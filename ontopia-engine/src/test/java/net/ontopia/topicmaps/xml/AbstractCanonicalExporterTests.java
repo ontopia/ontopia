@@ -20,10 +20,8 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -31,7 +29,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

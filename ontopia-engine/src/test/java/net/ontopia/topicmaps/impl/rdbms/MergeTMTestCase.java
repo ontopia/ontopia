@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.*;
-import junit.framework.TestCase;
+import java.io.File;
+import java.io.IOException;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;

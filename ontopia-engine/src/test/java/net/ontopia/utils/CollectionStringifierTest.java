@@ -20,9 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.*;
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 public class CollectionStringifierTest extends AbstractStringifierTest {
 

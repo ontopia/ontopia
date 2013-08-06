@@ -20,7 +20,8 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * This class is the base class for all test cases which test the collection properties

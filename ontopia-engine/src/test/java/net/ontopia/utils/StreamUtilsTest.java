@@ -20,7 +20,8 @@
 
 package net.ontopia.utils;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import junit.framework.TestCase;
 
 public class StreamUtilsTest extends TestCase {

@@ -20,10 +20,14 @@
 
 package net.ontopia.topicmaps.core.events;
 
-import java.util.*;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Iterator;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AbstractTopicMapTest;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
 

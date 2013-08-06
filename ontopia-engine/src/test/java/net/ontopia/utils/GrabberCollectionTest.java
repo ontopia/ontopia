@@ -20,8 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import junit.framework.TestSuite;
+import junit.framework.Test;
 
 public class GrabberCollectionTest extends AbstractCollectionTest {
 

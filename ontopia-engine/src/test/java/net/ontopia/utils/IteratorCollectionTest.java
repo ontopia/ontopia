@@ -20,9 +20,9 @@
 
 package net.ontopia.utils;
 
-import junit.framework.*;
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.Collection;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 public class IteratorCollectionTest extends AbstractCollectionTest {
 

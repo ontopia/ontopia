@@ -22,13 +22,12 @@ package net.ontopia.topicmaps.entry;
 
 import java.net.URL;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
-import net.ontopia.topicmaps.utils.ltm.*;
-import net.ontopia.topicmaps.utils.rdf.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
+import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 

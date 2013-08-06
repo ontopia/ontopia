@@ -26,14 +26,14 @@ import java.io.Writer;
 import java.io.File;
 import java.io.StringWriter;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import org.xml.sax.SAXException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public class TMXMLWriterTest {

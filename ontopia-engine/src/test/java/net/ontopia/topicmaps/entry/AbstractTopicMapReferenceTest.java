@@ -20,10 +20,9 @@
 
 package net.ontopia.topicmaps.entry;
 
-import junit.framework.*;
-
 import java.util.Collection;
 import java.util.Collections;
+import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public abstract class AbstractTopicMapReferenceTest extends TestCase {

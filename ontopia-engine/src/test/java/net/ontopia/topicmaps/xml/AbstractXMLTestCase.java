@@ -20,16 +20,17 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.infoset.impl.basic.GenericLocator;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Before;
-import net.ontopia.utils.URIUtils;
 
 public abstract class AbstractXMLTestCase {
   protected TopicMapBuilderIF builder;

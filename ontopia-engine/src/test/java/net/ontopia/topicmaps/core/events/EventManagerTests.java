@@ -22,17 +22,29 @@
 
 package net.ontopia.topicmaps.core.events;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.core.Locators;
+import net.ontopia.topicmaps.core.AbstractTopicMapTest;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.infoset.core.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.events.*;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
   
 public abstract class EventManagerTests extends AbstractTopicMapTest {
 

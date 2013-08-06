@@ -20,18 +20,18 @@
 
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.List;
 import junit.framework.TestCase;
-
-import net.ontopia.topicmaps.schema.core.*;
-import net.ontopia.topicmaps.schema.impl.osl.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.schema.core.SchemaValidatorIF;
+import net.ontopia.topicmaps.schema.core.SchemaViolationException;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchemaReader;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchemaWriter;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

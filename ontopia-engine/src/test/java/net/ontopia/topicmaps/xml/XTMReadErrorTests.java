@@ -20,14 +20,9 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.IOException;
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import java.util.List;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;

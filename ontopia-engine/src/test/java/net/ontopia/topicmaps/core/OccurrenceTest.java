@@ -20,8 +20,17 @@
 
 package net.ontopia.topicmaps.core;
 
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import net.ontopia.net.Base64;
 import net.ontopia.utils.StreamUtils;
@@ -30,7 +39,6 @@ import net.ontopia.utils.ReaderInputStream;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public abstract class OccurrenceTest extends AbstractTypedScopedTest {

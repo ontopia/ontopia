@@ -20,18 +20,10 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.ltm.*;
-
+import java.io.IOException;
 import java.util.List;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -20,14 +20,13 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.List;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

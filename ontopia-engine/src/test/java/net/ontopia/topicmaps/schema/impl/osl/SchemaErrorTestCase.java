@@ -20,13 +20,9 @@
 
 package net.ontopia.topicmaps.schema.impl.osl;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Collection;
-import net.ontopia.topicmaps.schema.core.*;
-import net.ontopia.utils.ResourcesDirectoryReader;
-import net.ontopia.utils.FileUtils;
+import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;

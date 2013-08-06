@@ -20,11 +20,10 @@
 package net.ontopia.topicmaps.entry;
 
 import java.io.IOException;
-import java.util.*;
-
+import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.utils.ltm.*;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 
 public class ResourceTopicMapSourceTest extends AbstractTopicMapSourceTest {
 

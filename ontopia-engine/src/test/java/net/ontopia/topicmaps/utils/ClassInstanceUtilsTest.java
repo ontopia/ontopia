@@ -20,12 +20,13 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.FileUtils;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
 
 public class ClassInstanceUtilsTest extends TestCase {

@@ -20,14 +20,15 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
 import java.util.List;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
