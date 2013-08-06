@@ -20,8 +20,8 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import net.ontopia.utils.FileUtils;
 

@@ -20,8 +20,6 @@
 
 package net.ontopia.infoset.content;
 
-import java.util.*;
-
 public class InMemoryContentStoreTest extends AbstractContentStoreTest {
   
   public InMemoryContentStoreTest(String name) {
