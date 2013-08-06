@@ -20,14 +20,13 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.*;
-import java.lang.ref.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.persistence.proxy.*;
+import net.ontopia.persistence.proxy.IdentityNotFoundException;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.ReadOnlyException;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.topicmaps.impl.utils.PhantomAssociation;
 
 /**
  * INTERNAL: The read-only rdbms association role implementation.

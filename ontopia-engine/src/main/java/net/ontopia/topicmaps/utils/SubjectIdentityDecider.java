@@ -21,9 +21,10 @@
 package net.ontopia.topicmaps.utils;
 
 import java.util.Iterator;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
 
 /**
  * INTERNAL: Decider that decides whether the object is an instance of a

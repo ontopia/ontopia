@@ -20,7 +20,8 @@
 
 package net.ontopia.xml;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 

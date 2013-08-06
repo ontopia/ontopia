@@ -21,7 +21,11 @@
 package net.ontopia.topicmaps.core.index;
 
 import java.util.Collection;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * PUBLIC: Implemented by objects holding information about topics

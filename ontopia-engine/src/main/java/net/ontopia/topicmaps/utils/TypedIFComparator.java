@@ -20,10 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
+import java.util.Comparator;
+import net.ontopia.topicmaps.core.TypedIF;
 
 /**
  * INTERNAL: Comparator that grabs the type of the comparable objects

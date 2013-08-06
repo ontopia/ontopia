@@ -20,9 +20,12 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.utils.GrabberIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * DEPRECATED: Grabber that grabs the most appropriate basename from a

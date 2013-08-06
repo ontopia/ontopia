@@ -20,23 +20,20 @@
 
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
-import java.io.*;
-import java.util.*;
-
-import org.xml.sax.Locator;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.CmdlineOptions;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.utils.*;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.schema.core.*;
-import net.ontopia.topicmaps.schema.impl.osl.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchemaWriter;
+import net.ontopia.topicmaps.schema.impl.osl.TopicClass;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 
 public class Generate {
 

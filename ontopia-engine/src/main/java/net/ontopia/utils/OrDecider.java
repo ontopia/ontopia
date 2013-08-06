@@ -20,7 +20,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * INTERNAL: Decider that checks all subdeciders and returns true of one

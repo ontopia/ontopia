@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the topic that plays the role in the

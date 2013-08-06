@@ -20,12 +20,20 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.persistence.proxy.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import net.ontopia.persistence.proxy.IdentityNotFoundException;
+import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.impl.utils.DeletionUtils;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: The rdbms association implementation.

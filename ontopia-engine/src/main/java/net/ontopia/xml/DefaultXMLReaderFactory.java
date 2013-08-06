@@ -20,11 +20,10 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.*;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: An XML reader factory that uses a JaxpXMLReaderFactory

@@ -25,11 +25,8 @@ import java.net.URLConnection;
 import java.net.MalformedURLException;
 import java.io.InputStream;
 import java.io.IOException;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.EntityResolver;
-
-import net.ontopia.xml.*;
 
 /**
  * INTERNAL: SAX entity resolver that only follows doctype

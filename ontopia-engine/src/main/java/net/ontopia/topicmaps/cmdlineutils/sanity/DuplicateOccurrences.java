@@ -20,11 +20,14 @@
 
 package net.ontopia.topicmaps.cmdlineutils.sanity;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * Used to report all duplicate occurrences(same locator, same occurrence roletype)

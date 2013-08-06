@@ -2,21 +2,14 @@
 header { package net.ontopia.topicmaps.query.parser; }
 
 {
- import java.util.Collection;
- import java.util.HashSet;
  import java.util.Iterator;
  import java.util.ArrayList;
  import java.util.List;
  import java.util.Stack;
  import java.util.Map;
  import java.util.HashMap;
- import java.net.MalformedURLException;
- import net.ontopia.utils.StringUtils;
- import net.ontopia.infoset.core.LocatorIF;
- import net.ontopia.infoset.impl.basic.URILocator;
- import net.ontopia.topicmaps.core.*;
+ import net.ontopia.topicmaps.core.TopicIF;
  import net.ontopia.topicmaps.query.core.InvalidQueryException;
- import net.ontopia.topicmaps.query.impl.basic.RulePredicate;
  import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
 }
 

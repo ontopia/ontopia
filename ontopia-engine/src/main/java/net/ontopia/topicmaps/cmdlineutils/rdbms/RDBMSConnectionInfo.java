@@ -20,14 +20,18 @@
 
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-
-import net.ontopia.persistence.proxy.*;
-import net.ontopia.persistence.rdbms.*;
-import net.ontopia.utils.*;
-
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+import net.ontopia.persistence.proxy.ConnectionFactoryIF;
+import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.PropertyUtils;
 import org.apache.commons.collections.BeanMap;
 
 /**

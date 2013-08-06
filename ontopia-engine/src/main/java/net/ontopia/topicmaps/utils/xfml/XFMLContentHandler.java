@@ -20,25 +20,28 @@
 
 package net.ontopia.topicmaps.utils.xfml;
 
-import java.util.*;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.util.Collection;
+import java.util.HashSet;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
+import net.ontopia.topicmaps.utils.AssociationBuilder;
+import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.AbstractTopicMapContentHandler;
-import net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver;
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.XMLReaderFactoryIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: SAX2 content handler used for importing XFML documents.

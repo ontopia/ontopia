@@ -20,12 +20,21 @@
 
 package net.ontopia.xml;
 
-import java.util.Stack;
-import java.io.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.ParserFactory;
-
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.xml.sax.AttributeList;
+import org.xml.sax.DocumentHandler;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.Parser;
+import org.xml.sax.helpers.ParserFactory;
 
 /**
  * INTERNAL: SAX document handler that writes pretty-printed XML to a

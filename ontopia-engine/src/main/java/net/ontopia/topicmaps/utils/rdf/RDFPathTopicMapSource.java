@@ -21,9 +21,10 @@
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.net.URL;
-import net.ontopia.topicmaps.entry.*;
 import net.ontopia.infoset.core.LocatorIF;
 import java.io.FileFilter;
+import net.ontopia.topicmaps.entry.AbstractPathTopicMapSource;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
 /**
  * INTERNAL: Source that locates RDF files in a directory on the file

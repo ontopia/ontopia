@@ -24,10 +24,10 @@ import java.net.URL;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.FileOutputStream;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.topicmaps.entry.*;
+import net.ontopia.topicmaps.entry.AbstractOntopolyTopicMapSource;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
 /**
  * INTERNAL: Source that locates CTM topic map files in a directory on

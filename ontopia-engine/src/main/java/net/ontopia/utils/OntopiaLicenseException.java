@@ -20,7 +20,8 @@
 
 package net.ontopia.utils;
 
-import java.io.*;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 
 /**
  * INTERNAL: An exception class that is thrown when licence related

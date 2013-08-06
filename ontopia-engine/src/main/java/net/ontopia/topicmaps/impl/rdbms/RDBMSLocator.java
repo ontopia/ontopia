@@ -20,8 +20,11 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.*;
-import net.ontopia.infoset.core.*;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.AbstractLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
 

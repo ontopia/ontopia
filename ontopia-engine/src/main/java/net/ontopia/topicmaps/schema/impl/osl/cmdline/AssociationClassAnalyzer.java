@@ -20,10 +20,18 @@
 
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
-import java.util.*;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.schema.impl.osl.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.schema.impl.osl.AnyTopicMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.AssociationClass;
+import net.ontopia.topicmaps.schema.impl.osl.AssociationRoleConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
+import net.ontopia.topicmaps.schema.impl.osl.TypeSpecification;
 
 public class AssociationClassAnalyzer extends AbstractSchemaAnalyzer {
 

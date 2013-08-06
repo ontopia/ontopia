@@ -20,7 +20,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * INTERNAL: A lookup index that extends WeakHashMap. It forgets what

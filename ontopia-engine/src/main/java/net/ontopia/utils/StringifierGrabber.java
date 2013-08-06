@@ -20,8 +20,6 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-
 /**
  * INTERNAL: Grabber that grabs a stringified version of the object
  * given to it.

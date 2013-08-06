@@ -20,7 +20,8 @@
 
 package net.ontopia.topicmaps.core.index;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 

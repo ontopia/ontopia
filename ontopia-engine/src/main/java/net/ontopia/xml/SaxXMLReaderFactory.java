@@ -20,8 +20,9 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * INTERNAL: A factory for creating SAX2 XMLReaders using the

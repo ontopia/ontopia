@@ -20,7 +20,8 @@
 
 package net.ontopia.utils;
 
-import java.io.*;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 
 /**
  * PUBLIC: An exception class that can be used to wrap other

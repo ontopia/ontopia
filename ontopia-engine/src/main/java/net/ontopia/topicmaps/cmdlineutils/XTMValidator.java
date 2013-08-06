@@ -20,12 +20,11 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.io.*;
-import java.util.*;
-import net.ontopia.utils.*;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.xml.*;
-
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

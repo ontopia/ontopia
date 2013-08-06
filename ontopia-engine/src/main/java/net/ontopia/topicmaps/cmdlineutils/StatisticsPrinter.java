@@ -20,16 +20,28 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.util.*;
-import java.io.*;
-import java.net.URL;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.topicmaps.cmdlineutils.statistics.*;
-import net.ontopia.topicmaps.cmdlineutils.utils.TopicMapReader;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.cmdlineutils.statistics.NoTypeCount;
+import net.ontopia.topicmaps.cmdlineutils.statistics.TopicAssocDep;
+import net.ontopia.topicmaps.cmdlineutils.statistics.TopicCounter;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * PUBLIC: Prints various kinds of statistics for topic maps.</p>

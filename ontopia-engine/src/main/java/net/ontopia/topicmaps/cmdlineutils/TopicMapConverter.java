@@ -21,15 +21,15 @@
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.File;
-
-import net.ontopia.utils.*;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.xml.sax.SAXParseException;
 
 /**

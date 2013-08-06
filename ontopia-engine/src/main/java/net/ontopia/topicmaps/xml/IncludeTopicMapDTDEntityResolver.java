@@ -21,7 +21,8 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.StringReader;
-import net.ontopia.xml.*;
+import net.ontopia.xml.ConfigurableEntityResolver;
+import net.ontopia.xml.InputSourceFactoryIF;
 import org.xml.sax.InputSource;
 
 /**
@@ -41,7 +42,7 @@ public class IncludeTopicMapDTDEntityResolver extends ConfigurableEntityResolver
 
   public IncludeTopicMapDTDEntityResolver() {
     InputSourceFactoryIF xtm_factory = new InputSourceFactoryIF() {
-        public org.xml.sax.InputSource createInputSource() {
+        public InputSource createInputSource() {
           return new InputSource(new StringReader(DTD.getXTMDocumentType()));
         }
       };

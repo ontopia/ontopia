@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.persistence.proxy.*;
-  
+import java.util.Collection;
+import net.ontopia.topicmaps.core.ReadOnlyException;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+
 /**
  * INTERNAL: The read-only rdbms topic name implementation.
  */

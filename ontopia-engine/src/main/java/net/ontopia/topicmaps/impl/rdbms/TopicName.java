@@ -20,13 +20,19 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
+import java.util.Collection;
+import java.util.Iterator;
+import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.impl.utils.DeletionUtils;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.persistence.proxy.*;
 
 /**
  * INTERNAL: The rdbms topic name implementation.

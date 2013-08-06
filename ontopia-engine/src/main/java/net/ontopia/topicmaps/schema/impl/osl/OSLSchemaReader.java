@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.schema.impl.osl;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import org.xml.sax.*;
 import org.xml.sax.helpers.LocatorImpl;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
@@ -37,6 +36,10 @@ import net.ontopia.topicmaps.schema.core.SchemaIF;
 import net.ontopia.topicmaps.schema.core.SchemaReaderIF;
 import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import net.ontopia.utils.StreamUtils;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 
 /**
  * PUBLIC: Reader that reads OSL schemas from their XML representation

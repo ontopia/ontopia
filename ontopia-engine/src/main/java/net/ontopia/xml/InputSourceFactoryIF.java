@@ -20,7 +20,7 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.*;
+import org.xml.sax.InputSource;
 
 /**
  * INTERNAL: A factory interface for creating SAX InputSources.

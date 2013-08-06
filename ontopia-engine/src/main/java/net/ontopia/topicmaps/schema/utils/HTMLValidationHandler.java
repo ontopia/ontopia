@@ -23,12 +23,31 @@ package net.ontopia.topicmaps.schema.utils;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.schema.core.ConstraintIF;
+import net.ontopia.topicmaps.schema.core.SchemaViolationException;
+import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
+import net.ontopia.topicmaps.schema.core.ValidationHandlerIF;
+import net.ontopia.topicmaps.schema.impl.osl.AnyTopicMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.AssociationRoleConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.InternalTopicRefMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.OccurrenceConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.ScopeSpecification;
+import net.ontopia.topicmaps.schema.impl.osl.ScopedConstraintIF;
+import net.ontopia.topicmaps.schema.impl.osl.SourceLocatorMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.SubjectIndicatorMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.TopicNameConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.TopicRoleConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.TypeSpecification;
+import net.ontopia.topicmaps.schema.impl.osl.TypedConstraintIF;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.schema.core.*;
-import net.ontopia.topicmaps.schema.impl.osl.*;
 
 /**
  * INTERNAL: Validation handler that writes error reports (using some

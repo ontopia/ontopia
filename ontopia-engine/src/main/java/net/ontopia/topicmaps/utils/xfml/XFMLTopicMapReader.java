@@ -20,22 +20,33 @@
 
 package net.ontopia.topicmaps.utils.xfml;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.net.MalformedURLException;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.basic.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.xml.AbstractTopicMapContentHandler;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver;
-import net.ontopia.utils.*;
-import net.ontopia.xml.*;
-
-import org.xml.sax.*;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
+import net.ontopia.xml.AbstractXMLFormatReader;
+import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 
 /**
  * PUBLIC: A topic map reader that is capable of reading the XFML format

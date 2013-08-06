@@ -20,9 +20,7 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * PUBLIC: Grabber that grabs the name most suitable for display from

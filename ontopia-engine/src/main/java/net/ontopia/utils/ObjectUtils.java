@@ -20,8 +20,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
+import java.util.Comparator;
 
 /**
  * INTERNAL: Class that contains useful methods.

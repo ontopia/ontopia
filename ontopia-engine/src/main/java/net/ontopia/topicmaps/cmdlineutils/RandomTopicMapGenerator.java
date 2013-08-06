@@ -20,12 +20,22 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Utility for randomly populating topic maps.

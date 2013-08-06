@@ -20,16 +20,27 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.cmdlineutils.sanity.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.StringTokenizer;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.cmdlineutils.sanity.AssociationSanity;
+import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateNames;
+import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateOccurrences;
+import net.ontopia.topicmaps.cmdlineutils.sanity.NoNames;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.StringifierIF;
+import net.ontopia.utils.URIUtils;
 
 /**
  * PUBLIC: Checks a topic map for dubious constructs.</p>
@@ -38,8 +49,6 @@ public class SanityChecker {
 
   protected TopicMapIF tm;
   protected StringifierIF ts = TopicStringifiers.getDefaultStringifier();
-
-
 
   public static void main(String [] argv) throws Exception {
 
@@ -77,7 +86,6 @@ public class SanityChecker {
     
   }
 
-
   /**
    * Constructor that accepts a topicmap as argument.
    */
@@ -85,7 +93,6 @@ public class SanityChecker {
     this.tm = tm;
     topicSanity();
   }
-  
 
   /**
    * Constructor that accepts a File object as argument (XTM file).
@@ -108,9 +115,6 @@ public class SanityChecker {
     this(ImportExportUtils.getReader(url).read());
   }
 
-
-
-
   private void topicSanity() {
 
     //Get all the duplicate assocs, and print them to screen.
@@ -126,7 +130,6 @@ public class SanityChecker {
     getDuplicatedNames();
 
   }
-
 
   /**
    * Handles all the duplicate assocaitions.
@@ -168,10 +171,6 @@ public class SanityChecker {
     } else print("This Topic Map contains no duplicate Associations.\n");
   }
 
-
-
-
-
  /**
    * Handles all the topics without name.
    */
@@ -192,7 +191,6 @@ public class SanityChecker {
       print(getTopicId(topic) + "\n");
     }
 
-
     Collection noChar = nn.getNoCharacteristics();
     print("\nTopics with no characteristics: " + noChar.size() +"\n");
 
@@ -202,18 +200,12 @@ public class SanityChecker {
       print(getTopicId(topic) + "\n");
     }
 
-
-
     Collection noscopes = nn.getNoNameUnconstrained();
     print("\nNumber of topics with no name in the unconstrained scope: " +
           noscopes.size() + "\n");
     list(noscopes);
     
   }
-
-
-
-
 
   /**
    * Handles all the topics with duplicate occurrences.
@@ -236,10 +228,6 @@ public class SanityChecker {
       print("\nThis TopicMap contains no duplicate occurrences.\n");
     }
   }
-
-
-
-
 
   /**
    * Handles all the topics with duplicate names, which means same basename
@@ -266,15 +254,12 @@ public class SanityChecker {
     }
   }
 
-
-
   /**
    * Lazy print, used internally.
    */
   private void print(String s) {
     System.out.print(s);
   }
- 
 
   private static void usage() {
     System.out.println("java net.ontopia.topicmaps.cmdlineutils.SanityChecker [options] <url>");

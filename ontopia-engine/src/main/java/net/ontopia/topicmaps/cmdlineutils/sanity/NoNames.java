@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.cmdlineutils.sanity;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 
 /**
  * Finds all Topics with: 

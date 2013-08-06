@@ -20,14 +20,14 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.impl.basic.BasicPredicateIF;
-import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-import net.ontopia.topicmaps.query.parser.ModuleIF;
-import net.ontopia.topicmaps.query.parser.PredicateIF;
 import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.spi.SearcherIF;

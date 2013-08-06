@@ -21,9 +21,20 @@
 package net.ontopia.topicmaps.utils;
 
 import java.io.Reader;
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Utilities for copying topic map data.

@@ -20,7 +20,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * INTERNAL: Utility for storing objects in a ring buffer. Adding an
