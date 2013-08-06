@@ -20,20 +20,8 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.db2tm.*;
-
 import org.junit.Test;
 import org.junit.Assert;
 

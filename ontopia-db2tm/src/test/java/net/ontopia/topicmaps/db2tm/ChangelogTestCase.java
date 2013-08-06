@@ -20,11 +20,8 @@
 
 package net.ontopia.topicmaps.db2tm;
 
+import au.com.bytecode.opencsv.CSVReader;
 import java.util.Map;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.io.File;
 import java.io.FileReader;
@@ -33,7 +30,6 @@ import java.io.IOException;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StringUtils;
@@ -42,9 +38,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
-
-import au.com.bytecode.opencsv.CSVReader;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -20,17 +20,17 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.*;
-import java.sql.*;
-import java.text.*;
-
+import java.io.StringReader;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.persistence.proxy.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Data source that reads tables via JDBC.

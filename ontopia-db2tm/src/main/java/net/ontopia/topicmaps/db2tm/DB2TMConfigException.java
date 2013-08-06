@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import net.ontopia.utils.OntopiaRuntimeException;
-
 /**
  * INTERNAL: Thrown when configuration errors are detected by DB2TM.</p>
  */

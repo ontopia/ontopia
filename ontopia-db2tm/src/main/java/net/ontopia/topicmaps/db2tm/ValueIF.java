@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.util.Collection;
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: Interface for extracting values from tuples. This
  * interfaces is, amongs other things, the basis for virtual column

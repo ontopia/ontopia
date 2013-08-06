@@ -25,15 +25,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-
 /**
  * INTERNAL: Virtual column that used a hash table to map from old
  * value to new value. A default value can also be specified when no
  * entry exists.
  */
-
 public final class Values {
     
   private static final Pattern PATTERN = Pattern.compile("\\$((\\d+)|\\{(\\w+)\\})");

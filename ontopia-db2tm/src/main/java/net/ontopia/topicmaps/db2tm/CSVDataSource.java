@@ -20,25 +20,17 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.BufferedReader;
+import au.com.bytecode.opencsv.CSVReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 /**
  * INTERNAL: Data source that reads CSV files from a directory.

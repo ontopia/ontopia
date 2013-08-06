@@ -20,17 +20,35 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.utils.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-
+import net.ontopia.topicmaps.utils.PSI;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

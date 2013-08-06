@@ -20,11 +20,8 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.util.Arrays;
-
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

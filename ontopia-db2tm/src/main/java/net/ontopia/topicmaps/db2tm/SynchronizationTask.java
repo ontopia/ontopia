@@ -28,20 +28,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: TimerTask that runs DB2TM synchronization.
  */
-
 public class SynchronizationTask extends TimerTask {
 
   static Logger log = LoggerFactory.getLogger(SynchronizationTask.class.getName());

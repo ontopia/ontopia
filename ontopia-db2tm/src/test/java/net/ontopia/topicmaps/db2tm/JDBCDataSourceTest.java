@@ -20,20 +20,24 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import net.ontopia.topicmaps.db2tm.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.xml.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.persistence.proxy.*;
-import net.ontopia.utils.*;
-
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-
+import net.ontopia.persistence.proxy.ConnectionFactoryIF;
+import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.PropertyUtils;
+import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.TestFileUtils;
+import net.ontopia.utils.URIUtils;
 import org.junit.Test;
 import org.junit.Assert;
 

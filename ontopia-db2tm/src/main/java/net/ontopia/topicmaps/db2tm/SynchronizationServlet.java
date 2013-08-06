@@ -20,21 +20,20 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.File;
-import java.text.*;
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-import net.ontopia.infoset.core.LocatorIF;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +80,6 @@ import org.slf4j.LoggerFactory;
  *
  * @since 3.3.0
  */
-
 public class SynchronizationServlet extends HttpServlet {
 
   static Logger log = LoggerFactory.getLogger(SynchronizationServlet.class.getName());

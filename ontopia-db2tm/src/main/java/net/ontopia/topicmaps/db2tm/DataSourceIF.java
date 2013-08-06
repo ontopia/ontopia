@@ -22,8 +22,6 @@ package net.ontopia.topicmaps.db2tm;
 
 import java.util.Collection;
 
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: A data source interface. This interface is used to
  * represent a data source that is capable of returning a stream of

@@ -23,29 +23,22 @@ package net.ontopia.topicmaps.db2tm;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Properties;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Properties;
+import net.ontopia.persistence.proxy.ConnectionFactoryIF;
+import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.persistence.proxy.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
