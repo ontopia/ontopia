@@ -20,8 +20,13 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.StringUtils;
 import junit.framework.TestCase;
