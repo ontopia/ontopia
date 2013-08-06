@@ -21,21 +21,18 @@
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.io.File;
-import java.util.*;
-
+import java.util.Collection;
 import javax.servlet.jsp.JspTagException;
-
+import net.ontopia.infoset.fulltext.core.SearcherIF;
+import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
+import net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher;
+import net.ontopia.infoset.fulltext.topicmaps.TopicMapSearchResult;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.infoset.fulltext.core.*;
-import net.ontopia.infoset.fulltext.topicmaps.*;
-import net.ontopia.infoset.fulltext.impl.lucene.*;
-import net.ontopia.infoset.fulltext.impl.rdbms.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

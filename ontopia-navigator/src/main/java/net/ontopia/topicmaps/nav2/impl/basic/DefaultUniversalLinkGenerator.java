@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.LinkGeneratorIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;

@@ -21,29 +21,31 @@
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.BodyContent;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.TopicComparators;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.CollectionMap;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.topicmaps.nav2.core.*;
-import net.ontopia.topicmaps.nav2.impl.basic.*;
 import net.ontopia.topicmaps.nav2.core.ScopeSupportIF;
+import net.ontopia.topicmaps.nav2.impl.basic.AssocInfoStorage;
+import net.ontopia.topicmaps.nav2.impl.basic.AssocInfoStorageComparator;
 import net.ontopia.topicmaps.nav2.utils.ScopeUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

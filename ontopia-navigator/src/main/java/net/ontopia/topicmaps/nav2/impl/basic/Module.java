@@ -22,18 +22,17 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.IOException;
 import java.io.File;
-import java.util.*;
 import java.net.URL;
-
-import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
-
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
 import net.ontopia.topicmaps.nav2.core.ModuleReaderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.ModuleReader;
 import net.ontopia.utils.StreamUtils;
-  
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.slf4j.Logger;

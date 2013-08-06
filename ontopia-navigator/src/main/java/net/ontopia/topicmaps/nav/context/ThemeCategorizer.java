@@ -20,20 +20,24 @@
 
 package net.ontopia.topicmaps.nav.context;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.LexicalComparator;
 import net.ontopia.utils.GrabberStringifier;
-
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.core.index.*;
-
 import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.topicmaps.nav.utils.comparators.ContextNameGrabber;
+import net.ontopia.topicmaps.utils.NameStringifier;
+import net.ontopia.topicmaps.utils.PSI;
 
 /**
  * INTERNAL: Class for categorizing a collection of themes according to

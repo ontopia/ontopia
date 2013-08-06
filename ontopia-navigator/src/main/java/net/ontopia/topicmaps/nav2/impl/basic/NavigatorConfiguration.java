@@ -20,16 +20,23 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import java.util.*;
 import java.text.Collator;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.impl.framework.MVSConfig;
 import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.plugins.PluginUtils;
 import net.ontopia.topicmaps.nav2.plugins.PluginComparator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

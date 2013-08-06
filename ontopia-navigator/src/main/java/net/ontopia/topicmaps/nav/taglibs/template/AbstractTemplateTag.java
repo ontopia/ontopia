@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.nav.taglibs.template;
 
 import java.util.Map;
 import java.util.Stack;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 

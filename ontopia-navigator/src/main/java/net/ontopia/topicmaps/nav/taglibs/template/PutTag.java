@@ -20,10 +20,8 @@
 
 package net.ontopia.topicmaps.nav.taglibs.template;
 
-import java.util.Map;
-import java.util.Stack;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

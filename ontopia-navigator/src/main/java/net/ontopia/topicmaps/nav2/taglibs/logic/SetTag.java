@@ -20,16 +20,13 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.infoset.impl.basic.URILocator; 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -38,11 +35,13 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
-import net.ontopia.topicmaps.nav2.core.*;
+import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.UserIF;
+import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.utils.StringifierIF;
-  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

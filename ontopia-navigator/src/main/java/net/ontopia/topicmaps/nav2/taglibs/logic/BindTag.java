@@ -20,24 +20,17 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
-import java.util.*;
-import java.io.IOException;
-
-import javax.servlet.jsp.JspWriter;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
-
+import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.impl.basic.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.infoset.core.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * INTERNAL: Bind Tag for turning map keys into variables.

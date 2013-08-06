@@ -26,17 +26,15 @@ import java.util.Stack;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.ArrayList;
-
 import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
-
-import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.junit.Ignore;
+import org.xml.sax.Attributes;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: A class which reads in the framework test configuration

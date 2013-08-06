@@ -20,7 +20,8 @@
 
 package net.ontopia.topicmaps.nav2.core;
 
-import java.io.*;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import javax.servlet.jsp.JspTagException;
 
 /**

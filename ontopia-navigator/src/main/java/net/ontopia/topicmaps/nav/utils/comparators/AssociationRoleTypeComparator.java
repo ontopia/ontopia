@@ -20,11 +20,16 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.utils.TopicComparators;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: A comparator for ordering AssociationRoleIFs alphabetically

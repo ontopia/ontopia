@@ -20,24 +20,11 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.utils.ontojsp.*;
-
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.nav2.core.*;
-import net.ontopia.topicmaps.nav2.impl.basic.Function;
+import net.ontopia.topicmaps.nav2.core.FunctionIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.utils.ontojsp.TaglibTagFactory;
-
-import org.xml.sax.SAXException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

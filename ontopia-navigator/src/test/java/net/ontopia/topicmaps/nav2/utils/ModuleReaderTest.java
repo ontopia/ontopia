@@ -20,16 +20,13 @@
 
 package net.ontopia.topicmaps.nav2.utils;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Map;
+import net.ontopia.topicmaps.nav2.core.FunctionIF;
+import net.ontopia.topicmaps.nav2.core.ModuleReaderIF;
 import org.xml.sax.SAXException;
-
-import net.ontopia.topicmaps.nav2.core.*;
-import net.ontopia.topicmaps.nav2.utils.*;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -20,17 +20,10 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.net.URLEncoder;
-
-import net.ontopia.utils.StringifierIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
-
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
 /**
