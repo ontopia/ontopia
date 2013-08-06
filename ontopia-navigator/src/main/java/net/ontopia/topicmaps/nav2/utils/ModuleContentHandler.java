@@ -25,20 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-
-import javax.servlet.jsp.tagext.Tag;
-import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.topicmaps.nav2.core.FunctionIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.impl.basic.Function;
-import net.ontopia.utils.ontojsp.*;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.DefaultHandler;
-
+import net.ontopia.utils.ontojsp.JSPContentHandler;
+import net.ontopia.utils.ontojsp.JSPTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: A content handler for module specification files (root

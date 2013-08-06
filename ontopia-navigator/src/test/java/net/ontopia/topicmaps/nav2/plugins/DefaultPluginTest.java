@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import java.util.*;
 import org.junit.Assert;
 import org.junit.Test;
 

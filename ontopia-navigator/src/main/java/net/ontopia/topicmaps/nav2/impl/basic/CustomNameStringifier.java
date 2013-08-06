@@ -20,8 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs

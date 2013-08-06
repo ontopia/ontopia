@@ -28,18 +28,18 @@ import java.util.Comparator;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.BodyContent;
-
+import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
+import net.ontopia.topicmaps.nav2.core.FunctionIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.utils.TopicComparators;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.StringifierIF;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import org.apache.commons.collections.comparators.ReverseComparator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

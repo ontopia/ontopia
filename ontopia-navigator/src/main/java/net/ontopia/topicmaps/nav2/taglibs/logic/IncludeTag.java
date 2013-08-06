@@ -20,35 +20,19 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.HashMap;
-import java.util.Collections;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.utils.ontojsp.*;
-
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.impl.basic.Function;
-import net.ontopia.topicmaps.nav2.impl.basic.Module;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.utils.ontojsp.TaglibTagFactory;
-
-import org.xml.sax.SAXException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

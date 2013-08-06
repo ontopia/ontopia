@@ -20,11 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import java.util.*;
-
+import java.util.Collection;
+import java.util.Collections;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.GrabberStringifier;

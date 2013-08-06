@@ -20,19 +20,13 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
-
-import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 

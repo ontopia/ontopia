@@ -20,12 +20,12 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import java.io.*;
-import java.util.*;
-import net.ontopia.utils.FileUtils;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

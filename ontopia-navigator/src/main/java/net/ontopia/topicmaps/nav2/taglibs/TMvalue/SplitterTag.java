@@ -20,14 +20,17 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.jsp.JspTagException;
-
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.CollectionMap;
-import net.ontopia.topicmaps.core.*;
-
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

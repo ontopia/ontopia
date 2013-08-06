@@ -24,22 +24,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.utils.ontojsp.*;
-
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.impl.basic.Function;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.utils.ontojsp.TaglibTagFactory;
-
+import net.ontopia.utils.ontojsp.JSPPageReader;
+import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
 import org.xml.sax.SAXException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

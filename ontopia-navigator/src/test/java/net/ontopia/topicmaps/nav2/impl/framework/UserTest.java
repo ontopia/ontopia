@@ -21,17 +21,12 @@
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.IOException;
-import java.io.File;
-import java.util.*;
-
+import java.util.List;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
-import net.ontopia.topicmaps.nav2.impl.framework.User;
 import net.ontopia.topicmaps.nav2.utils.NavigatorConfigFactory;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

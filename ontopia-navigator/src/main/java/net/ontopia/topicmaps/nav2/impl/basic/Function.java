@@ -22,17 +22,12 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.IOException;
 import java.util.Collection;
-
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.utils.ontojsp.*;
-
-import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
-import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
+import net.ontopia.utils.ontojsp.JSPPageExecuter;
+import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
 
 /**
  * INTERNAL: A FunctionIF implementation used by the XML-based

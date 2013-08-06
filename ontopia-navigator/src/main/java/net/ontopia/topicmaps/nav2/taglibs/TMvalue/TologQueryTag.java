@@ -20,28 +20,31 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.util.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletContext;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.nav2.core.*;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorCompileException;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingTag;
-import net.ontopia.infoset.core.*;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.StringTemplateUtils;
 import net.ontopia.topicmaps.nav2.impl.basic.JSPEngineWrapper;
-
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryResultIterator;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -21,14 +21,15 @@
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.net.MalformedURLException;
-
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
-import net.ontopia.infoset.core.*;
 import net.ontopia.infoset.impl.basic.URILocator;
-
-import net.ontopia.topicmaps.nav2.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 
 /**
  * INTERNAL: Decider for verifying if a given topic type is identical or

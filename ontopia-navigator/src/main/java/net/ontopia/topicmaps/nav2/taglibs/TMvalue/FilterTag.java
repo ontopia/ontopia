@@ -27,20 +27,26 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import javax.servlet.jsp.JspTagException;
-
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorCompileException;
+import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.NavigatorTagException;
 import net.ontopia.topicmaps.utils.SupersetOfContextDecider;
-
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 import net.ontopia.topicmaps.nav2.impl.basic.DeciderIFWrapper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
