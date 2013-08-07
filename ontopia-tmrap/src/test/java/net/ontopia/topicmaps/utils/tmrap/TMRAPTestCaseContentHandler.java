@@ -23,14 +23,13 @@ package net.ontopia.topicmaps.utils.tmrap;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Stack;
-
 import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.xml.sax.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
