@@ -22,8 +22,10 @@ package ontopoly.rdbms;
 import java.io.File;
 import javax.servlet.ServletContextEvent;
 import java.sql.Connection;
+import net.ontopia.persistence.rdbms.DatabaseProjectReader;
+import net.ontopia.persistence.rdbms.GenericSQLProducer;
+import net.ontopia.persistence.rdbms.Project;
 import org.h2.server.web.DbStarter;
-import net.ontopia.persistence.rdbms.*;
 
 public class H2DatabaseStarter extends DbStarter {
 

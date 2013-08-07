@@ -22,21 +22,22 @@ package net.ontopia.topicmaps.nav2.webapps.omnigator;
 
 import java.io.IOException;
 import java.util.Collection;
-
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.query.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.impl.basic.JSPEngineWrapper;
 import net.ontopia.topicmaps.nav2.impl.basic.AbstractFunction;
 import net.ontopia.topicmaps.nav2.utils.ContextUtils;
 import net.ontopia.topicmaps.nav2.utils.TreeWidget;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
 
 /**
  * INTERNAL: Used by the Omnigator to create the collapsible tree view
