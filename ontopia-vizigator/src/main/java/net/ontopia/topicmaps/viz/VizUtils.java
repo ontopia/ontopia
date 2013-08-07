@@ -24,15 +24,15 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Iterator;
 import java.net.MalformedURLException;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-
 import com.touchgraph.graphlayout.Node;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Helper methods.
