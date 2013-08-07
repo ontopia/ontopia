@@ -27,13 +27,30 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.index.*;
-import net.ontopia.topicmaps.schema.core.*;
-import net.ontopia.topicmaps.schema.impl.osl.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
+import net.ontopia.topicmaps.schema.core.ConstraintIF;
+import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
+import net.ontopia.topicmaps.schema.impl.osl.AssociationClass;
+import net.ontopia.topicmaps.schema.impl.osl.AssociationRoleConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.InternalTopicRefMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
+import net.ontopia.topicmaps.schema.impl.osl.OccurrenceConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.ScopeSpecification;
+import net.ontopia.topicmaps.schema.impl.osl.SourceLocatorMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.SubjectIndicatorMatcher;
+import net.ontopia.topicmaps.schema.impl.osl.TopicClass;
+import net.ontopia.topicmaps.schema.impl.osl.TopicNameConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.TypeSpecification;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 
 /**

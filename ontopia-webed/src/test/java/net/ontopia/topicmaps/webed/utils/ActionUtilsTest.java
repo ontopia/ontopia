@@ -21,21 +21,17 @@
 package net.ontopia.topicmaps.webed.utils;
 
 import java.io.File;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-import net.ontopia.topicmaps.webed.impl.utils.*;
 import net.ontopia.topicmaps.webed.impl.actions.basename.AddBasename;
 import net.ontopia.topicmaps.webed.impl.utils.ActionUtils;
 import net.ontopia.topicmaps.webed.impl.utils.ActionConfigurator;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import junit.framework.TestCase;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.webed.impl.basic.ActionInGroup;
+import net.ontopia.topicmaps.webed.impl.basic.ActionRegistryIF;
 
 public class ActionUtilsTest extends TestCase {
 

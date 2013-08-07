@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.webed.impl.basic;
 
-import java.util.*;
-
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
 import junit.framework.TestCase;
 
 public class ActionForwardPageTest extends TestCase {

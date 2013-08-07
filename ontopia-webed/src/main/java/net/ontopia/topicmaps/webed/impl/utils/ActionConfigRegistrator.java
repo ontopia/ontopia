@@ -21,8 +21,8 @@
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import javax.servlet.ServletContext;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-
+import net.ontopia.topicmaps.webed.impl.basic.ConfigurationObserverIF;
+import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
