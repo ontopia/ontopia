@@ -20,8 +20,10 @@
 
 package net.ontopia.topicmaps.webed;
 
-import com.meterware.httpunit.*;
-
+import com.meterware.httpunit.Button;
+import com.meterware.httpunit.HttpInternalErrorException;
+import com.meterware.httpunit.WebForm;
+import com.meterware.httpunit.WebResponse;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 
 /**

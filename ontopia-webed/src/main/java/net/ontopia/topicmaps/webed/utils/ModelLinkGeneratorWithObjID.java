@@ -20,14 +20,13 @@
 
 package net.ontopia.topicmaps.webed.utils;
 
-import javax.servlet.jsp.PageContext;
-
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.nav2.core.*;
+import net.ontopia.topicmaps.nav2.core.LinkGeneratorIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-
 import net.ontopia.utils.StringUtils;
 
 /**

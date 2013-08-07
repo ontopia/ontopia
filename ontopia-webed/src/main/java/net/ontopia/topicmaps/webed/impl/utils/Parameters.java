@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.webed.impl.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import net.ontopia.topicmaps.webed.core.FileValueIF;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 

@@ -20,20 +20,17 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.tmobject;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.schema.core.SchemaValidatorIF;
 import net.ontopia.topicmaps.schema.core.SchemaViolationException;
 import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
-import net.ontopia.topicmaps.webed.core.ActionIF;
 import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.core.OSLSchemaAwareIF;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
 /**
