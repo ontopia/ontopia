@@ -35,7 +35,7 @@ public class StringTemplateUtils {
    * "name" key in the paramvalues Map. Single '%' characters in the
    * output must be represented as "%%" in the template.   
    */
-  public static String replace(String template, Map paramvalues) {
+  public static String replace(String template, Map<String, Object> paramvalues) {
     return replace(template, paramvalues, '%');
   }
   
@@ -50,7 +50,7 @@ public class StringTemplateUtils {
    *                 references
    * @since 1.3.1
    */
-  public static String replace(String template, Map paramvalues,
+  public static String replace(String template, Map<String, Object> paramvalues,
                                char sep_char) {
     char[] temp = template.toCharArray();
     StringBuffer out = new StringBuffer(temp.length + paramvalues.size()*6);

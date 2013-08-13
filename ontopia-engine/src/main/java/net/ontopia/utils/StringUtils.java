@@ -166,11 +166,11 @@ public class StringUtils {
    * INTERNAL: Joins the objects in a collection (turned into strings
    * by toString) with a separator string.
    */
-  public static String join(Collection objects, String separator) {
+  public static String join(Collection<?> objects, String separator) {
     if (objects.isEmpty())
       return "";
 
-    Iterator iter = objects.iterator();
+    Iterator<?> iter = objects.iterator();
     StringBuffer list = new StringBuffer();
     list.append(iter.next());
     while (iter.hasNext()) {
@@ -186,12 +186,12 @@ public class StringUtils {
    *
    * @since 2.0
    */
-  public static String join(Collection objects, String separator,
-                            StringifierIF stringifier) {
+  public static <T> String join(Collection<T> objects, String separator,
+                            StringifierIF<T> stringifier) {
     if (objects.isEmpty())
       return "";
 
-    Iterator iter = objects.iterator();
+    Iterator<T> iter = objects.iterator();
     StringBuffer list=new StringBuffer();
     list.append(stringifier.toString(iter.next()));
     while (iter.hasNext()) {
@@ -339,10 +339,10 @@ public class StringUtils {
    *
    * @since 1.3.2
    */
-  public static void join(Collection objects, String separator, StringBuffer sb) {
+  public static void join(Collection<?> objects, String separator, StringBuffer sb) {
     if (objects.isEmpty()) return;
 
-    Iterator iter = objects.iterator();
+    Iterator<?> iter = objects.iterator();
     sb.append(iter.next());
     while (iter.hasNext()) {
       sb.append(separator);

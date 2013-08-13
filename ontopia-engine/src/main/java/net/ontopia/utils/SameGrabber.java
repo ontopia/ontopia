@@ -25,9 +25,9 @@ package net.ontopia.utils;
  * the object that was given to it.</p>
  */
 
-public class SameGrabber implements GrabberIF {
+public class SameGrabber<T> implements GrabberIF<T, T> {
   
-  public Object grab(Object object) {
+  public T grab(T object) {
     return object;
   }
 

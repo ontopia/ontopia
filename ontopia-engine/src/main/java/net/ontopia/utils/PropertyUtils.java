@@ -43,7 +43,7 @@ public class PropertyUtils {
    * INTERNAL: Helper method used to get better error messages with
    * less typing.
    */
-  public static String getProperty(Map properties, String name) {
+  public static String getProperty(Map<String, String> properties, String name) {
     return getProperty(properties, name, true);
   }
 
@@ -51,9 +51,9 @@ public class PropertyUtils {
    * INTERNAL: Helper method used to get better error messages with
    * less typing.
    */
-  public static String getProperty(Map properties, String name,
+  public static String getProperty(Map<String, String> properties, String name,
                                    boolean required) {
-    String value = (String) properties.get(name);
+    String value = properties.get(name);
     if (value == null) {
       if (!required)
         return null;
@@ -69,15 +69,15 @@ public class PropertyUtils {
    * properties. This method will return true if the property has the
    * values 'yes', 'true'. Otherwise the default value is returned.
    */
-  public static boolean isTrue(Map properties, String name, boolean default_value) {
-    return isTrue((String)properties.get(name), default_value);
+  public static boolean isTrue(Map<String, String> properties, String name, boolean default_value) {
+    return isTrue(properties.get(name), default_value);
   }
   
   /**
    * INTERNAL: Same as isTrue(Map, String, boolean) with the default
    * set to false;
    */
-  public static boolean isTrue(Map properties, String name) {
+  public static boolean isTrue(Map<String, String> properties, String name) {
     return isTrue(properties, name, false);
   }
   

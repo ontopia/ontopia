@@ -25,7 +25,7 @@ package net.ontopia.utils;
  * to it.
  */
 
-public class SubstringGrabber implements GrabberIF {
+public class SubstringGrabber implements GrabberIF<Object, String> {
 
   protected int begin_index;
   protected int end_index;
@@ -35,7 +35,7 @@ public class SubstringGrabber implements GrabberIF {
     this.end_index = end_index;
   }
   
-  public Object grab(Object object) {
+  public String grab(Object object) {
     if (object.toString().length() == 0) return "";                                      
     return object.toString().substring(begin_index, end_index);
   }
