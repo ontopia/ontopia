@@ -132,7 +132,7 @@ public class ArrayUtils {
    *
    * @since 4.0.5
    */
-  public static int binarySearchFirst(Object[] array, Object o, Comparator c) {
+  public static <T> int binarySearchFirst(T[] array, T o, Comparator<? super T> c) {
     int r = Arrays.binarySearch(array, o, c);
     if (r < 0) 
       return -1;

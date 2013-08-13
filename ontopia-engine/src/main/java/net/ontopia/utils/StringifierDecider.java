@@ -25,17 +25,17 @@ package net.ontopia.utils;
  * subdecider.
  */
 
-public class StringifierDecider implements DeciderIF {
+public class StringifierDecider<T> implements DeciderIF<T> {
 
-  protected StringifierIF stringifier;
-  protected DeciderIF decider;
+  protected StringifierIF<T> stringifier;
+  protected DeciderIF<String> decider;
    
-  public StringifierDecider(StringifierIF stringifier, DeciderIF decider) {
+  public StringifierDecider(StringifierIF<T> stringifier, DeciderIF<String> decider) {
     this.stringifier = stringifier;
     this.decider = decider;
   }
 
-  public boolean ok(Object object) {
+  public boolean ok(T object) {
     return decider.ok(stringifier.toString(object));
   }
   

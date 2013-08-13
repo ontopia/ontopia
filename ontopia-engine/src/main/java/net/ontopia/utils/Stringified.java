@@ -37,17 +37,17 @@ package net.ontopia.utils;
  * rescue.</p>
  */
 
-public class Stringified {
+public class Stringified<T> {
 
-  protected Object object;
-  protected StringifierIF stringifier;
+  protected T object;
+  protected StringifierIF<T> stringifier;
 
-  public Stringified(Object object, StringifierIF stringifier) {
+  public Stringified(T object, StringifierIF<T> stringifier) {
     this.object = object;
     this.stringifier = stringifier;
   }
 
-  public Object getObject() {
+  public T getObject() {
     return object;
   }
   

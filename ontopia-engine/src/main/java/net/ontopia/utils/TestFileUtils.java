@@ -54,31 +54,31 @@ public class TestFileUtils {
   public static final String testdataInputRoot = "net/ontopia/testdata/";
   private static String testdataOutputRoot = null;
 
-  public static List getTestInputFiles(String baseDirectory,
+  public static List<String[]> getTestInputFiles(String baseDirectory,
                                        String subDirectory, String filter) {
     return getTestInputFiles(baseDirectory + "/" + subDirectory, filter);
   }
 
-  public static List getTestInputFiles(String baseDirectory,
+  public static List<String[]> getTestInputFiles(String baseDirectory,
                                        String subDirectory,
                                        ResourcesFilterIF filter) {
     return getTestInputFiles(baseDirectory + "/" + subDirectory, filter);
   }
 
-  public static List getTestInputFiles(String directory, String filter) {
+  public static List<String[]> getTestInputFiles(String directory, String filter) {
     String resourcesDirectory = testdataInputRoot + directory;
     ResourcesDirectoryReader directoryReader = new ResourcesDirectoryReader(resourcesDirectory, filter);
     return getTestInputFiles(directoryReader, resourcesDirectory);
   }
 
-  public static List getTestInputFiles(String directory, ResourcesFilterIF filter) {
+  public static List<String[]> getTestInputFiles(String directory, ResourcesFilterIF filter) {
     String resourcesDirectory = testdataInputRoot + directory;
     ResourcesDirectoryReader directoryReader =
       new ResourcesDirectoryReader(resourcesDirectory, filter);
     return getTestInputFiles(directoryReader, resourcesDirectory);
   }
 
-  public static List getTestInputFiles(ResourcesDirectoryReader directoryReader,
+  public static List<String[]> getTestInputFiles(ResourcesDirectoryReader directoryReader,
                                        String resourcesDirectory) {
     Set<String> resources = directoryReader.getResources();
     if (resources.size() == 0)

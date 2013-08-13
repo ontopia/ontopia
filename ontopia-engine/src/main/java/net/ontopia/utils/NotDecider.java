@@ -24,15 +24,15 @@ package net.ontopia.utils;
  * INTERNAL: Decider that negates the decision of the nested decider.
  */
 
-public class NotDecider implements DeciderIF {
+public class NotDecider<T> implements DeciderIF<T> {
 
-  protected DeciderIF decider;
+  protected DeciderIF<? super T> decider;
   
-  public NotDecider(DeciderIF decider) {
+  public NotDecider(DeciderIF<? super T> decider) {
     this.decider = decider;
   }
   
-  public boolean ok(Object object) {
+  public boolean ok(T object) {
     return !decider.ok(object);
   }
 
