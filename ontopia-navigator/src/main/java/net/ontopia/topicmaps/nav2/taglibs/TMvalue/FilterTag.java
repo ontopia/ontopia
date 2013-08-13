@@ -34,6 +34,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -240,7 +241,7 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
    * which have the topic with the given URI as a theme in their scope,
    * or which have a topic in the named collection in their scopes.
    */
-  private Collection filterInScopeOf(Collection tmObjects, String inScopeOf)
+  private Collection filterInScopeOf(Collection<ScopedIF> tmObjects, String inScopeOf)
     throws NavigatorCompileException {
     
     Collection context = new ArrayList(1);
@@ -257,8 +258,8 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
     Collection filtered = new HashSet();
     if (tmObjects != null) {
       SupersetOfContextDecider decider = new SupersetOfContextDecider(context);
-      Iterator iter = tmObjects.iterator();
-      Object obj;
+      Iterator<ScopedIF> iter = tmObjects.iterator();
+      ScopedIF obj;
       while (iter.hasNext()) {
         obj = iter.next();
         if (decider.ok(obj)) {
