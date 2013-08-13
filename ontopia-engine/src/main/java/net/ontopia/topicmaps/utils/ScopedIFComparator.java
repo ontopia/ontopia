@@ -53,7 +53,7 @@ public class ScopedIFComparator<T extends ScopedIF> implements Comparator<T> {
   protected Comparator<? super T> subcomparator;
 
   public ScopedIFComparator() {
-    this(Collections.EMPTY_SET);
+    this(Collections.<TopicIF>emptySet());
   }
 
   public ScopedIFComparator(Collection<TopicIF> scope) {

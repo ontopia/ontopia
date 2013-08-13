@@ -20,24 +20,25 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.Collection;
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the association roles of an association.
  */
 
-public class RolesGrabber implements GrabberIF {
+public class RolesGrabber implements GrabberIF<AssociationIF, Collection<AssociationRoleIF>> {
   
   /**
    * INTERNAL: Grabs the association roles of the given association
    *
-   * @param object the given object; internally typecast to AssociationIF
+   * @param object the given object; AssociationIF
    * @return object which is a collection of AssociationRoleIF objects
    */ 
-
-  public Object grab(Object object) {
-    return ((AssociationIF)object).getRoles();
+  public Collection<AssociationRoleIF> grab(AssociationIF object) {
+    return object.getRoles();
   }
 
 }

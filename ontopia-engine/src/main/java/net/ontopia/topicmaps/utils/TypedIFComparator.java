@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.util.Comparator;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
 
 /**
@@ -30,7 +31,7 @@ import net.ontopia.topicmaps.core.TypedIF;
  * objects that implement TypedIF.
  */
 
-public class TypedIFComparator implements Comparator {
+public class TypedIFComparator implements Comparator<TypedIF> {
 
   //! /**
   //!  * INTERNAL: A TypedIFGrabber used to grab the types compared from
@@ -41,14 +42,14 @@ public class TypedIFComparator implements Comparator {
   /**
    * INTERNAL: The comparator used to compare the types
    */ 
-  protected Comparator subcomparator;
+  protected Comparator<TopicIF> subcomparator;
 
   /**
    * INTERNAL: Creates a TypedIfComparator which uses the given comparator
    *
    * @param subcomparator the given comparator
    */   
-  public TypedIFComparator(Comparator subcomparator) {
+  public TypedIFComparator(Comparator<TopicIF> subcomparator) {
     this.subcomparator = subcomparator;
   }
   
@@ -61,9 +62,9 @@ public class TypedIFComparator implements Comparator {
    * @return int; result from the comparator given to the constructor, when it compares the 
    *            types of the given objects
    */ 
-  public int compare(Object obj1, Object obj2) {
+  public int compare(TypedIF obj1, TypedIF obj2) {
     //! return subcomparator.compare(grabber.grab(obj1), grabber.grab(obj2));
-    return subcomparator.compare(((TypedIF)obj1).getType(), ((TypedIF)obj2).getType());
+    return subcomparator.compare(obj1.getType(), obj2.getType());
   }
   
 }

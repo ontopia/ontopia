@@ -68,27 +68,27 @@ public class IdentityUtils {
    * @since 4.0
    */
   public static Collection<TopicIF> findSameTopic(TopicMapIF topicmap, TopicIF topic) {
-    Set result = new HashSet();
+    Set<TopicIF> result = new HashSet<TopicIF>();
     // item identifiers
-    Iterator srclocs = topic.getItemIdentifiers().iterator();
+    Iterator<LocatorIF> srclocs = topic.getItemIdentifiers().iterator();
     while (srclocs.hasNext()) {
-      LocatorIF srcloc = (LocatorIF)srclocs.next();
+      LocatorIF srcloc = srclocs.next();
       TMObjectIF o = topicmap.getObjectByItemIdentifier(srcloc);
       if (o instanceof TopicIF)
-        result.add(o);
+        result.add((TopicIF) o);
     }
     // subject identifiers
-    Iterator subinds = topic.getSubjectIdentifiers().iterator();
+    Iterator<LocatorIF> subinds = topic.getSubjectIdentifiers().iterator();
     while (subinds.hasNext()) {
-      LocatorIF subind = (LocatorIF)subinds.next();
+      LocatorIF subind = subinds.next();
       TopicIF t = topicmap.getTopicBySubjectIdentifier(subind);
       if (t != null)
         result.add(t);
     }
     // subject locators
-    Iterator sublocs = topic.getSubjectLocators().iterator();
+    Iterator<LocatorIF> sublocs = topic.getSubjectLocators().iterator();
     while (sublocs.hasNext()) {
-      LocatorIF subloc = (LocatorIF)sublocs.next();
+      LocatorIF subloc = sublocs.next();
       TopicIF t = topicmap.getTopicBySubjectLocator(subloc);
       if (t != null)
         result.add(t);

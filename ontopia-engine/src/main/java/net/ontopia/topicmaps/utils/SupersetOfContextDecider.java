@@ -33,17 +33,17 @@ import net.ontopia.utils.DeciderIF;
  * more information.
  */
 
-public class SupersetOfContextDecider implements DeciderIF {
+public class SupersetOfContextDecider implements DeciderIF<ScopedIF> {
   
   protected TopicIF[] context;
   
-  public SupersetOfContextDecider(Collection context) {
+  public SupersetOfContextDecider(Collection<TopicIF> context) {
     this.context = new TopicIF[context.size()];
     context.toArray(this.context);
   }
   
-  public boolean ok(Object scoped) {
-    return ScopeUtils.isSupersetOfContext((ScopedIF)scoped, context);
+  public boolean ok(ScopedIF scoped) {
+    return ScopeUtils.isSupersetOfContext(scoped, context);
   }
 
 }

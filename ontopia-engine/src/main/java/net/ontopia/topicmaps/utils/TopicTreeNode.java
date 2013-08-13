@@ -23,10 +23,6 @@ package net.ontopia.topicmaps.utils;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.ontopia.topicmaps.core.TopicIF;
 
 /**
@@ -34,25 +30,22 @@ import net.ontopia.topicmaps.core.TopicIF;
  * @since 1.2
  */
 public class TopicTreeNode {
-  // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(TopicTreeNode.class
-      .getName());
 
   protected TopicTreeNode parent;
-  protected List children;
+  protected List<TopicTreeNode> children;
   protected TopicIF topic;
-  protected HashMap attributes;
+  protected HashMap<String, Object> attributes;
 
   public TopicTreeNode(TopicIF topic) {
     this.topic = topic;
-    this.children = new ArrayList();
-    this.attributes = new HashMap();
+    this.children = new ArrayList<TopicTreeNode>();
+    this.attributes = new HashMap<String, Object>();
   }
 
   /**
    * Returns a List containing TopicTreeNode objects.
    */
-  public List getChildren() {
+  public List<TopicTreeNode> getChildren() {
     return children;
   }
 

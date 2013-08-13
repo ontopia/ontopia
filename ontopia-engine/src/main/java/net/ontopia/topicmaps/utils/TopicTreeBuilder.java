@@ -40,7 +40,7 @@ public class TopicTreeBuilder {
   protected TopicIF assocType;
   protected TopicIF parentRole;
   protected TopicIF childRole;
-  protected Collection types;
+  protected Collection<TopicIF> types;
   
   public TopicTreeBuilder(TopicIF assocType,
                           TopicIF parentRole,
@@ -57,7 +57,7 @@ public class TopicTreeBuilder {
     this.types = null;
   }
 
-  public void setFilterTypes(Collection types) {
+  public void setFilterTypes(Collection<TopicIF> types) {
     this.types = types;
   }
   
@@ -67,10 +67,8 @@ public class TopicTreeBuilder {
    * position in the tree.
    */
   public TopicTreeNode build(TopicIF topic) {
-    TopicMapIF tm = assocType.getTopicMap();
-
-    TopicIF root = getRoot(topic, new HashSet());
-    return build(root, new HashSet());
+    TopicIF root = getRoot(topic, new HashSet<TopicIF>());
+    return build(root, new HashSet<TopicIF>());
   }
        
   /**
@@ -83,20 +81,20 @@ public class TopicTreeBuilder {
     TopicTreeNode falseroot = new TopicTreeNode(null);
     TopicMapIF tm = assocType.getTopicMap();
     ClassInstanceIndexIF index = (ClassInstanceIndexIF) tm.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-    Map trees = new HashMap(); // trees, registered by root topic
+    Map<TopicIF, TopicTreeNode> trees = new HashMap<TopicIF, TopicTreeNode>(); // trees, registered by root topic
 
-    Iterator it = index.getAssociations(assocType).iterator();
+    Iterator<AssociationIF> it = index.getAssociations(assocType).iterator();
     while (it.hasNext()) {
-      AssociationIF assoc = (AssociationIF) it.next();
+      AssociationIF assoc = it.next();
       TopicIF parent = getPlayer(assoc, parentRole);
       if (parent == null || !filter(parent))
         continue;
 
-      TopicIF root = getRoot(parent, new HashSet());
+      TopicIF root = getRoot(parent, new HashSet<TopicIF>());
       if (trees.containsKey(root))
         continue;
 
-      TopicTreeNode rootnode = build(root, new HashSet());
+      TopicTreeNode rootnode = build(root, new HashSet<TopicIF>());
       trees.put(root, rootnode);
       falseroot.getChildren().add(rootnode);
     }
@@ -106,11 +104,11 @@ public class TopicTreeBuilder {
 
   // --- Internal methods
 
-  protected TopicIF getRoot(TopicIF topic, Set visited) {
+  protected TopicIF getRoot(TopicIF topic, Set<TopicIF> visited) {
     visited.add(topic);
-    Iterator it = topic.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = topic.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       if (!childRole.equals(role.getType()) ||
           !assocType.equals(role.getAssociation().getType()))
         continue;
@@ -130,16 +128,16 @@ public class TopicTreeBuilder {
     return topic;
   }
   
-  protected TopicTreeNode build(TopicIF topic, Set visited) {
+  protected TopicTreeNode build(TopicIF topic, Set<TopicIF> visited) {
     TopicTreeNode node = new TopicTreeNode(topic);
     if (visited.contains(topic))
       return node; // we've already been here, so don't look for children again
     
     visited.add(topic);
 
-    Iterator it = topic.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = topic.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       if (!parentRole.equals(role.getType()) ||
           !assocType.equals(role.getAssociation().getType()))
         continue;
@@ -155,9 +153,9 @@ public class TopicTreeBuilder {
   }
 
   protected TopicIF getPlayer(AssociationIF assoc, TopicIF roleType) {
-    Iterator it = assoc.getRoles().iterator(); 
+    Iterator<AssociationRoleIF> it = assoc.getRoles().iterator(); 
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       if (roleType.equals(role.getType()))
         return role.getPlayer();
     }
@@ -168,7 +166,7 @@ public class TopicTreeBuilder {
     if (types == null)
       return true;
     
-    Iterator it = topic.getTypes().iterator();
+    Iterator<TopicIF> it = topic.getTypes().iterator();
     while (it.hasNext())
       if (types.contains(it.next()))
         return true;

@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Iterator;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -40,7 +39,7 @@ public class AssociationBuilder {
   protected TopicIF role2type;
   protected TopicIF role3type;
   protected TopicIF role4type;
-  protected Collection scope;
+  protected Collection<TopicIF> scope;
 
   /**
    * PUBLIC: Creates a new AssociationBuilder for unary associations.
@@ -118,7 +117,7 @@ public class AssociationBuilder {
    * PUBLIC: Returns the scope added to all associations created by
    * this builder.
    */   
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     return scope;
   }
 
@@ -126,7 +125,7 @@ public class AssociationBuilder {
    * PUBLIC: Sets the scope added to all associations created by
    * this builder.
    */
-  public void setScope(Collection scope) {
+  public void setScope(Collection<TopicIF> scope) {
     this.scope = scope;
   }
 
@@ -137,13 +136,12 @@ public class AssociationBuilder {
    */   
   public AssociationIF makeAssociation(TopicIF player) {
     AssociationIF assoc = builder.makeAssociation(assoctype);
-    AssociationRoleIF role =
-      builder.makeAssociationRole(assoc, role1type, player);
+    builder.makeAssociationRole(assoc, role1type, player);
 
     if (scope != null) {
-      Iterator it = scope.iterator();
+      Iterator<TopicIF> it = scope.iterator();
       while (it.hasNext())
-        assoc.addTheme((TopicIF) it.next());
+        assoc.addTheme(it.next());
     }
     
     return assoc;
@@ -155,15 +153,13 @@ public class AssociationBuilder {
    */   
   public AssociationIF makeAssociation(TopicIF player1, TopicIF player2) {
     AssociationIF assoc = builder.makeAssociation(assoctype);
-
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1type, player1);
-
-    role = builder.makeAssociationRole(assoc, role2type, player2);
+    builder.makeAssociationRole(assoc, role1type, player1);
+    builder.makeAssociationRole(assoc, role2type, player2);
 
     if (scope != null) {
-      Iterator it = scope.iterator();
+      Iterator<TopicIF> it = scope.iterator();
       while (it.hasNext())
-        assoc.addTheme((TopicIF) it.next());
+        assoc.addTheme(it.next());
     }
     
     return assoc;
@@ -184,17 +180,14 @@ public class AssociationBuilder {
       throw new IllegalArgumentException("Builder only configured for binary associations!");
     
     AssociationIF assoc = builder.makeAssociation(assoctype);
-
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1type, player1);
-
-    role = builder.makeAssociationRole(assoc, role2type, player2);
-
-    role = builder.makeAssociationRole(assoc, role3type, player3);
+    builder.makeAssociationRole(assoc, role1type, player1);
+    builder.makeAssociationRole(assoc, role2type, player2);
+    builder.makeAssociationRole(assoc, role3type, player3);
     
     if (scope != null) {
-      Iterator it = scope.iterator();
+      Iterator<TopicIF> it = scope.iterator();
       while (it.hasNext())
-        assoc.addTheme((TopicIF) it.next());
+        assoc.addTheme(it.next());
     }
     
     return assoc;
@@ -218,19 +211,15 @@ public class AssociationBuilder {
       throw new IllegalArgumentException("Builder only configured for ternary associations!");
     
     AssociationIF assoc = builder.makeAssociation(assoctype);
-
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1type, player1);
-
-    role = builder.makeAssociationRole(assoc, role2type, player2);
-
-    role = builder.makeAssociationRole(assoc, role3type, player3);
-
-    role = builder.makeAssociationRole(assoc, role4type, player4);
+    builder.makeAssociationRole(assoc, role1type, player1);
+    builder.makeAssociationRole(assoc, role2type, player2);
+    builder.makeAssociationRole(assoc, role3type, player3);
+    builder.makeAssociationRole(assoc, role4type, player4);
     
     if (scope != null) {
-      Iterator it = scope.iterator();
+      Iterator<TopicIF> it = scope.iterator();
       while (it.hasNext())
-        assoc.addTheme((TopicIF) it.next());
+        assoc.addTheme(it.next());
     }
     
     return assoc;

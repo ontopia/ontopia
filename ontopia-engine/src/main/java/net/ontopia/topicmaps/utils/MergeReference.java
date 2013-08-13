@@ -45,7 +45,7 @@ public class MergeReference extends AbstractTopicMapReference {
   protected TopicMapStoreIF store;
   protected TopicMapStoreFactoryIF sfactory;
   protected TopicMapRepositoryIF repository;
-  protected List refkeys;
+  protected List<String> refkeys;
   protected boolean reuse_store = true; // WARNING: always reusing store
 
   /**
@@ -62,7 +62,7 @@ public class MergeReference extends AbstractTopicMapReference {
    */ 
   public MergeReference(String id, String title, 
 			TopicMapStoreFactoryIF sfactory, TopicMapRepositoryIF repository,
-			List refkeys) {
+			List<String> refkeys) {
     super(id, title);
     this.sfactory = sfactory;
     this.repository = repository;
@@ -100,9 +100,9 @@ public class MergeReference extends AbstractTopicMapReference {
       TopicMapIF merged = store.getTopicMap();
 
       // merge in all referenced topic maps
-      Iterator iter = refkeys.iterator();
+      Iterator<String> iter = refkeys.iterator();
       while (iter.hasNext()) {
-        String refkey = (String)iter.next();
+        String refkey = iter.next();
 				TopicMapReferenceIF ref = repository.getReferenceByKey(refkey);
 				TopicMapStoreIF s = ref.createStore(true);
         MergeUtils.mergeInto(merged, s.getTopicMap());

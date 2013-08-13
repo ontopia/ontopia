@@ -31,15 +31,14 @@ import net.ontopia.utils.DeciderIF;
  * @since 1.1
  */
 
-public class UnconstrainedScopeDecider implements DeciderIF {
-  protected DeciderIF subdecider;
+public class UnconstrainedScopeDecider implements DeciderIF<ScopedIF> {
+  protected DeciderIF<? super ScopedIF> subdecider;
 
-  public UnconstrainedScopeDecider(DeciderIF subdecider) {
+  public UnconstrainedScopeDecider(DeciderIF<? super ScopedIF> subdecider) {
     this.subdecider = subdecider;
   }
   
-  public boolean ok(Object object) {
-    ScopedIF scoped = (ScopedIF) object;
+  public boolean ok(ScopedIF scoped) {
     return scoped.getScope().isEmpty() ||
            subdecider.ok(scoped);
   }

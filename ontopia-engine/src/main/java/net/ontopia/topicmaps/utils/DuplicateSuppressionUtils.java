@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -36,12 +37,9 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 
 /**
@@ -58,22 +56,22 @@ public class DuplicateSuppressionUtils {
 
     // remove duplicate topic characteristics
     int batchSize = 50;
-    Iterator it = topicmap.getTopics().iterator();
+    Iterator<TopicIF> it = topicmap.getTopics().iterator();
     while (it.hasNext()) {
-      List batch = (List) CollectionUtils.nextBatch(it, batchSize);
+      List<TopicIF> batch = CollectionUtils.nextBatch(it, batchSize);
       prefetchTopics(topicmap, batch);
-      Iterator iter = batch.iterator();
+      Iterator<TopicIF> iter = batch.iterator();
       while (iter.hasNext()) {
-        removeDuplicates((TopicIF) iter.next());
+        removeDuplicates(iter.next());
       }
     }
     
     // remove duplicate associations (do one association type at a time)
     ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-    Collection assocs;
-    Iterator atypes = new ArrayList(cindex.getAssociationTypes()).iterator();
+    Collection<AssociationIF> assocs;
+    Iterator<TopicIF> atypes = new ArrayList<TopicIF>(cindex.getAssociationTypes()).iterator();
     while (atypes.hasNext()) {
-      TopicIF atype = (TopicIF)atypes.next();
+      TopicIF atype = atypes.next();
       assocs = cindex.getAssociations(atype);
       if (!assocs.isEmpty())
         removeDuplicateAssociations(assocs);
@@ -84,7 +82,7 @@ public class DuplicateSuppressionUtils {
       removeDuplicateAssociations(assocs);
   }
 
-  private static void prefetchTopics(TopicMapIF topicmap, Collection batch) {
+  private static void prefetchTopics(TopicMapIF topicmap, Collection<TopicIF> batch) {
     // TopicIF.basenames
     Prefetcher.prefetch(topicmap, batch,
                         Prefetcher.TopicIF, 
@@ -95,12 +93,12 @@ public class DuplicateSuppressionUtils {
                         Prefetcher.TopicIF, 
                         Prefetcher.TopicIF_occurrences, false);
 
-    List basenames = new ArrayList();
-    List occurrences = new ArrayList();
+    List<TopicNameIF> basenames = new ArrayList<TopicNameIF>();
+    List<OccurrenceIF> occurrences = new ArrayList<OccurrenceIF>();
                                      
-    Iterator iter = batch.iterator();
+    Iterator<TopicIF> iter = batch.iterator();
     while (iter.hasNext()) {
-      TopicIF topic = (TopicIF)iter.next();
+      TopicIF topic = iter.next();
       basenames.addAll(topic.getTopicNames());
       occurrences.addAll(topic.getOccurrences());
     }
@@ -121,7 +119,7 @@ public class DuplicateSuppressionUtils {
                         Prefetcher.TopicNameIF_variants, false);
   }
 
-  private static void prefetchAssociations(TopicMapIF topicmap, Collection batch) {
+  private static void prefetchAssociations(TopicMapIF topicmap, Collection<AssociationIF> batch) {
     // AssociationIF.type (need this as the associations themselves haven't been fully loaded)
     Prefetcher.prefetch(topicmap, batch,
                         Prefetcher.AssociationIF, 
@@ -155,13 +153,13 @@ public class DuplicateSuppressionUtils {
   /**
    * INTERNAL: do not call this method.
    */
-  public static void removeDuplicateTopicNames(Collection basenames) {
-    HashMap map = new HashMap();
-    Iterator it = new ArrayList(basenames).iterator();
+  public static void removeDuplicateTopicNames(Collection<TopicNameIF> basenames) {
+    Map<String, TopicNameIF> map = new HashMap<String, TopicNameIF>();
+    Iterator<TopicNameIF> it = new ArrayList<TopicNameIF>(basenames).iterator();
     while (it.hasNext()) {
-      TopicNameIF basename = (TopicNameIF) it.next();
+      TopicNameIF basename = it.next();
       String key = KeyGenerator.makeTopicNameKey(basename);
-      TopicNameIF duplicate = (TopicNameIF) map.get(key);
+      TopicNameIF duplicate = map.get(key);
       if (duplicate != null) {
         if (duplicate != basename) {
           MergeUtils.mergeInto(duplicate, basename);
@@ -177,14 +175,14 @@ public class DuplicateSuppressionUtils {
   /**
    * INTERNAL: do not call this method.
    */
-  public static void removeDuplicateOccurrences(Collection occurs) {
-    HashMap map = new HashMap();
-    Iterator it = new ArrayList(occurs).iterator();
+  public static void removeDuplicateOccurrences(Collection<OccurrenceIF> occurs) {
+    Map<String, OccurrenceIF> map = new HashMap<String, OccurrenceIF>();
+    Iterator<OccurrenceIF> it = new ArrayList<OccurrenceIF>(occurs).iterator();
     while (it.hasNext()) {
-      OccurrenceIF occ = (OccurrenceIF) it.next();
+      OccurrenceIF occ = it.next();
       String key = KeyGenerator.makeOccurrenceKey(occ);
 
-      OccurrenceIF duplicate = (OccurrenceIF) map.get(key);
+      OccurrenceIF duplicate = map.get(key);
       if (duplicate != null) {
         if (duplicate != occ)
           MergeUtils.mergeInto(duplicate, occ);
@@ -196,32 +194,32 @@ public class DuplicateSuppressionUtils {
   /**
    * INTERNAL: do not call this method.
    */
-  public static void removeDuplicateAssociations(Collection assocs) {
+  public static void removeDuplicateAssociations(Collection<AssociationIF> assocs) {
     if (assocs.isEmpty()) return;
     
-    HashMap map = new HashMap();
+    Map<String, AssociationIF> map = new HashMap<String, AssociationIF>();
     int batchSize = 50;
 
     // get topicmap
-    AssociationIF a = (AssociationIF)CollectionUtils.getFirst(assocs);
+    AssociationIF a = CollectionUtils.getFirst(assocs);
     TopicMapIF topicmap = a.getTopicMap();
 
-    Iterator it = new ArrayList(assocs).iterator();
+    Iterator<AssociationIF> it = new ArrayList<AssociationIF>(assocs).iterator();
     while (it.hasNext()) {
 
       // prefetch associations
-      List batch = (List) CollectionUtils.nextBatch(it, batchSize);
+      List<AssociationIF> batch = CollectionUtils.nextBatch(it, batchSize);
       prefetchAssociations(topicmap, batch);
 
       // produce key and detect duplicates
-      Iterator aiter = batch.iterator();
+      Iterator<AssociationIF> aiter = batch.iterator();
       while (aiter.hasNext()) {
-        AssociationIF assoc = (AssociationIF) aiter.next();
+        AssociationIF assoc = aiter.next();
         removeDuplicates(assoc);
         
         String key = KeyGenerator.makeAssociationKey(assoc);
         
-        AssociationIF duplicate = (AssociationIF) map.get(key);
+        AssociationIF duplicate = map.get(key);
         if (duplicate != null) {
           if (duplicate != assoc)
             MergeUtils.mergeInto(duplicate, assoc);
@@ -235,13 +233,13 @@ public class DuplicateSuppressionUtils {
    * PUBLIC: Remove all duplicate variant names of the given topic name.
    */
   public static void removeDuplicates(TopicNameIF basename) {
-    HashMap map = new HashMap();
-    Iterator it = new ArrayList(basename.getVariants()).iterator();
+    Map<String, VariantNameIF> map = new HashMap<String, VariantNameIF>();
+    Iterator<VariantNameIF> it = new ArrayList<VariantNameIF>(basename.getVariants()).iterator();
     while (it.hasNext()) {
-      VariantNameIF variant = (VariantNameIF) it.next();
+      VariantNameIF variant = it.next();
       String key = KeyGenerator.makeVariantKey(variant);
 
-      VariantNameIF duplicate = (VariantNameIF) map.get(key);
+      VariantNameIF duplicate = map.get(key);
       if (duplicate != null)
         MergeUtils.mergeInto(duplicate, variant);
       else
@@ -253,10 +251,10 @@ public class DuplicateSuppressionUtils {
    * PUBLIC: Remove all duplicate association roles of the association.
    */
   public static void removeDuplicates(AssociationIF assoc) {
-    HashMap map = new HashMap();
-    Iterator it = new ArrayList(assoc.getRoles()).iterator();
+    Map<String, AssociationRoleIF> map = new HashMap<String, AssociationRoleIF>();
+    Iterator<AssociationRoleIF> it = new ArrayList<AssociationRoleIF>(assoc.getRoles()).iterator();
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       String key = KeyGenerator.makeAssociationRoleKey(role);
 
       if (map.get(key) != null)
@@ -271,18 +269,17 @@ public class DuplicateSuppressionUtils {
    * 
    * @since 2.1
    */
-  public static Map removeDuplicateAssociations(TopicIF topic) {
-    Map map = new HashMap();
-    Map resultMap = new HashMap();
-    TopicMapIF topicmap = topic.getTopicMap();
+  public static Map<AssociationIF, Set<AssociationIF>> removeDuplicateAssociations(TopicIF topic) {
+    Map<String, AssociationIF> map = new HashMap<String, AssociationIF>();
+    Map<AssociationIF, Set<AssociationIF>> resultMap = new HashMap<AssociationIF, Set<AssociationIF>>();
 
-    Iterator it = new ArrayList(topic.getRoles()).iterator();
+    Iterator<AssociationRoleIF> it = new ArrayList<AssociationRoleIF>(topic.getRoles()).iterator();
     while (it.hasNext()) {
-      AssociationIF assoc = ((AssociationRoleIF) it.next()).getAssociation();
+      AssociationIF assoc = it.next().getAssociation();
       if (assoc == null) continue;
 
       String key = KeyGenerator.makeAssociationKey(assoc);
-      AssociationIF existing = (AssociationIF) map.get(key);
+      AssociationIF existing = map.get(key);
       
       // For associations where the same topic plays more than one
       // role, the associations are the same, and this is not a duplicate. 
@@ -294,14 +291,14 @@ public class DuplicateSuppressionUtils {
           copySourceLocators(existing, assoc);
           assoc.remove();
           
-          ((HashSet) resultMap.get(existing)).add(assoc);
+          resultMap.get(existing).add(assoc);
         } else {
           map.put(key, assoc);
           resultMap.put(assoc, resultMap.remove(existing));
         }
       } else {
         map.put(key, assoc);
-        resultMap.put(assoc, new HashSet());
+        resultMap.put(assoc, new HashSet<AssociationIF>());
       }
     }
     return resultMap;
@@ -309,21 +306,15 @@ public class DuplicateSuppressionUtils {
 
   // --- Internal helper methods
 
-  private static void copyScope(ScopedIF target, ScopedIF source) {
-    Iterator it = source.getScope().iterator();
-    while (it.hasNext())
-      target.addTheme((TopicIF) it.next());
-  }
-
   private static void copySourceLocators(TMObjectIF target, TMObjectIF source) {
 
-    Collection srclocs = source.getItemIdentifiers();
+    Collection<LocatorIF> srclocs = source.getItemIdentifiers();
     if (srclocs.isEmpty()) return;
 
-    Object[] list = srclocs.toArray();
+    LocatorIF[] list = srclocs.toArray(new LocatorIF[srclocs.size()]);
 
     for (int i = 0; i < list.length; i++) {
-      LocatorIF loc = (LocatorIF) list[i];
+      LocatorIF loc = list[i];
       source.removeItemIdentifier(loc);
       target.addItemIdentifier(loc);
     }

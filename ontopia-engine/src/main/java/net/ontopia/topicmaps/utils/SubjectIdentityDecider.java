@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.util.Iterator;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
 
@@ -35,7 +36,7 @@ import net.ontopia.topicmaps.core.TypedIF;
  * identifier.</p>
  */
 
-public class SubjectIdentityDecider implements DeciderIF {
+public class SubjectIdentityDecider<T extends TMObjectIF> implements DeciderIF<T> {
   /**
    * PROTECTED: the given subject identifier.
    */ 
@@ -60,7 +61,7 @@ public class SubjectIdentityDecider implements DeciderIF {
    * identifier (directly or indirectly)
    */ 
 
-  public boolean ok(Object object) {
+  public boolean ok(T object) {
     if (object instanceof TopicIF) {
       TopicIF topic = (TopicIF) object;
       if (topic.getSubjectIdentifiers().contains(subject_identifier))
@@ -74,9 +75,9 @@ public class SubjectIdentityDecider implements DeciderIF {
       return topic.getSubjectIdentifiers().contains(subject_identifier);
       
     } else if (object instanceof TopicIF) {
-      Iterator it = ((TopicIF) object).getTypes().iterator();
+      Iterator<TopicIF> it = ((TopicIF) object).getTypes().iterator();
       while (it.hasNext()) {
-        TopicIF topic = (TopicIF) it.next();
+        TopicIF topic = it.next();
         if (topic.getSubjectIdentifiers().contains(subject_identifier))
           return true;
       }

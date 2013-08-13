@@ -89,9 +89,9 @@ public class ClassInstanceUtils {
       topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
 
     // then, look over those associations
-    Iterator it = typeIndex.getAssociations(classinstance).iterator();
+    Iterator<AssociationIF> it = typeIndex.getAssociations(classinstance).iterator();
     while (it.hasNext()) {
-      AssociationIF assoc = (AssociationIF) it.next();
+      AssociationIF assoc = it.next();
       if (assoc.getRoles().size() != 2 ||
           !assoc.getScope().isEmpty() ||
           assoc.getReifier() != null)
@@ -100,9 +100,9 @@ public class ClassInstanceUtils {
       TopicIF klasstopic = null;
       TopicIF insttopic = null;
 
-      Iterator it2 = assoc.getRoles().iterator();
+      Iterator<AssociationRoleIF> it2 = assoc.getRoles().iterator();
       while (it2.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF) it2.next();
+        AssociationRoleIF role = it2.next();
         TopicIF type = role.getType();
         if (type == null)
           break;
@@ -210,9 +210,9 @@ public class ClassInstanceUtils {
         ((Set)accumulated.get(type)).add(object);
       } else {
         // TopicIF
-        Iterator iter2 = ((TopicIF)object).getTypes().iterator();
+        Iterator<TopicIF> iter2 = ((TopicIF)object).getTypes().iterator();
         while (iter2.hasNext()) {
-          type = (TopicIF)iter2.next();
+          type = iter2.next();
           if (!accumulated.containsKey(type)) accumulated.put(type, new HashSet());
           ((Set)accumulated.get(type)).add(object);
         }

@@ -32,7 +32,6 @@ import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -70,9 +69,9 @@ public class CopyUtils {
   // --- occurrences
 
   private static void copyOccurrences(TopicIF target, TopicIF source) {
-    Iterator it = source.getOccurrences().iterator();
+    Iterator<OccurrenceIF> it = source.getOccurrences().iterator();
     while (it.hasNext()) {
-      OccurrenceIF o = (OccurrenceIF)it.next();
+      OccurrenceIF o = it.next();
       copyOccurrence(target, o);
     }
   }
@@ -117,9 +116,9 @@ public class CopyUtils {
   // --- base names
 
   private static void copyTopicNames(TopicIF target, TopicIF source) {
-    Iterator it = source.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = source.getTopicNames().iterator();
     while (it.hasNext()) {
-      TopicNameIF o = (TopicNameIF)it.next();
+      TopicNameIF o = it.next();
       copyTopicName(target, o);
     }
   }
@@ -141,9 +140,9 @@ public class CopyUtils {
   // --- variants
 
   private static void copyVariants(TopicNameIF target, TopicNameIF source) {
-    Iterator it = source.getVariants().iterator();
+    Iterator<VariantNameIF> it = source.getVariants().iterator();
     while (it.hasNext()) {
-      VariantNameIF o = (VariantNameIF)it.next();
+      VariantNameIF o = it.next();
       copyVariant(target, o);
     }
   }
@@ -178,16 +177,16 @@ public class CopyUtils {
   // --- associations
 
   private static void copyAssociations(TopicIF target, TopicIF source) {
-    Set uniqueAssocs = new HashSet();
+    Set<AssociationIF> uniqueAssocs = new HashSet<AssociationIF>();
 
-    Iterator it = source.getRoles().iterator();
-    while (it.hasNext()) {
-      AssociationRoleIF o = (AssociationRoleIF)it.next();
+    Iterator<AssociationRoleIF> roleIterator = source.getRoles().iterator();
+    while (roleIterator.hasNext()) {
+      AssociationRoleIF o = roleIterator.next();
       uniqueAssocs.add(o.getAssociation());
     }
-    it = uniqueAssocs.iterator();
-    while (it.hasNext()) {
-      AssociationIF o = (AssociationIF)it.next();
+    Iterator<AssociationIF> associationIterator = uniqueAssocs.iterator();
+    while (associationIterator.hasNext()) {
+      AssociationIF o = associationIterator.next();
       copyAssociation(target, o, source);
     }
   }
@@ -203,13 +202,13 @@ public class CopyUtils {
     AssociationIF n = builder.makeAssociation(source.getType());
     copyScope(n, source);
 
-    Iterator it = source.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = source.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF o = (AssociationRoleIF)it.next();
+      AssociationRoleIF o = it.next();
       TopicIF player = o.getPlayer();
       if (player != null && player.equals(sourcePlayer))
         player = targetPlayer;
-      AssociationRoleIF nr = builder.makeAssociationRole(n, o.getType(), player);
+      builder.makeAssociationRole(n, o.getType(), player);
     }
     return n;
   }
@@ -217,21 +216,17 @@ public class CopyUtils {
   // --- scope
 
   private static void copyScope(ScopedIF target, ScopedIF source) {
-    Iterator it = source.getScope().iterator();
+    Iterator<TopicIF> it = source.getScope().iterator();
     while (it.hasNext())
-      target.addTheme((TopicIF) it.next());
+      target.addTheme(it.next());
   }
 
   // --- types
 
-  private static void copyType(TypedIF target, TypedIF source) {
-    target.setType(source.getType());
-  }
-
   private static void copyTypes(TopicIF target, TopicIF source) {
-    Iterator it = source.getTypes().iterator();
+    Iterator<TopicIF> it = source.getTypes().iterator();
     while (it.hasNext())
-      target.addType((TopicIF) it.next());
+      target.addType(it.next());
   }
 
 }
