@@ -162,7 +162,7 @@ public class CharacteristicUtils {
   public static Collection<TopicIF> getAssociatedTopics(TopicIF topic) {
     Collection<TopicIF> result = new HashSet<TopicIF>();
     Collection<AssociationRoleIF> roles = topic.getRoles();
-    if (roles.isEmpty()) return Collections.EMPTY_SET;
+    if (roles.isEmpty()) return Collections.emptySet();
     Iterator<AssociationRoleIF> iter = roles.iterator();
     while (iter.hasNext()) {
       AssociationRoleIF role1 = iter.next();

@@ -20,6 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
+import net.ontopia.topicmaps.core.NameIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.GrabberIF;
 
 /**
@@ -29,11 +31,11 @@ import net.ontopia.utils.GrabberIF;
  * @deprecated Since 1.1. Use TopicCharacteristicGrabbers instead.
  */
 
-public class DisplayNameGrabber implements GrabberIF {
+public class DisplayNameGrabber implements GrabberIF<TopicIF, NameIF> {
   /**
    * PROTECTED: The NameGrabber used to implement the grabbing.
    */
-  protected GrabberIF subGrabber;
+  protected GrabberIF<? super TopicIF, NameIF> subGrabber;
  
   /**
    * PUBLIC: Creates the grabber and sets the comparator to be a 
@@ -55,7 +57,7 @@ public class DisplayNameGrabber implements GrabberIF {
    * VariantNameIF, null if the topic has no basenames.
    * @exception Throws OntopiaRuntimeException if object is not a topic.
    */
-  public Object grab(Object object) {
+  public NameIF grab(TopicIF object) {
     return subGrabber.grab(object);
   }
 

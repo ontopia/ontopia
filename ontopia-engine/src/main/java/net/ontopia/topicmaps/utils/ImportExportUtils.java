@@ -75,7 +75,7 @@ public class ImportExportUtils {
    * 
    * @since 1.2.4
    */
-  public static TopicMapReaderIF getReader (Map properties,
+  public static TopicMapReaderIF getReader (Map<String, String> properties,
       String filename_or_url) {
 
     if (filename_or_url.startsWith ("x-ontopia:tm-rdbms:"))

@@ -36,13 +36,13 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * @since 5.0.0
  */
 public class QNameRegistry {
-  private Map prefixes;
+  private Map<String, String> prefixes;
   
   /**
    * PUBLIC: Creates an empty registry.
    */
   public QNameRegistry() {
-    this.prefixes = new HashMap();
+    this.prefixes = new HashMap<String, String>();
   }
 
   /**

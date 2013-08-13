@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.GrabberIF;
 
 /**
@@ -28,18 +29,16 @@ import net.ontopia.utils.GrabberIF;
  * association role.
  */
 
-public class RolePlayerGrabber implements GrabberIF {
+public class RolePlayerGrabber implements GrabberIF<AssociationRoleIF, TopicIF> {
   
   /**
    * INTERNAL: Grabs the topic playing the role in the given association role
    *
-   * @param object the given object; internally typecast to AssociationRoleIF
+   * @param object the given object; AssociationRoleIF
    * @return object which is the role player; an object implementing TopicIF
    */ 
-
-
-  public Object grab(Object object) {
-    return ((AssociationRoleIF)object).getPlayer();
+  public TopicIF grab(AssociationRoleIF object) {
+    return object.getPlayer();
   }
 
 }

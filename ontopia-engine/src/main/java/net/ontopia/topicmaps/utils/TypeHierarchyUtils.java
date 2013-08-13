@@ -50,9 +50,9 @@ public class TypeHierarchyUtils {
    */
   public TypeHierarchyUtils() {
     
-    DeciderIF assocDecider = new SubjectIdentityDecider(PSI.getXTMSuperclassSubclass());
-    DeciderIF subclassDecider = new SubjectIdentityDecider(PSI.getXTMSubclass());
-    DeciderIF superclassDecider = new SubjectIdentityDecider(PSI.getXTMSuperclass());
+    DeciderIF<AssociationIF> assocDecider = new SubjectIdentityDecider<AssociationIF>(PSI.getXTMSuperclassSubclass());
+    DeciderIF<AssociationRoleIF> subclassDecider = new SubjectIdentityDecider<AssociationRoleIF>(PSI.getXTMSubclass());
+    DeciderIF<AssociationRoleIF> superclassDecider = new SubjectIdentityDecider<AssociationRoleIF>(PSI.getXTMSuperclass());
       
     supertypesWalker = new AssociationWalker(assocDecider, subclassDecider, superclassDecider);
     subtypesWalker = new AssociationWalker(assocDecider, superclassDecider, subclassDecider);

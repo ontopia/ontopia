@@ -116,10 +116,10 @@ public class KeyGenerator {
     sb.append(makeScopeKey(assoc));
     sb.append("$");
     
-    List roles = new ArrayList(assoc.getRoles());
+    List<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     String[] rolekeys = new String[roles.size()];
     for (int i = 0; i < rolekeys.length; i++) 
-      rolekeys[i] = makeAssociationRoleKey((AssociationRoleIF) roles.get(i));
+      rolekeys[i] = makeAssociationRoleKey(roles.get(i));
 
     Arrays.sort(rolekeys);
     sb.append(StringUtils.join(rolekeys, "$"));
@@ -149,11 +149,11 @@ public class KeyGenerator {
     sb.append(makeScopeKey(assoc));
     sb.append("$");
     
-    List roles = new ArrayList(assoc.getRoles());
+    List<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     roles.remove(role);
     String[] rolekeys = new String[roles.size()];
     for (int i = 0; i < rolekeys.length; i++) 
-      rolekeys[i] = makeAssociationRoleKey((AssociationRoleIF) roles.get(i));
+      rolekeys[i] = makeAssociationRoleKey(roles.get(i));
     
     sb.append(makeTypedKey(role));
     sb.append("$");
@@ -177,7 +177,7 @@ public class KeyGenerator {
     sb.append(makeScopeKey(assoc, othertm));
     sb.append("$");
     
-    Collection<AssociationRoleIF> roles = new ArrayList(assoc.getRoles());
+    Collection<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     String[] rolekeys = new String[roles.size()];
     int i = 0;
     for (AssociationRoleIF role : roles)

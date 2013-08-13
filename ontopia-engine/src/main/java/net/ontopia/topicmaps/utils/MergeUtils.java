@@ -123,64 +123,64 @@ public class MergeUtils {
     replaceTopics(target, source);
 
     // remove subject locators from source
-    List sublocs = new ArrayList(source.getSubjectLocators());
-    Iterator it = sublocs.iterator();
+    List<LocatorIF> sublocs = new ArrayList<LocatorIF>(source.getSubjectLocators());
+    Iterator<LocatorIF> it = sublocs.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       source.removeSubjectLocator(loc);
     }
 
     // remove subject indicators from source
-    List subinds = new ArrayList(source.getSubjectIdentifiers());
+    List<LocatorIF> subinds = new ArrayList<LocatorIF>(source.getSubjectIdentifiers());
     it = subinds.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       source.removeSubjectIdentifier(loc);
     }
 
     // remove item identifiers from source
-    List itemids = new ArrayList(source.getItemIdentifiers());
+    List<LocatorIF> itemids = new ArrayList<LocatorIF>(source.getItemIdentifiers());
     it = itemids.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       source.removeItemIdentifier(loc);
     }
 
     // add subject locators to target
     it = sublocs.iterator();
     while (it.hasNext()) {    
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       target.addSubjectLocator(loc);
     }
 
     // add subject indicators to target
     it = subinds.iterator();
     while (it.hasNext()) {    
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       target.addSubjectIdentifier(loc);
     }
 
     // add item identifiers to target
     it = itemids.iterator();
     while (it.hasNext()) {    
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       target.addItemIdentifier(loc);
     }
       
     // copying types
-    it = source.getTypes().iterator();
-    while (it.hasNext())
-      target.addType((TopicIF) it.next());
+    Iterator<TopicIF> topicIterator = source.getTypes().iterator();
+    while (topicIterator.hasNext())
+      target.addType(topicIterator.next());
         
     // copying base names
-    Map map = buildKeyMap(target.getTopicNames());
+    Map<String, TopicNameIF> topicnameMap = buildKeyMap(target.getTopicNames());
 
-    List sbns = new ArrayList(source.getTopicNames());
-    it = sbns.iterator();
-    while (it.hasNext()) {
-      TopicNameIF sourcebn = (TopicNameIF) it.next();
+    List<TopicNameIF> sbns = new ArrayList<TopicNameIF>(source.getTopicNames());
+    Iterator<TopicNameIF> topicnameIterator = sbns.iterator();
+    while (topicnameIterator.hasNext()) {
+      TopicNameIF sourcebn = topicnameIterator.next();
       String key = KeyGenerator.makeTopicNameKey(sourcebn);
-      TopicNameIF targetbn = (TopicNameIF) map.get(key);
+      TopicNameIF targetbn = topicnameMap.get(key);
 
       if (targetbn == null) {
         targetbn = CopyUtils.copyTopicName(target, sourcebn);
@@ -191,11 +191,11 @@ public class MergeUtils {
     }
 
     // copying occurrences
-    map = buildKeyMap(target.getOccurrences());
-    it = new ArrayList(source.getOccurrences()).iterator();
-    while (it.hasNext()) {
-      OccurrenceIF sourceoc = (OccurrenceIF) it.next();
-      OccurrenceIF targetoc = (OccurrenceIF) map.get(KeyGenerator.makeOccurrenceKey(sourceoc));
+    Map<String, OccurrenceIF> occurrenceMap = buildKeyMap(target.getOccurrences());
+    Iterator<OccurrenceIF> occurrenceIterator = new ArrayList<OccurrenceIF>(source.getOccurrences()).iterator();
+    while (occurrenceIterator.hasNext()) {
+      OccurrenceIF sourceoc = occurrenceIterator.next();
+      OccurrenceIF targetoc = occurrenceMap.get(KeyGenerator.makeOccurrenceKey(sourceoc));
       if (targetoc == null) {
         targetoc = CopyUtils.copyOccurrence(target, sourceoc);
         moveReifier(targetoc, sourceoc);
@@ -205,15 +205,15 @@ public class MergeUtils {
     }
 
     // copying roles
-    Set keys = new CompactHashSet();
-    it = target.getRoles().iterator();
-    while (it.hasNext())
+    Set<String> keys = new CompactHashSet<String>();
+    Iterator<AssociationRoleIF> roleIterator = target.getRoles().iterator();
+    while (roleIterator.hasNext())
       keys.add(KeyGenerator.makeAssociationKey(
-                 ((AssociationRoleIF) it.next()).getAssociation()));
+                 roleIterator.next().getAssociation()));
     
-    it = new ArrayList(source.getRoles()).iterator();
-    while (it.hasNext()) {
-      AssociationRoleIF ar = (AssociationRoleIF) it.next();
+    roleIterator = new ArrayList<AssociationRoleIF>(source.getRoles()).iterator();
+    while (roleIterator.hasNext()) {
+      AssociationRoleIF ar = roleIterator.next();
       ar.setPlayer(target);
 
       String key = KeyGenerator.makeAssociationKey(ar.getAssociation());
@@ -227,11 +227,11 @@ public class MergeUtils {
     source.remove();
   }
 
-  private static Map buildKeyMap(Collection objects) {
-    Map map = new HashMap();
-    Iterator it = objects.iterator();
+  private static <R extends ReifiableIF> Map<String, R> buildKeyMap(Collection<R> objects) {
+    Map<String, R> map = new HashMap<String, R>();
+    Iterator<R> it = objects.iterator();
     while (it.hasNext()) {
-      ReifiableIF object = (ReifiableIF) it.next();
+      R object = it.next();
       String key = KeyGenerator.makeKey(object);
       map.put(key, object);
     }
@@ -265,10 +265,10 @@ public class MergeUtils {
     replaceTopicInScope(scopeIndex.getVariants(source), target, source);
   }
 
-  private static void replaceTopicType(Collection objects, TopicIF t1) {
-    Iterator it = objects.iterator();
+  private static <T extends TypedIF> void replaceTopicType(Collection<T> objects, TopicIF t1) {
+    Iterator<T> it = objects.iterator();
     while (it.hasNext()) {
-      TypedIF object = (TypedIF) it.next();
+      T object = it.next();
       object.setType(t1);
     }
   }
@@ -276,22 +276,22 @@ public class MergeUtils {
   /**
    * INTERNAL: Replace source by target as the type of objects.
    */
-  private static void replaceTopicTypes(Collection objects,
+  private static void replaceTopicTypes(Collection<TopicIF> objects,
                                         TopicIF target,
                                         TopicIF source) {
-    Iterator it = objects.iterator();
+    Iterator<TopicIF> it = objects.iterator();
     while (it.hasNext()) {
-      TopicIF object = (TopicIF) it.next();
+      TopicIF object = it.next();
       object.removeType(source);
       object.addType(target);
     }
   }
 
-  private static void replaceTopicInScope(Collection objects, TopicIF t1,
+  private static <S extends ScopedIF> void replaceTopicInScope(Collection<S> objects, TopicIF t1,
                                           TopicIF t2) {
-    Iterator it = objects.iterator();
+    Iterator<S> it = objects.iterator();
     while (it.hasNext()) {
-      ScopedIF object = (ScopedIF) it.next();
+      S object = it.next();
       object.removeTheme(t2);
       object.addTheme(t1);
     }
@@ -305,9 +305,9 @@ public class MergeUtils {
    * @since 5.1.0
    */
   public static void mergeInto(TopicNameIF target, TopicNameIF source) {
-    Iterator it = new ArrayList(source.getVariants()).iterator();
+    Iterator<VariantNameIF> it = new ArrayList<VariantNameIF>(source.getVariants()).iterator();
     while (it.hasNext()) {
-      VariantNameIF sourcevn = (VariantNameIF) it.next();
+      VariantNameIF sourcevn = it.next();
       VariantNameIF targetvn = CopyUtils.copyVariant(target, sourcevn);
       moveReifier(targetvn, sourcevn);
       sourcevn.remove();
@@ -318,9 +318,9 @@ public class MergeUtils {
   }
 
   private static void moveItemIdentifiers(TMObjectIF target, TMObjectIF source) {
-    Iterator it = new ArrayList(source.getItemIdentifiers()).iterator();
+    Iterator<LocatorIF> it = new ArrayList<LocatorIF>(source.getItemIdentifiers()).iterator();
     while (it.hasNext()) {
-      LocatorIF itemid = (LocatorIF) it.next();
+      LocatorIF itemid = it.next();
       source.removeItemIdentifier(itemid);
       target.addItemIdentifier(itemid);
     }
@@ -352,16 +352,16 @@ public class MergeUtils {
 
     // set up key map
     Map<String, AssociationRoleIF> keys = new HashMap<String, AssociationRoleIF>();
-    Iterator it = target.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = target.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       keys.put(KeyGenerator.makeAssociationRoleKey(role), role);
     }
 
     // merge the roles
     it = source.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF srole = (AssociationRoleIF) it.next();
+      AssociationRoleIF srole = it.next();
       AssociationRoleIF trole = keys.get(KeyGenerator.makeAssociationRoleKey(srole));
       if (trole == null)
         throw new ConstraintViolationException("Cannot merge unequal associations");
@@ -522,7 +522,7 @@ public class MergeUtils {
    * @since 2.0
    */
   public static TopicIF mergeInto(TopicMapIF targettm, TopicIF source) {
-    return mergeInto(targettm, source, DeciderUtils.getTrueDecider());
+    return mergeInto(targettm, source, DeciderUtils.<TMObjectIF>getTrueDecider());
   }
 
   /**
@@ -537,7 +537,7 @@ public class MergeUtils {
    * @since 2.0
    */
   public static TopicIF mergeInto(TopicMapIF targettm, TopicIF source,
-                                  DeciderIF decider) {
+                                  DeciderIF<TMObjectIF> decider) {
     if (source.getTopicMap() == targettm)
       return source;
 
@@ -545,14 +545,14 @@ public class MergeUtils {
     TopicIF target = copyTopic(targettm, source);
 
     // copying types
-    Iterator it = source.getTypes().iterator();
-    while (it.hasNext()) 
-      target.addType(copyTopic(targettm, (TopicIF) it.next()));
+    Iterator<TopicIF> typeIterator = source.getTypes().iterator();
+    while (typeIterator.hasNext()) 
+      target.addType(copyTopic(targettm, typeIterator.next()));
 
     // copying base names
-    it = source.getTopicNames().iterator();
-    while (it.hasNext()) {
-      TopicNameIF bnsource = (TopicNameIF) it.next();
+    Iterator<TopicNameIF> topicnameIterator = source.getTopicNames().iterator();
+    while (topicnameIterator.hasNext()) {
+      TopicNameIF bnsource = topicnameIterator.next();
       if (!decider.ok(bnsource))
         continue;
       TopicNameIF bntarget = builder.makeTopicName(target, 
@@ -560,26 +560,26 @@ public class MergeUtils {
                                                  bnsource.getValue());
       copyScope(bntarget, bnsource);
 
-      Iterator it2 = bnsource.getVariants().iterator();
+      Iterator<VariantNameIF> it2 = bnsource.getVariants().iterator();
       while (it2.hasNext()) {
-        VariantNameIF vnsource = (VariantNameIF) it2.next();
+        VariantNameIF vnsource = it2.next();
         if (!decider.ok(vnsource))
           continue;
         
         VariantNameIF vntarget = builder.makeVariantName(bntarget, vnsource.getValue(), vnsource.getDataType());
         copyScope(vntarget, vnsource);
-        vntarget = (VariantNameIF)resolveIdentities(vntarget, vnsource);
+        vntarget = resolveIdentities(vntarget, vnsource);
         copyReifier(vntarget, vnsource);
       }
       
-      bntarget = (TopicNameIF)resolveIdentities(bntarget, bnsource);
+      bntarget = resolveIdentities(bntarget, bnsource);
       copyReifier(bntarget, bnsource);
     }
     
     // copying occurrences
-    it = source.getOccurrences().iterator();
-    while (it.hasNext()) {
-      OccurrenceIF osource = (OccurrenceIF) it.next();
+    Iterator<OccurrenceIF> occurrenceIterator = source.getOccurrences().iterator();
+    while (occurrenceIterator.hasNext()) {
+      OccurrenceIF osource = occurrenceIterator.next();
       if (!decider.ok(osource))
         continue;
       OccurrenceIF otarget = builder.makeOccurrence(target, 
@@ -587,14 +587,14 @@ public class MergeUtils {
                                                     "");
       CopyUtils.copyOccurrenceData(otarget, osource);
       copyScope(otarget, osource);
-      otarget = (OccurrenceIF)resolveIdentities(otarget, osource);
+      otarget = resolveIdentities(otarget, osource);
       copyReifier(otarget, osource);
     }
     
     // copying associations
-    it = source.getRoles().iterator();
-    while (it.hasNext()) {
-      AssociationRoleIF rstart = (AssociationRoleIF) it.next();
+    Iterator<AssociationRoleIF> roleIterator = source.getRoles().iterator();
+    while (roleIterator.hasNext()) {
+      AssociationRoleIF rstart = roleIterator.next();
       if (!decider.ok(rstart))
         continue;
       AssociationIF asource = rstart.getAssociation();
@@ -602,27 +602,27 @@ public class MergeUtils {
       AssociationIF atarget = builder.makeAssociation(resolveTopic(builder.getTopicMap(), asource.getType()));
       copyScope(atarget, asource);
 
-      Iterator it2 = asource.getRoles().iterator();
+      Iterator<AssociationRoleIF> it2 = asource.getRoles().iterator();
       while (it2.hasNext()) {
-        AssociationRoleIF rsource = (AssociationRoleIF) it2.next();
+        AssociationRoleIF rsource = it2.next();
         AssociationRoleIF rtarget = 
           builder.makeAssociationRole(atarget,
                                       resolveTopic(builder.getTopicMap(), rsource.getType()),
                                       (rsource == rstart ? target : copyTopic(targettm, rsource.getPlayer())));
-        rtarget = (AssociationRoleIF)resolveIdentities(rtarget, rsource);
+        rtarget = resolveIdentities(rtarget, rsource);
         copyReifier(rtarget, rsource);
       }
 
-      atarget = (AssociationIF)resolveIdentities(atarget, asource);
+      atarget = resolveIdentities(atarget, asource);
       copyReifier(atarget, asource);
     }
     return target;
   }
 
   private static void copyScope(ScopedIF target, ScopedIF source) {
-    Iterator it = source.getScope().iterator();
+    Iterator<TopicIF> it = source.getScope().iterator();
     while (it.hasNext())
-      target.addTheme(copyTopic(target.getTopicMap(), (TopicIF) it.next()));
+      target.addTheme(copyTopic(target.getTopicMap(), it.next()));
   }
   
   private static TopicIF resolveTopic(TopicMapIF targetTopicMap,
@@ -633,21 +633,14 @@ public class MergeUtils {
       return copyTopic(targetTopicMap, sourceTopic);
   }
   
-  private static void copyType(TypedIF target, TypedIF source) {
-    TopicIF type = (TopicIF) source.getType();
-    if (type == null)
-      target.setType(null);
-    else
-      target.setType(copyTopic(target.getTopicMap(), type));
-  }
-
   // returns false if object is a duplicate, true if it is not
   // expects caller to remove duplicate
-  private static TMObjectIF resolveIdentities(TMObjectIF target, TMObjectIF source) {
+  @SuppressWarnings("unchecked")
+  private static <O extends TMObjectIF> O resolveIdentities(O target, O source) {
     TopicMapIF targettm = target.getTopicMap();
-    Iterator it = source.getItemIdentifiers().iterator();
+    Iterator<LocatorIF> it = source.getItemIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
 
       TMObjectIF object = targettm.getObjectByItemIdentifier(loc);
       if (object != null) {
@@ -657,7 +650,7 @@ public class MergeUtils {
                                                  "): " + target + " and " + object);
         } else {
           target.remove();
-          return object; // this is a duplicate
+          return (O) object; // this is a duplicate
         }
       } else
         target.addItemIdentifier(loc);
@@ -674,7 +667,7 @@ public class MergeUtils {
     }
   }
 
-  private static void copyReifier(ReifiableIF target, ReifiableIF source, Map mergemap) {
+  private static void copyReifier(ReifiableIF target, ReifiableIF source, Map<TopicIF, TopicIF> mergemap) {
     TopicIF _sourceReifier = source.getReifier();
     if (_sourceReifier != null) {
       TopicIF targetReifier = target.getReifier();
@@ -705,9 +698,9 @@ public class MergeUtils {
     TopicMapIF targettm = target.getTopicMap();
 
     // merging on subject locators
-    Iterator it = source.getSubjectLocators().iterator();
+    Iterator<LocatorIF> it = source.getSubjectLocators().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF found = targettm.getTopicBySubjectLocator(loc);
       if (found != null) {
         if (found != target) {
@@ -721,7 +714,7 @@ public class MergeUtils {
     // merging on subject identifiers
     it = source.getSubjectIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF found = targettm.getTopicBySubjectIdentifier(loc);
 
       if (found == null) {
@@ -745,7 +738,7 @@ public class MergeUtils {
     // merging on item identifiers
     it = source.getItemIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TMObjectIF f = targettm.getObjectByItemIdentifier(loc);
       if (f != null && !(f instanceof TopicIF))
         throw new ConstraintViolationException("Item identifier " + loc +
@@ -771,13 +764,13 @@ public class MergeUtils {
     return target;
   }
 
-  public static TopicIF copyIdentifiers(TopicIF target, TopicIF source, Map mergemap) {
+  public static TopicIF copyIdentifiers(TopicIF target, TopicIF source, Map<TopicIF, TopicIF> mergemap) {
     TopicMapIF targettm = target.getTopicMap();
 
     // merging subject locators
-    Iterator it = source.getSubjectLocators().iterator();
+    Iterator<LocatorIF> it = source.getSubjectLocators().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF found = targettm.getTopicBySubjectLocator(loc);
       if (found != null) {
         if (found != target) {
@@ -793,7 +786,7 @@ public class MergeUtils {
     // merging subject indicators
     it = source.getSubjectIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF found = targettm.getTopicBySubjectIdentifier(loc);
       if (found != null) {
         if (found != target) {
@@ -809,7 +802,7 @@ public class MergeUtils {
     // merging source locators
     it = source.getItemIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TMObjectIF f = targettm.getObjectByItemIdentifier(loc);
       if (f != null && !(f instanceof TopicIF))
         throw new ConstraintViolationException("Source locator " + loc +
@@ -853,32 +846,31 @@ public class MergeUtils {
   public static void mergeInto(TopicMapIF target, TopicMapIF source)
     throws ConstraintViolationException {
     // Initialization
-    Map mergemap = new HashMap(); // see INV comment below for enlightenment
-    TopicMapBuilderIF builder = target.getBuilder();
+    Map<TopicIF, TopicIF> mergemap = new HashMap<TopicIF, TopicIF>(); // see INV comment below for enlightenment
 
     // STEP 1: URI-based merges
     // may find that topics in target should be merged, due to extra
     // information provided by source; in these cases, merge those
     // topics and update mergemap accordingly
-    Map mergemapRev = new HashMap();
-    Iterator it = source.getTopics().iterator();
+    Map<TopicIF, Set<TopicIF>> mergemapRev = new HashMap<TopicIF, Set<TopicIF>>();
+    Iterator<TopicIF> it = source.getTopics().iterator();
     while (it.hasNext()) {
-      TopicIF sourceT = (TopicIF) it.next();
+      TopicIF sourceT = it.next();
       TopicIF targetT;
 
       // subject locators
-      Iterator it2 = new ArrayList(sourceT.getSubjectLocators()).iterator();
+      Iterator<LocatorIF> it2 = new ArrayList<LocatorIF>(sourceT.getSubjectLocators()).iterator();
       while (it2.hasNext()) {
-        LocatorIF loc = (LocatorIF) it2.next();
+        LocatorIF loc = it2.next();
         targetT = target.getTopicBySubjectLocator(loc);
         if (targetT != null)
           registerMerge(targetT, sourceT, mergemap, mergemapRev);
       }
 
       // subject identifiers
-      it2 = new ArrayList(sourceT.getSubjectIdentifiers()).iterator();
+      it2 = new ArrayList<LocatorIF>(sourceT.getSubjectIdentifiers()).iterator();
       while (it2.hasNext()) {
-        LocatorIF ind = (LocatorIF) it2.next();
+        LocatorIF ind = it2.next();
         targetT = target.getTopicBySubjectIdentifier(ind);
         if (targetT == null) {
           TMObjectIF object = target.getObjectByItemIdentifier(ind);
@@ -891,9 +883,9 @@ public class MergeUtils {
       }
 
       // item identifiers
-      it2 = new ArrayList(sourceT.getItemIdentifiers()).iterator();
+      it2 = new ArrayList<LocatorIF>(sourceT.getItemIdentifiers()).iterator();
       while (it2.hasNext()) {
-        LocatorIF loc = (LocatorIF) it2.next();
+        LocatorIF loc = it2.next();
         TMObjectIF object = target.getObjectByItemIdentifier(loc);
         if (object != null && object instanceof TopicIF) 
           targetT = (TopicIF) object;
@@ -913,12 +905,12 @@ public class MergeUtils {
     mergemapRev = null; // no longer needed; conserve memory
     
     // STEP 3: copy to target
-    Map merged = new HashMap(mergemap);
+    Map<TopicIF, TopicIF> merged = new HashMap<TopicIF, TopicIF>(mergemap);
 
     // a) copy unmerged topics
     it = source.getTopics().iterator();
     while (it.hasNext()) {
-      TopicIF t2 = (TopicIF) it.next();
+      TopicIF t2 = it.next();
       if (!mergemap.containsKey(t2)) 
         copyTopic(target, t2, mergemap);
     }
@@ -926,16 +918,16 @@ public class MergeUtils {
     // b) copy characteristics of merged topics (except roles)
     it = merged.keySet().iterator();
     while (it.hasNext()) {
-      TopicIF t2 = (TopicIF) it.next();
+      TopicIF t2 = it.next();
       TopicIF t1 = (TopicIF) merged.get(t2);
       copyCharacteristics(t1, t2, mergemap);
     }
         
     // c) copy associations
-    Set assocs = getAssociationKeySet(target.getAssociations());
-    it = source.getAssociations().iterator();
-    while (it.hasNext())
-      copyAssociation(target, (AssociationIF) it.next(), mergemap, assocs);
+    Set<String> assocs = getAssociationKeySet(target.getAssociations());
+    Iterator<AssociationIF> associationIterator = source.getAssociations().iterator();
+    while (associationIterator.hasNext())
+      copyAssociation(target, associationIterator.next(), mergemap, assocs);
 
     // d) reifier
     // NOTE: the reifier is *not* to be copied, because if a topic is
@@ -945,25 +937,25 @@ public class MergeUtils {
   }
 
   private static void registerMerge(TopicIF target, TopicIF source,
-                                    Map mergemap, Map mergemapRev) {
+                                    Map<TopicIF, TopicIF> mergemap, Map<TopicIF, Set<TopicIF>> mergemapRev) {
     if (target.getTopicMap() == null) 
       throw new IllegalArgumentException("Target " + target + " has no topic map");
 
     // do the merge
-    Set sources = (Set) mergemapRev.get(target);
+    Set<TopicIF> sources = mergemapRev.get(target);
     if (sources == null) {
-      sources = new CompactHashSet();
+      sources = new CompactHashSet<TopicIF>();
       mergemapRev.put(target, sources);
     }
     sources.add(source);
 
-    TopicIF origTarget = (TopicIF) mergemap.get(source);
+    TopicIF origTarget = mergemap.get(source);
     mergemap.put(source, target);
 
     if (origTarget != null && !origTarget.equals(target)) {
-      Iterator it = ((Set) mergemapRev.get(origTarget)).iterator();
+      Iterator<TopicIF> it = mergemapRev.get(origTarget).iterator();
       while (it.hasNext()) {
-        TopicIF otherSource = (TopicIF) it.next();
+        TopicIF otherSource = it.next();
         sources.add(otherSource);
         mergemap.put(otherSource, target);
       }
@@ -974,18 +966,17 @@ public class MergeUtils {
   
   private static void copyAssociation(TopicMapIF targettm,
                                       AssociationIF source,
-                                      Map mergemap,
-                                      Set assocs) {
+                                      Map<TopicIF, TopicIF> mergemap,
+                                      Set<String> assocs) {
     TopicMapBuilderIF builder = targettm.getBuilder();
 
     AssociationIF target = builder.makeAssociation(resolveTopic(builder.getTopicMap(), source.getType(), mergemap));
     copyScope(target, source, mergemap);
 
-    Iterator it = source.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = source.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF sourceRole = (AssociationRoleIF) it.next();
-      AssociationRoleIF targetRole = 
-        builder.makeAssociationRole(target,
+      AssociationRoleIF sourceRole = it.next();
+      builder.makeAssociationRole(target,
                                     resolveTopic(builder.getTopicMap(), sourceRole.getType(), mergemap),
                                     resolveTopic(builder.getTopicMap(), sourceRole.getPlayer(), mergemap));
     }
@@ -998,11 +989,11 @@ public class MergeUtils {
     }
   }
 
-  private static Set getAssociationKeySet(Collection associations) {
-    Set assocs = new CompactHashSet();
-    Iterator it = associations.iterator();
+  private static Set<String> getAssociationKeySet(Collection<AssociationIF> associations) {
+    Set<String> assocs = new CompactHashSet<String>();
+    Iterator<AssociationIF> it = associations.iterator();
     while (it.hasNext()) {
-      AssociationIF assoc = (AssociationIF) it.next();
+      AssociationIF assoc = it.next();
       assocs.add(KeyGenerator.makeAssociationKey(assoc));
     }
     return assocs;
@@ -1010,7 +1001,7 @@ public class MergeUtils {
     
   // FIXME: note: updates mergemap
   private static TopicIF copyTopic(TopicMapIF targettm, TopicIF source,
-                                   Map mergemap) {
+                                   Map<TopicIF, TopicIF> mergemap) {
     TopicMapBuilderIF builder =
       targettm.getBuilder();
     TopicIF target = builder.makeTopic();
@@ -1025,9 +1016,9 @@ public class MergeUtils {
 
   // assumes the objects are in different topic maps
   private static void copySourceLocators(TMObjectIF target, TMObjectIF source) {
-    Iterator it = source.getItemIdentifiers().iterator();
+    Iterator<LocatorIF> it = source.getItemIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF srcloc = (LocatorIF) it.next();
+      LocatorIF srcloc = it.next();
       try {
         target.addItemIdentifier(srcloc);
       } catch (UniquenessViolationException e) {
@@ -1045,34 +1036,34 @@ public class MergeUtils {
   }
   
   private static void copyCharacteristics(TopicIF target, TopicIF source,
-                                          Map mergemap) {
+                                          Map<TopicIF, TopicIF> mergemap) {
     TopicMapBuilderIF builder = target.getTopicMap().getBuilder();
 
     // copy identifiers
     target = copyIdentifiers(target, source, mergemap);
 
     // copying types
-    Iterator it = source.getTypes().iterator();
-    while (it.hasNext()) {
-      TopicIF sourceType = (TopicIF) it.next();
+    Iterator<TopicIF> typeIterator = source.getTypes().iterator();
+    while (typeIterator.hasNext()) {
+      TopicIF sourceType = typeIterator.next();
       target.addType(resolveTopic(target.getTopicMap(), sourceType, mergemap));
     }
         
     // copying base names
-    HashMap map = new HashMap();
-    it = target.getTopicNames().iterator();
-    while (it.hasNext()) {
-      TopicNameIF bn = (TopicNameIF) it.next();
+    HashMap<String, TopicNameIF> map = new HashMap<String, TopicNameIF>();
+    Iterator<TopicNameIF> topicnameIterator = target.getTopicNames().iterator();
+    while (topicnameIterator.hasNext()) {
+      TopicNameIF bn = topicnameIterator.next();
       String key = KeyGenerator.makeTopicNameKey(bn);
       map.put(key, bn);
     }
 
-    it = source.getTopicNames().iterator();
-    while (it.hasNext()) {
-      TopicNameIF bn2 = (TopicNameIF) it.next();
+    topicnameIterator = source.getTopicNames().iterator();
+    while (topicnameIterator.hasNext()) {
+      TopicNameIF bn2 = topicnameIterator.next();
 
       // first copy the type, fixes #409
-      TopicIF nametype = (TopicIF)mergemap.get(bn2.getType());
+      TopicIF nametype = mergemap.get(bn2.getType());
       if (nametype == null) {
         nametype = copyTopic(builder.getTopicMap(), bn2.getType());
         mergemap.put(bn2.getType(), nametype);
@@ -1082,7 +1073,7 @@ public class MergeUtils {
       copyScope(bn1, bn2, mergemap);
 
       String key = KeyGenerator.makeTopicNameKey(bn1);
-      TopicNameIF dupl = (TopicNameIF) map.get(key);
+      TopicNameIF dupl = map.get(key);
       if (dupl == null) {
         copyVariants(bn1, bn2, mergemap);
       } else {
@@ -1095,17 +1086,17 @@ public class MergeUtils {
     }
         
     // copying occurrences
-    Set keys = new CompactHashSet();
-    it = target.getOccurrences().iterator();
-    while (it.hasNext())
-      keys.add(KeyGenerator.makeOccurrenceKey((OccurrenceIF) it.next()));
+    Set<String> keys = new CompactHashSet<String>();
+    Iterator<OccurrenceIF> occurrenceIterator = target.getOccurrences().iterator();
+    while (occurrenceIterator.hasNext())
+      keys.add(KeyGenerator.makeOccurrenceKey(occurrenceIterator.next()));
         
-    it = source.getOccurrences().iterator();
-    while (it.hasNext()) {
-      OccurrenceIF occ2 = (OccurrenceIF) it.next();
+    occurrenceIterator = source.getOccurrences().iterator();
+    while (occurrenceIterator.hasNext()) {
+      OccurrenceIF occ2 = occurrenceIterator.next();
 
       // first copy the type, fixes #409
-      TopicIF occtype = (TopicIF)mergemap.get(occ2.getType());
+      TopicIF occtype = mergemap.get(occ2.getType());
       if (occtype == null) {
         occtype = copyTopic(builder.getTopicMap(), occ2.getType());
         mergemap.put(occ2.getType(), occtype);
@@ -1128,38 +1119,32 @@ public class MergeUtils {
   }
 
   private static void copyScope(ScopedIF target, ScopedIF source,
-                                Map mergemap) {
-    Iterator it = source.getScope().iterator();
+                                Map<TopicIF, TopicIF> mergemap) {
+    Iterator<TopicIF> it = source.getScope().iterator();
     while (it.hasNext()) {
-      TopicIF replacement = (TopicIF) it.next();
+      TopicIF replacement = it.next();
       target.addTheme(resolveTopic(target.getTopicMap(), replacement, mergemap));
     }
   }
 
   private static TopicIF resolveTopic(TopicMapIF targetTopicMap,
                                       TopicIF sourceTopic,
-                                      Map mergemap) {
+                                      Map<TopicIF, TopicIF> mergemap) {
     if (sourceTopic == null)
       return null;
     if (mergemap.containsKey(sourceTopic))
-      return (TopicIF) mergemap.get(sourceTopic);
+      return mergemap.get(sourceTopic);
     else
       return copyTopic(targetTopicMap, sourceTopic, mergemap);
   }
 
-  private static void copyType(TypedIF target, TypedIF source, Map mergemap) {
-    TopicIF sourceType = source.getType();
-    if (sourceType != null)
-      target.setType(resolveTopic(target.getTopicMap(), sourceType, mergemap));
-  }
-    
   private static void copyVariants(TopicNameIF target, TopicNameIF source,
-                                   Map mergemap) {
+                                   Map<TopicIF, TopicIF> mergemap) {
     TopicMapBuilderIF builder = target.getTopicMap().getBuilder();
         
-    Iterator it = source.getVariants().iterator();
+    Iterator<VariantNameIF> it = source.getVariants().iterator();
     while (it.hasNext()) {
-      VariantNameIF sv = (VariantNameIF) it.next();
+      VariantNameIF sv = it.next();
       VariantNameIF tv = builder.makeVariantName(target, sv.getValue(), sv.getDataType());
       copyScope(tv, sv, mergemap);
 			copyReifier(tv, sv, mergemap);
@@ -1211,14 +1196,14 @@ public class MergeUtils {
       if (a1.getType() == a2.getType() &&
           a1.getRoles().size() == a2.getRoles().size() &&
           a1.getScope().equals(a2.getScope())) {
-        ArrayList roles2 = new ArrayList(a2.getRoles());
-        Iterator it1 = a1.getRoles().iterator();
+        ArrayList<AssociationRoleIF> roles2 = new ArrayList<AssociationRoleIF>(a2.getRoles());
+        Iterator<AssociationRoleIF> it1 = a1.getRoles().iterator();
         while (it1.hasNext()) {
-          AssociationRoleIF role1 = (AssociationRoleIF) it1.next();
-          Iterator it2 = roles2.iterator();
+          AssociationRoleIF role1 = it1.next();
+          Iterator<AssociationRoleIF> it2 = roles2.iterator();
           boolean found = false;
           while (it2.hasNext()) {
-            AssociationRoleIF role2 = (AssociationRoleIF) it2.next();
+            AssociationRoleIF role2 = it2.next();
             if (role2.getPlayer() == role1.getPlayer() &&
                 role1.getType() == role2.getType()) {
               roles2.remove(role2);

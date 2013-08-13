@@ -61,17 +61,17 @@ public class AssociationWalker {
    * PROTECTED: The decider used to filter associations to only those
    * which are being walked
    */
-  protected DeciderIF assocDecider;
+  protected DeciderIF<AssociationIF> assocDecider;
   /**
    * PROTECTED: The decider used to filter the left-hand role of the
    * transitive association
    */
-  protected DeciderIF leftRoleDecider;
+  protected DeciderIF<AssociationRoleIF> leftRoleDecider;
   /**
    * PROTECTED: The decider used to filter the right-hand role of the
    * transitive association.
    */
-  protected DeciderIF rightRoleDecider;
+  protected DeciderIF<AssociationRoleIF> rightRoleDecider;
 
   /**
    * PROTECTED: The listeners to be informed as the walker processes
@@ -94,9 +94,9 @@ public class AssociationWalker {
    * object implementing TopicIF.
    */
   public AssociationWalker(TopicIF associationType, TopicIF leftRoleSpec, TopicIF rightRoleSpec) {
-    assocDecider = new GrabberDecider(new TypedIFGrabber(), new EqualsDecider(associationType));
-    leftRoleDecider = new GrabberDecider(new TypedIFGrabber(), new EqualsDecider(leftRoleSpec));
-    rightRoleDecider = new GrabberDecider(new TypedIFGrabber(), new EqualsDecider(rightRoleSpec));
+    assocDecider = new GrabberDecider<AssociationIF, TopicIF>(new TypedIFGrabber<AssociationIF>(), new EqualsDecider<TopicIF>(associationType));
+    leftRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), new EqualsDecider<TopicIF>(leftRoleSpec));
+    rightRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), new EqualsDecider<TopicIF>(rightRoleSpec));
     listeners = new ArrayList<AssociationWalkerListenerIF>();
   }
 
@@ -107,7 +107,7 @@ public class AssociationWalker {
    * @param fromRoleDecider ; an object implementing DeciderIF.
    * @param toRoleDecider ; an object implementing DeciderIF.
    */
-  public AssociationWalker(DeciderIF assocDecider, DeciderIF fromRoleDecider, DeciderIF toRoleDecider) {
+  public AssociationWalker(DeciderIF<AssociationIF> assocDecider, DeciderIF<AssociationRoleIF> fromRoleDecider, DeciderIF<AssociationRoleIF> toRoleDecider) {
     this.assocDecider = assocDecider;
     leftRoleDecider = fromRoleDecider;
     rightRoleDecider = toRoleDecider;
@@ -206,16 +206,16 @@ public class AssociationWalker {
     if (fromRoles.isEmpty()) {
       foundLeaf(state);
     } else {
-      DeciderIterator leftRolesIt = new DeciderIterator(leftRoleDecider, fromRoles.iterator());
+      DeciderIterator<AssociationRoleIF> leftRolesIt = new DeciderIterator<AssociationRoleIF>(leftRoleDecider, fromRoles.iterator());
       if (!leftRolesIt.hasNext()) {
         foundLeaf(state);
       }
       while (!state.foundTopic && leftRolesIt.hasNext()) {
-        AssociationRoleIF leftRole = (AssociationRoleIF)leftRolesIt.next();
+        AssociationRoleIF leftRole = leftRolesIt.next();
         AssociationIF assoc = leftRole.getAssociation();
         if (assocDecider.ok(assoc)) {
           Collection<AssociationRoleIF> assocRoles = assoc.getRoles();
-          DeciderIterator rightRolesIt = new DeciderIterator(rightRoleDecider, assocRoles.iterator());
+          DeciderIterator<AssociationRoleIF> rightRolesIt = new DeciderIterator<AssociationRoleIF>(rightRoleDecider, assocRoles.iterator());
           if (!rightRolesIt.hasNext()) {
             // We have traversed to a leaf. Add the current path to the tree set
             foundLeaf(state);
@@ -224,7 +224,7 @@ public class AssociationWalker {
             // the current path and then traverse it.
             state.pushPath(assoc);
             while (!state.foundTopic && rightRolesIt.hasNext()) {
-              AssociationRoleIF rightRole = (AssociationRoleIF)rightRolesIt.next();
+              AssociationRoleIF rightRole = rightRolesIt.next();
               TopicIF rightPlayer = rightRole.getPlayer();
               state.pushPath(rightPlayer);
               if (state.closure.contains(rightPlayer)) {

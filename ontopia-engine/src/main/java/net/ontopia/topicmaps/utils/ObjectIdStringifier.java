@@ -32,8 +32,7 @@ public class ObjectIdStringifier implements StringifierIF<TMObjectIF> {
   /**
    * INTERNAL: Stringifies an arbitrary topicmap object, using its objectId
    *
-   * @param tmobject object, typecast internally to TMObjectIF; the
-   * given topicmap object
+   * @param tmobject TMObjectIF; the given topicmap object
    * @return string the topic map object id
    */
   public String toString(TMObjectIF tmobject) {

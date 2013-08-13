@@ -22,8 +22,6 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.io.OutputStream;
-import java.awt.Image;
 import java.awt.Graphics2D;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -43,11 +41,11 @@ public class TopicTreeRendrer {
   protected TopicTreeNode root;
   protected TopicIF current;
   protected Graphics2D g2d;
-  protected StringifierIF str;
+  protected StringifierIF<TopicIF> str;
 
   protected String title;
-  protected Collection bnscope;
-  protected Collection vnscope;
+  protected Collection<TopicIF> bnscope;
+  protected Collection<TopicIF> vnscope;
   
   protected int x;
   protected int y;
@@ -103,11 +101,11 @@ public class TopicTreeRendrer {
     return getBottom(getMaxY(root, 0));
   }
 
-  public void setTopicNameScope(Collection bnscope) {
+  public void setTopicNameScope(Collection<TopicIF> bnscope) {
     this.bnscope = bnscope;
   }
 
-  public void setVariantScope(Collection vnscope) {
+  public void setVariantScope(Collection<TopicIF> vnscope) {
     this.vnscope = vnscope;
   }
   
@@ -129,9 +127,9 @@ public class TopicTreeRendrer {
 
     int lasty = 0;
     x++;
-    Iterator it = node.getChildren().iterator();
+    Iterator<TopicTreeNode> it = node.getChildren().iterator();
     while (it.hasNext()) {
-      TopicTreeNode child = (TopicTreeNode) it.next();
+      TopicTreeNode child = it.next();
       g2d.draw(new Line2D.Float(getLeft(x-1) + 10, getMiddle(y),
                                 getLeft(x), getMiddle(y)));
       lasty = drawNode(child);
@@ -185,18 +183,18 @@ public class TopicTreeRendrer {
 
   protected int getMaxX(TopicTreeNode node, int x) {
     int ourX = getRight(x, getTitle(node));
-    Iterator it = node.getChildren().iterator();
+    Iterator<TopicTreeNode> it = node.getChildren().iterator();
     while (it.hasNext())
-      ourX = Math.max(ourX, getMaxX((TopicTreeNode) it.next(), x+1));
+      ourX = Math.max(ourX, getMaxX(it.next(), x+1));
 
     return ourX;
   }
 
   protected int getMaxY(TopicTreeNode node, int y) {
     y++;
-    Iterator it = node.getChildren().iterator();
+    Iterator<TopicTreeNode> it = node.getChildren().iterator();
     while (it.hasNext())
-      y = getMaxY((TopicTreeNode) it.next(), y);
+      y = getMaxY(it.next(), y);
 
     return y;
   }

@@ -23,6 +23,8 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.utils.StringifierComparator;
 import net.ontopia.utils.StringifierIF;
 
@@ -36,18 +38,18 @@ public class TopicComparators {
   }
   
   // Compare the stringified sortnames of the occurrence types
-  protected static Comparator tyc = getTypedIFComparator(Collections.EMPTY_SET);
+  protected static Comparator<TypedIF> tyc = getTypedIFComparator(Collections.<TopicIF>emptySet());
 
-  public static Comparator getTopicNameComparator(Collection scope) {
-    return new StringifierComparator(TopicStringifiers.getTopicNameStringifier(scope));
+  public static Comparator<TopicIF> getTopicNameComparator(Collection<TopicIF> scope) {
+    return new StringifierComparator<TopicIF>(TopicStringifiers.getTopicNameStringifier(scope));
   }
   
-  public static Comparator getTypedIFComparator() {
+  public static Comparator<TypedIF> getTypedIFComparator() {
     return tyc;
   }
 
-  public static Comparator getTypedIFComparator(Collection scope) {
-    return new TypedIFComparator(new StringifierComparator(TopicStringifiers.getTopicNameStringifier(scope)));
+  public static Comparator<TypedIF> getTypedIFComparator(Collection<TopicIF> scope) {
+    return new TypedIFComparator(new StringifierComparator<TopicIF>(TopicStringifiers.getTopicNameStringifier(scope)));
   }
 
   public static <E> Comparator<E> getCaseInsensitiveComparator(StringifierIF<E> stringifier) {
