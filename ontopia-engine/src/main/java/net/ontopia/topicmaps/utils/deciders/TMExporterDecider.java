@@ -39,16 +39,16 @@ import net.ontopia.utils.DeciderIF;
  * decisions on an individual basis.  Used by the topic map exporters
  * to support topic filtering.
  */
-public class TMExporterDecider implements DeciderIF {
+public class TMExporterDecider implements DeciderIF<Object> {
 
   // Decides whether individual TMObjectIFs should be accepted or rejected.
-  private DeciderIF filter;
+  private DeciderIF<Object> filter;
 
   /**
    * Creates a new TMExporterDecider.
    * @param filter accepts or rejects an individual object
    */
-  public TMExporterDecider(DeciderIF filter) {
+  public TMExporterDecider(DeciderIF<Object> filter) {
     if (filter == null)
       throw new NullPointerException("Filter cannot be null.");
     this.filter = filter;
@@ -63,7 +63,7 @@ public class TMExporterDecider implements DeciderIF {
     // Check that none of the scoping topics are disallowed.
     if (object instanceof ScopedIF) {
       ScopedIF scoped = (ScopedIF)object;
-      Iterator scopeIt = scoped.getScope().iterator();
+      Iterator<TopicIF> scopeIt = scoped.getScope().iterator();
       while (scopeIt.hasNext())
         if (!ok(scopeIt.next()))
           return false;
@@ -74,7 +74,7 @@ public class TMExporterDecider implements DeciderIF {
     if (object instanceof TopicNameIF)
       return ok((TopicNameIF)object);
     if (object instanceof Collection)
-      return ok((Collection)object);
+      return ok((Collection<?>)object);
     if (object instanceof OccurrenceIF)
       return ok((OccurrenceIF)object);
     if (object instanceof TopicIF)
@@ -112,9 +112,9 @@ public class TMExporterDecider implements DeciderIF {
    */
   public boolean ok(AssociationIF association) {
     boolean retVal = ok(association.getType());
-    Iterator rolesIt = association.getRoles().iterator();
+    Iterator<AssociationRoleIF> rolesIt = association.getRoles().iterator();
     while (rolesIt.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)rolesIt.next();
+      AssociationRoleIF role = rolesIt.next();
       retVal &= ok(role.getType()) && filter.ok(role.getPlayer())
           && filter.ok(role);
     }
@@ -141,7 +141,7 @@ public class TMExporterDecider implements DeciderIF {
    * @return true iff the topic is accepted.
    */
   public boolean ok(TopicIF topic) {
-    return ok(topic, new ArrayList());
+    return ok(topic, new ArrayList<TopicIF>());
   }
 
   /**
@@ -149,10 +149,10 @@ public class TMExporterDecider implements DeciderIF {
    * @param coll The collection to test (search)
    * @return true iff whole collection of topics are accepted by filter.
    */
-  private boolean ok(Collection coll) {
-    Iterator it = coll.iterator();
+  private boolean ok(Collection<?> coll) {
+    Iterator<?> it = coll.iterator();
     while (it.hasNext())
-      if (!ok((TopicIF)it.next()))
+      if (!ok(it.next()))
         return false;
     return true;
   }
@@ -165,7 +165,7 @@ public class TMExporterDecider implements DeciderIF {
    * @param checked Topics that have already been checked (passed).
    * @return true iff the topic is accepted.
    */
-  private boolean ok(TopicIF topic, Collection checked) {
+  private boolean ok(TopicIF topic, Collection<TopicIF> checked) {
     // Only check each topic once.
     if (checked.contains(topic))
       return true;
