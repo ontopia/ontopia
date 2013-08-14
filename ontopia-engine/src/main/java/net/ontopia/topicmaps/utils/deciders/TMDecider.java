@@ -21,23 +21,17 @@
 package net.ontopia.topicmaps.utils.deciders;
 
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 /**
  * INTERNAL: Decider that allows the user to filter out chosen objects
  * used for testing the filtering of exporters.
  */
-public class TMDecider implements DeciderIF {
+public class TMDecider implements DeciderIF<Object> {
 
   public TMDecider() {
   }
@@ -77,9 +71,9 @@ public class TMDecider implements DeciderIF {
     if (topic == null)
       return null;
     
-    Iterator it = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = topic.getTopicNames().iterator();
     if (it.hasNext()) {
-      TopicNameIF name = (TopicNameIF) it.next();
+      TopicNameIF name = it.next();
       return name.getValue();
     }
     return null;

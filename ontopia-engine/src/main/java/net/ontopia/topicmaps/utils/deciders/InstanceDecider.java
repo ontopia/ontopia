@@ -34,18 +34,18 @@ import org.slf4j.LoggerFactory;
  * returns ok if it is an instance of one of the types it was
  * constructed with.
  */
-public class InstanceDecider implements DeciderIF {
+public class InstanceDecider implements DeciderIF<Object> {
 
   // Define a logging category.
   protected static Logger log = LoggerFactory
     .getLogger(InstanceDecider.class.getName());
 
-  protected Collection types;
+  protected Collection<TopicIF> types;
 
   /**
    * Constructor which takes a Collection of types.
    */
-  public InstanceDecider(Collection types) {
+  public InstanceDecider(Collection<TopicIF> types) {
     this.types = types;
   } 
 
@@ -59,9 +59,9 @@ public class InstanceDecider implements DeciderIF {
       // Used for Associations, Roles, Occurrences.
       TypedIF typed = (TypedIF) object;
       if (types!=null && !types.isEmpty()) {
-        Iterator it=types.iterator();
+        Iterator<TopicIF> it=types.iterator();
         while(it.hasNext()){
-          TopicIF thisTopic = (TopicIF) it.next();
+          TopicIF thisTopic = it.next();
           if (ClassInstanceUtils.isInstanceOf(typed, thisTopic)) {
             return true;
           } 
@@ -71,9 +71,9 @@ public class InstanceDecider implements DeciderIF {
     } else if (object instanceof TopicIF) {
       TopicIF topic = (TopicIF) object;
       if (!types.isEmpty()) {
-        Iterator it = types.iterator();
+        Iterator<TopicIF> it = types.iterator();
         while(it.hasNext()) {
-          TopicIF thisTopic = (TopicIF) it.next();
+          TopicIF thisTopic = it.next();
           if (ClassInstanceUtils.isInstanceOf(topic, thisTopic)) {
             return true;
           } 

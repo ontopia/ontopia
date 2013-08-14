@@ -24,24 +24,25 @@ import java.util.Collection;
 
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Decider that decides whether the scoped object is broader
  * than the context. The context must be identical or a subset of the
  * scopes. If there is no context, there can be no "ok".
  */
-public class WithinScopeDecider implements DeciderIF {
+public class WithinScopeDecider implements DeciderIF<ScopedIF> {
   
-  protected Collection context;
+  protected Collection<TopicIF> context;
 
-  public WithinScopeDecider(Collection context) {
+  public WithinScopeDecider(Collection<TopicIF> context) {
     this.context = context;
   }
 
-  public boolean ok(Object scoped) { 
+  public boolean ok(ScopedIF scoped) { 
     if (context == null || context.isEmpty())
       return false;
-    Collection objscope = ((ScopedIF) scoped).getScope();
+    Collection<TopicIF> objscope = scoped.getScope();
     if (objscope.containsAll(context))
       return true;
     return false;
