@@ -56,7 +56,7 @@ public class LTMTemplateImporter {
    * @param parameters The %foo% parameters referenced from the LTM.
    * @return A Map containing references to the %new% topics created.
    */
-  public static Map read(TopicMapIF topicmap, String ltm, Map parameters)
+  public static Map<String, TopicIF> read(TopicMapIF topicmap, String ltm, Map<String, Object> parameters)
     throws IOException {
 
     // wrap parameters with translation/quoting/ID-creating map
@@ -72,14 +72,14 @@ public class LTMTemplateImporter {
     reader.importInto(topicmap);
 
     // turn ID map into topic map
-    Map newids = parawrapper.getNewIds();
-    Map newtopics = new HashMap(newids.size());
-    Iterator it = newids.keySet().iterator();
+    Map<String, String> newids = parawrapper.getNewIds();
+    Map<String, TopicIF> newtopics = new HashMap<String, TopicIF>(newids.size());
+    Iterator<String> it = newids.keySet().iterator();
     while (it.hasNext()) {
-      String key = (String) it.next();
-      String id = (String) newids.get(key);
+      String key = it.next();
+      String id = newids.get(key);
 
-      newtopics.put(key, topicmap.getObjectByItemIdentifier(base.resolveAbsolute("#" + id)));
+      newtopics.put(key, (TopicIF) topicmap.getObjectByItemIdentifier(base.resolveAbsolute("#" + id)));
     }
     return newtopics;
   }
@@ -91,29 +91,25 @@ public class LTMTemplateImporter {
    * actually be safely inserted into the LTM, and also implements the
    * %new% and %newX% references.
    */
-  static class ParameterWrapper extends AbstractMap {
-    private Map wrapped;
-    private Map newids; // new35 -> ID of new35
+  static class ParameterWrapper extends AbstractMap<String, Object> {
+    private Map<String, Object> wrapped;
+    private Map<String, String> newids; // new35 -> ID of new35
     private TopicMapIF topicmap;
 
-    public ParameterWrapper(Map wrapped, TopicMapIF topicmap) {
+    public ParameterWrapper(Map<String, Object> wrapped, TopicMapIF topicmap) {
       this.wrapped = wrapped;
-      this.newids = new HashMap();
+      this.newids = new HashMap<String, String>();
       this.topicmap = topicmap;
     }
 
-    public Map getNewIds() {
+    public Map<String, String> getNewIds() {
       return newids;
     }
 
-    public Object get(Object okey) {
-      if (!(okey instanceof String))
-        throw new OntopiaRuntimeException("LTM parameter name must be string");
-      String key = (String) okey;
-
+    public Object get(String key) {
       if (key.startsWith("new")) {
         // reference to a new topic
-        String id = (String) newids.get(key);
+        String id = newids.get(key);
         if (id == null) {
           id = makeRandomId(topicmap);
           newids.put(key, id);
@@ -141,7 +137,7 @@ public class LTMTemplateImporter {
       }
     }
 
-    public boolean containsKey(Object key) {
+    public boolean containsKey(String key) {
       return get(key) != null;
     }
 
@@ -149,16 +145,16 @@ public class LTMTemplateImporter {
       return 3; // a smallish number, that's all
     }
 
-    public Set entrySet() {
+    public Set<Map.Entry<String, Object>> entrySet() {
       throw new net.ontopia.utils.OntopiaRuntimeException("INTERNAL ERROR");
     }
 
     // internal stuff
     private String getId(TMObjectIF object) {
-      Iterator it = object.getItemIdentifiers().iterator();
+      Iterator<LocatorIF> it = object.getItemIdentifiers().iterator();
       if (it.hasNext()) {
         // FIXME: this doesn't check the base address!
-        LocatorIF loc = (LocatorIF) it.next();
+        LocatorIF loc = it.next();
         String address = loc.getAddress();
         int pos = address.indexOf("#");
         if (pos != -1)

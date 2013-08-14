@@ -74,39 +74,38 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     
   protected boolean preserveIds;
 
-  protected Map roleCounter;
-  protected Map rolesCounted;
+  protected Map<String, Integer> roleCounter;
+  protected Map<String, Boolean> rolesCounted;
   protected Writer out;
   protected Calendar calendar;
   protected String base;
 
-  protected DeciderIF filter;
+  protected DeciderIF<Object> filter;
   // Constrains which topic map constructs should be included in the exported
   // Ltm file.
 
-  protected Comparator
-      // Compares associations for correct output order.
-      associationComparator,
-      // Compares base names by their scope and then by their value.
-      baseNameComparator,
-      // Compares TMObjects by their elementId.
-      elementIdComparator,
-      // Compares supertype-subtype associations for correct output order.
-      supersubComparator,
-      // Compares supertype-subtype association roles for correct output order.
-      supersubRoleComparator,
-      // Compares occurrences for correct output order.
-      occurrenceComparator,
-      // Compares collections of reifying topics by the element ids(in order).
-      reifierComparator,
-      // Compares association roles for correct output order.
-      roleComparator,
-      // Compares collections of scoping topics by the element ids(in order).
-      scopeComparator,
-      // Compares topics for correct output order.
-      topicComparator,
-      // Compares variant names for correct output order.
-      variantComparator;
+  // Compares associations for correct output order.
+  Comparator<AssociationIF> associationComparator;
+  // Compares base names by their scope and then by their value.
+  Comparator<TopicNameIF> baseNameComparator;
+  // Compares TMObjects by their elementId.
+  Comparator<TopicIF> elementIdComparator;
+  // Compares supertype-subtype associations for correct output order.
+  Comparator<AssociationIF> supersubComparator;
+  // Compares supertype-subtype association roles for correct output order.
+  Comparator<AssociationRoleIF> supersubRoleComparator;
+  // Compares occurrences for correct output order.
+  Comparator<OccurrenceIF> occurrenceComparator;
+  // Compares collections of reifying topics by the element ids(in order).
+  Comparator<Collection<TopicIF>> reifierComparator;
+  // Compares association roles for correct output order.
+  Comparator<AssociationRoleIF> roleComparator;
+  // Compares collections of scoping topics by the element ids(in order).
+  Comparator<Collection<TopicIF>> scopeComparator;
+  // Compares topics for correct output order.
+  Comparator<TopicIF> topicComparator;
+  // Compares variant names for correct output order.
+  Comparator<VariantNameIF> variantComparator;
 
   protected IdManager idManager;
 
@@ -166,8 +165,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     supersubComparator = new SupersubComparator();
     supersubRoleComparator = new SupersubRoleComparator();
     occurrenceComparator = new OccurrenceComparator();
-    reifierComparator = new CollectionComparator(new ElementIdComparator());
-    scopeComparator = new CollectionComparator(new ElementIdComparator());
+    reifierComparator = new CollectionComparator<TopicIF>(new ElementIdComparator());
+    scopeComparator = new CollectionComparator<TopicIF>(new ElementIdComparator());
     topicComparator = new TopicComparator();
     variantComparator = new VariantComparator();
     this.preserveIds = true;
@@ -190,7 +189,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * disallowed.   
    * @param filter Places constraints on individual topicmap constructs.
    */
-  public void setFilter(DeciderIF filter) {
+  public void setFilter(DeciderIF<Object> filter) {
     this.filter = new TMExporterDecider(filter);
   }
 
@@ -201,8 +200,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * @return true iff 'collectino' contains at least one element that is
    *         accepted by filter.
    */
-  private boolean hasUnfiltered(Collection collection) {
-    Iterator it = collection.iterator();
+  private boolean hasUnfiltered(Collection<? extends TMObjectIF> collection) {
+    Iterator<? extends TMObjectIF> it = collection.iterator();
     while (it.hasNext())
       if (filterOk(it.next()))
         return true;
@@ -247,7 +246,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         || hasUnfiltered(classIndex.getAssociations(null)) || hasUnfiltered(classIndex
         .getOccurrences(null)));
 
-    Collection topics = tm.getTopics();
+    Collection<TopicIF> topics = tm.getTopics();
 
     recordIds(topics);
 
@@ -257,29 +256,29 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     // Get the topic(s) that reifies the topicmap.
     TopicIF reifier = tm.getReifier();
     // FIXME: no need to treat this as a collection anymore
-    Collection tmReifiers = (reifier == null ? Collections.EMPTY_SET : Collections.singleton(reifier));
+    Collection<TopicIF> tmReifiers = (reifier == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier));
     tmReifiers = filterCollection(tmReifiers);
     topics.removeAll(tmReifiers);
 
     // Get all associations.
-    Collection allAssociations = filterCollection(tm.getAssociations());
+    Collection<AssociationIF> allAssociations = filterCollection(tm.getAssociations());
     boolean existsUnspecified = existsUnspecifiedRolePlayer(allAssociations);
 
     // Sort all the topics.
-    Collection topicInstances = sort(topics, topicComparator);
+    Collection<TopicIF> topicInstances = sort(topics, topicComparator);
 
     // Filter out the topics that are used to type other topics.
-    Collection topicTypes = topicTypes(topics, topicInstances);
+    Collection<TopicIF> topicTypes = topicTypes(topics, topicInstances);
 
     // Filter out the topics that are used to type association roles.
-    Collection roleTypes = roleTypes(allAssociations, topicInstances);
+    Collection<TopicIF> roleTypes = roleTypes(allAssociations, topicInstances);
 
     // Filter out the topics that are used to type associations.
-    Collection associationTypes = associationTypes(allAssociations,
+    Collection<TopicIF> associationTypes = associationTypes(allAssociations,
         topicInstances);
 
     // Filter out the topics that are used to type occurrences.
-    Collection occurrenceTypes = occurrenceTypes(topics, topicInstances);
+    Collection<TopicIF> occurrenceTypes = occurrenceTypes(topics, topicInstances);
 
     // Count up the number of associations that a particular role, e.g.
     // "player : type" takes part in.
@@ -291,12 +290,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     // Filter out all superclass/subclass associations
     TopicIF supersubtype = tm.getTopicBySubjectIdentifier(PSI
         .getXTMSuperclassSubclass());
-    Collection supersubAssociations = classIndex.getAssociations(supersubtype);
+    Collection<AssociationIF> supersubAssociations = classIndex.getAssociations(supersubtype);
     supersubAssociations = filterCollection(supersubAssociations);
     allAssociations.removeAll(supersubAssociations);
 
     // Filter out the associations that have roles reifying the topic map.
-    Collection tmReifierAssociations = playerAssociations(tmReifiers,
+    Collection<AssociationIF> tmReifierAssociations = playerAssociations(tmReifiers,
         allAssociations);
 
     // Output preamble.
@@ -331,7 +330,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     }
 
     // If necessary, output the TOPICMAP directive with any topic reification.
-    Iterator tmReifiersIt = tmReifiers.iterator();
+    Iterator<TopicIF> tmReifiersIt = tmReifiers.iterator();
     if (!tmReifiers.isEmpty()) {
       out.write("\n/* ----------------- TOPIC MAP ----------------- */\n");
       out.write("\n#TOPICMAP");
@@ -344,14 +343,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       // Output the reifiers
       while (tmReifiersIt.hasNext())
-        writeTopic((TopicIF)tmReifiersIt.next(), out, false);
+        writeTopic(tmReifiersIt.next(), out, false);
     }
 
     // Output all associations that the tm reifier(s) are directly involved in.
     groupString1 = "";
-    Iterator tmReifierAssociationsIt = tmReifierAssociations.iterator();
+    Iterator<AssociationIF> tmReifierAssociationsIt = tmReifierAssociations.iterator();
     while (tmReifierAssociationsIt.hasNext())
-      writeAssociation((AssociationIF)tmReifierAssociationsIt.next(), out,
+      writeAssociation(tmReifierAssociationsIt.next(), out,
           false);
 
     out.write("\n/* ----------------- ONTOLOGY ------------------ */\n");
@@ -365,12 +364,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     // Write all supertype subtype associations
     groupString1 = "";
-    Iterator hierarchyIt = sort(supersubAssociations, supersubComparator)
+    Iterator<AssociationIF> hierarchyIt = sort(supersubAssociations, supersubComparator)
         .iterator();
     if (hierarchyIt.hasNext())
       out.write("\n");
     while (hierarchyIt.hasNext()) {
-      AssociationIF currentAssociation = (AssociationIF)hierarchyIt.next();
+      AssociationIF currentAssociation = hierarchyIt.next();
       writeSupersub(currentAssociation, out);
     }
 
@@ -395,9 +394,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     out.write("\n/* ----------------- Associations -------------- */\n");
     // Write all remaining associations
     groupString1 = "";
-    Iterator associationsIt = allAssociations.iterator();
+    Iterator<AssociationIF> associationsIt = allAssociations.iterator();
     while (associationsIt.hasNext())
-      writeAssociation((AssociationIF)associationsIt.next(), out);
+      writeAssociation(associationsIt.next(), out);
 
     out.flush();
   }
@@ -405,14 +404,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Write a collection of topics.
    */
-  private void writeTopics(Collection topics) throws IOException {
+  private void writeTopics(Collection<TopicIF> topics) throws IOException {
     groupString1 = "";
-    Iterator topicsIt = topics.iterator();
+    Iterator<TopicIF> topicsIt = topics.iterator();
     if (topicsIt.hasNext()
-        && filterOk(((TopicIF)topics.iterator().next()).getTypes()))
+        && filterOk(topics.iterator().next().getTypes()))
       out.write("\n");
     while (topicsIt.hasNext())
-      writeTopic((TopicIF)topicsIt.next(), out);
+      writeTopic(topicsIt.next(), out);
   }
 
   /**
@@ -424,16 +423,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * @return The associations of the roles played by 'rolePlayers' and that are
    *         in 'associations'.
    */
-  private SortedSet playerAssociations(Collection rolePlayers,
-      Collection associations)
+  private SortedSet<AssociationIF> playerAssociations(Collection<TopicIF> rolePlayers,
+      Collection<AssociationIF> associations)
   {
-    SortedSet retVal = new TreeSet(associationComparator);
-    Iterator rolePlayersIt = rolePlayers.iterator();
+    SortedSet<AssociationIF> retVal = new TreeSet<AssociationIF>(associationComparator);
+    Iterator<TopicIF> rolePlayersIt = rolePlayers.iterator();
     while (rolePlayersIt.hasNext()) {
-      Iterator rolesIt = ((TopicIF)rolePlayersIt.next()).getRoles().iterator();
+      Iterator<AssociationRoleIF> rolesIt = rolePlayersIt.next().getRoles().iterator();
       while (rolesIt.hasNext()) {
-        AssociationIF assoc = ((AssociationRoleIF)rolesIt.next())
-            .getAssociation();
+        AssociationIF assoc = rolesIt.next().getAssociation();
         if (assoc != null && associations.remove(assoc))
           retVal.add(assoc);
       }
@@ -444,16 +442,16 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Filter out the topics that are used to type other topics.
    */
-  private SortedSet topicTypes(Collection topics, Collection topicInstances) {
-    SortedSet typingTopics = new TreeSet(topicComparator);
+  private SortedSet<TopicIF> topicTypes(Collection<TopicIF> topics, Collection<TopicIF> topicInstances) {
+    SortedSet<TopicIF> typingTopics = new TreeSet<TopicIF>(topicComparator);
 
-    Iterator it = topics.iterator();
+    Iterator<TopicIF> it = topics.iterator();
     while (it.hasNext()) {
-      TopicIF currentTopic = (TopicIF)it.next();
-      Iterator typesIt = currentTopic.getTypes().iterator();
+      TopicIF currentTopic = it.next();
+      Iterator<TopicIF> typesIt = currentTopic.getTypes().iterator();
 
       while (typesIt.hasNext()) {
-        TopicIF currentType = (TopicIF)typesIt.next();
+        TopicIF currentType = typesIt.next();
 
         if (topicInstances.remove(currentType))
           typingTopics.add(currentType);
@@ -465,14 +463,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Filter out the topics that are used to type associations.
    */
-  private SortedSet associationTypes(Collection associations,
-      Collection topicInstances)
+  private SortedSet<TopicIF> associationTypes(Collection<AssociationIF> associations,
+      Collection<TopicIF> topicInstances)
   {
-    SortedSet associationTypes = new TreeSet(topicComparator);
+    SortedSet<TopicIF> associationTypes = new TreeSet<TopicIF>(topicComparator);
 
-    Iterator it = associations.iterator();
+    Iterator<AssociationIF> it = associations.iterator();
     while (it.hasNext()) {
-      TopicIF type = ((AssociationIF)it.next()).getType();
+      TopicIF type = it.next().getType();
 
       if (type != null && topicInstances.remove(type))
         associationTypes.add(type);
@@ -483,15 +481,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Filter out the topics that are used to type association roles.
    */
-  private SortedSet roleTypes(Collection associations, Collection topicInstances)
+  private SortedSet<TopicIF> roleTypes(Collection<AssociationIF> associations, Collection<TopicIF> topicInstances)
   {
-    SortedSet roleTypes = new TreeSet(topicComparator);
+    SortedSet<TopicIF> roleTypes = new TreeSet<TopicIF>(topicComparator);
 
-    Iterator it = associations.iterator();
+    Iterator<AssociationIF> it = associations.iterator();
     while (it.hasNext()) {
-      Iterator typesIt = ((AssociationIF)it.next()).getRoleTypes().iterator();
+      Iterator<TopicIF> typesIt = it.next().getRoleTypes().iterator();
       while (typesIt.hasNext()) {
-        TopicIF currentType = (TopicIF)typesIt.next();
+        TopicIF currentType = typesIt.next();
         if (topicInstances.remove(currentType))
           roleTypes.add(currentType);
       }
@@ -503,21 +501,21 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Filter out the topics that are used to type occurrences. Ignore topics
    * whose occurrence instances are not accepted by filterOk().
    */
-  private SortedSet occurrenceTypes(Collection topics, Collection topicInstances)
+  private SortedSet<TopicIF> occurrenceTypes(Collection<TopicIF> topics, Collection<TopicIF> topicInstances)
   {
-    SortedSet occurrenceTypes = new TreeSet(topicComparator);
+    SortedSet<TopicIF> occurrenceTypes = new TreeSet<TopicIF>(topicComparator);
 
-    Iterator it = topics.iterator();
+    Iterator<TopicIF> it = topics.iterator();
     while (it.hasNext()) {
-      TopicIF currentTopic = (TopicIF)it.next();
+      TopicIF currentTopic = it.next();
 
-      Collection occurrences = currentTopic.getOccurrences();
+      Collection<OccurrenceIF> occurrences = currentTopic.getOccurrences();
 
       // Get only occurrences that are accepted by filterOk().
       occurrences = filterCollection(occurrences);
-      Iterator occurrencesIt = occurrences.iterator();
+      Iterator<OccurrenceIF> occurrencesIt = occurrences.iterator();
       while (occurrencesIt.hasNext()) {
-        OccurrenceIF occurrence = (OccurrenceIF)occurrencesIt.next();
+        OccurrenceIF occurrence = occurrencesIt.next();
         TopicIF type = occurrence.getType();
 
         if (type != null && filterOk(type) && topicInstances.remove(type))
@@ -530,8 +528,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Sort the given collection with the given comparator.
    */
-  private SortedSet sort(Collection collection, Comparator comparator) {
-    SortedSet sorted = new TreeSet(comparator);
+  private <E> SortedSet<E> sort(Collection<E> collection, Comparator<? super E> comparator) {
+    SortedSet<E> sorted = new TreeSet<E>(comparator);
     sorted.addAll(collection);
     return sorted;
   }
@@ -559,20 +557,20 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       throws IOException
   {
     if (filterOk(topic)) {
-      Collection types = topic.getTypes();
+      Collection<TopicIF> types = topic.getTypes();
       types = sort(types, elementIdComparator);
       types = filterCollection(types);
-      Iterator typesIt = types.iterator();
+      Iterator<TopicIF> typesIt = types.iterator();
 
       String typeString = "";
       String headerType = "";
 
       if (typesIt.hasNext()) {
-        headerType = getElementId((TopicIF)typesIt.next());
+        headerType = getElementId(typesIt.next());
         typeString += " : " + headerType;
       }
       while (typesIt.hasNext())
-        typeString += " " + getElementId((TopicIF)typesIt.next());
+        typeString += " " + getElementId(typesIt.next());
 
       // IF this is the first time a topic of the current type is written
       // then write a header comment for this topic type.
@@ -590,31 +588,30 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       String baseString = "\n" + createSpaces(idString.length());
 
       // Get, filter and sort the basenames.
-      Collection baseNames = filterCollection(topic.getTopicNames());
+      Collection<TopicNameIF> baseNames = filterCollection(topic.getTopicNames());
       baseNames = filterCollection(baseNames);
       baseNames = sort(baseNames, baseNameComparator);
-      Iterator baseNamesIt = baseNames.iterator();
+      Iterator<TopicNameIF> baseNamesIt = baseNames.iterator();
 
       // Write the base names indented according to topic id and types.
       if (baseNamesIt.hasNext()) {
         out.write(idString);
         out.write(" = ");
-        writeTopicName((TopicNameIF)baseNamesIt.next(), out, baseString);
+        writeTopicName(baseNamesIt.next(), out, baseString);
       } else
         out.write(idString);
       while (baseNamesIt.hasNext()) {
         out.write(baseString);
         out.write(" = ");
-        writeTopicName((TopicNameIF)baseNamesIt.next(), out, baseString);
+        writeTopicName(baseNamesIt.next(), out, baseString);
       }
 
       // Write the subject locator(if any).
-      Collection subjectLocators = topic.getSubjectLocators();
+      Collection<LocatorIF> subjectLocators = topic.getSubjectLocators();
       subjectLocators = filterCollection(subjectLocators);
-      Iterator subjectLocatorsIt = subjectLocators.iterator();
+      Iterator<LocatorIF> subjectLocatorsIt = subjectLocators.iterator();
       while (subjectLocatorsIt.hasNext()) {
-        String externalForm = ((LocatorIF)subjectLocatorsIt.next())
-            .getExternalForm();
+        String externalForm = subjectLocatorsIt.next().getExternalForm();
         out.write("\n    ");
         out.write("%\"");
         out.write(escapeString(externalForm));
@@ -622,12 +619,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       }
 
       // Write subject indicators, one per line.
-      Collection subjectIndicators = topic.getSubjectIdentifiers();
+      Collection<LocatorIF> subjectIndicators = topic.getSubjectIdentifiers();
       subjectIndicators = filterCollection(subjectIndicators);
-      Iterator subjectIndicatorsIt = subjectIndicators.iterator();
+      Iterator<LocatorIF> subjectIndicatorsIt = subjectIndicators.iterator();
       while (subjectIndicatorsIt.hasNext()) {
-        String externalForm = ((LocatorIF)subjectIndicatorsIt.next())
-            .getExternalForm();
+        String externalForm = subjectIndicatorsIt.next().getExternalForm();
 
         boolean skip = false;
         if (prefixes.size() > 0) {
@@ -653,12 +649,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       out.write("]\n");
 
       // Write the occurrences of this topic.
-      Collection occurrences = topic.getOccurrences();
+      Collection<OccurrenceIF> occurrences = topic.getOccurrences();
       occurrences = filterCollection(occurrences);
       occurrences = sort(occurrences, occurrenceComparator);
-      Iterator occurrencesIt = occurrences.iterator();
+      Iterator<OccurrenceIF> occurrencesIt = occurrences.iterator();
       while (occurrencesIt.hasNext())
-        writeOccurrence((OccurrenceIF)occurrencesIt.next(), out);
+        writeOccurrence(occurrencesIt.next(), out);
 
       groupString1 = headerType;
     }
@@ -693,19 +689,19 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       out.write("( ");
 
       // Get and sort the roles of this association.
-      Collection roles = sort(association.getRoles(), roleComparator);
-      Iterator rolesIt = roles.iterator();
+      Collection<AssociationRoleIF> roles = sort(association.getRoles(), roleComparator);
+      Iterator<AssociationRoleIF> rolesIt = roles.iterator();
 
       // Write the roles of this association.
       if (rolesIt.hasNext())
-        writeAssociationRole((AssociationRoleIF)rolesIt.next(), out);
+        writeAssociationRole(rolesIt.next(), out);
       if (maxRolesOf(association) == 2 && rolesIt.hasNext()) {
         out.write(", ");
-        writeAssociationRole((AssociationRoleIF)rolesIt.next(), out);
+        writeAssociationRole(rolesIt.next(), out);
       }
       while (rolesIt.hasNext()) {
         out.write(",\n" + repeatString(" ", elementId.length() + 2));
-        writeAssociationRole((AssociationRoleIF)rolesIt.next(), out);
+        writeAssociationRole(rolesIt.next(), out);
       }
 
       out.write(" )");
@@ -737,16 +733,16 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     out.write("( ");
 
     // Get and sort the roles of this association.
-    Collection roles = association.getRoles();
+    Collection<AssociationRoleIF> roles = association.getRoles();
     roles = sort(roles, supersubRoleComparator);
-    Iterator rolesIt = roles.iterator();
+    Iterator<AssociationRoleIF> rolesIt = roles.iterator();
 
     // Write the association roles.
     if (rolesIt.hasNext())
-      writeAssociationRole((AssociationRoleIF)rolesIt.next(), out);
+      writeAssociationRole(rolesIt.next(), out);
     while (rolesIt.hasNext()) {
       out.write(", ");
-      writeAssociationRole((AssociationRoleIF)rolesIt.next(), out);
+      writeAssociationRole(rolesIt.next(), out);
     }
 
     out.write(" )");
@@ -780,13 +776,13 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * @return A new collection containing all objects accepted by the filter, or
    *         if this.filter is null, returns the original collection.
    */
-  private Collection filterCollection(Collection unfiltered) {
+  private <E> Collection<E> filterCollection(Collection<E> unfiltered) {
     if (filter == null)
       return unfiltered;
-    Collection retVal = new ArrayList();
-    Iterator unfilteredIt = unfiltered.iterator();
+    Collection<E> retVal = new ArrayList<E>();
+    Iterator<E> unfilteredIt = unfiltered.iterator();
     while (unfilteredIt.hasNext()) {
-      Object current = unfilteredIt.next();
+      E current = unfilteredIt.next();
       if (filter.ok(current))
         retVal.add(current);
     }
@@ -812,19 +808,19 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * @param si The subject indicator to search for.
    * @return The first matching VariantNameIF, or null if none is found.
    */
-  private VariantNameIF firstNameWithScopingPSI(Collection variants,
+  private VariantNameIF firstNameWithScopingPSI(Collection<VariantNameIF> variants,
       LocatorIF si)
   {
     VariantNameIF firstName = null;
 
-    Iterator it = variants.iterator();
+    Iterator<VariantNameIF> it = variants.iterator();
     while (firstName == null && it.hasNext()) {
-      VariantNameIF currentVariant = (VariantNameIF)it.next();
+      VariantNameIF currentVariant = it.next();
 
-      Collection scope = filterCollection(currentVariant.getScope());
+      Collection<TopicIF> scope = filterCollection(currentVariant.getScope());
       if (scope.size() == 1) {
-        TopicIF scopingTopic = (TopicIF)scope.iterator().next();
-        Collection scopingPSIs = scopingTopic.getSubjectIdentifiers();
+        TopicIF scopingTopic = scope.iterator().next();
+        Collection<LocatorIF> scopingPSIs = scopingTopic.getSubjectIdentifiers();
         if (scopingPSIs.contains(si))
           firstName = currentVariant;
       }
@@ -845,7 +841,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     out.write('"');
 
     // Get and sort the variants of this base name.
-    Collection variants = baseName.getVariants();
+    Collection<VariantNameIF> variants = baseName.getVariants();
     variants = filterCollection(variants);
     variants = sort(variants, variantComparator);
 
@@ -870,13 +866,13 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     // Write the names of the scoping topics of this topic basename.
     writeScope(baseName, out);
 
-    Iterator variantIt = variants.iterator();
+    Iterator<VariantNameIF> variantIt = variants.iterator();
 
     // Write the variants.
     while (variantIt.hasNext()) {
       out.write(indentString);
       out.write("  ");
-      writeVariant((VariantNameIF)variantIt.next(), out);
+      writeVariant(variantIt.next(), out);
     }
   }
 
@@ -968,19 +964,19 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private void writeScope(ScopedIF tmObject, Writer out) throws IOException {
     // Get and sort the scoping topics of this occurrence.
-    Collection scope = tmObject.getScope();
+    Collection<TopicIF> scope = tmObject.getScope();
 
     // No need to filter scope. All of scope must be filterOk() to reach this
     // method.
 
     scope = sort(scope, elementIdComparator);
-    Iterator scopeIt = scope.iterator();
+    Iterator<TopicIF> scopeIt = scope.iterator();
 
     // Write the scoping topics.
     if (scopeIt.hasNext())
       out.write(" /");
     while (scopeIt.hasNext())
-      out.write(" " + getElementId((TopicIF)scopeIt.next()));
+      out.write(" " + getElementId(scopeIt.next()));
   }
 
   /**
@@ -1008,7 +1004,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   private int maxRolesOf(AssociationIF association) {
     String key = lazyTypeElementId(association);
-    Integer count = (Integer)roleCounter.get(key);
+    Integer count = roleCounter.get(key);
     return (count == null) ? 0 : count.intValue();
   }
 
@@ -1017,32 +1013,32 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * associations, i.e. how often a triple like "associationType : rolePlayer :
    * roleType" is repeated
    */
-  private void countRoles(Collection associations) {
-    roleCounter = new HashMap();
-    rolesCounted = new HashMap();
+  private void countRoles(Collection<AssociationIF> associations) {
+    roleCounter = new HashMap<String, Integer>();
+    rolesCounted = new HashMap<String, Boolean>();
 
-    Iterator associationsIt = associations.iterator();
+    Iterator<AssociationIF> associationsIt = associations.iterator();
     while (associationsIt.hasNext()) {
-      AssociationIF association = (AssociationIF)associationsIt.next();
+      AssociationIF association = associationsIt.next();
       countMaxRolesOf(association);
 
-      Iterator rolesIt = association.getRoles().iterator();
+      Iterator<AssociationRoleIF> rolesIt = association.getRoles().iterator();
       while (rolesIt.hasNext())
-        count(association, (AssociationRoleIF)rolesIt.next());
+        count(association, rolesIt.next());
     }
   }
 
   /**
    * Returns true iff there exists an association role with no player.
    */
-  private boolean existsUnspecifiedRolePlayer(Collection associations) {
-    Iterator associationsIt = associations.iterator();
+  private boolean existsUnspecifiedRolePlayer(Collection<AssociationIF> associations) {
+    Iterator<AssociationIF> associationsIt = associations.iterator();
     while (associationsIt.hasNext()) {
-      AssociationIF association = (AssociationIF)associationsIt.next();
+      AssociationIF association = associationsIt.next();
 
-      Iterator rolesIt = association.getRoles().iterator();
+      Iterator<AssociationRoleIF> rolesIt = association.getRoles().iterator();
       while (rolesIt.hasNext()) {
-        if (((AssociationRoleIF)rolesIt.next()).getPlayer() == null)
+        if (rolesIt.next().getPlayer() == null)
           return true;
       }
     }
@@ -1077,7 +1073,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   private Integer getCount(AssociationIF association, AssociationRoleIF role) {
     String key = lazyTypeElementId(association) + " : "
         + lazyTypeElementId(role);
-    Integer retVal = (Integer)roleCounter.get(key);
+    Integer retVal = roleCounter.get(key);
     if (retVal == null)
       return new Integer(0);
     return retVal;
@@ -1121,9 +1117,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * IDs.
    */
   private String preserveId(TopicIF topic) {
-    Iterator sourceLocators = topic.getItemIdentifiers().iterator();
+    Iterator<LocatorIF> sourceLocators = topic.getItemIdentifiers().iterator();
     while (sourceLocators.hasNext()) {
-      LocatorIF sourceLocator = (LocatorIF)sourceLocators.next();
+      LocatorIF sourceLocator = sourceLocators.next();
       String fragmentId = getFragment(sourceLocator);
       if (!(fragmentId == null || isReservedId(fragmentId))) {
         // If fragmentId ends with _n for some integer n
@@ -1145,15 +1141,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Creates ids for all the topics in 'topics'.
    */
-  private void recordIds(Collection topics) {
-    Iterator it = topics.iterator();
+  private void recordIds(Collection<TopicIF> topics) {
+    Iterator<TopicIF> it = topics.iterator();
 
     if (preserveIds) {
       while (it.hasNext())
-        preserveId((TopicIF)it.next());
+        preserveId(it.next());
     } else {
       while (it.hasNext())
-        generateId((TopicIF)it.next());
+        generateId(it.next());
     }
   }
 
@@ -1328,19 +1324,19 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Helps manage the creation of systematic and unique ids.
    */
   private class IdManager {
-    private Map counters;
-    private Map ids;
+    private Map<String, Integer> counters;
+    private Map<TopicIF, String> ids;
 
     private IdManager() {
-      counters = new HashMap();
-      ids = new HashMap();
+      counters = new HashMap<String, Integer>();
+      ids = new HashMap<TopicIF, String>();
     }
 
     /**
      * Get the ID of a given topic. Will return null if no id has been created.
      */
     private String getId(TopicIF topic) {
-      return (String)ids.get(topic);
+      return ids.get(topic);
     }
 
     /**
@@ -1392,23 +1388,21 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Comparator for Objects of type TopicIF.
    */
-  private class TopicComparator implements Comparator {
+  private class TopicComparator implements Comparator<TopicIF> {
     public TopicComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
+    public int compare(TopicIF t1, TopicIF t2) {
       int retVal = 0;
-      TopicIF t1 = (TopicIF)o1;
-      TopicIF t2 = (TopicIF)o2;
 
-      Iterator t1TypesIt = sort(t1.getTypes(), elementIdComparator).iterator();
-      Iterator t2TypesIt = sort(t2.getTypes(), elementIdComparator).iterator();
+      Iterator<TopicIF> t1TypesIt = sort(t1.getTypes(), elementIdComparator).iterator();
+      Iterator<TopicIF> t2TypesIt = sort(t2.getTypes(), elementIdComparator).iterator();
 
       if (t1TypesIt.hasNext()) {
-        TopicIF t1Type = (TopicIF)t1TypesIt.next();
+        TopicIF t1Type = t1TypesIt.next();
 
         if (t2TypesIt.hasNext()) {
-          TopicIF t2Type = (TopicIF)t2TypesIt.next();
+          TopicIF t2Type = t2TypesIt.next();
           retVal = lazyStringCompare(getElementId(t1Type), getElementId(t2Type));
         } else
           retVal = -1; // Out of types -> ordered first.
@@ -1431,23 +1425,23 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Order TMObjects by their elementId.
    */
-  private class ElementIdComparator implements Comparator {
+  private class ElementIdComparator implements Comparator<TopicIF> {
 
     public ElementIdComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      return lazyStringCompare(getElementId((TopicIF)o1),
-          getElementId((TopicIF)o2));
+    public int compare(TopicIF o1, TopicIF o2) {
+      return lazyStringCompare(getElementId(o1),
+          getElementId(o2));
     }
   }
 
   /**
    * Comparator for Objects of type AssociationIF.
    */
-  private class AssociationComparator implements Comparator {
+  private class AssociationComparator implements Comparator<AssociationIF> {
 
-    private Comparator
+    private Comparator<Collection<AssociationRoleIF>>
     // Compares collections of association roles by role type ids.
         associationRoleTypeComparator,
         // Compares collections of association roles by role player ids.
@@ -1456,19 +1450,16 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         associationRolesComparator;
 
     public AssociationComparator() {
-      associationRoleTypeComparator = new CollectionNoSizeComparator(
+      associationRoleTypeComparator = new CollectionNoSizeComparator<AssociationRoleIF>(
           new RoleTypeComparator(), new AssociationRoleFrequencyComparator());
-      associationRolePlayerComparator = new CollectionComparator(
+      associationRolePlayerComparator = new CollectionComparator<AssociationRoleIF>(
           new RolePlayerComparator(), new AssociationRoleFrequencyComparator());
-      associationRolesComparator = new CollectionComparator(
+      associationRolesComparator = new CollectionComparator<AssociationRoleIF>(
           new AssociationRoleComparator(),
           new AssociationRoleFrequencyComparator());
     }
 
-    public int compare(Object o1, Object o2) {
-      AssociationIF assoc1 = (AssociationIF)o1;
-      AssociationIF assoc2 = (AssociationIF)o2;
-
+    public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       int retVal = lazyStringCompare(lazyTypeElementId(assoc1),
           lazyTypeElementId(assoc2));
 
@@ -1495,15 +1486,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       // Compare the reifier(if there is one) of the association.
       if (retVal == 0) {
         TopicIF reifier1 = assoc1.getReifier();
-        Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
+        Collection<TopicIF> reifiers1 = (reifier1 == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier1));
         TopicIF reifier2 = assoc2.getReifier();
-        Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
+        Collection<TopicIF> reifiers2 = (reifier2 == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier2));
         reifiers1 = filterCollection(reifiers1);
         reifiers2 = filterCollection(reifiers2);
         retVal = reifierComparator.compare(reifiers1, reifiers2);
       }
 
-      if (retVal == 0 && !o1.equals(o2))
+      if (retVal == 0 && !assoc1.equals(assoc2))
         retVal = -1;
 
       return retVal;
@@ -1513,14 +1504,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Compares roles by comparing their types.
    */
-  private class RoleTypeComparator implements Comparator {
+  private class RoleTypeComparator implements Comparator<AssociationRoleIF> {
     public RoleTypeComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      AssociationRoleIF ar1 = (AssociationRoleIF)o1;
-      AssociationRoleIF ar2 = (AssociationRoleIF)o2;
-
+    public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
           lazyTypeElementId(ar2));
 
@@ -1531,14 +1519,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Compares roles by comparing their players.
    */
-  private class RolePlayerComparator implements Comparator {
+  private class RolePlayerComparator implements Comparator<AssociationRoleIF> {
     public RolePlayerComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      AssociationRoleIF ar1 = (AssociationRoleIF)o1;
-      AssociationRoleIF ar2 = (AssociationRoleIF)o2;
-
+    public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyPlayerElementId(ar1),
           lazyPlayerElementId(ar2));
 
@@ -1552,17 +1537,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * topicmap. Then compares using AssociationRoleComparator. Then checks for
    * equality(.equals) and, if not equal, orders arbitrarily.
    */
-  private class AssociationRoleFrequencyComparator implements Comparator {
+  private class AssociationRoleFrequencyComparator implements Comparator<AssociationRoleIF> {
     AssociationRoleComparator associationRoleComparator;
 
     public AssociationRoleFrequencyComparator() {
       associationRoleComparator = new AssociationRoleComparator();
     }
 
-    public int compare(Object o1, Object o2) {
-      AssociationRoleIF ar1 = (AssociationRoleIF)o1;
-      AssociationRoleIF ar2 = (AssociationRoleIF)o2;
-
+    public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Lookup how many times the current combination of association,
       // role-type and role-player occurrs in this topic map.
       Integer count1 = getCount(ar1.getAssociation(), ar1);
@@ -1572,10 +1554,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       int retVal = count1.compareTo(count2);
 
       if (retVal == 0)
-        retVal = associationRoleComparator.compare(o1, o2);
+        retVal = associationRoleComparator.compare(ar1, ar2);
 
       // If topics are the same in all other ways, check if they're equal.
-      if (retVal == 0 && !o1.equals(o2))
+      if (retVal == 0 && !ar1.equals(ar2))
         // If they are not equal, arbitrarily order 1st role first.
         retVal = -1;
 
@@ -1587,15 +1569,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares association roles by comparing the IDs of their types, players and
    * reifiers respectively.
    */
-  private class AssociationRoleComparator implements Comparator {
+  private class AssociationRoleComparator implements Comparator<AssociationRoleIF> {
 
     public AssociationRoleComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      AssociationRoleIF ar1 = (AssociationRoleIF)o1;
-      AssociationRoleIF ar2 = (AssociationRoleIF)o2;
-
+    public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Compare the IDs of the role types.
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
           lazyTypeElementId(ar2));
@@ -1608,9 +1587,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       // Compare the reifier(if any) of the association roles.
       if (retVal == 0) {
         TopicIF reifier1 = ar1.getReifier();
-        Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
+        Collection<TopicIF> reifiers1 = (reifier1 == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier1));
         TopicIF reifier2 = ar2.getReifier();
-        Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
+        Collection<TopicIF> reifiers2 = (reifier2 == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier2));
         reifiers1 = filterCollection(reifiers1);
         reifiers2 = filterCollection(reifiers2);
         retVal = reifierComparator.compare(reifiers1, reifiers2);
@@ -1623,16 +1602,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Compares topic base names for correct output order.
    */
-  private class TopicNameComparator implements Comparator {
+  private class TopicNameComparator implements Comparator<TopicNameIF> {
 
     public TopicNameComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      if (o1 == o2)
+    public int compare(TopicNameIF bn1, TopicNameIF bn2) {
+      if (bn1 == bn2)
         return 0;
-      TopicNameIF bn1 = (TopicNameIF)o1;
-      TopicNameIF bn2 = (TopicNameIF)o2;
 
       int retVal = scopeComparator.compare(filterCollection(bn1.getScope()),
           filterCollection(bn2.getScope()));
@@ -1646,16 +1623,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Compares occurrences for correct output order.
    */
-  private class OccurrenceComparator implements Comparator {
+  private class OccurrenceComparator implements Comparator<OccurrenceIF> {
 
     public OccurrenceComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      if (o1 == o2)
+    public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
+      if (occ1 == occ2)
         return 0;
-      OccurrenceIF occ1 = (OccurrenceIF)o1;
-      OccurrenceIF occ2 = (OccurrenceIF)o2;
 
       int retVal = lazyStringCompare(lazyTypeElementId(occ1),
           lazyTypeElementId(occ2));
@@ -1671,9 +1646,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       // Compare the reifier(if there is one) of the occurrences.
       if (retVal == 0) {
         TopicIF reifier1 = occ1.getReifier();
-        Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
+        Collection<TopicIF> reifiers1 = (reifier1 == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier1));
         TopicIF reifier2 = occ2.getReifier();
-        Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
+        Collection<TopicIF> reifiers2 = (reifier2 == null ? Collections.<TopicIF>emptySet() : Collections.singleton(reifier2));
         reifiers1 = filterCollection(reifiers1);
         reifiers2 = filterCollection(reifiers2);
         retVal = reifierComparator.compare(reifiers1, reifiers2);
@@ -1690,16 +1665,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Compares variant names for correct output order.
    */
-  private class VariantComparator implements Comparator {
+  private class VariantComparator implements Comparator<VariantNameIF> {
 
     public VariantComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
-      if (o1 == o2)
+    public int compare(VariantNameIF vn1, VariantNameIF vn2) {
+      if (vn1 == vn2)
         return 0;
-      VariantNameIF vn1 = (VariantNameIF)o1;
-      VariantNameIF vn2 = (VariantNameIF)o2;
 
       int retVal = scopeComparator.compare(filterCollection(vn1.getScope()),
           filterCollection(vn2.getScope()));
@@ -1716,11 +1689,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * element-wise. If the Collections are of equal size, the one with fewer
    * elements is ordered first.
    */
-  private class CollectionComparator implements Comparator {
-    private Comparator betweenComp; // Compares elements within collection.
-    private Comparator withinComp; // Compares elements between two
+  private class CollectionComparator<E> implements Comparator<Collection<E>> {
+    private Comparator<? super E> betweenComp; // Compares elements within collection.
+    private Comparator<? super E> withinComp; // Compares elements between two
     // collections.
-    private IteratorComparator iteratorComparator; // Compares elements.
+    private IteratorComparator<E> iteratorComparator; // Compares elements.
 
     /**
      * Constructs a CollectionComparator that uses elementComparator for
@@ -1728,7 +1701,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
      * @param elementComparator Compares individual elements, both within a
      *        colleciton and for elements in two different collections.
      */
-    public CollectionComparator(Comparator elementComparator) {
+    public CollectionComparator(Comparator<? super E> elementComparator) {
       this(elementComparator, elementComparator);
     }
 
@@ -1739,20 +1712,17 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
      * @param betweenComparator Compares individual elements between two
      *        collections.
      */
-    public CollectionComparator(Comparator betweenComparator,
-        Comparator withinComparator)
+    public CollectionComparator(Comparator<? super E> betweenComparator,
+        Comparator<? super E> withinComparator)
     {
       this.betweenComp = betweenComparator;
       this.withinComp = withinComparator;
-      iteratorComparator = new IteratorComparator(betweenComp);
+      iteratorComparator = new IteratorComparator<E>(betweenComp);
     }
 
-    public int compare(Object o1, Object o2) {
-      if (o1 == o2)
+    public int compare(Collection<E> c1, Collection<E> c2) {
+      if (c1 == c2)
         return 0;
-
-      Collection c1 = (Collection)o1;
-      Collection c2 = (Collection)o2;
 
       return iteratorComparator.compare(sort(c1, withinComp).iterator(), sort(
           c2, withinComp).iterator());
@@ -1764,9 +1734,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * the end of one of the collection, in which case the collections will be
    * regarded as _equal_.
    */
-  private class CollectionNoSizeComparator implements Comparator {
-    private Comparator betweenComp; // Compares elements within collection.
-    private Comparator withinComp; // Compares elements between two
+  private class CollectionNoSizeComparator<E> implements Comparator<Collection<E>> {
+    private Comparator<? super E> betweenComp; // Compares elements within collection.
+    private Comparator<? super E> withinComp; // Compares elements between two
 
     // collections.
 
@@ -1776,7 +1746,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
      * @param elementComparator Compares individual elements, both within a
      *        colleciton and for elements in two different collections.
      */
-    public CollectionNoSizeComparator(Comparator elementComparator) {
+    public CollectionNoSizeComparator(Comparator<? super E> elementComparator) {
       this(elementComparator, elementComparator);
     }
 
@@ -1787,22 +1757,22 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
      * @param betweenComparator Compares individual elements between two
      *        collections.
      */
-    public CollectionNoSizeComparator(Comparator betweenComparator,
-        Comparator withinComparator)
+    public CollectionNoSizeComparator(Comparator<? super E> betweenComparator,
+        Comparator<? super E> withinComparator)
     {
       this.betweenComp = betweenComparator;
       this.withinComp = withinComparator;
     }
 
-    public int compare(Object o1, Object o2) {
+    public int compare(Collection<E> o1, Collection<E> o2) {
       if (o1 == o2)
         return 0;
 
-      Collection c1 = sort((Collection)o1, withinComp);
-      Collection c2 = sort((Collection)o2, withinComp);
+      Collection<E> c1 = sort(o1, withinComp);
+      Collection<E> c2 = sort(o2, withinComp);
 
-      Iterator i1 = c1.iterator();
-      Iterator i2 = c2.iterator();
+      Iterator<E> i1 = c1.iterator();
+      Iterator<E> i2 = c2.iterator();
 
       // NOTE: Deliberately does not take size into account.
       int retVal = 0;
@@ -1816,20 +1786,17 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * Comparator for superclass-subclass associations.
    */
-  private class SupersubComparator implements Comparator {
-    Comparator iteratorComparator;
-    Comparator supersubRoleComparator;
+  private class SupersubComparator implements Comparator<AssociationIF> {
+    Comparator<Iterator<AssociationRoleIF>> iteratorComparator;
+    Comparator<AssociationRoleIF> supersubRoleComparator;
 
     public SupersubComparator() {
       supersubRoleComparator = new SupersubRoleComparator();
-      iteratorComparator = new IteratorComparator(supersubRoleComparator);
+      iteratorComparator = new IteratorComparator<AssociationRoleIF>(supersubRoleComparator);
 
     }
 
-    public int compare(Object o1, Object o2) {
-      AssociationIF assoc1 = (AssociationIF)o1;
-      AssociationIF assoc2 = (AssociationIF)o2;
-
+    public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       // Compare the sortes sets of roles element-wise.
       return iteratorComparator.compare(sort(assoc1.getRoles(),
           supersubRoleComparator).iterator(), sort(assoc2.getRoles(),
@@ -1841,14 +1808,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares association roles in supertype-subtype associations correct output
    * order.
    */
-  private class SupersubRoleComparator implements Comparator {
+  private class SupersubRoleComparator implements Comparator<AssociationRoleIF> {
     public SupersubRoleComparator() {
     }
 
-    public int compare(Object o1, Object o2) {
+    public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = 0;
-      AssociationRoleIF ar1 = (AssociationRoleIF)o1;
-      AssociationRoleIF ar2 = (AssociationRoleIF)o2;
 
       // Get the types.
       TopicIF type1 = ar1.getType();
