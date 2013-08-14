@@ -30,9 +30,9 @@ import java.util.Iterator;
  */
 
 public class IteratorComparator<T> implements Comparator<Iterator<T>> {
-  Comparator<T> elementComparator;
+  Comparator<? super T> elementComparator;
   
-  public IteratorComparator (Comparator<T> elementComparator) {
+  public IteratorComparator (Comparator<? super T> elementComparator) {
     this.elementComparator = elementComparator;
   }
   
