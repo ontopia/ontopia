@@ -85,27 +85,27 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   // Ltm file.
 
   // Compares associations for correct output order.
-  Comparator<AssociationIF> associationComparator;
+  protected Comparator<AssociationIF> associationComparator;
   // Compares base names by their scope and then by their value.
-  Comparator<TopicNameIF> baseNameComparator;
+  protected Comparator<TopicNameIF> baseNameComparator;
   // Compares TMObjects by their elementId.
-  Comparator<TopicIF> elementIdComparator;
+  protected Comparator<TopicIF> elementIdComparator;
   // Compares supertype-subtype associations for correct output order.
-  Comparator<AssociationIF> supersubComparator;
+  protected Comparator<AssociationIF> supersubComparator;
   // Compares supertype-subtype association roles for correct output order.
-  Comparator<AssociationRoleIF> supersubRoleComparator;
+  protected Comparator<AssociationRoleIF> supersubRoleComparator;
   // Compares occurrences for correct output order.
-  Comparator<OccurrenceIF> occurrenceComparator;
+  protected Comparator<OccurrenceIF> occurrenceComparator;
   // Compares collections of reifying topics by the element ids(in order).
-  Comparator<Collection<TopicIF>> reifierComparator;
+  protected Comparator<Collection<TopicIF>> reifierComparator;
   // Compares association roles for correct output order.
-  Comparator<AssociationRoleIF> roleComparator;
+  protected Comparator<AssociationRoleIF> roleComparator;
   // Compares collections of scoping topics by the element ids(in order).
-  Comparator<Collection<TopicIF>> scopeComparator;
+  protected Comparator<Collection<TopicIF>> scopeComparator;
   // Compares topics for correct output order.
-  Comparator<TopicIF> topicComparator;
+  protected Comparator<TopicIF> topicComparator;
   // Compares variant names for correct output order.
-  Comparator<VariantNameIF> variantComparator;
+  protected Comparator<VariantNameIF> variantComparator;
 
   protected IdManager idManager;
 
