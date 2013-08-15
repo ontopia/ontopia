@@ -20,19 +20,15 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Properties;
 
 import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.SoftValueHashMapIndex;

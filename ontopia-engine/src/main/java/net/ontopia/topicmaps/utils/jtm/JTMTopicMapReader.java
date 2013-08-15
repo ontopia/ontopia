@@ -36,7 +36,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.utils.ClassInstanceUtils;
-import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 

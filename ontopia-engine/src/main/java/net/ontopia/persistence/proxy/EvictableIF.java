@@ -22,8 +22,6 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
 
-import net.ontopia.utils.LookupIndexIF;
-
 /**
  * INTERNAL: Simple interface used by helper objects for invalidation purposes.
  */

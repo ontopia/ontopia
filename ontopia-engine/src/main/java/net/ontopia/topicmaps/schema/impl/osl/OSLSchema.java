@@ -24,9 +24,7 @@ import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.schema.core.SchemaIF;
 import net.ontopia.topicmaps.schema.core.SchemaValidatorIF;
 

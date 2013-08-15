@@ -23,8 +23,6 @@ package net.ontopia.persistence.proxy;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

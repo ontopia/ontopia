@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;
 import java.util.ArrayList;
-import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
 
 /**
  * INTERNAL: Represents a constraint on a base name within a topic class

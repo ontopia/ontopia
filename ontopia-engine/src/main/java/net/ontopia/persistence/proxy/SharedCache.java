@@ -20,23 +20,15 @@
 
 package net.ontopia.persistence.proxy;
 
-import gnu.trove.map.hash.THashMap;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
-import net.ontopia.utils.LookupIndexIF;
-import net.ontopia.utils.ClearableIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.SoftValueHashMapIndex;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.SynchronizedLookupIndex;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

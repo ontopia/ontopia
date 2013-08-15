@@ -22,8 +22,6 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;
 import java.util.ArrayList;
-import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Represents a constraint on the association roles of an

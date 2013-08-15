@@ -20,7 +20,6 @@
 
 package net.ontopia.persistence.rdbms;
 
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.IOException;

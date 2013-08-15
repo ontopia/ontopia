@@ -20,8 +20,6 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.Collection;
-
 /**
  * INTERNAL: A transactional storage cache implementation. The cache
  * uses the transaction to lookup objects and relies on the fact that

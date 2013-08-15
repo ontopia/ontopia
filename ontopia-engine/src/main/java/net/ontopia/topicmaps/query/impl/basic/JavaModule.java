@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;

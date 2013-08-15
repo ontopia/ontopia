@@ -25,13 +25,9 @@ import java.util.Set;
 import java.util.List;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.ArrayList;
-
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 /**

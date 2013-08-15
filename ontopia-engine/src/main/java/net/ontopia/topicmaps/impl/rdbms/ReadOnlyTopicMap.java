@@ -21,24 +21,11 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.persistence.proxy.ConnectionFactoryIF;
-import net.ontopia.persistence.proxy.IdentityIF;
-import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.QueryCollection;
-import net.ontopia.persistence.proxy.RDBMSAccess;
-import net.ontopia.persistence.proxy.RDBMSStorage;
-import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.ConstraintViolationException;
-import net.ontopia.topicmaps.core.NotRemovableException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;

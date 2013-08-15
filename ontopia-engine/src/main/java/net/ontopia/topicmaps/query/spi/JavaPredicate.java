@@ -25,8 +25,6 @@ import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.impl.basic.BasicPredicateIF;
-import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
-import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 

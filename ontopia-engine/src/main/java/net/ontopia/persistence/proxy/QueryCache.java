@@ -22,15 +22,12 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
-import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.SynchronizedLookupIndex;
 
 import org.apache.commons.collections.map.LRUMap;
 

@@ -35,7 +35,6 @@ import org.tmapi.core.FeatureNotRecognizedException;
 import org.tmapi.core.Locator;
 import org.tmapi.core.MalformedIRIException;
 import org.tmapi.core.TopicMapExistsException;
-import org.tmapi.core.TopicMapSystem;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.

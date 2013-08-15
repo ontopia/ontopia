@@ -21,8 +21,6 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.List;
-import java.net.MalformedURLException;
-import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Interface implemented by event handlers which build the

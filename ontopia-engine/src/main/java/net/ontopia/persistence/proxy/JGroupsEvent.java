@@ -29,7 +29,7 @@ import java.io.ObjectOutput;
  * INTERNAL: 
  */
 
-public class JGroupsEvent implements java.io.Externalizable {
+public class JGroupsEvent implements Externalizable {
 
   public int eventType;
   public Object value;

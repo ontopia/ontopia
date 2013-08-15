@@ -20,9 +20,6 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,7 +32,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Properties;
 
-import net.ontopia.utils.SoftValueHashMapIndex;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.persistence.query.sql.EqualsSQLOptimizer;
@@ -49,12 +45,10 @@ import net.ontopia.persistence.query.sql.SQLQuery;
 import net.ontopia.persistence.query.sql.SQLStatementIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
-import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.SynchronizedLookupIndex;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

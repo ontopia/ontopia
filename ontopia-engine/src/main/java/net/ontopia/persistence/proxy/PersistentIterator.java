@@ -20,14 +20,8 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.HashSet;
-import java.util.Set;
-
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Iterator that iterates over an iterator of IdentityIF

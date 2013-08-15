@@ -21,9 +21,7 @@
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;
-import java.util.Collections;
 import java.net.MalformedURLException;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -33,8 +31,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-import net.ontopia.topicmaps.query.impl.basic.QueryContext;
-import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 
 /**
  * INTERNAL: Represents an UPDATE statement.

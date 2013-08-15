@@ -20,15 +20,6 @@
 
 package net.ontopia.persistence.proxy;
 
-import gnu.trove.procedure.TObjectIntProcedure;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
-import net.ontopia.utils.CompactIdentityHashSet;
-import net.ontopia.utils.LookupIndexIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.SoftValueHashMapIndex;
 

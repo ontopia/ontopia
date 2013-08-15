@@ -22,14 +22,12 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.SortedMap;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;

@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 

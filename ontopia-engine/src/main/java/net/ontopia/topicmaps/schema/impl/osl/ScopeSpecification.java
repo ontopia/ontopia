@@ -26,7 +26,6 @@ import java.util.Iterator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.schema.core.ConstraintIF;
 import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
 
 /**

@@ -23,15 +23,12 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyTopicMapSource;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**

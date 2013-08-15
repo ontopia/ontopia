@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.xml;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -34,12 +33,10 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.PrettyPrinter;
 

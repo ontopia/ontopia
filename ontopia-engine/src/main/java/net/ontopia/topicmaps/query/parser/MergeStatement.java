@@ -21,16 +21,10 @@
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;
-import java.util.List;
-import java.util.Collections;
-import java.net.MalformedURLException;
-
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-import net.ontopia.topicmaps.query.parser.Parameter;
 
 /**
  * INTERNAL: Represents a parsed MERGE statement.
