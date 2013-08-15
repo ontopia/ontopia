@@ -22,8 +22,6 @@ package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;
 import java.util.Map;
-
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.topicmaps.query.impl.utils.QueryContext;

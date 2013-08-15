@@ -25,14 +25,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.PrettyPrinter;
 
 import org.xml.sax.DocumentHandler;

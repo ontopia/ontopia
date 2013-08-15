@@ -31,8 +31,6 @@ import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
-
 import net.ontopia.utils.ResourcesDirectoryReader;
 import net.ontopia.utils.URIUtils;
 

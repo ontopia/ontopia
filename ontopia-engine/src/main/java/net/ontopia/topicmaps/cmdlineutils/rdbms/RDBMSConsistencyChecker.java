@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -32,13 +28,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import net.ontopia.persistence.proxy.ClassDescriptor;
-import net.ontopia.persistence.proxy.ClassInfoIF;
-import net.ontopia.persistence.proxy.FieldInfoIF;
-import net.ontopia.persistence.proxy.RDBMSMapping;
 import net.ontopia.persistence.proxy.RDBMSStorage;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 

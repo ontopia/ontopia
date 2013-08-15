@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.rdbms.SourceLocator;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.parser.Variable;
 
 /**
  * INTERNAL: Implements the 'item-identifier(tmobject,locator)' predicate.

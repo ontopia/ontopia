@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.schema.impl.osl;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
 

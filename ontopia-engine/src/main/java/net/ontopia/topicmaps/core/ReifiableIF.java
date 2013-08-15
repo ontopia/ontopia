@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.util.Collection;
-  
 /**
  * PUBLIC: Implemented by topic map objects that can be
  * reified. Reification means making a topic for another object (that

@@ -24,8 +24,6 @@ import java.util.List;
 
 import net.ontopia.persistence.query.jdo.JDOEquals;
 import net.ontopia.persistence.query.jdo.JDOField;
-import net.ontopia.persistence.query.jdo.JDONotEquals;
-import net.ontopia.persistence.query.jdo.JDONull;
 import net.ontopia.persistence.query.jdo.JDOObject;
 import net.ontopia.persistence.query.jdo.JDOValueIF;
 import net.ontopia.topicmaps.core.TopicMapIF;

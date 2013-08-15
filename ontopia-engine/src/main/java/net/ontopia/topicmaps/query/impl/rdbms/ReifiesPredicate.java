@@ -20,27 +20,16 @@
 
 package net.ontopia.topicmaps.query.impl.rdbms;
 
-import java.util.Collection;
 import java.util.List;
-
-import net.ontopia.persistence.proxy.PersistentIF;
-import net.ontopia.persistence.query.jdo.JDOAnd;
 import net.ontopia.persistence.query.jdo.JDOBoolean;
-import net.ontopia.persistence.query.jdo.JDOContains;
 import net.ontopia.persistence.query.jdo.JDOEquals;
 import net.ontopia.persistence.query.jdo.JDOField;
-import net.ontopia.persistence.query.jdo.JDONativeValue;
 import net.ontopia.persistence.query.jdo.JDOObject;
-import net.ontopia.persistence.query.jdo.JDOPrimitive;
 import net.ontopia.persistence.query.jdo.JDOValueIF;
-import net.ontopia.persistence.query.jdo.JDOVariable;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.impl.rdbms.SourceLocator;
-import net.ontopia.topicmaps.impl.rdbms.SubjectIndicatorLocator;
-import net.ontopia.topicmaps.impl.rdbms.Topic;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.utils.ObjectUtils;
 

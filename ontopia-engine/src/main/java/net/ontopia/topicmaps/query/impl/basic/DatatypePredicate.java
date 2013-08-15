@@ -35,8 +35,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
-import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 
 /**

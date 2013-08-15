@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.schema.impl.osl;
 
-import java.util.Collection;
-import java.util.ArrayList;
-import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
-
 /**
  * INTERNAL: Represents a constraint on the allowed variant names of
  * a base name.

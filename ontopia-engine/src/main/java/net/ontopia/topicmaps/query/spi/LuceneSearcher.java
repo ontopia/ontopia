@@ -29,11 +29,9 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Searcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.infoset.fulltext.impl.lucene.OmnigatorAnalyzer;
 import net.ontopia.utils.OntopiaRuntimeException;
 

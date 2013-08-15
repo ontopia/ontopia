@@ -20,12 +20,6 @@
 
 package net.ontopia.topicmaps.schema.impl.osl;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ArrayList;
-import net.ontopia.topicmaps.core.TopicIF;
-
 /**
  * INTERNAL: Represents a rule set, that is, a collection of reusable
  * topic constraints.

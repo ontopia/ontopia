@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyTopicMapSource;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;

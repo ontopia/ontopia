@@ -20,7 +20,6 @@
 
 package net.ontopia.persistence.query.sql;
 
-import java.util.List;
 import java.util.Map;
 
 /**

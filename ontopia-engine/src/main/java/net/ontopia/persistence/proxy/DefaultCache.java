@@ -23,7 +23,6 @@ package net.ontopia.persistence.proxy;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Collection;
-import java.util.Collections;
 
 import net.ontopia.utils.StringUtils;
 

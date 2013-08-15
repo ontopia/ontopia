@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.Collection;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;

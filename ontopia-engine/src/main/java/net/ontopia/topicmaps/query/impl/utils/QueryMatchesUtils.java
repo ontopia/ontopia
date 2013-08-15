@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.query.impl.utils;
 
-import java.util.Map;
 import java.util.Collection;
 import net.ontopia.topicmaps.query.impl.basic.QueryContext;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;

@@ -21,13 +21,7 @@
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;
-import java.util.List;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.net.MalformedURLException;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -36,8 +30,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-import net.ontopia.topicmaps.query.impl.basic.QueryContext;
-import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 /**
  * INTERNAL: Represents a parsed DELETE statement.
  */

@@ -28,8 +28,6 @@ import net.ontopia.persistence.query.jdo.JDOBoolean;
 import net.ontopia.persistence.query.jdo.JDOContains;
 import net.ontopia.persistence.query.jdo.JDOEquals;
 import net.ontopia.persistence.query.jdo.JDOField;
-import net.ontopia.persistence.query.jdo.JDONotEquals;
-import net.ontopia.persistence.query.jdo.JDONull;
 import net.ontopia.persistence.query.jdo.JDOObject;
 import net.ontopia.persistence.query.jdo.JDOValueIF;
 import net.ontopia.topicmaps.core.TopicIF;

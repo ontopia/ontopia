@@ -25,8 +25,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.Collections;
-import org.xml.sax.SAXException;
-import org.xml.sax.DocumentHandler;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;

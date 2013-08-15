@@ -53,7 +53,6 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.XMLReaderFactoryIF;

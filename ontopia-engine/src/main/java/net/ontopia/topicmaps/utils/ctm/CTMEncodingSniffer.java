@@ -21,9 +21,7 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PushbackInputStream;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.impl.utils.EncodingSnifferIF;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 

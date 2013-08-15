@@ -22,10 +22,7 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.ArrayList;
-import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Abstract superclass for objects that contain topic constraints.

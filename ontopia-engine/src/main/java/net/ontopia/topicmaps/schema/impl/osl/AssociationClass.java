@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;
 import java.util.ArrayList;
-import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.schema.core.ConstraintIF;
 

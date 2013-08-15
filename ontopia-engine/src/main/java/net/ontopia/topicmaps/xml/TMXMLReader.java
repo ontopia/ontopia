@@ -31,10 +31,8 @@ import java.util.Collections;
 import java.net.MalformedURLException;
 
 import net.ontopia.utils.URIUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.ValidatingContentHandler;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.xml.AbstractXMLFormatReader;
@@ -55,7 +53,6 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.ReificationUtils;

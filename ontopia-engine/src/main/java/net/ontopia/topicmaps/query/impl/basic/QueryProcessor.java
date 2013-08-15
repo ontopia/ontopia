@@ -42,8 +42,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
@@ -65,7 +63,6 @@ import net.ontopia.topicmaps.query.parser.TologOptions;
 import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.ModificationStatement;
 import net.ontopia.topicmaps.query.parser.Variable;
-import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 
 import org.slf4j.Logger;

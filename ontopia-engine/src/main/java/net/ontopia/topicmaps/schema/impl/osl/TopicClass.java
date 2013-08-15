@@ -21,11 +21,8 @@
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.ArrayList;
-import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.schema.core.ConstraintIF;
 
 /**

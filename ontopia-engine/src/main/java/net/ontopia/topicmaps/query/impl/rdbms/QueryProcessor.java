@@ -30,7 +30,6 @@ import net.ontopia.persistence.proxy.RDBMSAccess;
 import net.ontopia.persistence.proxy.RDBMSMapping;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;

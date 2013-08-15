@@ -29,9 +29,6 @@ import java.util.Set;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-//! import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Class containing utility methods for processing
  * descriptor information.

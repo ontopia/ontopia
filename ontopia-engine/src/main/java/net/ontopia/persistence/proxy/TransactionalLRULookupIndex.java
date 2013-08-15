@@ -25,11 +25,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.ontopia.utils.LookupIndexIF;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.SoftHashMapIndex;
-import net.ontopia.utils.SynchronizedLookupIndex;
-
 import org.apache.commons.collections.map.LRUMap;
 
 /**

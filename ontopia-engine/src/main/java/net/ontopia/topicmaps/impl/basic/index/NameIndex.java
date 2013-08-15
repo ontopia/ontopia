@@ -22,12 +22,9 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
-import java.util.Iterator;
 
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
@@ -35,7 +32,6 @@ import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CollectionMap;

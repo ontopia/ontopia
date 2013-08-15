@@ -20,9 +20,6 @@
 
 package net.ontopia.topicmaps.query.spi;
 
-import java.util.Map;
-import net.ontopia.topicmaps.core.TopicMapIF;
-
 /**
  * EXPERIMENTAL: Interface used by process predicates to add new
  * result rows.

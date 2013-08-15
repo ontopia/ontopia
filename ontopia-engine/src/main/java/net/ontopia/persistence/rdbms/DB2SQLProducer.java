@@ -20,12 +20,6 @@
 
 package net.ontopia.persistence.rdbms;
 
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-
-import net.ontopia.utils.StringUtils;
-
 /** 
  * INTERNAL: Class that generates DDL statements for the IBM db2
  * universal database platform.

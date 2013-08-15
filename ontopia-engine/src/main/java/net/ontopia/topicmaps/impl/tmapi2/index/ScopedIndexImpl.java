@@ -40,7 +40,6 @@ import org.tmapi.core.Name;
 import org.tmapi.core.Occurrence;
 import org.tmapi.core.Topic;
 import org.tmapi.core.Variant;
-import org.tmapi.index.ScopedIndex;
 
 /**
  * This is the implementation for the TMAPI2 {@link ScopedIndex} interface.

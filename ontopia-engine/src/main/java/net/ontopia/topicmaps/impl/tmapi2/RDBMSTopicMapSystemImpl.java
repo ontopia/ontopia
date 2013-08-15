@@ -30,12 +30,9 @@ import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.entry.TopicMapSourceIF;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSStoreFactory;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource;
 
@@ -43,7 +40,6 @@ import org.tmapi.core.FeatureNotRecognizedException;
 import org.tmapi.core.Locator;
 import org.tmapi.core.MalformedIRIException;
 import org.tmapi.core.TopicMapExistsException;
-import org.tmapi.core.TopicMapSystem;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.

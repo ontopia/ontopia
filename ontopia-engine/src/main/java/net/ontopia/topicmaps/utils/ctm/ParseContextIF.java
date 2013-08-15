@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.Map;
 import java.util.Set;
-import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 

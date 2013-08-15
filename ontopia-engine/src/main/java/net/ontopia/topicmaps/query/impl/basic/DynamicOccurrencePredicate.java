@@ -20,11 +20,8 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
-import java.net.MalformedURLException;
 import java.util.Iterator;
-
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;

@@ -22,19 +22,13 @@ package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.MalformedURLException;
 
 import org.xml.sax.InputSource;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
-import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 
 /**
  * INTERNAL: An CTM file topic map reference.

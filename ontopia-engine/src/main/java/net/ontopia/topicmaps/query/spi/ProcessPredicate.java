@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.query.spi;
 
-import java.util.Map;
-
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
