@@ -196,23 +196,19 @@ public class JDOQuery {
   }
   
   public void addAscending(JDOValueIF value) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new JDOOrderBy(value, JDOOrderBy.ASCENDING));
+    addOrderBy(new JDOOrderBy(value, JDOOrderBy.ASCENDING));
   }
   
   public void addDescending(JDOValueIF value) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new JDOOrderBy(value, JDOOrderBy.DESCENDING));
+    addOrderBy(new JDOOrderBy(value, JDOOrderBy.DESCENDING));
   }
   
   public void addAscending(JDOAggregateIF aggregate) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new JDOOrderBy(aggregate, JDOOrderBy.ASCENDING));
+    addOrderBy(new JDOOrderBy(aggregate, JDOOrderBy.ASCENDING));
   }
   
   public void addDescending(JDOAggregateIF aggregate) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new JDOOrderBy(aggregate, JDOOrderBy.DESCENDING));
+    addOrderBy(new JDOOrderBy(aggregate, JDOOrderBy.DESCENDING));
   }
 
   public String toString() {

@@ -117,23 +117,19 @@ public class SQLQuery {
   }
 
   public void addAscending(SQLValueIF value) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new SQLOrderBy(value, SQLOrderBy.ASCENDING));
+    addOrderBy(new SQLOrderBy(value, SQLOrderBy.ASCENDING));
   }
   
   public void addDescending(SQLValueIF value) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new SQLOrderBy(value, SQLOrderBy.DESCENDING));
+    addOrderBy(new SQLOrderBy(value, SQLOrderBy.DESCENDING));
   }
   
   public void addAscending(SQLAggregateIF aggregate) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new SQLOrderBy(aggregate, SQLOrderBy.ASCENDING));
+    addOrderBy(new SQLOrderBy(aggregate, SQLOrderBy.ASCENDING));
   }
   
   public void addDescending(SQLAggregateIF aggregate) {
-    if (orderby == null) orderby = new ArrayList();
-    orderby.add(new SQLOrderBy(aggregate, SQLOrderBy.DESCENDING));
+    addOrderBy(new SQLOrderBy(aggregate, SQLOrderBy.DESCENDING));
   }
 
   public SQLExpressionIF getFilter() {
