@@ -37,7 +37,7 @@ public class PostgreSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
 
-  protected List dropStatement(Table table, List statements) throws IOException {
+  protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
     StringBuffer sb = new StringBuffer();
     sb.append("drop table ");
     sb.append(table.getName());

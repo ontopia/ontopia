@@ -33,16 +33,16 @@ import java.util.Map;
 public class Project {
 
   protected String name;
-  protected Map tables;
-  protected Map datatypes;
-  protected Map c_actions;
-  protected Map d_actions;
+  protected Map<String, Table> tables;
+  protected Map<String, Map<String, DataType>> datatypes;
+  protected Map<String, List<String>> c_actions;
+  protected Map<String, List<String>> d_actions;
   
   public Project() {
-    tables = new HashMap();
-    datatypes = new HashMap();
-    c_actions = new HashMap();
-    d_actions = new HashMap();
+    tables = new HashMap<String, Table>();
+    datatypes = new HashMap<String, Map<String, DataType>>();
+    c_actions = new HashMap<String, List<String>>();
+    d_actions = new HashMap<String, List<String>>();
   }
 
   /**
@@ -63,13 +63,13 @@ public class Project {
    * INTERNAL: Gets a table definition by name.
    */
   public Table getTableByName(String name) {
-    return (Table)tables.get(name);
+    return tables.get(name);
   }
   
   /**
    * INTERNAL: Gets all the tables in the database schema.
    */
-  public Collection getTables() {
+  public Collection<Table> getTables() {
     return tables.values();
   }
 
@@ -90,7 +90,7 @@ public class Project {
   /**
    * INTERNAL: Gets all datatype platforms.
    */
-  public Collection getDataTypePlatforms() {
+  public Collection<String> getDataTypePlatforms() {
     return datatypes.keySet();
   }
   
@@ -103,10 +103,10 @@ public class Project {
   
   public DataType getDataTypeByName(String name, String[] platforms) {
     for (int i=0; i < platforms.length; i++) {
-      Map types = (Map)datatypes.get(platforms[i]);
+      Map<String, DataType> types = datatypes.get(platforms[i]);
       if (types == null ||
           !types.containsKey(name)) continue;
-      return (DataType)types.get(name);
+      return types.get(name);
     }
     return null;
   }
@@ -114,14 +114,14 @@ public class Project {
   /**
    * INTERNAL: Gets all the datatypes for the given platforms.
    */
-  public Collection getDataTypes(String platform) {
+  public Collection<DataType> getDataTypes(String platform) {
     return getDataTypes(new String[] { platform });
   }
   
-  public Collection getDataTypes(String[] platforms) {
-    Map types = new HashMap();
+  public Collection<DataType> getDataTypes(String[] platforms) {
+    Map<String, DataType> types = new HashMap<String, DataType>();
     for (int i=platforms.length-1; i >= 0; i--) {
-      Map _types = (Map)datatypes.get(platforms[i]);
+      Map<String, DataType> _types = datatypes.get(platforms[i]);
       if (_types != null)
         types.putAll(_types);
     }
@@ -133,11 +133,11 @@ public class Project {
    */
   public void addDataType(DataType datatype, String platform) {
     if (!datatypes.containsKey(platform)) {
-      Map types = new HashMap();
+      Map<String, DataType> types = new HashMap<String, DataType>();
       types.put(datatype.getName(), datatype);
       datatypes.put(platform, types);
     } else {
-      Map types = (Map)datatypes.get(platform);
+      Map<String, DataType> types = datatypes.get(platform);
       types.put(datatype.getName(), datatype);
     }
   }
@@ -147,7 +147,7 @@ public class Project {
    */
   public void removeDataType(DataType datatype, String platform) {
     if (datatypes.containsKey(platform)) {
-      Map types = (Map)datatypes.get(platform);      
+      Map<String, DataType> types = datatypes.get(platform);      
       types.remove(datatype.getName());
       if (types.isEmpty())
         datatypes.remove(platform);
@@ -159,11 +159,11 @@ public class Project {
    * part of the schema create. Actions for the first matching
    * platform is returned.
    */
-  public List getCreateActions(String[] platforms) {
-		List actions = new ArrayList();
+  public List<String> getCreateActions(String[] platforms) {
+		List<String> actions = new ArrayList<String>();
     for (int i=platforms.length-1; i >= 0; i--) {
       if (c_actions.containsKey(platforms[i]))
-				actions.addAll((List)c_actions.get(platforms[i]));
+				actions.addAll(c_actions.get(platforms[i]));
     }
     return actions;
   }
@@ -173,9 +173,9 @@ public class Project {
    * part of the schema create.
    */
   public void addCreateAction(String platform, String action) {
-    List actions = (List)this.c_actions.get(platform);
+    List<String> actions = this.c_actions.get(platform);
     if (actions == null) {
-      actions = new ArrayList();
+      actions = new ArrayList<String>();
       this.c_actions.put(platform, actions);
     }
     actions.add(action);
@@ -186,11 +186,11 @@ public class Project {
    * part of the schema drop. Actions for the first matching
    * platform is returned.
    */
-  public List getDropActions(String[] platforms) {
-		List actions = new ArrayList();
+  public List<String> getDropActions(String[] platforms) {
+		List<String> actions = new ArrayList<String>();
     for (int i=platforms.length-1; i >= 0; i--) {
       if (d_actions.containsKey(platforms[i]))
-        actions.addAll((List)d_actions.get(platforms[i]));
+        actions.addAll(d_actions.get(platforms[i]));
     }
     return actions;
   }
@@ -200,9 +200,9 @@ public class Project {
    * part of the schema drop.
    */
   public void addDropAction(String platform, String action) {
-    List actions = (List)this.d_actions.get(platform);
+    List<String> actions = this.d_actions.get(platform);
     if (actions == null) {
-      actions = new ArrayList();
+      actions = new ArrayList<String>();
       this.d_actions.put(platform, actions);
     }
     actions.add(action);

@@ -89,19 +89,19 @@ public class DatabaseProjectReader {
 
     dh.startElement("dbschema", EMPTY_ATTR_LIST);
 
-    Iterator platforms = project.getDataTypePlatforms().iterator();
+    Iterator<String> platforms = project.getDataTypePlatforms().iterator();
     if (platforms.hasNext()) {
       while (platforms.hasNext()) {        
-        String platform = (String)platforms.next();
+        String platform = platforms.next();
         
         atts.clear();
         atts.addAttribute("platform", "CDATA", platform);
         dh.startElement("datatypes", atts);
         
-        Iterator datatypes = project.getDataTypes(platform).iterator();
+        Iterator<DataType> datatypes = project.getDataTypes(platform).iterator();
         while (datatypes.hasNext()) {
           // Platform datatypes
-          DataType datatype = (DataType)datatypes.next();
+          DataType datatype = datatypes.next();
           atts.clear();
           atts.addAttribute("name", "CDATA", (datatype.getName()));
           atts.addAttribute("type", "CDATA", (datatype.getType()));
@@ -111,9 +111,9 @@ public class DatabaseProjectReader {
           dh.startElement("datatype", atts);
 
           // Datatype properties
-          Iterator properties = datatype.getProperties().iterator();
+          Iterator<String> properties = datatype.getProperties().iterator();
           while (properties.hasNext()) {
-            String name = (String)properties.next();
+            String name = properties.next();
             String value = datatype.getProperty(name);
             if (value != null) {
               atts.clear();
@@ -131,9 +131,9 @@ public class DatabaseProjectReader {
       dh.endElement("datatypes");
     }
     
-    Iterator tables = project.getTables().iterator();
+    Iterator<Table> tables = project.getTables().iterator();
     while (tables.hasNext()) {
-      Table table = (Table)tables.next();
+      Table table = tables.next();
 
       // Table attributes
       atts.clear();
@@ -145,9 +145,9 @@ public class DatabaseProjectReader {
       dh.startElement("table", atts);
 
       // Table properties
-      Iterator properties = table.getProperties().iterator();
+      Iterator<String> properties = table.getProperties().iterator();
       while (properties.hasNext()) {
-        String name = (String)properties.next();
+        String name = properties.next();
         String value = table.getProperty(name);
         if (value != null) {
           atts.clear();
@@ -158,9 +158,9 @@ public class DatabaseProjectReader {
         }
       }
 
-      Iterator columns = table.getColumns().iterator();
+      Iterator<Column> columns = table.getColumns().iterator();
       while (columns.hasNext()) {
-        Column column = (Column)columns.next();
+        Column column = columns.next();
 
         // Column attributes
         atts.clear();
@@ -181,9 +181,9 @@ public class DatabaseProjectReader {
         dh.startElement("column", atts);
       
         // Column properties
-        Iterator properties2 = column.getProperties().iterator();
+        Iterator<String> properties2 = column.getProperties().iterator();
         while (properties2.hasNext()) {
-          String name = (String)properties2.next();
+          String name = properties2.next();
           String value = column.getProperty(name);
           if (value != null) {
             atts.clear();
@@ -216,7 +216,7 @@ public class DatabaseProjectReader {
     static final String EL_DROP_ACTION = "drop-action";
 
     protected Project project;
-    protected Map info;
+    protected Map<String, Object> info;
     
     public ProjectHandler() {
       keepContentsOf("create-action");
@@ -225,7 +225,7 @@ public class DatabaseProjectReader {
 
     public void startDocument() {
       project = new Project();
-      info = new HashMap();
+      info = new HashMap<String, Object>();
     }
 
     public void endDocument() {
@@ -450,8 +450,8 @@ public class DatabaseProjectReader {
       
     }
 
-    protected Map parseAttribs(String content) {
-      Map result = new HashMap();
+    protected Map<String, String> parseAttribs(String content) {
+      Map<String, String> result = new HashMap<String, String>();
       
       String[] fields = StringUtils.split(content.toString(), "\n");
       for (int i=0; i < fields.length; i++) {
