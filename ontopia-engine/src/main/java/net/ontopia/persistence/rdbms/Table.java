@@ -36,13 +36,13 @@ public class Table {
   protected String name;
   protected String shortname;
 
-  protected Map colsmap = new HashMap();
-  protected List columns = new ArrayList();
-  protected Map idxsmap = new HashMap();
-  protected List indexes = new ArrayList();
+  protected Map<String, Column> colsmap = new HashMap<String, Column>();
+  protected List<Column> columns = new ArrayList<Column>();
+  protected Map<String, Index> idxsmap = new HashMap<String, Index>();
+  protected List<Index> indexes = new ArrayList<Index>();
   protected String[] pkeys;
 
-  protected Map properties;
+  protected Map<String, String> properties;
 
   /**
    * INTERNAL: Gets the name of the table.
@@ -75,8 +75,8 @@ public class Table {
   /**
    * INTERNAL: Gets the table properties.
    */
-  public Collection getProperties() {
-    return (properties == null ? Collections.EMPTY_SET : properties.keySet());
+  public Collection<String> getProperties() {
+    return (properties == null ? Collections.<String>emptySet() : properties.keySet());
   }
 
   /**
@@ -86,7 +86,7 @@ public class Table {
     if (properties == null)
       return null;
     else
-      return (String)properties.get(property);
+      return properties.get(property);
   }
 
   /**
@@ -94,7 +94,7 @@ public class Table {
    */
   public void addProperty(String property, String value) {
     if (properties == null)
-      properties = new HashMap();
+      properties = new HashMap<String, String>();
     properties.put(property, value);
   }
   
@@ -112,13 +112,13 @@ public class Table {
    * INTERNAL: Gets a column by name.
    */
   public Column getColumnByName(String name) {
-    return (Column)colsmap.get(name);
+    return colsmap.get(name);
   }
   
   /**
    * INTERNAL: Gets all the columns in the table.
    */
-  public List getColumns() {
+  public List<Column> getColumns() {
     return columns;
   }
   
@@ -153,7 +153,7 @@ public class Table {
   /**
    * INTERNAL: Gets all the indexes in the table.
    */
-  public List getIndexes() {
+  public List<Index> getIndexes() {
     return indexes;
   }
   

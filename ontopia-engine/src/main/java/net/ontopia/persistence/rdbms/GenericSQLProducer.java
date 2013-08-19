@@ -63,18 +63,18 @@ public class GenericSQLProducer {
   public void writeCreate(Writer writer) throws IOException {
 
     // Create table
-    Iterator iter = project.getTables().iterator();
+    Iterator<Table> iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
-      outputStatements(createStatement(table, new ArrayList()), writer);
+      Table table = iter.next();
+      outputStatements(createStatement(table, new ArrayList<String>()), writer);
       writer.write("\n");
     }
     
     // Primary keys
     iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
-      outputStatements(addPrimaryKeys(table, new ArrayList()), writer);
+      Table table = iter.next();
+      outputStatements(addPrimaryKeys(table, new ArrayList<String>()), writer);
     }
 
     // Foreign keys
@@ -84,15 +84,15 @@ public class GenericSQLProducer {
       if (fkeys) writer.write("\n/* \n");
 
       while (iter.hasNext()) {
-        Table table = (Table)iter.next();
+        Table table = iter.next();
         int counter = 0;
-        Iterator iter2 = table.getColumns().iterator();
+        Iterator<Column> iter2 = table.getColumns().iterator();
         while (iter2.hasNext()) {
-          Column col = (Column)iter2.next();
+          Column col = iter2.next();
           if (col.getReferencedTable() != null) {
             counter++;
             String keyname = "FK_" + table.getName() + "_" + counter;
-            outputStatements(addForeignKey(table, col, keyname, new ArrayList()), writer);
+            outputStatements(addForeignKey(table, col, keyname, new ArrayList<String>()), writer);
           }
         }
       }
@@ -103,13 +103,13 @@ public class GenericSQLProducer {
     iter = project.getTables().iterator();
     if (iter.hasNext()) writer.write("\n");    
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
+      Table table = iter.next();
       if (table.getIndexes() != null)
-        outputStatements(createIndexes(table, new ArrayList()), writer);
+        outputStatements(createIndexes(table, new ArrayList<String>()), writer);
     }
 
     // Actions
-    List actions = (List)project.getCreateActions(platforms);
+    List<String> actions = project.getCreateActions(platforms);
     if (!actions.isEmpty()) {
       writer.write("\n");
       outputStatements(actions, writer);
@@ -119,19 +119,19 @@ public class GenericSQLProducer {
 
   public void executeCreate(Connection conn) throws IOException, SQLException {
 
-    List statements = new ArrayList();
+    List<String> statements = new ArrayList<String>();
     
     // Create table
-    Iterator iter = project.getTables().iterator();
+    Iterator<Table> iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
+      Table table = iter.next();
       createStatement(table, statements);
     }
     
     // Primary keys
     iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
+      Table table = iter.next();
       addPrimaryKeys(table, statements);
     }
 
@@ -160,7 +160,7 @@ public class GenericSQLProducer {
     // Indexes
     iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
+      Table table = iter.next();
       if (table.getIndexes() != null)
         createIndexes(table, statements);
     }
@@ -178,14 +178,14 @@ public class GenericSQLProducer {
   public void writeDrop(Writer writer) throws IOException {
 
     // Actions
-    List actions = (List)project.getDropActions(platforms);
+    List<String> actions = project.getDropActions(platforms);
     if (!actions.isEmpty()) {
       writer.write("\n");
       outputStatements(actions, writer);
       writer.write("\n");
     }
 
-    Iterator iter;
+    Iterator<Table> iter;
     // Foreign keys
     if (supportsForeignKeys()) {
       iter = project.getTables().iterator();
@@ -193,15 +193,15 @@ public class GenericSQLProducer {
       if (fkeys) writer.write("\n/* \n");
 
       while (iter.hasNext()) {
-        Table table = (Table)iter.next();
+        Table table = iter.next();
         int counter = 0;
-        Iterator iter2 = table.getColumns().iterator();
+        Iterator<Column> iter2 = table.getColumns().iterator();
         while (iter2.hasNext()) {
-          Column col = (Column)iter2.next();
+          Column col = iter2.next();
           if (col.getReferencedTable() != null) {
             counter++;
             String keyname = "FK_" + table.getName() + "_" + counter;
-            outputStatements(dropConstraint(table, col, keyname, new ArrayList()), writer);
+            outputStatements(dropConstraint(table, col, keyname, new ArrayList<String>()), writer);
           }
         }
       }
@@ -211,23 +211,23 @@ public class GenericSQLProducer {
     // drop table
     iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
-      outputStatements(dropStatement(table, new ArrayList()), writer);
+      Table table = iter.next();
+      outputStatements(dropStatement(table, new ArrayList<String>()), writer);
     }
 
   }
   
   public void executeDrop(Connection conn) throws IOException, SQLException {
 
-    List statements = new ArrayList();
+    List<String> statements = new ArrayList<String>();
 
     // Actions
     statements.addAll(project.getDropActions(platforms));
     
     // drop table
-    Iterator iter = project.getTables().iterator();
+    Iterator<Table> iter = project.getTables().iterator();
     while (iter.hasNext()) {
-      Table table = (Table)iter.next();
+      Table table = iter.next();
       dropStatement(table, statements);
     }
 
@@ -238,16 +238,16 @@ public class GenericSQLProducer {
   /**
    * INTERNAL: Generate the DDL statement(s) to create the specified table.
    */
-  protected List createStatement(Table table, List statements) throws IOException {
+  protected List<String> createStatement(Table table, List<String> statements) throws IOException {
     String[] pkeys = table.getPrimaryKeys();
     // Create table
     StringBuffer sb = new StringBuffer();
     sb.append("create table ");
     sb.append(table.getName());
     sb.append(" (\n");
-    Iterator iter = table.getColumns().iterator();
+    Iterator<Column> iter = table.getColumns().iterator();
     while (iter.hasNext()) {
-      Column col = (Column)iter.next();
+      Column col = iter.next();
       DataType type = project.getDataTypeByName(col.getType(), platforms);
       if (type == null)
         throw new OntopiaRuntimeException("Unknown datatype: '" + col.getType() + "'");
@@ -288,7 +288,7 @@ public class GenericSQLProducer {
   /**
    * INTERNAL: Generate the DDL statement(s) to drop the specified table.
    */
-  protected List dropStatement(Table table, List statements) throws IOException {
+  protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
     StringBuffer sb = new StringBuffer();
     sb.append("drop table ");
     sb.append(table.getName());
@@ -301,7 +301,7 @@ public class GenericSQLProducer {
    * the specified table. This method should only be implemented if
    * primary keys need to be created by a separate statement.
    */
-  protected List addPrimaryKeys(Table table, List statements) throws IOException {
+  protected List<String> addPrimaryKeys(Table table, List<String> statements) throws IOException {
     // Ignore, since we do this in the createStatement method.
     return statements;
   }
@@ -311,7 +311,7 @@ public class GenericSQLProducer {
    * the specified column. This method should only be implemented if
    * foreign keys need to be created by a separate statement.
    */
-  protected List addForeignKey(Table table, Column col, String keyname, List statements) throws IOException {
+  protected List<String> addForeignKey(Table table, Column col, String keyname, List<String> statements) throws IOException {
     StringBuffer sb = new StringBuffer();
     sb.append("alter table ");
     sb.append(table.getName());
@@ -333,7 +333,7 @@ public class GenericSQLProducer {
    * the specified column. This method should only be implemented if
    * foreign keys need to be created by a separate statement.
    */
-  protected List dropConstraint(Table table, Column col, String keyname, List statements) throws IOException {
+  protected List<String> dropConstraint(Table table, Column col, String keyname, List<String> statements) throws IOException {
     StringBuffer sb = new StringBuffer();
     sb.append("alter table ");
     sb.append(table.getName());
@@ -347,10 +347,10 @@ public class GenericSQLProducer {
    * INTERNAL: Generate the DDL statement(s) to create indexes for the
    * specified table.
    */
-  protected List createIndexes(Table table, List statements) throws IOException {
-    List indexes = table.getIndexes();
+  protected List<String> createIndexes(Table table, List<String> statements) throws IOException {
+    List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {
-      Index index = (Index)indexes.get(i);
+      Index index = indexes.get(i);
       StringBuffer sb = new StringBuffer();
       sb.append("create index ");
       sb.append(getIndexName(index));
@@ -366,20 +366,20 @@ public class GenericSQLProducer {
   
   // -- utility methods
 
-  protected void outputStatements(List statements, Writer writer) throws IOException {
-    Iterator iter = statements.iterator();
+  protected void outputStatements(List<String> statements, Writer writer) throws IOException {
+    Iterator<String> iter = statements.iterator();
     while (iter.hasNext()) {
-      writer.write((String)iter.next());
+      writer.write(iter.next());
       writer.write(";\n");
     }
   }
 
-  protected void executeStatements(List statements, Connection conn) throws IOException, SQLException {
+  protected void executeStatements(List<String> statements, Connection conn) throws IOException, SQLException {
     // Execute the statements
-    Iterator iter = statements.iterator();
+    Iterator<String> iter = statements.iterator();
     while (iter.hasNext()) {
       Statement stm = conn.createStatement();
-      String sql = (String)iter.next();
+      String sql = iter.next();
       log.info("Executing sql statements generated by " + getClass().getName());
       if (log.isDebugEnabled())
         log.debug("Executing: " + sql);

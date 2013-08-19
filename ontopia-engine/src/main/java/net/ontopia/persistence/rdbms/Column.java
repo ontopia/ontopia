@@ -39,7 +39,7 @@ public class Column {
   protected String refcol;
   protected boolean nullable;
 
-  protected Map properties;
+  protected Map<String, String> properties;
 
   /**
    * INTERNAL: Gets the name of the column.
@@ -58,8 +58,8 @@ public class Column {
   /**
    * INTERNAL: Gets the table properties.
    */
-  public Collection getProperties() {
-    return (properties == null ? Collections.EMPTY_SET : properties.keySet());
+  public Collection<String> getProperties() {
+    return (properties == null ? Collections.<String>emptySet() : properties.keySet());
   }
 
   /**
@@ -69,7 +69,7 @@ public class Column {
     if (properties == null)
       return null;
     else
-      return (String)properties.get(property);
+      return properties.get(property);
   }
 
   /**
@@ -77,7 +77,7 @@ public class Column {
    */
   public void addProperty(String property, String value) {
     if (properties == null)
-      properties = new HashMap();
+      properties = new HashMap<String, String>();
     properties.put(property, value);
   }
   

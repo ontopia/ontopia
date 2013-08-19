@@ -36,7 +36,7 @@ public class DataType {
   protected String size;
   protected boolean variable;
 
-  protected Map properties;
+  protected Map<String, String> properties;
   
   public DataType() {
   }
@@ -58,8 +58,8 @@ public class DataType {
   /**
    * INTERNAL: Gets the table properties.
    */
-  public Collection getProperties() {
-    return (properties == null ? Collections.EMPTY_SET : properties.keySet());
+  public Collection<String> getProperties() {
+    return (properties == null ? Collections.<String>emptySet() : properties.keySet());
   }
 
   /**
@@ -69,7 +69,7 @@ public class DataType {
     if (properties == null)
       return null;
     else
-      return (String)properties.get(property);
+      return properties.get(property);
   }
 
   /**
@@ -77,7 +77,7 @@ public class DataType {
    */
   public void addProperty(String property, String value) {
     if (properties == null)
-      properties = new HashMap();
+      properties = new HashMap<String, String>();
     properties.put(property, value);
   }
   

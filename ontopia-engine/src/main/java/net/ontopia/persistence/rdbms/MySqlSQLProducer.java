@@ -43,16 +43,16 @@ public class MySqlSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
   
-  protected List createStatement(Table table, List statements) throws IOException {
+  protected List<String> createStatement(Table table, List<String> statements) throws IOException {
     StringBuffer sb = new StringBuffer();
     String[] pkeys = table.getPrimaryKeys();
     // Create table
     sb.append("create table ");
     sb.append(table.getName());
     sb.append(" (\n");
-    Iterator iter = table.getColumns().iterator();
+    Iterator<Column> iter = table.getColumns().iterator();
     while (iter.hasNext()) {
-      Column col = (Column)iter.next();
+      Column col = iter.next();
       DataType type = project.getDataTypeByName(col.getType(), platforms);
       sb.append("  ");
       sb.append(col.getName());
@@ -86,10 +86,10 @@ public class MySqlSQLProducer extends GenericSQLProducer {
    * INTERNAL: Generate the DDL statement(s) to create indexes for the
    * specified table.
    */
-  protected List createIndexes(Table table, List statements) throws IOException {
-    List indexes = table.getIndexes();
+  protected List<String> createIndexes(Table table, List<String> statements) throws IOException {
+    List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {
-      Index index = (Index)indexes.get(i);
+      Index index = indexes.get(i);
       StringBuffer sb = new StringBuffer();
       sb.append("create index ");
       sb.append(index.getName());
