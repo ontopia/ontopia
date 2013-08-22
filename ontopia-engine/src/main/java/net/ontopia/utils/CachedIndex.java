@@ -89,58 +89,58 @@ public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
   }
   
   public E get(K key) {
-    Entry Entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
+    Entry entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
 
-    while (Entry != null && !Entry.key.equals(key))
-      Entry = Entry.next;
+    while (entry != null && !entry.key.equals(key))
+      entry = entry.next;
 
     lookups++;
-    if (Entry == null) { // not found
+    if (entry == null) { // not found
       E result = fallback.get(key);
       if (result == null && !nulls) return null; // do not store null values
-      Entry = addEntry(new Entry(key, result));
+      entry = addEntry(new Entry(key, result));
     } else {
       hits++;
-      Entry.hits++;
+      entry.hits++;
     }
 
-    return (E) Entry.value;
+    return (E) entry.value;
   }
 
   public E put(K key, E value) {
     // check if key already there; otherwise may end up with two entries
     // with same key
-    Entry Entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
-    while (Entry != null && !Entry.key.equals(key))
-      Entry = Entry.next;
+    Entry entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
+    while (entry != null && !entry.key.equals(key))
+      entry = entry.next;
 
-    if (Entry == null)
+    if (entry == null)
       addEntry(new Entry(key, value));
     else
-      Entry.value = value;
+      entry.value = value;
 
     return value;
   }
 
   public E remove(K key) {
     int ix = (key.hashCode() & 0x7FFFFFFF) % data.length;
-    Entry<K, E> Entry = data[ix];
+    Entry<K, E> entry = data[ix];
     Entry<K, E> previous = null;
 
-    while (Entry != null) {
-      if (Entry.key.equals(key)) {
+    while (entry != null) {
+      if (entry.key.equals(key)) {
         // FIXME: pass on news to fallback?
         if (previous == null)
-          data[ix] = Entry.next;
+          data[ix] = entry.next;
         else
-          previous.next = Entry.next;
+          previous.next = entry.next;
         
         entries--;
-        return (E)Entry.value;
+        return (E)entry.value;
       }
 
-      previous = Entry;
-      Entry = Entry.next;
+      previous = entry;
+      entry = entry.next;
     }    
     return null;
   }
@@ -165,8 +165,8 @@ public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
   // --- Internal methods
 
   /**
-   * Called to add an Entry object into the data array. Assumes that
-   * no Entry with the same key already exists in the data array.
+   * Called to add an entry object into the data array. Assumes that
+   * no entry with the same key already exists in the data array.
    */
   
   private Entry<K, E> addEntry(Entry<K, E> newEntry) {
