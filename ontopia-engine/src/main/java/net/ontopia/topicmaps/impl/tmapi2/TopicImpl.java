@@ -356,7 +356,6 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * 
    * @see org.tmapi.core.Topic#getNames(org.tmapi.core.Topic)
    */
-  @SuppressWarnings("unchecked")
   public Set<Name> getNames(Topic type) {
     Check.typeNotNull(type);
     TopicIF type_ = topicMap.unwrapTopic(type);
@@ -386,7 +385,6 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * 
    * @see org.tmapi.core.Topic#getOccurrences(org.tmapi.core.Topic)
    */
-  @SuppressWarnings("unchecked")
   public Set<Occurrence> getOccurrences(Topic type) {
     Check.typeNotNull(type);
     TopicIF type_ = topicMap.unwrapTopic(type);

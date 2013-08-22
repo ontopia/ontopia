@@ -162,7 +162,6 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * @see org.tmapi.index.TypeInstanceIndex#getTopics(org.tmapi.core.Topic[],
    * boolean)
    */
-  @SuppressWarnings("unchecked")
   public Collection<Topic> getTopics(Topic[] types, boolean matchAll) {
 
     Set<TopicIF> resultSet = new HashSet<TopicIF>();

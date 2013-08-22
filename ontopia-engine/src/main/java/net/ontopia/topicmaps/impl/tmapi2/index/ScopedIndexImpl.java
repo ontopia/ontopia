@@ -76,7 +76,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.ScopedIndex#getAssociations(org.tmapi.core.Topic[],
    * boolean)
    */
-  @SuppressWarnings("unchecked")
   public Collection<Association> getAssociations(Topic[] themes,
       boolean matchAll) {
     Check.themeNotNull(themes);
@@ -127,7 +126,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getNames(org.tmapi.core.Topic[], boolean)
    */
-  @SuppressWarnings("unchecked")
   public Collection<Name> getNames(Topic[] themes, boolean matchAll) {
     Check.themeNotNull(themes);
     Set<TopicNameIF> resultSet = new HashSet<TopicNameIF>();
@@ -177,7 +175,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.ScopedIndex#getOccurrences(org.tmapi.core.Topic[],
    * boolean)
    */
-  @SuppressWarnings("unchecked")
   public Collection<Occurrence> getOccurrences(Topic[] themes, boolean matchAll) {
     Check.themeNotNull(themes);
     Set<OccurrenceIF> resultSet = new HashSet<OccurrenceIF>();
@@ -227,7 +224,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.ScopedIndex#getVariants(org.tmapi.core.Topic[],
    * boolean)
    */
-  @SuppressWarnings("unchecked")
   public Collection<Variant> getVariants(Topic[] themes, boolean matchAll) {
     Check.themeNotNull(themes);
 
