@@ -54,7 +54,6 @@ public class LazySet<T> extends AbstractSet<T> {
     throw new UnsupportedOperationException();
   }
 
-  @SuppressWarnings("unchecked")
   class LazySetIterator implements Iterator {
 
     Iterator iter;
