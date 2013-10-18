@@ -144,6 +144,13 @@
 									<version>${tmapi.version}</version>
 									<outputDirectory>${project.build.directory}/test-classes/</outputDirectory>
 								</artifactItem>
+								<artifactItem>
+									<groupId>net.ontopia</groupId>
+									<artifactId>cxtm-tests</artifactId>
+									<version>1</version>
+									<type>zip</type>
+									<outputDirectory>target/test-classes/net/ontopia/testdata</outputDirectory>
+								</artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
@@ -213,19 +220,6 @@
 							<target>
 								<property name="documentation.directories" value=".,engine,misc,query,rdbms,schema" />
 								<ant antfile="../src/docbook/ant/build.xml" target="main" />
-							</target>
-						</configuration>
-					</execution>
-					<execution>
-						<phase>generate-test-resources</phase>
-						<configuration>
-							<target name="main" description="Download and unpack CXTM-tests">
-								<ant target="init" />
-								<ant target="xtm2.checked.get" />
-								<ant target="xtm21.checked.get" />
-								<ant target="ctm.checked.get" />
-								<ant target="jtm.checked.get" />
-								<ant target="tmxml.checked.get" />
 							</target>
 						</configuration>
 					</execution>
