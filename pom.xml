@@ -642,6 +642,14 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>ontopia</id>
+			<name>Ontopia repository</name>
+			<url>http://ontopia.googlecode.com/svn/maven-repository</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 	
 	<profiles>
