@@ -29,7 +29,7 @@ import net.ontopia.utils.GrabberIF;
  * this class implements GrabberIF instead of StringifierIF.</p>
  */
 
-public class ObjectIdGrabber implements GrabberIF<TMObjectIF, String> {
+public class ObjectIdGrabber<T extends TMObjectIF> implements GrabberIF<T, String> {
   
   /**
    * INTERNAL: Grabs the objectId of the given TMObjectIF
@@ -37,7 +37,7 @@ public class ObjectIdGrabber implements GrabberIF<TMObjectIF, String> {
    * @param object TMObjectIF
    * @return String which is the objectId of the given TMObjectIF
    */ 
-  public String grab(TMObjectIF object) {
+  public String grab(T object) {
     return object.getObjectId();
 
   }
