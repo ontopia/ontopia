@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -36,6 +37,7 @@ import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
 
 /**
  * PUBLIC: A topic map source that holds the list of <i>all</i> topic
@@ -53,6 +55,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
   protected String title;
   protected Map<String, String> properties;
   protected String propfile;
+  protected String queryfile;
 
   protected String topicListeners;
   
@@ -147,6 +150,14 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
   public void setPropertyFile(String propfile) {
     this.propfile = propfile;
   }
+  
+  public void setQueryfile(String queryfile) {
+    this.queryfile = queryfile;
+  }
+
+  public String getQueryfile() {
+    return queryfile;
+  }
 
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (!isInitialized()) refresh();
@@ -161,6 +172,11 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
         this.storage = new RDBMSStorage(properties);
       else
         throw new OntopiaRuntimeException("propertyFile property must be specified on source with id '" + getId() + "'.");
+      if (queryfile != null) {
+        InputStream stream = StreamUtils.getInputStream(queryfile);
+        if (stream == null) throw new IOException("Could not find query file " + queryfile);
+        storage.getQueryDeclarations().loadQueries(stream);
+      }  
     }
     return storage;
   }
