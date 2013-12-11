@@ -41,7 +41,7 @@ public class DuplicateReificationException extends ConstraintViolationException 
     super(message);
   }
 
-  /*
+  /**
    * INTERNAL: Checks reification logic
    *
    * @return true if all operations are done and no more actions are needed
