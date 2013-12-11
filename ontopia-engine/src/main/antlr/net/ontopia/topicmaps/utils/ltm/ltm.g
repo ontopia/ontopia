@@ -17,6 +17,7 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import net.ontopia.infoset.core.LocatorIF;
   import net.ontopia.topicmaps.core.AssociationIF;
   import net.ontopia.topicmaps.core.AssociationRoleIF;
+  import net.ontopia.topicmaps.core.DuplicateReificationException;
   import net.ontopia.topicmaps.core.OccurrenceIF;
   import net.ontopia.topicmaps.core.ReifiableIF;
   import net.ontopia.topicmaps.core.TMObjectIF;
@@ -28,11 +29,9 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import net.ontopia.topicmaps.core.VariantNameIF;
   import net.ontopia.topicmaps.xml.XTMTopicMapReader;
   import net.ontopia.topicmaps.xml.XTMContentHandler;
-  import net.ontopia.topicmaps.xml.InvalidTopicMapException;
   import net.ontopia.topicmaps.utils.PSI;
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
-  import net.ontopia.topicmaps.impl.utils.ReificationUtils;
   import net.ontopia.utils.ObjectUtils;
   import org.xml.sax.InputSource;
   import antlr.TokenStreamException;
@@ -290,8 +289,8 @@ options {
           throws SemanticException {
     TopicIF reifier = getTopicByName(id);
     try {
-      ReificationUtils.reify(reifiable, reifier);
-    } catch (InvalidTopicMapException e) {
+      reifiable.setReifier(reifier);
+    } catch (DuplicateReificationException e) {
       throw new SemanticException(e.getMessage());
     }
   }

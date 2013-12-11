@@ -18,30 +18,39 @@
  * !#
  */
 
-package net.ontopia.topicmaps.impl.utils;
+package net.ontopia.topicmaps.core;
 
-import net.ontopia.topicmaps.core.ReifiableIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
-import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 
 /**
- * INTERNAL: Topic map object deletion utilities.
+ * INTERNAL: Thrown when a reifiable object is reified by a topic that
+ * already reifies another reifiable object.</p>
+ *
+ * Extends ConstraintViolationException but does not provide additional
+ * methods; this is because the purpose is just to provide a different
+ * exception, to allow API users to handle them differently.</p>
+ *
+ * @since %NEXT%
  */
-public class ReificationUtils {
 
-  /**
-   * INTERNAL: Make the reifier topic reify the reifiable object.
+public class DuplicateReificationException extends ConstraintViolationException {
+
+  public DuplicateReificationException(String message) {
+    super(message);
+  }
+
+  /*
+   * INTERNAL: Checks reification logic
    *
-   * @return the topic that ends up being the reifier
+   * @return true if all operations are done and no more actions are needed
    * @throws InvalidTopicMapException if the reifier already reifies a
    *         different object
    */
-  public static TopicIF reify(ReifiableIF reifiable, TopicIF reifier) {
+  public static boolean check(ReifiableIF reifiable, TopicIF reifier) {
     if (reifier == null)
-      return null;
+      return false;
     
     ReifiableIF existingReified = reifier.getReified();
     if (existingReified != null &&
@@ -49,7 +58,7 @@ public class ReificationUtils {
       String key1 = KeyGenerator.makeKey(reifiable);
       String key2 = KeyGenerator.makeKey(existingReified);
       if (!key1.equals(key2))
-        throw new InvalidTopicMapException("The topic " + reifier +
+        throw new DuplicateReificationException("The topic " + reifier +
            " cannot reify more than one reifiable object. 1: " + existingReified +
            " 2: " + reifiable);
       MergeUtils.mergeInto(reifiable, existingReified);
@@ -59,10 +68,8 @@ public class ReificationUtils {
     if (existingReifier != null &&
         ObjectUtils.different(existingReifier, reifier)) {
       MergeUtils.mergeInto(existingReifier, reifier);
-      return existingReifier;
-    } else {
-      reifiable.setReifier(reifier);
-      return reifier;
+      return true;
     }
+    return false;
   }
 }

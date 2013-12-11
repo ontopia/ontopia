@@ -32,6 +32,7 @@ import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.DuplicateReificationException;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -305,6 +306,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
+    if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();

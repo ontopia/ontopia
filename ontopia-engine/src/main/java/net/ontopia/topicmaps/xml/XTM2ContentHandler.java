@@ -55,7 +55,6 @@ import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
-import net.ontopia.topicmaps.impl.utils.ReificationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -668,7 +667,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   }
 
   private void reify(ReifiableIF reifiable, TopicIF reifier) {
-    ReificationUtils.reify(reifiable, reifier);
+    reifiable.setReifier(reifier);
   }
 
   private boolean logError() {

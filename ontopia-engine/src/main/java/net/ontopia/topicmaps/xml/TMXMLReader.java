@@ -55,7 +55,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.impl.utils.ReificationUtils;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -518,7 +517,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
     }    
 
     private void reify(ReifiableIF reifiable, TopicIF reifier) {
-      ReificationUtils.reify(reifiable, reifier);
+      reifiable.setReifier(reifier);
     }
   }
 

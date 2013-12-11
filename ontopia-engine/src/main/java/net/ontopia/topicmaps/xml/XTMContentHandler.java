@@ -56,7 +56,6 @@ import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.XMLReaderFactoryIF;
-import net.ontopia.topicmaps.impl.utils.ReificationUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1040,7 +1039,8 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
 
   // returns topic because reify() can merge topics
   private TopicIF reify(ReifiableIF reifiable, TopicIF reifier) {
-    return ReificationUtils.reify(reifiable, reifier);
+    reifiable.setReifier(reifier);
+    return reifiable.getReifier();
   }
 
   private boolean logError() {

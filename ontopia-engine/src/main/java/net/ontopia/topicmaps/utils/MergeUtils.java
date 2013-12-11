@@ -49,7 +49,6 @@ import net.ontopia.topicmaps.core.UniquenessViolationException;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
-import net.ontopia.topicmaps.impl.utils.ReificationUtils;
 
 /**
  * PUBLIC: Utilities for merging topics and topic maps. This class
@@ -1263,7 +1262,7 @@ public class MergeUtils {
         
       } else {
         sreified.setReifier(null);
-        ReificationUtils.reify(sreified, target);
+        sreified.setReifier(target);
       }
     }
   }
@@ -1277,7 +1276,7 @@ public class MergeUtils {
         mergeInto(treifier, sreifier);
       } else {
         source.setReifier(null);
-        ReificationUtils.reify(target, sreifier);
+        target.setReifier(sreifier);
       }
     }
   }

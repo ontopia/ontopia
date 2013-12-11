@@ -41,7 +41,10 @@ public interface ReifiableIF extends TMObjectIF {
   
   /**
    * PUBLIC: Sets the reifier of this object.
+   *
+   * @exception DuplicateReificationException Thrown when the reifier
+   *            already reifies another object.
    */
-  public void setReifier(TopicIF reifier);
+  public void setReifier(TopicIF reifier) throws DuplicateReificationException;
 
 }
