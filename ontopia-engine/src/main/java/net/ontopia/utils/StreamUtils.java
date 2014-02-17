@@ -81,6 +81,48 @@ public class StreamUtils {
   }
   
   /**
+   * INTERNAL: Transfers the entire contents of the InputStream to the
+   * OutputStream without modifying them in any way and closes the
+   * InputStream afterwards.
+   * @since %NEXT%
+   */
+  public static void transferAndCloseInputStream(InputStream in, OutputStream out) throws IOException {
+    try {
+      transfer(in, out);
+    } finally {
+      in.close();
+    }
+  }
+
+  /**
+   * INTERNAL: Transfers the entire contents of the InputStream to the
+   * OutputStream without modifying them in any way and closes the
+   * OutputStream afterwards.
+   * @since %NEXT%
+   */
+  public static void transferAndCloseOutputStream(InputStream in, OutputStream out) throws IOException {
+    try {
+      transfer(in, out);
+    } finally {
+      out.close();
+    }
+  }
+
+  /**
+   * INTERNAL: Transfers the entire contents of the InputStream to the
+   * OutputStream without modifying them in any way and closes the
+   * InputStream and OutputStream afterwards.
+   * @since %NEXT%
+   */
+  public static void transferAndClose(InputStream in, OutputStream out) throws IOException {
+    try {
+      transferAndCloseInputStream(in, out);
+    } finally {
+      out.close();
+    }
+  }
+
+  /**
    * INTERNAL: Returns the entire contents of a stream (well, Reader)
    * as a string.
    * @since 1.4
