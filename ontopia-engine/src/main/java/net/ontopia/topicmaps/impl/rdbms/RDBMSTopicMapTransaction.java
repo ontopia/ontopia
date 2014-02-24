@@ -348,7 +348,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
             "TopicIF.getAssociations", new Object[] {getTopicMap(), getTopicMap(), topic});
   }
 
-  public Collection<AssociationIF> getAssocationsByType(TopicIF topic, TopicIF type) {
+  public Collection<AssociationIF> getAssociationsByType(TopicIF topic, TopicIF type) {
     return new QueryCollection<AssociationIF>(txn, 
             "TopicIF.getAssociationsByType_size", new Object[] {getTopicMap(), type, getTopicMap(), topic}, 
             "TopicIF.getAssociationsByType", new Object[] {getTopicMap(), type, getTopicMap(), topic});

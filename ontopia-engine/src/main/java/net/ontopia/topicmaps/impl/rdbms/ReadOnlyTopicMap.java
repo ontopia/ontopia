@@ -292,8 +292,8 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     return transaction.getAssocations(topic);
   }
 
-  public Collection<AssociationIF> getAssocationsByType(TopicIF topic, TopicIF type) {
-    return transaction.getAssocationsByType(topic, type);
+  public Collection<AssociationIF> getAssociationsByType(TopicIF topic, TopicIF type) {
+    return transaction.getAssociationsByType(topic, type);
   }
   
   // ---------------------------------------------------------------------------
