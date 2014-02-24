@@ -371,7 +371,7 @@ public class Topic extends TMObject implements TopicIF {
   }
 
   public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
-    return ((TopicMap)getTopicMap()).getAssocationsByType(this, type);
+    return ((TopicMap)getTopicMap()).getAssociationsByType(this, type);
   }
   
   public void merge(TopicIF topic) {
