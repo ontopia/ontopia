@@ -20,15 +20,10 @@
 
 package net.ontopia.topicmaps.query.utils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
-import java.net.URL;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +40,7 @@ import net.ontopia.topicmaps.query.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.parser.ParseContextIF;
 import net.ontopia.topicmaps.query.parser.TologParser;
 import net.ontopia.topicmaps.query.parser.TologOptions;
+import net.ontopia.utils.ServiceUtils;
 
 import org.apache.commons.collections.map.ReferenceMap;
 import org.apache.commons.collections.map.AbstractReferenceMap;
@@ -67,11 +63,6 @@ public class QueryUtils {
 
   private static final String DEFAULT_LANGUAGE = TologQueryProcessorFactory.NAME;
   
-  private static String FACTORY_INTERFACE = 
-    "net.ontopia.topicmaps.query.core.QueryProcessorFactoryIF";
-  private static String RESOURCE_STRING = "META-INF/services/"
-      + FACTORY_INTERFACE;
-  
   private static Map<String, QueryProcessorFactoryIF> qpFactoryMap;
   
   static {
@@ -84,53 +75,14 @@ public class QueryUtils {
    */
   private static void loadQueryProcessorFactories() {
     qpFactoryMap = new HashMap<String, QueryProcessorFactoryIF>();
-    
-    Enumeration<URL> resources = null;
-    try {
-      resources = QueryUtils.class.getClassLoader().getResources(RESOURCE_STRING);
-    } catch (IOException e) {
-      log.error("Error while trying to look for " +
-          "QueryProcessorFactoryIF implementations.", e);
-    }
 
-    while (resources != null && resources.hasMoreElements()) {
-      URL url = resources.nextElement();
-      InputStream is = null;
-      
-      try {
-        is = url.openStream();
-      } catch (IOException e) {
-        log.warn("Error opening stream to QueryProcessorFactoryIF service description.", e);
+    try {
+      for (QueryProcessorFactoryIF  factory : ServiceUtils.loadServices(QueryProcessorFactoryIF.class)) {
+        qpFactoryMap.put(factory.getQueryLanguage().toUpperCase(), factory);
       }
       
-      if (is != null) {
-        BufferedReader rdr = new BufferedReader(new InputStreamReader(is));
-        String line;
-        try {
-          while ((line = rdr.readLine()) != null) {
-            try {
-              ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-              Class<?> c = Class.forName(line, true, classLoader);
-              if (QueryProcessorFactoryIF.class.isAssignableFrom(c)) {
-                QueryProcessorFactoryIF factory = (QueryProcessorFactoryIF) c
-                    .newInstance();
-                qpFactoryMap.put(factory.getQueryLanguage().toUpperCase(),
-                    factory);
-              } else {
-                log.warn("Wrong entry for QueryProcessorFactoryIF service "
-                    + "description, '" + line + "' is not implementing the "
-                    + "correct interface.");
-              }
-            } catch (Exception e) {
-              log.warn("Could not create an instance for "
-                  + "QueryProcessorFactoryIF service '" + line + "'.");
-            }
-          }
-        } catch (IOException e) {
-          log.warn("Could not read from QueryProcessorFactoryIF " + 
-              "service descriptor.", e);
-        }
-      }
+    } catch (IOException e) {
+      log.error("Could not read from QueryProcessorFactoryIF service descriptor.", e);
     }
 
     // if TOLOG has not been found so far, include it now
