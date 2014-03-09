@@ -68,10 +68,6 @@
 			<artifactId>jena</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>backport-util-concurrent</groupId>
-			<artifactId>backport-util-concurrent</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>jgroups</groupId>
 			<artifactId>jgroups</artifactId>
 		</dependency>

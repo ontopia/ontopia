@@ -52,7 +52,6 @@
 					<exclude>META-INF/NOTICE*</exclude>
 					<exclude>META-INF/NOTICE*</exclude>
 					<exclude>META-INF/services/org.tmapi*</exclude>
-					<exclude>edu/emory/mathcs/backport/java/util/concurrent/**</exclude>
 				</excludes>
 			</unpackOptions>
 			
