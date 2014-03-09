@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import net.ontopia.utils.UniqueSet;
 import net.ontopia.utils.ObjectUtils;
@@ -292,14 +293,6 @@ public class Topic extends TMObject implements TopicIF {
     if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
 
     synchronized (roles) {
-      if (roles instanceof edu.emory.mathcs.backport.java.util.TreeSet) {
-        AssociationRoleIF lowrole = new FakeRole(roletype, assoc_type,
-                                                 Integer.MIN_VALUE);
-        AssociationRoleIF highrole = new FakeRole(roletype, assoc_type,
-                                                  Integer.MAX_VALUE);        
-        return ((edu.emory.mathcs.backport.java.util.TreeSet)
-                roles).subSet(lowrole, true, highrole, true);
-      } else {
         // below are timing results from running a big query with
         // different data structures for the result collection. used
         // TologQuery --timeit and results indicate that uninitialized
@@ -323,7 +316,7 @@ public class Topic extends TMObject implements TopicIF {
           }
         }
         return result;
-      }
+      
     }    
   }
 
@@ -358,7 +351,7 @@ public class Topic extends TMObject implements TopicIF {
   protected void addRole(AssociationRoleIF assoc_role) {
     // Add association role to list of association roles
     if (roles.size() > 100 && roles instanceof CompactHashSet) {
-      Set<AssociationRoleIF> new_roles = new edu.emory.mathcs.backport.java.util.TreeSet(rolecomp);
+      Set<AssociationRoleIF> new_roles = new TreeSet<AssociationRoleIF>(rolecomp);
       new_roles.addAll(roles);
       roles = new_roles;
     }
