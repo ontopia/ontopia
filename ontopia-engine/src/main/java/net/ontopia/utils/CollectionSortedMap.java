@@ -20,7 +20,6 @@
 
 package net.ontopia.utils;
 
-//import edu.emory.mathcs.backport.java.util.TreeMap;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;

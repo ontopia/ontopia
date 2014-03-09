@@ -214,7 +214,6 @@
 					<exclude>META-INF/**</exclude>
 					<!-- exclude all shared ontopia jar's -->
 					<exclude>WEB-INF/lib/antlr*</exclude>
-					<exclude>WEB-INF/lib/backport-util-concurrent*</exclude>
 					<exclude>WEB-INF/lib/commons-collections*</exclude>
 					<exclude>WEB-INF/lib/commons-dbcp*</exclude>
 					<exclude>WEB-INF/lib/commons-fileupload*</exclude>
