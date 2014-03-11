@@ -1,8 +1,8 @@
 /*
  * #!
- * Ontopia Navigator
+ * Ontopia Omnigator webapplication
  * #-
- * Copyright (C) 2001 - 2013 The Ontopia Project
+ * Copyright (C) 2001 - 2014 The Ontopia Project
  * #-
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
