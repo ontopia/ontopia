@@ -237,7 +237,8 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * <li>'mappingURL' (String), corresponds to 
    * {@link #setMappingURL(java.lang.String)}</li>
    * <li>'mappingSyntax' (String), sets the syntax to use in combination with 
-   * {@link #setMappingFile(java.io.File)} and {@link #setMappingURL(java.lang.String)}
+   * {@link #setMappingFile(java.io.File)} and {@link #setMappingURL(java.lang.String)}</li>
+   * </ul>
    * @param properties 
    */
   public void setAdditionalProperties(Map<String, Object> properties) {
