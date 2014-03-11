@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.net.MalformedURLException;
+import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
@@ -45,6 +46,12 @@ import net.ontopia.topicmaps.core.TopicMapReaderIF;
  * @since 2.0
  */
 public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
+  public static final String PROPERTY_DUPLICATE_SUPPRESSION = "duplicateSuppression";
+  public static final String PROPERTY_GENERATE_NAMES = "generateNames";
+  public static final String PROPERTY_LENIENT = "lenient";
+  public static final String PROPERTY_MAPPING_FILE = "mappingFile";
+  public static final String PROPERTY_MAPPING_URL = "mappingURL";
+  public static final String PROPERTY_MAPPING_SYNTAX = "mappingSyntax";
   protected String infileurl;
   protected String syntax;
   protected String mappingurl;
@@ -214,6 +221,49 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
       return URIUtils.toURL(file).toExternalForm(); // FIXME: isn't right!
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
+    }
+  }
+
+  /**
+   * Sets additional RDFTopicMapReader properties. Accepts the following properties:
+   * <ul><li>'duplicateSuppression' (Boolean), corresponds to 
+   * {@link #setDuplicateSuppression(boolean)}</li>
+   * <li>'generateNames' (Boolean), corresponds to 
+   * {@link #setGenerateNames(boolean)}</li>
+   * <li>'lenient' (Boolean), corresponds to 
+   * {@link #setLenient(boolean)}</li>
+   * <li>'mappingFile' (File), corresponds to 
+   * {@link #setMappingFile(java.io.File)}</li>
+   * <li>'mappingURL' (String), corresponds to 
+   * {@link #setMappingURL(java.lang.String)}</li>
+   * <li>'mappingSyntax' (String), sets the syntax to use in combination with 
+   * {@link #setMappingFile(java.io.File)} and {@link #setMappingURL(java.lang.String)}
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object value = properties.get(PROPERTY_DUPLICATE_SUPPRESSION);
+    if ((value != null) && (value instanceof Boolean)) {
+      setDuplicateSuppression((Boolean) value);
+    }
+    value = properties.get(PROPERTY_GENERATE_NAMES);
+    if ((value != null) && (value instanceof Boolean)) {
+      setGenerateNames((Boolean) value);
+    }
+    value = properties.get(PROPERTY_LENIENT);
+    if ((value != null) && (value instanceof Boolean)) {
+      setLenient((Boolean) value);
+    }
+    value = properties.get(PROPERTY_MAPPING_FILE);
+    if ((value != null) && (value instanceof File)) {
+      setMappingFile((File) value);
+    }
+    value = properties.get(PROPERTY_MAPPING_URL);
+    if ((value != null) && (value instanceof String)) {
+      setMappingURL((String) value);
+    }
+    value = properties.get(PROPERTY_MAPPING_SYNTAX);
+    if ((value != null) && (value instanceof String)) {
+      this.mappingsyntax = (String) value;
     }
   }
 }

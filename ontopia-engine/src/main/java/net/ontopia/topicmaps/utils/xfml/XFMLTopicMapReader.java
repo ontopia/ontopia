@@ -28,6 +28,7 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -212,4 +213,11 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
   }
   
+  /**
+   * XFMLTopicMapReader has no additional options to set.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    // no-op
+  }
 }

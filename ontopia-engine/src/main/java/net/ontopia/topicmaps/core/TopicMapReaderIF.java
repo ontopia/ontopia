@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.core;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * PUBLIC: A topic map reader is used to read topic maps from an
@@ -66,4 +67,11 @@ public interface TopicMapReaderIF {
    */
   public Collection<TopicMapIF> readAll() throws IOException;
   
+  /**
+   * PUBLIC: set additional properties to the topic map reader. The
+   * set of accepted properties differs per reader implementation, see
+   * the specific reader documentation for details on accepted properties.
+   * @param properties Additional properties for the reader
+   */
+  public void setAdditionalProperties(Map<String, Object> properties);
 }

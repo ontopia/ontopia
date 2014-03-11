@@ -70,6 +70,7 @@ import org.xml.sax.InputSource;
  */
 public class TMXMLReader extends AbstractXMLFormatReader
                          implements TopicMapReaderIF, TopicMapImporterIF {
+  public static final String PROPERTY_VALIDATE = "validate";
   private LocatorIF base;
   private boolean validate;
   
@@ -525,5 +526,17 @@ public class TMXMLReader extends AbstractXMLFormatReader
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
     InputStream i = cl.getResourceAsStream("net/ontopia/topicmaps/xml/tmxml.rnc");
     return new InputSource(i);
+  }
+
+  /**
+   * Sets additional properties for the TMXMLReader. Only accepts the property "validate", which
+   * corresponds to the {@link #setValidate(boolean)} method. Only accepts a boolean value.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object value = properties.get(PROPERTY_VALIDATE);
+    if ((value != null) && (value instanceof Boolean)) {
+      setValidate((Boolean) value);
+    }
   }
 }
