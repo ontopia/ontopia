@@ -21,6 +21,8 @@
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
@@ -124,10 +126,13 @@ public class TopicMapConverter {
 
     TopicMapReaderIF reader = ImportExportUtils.getReader(infile);
 
-    if (reader instanceof net.ontopia.topicmaps.utils.rdf.RDFTopicMapReader &&
-        options.rdfmap != null)
-      ((net.ontopia.topicmaps.utils.rdf.RDFTopicMapReader) reader).setMappingFile(new File(options.rdfmap), getSyntax(options.rdfmap));
-    else if (reader instanceof XTMTopicMapReader)
+    Map<String, Object> config = new HashMap<String, Object>();
+    config.put("mappingFile", new File(options.rdfmap));
+    config.put("mappingSyntax", getSyntax(options.rdfmap));
+
+    reader.setAdditionalProperties(config);
+    
+    if (reader instanceof XTMTopicMapReader)
       ((XTMTopicMapReader) reader).setValidation(options.validate);
     
     TopicMapIF tm = reader.read();

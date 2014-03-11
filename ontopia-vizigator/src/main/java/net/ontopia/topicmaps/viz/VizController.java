@@ -54,7 +54,6 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopic;
 import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReader;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.topicmaps.utils.tmrap.TopicPage;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -66,6 +65,8 @@ import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
 import com.touchgraph.graphlayout.TGPanel;
 import com.touchgraph.graphlayout.graphelements.Locality;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * INTERNAL: The VizController manages the interaction between the
@@ -415,16 +416,16 @@ public class VizController {
       vpanel.setCursor(new Cursor(Cursor.WAIT_CURSOR));
       vpanel.clearSearchResults();
       TopicMapReaderIF reader = ImportExportUtils.getReader(tmfile);
-      if (reader instanceof RDFTopicMapReader) {
-        RDFTopicMapReader rdfreader = ((RDFTopicMapReader) reader);
-        String mappingFile = generalConfig.getRDFMappingFile();
-        // If we get this far, and the user has not set a mapping file,
-        // i.e. he has cancelled the dialog requests to set it, tuff
-        if (mappingFile != null)
-          rdfreader.setMappingFile(new File(mappingFile));
-        rdfreader.setGenerateNames(true);
-        rdfreader.setLenient(true);
+
+      Map<String, Object> properties = new HashMap<String, Object>(3);
+      properties.put("lenient", true);
+      properties.put("generateNames", true);
+      String mappingFile = generalConfig.getRDFMappingFile();
+      if (mappingFile != null) {
+        properties.put("mappingFile", new File(mappingFile));
       }
+      reader.setAdditionalProperties(properties);
+
       topicmap = importTopicMap(reader, tmfile.getName());
       if (topicmap != null) {
         if (cfgfile == null)

@@ -23,12 +23,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
@@ -45,11 +40,11 @@ public class TMXMLWriterSpecialTestCase {
 
   protected boolean recanonicalizeSource = false;
 
-  private final static String testdataDirectory = "tmxmlWriter";
+  protected final static String testdataDirectory = "tmxmlWriter";
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "x-in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "x-in", ".ltm|.xtm");
   }
 
   // --- Test case class
