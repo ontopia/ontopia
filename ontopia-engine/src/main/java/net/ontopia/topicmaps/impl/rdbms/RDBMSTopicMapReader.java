@@ -63,4 +63,13 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
   public Collection<TopicMapIF> readAll() throws java.io.IOException {
     return (Collection<TopicMapIF>) Collections.singleton(read());
   }        
+
+  /**
+   * RDBMSTopicMapReader does not accept any additional properties outside of the specified 
+   * properties file.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    // no-op
+  }
 }

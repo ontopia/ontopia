@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -58,6 +59,8 @@ import org.xml.sax.XMLReader;
  */
 public class XTMTopicMapReader extends AbstractXMLFormatReader
   implements TopicMapReaderIF, TopicMapImporterIF {
+  public static final String PROPERTY_VALIDATION = "validation";
+  public static final String PROPERTY_EXTERNAL_REFERENCE_HANDLER = "externalReferenceHandler";
   protected Iterator topicmaps;
   protected TopicMapStoreFactoryIF store_factory;
   protected ExternalReferenceHandlerIF ref_handler;
@@ -329,4 +332,23 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
     cxrfactory.setEntityResolver(new TopicMapDTDEntityResolver());
   }
   
+  /**
+   * Sets additional properties for the XTMTopicMapReader. Accepts properties 'validation' and 
+   * 'externalReferenceHandler'. The value of 'validation' has to be a boolean and corresponds
+   * to the {@link #setValidation(boolean)} method. The value of 'externalReferenceHandler' has
+   * to be an {@link ExternalReferenceHandlerIF} and corresponds to the 
+   * {@link #setExternalReferenceHandler(net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF)}
+   * method.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object o = properties.get(PROPERTY_VALIDATION);
+    if ((o != null) && (o instanceof Boolean)) {
+      setValidation((Boolean) o);
+    }
+    o = properties.get(PROPERTY_EXTERNAL_REFERENCE_HANDLER);
+    if ((o != null) && (o instanceof ExternalReferenceHandlerIF)) {
+      setExternalReferenceHandler((ExternalReferenceHandlerIF) o);
+    }
+  }
 }
