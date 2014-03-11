@@ -20,38 +20,26 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PushbackInputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
-import java.net.URL;
-import java.net.MalformedURLException;
 import antlr.RecognitionException;
-import antlr.TokenStreamRecognitionException;
 import antlr.TokenStreamException;
 import antlr.TokenStreamIOException;
-
-import org.xml.sax.InputSource;
-
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
+import antlr.TokenStreamRecognitionException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
-import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.topicmaps.utils.ClassInstanceUtils;
-import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
+import net.ontopia.topicmaps.utils.ClassInstanceUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
+import org.xml.sax.InputSource;
 
 /**
  * PUBLIC: This TopicMapReader can read topic maps from LTM files.
