@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -723,5 +724,13 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       break;
     }
     return sb.toString();
+  }
+
+  /**
+   * JTMTopicMapWriter has no additional properties.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    // no-op
   }
 }

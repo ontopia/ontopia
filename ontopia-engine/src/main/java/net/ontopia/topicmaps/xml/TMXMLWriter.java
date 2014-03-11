@@ -64,6 +64,8 @@ import org.xml.sax.helpers.AttributeListImpl;
  */
 public class TMXMLWriter extends AbstractTopicMapExporter
   implements TopicMapWriterIF {
+  public static final String PROPERTY_PREFIXES = "prefixes";
+  public static final String PROPERTY_DOCUMENT_ELEMENT = "documentElement";
   protected static final AttributeListImpl EMPTY_ATTR_LIST = new AttributeListImpl();
   
   private DocumentHandler out;
@@ -640,4 +642,26 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     }
   }
   
+  /**
+   * Sets additional properties for the TMXMLWriter. Accepted properties:
+   * <ul><li>'documentElement' (String), corresponds to 
+   * {@link #setDocumentElement(java.lang.String)}</li>
+   * <li>'prefixes' (Map), each key-value pair is passed to 
+   * {@link #addPrefix(java.lang.String, java.lang.String)} as Strings.</li>
+   * </ul>
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object value = properties.get(PROPERTY_DOCUMENT_ELEMENT);
+    if ((value != null) && (value instanceof String)) {
+      setDocumentElement((String) value);
+    }
+    value = properties.get(PROPERTY_PREFIXES);
+    if ((value != null) && (value instanceof Map)) {
+      Map _prefixes = (Map) value;
+      for (Object k : _prefixes.entrySet()) {
+        addPrefix(k.toString(), _prefixes.get(k).toString());
+      }
+    }
+  }
 }

@@ -68,6 +68,10 @@ import org.slf4j.LoggerFactory;
  * @since 2.2
  */
 public class LTMTopicMapWriter implements TopicMapWriterIF {
+  public static final String PROPERTY_PREFIXES = "prefixes";
+  public static final String PROPERTY_FILTER = "filter";
+  public static final String PROPERTY_PRESERVE_IDS = "preserveIds";
+  
   static Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
 
   protected String encoding; // the encoding reported on the first line
@@ -1845,4 +1849,31 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     }
   }
 
+  /**
+   * Sets additional properties for LTMTopicMapWriter. Accepted properties:
+   * <ul><li>'preserveIds' (Boolean), corresponds to {@link #setPreserveIds(boolean)}</li>
+   * <li>'filter' (DeciderIF), corresponds to {@link #setFilter(net.ontopia.utils.DeciderIF)}</li>
+   * <li>'prefixes' (Map), each key-value pair is passed to 
+   * {@link #addPrefix(java.lang.String, java.lang.String)} as Strings.</li>
+   * </ul>
+   * @param properties 
+   */
+  @SuppressWarnings("unchecked")
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object value = properties.get(PROPERTY_PRESERVE_IDS);
+    if ((value != null) && (value instanceof Boolean)) {
+      setPreserveIds((Boolean) value);
+    }
+    value = properties.get(PROPERTY_FILTER);
+    if ((value != null) && (value instanceof DeciderIF)) {
+      setFilter((DeciderIF) value);
+    }
+    value = properties.get(PROPERTY_PREFIXES);
+    if ((value != null) && (value instanceof Map)) {
+      Map _prefixes = (Map) value;
+      for (Object k : _prefixes.entrySet()) {
+        addPrefix(k.toString(), _prefixes.get(k).toString());
+      }
+    }
+  }
 }

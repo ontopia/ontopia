@@ -690,6 +690,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       
     return retVal;
   }
+
+  /**
+   * CanonicalXTMWriter has no additional properties.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    // no-op
+  }
   
   // --- Comparators
 

@@ -383,6 +383,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
 
+  /**
+   * CanonicalTopicMapWriter has no additional properties.
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    // no-op
+  }
+
   // --- Comparators
 
   static abstract class AbstractComparator<T> implements Comparator<T> {
