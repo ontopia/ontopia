@@ -25,7 +25,6 @@ import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
-import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
@@ -113,42 +112,4 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     // run abstract url topic map reference tests
     doAbstractURLTopicMapReferenceTests(ref);
   }
-
-  // --- Test cases (RDF)
-
-  public void testRDFRef() throws java.net.MalformedURLException, java.io.IOException {
-    String id = "instance-of.rdf";
-    String title = "RDFTM";
-    String file = TestFileUtils.getTestInputFile("rdf", "in", id);
-    RDFTopicMapReference ref = new RDFTopicMapReference(new URL(URIUtils.getURI(file).getAddress()), id, title);
-    
-    // test mapping file
-    String mf = ref.getMappingFile();
-    assertTrue("Mappingfile default is set", ref.getMappingFile() == null);
-    ref.setMappingFile("foo");
-    assertTrue("Mappingfile not equals 'foo'", "foo".equals(ref.getMappingFile()));
-    ref.setMappingFile(mf);
-    assertTrue("Mappingfile != " + mf, mf == ref.getMappingFile());
-    
-    // test syntax
-    String sx = ref.getSyntax();
-    assertTrue("Syntax default is set", ref.getSyntax() == null);
-    ref.setSyntax("foo");
-    assertTrue("Syntax not equals 'foo'", "foo".equals(ref.getSyntax()));
-    ref.setSyntax(sx);
-    assertTrue("Syntax != " + sx, sx == ref.getSyntax());
-
-    // test generate names
-    boolean gg = ref.getGenerateNames();
-    assertTrue("GenerateNames default is not false", !gg);   
-    ref.setGenerateNames(true);
-    assertTrue("GenerateNames is not true", ref.getGenerateNames());   
-    ref.setGenerateNames(gg);
-    assertTrue("GenerateNames is not " + gg, gg == ref.getGenerateNames());
-
-    // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
-
-  }
-  
 }

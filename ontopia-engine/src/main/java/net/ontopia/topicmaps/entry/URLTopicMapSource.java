@@ -28,9 +28,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
-import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.utils.ImportExportServiceIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -283,14 +284,21 @@ public class URLTopicMapSource implements TopicMapSourceIF {
                syntax.equalsIgnoreCase("N3") ||
                syntax.equalsIgnoreCase("N-TRIPLE")) {
       // Create RDF reference
-      RDFTopicMapReference ref = new RDFTopicMapReference(url2, refid, title, base_address, null);
-      ref.setDuplicateSuppression(duplicate_suppression);
-      ref.setSource(this);
+      AbstractURLTopicMapReference ref = null;
+      for (ImportExportServiceIF service : ImportExportUtils.getServices()) {
+        if (service.canRead(url.toString())) {
+          ref = service.createReference(url2, refid, title, base_address);
+          break;
+        }
+      }
 
-      if (!syntax.equalsIgnoreCase("RDF"))
-        ref.setSyntax(syntax.toUpperCase());
-      
-      reflist = Collections.singleton((TopicMapReferenceIF)ref);
+      if (ref != null) {
+        ref.setDuplicateSuppression(duplicate_suppression);
+        ref.setSource(this);
+        reflist = Collections.singleton((TopicMapReferenceIF)ref);
+      } else {
+        throw new OntopiaRuntimeException("Topic maps RDF syntax " + syntax + " specified, but no RDF import-export service found on the classpath");
+      }
     } else 
       throw new OntopiaRuntimeException("Topic maps syntax '" + syntax +
                                         "' not supported.");

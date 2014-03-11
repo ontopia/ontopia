@@ -39,8 +39,6 @@ import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.ctm.CTMTopicMapReader;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReader;
-import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReader;
-import net.ontopia.topicmaps.utils.rdf.RDFTopicMapWriter;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ServiceUtils;
 import org.apache.commons.collections.set.UnmodifiableSet;
@@ -153,23 +151,19 @@ public class ImportExportUtils {
       return new LTMTopicMapReader (url);
     else if (address.endsWith (".tmx"))
       return new TMXMLReader (url);
-    else if (address.endsWith (".rdf"))
-      return makeRDFReader (url, "RDF/XML");
-    else if (address.endsWith (".n3"))
-      return makeRDFReader (url, "N3");
-    else if (address.endsWith (".nt"))
-      return makeRDFReader (url, "N-TRIPLE");
     else if (address.endsWith (".xml"))
       return new TMXMLReader(url); 
     else if (address.endsWith (".ctm"))
       return new CTMTopicMapReader(url);
-   else
+    else {
+      for (ImportExportServiceIF service : services) {
+        if (service.canRead(address)) {
+          return service.getReader(address);
+        }
+      }
+      // fallback
       return new XTMTopicMapReader (url);
-  }
-
-  private static TopicMapReaderIF makeRDFReader (LocatorIF url, String syntax) {
-    // the purpose of this method is to reduce bytecode reliance on Jena
-    return new RDFTopicMapReader (url, syntax);
+    }
   }
 
   /**
@@ -198,18 +192,19 @@ public class ImportExportUtils {
       return new LTMTopicMapReader (url);
     else if (address.endsWith (".tmx"))
       return new TMXMLReader (url);
-    else if (address.endsWith (".rdf"))
-      return (TopicMapImporterIF) makeRDFReader (url, "RDF/XML");
-    else if (address.endsWith (".n3"))
-      return (TopicMapImporterIF) makeRDFReader (url, "N3");
-    else if (address.endsWith (".nt"))
-      return (TopicMapImporterIF) makeRDFReader (url, "N-TRIPLE");
     else if (address.endsWith (".xml"))
       return new TMXMLReader(url); 
     else if (address.endsWith (".ctm"))
       return new CTMTopicMapReader(url);
-    else
+    else {
+      for (ImportExportServiceIF service : services) {
+        if (service.canRead(address)) {
+          return service.getImporter(address);
+        }
+      }
+      // fallback
       return new XTMTopicMapReader (url);
+    }
   }
 
   /**
@@ -220,16 +215,21 @@ public class ImportExportUtils {
    */
   public static TopicMapWriterIF getWriter (String tmfile)
       throws java.io.IOException {
-    if (tmfile.endsWith (".rdf"))
-      return new RDFTopicMapWriter (new FileOutputStream (tmfile));
-    else if (tmfile.endsWith (".ltm"))
+    if (tmfile.endsWith (".ltm"))
       return new LTMTopicMapWriter (new FileOutputStream (tmfile));
     else if (tmfile.endsWith (".tmx"))
       return new TMXMLWriter (tmfile);
     else if (tmfile.endsWith (".xtm1"))
       return new XTMTopicMapWriter (new File (tmfile));
-    else
+    else {
+      for (ImportExportServiceIF service : services) {
+        if (service.canWrite(tmfile)) {
+          return service.getWriter(new FileOutputStream(tmfile));
+        }
+      }
+      // fallback
       return new XTM2TopicMapWriter (new File (tmfile));
+    }
   }
 
   /**

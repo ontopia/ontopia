@@ -64,10 +64,6 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>jena</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>jgroups</groupId>
 			<artifactId>jgroups</artifactId>
 		</dependency>
