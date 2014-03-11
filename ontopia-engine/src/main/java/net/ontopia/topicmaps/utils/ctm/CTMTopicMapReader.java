@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -56,7 +56,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
    * @param url The URL of the LTM file.
    */
   public CTMTopicMapReader(String url) throws MalformedURLException {
-    this(new InputSource(new URILocator(url).getExternalForm()), 
+    this(new InputSource(new URILocator(url).getExternalForm()),
          new URILocator(url));
   }
 
@@ -90,16 +90,16 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
     try {
       if (!file.exists())
         throw new FileNotFoundException(file.toString());
-      
+
       this.base_address = new URILocator(URIUtils.toURL(file));
       this.source = new InputSource(base_address.getExternalForm());
     }
     catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException("Internal error. File " + file + " had " 
+      throw new OntopiaRuntimeException("Internal error. File " + file + " had "
                                         + "invalid URL representation.");
     }
   }
-  
+
   /**
    * PUBLIC: Creates a topic map reader bound to the input source
    * given in the arguments.
@@ -114,16 +114,16 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
 
   /**
    * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.   
+   * arguments.
    * @param url The URL of the topic map document.
-   */  
+   */
   public CTMTopicMapReader(LocatorIF url) {
     this(new InputSource(url.getExternalForm()), url);
   }
 
   // ==== READER IMPLEMENTATION ====
 
-  protected TopicMapIF read(TopicMapStoreFactoryIF store_factory) 
+  protected TopicMapIF read(TopicMapStoreFactoryIF store_factory)
       throws IOException {
     TopicMapStoreIF store = store_factory.createStore();
     TopicMapIF topicmap = store.getTopicMap();
@@ -149,11 +149,11 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
     } catch (AntlrWrapException ex) {
       throw (IOException) ex.getException();
     } catch (RecognitionException ex) {
-      throw new IOException("Lexical error at " + getBaseAddress().getAddress() 
+      throw new IOException("Lexical error at " + getBaseAddress().getAddress()
           + ":" + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     } catch (TokenStreamRecognitionException e) {
       RecognitionException ex = e.recog;
-      throw new IOException("Lexical error at " + getBaseAddress().getAddress() 
+      throw new IOException("Lexical error at " + getBaseAddress().getAddress()
           + ":" + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     } catch (TokenStreamIOException ex) {
       throw ex.io;
@@ -170,9 +170,9 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
     ClassInstanceUtils.resolveAssociations2(topicmap);
     return topicmap;
   }
-  
+
   // ===== INTERNAL METHODS
-  
+
   protected Reader makeReader(InputStream stream, String encoding)
     throws IOException {
     // FIXME: fill in auto-detection of encoding
@@ -180,5 +180,5 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
       encoding = "utf-8";
     return new InputStreamReader(stream, encoding);
   }
-  
+
 }
