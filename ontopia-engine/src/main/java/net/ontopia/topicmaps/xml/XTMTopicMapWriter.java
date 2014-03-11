@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
@@ -41,6 +42,11 @@ import org.xml.sax.SAXException;
  * XTM 1.0, 2.0 or 2.1. The default is XTM 1.0.
  */
 public class XTMTopicMapWriter implements TopicMapWriterIF {
+
+  public static final String PROPERTY_ADD_IDS = "addIds";
+  public static final String PROPERTY_EXPORT_SOURCE_LOCATORS = "exportSourceLocators";
+  public static final String PROPERTY_FILTER = "filter";
+  public static final String PROPERTY_VERSION = "version";
 
   protected DocumentHandler out;
   
@@ -216,4 +222,35 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
     this.export_srclocs = export_srclocs;
   }
     
+  /**
+   * Sets additional properties for the XTMTopicMapWriter. Accepted properties:
+   * <ul><li>'addIds' (Boolean), corresponds to 
+   * {@link #setAddIds(boolean)}</li>
+   * <li>'exportSourceLocators' (Boolean), corresponds to 
+   * {@link #setExportSourceLocators(boolean)}</li>
+   * <li>'version' (XTMVersion), corresponds to 
+   * {@link #setVersion(net.ontopia.topicmaps.xml.XTMVersion)}</li>
+   * <li>'filter' (DeciderIF), corresponds to 
+   * {@link #setFilter(net.ontopia.utils.DeciderIF)}</li>
+   * </ul>
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object value = properties.get(PROPERTY_ADD_IDS);
+    if ((value != null) && (value instanceof Boolean)) {
+      setAddIds((Boolean) value);
+    }
+    value = properties.get(PROPERTY_EXPORT_SOURCE_LOCATORS);
+    if ((value != null) && (value instanceof Boolean)) {
+      setExportSourceLocators((Boolean) value);
+    }
+    value = properties.get(PROPERTY_VERSION);
+    if ((value != null) && (value instanceof XTMVersion)) {
+      setVersion((XTMVersion) value);
+    }
+    value = properties.get(PROPERTY_FILTER);
+    if ((value != null) && (value instanceof DeciderIF)) {
+      setFilter((DeciderIF) value);
+    }
+  }
 }

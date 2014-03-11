@@ -69,6 +69,9 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
  * @since 2.0
  */
 public class RDFTopicMapWriter implements TopicMapWriterIF {
+  public static final String PROPERTY_PRESERVE_REIFICATION = "preserveReification";
+  public static final String PROPERTY_PRESERVE_SCOPE = "preserveScope";
+  public static final String PROPERTY_FILTER = "filter";
   protected StatementHandler handler;
   protected Model model;
   protected Writer writer;
@@ -705,4 +708,27 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     
   }
   
+  /**
+   * Sets additional properties for the RDFTopicMapWriter. Accepted properties:
+   * <ul><li>'preserveReification' (Boolean), corresponds to 
+   * {@link #setPreserveReification(boolean)}</li>
+   * <li>'preserveScope' (Boolean), corresponds to {@link #setPreserveScope(boolean)}</li>
+   * <li>'filter' (DeciderIF), corresponds to {@link #setFilter(net.ontopia.utils.DeciderIF)}</li>
+   * </ul>
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    Object value = properties.get(PROPERTY_PRESERVE_REIFICATION);
+    if ((value != null) && (value instanceof Boolean)) {
+      setPreserveReification((Boolean) value);
+    }
+    value = properties.get(PROPERTY_PRESERVE_SCOPE);
+    if ((value != null) && (value instanceof Boolean)) {
+      setPreserveScope((Boolean) value);
+    }
+    value = properties.get(PROPERTY_FILTER);
+    if ((value != null) && (value instanceof DeciderIF)) {
+      setFilter((DeciderIF) value);
+    }
+  }
 }

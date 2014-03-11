@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.core;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * PUBLIC: A topic map writer is used to write/export topic maps in an
@@ -45,4 +46,11 @@ public interface TopicMapWriterIF {
    */
   public void write(TopicMapIF source_topicmap) throws IOException;
   
+  /**
+   * PUBLIC: set additional properties to the topic map writer. The
+   * set of accepted properties differs per writer implementation, see
+   * the specific writer documentation for details on accepted properties.
+   * @param properties Additional properties for the writer
+   */
+  public void setAdditionalProperties(Map<String, Object> properties);
 }
