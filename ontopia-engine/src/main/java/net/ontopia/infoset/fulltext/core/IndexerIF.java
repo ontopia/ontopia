@@ -44,7 +44,7 @@ public interface IndexerIF {
    * @return The number of documents that was deleted from the
    * index. -1 is return if this number is unknown.
    */
-  public int delete(String field, String value) throws IOException;
+  public void delete(String field, String value) throws IOException;
     
   /**
    * INTERNAL: Flushes all changes done to the index. A flushing

@@ -231,7 +231,7 @@ public class ThreadedIndexerManager implements IndexerIF {
     startProcess(document);
   }
   
-  public synchronized int delete(String field, String value) {
+  public synchronized void delete(String field, String value) {
     // Check to see if the manager isn't already closed.
     if (shutting_down)
       throw new OntopiaRuntimeException("The indexer manager is closed.");
@@ -242,10 +242,6 @@ public class ThreadedIndexerManager implements IndexerIF {
     } catch (InterruptedException e) {
       log.error("Couldn't delete document(s) (interrupted).");
     }
-
-    // Since the deletion is asynchronous we don't really know how
-    // many documents were deleted.
-    return -1;
   }
 
   public synchronized void flush() {

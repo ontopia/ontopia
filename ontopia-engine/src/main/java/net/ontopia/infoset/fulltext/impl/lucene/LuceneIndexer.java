@@ -45,13 +45,16 @@ import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 
 /**
  * INTERNAL: The Lucene indexer implementation. This indexer uses the
@@ -89,7 +92,7 @@ public class LuceneIndexer implements IndexerIF {
    *               information will be added to the existing index.
    */  
   public LuceneIndexer(String path, boolean create) throws IOException {
-    this(path, OmnigatorAnalyzer.INSTANCE, create);
+    this(path, new StandardAnalyzer(Version.LUCENE_36), create);
   }
   
   /**
@@ -104,7 +107,7 @@ public class LuceneIndexer implements IndexerIF {
    *               information will be added to the existing index.
    */
   public LuceneIndexer(String path, Analyzer analyzer, boolean create) throws IOException {
-    this(FSDirectory.getDirectory(path, create), analyzer, create);
+    this(FSDirectory.open(new File(path)), analyzer, create);
     this.path = path;
   }
   
@@ -120,7 +123,7 @@ public class LuceneIndexer implements IndexerIF {
    * @since 3.0
    */
   public LuceneIndexer(Directory dir, boolean create) throws IOException {
-    this(dir, OmnigatorAnalyzer.INSTANCE, create);
+    this(dir, new StandardAnalyzer(Version.LUCENE_36), create);
   }
   
   /**
@@ -138,7 +141,7 @@ public class LuceneIndexer implements IndexerIF {
     this.dir = dir;
     this.analyzer = analyzer;
     if (create)
-      this.writer = new IndexWriter(dir, analyzer, create);
+      this.writer = new IndexWriter(dir, new IndexWriterConfig(Version.LUCENE_36, analyzer));
   }
 
   protected IndexWriter getWriter(){
@@ -148,27 +151,14 @@ public class LuceneIndexer implements IndexerIF {
           reader.close();
           reader = null;
         }
-        writer = new IndexWriter(dir, analyzer, false);
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+        writer = new IndexWriter(dir, config);
       } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }
     }
     return writer;
-  }
-  
-  protected IndexReader getReader() {
-    if (reader == null) {
-      try {
-        if (writer != null) { 
-          writer.close();
-          writer = null;
-        }
-        reader = IndexReader.open(dir);
-      } catch (IOException e) {
-        throw new OntopiaRuntimeException(e);
-      }
-    }
-    return reader;  
   }
   
   /**
@@ -181,22 +171,19 @@ public class LuceneIndexer implements IndexerIF {
   /**
    * INTERNAL: Returns the number of documents stored in the index.
    */
-  public synchronized int getDocs() {
-    return getWriter().docCount();
+  public synchronized int getDocs() throws IOException {
+    return getWriter().numDocs();
   }
   
   public synchronized void index(DocumentIF document) throws IOException {
     getWriter().addDocument(getDocument(document));
   }
   
-  public synchronized int delete(String field, String value) throws IOException {
-    // delete the term and return count
-    return getReader().deleteDocuments(new Term(field, value));
+  public synchronized void delete(String field, String value) throws IOException {
+    getWriter().deleteDocuments(new Term(field, value));
   }
 
   public synchronized void flush() throws IOException {
-    // optimize and close index
-    getWriter().optimize();
   }
   
   public synchronized void delete() throws IOException {
@@ -255,9 +242,9 @@ public class LuceneIndexer implements IndexerIF {
   protected Field.Index getIndexSetting(FieldIF field) {
     if (field.isIndexed()) {
       if (field.isTokenized()) {
-        return Field.Index.TOKENIZED;
+        return Field.Index.ANALYZED;
       } else {
-        return Field.Index.UN_TOKENIZED;
+        return Field.Index.NOT_ANALYZED;
       }
     } else {
       return Field.Index.NO;
