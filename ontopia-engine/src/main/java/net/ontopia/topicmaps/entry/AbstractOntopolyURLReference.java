@@ -25,22 +25,14 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.fulltext.core.IndexerIF;
-import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.impl.utils.FulltextIndexManager;
 import net.ontopia.topicmaps.impl.utils.TransactionEventListenerIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import org.apache.lucene.store.FSDirectory;
 
 /**
  * INTERNAL: Common abstract superclass for references from sources
@@ -49,7 +41,6 @@ import org.apache.lucene.store.FSDirectory;
 public abstract class AbstractOntopolyURLReference
   extends AbstractURLTopicMapReference
   implements TransactionEventListenerIF {
-  protected FulltextIndexManager ftmanager;
   protected boolean alwaysReindexOnLoad;
 
   public AbstractOntopolyURLReference(URL url, String id, String title,
@@ -70,19 +61,16 @@ public abstract class AbstractOntopolyURLReference
     // create topic map importer
     TopicMapImporterIF reader = getImporter();
 
+    File _indexDirectory = null;
+    if (maintainFulltextIndexes) {
+      _indexDirectory = new File(getIndexDirectory(), getId());
+    }
+
     // create empty topic map
-    InMemoryTopicMapStore store = new InMemoryTopicMapStore();
+    InMemoryTopicMapStore store = new InMemoryTopicMapStore(maintainFulltextIndexes, _indexDirectory);
     if (base_address != null)
       store.setBaseAddress(base_address);
     TopicMapIF tm = store.getTopicMap();
-
-    // register fulltext index manager at this point, so that we can track
-    // all events that occur at loading
-    boolean replaceIndex = true;
-    
-    if (getMaintainFulltextIndexes())
-      // if index is not to be replaced, defer registration until after import
-      this.ftmanager = FulltextIndexManager.manageTopicMap(tm);
 
     // import file into topic map
     reader.importInto(tm);
@@ -90,15 +78,6 @@ public abstract class AbstractOntopolyURLReference
     // suppress duplicates
     if (getDuplicateSuppression())
       DuplicateSuppressionUtils.removeDuplicates(tm);
-
-    // deferred fulltext index manager registration
-    if (getMaintainFulltextIndexes()) {
-      // synchronize fulltext index
-      synchronizeFulltextIndex(true);
-
-      File ixdir = new File(getIndexDirectory(), getId());
-      ftmanager.setLuceneDirectory(FSDirectory.open(ixdir));
-    }
 
     return tm;
   }
@@ -122,68 +101,6 @@ public abstract class AbstractOntopolyURLReference
     this.alwaysReindexOnLoad = alwaysReindexOnLoad;
   }
 
-  /**
-   * INTERNAL: Synchronizes the underlying fulltext index with the latest
-   * changes in the topic map.
-   * 
-   * @return True if index was modified.
-   */
-  public boolean synchronizeFulltextIndex() throws IOException {
-    if (getMaintainFulltextIndexes())
-      return synchronizeFulltextIndex(false);
-    else
-      return false;
-  }
-
-  protected synchronized boolean synchronizeFulltextIndex(boolean replaceIndex)
-      throws IOException {
-    
-    File ixdir = new File(getIndexDirectory(), getId());
-    IndexerIF indexer = null;
-    boolean modified = false;
-    
-    try {
-      if (replaceIndex)
-        indexer = new LuceneIndexer(ixdir.getPath(), replaceIndex);
-
-      if (ftmanager != null && ftmanager.needSynchronization()) {      
-        if (indexer == null)
-          indexer = new LuceneIndexer(ixdir.getPath(), replaceIndex);
-
-        modified = ftmanager.synchronizeIndex(indexer);
-        if (modified) indexer.flush();      
-      }
-    } finally {
-      if (indexer != null) indexer.close();
-    }
-    return modified;
-  }
-
-  public SearcherIF getSearcher() {
-    if (getMaintainFulltextIndexes()) {
-      File ixdir = new File(getIndexDirectory(), getId());
-      try {
-        return new LuceneSearcher(ixdir.getPath());
-      } catch (IOException e) {
-        throw new OntopiaRuntimeException(e);
-      }
-    } else
-      return null;
-  }
-
-  public synchronized void close() {
-    super.close();
-    // close and dereference ftmanager
-    try {
-      if (ftmanager != null) {
-        ftmanager.close();
-        ftmanager = null;
-      }
-    } catch (IOException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-  }
-
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -194,9 +111,7 @@ public abstract class AbstractOntopolyURLReference
     if (getMaintainFulltextIndexes()) {
       try {
         // delete index directory
-        File ixdir = new File(getIndexDirectory(), getId());
-        if (ixdir.exists())
-          FileUtils.deleteDirectory(ixdir, true);
+        ((InMemoryTopicMapStore)store).deleteFullTextIndex();
       } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }
@@ -210,7 +125,7 @@ public abstract class AbstractOntopolyURLReference
   public void transactionCommit(TopicMapTransactionIF transaction) {
     // synchronize fulltext index
     try {
-      synchronizeFulltextIndex();
+      ((InMemoryTopicMapStore)store).synchronizeFulltextIndex();
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -219,7 +134,7 @@ public abstract class AbstractOntopolyURLReference
   public void transactionAbort(TopicMapTransactionIF transaction) {
     // synchronize fulltext index
     try {
-      synchronizeFulltextIndex();
+      ((InMemoryTopicMapStore)store).synchronizeFulltextIndex();
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }

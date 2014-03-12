@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.query.core;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +33,6 @@ import java.net.MalformedURLException;
 import junit.framework.TestCase;
 
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -44,14 +43,10 @@ import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.query.impl.basic.QueryProcessor;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
-import net.ontopia.topicmaps.xml.TMXMLReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-import org.xml.sax.InputSource;
 
 public abstract class AbstractQueryTest extends TestCase {
 
@@ -93,11 +88,20 @@ public abstract class AbstractQueryTest extends TestCase {
   }
   
   protected void load(String filename) throws IOException {
+    load(filename, false);
+  }
+
+  protected void load(String filename, boolean fulltext) throws IOException {
     // IMPORTANT: This method is being overloaded by the RDBMS
     // implementation to provide the right object implementations.
     filename = TestFileUtils.getTestInputFile(testdataDirectory, filename);
 
-    InMemoryTopicMapStore store = new InMemoryTopicMapStore();
+    File indexDirectory = null; 
+    if (fulltext) {
+      indexDirectory = TestFileUtils.getTestOutputFile("indexes", filename.substring(filename.lastIndexOf("/")));
+      indexDirectory.mkdirs();
+    }
+    InMemoryTopicMapStore store = new InMemoryTopicMapStore(fulltext, indexDirectory);
     topicmap = store.getTopicMap();
     builder = store.getTopicMap().getBuilder();
     base = URIUtils.getURI(filename);
@@ -107,6 +111,8 @@ public abstract class AbstractQueryTest extends TestCase {
       ((XTMTopicMapReader) importer).setValidation(false);
     importer.importInto(topicmap);
 
+    store.synchronizeFulltextIndex();
+    
     processor = new QueryProcessor(topicmap, base);
   }
   

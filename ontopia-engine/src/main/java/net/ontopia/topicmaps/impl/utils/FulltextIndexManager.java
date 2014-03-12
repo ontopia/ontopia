@@ -51,7 +51,7 @@ import org.apache.lucene.store.Directory;
 public class FulltextIndexManager extends BasicIndex implements SearcherIF {
 
   protected Directory luceneDirectory;
-  protected SearcherIF luceneSearcher;
+  protected LuceneSearcher luceneSearcher;
   
   protected Collection<TMObjectIF> added;
 
@@ -116,6 +116,10 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
 
   public void setLuceneDirectory(Directory luceneDirectory) {
       this.luceneDirectory = luceneDirectory;
+  }
+
+  public Directory getLuceneDirectory() {
+    return luceneDirectory;
   }
 
   /**
@@ -208,22 +212,28 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     }
     return changes;
   }
+  
+  public LuceneSearcher getSearcher() throws IOException {
+    if (luceneSearcher == null)
+      luceneSearcher = new LuceneSearcher(luceneDirectory);
+    return luceneSearcher;
+  }
 
   // -----------------------------------------------------------------------------
   // IndexIF implementation
   // -----------------------------------------------------------------------------
   
   public synchronized SearchResultIF search(String query) throws IOException {
-    if (luceneSearcher == null)
-      luceneSearcher = new LuceneSearcher(luceneDirectory);
-
-    return luceneSearcher.search(query);
+    return getSearcher().search(query);
   }
   
    public synchronized void close() throws IOException {
     if (luceneSearcher != null) { 
       luceneSearcher.close();
       luceneSearcher = null;
+    }
+    if (luceneDirectory != null) {
+      luceneDirectory.close();
     }
    }
   

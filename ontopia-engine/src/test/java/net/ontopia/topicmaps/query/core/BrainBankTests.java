@@ -42,7 +42,7 @@ public class BrainBankTests extends AbstractPredicateTest {
   /// tests
   
   public void testFindHorseInName() throws InvalidQueryException, IOException {
-    load("bb-test.ltm");
+    load("bb-test.ltm", true);
 
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById ("horse"),
@@ -69,7 +69,7 @@ public class BrainBankTests extends AbstractPredicateTest {
   }
 
   public void testFindHorseInAssocDesc() throws InvalidQueryException, IOException {
-    load("bb-test.ltm");
+    load("bb-test.ltm", true);
 
     TopicIF isabout = getTopicById("is-about");
     TopicIF reifier = getTopicById("is-about-horse");
@@ -100,7 +100,7 @@ public class BrainBankTests extends AbstractPredicateTest {
   }
 
   public void testFindHorseInComments() throws InvalidQueryException, IOException {
-    load("bb-test.ltm");
+    load("bb-test.ltm", true);
 
     List matches = new ArrayList();
     addMatch(matches, "COMMENT", getTopicById("comment1"),
