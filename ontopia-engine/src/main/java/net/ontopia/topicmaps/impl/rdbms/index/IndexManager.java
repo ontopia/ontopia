@@ -72,11 +72,15 @@ public class IndexManager extends AbstractIndexManager {
       throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
 
     // Create index
-    AbstractIndex ix = (AbstractIndex)indexes.get(name);
+    IndexIF ix = indexes.get(name);
     if (ix == null)
       // Throw unsupported exception if index is unsupported.
       throw new OntopiaUnsupportedException("Unknown index: " + name);
-    return ix.getIndex();
+    if (ix instanceof AbstractIndex) {
+      return ((AbstractIndex) ix).getIndex();
+    } else {
+      return ix;
+    }
   }
 
   public Collection<String> getSupportedIndexes() {
@@ -91,7 +95,7 @@ public class IndexManager extends AbstractIndexManager {
     return indexes.containsKey(name);
   }
 
-  public void registerIndex(String name, AbstractIndex index) {
+  public void registerIndex(String name, IndexIF index) {
     indexes.put(name, index);
   }
   
