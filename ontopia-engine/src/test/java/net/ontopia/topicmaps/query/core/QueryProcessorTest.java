@@ -31,7 +31,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 // TODO:
@@ -1564,7 +1563,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
   }
 
   public void testBug1232() throws InvalidQueryException, IOException {
-    load("opera.ltm");
+    load("opera.ltm", true);
 
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("nerone-c"));

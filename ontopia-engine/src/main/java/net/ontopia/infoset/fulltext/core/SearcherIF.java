@@ -21,13 +21,14 @@
 package net.ontopia.infoset.fulltext.core;
 
 import java.io.IOException;
+import net.ontopia.topicmaps.core.index.IndexIF;
 
 /**
  * INTERNAL: Represents a search engine. Instances of this class are
  * able to perform searches across a collection of documents.<p>
  */
 
-public interface SearcherIF {
+public interface SearcherIF extends IndexIF {
   
   /**
    * INTERNAL: Performs a query on an index. The actual query syntax is

@@ -22,12 +22,8 @@ package net.ontopia.topicmaps.query.impl.basic;
 
 import java.io.IOException;
 
-import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
-import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapIndexer;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapSearchResult;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -37,8 +33,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.OntopiaUnsupportedException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
-
-import org.apache.lucene.store.RAMDirectory;
 
 /**
  * INTERNAL: Implements the 'value-like' predicate.
@@ -150,26 +144,6 @@ public class ValueLikePredicate implements BasicPredicateIF {
       return (SearcherIF)topicmap
         .getIndex("net.ontopia.infoset.fulltext.core.SearcherIF");
     } catch (OntopiaUnsupportedException e) {
-      // so we don't have an index. use the fallback below
-    }
-
-    // FIXME: might move the rest of this into an index and mark it as
-    // non-updating. could then regenerate every time, or make it
-    // auto-updating.
-    
-    try {
-      RAMDirectory dir = new RAMDirectory();
-      
-      IndexerIF ixer = new LuceneIndexer(dir, true);
-      DefaultTopicMapIndexer imanager = new DefaultTopicMapIndexer(ixer, false, null);
-      imanager.index(topicmap);
-
-      // close indexers to flush out last pieces of data
-      imanager.close();
-      ixer.close();
-      
-      return new LuceneSearcher(dir);
-    } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

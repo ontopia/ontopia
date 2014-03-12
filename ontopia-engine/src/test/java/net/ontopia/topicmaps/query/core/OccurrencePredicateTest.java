@@ -107,7 +107,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
   }
 
   public void testKnownProblem() throws InvalidQueryException, IOException {
-    load("bb-test.ltm");
+    load("bb-test.ltm", true);
     List matches = new ArrayList();
 
     TopicIF content = getTopicById("content");
