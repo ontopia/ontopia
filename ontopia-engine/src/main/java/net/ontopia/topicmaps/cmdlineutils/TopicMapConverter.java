@@ -126,11 +126,12 @@ public class TopicMapConverter {
 
     TopicMapReaderIF reader = ImportExportUtils.getReader(infile);
 
-    Map<String, Object> config = new HashMap<String, Object>();
-    config.put("mappingFile", new File(options.rdfmap));
-    config.put("mappingSyntax", getSyntax(options.rdfmap));
-
-    reader.setAdditionalProperties(config);
+    if (options.rdfmap != null) {
+      Map<String, Object> config = new HashMap<String, Object>();
+      config.put("mappingFile", new File(options.rdfmap));
+      config.put("mappingSyntax", getSyntax(options.rdfmap));
+      reader.setAdditionalProperties(config);
+    }
     
     if (reader instanceof XTMTopicMapReader)
       ((XTMTopicMapReader) reader).setValidation(options.validate);
