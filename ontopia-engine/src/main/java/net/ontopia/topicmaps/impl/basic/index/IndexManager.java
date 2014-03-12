@@ -39,7 +39,7 @@ import net.ontopia.utils.OntopiaUnsupportedException;
 public class IndexManager extends AbstractIndexManager implements java.io.Serializable {
 
   protected TopicMapTransactionIF transaction;
-  protected Map indexes;
+  protected Map<String, IndexIF> indexes;
   
   public IndexManager(TopicMapTransactionIF transaction, CollectionFactoryIF cfactory, 
 		      EventManagerIF emanager, ObjectTreeManager otree) {
@@ -66,18 +66,22 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
       throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
 
     // Create index
-    AbstractIndex ix = (AbstractIndex)indexes.get(name);
+    IndexIF ix = indexes.get(name);
     if (ix == null)
       // Throw unsupported exception if index is unsupported.
       throw new OntopiaUnsupportedException("Unknown index: " + name);
-    return ix.getIndex();
+    if (ix instanceof AbstractIndex) {
+      return ((AbstractIndex) ix).getIndex();
+    } else {
+      return ix;
+    }
   }
 
-  public Collection getSupportedIndexes() {
+  public Collection<String> getSupportedIndexes() {
     return indexes.keySet();
   }
 
-  public Collection getActiveIndexes() {
+  public Collection<IndexIF> getActiveIndexes() {
     return indexes.values();
   }
 
@@ -85,7 +89,7 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
     return indexes.containsKey(name);
   }
 
-  public void registerIndex(String name, AbstractIndex index) {
+  public void registerIndex(String name, IndexIF index) {
     indexes.put(name, index);
   }
   

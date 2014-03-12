@@ -19,7 +19,7 @@
  */
 package net.ontopia.topicmaps.impl.utils;
 
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
+import net.ontopia.topicmaps.core.index.IndexIF;
 
 public abstract class AbstractIndexManager implements IndexManagerIF {
 
@@ -28,6 +28,6 @@ public abstract class AbstractIndexManager implements IndexManagerIF {
    * @param name The to register the index with name.
    * @param index The index to register.
    */
-  public abstract void registerIndex(String name, AbstractIndex index);
+  public abstract void registerIndex(String name, IndexIF index);
   
 }
