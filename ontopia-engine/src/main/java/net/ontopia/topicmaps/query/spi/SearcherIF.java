@@ -26,8 +26,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 /**
  * PUBLIC: Simple searcher interface that one can implement and
  * refer to by name through a java module import declaration.<p>
- *
- * <p>Example:<br> <pre>import "urn:x-java:net.ontopia.topicmaps.query.spi.LuceneSearcher?index=/tmp/indexes/i18n.xtm" as fulltext</pre></p>
  */
 public interface SearcherIF {
 

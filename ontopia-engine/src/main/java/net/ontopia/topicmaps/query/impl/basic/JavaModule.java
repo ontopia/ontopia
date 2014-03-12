@@ -33,8 +33,6 @@ import net.ontopia.utils.StringUtils;
 /**
  * EXPERIMENTAL: A query module that is able to instantiate predicates
  * when given a java class name.<p>
- *
- * Example: import "urn:x-java:net.ontopia.topicmaps.query.spi.LuceneSearcher?index=/tmp/myindex" as lucene<p>
  */
 public class JavaModule implements ModuleIF {
 
