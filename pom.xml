@@ -46,6 +46,7 @@
 		<module>ontopoly-editor</module>
 		<module>ontopia-tmprefs</module>
 		<module>ontopia-rdf</module>
+		<module>ontopia-schema</module>
 		
 		<!-- Web Apps -->
 		<module>webapp-root</module>
