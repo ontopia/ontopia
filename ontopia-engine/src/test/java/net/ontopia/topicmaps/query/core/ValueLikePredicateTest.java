@@ -26,7 +26,6 @@ import java.util.List;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public class ValueLikePredicateTest extends AbstractPredicateTest {
   
@@ -114,6 +113,8 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                   "  topic-name($TOPIC, $BNAME)?");
   }
   
+  // filtering on score is possible but not advised as it is searcher dependent and
+  // might not be percentage based (like with lucene > 3.x), so test it once
   public void testWithScoreAbove001() throws InvalidQueryException, IOException {
     load("family.ltm");
 
@@ -125,50 +126,6 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "select $TOPIC from " +
                          "  value-like($BNAME, \"skalle\", $SCORE), " +
                          "  topic-name($TOPIC, $BNAME), $SCORE > 0.01?");
-  }
-  
-  public void testWithScoreAbove001Ordered() throws InvalidQueryException, IOException {
-    load("family.ltm");
-
-    findAny("select $TOPIC, $SCORE from " +
-            "  value-like($BNAME, \"skalle\", $SCORE), " +
-            "  topic-name($TOPIC, $BNAME), $SCORE > 0.01 " +
-            "  order by $SCORE, $TOPIC desc limit 2 offset 1?");
-  } 
-  
-  public void testWithScoreAbove095() throws InvalidQueryException, IOException {
-    load("family.ltm");
-
-    if (topicmap.getStore().getImplementation() == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION) {      
-      List matches = new ArrayList();
-      addMatch(matches, "TOPIC", getTopicById("gerd"));
-      addMatch(matches, "TOPIC", getTopicById("asle"));
-      
-      verifyQuery(matches, "select $TOPIC from " +
-                  "  value-like($BNAME, \"skalle\", $SCORE), " +
-                  "  topic-name($TOPIC, $BNAME), $SCORE > 0.95?");
-    }
-  }
-  
-  public void testWithScoreBetween006and007() throws InvalidQueryException, IOException {
-    load("family.ltm");
-    
-    findNothing("select $TOPIC from " +
-                "  value-like($BNAME, \"skalle\", $SCORE), " +
-                "  topic-name($TOPIC, $BNAME), $SCORE < 0.06, $SCORE > 0.07?");
-  }
-  
-  public void testWithScoreBetween095and070() throws InvalidQueryException, IOException {
-    load("family.ltm");
-
-    if (topicmap.getStore().getImplementation() == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION) {      
-      List matches = new ArrayList();
-      addMatch(matches, "TOPIC", getTopicById("lms"));
-      
-      verifyQuery(matches, "select $TOPIC from " +
-                  "  value-like($BNAME, \"skalle\", $SCORE), " +
-                  "  topic-name($TOPIC, $BNAME), $SCORE < 0.95, $SCORE > 0.70?");
-    }
   }
   
   public void testWithEscapedQuotes() throws InvalidQueryException, IOException {

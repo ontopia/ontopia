@@ -97,7 +97,7 @@ public abstract class AbstractOntopolyURLReference
       synchronizeFulltextIndex(true);
 
       File ixdir = new File(getIndexDirectory(), getId());
-      ftmanager.setLuceneDirectory(FSDirectory.getDirectory(ixdir, false));
+      ftmanager.setLuceneDirectory(FSDirectory.open(ixdir));
     }
 
     return tm;

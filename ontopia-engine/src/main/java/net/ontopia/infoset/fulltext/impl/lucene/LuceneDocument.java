@@ -22,7 +22,6 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Iterator;
 
 import net.ontopia.infoset.fulltext.core.DocumentIF;
@@ -30,6 +29,7 @@ import net.ontopia.infoset.fulltext.core.FieldIF;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Fieldable;
   
 /**
  * INTERNAL: DocumentIF wrapper for Lucene's own internal document class.<p>
@@ -51,9 +51,8 @@ public class LuceneDocument implements DocumentIF {
   
   public Collection<FieldIF> getFields() {
     Collection<FieldIF> result = new ArrayList<FieldIF>();
-    Enumeration enumeration = document.fields();
-    while (enumeration.hasMoreElements()) {
-      result.add(new LuceneField((Field)enumeration.nextElement()));
+    for (Fieldable field : document.getFields()) {
+      result.add(new LuceneField((Field) field));
     }
     return result;
   }

@@ -99,8 +99,8 @@ public class DefaultIndexerManager implements IndexerIF {
     indexer.index(document);
   }
   
-  public int delete(String field, String value) throws IOException {
-    return indexer.delete(field, value);
+  public void delete(String field, String value) throws IOException {
+    indexer.delete(field, value);
   }
 
   public void flush() throws IOException {

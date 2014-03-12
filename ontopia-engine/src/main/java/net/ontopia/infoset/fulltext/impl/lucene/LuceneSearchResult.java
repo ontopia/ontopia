@@ -24,8 +24,9 @@ import java.io.IOException;
 
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
+import org.apache.lucene.search.IndexSearcher;
 
-import org.apache.lucene.search.Hits;
+import org.apache.lucene.search.TopDocs;
   
 /**
  * INTERNAL: Lucene search result wrapper implementation.<p>
@@ -33,22 +34,24 @@ import org.apache.lucene.search.Hits;
 
 public class LuceneSearchResult implements SearchResultIF {
 
-  protected Hits hits;
+  protected TopDocs hits;
+  protected final IndexSearcher searcher;
   
-  LuceneSearchResult(Hits hits) {
+  LuceneSearchResult(IndexSearcher searcher, TopDocs hits) {
     this.hits = hits;
+    this.searcher = searcher;
   }
   
   public DocumentIF getDocument(int hit) throws IOException {
-    return new LuceneDocument(hits.doc(hit));
+    return new LuceneDocument(searcher.doc(hits.scoreDocs[hit].doc));
   }
 
   public float getScore(int hit) throws IOException {
-    return hits.score(hit);
+    return hits.scoreDocs[hit].score;
   }
 
   public int hits() {
-    return hits.length();
+    return hits.totalHits;
   }
     
 }

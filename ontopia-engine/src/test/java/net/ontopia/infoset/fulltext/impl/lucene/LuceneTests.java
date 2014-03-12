@@ -41,10 +41,10 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 import org.apache.lucene.analysis.StopAnalyzer;
+import org.apache.lucene.util.Version;
 
 public class LuceneTests extends TestCase {
   
@@ -273,7 +273,7 @@ public class LuceneTests extends TestCase {
     }
     
     //!IndexerIF indexer = new LuceneIndexer(indexDir, true);
-    IndexerIF indexer = new LuceneIndexer(indexDir, new StopAnalyzer(), true);
+    IndexerIF indexer = new LuceneIndexer(indexDir, new StopAnalyzer(Version.LUCENE_36), true);
     DefaultTopicMapIndexer ix = new DefaultTopicMapIndexer(indexer, false, "preloader");    
     ix.index(topicmap);
     ix.close();
@@ -281,7 +281,7 @@ public class LuceneTests extends TestCase {
 
     // Assign new searcher instance
     //!searcher = new LuceneSearcher(indexDir);
-    searcher = new LuceneSearcher(indexDir, new StopAnalyzer());    
+    searcher = new LuceneSearcher(indexDir, new StopAnalyzer(Version.LUCENE_36));    
   }
 
   protected void remove(TMObjectIF object) throws IOException {
@@ -292,7 +292,7 @@ public class LuceneTests extends TestCase {
     }
 
     //!IndexerIF indexer = new LuceneIndexer(indexDir, false);
-    IndexerIF indexer = new LuceneIndexer(indexDir, new StopAnalyzer(), false);
+    IndexerIF indexer = new LuceneIndexer(indexDir, new StopAnalyzer(Version.LUCENE_36), false);
     DefaultTopicMapIndexer ix = new DefaultTopicMapIndexer(indexer, false, "preloader");    
     ix.delete(object);
     ix.close();
@@ -300,7 +300,7 @@ public class LuceneTests extends TestCase {
     
     // Assign new searcher instance
     //!searcher = new LuceneSearcher(indexDir);    
-    searcher = new LuceneSearcher(indexDir, new StopAnalyzer());    
+    searcher = new LuceneSearcher(indexDir, new StopAnalyzer(Version.LUCENE_36));    
   }
 
   protected void findSingle(SearchResultIF result, TMObjectIF object, String m)
