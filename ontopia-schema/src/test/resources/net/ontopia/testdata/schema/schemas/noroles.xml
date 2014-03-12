@@ -1,0 +1,12 @@
+
+<tm-schema match="loose">
+
+  <association>
+    <instanceOf>
+      <internalTopicRef href="#written-by"/>
+    </instanceOf>
+
+    <!-- no roles are allowed at all -->
+  </association>
+
+</tm-schema>

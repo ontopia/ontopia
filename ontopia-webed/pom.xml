@@ -17,12 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>ontopia-engine</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>ontopia-navigator</artifactId>
+			<artifactId>ontopia-schema</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

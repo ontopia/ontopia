@@ -1,0 +1,12 @@
+<tm-schema>
+  <association>
+    <role>
+      <instanceOf>
+  	<internalTopicRef href="#roletype"/>
+      </instanceOf>
+      <player>
+        <internalTopicRef href="#playertype"/>
+      </player>
+    </role>
+  </association>
+</tm-schema>
