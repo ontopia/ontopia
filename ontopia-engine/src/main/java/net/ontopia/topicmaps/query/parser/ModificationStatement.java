@@ -90,7 +90,7 @@ public abstract class ModificationStatement extends TologStatement {
   // --- Internal utilities
 
   protected String toStringLitlist() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int ix = 0; ix < litlist.size(); ix++) {
       buf.append(litlist.get(ix));
       if (ix + 1 < litlist.size())

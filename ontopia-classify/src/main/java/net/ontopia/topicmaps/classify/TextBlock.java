@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class TextBlock {
 
-  StringBuffer sb;
+  StringBuilder sb;
   List<Token> tokens = new ArrayList<Token>();
 
   public String getText() {
@@ -45,7 +45,7 @@ public class TextBlock {
   
   public void addText(char[] ch, int start, int length) {
     if (sb == null)
-      sb = new StringBuffer(length);
+      sb = new StringBuilder(length);
     sb.append(ch, start, length);
   }
 

@@ -145,7 +145,7 @@ public class URIUtils {
     // of the URI, but this should not be done unless the URI is being used
     // in a context that does not allow the unescaped character to appear.    
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int ix = 0; ix < encodedstr.length; ix++) {
       if ((encodedstr[ix] >= 'a' && encodedstr[ix] <= 'z') ||
           (encodedstr[ix] >= 'A' && encodedstr[ix] <= 'Z') ||
@@ -209,7 +209,7 @@ public class URIUtils {
     URL url = file.toURL();
     try {
       byte[] bytes = url.toString().getBytes( "US-ASCII" );
-      StringBuffer buf = new StringBuffer( bytes.length );
+      StringBuilder buf = new StringBuilder( bytes.length );
       for ( int i = 0; i < bytes.length; i++ ) {
         byte b = bytes[i];
         if (UNRESERVED.get(b)) {

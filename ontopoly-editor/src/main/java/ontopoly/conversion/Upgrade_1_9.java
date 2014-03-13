@@ -49,7 +49,7 @@ public class Upgrade_1_9 extends UpgradeBase {
   }
   
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     sb.append("[on:system-topic  : on:topic-type on:system-topic]\n");
     sb.append("[on:public-system-topic  : on:topic-type on:system-topic = \"Public system topic\"]\n");
     sb.append("xtm:superclass-subclass(on:system-topic : xtm:superclass, on:public-system-topic : xtm:subclass)\n");

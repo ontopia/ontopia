@@ -116,7 +116,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       //! } else new RuntimeException().printStackTrace();
     }
 
-    protected void addNonAggregateSelect(StringBuffer select) {
+    protected void addNonAggregateSelect(StringBuilder select) {
       nonaggregate.add(select);
     }
     
@@ -252,7 +252,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
     }
     
-    void nextReference(StringBuffer sql, BuildInfo info) {
+    void nextReference(StringBuilder sql, BuildInfo info) {
       // FIXME: why don't we just delegate to atomicSQLValueIF?
 
       switch (current.getType()) {
@@ -361,14 +361,14 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // Analyze query
     
     // WHERE and SELECT clauses must be created first.
-    StringBuffer sql_select = createSelectClause(selects, distinct, info);
+    StringBuilder sql_select = createSelectClause(selects, distinct, info);
     if (issetquery)
       info.rtables.clear();
-    StringBuffer sql_where = createWhereClause(filter, info);
-    StringBuffer sql_group_by = createGroupByClause(info);
-    StringBuffer sql_order_by = createOrderByClause(orderby, info);
+    StringBuilder sql_where = createWhereClause(filter, info);
+    StringBuilder sql_group_by = createGroupByClause(info);
+    StringBuilder sql_order_by = createOrderByClause(orderby, info);
     // FROM clause must be created at last.
-    StringBuffer sql_from;
+    StringBuilder sql_from;
     if (issetquery) {
       sql_from = sql_where;
       sql_from.insert(0, '(');
@@ -378,68 +378,68 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     } else
       sql_from = createFromClause(filter, info);
 
-    StringBuffer sql_offset_limit = createOffsetLimitClause(offset, limit, info);
+    StringBuilder sql_offset_limit = createOffsetLimitClause(offset, limit, info);
 
     // Construct the full statement.
     return createStatement(sql_select, sql_where, sql_from, sql_group_by, sql_order_by, sql_offset_limit, info);
   }
   
-  protected StringBuffer createSelectClause(List selects, boolean distinct, BuildInfo info) {
+  protected StringBuilder createSelectClause(List selects, boolean distinct, BuildInfo info) {
     // SELECT clause
     info.register_tables = true;
-    StringBuffer sql_select = new StringBuffer(INIT_WIDTH_SELECT);
+    StringBuilder sql_select = new StringBuilder(INIT_WIDTH_SELECT);
     produceSelect(selects, distinct, sql_select, info);
     info.register_tables = false;
     return sql_select;
   }
 
-  protected StringBuffer createWhereClause(SQLExpressionIF filter, BuildInfo info) {
+  protected StringBuilder createWhereClause(SQLExpressionIF filter, BuildInfo info) {
     // WHERE clause
     info.register_tables = true;
-    StringBuffer sql_where = new StringBuffer(INIT_WIDTH_WHERE);    
+    StringBuilder sql_where = new StringBuilder(INIT_WIDTH_WHERE);    
     produceWhere(filter, sql_where, info);
     info.register_tables = false;
     return sql_where;
   }
 
-  protected StringBuffer createFromClause(SQLExpressionIF filter, BuildInfo info) {
+  protected StringBuilder createFromClause(SQLExpressionIF filter, BuildInfo info) {
     // FROM clause
-    StringBuffer sql_from = new StringBuffer(INIT_WIDTH_FROM);
+    StringBuilder sql_from = new StringBuilder(INIT_WIDTH_FROM);
     produceFrom(sql_from, info);
     return sql_from;
   }
 
-  protected StringBuffer createGroupByClause(BuildInfo info) {
+  protected StringBuilder createGroupByClause(BuildInfo info) {
     // GROUP BY clause
-    StringBuffer sql_group_by = new StringBuffer(INIT_WIDTH_GROUP_BY);    
+    StringBuilder sql_group_by = new StringBuilder(INIT_WIDTH_GROUP_BY);    
     produceGroupBy(sql_group_by, info);
     return sql_group_by;
   }
 
-  protected StringBuffer createOrderByClause(List orderby, BuildInfo info) {
+  protected StringBuilder createOrderByClause(List orderby, BuildInfo info) {
     // ORDER BY clause
     info.register_tables = true;
-    StringBuffer sql_order_by = new StringBuffer(INIT_WIDTH_ORDER_BY);
+    StringBuilder sql_order_by = new StringBuilder(INIT_WIDTH_ORDER_BY);
     produceOrderBy(orderby, sql_order_by, info);
     info.register_tables = false;
     return sql_order_by;
   }
 
-  protected StringBuffer createOffsetLimitClause(int offset, int limit, BuildInfo info) {    
+  protected StringBuilder createOffsetLimitClause(int offset, int limit, BuildInfo info) {    
     // ISSUE: does not work with Oracle
     
     // LIMIT x OFFSET y clause
     if (limit > 0 && offset > 0) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(" limit ").append(limit).append(" offset ").append(offset);
       return sb;
     } else if (limit > 0) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(" limit ").append(limit);
       return sb;
     } else if (offset > 0) {
       // ISSUE: does not work with MySQL
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(" offset ").append(offset);
       return sb;
     } else {
@@ -447,15 +447,15 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
 
-  protected String createStatement(StringBuffer sql_select, StringBuffer sql_where,
-                                   StringBuffer sql_from, StringBuffer sql_group_by,
-                                   StringBuffer sql_order_by, StringBuffer sql_offset_limit, BuildInfo info) {
+  protected String createStatement(StringBuilder sql_select, StringBuilder sql_where,
+                                   StringBuilder sql_from, StringBuilder sql_group_by,
+                                   StringBuilder sql_order_by, StringBuilder sql_offset_limit, BuildInfo info) {
     
-    // FIXME: Return StringBuffer instead?
+    // FIXME: Return StringBuilder instead?
     // NOTE: WHERE clause and FROM clause has already been created at this point.
 
     // Append clauses
-    StringBuffer sql = new StringBuffer(INIT_WIDTH_SQL);
+    StringBuilder sql = new StringBuilder(INIT_WIDTH_SQL);
 
     // SELECT clause
     sql.append("select ");
@@ -644,7 +644,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // SELECT clause
   // -----------------------------------------------------------------------------
 
-  protected void produceSelect(List selects, boolean distinct, StringBuffer sql, BuildInfo info) {
+  protected void produceSelect(List selects, boolean distinct, StringBuilder sql, BuildInfo info) {
     // Output distinct if specified
     if (distinct) sql.append("distinct ");
 
@@ -677,7 +677,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // GROUP BY clause
   // -----------------------------------------------------------------------------
 
-  protected void produceGroupBy(StringBuffer sql, BuildInfo info) {
+  protected void produceGroupBy(StringBuilder sql, BuildInfo info) {
 
     if (!info.hasaggs) return;
 
@@ -697,7 +697,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // ORDER BY clause
   // -----------------------------------------------------------------------------
 
-  protected void produceOrderBy(List orderby, StringBuffer sql, BuildInfo info) {
+  protected void produceOrderBy(List orderby, StringBuilder sql, BuildInfo info) {
     if (orderby == null || orderby.isEmpty()) return;
     // Do not register field handlers and aggregate functions in order by clause
     boolean register = false;
@@ -734,7 +734,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       return false;
   }
   
-  protected void produceFrom(StringBuffer sql, BuildInfo info) {
+  protected void produceFrom(StringBuilder sql, BuildInfo info) {
     // Loop over referenced tables and FROM those that aren't joined.
     Iterator iter = info.rtables.iterator();
     while (iter.hasNext()) {
@@ -789,7 +789,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     StringUtils.join(info.fg_from, ", ", sql);
   }
   
-  //! protected void produceFrom(StringBuffer sql, BuildInfo info) {
+  //! protected void produceFrom(StringBuilder sql, BuildInfo info) {
   //!   Set ptables = null;
   //!   if (info.parent != null) {
   //!     ptables = new HashSet();
@@ -857,7 +857,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   //!     accumulateParentTables(info.parent, tables);
   //! }
 
-  protected void fromSubSelectAlias(StringBuffer sql, BuildInfo info) {
+  protected void fromSubSelectAlias(StringBuilder sql, BuildInfo info) {
     // No need for an alias.
   }
   
@@ -865,7 +865,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // WHERE clause
   // -----------------------------------------------------------------------------
 
-  protected void produceWhere(SQLExpressionIF filter, StringBuffer sql, BuildInfo info) {
+  protected void produceWhere(SQLExpressionIF filter, StringBuilder sql, BuildInfo info) {
     whereSQLExpressionIF(filter, sql, info);
 
     //! System.out.println("SQL: " + expression);
@@ -878,7 +878,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // SELECT - fragments
   // -----------------------------------------------------------------------------
 
-  protected void selectSQLAggregateIF(SQLAggregateIF aggregate, boolean register, StringBuffer sql, BuildInfo info) {
+  protected void selectSQLAggregateIF(SQLAggregateIF aggregate, boolean register, StringBuilder sql, BuildInfo info) {
     switch (aggregate.getType()) {      
     case SQLAggregateIF.COUNT:
       // Note: aggregate value field will not be registered, but
@@ -901,7 +901,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }    
   }
 
-  protected void selectColumnAlias(SQLAggregateIF aggregate, StringBuffer sql) {
+  protected void selectColumnAlias(SQLAggregateIF aggregate, StringBuilder sql) {
     if (aggregate == null) return;
     String alias = aggregate.getAlias();
     if (alias != null) {
@@ -910,7 +910,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
 
-  protected void selectColumnAlias(SQLValueIF value, StringBuffer sql) {
+  protected void selectColumnAlias(SQLValueIF value, StringBuilder sql) {
     if (value == null) return;
     String alias = value.getAlias();
     if (alias != null) {
@@ -919,7 +919,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
-  protected void selectSQLValueIF(SQLValueIF value, boolean register, StringBuffer sql, BuildInfo info) {
+  protected void selectSQLValueIF(SQLValueIF value, boolean register, StringBuilder sql, BuildInfo info) {
     SQLValueIF sqlvalue;
     SQLValueIF refvalue;
     if (value.isReference()) {
@@ -934,10 +934,10 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     switch (sqlvalue.getType()) {
     case SQLValueIF.COLUMNS:
       if (register) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         selectSQLColumns((SQLColumns)sqlvalue, refvalue, register, sb, info, false);
         // WARNING: last boolean used to prevent [column] aliases to be included in group by clause
-        StringBuffer sb_groupby = new StringBuffer();
+        StringBuilder sb_groupby = new StringBuilder();
         selectSQLColumns((SQLColumns)sqlvalue, refvalue, false, sb_groupby, info, true);
         info.addNonAggregateSelect(sb_groupby);
         // ISSUE: the next line is problematic if compiled with java 1.4
@@ -957,7 +957,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       return;
     case SQLValueIF.VERBATIM:
       if (register) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         selectSQLVerbatim((SQLVerbatim)sqlvalue, refvalue, register, sql, info);
         info.addNonAggregateSelect(sb);
         sql.append(sb);
@@ -967,7 +967,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       return;
     case SQLValueIF.FUNCTION:
       if (register) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         selectSQLFunction((SQLFunction)sqlvalue, refvalue, register, sql, info);
         info.addNonAggregateSelect(sb);
         sql.append(sb);
@@ -981,7 +981,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void selectSQLColumns(SQLColumns columns, SQLValueIF refvalue, boolean register,
-                                  StringBuffer sql, BuildInfo info, boolean nonagg) {
+                                  StringBuilder sql, BuildInfo info, boolean nonagg) {
 
     // Register select type+info
     if (register) {
@@ -1017,7 +1017,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void selectSQLPrimitive(SQLPrimitive value, SQLValueIF refvalue, 
-                                    boolean register, StringBuffer sql, BuildInfo info) {
+                                    boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
     if (register)
       info.addSelect(value.getValueType(), value.getFieldHandler());
@@ -1037,7 +1037,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   //! }
   
   protected void selectSQLNull(SQLNull value, SQLValueIF refvalue, 
-                               boolean register, StringBuffer sql, BuildInfo info) {
+                               boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
     if (register)
       info.addSelect(value.getValueType(), value.getFieldHandler());
@@ -1053,7 +1053,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void selectSQLVerbatim(SQLVerbatim value, SQLValueIF refvalue, 
-                                   boolean register, StringBuffer sql, BuildInfo info) {
+                                   boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
     if (register)
       info.addSelect(value.getValueType(), value.getFieldHandler());
@@ -1069,7 +1069,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void selectSQLFunction(SQLFunction value, SQLValueIF refvalue, 
-                                   boolean register, StringBuffer sql, BuildInfo info) {
+                                   boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
     if (register)
       info.addSelect(value.getValueType(), value.getFieldHandler());
@@ -1088,11 +1088,11 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // FROM - fragments
   // -----------------------------------------------------------------------------
   
-  protected void fromSQLTable(SQLTable table, StringBuffer sql, BuildInfo info) {
+  protected void fromSQLTable(SQLTable table, StringBuilder sql, BuildInfo info) {
     // Ignore if already FROMed
     if (!info.stables.contains(table)) {
       // Register FROM fragment
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       referenceSQLTableAndAlias(table, sb, info);
       info.fg_from.add(sb);
       // Register right table as selected
@@ -1100,7 +1100,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
-  protected void fromSQLJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void fromSQLJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     // Check join type
     switch (join.getJoinType()) {
     case SQLJoin.CROSS:
@@ -1121,26 +1121,26 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     
   }
   
-  protected void fromSQLCrossJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void fromSQLCrossJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     // FROM left table
     fromSQLTable(join.getLeft().getTable(), sql, info);
     // FROM right table
     fromSQLTable(join.getRight().getTable(), sql, info);
   }
   
-  protected void fromSQLLeftOuterJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void fromSQLLeftOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     fromSQLJoin_GENERIC(join, " LEFT OUTER JOIN ", sql, info);    
   }
   
-  protected void fromSQLRightOuterJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void fromSQLRightOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     fromSQLJoin_GENERIC(join, " RIGHT OUTER JOIN ", sql, info);    
   }
   
-  protected void fromSQLJoin_GENERIC(SQLJoin join, String jointype, StringBuffer sql, BuildInfo info) {
+  protected void fromSQLJoin_GENERIC(SQLJoin join, String jointype, StringBuilder sql, BuildInfo info) {
     SQLColumns lcols = join.getLeft();
     SQLColumns rcols = join.getRight();
         
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     // FROM left table
     referenceSQLTableAndAlias(lcols.getTable(), sb, info);
@@ -1164,7 +1164,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // SQLExpressionIF
   // -----------------------------------------------------------------------------
   
-  protected void whereSQLExpressionIF(SQLExpressionIF expr, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLExpressionIF(SQLExpressionIF expr, StringBuilder sql, BuildInfo info) {
     // Skip if expression is null
     if (expr == null) return;
     // Check expression type
@@ -1221,7 +1221,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
-  protected void whereSQLExpressionIF(SQLExpressionIF[] nexprs, String separator, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLExpressionIF(SQLExpressionIF[] nexprs, String separator, StringBuilder sql, BuildInfo info) {
     // Returns true if any nested expression contributed to the where clause
     if (nexprs == null || nexprs.length == 0) return;
 
@@ -1242,19 +1242,19 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // SQLLogicalIF
   // -----------------------------------------------------------------------------
 
-  protected void whereSQLAnd(SQLAnd and, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLAnd(SQLAnd and, StringBuilder sql, BuildInfo info) {
     sql.append('(');
     whereSQLExpressionIF(and.getExpressions(), " and ", sql, info);
     sql.append(')');
   }
   
-  protected void whereSQLOr(SQLOr or, StringBuffer sql, BuildInfo info) {    
+  protected void whereSQLOr(SQLOr or, StringBuilder sql, BuildInfo info) {    
     sql.append('(');
     whereSQLExpressionIF(or.getExpressions(), " or ", sql, info);
     sql.append(')');
   }
 
-  protected void whereSQLNot(SQLNot not, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLNot(SQLNot not, StringBuilder sql, BuildInfo info) {
     // FIXME: May have to special-case if nested expression is empty.
     sql.append("not (");
     whereSQLExpressionIF(not.getExpression(), sql, info);
@@ -1265,11 +1265,11 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // Operators
   // -----------------------------------------------------------------------------
 
-  protected void whereSQLFalse(SQLFalse expr, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLFalse(SQLFalse expr, StringBuilder sql, BuildInfo info) {
     sql.append("false");
   }
   
-  protected void whereSQLEquals(SQLEquals equals, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLEquals(SQLEquals equals, StringBuilder sql, BuildInfo info) {
     // Rewrite null values to an "is null" expression    
     if (equals.getLeft().getType() == SQLValueIF.NULL)
       whereSQLValueEqualsNull(equals.getRight(), sql, info);
@@ -1279,7 +1279,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       referenceSQLValueIFOpBinary(equals.getLeft(), "=", equals.getRight(), sql, info);    
   }
   
-  protected void whereSQLNotEquals(SQLNotEquals nequals, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLNotEquals(SQLNotEquals nequals, StringBuilder sql, BuildInfo info) {
     // Rewrite null values to an "is not null" expression
     if (nequals.getLeft().getType() == SQLValueIF.NULL)
       whereSQLValueNotEqualsNull(nequals.getRight(), sql, info);
@@ -1289,19 +1289,19 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       referenceSQLValueIFOpBinary(nequals.getLeft(), "!=", nequals.getRight(), sql, info);
   }
     
-  protected void whereSQLValueEqualsNull(SQLValueIF value, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLValueEqualsNull(SQLValueIF value, StringBuilder sql, BuildInfo info) {
     referenceSQLValueIFOpUnary(value, "is null", sql, info);
   }
   
-  protected void whereSQLValueNotEqualsNull(SQLValueIF value, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLValueNotEqualsNull(SQLValueIF value, StringBuilder sql, BuildInfo info) {
     referenceSQLValueIFOpUnary(value, "is not null", sql, info);
   }
   
-  protected void whereSQLIsNull(SQLIsNull is_null, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLIsNull(SQLIsNull is_null, StringBuilder sql, BuildInfo info) {
     referenceSQLValueIFOpUnary(is_null.getValue(), "is null", sql, info);
   }
   
-  protected void whereSQLLike(SQLLike like, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLLike(SQLLike like, StringBuilder sql, BuildInfo info) {
     //! referenceSQLValueIFOpBinary(like.getLeft(), "like", like.getRight(), sql, info);
 
     if (like.getCaseSensitive()) {
@@ -1324,7 +1324,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     return func.getName().indexOf('$') != -1;
   }
 
-  protected void referenceSQLFunction(SQLFunction func, StringBuffer sql, BuildInfo info) {
+  protected void referenceSQLFunction(SQLFunction func, StringBuilder sql, BuildInfo info) {
     SQLValueIF[] args = func.getArguments();
     String fname = func.getName();
 
@@ -1364,15 +1364,15 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
-  protected void whereSQLVerbatimExpression(SQLVerbatimExpression expr, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLVerbatimExpression(SQLVerbatimExpression expr, StringBuilder sql, BuildInfo info) {
     sql.append(expr.getValue());
   }
 
-  protected void whereSQLValueExpression(SQLValueExpression expr, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLValueExpression(SQLValueExpression expr, StringBuilder sql, BuildInfo info) {
     atomicSQLValueIF(expr.getValue(), sql, info);
   }
   
-  protected void whereSQLExists(SQLExists exists, StringBuffer sql, BuildInfo pinfo) {
+  protected void whereSQLExists(SQLExists exists, StringBuilder sql, BuildInfo pinfo) {
 
     // FIXME: Only use exists expression when new variables are
     // introduced, since the from-clause will be empty otherwise.    
@@ -1383,8 +1383,8 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
     SQLExpressionIF filter = exists.getExpression();
 
-    StringBuffer sql_where = createWhereClause(filter, info);
-    StringBuffer sql_from = createFromClause(filter, info);
+    StringBuilder sql_where = createWhereClause(filter, info);
+    StringBuilder sql_from = createFromClause(filter, info);
 
     if (sql_from.length() > 0) {
       // Produce full subquery if FROM clause is not empty
@@ -1393,10 +1393,10 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       List selects = Collections.singletonList(new SQLNull());
       boolean distinct = false;
 
-      StringBuffer sql_select = createSelectClause(selects, distinct, info);
-      StringBuffer sql_group_by = null; // createGroupByClause(info);
-      StringBuffer sql_order_by = null; // createOrderByClause(orderby, info);
-      StringBuffer sql_offset_limit = null; // createOffsetLimitClause(offset, limit, info);
+      StringBuilder sql_select = createSelectClause(selects, distinct, info);
+      StringBuilder sql_group_by = null; // createGroupByClause(info);
+      StringBuilder sql_order_by = null; // createOrderByClause(orderby, info);
+      StringBuilder sql_offset_limit = null; // createOffsetLimitClause(offset, limit, info);
       
       // Embed sub query
       sql.append("exists (");
@@ -1418,7 +1418,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // and parameter offsets to parent build info when done.
   }
   
-  protected void whereSQLIn(SQLIn in, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLIn(SQLIn in, StringBuilder sql, BuildInfo info) {
     SQLValueIF left = in.getLeft();
     SQLValueIF right = in.getRight();
     if (left.getArity() != 1)
@@ -1483,7 +1483,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
-  protected void whereSQLSetOperation(SQLSetOperation setop, StringBuffer sql, BuildInfo info) {    
+  protected void whereSQLSetOperation(SQLSetOperation setop, StringBuilder sql, BuildInfo info) {    
     String op = getSetOperator(setop.getOperator());;
 
     // TODO: Verify "embed build info" code!
@@ -1519,7 +1519,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // WHERE - joins
   // -----------------------------------------------------------------------------
 
-  protected void whereSQLJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     // Register join with build info
     info.joins.add(join);
     // Register join tables with build info
@@ -1542,11 +1542,11 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
-  protected void whereSQLCrossJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLCrossJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLCrossJoin_GENERIC(join, sql, info);
   }
   
-  protected void whereSQLCrossJoin_GENERIC(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLCrossJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
     // TASK: Cross joins inlined
     // : T1.col1 = T2.col2
     
@@ -1573,14 +1573,14 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     if (length > 1) sql.append(')');
   }
   
-  protected void whereSQLLeftOuterJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLLeftOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLLeftOuterJoin_GENERIC(join, sql, info);
   }
   
-  protected void whereSQLLeftOuterJoin_GENERIC(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLLeftOuterJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
   }
   
-  protected void whereSQLLeftOuterJoin_ORACLE(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLLeftOuterJoin_ORACLE(SQLJoin join, StringBuilder sql, BuildInfo info) {
     // TASK: Left outer joins inlined
     // : T1.col1 = T2.col2(+)
     
@@ -1608,14 +1608,14 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     if (length > 1) sql.append(')');
   }
   
-  protected void whereSQLRightOuterJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLRightOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLRightOuterJoin_GENERIC(join, sql, info);
   }
   
-  protected void whereSQLRightOuterJoin_GENERIC(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLRightOuterJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
   }
   
-  protected void whereSQLRightOuterJoin_ORACLE(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLRightOuterJoin_ORACLE(SQLJoin join, StringBuilder sql, BuildInfo info) {
     // TASK: Right outer joins inlined
     // : T1.col1(+) = T2.col2
 
@@ -1685,7 +1685,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   //! // ORDER BY - fragments
   //! // -----------------------------------------------------------------------------
   //! 
-  //! protected void orderBySQLValueIF(SQLValueIF value, StringBuffer sql, BuildInfo info) {
+  //! protected void orderBySQLValueIF(SQLValueIF value, StringBuilder sql, BuildInfo info) {
   //!   // Do not register tables in order by clause
   //!   boolean register = false;
   //!   // Same output as SELECT fragments, so we delegate to the select method.
@@ -1697,7 +1697,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // -----------------------------------------------------------------------------
 
   protected void referenceSQLValueIFOpUnary(SQLValueIF value, String operator,
-                                            StringBuffer sql, BuildInfo info) {
+                                            StringBuilder sql, BuildInfo info) {
     // Unary operations: <value> <operator>
     
     // If arity is 1 there is no need to create an array.
@@ -1734,7 +1734,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void referenceSQLValueIFOpBinary(SQLValueIF value1, String operator, SQLValueIF value2,
-                                             StringBuffer sql, BuildInfo info) {
+                                             StringBuilder sql, BuildInfo info) {
     // Binary operations: <value1> <operator> <value2>
     int arity1 = value1.getArity();
     int arity2 = value2.getArity();
@@ -1767,7 +1767,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
 
-  protected void atomicSQLValueIF(SQLValueIF value, StringBuffer sql, BuildInfo info) {
+  protected void atomicSQLValueIF(SQLValueIF value, StringBuilder sql, BuildInfo info) {
     // Note: SQLValueIF must have an arity of 1.
     switch (value.getType()) {
     case SQLValueIF.COLUMNS: {
@@ -1807,7 +1807,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }        
   }
   
-  protected void escapeString(String value, StringBuffer sql) {
+  protected void escapeString(String value, StringBuilder sql) {
     // TODO: optimize this code
     char[] chars = value.toCharArray();
     for (int i=0; i < chars.length; i++) {
@@ -1818,7 +1818,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
 
-  protected void joinSQLValueIF(SQLValueIF value, String separator, StringBuffer sql, BuildInfo info) {
+  protected void joinSQLValueIF(SQLValueIF value, String separator, StringBuilder sql, BuildInfo info) {
     int arity = value.getArity();
     // Use first value iterator
     ColumnValueIterator viter = info.viter1;
@@ -1897,7 +1897,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   //!   return strings;
   //! }
   
-  //! protected void referenceSQLColumns(SQLColumns columns, StringBuffer sql, BuildInfo info) {
+  //! protected void referenceSQLColumns(SQLColumns columns, StringBuilder sql, BuildInfo info) {
   //!   SQLTable table = columns.getTable();
   //!   String[] cols = columns.getColumns();
   //!   
@@ -1939,7 +1939,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // Primitive values
   // -----------------------------------------------------------------------------
 
-  protected void referenceSQLPrimitive(SQLPrimitive primitive, StringBuffer sql, BuildInfo info) {
+  protected void referenceSQLPrimitive(SQLPrimitive primitive, StringBuilder sql, BuildInfo info) {
     switch (primitive.getSQLType()) {
     case Types.VARCHAR:
     case Types.LONGVARCHAR:
@@ -1959,13 +1959,13 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // Tables and columns
   // -----------------------------------------------------------------------------
 
-  protected void referenceSQLTableAndAlias(SQLTable table, StringBuffer sql, BuildInfo info) {
+  protected void referenceSQLTableAndAlias(SQLTable table, StringBuilder sql, BuildInfo info) {
     sql.append(table.getName());
     sql.append(' ');
     sql.append(table.getAlias());
   }
   
-  protected void referenceSQLColumnsColumn(SQLTable table, String column, StringBuffer sql, BuildInfo info) {
+  protected void referenceSQLColumnsColumn(SQLTable table, String column, StringBuilder sql, BuildInfo info) {
     sql.append(table.getAlias());
     sql.append('.');
     sql.append(column);

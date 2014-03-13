@@ -55,7 +55,7 @@ public class JDONot implements JDOExpressionIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("!(");
     sb.append(expression);
     sb.append(")");

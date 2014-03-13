@@ -154,7 +154,7 @@ public class Wiki {
   
   private static String runQuery(String query, TopicMapIF topicmap, Map params) {
     try {
-      StringBuffer out = new StringBuffer();
+      StringBuilder out = new StringBuilder();
       out.append("<table>\n");
       
       QueryProcessorIF proc = QueryUtils.getQueryProcessor(topicmap);

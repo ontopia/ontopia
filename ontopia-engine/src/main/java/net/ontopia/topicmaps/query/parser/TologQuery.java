@@ -164,7 +164,7 @@ public class TologQuery extends TologStatement {
   /// Object implementation
   
   public String toString() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     
     // select clause
     buf.append("select ");
@@ -216,7 +216,7 @@ public class TologQuery extends TologStatement {
   }
 
   public static String toString(List clauses) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
 
     Set rules = new CompactHashSet();
     for (int ix = 0; ix < clauses.size(); ix++) {
@@ -268,7 +268,7 @@ public class TologQuery extends TologStatement {
   }
   
   private static String argumentsToString(List arguments) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
 
     for (int ix = 0; ix < arguments.size(); ix++) {
       if (ix > 0) buf.append(", ");
@@ -278,7 +278,7 @@ public class TologQuery extends TologStatement {
     return buf.toString();
   }
 
-  private static void valueToString(Object arg, StringBuffer buf) {
+  private static void valueToString(Object arg, StringBuilder buf) {
     if (arg instanceof String)
       buf.append('"').append(arg).append('"');
     else if (arg instanceof TopicIF)

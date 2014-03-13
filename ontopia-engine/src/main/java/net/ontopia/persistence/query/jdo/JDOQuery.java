@@ -212,7 +212,7 @@ public class JDOQuery {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("select ");
     if (getDistinct())
       sb.append("distinct ");

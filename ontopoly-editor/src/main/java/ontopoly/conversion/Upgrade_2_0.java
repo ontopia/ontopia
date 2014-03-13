@@ -32,7 +32,7 @@ public class Upgrade_2_0 extends UpgradeBase {
   }
   
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     // add height field to name-field
     sb.append("on:has-field(on:name-field : on:field-owner, on:height : on:field-definition)\n");
     sb.append("on:field-in-view(on:name-field-embedded-view : on:fields-view, on:height : on:field-definition)\n");

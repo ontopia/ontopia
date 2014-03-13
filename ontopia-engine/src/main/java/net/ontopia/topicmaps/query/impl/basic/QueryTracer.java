@@ -342,7 +342,7 @@ public class QueryTracer {
     // internal helpers
     
     private String getIndent(Info info) {
-      StringBuffer buf = new StringBuffer();
+      StringBuilder buf = new StringBuilder();
       for (int ix = 0; ix < info.entered.size(); ix++)
         buf.append("  ");
       return buf.toString();

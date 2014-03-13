@@ -157,7 +157,7 @@ protected String formElement(String itemType, String itemTitle, String itemName,
   boolean active =
     itemValueCheckSource!=null && itemValueCheckSource.equals(itemValue);
 
-  StringBuffer sb = new StringBuffer(128);
+  StringBuilder sb = new StringBuilder(128);
   if (itemType.equals("option")) {
     sb.append("<option value='" + itemValue + "'");
     if (active)

@@ -241,7 +241,7 @@ public class GenericSQLProducer {
   protected List<String> createStatement(Table table, List<String> statements) throws IOException {
     String[] pkeys = table.getPrimaryKeys();
     // Create table
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("create table ");
     sb.append(table.getName());
     sb.append(" (\n");
@@ -289,7 +289,7 @@ public class GenericSQLProducer {
    * INTERNAL: Generate the DDL statement(s) to drop the specified table.
    */
   protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("drop table ");
     sb.append(table.getName());
     statements.add(sb.toString());
@@ -312,7 +312,7 @@ public class GenericSQLProducer {
    * foreign keys need to be created by a separate statement.
    */
   protected List<String> addForeignKey(Table table, Column col, String keyname, List<String> statements) throws IOException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("alter table ");
     sb.append(table.getName());
     sb.append(" add constraint ");
@@ -334,7 +334,7 @@ public class GenericSQLProducer {
    * foreign keys need to be created by a separate statement.
    */
   protected List<String> dropConstraint(Table table, Column col, String keyname, List<String> statements) throws IOException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("alter table ");
     sb.append(table.getName());
     sb.append(" drop constraint ");
@@ -351,7 +351,7 @@ public class GenericSQLProducer {
     List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {
       Index index = indexes.get(i);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("create index ");
       sb.append(getIndexName(index));
       sb.append(" on ");

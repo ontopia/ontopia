@@ -64,7 +64,7 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer("Model:classname=[");
+    StringBuilder sb = new StringBuilder("Model:classname=[");
     sb.append(getClass().getName()).append("]");
     sb.append(":attached=").append(attached).append(":tempModelObject=[").append(
         this.transientModelObject).append("]");

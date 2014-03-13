@@ -487,7 +487,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   }
 
   private String list(int bitmask) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int i=0; i < values.length; i++) {
       if (i > 0) sb.append(", ");
       sb.append((bitmask & MASKS[i]) == MASKS[i]);

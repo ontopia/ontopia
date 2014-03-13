@@ -174,7 +174,7 @@ public class ThemeCategorizer {
         || stringifierTheme == null)
       return "";
     
-    StringBuffer strBuf = new StringBuffer();
+    StringBuilder strBuf = new StringBuilder();
 
     // ----- loop over all themes classes
     List themeClassList = new ArrayList( themeClassMap.keySet() );
@@ -237,7 +237,7 @@ public class ThemeCategorizer {
     if (templSelectedTheme == null)
       templSelectedTheme = "";
     
-    StringBuffer strBuf = new StringBuffer();
+    StringBuilder strBuf = new StringBuilder();
 
     // ----- loop over all themes classes
     List themeClassList = new ArrayList( themeClassMap.keySet() );

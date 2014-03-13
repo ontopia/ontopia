@@ -249,7 +249,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       groupId = "";
 
     // generate Property name to look up
-    StringBuffer propName = new StringBuffer(PLUGINS_ORDER);
+    StringBuilder propName = new StringBuilder(PLUGINS_ORDER);
     if (!groupId.equals(""))
       propName.append("_" + groupId);
     
@@ -322,7 +322,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   
   // ------------------------------------------------
   public String toString() {
-    StringBuffer strBuf = new StringBuffer();
+    StringBuilder strBuf = new StringBuilder();
     strBuf.append("NavigatorConfiguration: [")
       .append("autoloads: ").append(autoloads.toString())
       .append(", classmap: ").append(classmap.toString())

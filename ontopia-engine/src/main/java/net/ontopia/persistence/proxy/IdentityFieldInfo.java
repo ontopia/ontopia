@@ -303,7 +303,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
   }
   
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("<IdentityFieldInfo [");
     for (int i=0; i < fields_length; i++) {
       sb.append(fields[i].toString());

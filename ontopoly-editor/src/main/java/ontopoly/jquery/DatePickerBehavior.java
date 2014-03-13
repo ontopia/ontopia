@@ -50,7 +50,7 @@ public class DatePickerBehavior extends JQueryBehavior {
     String selector = "#" + markupId;
     String functionId = "fdp_" + markupId; 
     
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("var ").append(functionId).append(" = function() {\n");
     sb.append("  $(\"").append(selector).append("\").datepicker('destroy');\n");
     sb.append("  $(\"").append(selector).append("\").datepicker({firstDay: 1, dateFormat: '")

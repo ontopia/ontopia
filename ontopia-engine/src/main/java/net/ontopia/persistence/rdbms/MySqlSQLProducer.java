@@ -44,7 +44,7 @@ public class MySqlSQLProducer extends GenericSQLProducer {
   }
   
   protected List<String> createStatement(Table table, List<String> statements) throws IOException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     String[] pkeys = table.getPrimaryKeys();
     // Create table
     sb.append("create table ");
@@ -90,7 +90,7 @@ public class MySqlSQLProducer extends GenericSQLProducer {
     List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {
       Index index = indexes.get(i);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("create index ");
       sb.append(index.getName());
       sb.append(" on ");

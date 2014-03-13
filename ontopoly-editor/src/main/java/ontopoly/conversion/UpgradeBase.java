@@ -78,7 +78,7 @@ public abstract class UpgradeBase {
   
   public void upgrade() {    
     // produce LTM fragment
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("#PREFIX on  @\"http://psi.ontopia.net/ontology/\"\n");
     sb.append("#PREFIX xtm @\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"\n");
     sb.append("#PREFIX tech @\"http://www.techquila.com/psi/hierarchy/#\"\n");
@@ -102,7 +102,7 @@ public abstract class UpgradeBase {
     }
   }
   
-  protected abstract void importLTM(StringBuffer sb);
+  protected abstract void importLTM(StringBuilder sb);
   
   protected abstract void transform() throws InvalidQueryException;
 
@@ -124,7 +124,7 @@ public abstract class UpgradeBase {
 
   protected static void translateAssociations(String atype1, String[] rtypes1,
       String atype2, String[] rtypes2, TopicMapIF tm, LocatorIF base_on, QueryProcessorIF qp, DeclarationContextIF dc) throws InvalidQueryException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("select $A");
     for (int i=0; i < rtypes1.length; i++) {
       sb.append(", $P" + i);
@@ -164,7 +164,7 @@ public abstract class UpgradeBase {
   }
 
   protected static void removeAssociations(String atype, String[] rtypes, QueryProcessorIF qp, DeclarationContextIF dc) throws InvalidQueryException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("select $A from ");
     sb.append("association($A), type($A, " + atype + ")");
     for (int i=0; i < rtypes.length; i++) {

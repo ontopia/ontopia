@@ -45,7 +45,7 @@ public class GooglePlugin extends DefaultPlugin {
     if (topics == null || topics.isEmpty())
       return "Google it!";
     
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // --- Title
     String title = getParameter("title");
@@ -54,7 +54,7 @@ public class GooglePlugin extends DefaultPlugin {
 
     // Stringify the topic, get most appropiate name
     StringifierIF ts = TopicStringifiers.getDefaultStringifier();
-    StringBuffer query = new StringBuffer();
+    StringBuilder query = new StringBuilder();
     Iterator it = topics.iterator();
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();

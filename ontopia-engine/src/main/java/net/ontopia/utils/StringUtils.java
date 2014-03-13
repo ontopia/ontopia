@@ -171,7 +171,7 @@ public class StringUtils {
       return "";
 
     Iterator<?> iter = objects.iterator();
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(iter.next());
     while (iter.hasNext()) {
       list.append(separator);
@@ -192,7 +192,7 @@ public class StringUtils {
       return "";
 
     Iterator<T> iter = objects.iterator();
-    StringBuffer list=new StringBuffer();
+    StringBuilder list=new StringBuilder();
     list.append(stringifier.toString(iter.next()));
     while (iter.hasNext()) {
       list.append(separator);
@@ -209,7 +209,7 @@ public class StringUtils {
     if (objects.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(objects[0]);
     for (int ix = 1; ix < objects.length; ix++) {
       list.append(separator);
@@ -228,7 +228,7 @@ public class StringUtils {
     if (objects.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(objects[0]);
     for (int ix = 1; ix < objects.length; ix++) {
       list.append(separator);
@@ -247,7 +247,7 @@ public class StringUtils {
     if (vals.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(vals[0]);
     for (int ix = 1; ix < vals.length; ix++) {
       list.append(separator);
@@ -266,7 +266,7 @@ public class StringUtils {
     if (vals.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(vals[0]);
     for (int ix = 1; ix < vals.length; ix++) {
       list.append(separator);
@@ -285,7 +285,7 @@ public class StringUtils {
     if (vals.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(vals[0]);
     for (int ix = 1; ix < vals.length; ix++) {
       list.append(separator);
@@ -304,7 +304,7 @@ public class StringUtils {
     if (vals.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(vals[0]);
     for (int ix = 1; ix < vals.length; ix++) {
       list.append(separator);
@@ -323,7 +323,7 @@ public class StringUtils {
     if (vals.length == 0)
       return "";
 
-    StringBuffer list = new StringBuffer();
+    StringBuilder list = new StringBuilder();
     list.append(vals[0]);
     for (int ix = 1; ix < vals.length; ix++) {
       list.append(separator);
@@ -335,11 +335,11 @@ public class StringUtils {
   /**
    * INTERNAL: Joins the objects in a collection (turned into strings
    * by toString) with a separator string. The result is appended to
-   * the specified StringBuffer.
+   * the specified StringBuilder.
    *
    * @since 1.3.2
    */
-  public static void join(Collection<?> objects, String separator, StringBuffer sb) {
+  public static void join(Collection<?> objects, String separator, StringBuilder sb) {
     if (objects.isEmpty()) return;
 
     Iterator<?> iter = objects.iterator();
@@ -353,11 +353,11 @@ public class StringUtils {
   /**
    * INTERNAL: Joins the objects in an array (turned into strings by
    * toString) with a separator string. The result is appended to the
-   * specified StringBuffer.
+   * specified StringBuilder.
    *
    * @since 1.3.2
    */
-  public static void join(Object[] objects, String separator, StringBuffer sb) {
+  public static void join(Object[] objects, String separator, StringBuilder sb) {
     if (objects.length == 0) return;
 
     sb.append(objects[0]);
@@ -379,7 +379,7 @@ public class StringUtils {
       return "";
 
     if (remove_nulls) {
-      StringBuffer list = new StringBuffer();
+      StringBuilder list = new StringBuilder();
       boolean subseq = false;
       for (int ix = 0; ix < objects.length; ix++) {
         if (objects[ix] != null) {
@@ -558,7 +558,7 @@ public class StringUtils {
 
     char content[] = new char[value.length()];
     value.getChars(0, content.length, content, 0);
-    StringBuffer result = new StringBuffer(content.length + 50);
+    StringBuilder result = new StringBuilder(content.length + 50);
     for (int i = 0; i < content.length; i++) {
       switch (content[i]) {
       case '<':
@@ -664,7 +664,7 @@ public class StringUtils {
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");
       byte[] digest = md.digest(value.getBytes("UTF-8"));
-      StringBuffer md5hash = new StringBuffer(digest.length * 2);
+      StringBuilder md5hash = new StringBuilder(digest.length * 2);
       for (int i=0; i < digest.length; i++) {
         String hex = Integer.toHexString(digest[i] & 0xFF);
         if (hex.length() == 1)

@@ -684,7 +684,7 @@ public class QueryMatches {
   // ===== DEBUG METHODS =====================================================
   
   public String dump() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("------------------------------------------------------------------------------\n");
     StringUtils.join(columnDefinitions, " | ", sb);
     sb.append("\n");

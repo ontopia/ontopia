@@ -66,7 +66,7 @@ public class LuceneDocument implements DocumentIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("<lucene.Document ");
     Iterator<FieldIF> iter = getFields().iterator();
     while (iter.hasNext()) {

@@ -254,7 +254,7 @@ public class PropertiesPanel extends JScrollPane {
 
       while (baseNames.hasNext()) {
         TopicNameIF name = (TopicNameIF) baseNames.next();
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
         buff.append(name.getValue());
         if (!name.getScope().isEmpty()) {
           buff.append(" - ");

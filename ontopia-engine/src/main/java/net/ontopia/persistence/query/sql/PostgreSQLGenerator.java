@@ -32,7 +32,7 @@ public class PostgreSQLGenerator extends GenericSQLGenerator {
     super(properties);
   }
 
-  public void fromSubSelectAlias(StringBuffer sql, BuildInfo info) {
+  public void fromSubSelectAlias(StringBuilder sql, BuildInfo info) {
     // sub-SELECT in FROM must have an alias.
     // For example, FROM (SELECT ...) [AS] foo
     sql.append(" as FOOBAR");

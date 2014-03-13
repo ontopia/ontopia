@@ -29,7 +29,7 @@ public class Upgrade_1_2 extends UpgradeBase {
   }
   
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     // #2005 bug fix
     sb.append("[xtm:superclass-subclass : tech:hierarchical-relation-type]\n");
     sb.append("[xtm:superclass : tech:superordinate-role-type]\n");

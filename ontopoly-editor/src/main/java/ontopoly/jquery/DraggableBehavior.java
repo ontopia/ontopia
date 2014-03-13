@@ -48,7 +48,7 @@ public class DraggableBehavior extends JQueryBehavior {
     String selector = "#" + markupId;
     String functionId = "fdg_" + markupId; 
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("var ").append(functionId).append(" = function() {\n");
     sb.append("  $(\"").append(selector).append("\").draggable('destroy');\n");
     sb.append("  $(\"").append(selector).append("\").draggable({helper: 'clone'});\n");

@@ -239,7 +239,7 @@ public class ArgumentValidator {
    * INTERNAL: Returns a nicely formatted list of class names.
    */
   public static String getClassList(Object[] classes) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int ix = 0; ix < classes.length; ix++) {
       buf.append(getClassName((Class) classes[ix]));
       if (ix + 2 < classes.length)

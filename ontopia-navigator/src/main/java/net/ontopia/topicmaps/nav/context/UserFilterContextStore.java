@@ -83,7 +83,7 @@ public class UserFilterContextStore {
    * serialize this for debugging purposes.
    */
   public String toString() {
-    StringBuffer sb = new StringBuffer(200);
+    StringBuilder sb = new StringBuilder(200);
     sb.append("UserFilterContextStore [")
       .append("scope_baseNames: ").append(scope_baseNames)
       .append(", scope_variantNames: ").append(scope_variantNames)

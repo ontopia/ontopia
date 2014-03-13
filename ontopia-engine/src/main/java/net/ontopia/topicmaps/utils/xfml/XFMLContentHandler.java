@@ -72,7 +72,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   protected LocatorIF map_uri;
   private TopicMapIF topicmap;
   private TopicMapBuilderIF builder;
-  private StringBuffer content;
+  private StringBuilder content;
   private boolean keep_content;
 
   // parse state
@@ -112,7 +112,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     parents.clear();
     info.clear();
     keep_content = false;
-    content = new StringBuffer();
+    content = new StringBuilder();
 
     topicmap = stores.createStore().getTopicMap();
     builder = topicmap.getBuilder();

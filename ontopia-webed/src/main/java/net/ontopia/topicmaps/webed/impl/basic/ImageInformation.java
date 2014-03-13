@@ -74,7 +74,7 @@ public class ImageInformation implements ImageInformationIF {
   // --- overwrite methods from java.lang.Object
 
   public int hashCode() {
-    StringBuffer sb = new StringBuffer(32);
+    StringBuilder sb = new StringBuilder(32);
     sb.append(name).append(relative_url).append(width).append(height)
       .append(border).append(align);
     return sb.toString().hashCode();
@@ -93,7 +93,7 @@ public class ImageInformation implements ImageInformationIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer(48);
+    StringBuilder sb = new StringBuilder(48);
     sb.append("[ImageInformation: ").append(name).append(", ")
       .append(relative_url).append(", ")
       .append(width).append(", ")

@@ -85,7 +85,7 @@ public class CollectionStringifier<T> implements StringifierIF<Collection<T>> {
   
   public String toString(Collection<T> objects) {
     if (objects == null) return "null";
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     
     // Sort and output list
     List<T> list = new ArrayList<T>(objects);

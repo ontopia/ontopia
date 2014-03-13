@@ -29,7 +29,7 @@ public class Upgrade_1_3 extends UpgradeBase {
   }
   
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     sb.append("[on:datatype-html   : on:datatype = \"HTML\"]\n");
     sb.append("[on:datatype-image   : on:datatype = \"Image\"]\n");
     sb.append("[on:ontology-topic-type : on:topic-type]\n");

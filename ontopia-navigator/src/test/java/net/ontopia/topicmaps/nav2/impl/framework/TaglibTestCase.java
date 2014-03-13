@@ -281,7 +281,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
    * filename and the request parameters.
    */
   private String generateTestCaseFilename() {
-    StringBuffer filename = new StringBuffer(32);
+    StringBuilder filename = new StringBuilder(32);
 
     // (1) Append the topicmap ID first.
     filename.append( getTopicMapId() );
@@ -320,7 +320,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
    * topicmap id, the jsp filename and the request parameters.
    */
   private String generateTestCaseDescriptor() {
-    StringBuffer descriptor = new StringBuffer(32);
+    StringBuilder descriptor = new StringBuilder(32);
 
     // (1) Append the topicmap ID first.
     descriptor.append("TopicMapId: ");

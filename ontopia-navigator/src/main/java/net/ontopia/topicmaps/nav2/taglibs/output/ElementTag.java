@@ -63,7 +63,7 @@ public class ElementTag extends BodyTagSupport {
    */
   public int doAfterBody() throws JspTagException {
     BodyContent body = getBodyContent();
-    StringBuffer complElem = new StringBuffer(100);
+    StringBuilder complElem = new StringBuilder(100);
     complElem.append("<").append(elemName);
     // put in attribute-value pairs
     Iterator it = attrnames.iterator();

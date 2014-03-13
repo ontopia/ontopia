@@ -148,7 +148,7 @@ public class SQLColumns implements SQLValueIF {
     if (getArity() == 1)
       return getTable().getAlias() + "." + cols[0];
     else {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("columns:");
       sb.append(getTable().getAlias());
       sb.append("(");

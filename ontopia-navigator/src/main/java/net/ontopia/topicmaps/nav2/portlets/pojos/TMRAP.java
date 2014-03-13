@@ -304,7 +304,7 @@ public class TMRAP {
   }
   
   private String addParameters(String endpoint, Collection psis) {
-    StringBuffer buf = new StringBuffer(endpoint);
+    StringBuilder buf = new StringBuilder(endpoint);
     buf.append('?');
     Iterator it = psis.iterator();
     while (it.hasNext()) {
@@ -320,7 +320,7 @@ public class TMRAP {
   private String makeKey(Collection psis) {
     List uris = new ArrayList(psis);
     Collections.sort(uris);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ix = 0; ix < uris.size(); ix++)
       sb.append((String) uris.get(ix));
     return sb.toString();

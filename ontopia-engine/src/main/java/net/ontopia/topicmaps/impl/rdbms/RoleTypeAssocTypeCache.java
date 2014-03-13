@@ -132,7 +132,7 @@ public class RoleTypeAssocTypeCache {
     this.AssociationRoleIF_idfield = mapping.getClassInfo(AssociationRole.class).getIdentityFieldInfo();
     
     // build query strings
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("select r.player_id, r.id, r.assoc_id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.type_id = ? and r.assoc_id = a.id and a.topicmap_id = ? and a.type_id = ? and r.player_id in (");
     for (int i=0; i < batchSize; i++) {
       if (i > 0) 

@@ -29,7 +29,7 @@ public class Upgrade_1_1 extends UpgradeBase {
   }
 
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     sb.append("[on:ontology-topic-type : on:system-topic = \"Ontology Topic type\"]\n");
     sb.append("xtm:superclass-subclass(on:topic-type : xtm:superclass, on:ontology-topic-type : xtm:subclass)\n");
     sb.append("[on:topic-type : on:ontology-topic-type]\n");

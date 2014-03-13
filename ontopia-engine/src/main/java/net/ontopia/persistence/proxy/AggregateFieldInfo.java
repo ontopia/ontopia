@@ -194,7 +194,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("<AggregateFieldInfo " + field.getName() + " [");
     for (int i=0; i < fields.length; i++) {
       sb.append(fields[i].toString());

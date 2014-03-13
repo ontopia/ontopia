@@ -90,7 +90,7 @@ public class JDOFunction implements JDOValueIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(name).append('(');
     for (int i=0; i < args.length; i++) {
       if (i > 0) sb.append(", ");

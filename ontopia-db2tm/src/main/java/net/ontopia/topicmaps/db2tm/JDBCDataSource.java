@@ -158,7 +158,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
       
       // prepare, bind and execute statement
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("select max(");
       sb.append(changelog.getOrderColumn());
       sb.append(") from ");
@@ -261,7 +261,7 @@ public class JDBCDataSource implements DataSourceIF {
       this.relation = relation;
 
       // build sql statement from relation definition
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("select r.");
       String[] rcols = relation.getColumns();
       StringUtils.join(rcols, ", r.", sb);
@@ -362,7 +362,7 @@ public class JDBCDataSource implements DataSourceIF {
       if (localOrderColumn == null)
         localOrderColumn = changelog.getOrderColumn();
       
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("select distinct");
       
       // list primary key of main relation

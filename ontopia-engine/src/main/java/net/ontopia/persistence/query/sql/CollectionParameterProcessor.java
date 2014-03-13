@@ -59,7 +59,7 @@ public class CollectionParameterProcessor implements ParameterProcessorIF {
 
   public String process(String sql, Object[] params) {
     // Rewrite SQL statement so that includes the actual number of parameters.
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     int prev = 0;
     for (int i=0; i < coll_indexes.length; i++) {
       int coll_index = coll_indexes[i];

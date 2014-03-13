@@ -58,7 +58,7 @@ public class ROLocalCache extends AbstractLocalCache {
   // -----------------------------------------------------------------------------
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("proxy.ROLocalCache@");
     sb.append(System.identityHashCode(this));
     if (pcache != null)

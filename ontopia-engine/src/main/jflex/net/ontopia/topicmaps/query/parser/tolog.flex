@@ -25,7 +25,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 %{
   private TologOptions options;
   int commentNest = 0; // used to track comment nesting
-  StringBuffer comment = new StringBuffer(); // collect comment text for parsing
+  StringBuilder comment = new StringBuilder(); // collect comment text for parsing
 
   public TologLexer(Reader reader, TologOptions options) {
     this(reader);

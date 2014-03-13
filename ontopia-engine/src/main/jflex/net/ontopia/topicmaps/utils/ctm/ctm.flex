@@ -25,7 +25,7 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
    */
   private int commentCounter;
   
-  private StringBuffer string = new StringBuffer(); // used to gather strings
+  private StringBuilder string = new StringBuilder(); // used to gather strings
   
   private String docuri;
   public void setDocuri(String docuri) {

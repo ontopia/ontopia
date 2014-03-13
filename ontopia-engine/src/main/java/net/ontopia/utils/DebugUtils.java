@@ -51,7 +51,7 @@ public class DebugUtils {
     if (array == null)
       return "null";
     
-    StringBuffer list = new StringBuffer("[");
+    StringBuilder list = new StringBuilder("[");
 
     if (array.length > 0) {
       list.append(Integer.toString(array[0]));
@@ -70,7 +70,7 @@ public class DebugUtils {
     if (array == null)
       return "null";
     
-    StringBuffer list = new StringBuffer("[");
+    StringBuilder list = new StringBuilder("[");
 
     if (array.length > 0) {
       list.append(Boolean.toString(array[0]));

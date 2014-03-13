@@ -496,7 +496,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     if (!it.hasNext())
       return null;
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     while (it.hasNext()) {
       TopicIF theme = (TopicIF) it.next();
       buf.append(getElementTypeName(theme, null) + " ");

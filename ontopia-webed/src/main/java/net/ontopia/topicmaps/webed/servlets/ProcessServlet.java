@@ -460,7 +460,7 @@ public final class ProcessServlet extends HttpServlet {
     // So removed test for null forward page
 
     String url = forwardPage.getURL();
-    StringBuffer urlBuffer = new StringBuffer(url);
+    StringBuilder urlBuffer = new StringBuilder(url);
     urlBuffer.append('?');
 
     // merge request parameters

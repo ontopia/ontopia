@@ -139,7 +139,7 @@ public class ActionContext implements ActionContextIF {
   // -------------------------------------------------------------
 
   private String stringifyParams() {
-    StringBuffer sb = new StringBuffer(89);
+    StringBuilder sb = new StringBuilder(89);
     Iterator it_params = params.getNames().iterator();
     while (it_params.hasNext()) {
       String name = (String) it_params.next();
