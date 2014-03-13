@@ -95,7 +95,7 @@ public class SQLValueReference implements SQLValueIF {
   }
   
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("ref:");
     sb.append("(");
     sb.append(refvalue);

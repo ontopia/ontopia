@@ -57,7 +57,7 @@ public class SQLGenerator {
    */
   public static String getDeleteStatement(String table, String[] where_columns) {
     // Master table insert
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("delete from ");
     sb.append(table);
     sb.append(" where ");
@@ -85,7 +85,7 @@ public class SQLGenerator {
    */
   public static String getInsertStatement(String table, String[] value_columns) {
     // Master table insert
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("insert into ");
     sb.append(table);
     sb.append(" (");
@@ -121,7 +121,7 @@ public class SQLGenerator {
    */
   public static String getUpdateStatement(String table, String[] set_columns, String[] where_columns) {
     // Master table select
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("update ");
     sb.append(table);
     sb.append(" set ");
@@ -164,7 +164,7 @@ public class SQLGenerator {
   public static String getSelectStatement(String table, String[] select_columns, 
 					  String[] where_columns, int multiple) {
     // Master table select
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("select ");
     
     sb.append(StringUtils.join(select_columns, ", "));
@@ -208,7 +208,7 @@ public class SQLGenerator {
     //   from TM_TOPIC_SCOPE t1, TM_TOPIC t2
     //   where t1.id = t2.theme_id and t1.scoped_id = ?;
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     
     // select columns
     sb.append("select ");
@@ -271,7 +271,7 @@ public class SQLGenerator {
 
   public static String processMultipleLoadParameters(Collection identities, String sql) {
     int lix = sql.lastIndexOf('?');
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(sql.substring(0, lix));
 
     int size = identities.size();

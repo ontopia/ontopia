@@ -187,7 +187,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
     private int state;
     private TopicMapBuilderIF builder;
     private TopicIF topic;
-    private StringBuffer buffer;
+    private StringBuilder buffer;
     private TopicNameIF basename;
     private AssociationIF association;
     private boolean isuri;
@@ -203,7 +203,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
       this.topicmap = topicmap;
       this.builder = topicmap.getBuilder();
       this.state = START;
-      this.buffer = new StringBuffer();
+      this.buffer = new StringBuilder();
       this.nsprefixes = new HashMap();
     }
 

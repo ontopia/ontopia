@@ -67,7 +67,7 @@ public class PredicateClause extends AbstractClause {
   }
 
   public String toString() {
-    StringBuffer buf = new StringBuffer(predicate.getName() + "(");
+    StringBuilder buf = new StringBuilder(predicate.getName() + "(");
     for (int ix = 0; ix < arguments.size(); ix++) {
       if (arguments.get(ix) == null)
         buf.append("<null>");

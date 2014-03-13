@@ -289,7 +289,7 @@ public class FormTag extends BodyTagSupport {
     // render JavaScript to set the input focus (if required)
     if (focus != null) {
       String focus_elem = focus;
-      StringBuffer focus_ref = new StringBuffer("[");
+      StringBuilder focus_ref = new StringBuilder("[");
       if (focus_elem.indexOf('[') > 0) {
         StringTokenizer st = new StringTokenizer(focus_elem, "[");
         if (st.countTokens() == 2) {

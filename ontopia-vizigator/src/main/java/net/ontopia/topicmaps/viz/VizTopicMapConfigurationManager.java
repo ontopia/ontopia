@@ -1324,7 +1324,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
     // Fonts are serialized to the form:
     // "<family name>-<style>-<size>"
 
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append(font.getFamily());
     buffer.append("-");
     buffer.append(font.getStyle());

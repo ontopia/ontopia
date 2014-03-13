@@ -38,7 +38,7 @@ public class PostgreSQLProducer extends GenericSQLProducer {
   }
 
   protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("drop table ");
     sb.append(table.getName());
     sb.append(" cascade");

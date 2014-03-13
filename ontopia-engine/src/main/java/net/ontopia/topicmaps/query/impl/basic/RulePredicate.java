@@ -65,7 +65,7 @@ public class RulePredicate extends AbstractQueryProcessor
 
     // protect against infinite recursion
     List params = rule.getParameters();
-    StringBuffer sign = new StringBuffer();
+    StringBuilder sign = new StringBuilder();
     for (int ix = 0; ix < params.size(); ix++) {
       if (ix > 0) sign.append(' ');
       sign.append('.');
@@ -79,7 +79,7 @@ public class RulePredicate extends AbstractQueryProcessor
                      .getVariableTypes();
     
     // produce corresponding signature
-    sign = new StringBuffer();
+    sign = new StringBuilder();
     for (int ix = 0; ix < params.size(); ix++) {
       Variable var = (Variable) params.get(ix);
       if (ix > 0)

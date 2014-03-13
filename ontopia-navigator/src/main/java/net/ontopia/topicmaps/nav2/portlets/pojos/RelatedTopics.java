@@ -353,7 +353,7 @@ public class RelatedTopics {
     if (!aggregateHierarchy) return topic.getRoles();
     
     // build aggregate query
-    StringBuffer query = new StringBuffer();
+    StringBuilder query = new StringBuilder();
     query.append("/* #OPTION: optimizer.reorder=false */ ");
     query.append("/* #OPTION: optimizer.hierarchy-walker=false */ ");
     query.append("using h for i\"http://www.techquila.com/psi/hierarchy/#\" ");
@@ -660,7 +660,7 @@ public class RelatedTopics {
         // get name from ontopoly role field
         QueryProcessorIF proc = QueryUtils.getQueryProcessor(topic.getTopicMap());
         try {
-          StringBuffer query = new StringBuffer();
+          StringBuilder query = new StringBuilder();
           query.append("using on for i\"http://psi.ontopia.net/ontology/\" ");
           query.append("select $NAME from ");
           query.append("on:has-association-type(%AT% : on:association-type, $AF : on:association-field), ");

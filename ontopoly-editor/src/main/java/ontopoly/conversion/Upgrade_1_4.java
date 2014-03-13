@@ -29,7 +29,7 @@ public class Upgrade_1_4 extends UpgradeBase {
   }
   
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     sb.append("[on:untyped-name : on:system-topic]\n");
   }
   

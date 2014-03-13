@@ -42,7 +42,7 @@ public abstract class SAXTracker extends DefaultHandler {
    * The contents of the current element, or null if not
    * instructed to keep the contents of the current element.
    */
-  protected StringBuffer content;
+  protected StringBuilder content;
   private   boolean      keepContents;
   /**
    * The stack of currently open elements.
@@ -82,7 +82,7 @@ public abstract class SAXTracker extends DefaultHandler {
 
     keepContents = keepContentsOf.contains(qname);
     if (keepContents)
-      content = new StringBuffer();
+      content = new StringBuilder();
   }
 
   public void characters(char[] chars, int start, int length) {

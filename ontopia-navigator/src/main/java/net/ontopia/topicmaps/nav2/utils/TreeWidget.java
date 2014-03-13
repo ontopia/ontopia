@@ -477,7 +477,7 @@ public class TreeWidget {
   }
 
   protected String list(Set nodes) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     Iterator it = nodes.iterator();
     while (it.hasNext())
       buf.append("," + getId((TopicIF) it.next()));

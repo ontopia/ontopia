@@ -152,7 +152,7 @@ public class PrettyPrinterTest extends TestCase {
 
   // assumes s1.length() > s2.length()
   private String getRest(String s1, String s2) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int ix = s2.length(); ix < s1.length(); ix++) 
       buf.append(encode(s1.charAt(ix)) + " ");
     return buf.toString();

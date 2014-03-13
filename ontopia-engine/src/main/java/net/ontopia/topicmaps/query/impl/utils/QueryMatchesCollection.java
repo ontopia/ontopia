@@ -126,7 +126,7 @@ public class QueryMatchesCollection implements Collection {
   // -- object
 
   public String toString() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("[");
     
     Iterator i = iterator();

@@ -425,7 +425,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // -----------------------------------------------------------------------------
   
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("proxy.SharedCache@");
     sb.append(System.identityHashCode(this));
     return sb.toString();

@@ -94,7 +94,7 @@ public final class MemInfoTag extends TagSupport {
     long tot = Runtime.getRuntime().totalMemory();
     startTime = System.currentTimeMillis();
     startFreeMem = free;
-    StringBuffer strBuf = new StringBuffer(32);
+    StringBuilder strBuf = new StringBuilder(32);
     strBuf.append( "Free Mem: " ).append( formatter.format(free) )
       .append( ", Allocated Mem: " ).append( formatter.format(tot) )
       .append(".");
@@ -106,7 +106,7 @@ public final class MemInfoTag extends TagSupport {
     long usedMem = startFreeMem - free;
     long endTime = System.currentTimeMillis();
 
-    StringBuffer strBuf = new StringBuffer();
+    StringBuilder strBuf = new StringBuilder();
     if (usedMem > 0)
       strBuf.append("Used Mem: " + formatter.format(usedMem));
     else

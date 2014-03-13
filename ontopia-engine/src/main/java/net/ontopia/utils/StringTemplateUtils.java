@@ -53,7 +53,7 @@ public class StringTemplateUtils {
   public static String replace(String template, Map<String, Object> paramvalues,
                                char sep_char) {
     char[] temp = template.toCharArray();
-    StringBuffer out = new StringBuffer(temp.length + paramvalues.size()*6);
+    StringBuilder out = new StringBuilder(temp.length + paramvalues.size()*6);
 
     int last = 0;
     for (int ix = 0; ix < temp.length; ix++) {
@@ -106,7 +106,7 @@ public class StringTemplateUtils {
   public static String replace(String template, String param, String value,
                                char sep_char) {
     char[] temp = template.toCharArray();
-    StringBuffer out = new StringBuffer(temp.length + 6);
+    StringBuilder out = new StringBuilder(temp.length + 6);
 
     int last = 0;
     for (int ix = 0; ix < temp.length; ix++) {

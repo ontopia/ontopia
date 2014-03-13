@@ -50,7 +50,7 @@ public abstract class DroppableBehavior extends JQueryBehavior {
     String selector = "#" + markupId;
     String functionId = "fdo_" + markupId; 
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("var ").append(functionId).append(" = function() {\n");
     sb.append("  $(\"").append(selector).append("\").droppable('destroy');\n");
     sb.append("  $(\"").append(selector).append("\").droppable({\n");

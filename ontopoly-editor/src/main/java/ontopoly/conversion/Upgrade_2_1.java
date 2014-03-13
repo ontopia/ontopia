@@ -29,7 +29,7 @@ public class Upgrade_2_1 extends UpgradeBase {
   }
   
   @Override
-  protected void importLTM(StringBuffer sb) {
+  protected void importLTM(StringBuilder sb) {
     // Add support for query fields
     sb.append("[on:query-field : on:topic-type on:system-topic @\"http://psi.ontopia.net/ontology/query-field\" = \"Query field\"]\n");
     sb.append("xtm:superclass-subclass(on:field-definition : xtm:superclass, on:query-field : xtm:subclass)\n");

@@ -66,7 +66,7 @@ public class FieldInformation implements FieldInformationIF {
   // --- overwrite methods from java.lang.Object
 
   public int hashCode() {
-    StringBuffer sb = new StringBuffer(32);
+    StringBuilder sb = new StringBuilder(32);
     sb.append(name).append(type).append(maxlength).append(columns)
       .append(rows);
     return sb.toString().hashCode();
@@ -84,7 +84,7 @@ public class FieldInformation implements FieldInformationIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer(48);
+    StringBuilder sb = new StringBuilder(48);
     sb.append("[FieldInformation: ").append(name).append(", ")
       .append(type).append(", ")
       .append(maxlength).append(", ")

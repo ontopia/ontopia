@@ -108,7 +108,7 @@ public class KeyGenerator {
    * @return string containing key
    */
   public static String makeAssociationKey(AssociationIF assoc) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // asssociation type key fragment
     sb.append(makeTypedKey(assoc));
@@ -141,7 +141,7 @@ public class KeyGenerator {
    */
   public static String makeAssociationKey(AssociationIF assoc,
                                           AssociationRoleIF role) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // asssociation type key fragment
     sb.append(makeTypedKey(assoc));
@@ -169,7 +169,7 @@ public class KeyGenerator {
    */
   public static String makeAssociationKey(AssociationIF assoc,
                                           TopicMapIF othertm) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // asssociation type key fragment
     sb.append(makeTypedKey(assoc, othertm));

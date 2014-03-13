@@ -116,7 +116,7 @@ public class JSPContentHandler extends DefaultHandler {
     } else {
       // this is a not know tag, so we treat this as stupid text
       // without any nesting
-      StringBuffer dummyTag = new StringBuffer("<");
+      StringBuilder dummyTag = new StringBuilder("<");
       dummyTag.append(qname);
       for (int i = 0; i < atts.getLength(); i++) {
         dummyTag.append(" ").append(atts.getQName(i))
@@ -153,7 +153,7 @@ public class JSPContentHandler extends DefaultHandler {
       current = current.getParent();
       parents.pop();
     } else {
-      StringBuffer dummyTag = new StringBuffer();
+      StringBuilder dummyTag = new StringBuilder();
       dummyTag.append("</").append(qname).append(">");
       JSPTreeNodeIF node = new JSPContentTreeNode(current, dummyTag.toString());
       current.addChild(node);

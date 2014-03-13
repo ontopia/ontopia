@@ -443,7 +443,7 @@ public class MD5 {
 
   private static String dumpBytes(byte[] bytes) {
     int i;
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (i=0; i<bytes.length; i++) {
       if (i%32 == 0 && i!=0) {
         sb.append("\n");

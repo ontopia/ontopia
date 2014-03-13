@@ -62,20 +62,20 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
 
     // LIMIT x OFFSET y clause
     if (limit > 0 && offset > 0) {
-      StringBuffer sb = new StringBuffer("select * from ( select a.*, rownum rnum from (");
+      StringBuilder sb = new StringBuilder("select * from ( select a.*, rownum rnum from (");
       sb.append(sql);
       sb.append(") a where rownum <= ").append(offset+limit); // max
       sb.append(") where rnum >= ").append(offset+1); // min
       return sb.toString();
 
     } else if (limit > 0) {
-      StringBuffer sb = new StringBuffer("select a.* from (");
+      StringBuilder sb = new StringBuilder("select a.* from (");
       sb.append(sql);
       sb.append(") a where rownum <= ").append(limit); // max
       return sb.toString();
 
     } else if (offset > 0) {
-      StringBuffer sb = new StringBuffer("select * from ( select a.*, rownum rnum from (");
+      StringBuilder sb = new StringBuilder("select * from ( select a.*, rownum rnum from (");
       sb.append(sql);
       sb.append(") a ) where rnum >= ").append(offset+1); // min
       return sb.toString();
@@ -94,11 +94,11 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
     // Do nothing, since it is being specified in the where clause
   }
   
-  protected void whereSQLLeftOuterJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLLeftOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLLeftOuterJoin_ORACLE(join, sql, info);
   }
   
-  protected void whereSQLRightOuterJoin(SQLJoin join, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLRightOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLRightOuterJoin_ORACLE(join, sql, info);
   }
 
@@ -111,7 +111,7 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
       return super.getSetOperator(operator);
   }
   
-  protected StringBuffer createOffsetLimitClause(int offset, int limit, BuildInfo info) {    
+  protected StringBuilder createOffsetLimitClause(int offset, int limit, BuildInfo info) {    
     // no-op, since oracle uses ROWNUM for this. see elsewhere.
     return null;
   }
@@ -120,7 +120,7 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
     return true;
   }
 
-  protected void whereSQLFalse(SQLFalse expr, StringBuffer sql, BuildInfo info) {
+  protected void whereSQLFalse(SQLFalse expr, StringBuilder sql, BuildInfo info) {
     sql.append("1 = 2");
   }
   

@@ -68,7 +68,7 @@ public class SQLAggregate implements SQLAggregateIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     switch (type) {
     case COUNT:
       sb.append("count");

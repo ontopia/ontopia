@@ -157,7 +157,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   }
 
   protected String printTypes(TopicIF topic) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     Iterator it = topic.getTypes().iterator();
     while (it.hasNext()) {
       buf.append(printTopic((TopicIF) it.next()));
@@ -211,7 +211,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   }
 
   protected String printTypeSpecs(Collection specs) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     Iterator it = specs.iterator();
 
     while (it.hasNext()) {
@@ -227,7 +227,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   }
 
   protected String printScopeSpec(ScopeSpecification scopespec) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     Iterator it = scopespec.getThemeMatchers().iterator();
 
     if (!it.hasNext())
@@ -242,7 +242,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   }
 
   protected String printAssociationRole(AssociationRoleIF role) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("<tr><th>Association role player</th><td>" +
                printTopic(role.getPlayer()) + "</td></tr>\n");
     buf.append("<tr><th>Association role type</th><td>" + 

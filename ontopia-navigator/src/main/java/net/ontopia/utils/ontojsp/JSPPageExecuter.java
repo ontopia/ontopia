@@ -193,7 +193,7 @@ public class JSPPageExecuter {
    * Generates string out of concatenated identors.
    */
   private final String indent() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int i = 0; i < indentLevel; i++)
       sb.append(INDENTOR);
     return sb.toString();

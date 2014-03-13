@@ -170,7 +170,7 @@ public class DataURL {
   }
   
   public String toExternalForm() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("data:");
     if (mediaType != null && !mediaType.equals("text/plain"))
       sb.append(mediaType);

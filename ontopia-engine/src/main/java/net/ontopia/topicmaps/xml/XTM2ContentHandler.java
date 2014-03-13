@@ -79,7 +79,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
   private boolean keep_content;
   private TopicIF topic;
-  private StringBuffer content;
+  private StringBuilder content;
   private String datatype; // datatype attribute content
   private TopicIF type;
   private List<TopicIF> scope;
@@ -136,7 +136,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     this.xrfactory = xrfactory;
     this.doc_address = doc_address;
     this.read_documents = read_documents;
-    this.content = new StringBuffer();
+    this.content = new StringBuilder();
     this.scope = new ArrayList<TopicIF>();
     this.itemids = new ArrayList<LocatorIF>();
     this.delayedRoleReification = new ArrayList<RoleReification>();

@@ -46,7 +46,7 @@ public class ReloadPlugin extends DefaultPlugin {
     
     String redirect_url = request.getRequestURI();
     
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     String style = getParameter("style");
     if (style != null && style.equals("button")) {

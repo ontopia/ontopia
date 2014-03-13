@@ -62,7 +62,7 @@ public final class ReqParamUtils {
                                              Parameters reqparams,
                                              String charenc)
     throws IOException {
-    StringBuffer urlQuery = new StringBuffer(48);
+    StringBuilder urlQuery = new StringBuilder(48);
     boolean seenFirstPair = false;
     Iterator it = extraReqParams.keySet().iterator();
     while (it.hasNext()) {

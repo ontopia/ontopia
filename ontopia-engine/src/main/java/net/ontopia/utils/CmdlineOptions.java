@@ -37,7 +37,7 @@ public class CmdlineOptions {
   protected String application;
   protected String[] argv;
   
-  protected StringBuffer sargs = new StringBuffer();
+  protected StringBuilder sargs = new StringBuilder();
   protected List<LongOpt> largs = new ArrayList<LongOpt>();
 
   protected Map<Integer, ListenerIF> listeners = new HashMap<Integer, ListenerIF>();

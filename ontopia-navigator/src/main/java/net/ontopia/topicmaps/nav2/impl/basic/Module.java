@@ -146,7 +146,7 @@ public class Module implements ModuleIF {
   }
   
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[Module (type: ").append(readerType);
     sb.append(") location: ").append(location);
     sb.append("]");

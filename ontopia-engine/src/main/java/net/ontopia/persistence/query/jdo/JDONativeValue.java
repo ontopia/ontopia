@@ -92,7 +92,7 @@ public class JDONativeValue implements JDOValueIF {
   }
   
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(root.toString());
     sb.append(".{");
     StringUtils.join(args, ", ", sb);

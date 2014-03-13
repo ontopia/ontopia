@@ -180,7 +180,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   private TopicMapBuilderIF builder;
   private Collection topicmaps;
   private Stack bases;
-  private StringBuffer content;
+  private StringBuilder content;
   private boolean keep_content;
   
   /**
@@ -274,7 +274,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     info.clear();
     bases.clear();
     keep_content = false;
-    content = new StringBuffer();
+    content = new StringBuilder();
     
     topicmaps = new ArrayList();
     

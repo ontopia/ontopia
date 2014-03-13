@@ -79,7 +79,7 @@ public class CanonicalPrinter implements DocumentHandler {
   }
 
   public void characters (char ch[], int start, int length) {
-    StringBuffer content = new StringBuffer();
+    StringBuilder content = new StringBuilder();
     for (int i = start; i < start + length; i++) {
       switch(ch[i]) {
       case '&':

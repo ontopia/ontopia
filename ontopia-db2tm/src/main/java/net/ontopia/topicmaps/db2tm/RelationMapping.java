@@ -159,7 +159,7 @@ public class RelationMapping extends SAXTracker {
 
   public String getQueryDeclarations() {
     // create prefix declaration string
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     Iterator iter = iprefixes.values().iterator();
     while(iter.hasNext()) {
       Prefix prefix = (Prefix)iter.next();

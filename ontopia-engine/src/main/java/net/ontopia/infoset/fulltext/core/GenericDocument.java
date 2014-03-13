@@ -57,7 +57,7 @@ public class GenericDocument implements DocumentIF, java.io.Serializable {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("<Document");
     Iterator<FieldIF> iter = getFields().iterator();
     while (iter.hasNext()) {

@@ -292,7 +292,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
       if (idpredicates_T.isEmpty())
         return Collections.emptySet();
       
-      StringBuffer query = new StringBuffer();
+      StringBuilder query = new StringBuilder();
       query.append("related-to($T1, $T2) :- " +
                    "  role-player($R1, $T1), " +
                    "  association-role($A, $R1), " +
@@ -499,7 +499,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
                                           Collection<LocatorIF> subjects) {
 
     boolean notfirst = false;
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
 
     Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {

@@ -104,7 +104,7 @@ public final class Function extends AbstractFunction {
   // -------------------------------------------------------
 
   public String toString() {
-    StringBuffer sb = new StringBuffer(64);
+    StringBuilder sb = new StringBuilder(64);
     sb.append("[Function: ")
       .append( name ).append(", params ")
       .append( params ).append( "]");    

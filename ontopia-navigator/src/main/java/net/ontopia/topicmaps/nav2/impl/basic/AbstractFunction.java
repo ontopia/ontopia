@@ -97,7 +97,7 @@ public abstract class AbstractFunction implements FunctionIF {
   // -------------------------------------------------------
 
   public String toString() {
-    StringBuffer sb = new StringBuffer(64);
+    StringBuilder sb = new StringBuilder(64);
     sb.append("[Function: ")
       .append( getName() ).append(", params ")
       .append( getParameters() ).append( "]");    

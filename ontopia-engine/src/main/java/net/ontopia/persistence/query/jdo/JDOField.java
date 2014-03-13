@@ -123,7 +123,7 @@ public class JDOField implements JDOValueIF {
   }
   
   public String toString() {
-    StringBuffer sb = new StringBuffer(root.toString());
+    StringBuilder sb = new StringBuilder(root.toString());
     sb.append('.');
     StringUtils.join(path, ".", sb);
     if (!getEvaluatable()) sb.append('*');

@@ -140,7 +140,7 @@ public abstract class AbstractWebBasedTestCase extends TestCase {
 
   // this is RIDICULOUS. the DOM should have this method!
   protected String getElementContent(Element element) {
-    StringBuffer content = new StringBuffer();
+    StringBuilder content = new StringBuilder();
     NodeList children = element.getChildNodes();
     for (int ix = 0; ix < children.getLength(); ix++) {
       Node child = children.item(ix);

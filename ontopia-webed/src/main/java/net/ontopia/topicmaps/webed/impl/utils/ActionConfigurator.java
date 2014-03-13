@@ -115,7 +115,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer(89);
+    StringBuilder sb = new StringBuilder(89);
     sb.append("contextPath: ").append(contextPath)
       .append(", realPath: ").append(realPath)
       .append(", fileName: ").append(fileName)

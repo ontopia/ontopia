@@ -87,7 +87,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
     
     add(new WebComponent("fieldScript") {
       protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         //sb.append("\ntinyMCE.onLoad();");
         sb.append("\ntinyMCE.execCommand('mceAddControl', true, '" + textArea.getMarkupId() + "');");
 
@@ -108,7 +108,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
     // import script    
     response.renderJavascriptReference(reference);
     // initializer script
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("function onchangeTinyMCE(inst) {\n");
     sb.append("  if (inst.isDirty()) {\n");
     sb.append("    var value = inst.getBody().innerHTML;\n");

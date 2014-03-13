@@ -52,7 +52,7 @@ public class TreeModels {
   }
   
   public static TreeModel createTopicTypesTreeModel(TopicMap tm, boolean isAnnotationEnabled, boolean isAdminEnabled) {
-    StringBuffer sb = new StringBuffer(); 
+    StringBuilder sb = new StringBuilder(); 
     sb.append("using on for i\"http://psi.ontopia.net/ontology/\" ");
     sb.append("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" ");
     sb.append("select $P, $C from ");
@@ -96,7 +96,7 @@ public class TreeModels {
   }
   
   protected static TreeModel createTypesTreeModel(TopicMap tm, String typePSI, boolean isAdminEnabled) {
-    StringBuffer sb = new StringBuffer(); 
+    StringBuilder sb = new StringBuilder(); 
     sb.append("using on for i\"http://psi.ontopia.net/ontology/\" ");
     sb.append("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" ");
     sb.append("select $P, $C from ");
@@ -198,17 +198,17 @@ public class TreeModels {
         }
            
         // generate hierarchical query
-        Map<TopicIF,StringBuffer> existingRules = new LinkedHashMap<TopicIF,StringBuffer>();
+        Map<TopicIF,StringBuilder> existingRules = new LinkedHashMap<TopicIF,StringBuilder>();
         TopicIF topicTypeIf = topicType.getTopicIF();
         
-        StringBuffer sb = new StringBuffer();      
+        StringBuilder sb = new StringBuilder();      
         sb.append("select $P, $C from\n");
         sb.append(createHierarchyRuleFor(topicTypeIf, "P", "C", "B", existingRules, hd_ctypes));
 //        if (!isAdminEnabled)
 //          sb.append(", not({direct-instance-of($P, on:system-topic) || direct-instance-of($C, on:system-topic)})");        
         sb.append("\norder by $P, $C?");
         
-        Iterator<StringBuffer> riter = existingRules.values().iterator();
+        Iterator<StringBuilder> riter = existingRules.values().iterator();
         while (riter.hasNext()) {
           sb.insert(0, riter.next());
         }
@@ -247,9 +247,9 @@ public class TreeModels {
     return new DefaultTreeModel(root);
   }
 
-  private static StringBuffer createHierarchyRuleFor(TopicIF topicType, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
+  private static StringBuilder createHierarchyRuleFor(TopicIF topicType, String pVar, String cVar, String bVar, Map<TopicIF,StringBuilder> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
     if (!existingRules.containsKey(topicType)) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       existingRules.put(topicType, sb);
       // create rule for type
       sb.append("/* ").append(TopicStringifiers.toString(topicType)).append(" */\n");
@@ -264,12 +264,12 @@ public class TreeModels {
       sb.append(".\n");
     }
     // call rule
-    return new StringBuffer().append("hierarchy-for-").append(topicType.getObjectId())
+    return new StringBuilder().append("hierarchy-for-").append(topicType.getObjectId())
     .append("($").append(pVar).append(", $").append(cVar).append(", $").append(bVar).append(")");
   }
 
-  private static StringBuffer createStepPredicates(Collection<HierarchyDefinition> hds, Map<TopicIF,StringBuffer> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
-    StringBuffer sb = new StringBuffer();
+  private static StringBuilder createStepPredicates(Collection<HierarchyDefinition> hds, Map<TopicIF,StringBuilder> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
+    StringBuilder sb = new StringBuilder();
     // call parent rules
     sb.append("{ ");
     Iterator<HierarchyDefinition> hiter = hds.iterator();
@@ -289,8 +289,8 @@ public class TreeModels {
     return sb;
   }
   
-  private static StringBuffer createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
-    StringBuffer sb = new StringBuffer();
+  private static StringBuilder createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map<TopicIF,StringBuilder> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
+    StringBuilder sb = new StringBuilder();
     
     if (hd.ptypes.size() > 1) sb.append("{");
     Iterator<TopicIF> piter = hd.ptypes.iterator();

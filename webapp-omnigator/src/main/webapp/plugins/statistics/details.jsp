@@ -54,7 +54,7 @@
      
      String[] roles = assocdep.getAssociationRoleTypesOrdered(key);
      
-     StringBuffer buf = new StringBuffer();
+     StringBuilder buf = new StringBuilder();
      int counter = 0;
      Iterator it = assocs.iterator();
      while (it.hasNext()) {

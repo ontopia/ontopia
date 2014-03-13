@@ -159,8 +159,8 @@ public final class Stringificator {
     }    
     // --- otherwise signal error
     else {
-      StringBuffer msg =
-        new StringBuffer("Expected collection which contains topics," +
+      StringBuilder msg =
+        new StringBuilder("Expected collection which contains topics," +
                          " base names, variants or topic map refs as elements.\n");
       if (elem != null)
         msg.append("But got instance of class " +

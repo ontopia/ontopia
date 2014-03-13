@@ -74,7 +74,7 @@ public class FulltextPlugin extends DefaultPlugin {
 
     String type = getParameter("type");
     if (type == null || type.equals("form")) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("<form action='").append(action)
         .append("' method='get' style='display: inline'");
       if (description != null)

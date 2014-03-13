@@ -84,7 +84,7 @@ public class FunctionVirtualColumn implements ValueIF {
       // ignore
     }
     if (this.method == null) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("Could not find static method ");
       sb.append(fullMethodName);
       sb.append('(');

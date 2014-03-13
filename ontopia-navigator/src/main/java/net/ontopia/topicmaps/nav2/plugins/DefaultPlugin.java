@@ -86,7 +86,7 @@ public class DefaultPlugin implements PluginIF {
     String contextPath = request.getContextPath();
     
     // generate Link which is used by anchor element
-    StringBuffer link = new StringBuffer(89);
+    StringBuilder link = new StringBuilder(89);
     link.append(contextPath).append("/").append(uri)
       .append("?").append(tmParam).append("=").append(tm);
     if (objids != null) {
@@ -95,13 +95,13 @@ public class DefaultPlugin implements PluginIF {
     }
     
     // append requested URI inclusive query string to link
-    StringBuffer comingFrom = new StringBuffer(request.getRequestURI());
+    StringBuilder comingFrom = new StringBuilder(request.getRequestURI());
     if (request.getQueryString() != null)
       comingFrom.append("?").append(request.getQueryString());
     link.append("&redirect=").append(URLEncoder.encode(comingFrom.toString()));
 
     // generate HTML String
-    StringBuffer html = new StringBuffer(50);
+    StringBuilder html = new StringBuilder(50);
     html.append("<a href=\"").append(link.toString()).append('\"');
     if (description != null)
       html.append(" title=\"").append(description).append('\"');
@@ -202,7 +202,7 @@ public class DefaultPlugin implements PluginIF {
   // ----------------------------------------------------------
 
   public int hashCode() {
-    StringBuffer sb = new StringBuffer(32);
+    StringBuilder sb = new StringBuilder(32);
     sb.append(id).append(title).append(uri);
     return sb.toString().hashCode();
   }
@@ -217,7 +217,7 @@ public class DefaultPlugin implements PluginIF {
   }
   
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     // put out FQCN of plugin: this.getClass().getName()
     sb.append("[Plugin| " + getId())
       .append(" (" + getStateAsString() + ")");

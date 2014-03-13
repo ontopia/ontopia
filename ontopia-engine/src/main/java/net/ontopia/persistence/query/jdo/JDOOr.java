@@ -102,7 +102,7 @@ public class JDOOr implements JDOExpressionIF {
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("(");
     for (int i=0; i < expressions.length; i++) {
       if (i != 0) sb.append(" || ");
