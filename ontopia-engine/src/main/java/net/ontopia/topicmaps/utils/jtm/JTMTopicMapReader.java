@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
-import java.util.Map;
 
 import org.xml.sax.InputSource;
 
@@ -153,11 +152,4 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
     return topicmap;
   }
 
-  /**
-   * JTMTopicmapReader does not accept any additional properties
-   * @param properties 
-   */
-  public void setAdditionalProperties(Map<String, Object> properties) {
-    // no-op
-  }
 }
