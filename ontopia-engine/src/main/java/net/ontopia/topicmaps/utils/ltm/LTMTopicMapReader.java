@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
-import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -172,11 +171,4 @@ public class LTMTopicMapReader extends AbstractTopicMapReader {
     return topicmap;
   }
   
-  /**
-   * LTMTopicMapReader has no additional options to set.
-   * @param properties 
-   */
-  public void setAdditionalProperties(Map<String, Object> properties) {
-    // no-op
-  }
 }

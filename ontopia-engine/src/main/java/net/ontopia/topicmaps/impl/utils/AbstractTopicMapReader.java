@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.PushbackInputStream;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.net.URL;
 
 import org.xml.sax.InputSource;
@@ -127,6 +128,14 @@ public abstract class AbstractTopicMapReader
   protected abstract TopicMapIF read(TopicMapStoreFactoryIF store_factory) 
     throws IOException;
   
+  /**
+   * Default implemenentation does not accept any additional properties
+   * @param properties 
+   */
+  public void setAdditionalProperties(Map<String, Object> properties) {
+    // no-op
+  }
+
   // ==== IMPORTER IMPLEMENTATION ====
 
   public void importInto(TopicMapIF topicmap) throws IOException {
