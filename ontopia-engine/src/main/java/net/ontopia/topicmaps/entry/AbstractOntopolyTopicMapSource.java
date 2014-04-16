@@ -153,7 +153,9 @@ public abstract class AbstractOntopolyTopicMapSource
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      store.close();
+      if (store.isOpen()) {
+        store.close();
+      }
     }
 
     // create reference instance
