@@ -185,8 +185,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
-    Collection<TopicIF> empty = Collections.emptySet();
-    return (scope == null ? empty : scope);
+    return (scope == null ? Collections.<TopicIF>emptySet() : scope);
   }
   public void addTheme(TopicIF theme) {
     if (theme == null) 
@@ -196,8 +195,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     fireEvent(OccurrenceIF.EVENT_ADD_THEME, theme, null);
     // Add theme to scope
     if (scope == null) {
-      Set<TopicIF> empty = Collections.emptySet();
-      scope = topicmap.setpool.get(empty);
+      scope = topicmap.setpool.get(Collections.<TopicIF>emptySet());
     }
     scope = topicmap.setpool.add(scope, theme, true);
   }

@@ -59,8 +59,7 @@ public abstract class SnapshotTMObject implements TMObjectIF {
   }
 
   public Collection<LocatorIF> getItemIdentifiers() {
-    Collection<LocatorIF> empty = Collections.emptyList();
-    return (srclocs == null ? empty : srclocs);
+    return (srclocs == null ? Collections.<LocatorIF>emptyList() : srclocs);
   }
 
   public void addItemIdentifier(LocatorIF locator) throws ConstraintViolationException {

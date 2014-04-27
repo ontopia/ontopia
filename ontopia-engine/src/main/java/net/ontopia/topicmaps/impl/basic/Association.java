@@ -160,8 +160,7 @@ public class Association extends TMObject implements AssociationIF {
 
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
-    Collection<TopicIF> empty = Collections.emptyList();
-    return (scope == null ? empty : scope);
+    return (scope == null ? Collections.<TopicIF>emptyList() : scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -172,8 +171,7 @@ public class Association extends TMObject implements AssociationIF {
     fireEvent(AssociationIF.EVENT_ADD_THEME, theme, null);
     // Add theme to scope
     if (scope == null) {
-      Set<TopicIF> empty = Collections.emptySet();
-      scope = topicmap.setpool.get(empty);
+      scope = topicmap.setpool.get(Collections.<TopicIF>emptySet());
     }
     scope = topicmap.setpool.add(scope, theme, true);
   }

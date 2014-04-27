@@ -100,13 +100,11 @@ public class SnapshotTopicName extends SnapshotTMObject implements TopicNameIF {
   }
   
   public Collection<VariantNameIF> getVariants() {
-    Collection<VariantNameIF> empty = Collections.emptyList();
-    return (variants == null ? empty : variants);
+    return (variants == null ? Collections.<VariantNameIF>emptyList() : variants);
   }
   
   public Collection<TopicIF> getScope() {
-    Collection<TopicIF> empty = Collections.emptyList();
-    return (scope == null ? empty : scope);
+    return (scope == null ? Collections.<TopicIF>emptyList() : scope);
   }
   
   public void addTheme(TopicIF theme) {

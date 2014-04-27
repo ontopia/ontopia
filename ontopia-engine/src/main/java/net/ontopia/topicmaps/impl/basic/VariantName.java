@@ -62,8 +62,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     // WARNING: This means that the unique set will not get
     // dereferenced even though the variant name has been
     // dereferenced.
-    Set<TopicIF> empty = Collections.emptySet();
-    scope = topicmap.setpool.get(empty);
+    scope = topicmap.setpool.get(Collections.<TopicIF>emptySet());
   }
   
   // -----------------------------------------------------------------------------

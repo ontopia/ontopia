@@ -80,8 +80,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     //object_ids = cfactory.makeLargeMap(); // unused
     //id_objects = cfactory.makeLargeMap(); // unused
 
-    Set<TopicIF> empty = Collections.emptySet();
-    scope = setpool.get(empty);
+    scope = setpool.get(Collections.<TopicIF>emptySet());
     topics = cfactory.makeLargeSet();
     assocs = cfactory.makeLargeSet();
 
