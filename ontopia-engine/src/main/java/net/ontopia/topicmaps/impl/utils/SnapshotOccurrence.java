@@ -132,8 +132,7 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
   }
   
   public Collection<TopicIF> getScope() {
-    Collection<TopicIF> empty = Collections.emptyList();
-    return (scope == null ? empty : scope);
+    return (scope == null ? Collections.<TopicIF>emptyList() : scope);
   }
   
   public void addTheme(TopicIF theme) {

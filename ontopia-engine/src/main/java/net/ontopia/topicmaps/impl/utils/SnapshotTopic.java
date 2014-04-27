@@ -104,8 +104,7 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   // ---------------------------------------------------------------------------
 
   public Collection<LocatorIF> getSubjectLocators() {
-    Collection<LocatorIF> empty = Collections.emptyList();
-    return (sublocs == null ? empty : sublocs);
+    return (sublocs == null ? Collections.<LocatorIF>emptyList() : sublocs);
 	}
 
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
@@ -119,8 +118,7 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
 	}
 
   public Collection<LocatorIF> getSubjectIdentifiers() {
-    Collection<LocatorIF> empty = Collections.emptyList();
-    return (subinds == null ? empty : subinds);
+    return (subinds == null ? Collections.<LocatorIF>emptyList() : subinds);
   }
 
   public void addSubjectIdentifier(LocatorIF locator) throws ConstraintViolationException {
@@ -132,8 +130,7 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   }
 
   public Collection<TopicIF> getTypes() {
-    Collection<TopicIF> empty = Collections.emptyList();
-    return (types == null ? empty : types);
+    return (types == null ? Collections.<TopicIF>emptyList() : types);
   }
   
   public void addType(TopicIF type) {
@@ -145,8 +142,7 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   }
   
   public Collection<TopicNameIF> getTopicNames() {
-    Collection<TopicNameIF> empty = Collections.emptyList();
-    return (basenames == null ? empty : basenames);
+    return (basenames == null ? Collections.<TopicNameIF>emptyList() : basenames);
   }
   
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
@@ -154,8 +150,7 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   }
 
   public Collection<OccurrenceIF> getOccurrences() {
-    Collection<OccurrenceIF> empty = Collections.emptyList();
-    return (occurrences == null ? empty : occurrences);
+    return (occurrences == null ? Collections.<OccurrenceIF>emptyList() : occurrences);
   }
 
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
