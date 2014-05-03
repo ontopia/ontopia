@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.core;
 
-public interface NameIF {
+public interface NameIF extends TMObjectIF {
 
   /**
    * PUBLIC: Gets the topic to which this name belongs.
