@@ -204,12 +204,11 @@ public class SQLTypes {
           char[] chars = new char[SQLTypes.SIZE_THRESHOLD];
           int lengthRead = reader.read(chars);
           if (lengthRead <= SQLTypes.SIZE_THRESHOLD && reader.read() == -1) {
-						if (lengthRead > 0)
-							return new String(chars, 0, lengthRead);
-						else if (lengthRead == 0)
-							return "";
-						else
-							return null;
+            if (lengthRead > 0) {
+              return new String(chars, 0, lengthRead);
+            } else {
+              return "";
+            }
           } else {
             return new OnDemandValue();
           }
