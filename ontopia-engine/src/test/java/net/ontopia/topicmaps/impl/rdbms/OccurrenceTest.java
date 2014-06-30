@@ -31,4 +31,9 @@ public class OccurrenceTest extends net.ontopia.topicmaps.core.OccurrenceTest {
     return new RDBMSTestFactory();
   }
 
+  public void testIssue494() throws Exception {
+    // bug is only triggered if the value is committed
+    topicmap.getStore().commit();
+    assertNotNull("Bug 494: empty occurrence value returned as null", occurrence.getValue());
+  }
 }
