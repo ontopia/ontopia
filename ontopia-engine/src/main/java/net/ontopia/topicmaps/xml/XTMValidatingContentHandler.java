@@ -33,7 +33,8 @@ import org.xml.sax.SAXException;
 
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.relaxng.SchemaFactory;
-import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
@@ -75,7 +76,9 @@ public class XTMValidatingContentHandler implements ContentHandler {
       factory.setErrorHandler(new DraconianErrorHandler());
       factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       Schema schema = factory.createSchema(src);
-      return schema.createValidator(PropertyMap.EMPTY).getContentHandler();
+      PropertyMapBuilder pmb = new PropertyMapBuilder();
+      pmb.put(ValidateProperty.ERROR_HANDLER, new DraconianErrorHandler());
+      return schema.createValidator(pmb.toPropertyMap()).getContentHandler();
     } catch (Exception e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR: " + e, e);
     }
