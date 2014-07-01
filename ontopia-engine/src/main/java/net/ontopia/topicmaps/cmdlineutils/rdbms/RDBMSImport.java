@@ -24,10 +24,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
 import java.util.Properties;
 import org.xml.sax.InputSource;
-import net.ontopia.persistence.jdbcspy.SpyDriver;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
@@ -146,8 +146,16 @@ public class RDBMSImport {
 
     }
 
-    if (ohandler.jdbcspyFile != null)
-      SpyDriver.writeReport(ohandler.jdbcspyFile);
+    if (ohandler.jdbcspyFile != null) {
+      try {
+        Class<?> spyDriverClass = Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
+        Method method = spyDriverClass.getMethod("writeReport", String.class);
+        method.invoke(null, ohandler.jdbcspyFile);
+      } catch (ClassNotFoundException cnfe) {
+        System.out.println("JDBC-Spy driver was not found on the classpath, make sure you have the"
+                + " ontopia-jdbcspy jar of the correct java version on your classpath");
+      }
+    }
 
     // close store (and database connection)    
     store.close();
