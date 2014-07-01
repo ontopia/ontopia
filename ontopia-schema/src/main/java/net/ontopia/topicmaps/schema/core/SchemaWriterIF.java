@@ -24,7 +24,9 @@ package net.ontopia.topicmaps.schema.core;
  * PUBLIC: Schema writers can write object structures representing
  * schemas out to an implicitly specified location in some schema
  * language syntax.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface SchemaWriterIF {
 
   /**

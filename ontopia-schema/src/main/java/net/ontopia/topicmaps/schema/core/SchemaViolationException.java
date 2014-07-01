@@ -25,7 +25,9 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 /**
  * PUBLIC: This exception is thrown when topic maps violate their
  * schemas.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public class SchemaViolationException extends Exception {
   protected TMObjectIF container;
   protected Object offender;

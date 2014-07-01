@@ -23,7 +23,10 @@ package net.ontopia.topicmaps.schema.core;
 /**
  * INTERNAL: Represents constraints that may only match a specified
  * number of objects.
+ * 
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface CardinalityConstraintIF extends ConstraintIF {
   public static final int INFINITY = -1;
 

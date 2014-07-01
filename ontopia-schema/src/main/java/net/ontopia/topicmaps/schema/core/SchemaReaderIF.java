@@ -24,7 +24,9 @@ package net.ontopia.topicmaps.schema.core;
  * PUBLIC: Schema readers can read instances of a topic map schema
  * from some implicitly specified source and return object structures
  * representing the schema.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface SchemaReaderIF {
 
   /**

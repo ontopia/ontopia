@@ -25,7 +25,9 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 /**
  * INTERNAL: Implementations of this interface can match topic map objects
  * independently of any specific topic map.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */ 
+@Deprecated
 public interface TMObjectMatcherIF {
 
   /**

@@ -24,7 +24,9 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 
 /**
  * PUBLIC: Schema validator objects report errors through this interface.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface ValidationHandlerIF {
 
   /**

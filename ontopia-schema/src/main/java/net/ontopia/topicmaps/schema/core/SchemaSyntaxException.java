@@ -25,7 +25,9 @@ import org.xml.sax.Locator;
 /**
  * PUBLIC: This exception is thrown when a topic map schema violates
  * the syntax of the schema language it is written in.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public class SchemaSyntaxException extends Exception {
   protected Locator errorloc;
 

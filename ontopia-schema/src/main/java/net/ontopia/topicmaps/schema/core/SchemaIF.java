@@ -25,7 +25,9 @@ import net.ontopia.infoset.core.LocatorIF;
 /**
  * PUBLIC: This interface is implemented by objects that represent
  * complete topic map schemas.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface SchemaIF {
 
   /**
