@@ -28,7 +28,9 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * PUBLIC: Schema validators can validate topic map objects against a
  * schema. Violations of the schema are reported to a separate error
  * handler object.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface SchemaValidatorIF {
 
   /**

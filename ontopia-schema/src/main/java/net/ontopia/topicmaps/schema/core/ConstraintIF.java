@@ -24,7 +24,9 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 
 /**
  * PUBLIC: Represents a constraint specified in a schema.
+ * @deprecated The schema tools are no longer maintained in favor of a future TMCL implementation
  */
+@Deprecated
 public interface ConstraintIF {
 
   /**
