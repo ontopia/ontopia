@@ -47,6 +47,7 @@
 		<module>ontopia-tmprefs</module>
 		<module>ontopia-rdf</module>
 		<module>ontopia-schema</module>
+		<module>ontopia-jdbcspy6</module>
 		
 		<!-- Web Apps -->
 		<module>webapp-root</module>
