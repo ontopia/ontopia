@@ -288,4 +288,13 @@ public class SpyStatement implements Statement {
     return stm.isWrapperFor(aClass);
   }
 
+  // J2EE 1.7 specifics - comment out remainder of methods if you have to use java 1.6 or lower
+
+  public void closeOnCompletion() throws SQLException {
+    stm.closeOnCompletion();
+  }
+
+  public boolean isCloseOnCompletion() throws SQLException {
+    return stm.isCloseOnCompletion();
+  }
 }

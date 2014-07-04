@@ -25,6 +25,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -155,4 +156,9 @@ public class SpyDriver implements Driver {
     }
   }
 
+  // J2EE 1.7 specifics - comment out remainder of methods if you have to use java 1.6 or lower
+
+  public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+    throw new SQLFeatureNotSupportedException("JDBC Spy does not use JUL logging");
+  }
 }

@@ -37,6 +37,7 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 /**
  * INTERNAL: 
@@ -300,4 +301,25 @@ public class SpyConnection implements Connection {
     return conn.isWrapperFor(aClass);
   }
 
+  // J2EE 1.7 specifics - comment out remainder of methods if you have to use java 1.6 or lower
+
+  public void setSchema(String schema) throws SQLException {
+    conn.setSchema(schema);
+  }
+
+  public String getSchema() throws SQLException {
+    return conn.getSchema();
+  }
+
+  public void abort(Executor executor) throws SQLException {
+    conn.abort(executor);
+  }
+
+  public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+    conn.setNetworkTimeout(executor, milliseconds);
+  }
+
+  public int getNetworkTimeout() throws SQLException {
+    return conn.getNetworkTimeout();
+  }
 }
