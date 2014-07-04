@@ -972,4 +972,13 @@ public class SpyResultSet implements ResultSet {
     return rs.isWrapperFor(aClass);
   }
 
+  // J2EE 1.7 specifics - comment out remainder of methods if you have to use java 1.6 or lower
+
+  public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+    return rs.getObject(columnIndex, type);
+  }
+
+  public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+    return rs.getObject(columnLabel, type);
+  }
 }
