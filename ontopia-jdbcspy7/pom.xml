@@ -8,11 +8,11 @@
 		<version>5.3.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ontopia-jdbcspy6</artifactId>
+	<artifactId>ontopia-jdbcspy7</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>Ontopia JDBC Spy 6</name>
-	<description>Ontopia JDBC Spy for Java 6</description>
+	<name>Ontopia JDBC Spy 7</name>
+	<description>Ontopia JDBC Spy for Java 7</description>
 
 	<dependencies>
 		<dependency>
