@@ -21,7 +21,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>ontopia-jdbcspy6</artifactId>
+			<artifactId>ontopia-jdbcspy7</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
