@@ -161,11 +161,7 @@ public class MergeUtils {
         
     // copying base names
     Map<String, TopicNameIF> topicnameMap = buildKeyMap(target.getTopicNames());
-
-    List<TopicNameIF> sbns = new ArrayList<TopicNameIF>(source.getTopicNames());
-    Iterator<TopicNameIF> topicnameIterator = sbns.iterator();
-    while (topicnameIterator.hasNext()) {
-      TopicNameIF sourcebn = topicnameIterator.next();
+    for (TopicNameIF sourcebn : new ArrayList<TopicNameIF>(source.getTopicNames())) {
       String key = KeyGenerator.makeTopicNameKey(sourcebn);
       TopicNameIF targetbn = topicnameMap.get(key);
 
@@ -179,9 +175,7 @@ public class MergeUtils {
 
     // copying occurrences
     Map<String, OccurrenceIF> occurrenceMap = buildKeyMap(target.getOccurrences());
-    Iterator<OccurrenceIF> occurrenceIterator = new ArrayList<OccurrenceIF>(source.getOccurrences()).iterator();
-    while (occurrenceIterator.hasNext()) {
-      OccurrenceIF sourceoc = occurrenceIterator.next();
+    for (OccurrenceIF sourceoc : new ArrayList<OccurrenceIF>(source.getOccurrences())) {
       OccurrenceIF targetoc = occurrenceMap.get(KeyGenerator.makeOccurrenceKey(sourceoc));
       if (targetoc == null) {
         targetoc = CopyUtils.copyOccurrence(target, sourceoc);
@@ -193,14 +187,11 @@ public class MergeUtils {
 
     // copying roles
     Set<String> keys = new CompactHashSet<String>();
-    Iterator<AssociationRoleIF> roleIterator = target.getRoles().iterator();
-    while (roleIterator.hasNext())
-      keys.add(KeyGenerator.makeAssociationKey(
-                 roleIterator.next().getAssociation()));
+    for (AssociationRoleIF role : target.getRoles()) {
+      keys.add(KeyGenerator.makeAssociationKey(role.getAssociation()));
+    }
     
-    roleIterator = new ArrayList<AssociationRoleIF>(source.getRoles()).iterator();
-    while (roleIterator.hasNext()) {
-      AssociationRoleIF ar = roleIterator.next();
+    for (AssociationRoleIF ar : new ArrayList<AssociationRoleIF>(source.getRoles())) {
       ar.setPlayer(target);
 
       String key = KeyGenerator.makeAssociationKey(ar.getAssociation());
