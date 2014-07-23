@@ -123,54 +123,42 @@ public class MergeUtils {
     replaceTopics(target, source);
 
     // remove subject locators from source
-    List<LocatorIF> sublocs = new ArrayList<LocatorIF>(source.getSubjectLocators());
-    Iterator<LocatorIF> it = sublocs.iterator();
-    while (it.hasNext()) {
-      LocatorIF loc = it.next();
-      source.removeSubjectLocator(loc);
+    List<LocatorIF> subjectLocators = new ArrayList<LocatorIF>(source.getSubjectLocators());
+    for (LocatorIF subjectLocator : subjectLocators) {
+      source.removeSubjectLocator(subjectLocator);
     }
 
     // remove subject indicators from source
-    List<LocatorIF> subinds = new ArrayList<LocatorIF>(source.getSubjectIdentifiers());
-    it = subinds.iterator();
-    while (it.hasNext()) {
-      LocatorIF loc = it.next();
-      source.removeSubjectIdentifier(loc);
+    List<LocatorIF> subjectIdentifiers = new ArrayList<LocatorIF>(source.getSubjectIdentifiers());
+    for (LocatorIF subjectIdentifier: subjectIdentifiers) {
+      source.removeSubjectIdentifier(subjectIdentifier);
     }
 
     // remove item identifiers from source
-    List<LocatorIF> itemids = new ArrayList<LocatorIF>(source.getItemIdentifiers());
-    it = itemids.iterator();
-    while (it.hasNext()) {
-      LocatorIF loc = it.next();
-      source.removeItemIdentifier(loc);
+    List<LocatorIF> itemIdentifiers = new ArrayList<LocatorIF>(source.getItemIdentifiers());
+    for (LocatorIF itemIdentifier : itemIdentifiers) {
+      source.removeItemIdentifier(itemIdentifier);
     }
 
     // add subject locators to target
-    it = sublocs.iterator();
-    while (it.hasNext()) {    
-      LocatorIF loc = it.next();
-      target.addSubjectLocator(loc);
+    for (LocatorIF subjectLocator : subjectLocators) {
+      target.addSubjectLocator(subjectLocator);
     }
 
     // add subject indicators to target
-    it = subinds.iterator();
-    while (it.hasNext()) {    
-      LocatorIF loc = it.next();
-      target.addSubjectIdentifier(loc);
+    for (LocatorIF subjectIdentifier: subjectIdentifiers) {
+      target.addSubjectIdentifier(subjectIdentifier);
     }
 
     // add item identifiers to target
-    it = itemids.iterator();
-    while (it.hasNext()) {    
-      LocatorIF loc = it.next();
-      target.addItemIdentifier(loc);
+    for (LocatorIF itemIdentifier : itemIdentifiers) {
+      target.addItemIdentifier(itemIdentifier);
     }
       
     // copying types
-    Iterator<TopicIF> topicIterator = source.getTypes().iterator();
-    while (topicIterator.hasNext())
-      target.addType(topicIterator.next());
+    for (TopicIF type : source.getTypes()) {
+      target.addType(type);
+    }
         
     // copying base names
     Map<String, TopicNameIF> topicnameMap = buildKeyMap(target.getTopicNames());
