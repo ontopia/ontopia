@@ -160,6 +160,8 @@ public abstract class AbstractTransaction implements TransactionIF {
     log.debug(getId() + ": Transaction closed.");
     this.isclosed = true;
     this.isactive = false;
+
+    ((RDBMSStorage)access.getStorage()).transactionClosed(this);
   }
 
   public abstract void flush();

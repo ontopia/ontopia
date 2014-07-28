@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.persistence.query.sql.EqualsSQLOptimizer;
@@ -128,6 +129,8 @@ public class RDBMSStorage implements StorageIF {
 
   private CachesIF caches;
   private ClusterIF cluster;
+
+  private final Set<AbstractTransaction> transactions = Collections.newSetFromMap(new WeakHashMap<AbstractTransaction, Boolean>());
   
   /**
    * INTERNAL: Creates a storage definition which gets its settings
@@ -363,10 +366,17 @@ public class RDBMSStorage implements StorageIF {
   }
 
   public TransactionIF createTransaction(boolean readonly) {
+    AbstractTransaction transaction;
     if (readonly)
-      return new ROTransaction(createAccess(readonly));
+      transaction = new ROTransaction(createAccess(readonly));
     else
-      return new RWTransaction(createAccess(readonly));
+      transaction= new RWTransaction(createAccess(readonly));
+
+    synchronized (transactions) {
+      transactions.add(transaction);
+    }
+
+    return transaction;
   }
   
   public boolean isSharedCache() {
@@ -686,4 +696,11 @@ public class RDBMSStorage implements StorageIF {
     }
   }
 
+  public int getActiveTransactionCount() {
+    return transactions.size();
+  }
+
+  void transactionClosed(AbstractTransaction transaction) {
+    transactions.remove(transaction);
+  }
 }
