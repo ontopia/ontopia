@@ -22,7 +22,6 @@ package net.ontopia.persistence.proxy;
 
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.procedure.TObjectIntProcedure;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +40,7 @@ public class ObjectStates {
   public static final int STATE_DIRTY = 4;
   public static final int STATE_READ = 8;
 
-  protected TObjectIntHashMap map = new TObjectIntHashMap(53);
+  protected TObjectIntHashMap<IdentityIF> map = new TObjectIntHashMap<IdentityIF>(53);
   protected boolean clean = true;
 
   ObjectStates() {
@@ -106,13 +105,13 @@ public class ObjectStates {
   }
 
   public synchronized void clear() {
-    map = new TObjectIntHashMap(53);
+    map = new TObjectIntHashMap<IdentityIF>(53);
     clean = true;
   }
 
   // --- events
 
-  public synchronized void forEachEntry(TObjectIntProcedure proc) {
+  public synchronized void forEachEntry(TObjectIntProcedure<IdentityIF> proc) {
     map.forEachEntry(proc);
   }
 
