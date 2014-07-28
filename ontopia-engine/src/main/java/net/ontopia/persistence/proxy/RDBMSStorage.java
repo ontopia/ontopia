@@ -26,12 +26,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Properties;
-
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.persistence.query.sql.EqualsSQLOptimizer;
@@ -47,9 +44,8 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
-
+import net.ontopia.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,9 +59,9 @@ public class RDBMSStorage implements StorageIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
 
-  static final Set known_properties;
+  static final Set<String> known_properties;
   static {
-    known_properties = new HashSet();
+    known_properties = new HashSet<String>();
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.BatchUpdates");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.identitymap.lru");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.local.debug");
@@ -110,7 +106,7 @@ public class RDBMSStorage implements StorageIF {
     known_properties.add("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type");
   }
   
-  private Map properties;
+  private Map<String, String> properties;
   
   private RDBMSMapping mapping;
   private QueryDeclarations queries;
@@ -125,7 +121,6 @@ public class RDBMSStorage implements StorageIF {
   private String database;
   private String[] platforms;
   
-  private int transaction_counter;
   private int access_counter;
   
   private SQLBuilder sqlbuilder;
@@ -133,8 +128,6 @@ public class RDBMSStorage implements StorageIF {
 
   private CachesIF caches;
   private ClusterIF cluster;
-  
-  private static final String CONNECTION_POOLNAME = "RDBMSStorage";
   
   /**
    * INTERNAL: Creates a storage definition which gets its settings
@@ -160,8 +153,7 @@ public class RDBMSStorage implements StorageIF {
       throw new OntopiaRuntimeException("Property file '" + propfile + "' was not found.");
     if (log.isDebugEnabled())
       log.info("Loading properties file from: "  + propfile);
-    Properties properties = PropertyUtils.loadProperties(istream);
-    init(properties);
+    init(PropertyUtils.toMap(PropertyUtils.loadProperties(istream)));
   }
   
   /**
@@ -170,7 +162,7 @@ public class RDBMSStorage implements StorageIF {
    *
    * @since 1.2.4
    */
-  public RDBMSStorage(Map properties) throws IOException {
+  public RDBMSStorage(Map<String, String> properties) throws IOException {
     // Pass on user current directory
     init(properties);
   }
@@ -178,7 +170,7 @@ public class RDBMSStorage implements StorageIF {
   protected InputStream getInputStream(String property, String filename)
     throws IOException {
     
-    String _filename = (String)properties.get(property);
+    String _filename = properties.get(property);
     if (_filename == null) {
       _filename = "classpath:net/ontopia/topicmaps/impl/rdbms/config/" + filename;
     } else {
@@ -190,7 +182,7 @@ public class RDBMSStorage implements StorageIF {
   /**
    * INTERNAL: Method shared by constructors to properly initialize members.
    */
-  protected void init(Map properties) throws IOException {
+  protected void init(Map<String, String> properties) throws IOException {
     // Set storage properties
     this.properties = properties;
     
@@ -211,7 +203,7 @@ public class RDBMSStorage implements StorageIF {
     this.queries = new QueryDeclarations(qstream);
     
     // Set up connection factory
-    String cptype = (String)properties.get("net.ontopia.topicmaps.impl.rdbms.ConnectionPool");
+    String cptype = properties.get("net.ontopia.topicmaps.impl.rdbms.ConnectionPool");
     
     if (cptype == null || "true".equals(cptype) || "yes".equals(cptype) || "dbcp".equals(cptype)) {
       log.debug("Using DBCP connection pool.");
@@ -348,16 +340,16 @@ public class RDBMSStorage implements StorageIF {
     return keygen.generateKey(type);
   }
   
-  public Map getProperties() {
+  public Map<String, String> getProperties() {
     return properties;
   }
   
   public String getProperty(String property) {
-    return (String)properties.get(property);
+    return properties.get(property);
   }
   
   public String getProperty(String property, String default_value) {
-    String propval = (String)properties.get(property);
+    String propval = properties.get(property);
     if (propval == null)
       return default_value;
     else
@@ -680,11 +672,9 @@ public class RDBMSStorage implements StorageIF {
     // output storage properties
     out.write("<h3>Database properties</h3>\n");
     out.write("<p><i>The properties given in bold face are those actually recognized by the OKS.</i></p>\n");
-    List props = new ArrayList(properties.keySet());
+    List<String> props = new ArrayList<String>(properties.keySet());
     Collections.sort(props);
-    Iterator iter = props.iterator();
-    while (iter.hasNext()) {
-      Object prop = iter.next();
+    for (String prop : props) {
       if ("net.ontopia.topicmaps.impl.rdbms.Password".equals(prop)) {
         out.write("<b>" + prop + "</b>=(<i>hidden for security reasons</i>)<br>\n");
       } else {
