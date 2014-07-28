@@ -21,18 +21,15 @@
 package net.ontopia.persistence.proxy;
 
 import gnu.trove.procedure.TObjectIntProcedure;
-
 import java.util.Collection;
 import java.util.Set;
-
 import net.ontopia.utils.CompactIdentityHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.SoftValueHashMapIndex;
-
+import org.apache.commons.collections.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.collections.map.LRUMap;
 
 /**
  * INTERNAL: The read-write proxy transaction implementation. 
@@ -45,12 +42,12 @@ public class RWTransaction extends AbstractTransaction {
   
   // Changes tracked for cache invalidation
   public boolean trackall;
-  public ObjectStates ostates = new ObjectStates();
+  public final ObjectStates ostates = new ObjectStates();
   
   // Unflushed change sets
-  protected Set chgcre = new CompactIdentityHashSet(5);
-  protected Set chgdel = new CompactIdentityHashSet(5);
-  protected Set chgdty = new CompactIdentityHashSet(5);
+  protected Set<PersistentIF> chgcre = new CompactIdentityHashSet<PersistentIF>(5);
+  protected Set<PersistentIF> chgdel = new CompactIdentityHashSet<PersistentIF>(5);
+  protected Set<PersistentIF> chgdty = new CompactIdentityHashSet<PersistentIF>(5);
   
   public RWTransaction(StorageAccessIF access) {
     super("TX" + access.getId(), access);
@@ -249,23 +246,18 @@ public class RWTransaction extends AbstractTransaction {
       
       // Create objects marked for creation
       if (!chgcre.isEmpty()) {
-        Object[] objects = chgcre.toArray();
-        // TODO: Catch exception and reset created list to list of
-        // objects that weren't actually stored. Do the same for dirty
-        // and deleted objects.
-        for (int i=0; i < objects.length; i++) {
-          PersistentIF object = (PersistentIF)objects[i];
+        for (PersistentIF object : chgcre) {
           //! System.out.println("FLUSH CREATE: " + object._p_getIdentity());
-          
+
           // Store object in repository
           access.createObject(oaccess, object);
-          
+
           // Mark object as stored in database
           object.setInDatabase(true);
-          
+
           // WARN: Make sure that all non-default fields are marked
           // dirty at this point!!!
-          
+
           //! // Mark object as being persisted
           //! object._p_setPersistent(true);        
           // Store dirty object fields in repository
@@ -275,10 +267,7 @@ public class RWTransaction extends AbstractTransaction {
       
       // Store modified object fields
       if (!chgdty.isEmpty()) {
-        Object[] objects = chgdty.toArray();      
-        for (int i=0; i < objects.length; i++) {
-          PersistentIF object = (PersistentIF)objects[i];
-          
+        for (PersistentIF object : chgdty) {
           // Store dirty object fields in repository
           if (!object.isDeleted())      
             access.storeDirty(oaccess, object);
@@ -287,13 +276,11 @@ public class RWTransaction extends AbstractTransaction {
       
       // Delete objects marked for deletion
       if (!chgdel.isEmpty()) {
-        Object[] objects = chgdel.toArray();      
-        for (int i=0; i < objects.length; i++) {
-          PersistentIF object = (PersistentIF)objects[i];
-          
+        for (PersistentIF object : chgdel) {
+
           // Delete object from repository
           access.deleteObject(oaccess, object);
-          
+
           // Mark object as no longer stored in database
           object.setInDatabase(false);
         }
@@ -371,9 +358,8 @@ public class RWTransaction extends AbstractTransaction {
             // register eviction process
             txncache.registerEviction();
             try {
-              ostates.forEachEntry(new TObjectIntProcedure() {
-                  public boolean execute(Object id, int s) {
-                    IdentityIF identity = (IdentityIF)id;
+              ostates.forEachEntry(new TObjectIntProcedure<IdentityIF>() {
+                  public boolean execute(IdentityIF identity, int s) {
                     if ((s & ObjectStates.STATE_CREATED) == ObjectStates.STATE_CREATED) {
                       // no-op
                     } else if ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED) {
@@ -427,9 +413,8 @@ public class RWTransaction extends AbstractTransaction {
             // register eviction process
             txncache.registerEviction();
             try {
-              ostates.forEachEntry(new TObjectIntProcedure() {
-                  public boolean execute(Object id, int s) {
-                    IdentityIF identity = (IdentityIF)id;
+              ostates.forEachEntry(new TObjectIntProcedure<IdentityIF>() {
+                  public boolean execute(IdentityIF identity, int s) {
                     if (((s & ObjectStates.STATE_CREATED) == ObjectStates.STATE_CREATED) ||
                         ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED)) {
                       // drop from identity map
