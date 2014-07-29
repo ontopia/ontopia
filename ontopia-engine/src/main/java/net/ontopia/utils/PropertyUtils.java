@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -148,5 +149,12 @@ public class PropertyUtils {
     properties.load(istream);
     return properties;
   }
-  
+
+  public static Map<String, String> toMap(Properties properties) {
+    Map<String, String> result = new HashMap<String, String>(properties.size());
+    for (String key : properties.stringPropertyNames()) {
+      result.put(key, properties.getProperty(key));
+    }
+    return result;
+  }
 }
