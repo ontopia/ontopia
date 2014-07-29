@@ -27,6 +27,7 @@ import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.ContentReader;
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.OnDemandValue;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -326,6 +327,10 @@ public class VariantName extends TMObject implements VariantNameIF {
     return ObjectStrings.toString("rdbms.VariantName", (VariantNameIF)this);
   }
 
+  @Override
+  public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    syncFieldsAfterMerge(source, target, LF_name, LF_reifier, LF_scope);
+  }
 }
 
 

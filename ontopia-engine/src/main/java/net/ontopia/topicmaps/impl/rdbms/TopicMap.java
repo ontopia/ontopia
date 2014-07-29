@@ -25,6 +25,7 @@ import java.util.Collection;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.QueryCollection;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -410,5 +411,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
   public String toString() {
     return ObjectStrings.toString("rdbms.TopicMap", (TopicMapIF)this);
   }
-  
+
+  @Override
+  public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    syncFieldsAfterMerge(source, target, LF_reifier);
+  }
 }

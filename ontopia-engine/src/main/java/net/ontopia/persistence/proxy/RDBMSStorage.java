@@ -696,6 +696,24 @@ public class RDBMSStorage implements StorageIF {
     }
   }
 
+  /**
+   * INTERNAL: Propagates committed merges to other active transactions.
+   * @param source Identity of the merge source object
+   * @param target Identity of the merge target object
+   * @param cause The transaction that committed the merge
+   * @since %NEXT%
+   */
+  public void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
+    // block other transactons until we have processed the merge
+    synchronized (transactions) {
+      for (AbstractTransaction transaction : transactions) {
+        if (!transaction.equals(cause)) {
+          transaction.objectMerged(source, target);
+        }
+      }
+    }
+  }
+
   public int getActiveTransactionCount() {
     return transactions.size();
   }

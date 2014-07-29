@@ -69,7 +69,49 @@ public abstract class AbstractRWPersistent implements PersistentIF {
       throw new OntopiaRuntimeException("Cannot change the transaction of a persistent object.");
     this.txn = txn;
   }
-  
+
+  public abstract void syncAfterMerge(IdentityIF source, IdentityIF target);
+
+  protected void syncFieldsAfterMerge(IdentityIF source, IdentityIF target, int... fields) {
+    for (int i = 0; i < fields.length; i++) {
+      int field = fields[i];
+      // only process loaded fields
+      if (isLoaded(field)) {
+        Object o = getValue(field);
+        if (o instanceof AbstractRWPersistent) {
+          // only process objects of same type
+          if (((Class<?>)source.getType()).isAssignableFrom(o.getClass())) {
+            ((AbstractRWPersistent) o).syncAfterMerge(source, target);
+          }
+        }
+        if (o instanceof TrackableSet) {
+          TrackableSet ts = (TrackableSet) o;
+          if (ts.getAdded() != null) {
+            for (Object sub : ts.getAdded()) {
+              if (sub instanceof AbstractRWPersistent) {
+                if (((Class<?>)source.getType()).isAssignableFrom(sub.getClass())) {
+                  ((AbstractRWPersistent) sub).syncAfterMerge(source, target);
+                }
+              }
+            }
+          }
+          if (ts.getRemoved() != null) {
+            for (Object sub : ts.getRemoved()) {
+              if (sub instanceof AbstractRWPersistent) {
+                if (((Class<?>)source.getType()).isAssignableFrom(sub.getClass())) {
+                  ((AbstractRWPersistent) sub).syncAfterMerge(source, target);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    if (_p_getIdentity().equals(source)) {
+      _p_setIdentity(target);
+    }
+  }
+
   // -----------------------------------------------------------------------------
   // PersistentIF machinery
   // -----------------------------------------------------------------------------

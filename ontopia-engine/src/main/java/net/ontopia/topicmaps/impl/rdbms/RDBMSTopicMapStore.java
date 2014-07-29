@@ -33,6 +33,7 @@ import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.RDBMSAccess;
 import net.ontopia.persistence.proxy.RDBMSStorage;
+import net.ontopia.persistence.proxy.RWTransaction;
 import net.ontopia.persistence.proxy.StorageCacheIF;
 import net.ontopia.persistence.proxy.StorageIF;
 import net.ontopia.persistence.proxy.TransactionIF;
@@ -616,6 +617,18 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   public String getQueryString(String name) {
     return getStorage().getQueryString(name);
+  }
+
+  /**
+   * INTERNAL: Called by MergeUtils to notify transaction of a performed merge.
+   * @param source
+   * @param target
+   */
+  public void merged(TMObjectIF source, TMObjectIF target) {
+    TransactionIF tnx = getTransactionIF();
+    if (tnx instanceof RWTransaction) {
+      ((RWTransaction)tnx).registerMerge((TMObject) source, (TMObject) target);
+    }
   }
 
   // ---------------------------------------------------------------------------

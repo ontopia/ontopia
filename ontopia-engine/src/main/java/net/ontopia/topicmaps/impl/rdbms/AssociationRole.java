@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -232,5 +233,10 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   public String toString() {
     return ObjectStrings.toString("rdbms.AssociationRole", (AssociationRoleIF)this);
+  }
+
+  @Override
+  public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    syncFieldsAfterMerge(source, target, LF_type, LF_player, LF_association, LF_reifier);
   }
 }
