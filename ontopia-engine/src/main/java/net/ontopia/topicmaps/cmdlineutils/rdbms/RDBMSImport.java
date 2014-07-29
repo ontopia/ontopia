@@ -91,7 +91,7 @@ public class RDBMSImport {
     // override shared cache property
     props.put("net.ontopia.topicmaps.impl.rdbms.Cache.shared", "false");
     
-    RDBMSTopicMapStore store = new RDBMSTopicMapStore(props, ohandler.topicMapId);      
+    RDBMSTopicMapStore store = new RDBMSTopicMapStore(PropertyUtils.toMap(props), ohandler.topicMapId);
     TopicMapIF tm = store.getTopicMap();
 
     // set topic map title
