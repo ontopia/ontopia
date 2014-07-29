@@ -36,6 +36,9 @@ public class PersistentTest extends TestCase {
     }
     public void detach() {
     }
+
+    public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    }
   }
   
   public void testDirtyFlags() {

@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.impl.rdbms;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -279,5 +280,10 @@ public class Association extends TMObject implements AssociationIF {
   
   public String toString() {
     return ObjectStrings.toString("rdbms.Association", (AssociationIF) this);
+  }
+
+  @Override
+  public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    super.syncFieldsAfterMerge(source, target, LF_type, LF_reifier, LF_scope);
   }
 }

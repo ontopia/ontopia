@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Iterator;
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
@@ -305,4 +306,8 @@ public class TopicName extends TMObject implements TopicNameIF {
     return ObjectStrings.toString("rdbms.TopicName", (TopicNameIF) this);
   }
 
+  @Override
+  public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    syncFieldsAfterMerge(source, target, LF_topic, LF_type, LF_reifier, LF_scope);
+  }
 }

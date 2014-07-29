@@ -43,6 +43,7 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
@@ -50,6 +51,7 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.impl.utils.ReificationUtils;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 
 /**
  * PUBLIC: Utilities for merging topics and topic maps. This class
@@ -204,6 +206,9 @@ public class MergeUtils {
 
     // removing source
     source.remove();
+
+    // notify transactions of performed merge
+    notifyTransaction(source, target);
   }
 
   private static <R extends ReifiableIF> Map<String, R> buildKeyMap(Collection<R> objects) {
@@ -1258,6 +1263,13 @@ public class MergeUtils {
         source.setReifier(null);
         ReificationUtils.reify(target, sreifier);
       }
+    }
+  }
+
+  private static void notifyTransaction(TMObjectIF source, TMObjectIF target) {
+    TopicMapStoreIF store = target.getTopicMap().getStore();
+    if (store instanceof RDBMSTopicMapStore) {
+      ((RDBMSTopicMapStore) store).merged(source, target);
     }
   }
 }

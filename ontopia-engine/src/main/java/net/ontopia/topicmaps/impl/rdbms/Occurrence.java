@@ -27,6 +27,7 @@ import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.ContentReader;
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.OnDemandValue;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -322,5 +323,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   public String toString() {
     return ObjectStrings.toString("rdbms.Occurrence", (OccurrenceIF)this);
   }
-  
+
+  @Override
+  public void syncAfterMerge(IdentityIF source, IdentityIF target) {
+    super.syncFieldsAfterMerge(source, target, LF_topic, LF_type, LF_reifier, LF_scope);
+  }
 }

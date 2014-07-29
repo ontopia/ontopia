@@ -22,7 +22,10 @@ package net.ontopia.persistence.proxy;
 
 import gnu.trove.procedure.TObjectIntProcedure;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
+import net.ontopia.topicmaps.impl.rdbms.TMObject;
 import net.ontopia.utils.CompactIdentityHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
@@ -48,6 +51,7 @@ public class RWTransaction extends AbstractTransaction {
   protected Set<PersistentIF> chgcre = new CompactIdentityHashSet<PersistentIF>(5);
   protected Set<PersistentIF> chgdel = new CompactIdentityHashSet<PersistentIF>(5);
   protected Set<PersistentIF> chgdty = new CompactIdentityHashSet<PersistentIF>(5);
+  protected Map<IdentityIF, IdentityIF> merges = new LinkedHashMap<IdentityIF, IdentityIF>();
   
   public RWTransaction(StorageAccessIF access) {
     super("TX" + access.getId(), access);
@@ -336,6 +340,38 @@ public class RWTransaction extends AbstractTransaction {
     return ostates.isClean(identity);
   }
 
+  /**
+   * INTERNAL: Called by RDBMSTopicMapStore to notify the transaction
+   * of a performed merge.
+   * @param source
+   * @param target
+   */
+  public void registerMerge(TMObject source, TMObject target) {
+    merges.put(source._p_getIdentity(), target._p_getIdentity());
+  }
+
+  /**
+   * {@inheritDoc}
+   * RWTransaction notifies the added and modified objects of the merge,
+   * allowing them to update their fields as needed.
+   */
+  @Override
+  public void objectMerged(IdentityIF source, IdentityIF target) {
+    // let the added and modified objects update their fields as needed
+    // todo: removed items shouldn't cause problems ??
+    for (Object o : chgcre) {
+      if (o instanceof AbstractRWPersistent) {
+        ((AbstractRWPersistent) o).syncAfterMerge(source, target);
+      }
+    }
+
+    for (Object o : chgdty) {
+      if (o instanceof AbstractRWPersistent) {
+        ((AbstractRWPersistent) o).syncAfterMerge(source, target);
+      }
+    }
+  }
+
   // -----------------------------------------------------------------------------
   // Transaction boundary callbacks
   // -----------------------------------------------------------------------------
@@ -348,6 +384,13 @@ public class RWTransaction extends AbstractTransaction {
     chgcre.clear();
     chgdty.clear();
     chgdel.clear();
+
+    // sync merges to other transactions
+    for (Map.Entry<IdentityIF, IdentityIF> entry : merges.entrySet()) {
+      ((RDBMSStorage)access.getStorage()).objectMerged(entry.getKey(), entry.getValue(), this);
+    }
+
+    merges.clear();
     
     // invalidate object state
     if (trackall) {
@@ -395,6 +438,7 @@ public class RWTransaction extends AbstractTransaction {
     chgcre.clear();
     chgdty.clear();
     chgdel.clear();
+    merges.clear();
     
     // WARNING: after an abort we really want to get rid of all
     // existing objects, because we no longer know the states of the

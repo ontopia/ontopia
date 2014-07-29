@@ -229,6 +229,17 @@ public abstract class AbstractTransaction implements TransactionIF {
     }
     return value;
   }
+
+  /**
+   * INTERNAL: Called by other transactions to notify this transaction of
+   * committed merges. Default implementation is empty.
+   * @param source The identity of the object merged into target
+   * @param target The identity of the target object that was merged
+   * @since %NEXT%
+   */
+  public void objectMerged(IdentityIF source, IdentityIF target) {
+    // does noting by default, see RWTransaction
+  }
   
   // -----------------------------------------------------------------------------
   // Object lookup
