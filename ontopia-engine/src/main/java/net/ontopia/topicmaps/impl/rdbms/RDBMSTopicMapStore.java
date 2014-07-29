@@ -58,7 +58,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   long topicmap_id;
   protected RDBMSStorage storage;
   protected String propfile;
-  protected Map properties;
+  protected Map<String, String> properties;
   protected RDBMSTopicMapTransaction transaction;
 
   protected boolean storage_local = false;
@@ -115,7 +115,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    *
    * @since 1.2.4
    */
-  public RDBMSTopicMapStore(Map properties) throws IOException {
+  public RDBMSTopicMapStore(Map<String, String> properties) throws IOException {
     this(properties, -1);
   }
   
@@ -126,7 +126,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    *
    * @since 1.2.4
    */
-  public RDBMSTopicMapStore(Map properties, long topicmap_id) throws IOException {
+  public RDBMSTopicMapStore(Map<String, String> properties, long topicmap_id) throws IOException {
     this.properties = properties;
     this.storage = new RDBMSStorage(properties);
     this.storage_local = true;
