@@ -55,6 +55,16 @@
 			<artifactId>ontopia-tmrap</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-rdf</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-jdbcspy7</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		
 		<!-- Webapps -->
 		<dependency>
