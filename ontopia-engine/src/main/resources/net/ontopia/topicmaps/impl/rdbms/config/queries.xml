@@ -813,6 +813,9 @@
     <statement platform="sqlserver"
      query="select * from (select 'B' as class, 'B' + cast(id as varchar(20)) as id, content as content, 1.0 as score from TM_TOPIC_NAME where topicmap_id = ? and lower(content) like lower(?) union all select 'O', 'O' + cast(id as varchar(20)), content, 0.75 from TM_OCCURRENCE where topicmap_id = ? and lower(content) like lower(?) union all select 'N', 'N' + cast(id as varchar(20)), content, 0.75 from TM_VARIANT_NAME where topicmap_id = ? and lower(content) like lower(?)) as X order by score desc"/>
 
+    <statement platform="oracle"
+     query="select 'B' as class, 'B' || id as id, to_char(content) as content, 1.0 as score from TM_TOPIC_NAME where topicmap_id = ? and lower(content) like lower(?) union all select 'O', 'O' || id, to_char(content), 0.75 from TM_OCCURRENCE where topicmap_id = ? and lower(content) like lower(?) union all select 'N', 'N' || id, to_char(content), 0.75 from TM_VARIANT_NAME where topicmap_id = ? and lower(content) like lower(?)"/>
+
   </query>
 
   <query name="RDBMSSearcher.searchLike:oracle_text" type="matrix">
