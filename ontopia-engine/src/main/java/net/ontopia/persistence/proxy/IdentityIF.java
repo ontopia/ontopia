@@ -38,7 +38,7 @@ public interface IdentityIF extends Cloneable {
    * indicates the classification of the identified object. See also
    * {@link PersistentIF#_p_getType()}.
    */
-  public Object getType();
+  public Class<?> getType();
 
   /**
    * INTERNAL: Returns the number of primary key components that the

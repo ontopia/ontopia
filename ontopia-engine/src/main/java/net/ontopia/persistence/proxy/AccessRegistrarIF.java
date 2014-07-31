@@ -38,19 +38,19 @@ public interface AccessRegistrarIF {
    * INTERNAL: Factory method for creating new identity objects. Key
    * is guaranteed to have a width of 1 and key value which a Long.
    */
-  public IdentityIF createIdentity(Object type, long key);
+  public IdentityIF createIdentity(Class<?> type, long key);
 
   /**
    * INTERNAL: Factory method for creating new identity objects. Key
    * is guaranteed to have a width of 1.
    */
-  public IdentityIF createIdentity(Object type, Object key);
+  public IdentityIF createIdentity(Class<?> type, Object key);
   
   /**
    * INTERNAL: Factory method for creating new identity objects. Key
    * can have any width.
    */
-  public IdentityIF createIdentity(Object type, Object[] keys);
+  public IdentityIF createIdentity(Class<?> type, Object[] keys);
 
   /**
    * INTERNAL: Get ticket that should be used as first argument to

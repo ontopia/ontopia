@@ -339,7 +339,7 @@ public class RDBMSStorage implements StorageIF {
     return queries;
   }
   
-  public IdentityIF generateIdentity(Object type) {
+  public IdentityIF generateIdentity(Class<?> type) {
     return keygen.generateKey(type);
   }
   

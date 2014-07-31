@@ -22,11 +22,11 @@ package net.ontopia.persistence.proxy;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -44,9 +44,9 @@ public class FieldUtils {
    * fields are stored.
    */
   public static String[] getTables(FieldInfoIF[] fields) {
-    Set _tables = new HashSet();
-    for (int i=0; i < fields.length; i++) {
-      _tables.add(fields[i].getTable());
+    Set<String> _tables = new HashSet<String>();
+    for (FieldInfoIF field : fields) {
+      _tables.add(field.getTable());
     }
     String[] tables = new String[_tables.size()];
     _tables.toArray(tables);
@@ -58,7 +58,7 @@ public class FieldUtils {
    * span.
    */
   public static String[] getColumns(FieldInfoIF[] fields) {
-    List columns = new ArrayList();
+    List<String> columns = new ArrayList<String>();
     addColumns(fields, columns);
     
     String[] _columns = new String[columns.size()];
@@ -66,19 +66,13 @@ public class FieldUtils {
     return _columns;
   }
   
-  public static void addColumns(FieldInfoIF field, Collection columns) {
-    String[] names = field.getValueColumns();
-    for (int n=0; n < names.length; n++) {
-      columns.add(names[n]);
-    }
+  public static void addColumns(FieldInfoIF field, Collection<String> columns) {
+    columns.addAll(Arrays.asList(field.getValueColumns()));
   }
   
-  public static void addColumns(FieldInfoIF[] fields, Collection columns) {
-    for (int i=0; i < fields.length; i++) {
-      String[] names = fields[i].getValueColumns();
-      for (int n=0; n < names.length; n++) {
-        columns.add(names[n]);
-      }
+  public static void addColumns(FieldInfoIF[] fields, Collection<String> columns) {
+    for (FieldInfoIF field : fields) {
+      columns.addAll(Arrays.asList(field.getValueColumns()));
     }
   }
   
@@ -87,8 +81,8 @@ public class FieldUtils {
    */
   public static int getColumnCount(FieldInfoIF[] fields) {
     int columns = 0;
-    for (int i=0; i < fields.length; i++) {
-      columns += fields[i].getColumnCount();
+    for (FieldInfoIF field : fields) {
+      columns += field.getColumnCount();
     }
     return columns;
   }
@@ -123,9 +117,8 @@ public class FieldUtils {
    * INTERNAL: Filters the field descriptors by cardinality.
    */
   public static FieldDescriptor[] filterByCardinality(FieldDescriptor[] fdescs, int cardinality) {
-    Collection result = new ArrayList();
-    for (int i=0; i < fdescs.length; i++) {
-      FieldDescriptor fdesc = fdescs[i];
+    Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+    for (FieldDescriptor fdesc : fdescs) {
       if (fdesc.getCardinality() == cardinality)
         result.add(fdesc);
     }
@@ -136,9 +129,8 @@ public class FieldUtils {
    * INTERNAL: Filters the field infos by cardinality.
    */
   public static FieldInfoIF[] filterByCardinality(FieldInfoIF[] finfos, int cardinality) {
-    Collection result = new ArrayList();
-    for (int i=0; i < finfos.length; i++) {
-      FieldInfoIF finfo = finfos[i];
+    Collection<FieldInfoIF> result = new ArrayList<FieldInfoIF>();
+    for (FieldInfoIF finfo : finfos) {
       if (finfo.getCardinality() == cardinality)
         result.add(finfo);
     }
@@ -149,9 +141,8 @@ public class FieldUtils {
    * INTERNAL: Filters out all but the aggregate field infos.
    */
   public static FieldInfoIF[] filterAggregate(FieldInfoIF[] finfos) {
-    Collection result = new ArrayList();
-    for (int i=0; i < finfos.length; i++) {
-      FieldInfoIF finfo = finfos[i];
+    Collection<FieldInfoIF> result = new ArrayList<FieldInfoIF>();
+    for (FieldInfoIF finfo : finfos) {
       if (finfo.isAggregateField())
         result.add(finfo);
     }
@@ -163,9 +154,8 @@ public class FieldUtils {
    * specified table.
    */
   public static FieldDescriptor[] filterByTable(FieldDescriptor[] fdescs, String table) {
-    Collection result = new ArrayList();
-    for (int i=0; i < fdescs.length; i++) {
-      FieldDescriptor fdesc = fdescs[i];
+    Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+    for (FieldDescriptor fdesc : fdescs) {
       if (table.equals(fdesc.getTable()))
         result.add(fdesc);
     }
@@ -177,7 +167,7 @@ public class FieldUtils {
    * descriptor. This method uses reflection to locate the method.
    */
   public static Method getGetterMethod(FieldDescriptor fdesc) throws Exception {
-    Class object_class = fdesc.getClassDescriptor().getDescriptorClass();
+    Class<?> object_class = fdesc.getClassDescriptor().getDescriptorClass();
 
     // Getter
     String getter_name = fdesc.getGetter();
@@ -196,13 +186,13 @@ public class FieldUtils {
       // Try declared interfaces
       // log.debug("Trying declared interfaces...");
       if (fdesc.getClassDescriptor() != null) {
-        Class[] interfaces = fdesc.getClassDescriptor().getInterfaces();
+        Class<?>[] interfaces = fdesc.getClassDescriptor().getInterfaces();
         if (interfaces != null) {
-          for (int i=0; i < interfaces.length; i++) {
+          for (Class<?> intf : interfaces) {
             try {
               //! if (log.isDebugEnabled())
               //!   log.debug("Trying declared interface: " + interfaces[i]);
-              return interfaces[i].getMethod(getter_name, new Class[0]);
+              return intf.getMethod(getter_name, new Class<?>[0]);
             } catch (NoSuchMethodException e2) {
               // Ignore
             }
@@ -210,7 +200,7 @@ public class FieldUtils {
         }
       }
       
-      return object_class.getMethod(getter_name, new Class[0]);
+      return object_class.getMethod(getter_name, new Class<?>[0]);
     } catch (NoSuchMethodException e) {
       throw new OntopiaRuntimeException("Cannot find getter method for field " + fdesc.getName());
     }
@@ -221,8 +211,8 @@ public class FieldUtils {
    * descriptor. This method uses reflection to locate the method.
    */
   public static Method getSetterMethod(FieldDescriptor fdesc) throws Exception {
-    Class object_class = fdesc.getClassDescriptor().getDescriptorClass();
-    Class value_class;
+    Class<?> object_class = fdesc.getClassDescriptor().getDescriptorClass();
+    Class<?> value_class;
     if (fdesc.isOneToOne()) {
       value_class = fdesc.getValueClass();
     } else {
@@ -239,13 +229,13 @@ public class FieldUtils {
     if (fdesc.isPrimitiveField()) {
       try {
         // First try the primitive wrapper class
-        return object_class.getMethod(setter_name, new Class[] {value_class});
+        return object_class.getMethod(setter_name, new Class<?>[] {value_class});
       } catch (NoSuchMethodException e) {
         // Ignore
       } 
       try {
         // Then try the actual primitive class
-        return object_class.getMethod(setter_name, new Class[] {getPrimitiveClass(value_class)});
+        return object_class.getMethod(setter_name, new Class<?>[] {getPrimitiveClass(value_class)});
       } catch (NoSuchMethodException e) {
         // Ignore
       } 
@@ -257,11 +247,11 @@ public class FieldUtils {
         if (fdesc.getValueClassDescriptor() != null) {
           Class[] interfaces = fdesc.getValueClassDescriptor().getInterfaces();
           if (interfaces != null) {
-            for (int i=0; i < interfaces.length; i++) {
+            for (Class<?> intf : interfaces) {
               try {
                 //! if (log.isDebugEnabled())
                 //!   log.debug("Trying declared interface: " + interfaces[i]);
-                return object_class.getMethod(setter_name, new Class[] {interfaces[i]});
+                return object_class.getMethod(setter_name, new Class<?>[]{intf});
               } catch (NoSuchMethodException e2) {
                 // Ignore
               }
@@ -269,16 +259,16 @@ public class FieldUtils {
           }
         }
         
-        return object_class.getMethod(setter_name, new Class[] {value_class});
+        return object_class.getMethod(setter_name, new Class<?>[] {value_class});
       } catch (NoSuchMethodException e) {
         // Try interfaces
         // log.debug("Trying interfaces...");
         Class[] interfaces = getImplementedInterfaces(value_class);
-        for (int i=0; i < interfaces.length; i++) {
+        for (Class<?> intf : interfaces) {
           try {
             //! if (log.isDebugEnabled())
             //!   log.debug("Trying interface: " + interfaces[i]);
-            return object_class.getMethod(setter_name, new Class[] {interfaces[i]});
+            return object_class.getMethod(setter_name, new Class<?>[]{intf});
           } catch (NoSuchMethodException e2) {
             // Ignore
           } 
@@ -292,7 +282,7 @@ public class FieldUtils {
    * INTERNAL: Returns the primitive class for the specified primitive
    * wrapper class.
    */
-  public static Class getPrimitiveClass(Class klass) {
+  public static Class<?> getPrimitiveClass(Class<?> klass) {
     // Note: Only primitive wrapper classes are expected as argument.
     if (klass.equals(String.class))
       return klass;
@@ -310,11 +300,11 @@ public class FieldUtils {
    * INTERNAL: Returns all interfaces implemented by this class and
    * its superclasses.
    */
-  public static Class[] getImplementedInterfaces(Class klass) {
-    Set result = new HashSet();
+  public static Class[] getImplementedInterfaces(Class<?> klass) {
+    Set<Class<?>> result = new HashSet<Class<?>>();
     accumulateImplementedInterfaces(klass, result);
     
-    Class[] interfaces = new Class[result.size()];
+    Class<?>[] interfaces = new Class<?>[result.size()];
     result.toArray(interfaces);
     return interfaces;
     
@@ -325,16 +315,15 @@ public class FieldUtils {
    * and its superclasses. All recognized interfaces are added to the
    * result argument collection.
    */
-  protected static void accumulateImplementedInterfaces(Class klass, Set result) {
+  protected static void accumulateImplementedInterfaces(Class<?> klass, Set<Class<?>> result) {
     // Interfaces
     Class[] _interfaces = klass.getInterfaces();
-    for (int i=0; i < _interfaces.length; i++) {
-      Class _interface = _interfaces[i];
+    for (Class<?> _interface : _interfaces) {
       accumulateImplementedInterfaces(_interface, result);
       result.add(_interface);
     }
     // Superclasses
-    Class _superclass = klass.getSuperclass();
+    Class<?> _superclass = klass.getSuperclass();
     if (_superclass != null)
       accumulateImplementedInterfaces(_superclass, result);
   }
@@ -365,7 +354,7 @@ public class FieldUtils {
    * INTERNAL: Utility method that converts a collection of strings to
    * an array of strings.
    */
-  public static String[] toStringArray(Collection strings) {
+  public static String[] toStringArray(Collection<String> strings) {
     String[] _strings = new String[strings.size()];
     strings.toArray(_strings);
     return _strings;
@@ -375,7 +364,7 @@ public class FieldUtils {
    * INTERNAL: Utility method that converts a collection of field
    * descriptors to an array of field descriptors.
    */
-  public static FieldDescriptor[] toFieldDescriptorArray(Collection fdescs) {
+  public static FieldDescriptor[] toFieldDescriptorArray(Collection<FieldDescriptor> fdescs) {
     FieldDescriptor[] _fdescs = new FieldDescriptor[fdescs.size()];
     fdescs.toArray(_fdescs);
     return _fdescs;
@@ -385,7 +374,7 @@ public class FieldUtils {
    * INTERNAL: Utility method that converts a collection of field
    * infos to an array of field infos.
    */
-  public static FieldInfoIF[] toFieldInfoArray(Collection finfos) {
+  public static FieldInfoIF[] toFieldInfoArray(Collection<FieldInfoIF> finfos) {
     FieldInfoIF[] _finfos = new FieldInfoIF[finfos.size()];
     finfos.toArray(_finfos);
     return _finfos;

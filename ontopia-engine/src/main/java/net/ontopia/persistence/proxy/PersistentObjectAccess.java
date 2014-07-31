@@ -45,7 +45,7 @@ public class PersistentObjectAccess implements ObjectAccessIF {
       return ((PersistentIF)object)._p_getIdentity();
   }
 
-  public Object getType(Object object) {
+  public Class<?> getType(Object object) {
     return ((PersistentIF)object)._p_getType();
   }
 

@@ -21,7 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +117,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   // ISSUE: prefetch locally if no parent cache?
 
-  public int prefetch(StorageAccessIF access, Object type, int field, int nextField, boolean traverse, Collection identities) {
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities) {
     // WARNING: dirty objects should never be handed over to shared cache
     if (pcache != null) return pcache.prefetch(access, type, field, nextField, traverse, identities);
     return 0;
@@ -128,15 +127,15 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
   // AccessRegistrarIF implementation
   // -----------------------------------------------------------------------------
 
-  public IdentityIF createIdentity(Object type, long key) {
+  public IdentityIF createIdentity(Class<?> type, long key) {
     return new LongIdentity(type, key);
   }
 
-  public IdentityIF createIdentity(Object type, Object key) {
+  public IdentityIF createIdentity(Class<?> type, Object key) {
     return new AtomicIdentity(type, key);
   }
   
-  public IdentityIF createIdentity(Object type, Object[] keys) {
+  public IdentityIF createIdentity(Class<?> type, Object[] keys) {
     return new Identity(type, keys);
   }
 

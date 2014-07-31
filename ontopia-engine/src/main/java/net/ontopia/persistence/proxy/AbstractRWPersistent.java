@@ -23,7 +23,6 @@ package net.ontopia.persistence.proxy;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -52,7 +51,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     return id;
   }
 
-  public Object _p_getType() {
+  public Class<?> _p_getType() {
     return getClass();
   }
   

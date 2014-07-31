@@ -47,7 +47,7 @@ public interface ObjectAccessIF {
    * that this method returns the same value as
    * getIdentity(object).getType().
    */
-  public Object getType(Object object);
+  public Class<?> getType(Object object);
   
   /**
    * INTERNAL: Returns the object field value.

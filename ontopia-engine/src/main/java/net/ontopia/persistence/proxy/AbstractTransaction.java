@@ -20,19 +20,17 @@
 
 package net.ontopia.persistence.proxy;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-
+import java.util.Map;
+import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.SoftValueHashMapIndex;
-
+import net.ontopia.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -402,7 +400,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   // Prefetching
   // -----------------------------------------------------------------------------
   
-  public void prefetch(Object type, int field, boolean traverse, Collection identities) {    
+  public void prefetch(Class<?> type, int field, boolean traverse, Collection identities) {
     // bug #1439: do not prefetch if identity is altered by local transaction
     identities = extractNonDirty(identities);
     
@@ -412,7 +410,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     this.txncache.prefetch(access, type, field, -1, traverse, identities);
   }
   
-  public void prefetch(Object type, int[] fields, boolean[] traverse, Collection identities) {
+  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection identities) {
     // bug #1439: do not prefetch if identity is altered by local transaction
     identities = extractNonDirty(identities);
     

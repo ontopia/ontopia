@@ -24,7 +24,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -36,7 +35,7 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
 
   static final long serialVersionUID = 5662829503505256457L;
 
-  private Object type;
+  private Class<?> type;
   private Object key;
   private int hashcode;
 
@@ -51,14 +50,14 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
    * INTERNAL: Creates an identity instance of the given type with the
    * given key.
    */
-  public AtomicIdentity(Object type, Object key) {
+  public AtomicIdentity(Class<?> type, Object key) {
     this.type = type;
     //! if (key == null) throw new NullPointerException("AtomicIdentity key cannot be null.");
     this.key = key;
     this.hashcode = computeHashCode();
   }
 
-  public Object getType() {
+  public Class<?> getType() {
     return type;
   }
 
@@ -122,7 +121,7 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
   }
 
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-    type = in.readObject();
+    type = (Class<?>)in.readObject();
     key = in.readObject();
     this.hashcode = computeHashCode();
   }
