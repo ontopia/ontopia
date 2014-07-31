@@ -23,17 +23,14 @@ package net.ontopia.topicmaps.nav2.taglibs.tolog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
-
-import org.apache.commons.collections.BeanMap;
+import net.ontopia.utils.BeanUtils;
 
 /**
  * INTERNAL: Used to make the topic map repository and its references
@@ -69,7 +66,7 @@ public class Context {
     private Map getParams() {
       if (params == null) {
         // populate reference parameters
-        params = new HashMap(new BeanMap(ref.getSource()));
+        params = BeanUtils.beanMap(ref.getSource(), false);
         params.remove("references");
         params.put("sourceId", params.get("id"));
         params.put("sourceTitle", params.get("title"));

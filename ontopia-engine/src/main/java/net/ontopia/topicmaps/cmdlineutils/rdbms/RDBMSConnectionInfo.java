@@ -24,15 +24,13 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 import net.ontopia.persistence.proxy.ConnectionFactoryIF;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.utils.BeanUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.PropertyUtils;
-import org.apache.commons.collections.BeanMap;
 
 /**
  * EXPERIMENTAL: A tool that generates a report of the database
@@ -73,14 +71,10 @@ public class RDBMSConnectionInfo {
     Connection conn = cf.requestConnection();
     try {
       DatabaseMetaData dbm = conn.getMetaData();
-      Map map = new TreeMap(String.CASE_INSENSITIVE_ORDER);
-      map.putAll(new BeanMap(dbm));
 
       System.out.println("--- properties ------------------------------------------");
-      Iterator iter = map.keySet().iterator();
-      while (iter.hasNext()) {
-        Object k = iter.next();
-        System.out.println(k + ": " + map.get(k));
+      for (Map.Entry<String, String> entry : BeanUtils.beanMap(dbm, true).entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue());
       }
 
       System.out.println("--- tables and views ------------------------------------");
