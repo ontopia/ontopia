@@ -20,31 +20,16 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.io.StringWriter;
-import java.io.Reader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
-import java.net.URL;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+import java.util.concurrent.ConcurrentLinkedQueue;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
-
-import org.jgroups.Address;
-import org.jgroups.Channel;
-import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
-import org.jgroups.MessageListener;
-import org.jgroups.blocks.PullPushAdapter;
-
-import EDU.oswego.cs.dl.util.concurrent.LinkedQueue;
+import org.jgroups.ReceiverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: Class that represents a cluster of OKS instances.
  */
 
-public class JGroupsCluster implements ClusterIF, MessageListener {
+public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
 
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
@@ -60,13 +45,12 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   final static Integer DATA = new Integer(1); 
   
   protected JChannel dchannel;
-  protected PullPushAdapter ppadapter;
   
   protected String clusterId;
   protected String clusterProps;
   
   protected StorageIF storage;
-  protected LinkedQueue queue;
+  protected ConcurrentLinkedQueue<JGroupsEvent> queue;
 
   // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
   
@@ -74,7 +58,7 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
     this.clusterId = clusterId;
     this.clusterProps = clusterProps;
     this.storage = storage;
-    this.queue = new LinkedQueue();
+    this.queue = new ConcurrentLinkedQueue<JGroupsEvent>();
   }
   
   public synchronized void join() {   
@@ -101,15 +85,11 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
           clusterId + "'", e);
       }
       
-      this.dchannel.setOpt(Channel.LOCAL, Boolean.FALSE);
-      this.dchannel.setOpt(Channel.AUTO_GETSTATE, Boolean.TRUE);
+      dchannel.setReceiver(this);
 
       this.dchannel.connect(clusterId);
       
-      this.ppadapter = new PullPushAdapter(this.dchannel);
-      this.ppadapter.registerListener(DATA, this);
-      
-    } catch (ChannelException e) {
+    } catch (Exception e) {
       throw new OntopiaRuntimeException("Could not connect to cluster '" + clusterId + "'.", e);
     }
   }
@@ -117,10 +97,6 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   public synchronized void leave() {
     log.info("Leaving cluster: '" + clusterId + "'");
     flush();
-    if (ppadapter != null) {
-      ppadapter.stop();
-      ppadapter = null;
-    }
     if (dchannel != null) {
       dchannel.close();
       dchannel = null;
@@ -179,11 +155,7 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   }
 
   private void queue(JGroupsEvent e) {
-    try {
-      queue.put(e);
-    } catch (InterruptedException x) {
-      throw new OntopiaRuntimeException(x);
-    }
+    queue.add(e);
   }
   
   // -----------------------------------------------------------------------------
@@ -192,34 +164,26 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
 
   public synchronized void flush() {
     // retrieve all pending events from event queue
-    try {
-      Object o = queue.poll(0);
-      if (o != null) {
-        ArrayList data = new ArrayList();
-        do {
-          data.add(o);
-          o = queue.poll(0);
-        } while (o != null);
-        // send event list to cluster
-        log.debug("Sending " + data.size() + " events.");
-        sendEvent(data);
-      }    
-    } catch (InterruptedException x) {
-      throw new OntopiaRuntimeException(x);
-    }
+    JGroupsEvent o = queue.poll();
+    if (o != null) {
+      ArrayList<JGroupsEvent> data = new ArrayList<JGroupsEvent>();
+      do {
+        data.add(o);
+        o = queue.poll();
+      } while (o != null);
+      // send event list to cluster
+      log.debug("Sending " + data.size() + " events.");
+      sendEvent(data);
+    }    
   }
     
   private void sendEvent(java.io.Serializable e) {
     log.debug("Sending: " + e);
     try {
       Message msg = new Message(null, null, e);
-      ppadapter.send(DATA, msg);
-    } catch (java.lang.Exception ex0) {
-      ex0.printStackTrace();
-    //! } catch (org.jgroups.ChannelClosedException ex1) {
-    //!   ex1.printStackTrace();
-    //! } catch (org.jgroups.ChannelNotConnectedException ex2) {
-    //!   ex2.printStackTrace();
+      dchannel.send(msg);
+    } catch (Exception ex) {
+      log.error(ex.getMessage(), ex);
     }
   }
 
@@ -275,9 +239,10 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   }
 
   // -----------------------------------------------------------------------------
-  // JGroups MessageListener implementation
+  // JGroups ReceiverAdapter implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public void receive(Message msg) {
     try {
       List data = (List)msg.getObject();
@@ -287,15 +252,7 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
         processEvent(e);
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e.getMessage(), e);
     }
   }
-
-  public byte[] getState() {
-    return null;
-  }
-
-  public void setState(byte[] jgstate) {
-  }
-  
 }
