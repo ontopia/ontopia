@@ -23,22 +23,18 @@ package net.ontopia.persistence.proxy;
 import java.net.URL;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
-import org.jgroups.Channel;
-import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
-import org.jgroups.MessageListener;
-import org.jgroups.blocks.PullPushAdapter;
+import org.jgroups.ReceiverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
-public abstract class AbstractClusterTest implements MessageListener {
+public abstract class AbstractClusterTest extends ReceiverAdapter {
 
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(AbstractClusterTest.class.getName());
   
   transient protected JChannel channel;
-  transient protected PullPushAdapter adapter;
 
   transient protected String clusterId;
   transient protected String clusterProps;
@@ -86,22 +82,15 @@ public abstract class AbstractClusterTest implements MessageListener {
         throw new OntopiaRuntimeException("Problems occurred while loading JGroups properties from " + clusterProps, e);
       }
       
-      this.channel.setOpt(Channel.LOCAL, Boolean.FALSE);
-      this.channel.setOpt(Channel.AUTO_GETSTATE, Boolean.TRUE);      
+      this.channel.setReceiver(this);
       this.channel.connect(clusterId);
-      this.adapter = new PullPushAdapter(this.channel);
-      this.adapter.setListener(this);
-    } catch (ChannelException e) {
+    } catch (Exception e) {
       throw new OntopiaRuntimeException("Could not connect to cluster '" + clusterId + "'.", e);
     }
   }
   
   public synchronized void leaveCluster() {
     System.out.println("Leaving cluster: '" + clusterId + "'");
-    if (adapter != null) {
-      adapter.stop();
-      adapter = null;
-    }
     if (channel != null) {
       channel.close();
       channel = null;
@@ -114,13 +103,6 @@ public abstract class AbstractClusterTest implements MessageListener {
 
   public abstract void receive(Message msg);
 
-  public byte[] getState() {
-    return null;
-  }
-
-  public void setState(byte[] jgstate) {
-  }
-  
   // -----------------------------------------------------------------------------
   // Test methods
   // -----------------------------------------------------------------------------

@@ -473,9 +473,9 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>jgroups</groupId>
+				<groupId>org.jgroups</groupId>
 				<artifactId>jgroups</artifactId>
-				<version>2.6.10.GA</version>
+				<version>3.4.4.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>

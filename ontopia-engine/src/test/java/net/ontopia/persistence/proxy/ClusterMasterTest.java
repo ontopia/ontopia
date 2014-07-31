@@ -735,10 +735,8 @@ public class ClusterMasterTest extends AbstractClusterTest implements java.io.Se
     try {
       Message msg = new Message(null, null, mt);
       channel.send(msg);
-    } catch (org.jgroups.ChannelClosedException ex1) {
+    } catch (Exception ex1) {
       ex1.printStackTrace();
-    } catch (org.jgroups.ChannelNotConnectedException ex2) {
-      ex2.printStackTrace();
     }
   }
 
