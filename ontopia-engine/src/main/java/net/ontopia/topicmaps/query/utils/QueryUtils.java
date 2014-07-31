@@ -26,7 +26,6 @@ import java.lang.ref.SoftReference;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
@@ -38,12 +37,11 @@ import net.ontopia.topicmaps.query.impl.utils.TologQueryProcessorFactory;
 import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.parser.ParseContextIF;
-import net.ontopia.topicmaps.query.parser.TologParser;
 import net.ontopia.topicmaps.query.parser.TologOptions;
+import net.ontopia.topicmaps.query.parser.TologParser;
 import net.ontopia.utils.ServiceUtils;
-
-import org.apache.commons.collections.map.ReferenceMap;
-import org.apache.commons.collections.map.AbstractReferenceMap;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +57,8 @@ public class QueryUtils {
 
   // QueryProcessorIF cache structure {TopicMapIF : {LocatorIF : {String : SoftReference(QueryProcessorIF)}}}
   private static Map<TopicMapIF, Map<LocatorIF, Map<String, Reference<QueryProcessorIF>>>> qpcache = 
-    new ReferenceMap(AbstractReferenceMap.SOFT, AbstractReferenceMap.HARD);
+    new ReferenceMap<TopicMapIF, Map<LocatorIF, Map<String, Reference<QueryProcessorIF>>>>
+        (AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
 
   private static final String DEFAULT_LANGUAGE = TologQueryProcessorFactory.NAME;
   

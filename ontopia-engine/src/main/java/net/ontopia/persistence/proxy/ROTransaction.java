@@ -22,10 +22,9 @@ package net.ontopia.persistence.proxy;
 
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.SoftValueHashMapIndex;
-
+import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.collections.map.LRUMap;
 
 /**
  * INTERNAL: The read-only proxy transaction implementation. 

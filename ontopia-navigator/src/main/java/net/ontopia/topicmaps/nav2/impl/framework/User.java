@@ -33,7 +33,7 @@ import net.ontopia.utils.HistoryMap;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.RingBuffer;
 
-import org.apache.commons.collections.map.LRUMap;
+import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
