@@ -23,13 +23,11 @@ package net.ontopia.persistence.proxy;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import org.apache.commons.collections.map.LRUMap;
+import org.apache.commons.collections4.map.LRUMap;
 
 /**
  * INTERNAL: A storage access implementation accessing relational

@@ -23,17 +23,16 @@ package net.ontopia.topicmaps.impl.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-
-import org.apache.commons.collections.map.IdentityMap;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Default implementation of the TMRevitalizerIF interface.
@@ -45,7 +44,7 @@ public class TMRevitalizer implements TMRevitalizerIF {
   
   public TMRevitalizer(TopicMapIF topicmap) {
     this.topicmap = topicmap;
-    this.processed = new IdentityMap();
+    this.processed = new IdentityHashMap();
   }
   
   public Object revitalize(Object o) {

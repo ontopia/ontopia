@@ -218,7 +218,7 @@ public final class Ontopia {
     checkClass("net.ontopia.topicmaps.core.TopicMapIF",        "ontopia.jar");
     checkClass("org.apache.crimson.jaxp.SAXParserFactoryImpl", "crimson.jar");
     checkClass("org.slf4j.Logger",                             "slf4j-api.jar");
-    checkClass("org.apache.commons.collections.map.LRUMap",    "commons-collections.jar");
+    checkClass("org.apache.commons.collections4.map.LRUMap",   "commons-collections4.jar");
     checkClass("gnu.getopt.Getopt",                            "getopt.jar");
     checkClass("antlr.Parser",                                 "antlr.jar");
     checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");

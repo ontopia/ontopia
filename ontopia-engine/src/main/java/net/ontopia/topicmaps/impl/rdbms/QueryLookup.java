@@ -22,14 +22,12 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Map;
-
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
 import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.SoftHashMapIndex;
-
-import org.apache.commons.collections.map.LRUMap;
+import org.apache.commons.collections4.map.LRUMap;
 
 /**
  * INTERNAL: Non-shared locator lookup index.

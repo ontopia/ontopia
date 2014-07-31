@@ -25,23 +25,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.xml.XTM2TopicMapWriter;
-import net.ontopia.topicmaps.xml.TMXMLReader;
-import net.ontopia.topicmaps.xml.TMXMLWriter;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReader;
+import net.ontopia.topicmaps.utils.ctm.CTMTopicMapReader;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.ctm.CTMTopicMapReader;
-import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReader;
+import net.ontopia.topicmaps.xml.TMXMLReader;
+import net.ontopia.topicmaps.xml.TMXMLWriter;
+import net.ontopia.topicmaps.xml.XTM2TopicMapWriter;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ServiceUtils;
-import org.apache.commons.collections.set.UnmodifiableSet;
+import net.ontopia.utils.URIUtils;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -71,7 +71,7 @@ public class ImportExportUtils {
    */
   @SuppressWarnings("unchecked")
   public static Set<ImportExportServiceIF> getServices() {
-    return UnmodifiableSet.decorate(services);
+    return UnmodifiableSet.unmodifiableSet(services);
   }
 
   /**
