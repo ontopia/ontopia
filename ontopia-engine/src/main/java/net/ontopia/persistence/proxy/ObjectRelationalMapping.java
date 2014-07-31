@@ -20,16 +20,15 @@
 
 package net.ontopia.persistence.proxy;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -60,7 +59,7 @@ public class ObjectRelationalMapping {
     /**
      * INTERNAL: Looks up a class object by its name.
      */
-    protected Class getClassByName(String class_name) {
+    protected Class<?> getClassByName(String class_name) {
       try {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         return Class.forName(class_name, true, classLoader);
@@ -70,11 +69,12 @@ public class ObjectRelationalMapping {
       }
     }
     
+    @Override
     public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
       if (name.equals("class")) {
         // Get descriptor class
-        Class klass = getClassByName(atts.getValue("name"));
-        Class klass_immutable = getClassByName(atts.getValue("immutable"));
+        Class<?> klass = getClassByName(atts.getValue("name"));
+        Class<?> klass_immutable = getClassByName(atts.getValue("immutable"));
 
         // Create new class descriptor
         cdesc = new ClassDescriptor(klass, klass_immutable, mapping);
@@ -135,7 +135,7 @@ public class ObjectRelationalMapping {
         String _extends = atts.getValue("extends");
         if (_extends != null) {
           String[] _class_names = StringUtils.split(_extends, " ");
-          Class[] _classes = new Class[_class_names.length];
+          Class<?>[] _classes = new Class<?>[_class_names.length];
           for (int i=0; i < _class_names.length; i++) {
             _classes[i] = getClassByName(_class_names[i]);
           }
@@ -146,7 +146,7 @@ public class ObjectRelationalMapping {
         String _interfaces = atts.getValue("interfaces");
         if (_interfaces != null) {
           String[] _class_names = StringUtils.split(_interfaces, " ");
-          Class[] _classes = new Class[_class_names.length];
+          Class<?>[] _classes = new Class<?>[_class_names.length];
           for (int i=0; i < _class_names.length; i++) {
             _classes[i] = getClassByName(_class_names[i]);
           }
@@ -283,6 +283,7 @@ public class ObjectRelationalMapping {
       }
     }
 
+    @Override
     public void endElement (String uri, String name, String qName) throws SAXException {
       if (name.equals("class")) {
         // Reset class descriptor field
@@ -292,7 +293,7 @@ public class ObjectRelationalMapping {
 
   }
 
-  protected Map cdescs = new HashMap();
+  protected Map<Class<?>, ClassDescriptor> cdescs = new HashMap<Class<?>, ClassDescriptor>();
   
   /**
    * INTERNAL: Creates an object relational mapping instance that is
@@ -316,7 +317,9 @@ public class ObjectRelationalMapping {
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(isource);
-    } catch (Exception e) {
+    } catch (IOException e) {
+      throw new OntopiaRuntimeException(e);
+    } catch (SAXException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -325,7 +328,7 @@ public class ObjectRelationalMapping {
    * INTERNAL: Utility method that converts a collection of class
    * descriptors to an array of class descriptors.
    */
-  protected ClassDescriptor[] toClassDescriptorArray(Collection cdescs) {
+  protected ClassDescriptor[] toClassDescriptorArray(Collection<ClassDescriptor> cdescs) {
     ClassDescriptor[] _cdescs = new ClassDescriptor[cdescs.size()];
     cdescs.toArray(_cdescs);
     return _cdescs;
@@ -339,18 +342,10 @@ public class ObjectRelationalMapping {
   }
   
   /**
-   * INTERNAL: Gets all the descriptor classes in describes by the
-   * mapping.
-   */
-  public ClassDescriptor[] getDescriptorClasses() {
-    return toClassDescriptorArray(cdescs.keySet());
-  }
-
-  /**
    * INTERNAL: Gets the class descriptor by object type.
    */
-  public ClassDescriptor getDescriptorByClass(Object type) {
-    return (ClassDescriptor)cdescs.get(type);
+  public ClassDescriptor getDescriptorByClass(Class<?> type) {
+    return cdescs.get(type);
   }
     
   /**

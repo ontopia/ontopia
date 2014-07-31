@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.Arrays;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -37,7 +36,7 @@ public final class Identity implements IdentityIF, Externalizable {
 
   static final long serialVersionUID = 5662829503505256457L;
 
-  private Object type;
+  private Class<?> type;
   private Object[] keys;
   private int hashcode;
 
@@ -52,13 +51,13 @@ public final class Identity implements IdentityIF, Externalizable {
    * INTERNAL: Creates an identity instance of the given type with the
    * given keys.
    */
-  public Identity(Object type, Object[] keys) {
+  public Identity(Class<?> type, Object[] keys) {
     this.type = type;
     this.keys = keys;
     this.hashcode = computeHashCode();
   }
 
-  public Object getType() {
+  public Class<?> getType() {
     return type;
   }
 
@@ -125,7 +124,7 @@ public final class Identity implements IdentityIF, Externalizable {
   }
 
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-    type = in.readObject();
+    type = (Class<?>)in.readObject();
     keys = (Object[])in.readObject();
     this.hashcode = computeHashCode();
   }

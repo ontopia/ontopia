@@ -21,7 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-
 import net.ontopia.persistence.query.jdo.JDOQuery;
 
 /**
@@ -287,9 +286,9 @@ public interface TransactionIF {
   // Prefetching
   // ----------------------------------------------------------------------------
 
-  public void prefetch(Object type, int field, boolean traverse, Collection identities);
+  public void prefetch(Class<?> type, int field, boolean traverse, Collection identities);
 
-  public void prefetch(Object type, int[] fields, boolean[] traverse, Collection identities);
+  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection identities);
   
   // -----------------------------------------------------------------------------
   // Queries

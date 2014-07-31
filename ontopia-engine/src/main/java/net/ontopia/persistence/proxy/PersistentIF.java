@@ -67,7 +67,7 @@ public interface PersistentIF {
    * INTERNAL: Returns the object.type. This information is used by
    * the transaction to handle the persistent mapping for the object.
    */
-  public Object _p_getType();
+  public Class<?> _p_getType();
 
   public int _p_getFieldCount();
 

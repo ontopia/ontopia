@@ -21,7 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +124,7 @@ public class StatisticsCache implements StorageCacheIF {
   // prefetch
   // -----------------------------------------------------------------------------
 
-  public int prefetch(StorageAccessIF access, Object type, int field, int nextField, boolean traverse, Collection identities) {
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities) {
     return pcache.prefetch(access, type, field, nextField, traverse, identities);
   }
 

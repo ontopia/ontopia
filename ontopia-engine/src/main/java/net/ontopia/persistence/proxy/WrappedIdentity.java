@@ -24,7 +24,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -60,7 +59,7 @@ public final class WrappedIdentity implements IdentityIF, Externalizable {
       return new WrappedIdentity(identity);
   }
 
-  public Object getType() {
+  public Class<?> getType() {
     return wrapped.getType();
   }
 

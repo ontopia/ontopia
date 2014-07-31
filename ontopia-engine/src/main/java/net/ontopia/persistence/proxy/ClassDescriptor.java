@@ -26,9 +26,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +45,8 @@ public class ClassDescriptor {
   static Logger log = LoggerFactory.getLogger(ClassDescriptor.class.getName());
     
   protected ObjectRelationalMapping mapping;
-  protected Class klass;
-  protected Class klass_immutable;
+  protected Class<?> klass;
+  protected Class<?> klass_immutable;
   
   protected String[] identity_fields = new String[0];
   protected boolean isabstract;
@@ -56,19 +54,19 @@ public class ClassDescriptor {
   protected int structure;
   
   protected String master_table;
-  protected Class[] extends_classes = new Class[0];
-  protected Class[] interfaces = new Class[0];
+  protected Class<?>[] extends_classes = new Class<?>[0];
+  protected Class<?>[] interfaces = new Class<?>[0];
 
-  protected List fdescs_list;
-  protected Map fdescs;
+  protected List<FieldDescriptor> fdescs_list;
+  protected Map<String, FieldDescriptor> fdescs;
     
-  public ClassDescriptor(Class klass, Class klass_immutable, ObjectRelationalMapping mapping) {
+  public ClassDescriptor(Class<?> klass, Class<?> klass_immutable, ObjectRelationalMapping mapping) {
     this.klass = klass;
     this.klass_immutable = klass_immutable;
     this.mapping = mapping;
 
-    fdescs_list = new ArrayList();
-    fdescs = new HashMap();    
+    fdescs_list = new ArrayList<FieldDescriptor>();
+    fdescs = new HashMap<String, FieldDescriptor>();
   }
 
   /**
@@ -89,14 +87,14 @@ public class ClassDescriptor {
   /**
    * INTERNAL: Returns the descriptor class.
    */
-  public Class getDescriptorClass() {
+  public Class<?> getDescriptorClass() {
     return klass;
   }
   
   /**
    * INTERNAL: Returns the immutable descriptor class.
    */
-  public Class getImmutableDescriptorClass() {
+  public Class<?> getImmutableDescriptorClass() {
     return klass_immutable;
   }
   
@@ -122,11 +120,9 @@ public class ClassDescriptor {
    * fields, i.e. not identity fields.
    */
   public FieldDescriptor[] getValueFields() {
-    List id_fields = Arrays.asList(getIdentityFields());    
-    Collection result = new ArrayList();    
-    FieldDescriptor[] fdescs = getFieldDescriptors();
-    for (int i=0; i < fdescs.length; i++) {
-      FieldDescriptor fdesc = fdescs[i];
+    List<FieldDescriptor> id_fields = Arrays.asList(getIdentityFields());
+    Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+    for (FieldDescriptor fdesc : getFieldDescriptors()) {
       if (!id_fields.contains(fdesc))
         result.add(fdesc);
     }
@@ -138,10 +134,8 @@ public class ClassDescriptor {
    * primitive types.
    */
   public FieldDescriptor[] getPrimitiveFields() {
-    FieldDescriptor[] fdescs = getFieldDescriptors();
-    Collection result = new ArrayList();
-    for (int i=0; i < fdescs.length; i++) {
-      FieldDescriptor fdesc = fdescs[i];
+    Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+    for (FieldDescriptor fdesc : getFieldDescriptors()) {
       if (fdesc.isPrimitiveField())
         result.add(fdesc);
     }
@@ -153,10 +147,8 @@ public class ClassDescriptor {
    * other mapped objects.
    */
   public FieldDescriptor[] getReferenceFields() {
-    FieldDescriptor[] fdescs = getFieldDescriptors();
-    Collection result = new ArrayList();
-    for (int i=0; i < fdescs.length; i++) {
-      FieldDescriptor fdesc = fdescs[i];
+    Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+    for (FieldDescriptor fdesc : getFieldDescriptors()) {
       if (fdesc.isReferenceField())
         result.add(fdesc);
     }
@@ -169,11 +161,9 @@ public class ClassDescriptor {
    * don't have explicit identity.
    */
   public FieldDescriptor[] getAggregateFields() {
-    FieldDescriptor[] fdescs = getFieldDescriptors();
-    if (isAggregate()) return fdescs;
-    Collection result = new ArrayList();
-    for (int i=0; i < fdescs.length; i++) {
-      FieldDescriptor fdesc = fdescs[i];
+    if (isAggregate()) return new FieldDescriptor[0];
+    Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+    for (FieldDescriptor fdesc : getFieldDescriptors()) {
       if (fdesc.isAggregateField())
         result.add(fdesc);
     }
@@ -284,16 +274,15 @@ public class ClassDescriptor {
     this.extends_classes = extends_classes;
   }
 
-  protected Map getFieldDescriptorMap() {
-    Map all_fields = new HashMap();
+  protected Map<String, FieldDescriptor> getFieldDescriptorMap() {
+    Map<String, FieldDescriptor> all_fields = new HashMap<String, FieldDescriptor>();
     populateExtendsMap(all_fields);
     return all_fields;
   }
 
-  protected void populateExtendsMap(Map _fdescs) {
-    // Retrieve from extended classes first
-    for (int i=0; i < extends_classes.length; i++) {
-      getMapping().getDescriptorByClass(extends_classes[i]).populateExtendsMap(_fdescs);
+  protected void populateExtendsMap(Map<String, FieldDescriptor> _fdescs) {
+    for (Class<?> extends_classe : extends_classes) {
+      getMapping().getDescriptorByClass(extends_classe).populateExtendsMap(_fdescs);
     }
     // Add my own
     _fdescs.putAll(this.fdescs);
@@ -349,7 +338,7 @@ public class ClassDescriptor {
    * the given name.
    */
   public FieldDescriptor getFieldByName(String field_name) {
-    return (FieldDescriptor)getFieldDescriptorMap().get(field_name);
+    return getFieldDescriptorMap().get(field_name);
   }
   
   /**
@@ -377,6 +366,7 @@ public class ClassDescriptor {
   //   return fdescs;
   // }
 
+  @Override
   public String toString() {
     return "<ClassDescriptor " + getName() + ">";
   }

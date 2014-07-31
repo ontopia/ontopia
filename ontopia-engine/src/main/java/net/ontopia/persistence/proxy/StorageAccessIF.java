@@ -21,7 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-
 import net.ontopia.persistence.query.jdo.JDOQuery;
   
 /**
@@ -137,7 +136,7 @@ public interface StorageAccessIF {
    * @throws IdentityNotFoundException if the identity was not found.
    */
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
-                                 IdentityIF current, Object type, int field)
+                                 IdentityIF current, Class<?> type, int field)
     throws IdentityNotFoundException;
 
   /**
@@ -200,7 +199,7 @@ public interface StorageAccessIF {
    * INTERNAL: Called by the application when it requests a new object
    * identity for a given object type.
    */
-  public IdentityIF generateIdentity(Object type);
+  public IdentityIF generateIdentity(Class<?> type);
 
   // -----------------------------------------------------------------------------
   // Queries

@@ -488,12 +488,12 @@ public class RWTransaction extends AbstractTransaction {
   // Prefetching
   // -----------------------------------------------------------------------------
 
-  public void prefetch(Object type, int field, boolean traverse, Collection identities) {    
+  public void prefetch(Class<?> type, int field, boolean traverse, Collection identities) {
     // do not prefetch when no shared cache
     if (!trackall) super.prefetch(type, field, traverse, identities);
   }
 
-  public void prefetch(Object type, int[] fields, boolean[] traverse, Collection identities) {
+  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection identities) {
     // do not prefetch when no shared cache
     if (!trackall) super.prefetch(type, fields, traverse, identities);
   }

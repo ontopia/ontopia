@@ -177,6 +177,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return true;
   }
 
+  @Override
   public LocatorIF getBaseAddress() {
     if (base_address != null) 
       return base_address;
@@ -221,10 +222,12 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return transaction;
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return getTransaction().getTopicMap();
   }
   
+  @Override
   public void commit() {
     if (transaction != null) {
       transaction.commit();
@@ -232,6 +235,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     }
   }
 
+  @Override
   public void abort() {
     if (transaction != null) transaction.abort();
   }
@@ -253,6 +257,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return deleted;
   }
   
+  @Override
   public void delete(boolean force) throws NotRemovableException {
     if (readonly) throw new ReadOnlyException();
     if (deleted) return;
@@ -299,6 +304,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return getStorage().getProperty(name);
   }
 
+  @Override
   protected void finalize() {
     // Close store when garbage collected.
     if (isOpen()) close();
@@ -347,6 +353,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     }
   }
 
+  @Override
   public boolean validate() {    
     // if we're closed then not valid
     if (closed) return false;
@@ -443,55 +450,51 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   // Prefetch objects by object id
   // ---------------------------------------------------------------------------
 
-  public boolean prefetchObjectsById(Collection object_ids) {
+  public boolean prefetchObjectsById(Collection<String> object_ids) {
     TransactionIF txn = transaction.getTransaction();
     // create a map per object type
-    Map idmap = new HashMap();
-    Iterator iter = object_ids.iterator();
-    while (iter.hasNext()) {
-      String object_id = (String)iter.next();
+    Map<Class<?>, Collection<IdentityIF>> idmap = new HashMap<Class<?>, Collection<IdentityIF>>();
+    for (String object_id : object_ids) {
       IdentityIF identity = getIdentityForObjectId(txn, object_id);
       if (identity == null) continue;
       if (txn.isObjectLoaded(identity)) continue;
 
-      Collection ids = (Collection)idmap.get(identity.getType());
+      Collection<IdentityIF> ids = idmap.get(identity.getType());
       if (ids == null) {
-        ids = new ArrayList();
+        ids = new ArrayList<IdentityIF>();
         idmap.put(identity.getType(), ids);
       }
       ids.add(identity);
     }
-    Iterator keys = idmap.keySet().iterator();
+    Iterator<Class<?>> keys = idmap.keySet().iterator();
     while (keys.hasNext()) {
       // prefetch TMObjectIF_topicmap (always field number 1)
-      Object type = keys.next();
-      Collection identities = (Collection)idmap.get(type);
+      Class<?> type = keys.next();
+      Collection<IdentityIF> identities = idmap.get(type);
       txn.prefetch(type, 1, false, identities);
     }
     return true;
   }
 
-  public boolean prefetchFieldsById(Collection object_ids, int field) {
+  public boolean prefetchFieldsById(Collection<String> object_ids, int field) {
     TransactionIF txn = transaction.getTransaction();
     // create a map per object type
-    Map idmap = new HashMap();
-    Iterator iter = object_ids.iterator();
-    while (iter.hasNext()) {
-      String object_id = (String)iter.next();
+    Map<Class<?>, Collection<IdentityIF>> idmap = new HashMap<Class<?>, Collection<IdentityIF>>();
+    for (String object_id : object_ids) {
       IdentityIF identity = getIdentityForObjectId(txn, object_id);
       if (identity == null) continue;
-      Collection ids = (Collection)idmap.get(identity.getType());
+      Collection<IdentityIF> ids = idmap.get(identity.getType());
       if (ids == null) {
-        ids = new ArrayList();
+        ids = new ArrayList<IdentityIF>();
         idmap.put(identity.getType(), ids);
       }
       ids.add(identity);
     }
-    Iterator keys = idmap.keySet().iterator();
+    Iterator<Class<?>> keys = idmap.keySet().iterator();
     while (keys.hasNext()) {
       // prefetch TMObjectIF_topicmap (always field number 1)
-      Object type = keys.next();
-      Collection identities = (Collection)idmap.get(type);
+      Class<?> type = keys.next();
+      Collection<IdentityIF> identities = idmap.get(type);
       txn.prefetch(type, field, false, identities);
     }
     return true;

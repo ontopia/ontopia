@@ -26,10 +26,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -175,7 +173,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // prefetch
   // -----------------------------------------------------------------------------
   
-  public int prefetch(StorageAccessIF access, Object type, int field, int nextField, boolean traverse, Collection identities) {
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities) {
     long start = System.currentTimeMillis();
     int num = identities.size();
     if (debug)
@@ -230,20 +228,20 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // AccessRegistrarIF implementation
   // -----------------------------------------------------------------------------
   
-  public IdentityIF createIdentity(Object type, long key) {
+  public IdentityIF createIdentity(Class<?> type, long key) {
     // do identity interning
     IdentityIF identity = new LongIdentity(type, key);
     CacheEntry entry = (CacheEntry)datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
-  public IdentityIF createIdentity(Object type, Object key) {
+  public IdentityIF createIdentity(Class<?> type, Object key) {
     IdentityIF identity = new AtomicIdentity(type, key);
     CacheEntry entry = (CacheEntry)datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
-  public IdentityIF createIdentity(Object type, Object[] keys) {
+  public IdentityIF createIdentity(Class<?> type, Object[] keys) {
     IdentityIF identity = new Identity(type, keys);
     CacheEntry entry = (CacheEntry)datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
@@ -330,7 +328,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   
   protected Map field_counts = new HashMap();
   
-  protected int getFieldsCount(Object type) {
+  protected int getFieldsCount(Class<?> type) {
     synchronized (field_counts) {
       Integer count = (Integer)field_counts.get(type);
       if (count != null)

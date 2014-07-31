@@ -22,9 +22,7 @@ package net.ontopia.persistence.proxy;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +36,11 @@ public class RDBMSMapping implements ObjectRelationalMappingIF {
   static Logger log = LoggerFactory.getLogger(RDBMSMapping.class.getName());
 
   protected ObjectRelationalMapping mapping;
-  protected Map class_infos;
+  protected Map<Object, ClassInfoIF> class_infos;
   
   public RDBMSMapping(ObjectRelationalMapping mapping) {
     this.mapping = mapping;
-    class_infos = new HashMap();
+    class_infos = new HashMap<Object, ClassInfoIF>();
   }
 
   /**
@@ -53,8 +51,8 @@ public class RDBMSMapping implements ObjectRelationalMappingIF {
     return mapping;
   }
   
-  public synchronized ClassInfoIF getClassInfo(Object type) {
-    ClassInfoIF ci = (ClassInfoIF) class_infos.get(type);
+  public synchronized ClassInfoIF getClassInfo(Class<?> type) {
+    ClassInfoIF ci = class_infos.get(type);
     if (ci == null) {
       ClassDescriptor cdesc = mapping.getDescriptorByClass(type);
       if (cdesc == null)
@@ -73,7 +71,7 @@ public class RDBMSMapping implements ObjectRelationalMappingIF {
     return ci;
   }
 
-  public boolean isDeclared(Object type) {
+  public boolean isDeclared(Class<?> type) {
     return (mapping.getDescriptorByClass(type) != null);
   }
 }

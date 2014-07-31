@@ -25,9 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +76,7 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     max_value = -1;
   }
   
-  public synchronized IdentityIF generateKey(Object type) {
+  public synchronized IdentityIF generateKey(Class<?> type) {
     
     // If we've used up the reserved interval fetch a new one from the database.
     if (value >= max_value)

@@ -28,13 +28,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-
 import java.util.WeakHashMap;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.TraceUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,14 +54,14 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSMapping mapping;
   
   protected Connection conn_;
-  protected Map<Thread, Connection> conn_map = new WeakHashMap<Thread, Connection>();
+  protected final Map<Thread, Connection> conn_map = new WeakHashMap<Thread, Connection>();
 
   protected boolean closed;
   
-  protected Map handlers;
+  protected Map<Class<?>, ClassAccessIF> handlers;
   
   protected boolean batch_updates = false;
-  protected Collection flushable;
+  protected Collection<FlushableIF> flushable;
   
   public RDBMSAccess(String id, RDBMSStorage storage, boolean readonly) {
     this.id = id;
@@ -75,8 +73,8 @@ public class RDBMSAccess implements StorageAccessIF {
     if (PropertyUtils.isTrue(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates")))
       batch_updates = true;
     
-    handlers = new HashMap();
-    flushable = new HashSet();
+    handlers = new HashMap<Class<?>, ClassAccessIF>();
+    flushable = new HashSet<FlushableIF>();
     
     log.debug(getId() + ": Storage access created");    
   }
@@ -178,9 +176,9 @@ public class RDBMSAccess implements StorageAccessIF {
    * INTERNAL: Gets up the handler class that is used to manage
    * objects of the given class.
    */
-  protected ClassAccessIF getHandler(Object type) {
+  protected ClassAccessIF getHandler(Class<?> type) {
     // Each class have its own handler
-    ClassAccessIF handler = (ClassAccessIF)handlers.get(type);
+    ClassAccessIF handler = handlers.get(type);
     // Create class handlers lazily
     if (handler == null) {
       // TODO: Update class descriptors to no longer depend on java.lang.Class.
@@ -316,7 +314,7 @@ public class RDBMSAccess implements StorageAccessIF {
             }
           }
         }
-        conn_map = null;
+        conn_map.clear();
       }
     } finally {
       closed = true;
@@ -330,10 +328,9 @@ public class RDBMSAccess implements StorageAccessIF {
     try {
       TraceUtils.enter("RDBMSAccess.flush");
       // Flush flushable handlers
-      Object[] objects = flushable.toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((FlushableIF)objects[i]).flush();
-      }      
+      for (FlushableIF object : flushable) {
+        object.flush();
+      }
       flushable.clear();
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
@@ -389,7 +386,7 @@ public class RDBMSAccess implements StorageAccessIF {
   }
   
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
-      IdentityIF current, Object type, int field) {
+      IdentityIF current, Class<?> type, int field) {
     try {
       if (debug) {
         if (current == null)
@@ -467,7 +464,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Identity generator
   // -----------------------------------------------------------------------------
   
-  public IdentityIF generateIdentity(Object type) {
+  public IdentityIF generateIdentity(Class<?> type) {
     return storage.generateIdentity(type);
   }
   

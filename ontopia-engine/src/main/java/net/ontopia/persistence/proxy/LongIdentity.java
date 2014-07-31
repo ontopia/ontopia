@@ -24,7 +24,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -34,7 +33,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public final class LongIdentity implements IdentityIF, Externalizable {
 
-  private Object type;
+  private Class<?> type;
   private long key;
 
   /**
@@ -48,12 +47,12 @@ public final class LongIdentity implements IdentityIF, Externalizable {
    * INTERNAL: Creates an identity instance of the given type with the
    * given key.
    */
-  public LongIdentity(Object type, long key) {
+  public LongIdentity(Class<?> type, long key) {
     this.type = type;
     this.key = key;
   }
 
-  public Object getType() {
+  public Class<?> getType() {
     return type;
   }
 
@@ -120,7 +119,7 @@ public final class LongIdentity implements IdentityIF, Externalizable {
   }
 
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-    type = in.readObject();
+    type = (Class<?>) in.readObject();
     key = in.readLong();
   }
 
