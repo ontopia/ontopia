@@ -21,7 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.lang.reflect.Method;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -39,7 +38,7 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
   protected boolean readonly;
   protected boolean is_collection;
   protected ClassInfoIF parent_cinfo;
-  protected Class value_class;
+  protected Class<?> value_class;
   protected FieldDescriptor field;
   protected Method getter;
   protected Method setter;
@@ -53,7 +52,7 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
   }
 
   protected AbstractFieldInfo(ClassInfoIF parent_cinfo, String name,
-                              int index, Class value_class,
+                              int index, Class<?> value_class,
                               boolean is_collection, int cardinality, boolean readonly) {
     // WARN: These properties are not enough to support all methods,
     // since some of the methods still rely on the field instance.
@@ -102,7 +101,7 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
     return parent_cinfo;
   }
 
-  public Class getValueClass() {
+  public Class<?> getValueClass() {
     return value_class;
   }
 

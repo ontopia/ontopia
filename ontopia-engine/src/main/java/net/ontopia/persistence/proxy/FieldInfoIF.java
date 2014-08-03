@@ -120,7 +120,7 @@ public interface FieldInfoIF extends FieldHandlerIF {
    * INTERNAL: Gets the field value class. For primitive fields the
    * primitive wrapper class is returned.
    */
-  public Class getValueClass();
+  public Class<?> getValueClass();
   
   /**
    * INTERNAL: Gets the table in which the field value is stored (aka

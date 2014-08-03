@@ -26,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ import java.util.List;
 public class IdentityFieldInfo implements FieldInfoIF {
   
   protected ClassInfoIF parent_cinfo;
-  protected Class parent_class;
+  protected Class<?> parent_class;
   
   protected FieldInfoIF[] fields;
   protected int fields_length;
@@ -120,7 +121,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
     throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
   }
 
-  public Class getValueClass() {
+  public Class<?> getValueClass() {
     throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
   }
 
@@ -146,12 +147,9 @@ public class IdentityFieldInfo implements FieldInfoIF {
     return _names;
   }
   
-  protected void aggregateColumnNames(List columns) {
+  protected void aggregateColumnNames(List<String> columns) {
     for (int i=0; i < fields_length; i++) {
-      String[] names = fields[i].getValueColumns();
-      for (int f=0; f < names.length; f++) {
-        columns.add(names[f]);
-      }
+      columns.addAll(Arrays.asList(fields[i].getValueColumns()));
     }    
   }
 

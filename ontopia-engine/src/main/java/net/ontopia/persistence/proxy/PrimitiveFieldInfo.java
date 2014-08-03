@@ -24,10 +24,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import net.ontopia.persistence.query.sql.SQLNull;
 import net.ontopia.persistence.query.sql.SQLPrimitive;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

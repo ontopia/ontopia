@@ -24,7 +24,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +44,7 @@ public class ReferenceFieldInfo extends AbstractFieldInfo {
   static Logger log = LoggerFactory.getLogger(ReferenceFieldInfo.class.getName());
 
   protected ClassInfoIF value_cinfo;
-  protected Class value_class;
+  //protected Class<?> value_class;
   protected FieldInfoIF identity_field;
   protected String[] value_columns;
   protected int column_count;

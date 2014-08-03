@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -74,7 +75,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   
   protected String[] computeValueColumns() {
     // Collect column names from children
-    List names = new ArrayList();
+    List<String> names = new ArrayList<String>();
     aggregateColumnNames(names);
     // Morph into a string array
     String[] _names = new String[names.size()];
@@ -82,12 +83,9 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
     return _names;
   }
   
-  protected void aggregateColumnNames(List columns) {
-    for (int i=0; i < fields.length; i++) {
-      String[] names = fields[i].getValueColumns();
-      for (int f=0; f < names.length; f++) {
-        columns.add(names[f]);
-      }
+  protected void aggregateColumnNames(List<String> columns) {
+    for (FieldInfoIF _field : fields) {
+      columns.addAll(Arrays.asList(_field.getValueColumns()));
     }    
   }
 
