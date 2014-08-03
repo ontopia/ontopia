@@ -22,9 +22,7 @@ package net.ontopia.persistence.proxy;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,10 +38,10 @@ public class ClassInfo implements ClassInfoIF {
 
   protected RDBMSMapping mapping;
   protected ClassDescriptor cdesc;
-  protected Class klass;
-  protected Class klass_immutable;
+  protected Class<?> klass;
+  protected Class<?> klass_immutable;
   
-  protected Map fields;
+  protected Map<String, FieldInfoIF> fields;
 
   protected FieldInfoIF identity_field;
   protected FieldInfoIF[] value_fields;
@@ -61,7 +59,7 @@ public class ClassInfo implements ClassInfoIF {
     this.cdesc = cdesc;
     this.klass = cdesc.getDescriptorClass();
     this.klass_immutable = cdesc.getImmutableDescriptorClass();
-    fields = new HashMap();
+    fields = new HashMap<String, FieldInfoIF>();
   }
 
   /**
@@ -117,7 +115,7 @@ public class ClassInfo implements ClassInfoIF {
    * INTERNAL: Return the descriptor class described by the
    * descriptor.
    */
-  public Class getDescriptorClass() {
+  public Class<?> getDescriptorClass() {
     return klass;
   }
   
@@ -133,7 +131,7 @@ public class ClassInfo implements ClassInfoIF {
    */
   public FieldInfoIF getFieldInfoByName(String name) {
     // System.out.println("WARN: should deprecate getFieldInfoByName or rename to getValueFieldInfoByName.");
-    return (FieldInfoIF)fields.get(name);
+    return fields.get(name);
   }
   
   /**
