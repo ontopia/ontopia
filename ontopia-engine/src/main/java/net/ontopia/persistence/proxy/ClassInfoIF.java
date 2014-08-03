@@ -74,7 +74,7 @@ public interface ClassInfoIF {
    * INTERNAL: Return the descriptor class described by the
    * descriptor.
    */
-  public Class getDescriptorClass();
+  public Class<?> getDescriptorClass();
 
   /**
    * INTERNAL: Creates an instance of the descriptor class. Actual
