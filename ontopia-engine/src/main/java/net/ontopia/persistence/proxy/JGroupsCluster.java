@@ -216,7 +216,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     case ClusterIF.QUERY_CACHE_RT1_EVICT:
     case ClusterIF.QUERY_CACHE_RT2_EVICT: {
       log.debug("  QE " + e.eventType + ": " + e.value);
-      EvictableIF evictable = (EvictableIF)storage.getHelperObject(e.eventType, e.namespace);
+      EvictableIF evictable = storage.getHelperObject(e.eventType, e.namespace);
       if (e.value instanceof Collection)
         evictable.removeAll((Collection)e.value, false);
       else
@@ -229,7 +229,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     case ClusterIF.QUERY_CACHE_RT1_CLEAR:
     case ClusterIF.QUERY_CACHE_RT2_CLEAR: {
       log.debug("  QC " + e.eventType + ": " + e.value);
-      EvictableIF evictable = (EvictableIF)storage.getHelperObject(e.eventType-1 , e.namespace);
+      EvictableIF evictable = storage.getHelperObject(e.eventType-1 , e.namespace);
       evictable.clear(false);
       break;
     }
