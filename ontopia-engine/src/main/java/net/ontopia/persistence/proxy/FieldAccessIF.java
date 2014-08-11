@@ -57,7 +57,7 @@ public interface FieldAccessIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object loadMultiple(AccessRegistrarIF registrar, Collection identities, 
+  public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
 			     IdentityIF current) throws Exception;
 
   /**

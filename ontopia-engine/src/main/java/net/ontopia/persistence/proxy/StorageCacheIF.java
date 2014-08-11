@@ -110,7 +110,7 @@ public interface StorageCacheIF {
   // prefetch
   // -----------------------------------------------------------------------------
 
-  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities);
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities);
   
   // -----------------------------------------------------------------------------
   // AccessRegistrar

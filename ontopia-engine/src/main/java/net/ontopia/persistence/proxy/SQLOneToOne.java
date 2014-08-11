@@ -208,7 +208,7 @@ public class SQLOneToOne implements FieldAccessIF {
     return result;
   }
 
-  public Object loadMultiple(AccessRegistrarIF registrar, Collection identities,
+  public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities,
                              IdentityIF current) throws Exception {
     // Prepare result value
     boolean found_current = false;

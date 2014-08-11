@@ -135,7 +135,7 @@ public interface StorageAccessIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
+  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                                  IdentityIF current, Class<?> type, int field)
     throws IdentityNotFoundException;
 

@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.LookupIndexIF;
@@ -56,11 +55,11 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   protected ObjectRelationalMappingIF mapping;
   
-  protected LookupIndexIF identity_map;
-  protected Map lru;
+  protected LookupIndexIF<IdentityIF, PersistentIF> identity_map;
+  protected Map<IdentityIF, PersistentIF> lru;
   protected int lrusize;
 
-  protected Map querymap;
+  protected Map<String, QueryIF> querymap;
   protected long timestamp;
   
   AbstractTransaction(String id, StorageAccessIF access) {
@@ -69,7 +68,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     this.mapping = access.getStorage().getMapping();
 
     // Map containing named queries
-    this.querymap = new HashMap();
+    this.querymap = new HashMap<String, QueryIF>();
     
     // Identity map - maintains the relationships between object
     // identities and the single(ton) instances used with the
@@ -330,7 +329,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     // WARNING: access to this method should be synchronized on identity_map
     
     // Check to see if somebody else has registered the same identity
-    return (PersistentIF)identity_map.get(identity);
+    return identity_map.get(identity);
   }
   
   PersistentIF removeIdentityMapNoLRU(IdentityIF identity) {
@@ -338,14 +337,14 @@ public abstract class AbstractTransaction implements TransactionIF {
     // ISSUE: remove from lru as well?
     
     // Check to see if somebody else has registered the same identity
-    return (PersistentIF)identity_map.remove(identity);
+    return identity_map.remove(identity);
   }
   
   PersistentIF checkIdentityMap(IdentityIF identity) {
     // WARNING: access to this method should be synchronized on identity_map
     
     // Check to see if somebody else has registered the same identity
-    Object o = identity_map.get(identity);
+    PersistentIF o = identity_map.get(identity);
     if (o != null) {
       //! if (log.isDebugEnabled())
       //!   log.debug(getId() + ": Object found in identity map: " + identity);
@@ -353,7 +352,7 @@ public abstract class AbstractTransaction implements TransactionIF {
       // Register with LRU cache
       lru.put(identity, o);
       // Return singleton object instance 
-      return (PersistentIF)o;
+      return o;
     }
     return null;
   }
@@ -400,7 +399,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   // Prefetching
   // -----------------------------------------------------------------------------
   
-  public void prefetch(Class<?> type, int field, boolean traverse, Collection identities) {
+  public void prefetch(Class<?> type, int field, boolean traverse, Collection<IdentityIF> identities) {
     // bug #1439: do not prefetch if identity is altered by local transaction
     identities = extractNonDirty(identities);
     
@@ -410,7 +409,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     this.txncache.prefetch(access, type, field, -1, traverse, identities);
   }
   
-  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection identities) {
+  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection<IdentityIF> identities) {
     // bug #1439: do not prefetch if identity is altered by local transaction
     identities = extractNonDirty(identities);
     
@@ -436,12 +435,10 @@ public abstract class AbstractTransaction implements TransactionIF {
     }
   }
   
-  protected Collection extractNonDirty(Collection identities) {
+  protected Collection<IdentityIF> extractNonDirty(Collection<IdentityIF> identities) {
     // get rid of identities that are dirty in this transaction
-    Collection result = new HashSet(identities.size());
-    Iterator iter = identities.iterator();
-    while (iter.hasNext()) {
-      IdentityIF identity = (IdentityIF)iter.next();
+    Collection<IdentityIF> result = new HashSet<IdentityIF>(identities.size());
+    for (IdentityIF identity : identities) {
       
       // bug #1439: do not prefetch if identity is altered by local transaction
       if (!isObjectClean(identity)) continue;
@@ -451,11 +448,9 @@ public abstract class AbstractTransaction implements TransactionIF {
     return result;
   }
   
-  protected Collection extractFieldValues(Object type, int field, Collection identities) {    
+  protected Collection extractFieldValues(Object type, int field, Collection<IdentityIF> identities) {    
     Collection result = new HashSet(identities.size());
-    Iterator iter = identities.iterator();
-    while (iter.hasNext()) {
-      IdentityIF identity = (IdentityIF)iter.next();
+    for (IdentityIF identity : identities) {
       
       // bug #1439: do not prefetch if identity is altered by local transaction
       if (!isObjectClean(identity)) continue;
@@ -503,7 +498,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   }
   
   protected QueryIF getQuery(String name) {
-    QueryIF query = (QueryIF)querymap.get(name);
+    QueryIF query = querymap.get(name);
     if (query == null) {
       // Create and register query instance lazily
       query = access.createQuery(name, oaccess, registrar);

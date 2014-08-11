@@ -385,7 +385,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
-  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
+  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
       IdentityIF current, Class<?> type, int field) {
     try {
       if (debug) {

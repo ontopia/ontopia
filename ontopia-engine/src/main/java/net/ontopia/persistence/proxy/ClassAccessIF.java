@@ -47,7 +47,7 @@ public interface ClassAccessIF {
    * INTERNAL: Loads the specified object field for the given
    * identitys from the database.
    */
-  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
+  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
 				  IdentityIF current, int field) throws Exception;
   
   /**

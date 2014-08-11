@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
@@ -43,7 +42,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   static Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
   
   protected StorageIF storage;
-  protected Map datacache;
+  protected Map<IdentityIF, CacheEntry> datacache;
 
   protected long current_ticket_value;
   protected TicketIF current_ticket;
@@ -54,7 +53,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   protected ClusterIF cluster;
   protected long timestamp;
   
-  SharedCache(StorageIF storage, Map datacache) {
+  SharedCache(StorageIF storage, Map<IdentityIF, CacheEntry> datacache) {
     this.storage = storage;
     this.datacache = datacache;
     this.debug = log.isDebugEnabled();
@@ -99,7 +98,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   }
   
   public Object getValue(StorageAccessIF access, IdentityIF identity, int field) {
-    CacheEntry fields = (CacheEntry)datacache.get(identity);
+    CacheEntry fields = datacache.get(identity);
     
     // Check to see if field is in the local cache
     if (fields != null) {
@@ -131,7 +130,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   public boolean isFieldLoaded(IdentityIF identity, int field) {
     // TODO: flag argument for also checking parent caches too?
     // If identity does not exist, nor does field
-    CacheEntry fields = (CacheEntry)datacache.get(identity);
+    CacheEntry fields = datacache.get(identity);
     if (fields != null && fields.contains(field))
       return true;
     else
@@ -150,7 +149,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   public void evictFields(IdentityIF identity, boolean notifyCluster) {
     if (debug)
       log.debug("SharedCache: evicting fields " + identity);
-    CacheEntry fields = (CacheEntry)datacache.get(identity);
+    CacheEntry fields = datacache.get(identity);
     if (fields != null) {
       // Drop all field values from the cache
       fields.clear();
@@ -160,7 +159,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   }
   
   public void evictField(IdentityIF identity, int field, boolean notifyCluster) {
-    CacheEntry fields = (CacheEntry)datacache.get(identity);
+    CacheEntry fields = datacache.get(identity);
     if (fields != null) {
       // Drop field value from fields cache
       fields.unsetValue(field, null); // NOTE: value is now null when unset
@@ -173,7 +172,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // prefetch
   // -----------------------------------------------------------------------------
   
-  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities) {
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     long start = System.currentTimeMillis();
     int num = identities.size();
     if (debug)
@@ -181,12 +180,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     if (traverse) {
       // filter out identities that have their fields loaded, but
       // not their next field loaded
-      Collection filtered = new ArrayList(num);
-      Iterator iter = identities.iterator();
-      for (int i=0; i < num; i++) {
-        IdentityIF identity = (IdentityIF)iter.next();
-          
-        CacheEntry fields = (CacheEntry)datacache.get(identity);
+      Collection<IdentityIF> filtered = new ArrayList<IdentityIF>(num);
+      for (IdentityIF identity : identities) {
+        CacheEntry fields = datacache.get(identity);
           
         if (fields == null || !fields.contains(field)) {
           // prefetch if field not loaded
@@ -195,7 +191,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
           // prefetch if 1:1 field loaded, but next field not loaded
           Object value = fields.getValue(field);
           if (value != null && value instanceof IdentityIF) {
-            CacheEntry nfields = (CacheEntry)datacache.get((IdentityIF)value);
+            CacheEntry nfields = datacache.get((IdentityIF)value);
               
             if (nfields == null || !nfields.contains(nextField)) {
               filtered.add(identity);
@@ -208,10 +204,8 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
         access.loadFieldMultiple(this, filtered, null, type, field);
     } else {
       // filter out identities that already have their *fields* loaded
-      Collection filtered = new ArrayList(num);
-      Iterator iter = identities.iterator();
-      for (int i=0; i < num; i++) {
-        IdentityIF identity = (IdentityIF)iter.next();
+      Collection<IdentityIF> filtered = new ArrayList<IdentityIF>(num);
+      for (IdentityIF identity : identities) {
         if (!isFieldLoaded(identity, field))
           filtered.add(identity);
       }
@@ -231,19 +225,19 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   public IdentityIF createIdentity(Class<?> type, long key) {
     // do identity interning
     IdentityIF identity = new LongIdentity(type, key);
-    CacheEntry entry = (CacheEntry)datacache.get(identity);
+    CacheEntry entry = datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
   public IdentityIF createIdentity(Class<?> type, Object key) {
     IdentityIF identity = new AtomicIdentity(type, key);
-    CacheEntry entry = (CacheEntry)datacache.get(identity);
+    CacheEntry entry = datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
   public IdentityIF createIdentity(Class<?> type, Object[] keys) {
     IdentityIF identity = new Identity(type, keys);
-    CacheEntry entry = (CacheEntry)datacache.get(identity);
+    CacheEntry entry = datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
@@ -270,7 +264,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     // Note: object identity should be registered already.
     if (debug)
       log.debug("Registering " + identity + " field " + field + "=" + value);
-    CacheEntry fields = (CacheEntry)datacache.get(identity);
+    CacheEntry fields = datacache.get(identity);
     if (fields == null) {
       IdentityIF wrappedIdentity = WrappedIdentity.wrap(identity);
       // create new cache entry
@@ -326,11 +320,11 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // CacheEntry initialization
   // -----------------------------------------------------------------------------
   
-  protected Map field_counts = new HashMap();
+  protected Map<Object, Integer> field_counts = new HashMap<Object, Integer>();
   
   protected int getFieldsCount(Class<?> type) {
     synchronized (field_counts) {
-      Integer count = (Integer)field_counts.get(type);
+      Integer count = field_counts.get(type);
       if (count != null)
         return count.intValue();
       
@@ -360,19 +354,17 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   public void writeReport(java.io.Writer out, boolean dumpCache) throws java.io.IOException {
     try {
       // lock data cache while generating report
-      Map stats = new HashMap();
+      Map<Object, Integer> stats = new HashMap<Object, Integer>();
       // generate statistics
       int size = 0;
       synchronized (datacache) {
-        Iterator iter = datacache.keySet().iterator();
-        while (iter.hasNext()) {
-          IdentityIF key = (IdentityIF)iter.next();
+        for (IdentityIF key : datacache.keySet()) {
           if (key == null) continue;
           size++;
           if (!stats.containsKey(key.getType())) {
             stats.put(key.getType(), new Integer(1));
           } else {
-            Integer cnt = (Integer)stats.get(key.getType());
+            Integer cnt = stats.get(key.getType());
             stats.put(key.getType(), new Integer(cnt.intValue() + 1));
           }
         }
@@ -384,10 +376,8 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
           
       // output statistics
       out.write("<table>\n");
-      Iterator iter = stats.keySet().iterator();
-      while (iter.hasNext()) {
-        Object key = iter.next();
-        Object val = stats.get(key);
+      for (Object key : stats.keySet()) {
+        Integer val = stats.get(key);
           out.write("<tr><td>");
           out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
           out.write("</td><td>");
@@ -399,11 +389,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       if (dumpCache) {
         out.write("<table>\n");
         synchronized (datacache) {
-          iter = datacache.keySet().iterator();
-          while (iter.hasNext()) {
-            Object key = iter.next();
+          for (Object key : datacache.keySet()) {
             if (key == null) continue;
-            Object val = datacache.get(key);
+            CacheEntry val = datacache.get(key);
             out.write("<tr><td>");
             out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
             out.write("</td><td>");

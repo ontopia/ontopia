@@ -43,10 +43,10 @@ public class FieldDescriptor {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(FieldDescriptor.class.getName());
 
-  final static Set PRIMITIVE_TYPES;
+  final static Set<Class<?>> PRIMITIVE_TYPES;
 
   static {
-    Set pt = new HashSet();
+    Set<Class<?>> pt = new HashSet<Class<?>>();
     pt.add(java.lang.String.class);
     pt.add(java.io.Reader.class);
     pt.add(java.io.InputStream.class);

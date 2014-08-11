@@ -52,7 +52,7 @@ public class JNDIConnectionFactory implements ConnectionFactoryIF {
     this.jndiname = jndiname;
   }
   
-  public JNDIConnectionFactory(Map properties) {    
+  public JNDIConnectionFactory(Map<String, String> properties) {    
     this.jndiname = PropertyUtils.getProperty(properties, propname);
     if (this.jndiname == null)
       throw new OntopiaRuntimeException("Property '" + propname+ "' is not set. Please update the RDBMS properties file.");

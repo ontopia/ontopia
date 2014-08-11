@@ -53,10 +53,10 @@ public class QueryDeclarations {
   class QueriesHandler extends DefaultHandler {
 
     protected QueryDescriptor qdesc;
-    protected List params;
-    protected List selects;
+    protected List<Class<?>> params;
+    protected List<QueryDescriptor.SelectField> selects;
     protected String indname;
-    protected Map indics;
+    protected Map<String, Class<?>> indics;
     
     protected Class getClassByName(String class_name) {
       try {
@@ -85,8 +85,8 @@ public class QueryDeclarations {
 
         // Create query descriptor
         qdesc = new QueryDescriptor(query_name, type, lookup_identities);
-        selects = new ArrayList();
-        params = new ArrayList();
+        selects = new ArrayList<QueryDescriptor.SelectField>();
+        params = new ArrayList<Class<?>>();
 
         // Get fetch size
         String fetchSize = atts.getValue("fetchSize");
@@ -142,7 +142,7 @@ public class QueryDeclarations {
         if (indname == null) 
           throw new OntopiaRuntimeException("class-indicator.name must be specified: " + indname);
 
-        indics = new HashMap();
+        indics = new HashMap<String, Class<?>>();
       }
       else if (name.equals("indicator")) {
         // Get indicator token
@@ -191,8 +191,8 @@ public class QueryDeclarations {
 
   }
 
-  protected Map queries = new HashMap();
-  protected Map indicators = new HashMap();
+  protected Map<String, QueryDescriptor> queries = new HashMap<String, QueryDescriptor>();
+  protected Map<String, Map<String, Class<?>>> indicators = new HashMap<String, Map<String, Class<?>>>();
   
   public QueryDeclarations(InputStream istream) {
     loadQueries(istream);
@@ -202,7 +202,7 @@ public class QueryDeclarations {
    * INTERNAL: Gets the query descriptor by name.
    */
   public QueryDescriptor getQueryDescriptor(String name) {
-    return (QueryDescriptor)queries.get(name);
+    return queries.get(name);
   }
   
   /**
@@ -219,18 +219,18 @@ public class QueryDeclarations {
   /**
    * INTERNAL: Looks up the class indicator map by name.
    */
-  public Map getIndicator(String name) {
+  public Map<String, Class<?>> getIndicator(String name) {
     if (!indicators.containsKey(name))
       throw new OntopiaRuntimeException("No indicator with the name: " + name);
     
-    return (Map)indicators.get(name);
+    return indicators.get(name);
   }
 
   /**
    * INTERNAL: Adds the class indicator map by name. The indicator map
    * is keyed by strings and has Class object values.
    */
-  public void addIndicator(String name, Map indicator) {
+  public void addIndicator(String name, Map<String, Class<?>> indicator) {
     indicators.put(name, indicator);
   }
   

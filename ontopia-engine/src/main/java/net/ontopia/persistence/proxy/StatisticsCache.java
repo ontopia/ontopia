@@ -124,7 +124,7 @@ public class StatisticsCache implements StorageCacheIF {
   // prefetch
   // -----------------------------------------------------------------------------
 
-  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities) {
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     return pcache.prefetch(access, type, field, nextField, traverse, identities);
   }
 

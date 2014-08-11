@@ -117,7 +117,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   // ISSUE: prefetch locally if no parent cache?
 
-  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection identities) {
+  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     // WARNING: dirty objects should never be handed over to shared cache
     if (pcache != null) return pcache.prefetch(access, type, field, nextField, traverse, identities);
     return 0;

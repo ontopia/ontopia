@@ -51,14 +51,14 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
   protected int grabsize;
   protected String global_entry;
   protected String database;
-  protected Map properties;
+  protected Map<String, String> properties;
   
   protected long value;
   protected long max_value;
   
   public HighLowKeyGenerator(ConnectionFactoryIF connfactory,
       String table, String keycol, String valcol,
-      String global_entry, int grabsize, String database, Map properties) {
+      String global_entry, int grabsize, String database, Map<String, String> properties) {
     
     this.connfactory = connfactory;
     
@@ -106,7 +106,7 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     
     
     // Get key generator row locking keyword (e.g. 'for update')
-    String lkw = (String)properties.get("net.ontopia.topicmaps.impl.rdbms.HighLowKeyGenerator.SelectSuffix");    
+    String lkw = properties.get("net.ontopia.topicmaps.impl.rdbms.HighLowKeyGenerator.SelectSuffix");    
     
     // The row should normally be should locked while updating, but
     // not all databases support this.

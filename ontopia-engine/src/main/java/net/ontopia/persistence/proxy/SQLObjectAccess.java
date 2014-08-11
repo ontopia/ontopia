@@ -219,16 +219,16 @@ public class SQLObjectAccess implements ClassAccessIF {
 
   public static int batchSize = 50;
 
-  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
+  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                                   IdentityIF current, int field) {
     try {
       if (identities.size() > batchSize) {
         // split identities into smaller batches that can be handled
         // by underlying data store
         Object result = null;
-        Iterator iter = identities.iterator();
+        Iterator<IdentityIF> iter = identities.iterator();
         while (iter.hasNext()) {
-          Collection batch = CollectionUtils.nextBatch(iter, batchSize);
+          Collection<IdentityIF> batch = CollectionUtils.nextBatch(iter, batchSize);
           result = faccesses[field].loadMultiple(registrar, batch, current);
         }
         return result;
