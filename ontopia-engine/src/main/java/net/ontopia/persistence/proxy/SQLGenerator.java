@@ -269,16 +269,16 @@ public class SQLGenerator {
     return sb.toString();    
   }
 
-  public static String processMultipleLoadParameters(Collection identities, String sql) {
+  public static String processMultipleLoadParameters(Collection<IdentityIF> identities, String sql) {
     int lix = sql.lastIndexOf('?');
     StringBuilder sb = new StringBuilder();
     sb.append(sql.substring(0, lix));
 
     int size = identities.size();
-    Iterator iter = identities.iterator();
+    Iterator<IdentityIF> iter = identities.iterator();
     for (int i=0; i < size; i++) {
       if (i > 0) sb.append(", ");
-      IdentityIF identity = (IdentityIF)iter.next();
+      IdentityIF identity = iter.next();
       // HACK: this assumes that arity of identity field is 1
       sb.append(identity.getKey(0));
     }
@@ -287,20 +287,20 @@ public class SQLGenerator {
     return sb.toString();
   }
 
-  public static void bindMultipleParameters(Iterator identities, FieldInfoIF finfo, 
+  public static void bindMultipleParameters(Iterator<IdentityIF> identities, FieldInfoIF finfo, 
 					    java.sql.PreparedStatement stm, int batchSize) 
     throws java.sql.SQLException {
     bindMultipleParameters(identities, finfo, stm, 1, batchSize);
   }
 
-  public static void bindMultipleParameters(Iterator identities, FieldInfoIF finfo, 
+  public static void bindMultipleParameters(Iterator<IdentityIF> identities, FieldInfoIF finfo, 
 					    java.sql.PreparedStatement stm, int offset, int batchSize) 
     throws java.sql.SQLException {
     // bind parameters until iterator exhausted or batchSize reached
     int w = finfo.getColumnCount();
     int x = 0;
     for (; (x/w) < batchSize && identities.hasNext();) {
-      IdentityIF identity = (IdentityIF)identities.next();
+      IdentityIF identity = identities.next();
       finfo.bind(identity, stm, offset + x);
       x += w;
     }

@@ -49,13 +49,13 @@ public class QueryDescriptor {
   protected int fetchSize;
   protected SelectField[] selects;
   protected Class[] params;
-  protected Map statements;
+  protected Map<String, String> statements;
   protected boolean lookup_identities;
   
   public QueryDescriptor(String name, String type, boolean lookup_identities) {
     this.name = name;
     this.type = type;
-    this.statements = new HashMap();
+    this.statements = new HashMap<String, String>();
     this.lookup_identities = lookup_identities;
   }
 
@@ -91,7 +91,7 @@ public class QueryDescriptor {
   /**
    * INTERNAL: Sets the selected fields.
    */
-  public void setSelects(List selects) {
+  public void setSelects(List<SelectField> selects) {
     this.selects = new SelectField[selects.size()];
     selects.toArray(this.selects);
   }
@@ -99,7 +99,7 @@ public class QueryDescriptor {
   /**
    * INTERNAL: Sets the class type of the query parameters.
    */
-  public void setParameters(List params) {
+  public void setParameters(List<Class<?>> params) {
     this.params = new Class[params.size()];
     params.toArray(this.params);
   }
@@ -110,7 +110,7 @@ public class QueryDescriptor {
   public String getStatement(String[] platforms) {
     for (int i=0; i < platforms.length; i++) {
       if (statements.containsKey(platforms[i])) {
-        return (String)statements.get(platforms[i]);
+        return statements.get(platforms[i]);
       }
     }
     throw new OntopiaRuntimeException("No statement available for query '" + getName() +

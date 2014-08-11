@@ -433,21 +433,21 @@ public class RDBMSStorage implements StorageIF {
   
   // NOTE: query caches are indexed by name spaces. There is typically
   // one query cache instance per topicmap id + query name.
-  protected Map qcmap = new HashMap();
+  protected Map<IdentityIF, Map<String, EvictableIF>> qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
   
-  public synchronized Object getHelperObject(int identifier, IdentityIF namespace) {
+  public synchronized EvictableIF getHelperObject(int identifier, IdentityIF namespace) {
     if (isSharedCache()) {
       // get query cache map for namespace 
-      Map qcm = (Map)qcmap.get(namespace);
+      Map<String, EvictableIF> qcm = qcmap.get(namespace);
       if (qcm == null) {
-        qcm = new HashMap();
+        qcm = new HashMap<String, EvictableIF>();
         qcmap.put(namespace, qcm);
       }
 
       switch (identifier) {
       case CachesIF.QUERY_CACHE_SRCLOC: {
         final String name = "TopicMapIF.getObjectByItemIdentifier";
-        QueryCache qc = (QueryCache)qcm.get(name);
+        EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_srcloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.srcloc.lru"), 2000);
           CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SRCLOC, namespace);
@@ -458,7 +458,7 @@ public class RDBMSStorage implements StorageIF {
       }
       case CachesIF.QUERY_CACHE_SUBIND: {
         final String name = "TopicMapIF.getTopicBySubjectIdentifier";
-        QueryCache qc = (QueryCache)qcm.get(name);
+        EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_subind = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru"), 1000);
           CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SUBIND, namespace);
@@ -469,7 +469,7 @@ public class RDBMSStorage implements StorageIF {
       }
       case CachesIF.QUERY_CACHE_SUBLOC: {
         final String name = "TopicMapIF.getTopicBySubject";
-        QueryCache qc = (QueryCache)qcm.get(name);
+        EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_subloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru"), 100);    
           CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SUBLOC, namespace);
@@ -480,7 +480,7 @@ public class RDBMSStorage implements StorageIF {
       }
       case CachesIF.QUERY_CACHE_RT1: {
         final String name = "TopicIF.getRolesByType";
-        QueryCache qc = (QueryCache)qcm.get(name);
+        EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype.lru"), 1000);
           CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_RT1, namespace);
@@ -491,7 +491,7 @@ public class RDBMSStorage implements StorageIF {
       }
       case CachesIF.QUERY_CACHE_RT2: {
         final String name = "TopicIF.getRolesByType2";
-        TransactionalLookupIndexIF li = (TransactionalLookupIndexIF)qcm.get(name);
+        EvictableIF li = qcm.get(name);
         if (li == null) {
           int lrusize = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype2.lru"), 1000);
           CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_RT2, namespace);
@@ -588,7 +588,7 @@ public class RDBMSStorage implements StorageIF {
       // clear shared cache
       ((SharedCache)scache).clear(true);
       // clear helper objects
-      this.qcmap = new HashMap();
+      this.qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
     }
   }
   
@@ -596,19 +596,19 @@ public class RDBMSStorage implements StorageIF {
     if (isSharedCache()) {
       EvictableIF ho;
       
-      ho = (EvictableIF)getHelperObject(CachesIF.QUERY_CACHE_SRCLOC, namespace);
+      ho = getHelperObject(CachesIF.QUERY_CACHE_SRCLOC, namespace);
       ho.clear(true);
       
-      ho = (EvictableIF)getHelperObject(CachesIF.QUERY_CACHE_SUBIND, namespace);
+      ho = getHelperObject(CachesIF.QUERY_CACHE_SUBIND, namespace);
       ho.clear(true);
       
-      ho = (EvictableIF)getHelperObject(CachesIF.QUERY_CACHE_SUBLOC, namespace);
+      ho = getHelperObject(CachesIF.QUERY_CACHE_SUBLOC, namespace);
       ho.clear(true);
       
-      ho = (EvictableIF)getHelperObject(CachesIF.QUERY_CACHE_RT1, namespace);
+      ho = getHelperObject(CachesIF.QUERY_CACHE_RT1, namespace);
       ho.clear(true);
       
-      ho = (EvictableIF)getHelperObject(CachesIF.QUERY_CACHE_RT2, namespace);
+      ho = getHelperObject(CachesIF.QUERY_CACHE_RT2, namespace);
       ho.clear(true);
     }
   }

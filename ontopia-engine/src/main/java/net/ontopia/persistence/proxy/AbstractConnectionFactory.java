@@ -49,14 +49,14 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
     }
   }
 
-  protected Map properties;
+  protected Map<String, String> properties;
   
   protected String connstring;
   protected String driver;
   protected String username;
   protected String password;
 
-  public AbstractConnectionFactory(Map properties) {
+  public AbstractConnectionFactory(Map<String, String> properties) {
     this.properties = properties;
     
     driver = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.DriverClass");

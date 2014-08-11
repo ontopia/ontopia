@@ -41,15 +41,15 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(IndicatorFieldHandler.class.getName());
 
-  protected ObjectRelationalMappingIF mapping;
-  protected Map indicators;
+  protected final ObjectRelationalMappingIF mapping;
+  protected final Map<Object, Class<?>> indicators;
 
   protected FieldHandlerIF common_handler;
 
   /**
    * INTERNAL:
    */
-  public IndicatorFieldHandler(ObjectRelationalMappingIF mapping, Map indicators) {
+  public IndicatorFieldHandler(ObjectRelationalMappingIF mapping, Map<Object, Class<?>> indicators) {
     this.mapping = mapping;
     this.indicators = indicators;
   }
@@ -57,7 +57,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
   public int getColumnCount() {
     if (common_handler == null)
       // Register common handler by pulling out first indicated class.
-      registerCommonFieldHandler((Class)indicators.values().iterator().next());
+      registerCommonFieldHandler(indicators.values().iterator().next());
     return 1 + common_handler.getColumnCount();
   }
   
@@ -65,7 +65,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     return true;
   }
 
-  protected void registerCommonFieldHandler(Class indicated_klass) {
+  protected void registerCommonFieldHandler(Class<?> indicated_klass) {
     // Register common identity field handler if not already set.
     if (common_handler != null) return;    
     common_handler = mapping.getClassInfo(indicated_klass).getIdentityFieldInfo();    
@@ -81,7 +81,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     Object indicator = rs.getObject(rsindex);
     
     // Get class info
-    Class indicated_klass = (Class)indicators.get(indicator);
+    Class<?> indicated_klass = indicators.get(indicator);
     if (indicated_klass == null)
       throw new OntopiaRuntimeException("Indicator '" + indicator + "' unknown.");
     

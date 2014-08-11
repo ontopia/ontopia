@@ -73,7 +73,7 @@ public interface StorageIF {
   /**
    * INTERNAL: Gets the properties held by the storage.
    */
-  public Map getProperties();
+  public Map<String, String> getProperties();
 
   /**
    * INTERNAL: Gets the value of the specified storage property.

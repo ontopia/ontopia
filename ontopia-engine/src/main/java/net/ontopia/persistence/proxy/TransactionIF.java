@@ -286,9 +286,9 @@ public interface TransactionIF {
   // Prefetching
   // ----------------------------------------------------------------------------
 
-  public void prefetch(Class<?> type, int field, boolean traverse, Collection identities);
+  public void prefetch(Class<?> type, int field, boolean traverse, Collection<IdentityIF> identities);
 
-  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection identities);
+  public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection<IdentityIF> identities);
   
   // -----------------------------------------------------------------------------
   // Queries

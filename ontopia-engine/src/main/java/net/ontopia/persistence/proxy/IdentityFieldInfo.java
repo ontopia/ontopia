@@ -139,7 +139,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
   
   protected String[] computeValueColumns() {
     // Collect column names from children
-    List names = new ArrayList();
+    List<String> names = new ArrayList<String>();
     aggregateColumnNames(names);
     // Morph into a string array
     String[] _names = new String[names.size()];

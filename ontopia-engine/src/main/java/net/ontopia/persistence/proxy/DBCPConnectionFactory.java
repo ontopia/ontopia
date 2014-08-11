@@ -61,7 +61,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   protected boolean defaultReadOnly;
   protected int defaultTransactionIsolation = Connection.TRANSACTION_READ_COMMITTED;
   
-  public DBCPConnectionFactory(Map properties, boolean defaultReadOnly) {
+  public DBCPConnectionFactory(Map<String, String> properties, boolean defaultReadOnly) {
     super(properties);
     this.defaultReadOnly = defaultReadOnly;
     // set up connection pool

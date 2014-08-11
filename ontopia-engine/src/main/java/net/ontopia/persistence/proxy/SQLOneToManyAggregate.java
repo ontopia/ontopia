@@ -113,7 +113,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   
   public Object load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception {    
     // Prepare result collection
-    Collection result = new HashSet();
+    Collection<Object> result = new HashSet<Object>();
 
     // Get ticket
     TicketIF ticket = registrar.getTicket();
@@ -166,13 +166,12 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     return result;
   }
   
-  public Object loadMultiple(AccessRegistrarIF registrar, Collection identities, 
+  public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                              IdentityIF current) throws Exception {    
     // Prepare result collection
-    Map results = new HashMap(identities.size());
-    Iterator iter = identities.iterator();
-    while (iter.hasNext()) {
-      results.put(iter.next(), new HashSet());
+    Map<IdentityIF, Collection<Object>> results = new HashMap<IdentityIF, Collection<Object>>(identities.size());
+    for (IdentityIF identity : identities) {
+      results.put(identity, new HashSet<Object>());
     }
 
     // Get ticket
@@ -227,9 +226,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     }
 
     // Update persistence cache
-    Iterator rkeys = results.keySet().iterator();
-    while (rkeys.hasNext()) {
-      IdentityIF rkey = (IdentityIF)rkeys.next();
+    for (IdentityIF rkey : results.keySet()) {
       registrar.registerField(ticket, rkey, field.getIndex(), results.get(rkey));
     }
 
@@ -237,13 +234,13 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     return results.get(current);
   }
   
-  protected void add(IdentityIF identity, Collection values) throws Exception {
+  protected void add(IdentityIF identity, Collection<?> values) throws Exception {
     // Prepare statement
     PreparedStatement stm = add_getStatement();
     try {      
       
       // Loop over the values
-      Iterator iter = values.iterator();
+      Iterator<?> iter = values.iterator();
       while (iter.hasNext()) {
         
         // Bind parameters
@@ -274,13 +271,13 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
-  protected void remove(IdentityIF identity, Collection values) throws Exception {
+  protected void remove(IdentityIF identity, Collection<?> values) throws Exception {
     // Prepare statement
     PreparedStatement stm = remove_getStatement();
     try {
       
       // Loop over the values
-      Iterator iter = values.iterator();
+      Iterator<?> iter = values.iterator();
       while (iter.hasNext()) {
         
         // Bind parameters
@@ -344,8 +341,8 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     TrackableCollectionIF value = (TrackableCollectionIF)oaccess.getValue(object, field);
 
     // Compare added values
-    Collection added = value.getAdded();
-    Collection removed = value.getRemoved();
+    Collection<?> added = value.getAdded();
+    Collection<?> removed = value.getRemoved();
     
     // Add added values
     if (added != null && !added.isEmpty())
