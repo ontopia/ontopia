@@ -50,7 +50,7 @@ public interface StorageIF {
   /**
    * INTERNAL: Returns the shared caches.
    */
-  public Object getHelperObject(int identifier, IdentityIF namespace);
+  public EvictableIF getHelperObject(int identifier, IdentityIF namespace);
 
   /**
    * INTERNAL: Notify cluster that transaction has been committed, so
