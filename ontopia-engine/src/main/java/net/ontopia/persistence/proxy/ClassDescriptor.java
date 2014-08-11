@@ -161,7 +161,7 @@ public class ClassDescriptor {
    * don't have explicit identity.
    */
   public FieldDescriptor[] getAggregateFields() {
-    if (isAggregate()) return new FieldDescriptor[0];
+    if (isAggregate()) return getFieldDescriptors();
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : getFieldDescriptors()) {
       if (fdesc.isAggregateField())
