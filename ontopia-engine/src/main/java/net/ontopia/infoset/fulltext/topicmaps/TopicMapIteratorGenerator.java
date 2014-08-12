@@ -22,13 +22,11 @@ package net.ontopia.infoset.fulltext.topicmaps;
 
 import java.io.IOException;
 import java.util.Iterator;
-
-import net.ontopia.infoset.fulltext.core.EventGeneratorIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
   
 /**
@@ -41,7 +39,7 @@ import net.ontopia.topicmaps.core.VariantNameIF;
  * be set before the event generation can be started.<p>
  */
 
-public class TopicMapIteratorGenerator implements EventGeneratorIF {
+public class TopicMapIteratorGenerator {
 
   protected TopicMapDocumentGeneratorIF docgen;
   protected TopicMapIF topicmap;
