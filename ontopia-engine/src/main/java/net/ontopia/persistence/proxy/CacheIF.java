@@ -26,15 +26,15 @@ import java.util.Collection;
  * INTERNAL: Simple interface used by innermost caches.
  */
 
-public interface CacheIF {
+public interface CacheIF<K, V> {
 
-  public Object get(Object key);
+  public V get(K key);
 
-  public Object put(Object key, Object value);
+  public V put(K key, V value);
 
-  public Object remove(Object key, boolean notifyCluster);
+  public V remove(K key, boolean notifyCluster);
 
-  public void removeAll(Collection keys, boolean notifyCluster);
+  public void removeAll(Collection<K> keys, boolean notifyCluster);
 
   public void clear(boolean notifyCluster);
 

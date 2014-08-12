@@ -302,7 +302,7 @@ public class RDBMSStorage implements StorageIF {
     if (PropertyUtils.isTrue(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.shared"), true)) {
       
       // default shared cache
-      this.scache = new SharedCache(this, caches.createDataCache());
+      this.scache = new SharedCache(this, caches.<IdentityIF, CacheEntry>createDataCache());
       ((SharedCache)this.scache).setCluster(cluster);              
       
       // instrument shared cache
