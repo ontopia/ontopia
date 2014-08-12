@@ -23,7 +23,8 @@ package net.ontopia.persistence.proxy;
 import java.util.Collections;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.SoftHashMap;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 
 
 /**
@@ -37,11 +38,11 @@ public class DefaultCaches implements CachesIF {
     // will every be requested anyway as we do not do any clustering.
   }
   
-  public Map createDataCache() {
-    return Collections.synchronizedMap(new SoftHashMap());
+  public <K, V> Map<K, V> createDataCache() {
+    return Collections.synchronizedMap(this.<K, V>createSoftHashMap());
   }
   
-  public CacheIF createCache(int cacheType, IdentityIF namespace) {
+  public <K, V> CacheIF<K, V> createCache(int cacheType, IdentityIF namespace) {
     switch (cacheType) {
     case CachesIF.QUERY_CACHE_SRCLOC:
       return createCache();
@@ -60,8 +61,11 @@ public class DefaultCaches implements CachesIF {
   
   // --- helper
 
-  private CacheIF createCache() {
-    return new DefaultCache(new SoftHashMap());
+  private <K, V> CacheIF<K, V> createCache() {
+    return new DefaultCache<K, V>(this.<K, V>createSoftHashMap());
   }
-  
+
+  private <K, V> Map<K, V> createSoftHashMap() {
+    return new ReferenceMap<K, V>(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
+  }
 }

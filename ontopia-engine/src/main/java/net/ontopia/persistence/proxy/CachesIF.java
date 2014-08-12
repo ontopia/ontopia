@@ -35,8 +35,8 @@ public interface CachesIF {
   public static final int QUERY_CACHE_RT1 = 16;
   public static final int QUERY_CACHE_RT2 = 32;
 
-  public Map createDataCache();
+  public <K, V> Map<K, V> createDataCache();
 
-  public CacheIF createCache(int cacheType, IdentityIF namespace);
+  public <K, V> CacheIF<K, V> createCache(int cacheType, IdentityIF namespace);
   
 }

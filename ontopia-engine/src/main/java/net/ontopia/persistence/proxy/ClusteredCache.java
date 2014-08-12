@@ -20,10 +20,8 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.Map;
-import java.util.Iterator;
 import java.util.Collection;
-
+import java.util.Map;
 import net.ontopia.utils.StringUtils;
 
 /**
@@ -31,41 +29,40 @@ import net.ontopia.utils.StringUtils;
  * cluster about removals. All access is synchronized.
  */
 
-public final class ClusteredCache implements CacheIF {
+public final class ClusteredCache<K, V> implements CacheIF<K, V> {
 
-  protected Map cache;
+  protected final Map<K, V> cache;
 
   protected ClusterIF cluster;
   protected int cacheType;
   protected IdentityIF namespace;
   
-  ClusteredCache(Map cache, ClusterIF cluster, int cacheType, IdentityIF namespace) {
+  ClusteredCache(Map<K, V> cache, ClusterIF cluster, int cacheType, IdentityIF namespace) {
     this.cache = cache;
     this.cluster = cluster;
     this.cacheType = cacheType;
     this.namespace = namespace;    
   }
 
-  public synchronized Object get(Object key) {
+  public synchronized V get(K key) {
     return cache.get(key);
   }
 
-  public synchronized Object put(Object key, Object value) {
+  public synchronized V put(K key, V value) {
     return cache.put(key, value);
   }
   
-  public synchronized Object remove(Object key, boolean notifyCluster) {
-    Object o = cache.remove(key);
+  public synchronized V remove(K key, boolean notifyCluster) {
+    V o = cache.remove(key);
     // notify cluster
     if (notifyCluster)
       cluster.evictCache(namespace, cacheType, key);
     return o;
   }
   
-  public synchronized void removeAll(Collection keys, boolean notifyCluster) {
-    Iterator iter = keys.iterator();
-    while (iter.hasNext()) {
-      cache.remove(iter.next());
+  public synchronized void removeAll(Collection<K> keys, boolean notifyCluster) {
+    for (K key : keys) {
+      cache.remove(key);
     }
     // notify cluster
     if (notifyCluster)
@@ -85,11 +82,9 @@ public final class ClusteredCache implements CacheIF {
       
       if (dumpCache) {
         out.write("<table>\n");
-        Iterator iter = cache.keySet().iterator();
-        while (iter.hasNext()) {
-          Object key = iter.next();
+        for (K key : cache.keySet()) {
           if (key == null) continue;
-          Object val = cache.get(key);
+          V val = cache.get(key);
           out.write("<tr><td>");
           out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
           out.write("</td><td>");

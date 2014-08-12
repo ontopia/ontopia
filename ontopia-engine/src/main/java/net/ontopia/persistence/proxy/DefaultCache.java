@@ -20,10 +20,8 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.Map;
-import java.util.Iterator;
 import java.util.Collection;
-
+import java.util.Map;
 import net.ontopia.utils.StringUtils;
 
 /**
@@ -31,30 +29,29 @@ import net.ontopia.utils.StringUtils;
  * synchronized.
  */
 
-public final class DefaultCache implements CacheIF {
+public final class DefaultCache<K, V> implements CacheIF<K, V> {
 
-  protected Map cache;
+  protected final Map<K, V> cache;
   
-  DefaultCache(Map cache) {
+  DefaultCache(Map<K, V> cache) {
     this.cache = cache;
   }
 
-  public synchronized Object get(Object key) {
+  public synchronized V get(K key) {
     return cache.get(key);
   }
 
-  public synchronized Object put(Object key, Object value) {
+  public synchronized V put(K key, V value) {
     return cache.put(key, value);
   }
   
-  public synchronized Object remove(Object key, boolean notifyCluster) {
+  public synchronized V remove(K key, boolean notifyCluster) {
     return cache.remove(key);
   }
   
-  public synchronized void removeAll(Collection keys, boolean notifyCluster) {
-    Iterator iter = keys.iterator();
-    while (iter.hasNext()) {
-      cache.remove(iter.next());
+  public synchronized void removeAll(Collection<K> keys, boolean notifyCluster) {
+    for (K key : keys) {
+      cache.remove(key);
     }
   }
 
@@ -68,9 +65,7 @@ public final class DefaultCache implements CacheIF {
       
       if (dumpCache) {
         out.write("<table>\n");
-        Iterator iter = cache.keySet().iterator();
-        while (iter.hasNext()) {
-          Object key = iter.next();
+        for (K key : cache.keySet()) {
           if (key == null) continue;
           Object val = cache.get(key);
           out.write("<tr><td>");

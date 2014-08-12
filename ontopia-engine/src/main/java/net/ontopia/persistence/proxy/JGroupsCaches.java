@@ -23,7 +23,8 @@ package net.ontopia.persistence.proxy;
 import java.util.Collections;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.SoftHashMap;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 
 /**
  * INTERNAL: Caches used by JGroups cluster.
@@ -37,11 +38,11 @@ public class JGroupsCaches implements CachesIF {
     this.cluster = cluster;
   }
   
-  public Map createDataCache() {
-    return Collections.synchronizedMap(new SoftHashMap());
+  public <K, V> Map<K, V> createDataCache() {
+    return Collections.synchronizedMap(this.<K, V>createSoftHashMap());
   }
   
-  public CacheIF createCache(int cacheType, IdentityIF namespace) {
+  public <K, V>CacheIF<K, V> createCache(int cacheType, IdentityIF namespace) {
     switch (cacheType) {
     case CachesIF.QUERY_CACHE_SRCLOC:
       return _createCache(cacheType, namespace);
@@ -60,8 +61,11 @@ public class JGroupsCaches implements CachesIF {
 
   // --- helper
     
-  private CacheIF _createCache(int cacheType, IdentityIF namespace) {
-    return new ClusteredCache(new SoftHashMap(), this.cluster, cacheType, namespace);
+  private <K, V> CacheIF<K, V> _createCache(int cacheType, IdentityIF namespace) {
+    return new ClusteredCache<K, V>(this.<K, V>createSoftHashMap(), this.cluster, cacheType, namespace);
   }
-  
+
+  private <K, V> Map<K, V> createSoftHashMap() {
+    return new ReferenceMap<K, V>(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
+  }
 }
