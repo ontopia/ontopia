@@ -34,12 +34,12 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * that has been removed.
  */
 
-public class TrackableSet extends HashSet implements TrackableCollectionIF {
+public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF<E> {
 
   protected TransactionIF txn;
 
-  protected Set added;
-  protected Set removed;
+  protected Set<E> added;
+  protected Set<E> removed;
 
   public void dump() {
     System.out.println("(TS: " + this + ")");
@@ -47,16 +47,16 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
     System.out.println("   (-: " + removed + ")");
   }
 
-  public TrackableSet(TransactionIF txn, Collection coll) {
+  public TrackableSet(TransactionIF txn, Collection<E> coll) {
     // init with coll size
     super((coll == null ? 0 : coll.size()));
     init(txn, coll);
   }
   
-  private synchronized void init(TransactionIF txn, Collection coll) {
+  private synchronized void init(TransactionIF txn, Collection<E> coll) {
     // add to collection if not null and not empty
     if (coll != null && !coll.isEmpty()) {
-      Iterator iter = coll.iterator();
+      Iterator<E> iter = coll.iterator();
       while (iter.hasNext()) {
         super.add(iter.next());
       }
@@ -76,25 +76,25 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
   public void selfAdded() {
     if (!isEmpty()) {
       if (added == null)
-        added = new HashSet(this);
+        added = new HashSet<E>(this);
       else
         added.addAll(this);
     }
   }
 
-  public Collection getAdded() {
+  public Collection<E> getAdded() {
     return added;
   }
 
-  public Collection getRemoved() {
+  public Collection<E> getRemoved() {
     return removed;
   }
   
-  public boolean addWithTracking(Object _o) {
+  public boolean addWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
-    Object o;
+    E o;
     if (_o instanceof PersistentIF) {
-      o = ((PersistentIF)_o)._p_getIdentity();
+      o = (E) ((PersistentIF)_o)._p_getIdentity();
       if (o == null) throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
     } else
       o = _o;
@@ -105,18 +105,18 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
       // Register added object and remove object from removed objects
       if (removed == null || !removed.remove(o)) {
         // Initialize added set
-        if (added == null) added = new HashSet(4);
+        if (added == null) added = new HashSet<E>(4);
         added.add(o);
       }
     }
     return result;
   }
 
-  public boolean removeWithTracking(Object _o) {
+  public boolean removeWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
-    Object o;
+    E o;
     if (_o instanceof PersistentIF) {
-      o = ((PersistentIF)_o)._p_getIdentity();
+      o = (E) ((PersistentIF)_o)._p_getIdentity();
       if (o == null) throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
     } else
       o = _o;
@@ -135,7 +135,7 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
   }
 
   public void clearWithTracking() {
-    Iterator iter = new ArrayList(this).iterator();
+    Iterator<E> iter = new ArrayList<E>(this).iterator();
     while (iter.hasNext()) {
       removeWithTracking(iter.next());
     }
@@ -147,11 +147,11 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
     throw new UnsupportedOperationException();
   }
 
-  public boolean add(Object o) {
+  public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean addAll(Collection c) {
+  public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
@@ -159,18 +159,18 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
     throw new UnsupportedOperationException();
   }
 
-  public boolean removeAll(Collection c) {
+  public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean retainAll(Collection c) {
+  public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
   // -- iterator
 
-  public Iterator iterator() {
-    return new PersistentIterator(txn, true, super.iterator());
+  public Iterator<E> iterator() {
+    return new PersistentIterator<E>(txn, true, super.iterator());
   }
 
   // -- other
@@ -179,7 +179,7 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
     return super.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
-  public boolean containsAll(Collection c) {
+  public boolean containsAll(Collection<?> c) {
     Iterator e = c.iterator();
     while (e.hasNext())
       if(!contains(e.next()))
@@ -205,15 +205,16 @@ public class TrackableSet extends HashSet implements TrackableCollectionIF {
     }
   }
 
-  public Object[] toArray(Object[] a) {
+  @SuppressWarnings("unchecked")
+  public <T> T[] toArray(T[] a) {
     int size = size();
     if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+      a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
 
     int i = 0;
-    Iterator it = iterator();
+    Iterator<E> it = iterator();
     for (; it.hasNext(); i++) {    
-      a[i] = it.next();
+      a[i] = (T) it.next();
     }
     
     if (a.length > i+1)

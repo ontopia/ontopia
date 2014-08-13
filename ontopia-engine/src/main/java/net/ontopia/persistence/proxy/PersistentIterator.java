@@ -29,16 +29,16 @@ import java.util.NoSuchElementException;
  * that have been deleted will silently be ignored.
  */
 
-public class PersistentIterator implements Iterator {
+public class PersistentIterator<E> implements Iterator<E> {
 
   final protected TransactionIF txn;
   final private boolean acceptDeleted; 
-  final private Iterator iter;
+  final private Iterator<?> iter;
 
   private int has_next = -1;
-  private Object next;
+  private E next;
 
-  PersistentIterator(TransactionIF txn, boolean acceptDeleted, Iterator iter) {
+  PersistentIterator(TransactionIF txn, boolean acceptDeleted, Iterator<?> iter) {
     this.txn = txn;
     this.acceptDeleted = acceptDeleted;
     this.iter = iter;
@@ -55,7 +55,7 @@ public class PersistentIterator implements Iterator {
     }
   }
 
-  public Object next() {
+  public E next() {
     if (has_next == 0) {
       throw new NoSuchElementException();
     } else if (has_next == 1) {
@@ -87,7 +87,7 @@ public class PersistentIterator implements Iterator {
           _next();          
         } else {
           has_next = 1;
-          next = o;
+          next = (E) o;
         }
       } catch (Throwable t) {
         has_next = -1;
@@ -95,7 +95,7 @@ public class PersistentIterator implements Iterator {
       }
     } else {
       has_next = 1;
-      next = o;
+      next = (E) o;
     }
   }
 
