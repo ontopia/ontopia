@@ -28,7 +28,7 @@ import java.util.Collection;
  * have been added and the ones that has been removed.
  */
 
-public interface TrackableCollectionIF extends Collection {
+public interface TrackableCollectionIF<E> extends Collection<E> {
   
   /**
    * INTERNAL: Clears the list of added and removed objects without
@@ -45,13 +45,13 @@ public interface TrackableCollectionIF extends Collection {
   /**
    * INTERNAL: Adds the item to the collection tracking the change.
    */
-  public boolean addWithTracking(Object item);
+  public boolean addWithTracking(E item);
 
   /**
    * INTERNAL: Removes the item from the collection tracking the
    * change.
    */
-  public boolean removeWithTracking(Object item);
+  public boolean removeWithTracking(E item);
 
   /**
    * INTERNAL: Removes all items from the collection tracking the
@@ -84,13 +84,13 @@ public interface TrackableCollectionIF extends Collection {
    * collection is immutable. Null is returned if the added collection
    * has not been initialized, ie. it is empty.
    */
-  public Collection getAdded();
+  public Collection<E> getAdded();
 
   /**
    * INTERNAL: Gets the objects that have been removed from the
    * set. This collection is immutable. Null is returned if the
    * removed collection has not been initialized, ie. it is empty.
    */
-  public Collection getRemoved();
+  public Collection<E> getRemoved();
   
 }

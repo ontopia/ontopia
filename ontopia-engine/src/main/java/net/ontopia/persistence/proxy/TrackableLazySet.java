@@ -36,15 +36,15 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * storage when it is actually needed.
  */
 
-public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
+public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollectionIF<E> {
 
   protected TransactionIF txn;
   protected IdentityIF identity;
   protected int field;
   protected boolean loaded;
 
-  protected Set added;
-  protected Set removed;
+  protected Set<E> added;
+  protected Set<E> removed;
 
   public void dump() {
     System.out.println("(TS: " + this + ")");
@@ -70,25 +70,25 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
   public void selfAdded() {
     if (!isEmpty()) {
       if (added == null)
-        added = new HashSet(this);
+        added = new HashSet<E>(this);
       else
         added.addAll(this);
     }
   }
 
-  public Collection getAdded() {
+  public Collection<E> getAdded() {
     return added;
   }
 
-  public Collection getRemoved() {
+  public Collection<E> getRemoved() {
     return removed;
   }
   
-  public boolean addWithTracking(Object _o) {
+  public boolean addWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
-    Object o;
+    E o;
     if (_o instanceof PersistentIF) {
-      o = ((PersistentIF)_o)._p_getIdentity();
+      o = (E) ((PersistentIF)_o)._p_getIdentity();
       if (o == null) throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
     } else
       o = _o;
@@ -99,18 +99,18 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
       // Register added object and remove object from removed objects
       if (removed == null || !removed.remove(o)) {
         // Initialize added set
-        if (added == null) added = new HashSet(4);
+        if (added == null) added = new HashSet<E>(4);
         added.add(o);
       }
     }
     return result;
   }
 
-  public boolean removeWithTracking(Object _o) {
+  public boolean removeWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
-    Object o;
+    E o;
     if (_o instanceof PersistentIF) {
-      o = ((PersistentIF)_o)._p_getIdentity();
+      o = (E) ((PersistentIF)_o)._p_getIdentity();
       if (o == null) throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
     } else
       o = _o;
@@ -129,7 +129,7 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
   }
 
   public void clearWithTracking() {
-    Iterator iter = new ArrayList(this).iterator();
+    Iterator<E> iter = new ArrayList<E>(this).iterator();
     while (iter.hasNext()) {
       removeWithTracking(iter.next());
     }
@@ -141,11 +141,11 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
     throw new UnsupportedOperationException();
   }
 
-  public boolean add(Object o) {
+  public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean addAll(Collection c) {
+  public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
@@ -153,19 +153,19 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
     throw new UnsupportedOperationException();
   }
 
-  public boolean removeAll(Collection c) {
+  public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean retainAll(Collection c) {
+  public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
   // -- iterator
 
-  public Iterator iterator() {
+  public Iterator<E> iterator() {
     loadField(); // materialize
-    return new PersistentIterator(txn, true, super.iterator());
+    return new PersistentIterator<E>(txn, true, super.iterator());
   }
 
   // -- other
@@ -175,7 +175,7 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
     return super.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
-  public boolean containsAll(Collection c) {
+  public boolean containsAll(Collection<?> c) {
     Iterator e = c.iterator();
     while (e.hasNext())
       if(!contains(e.next()))
@@ -222,16 +222,17 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
     }
   }
 
-  public Object[] toArray(Object[] a) {
+  @SuppressWarnings("unchecked")
+  public <T> T[] toArray(T[] a) {
     // materialized in size()
     int size = size();
     if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+      a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
 
     int i = 0;
-    Iterator it = iterator();
+    Iterator<E> it = iterator();
     for (; it.hasNext(); i++) {    
-      a[i] = it.next();
+      a[i] = (T) it.next();
     }
     
     if (a.length > i+1)
@@ -250,21 +251,21 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
     if (!loaded) {
       synchronized (this) {
         if (!loaded) {
-          Collection _coll = null;
+          Collection<E> _coll = null;
           try {
-            _coll = (Collection)txn.loadField(identity, field);
+            _coll = (Collection<E>)txn.loadField(identity, field);
           } catch (IdentityNotFoundException e) {
             // let coll be null
           }
           if (_coll != null && !_coll.isEmpty()) {
             // add all loaded elements to self
-            Iterator iter = _coll.iterator();
+            Iterator<E> iter = _coll.iterator();
             while (iter.hasNext()) {
               super.add(iter.next());
             }
             // only remove if there's something there
             if (removed != null && !removed.isEmpty()) {
-              Iterator i = removed.iterator();
+              Iterator<E> i = removed.iterator();
               while (i.hasNext()) {
                 if (!super.remove(i.next()))
                   // should not be part of removed list if not removable
@@ -273,7 +274,7 @@ public class TrackableLazySet extends HashSet implements TrackableCollectionIF {
             }
           }
           if (added != null && !added.isEmpty()) {
-            Iterator i = added.iterator();
+            Iterator<E> i = added.iterator();
             while (i.hasNext()) {
               if (!super.add(i.next()))
                 // should not be part of added list if not addable

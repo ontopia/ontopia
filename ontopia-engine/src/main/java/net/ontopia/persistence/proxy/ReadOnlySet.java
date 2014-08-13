@@ -30,13 +30,13 @@ import java.util.Set;
  * that has been removed.
  */
 
-public class ReadOnlySet implements Set {
+public class ReadOnlySet<E> implements Set<E> {
 
   protected TransactionIF txn;
 
-  protected Collection coll;
+  protected final Collection<?> coll;
 
-  public ReadOnlySet(TransactionIF txn, Collection coll) {
+  public ReadOnlySet(TransactionIF txn, Collection<?> coll) {
     this.txn = txn;
     this.coll = coll;
   }
@@ -47,11 +47,11 @@ public class ReadOnlySet implements Set {
     throw new UnsupportedOperationException();
   }
 
-  public boolean add(Object o) {
+  public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean addAll(Collection c) {
+  public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
@@ -59,11 +59,11 @@ public class ReadOnlySet implements Set {
     throw new UnsupportedOperationException();
   }
 
-  public boolean removeAll(Collection c) {
+  public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean retainAll(Collection c) {
+  public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
@@ -79,8 +79,8 @@ public class ReadOnlySet implements Set {
 
   // -- iterator
 
-  public Iterator iterator() {
-    return new PersistentIterator(txn, false, coll.iterator());
+  public Iterator<E> iterator() {
+    return new PersistentIterator<E>(txn, false, coll.iterator());
   }
 
   // -- other
@@ -89,8 +89,8 @@ public class ReadOnlySet implements Set {
     return coll.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
-  public boolean containsAll(Collection c) {
-    Iterator e = c.iterator();
+  public boolean containsAll(Collection<?> c) {
+    Iterator<?> e = c.iterator();
     while (e.hasNext())
       if(!contains(e.next()))
         return false;
@@ -100,20 +100,21 @@ public class ReadOnlySet implements Set {
 
   public Object[] toArray() {
     Object[] result = new Object[size()];
-    Iterator e = iterator();
+    Iterator<E> e = iterator();
     for (int i=0; e.hasNext(); i++)
       result[i] = e.next();
     return result;
   }
 
-  public Object[] toArray(Object[] a) {
+  @SuppressWarnings("unchecked")
+  public <T> T[] toArray(T[] a) {
     int size = size();
     if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+      a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
     
-    Iterator it=iterator();
+    Iterator<E> it=iterator();
     for (int i=0; i<size; i++)
-      a[i] = it.next();
+      a[i] = (T) it.next();
     
     if (a.length > size)
       a[size] = null;
