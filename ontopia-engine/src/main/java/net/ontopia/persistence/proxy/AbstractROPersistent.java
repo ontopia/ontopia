@@ -77,13 +77,13 @@ public abstract class AbstractROPersistent implements PersistentIF {
    * specified field value. This call will lead to the value being
    * retrieved from the data repository.
    */
-  protected Object loadField(int field) {
+  protected <F> F loadField(int field) {
     // get identity
     IdentityIF identity = _p_getIdentity();
     if (identity == null) return null;
     // load from storage
     try { 
-      return txn.loadField(identity, field);
+      return txn.<F>loadField(identity, field);
     } catch (IdentityNotFoundException e) {
       return null;
     }
@@ -91,22 +91,22 @@ public abstract class AbstractROPersistent implements PersistentIF {
 
   // NOTE: method will throw IdentityNotFoundException if value object
   // not found
-  protected Object loadFieldNoCheck(int field) throws IdentityNotFoundException {
+  protected <F> F loadFieldNoCheck(int field) throws IdentityNotFoundException {
     // get identity
     IdentityIF identity = _p_getIdentity();
     if (identity == null) return null;
     // load from storage
-    return txn.loadField(identity, field);
+    return txn.<F>loadField(identity, field);
   }
 
-  protected Collection loadCollectionField(int field) {
+  protected <F> Collection<F> loadCollectionField(int field) {
     // get identity
     IdentityIF identity = _p_getIdentity();
     if (identity == null) return Collections.EMPTY_SET;
     // load from storage
-    Object coll = null; 
+    Collection<F> coll = null; 
     try {
-      coll = txn.loadField(identity, field);
+      coll = txn.<Collection<F>>loadField(identity, field);
     } catch (IdentityNotFoundException e) {
       // let coll be null
     }
@@ -114,7 +114,7 @@ public abstract class AbstractROPersistent implements PersistentIF {
       return Collections.EMPTY_SET;
     } else {
       // set value and mark field as loaded
-      return new ReadOnlySet(txn, (Collection)coll);
+      return new ReadOnlySet<F>(txn, coll);
     }
   }
 
