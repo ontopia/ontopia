@@ -228,7 +228,7 @@ public interface TransactionIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object loadField(IdentityIF object, int field)
+  public <F> F loadField(IdentityIF object, int field)
     throws IdentityNotFoundException;
 
   /**
