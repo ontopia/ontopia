@@ -71,11 +71,11 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // ---------------------------------------------------------------------------
 
   public TopicIF getTopic() {
-    return (TopicIF)loadField(Occurrence.LF_topic);
+    return this.<TopicIF>loadField(Occurrence.LF_topic);
   }
 
   public LocatorIF getDataType() {
-    return (LocatorIF)loadField(Occurrence.LF_datatype);    
+    return this.<LocatorIF>loadField(Occurrence.LF_datatype);    
   }
 
   public void setDataType(LocatorIF datatype) {
@@ -132,7 +132,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   }
 
   public long getLength() {
-    Number length = (Number)loadField(Occurrence.LF_length);
+    Number length = this.<Number>loadField(Occurrence.LF_length);
     long len = (length == null ? 0 : length.longValue());
     if (len < 0)
       return len * -1L;
@@ -145,7 +145,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return (Collection<TopicIF>) loadCollectionField(Occurrence.LF_scope);
+    return this.<TopicIF>loadCollectionField(Occurrence.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -161,7 +161,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
-    return (TopicIF)loadField(Occurrence.LF_type);
+    return this.<TopicIF>loadField(Occurrence.LF_type);
   }
 
   public void setType(TopicIF type) {
@@ -173,7 +173,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(Occurrence.LF_reifier);
+    return this.<TopicIF>loadField(Occurrence.LF_reifier);
   }
   
   public void setReifier(TopicIF reifier) {

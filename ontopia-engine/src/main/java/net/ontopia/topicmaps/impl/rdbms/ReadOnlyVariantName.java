@@ -75,11 +75,11 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   }
 
   public TopicNameIF getTopicName() {
-    return (TopicNameIF)loadField(VariantName.LF_name);
+    return this.<TopicNameIF>loadField(VariantName.LF_name);
   }
 
   public LocatorIF getDataType() {
-    return (LocatorIF)loadField(VariantName.LF_datatype);    
+    return this.<LocatorIF>loadField(VariantName.LF_datatype);    
   }
 
   public void setDataType(LocatorIF datatype) {
@@ -87,7 +87,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   }
 
   public String getValue() {
-    return (String)loadField(VariantName.LF_value);    
+    return this.<String>loadField(VariantName.LF_value);    
   }
 
   public void setValue(String value) {
@@ -117,7 +117,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   }
 
   public long getLength() {
-    Number length = (Number)loadField(VariantName.LF_length);
+    Number length = this.<Number>loadField(VariantName.LF_length);
     long len = (length == null ? 0 : length.longValue());
     if (len < 0)
       return len * -1L;
@@ -130,7 +130,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return (Collection<TopicIF>) loadCollectionField(VariantName.LF_scope);
+    return this.<TopicIF>loadCollectionField(VariantName.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -146,7 +146,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(VariantName.LF_reifier);
+    return this.<TopicIF>loadField(VariantName.LF_reifier);
   }
   
   public void setReifier(TopicIF reifier) {

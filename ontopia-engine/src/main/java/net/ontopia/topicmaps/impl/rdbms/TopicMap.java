@@ -84,7 +84,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   }
 
   public LocatorIF getBaseAddress() {
-    String base_address = (String)loadField(LF_base_address);
+    String base_address = this.<String>loadField(LF_base_address);
     if (base_address == null) return null;
     try {
       return new URILocator(base_address);
@@ -100,7 +100,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   }
 
   public String getTitle() {
-    return (String)loadField(LF_title);
+    return this.<String>loadField(LF_title);
   }
 
   public void setTitle(String title) {
@@ -111,7 +111,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   }
 
   public String getComments() {
-    return (String)loadField(LF_comments);
+    return this.<String>loadField(LF_comments);
   }
 
   public void setComments(String comments) {
@@ -388,7 +388,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(LF_reifier);
+    return this.<TopicIF>loadField(LF_reifier);
   }
   
   public void setReifier(TopicIF _reifier) {

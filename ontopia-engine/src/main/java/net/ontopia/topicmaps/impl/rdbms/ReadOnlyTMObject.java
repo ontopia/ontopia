@@ -64,7 +64,7 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
 
   public TopicMapIF getTopicMap() {
     try {
-      return (TopicMapIF)loadField(TMObject.LF_topicmap);
+      return this.<TopicMapIF>loadField(TMObject.LF_topicmap);
     } catch (IdentityNotFoundException e) {
       // object has been deleted by somebody else, so return null
       return null;
@@ -72,7 +72,7 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
   }
 
   public Collection<LocatorIF> getItemIdentifiers() {
-    return (Collection<LocatorIF>) loadCollectionField(TMObject.LF_sources);
+    return this.<LocatorIF>loadCollectionField(TMObject.LF_sources);
   }
 
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {

@@ -103,7 +103,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getTopic() {
-    return (TopicIF) loadField(LF_topic);
+    return this.<TopicIF>loadField(LF_topic);
   }
 
   /**
@@ -122,15 +122,13 @@ public class TopicName extends TMObject implements TopicNameIF {
     valueChanged(LF_topicmap, topicmap, true);
 
     // Inform variants
-    Collection variants = loadCollectionField(LF_variants);
-    Iterator iter = variants.iterator();
-    while (iter.hasNext()) {
-      ((VariantName) iter.next()).setTopicMap(topicmap);
+    for (VariantName variantname : this.<VariantName>loadCollectionField(LF_variants)) {
+      variantname.setTopicMap(topicmap);
     }
   }
 
   public String getValue() {
-    return (String) loadField(LF_value);
+    return this.<String>loadField(LF_value);
   }
 
   public void setValue(String value) {
@@ -143,7 +141,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   }
 
   public Collection<VariantNameIF> getVariants() {
-    return loadCollectionField(LF_variants);
+    return this.<VariantNameIF>loadCollectionField(LF_variants);
   }
 
   void addVariant(VariantNameIF variant) {
@@ -201,7 +199,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return loadCollectionField(LF_scope);
+    return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -250,7 +248,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
-    return (TopicIF) loadField(LF_type);
+    return this.<TopicIF>loadField(LF_type);
   }
 
   public void setType(TopicIF type) {
@@ -281,7 +279,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF) loadField(LF_reifier);
+    return this.<TopicIF>loadField(LF_reifier);
   }
 
   public void setReifier(TopicIF _reifier) {

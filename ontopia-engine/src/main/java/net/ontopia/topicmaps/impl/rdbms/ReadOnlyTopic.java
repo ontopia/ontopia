@@ -69,7 +69,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   // ---------------------------------------------------------------------------
 
   public Collection<LocatorIF> getSubjectLocators() {
-    return (Collection<LocatorIF>) loadCollectionField(Topic.LF_subjects);
+    return this.<LocatorIF>loadCollectionField(Topic.LF_subjects);
   }
 
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
@@ -81,7 +81,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
 
   public Collection<LocatorIF> getSubjectIdentifiers() {
-    return (Collection<LocatorIF>) loadCollectionField(Topic.LF_indicators);
+    return this.<LocatorIF>loadCollectionField(Topic.LF_indicators);
   }
 
   public void addSubjectIdentifier(LocatorIF subject_identifier) throws ConstraintViolationException {
@@ -93,7 +93,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
   
   public Collection<TopicNameIF> getTopicNames() {
-    return (Collection<TopicNameIF>) loadCollectionField(Topic.LF_names);
+    return this.<TopicNameIF>loadCollectionField(Topic.LF_names);
   }
   
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
@@ -109,7 +109,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
   
   public Collection<OccurrenceIF> getOccurrences() {
-    return (Collection<OccurrenceIF>) loadCollectionField(Topic.LF_occurrences);
+    return this.<OccurrenceIF>loadCollectionField(Topic.LF_occurrences);
   }
   
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
@@ -125,7 +125,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
   
   public Collection<AssociationRoleIF> getRoles() {
-    return (Collection<AssociationRoleIF>) loadCollectionField(Topic.LF_roles);
+    return this.<AssociationRoleIF>loadCollectionField(Topic.LF_roles);
   }
   
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
@@ -168,8 +168,8 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     throw new ReadOnlyException();
   } 
   
-  public Collection getTypes() {
-    return loadCollectionField(Topic.LF_types);
+  public Collection<TopicIF> getTypes() {
+    return this.<TopicIF>loadCollectionField(Topic.LF_types);
   }
   
   public void addType(TopicIF type) {
@@ -181,7 +181,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
 
 	public ReifiableIF getReified() {
-		String reifiedId = (String)loadField(Topic.LF_reified);
+		String reifiedId = this.<String>loadField(Topic.LF_reified);
 		if (reifiedId == null) return null;
 		return (ReifiableIF)getTopicMap().getObjectById(reifiedId);
 	}

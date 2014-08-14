@@ -54,7 +54,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   }
 
   public LocatorIF getBaseAddress() {
-    String base_address = (String)loadField(TopicMap.LF_base_address);
+    String base_address = this.<String>loadField(TopicMap.LF_base_address);
     if (base_address == null) return null;
     try {
       return new URILocator(base_address);
@@ -68,7 +68,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   }
 
   public String getTitle() {
-    return (String)loadField(TopicMap.LF_title);
+    return this.<String>loadField(TopicMap.LF_title);
   }
 
   public void setTitle(String title) {
@@ -301,7 +301,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(TopicMap.LF_reifier);
+    return this.<TopicIF>loadField(TopicMap.LF_reifier);
   }
   
   public void setReifier(TopicIF reifier) {

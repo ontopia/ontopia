@@ -120,7 +120,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public TopicIF getTopic() {
-    return (TopicIF)loadField(LF_topic);
+    return this.<TopicIF>loadField(LF_topic);
   }
 
   /**
@@ -140,7 +140,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public LocatorIF getDataType() {
-    return (LocatorIF) loadField(LF_datatype);    
+    return this.<LocatorIF>loadField(LF_datatype);    
   }
 
   protected void setDataType(LocatorIF datatype) {
@@ -240,7 +240,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public long getLength() {
-    Number length = (Number)loadField(LF_length);
+    Number length = this.<Number>loadField(LF_length);
     long len = (length == null ? 0 : length.longValue());
     if (len < 0)
       return len * -1L;
@@ -252,8 +252,8 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
-  public Collection getScope() {
-    return loadCollectionField(LF_scope);
+  public Collection<TopicIF> getScope() {
+    return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -281,7 +281,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
-    return (TopicIF)loadField(LF_type);
+    return this.<TopicIF>loadField(LF_type);
   }
 
   public void setType(TopicIF type) {
@@ -299,7 +299,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(LF_reifier);
+    return this.<TopicIF>loadField(LF_reifier);
   }
   
   public void setReifier(TopicIF _reifier) {

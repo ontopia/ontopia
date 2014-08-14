@@ -68,7 +68,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
 
   public AssociationIF getAssociation() {
     try {
-      return (AssociationIF)loadFieldNoCheck(AssociationRole.LF_association);
+      return this.<AssociationIF>loadFieldNoCheck(AssociationRole.LF_association);
     } catch (IdentityNotFoundException e) {
       // role or association has been deleted by somebody else, so
       // return a phantom association
@@ -78,7 +78,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
 
   public TopicIF getPlayer() {
     try {
-      return (TopicIF)loadField(AssociationRole.LF_player);
+      return this.<TopicIF>loadField(AssociationRole.LF_player);
     } catch (IdentityNotFoundException e) {
       // role has been deleted by somebody else, so return null
       return null;
@@ -95,7 +95,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
 
   public TopicIF getType() {
     try {
-      return (TopicIF)loadField(AssociationRole.LF_type);
+      return this.<TopicIF>loadField(AssociationRole.LF_type);
     } catch (IdentityNotFoundException e) {
       // role has been deleted by somebody else, so return null
       return null;
@@ -112,7 +112,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
 
   public TopicIF getReifier() {
     try {
-      return (TopicIF)loadField(AssociationRole.LF_reifier);
+      return this.<TopicIF>loadField(AssociationRole.LF_reifier);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return null
       return null;
