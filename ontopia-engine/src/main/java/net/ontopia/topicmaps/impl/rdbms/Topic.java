@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.TransactionIF;
@@ -112,16 +111,12 @@ public class Topic extends TMObject implements TopicIF {
     valueChanged(LF_topicmap, topicmap, true);
     
     // Inform topic names
-    Collection names = loadCollectionField(LF_names);
-    Iterator iter = names.iterator();
-    while (iter.hasNext()) {
-      ((TopicName)iter.next()).setTopicMap(topicmap);
+    for (TopicName topicname : this.<TopicName>loadCollectionField(LF_names)) {
+      topicname.setTopicMap(topicmap);
     }
     // Inform occurrences
-    Collection occurs = loadCollectionField(LF_occurrences);
-    iter = occurs.iterator();
-    while (iter.hasNext()) {
-      ((Occurrence)iter.next()).setTopicMap(topicmap);
+    for (Occurrence occurrence : this.<Occurrence>loadCollectionField(LF_occurrences)) {
+      occurrence.setTopicMap(topicmap);
     }
   }
   
@@ -130,7 +125,7 @@ public class Topic extends TMObject implements TopicIF {
   // ---------------------------------------------------------------------------
 
   public Collection<LocatorIF> getSubjectLocators() {
-    return (Collection<LocatorIF>) loadCollectionField(LF_subjects);
+    return this.<LocatorIF>loadCollectionField(LF_subjects);
   }
 
   public void addSubjectLocator(LocatorIF subject_locator)
@@ -143,7 +138,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new ConstraintViolationException("Cannot modify subject locator when topic isn't attached to a topic map.");
     
     // Check to see if subject is already a subject locator of this topic.
-    Collection subjects = loadCollectionField(LF_subjects);
+    Collection<LocatorIF> subjects = this.<LocatorIF>loadCollectionField(LF_subjects);
     if (subjects.contains(subject_locator)) return;
     
     if (!(subject_locator instanceof SubjectLocator))
@@ -163,7 +158,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new ConstraintViolationException("Cannot modify subject locator when topic isn't attached to a topic map.");
     
     // Check to see if subject locator is a subject locator of this topic.
-    Collection subjects = loadCollectionField(LF_subjects);
+    Collection<LocatorIF> subjects = this.<LocatorIF>loadCollectionField(LF_subjects);
     if (!subjects.contains(subject_locator)) return;
     
     if (!(subject_locator instanceof SubjectLocator))
@@ -176,7 +171,7 @@ public class Topic extends TMObject implements TopicIF {
   }
 
   public Collection<LocatorIF> getSubjectIdentifiers() {
-    return (Collection<LocatorIF>) loadCollectionField(LF_indicators);
+    return this.<LocatorIF>loadCollectionField(LF_indicators);
   }
 
   public void addSubjectIdentifier(LocatorIF subject_indicator)
@@ -188,7 +183,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new ConstraintViolationException("Cannot modify subject indicator when topic isn't attached to a topic map.");
     
     // Check to see if subject is already a subject indicator of this topic.
-    Collection indicators = loadCollectionField(LF_indicators);
+    Collection<LocatorIF> indicators = this.<LocatorIF>loadCollectionField(LF_indicators);
     if (indicators.contains(subject_indicator)) return;
     
     if (!(subject_indicator instanceof SubjectIndicatorLocator))
@@ -208,7 +203,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new ConstraintViolationException("Cannot modify subject indicator when topic isn't attached to a topic map.");
     
     // Check to see if subject indicator is a subject indicator of this topic.
-    Collection indicators = loadCollectionField(LF_indicators);
+    Collection<LocatorIF> indicators = this.<LocatorIF>loadCollectionField(LF_indicators);
     if (!indicators.contains(subject_indicator)) return;
     
     if (!(subject_indicator instanceof SubjectIndicatorLocator))
@@ -221,7 +216,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public Collection<TopicNameIF> getTopicNames() {
-    return (Collection<TopicNameIF>) loadCollectionField(LF_names);
+    return this.<TopicNameIF>loadCollectionField(LF_names);
   }
   
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
@@ -260,7 +255,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public Collection<OccurrenceIF> getOccurrences() {
-    return (Collection<OccurrenceIF>) loadCollectionField(LF_occurrences);
+    return this.<OccurrenceIF>loadCollectionField(LF_occurrences);
   }
   
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
@@ -300,7 +295,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public Collection<AssociationRoleIF> getRoles() {
-    return (Collection<AssociationRoleIF>) loadCollectionField(LF_roles);
+    return this.<AssociationRoleIF>loadCollectionField(LF_roles);
   }
   
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
@@ -405,7 +400,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public Collection<TopicIF> getTypes() {
-    return (Collection<TopicIF>) loadCollectionField(LF_types);
+    return this.<TopicIF>loadCollectionField(LF_types);
   }
   
   public void addType(TopicIF type) {
@@ -429,7 +424,7 @@ public class Topic extends TMObject implements TopicIF {
   }
 
   public ReifiableIF getReified() {
-    String reifiedId = (String) loadField(Topic.LF_reified);
+    String reifiedId = this.<String>loadField(Topic.LF_reified);
     if (reifiedId == null)
       return null;
     return (ReifiableIF) getTopicMap().getObjectById(reifiedId);

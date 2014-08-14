@@ -112,7 +112,7 @@ public abstract class TMObject extends AbstractRWPersistent
 
   public TopicMapIF getTopicMap() {
     try {
-      return (TopicMapIF)loadField(LF_topicmap);
+      return this.<TopicMapIF>loadField(LF_topicmap);
     } catch (IdentityNotFoundException e) {
       // object has been deleted by somebody else, so return null
       return null;
@@ -120,7 +120,7 @@ public abstract class TMObject extends AbstractRWPersistent
   }
 
   public Collection<LocatorIF> getItemIdentifiers() {
-    return (Collection<LocatorIF>) loadCollectionField(LF_sources);
+    return this.<LocatorIF>loadCollectionField(LF_sources);
   }
 
   public void addItemIdentifier(LocatorIF source_locator)
@@ -133,7 +133,7 @@ public abstract class TMObject extends AbstractRWPersistent
 
     // Check to see if the source locator is already a source locator
     // of this topic.    
-    Collection sources = loadCollectionField(LF_sources);
+    Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
     if (sources.contains(source_locator)) return;    
 
     // Note: Need to morph it into source locator to ensure that it is
@@ -162,7 +162,7 @@ public abstract class TMObject extends AbstractRWPersistent
                                  "when object isn't attached to a topic map.");
     
     // Check to see if source locator is a source locator of this topic.
-    Collection sources = loadCollectionField(LF_sources);
+    Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
     if (!sources.contains(source_locator)) return;
 
     // Note: Need to morph it into source locator to ensure that it is

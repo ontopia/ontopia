@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionIF;
@@ -108,16 +107,14 @@ public class Association extends TMObject implements AssociationIF {
     valueChanged(LF_topicmap, topicmap, true);
 
     // Inform association roles
-    Collection roles = loadCollectionField(LF_roles);
-    Iterator iter = roles.iterator();
-    while (iter.hasNext()) {
-      ((AssociationRole)iter.next()).setTopicMap(topicmap);
+    for (AssociationRole role : this.<AssociationRole>loadCollectionField(LF_roles)) {
+      role.setTopicMap(topicmap);
     }
   }
 
   public Collection<TopicIF> getRoleTypes() {
     Collection<TopicIF> result = new CompactHashSet<TopicIF>();
-    for (AssociationRoleIF role : (Collection<AssociationRoleIF>) loadCollectionField(LF_roles)) {
+    for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles)) {
       TopicIF type = role.getType();
       if (type != null)
         result.add(role.getType());
@@ -130,7 +127,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new NullPointerException("Role type must not be null.");
     CrossTopicMapException.check(roletype, this);
     Collection<AssociationRoleIF> result = new CompactHashSet<AssociationRoleIF>();
-    for (AssociationRoleIF role : (Collection<AssociationRoleIF>) loadCollectionField(LF_roles))
+    for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles))
       if (role.getType() == roletype)
         result.add(role);
     return result;
@@ -138,10 +135,10 @@ public class Association extends TMObject implements AssociationIF {
 
   public Collection<AssociationRoleIF> getRoles() {
     try {
-      return (Collection<AssociationRoleIF>) loadCollectionField(LF_roles);
+      return this.<AssociationRoleIF>loadCollectionField(LF_roles);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return empty set
-      return (Collection<AssociationRoleIF>) Collections.EMPTY_SET;
+      return Collections.EMPTY_SET;
     }
   }
 
@@ -204,7 +201,7 @@ public class Association extends TMObject implements AssociationIF {
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return (Collection<TopicIF>) loadCollectionField(LF_scope);
+    return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -233,7 +230,7 @@ public class Association extends TMObject implements AssociationIF {
 
   public TopicIF getType() {
     try {
-      return (TopicIF)loadField(LF_type);
+      return this.<TopicIF>loadField(LF_type);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return null
       return null;
@@ -256,7 +253,7 @@ public class Association extends TMObject implements AssociationIF {
 
   public TopicIF getReifier() {
     try {
-      return (TopicIF)loadField(LF_reifier);
+      return this.<TopicIF>loadField(LF_reifier);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return null
       return null;

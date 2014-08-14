@@ -125,7 +125,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   }
 
   public TopicNameIF getTopicName() {
-    return (TopicNameIF)loadField(LF_name);
+    return this.<TopicNameIF>loadField(LF_name);
   }
 
   /**
@@ -145,7 +145,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   }
 
   public LocatorIF getDataType() {
-    return (LocatorIF)loadField(LF_datatype);    
+    return this.<LocatorIF>loadField(LF_datatype);    
   }
 
   protected void setDataType(LocatorIF datatype) {
@@ -245,7 +245,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   }
 
   public long getLength() {
-    Number length = (Number)loadField(LF_length);
+    Number length = this.<Number>loadField(LF_length);
     long len = (length == null ? 0 : length.longValue());
     if (len < 0)
       return len * -1L;
@@ -258,7 +258,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return loadCollectionField(LF_scope);
+    return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -301,7 +301,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(LF_reifier);
+    return this.<TopicIF>loadField(LF_reifier);
   }
   
   public void setReifier(TopicIF _reifier) {

@@ -64,19 +64,19 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
   
   public TopicIF getTopic() {
-    return (TopicIF)loadField(TopicName.LF_topic);
+    return this.<TopicIF>loadField(TopicName.LF_topic);
   }
   
   public String getValue() {
-    return (String)loadField(TopicName.LF_value);    
+    return this.<String>loadField(TopicName.LF_value);    
   }
   
   public void setValue(String value) {
     throw new ReadOnlyException();
   }
 
-  public Collection getVariants() {
-    return loadCollectionField(TopicName.LF_variants);
+  public Collection<VariantNameIF> getVariants() {
+    return this.<VariantNameIF>loadCollectionField(TopicName.LF_variants);
   }
 
   void addVariant(VariantNameIF variant) {
@@ -92,7 +92,7 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return (Collection<TopicIF>) loadCollectionField(TopicName.LF_scope);
+    return this.<TopicIF>loadCollectionField(TopicName.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -108,7 +108,7 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
-    return (TopicIF)loadField(TopicName.LF_type);
+    return this.<TopicIF>loadField(TopicName.LF_type);
   }
 
   public void setType(TopicIF type) {
@@ -120,7 +120,7 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(TopicName.LF_reifier);
+    return this.<TopicIF>loadField(TopicName.LF_reifier);
   }
   
   public void setReifier(TopicIF reifier) {

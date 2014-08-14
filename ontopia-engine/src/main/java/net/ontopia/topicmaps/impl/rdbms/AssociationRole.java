@@ -105,7 +105,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   public AssociationIF getAssociation() {
     try {
-      return (AssociationIF)loadFieldNoCheck(LF_association);
+      return this.<AssociationIF>loadFieldNoCheck(LF_association);
     } catch (IdentityNotFoundException e) {
       // role or association has been deleted by somebody else, so
       // return a phantom association
@@ -141,7 +141,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   public TopicIF getPlayer() {
     try {
-      return (TopicIF)loadField(LF_player);
+      return this.<TopicIF>loadField(LF_player);
     } catch (IdentityNotFoundException e) {
       // role has been deleted by somebody else, so return null
       return null;
@@ -184,7 +184,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   public TopicIF getType() {
     try {
-      return (TopicIF)loadField(LF_type);
+      return this.<TopicIF>loadField(LF_type);
     } catch (IdentityNotFoundException e) {
       // role has been deleted by somebody else, so return null
       return null;
@@ -207,7 +207,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   public TopicIF getReifier() {
     try {
-      return (TopicIF)loadField(LF_reifier);
+      return this.<TopicIF>loadField(LF_reifier);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return null
       return null;

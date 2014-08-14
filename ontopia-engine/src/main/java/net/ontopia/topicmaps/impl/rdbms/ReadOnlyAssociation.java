@@ -68,8 +68,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
 
   public Collection<TopicIF> getRoleTypes() {
     Collection<TopicIF> result = new CompactHashSet<TopicIF>();
-    for (AssociationRoleIF role : (Collection<AssociationRoleIF>)
-           loadCollectionField(Association.LF_roles)) {
+    for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(Association.LF_roles)) {
       TopicIF type = role.getType();
       if (type != null)
         result.add(role.getType());
@@ -79,8 +78,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
   
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     Collection<AssociationRoleIF> result = new CompactHashSet<AssociationRoleIF>();
-    for (AssociationRoleIF role : (Collection<AssociationRoleIF>)
-           loadCollectionField(Association.LF_roles)) {
+    for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(Association.LF_roles)) {
       if (role.getType() == roletype)
         result.add(role);
     }
@@ -89,7 +87,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
 
   public Collection<AssociationRoleIF> getRoles() {
     try {
-      return (Collection<AssociationRoleIF>) loadCollectionField(Association.LF_roles);
+      return this.<AssociationRoleIF>loadCollectionField(Association.LF_roles);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return empty set
       return Collections.EMPTY_SET;
@@ -109,7 +107,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
   // ---------------------------------------------------------------------------
 
   public Collection<TopicIF> getScope() {
-    return (Collection<TopicIF>) loadCollectionField(Association.LF_scope);
+    return this.<TopicIF>loadCollectionField(Association.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -126,7 +124,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
 
   public TopicIF getType() {
     try {
-      return (TopicIF)loadField(Association.LF_type);
+      return this.<TopicIF>loadField(Association.LF_type);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return null
       return null;
@@ -143,7 +141,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
 
   public TopicIF getReifier() {
     try {
-      return (TopicIF)loadField(Association.LF_reifier);
+      return this.<TopicIF>loadField(Association.LF_reifier);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return null
       return null;
