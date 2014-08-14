@@ -124,10 +124,10 @@ public abstract class AbstractRWPersistent implements PersistentIF {
    * @return FIXME: only loaded values will be returned. if the
    * default value is being set, the return value is null.
    */
-  protected Object loadField(int field) {
+  protected <F> F loadField(int field) {
     // load field from storage
     if (isLoaded(field)) {
-      return getValue(field);
+      return this.<F>getValue(field);
 
     } else if (isNewObject() || !isInDatabase()) {
       return null;
@@ -137,9 +137,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
       IdentityIF identity = _p_getIdentity();
       if (identity == null) return null;
       // load from storage
-      Object value = null;
+      F value = null;
       try { 
-        value = txn.loadField(identity, field);
+        value = txn.<F>loadField(identity, field);
       } catch (IdentityNotFoundException e) {
         // let value be null
       }
@@ -151,10 +151,10 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   // NOTE: method will throw IdentityNotFoundException if value object
   // not found
-  protected Object loadFieldNoCheck(int field) throws IdentityNotFoundException {
+  protected <F> F loadFieldNoCheck(int field) throws IdentityNotFoundException {
     // load field from storage
     if (isLoaded(field)) {
-      return getValue(field);
+      return this.<F>getValue(field);
 
     } else if (isNewObject() || !isInDatabase()) {
       return null;
@@ -164,18 +164,18 @@ public abstract class AbstractRWPersistent implements PersistentIF {
       IdentityIF identity = _p_getIdentity();
       if (identity == null) return null;
       // load from storage
-      Object value = txn.loadField(identity, field);
+      F value = txn.<F>loadField(identity, field);
       // set value and mark field as loaded
       setValue(field, value);
       return value;
     }
   }
 
-  protected Collection loadCollectionField(int field) {
+  protected <F> Collection<F> loadCollectionField(int field) {
     // load field from storage
     if (isLoaded(field)) {
-      Object o = getValue(field);
-      return (o == null ? Collections.EMPTY_SET : (Collection)o);
+      Collection<F> o = this.<Collection<F>>getValue(field);
+      return (o == null ? Collections.<F>emptySet() : o);
 
     } else if (isNewObject() || !isInDatabase()) {
       return Collections.EMPTY_SET;
@@ -185,9 +185,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
       IdentityIF identity = _p_getIdentity();
       if (identity == null) return Collections.EMPTY_SET;
       // load from storage
-      Object coll = null; 
+      Collection<F> coll = null; 
       try {
-        coll = txn.loadField(identity, field);
+        coll = txn.<Collection<F>>loadField(identity, field);
       } catch (IdentityNotFoundException e) {
         // let coll be null
       }
@@ -196,9 +196,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
         return Collections.EMPTY_SET;
       } else {
         // set value and mark field as loaded
-        coll = new TrackableSet(txn, (Collection)coll);
+        coll = new TrackableSet<F>(txn, coll);
         setValue(field, coll);
-        return (Collection)coll;
+        return coll;
       }
     }
   }
@@ -412,8 +412,8 @@ public abstract class AbstractRWPersistent implements PersistentIF {
       return loadField(finfo.getIndex());
   }
   
-  protected Object getValue(int field) {
-    return values[field];
+  protected <F> F getValue(int field) {
+    return (F) values[field];
   }
   
   protected void setValue(int field, Object value) {
