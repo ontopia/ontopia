@@ -207,7 +207,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     return txncache.isFieldLoaded(identity, field);
   }
   
-  public Object loadField(IdentityIF identity, int field) {
+  public <F> F loadField(IdentityIF identity, int field) {
     if (!isactive) throw new TransactionNotActiveException();
     
     // NOTE: this methods is always called by a PersistentIF
@@ -222,9 +222,9 @@ public abstract class AbstractTransaction implements TransactionIF {
     // look up identity value    
     if (value != null) {
       if (value instanceof IdentityIF)
-        return getObject((IdentityIF)value);
+        return (F) getObject((IdentityIF)value);
     }
-    return value;
+    return (F) value;
   }
 
   /**
