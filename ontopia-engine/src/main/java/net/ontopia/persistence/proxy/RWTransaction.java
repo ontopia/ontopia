@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.impl.rdbms.TMObject;
 import net.ontopia.utils.CompactIdentityHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.SoftValueHashMapIndex;
 import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +61,6 @@ public class RWTransaction extends AbstractTransaction {
     this.txncache = new RWLocalCache(this, scache);
 
     // initialize identity map
-    this.identity_map = new SoftValueHashMapIndex();
     this.lrusize = PropertyUtils.getInt(access.getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.identitymap.lru"), 300);
     this.lru = new LRUMap(lrusize);
     

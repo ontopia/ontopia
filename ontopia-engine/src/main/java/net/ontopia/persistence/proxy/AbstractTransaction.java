@@ -26,10 +26,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import net.ontopia.persistence.query.jdo.JDOQuery;
-import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.SoftValueHashMapIndex;
 import net.ontopia.utils.StringUtils;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   protected ObjectRelationalMappingIF mapping;
   
-  protected LookupIndexIF<IdentityIF, PersistentIF> identity_map;
+  protected final Map<IdentityIF, PersistentIF> identity_map;
   protected Map<IdentityIF, PersistentIF> lru;
   protected int lrusize;
 
@@ -81,6 +81,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     // that lets us do this, i.e. the objects reference their
     // identities, so the identity will not be garbage collected as
     // long as the object is reachable.
+    this.identity_map = new ReferenceMap<IdentityIF, PersistentIF>(AbstractReferenceMap.ReferenceStrength.HARD, AbstractReferenceMap.ReferenceStrength.SOFT);
 
     log.debug(getId() + ": Transaction created.");
     this.timestamp = System.currentTimeMillis();
@@ -514,13 +515,22 @@ public abstract class AbstractTransaction implements TransactionIF {
   }
   
   public void writeIdentityMap(java.io.Writer out, boolean dump) throws java.io.IOException {
-    SoftValueHashMapIndex li = (SoftValueHashMapIndex)identity_map;
-
-    out.write("<p>Cache size: " + li.size() + " / " + li.entries.length + ", LRU size: " + lru.size() + " / " + lrusize + "<br>\n");    
+    out.write("<p>Cache size: " + identity_map.size() + ", LRU size: " + lru.size() + " / " + lrusize + "<br>\n");
     out.write("Created: " + new Date(timestamp) + " (" + (System.currentTimeMillis()-timestamp) + " ms)</p>\n");
     
-    if (dump)
-      li.writeReport(out);
+    if (dump) {
+      out.write("<table>\n");
+      for (Map.Entry<IdentityIF, PersistentIF> entry : identity_map.entrySet()) {
+        IdentityIF key = entry.getKey();
+        PersistentIF val = entry.getValue();
+        out.write("<tr><td>");
+        out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
+        out.write("</td><td>");
+        out.write((val == null ? "null" : StringUtils.escapeHTMLEntities(val.toString())));
+        out.write("</td></tr>\n");
+      }
+      out.write("</table><br>\n");
+    }
   }
   
   // -----------------------------------------------------------------------------
