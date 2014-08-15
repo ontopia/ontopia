@@ -29,11 +29,11 @@ import net.ontopia.utils.SoftHashMapIndex;
  * INTERNAL: 
  */
 
-public class TransactionalSoftHashMapIndex 
-  extends SoftHashMapIndex implements TransactionalLookupIndexIF {
+public class TransactionalSoftHashMapIndex<K, E> 
+  extends SoftHashMapIndex<K, E> implements TransactionalLookupIndexIF<K, E> {
 
-  public void removeAll(Collection keys) {
-    Iterator iter = keys.iterator();
+  public void removeAll(Collection<K> keys) {
+    Iterator<K> iter = keys.iterator();
     while (iter.hasNext()) {
       remove(iter.next());
     }
