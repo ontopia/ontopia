@@ -31,11 +31,11 @@ import java.util.NoSuchElementException;
  * is stored by this instance except for the current TransactionIF and
  * the wrapped identities collection.
  */
-public class IdentityCollectionWrapper implements Collection {
-  protected TransactionIF txn;
-  protected Collection other;
+public class IdentityCollectionWrapper<E> implements Collection<E> {
+  protected final TransactionIF txn;
+  protected final Collection<?> other;
 
-  public IdentityCollectionWrapper(TransactionIF txn, Collection identities) {
+  public IdentityCollectionWrapper(TransactionIF txn, Collection<?> identities) {
     this.txn = txn;
     this.other = identities;
   }
@@ -46,11 +46,11 @@ public class IdentityCollectionWrapper implements Collection {
     throw new UnsupportedOperationException();
   }
 
-  public boolean add(Object o) {
+  public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean addAll(Collection c) {
+  public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
@@ -58,11 +58,11 @@ public class IdentityCollectionWrapper implements Collection {
     throw new UnsupportedOperationException();
   }
 
-  public boolean removeAll(Collection c) {
+  public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean retainAll(Collection c) {
+  public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
@@ -80,8 +80,8 @@ public class IdentityCollectionWrapper implements Collection {
     return other.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
-  public boolean containsAll(Collection c) {
-    Iterator e = c.iterator();
+  public boolean containsAll(Collection<?> c) {
+    Iterator<?> e = c.iterator();
     while (e.hasNext()) {
       if(!contains(e.next()))
         return false;
@@ -106,15 +106,15 @@ public class IdentityCollectionWrapper implements Collection {
     }
   }
 
-  public Object[] toArray(Object[] a) {
+  public <T> T[] toArray(T[] a) {
     int size = size();
     if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+      a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
 
     int i = 0;
-    Iterator it = iterator();
+    Iterator<E> it = iterator();
     for (; it.hasNext(); i++) {    
-      a[i] = it.next();
+      a[i] = (T) it.next();
     }
     
     if (a.length > i+1)
@@ -129,10 +129,10 @@ public class IdentityCollectionWrapper implements Collection {
     StringBuilder buf = new StringBuilder();
     buf.append("[");
     
-    Iterator i = iterator();
+    Iterator<E> i = iterator();
     boolean hasNext = i.hasNext();
     while (hasNext) {
-      Object o = i.next();
+      E o = i.next();
       buf.append(o == this ? "(this Collection)" : String.valueOf(o));
       hasNext = i.hasNext();
       if (hasNext)
@@ -145,17 +145,17 @@ public class IdentityCollectionWrapper implements Collection {
 
   // -- iterator
 
-  public Iterator iterator() {
-    return new IdentityCollectionIterator(other.iterator());
+  public Iterator<E> iterator() {
+    return new IdentityCollectionIterator<E>(other.iterator());
   }
 
-  class IdentityCollectionIterator implements Iterator {
+  class IdentityCollectionIterator<F> implements Iterator<F> {
 
-    private Iterator iter;
+    private Iterator<?> iter;
     private int has_next = -1;
-    private Object next;
+    private F next;
 
-    private IdentityCollectionIterator(Iterator iter) {
+    private IdentityCollectionIterator(Iterator<?> iter) {
       this.iter = iter;
     }
 
@@ -166,7 +166,7 @@ public class IdentityCollectionWrapper implements Collection {
       return has_next == 1;
     }
 
-    public Object next() {
+    public F next() {
       if (has_next == 0) {
         throw new NoSuchElementException();
       } else if (has_next == 1) {
@@ -198,7 +198,7 @@ public class IdentityCollectionWrapper implements Collection {
             _next();
           } else {
             has_next = 1;
-            next = o;
+            next = (F) o;
           }
         } catch (Throwable t) {
           has_next = -1;
@@ -206,7 +206,7 @@ public class IdentityCollectionWrapper implements Collection {
         }
       } else {
         has_next = 1;
-        next = o;
+        next = (F) o;
       }
     }
 
