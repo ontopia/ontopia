@@ -21,7 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.SoftValueHashMapIndex;
 import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +42,6 @@ public class ROTransaction extends AbstractTransaction {
     this.txncache = new ROLocalCache(this, scache);
 
     // initialize identity map
-    this.identity_map = new SoftValueHashMapIndex();
     this.lrusize = PropertyUtils.getInt(access.getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.shared.identitymap.lru"), 5000);
     this.lru = new LRUMap(this.lrusize);
 

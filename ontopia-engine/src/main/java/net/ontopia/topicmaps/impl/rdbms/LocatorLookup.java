@@ -27,10 +27,10 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.NullObject;
-import net.ontopia.utils.SoftHashMapIndex;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.LRUMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 
 /**
  * INTERNAL: Non-shared locator lookup index.
@@ -42,7 +42,7 @@ public class LocatorLookup implements TransactionalLookupIndexIF {
   protected TopicMapIF tm;
   protected int lrusize;
 
-  protected LookupIndexIF cache;
+  protected Map cache;
   protected Map lru;
 
   public LocatorLookup(String qname, TransactionIF txn, TopicMapIF tm, int lrusize) {
@@ -50,7 +50,7 @@ public class LocatorLookup implements TransactionalLookupIndexIF {
     this.txn = txn;
     this.tm = tm;
     this.lrusize = lrusize;
-    this.cache = new SoftHashMapIndex();
+    this.cache = new ReferenceMap(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
     this.lru = new LRUMap(lrusize);
   }
 

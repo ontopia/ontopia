@@ -24,10 +24,10 @@ import java.util.Collection;
 import java.util.Map;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
-import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.NullObject;
-import net.ontopia.utils.SoftHashMapIndex;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.LRUMap;
+import org.apache.commons.collections4.map.ReferenceMap;
 
 /**
  * INTERNAL: Non-shared locator lookup index.
@@ -36,13 +36,13 @@ public class QueryLookup implements TransactionalLookupIndexIF {
   protected String qname;
   protected TransactionIF txn;
 
-  protected LookupIndexIF cache;
+  protected Map cache;
   protected Map lru;
 
   public QueryLookup(String qname, TransactionIF txn, int lrusize) {
     this.qname = qname;
     this.txn = txn;
-    this.cache = new SoftHashMapIndex();
+    this.cache = new ReferenceMap(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
     this.lru = new LRUMap(lrusize);
   }
 

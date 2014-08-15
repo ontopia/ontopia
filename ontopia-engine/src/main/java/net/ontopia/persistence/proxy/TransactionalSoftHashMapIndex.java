@@ -21,21 +21,23 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-import java.util.Iterator;
-
-import net.ontopia.utils.SoftHashMapIndex;
+import org.apache.commons.collections4.map.ReferenceMap;
 
 /**
  * INTERNAL: 
  */
 
-public class TransactionalSoftHashMapIndex<K, E> 
-  extends SoftHashMapIndex<K, E> implements TransactionalLookupIndexIF<K, E> {
+public class TransactionalSoftHashMapIndex<K, V>
+  extends ReferenceMap<K, V> implements TransactionalLookupIndexIF<K, V> {
+  private static final long serialVersionUID = 1L;
+
+  public TransactionalSoftHashMapIndex() {
+    super(ReferenceStrength.SOFT, ReferenceStrength.HARD);
+  }
 
   public void removeAll(Collection<K> keys) {
-    Iterator<K> iter = keys.iterator();
-    while (iter.hasNext()) {
-      remove(iter.next());
+    for (K key : keys) {
+      remove(key);
     }
   }
 
