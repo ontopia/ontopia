@@ -50,7 +50,7 @@ public class Pair {
 
     Pair pair = (Pair)obj;
     return (first.equals(pair.first) &&
-            second.equals(pair.first));
+            second.equals(pair.second));
   }
 
   public int hashCode() {
