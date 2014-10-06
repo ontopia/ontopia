@@ -196,8 +196,8 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
 
     AssociationIF assoc2 = builder.makeAssociation(atype);
-    AssociationRoleIF role3 = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc, rtype2, other);
+    AssociationRoleIF role3 = builder.makeAssociationRole(assoc2, rtype1, player);
+    AssociationRoleIF role4 = builder.makeAssociationRole(assoc2, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
