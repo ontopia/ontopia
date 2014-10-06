@@ -98,7 +98,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     Object[][] data = matches.data;  // ditto
 
     // loop over associations
-    Object[] assocs = index.getAssociations(type).toArray();
+    AssociationIF[] assocs = index.getAssociations(type).toArray(new AssociationIF[0]);
 
     // prefetch roles
     Prefetcher.prefetch(topicmap, assocs, 
@@ -109,11 +109,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     int unbound_length = unbound.length;
     boolean[] roleused = new boolean[10];
 
-    for (int aix=0; aix < assocs.length; aix++) {
-      AssociationIF assoc = (AssociationIF) assocs[aix];
-      Collection rolecoll = assoc.getRoles();
-      AssociationRoleIF[] roles =
-        (AssociationRoleIF[]) rolecoll.toArray(seed2);
+    for (AssociationIF assoc : assocs) {
+      Collection<AssociationRoleIF> rolecoll = assoc.getRoles();
+      AssociationRoleIF[] roles = rolecoll.toArray(seed2);
       int roles_length = rolecoll.size();
       if (roles_length > roleused.length)
         roleused = new boolean[roles_length];
@@ -277,27 +275,16 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       // now, test if this row is really valid
       TopicIF topic = (TopicIF) data[row][boundcol];
 
-      Collection theroles = //(Collection) rolecache.get(topic);
-//       if (theroles == null) {
-//        theroles =
-        topic.getRolesByType(rtype, type);
-//         rolecache.put(topic, theroles);
-//       }
-      
-      Iterator riter = theroles.iterator(); 
-
       // first, look for roles in assocs of the type we're supposed to have
-      // (role type already ensured)
-      while (riter.hasNext()) {
-        AssociationRoleIF arole = (AssociationRoleIF)riter.next();
+      for (AssociationRoleIF arole : topic.getRolesByType(rtype, type)) {
         TopicIF assoctype = arole.getAssociation().getType();
         if (assoctype != null && assoctype.equals(type)) {
           
           // ok, we've found the role; now let's see if the association
           // can produce a match
           // --------------------------------------------------------------
-          Collection rolecoll = arole.getAssociation().getRoles();
-          AssociationRoleIF[] roles = (AssociationRoleIF[]) rolecoll.toArray(seed2);
+          Collection<AssociationRoleIF> rolecoll = arole.getAssociation().getRoles();
+          AssociationRoleIF[] roles = rolecoll.toArray(seed2);
           int roles_length = rolecoll.size();
         
           // check bound arguments against association
