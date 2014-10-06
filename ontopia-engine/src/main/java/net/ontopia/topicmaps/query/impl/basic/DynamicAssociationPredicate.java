@@ -22,9 +22,7 @@ package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -32,10 +30,10 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.parser.Pair;
 import net.ontopia.topicmaps.query.parser.Variable;
-import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 
 /**
  * INTERNAL: Implements association type predicates.
