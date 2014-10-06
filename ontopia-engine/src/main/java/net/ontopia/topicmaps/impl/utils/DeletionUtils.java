@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Collection;
+import java.util.HashSet;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -56,60 +57,52 @@ public class DeletionUtils {
       ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
       
       // Remove associations scoped by topic
-      Object[] objects = sindex.getAssociations(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((ScopedIF)objects[i]).remove();
+      for (ScopedIF object : sindex.getAssociations(topic)) {
+        object.remove();
       }
       // Remove topicnames scoped by topic
-      objects = sindex.getTopicNames(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((ScopedIF)objects[i]).remove();
+      for (ScopedIF object : sindex.getTopicNames(topic)) {
+        object.remove();
       }
       // Remove occurrences scoped by topic
-      objects = sindex.getOccurrences(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((ScopedIF)objects[i]).remove();
+      for (ScopedIF object : sindex.getOccurrences(topic)) {
+        object.remove();
       }
       // Remove variants scoped by topic
-      objects = sindex.getVariants(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((ScopedIF)objects[i]).remove();
+      for (ScopedIF object : sindex.getVariants(topic)) {
+        object.remove();
       }
       
       // Get class instance index; to be used when removing where topic is used as type
       ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
       
       // Remove associations where topic is role type
-      objects = cindex.getAssociationRoles(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((TypedIF)objects[i]).remove();
+      for (TypedIF object : cindex.getAssociationRoles(topic)) {
+        object.remove();
       }
       // Remove associations where topic is association type
-      objects = cindex.getAssociations(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((TypedIF)objects[i]).remove();
+      for (TypedIF object : cindex.getAssociations(topic)) {
+        object.remove();
       }
       // Remove basenames where topic is name type
-      objects = cindex.getTopicNames(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((TypedIF)objects[i]).remove();
+      for (TypedIF object : cindex.getTopicNames(topic)) {
+        object.remove();
       }
       // Remove occurrences where topic is occurrence type
-      objects = cindex.getOccurrences(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        ((TypedIF)objects[i]).remove();
+      for (TypedIF object : cindex.getOccurrences(topic)) {
+        object.remove();
       }
       // Remove instances of the topic
-      objects = cindex.getTopics(topic).toArray();
-      for (int i=0; i < objects.length; i++) {
-        if (objects[i] != topic) // avoids infinite recursion if instance of self
-          ((TopicIF)objects[i]).remove();
+      for (TopicIF object : cindex.getTopics(topic)) {
+        if (object != topic) {
+          object.remove();
+        }
       }
       
       // Remove associations
-      Object[] roles = topic.getRoles().toArray();
-      for (int i=0; i < roles.length; i++) {
-        AssociationRoleIF role = (AssociationRoleIF)roles[i];        
+      // wrap to avoid concurrent modification
+      HashSet<AssociationRoleIF> roles = new HashSet<AssociationRoleIF>(topic.getRoles());
+      for (AssociationRoleIF role : roles) {
         role.getAssociation().remove();
       }
 
@@ -143,16 +136,18 @@ public class DeletionUtils {
       TopicIF[] topics = new TopicIF[ts.size()];
       ts.toArray(topics);
       
-      for (int i=0; i < topics.length; i++)
-        topics[i].remove();
+      for (TopicIF topic : topics) {
+        topic.remove();
+      }
       
       // Delete associations
       Collection<AssociationIF> as = topicmap.getAssociations();
       AssociationIF[] associations = new AssociationIF[as.size()];
       as.toArray(associations);
       
-      for (int i=0; i < associations.length; i++)
-        associations[i].remove();
+      for (AssociationIF association : associations) {
+        association.remove();
+      }
     }
   }
 
