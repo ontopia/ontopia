@@ -415,7 +415,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     throws InvalidQueryException {
 
     int width = arguments.length;
-    List args = new ArrayList(width);
+    List<ArgumentPair> args = new ArrayList<ArgumentPair>(width);
     for (int ix = 0; ix < width; ix++) {
       if (ix == boundarg)
         continue; // yes, this is bound, but since we're starting from it
@@ -438,7 +438,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
 
     if (args.isEmpty())
       return new ArgumentPair[0];
-    return (ArgumentPair[]) args.toArray(new ArgumentPair[args.size()]);
+    return args.toArray(new ArgumentPair[args.size()]);
   }
 
   protected ArgumentPair[] getUnboundArguments(QueryMatches matches,
@@ -446,7 +446,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     throws InvalidQueryException {
     
     int width = arguments.length;
-    List args = new ArrayList(width);
+    List<ArgumentPair> args = new ArrayList<ArgumentPair>(width);
     for (int ix = 0; ix < width; ix++) {
       Pair pair = (Pair) arguments[ix];
       if (!(pair.getSecond() instanceof TopicIF))
@@ -460,12 +460,12 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
 
     if (args.isEmpty())
       return new ArgumentPair[0];
-    return (ArgumentPair[]) args.toArray(new ArgumentPair[args.size()]);
+    return args.toArray(new ArgumentPair[args.size()]);
   }
   
   // --- Argument class
 
-  class ArgumentPair {
+  protected class ArgumentPair {
     public int ix;
     public TopicIF roleType;
     public TopicIF boundTo;  // used to store binding during evaluation
@@ -475,6 +475,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       this.roleType = roleType;
     }
 
+    @Override
     public String toString() {
       return "<AP$ArgPair " + ix + ":" + roleType + ">";
     }
