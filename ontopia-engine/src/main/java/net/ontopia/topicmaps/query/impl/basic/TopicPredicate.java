@@ -44,10 +44,11 @@ public class TopicPredicate implements BasicPredicateIF {
   }
   
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0])
+    if (boundparams[0]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
@@ -55,12 +56,12 @@ public class TopicPredicate implements BasicPredicateIF {
 
     int topicix = matches.getIndex(arguments[0]);
     
-    if (matches.data[0][topicix] == null)
+    if (matches.data[0][topicix] == null) {
       return PredicateUtils.collectionToOne(matches, topicmap.getTopics().toArray(),
                                             topicix, topicix,
                                             PredicateUtils.NO_OPERATION);
-    else
+    } else {
       return PredicateUtils.filterClass(matches, topicix, TopicIF.class);
+    }
   }
-  
 }
