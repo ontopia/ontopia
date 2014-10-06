@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.topicmaps.utils;
+package net.ontopia.topicmaps.impl.utils;
 
 import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.AssociationIF;
