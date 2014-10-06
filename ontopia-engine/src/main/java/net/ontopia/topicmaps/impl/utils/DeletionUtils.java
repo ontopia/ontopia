@@ -52,25 +52,25 @@ public class DeletionUtils {
       TopicMapIF tm = topic.getTopicMap();
       if (tm == null) return;
       
-      // Get scope index; to be used when removing where topic is used as theme
+      // Get scope index; to be used when removing where topic is used as scope
       ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
       
-      // Remove from association themes
+      // Remove from association scope
       Object[] objects = sindex.getAssociations(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
       }
-      // Remove from basename themes
+      // Remove from topicname scope
       objects = sindex.getTopicNames(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
       }
-      // Remove from occurrence themes
+      // Remove from occurrence scope
       objects = sindex.getOccurrences(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
       }
-      // Remove from variant themes
+      // Remove from variant scope
       objects = sindex.getVariants(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
