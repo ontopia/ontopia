@@ -39,9 +39,9 @@ public class DeletionUtils {
   
   /**
    * INTERNAL: Removes the dependencies to the given topic from its
-   * topic map. For the characteristics that have the topic in its
-   * scope gets the topic removed from the scope. Characteristics that
-   * have the topic as a type is removed from the topic map.
+   * topic map. Characteristics that have the topic in its
+   * scope get  removed. Characteristics that
+   * have the topic as a type are removed from the topic map.
    *
    * @since 4.0
    * @param topic The given topic; an object implementing TopicIF.
@@ -55,22 +55,22 @@ public class DeletionUtils {
       // Get scope index; to be used when removing where topic is used as scope
       ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
       
-      // Remove from association scope
+      // Remove associations scoped by topic
       Object[] objects = sindex.getAssociations(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
       }
-      // Remove from topicname scope
+      // Remove topicnames scoped by topic
       objects = sindex.getTopicNames(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
       }
-      // Remove from occurrence scope
+      // Remove occurrences scoped by topic
       objects = sindex.getOccurrences(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
       }
-      // Remove from variant scope
+      // Remove variants scoped by topic
       objects = sindex.getVariants(topic).toArray();
       for (int i=0; i < objects.length; i++) {
         ((ScopedIF)objects[i]).remove();
