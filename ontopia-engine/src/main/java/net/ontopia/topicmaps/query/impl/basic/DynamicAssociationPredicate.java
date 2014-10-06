@@ -354,8 +354,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
               result.increaseCapacity();
             result.last++;
 
-            for (int col = 0; col < colcount; col++)
-              result.data[result.last][col] = data[row][col];
+            System.arraycopy(data[row], 0, result.data[result.last], 0, colcount);
             for (int arg = 0; arg < unbound_length && ok; arg++) {
               result.data[result.last][unbound[arg].ix] = unbound[arg].boundTo;
               unbound[arg].boundTo = null;
