@@ -39,9 +39,9 @@ public class DeletionUtils {
   
   /**
    * INTERNAL: Removes the dependencies to the given topic from its
-   * topic map. Characteristics that have the topic in its
-   * scope get  removed. Characteristics that
-   * have the topic as a type are removed from the topic map.
+   * topic map. Characteristics that have the topic in its scope get 
+   * removed. Characteristics that have the topic as a type are 
+   * removed from the topic map.
    *
    * @since 4.0
    * @param topic The given topic; an object implementing TopicIF.
