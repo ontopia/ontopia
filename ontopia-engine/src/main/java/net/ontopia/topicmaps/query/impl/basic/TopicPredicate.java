@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 
@@ -31,11 +30,9 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
  */
 public class TopicPredicate implements BasicPredicateIF {
   protected TopicMapIF topicmap;
-  protected ClassInstanceIndexIF index;
 
   public TopicPredicate(TopicMapIF topicmap) {
     this.topicmap = topicmap;
-    index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
   }
   
   public String getName() {
