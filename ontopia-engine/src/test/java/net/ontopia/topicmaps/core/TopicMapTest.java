@@ -272,6 +272,8 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
     other.addType(topic);
     //! System.out.println("--2");
     topic.remove();
+    
+    assertEquals("To many topics after remove", 0, topicmap.getTopics().size());
   }
 
   public void testObjectById() {
