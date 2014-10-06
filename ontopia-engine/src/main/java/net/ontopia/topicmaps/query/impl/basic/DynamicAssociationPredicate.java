@@ -109,7 +109,6 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     int unbound_length = unbound.length;
     boolean[] roleused = new boolean[10];
 
-    association:
     for (int aix=0; aix < assocs.length; aix++) {
       AssociationIF assoc = (AssociationIF) assocs[aix];
       Collection rolecoll = assoc.getRoles();
