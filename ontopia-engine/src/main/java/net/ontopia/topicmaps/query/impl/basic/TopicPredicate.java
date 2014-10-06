@@ -26,7 +26,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 
 /**
- * INTERNAL: Implements the 'type(typed, type)' predicate.
+ * INTERNAL: Implements the 'topic(topic)' predicate.
  */
 public class TopicPredicate implements BasicPredicateIF {
   protected TopicMapIF topicmap;
