@@ -276,93 +276,89 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
 
       // first, look for roles in assocs of the type we're supposed to have
       for (AssociationRoleIF arole : topic.getRolesByType(rtype, type)) {
-        TopicIF assoctype = arole.getAssociation().getType();
-        if (assoctype != null && assoctype.equals(type)) {
-          
-          // ok, we've found the role; now let's see if the association
-          // can produce a match
-          // --------------------------------------------------------------
-          Collection<AssociationRoleIF> rolecoll = arole.getAssociation().getRoles();
-          AssociationRoleIF[] roles = rolecoll.toArray(seed2);
-          int roles_length = rolecoll.size();
-        
-          // check bound arguments against association
-          boolean ok = true;
-          for (int arg = 0; arg < bound_length; arg++) {
-            TopicIF roleType = bound[arg].roleType;
-            int col = bound[arg].ix;
 
-            // find corresponding role
-            int role = -1;
-            for (int roleix = 0; roleix < roles_length; roleix++) {
-              if (roleType.equals(roles[roleix].getType()) &&
-                  data[row][col] != null && // bug #2001
-                  data[row][col].equals(roles[roleix].getPlayer())) {
-                role = roleix;
-                break;
-              }
-            }
+        // ok, we've found the role; now let's see if the association
+        // can produce a match
+        // --------------------------------------------------------------
+        Collection<AssociationRoleIF> rolecoll = arole.getAssociation().getRoles();
+        AssociationRoleIF[] roles = rolecoll.toArray(seed2);
+        int roles_length = rolecoll.size();
 
-            if (role == -1) { // no matching role found
-              ok = false;
+        // check bound arguments against association
+        boolean ok = true;
+        for (int arg = 0; arg < bound_length; arg++) {
+          TopicIF roleType = bound[arg].roleType;
+          int col = bound[arg].ix;
+
+          // find corresponding role
+          int role = -1;
+          for (int roleix = 0; roleix < roles_length; roleix++) {
+            if (roleType.equals(roles[roleix].getType()) &&
+                data[row][col] != null && // bug #2001
+                data[row][col].equals(roles[roleix].getPlayer())) {
+              role = roleix;
               break;
             }
           }
-          if (!ok)
-            continue; // this assoc didn't match
-          
-          // produce match by binding unbound columns
-          if (roles_length > roleused.length)
-            roleused = new boolean[roles_length];
-          for (int roleix = 0; roleix < roles_length; roleix++)
-            roleused[roleix] =
-              // if this is the start role then that's already used
-              topic.equals(roles[roleix].getPlayer()) &&
-              rtype.equals(roles[roleix].getType());
 
-          for (int arg = 0; arg < unbound_length; arg++) {
-            TopicIF roleType = unbound[arg].roleType;
-            
-            // find corresponding role
-            int role = -1;
-            for (int roleix = 0; roleix < roles_length; roleix++) {
-              if (roleType.equals(roles[roleix].getType()) &&
-                  !roleused[roleix]) {
-                role = roleix;
-                break;
-              }
-            }
-            if (role == -1) {
-              ok = false;
-              break;
-            }
-
-            // won't accept null players
-            if (roles[role].getPlayer() == null) {
-              ok = false;
-              break;
-            }
-            
-            // ok, there is an association role matching this unbound column
-            unbound[arg].boundTo = roles[role].getPlayer();
-            roleused[role] = true;
+          if (role == -1) { // no matching role found
+            ok = false;
+            break;
           }
-
-          if (ok) {
-            // ok, the row/assoc combo is fine; now make a match for it
-            if (result.last+1 == result.size)
-              result.increaseCapacity();
-            result.last++;
-
-            System.arraycopy(data[row], 0, result.data[result.last], 0, colcount);
-            for (int arg = 0; arg < unbound_length && ok; arg++) {
-              result.data[result.last][unbound[arg].ix] = unbound[arg].boundTo;
-              unbound[arg].boundTo = null;
-            }
-          }
-
-// ----------------------------------------------------------------------
         }
+        if (!ok)
+          continue; // this assoc didn't match
+
+        // produce match by binding unbound columns
+        if (roles_length > roleused.length)
+          roleused = new boolean[roles_length];
+        for (int roleix = 0; roleix < roles_length; roleix++)
+          roleused[roleix] =
+            // if this is the start role then that's already used
+            topic.equals(roles[roleix].getPlayer()) &&
+            rtype.equals(roles[roleix].getType());
+
+        for (int arg = 0; arg < unbound_length; arg++) {
+          TopicIF roleType = unbound[arg].roleType;
+
+          // find corresponding role
+          int role = -1;
+          for (int roleix = 0; roleix < roles_length; roleix++) {
+            if (roleType.equals(roles[roleix].getType()) &&
+                !roleused[roleix]) {
+              role = roleix;
+              break;
+            }
+          }
+          if (role == -1) {
+            ok = false;
+            break;
+          }
+
+          // won't accept null players
+          if (roles[role].getPlayer() == null) {
+            ok = false;
+            break;
+          }
+
+          // ok, there is an association role matching this unbound column
+          unbound[arg].boundTo = roles[role].getPlayer();
+          roleused[role] = true;
+        }
+
+        if (ok) {
+          // ok, the row/assoc combo is fine; now make a match for it
+          if (result.last+1 == result.size)
+            result.increaseCapacity();
+          result.last++;
+
+          System.arraycopy(data[row], 0, result.data[result.last], 0, colcount);
+          for (int arg = 0; arg < unbound_length && ok; arg++) {
+            result.data[result.last][unbound[arg].ix] = unbound[arg].boundTo;
+            unbound[arg].boundTo = null;
+          }
+        }
+// ----------------------------------------------------------------------
       }
     }
     
