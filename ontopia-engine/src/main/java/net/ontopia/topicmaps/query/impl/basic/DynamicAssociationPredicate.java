@@ -191,8 +191,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
             result.increaseCapacity();
           result.last++;
         
-          for (int col = 0; col < colcount; col++) 
-            result.data[result.last][col] = data[row][col];
+          System.arraycopy(data[row], 0, result.data[result.last], 0, colcount);
           for (int colix = 0; colix < unbound_length; colix++) {
             // we may have had multiple arguments for the same unbound
             // column, so have to check whether they matched up
