@@ -20,12 +20,16 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
+import java.util.Collections;
 import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 public class DeletionUtilsTest extends TestCase {
@@ -108,4 +112,41 @@ public class DeletionUtilsTest extends TestCase {
     assertTrue("Topic map still has association", topicmap.getAssociations().size() == 0);
   }
   
+  public void testScopingTopicDeletion() {
+    TopicMapIF topicmap = makeTopicMap();
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF morituri = builder.makeTopic();
+    TopicIF other = builder.makeTopic();
+
+    // association 1 and 2: arbitrary AT, player and RT
+    AssociationIF assoc = builder.makeAssociation(other);
+    builder.makeAssociationRole(assoc, other, other);
+    
+    // occurrence with arbitrary type and topic
+    OccurrenceIF occurrence = builder.makeOccurrence(other, other, "foo");
+    
+    // name with arbitrary topic
+    TopicNameIF name = builder.makeTopicName(other, "foo");
+    
+    // variant with arbitrary name
+    VariantNameIF variant = builder.makeVariantName(
+            builder.makeTopicName(other, "bar"), 
+            "baz", Collections.singleton(morituri));
+    
+    // scope all with mortituri
+    assoc.addTheme(morituri);
+    occurrence.addTheme(morituri);
+    name.addTheme(morituri);
+
+    // remove topic 
+    morituri.remove();
+    
+    // remainder: 2 topics: other, default-name-type
+    assertEquals("Incorrect number of topics after removal", 2, topicmap.getTopics().size());
+    assertTrue("Incorrect number of association after removal", topicmap.getAssociations().isEmpty());
+    assertNull("Association bound to topicmap after removal", assoc.getTopicMap());
+    assertNull("Occurrence bound to topicmap after removal", occurrence.getTopicMap());
+    assertNull("Topic name bound to topicmap after removal", name.getTopicMap());
+    assertNull("Variant name bound to topicmap after removal", variant.getTopicMap());
+  }
 }
