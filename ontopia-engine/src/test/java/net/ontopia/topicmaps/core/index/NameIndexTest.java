@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.core.index;
 
+import java.util.Collections;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -95,8 +96,8 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     assertTrue("TopicName index is not empty", ix.getTopicNames("TopicName").isEmpty());
 
     // STATE 2: Variants added
-    VariantNameIF vn1 = builder.makeVariantName(bn1, "VariantName");
-    VariantNameIF vn2 = builder.makeVariantName(bn2, "VariantName2");
+    VariantNameIF vn1 = builder.makeVariantName(bn1, "VariantName", Collections.<TopicIF>emptySet());
+    VariantNameIF vn2 = builder.makeVariantName(bn2, "VariantName2", Collections.<TopicIF>emptySet());
     bn1.setValue("TopicName");
     bn2.setValue("TopicName2");
     
@@ -114,14 +115,14 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     //!            ix.getVariants((String)null, DataTypes.TYPE_STRING).contains(vn3));
 
     // STATE 3: Duplicate added
-    VariantNameIF v4 = builder.makeVariantName(bn1, "VariantName");
+    VariantNameIF v4 = builder.makeVariantName(bn1, "VariantName", Collections.<TopicIF>emptySet());
         
     assertTrue("duplicate variant name string not found via string",
            ix.getVariants("VariantName", DataTypes.TYPE_STRING).size() == 2);
  
     // STATE 4: variant names with difficult characters
-    VariantNameIF v5 = builder.makeVariantName(bn1, "Erlend \u00d8verby");
-    VariantNameIF v6 = builder.makeVariantName(bn1, "Kana: \uFF76\uFF85"); // half-width katakana
+    VariantNameIF v5 = builder.makeVariantName(bn1, "Erlend \u00d8verby", Collections.<TopicIF>emptySet());
+    VariantNameIF v6 = builder.makeVariantName(bn1, "Kana: \uFF76\uFF85", Collections.<TopicIF>emptySet()); // half-width katakana
     
     assertTrue("couldn't find variant name via latin1 string",
            ix.getVariants("Erlend \u00d8verby", DataTypes.TYPE_STRING).size() == 1);
@@ -139,7 +140,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     // STATE 1: No variant locators defined
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF vn = builder.makeVariantName(bn, "");
+    VariantNameIF vn = builder.makeVariantName(bn, "", Collections.<TopicIF>emptySet());
     LocatorIF loc = null;
     try {
       loc = new URILocator("http://www.ontopia.net/test-data/variant-locator.xml");
@@ -156,7 +157,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
            ix.getVariants(loc.getAddress(), DataTypes.TYPE_URI).contains(vn));
 
     // STATE 3: Duplicate variant locator defined
-    VariantNameIF vn2 = builder.makeVariantName(bn, loc);
+    VariantNameIF vn2 = builder.makeVariantName(bn, loc, Collections.<TopicIF>emptySet());
     assertTrue("second variant not found by locator",
            ix.getVariants(loc.getAddress(), DataTypes.TYPE_URI).size() == 2);
   }
@@ -205,8 +206,8 @@ public abstract class NameIndexTest extends AbstractIndexTest {
         // STATE 2: topic map has some topics in it
         TopicIF t1 = builder.makeTopic();
         TopicNameIF bn1 = builder.makeTopicName(t1, "");
-        VariantNameIF v1 = builder.makeVariantName(bn1, loc1);
-        VariantNameIF v2 = builder.makeVariantName(bn1, "");
+        VariantNameIF v1 = builder.makeVariantName(bn1, loc1, Collections.<TopicIF>emptySet());
+        VariantNameIF v2 = builder.makeVariantName(bn1, "", Collections.<TopicIF>emptySet());
         
         // assertTrue("variant locator not found",
         //        ix.getVariantLocators().size() == 2);
@@ -223,7 +224,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
                ix.getVariants(loc2.getAddress(), DataTypes.TYPE_URI).size() == 0);
         
         // STATE 3: topic map with duplicates
-        VariantNameIF v3 = builder.makeVariantName(bn1, loc1);
+        VariantNameIF v3 = builder.makeVariantName(bn1, loc1, Collections.<TopicIF>emptySet());
         
         // assertTrue("duplicate variant locator not filtered out",
         //        ix.getVariantLocators().size() == 2);

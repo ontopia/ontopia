@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.impl.basic.index;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
+import java.util.Collections;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -128,8 +129,8 @@ public class NameTest extends TestCase {
     // STATE 2: topic map has some topics in it
     TopicIF t1 = builder.makeTopic();
     TopicNameIF bn1 = builder.makeTopicName(t1, "");
-    VariantNameIF v1 = builder.makeVariantName(bn1, "bonka rakka");
-    VariantNameIF v2 = builder.makeVariantName(bn1, "");
+    VariantNameIF v1 = builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
+    VariantNameIF v2 = builder.makeVariantName(bn1, "", Collections.<TopicIF>emptySet());
 
     assertTrue("couldn't find variant name via string",
                index.getVariants("bonka rakka").size() == 1);
@@ -149,7 +150,7 @@ public class NameTest extends TestCase {
                index.getVariants("").iterator().next().equals(v2));
         
     // STATE 3: topic map with duplicates
-    VariantNameIF v3 = builder.makeVariantName(bn1, "bonka rakka");
+    VariantNameIF v3 = builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
         
     assertTrue("duplicate variant name string not filtered out",
                index.getVariants("bonka rakka").size() == 2);
@@ -158,8 +159,8 @@ public class NameTest extends TestCase {
 
 
     // STATE 4: variant names with difficult characters
-    VariantNameIF v4 = builder.makeVariantName(bn1, "Erlend \u00d8verby");
-    VariantNameIF v5 = builder.makeVariantName(bn1, "Kana: \uFF76\uFF85"); // half-width katakana
+    VariantNameIF v4 = builder.makeVariantName(bn1, "Erlend \u00d8verby", Collections.<TopicIF>emptySet());
+    VariantNameIF v5 = builder.makeVariantName(bn1, "Kana: \uFF76\uFF85", Collections.<TopicIF>emptySet()); // half-width katakana
 
     assertTrue("couldn't find variant name via latin1 string",
                index.getVariants("Erlend \u00d8verby").size() == 1);

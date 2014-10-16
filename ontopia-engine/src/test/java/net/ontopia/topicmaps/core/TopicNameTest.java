@@ -20,6 +20,8 @@
 
 package net.ontopia.topicmaps.core;
 
+import java.util.Collections;
+
 public abstract class TopicNameTest extends AbstractTypedScopedTest {
   protected TopicNameIF basename;
   
@@ -87,7 +89,7 @@ public abstract class TopicNameTest extends AbstractTypedScopedTest {
                basename.getVariants().size() == 0);
 
     // STATE 2: one child variant
-    VariantNameIF variant = builder.makeVariantName(basename, "");
+    VariantNameIF variant = builder.makeVariantName(basename, "foo", Collections.singleton(builder.makeTopic()));
     // builder adds the child for us
 
     assertTrue("variant child of " + basename + " not added",
