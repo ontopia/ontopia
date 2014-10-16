@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import net.ontopia.infoset.impl.basic.URILocator;
 
 public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
-  protected static final String MSG_NULL_ARGUMENT = "null is not a valid argument.";
 
   protected TMObjectIF    object;      // object being tested
   protected TMObjectIF    parent;      // parent of object being tested, if any
