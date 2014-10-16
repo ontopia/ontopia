@@ -42,8 +42,9 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
 
   public void testObjectId() {
     assertTrue("object id not null", object.getObjectId() != null);
-    assertTrue("object not found by id",
-           topicmap.getObjectById(object.getObjectId()).equals(object));
+    TMObjectIF objectById = topicmap.getObjectById(object.getObjectId());
+    assertTrue("object not found by id", objectById != null);
+    assertTrue("object by id not equal", objectById.equals(object));
   }
 
   //! public void _testObjectIdUnassignable() { // Note: this test is really specific to the basic implementation
