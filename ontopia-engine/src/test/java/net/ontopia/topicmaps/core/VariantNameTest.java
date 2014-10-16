@@ -27,6 +27,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.Collections;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.infoset.core.LocatorIF;
@@ -46,7 +47,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     TopicIF topic = builder.makeTopic();
     TopicNameIF basename = builder.makeTopicName(topic, "");
     parent = basename;
-    variant = builder.makeVariantName(basename, "");
+    variant = builder.makeVariantName(basename, "", Collections.<TopicIF>emptySet());
     scoped = variant;
     object = variant;
   }
@@ -261,7 +262,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
   protected TMObjectIF makeObject() {
     TopicIF    topic = builder.makeTopic();
     TopicNameIF basename = builder.makeTopicName(topic, "");
-    return builder.makeVariantName(basename, "");
+    return builder.makeVariantName(basename, "", Collections.<TopicIF>emptySet());
   }
 
 }

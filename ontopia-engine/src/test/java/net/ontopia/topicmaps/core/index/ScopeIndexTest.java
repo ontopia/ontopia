@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.core.index;
 
+import java.util.Collections;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -194,9 +195,9 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
   public void testVariantNameIndex() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF scoped1 = builder.makeVariantName(bn, "");
-    VariantNameIF scoped2 = builder.makeVariantName(bn, "");
-    VariantNameIF scoped3 = builder.makeVariantName(bn, "");
+    VariantNameIF scoped1 = builder.makeVariantName(bn, "", Collections.<TopicIF>emptySet());
+    VariantNameIF scoped2 = builder.makeVariantName(bn, "", Collections.<TopicIF>emptySet());
+    VariantNameIF scoped3 = builder.makeVariantName(bn, "", Collections.<TopicIF>emptySet());
 
     assertTrue("Number of unscoped variants is not 3",
            ix.getVariants(null).size() == 3);
