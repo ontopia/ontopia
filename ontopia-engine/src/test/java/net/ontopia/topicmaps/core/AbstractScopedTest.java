@@ -59,14 +59,14 @@ public abstract class AbstractScopedTest extends AbstractTMObjectTest {
       scoped.addTheme(null);
       fail("was allowed to add null theme");
     } catch (NullPointerException e) {
-      assertEquals("Wrong error message in NPE", MSG_NULL_ARGUMENT, e.getMessage());
+      // expected
     }
 
     try {
       scoped.removeTheme(null);
       fail("was allowed to remove null theme");
     } catch (NullPointerException e) {
-      assertEquals("Wrong error message in NPE", MSG_NULL_ARGUMENT, e.getMessage());
+      // expected
     }
   }
 
