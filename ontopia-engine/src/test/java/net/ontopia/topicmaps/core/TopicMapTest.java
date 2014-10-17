@@ -26,9 +26,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 public abstract class TopicMapTest extends AbstractTMObjectTest {
 
   protected TopicMapIF tm;
-  // The expected exception message if NULL is passed to a function
-  // which does not accept it.
-  protected static String NULLPOINTERMESSAGE = "null is not a valid argument.";
 
   public TopicMapTest(String name) {
     super(name);
@@ -152,9 +149,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
         fail("getTopicBySubjectLocator() accepts null parameter.");
       } catch (NullPointerException ex) {
         // Expected
-        assertTrue("Got a NullPointerException with an unexcpected message: " 
-               + ex.getMessage(),
-               ex.getMessage().equals(NULLPOINTERMESSAGE));
       }
     }
     catch (MalformedURLException e) {
@@ -193,9 +187,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
         fail("getTopicBySubjectIdentifier accepts null parameter");
       } catch (NullPointerException e) {
         // Expected.
-        assertTrue("Got a NullPointerException with an unexcpected message: " 
-               + e.getMessage(),
-               e.getMessage().equals(NULLPOINTERMESSAGE));
       }
                     
     }
@@ -234,9 +225,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
         fail("getObjectByItemIdentifier accepts null parameter");
       } catch (NullPointerException e) {
         // Expected.
-        assertTrue("Got a NullPointerException with an unexcpected message: " 
-               + e.getMessage(),
-               e.getMessage().equals(NULLPOINTERMESSAGE));
       }
                     
     }
@@ -298,9 +286,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
       fail("getObjectById accepts null parameter.");
     } catch (NullPointerException ex) {
       // Expected.
-      assertTrue("Got a NullPointerException with an unexcpected message: " 
-             + ex.getMessage(),
-             ex.getMessage().equals(NULLPOINTERMESSAGE));
     }
   }
 
