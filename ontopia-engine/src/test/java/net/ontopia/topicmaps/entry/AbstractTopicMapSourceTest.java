@@ -30,7 +30,7 @@ public abstract class AbstractTopicMapSourceTest extends TestCase {
 
   // --- utility methods
 
-  public void doAbstractTopicMapSourceTests(TopicMapSourceIF source) {
+  public static void doAbstractTopicMapSourceTests(TopicMapSourceIF source) {
     // test id
     String id = source.getId();
     assertTrue("Id default is not set", source.getId() != null);
