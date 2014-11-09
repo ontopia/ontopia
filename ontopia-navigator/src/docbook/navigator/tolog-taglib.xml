@@ -1616,6 +1616,15 @@ child. If not it must be empty.</para>
       <entry>The name of the slot whose contents are to be inserted to
       replace this tag when the template is used.</entry> 
     </row> 
+    <row>
+      <entry>fallback</entry>
+      <entry>No</entry>
+      <entry>Boolean</entry>
+      <entry>Indicates whether the tag body should be used as fallback
+        value if no corresponding <symbol>put</symbol> tag is found 
+        (see example below).
+        </entry>
+    </row>
   </tbody> 
 </tgroup> 
 </informaltable> 
@@ -1627,8 +1636,8 @@ child. If not it must be empty.</para>
 <para>
 When the template is used the contents of the named slot (as produced
 by the using page) are looked up and inserted in place of this tag. If
-no content has been filled into the slot the tag will not output
-anything. 
+no content has been filled into the slot and no <symbol>fallback</symbol>
+is given, the tag will not output anything. 
 </para>
 
 <para>
@@ -1647,6 +1656,41 @@ will output the slot after the split point.
 See the example given for the <symbol>insert</symbol> tag.
 </para>
 </refsect1>
+
+<refsect1>
+<title>Example with fallback value</title>
+
+<para>The example below defines a template that injects a date of last 
+change for each page that uses the template. The fallback value is included 
+in the template to avoid broken content if a page fails to define a 
+<symbol>put</symbol> for <symbol>date-last-change</symbol>.
+</para>
+
+<example>
+<title>Template with fallback value</title>
+<literallayout><![CDATA[
+  <div class="date-last-change">
+    This page was last changed at 
+    <template:get name="date-last-change" fallback="true">
+      an unknown date
+    </template:get>
+  </div>
+]]></literallayout>
+</example>
+
+<para>The result of this template is e.g. <emphasis>'This page was last changed 
+at december 2nd 2001'</emphasis> for a page that includes a <symbol>put</symbol> 
+tag with name <symbol>date-last-change</symbol>, or <emphasis>'This page was last 
+changed at an unknown date'</emphasis> for pages that lack such a tag.
+</para>
+
+<para>The body of a <symbol>get</symbol> tag with <symbol>fallback</symbol> 
+can include any kind of JSP content, even including other <symbol>get</symbol> 
+tags, if needed.
+</para>
+
+</refsect1>
+
 </refentry>
 
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
