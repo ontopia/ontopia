@@ -1706,7 +1706,7 @@ client uses the template (as defined in
   <template:put name="title">An example page</template:put>
 
   <template:put name="content">
-    <form ...>
+    <form action="demo.jsp" method="post">
 
       <template:split/>
 
@@ -1750,7 +1750,7 @@ and the form body (as another template slot).
     <table>
     <tr><td><template:get name="menu"/>
 
-    <tr><td><template:get name="content"/>
+    <tr><td><template:get name="body"/>
 
     <tr><td><template:get name="menu"/>
     </table>
@@ -1764,11 +1764,48 @@ and the form body (as another template slot).
 
 <para>
 In this template the <symbol>get</symbol> start tag for the 'content'
-slot outputs the form start tag (basically the 'content' slot up to
+slot outputs the form start tag (the 'content' slot up to
 the <symbol>split</symbol> tag), then the content of the
 <symbol>get</symbol> tag is output with the slots inserted, and
-finally the end tag outputs the form end tag.
+finally the end tag outputs the form end tag, like this:
 </para>
+
+<example>
+<title>Result of template with split tag</title>
+<literallayout><![CDATA[
+<html>
+<head>
+  <link rel=stylesheet type="text/css" href="default.css">
+  <title>An example page</title>
+</head>
+
+<body>
+  <h1>An example page</h1>
+
+  <form action="demo.jsp" method="post">
+    <table>
+    <tr><td>
+        <input type=button name=button1 value="Button1">
+        <input type=button name=button2 value="Button2">
+
+    <tr><td>
+        <input type=text name=field>
+
+    <tr><td>
+        <input type=button name=button1 value="Button1">
+        <input type=button name=button2 value="Button2">
+    </table>
+  </form>
+
+  <hr>
+  <address>
+    Ontopia A/S
+  </address>
+</body>
+</html>
+]]></literallayout>
+</example>
+
 </refsect1>
 </refentry>
 
