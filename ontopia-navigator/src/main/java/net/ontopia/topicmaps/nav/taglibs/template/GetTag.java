@@ -50,6 +50,8 @@ public class GetTag extends AbstractTemplateTag {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(GetTag.class.getName());
 
+  private boolean fallback = false;
+
   /**
    * Sets the name of the string to "get". It must match a value set
    * already by the PutTag.
@@ -58,13 +60,22 @@ public class GetTag extends AbstractTemplateTag {
     this.name = name;
   }
 
+  /**
+   * Sets the flag that defines whether the tag content should be used
+   * as fallback if no corresponding PutTag was found.
+   * @since %NEXT%
+   */
+  public void setFallback(boolean fallback) {
+    this.fallback = fallback;
+  }
+
   public int doStartTag() throws JspException {
     if (log.isDebugEnabled())
       log.debug("doStartTag, name: " + name);
 
     PageParameter param = getParameter();
     if (param == null)
-      return SKIP_BODY;
+      return fallback ? EVAL_BODY_BUFFERED : SKIP_BODY;
     
     String content = param.getContent();
     if (content == null) content = "";
@@ -91,6 +102,13 @@ public class GetTag extends AbstractTemplateTag {
     
     PageParameter param = getParameter();
     if (param == null) {
+      if (fallback) {
+        try {
+          getBodyContent().writeOut(pageContext.getOut());
+        } catch(java.io.IOException ex) {
+          throw new NavigatorRuntimeException("Exception occurred when writing content.", ex);
+        }
+      }
       resetMembers();
       return EVAL_PAGE;
     }
@@ -148,6 +166,7 @@ public class GetTag extends AbstractTemplateTag {
   private void resetMembers() {
     // tag attributes;
     name = null;
+    fallback = false;
   }
 
 }
