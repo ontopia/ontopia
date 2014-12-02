@@ -128,6 +128,13 @@ public class SpyDriver implements Driver {
     }
   }
 
+  public static void unregister() {
+    try {
+      DriverManager.deregisterDriver(DriverManager.getDriver("jdbcspy:"));
+    } catch (SQLException sqle) {
+      // ignore if it doesn't exist
+    }
+  }
 
   // -- report generation
 
