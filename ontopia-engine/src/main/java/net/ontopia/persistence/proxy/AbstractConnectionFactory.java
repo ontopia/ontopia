@@ -40,15 +40,6 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(AbstractConnectionFactory.class.getName());
 
-  static {
-    // Register jdbcspy driver
-    try {
-      Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
-    } catch (ClassNotFoundException e) {
-      // ignore if not exists
-    }
-  }
-
   protected Map<String, String> properties;
   
   protected String connstring;
@@ -61,6 +52,10 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
     
     driver = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.DriverClass");
     connstring = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionString");
+    
+    if ((connstring != null) && connstring.startsWith("jdbspy:")) {
+      loadSpyDriver();
+    }
 
     username = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.UserName", false);
     password = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.Password", false);
@@ -86,7 +81,15 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
   protected String getPassword() {
     return password;
   }
-  
+
+  // Register jdbcspy driver
+  public static void loadSpyDriver() {
+    try {
+      Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
+    } catch (ClassNotFoundException e) {
+      // ignore if not exists
+    }
+  }  
 }
 
 
