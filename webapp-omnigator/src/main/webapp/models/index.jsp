@@ -59,7 +59,7 @@
       <ul>
         <li><b>Documentation</b>
           <ul>
-            <li><a href="../docs/navigator/userguide.html" title="Don't miss a single feature of the Omnigator!">Omnigator User Guide</a></li>
+            <li><a href="../docs/omnigator/userguide.html" title="Don't miss a single feature of the Omnigator!">Omnigator User Guide</a></li>
             <li><a href="../docs/query/tutorial.html" title="Learn how to write mind-blowing tolog queries...">Query Language Tutorial</a></li>
             <li><a href="../docs/schema/tutorial.html" title="How to ensure consistency in your own topic maps">Schema Language Tutorial</a></li>
           </ul>
@@ -89,9 +89,9 @@
         </li>
         <li><b>Examples</b>
             <ul>
-              <li><a href="../docs/navigator/ItalianOpera.ltm" title="The world's most famous topic map, in LTM format">Italian Opera (LTM syntax)</a></li>
-              <li><a href="../docs/i18n.ltm" title="An LTM topic map about the world's scripts and languages">Scripts and languages (LTM syntax)</a></li>
-              <li><a href="../docs/jill.xtm" title="A simple topic map based on the tutorial in the Omnigator User Guide">Jill's First Topic Map (XTM syntax)</a></li>
+              <li><a href="../docs/omnigator/ItalianOpera.ltm" title="The world's most famous topic map, in LTM format">Italian Opera (LTM syntax)</a></li>
+              <li><a href="../docs/omnigator/i18n.ltm" title="An LTM topic map about the world's scripts and languages">Scripts and languages (LTM syntax)</a></li>
+              <li><a href="../docs/omnigator/jill.xtm" title="A simple topic map based on the tutorial in the Omnigator User Guide">Jill's First Topic Map (XTM syntax)</a></li>
             </ul>
         </li>
         <li><b>Example applications</b>
