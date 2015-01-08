@@ -66,6 +66,14 @@
 		<!-- jill.xtm -->
 		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/jill.xtm"
 			tofile="target/docbook-collected/resources/omnigator/jill.xtm"/>
+
+		<!-- i18n.ltm -->
+		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/i18n.ltm"
+			tofile="target/docbook-collected/resources/omnigator/i18n.ltm"/>
+
+		<!-- ItalianOpera.ltm -->
+		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/ItalianOpera.ltm"
+			tofile="target/docbook-collected/resources/omnigator/ItalianOpera.ltm"/>
 	</target>
 	
 	<!-- Collects all the ontopoly documentation that is included in the WAR -->
