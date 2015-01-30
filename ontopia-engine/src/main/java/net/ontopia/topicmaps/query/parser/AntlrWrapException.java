@@ -36,4 +36,9 @@ public class AntlrWrapException extends RecognitionException {
   public Exception getException() {
     return exception;
   }
+
+  @Override
+  public Throwable getCause() {
+    return exception;
+  }
 }
