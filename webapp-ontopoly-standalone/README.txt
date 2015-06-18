@@ -4,7 +4,7 @@
 
 To get started do the following:
 
-  1. Check out Ontopia from subversion. See http://code.google.com/p/ontopia/source/checkout
+  1. Check out Ontopia from github. See https://github.com/ontopia/ontopia/
 
   2. Build the ontopia-engine jar file and deploy it to the local
      maven repository: 

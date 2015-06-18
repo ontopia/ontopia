@@ -162,7 +162,7 @@ public class MergeTMTest extends TestCase {
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
-    // http://code.google.com/p/ontopia/issues/detail?id=28
+    // https://github.com/ontopia/ontopia/issues/28
     assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
@@ -190,7 +190,7 @@ public class MergeTMTest extends TestCase {
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
-    // http://code.google.com/p/ontopia/issues/detail?id=28
+    // https://github.com/ontopia/ontopia/issues/28
     assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
@@ -218,7 +218,7 @@ public class MergeTMTest extends TestCase {
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
-    // http://code.google.com/p/ontopia/issues/detail?id=28
+    // https://github.com/ontopia/ontopia/issues/28
     assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
@@ -246,7 +246,7 @@ public class MergeTMTest extends TestCase {
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
-    // http://code.google.com/p/ontopia/issues/detail?id=28
+    // https://github.com/ontopia/ontopia/issues/28
     assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    

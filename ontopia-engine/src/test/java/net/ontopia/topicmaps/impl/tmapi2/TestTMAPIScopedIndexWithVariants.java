@@ -41,7 +41,7 @@ import net.ontopia.topicmaps.impl.tmapi2.MemoryTopicMapSystemImpl;
 import junit.framework.TestCase;
 
 /**
- * Test for issue <a href="http://code.google.com/p/ontopia/issues/detail?id=214">http://code.google.com/p/ontopia/issues/detail?id=214</a>
+ * Test for issue <a href="https://github.com/ontopia/ontopia/issues/214">http://code.google.com/p/ontopia/issues/detail?id=214</a>
  */
 public class TestTMAPIScopedIndexWithVariants extends TestCase {
 

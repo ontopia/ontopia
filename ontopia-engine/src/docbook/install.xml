@@ -171,7 +171,7 @@ Class 'org.apache.log4j.BasicConfigurator' not found. Please add log4j.jar to yo
 Since Ontopia 5.2.0, testing is automatically done during creation of
 the distribution. It is no longer needed to run the test suite yourself.
 If you are experiencing problems, please report an issue at <ulink
-url="http://code.google.com/p/ontopia/issues/list">Google Code</ulink>
+url="https://github.com/ontopia/ontopia/issues">Ontopia @ Github</ulink>
 including:
 </para>
 

@@ -56,7 +56,7 @@ public class User implements UserIF, Serializable {
   // and resurrected from there, they will all be null. the rest of
   // the class is coded to handle the case where these are initialized
   // as null. (the loss of the actual data is no problem.) see issue 135
-  // http://code.google.com/p/ontopia/issues/detail?id=135
+  // https://github.com/ontopia/ontopia/issues/135
   protected transient UserFilterContextStore filterContext;
   protected transient HistoryMap history;
   protected transient RingBuffer log;

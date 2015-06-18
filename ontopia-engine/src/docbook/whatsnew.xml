@@ -88,131 +88,131 @@ both at a higher level, and in more detail.
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=56"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/56"
       >Issue 56: Automate distribution uploading</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=66"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/66"
       >Issue 66: Remove dependency to patched 3rd-party libs</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=70"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/70"
       >Issue 70: Testing after installation failures</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=224"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/224"
       >Issue 224: Ontopia could show version number</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=232"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/232"
       >Issue 232: Execute RDBMS tests during build</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=392"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/392"
       >Issue 392: NavigatorApplication.getTopicMapRepository() returns different repository object then TopicMaps.getTopicMapRepository() for the same sources file</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=406"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/406"
       >Issue 406: Cant build ontopia from scratch</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=422"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/422"
       >Issue 422: ontopia/pom.xml contains duplicate maven-javadoc-plugin dependency</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=432"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/432"
       >Issue 432: Error in NextPreviousOptimizer</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=446"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/446"
       >Issue 446: Export in Ontopoly produces 0 byte file, Export in Ominigator produces correct result</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=450"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/450"
       >Issue 450: the failure when use "Visualize"</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=452"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/452"
       >Issue 452: LTM reification should support prefix:suffix notation</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=454"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/454"
       >Issue 454: LTMTopicMapWriter should support user defined prefixes</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=457"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/457"
       >Issue 457: Cannot create symmetric associations with the browse dialog</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=460"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/460"
       >Issue 460: Omnigator documentation specifies incorrect path for topicmaps location</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=465"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/465"
       >Issue 465: Upgrade slf4j to 1.6 or higher</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=466"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/466"
       >Issue 466: TMRAP webapp fails to start due to missing axis class</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=467"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/467"
       >Issue 467: tolog:out, :oid and :id tags should support fallback value</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=468"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/468"
       >Issue 468: RDBMSTopicMapSource should implement close() method</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=469"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/469"
       >Issue 469: TopicMapSourceIF could use close() method</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=470"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/470"
       >Issue 470: RDBMSTopicMapReference.setTitle is not persisted</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=471"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/471"
       >Issue 471: RDBMSTopicMapReference should implement methods to get and set base address</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=473"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/473"
       >Issue 473: RDBMSTopicMapSource.refresh might leave references open</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=474"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/474"
       >Issue 474: Documentation pages are missing tables of contents and section numbering</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=475"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/475"
       >Issue 475: RDBMS clustering throws exception when shared cache is off</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=476"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/476"
       >Issue 476: JGroups fails to include sub-dependency commons-logging</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=477"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/477"
       >Issue 477: SimpleClassifier holds files open</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=479"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/479"
       >Issue 479: Ability to build Ontopia without need for port 8080</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=480"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/480"
       >Issue 480: PoolableSet[Factory][IF] and SetPool[IF] classes are unused and should be removed</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=481"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/481"
       >Issue 481: XTMTopicMapWriter does not add xlink namespace</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=482"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/482"
       >Issue 482: Ontopia distribution contains duplicate libraries</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=483"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/483"
       >Issue 483: Revision r2338 exposes error in tolog SetTag when used with tag pooling</ulink></para>
   </listitem>
 </itemizedlist>
@@ -249,23 +249,23 @@ both at a higher level, and in more detail.
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=447"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/447"
       >Issue 447: The PostgreSQL specific searcher implementation is broken due to deprecated function use</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=448"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/448"
       >Issue 448: Topicmap statistics should be available though API</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=449"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/449"
       >Issue 449: TMXMLWriter should support user defined prefixes</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=411"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/411"
       >Issue 411: TopicIF should have a getOccurrencesByType(TopicIF type) method</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=409"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/409"
       >Issue 409: MergeUtils fails to merge names of name and occurrences types that do not have a subject identifier</ulink></para>
   </listitem>
 </itemizedlist>
@@ -283,15 +283,15 @@ both at a higher level, and in more detail.
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=438"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/438"
       >Issue 438: Vizigator is not starting on Mac!</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=439"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/439"
       >Issue 439: TopicNameComparator might throw NullPointerException</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=440"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/440"
       >Issue 440: bat file pointing to noneixisting jar file in 5.2.0</ulink></para>
   </listitem>
 </itemizedlist>
@@ -339,151 +339,151 @@ both at a higher level, and in more detail.
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=41"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/41"
       >Issue 41: CVS tags in source code</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=59"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/59"
       >Issue 59: Modularize the product</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=60"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/60"
       >Issue 60: Tweak the directory-structure to add initial Maven2 support</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=152"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/152"
       >Issue 152: Document access control in Ontopoly</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=189"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/189"
       >Issue 189: Query text box in omnigator could be larger</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=285"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/285"
       >Issue 285: URIUtils.getURI to support resources</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=307"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/307"
       >Issue 307: Omnigator doesn't show correct "untyped" name for topics</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=325"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/325"
       >Issue 325: Ontopoly date and datetime fields don't allow user input</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=339"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/339"
       >Issue 339: export topicmap without data</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=344"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/344"
       >Issue 344: CanonicalXTMWriterTestGenerator is not included in test configuration + testdata baseline is outdated</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=363"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/363"
       >Issue 363: Document DB2TM changelog improvement</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=368"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/368"
       >Issue 368: Ontopoly 5.1.3 fails to add Subject identifier Identity for Topic classes</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=369"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/369"
       >Issue 369: Ontopoly - Removing fields from topic type definition</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=378"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/378"
       >Issue 378: Apache Tomcat should be updated to 5.5.33</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=380"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/380"
       >Issue 380: Class.forName uses wrong classloader</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=381"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/381"
       >Issue 381: StreamUtils.readString might return incorrect result</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=383"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/383"
       >Issue 383: Not all TMAPI2 test are ran in the trunk, and fail when enabled</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=384"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/384"
       >Issue 384: LTM export of RDBMS readonly topicmap causes ClassCastException</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=385"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/385"
       >Issue 385: tolog subject-locator predicate returns wrong costs iff topic is bound and IRI is unbound</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=386"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/386"
       >Issue 386: tolog reifies predicate returns wrong costs</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=387"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/387"
       >Issue 387: Docs "The Built-in tolog Predicates" - Wrong example for the reifies predicate</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=389"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/389"
       >Issue 389: coalesce() predicate in ontopia 5.1.3 doesn't allow unbound second argument</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=389"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/389"
       >Issue 389: coalesce() predicate in ontopia 5.1.3 doesn't allow unbound second argument</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=390"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/390"
       >Issue 390: Allow CTM topic map sources should be able to have their full-text indexes maintained just like XTM and LTM topic maps</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=391"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/391"
       >Issue 391: QueryUtils circumvents query processor caching for non-tolog languages</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=393"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/393"
       >Issue 393: JFlex is an unnecessary compile/runtime dependency</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=395"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/395"
       >Issue 395: Test-specific methods in FileUtils</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=397"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/397"
       >Issue 397: Documentation for Ontopia Web Editor framework is broken.</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=399"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/399"
       >Issue 399: Build date is wrong</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=407"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/407"
       >Issue 407: Ontopia distribution doesn't contain xerces.jar</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=408"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/408"
       >Issue 408: Cannot sort on numbers</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=412"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/412"
       >Issue 412: Ontopoly instances page takes very long to load on types with a lot of intsances</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=413"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/413"
       >Issue 413: The Tomcat download link returns a 404</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=415"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/415"
       >Issue 415: Build Ontopia from tomcat.zip, not tomcat.tar.gz</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=417"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/417"
       >Issue 417: Ontopoly access right 'NONE' gives a user read-write rights</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=418"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/418"
       >Issue 418: StringUtils.compare() should be case-sensitive</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=434"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/434"
       >Issue 434: NumbersModuleTest fails due to locale</ulink></para>
   </listitem>
 </itemizedlist>
@@ -533,31 +533,31 @@ adds some fairly minor new functionality.</para>
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=316"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/316"
       >Issue 316: No events for new role players</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=313"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/313"
       >Issue 313: No events when associations are deleted</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=334"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/334"
       >Issue 334: Incorrect encoding of characters in URIs</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=343"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/343"
       >Issue 343: Multiple conformance errors in CTM parser</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=344"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/344"
       >Issue 344: CXTM conformance tests were disabled</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=356"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/356"
       >Issue 356: The literal "1.0" not allowed in CTM</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=360"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/360"
       >Issue 360: CTM parser doesn't accept fractional seconds and timezones</ulink></para>
   </listitem>
 </itemizedlist>
@@ -572,15 +572,15 @@ adds some fairly minor new functionality.</para>
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=320"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/320"
       >Issue 320: Geotagging in Ontopoly: failed searches give no response</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=322"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/322"
       >Issue 322: Ontopoly: list of "other topic maps" in random order</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=323"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/323"
       >Issue 323: Ontopoly: association search popup broken</ulink></para>
   </listitem>
 </itemizedlist>
@@ -600,7 +600,7 @@ occurrences.</para>
 
 <para>Further, pluggable support for authorization and authentication
 was added to Ontopoly, as described
-<ulink url="http://code.google.com/p/ontopia/wiki/OntopolyHowTo">in the
+<ulink url="https://github.com/ontopia/ontopia/wiki/OntopolyHowTo">in the
 wiki</ulink>.</para>
 
 <para>Beyond that this release features mainly the following bug
@@ -608,57 +608,57 @@ fixes:</para>
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=48"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/48"
       >Issue 48: Ontopoly repository out of sync with the underlying topic
     map repository</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=105"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/105"
       >Issue 105: Instance list in Ontopoly no longer displayed as
     tree when there is no tree</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=240"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/240"
       >Issue 240: Problem with character " (quotation mark) in Ontopoly</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=259"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/259"
       >Issue 259: XTM 2.1 export is now available in Ontopoly</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=275"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/275"
       >Issue 275: LTM add-fragment support in TMRAP was broken</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=277"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/277"
       >Issue 277: Fix to handling of equal parameters to rules</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=283"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/283"
       >Issue 283: RDBMS schema no longer allows NULLs</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=287"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/287"
       >Issue 287: tolog updates in Omnigator had no effect on RDBMS</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=292"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/292"
       >Issue 292: Topic selection in hierarchy didn't work in Ontopoly</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=294"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/294"
       >Issue 294: tolog did not optimize rule sets</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=302"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/302"
       >Issue 302: Cost estimator in value-like predicate caused errors</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=305"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/305"
       >Issue 305: Merging away sort and display topics in LTM caused errors</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=318"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/318"
       >Issue 318: Save icon visible with RDBMS backend</ulink></para>
   </listitem>
 </itemizedlist>
@@ -766,129 +766,129 @@ fixes:</para>
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=135"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/135"
     >Issue 135</ulink>: Omnigator: NullPointerException in
     getScopeDecider</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=264"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/264"
     >Issue 264</ulink>: Query plugin in Omnigator doesn't handle non-latin-1
     characters correctly</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=254"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/254"
     >Issue 254</ulink>: tolog "reifies" predicate returns error on finding
     refiers of a topic</para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=244"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/244"
     >Issue 244</ulink>: DB2TM schema disallows iid/slo prefixes, but they
     actually work</para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=238"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/238"
     >Issue 238</ulink>: Exception on instance topic in Ontopoly</para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=237"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/237"
     >Issue 237</ulink>: Interning of locators caused out of memory error in
     the engine even when there was more memory left</para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=231"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/231"
     >Issue 231</ulink>: TopicType not serializable exception in Ontopoly</para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=228"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/228"
     >Issue 228</ulink>: TMAPI TopicMap/TopicMapSystem.close() doesn't commit
     current transaction</para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=214"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/214"
     >Issue 214</ulink>: TMAPI ScopedIndex throws NullPointerException</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=209"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/209"
     >Issue 209</ulink>: TMAPI Variants allow empty scope</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=208"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/208"
     >Issue 208</ulink>: Ontopoly should not clear field when cardinality is
     0-1 or 1-1 and field has multiple values</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=193"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/193"
     >Issue 193</ulink>: DB2TM synchronization strips topic type</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=184"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/184"
     >Issue 184</ulink>: Cannot disassociate second topic type of an instance
     in Ontopoly</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=176"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/176"
     >Issue 176</ulink>: Omnigator: ClassNotFoundException when exporting to
     RDF</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=132"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/132"
     >Issue 132</ulink>: Copy assotiation type does not work correctly in
     Ontopoly</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=121"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/121"
     >Issue 121</ulink>: Ontopoly: field list updated incorrectly when
     subtyping</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=99"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/99"
     >Issue 99</ulink>: tolog should not count null values</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=93"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/93"
     >Issue 93</ulink>: tolog reordering optimizer makes query much slower</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=238"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/238"
     >Issue 238</ulink>: InvalidQueryException when viewing certain topics in
     Ontopoly</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=216"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/216"
     >Issue 216</ulink>: DB2TM makePSI function strips out chars 9 and z</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=208"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/208"
     >Issue 208</ulink>: Problem with hierarchy-walker optimization in
     tolog</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=207"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/207"
     >Issue 207</ulink>: tolog topic and association predicates do not filter
     correctly</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=143"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/143"
     >Issue 143</ulink>: Bad syntax error reporting in LTM reader</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=111"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/111"
     >Issue 111</ulink>: XTM 1.0 importer uses non-standard PSIs</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=267"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/267"
     >Issue 267</ulink>: Broader/narrower association type names in the
     wrong direction in MyThesaurus.xtm</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=252"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/252"
     >Issue 252</ulink>: Add update-topic method to SOAP version of TMRAP</para>
   </listitem>
 </itemizedlist>
 
 <para>Note that a minor modification has been made to the Ontopia
 database schema on MySQL in order to fix a failing test. See <ulink
-url="http://code.google.com/p/ontopia/issues/detail?id=163" >issue
+url="https://github.com/ontopia/ontopia/issues/163" >issue
 163</ulink> for a description of the problem and how to upgrade older
 databases.</para>
 </section>
@@ -900,8 +900,8 @@ databases.</para>
 
 <para>This is a bug fix release, specifically released in order to
 make the fix in <ulink
-url="http://code.google.com/p/ontopia/source/detail?r=486">revision
-486</ulink> available to a customer who needed this fix. The fix
+url="https://github.com/ontopia/ontopia/commit/23e327d29029f653729374a1f3118fef8441191e">revision
+486 (23e327d29029f653729374a1f3118fef8441191e in github)</ulink> available to a customer who needed this fix. The fix
 solves performance problems with tolog inference rules parsed into
 <interfacename>DeclarationContextIF</interfacename> objects.</para>
 
@@ -924,46 +924,46 @@ The following changes have been made:
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=13"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/13"
                 >Support for tolog.properties added</ulink>
     (<ulink url="http://ontopia.wordpress.com/2009/08/31/tolog-properties/"
     >blog post</ulink>)
     </para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=72"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/72"
                 >Refactored Vizigator to simplify embedding</ulink>
     </para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=81"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/81"
                 >Dependency on Apache ORO removed</ulink>
     </para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=114"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/114"
                 >Ontopoly can now be built as a .jar file</ulink>
     </para>
   </listitem>
   <listitem>
     <para><ulink url="http://ontopia.wordpress.com/2009/08/21/ontopia-on-google-appengine/">Ontopia now runs on Google AppEngine</ulink>, thanks to two small fixes
-    (<ulink url="http://code.google.com/p/ontopia/issues/detail?id=118"
+    (<ulink url="https://github.com/ontopia/ontopia/issues/118"
            >118</ulink>,
-     <ulink url="http://code.google.com/p/ontopia/issues/detail?id=114"
+     <ulink url="https://github.com/ontopia/ontopia/issues/114"
            >114</ulink>)
     </para>
   </listitem>
   <listitem>
     <para>Minor improvements in
-    <ulink url="http://code.google.com/p/ontopia/wiki/TologTips">TologSpy</ulink>
+    <ulink url="https://github.com/ontopia/ontopia/wiki/TologTips">TologSpy</ulink>
     to make reports more readable</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=80"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/80"
                 >tolog can now count to zero</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=104"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/104"
                 >tolog plug-in in Omnigator can show query plan without
     running query</ulink></para>
   </listitem>
@@ -978,31 +978,31 @@ The following bugs have been fixed:
 
 <itemizedlist>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=30"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/30"
                  >Synchronization problem in DB2TM fixed</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=77"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/77"
                  >XTM 1.0 crash on duplicate non-topic objects</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=91"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/91"
                  >XTM 2.0 crash on duplicate non-topic objects</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=85"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/85"
                  >NullPointerException on names in TMAPI 2.0</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=88"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/88"
                  >TMSync doesn't synchronize reifying topics</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=117"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/117"
                  >Reification of sub-topic maps carred into main TM in XTM 2.0</ulink></para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=15"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/15"
                  >Cannot log in to new installation</ulink></para>
   </listitem>
 </itemizedlist>
@@ -1072,52 +1072,52 @@ You no longer need a valid license key to run Ontopia.</para>
 
 <itemizedlist>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=2"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/2"
      >Issue 2:</ulink> template definitions crash CTM parser</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=3"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/3"
      >Issue 3:</ulink> Name typing breaks on import into Ontopoly</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=9"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/9"
      >Issue 9:</ulink> Nontopoly model in Omnigator broken
     </para>
   </listitem>
   <listitem>
     <para><ulink
-    url="http://code.google.com/p/ontopia/issues/detail?id=17" >Issue
+    url="https://github.com/ontopia/ontopia/issues/17" >Issue
     17:</ulink> Exception thrown in Ontopoly when clicking Add on "Add
     or remove topic type" when no topic type selected
     </para>
   </listitem>  
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=20"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/20"
      >Issue 20:</ulink> Exporting topic maps without schema broken in Ontopoly
     </para>
   </listitem>
   <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=28"
+    <para><ulink url="https://github.com/ontopia/ontopia/issues/28"
      >Issue 28:</ulink> Merging lost item identifiers if they were the
     same as some subject identifier    
     </para>
   </listitem>
   <listitem>
     <para><ulink
-    url="http://code.google.com/p/ontopia/issues/detail?id=36" >Issue
+    url="https://github.com/ontopia/ontopia/issues/36" >Issue
     36:</ulink> Ontopoly export without schema loses description
     occurrence
     </para>
   </listitem>
   <listitem>
     <para><ulink
-    url="http://code.google.com/p/ontopia/issues/detail?id=37" >Issue
+    url="https://github.com/ontopia/ontopia/issues/37" >Issue
     37:</ulink> TMSync does not synchronize reification
     </para>
   </listitem>
   <listitem>
     <para><ulink
-    url="http://code.google.com/p/ontopia/issues/detail?id=37" >Issue
+    url="https://github.com/ontopia/ontopia/issues/37" >Issue
     58:</ulink> VizDesktop doesn't work with Sun 1.5 JRE under Gnome
     </para>
   </listitem>  
