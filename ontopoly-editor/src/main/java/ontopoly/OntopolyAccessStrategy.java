@@ -33,8 +33,8 @@ import ontopoly.model.Topic;
  * implementation, create an extension of {@link OntopolyApplication} and
  * override the {@link OntopolyApplication#newAccessStrategy()} method.
  *
- * @see <a href="http://code.google.com/p/ontopia/wiki/OntopolyHowTo">
- *      Ontopia googlecode - OntopolyHowTo</a>
+ * @see <a href="https://github.com/ontopia/ontopia/wiki/OntopolyHowTo">
+ *      Ontopia github - Ontopoly tips</a>
  * @see OntopolyApplication
  * @see OntopolyApplication#newAccessStrategy()
  */

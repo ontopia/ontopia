@@ -87,7 +87,7 @@
       <p>
       <ul>
         <li><a href="http://groups.google.com/group/ontopia">Mailing list</a>
-        <li><a href="http://code.google.com/p/ontopia/issues/list">Report a bug</a><br><br>
+        <li><a href="https://github.com/ontopia/ontopia/issues">Report a bug</a><br><br>
       </ul>
     </table>
 

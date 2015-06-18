@@ -16,7 +16,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.tmapi</groupId>
+			<groupId>${tmapi.group}</groupId>
 			<artifactId>tmapi</artifactId>
 		</dependency>
 		<dependency>
@@ -119,7 +119,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.tmapi</groupId>
+									<groupId>${tmapi.group}</groupId>
 									<artifactId>tmapi-tests</artifactId>
 									<version>${tmapi.version}</version>
 									<outputDirectory>${project.build.directory}/test-classes/</outputDirectory>

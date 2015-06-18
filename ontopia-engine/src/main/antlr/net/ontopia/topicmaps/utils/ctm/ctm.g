@@ -129,7 +129,7 @@ options {
   private LocatorIF getRelativeLocator() throws antlr.TokenStreamException {
     // we don't always have a document locator. when we don't have one, we
     // only allow absolute URIs anywhere in the CTM. see issue 182.
-    // http://code.google.com/p/ontopia/issues/detail?id=182
+    // https://github.com/ontopia/ontopia/issues/182
     if (document != null)
       return document.resolveAbsolute(LT(0).getText());
     else
@@ -386,7 +386,7 @@ literal :
              basic_literal.setDatatype(PSI.getXSDInteger()); } |
   (ONEOH | DECIMAL)
   // we need ONEOH because it shadows the DECIMAL lexical rule
-  // http://code.google.com/p/ontopia/issues/detail?id=356
+  // https://github.com/ontopia/ontopia/issues/356
            { literal = basic_literal;
              basic_literal.setLiteral(LT(0).getText());
              basic_literal.setDatatype(PSI.getXSDDecimal()); } |

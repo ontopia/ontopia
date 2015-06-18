@@ -81,7 +81,7 @@ public class LTMTopicMapReaderTest {
 
   @Test
   public void testSubfileErrorReporting() throws IOException {
-    // test for issue 143: http://code.google.com/p/ontopia/issues/detail?id=143
+    // test for issue 143: https://github.com/ontopia/ontopia/issues/143
     try {
       TopicMapIF tm = read("mergemap-error.ltm");
       Assert.fail("No error found!");

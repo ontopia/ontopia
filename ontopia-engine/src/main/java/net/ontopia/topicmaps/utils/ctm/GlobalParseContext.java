@@ -93,7 +93,7 @@ public class GlobalParseContext implements ParseContextIF {
   public ValueGeneratorIF getTopicById(String id) {
     if (base == null)
       // when no base locator only absolute URIs are allowed
-      // see http://code.google.com/p/ontopia/issues/detail?id=182
+      // see https://github.com/ontopia/ontopia/issues/182
       throw new InvalidTopicMapException("Cannot resolve id '" + id +
                                          "' when no base locator");
     LocatorIF itemid = base.resolveAbsolute('#' + id);

@@ -43,4 +43,4 @@ queries:</p>
 <p><b>toma</b> is a language for querying topic maps. It is inspired by 
 SQL and based around the concept of path expressions.
 For a full description of the language, see <a
-href="http://code.google.com/p/ontopia/wiki/TomaImplementation">The introduction to <b>toma</b></a>.</p>
+href="https://github.com/ontopia/sandbox/wiki/TomaImplementation">The introduction to <b>toma</b></a>.</p>

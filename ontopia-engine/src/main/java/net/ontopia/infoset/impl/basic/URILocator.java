@@ -53,7 +53,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
     } catch (NoClassDefFoundError e) {
       // This happens on Google AppEngine, but is not really a problem
       // since the data-URL handler is rarely used. See
-      // http://code.google.com/p/ontopia/issues/detail?id=118
+      // https://github.com/ontopia/ontopia/issues/118
     }
   }
 

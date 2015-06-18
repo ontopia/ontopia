@@ -3,7 +3,7 @@
 # TM/XML
 #
 # A RELAX-NG schema for TM/XML. This is for TM/XML 1.1, changed
-# as proposed in http://code.google.com/p/ontopia/issues/detail?id=138
+# as proposed in https://github.com/ontopia/ontopia/issues/138
 #
 # ============================================================
 

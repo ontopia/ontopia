@@ -92,7 +92,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
         sb.append("\ntinyMCE.execCommand('mceAddControl', true, '" + textArea.getMarkupId() + "');");
 
         // the next two lines are a work-around for issue 459
-        // http://code.google.com/p/ontopia/issues/detail?id=459
+        // https://github.com/ontopia/ontopia/issues/459
         // motivated by this posting
         // http://apache-wicket.1842946.n4.nabble.com/tinymce-textarea-in-a-modal-window-not-letting-to-type-td1886534.html
         sb.append("\ntinyMCE.execCommand('mceRemoveControl', false, '" + textArea.getMarkupId() + "');");

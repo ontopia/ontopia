@@ -373,7 +373,7 @@ options {
     } catch (RecognitionException ex) {
       // need to catch the error here and rethrow in order to ensure that
       // error message points to correct file. see issue #143 on google code
-      // http://code.google.com/p/ontopia/issues/detail?id=143
+      // https://github.com/ontopia/ontopia/issues/143
       throw new AntlrWrapException(new IOException(
           "Lexical error at " + extloc.getAddress() 
           + ":" + ex.line + ":" + ex.column + ": "+ ex.getMessage()));
