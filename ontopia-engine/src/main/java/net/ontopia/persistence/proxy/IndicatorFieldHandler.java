@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -98,12 +99,12 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
   }
 
   @Override
-  public void retrieveFieldValues(Object value, List field_values) {
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     throw new UnsupportedOperationException("Indicator field handler cannot retrieve field values.");
   }
 
   @Override
-  public void retrieveSQLValues(Object value, List sql_values) {
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     throw new UnsupportedOperationException("Indicator field handler cannot retrieve sql values.");
   }
 

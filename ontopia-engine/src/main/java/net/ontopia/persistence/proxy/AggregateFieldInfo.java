@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 
 /**
  * INTERNAL: A field that references an aggregate class.<p>
@@ -168,7 +169,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   }
 
   @Override
-  public void retrieveFieldValues(Object value, List field_values) {
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     for (int i=0; i < fields.length; i++) {      
       try {
         if (value == null) 
@@ -182,7 +183,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   }
 
   @Override
-  public void retrieveSQLValues(Object value, List sql_values) {
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     for (int i=0; i < fields.length; i++) {      
       try {
         if (value == null) 

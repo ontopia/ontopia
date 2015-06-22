@@ -41,8 +41,8 @@ public class SQLTuple implements SQLValueIF {
   protected Class vtype;
   protected FieldHandlerIF fhandler;
   
-  public SQLTuple(List values) {
-    this((SQLValueIF[])values.toArray(new SQLValueIF[values.size()]));
+  public SQLTuple(List<SQLValueIF> values) {
+    this(values.toArray(new SQLValueIF[values.size()]));
   }
   
   public SQLTuple(SQLValueIF[] values) {

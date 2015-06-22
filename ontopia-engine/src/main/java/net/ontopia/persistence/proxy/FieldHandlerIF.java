@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import net.ontopia.persistence.query.sql.SQLValueIF;
   
 /**
  * INTERNAL: Interface for use by classes that retrieve field values
@@ -58,9 +59,9 @@ public interface FieldHandlerIF {
    */    
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException;
 
-  public void retrieveFieldValues(Object value, List field_values);
+  public void retrieveFieldValues(Object value, List<Object> field_values);
   
-  public void retrieveSQLValues(Object value, List sql_values);
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values);
   
 }
 
