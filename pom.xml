@@ -2,6 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>net.ontopia</groupId>
+		<artifactId>super-pom</artifactId>
+		<version>1</version>
+	</parent>
+
 	<groupId>net.ontopia</groupId>
 	<artifactId>ontopia-parent</artifactId>
 	<packaging>pom</packaging>
@@ -652,38 +658,6 @@
 							<reportOutputDirectory>${project.build.directory}/site/api</reportOutputDirectory>
 							<destDir>api</destDir>
 						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<!-- profile used to prepare for a release -->
-			<id>release</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-javadoc</id>
-								<phase>package</phase>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<phase>package</phase>
-								<goals><goal>jar-no-fork</goal><goal>test-jar-no-fork</goal></goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>
