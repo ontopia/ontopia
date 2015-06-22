@@ -30,13 +30,12 @@
 		<finalName>xmltools</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jspc-maven-plugin</artifactId>
+				<groupId>org.apache.sling</groupId>
+				<artifactId>maven-jspc-plugin</artifactId>
 				<executions>
 					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
+						<id>compile-jsp</id>
+						<phase>prepare-package</phase>
 					</execution>
 				</executions>
 			</plugin>

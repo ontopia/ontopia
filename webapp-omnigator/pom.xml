@@ -68,19 +68,14 @@
 		<finalName>omnigator</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jspc-maven-plugin</artifactId>
+				<groupId>org.apache.sling</groupId>
+				<artifactId>maven-jspc-plugin</artifactId>
 				<executions>
 					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
+						<id>compile-jsp</id>
+						<phase>prepare-package</phase>
 					</execution>
 				</executions>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>xerces</groupId>
