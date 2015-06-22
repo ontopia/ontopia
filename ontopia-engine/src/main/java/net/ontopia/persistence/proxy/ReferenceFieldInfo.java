@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,12 +103,12 @@ public class ReferenceFieldInfo extends AbstractFieldInfo {
   }
 
   @Override
-  public void retrieveFieldValues(Object value, List field_values) {
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     identity_field.retrieveFieldValues(value, field_values);
   }
   
   @Override
-  public void retrieveSQLValues(Object value, List sql_values) {
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     identity_field.retrieveSQLValues(value, sql_values);
   }
 

@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.List;
 import net.ontopia.persistence.query.sql.SQLNull;
 import net.ontopia.persistence.query.sql.SQLPrimitive;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,12 +93,12 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
   }
 
   @Override
-  public void retrieveFieldValues(Object value, List field_values) {
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     field_values.add(value);
   }
 
   @Override
-  public void retrieveSQLValues(Object value, List sql_values) {
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     if (value == null)      
       sql_values.add(new SQLNull()); // TODO: Use SQLNull.getInstance() / SQLNull.INSTANCE
     else

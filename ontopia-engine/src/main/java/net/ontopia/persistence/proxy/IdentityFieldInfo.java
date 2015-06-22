@@ -28,6 +28,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 
 /**
  * INTERNAL: A field that represents the identity of instances of a
@@ -268,7 +269,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
   }
 
   @Override
-  public void retrieveFieldValues(Object value, List field_values) {
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     // Get the identity keys
     IdentityIF identity = getIdentity(value);
 
@@ -287,7 +288,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
   }
   
   @Override
-  public void retrieveSQLValues(Object value, List sql_values) {
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     // Get the identity keys
     IdentityIF identity = getIdentity(value);
 
