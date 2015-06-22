@@ -322,17 +322,6 @@
 					<stylesheetLocation>${basedir}/src/docbook/stylesheets/docbook2html.xslt</stylesheetLocation>
 				</configuration>
 			</plugin>
-			<!-- generate test jars -->
-			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
