@@ -685,13 +685,6 @@
 							</execution>
 						</executions>
 					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-						<configuration>
-							<createChecksum>true</createChecksum>
-						</configuration>
-					</plugin>
 				</plugins>
 			</build>
 		</profile>
