@@ -1736,7 +1736,7 @@ public class SQLBuilder {
 
   protected SQLValueIF produceCollection(JDOCollection coll, BuildInfo info) {
     // loop over collection elements and retrieve field values
-    List values = new ArrayList();    
+    List<SQLValueIF> values = new ArrayList<SQLValueIF>();
     FieldInfoIF id_finfo = getFieldInfo(coll, info);
     Collection _coll = coll.getValue();
     Iterator iter = _coll.iterator();
@@ -1744,7 +1744,7 @@ public class SQLBuilder {
       id_finfo.retrieveSQLValues(iter.next(), values);
     }
     if (values.size() == 1)
-      return (SQLValueIF)values.get(0);
+      return values.get(0);
     else
       return new SQLTuple(values);
     
