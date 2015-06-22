@@ -131,11 +131,13 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   /**
    * INTERNAL: Loads from its containing fields an aggregate object.
    */
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Read aggregate object
     return readAggregateObject(registrar, ticket, rs, rsindex, direct);
   }
   
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // value is an aggregate object
 
@@ -165,6 +167,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
     
   }
 
+  @Override
   public void retrieveFieldValues(Object value, List field_values) {
     for (int i=0; i < fields.length; i++) {      
       try {
@@ -178,6 +181,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
     }
   }
 
+  @Override
   public void retrieveSQLValues(Object value, List sql_values) {
     for (int i=0; i < fields.length; i++) {      
       try {
@@ -191,6 +195,7 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
     }
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("<AggregateFieldInfo " + field.getName() + " [");

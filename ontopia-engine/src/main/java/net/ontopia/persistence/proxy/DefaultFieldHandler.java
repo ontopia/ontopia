@@ -59,6 +59,7 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     return false;
   }
   
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Read primitive value
     Object value = SQLTypes.getObject(rs, rsindex, sql_type, direct);
@@ -68,6 +69,7 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     return value;
   }
   
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // value is a primitive object
     if (log.isDebugEnabled())
@@ -75,10 +77,12 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     SQLTypes.setObject(stm, stmt_index, value, sql_type);
   }
 
+  @Override
   public void retrieveFieldValues(Object value, List field_values) {
     throw new UnsupportedOperationException("Default field handler cannot retrieve field values.");
   }
 
+  @Override
   public void retrieveSQLValues(Object value, List sql_values) {
     throw new UnsupportedOperationException("Default field handler cannot retrieve sql values.");
     //! if (value == null)      
@@ -87,6 +91,7 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     //!   field_values.add(new SQLPrimitive(value, sql_type));      
   }
 
+  @Override
   public String toString() {
     return "<DefaultFieldHandler " + sql_type + ">";
   }

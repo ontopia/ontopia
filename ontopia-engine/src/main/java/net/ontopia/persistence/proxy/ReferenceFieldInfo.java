@@ -86,6 +86,7 @@ public class ReferenceFieldInfo extends AbstractFieldInfo {
    * INTERNAL: Loads from its containing fields the identity of an
    * object.
    */
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Delegate loading to identity field handler
     return identity_field.load(registrar, ticket, rs, rsindex, direct);
@@ -94,19 +95,23 @@ public class ReferenceFieldInfo extends AbstractFieldInfo {
   /**
    * INTERNAL: Binds the identity keys to the containing fields.
    */
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // Delegate binding to identity field handler
     identity_field.bind(value, stm, stmt_index);
   }
 
+  @Override
   public void retrieveFieldValues(Object value, List field_values) {
     identity_field.retrieveFieldValues(value, field_values);
   }
   
+  @Override
   public void retrieveSQLValues(Object value, List sql_values) {
     identity_field.retrieveSQLValues(value, sql_values);
   }
 
+  @Override
   public String toString() {
     return "<ReferenceFieldInfo " + field.getName() + ">";
   }
