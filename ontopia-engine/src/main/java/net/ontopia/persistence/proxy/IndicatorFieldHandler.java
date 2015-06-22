@@ -75,6 +75,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     return common_handler;
   }
   
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Load class indicator. Note that the indicator must be the first
     // column.
@@ -91,18 +92,22 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     return handler.load(registrar, ticket, rs, rsindex + 1, direct);
   }
   
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     throw new UnsupportedOperationException("Indicator field handler cannot bind values.");
   }
 
+  @Override
   public void retrieveFieldValues(Object value, List field_values) {
     throw new UnsupportedOperationException("Indicator field handler cannot retrieve field values.");
   }
 
+  @Override
   public void retrieveSQLValues(Object value, List sql_values) {
     throw new UnsupportedOperationException("Indicator field handler cannot retrieve sql values.");
   }
 
+  @Override
   public String toString() {
     return "<IndicatorFieldHandler " + indicators.keySet() + ">";
   }
