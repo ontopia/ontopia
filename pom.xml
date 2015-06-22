@@ -249,7 +249,7 @@
 						<bottom><![CDATA[<i>Copyright &#169; 2000-2012 <a href="http://www.ontopia.net">Ontopia</a>.</i>]]></bottom>
 						<doctitle>Ontopia API documentation</doctitle>
 						<windowtitle>Ontopia</windowtitle>
-						<excludePackageNames>jsp.*</excludePackageNames>
+						<excludePackageNames>org.apache.jsp</excludePackageNames>
 						<quiet>true</quiet>
 						<groups>
 							<group><title>Core Topic Map Packages</title><packages>net.ontopia.topicmaps.core*:net.ontopia.topicmaps.classify*:net.ontopia.topicmaps.db2tm*:net.ontopia.topicmaps.entry*:net.ontopia.topicmaps.impl*:net.ontopia.topicmaps.utils*:net.ontopia.topicmaps.xml*</packages></group>
@@ -288,6 +288,7 @@
 					<version>2.4</version>
 					<configuration>
 						<excludes>
+							<exclude>**/org/apache/jsp/**</exclude>
 							<exclude>**/ontopoly/resources/tiny_mce/**</exclude>
 							<exclude>**/ontopoly/images/jquery**</exclude>
 						</excludes>
