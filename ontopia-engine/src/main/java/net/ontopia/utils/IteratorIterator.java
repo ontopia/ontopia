@@ -19,73 +19,35 @@
  */
 package net.ontopia.utils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
+import org.apache.commons.collections4.iterators.IteratorChain;
 
 /**
  * INTERNAL: An iterator that works as a facade for multiple
  * iterators. The iterator represents the sum of all the
  * iterators.
  */
-public class IteratorIterator<T> implements Iterator<T> {
-
-  protected Iterator<Iterator<T>> colls_iter;
-  protected Iterator<T> iter;
+public class IteratorIterator<T> extends IteratorChain<T> {
 
   /**
    * @param colls_or_iters a collection of collections or iterators.
    */
   public IteratorIterator(Collection<Collection<T>> colls_or_iters) {
-    Collection<Iterator<T>> iterators = new ArrayList<Iterator<T>>(colls_or_iters.size());
+    super();
     for (Collection<T> col : colls_or_iters) {
-      iterators.add(col.iterator());
+      addIterator(col.iterator());
     }
-    colls_iter = iterators.iterator();
   }
 
   public IteratorIterator(Iterator<Iterator<T>> colls_or_iters) {
-    colls_iter = colls_or_iters;
-  }
-
-  protected Iterator<T> getNextIterator() {
-    // Check to see if therre are any more collections
-    while (colls_iter.hasNext()) {
-      Iterator<T> _iter = colls_iter.next();
-      if (_iter.hasNext()) {
-        return _iter;
-      }
-    }
-    return null;
-  }
-
-  public boolean hasNext() {
-    if (iter != null) {
-      // Check current iterator
-      if (iter.hasNext()) {
-        return true;
-      }
-    }
-
-    // Get next iterator
-    Iterator<T> _iter = getNextIterator();
-    if (_iter == null) {
-      return false;
-    }
-    iter = _iter;
-    return true;
-  }
-
-  public T next() {
-    if (hasNext()) {
-      return iter.next();
-    } else {
-      throw new NoSuchElementException();
+    while (colls_or_iters.hasNext()) {
+      addIterator(colls_or_iters.next());
     }
   }
 
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
-  }
+  }  
 }
