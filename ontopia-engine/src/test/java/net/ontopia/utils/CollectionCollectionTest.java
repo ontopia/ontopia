@@ -17,16 +17,13 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import junit.framework.TestSuite;
 import junit.framework.Test;
+import junit.framework.TestSuite;
 import org.junit.Assert;
 
 public class CollectionCollectionTest extends AbstractCollectionTest {
@@ -38,7 +35,7 @@ public class CollectionCollectionTest extends AbstractCollectionTest {
   public static Test suite() {
     return new TestSuite(CollectionCollectionTest.class);
   }
-  
+
   public void testCollection(Collection coll, Collection identical, Collection smaller) {
     super.testCollection(coll, identical, smaller);
   }
@@ -64,17 +61,13 @@ public class CollectionCollectionTest extends AbstractCollectionTest {
     testCollection(new CollectionCollection(getCollections(5, 8)), getCollectionList(5, 8), getCollectionList(6, 3));
     testCollection(new CollectionCollection(getCollections(5, 8)), getCollectionList(5, 8), getCollectionList(2, 7));
   }
-  
+
   public void testEmpty() {
     Collection<Collection<Object>> singletonList = Collections.<Collection<Object>>singletonList(new ArrayList<Object>());
     CollectionCollection<Object> collectionCollection = new CollectionCollection<Object>(singletonList);
-    
+
     // Failed due to #515
     Assert.assertFalse(collectionCollection.iterator().hasNext());
   }
 
 }
-
-
-
-
