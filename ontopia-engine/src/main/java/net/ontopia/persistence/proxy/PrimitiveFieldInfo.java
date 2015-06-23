@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.List;
 import net.ontopia.persistence.query.sql.SQLNull;
 import net.ontopia.persistence.query.sql.SQLPrimitive;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,6 +75,7 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
   /**
    * INTERNAL: Loads a single primitive value.
    */
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Read primitive value
     Object value = SQLTypes.getObject(rs, rsindex, sqltype, direct);
@@ -82,6 +84,7 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
     return value;
   }
   
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // value is a primitive object
     if (log.isDebugEnabled())
@@ -89,17 +92,20 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
     SQLTypes.setObject(stm, stmt_index, value, sqltype);
   }
 
-  public void retrieveFieldValues(Object value, List field_values) {
+  @Override
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     field_values.add(value);
   }
 
-  public void retrieveSQLValues(Object value, List sql_values) {
+  @Override
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     if (value == null)      
       sql_values.add(new SQLNull()); // TODO: Use SQLNull.getInstance() / SQLNull.INSTANCE
     else
       sql_values.add(new SQLPrimitive(value, sqltype));      
   }
 
+  @Override
   public String toString() {
     return "<PrimitiveFieldInfo " + field.getName() + ">";
   }

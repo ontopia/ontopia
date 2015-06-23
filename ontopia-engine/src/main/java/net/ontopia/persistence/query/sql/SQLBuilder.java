@@ -96,14 +96,14 @@ public class SQLBuilder {
     protected SQLQuery sqlquery;
 
     // Mapping between table aliases and table names
-    protected Map tables = new HashMap(); // { alias : SQLTable }
-    protected Map valiases = new HashMap(); // { JDOVariable|JDOParameter : alias }
+    protected Map<String, SQLTable> tables = new HashMap<String, SQLTable>(); // { alias : SQLTable }
+    protected Map<JDOValueIF, String> valiases = new HashMap<JDOValueIF, String>(); // { JDOVariable|JDOParameter : alias }
     protected int tblcount;
 
     // Mapping between values of non-identifiable type and their field infos.
-    protected Map nfvals = new HashMap(); // { JDOVariable|JDOParameter : FieldInfoIF }
+    protected Map<JDOValueIF, FieldInfoIF> nfvals = new HashMap<JDOValueIF, FieldInfoIF>(); // { JDOVariable|JDOParameter : FieldInfoIF }
     // Values of non-identifiable types and their corresponding tables
-    protected Map ntvals = new HashMap(); // { JDOVariable|JDOParameter : String tblname }
+    protected Map<JDOValueIF, String> ntvals = new HashMap<JDOValueIF, String>(); // { JDOVariable|JDOParameter : String tblname }
 
     SQLTable createNamedValueTable(JDOValueIF value, List expressions) {
 
@@ -125,7 +125,7 @@ public class SQLBuilder {
       }
         
       // Get or create value alias
-      String alias = (debug ? valname : (String)valiases.get(value));
+      String alias = (debug ? valname : valiases.get(value));
       if (alias == null) {
         while (true) { 
           alias = prefix + (tblcount++);
@@ -138,13 +138,13 @@ public class SQLBuilder {
       // Check to see if value table already has been registered
       if (tables.containsKey(alias)) {
         // Return existing table
-        return (SQLTable)tables.get(alias);
+        return tables.get(alias);
       } else {
         
         // Value is of non-identifiable type
         if (nfvals.containsKey(value)) {
           // Lookup field info
-          FieldInfoIF finfo = (FieldInfoIF)nfvals.get(value);          
+          FieldInfoIF finfo = nfvals.get(value);
           // Create table information
 
           // BUG: null pointer exception (tblname==null) thrown on
@@ -154,7 +154,7 @@ public class SQLBuilder {
 
           String tblname = finfo.getTable();
           if (tblname == null)
-            tblname = (String)ntvals.get(value);
+            tblname = ntvals.get(value);
           if (tblname == null)
             throw new OntopiaRuntimeException("Not able to figure out table for value: '" + value + "'");
           
@@ -412,12 +412,12 @@ public class SQLBuilder {
 
         // figure out table if value 1
         FieldInfoIF finfo1 = getFieldInfo(value1, this);
-        if (finfo1 == null) finfo1 = (FieldInfoIF)nfvals.get(value1);        
+        if (finfo1 == null) finfo1 = nfvals.get(value1);
         String table1 = (finfo1 != null && finfo1.getTable() != null ? finfo1.getTable() : null);
         
         // figure out table if value 2
         FieldInfoIF finfo2 = getFieldInfo(value2, this);
-        if (finfo2 == null) finfo2 = (FieldInfoIF)nfvals.get(value2);
+        if (finfo2 == null) finfo2 = nfvals.get(value2);
         String table2 = (finfo2 != null && finfo2.getTable() != null ? finfo2.getTable() : null);
 
         // Analyze left value
@@ -437,12 +437,12 @@ public class SQLBuilder {
             ntvals.put(value1, table2);
           } else {
             if (nfvals.containsKey(rvalue1)) {
-              FieldInfoIF finfo = (FieldInfoIF)nfvals.get(rvalue1);
+              FieldInfoIF finfo = nfvals.get(rvalue1);
               if (finfo.getTable() != null)
                 ntvals.put(value1, finfo.getTable());
             }
             if (!ntvals.containsKey(value1) && nfvals.containsKey(rvalue2)) {
-              FieldInfoIF finfo = (FieldInfoIF)nfvals.get(rvalue2);
+              FieldInfoIF finfo = nfvals.get(rvalue2);
               if (finfo.getTable() != null)
                 ntvals.put(value1, finfo.getTable());
             }
@@ -466,12 +466,12 @@ public class SQLBuilder {
             ntvals.put(value2, table1);
           } else {
             if (nfvals.containsKey(rvalue2)) {
-              FieldInfoIF finfo = (FieldInfoIF)nfvals.get(rvalue2);
+              FieldInfoIF finfo = nfvals.get(rvalue2);
               if (finfo.getTable() != null)
                 ntvals.put(value2, finfo.getTable());
             }
             if (!ntvals.containsKey(value2) && nfvals.containsKey(rvalue1)) {
-              FieldInfoIF finfo = (FieldInfoIF)nfvals.get(rvalue1);
+              FieldInfoIF finfo = nfvals.get(rvalue1);
               if (finfo.getTable() != null)
                 ntvals.put(value2, finfo.getTable());
             }
@@ -542,13 +542,13 @@ public class SQLBuilder {
     if (!jdoquery.isSetQuery()) {
       
       // Get JDO filter
-      List expressions = new ArrayList();
+      List<SQLExpressionIF> expressions = new ArrayList<SQLExpressionIF>();
       JDOExpressionIF filter = jdoquery.getFilter();
       if (filter != null)
         produceExpression(filter, expressions, info);
       
       // Add select clauses
-      List select = jdoquery.getSelect();
+      List<Object> select = jdoquery.getSelect();
       int select_length = select.size();
       for (int i=0; i < select_length; i++) {
         Object value = select.get(i);
@@ -568,10 +568,10 @@ public class SQLBuilder {
       }
       
       // Add order by clauses
-      List orderby = jdoquery.getOrderBy();
+      List<JDOOrderBy> orderby = jdoquery.getOrderBy();
       int orderby_length = orderby.size();
       for (int i=0; i < orderby_length; i++) {
-        sqlquery.addOrderBy(produceSQLOrderBy((JDOOrderBy)orderby.get(i), expressions, info));
+        sqlquery.addOrderBy(produceSQLOrderBy(orderby.get(i), expressions, info));
       }        
       
       // Make sql expressions and register filter
@@ -589,9 +589,9 @@ public class SQLBuilder {
 
       // Copy select clauses from first sub set and add aggregation if specified.
       SQLQuery _first = getFirstSQLQuery(sqlset);
-      Map valuemap = new HashMap();
-      List jdoselect = jdoquery.getSelect();
-      List sqlselect = _first.getSelect();
+      Map<Object, Object> valuemap = new HashMap<Object, Object>();
+      List<Object> jdoselect = jdoquery.getSelect();
+      List<Object> sqlselect = _first.getSelect();
       //! System.out.println("JS: " + jdoselect + " SS: " + sqlselect);
       for (int i=0; i < jdoselect.size(); i++) {
         Object jdoval = jdoselect.get(i);
@@ -615,9 +615,9 @@ public class SQLBuilder {
       }
       
       // Add order by clauses.
-      List jdoorderby = jdoquery.getOrderBy();
+      List<JDOOrderBy> jdoorderby = jdoquery.getOrderBy();
       for (int i=0; i < jdoorderby.size(); i++) {
-        JDOOrderBy jdoob = (JDOOrderBy)jdoorderby.get(i);
+        JDOOrderBy jdoob = jdoorderby.get(i);
         int sqlorder = getSQLOrder(jdoob);
         // TODO: USE ALIASES INSTEAD
         if (jdoob.isAggregate()) {
@@ -646,7 +646,7 @@ public class SQLBuilder {
       return getFirstSQLQuery((SQLSetOperation)first);
   }
   
-  protected SQLOrderBy produceSQLOrderBy(JDOOrderBy orderby, List expressions, BuildInfo info) {
+  protected SQLOrderBy produceSQLOrderBy(JDOOrderBy orderby, List<SQLExpressionIF> expressions, BuildInfo info) {
     int order = getSQLOrder(orderby);
       
     if (orderby.isAggregate())
@@ -662,7 +662,7 @@ public class SQLBuilder {
       return SQLOrderBy.DESCENDING;
   }
   
-  protected SQLValueIF produceSelectSQLValueIF(JDOValueIF value, List expressions, BuildInfo info) {
+  protected SQLValueIF produceSelectSQLValueIF(JDOValueIF value, List<SQLExpressionIF> expressions, BuildInfo info) {
     // Note: all table objects have been created at this time
     switch (value.getType()) {
     case JDOValueIF.PARAMETER:
@@ -730,13 +730,13 @@ public class SQLBuilder {
   
   protected String[] getInlineColumns(FieldInfoIF finfo) {
     ClassInfoIF cinfo = finfo.getValueClassInfo();
-    List vcols = new ArrayList();
+    List<String> vcols = new ArrayList<String>();
     FieldUtils.addColumns(cinfo.getIdentityFieldInfo(), vcols);
     FieldUtils.addColumns(cinfo.getOne2OneFieldInfos(), vcols);
     return FieldUtils.toStringArray(vcols);
   }
 
-  protected SQLAggregateIF produceSelectSQLAggregateIF(JDOAggregateIF aggregate, List expressions, BuildInfo info) {
+  protected SQLAggregateIF produceSelectSQLAggregateIF(JDOAggregateIF aggregate, List<SQLExpressionIF> expressions, BuildInfo info) {
     // Produce sql value
     SQLValueIF sqlvalue = produceSelectSQLValueIF(aggregate.getValue(), expressions, info);
     // Then wrap in aggregate
@@ -754,14 +754,14 @@ public class SQLBuilder {
     }
   }
 
-  protected SQLExpressionIF makeAndExpression(List expressions) {
+  protected SQLExpressionIF makeAndExpression(List<SQLExpressionIF> expressions) {
     if (expressions.size() > 1) {
       SQLExpressionIF[] exprlist = new SQLExpressionIF[expressions.size()];
       expressions.toArray(exprlist);
       return new SQLAnd(exprlist);
     }
     else if (expressions.size() == 1)
-      return (SQLExpressionIF)expressions.get(0);
+      return expressions.get(0);
     else
       throw new OntopiaRuntimeException("No expressions were found.");
   }
@@ -771,12 +771,12 @@ public class SQLBuilder {
       return new SQLOr(expressions);
     }
     else if (expressions.length == 1)
-      return (SQLExpressionIF)expressions[0];
+      return expressions[0];
     else
       throw new OntopiaRuntimeException("No expressions were found.");
   }
   
-  protected void produceExpression(JDOExpressionIF jdoexpr, List expressions, BuildInfo info) {
+  protected void produceExpression(JDOExpressionIF jdoexpr, List<SQLExpressionIF> expressions, BuildInfo info) {
     // Check expression type and delegate to appropriate produce method.
     switch (jdoexpr.getType()) {
       // method calls
@@ -857,8 +857,8 @@ public class SQLBuilder {
   }
 
   protected SQLSetOperation produceSetOperation(JDOSetOperation setop_expr, BuildInfo info) {
-    List jdosets = setop_expr.getSets();
-    List sqlsets = new ArrayList(jdosets.size());
+    List<Object> jdosets = setop_expr.getSets();
+    List<Object> sqlsets = new ArrayList<Object>(jdosets.size());
 
     int length = jdosets.size();
     for (int i=0; i < length; i++) {
@@ -889,7 +889,7 @@ public class SQLBuilder {
     return new SQLSetOperation(sqlsets, optype);
   }
 
-  protected void produceBoolean(JDOBoolean boolean_expr, List expressions, BuildInfo info) {
+  protected void produceBoolean(JDOBoolean boolean_expr, List<SQLExpressionIF> expressions, BuildInfo info) {
     SQLValueIF value = new SQLPrimitive(new Integer(0), Types.INTEGER);
     if (boolean_expr.getValue())
       expressions.add(new SQLEquals(value, value));
@@ -897,22 +897,22 @@ public class SQLBuilder {
       expressions.add(new SQLNotEquals(value, value));
   }
 
-  protected void produceValueExpression(JDOValueExpression jdoexpr, List expressions, BuildInfo info) {
+  protected void produceValueExpression(JDOValueExpression jdoexpr, List<SQLExpressionIF> expressions, BuildInfo info) {
     expressions.add(new SQLValueExpression(produceValue(jdoexpr.getValue(), expressions, info)));
   }
   
-  protected void produceAnd(JDOAnd and_expr, List expressions, BuildInfo info) {
+  protected void produceAnd(JDOAnd and_expr, List<SQLExpressionIF> expressions, BuildInfo info) {
     expressions.add(new SQLAnd(produceExpressions(and_expr.getExpressions(), info)));
   }
   
-  protected void produceNot(JDONot not_expr, List expressions, BuildInfo info) {
+  protected void produceNot(JDONot not_expr, List<SQLExpressionIF> expressions, BuildInfo info) {
     JDOExpressionIF jdoexpr = not_expr.getExpression();
-    List templist = new ArrayList();
+    List<SQLExpressionIF> templist = new ArrayList<SQLExpressionIF>();
     produceExpression(jdoexpr, templist, info);
     expressions.add(new SQLNot(new SQLExists(makeAndExpression(templist))));
   }
   
-  protected void produceOr(JDOOr or_expr, List expressions, BuildInfo info) {
+  protected void produceOr(JDOOr or_expr, List<SQLExpressionIF> expressions, BuildInfo info) {
     // TODO: Break expressions into SQLExists if they are complex enough.
     // ISSUE: When are they complex enough? Only when new variables
     // are introduced?    
@@ -920,7 +920,7 @@ public class SQLBuilder {
     JDOExpressionIF[] jdoexprs = or_expr.getExpressions();
     SQLExpressionIF[] sqlexprs = new SQLExpressionIF[jdoexprs.length];
     for (int i=0; i < jdoexprs.length; i++) {
-      List templist = new ArrayList();
+      List<SQLExpressionIF> templist = new ArrayList<SQLExpressionIF>();
       produceExpression(jdoexprs[i], templist, info);
       sqlexprs[i] = new SQLExists(makeAndExpression(templist));
     }
@@ -929,7 +929,7 @@ public class SQLBuilder {
   
   protected SQLExpressionIF[] produceExpressions(JDOExpressionIF[] jdoexprs, BuildInfo info) {
     // Loop over JDO expression and produce SQL expression
-    List expressions = new ArrayList();
+    List<SQLExpressionIF> expressions = new ArrayList<SQLExpressionIF>();
     for (int i=0; i < jdoexprs.length; i++) {
       produceExpression(jdoexprs[i], expressions, info);
     }
@@ -942,7 +942,7 @@ public class SQLBuilder {
   // SQL expression
   // -----------------------------------------------------------------------------
   
-  protected void produceEquals(JDOValueIF left, JDOValueIF right, List expressions, BuildInfo info) {
+  protected void produceEquals(JDOValueIF left, JDOValueIF right, List<SQLExpressionIF> expressions, BuildInfo info) {
     
     // -----------------------------------------------------------------------------
     // EXPRESSION: variable1.field == variable2
@@ -967,14 +967,14 @@ public class SQLBuilder {
                                   produceValue(right, expressions, info)));
   }
 
-  protected void produceNotEquals(JDOValueIF left, JDOValueIF right, List expressions, BuildInfo info) {
+  protected void produceNotEquals(JDOValueIF left, JDOValueIF right, List<SQLExpressionIF> expressions, BuildInfo info) {
 
     // Produce values for left and right JDO value and wrap in equals expression
     expressions.add(new SQLNotEquals(produceValue(left, expressions, info), 
                                      produceValue(right, expressions, info)));
   }
   
-  protected void produceContains(JDOValueIF left, JDOValueIF right, List expressions, BuildInfo info) {
+  protected void produceContains(JDOValueIF left, JDOValueIF right, List<SQLExpressionIF> expressions, BuildInfo info) {
 
     // -----------------------------------------------------------------------------
     // EXPRESSION: variable1.field[OM].contains(variable2.field)
@@ -1183,7 +1183,7 @@ public class SQLBuilder {
     }
   }
   
-  protected void produceIsEmpty(JDOValueIF value, List expressions, BuildInfo info) {
+  protected void produceIsEmpty(JDOValueIF value, List<SQLExpressionIF> expressions, BuildInfo info) {
     
     // Check value type
     switch (value.getType()) {
@@ -1205,7 +1205,7 @@ public class SQLBuilder {
 
       // JDO: T1.topicmap = M1 & T1.roles.isEmpty() & T1.types.isEmpty()
       
-      List lexpressions = new ArrayList();
+      List<SQLExpressionIF> lexpressions = new ArrayList<SQLExpressionIF>();
       // Produce left value
       Values lvalues = produceFieldValues(field, null, lexpressions, info);
 
@@ -1240,23 +1240,23 @@ public class SQLBuilder {
   }
 
   protected void produceStartsWith(JDOValueIF left, JDOValueIF right,
-                                   List expressions, BuildInfo info) {
+                                   List<SQLExpressionIF> expressions, BuildInfo info) {
     produceLikeWithPattern(left, right, false, expressions, true, info);
   }
   
   protected void produceEndsWith(JDOValueIF left, JDOValueIF right,
-                                 List expressions, BuildInfo info) {
+                                 List<SQLExpressionIF> expressions, BuildInfo info) {
     produceLikeWithPattern(left, right, false, expressions, false, info);
   }
 
   protected void produceLike(JDOValueIF left, JDOValueIF right, boolean caseSensitive,
-                             List expressions, BuildInfo info) {
+                             List<SQLExpressionIF> expressions, BuildInfo info) {
     expressions.add(new SQLLike(produceValue(left, expressions, info),
                                 produceValue(right, expressions, info), caseSensitive));
   }
   
   protected void produceLikeWithPattern(JDOValueIF left, JDOValueIF right, boolean caseSensitive,
-                                       List expressions, boolean starts_not_ends, BuildInfo info) {
+                                       List<SQLExpressionIF> expressions, boolean starts_not_ends, BuildInfo info) {
 
     //! // Make sure that the value type is of string type
     //! if (!java.lang.String.class.equals(vtype))
@@ -1305,7 +1305,7 @@ public class SQLBuilder {
   //!   return arity;    
   //! }
 
-  protected SQLValueIF[] produceValues(JDOValueIF[] values, List expressions, BuildInfo info) {
+  protected SQLValueIF[] produceValues(JDOValueIF[] values, List<SQLExpressionIF> expressions, BuildInfo info) {
     SQLValueIF[] retval = new SQLValueIF[values.length];
     for (int i=0; i < values.length; i++) {
       retval[i] = produceValue(values[i], expressions, info);
@@ -1313,7 +1313,7 @@ public class SQLBuilder {
     return retval;
   }
   
-  protected SQLValueIF produceValue(JDOValueIF value, List expressions, BuildInfo info) {
+  protected SQLValueIF produceValue(JDOValueIF value, List<SQLExpressionIF> expressions, BuildInfo info) {
     // FIXME: Sometimes need both left and right values in orcer to
     // correctly assert value type. This is especially applies to
     // parameters and aggregate variables.
@@ -1346,7 +1346,7 @@ public class SQLBuilder {
     }
   }
   
-  protected SQLValueIF produceField(JDOField field, SQLTable endtable, List expressions, BuildInfo info) {
+  protected SQLValueIF produceField(JDOField field, SQLTable endtable, List<SQLExpressionIF> expressions, BuildInfo info) {
     return produceFieldValues(field, endtable, expressions, info).vcols;
   }
   
@@ -1368,7 +1368,7 @@ public class SQLBuilder {
     }
   }
 
-  protected Values produceFieldValues(JDOField field, SQLTable endtable, List expressions, BuildInfo info) {
+  protected Values produceFieldValues(JDOField field, SQLTable endtable, List<SQLExpressionIF> expressions, BuildInfo info) {
 
     // TODO: Add flag indicating that only key value or inline values
     // should be used as vcols. Note that this may only make sense for
@@ -1406,7 +1406,7 @@ public class SQLBuilder {
   }
 
   protected Values produceVariableFieldValues(JDOValueIF root, String[] path, SQLTable endtable,
-                                              List expressions, BuildInfo info) {
+                                              List<SQLExpressionIF> expressions, BuildInfo info) {
 
     // FIXME: Reuse the same Values instance for every loop.
     Values pvalues = null;  // parent values
@@ -1607,18 +1607,18 @@ public class SQLBuilder {
           (finfo.getValueClassInfo() != null &&
            finfo.getValueClassInfo().getStructure() == ClassInfoIF.STRUCTURE_COLLECTION)) {
         Collection cvalue = (Collection)value;
-        List tuples = new ArrayList(cvalue.size());
+        List<SQLValueIF> tuples = new ArrayList<SQLValueIF>(cvalue.size());
         Iterator iter = cvalue.iterator();
         while (iter.hasNext()) {
-          List list = new ArrayList(finfo.getColumnCount());
+          List<SQLValueIF> list = new ArrayList<SQLValueIF>(finfo.getColumnCount());
           finfo.retrieveSQLValues(iter.next(), list);
           tuples.add((list.size() == 1 ? list.get(0) : new SQLTuple(list)));
         }
-        values.vcols = (tuples.size() == 1 ? (SQLValueIF)tuples.get(0) : new SQLTuple(tuples));
+        values.vcols = (tuples.size() == 1 ? tuples.get(0) : new SQLTuple(tuples));
       } else {
-        List list = new ArrayList();
+        List<SQLValueIF> list = new ArrayList<SQLValueIF>();
         finfo.retrieveSQLValues(value, list);
-        values.vcols = (list.size() == 1 ? (SQLValueIF)list.get(0) : new SQLTuple(list));
+        values.vcols = (list.size() == 1 ? list.get(0) : new SQLTuple(list));
       }
     } else {
       // FIXME: Arity might not be 1. Use FieldHandlerIF.getColumnCount()?
@@ -1627,7 +1627,7 @@ public class SQLBuilder {
     return values;
   }
   
-  protected SQLValueIF produceVariable(JDOVariable var, List expressions, BuildInfo info) {
+  protected SQLValueIF produceVariable(JDOVariable var, List<SQLExpressionIF> expressions, BuildInfo info) {
     String varname = var.getName();
     
     // FIXME: Handle aggregate or alias type variables properly.
@@ -1645,7 +1645,7 @@ public class SQLBuilder {
     else if (isAggregateVariable(varname, info.jdoquery) ||
              isPrimitiveVariable(varname, info.jdoquery)) {
       // Get variable table
-      FieldInfoIF finfo = (FieldInfoIF)info.nfvals.get(var);
+      FieldInfoIF finfo = info.nfvals.get(var);
       SQLTable table = info.createNamedValueTable(var, expressions);
       // Produce values
       return new SQLColumns(table, finfo.getValueColumns());
@@ -1656,7 +1656,7 @@ public class SQLBuilder {
     }
   }
   
-  protected SQLValueIF produceParameter(JDOParameter par, List expressions, BuildInfo info) {
+  protected SQLValueIF produceParameter(JDOParameter par, List<SQLExpressionIF> expressions, BuildInfo info) {
     String parname = par.getName();
     
     // FIXME: Handle aggregate or alias type parameters properly.
@@ -1674,7 +1674,7 @@ public class SQLBuilder {
     else if (isAggregateParameter(parname, info.jdoquery) ||
              isPrimitiveParameter(parname, info.jdoquery)) {
       // Get parameter table
-      FieldInfoIF finfo = (FieldInfoIF)info.nfvals.get(par);
+      FieldInfoIF finfo = info.nfvals.get(par);
       SQLTable table = info.createNamedValueTable(par, expressions);
       // Produce values
       return new SQLColumns(table, finfo.getValueColumns());
@@ -1712,31 +1712,31 @@ public class SQLBuilder {
     }
   }
 
-  protected SQLValueIF produceNativeValue(JDONativeValue field, List expressions, BuildInfo info) {
+  protected SQLValueIF produceNativeValue(JDONativeValue field, List<SQLExpressionIF> expressions, BuildInfo info) {
     // TODO: Add support for other things than column references
     JDOVariable var = field.getRoot();
     SQLColumns varcols = (SQLColumns)produceVariable(var, expressions, info);
     return new SQLColumns(varcols.getTable(), field.getArguments());
   }
   
-  protected SQLValueIF produceFunction(JDOFunction func, List expressions, BuildInfo info) {
+  protected SQLValueIF produceFunction(JDOFunction func, List<SQLExpressionIF> expressions, BuildInfo info) {
     return new SQLFunction(func.getName(), produceValues(func.getArguments(), expressions, info));
   }
 
   protected SQLValueIF produceObject(JDOObject object, BuildInfo info) {
     // retrieve field values
-    List values = new ArrayList();    
+    List<SQLValueIF> values = new ArrayList<SQLValueIF>();    
     FieldInfoIF id_finfo = getFieldInfo(object, info);
     id_finfo.retrieveSQLValues(object.getValue(), values);
     if (values.size() == 1)
-      return (SQLValueIF)values.get(0);
+      return values.get(0);
     else
       return new SQLTuple(values);
   }
 
   protected SQLValueIF produceCollection(JDOCollection coll, BuildInfo info) {
     // loop over collection elements and retrieve field values
-    List values = new ArrayList();    
+    List<SQLValueIF> values = new ArrayList<SQLValueIF>();
     FieldInfoIF id_finfo = getFieldInfo(coll, info);
     Collection _coll = coll.getValue();
     Iterator iter = _coll.iterator();
@@ -1744,7 +1744,7 @@ public class SQLBuilder {
       id_finfo.retrieveSQLValues(iter.next(), values);
     }
     if (values.size() == 1)
-      return (SQLValueIF)values.get(0);
+      return values.get(0);
     else
       return new SQLTuple(values);
     

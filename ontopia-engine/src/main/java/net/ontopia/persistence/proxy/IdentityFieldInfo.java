@@ -28,6 +28,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 
 /**
  * INTERNAL: A field that represents the identity of instances of a
@@ -198,6 +199,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
    * INTERNAL: Loads from its containing fields an IdentityIF with the
    * field values as key.
    */
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // FIXME: Should we open up for the possibility of identity fields
     // should being null? Then reference field handlers can just
@@ -244,6 +246,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
   /**
    * INTERNAL: Binds the identity keys to the containing fields.
    */
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // Get the identity
     IdentityIF identity = getIdentity(value);
@@ -265,7 +268,8 @@ public class IdentityFieldInfo implements FieldInfoIF {
     }
   }
 
-  public void retrieveFieldValues(Object value, List field_values) {
+  @Override
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     // Get the identity keys
     IdentityIF identity = getIdentity(value);
 
@@ -283,7 +287,8 @@ public class IdentityFieldInfo implements FieldInfoIF {
     }
   }
   
-  public void retrieveSQLValues(Object value, List sql_values) {
+  @Override
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     // Get the identity keys
     IdentityIF identity = getIdentity(value);
 
@@ -300,6 +305,7 @@ public class IdentityFieldInfo implements FieldInfoIF {
     }
   }
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("<IdentityFieldInfo [");

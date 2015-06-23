@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import net.ontopia.persistence.query.sql.SQLValueIF;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,7 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     return false;
   }
   
+  @Override
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Read primitive value
     Object value = SQLTypes.getObject(rs, rsindex, sql_type, direct);
@@ -68,6 +70,7 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     return value;
   }
   
+  @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // value is a primitive object
     if (log.isDebugEnabled())
@@ -75,11 +78,13 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     SQLTypes.setObject(stm, stmt_index, value, sql_type);
   }
 
-  public void retrieveFieldValues(Object value, List field_values) {
+  @Override
+  public void retrieveFieldValues(Object value, List<Object> field_values) {
     throw new UnsupportedOperationException("Default field handler cannot retrieve field values.");
   }
 
-  public void retrieveSQLValues(Object value, List sql_values) {
+  @Override
+  public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     throw new UnsupportedOperationException("Default field handler cannot retrieve sql values.");
     //! if (value == null)      
     //!   field_values.add(new SQLNull());
@@ -87,6 +92,7 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     //!   field_values.add(new SQLPrimitive(value, sql_type));      
   }
 
+  @Override
   public String toString() {
     return "<DefaultFieldHandler " + sql_type + ">";
   }
