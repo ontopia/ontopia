@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.utils;
 
 import java.util.ArrayList;
@@ -28,9 +27,8 @@ import java.util.NoSuchElementException;
 /**
  * INTERNAL: An iterator that works as a facade for multiple
  * iterators. The iterator represents the sum of all the
- * iterators.</p>
+ * iterators.
  */
-
 public class IteratorIterator<T> implements Iterator<T> {
 
   protected Iterator<Iterator<T>> colls_iter;
@@ -54,22 +52,27 @@ public class IteratorIterator<T> implements Iterator<T> {
   protected Iterator<T> getNextIterator() {
     // Check to see if therre are any more collections
     while (colls_iter.hasNext()) {
-        Iterator<T> _iter = colls_iter.next();
-        if (_iter.hasNext())
-            return _iter;
+      Iterator<T> _iter = colls_iter.next();
+      if (_iter.hasNext()) {
+        return _iter;
+      }
     }
     return null;
   }
-  
+
   public boolean hasNext() {
     if (iter != null) {
       // Check current iterator
-      if (iter.hasNext()) return true;
+      if (iter.hasNext()) {
+        return true;
+      }
     }
 
     // Get next iterator
     Iterator<T> _iter = getNextIterator();
-    if (_iter == null) return false;
+    if (_iter == null) {
+      return false;
+    }
     iter = _iter;
     return true;
   }
@@ -85,9 +88,4 @@ public class IteratorIterator<T> implements Iterator<T> {
   public void remove() {
     throw new UnsupportedOperationException();
   }
-  
 }
-
-
-
-
