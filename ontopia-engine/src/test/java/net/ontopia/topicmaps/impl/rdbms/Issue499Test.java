@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collections;
 import junit.framework.Assert;
