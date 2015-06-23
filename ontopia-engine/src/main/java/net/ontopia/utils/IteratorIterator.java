@@ -23,6 +23,7 @@ package net.ontopia.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * INTERNAL: An iterator that works as a facade for multiple
@@ -52,15 +53,10 @@ public class IteratorIterator<T> implements Iterator<T> {
 
   protected Iterator<T> getNextIterator() {
     // Check to see if therre are any more collections
-    if (colls_iter.hasNext()) {
-    
-      // Get next collection
-      while (true) {
+    while (colls_iter.hasNext()) {
         Iterator<T> _iter = colls_iter.next();
         if (_iter.hasNext())
             return _iter;
-        if (colls_iter.hasNext()) continue;
-      }
     }
     return null;
   }
@@ -79,7 +75,11 @@ public class IteratorIterator<T> implements Iterator<T> {
   }
 
   public T next() {
-    return iter.next();
+    if (hasNext()) {
+      return iter.next();
+    } else {
+      throw new NoSuchElementException();
+    }
   }
 
   public void remove() {
