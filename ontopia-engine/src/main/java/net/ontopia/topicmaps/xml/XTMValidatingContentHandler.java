@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.xml;
 
 import com.thaiopensource.datatype.DatatypeLibraryLoader;
-import java.io.StringReader;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -50,6 +49,9 @@ public class XTMValidatingContentHandler implements ContentHandler {
   private Locator locator; // stored until we can pass on to validator
   private XTMVersion xtm_version; // which XTM version to validate against
   
+  public static final String XTM_1_RNC = "xtm1.rnc";
+  public static final String XTM_2_RNC = "xtm2.rnc";
+
   public XTMValidatingContentHandler(ContentHandler child) {
     this(child, XTMVersion.XTM_1_0);
   }
@@ -62,14 +64,14 @@ public class XTMValidatingContentHandler implements ContentHandler {
   protected ContentHandler createValidator() {
     String rnc;
     if (xtm_version == XTMVersion.XTM_1_0)
-      rnc = DTD.getXTMRelaxNG();
+      rnc = XTM_1_RNC;
     else if (xtm_version == XTMVersion.XTM_2_0 ||
              xtm_version == XTMVersion.XTM_2_1)
-      rnc = DTD.getXTM2RelaxNG();
+      rnc = XTM_2_RNC;
     else
       throw new OntopiaRuntimeException("Unknown XTM version: " + xtm_version);
       
-    InputSource src = new InputSource(new StringReader(rnc));
+    InputSource src = new InputSource(XTMValidatingContentHandler.class.getResourceAsStream(rnc));
     try {
       SchemaFactory factory = new SchemaFactory();
       factory.setXMLReaderCreator(new Jaxp11XMLReaderCreator());

@@ -1,0 +1,453 @@
+<!-- ............................................................. -->
+<!-- XML Topic Maps 1.0  ......................................... -->
+
+<!-- XML Topic Map (XTM) 1.0
+  
+     This is an informative RELAX-NG schema for the XTM 1.0 syntax, to
+     be published as part of ISO 13250.
+  
+-->
+<!-- ............................................................. -->
+
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
+         xmlns:xlink="http://www.w3.org/1999/xlink" 
+         ns="http://www.topicmaps.org/xtm/1.0/" 
+         xmlns="http://relaxng.org/ns/structure/1.0" 
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+  <!-- topicMap: Topic Map document element ........................ -->
+  <define name="topicMap">
+    <element name="topicMap">
+      <ref name="attlist.topicMap"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="topic"/>
+          <ref name="association"/>
+          <ref name="mergeMap"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.topicMap" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:base">
+        <data type="anyURI"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- topic: Topic element ........................................ -->
+  <define name="topic">
+    <element name="topic">
+      <ref name="attlist.topic"/>
+      <zeroOrMore>
+        <ref name="instanceOf"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="subjectIdentity"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="baseName"/>
+          <ref name="occurrence"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.topic" combine="interleave">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+  </define>
+
+  <!-- instanceOf: Points To a Topic representing a class .......... -->
+  <define name="instanceOf">
+    <element name="instanceOf">
+      <ref name="attlist.instanceOf"/>
+      <choice>
+        <ref name="topicRef"/>
+        <ref name="subjectIndicatorRef"/>
+      </choice>
+    </element>
+  </define>
+
+  <define name="attlist.instanceOf" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- subjectIdentity: Subject reified by Topic ................... -->
+  <define name="subjectIdentity">
+    <element name="subjectIdentity">
+      <ref name="attlist.subjectIdentity"/>
+      <optional>
+        <ref name="resourceRef"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="topicRef"/>
+          <ref name="subjectIndicatorRef"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.subjectIdentity" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- topicRef: Reference to a Topic element ...................... -->
+  <define name="topicRef">
+    <element name="topicRef">
+      <ref name="attlist.topicRef"/>
+      <empty/>
+    </element>
+  </define>
+
+  <define name="attlist.topicRef" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:type" a:defaultValue="simple">
+        <value type="NMTOKEN">simple</value>
+      </attribute>
+    </optional>
+    <attribute name="xlink:href">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+
+  <!-- subjectIndicatorRef: Reference to a Subject Indicator ....... -->
+  <define name="subjectIndicatorRef">
+    <element name="subjectIndicatorRef">
+      <ref name="attlist.subjectIndicatorRef"/>
+      <empty/>
+    </element>
+  </define>
+
+  <define name="attlist.subjectIndicatorRef" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:type" a:defaultValue="simple">
+        <value type="NMTOKEN">simple</value>
+      </attribute>
+    </optional>
+    <attribute name="xlink:href">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+
+  <!-- baseName: Base Name of a Topic .............................. -->
+  <define name="baseName">
+    <element name="baseName">
+      <ref name="attlist.baseName"/>
+      <optional>
+        <ref name="instanceOf"/>
+      </optional>
+      <optional>
+        <ref name="scope"/>
+      </optional>
+      <ref name="baseNameString"/>
+      <zeroOrMore>
+        <ref name="variant"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.baseName" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- baseNameString: Base Name String container .................. -->
+  <define name="baseNameString">
+    <element name="baseNameString">
+      <ref name="attlist.baseNameString"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="attlist.baseNameString" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- variant: Alternate forms of Base Name ....................... -->
+  <define name="variant">
+    <element name="variant">
+      <ref name="attlist.variant"/>
+      <ref name="parameters"/>
+      <optional>
+        <ref name="variantName"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="variant"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.variant" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- variantName: Container for Variant Name ..................... -->
+  <define name="variantName">
+    <element name="variantName">
+      <ref name="attlist.variantName"/>
+      <choice>
+        <ref name="resourceRef"/>
+        <ref name="resourceData"/>
+      </choice>
+    </element>
+  </define>
+
+  <define name="attlist.variantName" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- parameters: Processing context for Variant .................. -->
+  <define name="parameters">
+    <element name="parameters">
+      <ref name="attlist.parameters"/>
+      <oneOrMore>
+        <choice>
+          <ref name="topicRef"/>
+          <ref name="subjectIndicatorRef"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.parameters" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- occurrence: Resources regarded as an Occurrence ............. -->
+  <define name="occurrence">
+    <element name="occurrence">
+      <ref name="attlist.occurrence"/>
+      <optional>
+        <ref name="instanceOf"/>
+      </optional>
+      <optional>
+        <ref name="scope"/>
+      </optional>
+      <choice>
+        <ref name="resourceRef"/>
+        <ref name="resourceData"/>
+      </choice>
+    </element>
+  </define>
+
+  <define name="attlist.occurrence" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- resourceRef: Reference to a Resource ........................ -->
+  <define name="resourceRef">
+    <element name="resourceRef">
+      <ref name="attlist.resourceRef"/>
+      <empty/>
+    </element>
+  </define>
+
+  <define name="attlist.resourceRef" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:type" a:defaultValue="simple">
+        <value type="NMTOKEN">simple</value>
+      </attribute>
+    </optional>
+    <attribute name="xlink:href">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+
+  <!-- resourceData: Container for Resource Data ................... -->
+  <define name="resourceData">
+    <element name="resourceData">
+      <ref name="attlist.resourceData"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="attlist.resourceData" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- association: Topic Association  ............................. -->
+  <define name="association">
+    <element name="association">
+      <ref name="attlist.association"/>
+      <optional>
+        <ref name="instanceOf"/>
+      </optional>
+      <optional>
+        <ref name="scope"/>
+      </optional>
+      <oneOrMore>
+        <ref name="member"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.association" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- member: Member in Topic Association ......................... -->
+  <define name="member">
+    <element name="member">
+      <ref name="attlist.member"/>
+      <optional>
+        <ref name="roleSpec"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="topicRef"/>
+          <ref name="resourceRef"/>
+          <ref name="subjectIndicatorRef"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.member" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- roleSpec: Points to a Topic serving as an Association Role .. -->
+  <define name="roleSpec">
+    <element name="roleSpec">
+      <ref name="attlist.roleSpec"/>
+      <choice>
+        <ref name="topicRef"/>
+        <ref name="subjectIndicatorRef"/>
+      </choice>
+    </element>
+  </define>
+
+  <define name="attlist.roleSpec" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- scope: Reference to Topic(s) that comprise the Scope ........ -->
+  <define name="scope">
+    <element name="scope">
+      <ref name="attlist.scope"/>
+      <oneOrMore>
+        <choice>
+          <ref name="topicRef"/>
+          <ref name="resourceRef"/>
+          <ref name="subjectIndicatorRef"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.scope" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- mergeMap: Merge with another Topic Map ...................... -->
+  <define name="mergeMap">
+    <element name="mergeMap">
+      <ref name="attlist.mergeMap"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="topicRef"/>
+          <ref name="resourceRef"/>
+          <ref name="subjectIndicatorRef"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="attlist.mergeMap" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:type" a:defaultValue="simple">
+        <value type="NMTOKEN">simple</value>
+      </attribute>
+    </optional>
+    <attribute name="xlink:href">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+  <start>
+    <choice>
+      <ref name="topicMap"/>
+    </choice>
+  </start>
+</grammar>

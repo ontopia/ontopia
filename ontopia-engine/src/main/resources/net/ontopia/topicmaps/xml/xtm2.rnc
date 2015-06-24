@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://www.topicmaps.org/xtm/" xmlns:xtm="http://www.topicmaps.org/xtm/" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <choice>
+      <ref name="topicMap2"/>
+      <ref name="topicMap21"/>
+    </choice>
+  </start>
+  <define name="href">
+    <attribute name="href">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+  <define name="any-markup">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <element>
+          <anyName>
+            <except>
+              <nsName/>
+            </except>
+          </anyName>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+            </attribute>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="any-markup"/>
+          </zeroOrMore>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="mergeMap">
+    <element name="mergeMap">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="id">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+  </define>
+  <define name="value">
+    <element name="value">
+      <text/>
+    </element>
+  </define>
+  <define name="datatype">
+    <attribute name="datatype">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+  <define name="resourceData">
+    <element name="resourceData">
+      <optional>
+        <ref name="datatype"/>
+      </optional>
+      <ref name="any-markup"/>
+    </element>
+  </define>
+  <define name="topicRef">
+    <element name="topicRef">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="resourceRef">
+    <element name="resourceRef">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="subjectLocator">
+    <element name="subjectLocator">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="subjectIdentifier">
+    <element name="subjectIdentifier">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="itemIdentity">
+    <element name="itemIdentity">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="topicMap21">
+    <element name="topicMap">
+      <ref name="reifiable21"/>
+      <ref name="version21"/>
+      <zeroOrMore>
+        <ref name="mergeMap"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="topic21"/>
+          <ref name="association21"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="version21">
+    <attribute name="version">
+      <value>2.1</value>
+    </attribute>
+  </define>
+  <define name="topic21">
+    <element name="topic">
+      <oneOrMore>
+        <choice>
+          <ref name="id"/>
+          <ref name="itemIdentity"/>
+          <ref name="subjectLocator"/>
+          <ref name="subjectIdentifier"/>
+        </choice>
+      </oneOrMore>
+      <optional>
+        <ref name="instanceOf21"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="name21"/>
+          <ref name="occurrence21"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="name21">
+    <element name="name">
+      <ref name="reifiable21"/>
+      <optional>
+        <ref name="type21"/>
+      </optional>
+      <optional>
+        <ref name="scope21"/>
+      </optional>
+      <ref name="value"/>
+      <zeroOrMore>
+        <ref name="variant21"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="variant21">
+    <element name="variant">
+      <ref name="reifiable21"/>
+      <ref name="scope21"/>
+      <choice>
+        <ref name="resourceRef"/>
+        <ref name="resourceData"/>
+      </choice>
+    </element>
+  </define>
+  <define name="scope21">
+    <element name="scope">
+      <oneOrMore>
+        <ref name="tref"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="instanceOf21">
+    <element name="instanceOf">
+      <oneOrMore>
+        <ref name="tref"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="type21">
+    <element name="type">
+      <ref name="tref"/>
+    </element>
+  </define>
+  <define name="occurrence21">
+    <element name="occurrence">
+      <ref name="reifiable21"/>
+      <ref name="type21"/>
+      <optional>
+        <ref name="scope21"/>
+      </optional>
+      <choice>
+        <ref name="resourceRef"/>
+        <ref name="resourceData"/>
+      </choice>
+    </element>
+  </define>
+  <define name="association21">
+    <element name="association">
+      <ref name="reifiable21"/>
+      <ref name="type21"/>
+      <optional>
+        <ref name="scope21"/>
+      </optional>
+      <oneOrMore>
+        <ref name="role21"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="role21">
+    <element name="role">
+      <ref name="reifiable21"/>
+      <ref name="type21"/>
+      <ref name="tref"/>
+    </element>
+  </define>
+  <define name="reifiable21">
+    <optional>
+      <choice>
+        <attribute name="reifier">
+          <data type="anyURI"/>
+        </attribute>
+        <ref name="reifier"/>
+      </choice>
+    </optional>
+    <zeroOrMore>
+      <ref name="itemIdentity"/>
+    </zeroOrMore>
+  </define>
+  <define name="reifier">
+    <element name="reifier">
+      <ref name="tref"/>
+    </element>
+  </define>
+  <define name="tref">
+    <choice>
+      <ref name="topicRef"/>
+      <ref name="subjectIdentifierRef"/>
+      <ref name="subjectLocatorRef"/>
+    </choice>
+  </define>
+  <define name="subjectLocatorRef">
+    <element name="subjectLocatorRef">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="subjectIdentifierRef">
+    <element name="subjectIdentifierRef">
+      <ref name="href"/>
+    </element>
+  </define>
+  <define name="reifiable2">
+    <optional>
+      <attribute name="reifier">
+        <data type="anyURI"/>
+      </attribute>
+    </optional>
+    <zeroOrMore>
+      <ref name="itemIdentity"/>
+    </zeroOrMore>
+  </define>
+  <define name="topicMap2">
+    <element name="topicMap">
+      <ref name="reifiable2"/>
+      <ref name="version2"/>
+      <zeroOrMore>
+        <ref name="mergeMap"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="topic2"/>
+          <ref name="association2"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="version2">
+    <attribute name="version">
+      <value>2.0</value>
+    </attribute>
+  </define>
+  <define name="topic2">
+    <element name="topic">
+      <ref name="id"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="itemIdentity"/>
+          <ref name="subjectLocator"/>
+          <ref name="subjectIdentifier"/>
+        </choice>
+      </zeroOrMore>
+      <optional>
+        <ref name="instanceOf2"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="name2"/>
+          <ref name="occurrence2"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="name2">
+    <element name="name">
+      <ref name="reifiable2"/>
+      <optional>
+        <ref name="type2"/>
+      </optional>
+      <optional>
+        <ref name="scope2"/>
+      </optional>
+      <ref name="value"/>
+      <zeroOrMore>
+        <ref name="variant2"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="variant2">
+    <element name="variant">
+      <ref name="reifiable2"/>
+      <ref name="scope2"/>
+      <choice>
+        <ref name="resourceRef"/>
+        <ref name="resourceData"/>
+      </choice>
+    </element>
+  </define>
+  <define name="scope2">
+    <element name="scope">
+      <oneOrMore>
+        <ref name="topicRef"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="instanceOf2">
+    <element name="instanceOf">
+      <oneOrMore>
+        <ref name="topicRef"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="type2">
+    <element name="type">
+      <ref name="topicRef"/>
+    </element>
+  </define>
+  <define name="occurrence2">
+    <element name="occurrence">
+      <ref name="reifiable2"/>
+      <ref name="type2"/>
+      <optional>
+        <ref name="scope2"/>
+      </optional>
+      <choice>
+        <ref name="resourceRef"/>
+        <ref name="resourceData"/>
+      </choice>
+    </element>
+  </define>
+  <define name="association2">
+    <element name="association">
+      <ref name="reifiable2"/>
+      <ref name="type2"/>
+      <optional>
+        <ref name="scope2"/>
+      </optional>
+      <oneOrMore>
+        <ref name="role2"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="role2">
+    <element name="role">
+      <ref name="reifiable2"/>
+      <ref name="type2"/>
+      <ref name="topicRef"/>
+    </element>
+  </define>
+</grammar>

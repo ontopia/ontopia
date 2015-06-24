@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.StringReader;
 import net.ontopia.xml.ConfigurableEntityResolver;
 import net.ontopia.xml.InputSourceFactoryIF;
 import org.xml.sax.InputSource;
@@ -40,10 +39,12 @@ import org.xml.sax.InputSource;
  */
 public class IncludeTopicMapDTDEntityResolver extends ConfigurableEntityResolver {
 
+  public static final String XTM_1_0_DTD = "xtm1.dtd";
+
   public IncludeTopicMapDTDEntityResolver() {
     InputSourceFactoryIF xtm_factory = new InputSourceFactoryIF() {
         public InputSource createInputSource() {
-          return new InputSource(new StringReader(DTD.getXTMDocumentType()));
+          return new InputSource(IncludeTopicMapDTDEntityResolver.class.getResourceAsStream(XTM_1_0_DTD));
         }
       };
     addPublicIdSource("-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN", xtm_factory);
