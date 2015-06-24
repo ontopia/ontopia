@@ -36,6 +36,8 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
+import net.ontopia.utils.StreamUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -166,6 +168,26 @@ public class Issue499Test {
 
     // verify no inconsistenties were created
     check(tm1, tm1.getReifier(), "Topicmap", "reifier");
+  }
+
+  @Test
+  public void testImport() throws Exception {
+    OccurrenceIF occ = tm1.getBuilder().makeOccurrence(foo1, foo1, "foo");
+
+    // concurrent import causing a merge
+    MergeUtils.mergeInto(tm1,
+            new LTMTopicMapReader(
+                    StreamUtils.getInputStream("classpath:net/ontopia/topicmaps/impl/rdbms/issue499.ltm"),
+                    URILocator.create("foo:bar"))
+                    .read());
+
+    store2.commit();
+    store1.commit();
+
+    occ = (OccurrenceIF) tm1.getObjectById(occ.getObjectId());
+    check(tm1, occ.getType(), "Occurrence", "type");
+    check(tm1, occ.getTopic(), "Occurrence", "topic");
+//    check(tm1, occ.getReifier(), "Occurrence", "reifier");
   }
 
   @Test
