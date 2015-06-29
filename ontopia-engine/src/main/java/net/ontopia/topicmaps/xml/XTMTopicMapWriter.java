@@ -34,7 +34,7 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.xml.PrettyPrinter;
 
-import org.xml.sax.DocumentHandler;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 /**
@@ -48,7 +48,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
   public static final String PROPERTY_FILTER = "filter";
   public static final String PROPERTY_VERSION = "version";
 
-  protected DocumentHandler out;
+  protected ContentHandler out;
   
   // If writer is instantiated here we'll close it when we're done.
   protected Writer writer;

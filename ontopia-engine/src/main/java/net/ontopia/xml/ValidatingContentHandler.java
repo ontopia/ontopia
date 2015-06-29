@@ -20,18 +20,19 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.Locator;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import com.thaiopensource.validate.Schema;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import com.thaiopensource.relaxng.SchemaFactory;
-import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.SinglePropertyMap;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
-import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: SAX2 content handler used for validating XML documents
@@ -54,7 +55,9 @@ public class ValidatingContentHandler implements ContentHandler {
       factory.setErrorHandler(new DraconianErrorHandler());
       factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       Schema schema = factory.createSchema(src);
-	  this.validator = schema.createValidator(PropertyMap.EMPTY).getContentHandler();
+      this.validator = schema.createValidator(
+              SinglePropertyMap.newInstance(ValidateProperty.ERROR_HANDLER, 
+                      factory.getErrorHandler())).getContentHandler();
     } catch (Exception e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);
     }
