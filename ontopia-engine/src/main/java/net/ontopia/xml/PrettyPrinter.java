@@ -81,33 +81,6 @@ public class PrettyPrinter implements DocumentHandler {
     makeStartLineBuffer(100);
   }  
 
-  /**
-   * Main method to allow PrettyPrinter to be used from the command-line.
-   */
-  public static void main(String[] args) throws Exception {
-    if (args.length != 2) {
-      System.out.println("Usage: java " + PrettyPrinter.class.getName() + " [inputFilename] [outputFilename]");
-      System.exit(0);
-    }
-    
-    String in_filename = args[0];
-    String out_filename = args[1];
-    
-    // Get instances of our handlers
-    DocumentHandler prettyPrinter = new PrettyPrinter(new FileOutputStream(out_filename), "iso-8859-1");
-    ErrorHandler errorHandler = new OntopiaErrorHandler();
-    
-    InputSource inSource = new InputSource( new FileReader(in_filename) );
-
-    // get parser instance and connect to our handlers
-    Parser parser = ParserFactory.makeParser("com.jclark.xml.sax.Driver");
-    parser.setDocumentHandler( prettyPrinter );
-    parser.setErrorHandler( errorHandler );
-
-    // beautify
-    parser.parse(inSource);
-  }
-  
   // --------------------------------------------------------------------------
   // Document events
   // --------------------------------------------------------------------------
