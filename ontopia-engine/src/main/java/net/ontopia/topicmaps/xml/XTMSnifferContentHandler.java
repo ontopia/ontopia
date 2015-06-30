@@ -62,6 +62,8 @@ public class XTMSnifferContentHandler extends DefaultHandler
   private int stack_depth; // used to avoid unbalanced stacks in XTM 1.0
   private Locator locator; // stored to be passed on to real ContentHandlers
   private static final Attributes EMPTY_ATTS = new AttributesImpl();
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
 
   public XTMSnifferContentHandler(XTMTopicMapReader reader,
                                   TopicMapStoreFactoryIF store_factory,
@@ -118,7 +120,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
       
       outer_handler.startDocument();
       for (int ix = 0; ix < stack_depth; ix++) // avoid EmptyStackException
-        outer_handler.startElement("", "", "fake-element", EMPTY_ATTS);
+        outer_handler.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "fake-element", EMPTY_ATTS);
       outer_handler.startElement(uri, name, qname, atts);
       
     } else if (uri == XTM2ContentHandler.NS_XTM2) {
