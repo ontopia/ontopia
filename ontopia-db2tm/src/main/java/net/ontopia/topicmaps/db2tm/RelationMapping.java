@@ -41,12 +41,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
-import org.xml.sax.DocumentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * INTERNAL: DB2TM relation mapping definition. Container for a set of
@@ -551,12 +550,12 @@ public class RelationMapping extends SAXTracker {
       return getValues(attrs, plural);
   }
 
-  protected void addAttribute(AttributeListImpl atts, String name, String type, String value) {
-    if (value != null) atts.addAttribute(name, type, value);
+  protected void addAttribute(AttributesImpl atts, String name, String type, String value) {
+    if (value != null) atts.addAttribute("", "", name, type, value);
   }
 
-  protected void addAttribute(AttributeListImpl atts, String name, String type, String[] values) {
-    if (values != null) atts.addAttribute(name, type, StringUtils.join(values, ","));
+  protected void addAttribute(AttributesImpl atts, String name, String type, String[] values) {
+    if (values != null) atts.addAttribute("", "", name, type, StringUtils.join(values, ","));
   }
 
   // --------------------------------------------------------------------------
@@ -571,18 +570,18 @@ public class RelationMapping extends SAXTracker {
     write(new PrettyPrinter(writer, encoding));
   }
 
-  protected void write(DocumentHandler dh) throws SAXException {
+  protected void write(ContentHandler dh) throws SAXException {
 
     // initialize attributes
-    AttributeListImpl empty = new AttributeListImpl();
-    AttributeListImpl atts = new AttributeListImpl();
+    AttributesImpl empty = new AttributesImpl();
+    AttributesImpl atts = new AttributesImpl();
 
 
     // <db2tm name="...">
     if (name != null) addAttribute(atts, "name", "CDATA", name);
 
     dh.startDocument();
-    dh.startElement("db2tm", atts);
+    dh.startElement("", "", "db2tm", atts);
     atts.clear();
 
     // prefixes
@@ -603,9 +602,9 @@ public class RelationMapping extends SAXTracker {
         break;
       }
              
-      dh.startElement("using", atts);
+      dh.startElement("", "", "using", atts);
       atts.clear();
-      dh.endElement("using");
+      dh.endElement("", "", "using");
     }
 
     // relations
@@ -613,22 +612,22 @@ public class RelationMapping extends SAXTracker {
       // <relation>
       addAttribute(atts, "name", "CDATA", rel.getName());
       addAttribute(atts, "columns", "CDATA", rel.getColumns());
-      dh.startElement("relation", atts);
+      dh.startElement("", "", "relation", atts);
       atts.clear();
 
       outputEntities(rel, dh);
 
       // </relation>
-      dh.endElement("relation");
+      dh.endElement("", "", "relation");
     }
 
     // </db2tm>
-    dh.endElement("db2tm");
+    dh.endElement("", "", "db2tm");
     dh.endDocument();
   }
 
-  protected void outputEntities(Relation rel, DocumentHandler dh) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
+  protected void outputEntities(Relation rel, ContentHandler dh) throws SAXException {
+    AttributesImpl atts = new AttributesImpl();
 
     List entities = rel.getEntities();
     for (int i=0; i < entities.size(); i++) {
@@ -639,13 +638,13 @@ public class RelationMapping extends SAXTracker {
         if (entity.getId() != null)
           addAttribute(atts, "id", "CDATA", entity.getId());
         addAttribute(atts, "type", "CDATA", entity.getAssociationType());
-        dh.startElement("topic", atts);
+        dh.startElement("", "", "topic", atts);
         atts.clear();
         
         outputFields(entity, dh);
         
         // </topic>
-        dh.endElement("topic");
+        dh.endElement("", "", "topic");
         
       } else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
         
@@ -655,18 +654,18 @@ public class RelationMapping extends SAXTracker {
         addAttribute(atts, "type", "CDATA", entity.getAssociationType());
         addAttribute(atts, "scope", "CDATA", entity.getScope());
         
-        dh.startElement("association", atts);
+        dh.startElement("", "", "association", atts);
         atts.clear();
         
         outputFields(entity, dh);
         
         // </association>
-        dh.endElement("association");
+        dh.endElement("", "", "association");
       }
     }
   }
 
-  protected void outputFields(Entity entity, DocumentHandler dh) throws SAXException {
+  protected void outputFields(Entity entity, ContentHandler dh) throws SAXException {
 
     // identity fields
     Iterator ifields = entity.getIdentityFields().iterator();
@@ -691,30 +690,30 @@ public class RelationMapping extends SAXTracker {
 
   }
 
-  protected void outputField(Field field, DocumentHandler dh) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
+  protected void outputField(Field field, ContentHandler dh) throws SAXException {
+    AttributesImpl atts = new AttributesImpl();
     if (field.getFieldType() == Field.TYPE_SUBJECT_LOCATOR) {
         addAttribute(atts, "column", "CDATA", field.getColumn());
-        dh.startElement("subject-locator", atts);
+        dh.startElement("", "", "subject-locator", atts);
         char[] c = field.getPattern().toCharArray(); 
         dh.characters(c, 0, c.length);
-        dh.endElement("subject-locator");
+        dh.endElement("", "", "subject-locator");
         atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_SUBJECT_IDENTIFIER) {
       addAttribute(atts, "column", "CDATA", field.getColumn());
-      dh.startElement("subject-identifier", atts);
+      dh.startElement("", "", "subject-identifier", atts);
       char[] c = field.getPattern().toCharArray(); 
       dh.characters(c, 0, c.length);
-      dh.endElement("subject-identifier");
+      dh.endElement("", "", "subject-identifier");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
       addAttribute(atts, "column", "CDATA", field.getColumn());
-      dh.startElement("item-identifier", atts);
+      dh.startElement("", "", "item-identifier", atts);
       char[] c = field.getPattern().toCharArray(); 
       dh.characters(c, 0, c.length);
-      dh.endElement("item-identifier");
+      dh.endElement("", "", "item-identifier");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_OCCURRENCE) {
@@ -722,16 +721,16 @@ public class RelationMapping extends SAXTracker {
       addAttribute(atts, "type", "CDATA", field.getType());
       addAttribute(atts, "scope", "CDATA", field.getScope());
       addAttribute(atts, "datatype", "CDATA", field.getDatatype());
-      dh.startElement("occurrence", atts);
-      dh.endElement("occurrence");
+      dh.startElement("", "", "occurrence", atts);
+      dh.endElement("", "", "occurrence");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_TOPIC_NAME) {
       addAttribute(atts, "column", "CDATA", field.getColumn());
       addAttribute(atts, "type", "CDATA", field.getType());
       addAttribute(atts, "scope", "CDATA", field.getScope());
-      dh.startElement("topic-name", atts);
-      dh.endElement("topic-name");
+      dh.startElement("", "", "topic-name", atts);
+      dh.endElement("", "", "topic-name");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_PLAYER) {
@@ -739,7 +738,7 @@ public class RelationMapping extends SAXTracker {
       addAttribute(atts, "atype", "CDATA", field.getAssociationType());
       addAttribute(atts, "scope", "CDATA", field.getScope());
       
-      dh.startElement("player", atts);
+      dh.startElement("", "", "player", atts);
       atts.clear();
 
       Iterator iter = field.getOtherRoleFields().iterator();
@@ -747,19 +746,19 @@ public class RelationMapping extends SAXTracker {
         Field orole = (Field)iter.next();
         addAttribute(atts, "rtype", "CDATA", orole.getRoleType());
         addAttribute(atts, "player", "CDATA", orole.getPlayer());
-        dh.startElement("other", atts);
-        dh.endElement("other");
+        dh.startElement("", "", "other", atts);
+        dh.endElement("", "", "other");
         atts.clear();
       }
 
-      dh.endElement("player");
+      dh.endElement("", "", "player");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_ASSOCIATION_ROLE) {
       addAttribute(atts, "type", "CDATA", field.getRoleType());
       addAttribute(atts, "player", "CDATA", field.getPlayer());
-      dh.startElement("role", atts);
-      dh.endElement("role");
+      dh.startElement("", "", "role", atts);
+      dh.endElement("", "", "role");
       atts.clear();
     }
     else throw new OntopiaRuntimeException("Unknown field type: " + field.getType());
