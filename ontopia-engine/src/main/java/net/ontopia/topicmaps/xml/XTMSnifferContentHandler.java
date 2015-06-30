@@ -95,8 +95,8 @@ public class XTMSnifferContentHandler extends DefaultHandler
     
     ContentHandler outer_handler = null;
 
-    if (uri == XTMContentHandler.NS_XTM ||
-        (uri == "" && qname == "topicMap")) {
+    if (XTMContentHandler.NS_XTM.equals(uri) ||
+        ("".equals(uri) && "topicMap".equals(qname))) {
       // We are reading XTM 1.0. Update accordingly.
       handler1 = new XTMContentHandler(store_factory,
                                        reader.getXMLReaderFactory(),
@@ -123,7 +123,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
         outer_handler.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "fake-element", EMPTY_ATTS);
       outer_handler.startElement(uri, name, qname, atts);
       
-    } else if (uri == XTM2ContentHandler.NS_XTM2) {
+    } else if (XTM2ContentHandler.NS_XTM2.equals(uri)) {
       // We are reading XTM 2.x. Update accordingly.
       handler2 = new XTM2ContentHandler(store_factory,
                                         reader.getXMLReaderFactory(),
