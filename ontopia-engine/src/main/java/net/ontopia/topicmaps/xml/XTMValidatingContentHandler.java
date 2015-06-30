@@ -96,7 +96,7 @@ public class XTMValidatingContentHandler implements ContentHandler {
   
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     // initialize validator
-    if (EL_TOPICMAP == qName) {
+    if (EL_TOPICMAP.equals(qName)) {
       validator = createValidator();
       if (locator != null) // if received already
         validator.setDocumentLocator(locator); 
@@ -116,7 +116,7 @@ public class XTMValidatingContentHandler implements ContentHandler {
     child.endElement(uri, name, qName);
 
     // clear validator
-    if (EL_TOPICMAP == qName) {
+    if (EL_TOPICMAP.equals(qName)) {
       validator.endDocument();
       validator = null;
     }

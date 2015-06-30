@@ -324,14 +324,14 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       bases.push(bases.peek());
     }
     
-    if (uri == NS_XTM || uri.equals("")) {
-      if (uri == NS_XTM) 
+    if (uri.equals(NS_XTM) || uri.equals("")) {
+      if (uri.equals(NS_XTM)) 
         qName = name; // use the local name, since qName may have prefix
       
       // -----------------------------------------------------------------------------
       // S: topicRef
       // -----------------------------------------------------------------------------
-      if (qName == EL_TOPICREF) {
+      if (EL_TOPICREF.equals(qName)) {
         
         // Resolve reference
         String href = atts.getValue(NS_XLINK, "href");
@@ -341,7 +341,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         // Process in context of parent
         String parent_type = (String)parents.peek();        
         // FIXME: subjectIdentity.topicRef vs. instanceOf.topicRef
-        if (parent_type == EL_SUBJECTIDENTITY &&
+        if (EL_SUBJECTIDENTITY.equals(parent_type) &&
             info.get(EL_TOPIC) == this.lazyTopic && this.lazyTopic != null) {
           LocatorIF loc = createLocator(href);
           addItemIdentifier(this.lazyTopic, loc);
@@ -360,7 +360,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: instanceof
       // -----------------------------------------------------------------------------
-      else if (qName == EL_INSTANCEOF) {
+      else if (EL_INSTANCEOF.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_INSTANCEOF);
@@ -369,7 +369,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: member
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MEMBER) {
+      else if (EL_MEMBER.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_MEMBER);
@@ -378,7 +378,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: roleSpec
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ROLESPEC) {
+      else if (EL_ROLESPEC.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_ROLESPEC);      
@@ -387,7 +387,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: association
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ASSOCIATION) {
+      else if (EL_ASSOCIATION.equals(qName)) {
         
         if (builder == null) 
           throw new InvalidTopicMapException("Association outside topic map. Did you forget or misspell the 'topicMap' element?");
@@ -412,7 +412,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: baseName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAME) {
+      else if (EL_BASENAME.equals(qName)) {
         // Create basename
         TopicIF topic = getParentTopic();
         TopicNameIF basename = builder.makeTopicName(topic, "");
@@ -435,7 +435,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: baseNameString
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAMESTRING) {
+      else if (EL_BASENAMESTRING.equals(qName)) {
         keep_content = true;
         content.setLength(0);
       }
@@ -443,7 +443,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: topic
       // -----------------------------------------------------------------------------
-      else if (qName == EL_TOPIC) {
+      else if (EL_TOPIC.equals(qName)) {
         
         // Check to see if topic already exist
         String id = atts.getValue("", "id");
@@ -479,7 +479,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: occurrence
       // -----------------------------------------------------------------------------
-      else if (qName == EL_OCCURRENCE) {
+      else if (EL_OCCURRENCE.equals(qName)) {
         // Create occurrence
         TopicIF topic = getParentTopic();
         TopicIF otype = getDefaultOccurrenceTopic(builder.getTopicMap());
@@ -503,7 +503,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: resourceRef
       // -----------------------------------------------------------------------------
-      else if (qName == EL_RESOURCEREF) {
+      else if (EL_RESOURCEREF.equals(qName)) {
         
         // Create locator
         String href = atts.getValue(NS_XLINK, "href");
@@ -515,19 +515,19 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         
         // References a topic:
         
-        if (parent_type == EL_MEMBER) {
+        if (EL_MEMBER.equals(parent_type)) {
           // Resolve referenced topic
           TopicIF referenced_topic = resolveResourceRef(createLocator(href));
           // Create new association role
           processMember(referenced_topic);
         }
-        else if(parent_type == EL_MERGEMAP) {
+        else if (EL_MERGEMAP.equals(parent_type)) {
           // Resolve referenced topic
           TopicIF referenced_topic = resolveResourceRef(createLocator(href));
           ExternalDocument merge_map = (ExternalDocument)info.get(EL_MERGEMAP);
           merge_map.addTheme(referenced_topic);
         }
-        else if (parent_type == EL_SCOPE) {
+        else if (EL_SCOPE.equals(parent_type)) {
           // Resolve referenced topic
           TopicIF referenced_topic = resolveResourceRef(createLocator(href));
           processTheme(referenced_topic);
@@ -535,14 +535,14 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         
         // References an information resource:
         
-        else if (parent_type == EL_OCCURRENCE) {
+        else if (EL_OCCURRENCE.equals(parent_type)) {
           // Create locator
           LocatorIF locator = createLocator(href);
           // Set occurrence locator
           OccurrenceIF occurs = (OccurrenceIF)info.get(EL_OCCURRENCE);
           occurs.setLocator(locator);
         }
-        else if (parent_type == EL_VARIANTNAME) {
+        else if (EL_VARIANTNAME.equals(parent_type)) {
           // Create locator
           LocatorIF locator = createLocator(href);
           // Set variant name locator
@@ -553,7 +553,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         
         // Can reference both:
         
-        else if (parent_type == EL_SUBJECTIDENTITY) {
+        else if (EL_SUBJECTIDENTITY.equals(parent_type)) {
           
           // FIXME: Need to check if the topic is a local topic.
           // Local topics are easily recognizable as long as the
@@ -600,7 +600,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: resourceData
       // -----------------------------------------------------------------------------
-      else if (qName == EL_RESOURCEDATA) {
+      else if (EL_RESOURCEDATA.equals(qName)) {
         keep_content = true;
         content.setLength(0);
       }
@@ -608,7 +608,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: variantName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANTNAME) {
+      else if (EL_VARIANTNAME.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_VARIANTNAME);   
@@ -617,7 +617,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: variant
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANT) {
+      else if (EL_VARIANT.equals(qName)) {
         
         // Create variant name
         TopicNameIF bname = (TopicNameIF)info.get(EL_BASENAME);
@@ -655,7 +655,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: parameters
       // -----------------------------------------------------------------------------
-      else if (qName == EL_PARAMETERS) {
+      else if (EL_PARAMETERS.equals(qName)) {
         // Push element on parent stack
         parents.push(EL_PARAMETERS);    
       }
@@ -663,7 +663,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: scope
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SCOPE) {
+      else if (EL_SCOPE.equals(qName)) {
         // Push element on parent stack
         parents.push(EL_SCOPE); 
       }
@@ -671,7 +671,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: subjectIndicatorRef
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SUBJECTINDICATORREF) {
+      else if (EL_SUBJECTINDICATORREF.equals(qName)) {
         
         // Get reference
         String href = atts.getValue(NS_XLINK, "href");
@@ -684,7 +684,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         
         // If the parent is subjectIdentity this reference should
         // become a subject indicator of the parent topic.
-        if (parent_type == EL_SUBJECTIDENTITY) {
+        if (EL_SUBJECTIDENTITY.equals(parent_type)) {
           // FIXME: Should merge with parent topic if it references
           // another topic.
           
@@ -712,7 +712,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: subjectIdentity
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SUBJECTIDENTITY) {
+      else if (EL_SUBJECTIDENTITY.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_SUBJECTIDENTITY);
@@ -721,7 +721,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: mergeMap
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MERGEMAP) {
+      else if (EL_MERGEMAP.equals(qName)) {
         
         // Get merge map address
         String href = atts.getValue(NS_XLINK, "href");
@@ -739,7 +739,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: topicMap
       // -----------------------------------------------------------------------------      
-      else if (qName == EL_TOPICMAP) {
+      else if (EL_TOPICMAP.equals(qName)) {
         
         // Initialize the list of processed documents for the current topic map
         processed_documents_current = new HashSet(processed_documents_from_parent);
@@ -779,7 +779,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     } else { // if there is a namespace URI that is not the XTM ns URI
       // log.error("Unknown element: {" + uri + "}" + name + "[" + qName + "]");
       
-      if (qName == EL_TOPICMAP) {
+      if (EL_TOPICMAP.equals(qName)) {
         log.error("Unrecognized <topicMap> element " + getLocationInfo());
       } 
     }
@@ -798,21 +798,21 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     //System.out.println("E: " + qName + " (" + getLocationInfo() + ")");
     try {
       
-    if (uri == NS_XTM || uri.equals("")) {
-      if (uri == NS_XTM)
+    if (NS_XTM.equals(uri) || uri.equals("")) {
+      if (NS_XTM.equals(uri))
         qName = name;
       
       // -----------------------------------------------------------------------------
       // E: instanceOf
       // -----------------------------------------------------------------------------
-      if (qName == EL_INSTANCEOF) {
+      if (EL_INSTANCEOF.equals(qName)) {
         // Pop element off parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: member
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MEMBER) {
+      else if (EL_MEMBER.equals(qName)) {
         // Pop element off parent stack
         parents.pop();
         
@@ -837,14 +837,14 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: roleSpec
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ROLESPEC) {
+      else if (EL_ROLESPEC.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: association
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ASSOCIATION) {
+      else if (EL_ASSOCIATION.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
@@ -854,7 +854,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: baseName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAME) {
+      else if (EL_BASENAME.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
@@ -864,7 +864,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: baseNameString
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAMESTRING) {
+      else if (EL_BASENAMESTRING.equals(qName)) {
         // Set the name value of the base name
         TopicNameIF basename = (TopicNameIF)info.get(EL_BASENAME);
         basename.setValue(content.toString());
@@ -873,7 +873,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: topic
       // -----------------------------------------------------------------------------
-      else if (qName == EL_TOPIC) {
+      else if (EL_TOPIC.equals(qName)) {
         // resolve lazy topic if it still exists
         if (info.get(EL_TOPIC)  == this.lazyTopic && this.lazyTopic != null) {
           createTopicFromLazyTopic();
@@ -888,7 +888,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: occurrence
       // -----------------------------------------------------------------------------
-      else if (qName == EL_OCCURRENCE) {
+      else if (EL_OCCURRENCE.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
@@ -898,7 +898,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: resourceData
       // -----------------------------------------------------------------------------
-      else if (qName == EL_RESOURCEDATA) {
+      else if (EL_RESOURCEDATA.equals(qName)) {
         
         if (info.containsKey(EL_VARIANT)) {
           Stack variants = (Stack)info.get(EL_VARIANT);
@@ -918,18 +918,18 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: variant
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANT) {
+      else if (EL_VARIANT.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
         // Process in context of parent
         String parent_type = (String)parents.peek();
         
-        if (parent_type == EL_BASENAME) {
+        if (EL_BASENAME.equals(parent_type)) {
           // Remove variant stack from info map      
           info.remove(EL_VARIANT);
         }
-        else if (parent_type == EL_VARIANT) {
+        else if (EL_VARIANT.equals(parent_type)) {
           // Pop variant name of info map variant name stack.
           Stack variants = (Stack)info.get(EL_VARIANT);
           variants.pop();
@@ -938,35 +938,35 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: variantName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANTNAME) {
+      else if (EL_VARIANTNAME.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: parameters
       // -----------------------------------------------------------------------------
-      else if (qName == EL_PARAMETERS) {
+      else if (EL_PARAMETERS.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: scope
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SCOPE) {
+      else if (EL_SCOPE.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: subjectIdentity
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SUBJECTIDENTITY) {
+      else if (EL_SUBJECTIDENTITY.equals(qName)) {
         // Pop element off parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: mergeMap
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MERGEMAP) {
+      else if (EL_MERGEMAP.equals(qName)) {
         
         // Get merge map from info map
         ExternalDocument merge_map = (ExternalDocument)info.get(EL_MERGEMAP);
@@ -994,7 +994,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: topicMap
       // -----------------------------------------------------------------------------
-      else if (qName == EL_TOPICMAP) {
+      else if (EL_TOPICMAP.equals(qName)) {
         
         // Add processed documents to accumulated list.
         processed_documents_accumulated.addAll(processed_documents_current);
@@ -1270,7 +1270,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // Process in context of parent
     String parent_type = (String)parents.peek();
     
-    if (parent_type == EL_INSTANCEOF) {
+    if (EL_INSTANCEOF.equals(parent_type)) {
       
       if (info.containsKey(EL_ASSOCIATION)) {
         // Set association type
@@ -1293,21 +1293,21 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       }
       
     }
-    else if (parent_type == EL_SCOPE) {
+    else if (EL_SCOPE.equals(parent_type)) {
       processTheme(referenced_topic);
     }
-    else if (parent_type == EL_MEMBER) {
+    else if (EL_MEMBER.equals(parent_type)) {
       // Create new association role
       processMember(referenced_topic);
     }                      
-    else if (parent_type == EL_ROLESPEC) {
+    else if (EL_ROLESPEC.equals(parent_type)) {
       // Put role type on info map
       info.put(EL_ROLESPEC, referenced_topic);
     }                      
-    else if (parent_type == EL_PARAMETERS) {
+    else if (EL_PARAMETERS.equals(parent_type)) {
       processTheme(referenced_topic);
     }                      
-    else if (parent_type == EL_SUBJECTIDENTITY) {
+    else if (EL_SUBJECTIDENTITY.equals(parent_type)) {
       TopicIF current_topic = (TopicIF)info.get(EL_TOPIC);
       
       if (current_topic != referenced_topic) {
@@ -1322,7 +1322,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         info.put(EL_TOPIC, referenced_topic);
       }
     }
-    else if (parent_type == EL_MERGEMAP) {
+    else if (EL_MERGEMAP.equals(parent_type)) {
       // FIXME: do something else?
       processTheme(referenced_topic);
     }

@@ -228,8 +228,8 @@ public class TMXMLReader extends AbstractXMLFormatReader
         break;
       case TOPIC:
         // this has to be some property of the topic
-        if (uri == TMXMLWriter.NS_TM &&
-            (name == "identifier" || name == "locator"))
+        if (TMXMLWriter.NS_TM.equals(uri) &&
+            ("identifier".equals(name) || "locator".equals(name)))
           state = IDENTIFIER;
         else if (atts.getValue("", "role") != null) {
           // it's an association, of some kind
@@ -261,7 +261,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
         break;
       case MAYBETOPICNAME:
         // could be occurrence, could be topic name
-        if (uri == TMXMLWriter.NS_TM && name == "value") {
+        if (TMXMLWriter.NS_TM.equals(uri) && "value".equals(name)) {
           // ok, it was a topic name
           state = BASENAME;
           // we were collecting chars in case it was an occurrence; now dump
@@ -269,7 +269,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
         }
         break;
       case TOPICNAME:
-        if (uri == TMXMLWriter.NS_TM && name == "variant") {
+        if (TMXMLWriter.NS_TM.equals(uri) && "variant".equals(name)) {
           state = VARIANT;
           scope = getScope(atts);
           reifier = atts.getValue("", "reifier");
@@ -319,9 +319,9 @@ public class TMXMLReader extends AbstractXMLFormatReader
         LocatorIF loc = createLocator(buffer.toString());
         buffer.setLength(0);
 
-        if (name == "identifier")
+        if ("identifier".equals(name))
           registerSubjectIndicator(topic, loc);
-        else if (name == "locator")
+        else if ("locator".equals(name))
           registerSubjectLocator(topic, loc);
         break;
       case BASENAME:
@@ -390,9 +390,9 @@ public class TMXMLReader extends AbstractXMLFormatReader
     }
 
     private TopicIF getType(String uri, String name) throws SAXException {
-      if (uri == null || uri == "")
+      if (uri == null || "".equals(uri))
         return getTopicById(name);
-      if (uri == TMXMLWriter.NS_TM && name == "topic")
+      if (TMXMLWriter.NS_TM.equals(uri) && "topic".equals(name))
         return null; // element for typeless construct
       
       try {
