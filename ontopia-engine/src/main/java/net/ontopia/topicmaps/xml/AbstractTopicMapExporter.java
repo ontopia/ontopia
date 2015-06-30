@@ -37,6 +37,8 @@ import net.ontopia.utils.CharacterSet;
  * exporters.
  */
 public abstract class AbstractTopicMapExporter {
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
   protected DeciderIF filter;
   
   /**
@@ -97,7 +99,7 @@ public abstract class AbstractTopicMapExporter {
   protected void addId(AttributesImpl atts, TMObjectIF tmobject) {
     String id = getElementId(tmobject);
     if (id != null)
-      atts.addAttribute("", "", "id", "ID", id);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "id", "ID", id);
   }
   
   /**

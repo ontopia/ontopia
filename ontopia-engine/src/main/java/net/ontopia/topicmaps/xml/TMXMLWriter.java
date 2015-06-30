@@ -67,6 +67,8 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   public static final String PROPERTY_PREFIXES = "prefixes";
   public static final String PROPERTY_DOCUMENT_ELEMENT = "documentElement";
   protected static final AttributesImpl EMPTY_ATTR_LIST = new AttributesImpl();
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
   
   private ContentHandler out;
   
@@ -214,14 +216,14 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String nsuri = (String) it.next();
       String prefix = (String) nsuris.get(nsuri);
 
-      atts.addAttribute("", "","xmlns:" + prefix, "CDATA", nsuri);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xmlns:" + prefix, "CDATA", nsuri);
     }
 
     if (topicmap != null) // topic map can be null in some situations (particularly when using tmrap)
       addReifierAttribute(topicmap, atts);
     
     out.startDocument();
-    out.startElement("", "",docelem, atts);
+    out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, docelem, atts);
     atts.clear();
   }
 
@@ -260,26 +262,26 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     if (typeit.hasNext())
       elem = getElementTypeName((TopicIF) typeit.next(), TOPIC);
     
-    atts.addAttribute("", "","id", "CDATA", getTopicId(topic));
-    out.startElement("", "",elem, atts);
+    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "id", "CDATA", getTopicId(topic));
+    out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, elem, atts);
     atts.clear();
     
     // indicators
     Iterator it = filterCollection(topic.getSubjectIdentifiers()).iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
-      out.startElement("", "","tm:identifier", EMPTY_ATTR_LIST);
+      out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:identifier", EMPTY_ATTR_LIST);
       writeText(getSubjectIndicatorRef(topic, loc));
-      out.endElement("", "","tm:identifier");
+      out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:identifier");
     }
 
     // subject locator
     it = filterCollection(topic.getSubjectLocators()).iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
-      out.startElement("", "","tm:locator", EMPTY_ATTR_LIST);
+      out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:locator", EMPTY_ATTR_LIST);
       writeText(loc.getExternalForm());
-      out.endElement("", "","tm:locator");
+      out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:locator");
     }
 
     // topic name
@@ -290,14 +292,14 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
       String scope = getScope(bn);
       if (scope != null)
-        atts.addAttribute("", "","scope", "CDATA", scope);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
 
       addReifierAttribute(bn, atts);
       
-      out.startElement("", "",bnelem, atts);
-      out.startElement("", "","tm:value", EMPTY_ATTR_LIST);
+      out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, bnelem, atts);
+      out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:value", EMPTY_ATTR_LIST);
       writeText(bn.getValue());
-      out.endElement("", "","tm:value");
+      out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:value");
 
       // variant names
       Iterator it2 = filterCollection(bn.getVariants()).iterator();
@@ -307,18 +309,18 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         atts.clear();
         scope = getScope(vn);
         if (scope != null)
-          atts.addAttribute("", "","scope", "CDATA", scope);
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
         if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_STRING))
-          atts.addAttribute("", "","datatype", "CDATA", vn.getDataType().getAddress());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", "CDATA", vn.getDataType().getAddress());
 
         addReifierAttribute(vn, atts);
         
-        out.startElement("", "","tm:variant", atts);
+        out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:variant", atts);
         writeText(vn.getValue());
-        out.endElement("", "","tm:variant");
+        out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "tm:variant");
       }
       
-      out.endElement("", "",bnelem);
+      out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, bnelem);
       atts.clear();
     }
 
@@ -331,15 +333,15 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
       String scope = getScope(occ);
       if (scope != null && filterOk(scope))
-        atts.addAttribute("", "","scope", "CDATA", scope);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
       if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_STRING))
-        atts.addAttribute("", "","datatype", "CDATA", occ.getDataType().getAddress());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", "CDATA", occ.getDataType().getAddress());
 
       addReifierAttribute(occ, atts);
 
-      out.startElement("", "",occelem, atts);
+      out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, occelem, atts);
       writeText(occ.getValue());
-      out.endElement("", "",occelem);
+      out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, occelem);
       atts.clear();
     }
 
@@ -348,11 +350,11 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     // if so, we can output them as associations here)
     while (typeit.hasNext()) {
       TopicIF type = (TopicIF) typeit.next();
-      atts.addAttribute("", "","role", "CDATA", "xtm:instance");
-      atts.addAttribute("", "","otherrole", "CDATA", "xtm:class");
-      atts.addAttribute("", "","topicref", "CDATA", getTopicId(type));
-      out.startElement("", "","xtm:class-instance", atts);
-      out.endElement("", "","xtm:class-instance");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", "CDATA", "xtm:instance");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "otherrole", "CDATA", "xtm:class");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", "CDATA", getTopicId(type));
+      out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xtm:class-instance", atts);
+      out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xtm:class-instance");
       atts.clear();
     }
     
@@ -370,8 +372,8 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String assocelem = getElementTypeName(assoc.getType(), ASSOCIATION);
       String scope = getScope(assoc);
       if (scope != null)
-        atts.addAttribute("", "","scope", "CDATA", scope);
-      atts.addAttribute("", "","role", "CDATA",
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", "CDATA",
                         getElementTypeName(role.getType(), ROLE));
 
       addReifierAttribute(assoc, atts);
@@ -392,16 +394,16 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         if (otherrole != null && otherrole.getPlayer() != null) {
           // if unary we skip spec of the other role
           // also skip if player is null
-          atts.addAttribute("", "","topicref", "CDATA",
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", "CDATA",
                             getTopicId(otherrole.getPlayer()));
-          atts.addAttribute("", "","otherrole", "CDATA",
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "otherrole", "CDATA",
                             getElementTypeName(otherrole.getType(), ROLE));
         }
-        out.startElement("", "",assocelem, atts);
-        out.endElement("", "",assocelem);
+        out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, assocelem, atts);
+        out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, assocelem);
       } else {
         // n-ary
-        out.startElement("", "",assocelem, atts);
+        out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, assocelem, atts);
 
         Iterator it2 = assoc.getRoles().iterator();
         while (it2.hasNext()) {
@@ -410,19 +412,19 @@ public class TMXMLWriter extends AbstractTopicMapExporter
             continue; // this is our role, which is already covered
 
           atts.clear();
-          atts.addAttribute("", "","topicref", "CDATA", getTopicId(r.getPlayer()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", "CDATA", getTopicId(r.getPlayer()));
           String roleelem = getElementTypeName(r.getType(), ROLE);
-          out.startElement("", "",roleelem, atts);
-          out.endElement("", "",roleelem);
+          out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, roleelem, atts);
+          out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, roleelem);
         }
         
-        out.endElement("", "",assocelem);
+        out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, assocelem);
       }
       
       atts.clear();
     }    
     
-    out.endElement("", "",elem);
+    out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, elem);
   }
 
   /**
@@ -430,7 +432,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * only).
    */
   public void endTopicMap() throws SAXException {
-    out.endElement("", "",docelem);
+    out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, docelem);
     out.endDocument();   
   }
 
@@ -637,7 +639,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     if (reifier != null) {
       if (filter == null || filter.ok(reifier)) {
         String reifierAttribute = getTopicId(reifier);
-        atts.addAttribute("", "","reifier", "CDATA", reifierAttribute);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reifier", "CDATA", reifierAttribute);
       }
     }
   }
