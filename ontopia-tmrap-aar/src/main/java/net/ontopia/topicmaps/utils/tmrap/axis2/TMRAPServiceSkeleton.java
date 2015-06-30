@@ -36,7 +36,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapExporter;
 import org.apache.axiom.om.impl.builder.SAXOMBuilder;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.transport.http.HTTPConstants;
-import org.xml.sax.DocumentHandler;
+import org.xml.sax.ContentHandler;
 
 public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
 
@@ -44,7 +44,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
       SAXOMBuilder builder = new SAXOMBuilder();
-      DocumentHandler handler = new ContentHandlerAdapter(builder);
+      ContentHandler handler = new ContentHandlerAdapter(builder);
       TMRAPImplementation.getTopic(
         navapp, 
         makeLocatorCollection(param.getItems()), 
@@ -67,7 +67,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
       SAXOMBuilder builder = new SAXOMBuilder();
-      DocumentHandler handler = new ContentHandlerAdapter(builder);
+      ContentHandler handler = new ContentHandlerAdapter(builder);
       TMRAPImplementation.getTolog(
         navapp, 
         param.getQuery(), 
@@ -148,7 +148,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
         makeLocatorCollection(param.getIdentifiers()), 
         param.getTmids());
       SAXOMBuilder builder = new SAXOMBuilder();
-      DocumentHandler handler = new ContentHandlerAdapter(builder);
+      ContentHandler handler = new ContentHandlerAdapter(builder);
       XTMTopicMapExporter exporter = new XTMTopicMapExporter();
       exporter.export(tm, handler);
       GetTopicPageResponse response = new GetTopicPageResponse();
