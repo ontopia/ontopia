@@ -25,12 +25,9 @@ import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 
-import org.junit.Ignore;
-
 /**
  * INTERNAL.
  */
-@Ignore
 public class TestAction implements ActionIF {
 
     public void perform(ActionParametersIF params, ActionResponseIF response)
