@@ -32,13 +32,10 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.junit.Ignore;
-
 /**
  * INTERNAL: PRIVATE: TESTING:
  */
 
-@Ignore
 public class TestActionParameters implements ActionIF {
 
   public void perform(ActionParametersIF params, ActionResponseIF response)
