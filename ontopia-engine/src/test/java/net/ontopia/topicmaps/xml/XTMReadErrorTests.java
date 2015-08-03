@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.IOException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import java.util.List;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
@@ -61,6 +62,9 @@ public class XTMReadErrorTests extends AbstractCanonicalTests {
         reader.read();
         Assert.fail("succeeded in importing bad file " + filename);
       } catch (IOException e) {
+        // ok
+        return;
+      } catch (ConstraintViolationException e) {
         // ok
       } catch (OntopiaRuntimeException e) {
         if (!(e.getCause() instanceof org.xml.sax.SAXParseException))
