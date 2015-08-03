@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ALiteral;
-import com.hp.hpl.jena.rdf.arp.AResource;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -35,12 +35,15 @@ import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.shared.JenaException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.MergeUtils;
@@ -59,6 +62,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.utils.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -224,9 +228,14 @@ public class RDFToTopicMapConverter {
       RDFUtils.parseRDFXML(url, new ToTMStatementHandler());
 
     else {
+      URL uri;
+      try {
+        uri = new URL(url);
+      } catch (MalformedURLException mufe) {
+        throw new IOException(mufe);
+      }
       Model model = ModelFactory.createDefaultModel();
-      model.read(url, syntax);
-
+      model.read(uri.openStream(), url, syntax);
       if (mappings == null)
         buildMappings(model);
 

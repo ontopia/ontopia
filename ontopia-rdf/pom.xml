@@ -28,8 +28,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>jena</artifactId>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
