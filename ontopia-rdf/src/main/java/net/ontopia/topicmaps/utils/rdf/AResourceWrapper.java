@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 /**

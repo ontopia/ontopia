@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ARP;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdfxml.xmlinput.ARP;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import java.net.URL;
 import java.net.URLConnection;
 import java.io.InputStream;
