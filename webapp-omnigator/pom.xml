@@ -76,13 +76,6 @@
 						<phase>prepare-package</phase>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>xerces</groupId>
-						<artifactId>xercesImpl</artifactId>
-						<version>2.11.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
