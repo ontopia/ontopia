@@ -46,8 +46,6 @@
     </servlet-class>
   </servlet>
 
-  <!-- include start %(WEB_COMPILED)s include end --> 
-
   <servlet-mapping>
     <servlet-name>WebEditorProcessServlet</servlet-name>
     <url-pattern>/process</url-pattern>

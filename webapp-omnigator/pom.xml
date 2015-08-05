@@ -68,14 +68,8 @@
 		<finalName>omnigator</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.sling</groupId>
-				<artifactId>maven-jspc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>compile-jsp</id>
-						<phase>prepare-package</phase>
-					</execution>
-				</executions>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-jspc-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
