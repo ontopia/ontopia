@@ -48,8 +48,6 @@
     </init-param>
   </servlet>
 
-  <!-- include start %(WEB_COMPILED)s include end --> 
-
   <servlet-mapping>
     <servlet-name>PNGTreeServlet</servlet-name>
     <url-pattern>/models/pngtree.jsp</url-pattern>
