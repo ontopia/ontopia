@@ -23,12 +23,5 @@
 
 	<build>
 		<finalName>ROOT</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jspc-maven-plugin</artifactId>
-				<!-- there is no actual jsp code in this app, so no further configuration needed -->
-			</plugin>
-		</plugins>
 	</build>
 </project>
