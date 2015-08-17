@@ -22,7 +22,6 @@ package net.ontopia.utils.ontojsp;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**

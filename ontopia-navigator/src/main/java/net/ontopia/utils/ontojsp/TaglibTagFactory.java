@@ -21,14 +21,10 @@
 package net.ontopia.utils.ontojsp;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +46,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
   static Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
 
   // Map between tag names (with namespace prefix) and Java Classes
-  static Map classes;
+  static Map<String, String> classes;
 
   public TaglibTagFactory() {
     this(TAGPOOLING_DEFAULT);
@@ -63,9 +59,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
 
   public static String getTagName(Class tagclass) {
     String classname = tagclass.getName();
-    Iterator iter = classes.keySet().iterator();
-    while (iter.hasNext()) {
-      String tagname = (String) iter.next();
+    for (String tagname : classes.keySet()) {
       if (classes.get(tagname).equals(classname))
         return tagname;
     }
@@ -104,7 +98,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
     }
 
     // create tag instance
-    String classname = (String) classes.get(tagname);
+    String classname = classes.get(tagname);
     TagSupport tag = null;
     try {
       // try to get class for tag classname
@@ -136,7 +130,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
   }
 
   private static void initClassMap() {
-    classes = new HashMap();
+    classes = new HashMap<String, String>();
     // package base name for all tag classes
     String tlpackage = "net.ontopia.topicmaps.nav2.taglibs.";
     String tlpackage2 = "net.ontopia.topicmaps.webed.taglibs.";
