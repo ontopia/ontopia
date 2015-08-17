@@ -25,11 +25,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -51,8 +52,8 @@ public class FakeServletContext implements ServletContext {
     .getLogger(FakeServletContext.class.getName());
   
   private String rootpath;
-  private Hashtable attrs;
-  private Hashtable initParams;
+  private Map<String, Object> attrs;
+  private Map<String, String> initParams;
 
   private int majorVersion;
 
@@ -63,21 +64,21 @@ public class FakeServletContext implements ServletContext {
   }
   
   public FakeServletContext(String rootpath) {
-    this(rootpath, new Hashtable());
+    this(rootpath, new HashMap<String, Object>());
   }
   
-  public FakeServletContext(String rootpath, Hashtable attrs) {
-    this(rootpath, attrs, new Hashtable());
+  public FakeServletContext(String rootpath, Map<String, Object> attrs) {
+    this(rootpath, attrs, new HashMap<String, String>());
   }
 
-  public FakeServletContext(String rootpath, Hashtable attrs, Hashtable initParams) {
+  public FakeServletContext(String rootpath, Map<String, Object> attrs, Map<String, String> initParams) {
     this.rootpath = rootpath;
     if (!this.rootpath.endsWith("/")) {
       this.rootpath += '/';
     }
     this.attrs = attrs;
     this.initParams = initParams;
-    setVersion(2,3);
+    setVersion(3,0);
   }
 
   public void setVersion(int major, int minor) {
@@ -100,8 +101,8 @@ public class FakeServletContext implements ServletContext {
   }
 
   @Override
-  public Enumeration getAttributeNames() {
-    return attrs.keys();
+  public Enumeration<String> getAttributeNames() {
+    return Collections.enumeration(attrs.keySet());
   }
 
   @Override
@@ -144,17 +145,15 @@ public class FakeServletContext implements ServletContext {
   public String getRealFilePath(String path) {
     File current = new File(rootpath);
     String[] components = StringUtils.split(path, "/");
-    for (int ix = 0; ix < components.length; ix++) {
-      logger.debug(" - comp: " + components[ix]);
+    for (String component : components) {
+      logger.debug(" - comp: " + component);
       logger.debug(" - current " + current);
-      if (components[ix].equals("") || components[ix].equals("."))
-        continue;
-      
-      else if (components[ix].equals(".."))
+      if (component.equals("") || component.equals(".")) {
+      } else if (component.equals("..")) {
         current = current.getParentFile();
-
-      else
-        current = new File(current, components[ix]);
+      } else {
+        current = new File(current, component);
+      }
     }
 
     return current.toString();
@@ -179,14 +178,14 @@ public class FakeServletContext implements ServletContext {
   }
 
   @Override
-  public Set getResourcePaths(String path) {
-    Set paths = new HashSet();
+  public Set<String> getResourcePaths(String path) {
+    Set<String> paths = new HashSet<String>();
     File directory = new File(rootpath, path);
     logger.debug("getResourcePaths in dir: "+directory);
     String[] filenames = directory.list();
     // logger.debug("--> files: "+filenames);
-    for (int i=0; i < filenames.length; i++) {
-      paths.add(path+"/"+filenames[i]);
+    for (String filename : filenames) {
+      paths.add(path+"/" + filename);
     }
     return paths;
   }
@@ -208,12 +207,12 @@ public class FakeServletContext implements ServletContext {
     
   @Override
   public String getInitParameter(String name) {
-    return (String)initParams.get(name);
+    return initParams.get(name);
   }
     
   @Override
-  public Enumeration getInitParameterNames() {
-    return initParams.elements();
+  public Enumeration<String> getInitParameterNames() {
+    return Collections.enumeration(initParams.keySet());
   }
     
   @Override
@@ -237,15 +236,13 @@ public class FakeServletContext implements ServletContext {
   }
 
   @Override
-  public Enumeration getServlets() {
-    Vector v = new Vector();
-    return v.elements();
+  public Enumeration<Servlet> getServlets() {
+    return Collections.enumeration(Collections.<Servlet>emptySet());
   }
     
   @Override
-  public Enumeration getServletNames() {
-    Vector v = new Vector();
-    return v.elements();
+  public Enumeration<String> getServletNames() {
+    return Collections.enumeration(Collections.<String>emptySet());
   }
 
   @Override
