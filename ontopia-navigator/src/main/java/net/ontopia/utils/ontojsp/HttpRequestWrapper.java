@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,7 +46,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getMethod();
   }
   @Override
-  public Enumeration getHeaders(String attr0) {
+  public Enumeration<String> getHeaders(String attr0) {
     return request.getHeaders(attr0);
   }
   @Override
@@ -65,7 +66,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getHeader(attr0);
   }
   @Override
-  public Enumeration getHeaderNames() {
+  public Enumeration<String> getHeaderNames() {
     return request.getHeaderNames();
   }
   @Override
@@ -166,7 +167,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getAttribute(attr0);
   }
   @Override
-  public Enumeration getAttributeNames() {
+  public Enumeration<String> getAttributeNames() {
     return request.getAttributeNames();
   }
   @Override
@@ -183,7 +184,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getParameter(attr0);
   }
   @Override
-  public Enumeration getParameterNames() {
+  public Enumeration<String> getParameterNames() {
     return request.getParameterNames();
   }
   @Override
@@ -191,7 +192,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getParameterValues(attr0);
   }
   @Override
-  public Map getParameterMap() {
+  public Map<String, String[]> getParameterMap() {
     return request.getParameterMap();
   }
   @Override
@@ -228,7 +229,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getLocale();
   }
   @Override
-  public Enumeration getLocales() {
+  public Enumeration<Locale> getLocales() {
     return request.getLocales();
   }
   @Override
