@@ -22,8 +22,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
 		</dependency>
 		<!-- Axis2 dependencies will be included in webapp-tmrap -->
 		<dependency>
