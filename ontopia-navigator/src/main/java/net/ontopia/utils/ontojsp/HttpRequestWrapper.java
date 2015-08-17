@@ -20,8 +20,15 @@
 
 package net.ontopia.utils.ontojsp;
 
+import java.io.BufferedReader;
+import java.security.Principal;
 import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Map;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * INTERNAL: Wrapper class for HttpServletRequest; needed because Tomcat
@@ -38,7 +45,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getMethod();
   }
   @Override
-  public java.util.Enumeration getHeaders(String attr0) {
+  public Enumeration getHeaders(String attr0) {
     return request.getHeaders(attr0);
   }
   @Override
@@ -46,7 +53,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getAuthType();
   }
   @Override
-  public javax.servlet.http.Cookie[] getCookies() {
+  public Cookie[] getCookies() {
     return request.getCookies();
   }
   @Override
@@ -58,7 +65,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getHeader(attr0);
   }
   @Override
-  public java.util.Enumeration getHeaderNames() {
+  public Enumeration getHeaderNames() {
     return request.getHeaderNames();
   }
   @Override
@@ -90,7 +97,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.isUserInRole(attr0);
   }
   @Override
-  public java.security.Principal getUserPrincipal() {
+  public Principal getUserPrincipal() {
     return request.getUserPrincipal();
   }
   @Override
@@ -110,11 +117,11 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getServletPath();
   }
   @Override
-  public javax.servlet.http.HttpSession getSession(boolean attr0) {
+  public HttpSession getSession(boolean attr0) {
     return request.getSession(attr0);
   }
   @Override
-  public javax.servlet.http.HttpSession getSession() {
+  public HttpSession getSession() {
     return request.getSession();
   }
   @Override
@@ -142,7 +149,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getProtocol();
   }
   @Override
-  public javax.servlet.ServletInputStream getInputStream() 
+  public ServletInputStream getInputStream() 
     throws java.io.IOException {
     return request.getInputStream();
   }
@@ -159,7 +166,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getAttribute(attr0);
   }
   @Override
-  public java.util.Enumeration getAttributeNames() {
+  public Enumeration getAttributeNames() {
     return request.getAttributeNames();
   }
   @Override
@@ -176,7 +183,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getParameter(attr0);
   }
   @Override
-  public java.util.Enumeration getParameterNames() {
+  public Enumeration getParameterNames() {
     return request.getParameterNames();
   }
   @Override
@@ -184,7 +191,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getParameterValues(attr0);
   }
   @Override
-  public java.util.Map getParameterMap() {
+  public Map getParameterMap() {
     return request.getParameterMap();
   }
   @Override
@@ -196,7 +203,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getServerPort();
   }
   @Override
-  public java.io.BufferedReader getReader() 
+  public BufferedReader getReader() 
     throws java.io.IOException {
     return request.getReader();
   }
@@ -217,7 +224,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     request.removeAttribute(attr0);
   }
   @Override
-  public java.util.Locale getLocale() {
+  public Locale getLocale() {
     return request.getLocale();
   }
   @Override
@@ -229,7 +236,7 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.isSecure();
   }
   @Override
-  public javax.servlet.RequestDispatcher getRequestDispatcher(String attr0) {
+  public RequestDispatcher getRequestDispatcher(String attr0) {
     return request.getRequestDispatcher(attr0);
   }
   @Override
