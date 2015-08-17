@@ -22,37 +22,37 @@ package net.ontopia.utils.ontojsp;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-
 import net.ontopia.utils.NullObject;
 
 /**
  * INTERNAL: Fake the ServletContext, needed for execution of servlets
  */
 public class FakeHttpSession implements HttpSession {
-  private Hashtable attrs;
+  private Map<String, Object> attrs;
   private ServletContext context;
   private int maxInactiveInterval;
-  private Collection listeners = new ArrayList();
+  private Collection<HttpSessionListener> listeners = new ArrayList<HttpSessionListener>();
 
   public FakeHttpSession(ServletContext context) {
-    this(context, new Hashtable());
+    this(context, new HashMap<String, Object>());
   }
   
-  public FakeHttpSession(ServletContext context, Hashtable attrs) {
+  public FakeHttpSession(ServletContext context, Map<String, Object> attrs) {
     this.context = context;
     this.attrs = attrs;
     maxInactiveInterval = -1;
   }
   
+  @Override
   public Object getAttribute(String name) {
     Object result = attrs.get(name);
     if (result == NullObject.INSTANCE) 
@@ -61,14 +61,17 @@ public class FakeHttpSession implements HttpSession {
       return result;
   }
   
-  public Enumeration getAttributeNames() {
-    return attrs.keys();
+  @Override
+  public Enumeration<String> getAttributeNames() {
+    return Collections.enumeration(attrs.keySet());
   }
   
+  @Override
   public void removeAttribute(String name) {
     attrs.remove(name);
   }
   
+  @Override
   public void setAttribute(String name, Object value) {
     if (value == null) 
       attrs.put(name, NullObject.INSTANCE);
@@ -76,53 +79,60 @@ public class FakeHttpSession implements HttpSession {
       attrs.put(name, value);
   }
   
+  @Override
   public Object getValue(String name) {
     // Note: deprecated
     return getAttribute(name);
   }
   
+  @Override
   public String[] getValueNames() {
     // Note: deprecated
-    Collection keys = attrs.keySet();
-    String[] names = new String[keys.size()];
-    keys.toArray(names);
-    return names;
+    return attrs.keySet().toArray(new String[attrs.keySet().size()]);
   }
   
+  @Override
   public void putValue(String name, Object value) {
     // Note: deprecated
     setAttribute(name, value);
   }
   
+  @Override
   public void removeValue(String name) {
     // Note: deprecated
     removeAttribute(name);
   }
   
+  @Override
   public long getCreationTime() {
     // TODO
     return -1;
   }
   
+  @Override
   public String getId() {
     // TODO
     return null;
   }
   
+  @Override
   public long getLastAccessedTime() {
     // TODO
     return -1;
   }
   
+  @Override
   public int getMaxInactiveInterval() {
     return maxInactiveInterval;
   }
   
+  @Override
   public HttpSessionContext getSessionContext() {
     // Note: deprecated
     return null;
   }
 
+  @Override
   public ServletContext getServletContext() {
     return context;
   }
@@ -134,18 +144,20 @@ public class FakeHttpSession implements HttpSession {
   public void expire() {
      invalidate();
   }
+  @Override
   public void invalidate() {
-    for (Iterator iter = listeners.iterator(); iter.hasNext();) {
-      HttpSessionListener listener = (HttpSessionListener) iter.next();
+    for (HttpSessionListener listener : listeners) {
       listener.sessionDestroyed(new HttpSessionEvent(this));
     }
   }
   
+  @Override
   public boolean isNew() {
     // TODO
     return true;
   }
   
+  @Override
   public void setMaxInactiveInterval(int interval) {
     maxInactiveInterval = interval;
   }
