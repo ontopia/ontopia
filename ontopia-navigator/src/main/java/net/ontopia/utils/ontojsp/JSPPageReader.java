@@ -22,12 +22,9 @@ package net.ontopia.utils.ontojsp;
 
 import java.io.File;
 import java.io.IOException;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.utils.URIUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;

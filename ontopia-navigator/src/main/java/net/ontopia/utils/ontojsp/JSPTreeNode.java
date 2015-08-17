@@ -24,9 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -56,57 +54,70 @@ public class JSPTreeNode implements JSPTreeNodeIF {
     this.dontCloneTags = dontCloneTags;
   }
 
+  @Override
   public Map<String, String> getAttributes() {
     return attr;
   }
 
+  @Override
   public void addAttribute(String key, String value) {
     attr.put(key, value);
   }
 
+  @Override
   public void setTagName(String name) {
     this.name = name;
   }
 
+  @Override
   public String getTagName() {
     return name;
   }
 
+  @Override
   public TagSupport getTag() {
     return tag;
   }
 
+  @Override
   public void setTag(TagSupport tag) {
     this.tag = tag;
   }
   
+  @Override
   public JSPTreeNodeIF getParent() {
     return parent;
   }
 
+  @Override
   public void setParent(JSPTreeNodeIF parent) {
     this.parent = parent;
   }
 
+  @Override
   public void addChild(JSPTreeNodeIF node) {
     children.add(node);
   }
 
+  @Override
   public List<JSPTreeNodeIF> getChildren() {
     return children;
   }
 
+  @Override
   public String getContent() {
     // not supported
     return "";
   }
   
+  @Override
   public String toString() {
     return "[JSPTreeNode - tag: <" + name + ">, parent: <" +
       (parent!=null ? parent.getTagName() : "null") + ">; " +
       "children=" + children.size() + "]";
   }
 
+  @Override
   public JSPTreeNodeIF makeClone() {
     // clone node
     JSPTreeNode clone = new JSPTreeNode(name, null, dontCloneTags); // parent will set parent, if any
