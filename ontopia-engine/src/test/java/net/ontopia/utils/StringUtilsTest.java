@@ -253,7 +253,6 @@ public class StringUtilsTest extends TestCase {
   }
 
   public void testNormalizeIdStripAccents() {
-    //String input = "ab∆ÿ≈Èˇ¸abœ"; got to replace this with \u0000 escapes :-(
     String input = "ab\u00C6\u00D8\u00E5\u00E9\u00FF\u00FCab\u00CF";
     assertEquals("incorrect normalization",
                  StringUtils.normalizeId(input), "abeoaeyuabi");
