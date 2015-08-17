@@ -20,14 +20,8 @@
 
 package net.ontopia.topicmaps.nav2.impl.framework;
 
-import java.io.File;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,13 +31,13 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractTaglibTestCase {
 
-  static Logger log = LoggerFactory.getLogger(AbstractTaglibTestCase.class.getName());
+  private static Logger log = LoggerFactory.getLogger(AbstractTaglibTestCase.class.getName());
   protected String jspfile;
   protected String topicmapId;
-  protected Hashtable reqParams;
+  protected Map<String, String[]> reqParams;
 
   /** Use this character sequence to separate attribute values */
-  protected final static String SEPARATOR = "|";
+  protected final static String SEPARATOR = "\\|";
   
   /**
    * Default constructor.
@@ -63,31 +57,17 @@ public abstract class AbstractTaglibTestCase {
    * Sets the parameters of the Request in the fake servlet
    * environment from the map containing parameter key-value pairs.
    */
-  protected void setRequestParameters(Map params) {
-    reqParams = new Hashtable();
-    Iterator it = params.keySet().iterator();
-    while (it.hasNext()) {
-      String key = (String) it.next();
-      String val = (String) params.get(key);
-      // figure out if this is a single value or a multi value field
-      if (val.indexOf(SEPARATOR) < 0) {
-        reqParams.put(key, val);
-      } else {
-        StringTokenizer strtok = new StringTokenizer(val, SEPARATOR);
-        List values = new ArrayList();
-        while (strtok.hasMoreTokens()) {
-          String sVal = strtok.nextToken();
-          values.add(sVal);
-        }
-        reqParams.put(key, values.toArray(new String[values.size()]));
-      }
-    } // while
+  protected void setRequestParameters(Map<String, String> params) {
+    reqParams = new LinkedHashMap<String, String[]>();
+    for (String key : params.keySet()) {
+      reqParams.put(key, params.get(key).split(SEPARATOR));
+    }
   }
 
   /**
    * Gets the request parameters used by the JSP as input.
    */
-  protected Hashtable getRequestParameters() {
+  protected Map<String, String[]> getRequestParameters() {
     return reqParams;
   }
 
