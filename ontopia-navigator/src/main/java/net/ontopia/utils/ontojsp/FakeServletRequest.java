@@ -39,26 +39,26 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class FakeServletRequest implements HttpServletRequest {
 
-  private Map params;
-  private Map attrs;
-  private Map headers;
+  private Map<String, String[]> params;
+  private Map<String, Object> attrs;
+  private Map<String, String> headers;
   private String context_path;
   private String user;
   private FakeHttpSession session;
   private FakeServletContext context;
 
   public FakeServletRequest() {
-    this(new HashMap(), new HashMap());
+    this(new HashMap<String, String[]>(), new HashMap<String, Object>());
   }
   
-  public FakeServletRequest(Map params) {
-    this(params, new HashMap());
+  public FakeServletRequest(Map<String, String[]> params) {
+    this(params, new HashMap<String, Object>());
   }
       
-  public FakeServletRequest(Map params, Map attrs) {
+  public FakeServletRequest(Map<String, String[]> params, Map<String, Object> attrs) {
     this.params = params;
     this.attrs = attrs;
-    this.headers = new HashMap();
+    this.headers = new HashMap<String, String>();
   }
   
   @Override
@@ -70,7 +70,7 @@ public class FakeServletRequest implements HttpServletRequest {
   }
 
   @Override
-  public Enumeration getAttributeNames() {
+  public Enumeration<String> getAttributeNames() {
     return Collections.enumeration(attrs.keySet());
   }
 
@@ -114,16 +114,16 @@ public class FakeServletRequest implements HttpServletRequest {
     
   @Override
   public String getHeader(String name) {
-    return (String) headers.get(name);
+    return headers.get(name);
   }
 
   @Override
-  public Enumeration getHeaders(String name) {
+  public Enumeration<String> getHeaders(String name) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Enumeration getHeaderNames() {
+  public Enumeration<String> getHeaderNames() {
     return Collections.enumeration(headers.keySet());
   }
 
@@ -163,30 +163,16 @@ public class FakeServletRequest implements HttpServletRequest {
   public String[] getParameterValues(String name) {
     // we *do* support in the fake environment to
     // have several values for the same request parameter
-    Object val = params.get(name);
-    
-    if (val == null)
-      return null;
-    
-    if (val instanceof String) {
-      String[] sval = {(String) params.get(name)};
-      return sval;
-    }
-    if (val instanceof String[])
-      return (String[]) val;
-    
-    throw new OntopiaRuntimeException("The parameter name " + name
-        + " should have returened a String or array of Strings, but gave a " 
-        + val.getClass().getName());
+    return  params.get(name);
   }
 
   @Override
-  public Enumeration getParameterNames() {
+  public Enumeration<String> getParameterNames() {
     return Collections.enumeration(params.keySet());
   }
 
   @Override
-  public Map getParameterMap() {
+  public Map<String, String[]> getParameterMap() {
     return params;
   }
     
@@ -265,7 +251,7 @@ public class FakeServletRequest implements HttpServletRequest {
   }
 
   @Override
-  public Enumeration getLocales() {
+  public Enumeration<Locale> getLocales() {
     throw new UnsupportedOperationException();
   }
 
