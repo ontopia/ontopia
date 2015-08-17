@@ -22,6 +22,7 @@ package net.ontopia.utils.ontojsp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -29,10 +30,18 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -364,6 +373,68 @@ public class FakeServletRequest implements HttpServletRequest {
   public String getLocalName() {
     throw new UnsupportedOperationException();
   }
+
+  // servlet 2.5, 3.0
+  
+  @Override
+  public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void login(String username, String password) throws ServletException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void logout() throws ServletException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Collection<Part> getParts() throws IOException, ServletException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Part getPart(String name) throws IOException, ServletException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public ServletContext getServletContext() {
+    return context;
+  }
+
+  @Override
+  public AsyncContext startAsync() throws IllegalStateException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isAsyncStarted() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isAsyncSupported() {
+    return false;
+  }
+
+  @Override
+  public AsyncContext getAsyncContext() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public DispatcherType getDispatcherType() {
+    throw new UnsupportedOperationException();
+  }  
 
   // --- Extra methods
 
