@@ -20,21 +20,20 @@
 
 package net.ontopia.topicmaps.nav2.impl.framework;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.Set;
 import java.util.Stack;
-import java.util.Iterator;
-import java.util.Collection;
-import java.util.ArrayList;
-import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
-import org.xml.sax.helpers.DefaultHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Ignore;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: A class which reads in the framework test configuration
@@ -44,20 +43,20 @@ import org.xml.sax.XMLReader;
 @Ignore
 public class TestCaseContentHandler extends SAXTracker {
 
-  static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(TestCaseContentHandler.class.getName());
 
   protected ErrorHandler ehandler;
-  protected Map tests;
-  protected Map parameters;
+  protected Map<String, Set<Map<String, String>>> tests;
+  protected Map<String, String> parameters;
   protected int test;
-  protected Stack stack;
-  protected Stack parents;
+  protected Stack<Map<String, String>> stack;
+  protected Stack<String> parents;
   protected String tmname;
 
   public TestCaseContentHandler() {
     super();
-    tests = new HashMap();
+    tests = new LinkedHashMap<String, Set<Map<String, String>>>();
     test = 0;
   }
 
@@ -73,20 +72,24 @@ public class TestCaseContentHandler extends SAXTracker {
     ehandler = parser.getErrorHandler();
   }
 
+  @Override
   public void startDocument() {
-    parents = new Stack();
+    parents = new Stack<String>();
   }
 
+  @Override
   public void endDocument() {
   }
 
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) {
-    if (qname == "test") {
-      stack = new Stack();
+    if ("test".equals(qname)) {
+      stack = new Stack<Map<String, String>>();
       tmname = attrs.getValue("tm");
-    } else if (qname == "jsp") {
-      parameters = new HashMap();
+    } else if ("jsp".equals(qname)) {
+      parameters = new LinkedHashMap<String, String>();
+      
       for (int i = 0; i < attrs.getLength(); i++) {
         parameters.put(attrs.getQName(i), attrs.getValue(i));
       }
@@ -95,8 +98,9 @@ public class TestCaseContentHandler extends SAXTracker {
     parents.push(qname);
   }
 
+  @Override
   public void endElement(String nsuri, String name, String qname) {
-    if (qname == "test") createTests(stack);
+    if ("test".equals(qname)) createTests(stack);
     parents.pop();
   }
   
@@ -107,28 +111,22 @@ public class TestCaseContentHandler extends SAXTracker {
    *         together as key and the corresponsing tests as a
    *         Collection.
    */
-  public Map getTests() {
+  public Map<String, Set<Map<String, String>>> getTests() {
     return tests;
   }
 
   
   // -- internal helper method(s)
   
-  private void createTests(Stack stack) {
+  private void createTests(Stack<Map<String, String>> stack) {
     while (!stack.empty()) {
-      Map params = (Map) stack.pop();
-      String key = tmname + "$$$" + (String) params.get("file");
-      params.remove("file");
-      Map result = new HashMap();
-      Iterator it = params.keySet().iterator();
-      while (it.hasNext()) {
-        String tmp = (String) it.next();
-        result.put(tmp, (String) params.get(tmp));
-      }
+      Map<String, String> params = stack.pop();
+      String key = tmname + "$$$" + params.remove("file");
+      Map<String, String> result = new LinkedHashMap<String, String>(params);
       // Check to see if there are more tests using the same key.
-      Collection testsWithSameKey = (Collection) tests.get(key);
+      Set<Map<String, String>> testsWithSameKey = tests.get(key);
       if (testsWithSameKey == null) 
-        testsWithSameKey = new ArrayList();
+        testsWithSameKey = new HashSet<Map<String, String>>();
       testsWithSameKey.add(result);
       tests.put(key, testsWithSameKey);
     }
