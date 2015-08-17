@@ -43,23 +43,23 @@ import javax.servlet.jsp.tagext.BodyContent;
  * INTERNAL: Fake the PageContext, needed for execution of a JSP.
  */
 public class FakePageContext extends PageContext {
-  private Map attrs;
+  private Map<String, Object> attrs;
   private ServletRequest request;
   private JspWriter out;
-  private Stack writerStack = new Stack();
+  private final Stack<JspWriter> writerStack = new Stack<JspWriter>();
   private ServletContext context;
   private ServletConfig config;
   private HttpSession session;
   
   public FakePageContext(Writer out) {
-    this(out, new HashMap());
+    this(out, new HashMap<String, Object>());
   }
 
-  public FakePageContext(Writer out, Map attrs) {
-    this(out, attrs, new HashMap(), ".");
+  public FakePageContext(Writer out, Map<String, Object> attrs) {
+    this(out, attrs, new HashMap<String, String[]>(), ".");
   }
   
-  public FakePageContext(Writer out, Map attrs, Map params, String path) {
+  public FakePageContext(Writer out, Map<String, Object> attrs, Map<String, String[]> params, String path) {
     this.attrs = attrs;
     this.out = new DefaultJspWriter(out);
 
@@ -72,7 +72,7 @@ public class FakePageContext extends PageContext {
 
   // -- internal mutators
 
-  public void setAttributes(Map attrs) {
+  public void setAttributes(Map<String, Object> attrs) {
     this.attrs = attrs;
   }
   
@@ -205,7 +205,7 @@ public class FakePageContext extends PageContext {
   }
   
   @Override
-  public Enumeration getAttributeNamesInScope(int scope) {
+  public Enumeration<String> getAttributeNamesInScope(int scope) {
     throw new UnsupportedOperationException();
   }
 
@@ -280,7 +280,7 @@ public class FakePageContext extends PageContext {
 
   @Override
   public JspWriter popBody() {
-    out = (JspWriter) writerStack.pop();
+    out = writerStack.pop();
     return out;
   }
 
