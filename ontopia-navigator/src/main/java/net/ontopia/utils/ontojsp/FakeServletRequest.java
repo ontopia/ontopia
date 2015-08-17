@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
@@ -369,4 +371,17 @@ public class FakeServletRequest implements HttpServletRequest {
     this.context = context;
   }
   
+  public static Map<String, String[]> transform(Hashtable<String, Object> paramsTable) {
+    Map<String, String[]> result = new LinkedHashMap<String, String[]>();
+    for (String key : paramsTable.keySet()) {
+      Object v = paramsTable.get(key);
+      if (v instanceof String) {
+        result.put(key, new String[] { (String) v });
+      }
+      if (v instanceof String[]) {
+        result.put(key, (String[]) v);
+      }
+    }
+    return result;
+  }
 }
