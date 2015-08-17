@@ -23,7 +23,6 @@ package net.ontopia.utils.ontojsp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-
 import javax.servlet.jsp.JspWriter;
 
 /**
@@ -41,18 +40,22 @@ public class DefaultJspWriter extends JspWriter {
     this.out = new PrintWriter(out);
   }
     
+  @Override
   public final void clear() throws IOException {
   }
 
+  @Override
   public void clearBuffer() throws IOException {
   }
 
+  @Override
   public void flush()  throws IOException {
     synchronized (lock) {
       out.flush();
     }
   }
 
+  @Override
   public void close() throws IOException {
     synchronized (lock) {
       out.close();
@@ -60,57 +63,70 @@ public class DefaultJspWriter extends JspWriter {
     }
   }
 
+  @Override
   public int getRemaining() {
     return -1;
   }
 
+  @Override
   public void newLine() throws IOException {
     synchronized (lock) {
       out.println();
     }
   }
 
+  @Override
   public void write(char[] ch, int start, int length) throws IOException {
     for (int ix = 0; ix < length; ix++)
       out.print(ch[ix + start]);
   }
 
+  @Override
   public void print(boolean b) throws IOException {
     out.print(b);
   }
 
+  @Override
   public void print(char c) throws IOException {
     out.print(c);
   }
 
+  @Override
   public void print(int i) throws IOException {
     out.print(i);
   }
 
+  @Override
   public void print(long l) throws IOException {
     out.print(l);
   }
 
+  @Override
   public void print(float f) throws IOException {
     out.print(f);
   }
 
+  @Override
   public void print(double d) throws IOException {
     out.print(d);
   }
 
+  @Override
   public void print(char s[]) throws IOException {
     out.print(s);
   }
 
+  @Override
   public void print(String s) throws IOException {
     out.print(s);
   }
 
+  @Override
   public void print(Object obj) throws IOException {
     out.print(obj);
   }
 
+  @Override
   public void println() throws IOException {
     newLine();
   }
@@ -120,6 +136,7 @@ public class DefaultJspWriter extends JspWriter {
    * as though it invokes <code>{@link #print(boolean)}</code> and then
    * <code>{@link #println()}</code>.
    */
+  @Override
   public void println(boolean x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -132,6 +149,7 @@ public class DefaultJspWriter extends JspWriter {
    * though it invokes <code>{@link #print(char)}</code> and then <code>{@link
    * #println()}</code>.
    */
+  @Override
   public void println(char x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -144,6 +162,7 @@ public class DefaultJspWriter extends JspWriter {
    * though it invokes <code>{@link #print(int)}</code> and then <code>{@link
    * #println()}</code>.
    */
+  @Override
   public void println(int x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -156,6 +175,7 @@ public class DefaultJspWriter extends JspWriter {
    * as though it invokes <code>{@link #print(long)}</code> and then
    * <code>{@link #println()}</code>.
    */
+  @Override
   public void println(long x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -168,6 +188,7 @@ public class DefaultJspWriter extends JspWriter {
    * behaves as though it invokes <code>{@link #print(float)}</code> and then
    * <code>{@link #println()}</code>.
    */
+  @Override
   public void println(float x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -180,6 +201,7 @@ public class DefaultJspWriter extends JspWriter {
    * line. This method behaves as though it invokes <code>{@link
    * #print(double)}</code> and then <code>{@link #println()}</code>.
    */
+  @Override
   public void println(double x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -192,6 +214,7 @@ public class DefaultJspWriter extends JspWriter {
    * behaves as though it invokes <code>{@link #print(char[])}</code> and then
    * <code>{@link #println()}</code>.
    */
+  @Override
   public void println(char x[]) throws IOException {
     synchronized (lock) {
       print(x);
@@ -204,6 +227,7 @@ public class DefaultJspWriter extends JspWriter {
    * though it invokes <code>{@link #print(String)}</code> and then
    * <code>{@link #println()}</code>.
    */
+  @Override
   public void println(String x) throws IOException {
     synchronized (lock) {
       print(x);
@@ -216,6 +240,7 @@ public class DefaultJspWriter extends JspWriter {
    * though it invokes <code>{@link #print(Object)}</code> and then
    * <code>{@link #println()}</code>.
    */
+  @Override
   public void println(Object x) throws IOException {
     synchronized (lock) {
       print(x);
