@@ -21,15 +21,25 @@
 package net.ontopia.utils.ontojsp;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  * INTERNAL: Wrapper class for HttpServletRequest; needed because Tomcat
@@ -267,4 +277,65 @@ public class HttpRequestWrapper implements HttpServletRequest {
     throw new UnsupportedOperationException();
   }
 
+  // servlet 2.5, 3.0
+  
+  @Override
+  public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+    return request.authenticate(response);
+  }
+
+  @Override
+  public void login(String username, String password) throws ServletException {
+    request.login(username, password);
+  }
+
+  @Override
+  public void logout() throws ServletException {
+    request.logout();
+  }
+
+  @Override
+  public Collection<Part> getParts() throws IOException, ServletException {
+    return request.getParts();
+  }
+
+  @Override
+  public Part getPart(String name) throws IOException, ServletException {
+    return request.getPart(name);
+  }
+
+  @Override
+  public ServletContext getServletContext() {
+    return request.getServletContext();
+  }
+
+  @Override
+  public AsyncContext startAsync() throws IllegalStateException {
+    return request.startAsync();
+  }
+
+  @Override
+  public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
+    return request.startAsync(servletRequest, servletResponse);
+  }
+
+  @Override
+  public boolean isAsyncStarted() {
+    return request.isAsyncStarted();
+  }
+
+  @Override
+  public boolean isAsyncSupported() {
+    return request.isAsyncSupported();
+  }
+
+  @Override
+  public AsyncContext getAsyncContext() {
+    return request.getAsyncContext();
+  }
+
+  @Override
+  public DispatcherType getDispatcherType() {
+    return request.getDispatcherType();
+  }
 }

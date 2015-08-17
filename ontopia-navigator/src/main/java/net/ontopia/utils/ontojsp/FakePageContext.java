@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import javax.el.ELContext;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -314,4 +315,8 @@ public class FakePageContext extends PageContext {
     throw new UnsupportedOperationException();
   }
 
+  @Override
+  public ELContext getELContext() {
+    throw new UnsupportedOperationException();
+  }
 }
