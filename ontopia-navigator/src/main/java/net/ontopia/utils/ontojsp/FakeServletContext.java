@@ -30,17 +30,14 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 import java.util.Vector;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-
 import net.ontopia.utils.NullObject;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,10 +85,12 @@ public class FakeServletContext implements ServletContext {
     minorVersion = minor;
   }
 
+  @Override
   public ServletContext getContext(String path) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Object getAttribute(String name) {
     Object result = attrs.get(name);
     if (result == NullObject.INSTANCE) 
@@ -100,14 +99,17 @@ public class FakeServletContext implements ServletContext {
       return result;
   }
 
+  @Override
   public Enumeration getAttributeNames() {
     return attrs.keys();
   }
 
+  @Override
   public void removeAttribute(String name) {
     attrs.remove(name);
   } 
 
+  @Override
   public void setAttribute(String name, Object value) {
     if (value == null) 
       attrs.put(name, NullObject.INSTANCE);
@@ -115,19 +117,23 @@ public class FakeServletContext implements ServletContext {
       attrs.put(name, value);
   }
     
+  @Override
   public int getMajorVersion() {
     return majorVersion;
   }
 
+  @Override
   public int getMinorVersion() {
     return minorVersion;
   }
 
+  @Override
   public String getMimeType(String filename) {
     // FIXME: Make it possible to set the mime-type.
     return "text/plain";
   }
 
+  @Override
   public String getRealPath(String path) {
     if (rootpath.startsWith("file://")) {
       return getRealFilePath(path);
@@ -154,6 +160,7 @@ public class FakeServletContext implements ServletContext {
     return current.toString();
   }
 
+  @Override
   public InputStream getResourceAsStream(String path) {
     InputStream stream = null;
     String fullpath = rootpath + path;
@@ -165,11 +172,13 @@ public class FakeServletContext implements ServletContext {
     return stream;
   }
 
+  @Override
   public URL getResource(String path) throws MalformedURLException {
     File respath = new File(rootpath, path);
     return URIUtils.toURL(respath);
   }
 
+  @Override
   public Set getResourcePaths(String path) {
     Set paths = new HashSet();
     File directory = new File(rootpath, path);
@@ -182,52 +191,64 @@ public class FakeServletContext implements ServletContext {
     return paths;
   }
 
+  @Override
   public RequestDispatcher getRequestDispatcher(String path) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public RequestDispatcher getNamedDispatcher(String name) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getServerInfo() {
     return "FakeServer/ontopia";
   }
     
+  @Override
   public String getInitParameter(String name) {
     return (String)initParams.get(name);
   }
     
+  @Override
   public Enumeration getInitParameterNames() {
     return initParams.elements();
   }
     
+  @Override
   public void log(String msg) {
     logger.info(msg);
   }
 
+  @Override
   public void log(String msg, Throwable t) {
     logger.info(msg, t);
   }
   
+  @Override
   public void log(Exception e, String msg) {
     logger.info(msg, e);
   }
 
+  @Override
   public Servlet getServlet(String name) throws ServletException {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Enumeration getServlets() {
     Vector v = new Vector();
     return v.elements();
   }
     
+  @Override
   public Enumeration getServletNames() {
     Vector v = new Vector();
     return v.elements();
   }
 
+  @Override
   public String getServletContextName() {
     return "fakeContext";
   }
