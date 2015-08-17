@@ -23,9 +23,7 @@ package net.ontopia.utils.ontojsp;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.jsp.tagext.TagSupport;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class JSPContentTreeNode implements JSPTreeNodeIF {
 
   // initialization of logging facility
-  private static Logger logger =
+  private static final Logger logger =
     LoggerFactory.getLogger(JSPContentTreeNode.class.getName());
   
   protected String content;
@@ -54,46 +52,57 @@ public class JSPContentTreeNode implements JSPTreeNodeIF {
     // logger.debug("JSPContentTreeNode(" + content + ")");
   }
 
+  @Override
   public Map<String, String> getAttributes() {
     return Collections.emptyMap();
   }
 
+  @Override
   public void addAttribute(String key, String value) {
     throw new UnsupportedOperationException("Content nodes can't have attributes");
   }
 
+  @Override
   public void setTagName(String name) {
     throw new UnsupportedOperationException("Content nodes don't have tag names");
   }
 
+  @Override
   public String getTagName() {
     return "#CONTENT";
   }
 
+  @Override
   public TagSupport getTag() {
     return null;
   }
 
+  @Override
   public void setTag(TagSupport tag) {
     throw new UnsupportedOperationException("Content nodes have no tags");
   }
   
+  @Override
   public JSPTreeNodeIF getParent() {
     return parent;
   }
 
+  @Override
   public void setParent(JSPTreeNodeIF parent) {
     this.parent = parent;
   }
     
+  @Override
   public void addChild(JSPTreeNodeIF node) {
     throw new UnsupportedOperationException("Content nodes can't have children");
   }
 
+  @Override
   public List<JSPTreeNodeIF> getChildren() {
     return Collections.emptyList();
   }
 
+  @Override
   public String getContent() {
     return content;
   }
@@ -102,6 +111,7 @@ public class JSPContentTreeNode implements JSPTreeNodeIF {
     this.content = content;
   }
 
+  @Override
   public String toString() {
     String contentExtract = content;
     if (content.length() > 42) {
@@ -111,6 +121,7 @@ public class JSPContentTreeNode implements JSPTreeNodeIF {
       ", parent: <" + (parent!=null ? parent.getTagName() : "null") + ">]";
   }
 
+  @Override
   public JSPTreeNodeIF makeClone() {
     // must clone these nodes, too, because of parent pointer
     return new JSPContentTreeNode(null, content); // parent will set parent
