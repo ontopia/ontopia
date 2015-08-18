@@ -11,7 +11,7 @@
 	<fileSets>
 		<!-- Move tomcat to the correct location -->
 		<fileSet>
-			<directory>target/apache-tomcat-6.0.37-windows-x64/apache-tomcat-6.0.37</directory>
+			<directory>target/apache-tomcat-${tomcat.version}-windows-x64/apache-tomcat-${tomcat.version}</directory>
 			<outputDirectory>apache-tomcat</outputDirectory>
 			<excludes>
 				<!-- exclude the default webapps -->
@@ -19,30 +19,17 @@
 				
 				<!-- exclude all runnable files, copied later with correct mods -->
 				<exclude>bin/*.sh</exclude>
-				
-				<!-- exclude catalina.bat and setclasspath.bat, is replaced later -->
-				<exclude>bin/catalina.bat</exclude>
-				<exclude>bin/setclasspath.bat</exclude>
-				
-				<!-- exclude server.xml, catalina.properties -->
-				<exclude>conf/server.xml</exclude>
-				<exclude>conf/catalina.properties</exclude>
 			</excludes>
 		</fileSet>
 		
 		<!-- chmod runnable files -->
 		<fileSet>
-			<directory>target/apache-tomcat-6.0.37-windows-x64/apache-tomcat-6.0.37/bin</directory>
+			<directory>target/apache-tomcat-${tomcat.version}-windows-x64/apache-tomcat-${tomcat.version}/bin</directory>
 			<outputDirectory>apache-tomcat/bin</outputDirectory>
 			<fileMode>0755</fileMode>
 			<includes>
 				<include>*.sh</include>
 			</includes>
-			
-			<!-- except catalina.sh, is replaced later -->
-			<excludes>
-				<exclude>catalina.sh</exclude>
-			</excludes>
 		</fileSet>
 			
 		<!-- copy modified configuration to distribution -->
@@ -92,6 +79,7 @@
 			<excludes>
 				<exclude>*:war:*</exclude>
 				<exclude>*:vizlet:*</exclude>
+                <exclude>*:standard:*</exclude>
 			</excludes>
 		</dependencySet>
 		
@@ -239,6 +227,7 @@
 					<exclude>WEB-INF/lib/tmapi*</exclude>
 					<exclude>WEB-INF/lib/trove4j*</exclude>
 					<exclude>WEB-INF/lib/xercesImpl*</exclude>
+					<exclude>WEB-INF/lib/servlet-api*</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
