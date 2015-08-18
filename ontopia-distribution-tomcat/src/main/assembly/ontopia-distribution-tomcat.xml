@@ -79,7 +79,7 @@
 			<excludes>
 				<exclude>*:war:*</exclude>
 				<exclude>*:vizlet:*</exclude>
-                <exclude>*:standard:*</exclude>
+				<exclude>*:standard:*</exclude>
 			</excludes>
 		</dependencySet>
 		
