@@ -26,15 +26,12 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,10 +42,6 @@ public class JSPPageExecuter {
 
   // initialize logging facility
   static Logger logger = LoggerFactory.getLogger(JSPPageExecuter.class.getName());
-
-  // internal variables for generating nice debug output
-  private final static String INDENTOR = "  ";
-  private int indentLevel;
 
   // members
   protected PageContext pageContext;
@@ -86,9 +79,8 @@ public class JSPPageExecuter {
 
     //System.out.println("Running: " + node);
     
-    List children = node.getChildren();
-    for (int i = 0; i < children.size(); i++) {
-      JSPTreeNodeIF curNode = (JSPTreeNodeIF) children.get(i);
+    List<JSPTreeNodeIF> children = node.getChildren();
+    for (JSPTreeNodeIF curNode : children) {
       TagSupport curTag = curNode.getTag();
 
       // if content tag just put it out and proceed with next
@@ -125,8 +117,7 @@ public class JSPPageExecuter {
           throw new OntopiaRuntimeException("Internal error: unknown doStartTag token: " + startTagToken);
         }
         
-      }      
-
+      }
       // FIXME: Handle SKIP_PAGE;
       curTag.doEndTag();
       //tag.release(); FIXME: having this call here can't possibly be correct
@@ -188,15 +179,4 @@ public class JSPPageExecuter {
       }
     }
   }
-  
-  /**
-   * Generates string out of concatenated identors.
-   */
-  private final String indent() {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < indentLevel; i++)
-      sb.append(INDENTOR);
-    return sb.toString();
-  }
- 
 }

@@ -153,7 +153,7 @@ public abstract class TestTMRAPOperation {
         .tabularizeParameters(TMRAPTestUtils
             .tokenizeParameters(parameters)));
     
-    FakeServletRequest request = new FakeServletRequest(tempTable);
+    FakeServletRequest request = new FakeServletRequest(FakeServletRequest.transform(tempTable));
     PrintWriter writer = new PrintWriter(out);
     FakeServletResponse response = new FakeServletResponse(writer);
     rapServlet.doGet(request, response, operationURI);
@@ -235,7 +235,7 @@ public abstract class TestTMRAPOperation {
                        RAPServlet rapServlet, Writer out) 
     throws ServletException, IOException {
 
-    FakeServletRequest request = new FakeServletRequest(params);    
+    FakeServletRequest request = new FakeServletRequest(FakeServletRequest.transform(params));    
     PrintWriter writer = new PrintWriter(out);
     FakeServletResponse response = new FakeServletResponse(writer);
     rapServlet.doPost(request, response, operationURI);

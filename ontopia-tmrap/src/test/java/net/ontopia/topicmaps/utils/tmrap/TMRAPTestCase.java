@@ -30,6 +30,7 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -244,13 +245,13 @@ public class TMRAPTestCase {
 
     Hashtable paramsTable = TMRAPTestUtils.tabularizeParameters(params);
     
-    Hashtable initParams = new Hashtable();
-    initParams.put("source_config", TestFileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml"));
-    FakeServletContext servletContext = new FakeServletContext(base, new Hashtable(), initParams);
+    FakeServletContext servletContext = new FakeServletContext(base, new Hashtable(), 
+            Collections.singletonMap("source_config", 
+                    TestFileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml")));
     
     FakeServletConfig servletConfig = new FakeServletConfig(servletContext,
         paramsTable);
-    FakeServletRequest servletRequest = new FakeServletRequest(paramsTable);
+    FakeServletRequest servletRequest = new FakeServletRequest(FakeServletRequest.transform(paramsTable));
     
     FakeServletResponse servletResponse = 
         new FakeServletResponse(responseWriter);

@@ -21,13 +21,10 @@
 package net.ontopia.utils.ontojsp;
 
 import java.util.Stack;
-
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -66,6 +63,7 @@ public class JSPContentHandler extends DefaultHandler {
     this.useTagPooling = useTagPooling;
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator;
   }
@@ -84,13 +82,16 @@ public class JSPContentHandler extends DefaultHandler {
     return ehandler;
   }
 
+  @Override
   public void startDocument() {
     parents.clear();
   }
 
+  @Override
   public void endDocument() {
   }
 
+  @Override
   public void startElement(String uri, String lname, String qname,
                            Attributes atts) throws SAXException {
     // instantiate new node with current node as parent
@@ -136,6 +137,7 @@ public class JSPContentHandler extends DefaultHandler {
     }
   }
 
+  @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
     String content = new String(ch, start, length);
     JSPTreeNodeIF node = new JSPContentTreeNode(current, content);
@@ -144,6 +146,7 @@ public class JSPContentHandler extends DefaultHandler {
       log.debug("Created content child: " + node);
   }
   
+  @Override
   public void endElement(String uri, String lname, String qname)
     throws SAXException {
     
