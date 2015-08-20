@@ -64,7 +64,7 @@ public class ClassInstanceIndex extends RDBMSIndex
     if (name_type == null) {
       name_type = getTopicMap().getTopicBySubjectIdentifier(PSI.getSAMNameType());
       if (name_type == null) {
-        return Collections.unmodifiableSet(Collections.<TopicNameIF>emptySet());
+        return Collections.emptySet();
       }
       return getTopicNames(name_type);
     } else {
@@ -76,7 +76,7 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
     if (occurrence_type == null) {
-      return Collections.unmodifiableSet(Collections.<OccurrenceIF>emptySet());
+      return Collections.emptySet();
     } else {
       Object[] params = new Object[] { getTopicMap(), occurrence_type };
       return new QueryCollection<OccurrenceIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getOccurrences_size", params,
@@ -86,7 +86,7 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {
     if (association_type == null) {
-      return Collections.unmodifiableSet(Collections.<AssociationIF>emptySet());
+      return Collections.emptySet();
     } else {
       Object[] params = new Object[] { getTopicMap(), association_type };
       return new QueryCollection<AssociationIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociations_size", params,
@@ -96,7 +96,7 @@ public class ClassInstanceIndex extends RDBMSIndex
 
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type) {
     if (association_role_type == null) {
-      return Collections.unmodifiableSet(Collections.<AssociationRoleIF>emptySet());
+      return Collections.emptySet();
     } else {
       Object[] params = new Object[] { getTopicMap(), association_role_type };
       return new QueryCollection<AssociationRoleIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociationRoles_size", params,
