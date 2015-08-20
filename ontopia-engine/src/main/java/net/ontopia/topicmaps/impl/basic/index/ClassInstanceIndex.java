@@ -98,76 +98,76 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   // -----------------------------------------------------------------------------
   
   public Collection<TopicIF> getTopics(TopicIF topic_type) {
-    Collection<TopicIF> result = topics.get(topic_type);
-    if (result == null) return Collections.emptySet();
-    // Create new collection
-    return new ArrayList<TopicIF>(result);
+    return topics.containsKey(topic_type) ? 
+            Collections.<TopicIF>unmodifiableCollection(
+                    new ArrayList<TopicIF>(topics.get(topic_type))) :
+            Collections.<TopicIF>emptyList();
   }
   
   public Collection<TopicNameIF> getTopicNames(TopicIF basename_type) {
     if (basename_type == null) {
       basename_type = topicmap.getTopicBySubjectIdentifier(PSI.getSAMNameType());
     }
-    Collection<TopicNameIF> result = bnames.get(basename_type);
-    if (result == null) return Collections.emptySet();
-    // Create new collection
-    return new ArrayList<TopicNameIF>(result);
+    return bnames.containsKey(basename_type) ? 
+            Collections.<TopicNameIF>unmodifiableCollection(
+                    new ArrayList<TopicNameIF>(bnames.get(basename_type))) :
+            Collections.<TopicNameIF>emptyList();
   }
   
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
-    Collection<OccurrenceIF> result = occurs.get(occurrence_type);
-    if (result == null) return Collections.emptySet();
-    // Create new collection
-    return new ArrayList<OccurrenceIF>(result);
+    return occurs.containsKey(occurrence_type) ? 
+            Collections.<OccurrenceIF>unmodifiableCollection(
+                    new ArrayList<OccurrenceIF>(occurs.get(occurrence_type))) :
+            Collections.<OccurrenceIF>emptyList();
   }
   
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {
-    Collection<AssociationIF> result = assocs.get(association_type);
-    if (result == null) return Collections.emptySet();
-    // Create new collection
-    return new ArrayList<AssociationIF>(result);
+    return assocs.containsKey(association_type) ? 
+            Collections.<AssociationIF>unmodifiableCollection(
+                    new ArrayList<AssociationIF>(assocs.get(association_type))) :
+            Collections.<AssociationIF>emptyList();
   }
 
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type) {
-    Collection<AssociationRoleIF> result = roles.get(association_role_type);
-    if (result == null) return Collections.emptySet();
-    // Create new collection
-    return new ArrayList<AssociationRoleIF>(result);
+    return roles.containsKey(association_role_type) ? 
+            Collections.<AssociationRoleIF>unmodifiableCollection(
+                    new ArrayList<AssociationRoleIF>(roles.get(association_role_type))) :
+            Collections.<AssociationRoleIF>emptyList();
   }
 
   public Collection<TopicIF> getTopicTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(topics.keySet());
     result.remove(null);
-    return result;
+    return Collections.unmodifiableCollection(result);
   }
   
   public Collection<TopicIF> getTopicNameTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(bnames.keySet());
     result.remove(null);
-    return result;
+    return Collections.unmodifiableCollection(result);
   }
   
   public Collection<TopicIF> getOccurrenceTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(occurs.keySet());
     result.remove(null);
-    return result;
+    return Collections.unmodifiableCollection(result);
   }
   
   public Collection<TopicIF> getAssociationTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(assocs.keySet());
     result.remove(null);
-    return result;
+    return Collections.unmodifiableCollection(result);
   }
   
   public Collection<TopicIF> getAssociationRoleTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(roles.keySet());
     result.remove(null);
-    return result;
+    return Collections.unmodifiableCollection(result);
   }
   
   public boolean usedAsTopicType(TopicIF topic) {
