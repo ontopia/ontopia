@@ -21,15 +21,16 @@
 package net.ontopia.topicmaps.impl.rdbms.index;
 
 import java.util.Collection;
-
+import java.util.Collections;
 import net.ontopia.persistence.proxy.QueryCollection;
-import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
+import net.ontopia.topicmaps.utils.PSI;
 
 /**
  * INTERNAL: The rdbms class instance index implementation.
@@ -61,9 +62,11 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   public Collection<TopicNameIF> getTopicNames(TopicIF name_type) {
     if (name_type == null) {
-      Object[] params = new Object[] { getTopicMap() };
-      return new QueryCollection<TopicNameIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getTopicNames_null_size", params,
-                                 "ClassInstanceIndexIF.getTopicNames_null", params);
+      name_type = getTopicMap().getTopicBySubjectIdentifier(PSI.getSAMNameType());
+      if (name_type == null) {
+        return Collections.unmodifiableSet(Collections.<TopicNameIF>emptySet());
+      }
+      return getTopicNames(name_type);
     } else {
       Object[] params = new Object[] { getTopicMap(), name_type };
       return new QueryCollection<TopicNameIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getTopicNames_size", params,
@@ -73,9 +76,7 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
     if (occurrence_type == null) {
-      Object[] params = new Object[] { getTopicMap() };
-      return new QueryCollection<OccurrenceIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getOccurrences_null_size", params,
-                                 "ClassInstanceIndexIF.getOccurrences_null", params);
+      return Collections.unmodifiableSet(Collections.<OccurrenceIF>emptySet());
     } else {
       Object[] params = new Object[] { getTopicMap(), occurrence_type };
       return new QueryCollection<OccurrenceIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getOccurrences_size", params,
@@ -85,9 +86,7 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {
     if (association_type == null) {
-      Object[] params = new Object[] { getTopicMap() };
-      return new QueryCollection<AssociationIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociations_null_size", params,
-                                 "ClassInstanceIndexIF.getAssociations_null", params);
+      return Collections.unmodifiableSet(Collections.<AssociationIF>emptySet());
     } else {
       Object[] params = new Object[] { getTopicMap(), association_type };
       return new QueryCollection<AssociationIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociations_size", params,
@@ -97,9 +96,7 @@ public class ClassInstanceIndex extends RDBMSIndex
 
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type) {
     if (association_role_type == null) {
-      Object[] params = new Object[] { getTopicMap() };
-      return new QueryCollection<AssociationRoleIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociationRoles_null_size", params,
-                                 "ClassInstanceIndexIF.getAssociationRoles_null", params);
+      return Collections.unmodifiableSet(Collections.<AssociationRoleIF>emptySet());
     } else {
       Object[] params = new Object[] { getTopicMap(), association_role_type };
       return new QueryCollection<AssociationRoleIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociationRoles_size", params,

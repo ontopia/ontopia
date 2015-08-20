@@ -24,18 +24,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.CollectionMap;
 
 /**
@@ -49,6 +50,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   protected CollectionMap occurs;
   protected CollectionMap assocs;
   protected CollectionMap roles;
+  protected final TopicMapIF topicmap;
 
   ClassInstanceIndex(IndexManagerIF imanager, EventManagerIF emanager, ObjectTreeManager otree) {
     
@@ -58,6 +60,8 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     occurs = new CollectionMap();
     assocs = new CollectionMap();
     roles = new CollectionMap();
+    
+    this.topicmap = imanager.getTransaction().getTopicMap();
     
     // Initialize object tree event handlers [objects added or removed]    
     otree.addListener(new TopicIF_added(topics, TopicIF.EVENT_ADD_TYPE), TopicIF.EVENT_ADDED);
@@ -103,6 +107,9 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   }
   
   public Collection getTopicNames(TopicIF basename_type) {
+    if (basename_type == null) {
+      basename_type = topicmap.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+    }
     Collection result = (Collection)bnames.get(basename_type);
     if (result == null) return Collections.EMPTY_SET;
     // Create new collection
