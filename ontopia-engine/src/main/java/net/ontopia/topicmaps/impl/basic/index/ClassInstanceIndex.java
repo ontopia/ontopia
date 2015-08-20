@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.impl.basic.index;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -45,21 +44,21 @@ import net.ontopia.utils.CollectionMap;
 
 public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndexIF {
   
-  protected CollectionMap topics;
-  protected CollectionMap bnames;
-  protected CollectionMap occurs;
-  protected CollectionMap assocs;
-  protected CollectionMap roles;
+  protected CollectionMap<TopicIF, TopicIF> topics;
+  protected CollectionMap<TopicIF, TopicNameIF> bnames;
+  protected CollectionMap<TopicIF, OccurrenceIF> occurs;
+  protected CollectionMap<TopicIF, AssociationIF> assocs;
+  protected CollectionMap<TopicIF, AssociationRoleIF> roles;
   protected final TopicMapIF topicmap;
 
   ClassInstanceIndex(IndexManagerIF imanager, EventManagerIF emanager, ObjectTreeManager otree) {
     
     // Initialize index maps
-    topics = new CollectionMap();
-    bnames = new CollectionMap();
-    occurs = new CollectionMap();
-    assocs = new CollectionMap();
-    roles = new CollectionMap();
+    topics = new CollectionMap<TopicIF, TopicIF>();
+    bnames = new CollectionMap<TopicIF, TopicNameIF>();
+    occurs = new CollectionMap<TopicIF, OccurrenceIF>();
+    assocs = new CollectionMap<TopicIF, AssociationIF>();
+    roles = new CollectionMap<TopicIF, AssociationRoleIF>();
     
     this.topicmap = imanager.getTransaction().getTopicMap();
     
@@ -89,9 +88,8 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     handlers.put(AssociationIF.EVENT_SET_TYPE, new TypedIF_setType(assocs));
 
     // Register dynamic index as event listener
-    Iterator iter = handlers.keySet().iterator();
-    while (iter.hasNext()) {
-      emanager.addListener(this, (String)iter.next());
+    for (String handler : handlers.keySet()) {
+      emanager.addListener(this, handler);
     }
   }
 
@@ -99,75 +97,75 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   // ClassInstanceIndexIF
   // -----------------------------------------------------------------------------
   
-  public Collection getTopics(TopicIF topic_type) {
-    Collection result = (Collection)topics.get(topic_type);
-    if (result == null) return Collections.EMPTY_SET;
+  public Collection<TopicIF> getTopics(TopicIF topic_type) {
+    Collection<TopicIF> result = topics.get(topic_type);
+    if (result == null) return Collections.emptySet();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<TopicIF>(result);
   }
   
-  public Collection getTopicNames(TopicIF basename_type) {
+  public Collection<TopicNameIF> getTopicNames(TopicIF basename_type) {
     if (basename_type == null) {
       basename_type = topicmap.getTopicBySubjectIdentifier(PSI.getSAMNameType());
     }
-    Collection result = (Collection)bnames.get(basename_type);
-    if (result == null) return Collections.EMPTY_SET;
+    Collection<TopicNameIF> result = bnames.get(basename_type);
+    if (result == null) return Collections.emptySet();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<TopicNameIF>(result);
   }
   
-  public Collection getOccurrences(TopicIF occurrence_type) {
-    Collection result = (Collection)occurs.get(occurrence_type);
-    if (result == null) return Collections.EMPTY_SET;
+  public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
+    Collection<OccurrenceIF> result = occurs.get(occurrence_type);
+    if (result == null) return Collections.emptySet();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<OccurrenceIF>(result);
   }
   
-  public Collection getAssociations(TopicIF association_type) {
-    Collection result = (Collection)assocs.get(association_type);
-    if (result == null) return Collections.EMPTY_SET;
+  public Collection<AssociationIF> getAssociations(TopicIF association_type) {
+    Collection<AssociationIF> result = assocs.get(association_type);
+    if (result == null) return Collections.emptySet();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<AssociationIF>(result);
   }
 
-  public Collection getAssociationRoles(TopicIF association_role_type) {
-    Collection result = (Collection)roles.get(association_role_type);
-    if (result == null) return Collections.EMPTY_SET;
+  public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type) {
+    Collection<AssociationRoleIF> result = roles.get(association_role_type);
+    if (result == null) return Collections.emptySet();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<AssociationRoleIF>(result);
   }
 
-  public Collection getTopicTypes() {
+  public Collection<TopicIF> getTopicTypes() {
     // Create new collection
-    Collection result = new ArrayList(topics.keySet());
+    Collection<TopicIF> result = new ArrayList<TopicIF>(topics.keySet());
     result.remove(null);
     return result;
   }
   
-  public Collection getTopicNameTypes() {
+  public Collection<TopicIF> getTopicNameTypes() {
     // Create new collection
-    Collection result = new ArrayList(bnames.keySet());
+    Collection<TopicIF> result = new ArrayList<TopicIF>(bnames.keySet());
     result.remove(null);
     return result;
   }
   
-  public Collection getOccurrenceTypes() {
+  public Collection<TopicIF> getOccurrenceTypes() {
     // Create new collection
-    Collection result = new ArrayList(occurs.keySet());
+    Collection<TopicIF> result = new ArrayList<TopicIF>(occurs.keySet());
     result.remove(null);
     return result;
   }
   
-  public Collection getAssociationTypes() {
+  public Collection<TopicIF> getAssociationTypes() {
     // Create new collection
-    Collection result = new ArrayList(assocs.keySet());
+    Collection<TopicIF> result = new ArrayList<TopicIF>(assocs.keySet());
     result.remove(null);
     return result;
   }
   
-  public Collection getAssociationRoleTypes() {
+  public Collection<TopicIF> getAssociationRoleTypes() {
     // Create new collection
-    Collection result = new ArrayList(roles.keySet());
+    Collection<TopicIF> result = new ArrayList<TopicIF>(roles.keySet());
     result.remove(null);
     return result;
   }
