@@ -38,6 +38,10 @@
 			<artifactId>javax.servlet.jsp-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-snowball</artifactId>
 		</dependency>
