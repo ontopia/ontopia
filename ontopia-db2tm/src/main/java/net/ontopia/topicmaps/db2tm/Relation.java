@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -203,9 +202,9 @@ public class Relation {
   // ---------------------------------------------------------------------------
   
   void compile() {
-    Iterator<Entity> iter = entities.iterator();
-    while (iter.hasNext())
-      iter.next().compile();
+    for (Entity entity : entities) {
+      entity.compile();
+    }
   }
 
 }

@@ -134,16 +134,11 @@ public class Processor {
       }
       
       // loop over datasources
-      Iterator<DataSourceIF> dsiter = ds_relations.keySet().iterator();
-      while (dsiter.hasNext()) {
-        DataSourceIF datasource = dsiter.next();
+      for (DataSourceIF datasource : ds_relations.keySet()) {
         log.debug("Adding tuples from data source " + datasource);
       
         // loop over relations
-        Collection<Relation> rels = ds_relations.get(datasource);
-        Iterator<Relation> riter = rels.iterator();
-        while (riter.hasNext()) {
-          Relation relation = riter.next();
+        for (Relation relation : ds_relations.get(datasource)) {
 
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
@@ -177,16 +172,11 @@ public class Processor {
           }
 
           // changelog synchronization; set start order values
-          Collection<Changelog> syncs = relation.getSyncs();
-          if (!syncs.isEmpty()) {
-            Iterator<Changelog> siter = syncs.iterator();
-            while (siter.hasNext()) {
-              Changelog sync = siter.next();
+            for (Changelog sync : relation.getSyncs()) {
               String maxOrderValue = datasource.getMaxOrderValue(sync);
               log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
               setStartOrder(sync, ctx, maxOrderValue);
             }
-          }
 
           if (usedCommitMode > NEVER_COMMIT_MODE) {
             log.info("  using commit mode: " + commitModeToString(usedCommitMode, usedCommitCount));
@@ -274,16 +264,11 @@ public class Processor {
       }
       
       // loop over datasources
-      Iterator<DataSourceIF> dsiter = ds_relations.keySet().iterator();
-      while (dsiter.hasNext()) {
-        DataSourceIF datasource = dsiter.next();
+      for (DataSourceIF datasource : ds_relations.keySet()) {
         log.debug("Removing tuples from data source: " + datasource);
       
         // loop over relations
-        Collection<Relation> rels = ds_relations.get(datasource);
-        Iterator<Relation> riter = rels.iterator();
-        while (riter.hasNext()) {
-          Relation relation = riter.next();
+        for (Relation relation : ds_relations.get(datasource)) {
       
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
@@ -629,9 +614,7 @@ public class Processor {
 
   protected static void deleteTopic(TopicIF topic) {
     // first remove all topics that reifies any of the topic's associations
-    Iterator<AssociationRoleIF> iter = topic.getRoles().iterator();
-    while (iter.hasNext()) {
-      AssociationRoleIF role = iter.next();
+    for (AssociationRoleIF role : topic.getRoles()) {
       AssociationIF assoc = role.getAssociation();
       // if reifier topic found, then remove it
       TopicIF reifier = assoc.getReifier();
@@ -1241,17 +1224,13 @@ public class Processor {
         // check association cardinality
         Collection<AssociationRoleIF> roles = assoc.getRoles();
         if (roles.size() != (rfields.size() + 1)) continue;
-        Iterator<AssociationRoleIF> ariter = roles.iterator();
-        while (ariter.hasNext()) {
-          AssociationRoleIF arole = ariter.next();
+        for (AssociationRoleIF arole : roles) {
           if (arole.equals(role)) continue;
           TopicIF rtype = arole.getType();
           TopicIF player = arole.getPlayer();
           // check role
           Field matching_rfield = null;
-          Iterator<Field> rfiter = rfields.iterator();
-          while (rfiter.hasNext()) {
-            Field rfield = rfiter.next();
+          for (Field rfield : rfields) {
             TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
             if (rtype_o == null)
               throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
@@ -1281,12 +1260,9 @@ public class Processor {
       throw new DB2TMInputException("Role type not found", entity, tuple, field.getRoleType());
 
     Collection<Field> rfields = field.getOtherRoleFields();
-    
-    Iterator<AssociationRoleIF> triter = topic.getRoles().iterator();
 
     outer:
-    while (triter.hasNext()) {
-      AssociationRoleIF role = triter.next();
+    for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
       if (ObjectUtils.different(role.getType(), rtype_p)) continue;
       // check association type
@@ -1297,17 +1273,13 @@ public class Processor {
       // check association cardinality
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != (rfields.size() + 1)) continue;
-      Iterator<AssociationRoleIF> ariter = roles.iterator();
-      while (ariter.hasNext()) {
-        AssociationRoleIF arole = ariter.next();
+      for (AssociationRoleIF arole : roles) {
         if (arole.equals(role)) continue;
         TopicIF rtype = arole.getType();
         TopicIF player = arole.getPlayer();
         // check role
         Field matching_rfield = null;
-        Iterator<Field> rfiter = rfields.iterator();
-        while (rfiter.hasNext()) {
-          Field rfield = rfiter.next();
+        for (Field rfield : rfields) {
           TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
           if (rtype_o == null)
             throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
@@ -1355,10 +1327,8 @@ public class Processor {
     // if player topic is gone, then there won't be any matching associations either
     if (topic == null) return;
     
-    Iterator<AssociationRoleIF> triter = topic.getRoles().iterator();
     outer:
-    while (triter.hasNext()) {
-      AssociationRoleIF role = triter.next();
+    for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
       if (ObjectUtils.different(role.getType(), rtype_p)) continue;
       // check association type
@@ -1367,9 +1337,7 @@ public class Processor {
       // check association cardinality
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != rfields.size()) continue;
-      Iterator<AssociationRoleIF> ariter = roles.iterator();
-      while (ariter.hasNext()) {
-        AssociationRoleIF arole = ariter.next();
+      for (AssociationRoleIF arole : roles) {
         if (arole.equals(role)) continue;
         TopicIF rtype = arole.getType();
         TopicIF player = arole.getPlayer();
@@ -1444,16 +1412,11 @@ public class Processor {
       }
       
       // loop over datasources
-      Iterator<DataSourceIF> dsiter = ds_relations.keySet().iterator();
-      while (dsiter.hasNext()) {
-        DataSourceIF datasource = dsiter.next();
+      for (DataSourceIF datasource : ds_relations.keySet()) {
         log.debug("Synchronizing relations in data source: " + datasource);
       
         // loop over relations
-        Collection<Relation> rels = ds_relations.get(datasource);
-        Iterator<Relation> riter = rels.iterator();
-        while (riter.hasNext()) {
-          Relation relation = riter.next();
+        for (Relation relation : ds_relations.get(datasource)) {
       
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
@@ -1489,11 +1452,7 @@ public class Processor {
           // synchronize relation if configured to do so
           if (synctype == Relation.SYNCHRONIZATION_CHANGELOG) {
             // changelog synchronization
-            Collection<Changelog> syncs = relation.getSyncs();
-            if (!syncs.isEmpty()) {
-              Iterator<Changelog> siter = syncs.iterator();
-              while (siter.hasNext()) {
-                Changelog sync = siter.next();
+              for (Changelog sync : relation.getSyncs()) {
                 log.debug("  changelog, table " + sync.getTable());
                 
                 // get start order from topic map
@@ -1532,7 +1491,6 @@ public class Processor {
                   reader.close();
                 }
               }            
-            }
           }
           else if (synctype == Relation.SYNCHRONIZATION_RESCAN) {
             
@@ -1540,16 +1498,11 @@ public class Processor {
             ctx.loadExtents();
       
             // update start order values if there are changelogs declared
-            Collection<Changelog> syncs = relation.getSyncs();
-            if (!syncs.isEmpty()) {
-              Iterator<Changelog> siter = syncs.iterator();
-              while (siter.hasNext()) {
-                Changelog sync = siter.next();
+              for (Changelog sync : relation.getSyncs()) {
                 String maxOrderValue = datasource.getMaxOrderValue(sync);
                 log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
                 setStartOrder(sync, ctx, maxOrderValue);
               }
-            }
             
             // full relation rescan
             TupleReaderIF reader = datasource.getReader(relation.getName());
@@ -1610,9 +1563,7 @@ public class Processor {
         String syncname = sync.getTable();
         String prefix = procname + ":" + relname + ":" + syncname + ":";      
         // loop over occurrences to find appropriate value
-        Iterator<OccurrenceIF> iter = reifier.getOccurrences().iterator();
-        while (iter.hasNext()) {
-          OccurrenceIF occ = iter.next();
+        for (OccurrenceIF occ : reifier.getOccurrences()) {
           TopicIF otype_ = occ.getType();
           if (otype_ != null && otype_.equals(otype)) {
             String value = occ.getValue();
@@ -1646,9 +1597,7 @@ public class Processor {
       
       if (reifier != null && otype != null) {
         // loop over occurrences to find appropriate value
-        Iterator<OccurrenceIF> iter = reifier.getOccurrences().iterator();
-        while (iter.hasNext()) {
-          OccurrenceIF occ = iter.next();
+        for (OccurrenceIF occ : reifier.getOccurrences()) {
           TopicIF otype_ = occ.getType();
           if (otype_ != null && otype_.equals(otype)) {
             String value = occ.getValue();
