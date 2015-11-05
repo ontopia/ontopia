@@ -268,9 +268,7 @@ public class Context {
   }
 
   void removeOldValues() {
-    Iterator<List<?>[]> iter = this.oldValues.values().iterator();
-    while (iter.hasNext()) {
-      List<?>[] fields = iter.next();
+    for (List<?>[] fields : this.oldValues.values()) {
       if (fields != null && fields.length != 0) {
         for (int f=0; f < fields.length; f++) {
           List<?> value = fields[f];
@@ -436,9 +434,7 @@ public class Context {
     dsCandidates.add(topic);    
     if (dsCandidates.size() == MAX_DSCANDIDATES) {
       log.debug("Suppressing duplicates: " + dsCandidates.size());
-      Iterator<TopicIF> iter = dsCandidates.iterator();
-      while (iter.hasNext()) {
-        TopicIF candidate = iter.next();
+      for (TopicIF candidate : dsCandidates) {
         if (candidate.getTopicMap() != null) {
           DuplicateSuppressionUtils.removeDuplicates(candidate);
           DuplicateSuppressionUtils.removeDuplicateAssociations(candidate);
@@ -451,9 +447,7 @@ public class Context {
   public void close() {
     if (dsCandidates.size() > 0) {
       log.debug("Suppressing duplicates: " + dsCandidates.size());
-      Iterator<TopicIF> iter = dsCandidates.iterator();
-      while (iter.hasNext()) {
-        TopicIF candidate = iter.next();
+      for (TopicIF candidate : dsCandidates) {
         if (candidate.getTopicMap() != null) {
           DuplicateSuppressionUtils.removeDuplicates(candidate);
           DuplicateSuppressionUtils.removeDuplicateAssociations(candidate);

@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.db2tm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.jsp.PageContext;
@@ -67,22 +66,16 @@ public class Utils {
     // build return value
     Collection<DataSourceIF> ds = rmapping.getDataSources();
     Map<DataSourceIF, Collection<Relation>> foundRelations = new HashMap<DataSourceIF, Collection<Relation>>(ds.size());
-    Iterator<DataSourceIF> diter = ds.iterator();
-    while (diter.hasNext()) {
-      DataSourceIF datasource = diter.next();
+    for (DataSourceIF datasource : ds) {
       foundRelations.put(datasource, datasource.getRelations());
     }
     
     // detect missing relations
     List<Relation> missingRelations = new ArrayList<Relation>();
-    Iterator<Relation> iter = rmapping.getRelations().iterator();
-    while (iter.hasNext()) {
-      Relation relation = iter.next();
+    for (Relation relation : rmapping.getRelations()) {
       boolean relationMapped = false;
 
-      Iterator<Collection<Relation>> fiter = foundRelations.values().iterator();
-      while (fiter.hasNext()) {
-        Collection<Relation> frels = fiter.next();
+      for (Collection<Relation> frels : foundRelations.values()) {
         if (frels.contains(relation)) {
           relationMapped = true;
           break;
