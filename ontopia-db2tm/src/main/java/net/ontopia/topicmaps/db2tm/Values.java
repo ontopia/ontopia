@@ -60,7 +60,7 @@ public final class Values {
   
   static ValueIF getPatternValue(Relation relation, String value) {
     // use pattern value
-    List list = new ArrayList();
+    List<Object> list = new ArrayList<Object>();
     Matcher matcher = PATTERN.matcher(value);
     int colvals = 0;
     int ix = 0;

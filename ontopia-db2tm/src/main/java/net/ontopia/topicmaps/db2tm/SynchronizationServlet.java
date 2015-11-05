@@ -124,7 +124,7 @@ public class SynchronizationServlet extends HttpServlet {
         throw new OntopiaRuntimeException("Servlet init-param 'mapping' must be specified.");
       
       // get relation names (comma separated)
-      Collection relnames = null;
+      Collection<String> relnames = null;
       String relations = config.getInitParameter("relations");
       if (relations != null)
         relnames = Arrays.asList(StringUtils.split(relations, ","));

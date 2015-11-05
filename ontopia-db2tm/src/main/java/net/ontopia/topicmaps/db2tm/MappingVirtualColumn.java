@@ -33,7 +33,7 @@ public class MappingVirtualColumn implements ValueIF {
   protected Relation relation;
   protected String colname;
     
-  protected Map table = new HashMap();
+  protected Map<String, String> table = new HashMap<String, String>();
   protected String defaultValue;
   protected boolean defaultSpecified;
 
@@ -57,7 +57,7 @@ public class MappingVirtualColumn implements ValueIF {
   public String getValue(String[] tuple) {
     String value = (isVirtualColumn ? relation.getVirtualColumn(inputColumn).getValue(tuple) : tuple[cix]);
     if (table.containsKey(value))
-      return (String)table.get(value);
+      return table.get(value);
     else
       if (defaultSpecified)
         return defaultValue;

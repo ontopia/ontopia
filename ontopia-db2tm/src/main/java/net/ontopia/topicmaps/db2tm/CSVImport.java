@@ -103,8 +103,8 @@ public class CSVImport {
       }
 
       // get hold of column metadata
-      List colnames = new ArrayList();
-      List coltypes_ = new ArrayList();
+      List<String> colnames = new ArrayList<String>();
+      List<Integer> coltypes_ = new ArrayList<Integer>();
       ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
       try {
         while(rs.next()) {
@@ -118,7 +118,7 @@ public class CSVImport {
       }
       int[] coltypes = new int[coltypes_.size()];
       for (int i=0; i < coltypes.length; i++) {
-        coltypes[i] = ((Integer)coltypes_.get(i)).intValue();
+        coltypes[i] = coltypes_.get(i).intValue();
       }
 
       String[] qmarks = new String[coltypes.length];

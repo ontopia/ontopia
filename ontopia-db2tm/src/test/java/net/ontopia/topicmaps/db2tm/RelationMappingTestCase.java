@@ -45,13 +45,13 @@ public class RelationMappingTestCase {
     Assert.assertEquals("Wrong third column", r.getColumns()[2], "NAME");
     Assert.assertEquals("Wrong fourth column", r.getColumns()[3], "ADDRESS");
     
-    List entities = r.getEntities();
+    List<Entity> entities = r.getEntities();
     Entity e;
 
     Assert.assertTrue("Incorrect number of entities", entities.size() == 5);
 
     // primary entities: checking that defaulting works as expected
-    e = (Entity)entities.get(0);
+    e = entities.get(0);
     Assert.assertTrue("First entity is not primary", e.isPrimary());
     Assert.assertTrue("Wrong entity type", e.getEntityType() == Entity.TYPE_TOPIC);
     Assert.assertEquals("First entity has wrong id", e.getId(), "primary");
@@ -66,21 +66,21 @@ public class RelationMappingTestCase {
     Assert.assertTrue("Wrong number of characteristic fields", e.getCharacteristicFields().size() == 2);
     Assert.assertTrue("Wrong number of role fields", e.getRoleFields().size() == 0);
 
-    Field f = ((Field)e.getIdentityFields().get(0));
+    Field f = e.getIdentityFields().get(0);
     Assert.assertTrue("Wrong field type", f.getFieldType() == Field.TYPE_SUBJECT_IDENTIFIER);
     Assert.assertEquals("Wrong subject identifier pattern", f.getPattern(), "test:a:${ID1}");
     Assert.assertEquals("Wrong entity", f.getEntity(), e);
 
-    f = ((Field)e.getCharacteristicFields().get(0));    
+    f = e.getCharacteristicFields().get(0);
     Assert.assertEquals("Wrong name pattern", f.getPattern(), "${NAME}");
     Assert.assertEquals("Wrong name type", f.getType(), null);
     Assert.assertTrue("Wrong name scope", f.getScope().length == 0);
-    f = ((Field)e.getCharacteristicFields().get(1));    
+    f = e.getCharacteristicFields().get(1);
     Assert.assertEquals("Wrong occurrence pattern", f.getPattern(), "${ADDRESS}");
     Assert.assertEquals("Wrong occurrence type", f.getType(), "local:address");
     Assert.assertTrue("Wrong occurrence scope", f.getScope().length == 0);
     
-    e = (Entity)entities.get(1);
+    e = entities.get(1);
     Assert.assertTrue("Second entity is primary", !e.isPrimary());
     Assert.assertEquals("Second entity has wrong id", e.getId(), "non-primary");
 
@@ -88,25 +88,25 @@ public class RelationMappingTestCase {
     Assert.assertTrue("Wrong number of characteristic fields", e.getCharacteristicFields().size() == 0);
     Assert.assertTrue("Wrong number of role fields", e.getRoleFields().size() == 0);
 
-    f = ((Field)e.getIdentityFields().get(0));
+    f = e.getIdentityFields().get(0);
     Assert.assertTrue("Wrong field type", f.getFieldType() == Field.TYPE_SUBJECT_LOCATOR);
     Assert.assertEquals("Wrong subject locator pattern", f.getPattern(), "test:b:${ID2}");
-    f = ((Field)e.getIdentityFields().get(1));
+    f = e.getIdentityFields().get(1);
     Assert.assertTrue("Wrong field type", f.getFieldType() == Field.TYPE_ITEM_IDENTIFIER);
     Assert.assertEquals("Wrong item identifier pattern", f.getPattern(), "test:c:${ID2}");
-    f = ((Field)e.getIdentityFields().get(2));
+    f = e.getIdentityFields().get(2);
     Assert.assertTrue("Wrong field type", f.getFieldType() == Field.TYPE_SUBJECT_IDENTIFIER);
     Assert.assertEquals("Wrong subject identifier pattern", f.getPattern(), "test:d:${ID2}");
 
     // primary entities: checking that explicit attribute values works as expected
-    e = (Entity)entities.get(2);
+    e = entities.get(2);
     Assert.assertTrue("Third entity is not primary", e.isPrimary());
 
     Assert.assertTrue("Wrong number of identity fields", e.getIdentityFields().size() == 1);
     Assert.assertTrue("Wrong number of characteristic fields", e.getCharacteristicFields().size() == 1);
     Assert.assertTrue("Wrong number of role fields", e.getRoleFields().size() == 0);
 
-    f = ((Field)e.getCharacteristicFields().get(0));
+    f = e.getCharacteristicFields().get(0);
     Assert.assertTrue("Wrong field type", f.getFieldType() == Field.TYPE_PLAYER);
     Assert.assertEquals("Wrong player type", f.getRoleType(), "local:rt1");
     Assert.assertEquals("Wrong association type", f.getAssociationType(), "local:at1");
@@ -114,14 +114,14 @@ public class RelationMappingTestCase {
     Assert.assertTrue("Wrong scope size", f.getScope().length == 1);
     Assert.assertEquals("Wrong scope", f.getScope()[0], "#primary");
 
-    f = ((Field)f.getOtherRoleFields().get(0));
+    f = f.getOtherRoleFields().get(0);
     Assert.assertEquals("Wrong other role type", f.getRoleType(), "local:rt2");
     Assert.assertEquals("Wrong other player", f.getPlayer(), "#primary");
     
-    e = (Entity)entities.get(3);
+    e = entities.get(3);
     Assert.assertTrue("Fourth entity is primary", !e.isPrimary());
 
-    e = (Entity)entities.get(4);
+    e = entities.get(4);
     Assert.assertTrue("Fifth entity is not primary", e.isPrimary());
     Assert.assertTrue("Wrong entity type", e.getEntityType() == Entity.TYPE_ASSOCIATION);
 
@@ -133,11 +133,11 @@ public class RelationMappingTestCase {
     Assert.assertTrue("Wrong number of characteristic fields", e.getCharacteristicFields().size() == 0);
     Assert.assertTrue("Wrong number of role fields", e.getRoleFields().size() == 2);
 
-    f = ((Field)e.getRoleFields().get(0));
+    f = e.getRoleFields().get(0);
     Assert.assertEquals("Wrong role type", f.getRoleType(), "local:rt3");
     Assert.assertEquals("Wrong player", f.getPlayer(), "#primary");
 
-    f = ((Field)e.getRoleFields().get(1));
+    f = e.getRoleFields().get(1);
     Assert.assertEquals("Wrong role type", f.getRoleType(), "local:rt4");
     Assert.assertEquals("Wrong player", f.getPlayer(), "#non-primary");
     
@@ -146,7 +146,7 @@ public class RelationMappingTestCase {
 
     Assert.assertTrue("Wrong number of syncs", r.getSyncs().size() == 1);
 
-    Changelog sync = (Changelog)r.getSyncs().get(0);
+    Changelog sync = r.getSyncs().get(0);
     Assert.assertEquals("Wrong relation", sync.getRelation(), r);
     Assert.assertEquals("Wrong table", sync.getTable(), "TEST_CLOG");
     Assert.assertEquals("Wrong order column", sync.getOrderColumn(), "CORDER");

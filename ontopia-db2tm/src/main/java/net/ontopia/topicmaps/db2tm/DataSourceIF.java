@@ -33,7 +33,7 @@ public interface DataSourceIF {
    * INTERNAL: Returns the relations that the data source knows
    * of. The collection return contains Relation instances.
    */
-  public Collection getRelations();
+  public Collection<Relation> getRelations();
 
   /**
    * INTERNAL: Returns a tuple reader for the given relation.
