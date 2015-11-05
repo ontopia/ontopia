@@ -85,8 +85,8 @@ public class CSVDataSource implements DataSourceIF {
     this.ignoreFirstLines = ignoreFirstLines;
   }
 
-  public Collection getRelations() {
-    Collection relations = new ArrayList();
+  public Collection<Relation> getRelations() {
+    Collection<Relation> relations = new ArrayList<Relation>();
     // scan directory to find csv files    
     String[] files = path.list();
     for (int i=0;  i< files.length; i++) {

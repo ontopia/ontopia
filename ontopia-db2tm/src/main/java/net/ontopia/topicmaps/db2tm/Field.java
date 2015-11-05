@@ -56,7 +56,7 @@ public class Field {
   protected String atype;
   protected String rtype;
   protected String player;
-  protected List oroles = new ArrayList();
+  protected List<Field> oroles = new ArrayList<Field>();
 
   public static final int OPTIONAL_DEFAULT = 0;
   public static final int OPTIONAL_TRUE = 1;
@@ -156,7 +156,7 @@ public class Field {
     oroles.add(orole);
   }
   
-  public List getOtherRoleFields() { // TYPE_PLAYER only
+  public List<Field> getOtherRoleFields() { // TYPE_PLAYER only
     return oroles;
   }
 

@@ -41,11 +41,11 @@ public class SynchronizationTask extends TimerTask {
 
   static Logger log = LoggerFactory.getLogger(SynchronizationTask.class.getName());
 
-  protected static Map lastExecutions = Collections.synchronizedMap(new HashMap());
+  protected static Map<String, Date> lastExecutions = Collections.synchronizedMap(new HashMap<String, Date>());
     
   protected String name;
   protected String rmappingfile;
-  protected Collection relnames;
+  protected Collection<String> relnames;
   protected TopicMapReferenceIF ref;
   protected LocatorIF baseloc;
   
@@ -69,7 +69,7 @@ public class SynchronizationTask extends TimerTask {
     this.rmappingfile = rmappingfile;
   }
 
-  public void setRelationNames(Collection relnames) {
+  public void setRelationNames(Collection<String> relnames) {
     this.relnames = relnames;
   }
 
@@ -126,7 +126,7 @@ public class SynchronizationTask extends TimerTask {
   }
 
   public static Date getLastExecution(String taskname) {
-    return (Date)lastExecutions.get(taskname);
+    return lastExecutions.get(taskname);
   }
   
 }

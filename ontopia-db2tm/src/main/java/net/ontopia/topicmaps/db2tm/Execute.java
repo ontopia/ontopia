@@ -120,11 +120,11 @@ public class Execute {
         baseloc = (ohandler.baseuri == null ? URIUtils.getURI(tmurl) : URIUtils.getURI(ohandler.baseuri));
 
       // figure out which relations to actually process
-      Collection relations = null;
+      Collection<String> relations = null;
       if (ohandler.relations != null) {
         String[] relnames = StringUtils.split(ohandler.relations, ",");
         if (relnames.length > 0) {
-          relations = new HashSet(relnames.length);
+          relations = new HashSet<String>(relnames.length);
           CollectionUtils.addAll(relations, relnames);
         }
       }

@@ -96,8 +96,8 @@ public class JDBCDataSource implements DataSourceIF {
     }
   }
   
-  public Collection getRelations() {
-    Collection relations = new ArrayList();
+  public Collection<Relation> getRelations() {
+    Collection<Relation> relations = new ArrayList<Relation>();
     Connection c = getConnection();
     try {
       DatabaseMetaData dbm = c.getMetaData();
@@ -205,7 +205,7 @@ public class JDBCDataSource implements DataSourceIF {
   private Map<String, Integer> getColumnTypes(String schema,
                                               String table, Connection conn)
     throws SQLException {
-    Map datatypes = new HashMap();
+    Map<String, Integer> datatypes = new HashMap<String, Integer>();
     ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
     try {
       while(rs.next())
@@ -460,25 +460,25 @@ public class JDBCDataSource implements DataSourceIF {
       Connection conn = getConnection();
 
         // get hold of column data types
-        Map rdatatypes = getColumnTypes(relation.getName(), conn);
+        Map<String, Integer> rdatatypes = getColumnTypes(relation.getName(), conn);
         if (rdatatypes.isEmpty())
           throw new DB2TMInputException("Relation '" + relation.getName() + "' does not exist.");
         coltypes = new int[rcols.length];
         for (int i=0; i < rcols.length; i++) {
           if (rdatatypes.containsKey(rcols[i])) {
-            coltypes[i] = ((Integer)rdatatypes.get(rcols[i])).intValue();
+            coltypes[i] = rdatatypes.get(rcols[i]).intValue();
           } else if (rdatatypes.containsKey(rcols[i].toUpperCase())) {
-            coltypes[i] = ((Integer)rdatatypes.get(rcols[i].toUpperCase())).intValue();
+            coltypes[i] = rdatatypes.get(rcols[i].toUpperCase()).intValue();
           } else {
             throw new DB2TMInputException("Column '" + rcols[i] + "' in relation '" + relation.getName() + "' does not exist.");
           }
         }
-        Map cdatatypes = getColumnTypes(changelog.getTable(), conn);
+        Map<String, Integer> cdatatypes = getColumnTypes(changelog.getTable(), conn);
         if (cdatatypes.isEmpty())
           throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
-        Integer oct = (Integer)cdatatypes.get(changelog.getOrderColumn());
+        Integer oct = cdatatypes.get(changelog.getOrderColumn());
         if (oct == null)
-          oct = (Integer)cdatatypes.get(changelog.getOrderColumn().toUpperCase());
+          oct = cdatatypes.get(changelog.getOrderColumn().toUpperCase());
         if (oct == null)
           throw new DB2TMInputException("Order column '" +
                                         changelog.getOrderColumn() +

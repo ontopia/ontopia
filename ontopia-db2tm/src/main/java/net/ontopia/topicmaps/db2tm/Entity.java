@@ -46,12 +46,12 @@ public class Entity {
   protected String[] types;  // topic types
   protected String[] scope;
 
-  protected List ifields = new ArrayList();
-  protected List cfields = new ArrayList();
-  protected List rfields = new ArrayList();
+  protected List<Field> ifields = new ArrayList<Field>();
+  protected List<Field> cfields = new ArrayList<Field>();
+  protected List<Field> rfields = new ArrayList<Field>();
   protected boolean requiresTopic;
 
-  protected List extents = new ArrayList();
+  protected List<String> extents = new ArrayList<String>();
   
   Entity(int etype, Relation relation) {
     this.etype = etype;
@@ -60,11 +60,11 @@ public class Entity {
 
   public void compile() {
     for (int i=0; i < ifields.size(); i++)
-      ((Field)ifields.get(i)).compile();
+      ifields.get(i).compile();
     for (int i=0; i < cfields.size(); i++)
-      ((Field)cfields.get(i)).compile();
+      cfields.get(i).compile();
     for (int i=0; i < rfields.size(); i++)
-      ((Field)rfields.get(i)).compile();
+      rfields.get(i).compile();
 
     if (etype == TYPE_TOPIC)
       this.requiresTopic = true;
@@ -75,7 +75,7 @@ public class Entity {
         this.requiresTopic = true;
       else {
         for (int i=0; i < ifields.size(); i++) {
-          int ftype = ((Field)ifields.get(i)).getFieldType();
+          int ftype = ifields.get(i).getFieldType();
           if (ftype == Field.TYPE_SUBJECT_LOCATOR ||
               ftype == Field.TYPE_SUBJECT_IDENTIFIER) {
             this.requiresTopic = true;
@@ -165,15 +165,15 @@ public class Entity {
     this.scope = scope;
   }
 
-  public List getCharacteristicFields() {
+  public List<Field> getCharacteristicFields() {
     return cfields;
   }
 
-  public List getIdentityFields() {
+  public List<Field> getIdentityFields() {
     return ifields;
   }
 
-  public List getRoleFields() {
+  public List<Field> getRoleFields() {
     return rfields;
   }
 
@@ -202,7 +202,7 @@ public class Entity {
   // Extents
   // -----------------------------------------------------------------------------
 
-  public List getExtentQueries() {
+  public List<String> getExtentQueries() {
     return extents;
   }
 

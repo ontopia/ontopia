@@ -63,14 +63,14 @@ public class RelationMapping extends SAXTracker {
   protected String name;
   protected String commitMode;
   protected File baseDirectory;
-  protected Map datasources;
+  protected Map<String, DataSourceIF> datasources;
   protected Map<String, Relation> relations;
-  protected Map iprefixes;
+  protected Map<String, Prefix> iprefixes;
 
   RelationMapping() {
-    this.datasources = new HashMap();
-    this.relations = new HashMap();
-    this.iprefixes = new HashMap();
+    this.datasources = new HashMap<String, DataSourceIF>();
+    this.relations = new HashMap<String, Relation>();
+    this.iprefixes = new HashMap<String, Prefix>();
 
     // default commit mode, never commit
     this.commitMode = null;
@@ -91,9 +91,9 @@ public class RelationMapping extends SAXTracker {
   }
 
   public void close() {
-    Iterator iter = getDataSources().iterator();
+    Iterator<DataSourceIF> iter = getDataSources().iterator();
     while (iter.hasNext()) {
-      DataSourceIF ds = (DataSourceIF)iter.next();
+      DataSourceIF ds = iter.next();
       try {
         ds.close();
       } catch (Throwable t) {
@@ -124,12 +124,12 @@ public class RelationMapping extends SAXTracker {
     return commitMode;
   }
 
-  public Collection getDataSources() {
+  public Collection<DataSourceIF> getDataSources() {
     return datasources.values();
   }
 
   public DataSourceIF getDataSource(String id) {
-    return (DataSourceIF)datasources.get(id);
+    return datasources.get(id);
   }
 
   public void addDataSource(String id, DataSourceIF datasource) {
@@ -153,15 +153,15 @@ public class RelationMapping extends SAXTracker {
   }
 
   public Prefix getPrefix(String prefix) {
-    return (Prefix)iprefixes.get(prefix);
+    return iprefixes.get(prefix);
   }
 
   public String getQueryDeclarations() {
     // create prefix declaration string
     StringBuilder sb = new StringBuilder();
-    Iterator iter = iprefixes.values().iterator();
+    Iterator<Prefix> iter = iprefixes.values().iterator();
     while(iter.hasNext()) {
-      Prefix prefix = (Prefix)iter.next();
+      Prefix prefix = iter.next();
       sb.append("using ");
       sb.append(prefix.getId());
       sb.append(" for ");
@@ -585,9 +585,9 @@ public class RelationMapping extends SAXTracker {
     atts.clear();
 
     // prefixes
-    Iterator iter = iprefixes.values().iterator();
+    Iterator<Prefix> iter = iprefixes.values().iterator();
     while(iter.hasNext()) {
-      Prefix prefix = (Prefix)iter.next();
+      Prefix prefix = iter.next();
       addAttribute(atts, "prefix", "CDATA", prefix.getId());
 
       switch (prefix.getType()) {
@@ -629,9 +629,9 @@ public class RelationMapping extends SAXTracker {
   protected void outputEntities(Relation rel, ContentHandler dh) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
 
-    List entities = rel.getEntities();
+    List<Entity> entities = rel.getEntities();
     for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
 
       if (entity.getEntityType() == Entity.TYPE_TOPIC) {
         // <topic>
@@ -668,23 +668,23 @@ public class RelationMapping extends SAXTracker {
   protected void outputFields(Entity entity, ContentHandler dh) throws SAXException {
 
     // identity fields
-    Iterator ifields = entity.getIdentityFields().iterator();
+    Iterator<Field> ifields = entity.getIdentityFields().iterator();
     while (ifields.hasNext()) {
-      Field field = (Field)ifields.next();
+      Field field = ifields.next();
       outputField(field, dh);
     }
 
     // role fields
-    Iterator rfields = entity.getRoleFields().iterator();
+    Iterator<Field> rfields = entity.getRoleFields().iterator();
     while (rfields.hasNext()) {
-      Field field = (Field)rfields.next();
+      Field field = rfields.next();
       outputField(field, dh);
     }
 
     // characteristic fields
-    Iterator cfields = entity.getCharacteristicFields().iterator();
+    Iterator<Field> cfields = entity.getCharacteristicFields().iterator();
     while (cfields.hasNext()) {
-      Field field = (Field)cfields.next();
+      Field field = cfields.next();
       outputField(field, dh);
     }
 
@@ -741,9 +741,9 @@ public class RelationMapping extends SAXTracker {
       dh.startElement("", "", "player", atts);
       atts.clear();
 
-      Iterator iter = field.getOtherRoleFields().iterator();
+      Iterator<Field> iter = field.getOtherRoleFields().iterator();
       while (iter.hasNext()) {
-        Field orole = (Field)iter.next();
+        Field orole = iter.next();
         addAttribute(atts, "rtype", "CDATA", orole.getRoleType());
         addAttribute(atts, "player", "CDATA", orole.getPlayer());
         dh.startElement("", "", "other", atts);

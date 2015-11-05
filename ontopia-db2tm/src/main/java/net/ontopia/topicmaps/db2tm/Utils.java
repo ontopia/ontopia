@@ -62,27 +62,27 @@ public class Utils {
    * declared in the mapping. If relations are missing an error is
    * issued indicating which ones are missing.
    */
-  public static Map verifyRelationsForMapping(RelationMapping rmapping) {
+  public static Map<DataSourceIF, Collection<Relation>> verifyRelationsForMapping(RelationMapping rmapping) {
 
     // build return value
-    Collection ds = rmapping.getDataSources();
-    Map foundRelations = new HashMap(ds.size());
-    Iterator diter = ds.iterator();
+    Collection<DataSourceIF> ds = rmapping.getDataSources();
+    Map<DataSourceIF, Collection<Relation>> foundRelations = new HashMap<DataSourceIF, Collection<Relation>>(ds.size());
+    Iterator<DataSourceIF> diter = ds.iterator();
     while (diter.hasNext()) {
-      DataSourceIF datasource = (DataSourceIF)diter.next();
+      DataSourceIF datasource = diter.next();
       foundRelations.put(datasource, datasource.getRelations());
     }
     
     // detect missing relations
-    List missingRelations = new ArrayList();
-    Iterator iter = rmapping.getRelations().iterator();
+    List<Relation> missingRelations = new ArrayList<Relation>();
+    Iterator<Relation> iter = rmapping.getRelations().iterator();
     while (iter.hasNext()) {
-      Object relation = iter.next();
+      Relation relation = iter.next();
       boolean relationMapped = false;
 
-      Iterator fiter = foundRelations.values().iterator();
+      Iterator<Collection<Relation>> fiter = foundRelations.values().iterator();
       while (fiter.hasNext()) {
-        Collection frels = (Collection)fiter.next();
+        Collection<Relation> frels = fiter.next();
         if (frels.contains(relation)) {
           relationMapped = true;
           break;
@@ -95,13 +95,13 @@ public class Utils {
     if (size > 1) {
       String[] relnames = new String[size];
       for (int i=0; i < relnames.length; i++) {
-        relnames[i] = ((Relation)missingRelations.get(i)).getName();
+        relnames[i] = missingRelations.get(i).getName();
       }
       throw new DB2TMException("No relations found for mappings: " +
                                StringUtils.join(relnames, ", "));
     } else if (size == 1) {
       throw new DB2TMException("No relation found for mapping: " +
-                               ((Relation)missingRelations.get(0)).getName());
+                               missingRelations.get(0).getName());
     }
 
     return foundRelations;

@@ -37,7 +37,7 @@ public class Changelog {
 
   protected String condition; // added to where clause for filtering
   
-  protected Map<String, ExpressionVirtualColumn> virtualColumns = new HashMap();
+  protected Map<String, ExpressionVirtualColumn> virtualColumns = new HashMap<String, ExpressionVirtualColumn>();
   
   Changelog(Relation relation) {
     this.relation = relation;
