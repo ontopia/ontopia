@@ -23,10 +23,10 @@ package net.ontopia.utils.ontojsp;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
-
+import javax.el.ELContext;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -36,31 +36,31 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.BodyContent;
-import javax.servlet.jsp.el.VariableResolver;
 import javax.servlet.jsp.el.ExpressionEvaluator;
+import javax.servlet.jsp.el.VariableResolver;
+import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * INTERNAL: Fake the PageContext, needed for execution of a JSP.
  */
 public class FakePageContext extends PageContext {
-  private Map attrs;
+  private Map<String, Object> attrs;
   private ServletRequest request;
   private JspWriter out;
-  private Stack writerStack = new Stack();
+  private final Stack<JspWriter> writerStack = new Stack<JspWriter>();
   private ServletContext context;
   private ServletConfig config;
   private HttpSession session;
   
   public FakePageContext(Writer out) {
-    this(out, new HashMap());
+    this(out, new HashMap<String, Object>());
   }
 
-  public FakePageContext(Writer out, Map attrs) {
-    this(out, attrs, new HashMap(), ".");
+  public FakePageContext(Writer out, Map<String, Object> attrs) {
+    this(out, attrs, new HashMap<String, String[]>(), ".");
   }
   
-  public FakePageContext(Writer out, Map attrs, Map params, String path) {
+  public FakePageContext(Writer out, Map<String, Object> attrs, Map<String, String[]> params, String path) {
     this.attrs = attrs;
     this.out = new DefaultJspWriter(out);
 
@@ -73,7 +73,7 @@ public class FakePageContext extends PageContext {
 
   // -- internal mutators
 
-  public void setAttributes(Map attrs) {
+  public void setAttributes(Map<String, Object> attrs) {
     this.attrs = attrs;
   }
   
@@ -91,6 +91,7 @@ public class FakePageContext extends PageContext {
   
   // --
   
+  @Override
   public void initialize(Servlet servlet, ServletRequest request,
                          ServletResponse response, String errorPageURL,
                          boolean needsSession, int bufferSize,
@@ -100,14 +101,17 @@ public class FakePageContext extends PageContext {
     // TODO
   }
 
+  @Override
   public void release() {
     // TODO
   }
 
+  @Override
   public Object getAttribute(String name) {
     return attrs.get(name);
   }
 
+  @Override
   public Object getAttribute(String name, int scope) {
     switch (scope) {
     case PageContext.APPLICATION_SCOPE:
@@ -123,6 +127,7 @@ public class FakePageContext extends PageContext {
     }
   }
 
+  @Override
   public void setAttribute(String name, Object value) {
     if (value == null)
       // JSP spec doesn't allow nulls
@@ -131,6 +136,7 @@ public class FakePageContext extends PageContext {
       attrs.put(name, value);
   }
 
+  @Override
   public void setAttribute(String name, Object value, int scope) {
     if (value == null) 
       // JSP spec doesn't allow nulls
@@ -154,6 +160,7 @@ public class FakePageContext extends PageContext {
     }
   }
 
+  @Override
   public void removeAttribute(String name, int scope) {
     switch (scope) {
     case PageContext.APPLICATION_SCOPE:
@@ -173,10 +180,12 @@ public class FakePageContext extends PageContext {
     }
   }
 
+  @Override
   public int getAttributesScope(String name) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Object findAttribute(String name) {
     Object o = attrs.get(name);
     if (o != null)
@@ -196,18 +205,22 @@ public class FakePageContext extends PageContext {
     return getServletContext().getAttribute(name);
   }
   
-  public Enumeration getAttributeNamesInScope(int scope) {
+  @Override
+  public Enumeration<String> getAttributeNamesInScope(int scope) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void removeAttribute(String name) {
     attrs.remove(name);
   }
 
+  @Override
   public JspWriter getOut() {
     return out;
   }
 
+  @Override
   public HttpSession getSession() {
     return session;
   }
@@ -216,40 +229,49 @@ public class FakePageContext extends PageContext {
     throw new UnsupportedOperationException();
   }
     
+  @Override
   public ServletConfig getServletConfig() {
     return config;
   }
     
+  @Override
   public ServletContext getServletContext() {
     return config.getServletContext();
   }
     
+  @Override
   public ServletRequest getRequest() {
     return request;
   }
     
+  @Override
   public ServletResponse getResponse() {
     throw new UnsupportedOperationException();
   }
     
+  @Override
   public Exception getException() {
     throw new UnsupportedOperationException();
   }
     
+  @Override
   public Object getPage() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void include(String relativeUrlPath)
     throws ServletException, IOException {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void forward(String relativeUrlPath)
     throws ServletException, IOException {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public BodyContent pushBody() {
     JspWriter previous = out;
     writerStack.push(out);
@@ -257,16 +279,19 @@ public class FakePageContext extends PageContext {
     return (BodyContent) out;
   }
 
+  @Override
   public JspWriter popBody() {
-    out = (JspWriter) writerStack.pop();
+    out = writerStack.pop();
     return out;
   }
 
+  @Override
   public void handlePageException(Exception e)
     throws IOException, ServletException {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public void handlePageException(Throwable t)
     throws IOException, ServletException {
     throw new UnsupportedOperationException();
@@ -274,17 +299,24 @@ public class FakePageContext extends PageContext {
 
   // jsp 2.0
 
+  @Override
   public void include ( String relativeUrlPath, boolean flush ) 
     throws ServletException, IOException {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public VariableResolver getVariableResolver() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public ExpressionEvaluator getExpressionEvaluator() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
+  public ELContext getELContext() {
+    throw new UnsupportedOperationException();
+  }
 }

@@ -349,7 +349,7 @@ public class URITest extends TestCase {
 //   }
 
   public void testNonAsciiCharsInFragment() {
-    verifyIllegal("http://www.math.uio.no/abc/#føø");
+    verifyIllegal("http://www.math.uio.no/abc/#f\u00F8\u00F8");
   }
   
   // --- relative URI resolution
@@ -738,7 +738,7 @@ public class URITest extends TestCase {
 
 //   public void testEscapedCharsInFragment() {
 //     normalizesTo("http://www.math.uio.no/abc/#f%F8%F8",
-//                  "http://www.math.uio.no/abc/#føø");
+//                  "http://www.math.uio.no/abc/#f\u00F8\u00F8");
 //   }
   
   // --- equals

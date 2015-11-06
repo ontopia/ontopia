@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.core.index;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.PSI;
 
 public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
@@ -307,4 +307,38 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
 
   }
 
+  /*
+    Bug 510: Tests for differences in index implementations between basic and rmdbs 
+    regarding null values for occurrence, name, role and association type.
+  */
+  
+  public void testBug510_N_default() {
+    assertEquals("Index finds spurious names", 0, clsix.getTopicNames(null).size());
+    builder.makeTopicName(type, "");
+    assertEquals("Index does not find default name type names", 1, clsix.getTopicNames(null).size());
+  }
+
+  public void testBug510_N_notDefault() {
+    assertEquals("Index finds spurious names", 0, clsix.getTopicNames(null).size());
+    builder.makeTopicName(type, type, "");
+    assertEquals("Index finds names with wrong type", 0, clsix.getTopicNames(null).size());
+  }
+
+  public void testBug510_O() {
+    assertEquals("Index finds spurious occurrences", 0, clsix.getOccurrences(null).size());
+    builder.makeOccurrence(type, type, "");
+    assertEquals("Index finds spurious occurrences", 0, clsix.getOccurrences(null).size());
+  }
+  
+  public void testBug510_A() {
+    assertEquals("Index finds spurious associations", 0, clsix.getAssociations(null).size());
+    builder.makeAssociation(type);
+    assertEquals("Index finds spurious associations", 0, clsix.getAssociations(null).size());
+  }
+  
+  public void testBug510_R() {
+    assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
+    builder.makeAssociationRole(builder.makeAssociation(type), type, type);
+    assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
+  }
 }

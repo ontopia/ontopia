@@ -162,6 +162,6 @@ public class FunctionsTestCase {
 
   @Test
   public void testMakePsiBadChars() {
-    Assert.assertEquals("is-a--fail", Functions.makePSI("'is a זרו #fail'"));
+    Assert.assertEquals("is-a--fail", Functions.makePSI("'is a \u00E6\u00F8\u00E5 #fail'"));
   }
 }

@@ -22,14 +22,21 @@ package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.Set;
+import java.util.StringTokenizer;
 import javax.servlet.jsp.PageContext;
-
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ontojsp.FakeHttpSession;
 import net.ontopia.utils.ontojsp.FakePageContext;
 import net.ontopia.utils.ontojsp.FakeServletConfig;
@@ -38,34 +45,17 @@ import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.JSPPageExecuter;
 import net.ontopia.utils.ontojsp.JSPPageReader;
 import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collection;
-import java.util.HashMap;
-import java.io.InputStream;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.SAXException;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
-import net.ontopia.utils.StreamUtils;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: A class which represents a single testcase of the nav2
@@ -77,15 +67,15 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
   private final static String testdataDirectory = "nav2";
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(TaglibTestCase.class.getName());
 
   // navigator environment (app-scope) shared by all test cases
-  private static Hashtable appAttrs;
+  private static Map<String, Object> appAttrs;
   // filename of output result file without path
   private String filename;
   // boolean value which is true if the test should fail.
-  private boolean shouldFail;
+  private final boolean shouldFail;
   // string value that holds the expected exception if it is given.
   private String expectedException = "";
   // boolean value that indicates whether tag pooling should be used
@@ -94,27 +84,23 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
   private final String PARAM_TAGPOOLING = "tagpooling";
 
   @Parameters
-  public static List generateTests() throws IOException, SAXException {
-    String config = TestFileUtils.getTestInputFile(testdataDirectory, "config", "tests.xml");
-    InputStream in = StreamUtils.getInputStream(config);
+  public static List<Object[]> generateTests() throws IOException, SAXException {
+    InputStream in = StreamUtils.getInputStream(
+            TestFileUtils.getTestInputFile(testdataDirectory, "config", "tests.xml"));
 
     XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
     TestCaseContentHandler handler = new TestCaseContentHandler();
     handler.register(parser);
     parser.parse(new InputSource(in));
-    Map result = handler.getTests();
-    List tests = new ArrayList<Object[]>();
+    Map<String, Set<Map<String, String>>> result = handler.getTests();
+    List<Object[]> tests = new ArrayList<Object[]>();
 
-    Iterator it = result.keySet().iterator();
-    while (it.hasNext()) {
-      String key = (String) it.next();
-      Collection value = (Collection) result.get(key);
+    for (String key : result.keySet()) {
+      Set<Map<String, String>> value = result.get(key);
       StringTokenizer strtok = new StringTokenizer(key, "$$$");
       String tm = strtok.nextToken();
       String jsp = strtok.nextToken();
-      Iterator iter = value.iterator();
-      while (iter.hasNext()) {
-        Map test_params = (HashMap) iter.next();
+      for (Map<String, String> test_params : value) {
         tests.add(new Object[] {jsp, /* base, */ tm, test_params});
       }
     }
@@ -240,7 +226,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     // reuse same NavigatorApplication object for all test cases
     // so the topicmaps have not to be loaded several times.
     // setup attributes for application and session context
-    if (appAttrs == null) appAttrs = new Hashtable();
+    if (appAttrs == null) appAttrs = new HashMap<String, Object>();
 
     // Set up a complete page context, reusing the application scope attributes
     FakePageContext pageContext = new FakePageContext(getWriter());
@@ -248,7 +234,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     servletRequest.setContextPath("jsp/" + getJspFileName());
     String path = "classpath:net/ontopia/testdata/nav2/"; // so that it can find the WEB-INF directory.
 
-    Hashtable initParams = new Hashtable();
+    Map<String, String> initParams = new HashMap<String, String>(2);
     initParams.put("source_config", "classpath:net/ontopia/testdata/nav2/WEB-INF/config/tm-sources.xml");
     initParams.put("app_config",    "classpath:net/ontopia/testdata/nav2/WEB-INF/config/application.xml");
     FakeServletContext servletContext = new FakeServletContext(path, appAttrs, initParams);
@@ -290,20 +276,12 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     String jspname = getJspFileName();
     filename.append( jspname.substring(0, jspname.lastIndexOf(".jsp")) );
     // (3) Append the request parameters
-    Hashtable params = getRequestParameters();
-    Iterator it = params.keySet().iterator();
-    while (it.hasNext()) {
-      String key = (String) it.next();
+    Map<String, String[]> params = getRequestParameters();
+    for (String key : params.keySet()) {
+       String vals[] = params.get(key);
 
-      Object objectVal = params.get(key);
-      if (objectVal instanceof String) {
-        String val = (String) objectVal;
-        filename.append("-").append(key).append("=").append(val);
-      } else {
-        String vals[] = (String[]) objectVal;
-
-        if (0 < vals.length)
-          filename.append("-").append(key).append("=").append(vals[0]);
+      if (vals.length != 0) {
+        filename.append("-").append(key).append("=").append(vals[0]);
         for (int i = 1; i < vals.length; i++)
           filename.append("_").append(vals[i]);
       }
@@ -330,10 +308,8 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     descriptor.append( getJspFileName() );
     // (3) Append the request parameters
     descriptor.append(", Params: ");
-    Hashtable params = getRequestParameters();
-    Iterator it = params.keySet().iterator();
-    while (it.hasNext()) {
-      String key = (String) it.next();
+    Map<String, String[]> params = getRequestParameters();
+    for (String key : params.keySet()) {
       descriptor.append(" ").append(key).append("=");
       Object val = params.get(key);
       if (val instanceof String)

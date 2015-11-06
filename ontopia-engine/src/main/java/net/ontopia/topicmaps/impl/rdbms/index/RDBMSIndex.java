@@ -30,9 +30,8 @@ import net.ontopia.topicmaps.impl.utils.AbstractIndex;
  * INTERNAL: An abstract super class used by the rdbms indexes.
  */
 public abstract class RDBMSIndex extends AbstractIndex implements IndexIF {
-  IndexManagerIF imanager;
-  RDBMSTopicMapTransaction transaction;
-  TopicMapIF topicmap;
+  protected IndexManagerIF imanager;
+  protected RDBMSTopicMapTransaction transaction;
   
   public RDBMSIndex(IndexManagerIF imanager) {
     this.imanager = imanager;

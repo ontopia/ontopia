@@ -337,62 +337,6 @@
      query="select count(t1.id) from TM_TOPIC t1 where t1.topicmap_id = ? and t1.id not in (select t2.topic_id from TM_TOPIC_TYPES t2)"/>
   </query>
 
-  <query name="ClassInstanceIndexIF.getTopicNames_null" type="matrix">
-    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <!-- JDOQL: [B1] B1.type == null -->
-    <statement platform="generic"
-     query="select t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-  <query name="ClassInstanceIndexIF.getTopicNames_null_size" type="matrix">
-    <select class="java.lang.Integer"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <!-- JDOQL: [B1] B1.type == null -->
-    <statement platform="generic"
-     query="select count(t1.id) from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-
-  <query name="ClassInstanceIndexIF.getOccurrences_null" type="matrix">
-    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <!-- JDOQL: [O1] O1.type == null -->
-    <statement platform="generic"
-     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-  <query name="ClassInstanceIndexIF.getOccurrences_null_size" type="matrix">
-    <select class="java.lang.Integer"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <!-- JDOQL: [O1] O1.type == null -->
-    <statement platform="generic"
-     query="select count(t1.id) from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-
-  <query name="ClassInstanceIndexIF.getAssociations_null" type="matrix">
-    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <statement platform="generic"
-     query="select t1.id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-  <query name="ClassInstanceIndexIF.getAssociations_null_size" type="matrix">
-    <select class="java.lang.Integer"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <statement platform="generic"
-     query="select count(t1.id) from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-
-  <query name="ClassInstanceIndexIF.getAssociationRoles_null" type="matrix">
-    <select class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <statement platform="generic"
-     query="select t1.id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-  <query name="ClassInstanceIndexIF.getAssociationRoles_null_size" type="matrix">
-    <select class="java.lang.Integer"/>
-    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
-    <statement platform="generic"
-     query="select count(t1.id) from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
-  </query>
-
   <query name="ClassInstanceIndexIF.getTopicTypes" type="collection">
     <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>

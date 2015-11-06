@@ -17,46 +17,47 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.utils.ontojsp;
 
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Hashtable;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 public class FakeServletConfig implements ServletConfig {
+
   protected ServletContext context;
-  protected Hashtable params;
-  
+  protected Map<String, String> params;
+
   public FakeServletConfig(ServletContext context) {
-    this(context, new Hashtable());
+    this(context, new HashMap<String, String>());
   }
 
-  public FakeServletConfig(ServletContext context, Hashtable params) {
+  public FakeServletConfig(ServletContext context, Map<String, String> params) {
     this.context = context;
     this.params = params;
   }
-  
+
+  @Override
   public ServletContext getServletContext() {
     return context;
   }
 
+  @Override
   public String getInitParameter(String name) {
-    return (String)params.get(name);
+    return params.get(name);
   }
 
-  public Enumeration getInitParameterNames() {
-    return params.keys();
+  @Override
+  public Enumeration<String> getInitParameterNames() {
+    return Collections.enumeration(params.keySet());
   }
 
+  @Override
   public String getServletName() {
     // TODO
     return null;
   }
 }
-
-
-
-

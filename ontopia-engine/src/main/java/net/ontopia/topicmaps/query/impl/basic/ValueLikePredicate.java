@@ -98,8 +98,10 @@ public class ValueLikePredicate implements BasicPredicateIF {
       String value = (String) matches.data[ix][valueix];
       if ("".equals(value))
         continue;
-      else if (!previous.equals(value))
+      else if (!previous.equals(value)) {
         ftresult = search(value);
+        previous = value;
+      }
         
       int length = ftresult.size();
       for (int i=0; i < length; i++) {
