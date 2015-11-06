@@ -571,9 +571,7 @@ public class RelationMapping extends SAXTracker {
   protected void write(DocumentHandler dh) throws SAXException {
 
     // initialize attributes
-    AttributeListImpl empty = new AttributeListImpl();
     AttributeListImpl atts = new AttributeListImpl();
-
 
     // <db2tm name="...">
     if (name != null) addAttribute(atts, "name", "CDATA", name);

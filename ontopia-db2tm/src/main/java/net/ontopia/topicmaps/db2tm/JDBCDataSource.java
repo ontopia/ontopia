@@ -257,14 +257,11 @@ public class JDBCDataSource implements DataSourceIF {
 
   private class TupleReader implements TupleReaderIF {
 
-    protected Relation relation;
     PreparedStatement stm;
     ResultSet rs;
     int[] coltypes;
     
     private TupleReader(Relation relation) {
-      this.relation = relation;
-
       // build sql statement from relation definition
       StringBuilder sb = new StringBuilder();
       sb.append("select r.");
@@ -333,21 +330,16 @@ public class JDBCDataSource implements DataSourceIF {
   }
 
   private class ChangelogReader implements ChangelogReaderIF {
-    protected Changelog changelog;
     PreparedStatement stm;
     ResultSet rs;
     int[] coltypes;
     int ocoltype;
     
-    String orderValue;
     int tcix; // tuple start index
     int ocix;
     
     private ChangelogReader(Changelog changelog, String orderValue)
       throws SQLException {
-      this.changelog = changelog;
-      this.orderValue = orderValue;
-
       // FIXME: require primary key to be specified on both tables
       // add test case for it
       
