@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SynchronizationTask extends TimerTask {
 
-  static Logger log = LoggerFactory.getLogger(SynchronizationTask.class.getName());
+  static Logger log = LoggerFactory.getLogger(SynchronizationTask.class);
 
   protected static Map<String, Date> lastExecutions = Collections.synchronizedMap(new HashMap<String, Date>());
     

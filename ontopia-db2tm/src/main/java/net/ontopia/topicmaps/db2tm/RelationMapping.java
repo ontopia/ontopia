@@ -55,7 +55,7 @@ import org.xml.sax.helpers.AttributesImpl;
 public class RelationMapping extends SAXTracker {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(RelationMapping.class.getName());
+  static Logger log = LoggerFactory.getLogger(RelationMapping.class);
 
   protected XMLReader reader;
 

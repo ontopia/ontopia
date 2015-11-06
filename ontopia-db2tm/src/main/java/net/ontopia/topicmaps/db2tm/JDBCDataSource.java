@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class JDBCDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
 
   protected RelationMapping mapping;
   protected String propfile;

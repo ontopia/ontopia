@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class CSVDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVDataSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVDataSource.class);
 
   protected RelationMapping mapping;
 
