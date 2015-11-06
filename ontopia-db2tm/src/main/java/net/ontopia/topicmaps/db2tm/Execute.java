@@ -96,12 +96,12 @@ public class Execute {
 
     try {
       // Read mapping file
-      log.debug("Reading relation mapping file " + cfgfile);
+      log.debug("Reading relation mapping file {}", cfgfile);
       RelationMapping mapping = RelationMapping.read(new File(cfgfile));
       
       // open topic map
       String tmurl = ohandler.tm;    
-      log.debug("Opening topic map " + tmurl);
+      log.debug("Opening topic map {}", tmurl);
       TopicMapIF topicmap;
       if (tmurl == null || tmurl.equals("tm:in-memory:new"))
         topicmap = new InMemoryTopicMapStore().getTopicMap();
@@ -143,7 +143,7 @@ public class Execute {
 
         // export topicmap
         if (outfile != null) {
-          log.debug("Exporting topic map to " + outfile);
+          log.debug("Exporting topic map to {}", outfile);
           TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
           writer.write(topicmap);
         }

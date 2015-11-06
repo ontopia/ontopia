@@ -88,8 +88,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     // now read new tuples until we find one belonging to a new key
     while (true) {
       if (log.isTraceEnabled())
-        log.trace("State: " + prevchange + " Tuple: (" +
-                  (tuple == null ? "null" : StringUtils.join(tuple, "|")) + ")");
+        log.trace("State: {} Tuple: ({})", prevchange, (tuple == null ? "null" : StringUtils.join(tuple, "|")));
       
       // move one row forwards
       prevtuple = tuple;

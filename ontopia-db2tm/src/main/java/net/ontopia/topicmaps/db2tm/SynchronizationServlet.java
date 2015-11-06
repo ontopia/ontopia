@@ -107,16 +107,16 @@ public class SynchronizationServlet extends HttpServlet {
         if (c.before(c0))
           c.add(Calendar.HOUR_OF_DAY, 24);
         time = c.getTime();
-        log.info("Setting synchronization start time to " + time + " ms.");
+        log.info("Setting synchronization start time to {} ms.", time);
       } else {
         // default delay is 180 sec.
         delay = getLongProperty(config, "delay", delay);
-        log.info("Setting synchronization delay to " + delay + " ms.");
+        log.info("Setting synchronization delay to {} ms.", delay);
       }
       
       // default interval is 24 hours.
       long interval = getLongProperty(config, "interval", 1000*60*60*24);
-      log.info("Setting synchronization interval to " + interval + " ms.");
+      log.info("Setting synchronization interval to {} ms.", interval);
       
       // load relation mapping file
       String mapping = config.getInitParameter("mapping");
@@ -161,7 +161,7 @@ public class SynchronizationServlet extends HttpServlet {
       try {
         return Long.parseLong(propval);
       } catch (NumberFormatException e) {
-        log.warn("Invalid long in servlet parameter '" + propname + "': " + propval);
+        log.warn("Invalid long in servlet parameter '{}': {}", propname, propval);
       }
     }
     return defval;

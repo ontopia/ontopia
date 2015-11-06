@@ -55,14 +55,14 @@ public class SynchronizationTask extends TimerTask {
     this.name = name;
     this.timer = new Timer();
     this.timer.schedule(this, delay, interval);
-    log.info("Synchronization task '" + name + "' scheduled with delay.");
+    log.info("Synchronization task '{}' scheduled with delay.", name);
   }
   
   public SynchronizationTask(String name, Date startTime, long interval) {
     this.name = name;
     this.timer = new Timer();
     this.timer.schedule(this, startTime, interval);
-    log.info("Synchronization task '" + name + "' scheduled with start time.");
+    log.info("Synchronization task '{}' scheduled with start time.", name);
   }
   
   public void setRelationMappingFile(String rmappingfile) {
@@ -82,7 +82,7 @@ public class SynchronizationTask extends TimerTask {
   }
   
   public void run() {
-    log.debug("Synchronization task '" + name + "' begins...");
+    log.debug("Synchronization task '{}' begins...", name);
     
     try {
       File cfgfile = new File(rmappingfile);
@@ -94,10 +94,10 @@ public class SynchronizationTask extends TimerTask {
       try {
         // perform synchronization
         TopicMapStoreIF store = ref.createStore(false);
-        log.debug("rmapping: " + rmapping);
-        log.debug("relnames: " + relnames);
-        log.debug("store: " + store);
-        log.debug("baseloc: " + baseloc);
+        log.debug("rmapping: {}", rmapping);
+        log.debug("relnames: {}", relnames);
+        log.debug("store: {}", store);
+        log.debug("baseloc: {}", baseloc);
         try {
           Processor.synchronizeRelations(rmapping, relnames, store.getTopicMap(), baseloc);
           store.commit();
@@ -116,13 +116,13 @@ public class SynchronizationTask extends TimerTask {
       // throw new OntopiaRuntimeException("Synchronization task '" + name + "' failed", e);
       return;
     }
-    log.debug("Synchronization task '" + name + "' ends...");
+    log.debug("Synchronization task '{}' ends...", name);
     lastExecutions.put(name, new Date());
   }
   
   public void stop() {
     timer.cancel(); // terminate the timer thread
-    log.info("Synchronization task '" + name + "' descheduled.");
+    log.info("Synchronization task '{}' descheduled.", name);
   }
 
   public static Date getLastExecution(String taskname) {

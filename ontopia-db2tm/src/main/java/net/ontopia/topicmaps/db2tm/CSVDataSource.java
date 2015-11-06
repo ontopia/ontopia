@@ -97,7 +97,7 @@ public class CSVDataSource implements DataSourceIF {
       if (relation != null)
         relations.add(relation);
       else
-        log.debug("No mapping found for file '" + filename + "'.");
+        log.debug("No mapping found for file '{}'.", filename);
     }
     return relations;
   }

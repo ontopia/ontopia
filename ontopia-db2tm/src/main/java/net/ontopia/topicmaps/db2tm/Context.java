@@ -280,7 +280,7 @@ public class Context {
                 TopicIF topic = bn.getTopic();
                 // remove existing characteristic
                 if (topic != null) {
-                  log.debug("      -N " + topic + " " + bn);
+                  log.debug("      -N {} {}", topic, bn);
                   bn.remove();
                   // notify context
                   characteristicsChanged(topic);
@@ -290,7 +290,7 @@ public class Context {
                 TopicIF topic = oc.getTopic();
                 // remove existing characteristic
                 if (topic != null) {
-                  log.debug("      -O " + topic + " " + oc);
+                  log.debug("      -O {} {}", topic, oc);
                   oc.remove();
                   // notify context
                   characteristicsChanged(topic);
@@ -302,7 +302,7 @@ public class Context {
                 AssociationIF a = r.getAssociation();
                 if (a != null) {
                   if (a.getTopicMap() != null) {
-                    log.debug("      -R "  + topic + " :" + r.getType());
+                    log.debug("      -R {} :{}", topic, r.getType());
                     a.remove();
                     // notify context
                     if (topic != null) characteristicsChanged(topic);
@@ -350,10 +350,10 @@ public class Context {
                 if (type != null) {
                   String extentQuery = "direct-instance-of($O, %TYPE%)?";
                   Map<String, ?> params = Collections.singletonMap("TYPE", type);
-                  log.info("      defaulting extent query for topic type '" + types[t] + "': " + extentQuery);
+                  log.info("      defaulting extent query for topic type '{}': {}", types[t], extentQuery);
                   accumulateObjectsFromQuery(extentQuery, params, extents[i]);
                 } else {
-                  log.warn("      not able to figure out default extent query for topic type '" + types[t] + "'");
+                  log.warn("      not able to figure out default extent query for topic type '{}'", types[t]);
                 }
               }
             }
@@ -365,10 +365,10 @@ public class Context {
               if (type != null) {
                 String extentQuery = "association($O), type($O, %TYPE%)?";
                 Map<String, ?> params = Collections.singletonMap("TYPE", type);
-                log.info("      defaulting extent query for association type '" + atype + "': " + extentQuery);
+                log.info("      defaulting extent query for association type '{}': {}", atype, extentQuery);
                 accumulateObjectsFromQuery(extentQuery, params, extents[i]);
               } else {
-                log.warn("      not able to figure out default extent query for association type '" + atype + "'");
+                log.warn("      not able to figure out default extent query for association type '{}'", atype);
               }
             }
           }
@@ -384,24 +384,24 @@ public class Context {
       Entity entity = entities.get(i);
       if (entity.isPrimary()) {
         if (extents[i] != null) {
-          log.debug("      removing objects from relation " + relation.getName() + " extent '" + entity.getId() + "'");
+          log.debug("      removing objects from relation {} extent '{}'", relation.getName(), entity.getId());
           Iterator<?> iter = extents[i].iterator();
           if (entity.getEntityType() == Entity.TYPE_TOPIC) {
             while (iter.hasNext()) {
               TopicIF topic = (TopicIF)iter.next();
-              log.debug("      !" + topic);
+              log.debug("      !{}", topic);
               topic.remove();
             }
           } else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
             while (iter.hasNext()) {
               AssociationIF assoc = (AssociationIF)iter.next();
-              log.debug("      !" + assoc);
+              log.debug("      !{}", assoc);
               assoc.remove();
             }
           } else {
             throw new DB2TMInputException("Unknown entity type: " + entity.getEntityType());
           }
-          log.debug("      removed " + extents[i].size() + " objects from relation " + relation.getName() + " extent '" + entity.getId() + "'");
+          log.debug("      removed {} objects from relation {} extent '{}'", new Object[] {extents[i].size(), relation.getName(), entity.getId()});
           extents[i] = null;
         }
       }
@@ -433,7 +433,7 @@ public class Context {
   void characteristicsChanged(TopicIF topic) {
     dsCandidates.add(topic);    
     if (dsCandidates.size() == MAX_DSCANDIDATES) {
-      log.debug("Suppressing duplicates: " + dsCandidates.size());
+      log.debug("Suppressing duplicates: {}", dsCandidates.size());
       for (TopicIF candidate : dsCandidates) {
         if (candidate.getTopicMap() != null) {
           DuplicateSuppressionUtils.removeDuplicates(candidate);
@@ -446,7 +446,7 @@ public class Context {
   
   public void close() {
     if (dsCandidates.size() > 0) {
-      log.debug("Suppressing duplicates: " + dsCandidates.size());
+      log.debug("Suppressing duplicates: {}", dsCandidates.size());
       for (TopicIF candidate : dsCandidates) {
         if (candidate.getTopicMap() != null) {
           DuplicateSuppressionUtils.removeDuplicates(candidate);

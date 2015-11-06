@@ -102,7 +102,7 @@ public class Processor {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Adding relations: " + new Date());
+    if (log.isInfoEnabled()) log.info("Adding relations: {}", new Date());
 
     try {
       // verify relation mapping
@@ -135,17 +135,17 @@ public class Processor {
       
       // loop over datasources
       for (DataSourceIF datasource : ds_relations.keySet()) {
-        log.debug("Adding tuples from data source " + datasource);
+        log.debug("Adding tuples from data source {}", datasource);
       
         // loop over relations
         for (Relation relation : ds_relations.get(datasource)) {
 
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
-            log.debug("  ignoring relation: " + relation.getName());
+            log.debug("  ignoring relation: {}", relation.getName());
             continue;
           } else {
-            log.info("  adding relation: " + relation.getName());
+            log.info("  adding relation: {}", relation.getName());
           }
       
           int rtuples = 0;
@@ -174,12 +174,12 @@ public class Processor {
           // changelog synchronization; set start order values
             for (Changelog sync : relation.getSyncs()) {
               String maxOrderValue = datasource.getMaxOrderValue(sync);
-              log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
+              log.debug("New order value: {}={}", sync.getTable(), maxOrderValue);
               setStartOrder(sync, ctx, maxOrderValue);
             }
 
           if (usedCommitMode > NEVER_COMMIT_MODE) {
-            log.info("  using commit mode: " + commitModeToString(usedCommitMode, usedCommitCount));
+            log.info("  using commit mode: {}", commitModeToString(usedCommitMode, usedCommitCount));
           }
           
           // loop over tuples        
@@ -204,7 +204,7 @@ public class Processor {
             if ((usedCommitMode == COUNT_COMMIT_MODE) && (rtuples % usedCommitCount == 0)) {
               topicmap = doCommit(topicmap);
               ctx.setTopicMap(topicmap);
-              log.info("    committed after " + rtuples + " tuples ");
+              log.info("    committed after {} tuples ", rtuples);
             }
           }
 
@@ -214,8 +214,8 @@ public class Processor {
             ctx.setTopicMap(topicmap);
           }
 
-          log.info("    Added " + rtuples + " tuples from " + relation.getName() + ", " + 
-                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          log.info("    Added {} tuples from {}, {}/{} ms",
+                   new Object[] {rtuples, relation.getName(), (System.currentTimeMillis()-rstime1), rstime2});
           ttuples += rtuples;
           reader.close();
         }
@@ -237,7 +237,7 @@ public class Processor {
       ctx.close();
     }
     if (log.isInfoEnabled())
-      log.info("done adding relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
+      log.info("done adding relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
   }
 
   /**
@@ -247,7 +247,7 @@ public class Processor {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Removing relations: " + new Date());
+    if (log.isInfoEnabled()) log.info("Removing relations: {}", new Date());
 
     try {
       // verify relation mapping
@@ -265,17 +265,17 @@ public class Processor {
       
       // loop over datasources
       for (DataSourceIF datasource : ds_relations.keySet()) {
-        log.debug("Removing tuples from data source: " + datasource);
+        log.debug("Removing tuples from data source: {}", datasource);
       
         // loop over relations
         for (Relation relation : ds_relations.get(datasource)) {
       
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
-            log.debug("  ignoring relation: " + relation.getName());
+            log.debug("  ignoring relation: {}", relation.getName());
             continue;
           } else {
-            log.debug("  removing relation: " + relation.getName());
+            log.debug("  removing relation: {}", relation.getName());
           }
       
           int rtuples = 0;
@@ -298,8 +298,8 @@ public class Processor {
             rstime2 += (System.currentTimeMillis()-time);
             rtuples++;
           }
-          log.info("    Removed " + rtuples + " tuples from " + relation.getName() + ", " + 
-                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          log.info("    Removed {} tuples from {}, {}/{} ms",
+                   new Object[] {rtuples, relation.getName(), (System.currentTimeMillis()-rstime1), rstime2});
           ttuples += rtuples;
         }
       }
@@ -309,11 +309,11 @@ public class Processor {
       ctx.close();
     }
     if (log.isInfoEnabled())
-      log.info("done removing relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
+      log.info("done removing relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
   }
   
   public static void addTuple(Relation relation, String[] tuple, Context ctx) {
-    if (log.isDebugEnabled()) log.debug("    a(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+    if (log.isDebugEnabled()) log.debug("    a({}),{}", StringUtils.join(tuple, "|"), tuple.length);
     
     List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
@@ -440,14 +440,14 @@ public class Processor {
     if (assoc == null) {    
       // create association
       assoc = ctx.getBuilder().makeAssociation(atype);
-      log.trace("      +A "  + assoc + " " + atype);
+      log.trace("      +A {} {}", assoc, atype);
     
       // add roles
       int arity = 0;
       for (int i=0; i < rlen; i++) {
         if (players[i] != null) {
           arity++;
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
           if (arity == 1)
             ctx.characteristicsChanged(players[i]);
@@ -460,7 +460,7 @@ public class Processor {
       
     } else {
       // reuse association      
-      log.trace("      =A "  + assoc);
+      log.trace("      =A {}", assoc);
       assoc.setType(atype);
 
       List<AssociationRoleIF> oroles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
@@ -469,9 +469,9 @@ public class Processor {
         if (or != null) {
           if (ObjectUtils.different(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
-          log.trace("      =R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
         if (i == 1)
@@ -480,7 +480,7 @@ public class Processor {
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
           AssociationRoleIF or = oroles.get(i);
-          log.trace("      -R "  + or.getPlayer() + " :" + or.getType());
+          log.trace("      -R {} :{}", or.getPlayer(), or.getType());
           TopicIF player = or.getPlayer();
           or.remove();
           if (player != null) ctx.characteristicsChanged(player);
@@ -506,7 +506,7 @@ public class Processor {
 
   public static void removeTuple(Relation relation, String[] tuple, Context ctx) {
     if (log.isDebugEnabled())
-      log.trace("    r(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+      log.trace("    r({}),{}", StringUtils.join(tuple, "|"), tuple.length);
 
     List<Entity> entities = relation.getEntities();
     
@@ -546,7 +546,7 @@ public class Processor {
         if (reified instanceof AssociationIF) {
           // remove association
           AssociationIF assoc = (AssociationIF)reified;
-          log.trace("      -A-reified "  + topic + " -> " + assoc + " " + assoc.getType());
+          log.trace("      -A-reified {} -> {} {}", new Object[] {topic, assoc, assoc.getType()});
           assoc.remove();
         }
         // remove reifier topic
@@ -564,7 +564,7 @@ public class Processor {
       // delete topic (and identities)
       deleteTopic(topic);
     } else {
-      log.debug("      >T "  + topic);
+      log.debug("      >T {}", topic);
 
       // TODO: reject if non-primary entity and relation.cardinality > 1 and field is dynamic
       // CONSTRAINT: primary entity cannot occur in multiple rows if changelog
@@ -579,7 +579,7 @@ public class Processor {
           List<TopicNameIF> names = getTopicNames(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < names.size(); i++) {
             TopicNameIF _bn = names.get(i);
-            log.trace("      -N "  + topic + " " + _bn);
+            log.trace("      -N {} {}", topic, _bn);
             _bn.remove();
           }
           //! removeTopicName(topic, relation, entity, field, tuple, ctx);
@@ -588,7 +588,7 @@ public class Processor {
           List<OccurrenceIF> occs = getOccurrences(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < occs.size(); i++) {
             OccurrenceIF _occ = occs.get(i);
-            log.trace("      -O "  + topic + " " + _occ);
+            log.trace("      -O {} {}", topic, _occ);
             _occ.remove();
           }
           //! removeOccurrence(topic, relation, entity, field, tuple, ctx);
@@ -598,7 +598,7 @@ public class Processor {
           for (int i=0; i < roles.size(); i++) {
             AssociationRoleIF role = roles.get(i);
             AssociationIF assoc = role.getAssociation();
-            log.trace("      -P "  + assoc + " " + assoc.getType());
+            log.trace("      -P {} {}", assoc, assoc.getType());
             assoc.remove();
           }
           //! removePlayer(topic, relation, entity, field, tuple, ctx);
@@ -620,12 +620,12 @@ public class Processor {
       TopicIF reifier = assoc.getReifier();
       if (reifier != null) {
         // remove reifier topic
-        log.trace("      -A-reifier "  + topic + " " + reifier + " -> " + assoc);
+        log.trace("      -A-reifier {} {} -> {}", new Object[] {topic, reifier, assoc});
         reifier.remove();
       }
     }
     // remove topic (and identities)
-    log.debug("      -T "  + topic);
+    log.debug("      -T {}", topic);
     topic.remove();
   }
   
@@ -662,7 +662,7 @@ public class Processor {
         return (TopicIF)tmobject;
       } else {
         if (tmobject != null)
-          log.warn("Item identifier lookup returned non-topic: " + loc + " -> " + tmobject);
+          log.warn("Item identifier lookup returned non-topic: {} -> {}", loc, tmobject);
         return null;
       }
     } default:
@@ -682,7 +682,7 @@ public class Processor {
         if (tmobject instanceof AssociationIF)
           return (AssociationIF)tmobject;
         else if (tmobject != null)
-          log.warn("Item identifier lookup returned non-association: " + loc + " -> " + tmobject);
+          log.warn("Item identifier lookup returned non-association: {} -> {}", loc, tmobject);
       }
     }
     return null;
@@ -891,11 +891,11 @@ public class Processor {
       if (bn == null) {
         bn = ctx.getBuilder().makeTopicName(topic, type, value);
         addScope(bn, field.getScope(), entity, tuple, ctx);
-        log.trace("      +N "  + topic + " " + bn);
+        log.trace("      +N {} {}", topic, bn);
       } else {
         if (!bn.getValue().equals(value)) {
           bn.setValue(value);
-          log.trace("      =N "  + topic + " " + bn);
+          log.trace("      =N {} {}", topic, bn);
         }
       }
       // notify context
@@ -970,7 +970,7 @@ public class Processor {
       // check scope
       if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) continue;
 
-      log.trace("      -N "  + topic + " " + _bn);
+      log.trace("      -N {} {}", topic, _bn);
       // remove matching name
       _bn.remove();
       // notify context
@@ -1005,12 +1005,12 @@ public class Processor {
         // FIXME: rewrite so that we can set occurrence value directly
         oc = ctx.getBuilder().makeOccurrence(topic, type, occvalue, occDatatype); 
         addScope(oc, field.getScope(), entity, tuple, ctx);
-        log.trace("      +O "  + topic + " " + oc);
+        log.trace("      +O {} {}", topic, oc);
       } else {
         if (!oc.getValue().equals(occvalue) ||
             !oc.getDataType().equals(occDatatype)) {
           oc.setValue(occvalue, occDatatype);
-          log.trace("      =O "  + topic + " " + oc);
+          log.trace("      =O {} {}", topic, oc);
         }
       }
       // notify context
@@ -1074,7 +1074,7 @@ public class Processor {
       // check scope
       if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) continue;
 
-      log.trace("      -O "  + topic + " " + _occ);
+      log.trace("      -O {} {}", topic, _occ);
       // remove matching occurrence
       _occ.remove();
       // notify context
@@ -1131,30 +1131,30 @@ public class Processor {
       
       // create association
       AssociationIF assoc = ctx.getBuilder().makeAssociation(atype);
-      log.trace("      +P "  + assoc + " " + atype);
+      log.trace("      +P {} {}", assoc, atype);
 
       // add scope
       addScope(assoc, field.getScope(), entity, tuple, ctx);
       
       // add current role
-      log.trace("      +R "  + topic + " :" + rtype);
+      log.trace("      +R {} :{}", topic, rtype);
       ctx.getBuilder().makeAssociationRole(assoc, rtype, topic);
       
       // add other roles
       for (int i=0; i < rlen; i++) {
         // do not create role if player is null
         if (players[i] != null) {
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         } else {
-          log.trace("      ?R "  + players[i] + " :" + rtypes[i]);          
+          log.trace("      ?R {} :{}", players[i], rtypes[i]);          
         }
       }
 
     } else {
       // reuse association
       AssociationIF assoc = ar.getAssociation();
-      log.trace("      =P "  + topic + " " + assoc);
+      log.trace("      =P {} {}", topic, assoc);
 
       List<AssociationRoleIF> oroles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
       oroles.remove(ar);
@@ -1163,16 +1163,16 @@ public class Processor {
         if (or != null) {
           if (ObjectUtils.different(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
-          log.trace("      =R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
       }
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
           AssociationRoleIF or = oroles.get(i);
-          log.trace("      -R "  + or.getPlayer() + " :" + or.getType());
+          log.trace("      -R {} :{}", or.getPlayer(), or.getType());
           TopicIF player = or.getPlayer();
           or.remove();
           if (player != null) ctx.characteristicsChanged(player);
@@ -1298,7 +1298,7 @@ public class Processor {
       //! if (reifier != null)
       //!   // remove reifier topic
       //!   reifier.remove();
-      log.trace("      -P "  + assoc + " " + atype);
+      log.trace("      -P {} {}", assoc, atype);
       // remove association
       assoc.remove();
       // notify context
@@ -1368,10 +1368,10 @@ public class Processor {
         removeTopic(reifier, relation, entity, tuple, ctx);
       // remove association
       if (entity.isPrimary()) {
-        log.trace("      -A "  + assoc + " " + atype);
+        log.trace("      -A {} {}", assoc, atype);
         assoc.remove();
       } else {
-        log.trace("      >A "  + assoc);
+        log.trace("      >A {}", assoc);
       }
       break;
     }    
@@ -1395,7 +1395,7 @@ public class Processor {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Synchronizing relations: " + new Date());
+    if (log.isInfoEnabled()) log.info("Synchronizing relations: {}", new Date());
 
     try {
       // verify relation mapping
@@ -1413,14 +1413,14 @@ public class Processor {
       
       // loop over datasources
       for (DataSourceIF datasource : ds_relations.keySet()) {
-        log.debug("Synchronizing relations in data source: " + datasource);
+        log.debug("Synchronizing relations in data source: {}", datasource);
       
         // loop over relations
         for (Relation relation : ds_relations.get(datasource)) {
       
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
-            log.debug("  ignoring relation: " + relation.getName());
+            log.debug("  ignoring relation: {}", relation.getName());
             continue;
           }
       
@@ -1433,14 +1433,14 @@ public class Processor {
           if (synctype == Relation.SYNCHRONIZATION_UNKNOWN) {
             if (!relation.getSyncs().isEmpty()) {
               synctype = Relation.SYNCHRONIZATION_CHANGELOG;
-              log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+              log.debug("  defaulting synchronization type for relation {} to {}", relation.getName(), synctype);
             } else {
               synctype = Relation.SYNCHRONIZATION_RESCAN;
-              log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+              log.debug("  defaulting synchronization type for relation {} to {}", relation.getName(), synctype);
             }
           }
-          log.debug("  synchronizing relation: " + relation.getName() + " type: " +
-                    synctype + " " + Relation.getSynchronizationTypeName(synctype) + " force: " + forceRescan);
+          log.debug("  synchronizing relation: {} type: {} {} force: {}", 
+                    new Object[] {relation.getName(), synctype, Relation.getSynchronizationTypeName(synctype), forceRescan});
           
           int rtuples = 0;
           long rstime1 = System.currentTimeMillis();
@@ -1453,12 +1453,12 @@ public class Processor {
           if (synctype == Relation.SYNCHRONIZATION_CHANGELOG) {
             // changelog synchronization
               for (Changelog sync : relation.getSyncs()) {
-                log.debug("  changelog, table " + sync.getTable());
+                log.debug("  changelog, table {}", sync.getTable());
                 
                 // get start order from topic map
                 String startOrder = getStartOrder(sync, ctx);
                 String highestOrder = startOrder;
-                log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
+                log.debug("Old order value: {}={}", sync.getTable(), startOrder);
                 ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
                 reader = new ChangelogReaderWrapper(reader, relation);
                 
@@ -1484,7 +1484,7 @@ public class Processor {
                   }
                   
                   // update start order
-                  log.debug("New order value: " + sync.getTable() + "=" + highestOrder);
+                  log.debug("New order value: {}={}", sync.getTable(), highestOrder);
                   setStartOrder(sync, ctx, highestOrder);
                   
                 } finally {
@@ -1500,7 +1500,7 @@ public class Processor {
             // update start order values if there are changelogs declared
               for (Changelog sync : relation.getSyncs()) {
                 String maxOrderValue = datasource.getMaxOrderValue(sync);
-                log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
+                log.debug("New order value: {}={}", sync.getTable(), maxOrderValue);
                 setStartOrder(sync, ctx, maxOrderValue);
               }
             
@@ -1508,7 +1508,7 @@ public class Processor {
             TupleReaderIF reader = datasource.getReader(relation.getName());
             
             try {
-              log.debug("  full rescan, table " + relation.getName());
+              log.debug("  full rescan, table {}", relation.getName());
                 
               String [] tuple = null;
               while ((tuple = reader.readNext()) != null) {
@@ -1533,8 +1533,8 @@ public class Processor {
           // EXPERIMENTAL: remove expired field values (characteristics)
           ctx.removeOldValues();
           
-          log.info("    Synchronized " + rtuples + " tuples for " + relation.getName() + ", " + 
-                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          log.info("    Synchronized {} tuples for {}, {}/{} ms",
+                   new Object[] {rtuples, relation.getName(), (System.currentTimeMillis()-rstime1), rstime2});
           ttuples += rtuples;
         }
       }
@@ -1542,7 +1542,7 @@ public class Processor {
       ctx.close();
     }
     if (log.isInfoEnabled())
-      log.info("done synchronizing relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
+      log.info("done synchronizing relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
   }
   
   /**
@@ -1635,7 +1635,7 @@ public class Processor {
   private static void updateTuple(Relation relation, String[] tuple, Context ctx) {
 
     if (log.isDebugEnabled())
-      log.debug("    u(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+      log.debug("    u({}),{}", StringUtils.join(tuple, "|"), tuple.length);
     
     List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {

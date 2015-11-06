@@ -190,7 +190,7 @@ public class Functions {
    */
   public static String makePSI(String str) {
     if (Utils.isValueEmpty(str)) {
-      log.debug("No PSI suffix; empty string '" + str + "'");
+      log.debug("No PSI suffix; empty string '{}'", str);
       return null;
     }
 
@@ -209,7 +209,7 @@ public class Functions {
     }
 
     str = new String(tmp, 0, pos);
-    log.debug("Produced PSI suffix: '" + str + "'");
+    log.debug("Produced PSI suffix: '{}'", str);
     return str;
   }
 
