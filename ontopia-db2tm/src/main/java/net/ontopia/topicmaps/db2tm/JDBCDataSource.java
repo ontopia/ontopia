@@ -119,7 +119,7 @@ public class JDBCDataSource implements DataSourceIF {
         if (relation != null)
           relations.add(relation);
         else
-          log.debug("No mapping found for table '" + table_name + "' in schema '" + schema_name + "'.");
+          log.debug("No mapping found for table '{}' in schema '{}'.", table_name, schema_name);
       }
       rs.close();
     } catch (Throwable t) {
@@ -164,7 +164,7 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(") from ");
       sb.append(changelog.getTable());
       String sql = sb.toString();
-      log.debug("max order value query: " + sql);
+      log.debug("max order value query: {}", sql);
 
       PreparedStatement pstm = null;
       ResultSet rs = null;
@@ -277,7 +277,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
 
       String sql = sb.toString();
-      log.debug("tuple query: " + sql);
+      log.debug("tuple query: {}", sql);
 
       // prepare query
       Connection conn = getConnection();
@@ -455,7 +455,7 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(changelog.getOrderColumn());
 
       String sql = sb.toString();
-      log.debug("changelog query: " + sql);
+      log.debug("changelog query: {}", sql);
 
       Connection conn = getConnection();
 
@@ -493,7 +493,7 @@ public class JDBCDataSource implements DataSourceIF {
       // order value
       if (orderValue != null) {
         int cix = 1;
-        log.debug("changelog order value: " + orderValue);
+        log.debug("changelog order value: {}", orderValue);
         JDBCUtils.setHighPrecisionObject(this.stm, cix, orderValue, ocoltype);
       }
       this.rs = stm.executeQuery();        

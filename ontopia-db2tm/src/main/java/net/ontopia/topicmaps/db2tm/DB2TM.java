@@ -49,7 +49,7 @@ public class DB2TM {
    */
   public static void add(String cfgfile, TopicMapIF topicmap)
     throws IOException {
-    log.info("Reading DB2TM configuration file: " + cfgfile);
+    log.info("Reading DB2TM configuration file: {}", cfgfile);
     RelationMapping mapping;
     try {
       mapping = RelationMapping.read(new File(cfgfile));
@@ -85,7 +85,7 @@ public class DB2TM {
   public static void sync(String cfgfile, TopicMapIF topicmap,
                           boolean force_rescan)
     throws IOException {
-    log.info("Reading DB2TM configuration file: " + cfgfile);
+    log.info("Reading DB2TM configuration file: {}", cfgfile);
     RelationMapping mapping;
     try {
       mapping = RelationMapping.read(new File(cfgfile));

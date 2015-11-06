@@ -96,7 +96,7 @@ public class CSVImport {
       if (cleartable) {
         String delsql = "delete from " + table;
         System.out.println("DELETE:" + delsql);
-        log.debug("DELETE: " + delsql);
+        log.debug("DELETE: {}", delsql);
         Statement delstm = conn.createStatement();
         delstm.executeUpdate(delsql);
         //! conn.commit();
@@ -128,7 +128,7 @@ public class CSVImport {
       
       String sql = "insert into " + table + " (" + StringUtils.join(colnames, ", ")
         + ") values (" + StringUtils.join(qmarks, ", ") + ")";
-      log.debug("INSERT: " + sql);
+      log.debug("INSERT: {}", sql);
       System.out.println("INSERT:" + sql);
       PreparedStatement stm = conn.prepareStatement(sql);
       
@@ -146,7 +146,7 @@ public class CSVImport {
       JDBCUtils.df_datetime = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
       
       // Process input
-      log.debug("[" + StringUtils.join(colnames, ", ") + "]");
+      log.debug("[{}]", StringUtils.join(colnames, ", "));
       int lineno = 0;
       String [] tuple = null;
       try {

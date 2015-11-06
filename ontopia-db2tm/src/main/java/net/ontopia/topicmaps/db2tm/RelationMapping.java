@@ -192,7 +192,7 @@ public class RelationMapping extends SAXTracker {
     ClassLoader cloader = RelationMapping.class.getClassLoader();
     InputStream istream = cloader.getResourceAsStream(resource);
     if (istream != null) {
-      log.debug(resource + ": loading from classpath");
+      log.debug("{}: loading from classpath", resource);
       return read(istream, null);
     } else {
       throw new DB2TMConfigException("Resource '" + resource + "' not found on classpath.");
@@ -221,7 +221,7 @@ public class RelationMapping extends SAXTracker {
       // Parse input source
       parser.parse(new InputSource(istream));
     } catch (FileNotFoundException e) {
-      log.error("Resource not found: " + e.getMessage());
+      log.error("Resource not found: {}", e.getMessage());
       throw e;
     } catch (SAXParseException e) {
       throw new OntopiaRuntimeException("XML parsing problem: " + e.toString() + " at: "+
