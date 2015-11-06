@@ -85,6 +85,7 @@ public class JDBCDataSource implements DataSourceIF {
     return conn;
   }
 
+  @Override
   public void close() {
     if (conn != null) {
       try {
@@ -96,6 +97,7 @@ public class JDBCDataSource implements DataSourceIF {
     }
   }
   
+  @Override
   public Collection<Relation> getRelations() {
     Collection<Relation> relations = new ArrayList<Relation>();
     Connection c = getConnection();
@@ -128,12 +130,14 @@ public class JDBCDataSource implements DataSourceIF {
     return relations;
   }
 
+  @Override
   public TupleReaderIF getReader(String relation) {
     Relation rel = mapping.getRelation(relation);
     if (rel == null) throw new DB2TMException("Unknown relation: " + relation);
     return new TupleReader(rel);
   }
 
+  @Override
   public ChangelogReaderIF getChangelogReader(Changelog changelog, String startOrder) {
     try {
       return new ChangelogReader(changelog, startOrder);
@@ -142,6 +146,7 @@ public class JDBCDataSource implements DataSourceIF {
     }
   }
   
+  @Override
   public String getMaxOrderValue(Changelog changelog) {
     try {
       // get datatypes
@@ -299,6 +304,7 @@ public class JDBCDataSource implements DataSourceIF {
       
     }
 
+    @Override
     public String[] readNext() {
       try {
         if (rs.next()) {
@@ -314,6 +320,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
+    @Override
     public void close() {
       try {
         if (rs != null) rs.close();
@@ -507,6 +514,7 @@ public class JDBCDataSource implements DataSourceIF {
       return "r." + col;
     }
     
+    @Override
     public String[] readNext() {
       try {
         if (rs.next()) {
@@ -523,6 +531,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
+    @Override
     public ChangeType getChangeType() {
       try {
         // if the primary key is null, then obviously the row has been
@@ -537,6 +546,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
+    @Override
     public String getOrderValue() {
       try {
         return JDBCUtils.getHighPrecisionString(rs, ocix, ocoltype);
@@ -545,6 +555,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
     
+    @Override
     public void close() {
       try {
         if (rs != null) rs.close();

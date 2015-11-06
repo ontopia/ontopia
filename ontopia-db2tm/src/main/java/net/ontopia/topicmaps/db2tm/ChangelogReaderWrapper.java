@@ -61,14 +61,17 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
                                relation.getName() + "'");
   }
   
+  @Override
   public ChangeType getChangeType() {
     return prevchange;
   }
 
+  @Override
   public String getOrderValue() {
     return prevorder;
   }
 
+  @Override
   public String[] readNext() {
     // INVARIANT:
     //  (a) prevtuple is null, tuple is null, ready to start on first row
@@ -109,6 +112,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     return prevtuple;
   }
 
+  @Override
   public void close() {
     source.close();
   }
