@@ -97,6 +97,7 @@ public class FunctionVirtualColumn implements ValueIF {
     }
   }
   
+  @Override
   public String getValue(String[] tuple) {
     // get method argument values
     Object[] args = new String[params.size()];

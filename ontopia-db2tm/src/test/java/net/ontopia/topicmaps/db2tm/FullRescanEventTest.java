@@ -91,14 +91,17 @@ public class FullRescanEventTest {
       return events;
     }
     
+    @Override
     public void objectAdded(TMObjectIF snapshot) {
       events++;
     }
     
+    @Override
     public void objectModified(TMObjectIF snapshot) {
       events++;
     }
     
+    @Override
     public void objectRemoved(TMObjectIF snapshot) {
       events++;
     }

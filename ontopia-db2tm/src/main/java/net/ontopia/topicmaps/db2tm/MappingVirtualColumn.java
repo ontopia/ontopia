@@ -54,6 +54,7 @@ public class MappingVirtualColumn implements ValueIF {
     }
   }
 
+  @Override
   public String getValue(String[] tuple) {
     String value = (isVirtualColumn ? relation.getVirtualColumn(inputColumn).getValue(tuple) : tuple[cix]);
     if (table.containsKey(value))

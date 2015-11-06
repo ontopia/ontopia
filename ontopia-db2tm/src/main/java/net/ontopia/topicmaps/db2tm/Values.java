@@ -106,6 +106,7 @@ public final class Values {
     private TupleValue(int ix) {
       this.ix = ix;
     }
+    @Override
     public String getValue(String[] tuple) {
       if (ix >= tuple.length)
         return null;
@@ -119,6 +120,7 @@ public final class Values {
     private StaticValue(String value) {
       this.value = value;
     }
+    @Override
     public String getValue(String[] tuple) {
       return value;
     }
@@ -134,6 +136,7 @@ public final class Values {
       this.colvals = colvals;
     }
     
+    @Override
     public String getValue(String[] tuple) {
       int empties = 0;
       StringBuilder sb = new StringBuilder();
