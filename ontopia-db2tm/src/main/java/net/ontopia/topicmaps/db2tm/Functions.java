@@ -218,6 +218,7 @@ public class Functions {
    * trim() in that internal spaces are also removed.
    */
   public static String stripSpaces(String str) {
+    if (str == null) { return null; }
     char[] buf = new char[str.length()];
     int pos = 0;
     for (int ix = 0; ix < buf.length; ix++) {
