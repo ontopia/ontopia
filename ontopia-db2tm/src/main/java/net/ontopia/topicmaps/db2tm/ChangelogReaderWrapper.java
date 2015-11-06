@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * by sequence.
  */
 public class ChangelogReaderWrapper implements ChangelogReaderIF {
-  private ChangelogReaderIF source;
+  private final ChangelogReaderIF source;
   private int[] keycols; // contains index in relation of each key column
 
   // used for tracking next tuple

@@ -43,13 +43,13 @@ public class SynchronizationTask extends TimerTask {
 
   protected static Map<String, Date> lastExecutions = Collections.synchronizedMap(new HashMap<String, Date>());
     
-  protected String name;
+  protected final String name;
   protected String rmappingfile;
   protected Collection<String> relnames;
   protected TopicMapReferenceIF ref;
   protected LocatorIF baseloc;
   
-  protected Timer timer;
+  protected final Timer timer;
 
   public SynchronizationTask(String name, long delay, long interval) {
     this.name = name;

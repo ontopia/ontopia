@@ -51,7 +51,7 @@ public class CSVImport {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(CSVImport.class);
   
-  protected Connection conn;
+  protected final Connection conn;
 
   protected String table;
   protected String[] columns;
@@ -95,7 +95,6 @@ public class CSVImport {
 
       if (cleartable) {
         String delsql = "delete from " + table;
-        System.out.println("DELETE:" + delsql);
         log.debug("DELETE: {}", delsql);
         Statement delstm = conn.createStatement();
         delstm.executeUpdate(delsql);
@@ -129,7 +128,6 @@ public class CSVImport {
       String sql = "insert into " + table + " (" + StringUtils.join(colnames, ", ")
         + ") values (" + StringUtils.join(qmarks, ", ") + ")";
       log.debug("INSERT: {}", sql);
-      System.out.println("INSERT:" + sql);
       PreparedStatement stm = conn.prepareStatement(sql);
       
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(csvfile));

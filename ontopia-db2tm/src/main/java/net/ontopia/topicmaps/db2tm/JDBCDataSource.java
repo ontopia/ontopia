@@ -50,7 +50,7 @@ public class JDBCDataSource implements DataSourceIF {
   // --- define a logging category.
   static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
 
-  protected RelationMapping mapping;
+  protected final RelationMapping mapping;
   protected String propfile;
 
   protected String catalog;

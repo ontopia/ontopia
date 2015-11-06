@@ -37,7 +37,7 @@ public class Entity {
 
   // entity type
   protected int etype;
-  protected Relation relation;
+  protected final Relation relation;
   protected Boolean primary;
   
   protected String id;
@@ -59,12 +59,12 @@ public class Entity {
   }
 
   public void compile() {
-    for (int i=0; i < ifields.size(); i++)
-      ifields.get(i).compile();
-    for (int i=0; i < cfields.size(); i++)
-      cfields.get(i).compile();
-    for (int i=0; i < rfields.size(); i++)
-      rfields.get(i).compile();
+    for (Field field : ifields)
+      field.compile();
+    for (Field field : cfields)
+      field.compile();
+    for (Field field : rfields)
+      field.compile();
 
     if (etype == TYPE_TOPIC)
       this.requiresTopic = true;

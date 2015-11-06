@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
@@ -62,9 +61,9 @@ public class RelationMapping extends SAXTracker {
   protected String name;
   protected String commitMode;
   protected File baseDirectory;
-  protected Map<String, DataSourceIF> datasources;
-  protected Map<String, Relation> relations;
-  protected Map<String, Prefix> iprefixes;
+  protected final Map<String, DataSourceIF> datasources;
+  protected final Map<String, Relation> relations;
+  protected final Map<String, Prefix> iprefixes;
 
   RelationMapping() {
     this.datasources = new HashMap<String, DataSourceIF>();
@@ -533,18 +532,16 @@ public class RelationMapping extends SAXTracker {
 
   protected String[] getValues(Attributes attrs, String name) {
     String value = getValue(attrs, name);
-    if (value == null)
-      return new String[] { };
-    else 
-      return StringUtils.tokenize(value, " \t\n\r,");
+    return (value == null)
+      ? new String[] { }
+      : StringUtils.tokenize(value, " \t\n\r,");
   }
 
   protected String[] getValues(Attributes attrs, String plural, String singular) {
     String value = getValue(attrs, singular);
-    if (value != null)
-      return new String[] { value };
-    else
-      return getValues(attrs, plural);
+    return (value != null)
+      ? new String[] { value }
+      : getValues(attrs, plural);
   }
 
   protected void addAttribute(AttributesImpl atts, String name, String type, String value) {
@@ -622,10 +619,7 @@ public class RelationMapping extends SAXTracker {
   protected void outputEntities(Relation rel, ContentHandler dh) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
 
-    List<Entity> entities = rel.getEntities();
-    for (int i=0; i < entities.size(); i++) {
-      Entity entity = entities.get(i);
-
+    for (Entity entity : rel.getEntities()) {
       if (entity.getEntityType() == Entity.TYPE_TOPIC) {
         // <topic>
         if (entity.getId() != null)

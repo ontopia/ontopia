@@ -40,7 +40,7 @@ public class CSVDataSource implements DataSourceIF {
   // --- define a logging category.
   static Logger log = LoggerFactory.getLogger(CSVDataSource.class);
 
-  protected RelationMapping mapping;
+  protected final RelationMapping mapping;
 
   protected File path;
 
@@ -130,19 +130,18 @@ public class CSVDataSource implements DataSourceIF {
   }
 
   private class TupleReader implements TupleReaderIF {
-    private CSVReader reader;
-    private Reader in;
+    private final CSVReader reader;
+    private final Reader in;
     
     private TupleReader(File csvfile) {
       try {
-        if (encoding == null)
-          in = new InputStreamReader(new FileInputStream(csvfile));
-        else
-          in = new InputStreamReader(new FileInputStream(csvfile), encoding);
+        in = (encoding == null)
+          ? new InputStreamReader(new FileInputStream(csvfile))
+          : new InputStreamReader(new FileInputStream(csvfile), encoding);
         this.reader = new CSVReader(in, separator, quoteCharacter);
         // ignore first N lines
         for (int i=0; i < ignoreFirstLines; i++) {
-          java.util.Arrays.asList(readNext());
+          readNext();
         }
       } catch (Throwable e) {
         throw new OntopiaRuntimeException(e);
@@ -153,7 +152,7 @@ public class CSVDataSource implements DataSourceIF {
     public String[] readNext() {
       try {
         return reader.readNext();
-      } catch (java.io.IOException e) {
+      } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }
     }
