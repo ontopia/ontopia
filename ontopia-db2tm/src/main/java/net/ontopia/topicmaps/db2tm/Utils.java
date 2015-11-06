@@ -46,10 +46,10 @@ public class Utils {
    */  
   public static RelationMapping getRelationMapping(PageContext ctxt) {
     RelationMapping db = (RelationMapping)
-      ctxt.getAttribute("RelationMapping", ctxt.APPLICATION_SCOPE);
+      ctxt.getAttribute("RelationMapping", PageContext.APPLICATION_SCOPE);
     if (db == null) {
       db = new RelationMapping();
-      ctxt.setAttribute("RelationMapping", db, ctxt.APPLICATION_SCOPE);
+      ctxt.setAttribute("RelationMapping", db, PageContext.APPLICATION_SCOPE);
     }
     return db;
   }
