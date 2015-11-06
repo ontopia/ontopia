@@ -40,7 +40,7 @@ public class Relation {
 
   protected String commit = null;
   
-  protected RelationMapping mapping;
+  protected final RelationMapping mapping;
   protected List<Entity> entities = new ArrayList<Entity>(2);
   protected Map<String, ValueIF> virtualColumns = new HashMap<String, ValueIF>(2);
 

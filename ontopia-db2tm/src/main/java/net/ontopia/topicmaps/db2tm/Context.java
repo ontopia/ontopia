@@ -270,8 +270,7 @@ public class Context {
   void removeOldValues() {
     for (List<?>[] fields : this.oldValues.values()) {
       if (fields != null && fields.length != 0) {
-        for (int f=0; f < fields.length; f++) {
-          List<?> value = fields[f];
+        for (List<?> value : fields) {
           if (value != null && !value.isEmpty()) {
             for (int v=0; v < value.size(); v++) {
               Object o = value.get(v);

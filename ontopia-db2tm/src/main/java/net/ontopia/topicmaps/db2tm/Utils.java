@@ -185,10 +185,9 @@ public class Utils {
   static LocatorIF getLocator(Relation relation, Entity entity, Field field,
       String[] tuple, Context ctx) {
     String value = getValue(relation, entity, field, tuple, ctx);
-    if (isValueEmpty(value))
-      return null;
-    else
-      return ctx.getBaseLocator().resolveAbsolute(value);
+    return (isValueEmpty(value))
+      ? null
+      : ctx.getBaseLocator().resolveAbsolute(value);
   }
 
   static String expandPrefixedValue(String value, Context ctx) {

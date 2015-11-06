@@ -40,8 +40,8 @@ public class Field {
   public static final int TYPE_ASSOCIATION_ROLE = 64;
 
   // field type
-  protected int ftype;
-  protected Entity entity;
+  protected final int ftype;
+  protected final Entity entity;
   
   // subject-locator, subject-identifier, item-identifier
   protected String column;
@@ -173,10 +173,9 @@ public class Field {
         getFieldType() != TYPE_ASSOCIATION_ROLE) {
       Relation relation = getEntity().getRelation();
       String column = getColumn();
-      if (column != null)
-        this.cvalue = Values.getColumnValue(relation, column);
-      else
-        this.cvalue = Values.getPatternValue(relation, getPattern());
+      this.cvalue = (column != null)
+        ? Values.getColumnValue(relation, column)
+        : Values.getPatternValue(relation, getPattern());
     }
   }
 

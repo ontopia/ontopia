@@ -28,7 +28,7 @@ import java.util.HashMap;
  * table from the mapping file.
  */
 public class Changelog {
-  protected Relation relation;
+  protected final Relation relation;
   
   protected String table; // table name
   protected String[] pkey; // primary key

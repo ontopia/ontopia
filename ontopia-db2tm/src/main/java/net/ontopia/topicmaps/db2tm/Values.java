@@ -108,10 +108,7 @@ public final class Values {
     }
     @Override
     public String getValue(String[] tuple) {
-      if (ix >= tuple.length)
-        return null;
-      else
-        return tuple[ix];
+      return (ix >= tuple.length) ? null : tuple[ix];
     }    
   }
   

@@ -31,9 +31,9 @@ import net.ontopia.utils.DebugUtils;
  * to new value.
  */
 public class FunctionVirtualColumn implements ValueIF {
-  protected Relation relation;
-  protected String colname;
-  protected String fullMethodName;
+  protected final Relation relation;
+  protected final String colname;
+  protected final String fullMethodName;
   protected Method method;
   
   protected List<ValueIF> params = new ArrayList<ValueIF>();
