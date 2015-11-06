@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * the function-column element.
  */
 public class Functions {
-  static Logger log = LoggerFactory.getLogger(Functions.class.getName());
+  static Logger log = LoggerFactory.getLogger(Functions.class);
 
   /**
    * INTERNAL: Returns the string argument as-is. This is useful

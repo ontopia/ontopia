@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 public class Context {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Context.class.getName());
+  static Logger log = LoggerFactory.getLogger(Context.class);
 
   protected RelationMapping rmapping;
 

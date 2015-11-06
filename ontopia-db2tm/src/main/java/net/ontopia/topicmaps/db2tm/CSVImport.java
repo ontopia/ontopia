@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 public class CSVImport {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVImport.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVImport.class);
   
   protected Connection conn;
 

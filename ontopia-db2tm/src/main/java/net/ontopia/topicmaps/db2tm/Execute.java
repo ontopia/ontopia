@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class Execute {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Execute.class.getName());
+  static Logger log = LoggerFactory.getLogger(Execute.class);
 
   Execute() {
   }
