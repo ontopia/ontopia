@@ -186,8 +186,6 @@ public class Processor {
           TupleReaderIF reader = datasource.getReader(relation.getName());
           String [] tuple = null;
           while ((tuple = reader.readNext()) != null) {
-            if (tuple == null) break;
-      
             // process individual tuple
             long time = System.currentTimeMillis();
             // FIXME: we could change to updateTuple here with no ill effects,
@@ -290,8 +288,6 @@ public class Processor {
           
           String [] tuple = null;
           while ((tuple = reader.readNext()) != null) {
-            if (tuple == null) break;
-          
             // process individual tuple
             long time = System.currentTimeMillis();
             removeTuple(relation, tuple, ctx);
@@ -906,7 +902,6 @@ public class Processor {
   protected static List<TopicNameIF> getTopicNames(TopicIF topic, Relation relation,
                                       Entity entity, Field field,
                                       String[] tuple, Context ctx) {
-    String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
     if (type == null) {
       if (field.getType() != null)
@@ -1020,7 +1015,6 @@ public class Processor {
 
   protected static List<OccurrenceIF> getOccurrences(TopicIF topic, Relation relation, Entity entity, Field field,
                                        String[] tuple, Context ctx) {
-    String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
     if (type == null)
       throw new DB2TMInputException("Occurrence type not found", entity, tuple, field.getType());
@@ -1227,7 +1221,6 @@ public class Processor {
         for (AssociationRoleIF arole : roles) {
           if (arole.equals(role)) continue;
           TopicIF rtype = arole.getType();
-          TopicIF player = arole.getPlayer();
           // check role
           Field matching_rfield = null;
           for (Field rfield : rfields) {
@@ -1512,8 +1505,6 @@ public class Processor {
                 
               String [] tuple = null;
               while ((tuple = reader.readNext()) != null) {
-                if (tuple == null) break;
-                  
                 // process individual tuple
                 long time = System.currentTimeMillis();
                   
@@ -1613,7 +1604,6 @@ public class Processor {
       if (match == null) {
         if (reifier == null) {
           // create reifier
-          LocatorIF srcloc = ctx.getBaseLocator().resolveAbsolute("#" + topicmap.getObjectId());
           reifier = ctx.getBuilder().makeTopic();
           topicmap.setReifier(reifier);
         }

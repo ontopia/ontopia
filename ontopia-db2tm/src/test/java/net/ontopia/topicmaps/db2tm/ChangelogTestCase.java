@@ -49,8 +49,6 @@ import org.junit.runners.Parameterized.Parameters;
  */
 @RunWith(Parameterized.class)
 public class ChangelogTestCase {
-  private Connection conn;
-  private Statement stm;
   
   private final static String testdataDirectory = "db2tm";
       

@@ -147,12 +147,9 @@ public class CSVImport {
       
       // Process input
       log.debug("[{}]", StringUtils.join(colnames, ", "));
-      int lineno = 0;
       String [] tuple = null;
       try {
         while ((tuple = csvreader.readNext()) != null) {
-          if (tuple == null) break;
-          
           for (int i=0; i < tuple.length; i++) {
             System.out.println("V:" + (i+1) + " " + colnames.get(i) + ":" + coltypes[i] + " " + tuple[i].length() + "'" + tuple[i] + "'");
             JDBCUtils.setObject(stm, i+1, tuple[i], coltypes[i]);

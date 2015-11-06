@@ -51,8 +51,6 @@ public class FullRescanEventTest {
     String casename = "EVENTS";
     String cfg = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".xml").getPath();
     String tm = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".ltm").getPath();
-    String out = TestFileUtils.getTestOutputFile(dir, "out", casename + ".cxtm").getPath();
-    String baseline = TestFileUtils.getTestInputFile(dir, "in/sync/baseline", casename + ".cxtm");
       
     // Connect to the DB
     Connection conn = ChangelogTestCase.getConnection();

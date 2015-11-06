@@ -36,7 +36,6 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class DB2TMErrorTestCase {
 
-  private static final boolean DEBUG_LTM = false; // keep off in CVS
   protected boolean recanonicalizeSource = true;
 
   private final static String testdataDirectory = "db2tm";
@@ -52,12 +51,10 @@ public class DB2TMErrorTestCase {
 
   // --- Test case class
 
-    private String base;
     private String filename;
 
     public DB2TMErrorTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
