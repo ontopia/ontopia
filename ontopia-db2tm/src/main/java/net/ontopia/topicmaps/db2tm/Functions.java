@@ -47,9 +47,7 @@ public class Functions {
    * it returns null.
    */
   public static String toUpperCase(String str) {
-    if (str == null)
-      return null;
-    return str.toUpperCase();
+    return (str == null) ? null : str.toUpperCase();
   }
 
   /**
@@ -57,9 +55,7 @@ public class Functions {
    * it returns null.
    */
   public static String toLowerCase(String str) {
-    if (str == null)
-      return null;
-    return str.toLowerCase();
+    return (str == null) ? null : str.toLowerCase();
   }
 
   /**
@@ -67,9 +63,7 @@ public class Functions {
    * returns null.
    */
   public static String trim(String str) {
-    if (str == null)
-      return null;
-    return str.trim();
+    return (str == null) ? null : str.trim();
   }
 
   /**
@@ -181,8 +175,7 @@ public class Functions {
    * INTERNAL: Replace all occurrences of a regex in a string with a new value.
    */
   public static String stringReplaceAll(String str, String regex, String toValue) {
-    if (str == null) return null;
-    return str.replaceAll(regex, toValue);
+    return (str == null) ? null : str.replaceAll(regex, toValue);
   }
 
   /**
