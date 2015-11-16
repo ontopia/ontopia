@@ -55,9 +55,7 @@ public class ValidatingContentHandler implements ContentHandler {
       factory.setErrorHandler(new DraconianErrorHandler());
       factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       Schema schema = factory.createSchema(src);
-      this.validator = schema.createValidator(
-              SinglePropertyMap.newInstance(ValidateProperty.ERROR_HANDLER, 
-                      factory.getErrorHandler())).getContentHandler();
+	  this.validator = schema.createValidator(SinglePropertyMap.newInstance(ValidateProperty.ERROR_HANDLER, new DraconianErrorHandler())).getContentHandler();
     } catch (Exception e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);
     }
