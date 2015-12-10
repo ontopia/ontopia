@@ -48,7 +48,9 @@
      TopicMapReferenceIF ref = rep.getReferenceByKey(tmid);
      if (ref instanceof AbstractOntopolyURLReference) {
        AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
-       fullpath = oref.getIndexDirectory() + File.separator + tmid;
+       if (oref.getIndexDirectory() != null) {
+         fullpath = oref.getIndexDirectory() + File.separator + tmid;
+	   }
      }
 
      TopicMapIF topicmap = (TopicMapIF)ContextUtils.getSingleValue("topicmap", pageContext);

@@ -80,13 +80,13 @@
                      ServletContext ctxt = pageContext.getServletContext();
                      String path = ctxt.getRealPath("/") + "WEB-INF/indexes/" + tm;
 
-TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(pageContext);
-TopicMapReferenceIF ref = rep.getReferenceByKey(tm);
-if (ref instanceof AbstractOntopolyURLReference) {
-  AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
-  if (oref.getIndexDirectory() != null)
-    path = oref.getIndexDirectory() + File.separator + tm;
-}
+                     TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(pageContext);
+                     TopicMapReferenceIF ref = rep.getReferenceByKey(tm);
+                     if (ref instanceof AbstractOntopolyURLReference) {
+                       AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
+                       if (oref.getIndexDirectory() != null)
+                         path = oref.getIndexDirectory() + File.separator + tm;
+                     }
                       
                      if (context != null) {
                        TopicMapIF topicmap = context.getTopicMap();
