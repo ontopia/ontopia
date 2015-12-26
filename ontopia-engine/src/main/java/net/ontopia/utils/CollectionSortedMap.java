@@ -75,7 +75,8 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
     }     
   }
 
-  public void remove(K key, V value) {
+  @Override
+  public boolean remove(Object key, Object value) {
 
     // Get collection value
     Collection<V> coll = get(key);
@@ -83,11 +84,13 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
     // Remove from collection
     if (coll != null) {
       // Remove value
-      coll.remove(value);
+      boolean removed = coll.remove(value);
       // Remove key
       if (drop_empty && coll.size() == 0) remove(key);
+      
+      return removed;
     }
-
+    return false;
   }
 
   public void move(V value, K old_key, K new_key) {
