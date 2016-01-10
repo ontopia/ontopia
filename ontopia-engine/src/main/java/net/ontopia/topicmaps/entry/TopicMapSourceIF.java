@@ -26,7 +26,7 @@ import java.util.Collection;
  * PUBLIC: Topic map sources collect references to topic maps.<p>
  */
 
-public interface TopicMapSourceIF {
+public interface TopicMapSourceIF extends AutoCloseable {
 
   /**
    * PUBLIC: Gets the id of the source.

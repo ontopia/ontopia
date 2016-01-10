@@ -34,7 +34,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
  * The most common TopicMapReferenceIF implementations (such as the
  * one for RDBMS topic maps) are thread-safe.<p>
  */
-public interface TopicMapReferenceIF {
+public interface TopicMapReferenceIF extends AutoCloseable {
 
   /**
    * PUBLIC: Gets the id of the reference.
