@@ -37,7 +37,7 @@ package net.ontopia.topicmaps.query.core;
  * <p>The <tt>next()</tt> method is used to simultaneously step to the
  * next row <em>and</em> check if there is a next row.
  */
-public interface QueryResultIF {
+public interface QueryResultIF extends AutoCloseable {
 
   /**
    * PUBLIC: Steps to the next match, returning true if a valid match
