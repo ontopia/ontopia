@@ -54,12 +54,12 @@ public class CollectionMap<K, V> extends HashMap<K, Collection<V>> {
   protected Collection<V> createCollection() {
     return new CompactHashSet<V>();
   }
-  
+
   public void add(K key, V value) {
 
     // Get collection value
     Collection<V> coll = get(key);
-    
+
     // Add to collection
     if (coll != null) {
       // Add new value
@@ -70,7 +70,7 @@ public class CollectionMap<K, V> extends HashMap<K, Collection<V>> {
       coll.add(value);
       // Add new entry to index
       put(key, coll);
-    }     
+    }
   }
 
   @Override
@@ -78,26 +78,22 @@ public class CollectionMap<K, V> extends HashMap<K, Collection<V>> {
 
     // Get collection value
     Collection<V> coll = get(key);
-    
+
     // Remove from collection
     if (coll != null) {
       // Remove value
-      boolean removed = coll.remove(value);
+      coll.remove(value);
       // Remove key
-      if (drop_empty && coll.isEmpty()) remove(key);
-      
-      return removed;
-    }
-    return false;
+      if (drop_empty && coll.size() == 0) remove(key);
+      return true;
+    } else
+      return false;
+
   }
 
   public void move(V value, K old_key, K new_key) {
     remove(old_key, value);
     add(new_key, value);
   }
-  
+
 }
-
-
-
-
