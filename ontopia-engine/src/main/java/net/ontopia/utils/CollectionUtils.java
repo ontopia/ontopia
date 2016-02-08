@@ -194,7 +194,7 @@ public class CollectionUtils {
   /**
    * EXPERIMENTAL: Iterates over up to <i>values.length</i> number of
    * elements in the iterator and inserts those elements in the
-   * <i>values> array. If the iterator is exhausted only the iterated
+   * <i>values</i> array. If the iterator is exhausted only the iterated
    * elements are included.
    *
    * @return the number of elements inserted into the array
@@ -212,7 +212,7 @@ public class CollectionUtils {
   /**
    * EXPERIMENTAL: Iterates over up to <i>length</i> number of
    * elements in the iterator and inserts those elements in the
-   * <i>values> array. The first element is inserted at the specified
+   * <i>values</i> array. The first element is inserted at the specified
    * <i>offset</i>. If the iterator is exhausted only the iterated
    * elements are included.
    *
