@@ -27,7 +27,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.relaxng.SchemaFactory;
-import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.SinglePropertyMap;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.datatype.DatatypeLibraryLoader;
@@ -54,7 +55,7 @@ public class ValidatingContentHandler implements ContentHandler {
       factory.setErrorHandler(new DraconianErrorHandler());
       factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       Schema schema = factory.createSchema(src);
-	  this.validator = schema.createValidator(PropertyMap.EMPTY).getContentHandler();
+	  this.validator = schema.createValidator(SinglePropertyMap.newInstance(ValidateProperty.ERROR_HANDLER, new DraconianErrorHandler())).getContentHandler();
     } catch (Exception e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);
     }

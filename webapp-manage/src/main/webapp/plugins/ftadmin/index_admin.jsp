@@ -37,6 +37,13 @@
   if (action != null) {
     if (id != null && !id.equals("")) {
       String fullpath = application.getRealPath("/") + "../omnigator/WEB-INF/indexes/" + id;
+      TopicMapReferenceIF _reference = repository.getReferenceByKey(id);
+      if (_reference instanceof AbstractOntopolyURLReference) {
+        AbstractOntopolyURLReference aref = (AbstractOntopolyURLReference)_reference;
+        if (aref.getIndexDirectory() != null) {
+          fullpath = aref.getIndexDirectory() + File.separator + id;
+        }
+      }
       // === delete index
       if (action.equals("delete index") || action.equals("reindex")) {
         try {
@@ -139,17 +146,6 @@
       <%
         // Get the indexed topicmaps.
         String fullpathstr = application.getRealPath("/") + "../omnigator/WEB-INF/indexes";
-        File path = new File(fullpathstr);
-        if (!path.exists())
-          path.mkdir();
-        Collection indexes = new ArrayList();
-        File[] files = path.listFiles();
-        if (files != null) {
-          for (int i = 0; i < files.length; i++) {
-            File index = files[i];
-            indexes.add(index.getName());
-          }
-        }
         // get the refs
         Collection refs = repository.getReferences();
         if (!refs.isEmpty()) {
@@ -159,10 +155,19 @@
           Iterator iter = sortedRefs.iterator();
           while (iter.hasNext()) {
             TopicMapReferenceIF reference = (TopicMapReferenceIF) iter.next();
+            String path = fullpathstr;
+            if (reference instanceof AbstractOntopolyURLReference) {
+              AbstractOntopolyURLReference aref = (AbstractOntopolyURLReference) reference;
+              if (aref.getIndexDirectory() != null) {
+                path = aref.getIndexDirectory();
+              }
+            }
+            path += File.separator + reference.getId();
+            File indexpath = new File(path);
             String _id=reference.getId();
             String _title=reference.getTitle();
     
-            if (indexes.contains(_id)) { %>
+            if (indexpath.exists()) { %>
           <tr valign="middle">
           <td><img src="../../images/indexed.gif" alt="[Indexed]" title="Indexed" hspace="2"/></td>
           <td class="text"><strong><a href="/omnigator/models/topicmap_<%= model %>.jsp?tm=<%=_id%>"><%= _title %></a></strong></td>

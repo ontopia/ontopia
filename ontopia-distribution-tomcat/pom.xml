@@ -139,6 +139,7 @@
 	</dependencies>
 	
 	<properties>
+		<tomcat.version>7.0.10</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
 		<rdbms-setup>${basedir}/target/${project.artifactId}-${project.version}/rdbms/setup/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
@@ -158,7 +159,7 @@
 							<container>
 								<containerId>tomcat6x</containerId>
 								<zipUrlInstaller>
-									<url>http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.37/bin/apache-tomcat-6.0.37-windows-x64.zip</url>
+									<url>http://archive.apache.org/dist/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}-windows-x64.zip</url>
 									<extractDir>${project.build.directory}</extractDir>
 								</zipUrlInstaller>
 							</container>
@@ -194,7 +195,27 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-patch-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>patch-tomcat-config</id>
+								<phase>package</phase>
+								<goals>
+									<goal>apply</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<optimizations>false</optimizations>
+							<patchDirectory>src/main/patches</patchDirectory>
+							<naturalOrderProcessing>true</naturalOrderProcessing>
+							<targetDirectory>target/${project.build.finalName}/apache-tomcat/</targetDirectory>
+						</configuration>
+					</plugin>
+
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
