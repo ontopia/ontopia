@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Index that holds information about occurrences in the
@@ -44,6 +45,15 @@ public interface OccurrenceIndexIF extends IndexIF {
   public Collection<OccurrenceIF> getOccurrences(String value);
 
   /**
+   * INTERNAL: Gets all occurrences that have the specified value
+   * and occurrenceType independent of datatype.
+   *
+   * @return A collection of OccurrenceIF objects.
+   * @since %NEXT%
+   */
+  public Collection<OccurrenceIF> getOccurrences(String value, TopicIF occurrenceType);
+
+  /**
    * INTERNAL: Gets all occurrences that have the specified value and
    * datatype.
    *
@@ -51,6 +61,15 @@ public interface OccurrenceIndexIF extends IndexIF {
    * @since 4.0
    */
   public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype);
+
+  /**
+   * INTERNAL: Gets all occurrences that have the specified value,
+   * datatype and occurrenceType.
+   *
+   * @return A collection of OccurrenceIF objects.
+   * @since %NEXT%
+   */
+  public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype, TopicIF occurrenceType);
 
   /**
    * INTERNAL: Gets all occurrences of any datatype that have a value
