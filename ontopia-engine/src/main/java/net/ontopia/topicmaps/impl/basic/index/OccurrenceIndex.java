@@ -30,6 +30,7 @@ import java.util.SortedMap;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
@@ -90,12 +91,34 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     return extractExactValues(occurs, value);
   }
   
+
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, final TopicIF occurrenceType) {
+    return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
+      @Override
+      public boolean ok(OccurrenceIF occurrence) {
+        return ObjectUtils.equals(occurrence.getType(), occurrenceType);
+      }
+    });
+  }
+
   public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype) {
     return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
         public boolean ok(OccurrenceIF occ) {
           return ObjectUtils.equals(occ.getDataType(), datatype);
         }
       });
+  }
+
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype, final TopicIF occurrenceType) {
+    return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
+      @Override
+      public boolean ok(OccurrenceIF occurrence) {
+        return ObjectUtils.equals(occurrence.getType(), occurrenceType)
+            && ObjectUtils.equals(occurrence.getDataType(), datatype);
+      }
+    });
   }
 
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix) {

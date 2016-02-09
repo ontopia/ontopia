@@ -73,6 +73,50 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
 
   }
 
+  public void testOccurrenceIndexByType() {
+    // STATE 1: no occurrence values defined
+    TopicIF topic = builder.makeTopic();
+    TopicIF otype1 = builder.makeTopic();
+    TopicIF otype2 = builder.makeTopic();
+    String value0 = "dummy0";
+    String value1 = "dummy";
+    OccurrenceIF occ = builder.makeOccurrence(topic, otype1, value0);
+    assertTrue("Index of occurrences by value and type is not empty.",
+      ix.getOccurrences(value1, otype1).isEmpty());
+
+    // STATE 2: Occurrence value added
+    occ.setValue(value1);
+    assertTrue("Index of occurrences by value and type does not contain test value.",
+      ix.getOccurrences(value1, otype1).contains(occ));
+
+    // STATE 3: Duplicate occurrence value added
+    OccurrenceIF occ2 = builder.makeOccurrence(topic, otype1, value1);
+    assertTrue("second occurrence not found by value",
+      ix.getOccurrences(value1, otype1).size() == 2);
+
+    // STATE 4: Change first occurrence value
+    String value2 = "dummy2";
+    occ.setValue(value2);
+    assertTrue("list of occurrences not updated",
+      ix.getOccurrences(value1, otype1).size() == 1);
+    assertTrue("first occurrence not found by new value",
+      ix.getOccurrences(value2, otype1).size() == 1);
+
+    // STATE 5: Change occurrence types
+    assertTrue("Index of occurrences by value and type is not empty for original type",
+      ix.getOccurrences(value2, otype2).isEmpty());
+    occ.setType(otype2);
+    assertFalse("Index of occurrences by value and type does not detect changed type",
+      ix.getOccurrences(value2, otype2).isEmpty());
+    assertTrue("Index of occurrences by value and type does not detect aborted type",
+      ix.getOccurrences(value2, otype1).isEmpty());
+
+    // STATE 6: Change second occurrence type
+    occ2.setType(otype2);
+    assertFalse("Index of occurrences by value and type contains occurrence with wrong value",
+      ix.getOccurrences(value2, otype2).contains(occ2));
+  }
+
   public void testOccurrenceIndexByPrefix() {
     // STATE 1: no occurrence values defined
     TopicIF topic = builder.makeTopic();
