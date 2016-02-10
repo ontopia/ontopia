@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
@@ -80,6 +81,16 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     return new ArrayList<TopicNameIF>(result);
   }
   
+  @Override
+  public Collection<TopicNameIF> getTopicNames(String value, final TopicIF topicNameType) {
+    return CollectionUtils.filterSet(extractExactValues(basenames, value), new DeciderIF<TopicNameIF>() {
+      @Override
+      public boolean ok(TopicNameIF topicName) {
+        return ObjectUtils.equals(topicName.getType(), topicNameType);
+      }
+    });
+  }
+
   public Collection<VariantNameIF> getVariants(String value) {
 		return extractExactValues(variants, value);
   }
