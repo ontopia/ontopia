@@ -553,6 +553,19 @@
 
   </query>
 
+  <query name="NameIndexIF.getTopicNamesByType" type="collection">
+
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.content = ? and t1.type_id = ?"/>
+
+  </query>
+
   <query name="NameIndexIF.getVariants" type="collection">
   
     <select class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
