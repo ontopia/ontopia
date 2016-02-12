@@ -92,7 +92,6 @@ public class TopicMapSynchronizer {
    */
   public static void update(TopicMapIF target, TopicIF source,
                             DeciderIF<TMObjectIF> tfilter, DeciderIF<TMObjectIF> sfilter) {
-    final boolean debug = log.isDebugEnabled();
     
     AssociationTracker tracker = new AssociationTracker();
     update(target, source, tfilter, sfilter, tracker);
@@ -101,7 +100,7 @@ public class TopicMapSynchronizer {
     Iterator<AssociationIF> it = tracker.getUnsupported().iterator();
     while (it.hasNext()) {
       AssociationIF tassoc = it.next();
-      if (debug) log.debug("  target associations removed " + tassoc); 
+      log.debug("  target associations removed {}", tassoc); 
       tassoc.remove();
     }
   }
@@ -120,7 +119,6 @@ public class TopicMapSynchronizer {
   private static void update(TopicMapIF target, TopicIF source,
                              DeciderIF<TMObjectIF> tfilter, DeciderIF<TMObjectIF> sfilter,
                              AssociationTracker tracker) {
-    final boolean debug = log.isDebugEnabled();
 
     TopicMapBuilderIF builder = target.getBuilder();
     
@@ -128,12 +126,9 @@ public class TopicMapSynchronizer {
     TopicIF targett = getTopic(target, source);
     if (targett == null) {
       targett = builder.makeTopic();
-      if (debug)
-        log.debug("Updating new target " + targett + " with source " + source);
+      log.debug("Updating new target {} with source {}", targett, source);
     } else {
-      if (debug)
-        log.debug("Updating existing target " + targett + " with source " +
-                  source);
+      log.debug("Updating existing target {} with source {}", targett, source);
     }
     targett = copyIdentifiers(targett, source);
     
@@ -158,24 +153,20 @@ public class TopicMapSynchronizer {
     while (topicnameIterator.hasNext()) {
       TopicNameIF bn = topicnameIterator.next();
       if (tfilter.ok(bn)) {
-        if (debug)
-          log.debug("  target name included " + bn); 
+        log.debug("  target name included {}", bn); 
         originalTopicNames.put(KeyGenerator.makeTopicNameKey(bn), bn);
       } else {
-        if (debug)
-          log.debug("  target name excluded " + bn); 
+        log.debug("  target name excluded {}", bn); 
       }        
     }
     topicnameIterator = source.getTopicNames().iterator();
     while (topicnameIterator.hasNext()) {
       TopicNameIF sbn = topicnameIterator.next();
       if (!sfilter.ok(sbn)) {
-        if (debug)
-          log.debug("  source name excluded " + sbn); 
+        log.debug("  source name excluded {}", sbn); 
         continue;
       }
-      if (debug)
-        log.debug("  source name included " + sbn); 
+      log.debug("  source name included {}", sbn); 
       TopicIF ttype = getOrCreate(target, sbn.getType());
       Collection<TopicIF> tscope = translateScope(target, sbn.getScope());
       String key =  KeyGenerator.makeScopeKey(tscope) + "$" +
@@ -190,13 +181,13 @@ public class TopicMapSynchronizer {
         addScope(tbn, tscope);
         addReifier(tbn, sbn.getReifier(), tfilter, sfilter, tracker);
         update(tbn, sbn, tfilter);
-        if (debug) log.debug("  target name added " + tbn); 
+        log.debug("  target name added {}", tbn); 
       }
     }
     topicnameIterator = originalTopicNames.values().iterator();
     while (topicnameIterator.hasNext()) {
       TopicNameIF tbn = topicnameIterator.next();
-      if (debug) log.debug("  target name removed " + tbn); 
+      log.debug("  target name removed {}", tbn); 
       tbn.remove();
     }
     
@@ -206,20 +197,20 @@ public class TopicMapSynchronizer {
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF occ = occurrenceIterator.next();
       if (tfilter.ok(occ)) {
-        if (debug) log.debug("  target occurrence included: " + occ); 
+        log.debug("  target occurrence included: {}", occ); 
         originalOccurrences.put(KeyGenerator.makeOccurrenceKey(occ), occ);
       } else {
-        if (debug) log.debug("  target occurrence excluded " + occ); 
+        log.debug("  target occurrence excluded {}", occ); 
       }        
     }
     occurrenceIterator = source.getOccurrences().iterator();
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF socc = occurrenceIterator.next();
       if (!sfilter.ok(socc)) {
-        if (debug) log.debug("  source occurrence excluded " + socc); 
+        log.debug("  source occurrence excluded {}", socc); 
         continue;
       }
-      if (debug) log.debug("  source occurrence included: " + socc); 
+      log.debug("  source occurrence included: {}", socc); 
       TopicIF ttype = getOrCreate(target, socc.getType());
       Collection<TopicIF> tscope = translateScope(target, socc.getScope());
       String key = KeyGenerator.makeScopeKey(tscope) + "$" +
@@ -232,13 +223,13 @@ public class TopicMapSynchronizer {
         CopyUtils.copyOccurrenceData(tocc, socc);
         addScope(tocc, tscope);
         addReifier(tocc, socc.getReifier(), tfilter, sfilter, tracker);
-        if (debug) log.debug("  target occurrence added " + tocc); 
+        log.debug("  target occurrence added {}", tocc); 
       }
     }
     occurrenceIterator = originalOccurrences.values().iterator();
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF tocc = occurrenceIterator.next();
-      if (debug) log.debug("  target occurrence removed " + tocc); 
+      log.debug("  target occurrence removed {}", tocc); 
       tocc.remove();
     }
     
@@ -249,10 +240,10 @@ public class TopicMapSynchronizer {
       AssociationRoleIF role = roleIterator.next();
       AssociationIF assoc = role.getAssociation();
       if (tfilter.ok(assoc) && tracker.isWithinSyncSet(assoc)) {
-        if (debug) log.debug("  target association included: " + assoc); 
+        log.debug("  target association included: {}", assoc); 
         tracker.unwanted(assoc); // means: unwanted if not found in source
       } else {
-        if (debug) log.debug("  target association excluded " + assoc); 
+        log.debug("  target association excluded {}", assoc); 
       }
     }
     roleIterator = source.getRoles().iterator();
@@ -260,10 +251,10 @@ public class TopicMapSynchronizer {
       AssociationRoleIF role = roleIterator.next();
       AssociationIF sassoc = role.getAssociation();
       if (!sfilter.ok(sassoc)) {
-        if (debug) log.debug("  source association excluded " + sassoc); 
+        log.debug("  source association excluded {}", sassoc); 
         continue;
       }
-      if (debug) log.debug("  source association included: " + sassoc); 
+      log.debug("  source association included: {}", sassoc); 
       TopicIF ttype = getOrCreate(target, sassoc.getType());
       Collection<TopicIF> tscope = translateScope(target, sassoc.getScope());
 
@@ -283,7 +274,7 @@ public class TopicMapSynchronizer {
                                       getOrCreate(target, role.getType()),
                                       getOrCreate(target, role.getPlayer()));
         }
-        if (debug) log.debug("  target association added " + tassoc); 
+        log.debug("  target association added {}", tassoc); 
       }
       tracker.wanted(key);
     }
@@ -327,8 +318,7 @@ public class TopicMapSynchronizer {
     Iterator<AssociationIF> associationIterator = tracker.getUnsupported().iterator();
     while (associationIterator.hasNext()) {
       AssociationIF assoc = associationIterator.next();
-      if (log.isDebugEnabled())
-        log.debug("Tracker removing " + assoc);
+      log.debug("Tracker removing {}", assoc);
       assoc.remove();
     }
     
