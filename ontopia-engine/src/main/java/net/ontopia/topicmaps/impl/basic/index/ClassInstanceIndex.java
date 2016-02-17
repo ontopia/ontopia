@@ -66,26 +66,26 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     otree.addListener(new TopicIF_added(topics, TopicIF.EVENT_ADD_TYPE), TopicIF.EVENT_ADDED);
     otree.addListener(new TopicIF_removed(topics, TopicIF.EVENT_REMOVE_TYPE), TopicIF.EVENT_REMOVED);
 
-    otree.addListener(new TypedIF_added(assocs), AssociationIF.EVENT_ADDED);
-    otree.addListener(new TypedIF_removed(assocs), AssociationIF.EVENT_REMOVED);
+    otree.addListener(new TypedIF_added<AssociationIF>(assocs), AssociationIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed<AssociationIF>(assocs), AssociationIF.EVENT_REMOVED);
                           
-    otree.addListener(new TypedIF_added(bnames), TopicNameIF.EVENT_ADDED);
-    otree.addListener(new TypedIF_removed(bnames), TopicNameIF.EVENT_REMOVED);
+    otree.addListener(new TypedIF_added<TopicNameIF>(bnames), TopicNameIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed<TopicNameIF>(bnames), TopicNameIF.EVENT_REMOVED);
                           
-    otree.addListener(new TypedIF_added(occurs), OccurrenceIF.EVENT_ADDED);
-    otree.addListener(new TypedIF_removed(occurs), OccurrenceIF.EVENT_REMOVED);
+    otree.addListener(new TypedIF_added<OccurrenceIF>(occurs), OccurrenceIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed<OccurrenceIF>(occurs), OccurrenceIF.EVENT_REMOVED);
                           
-    otree.addListener(new TypedIF_added(roles), AssociationRoleIF.EVENT_ADDED);
-    otree.addListener(new TypedIF_removed(roles), AssociationRoleIF.EVENT_REMOVED);
+    otree.addListener(new TypedIF_added<AssociationRoleIF>(roles), AssociationRoleIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed<AssociationRoleIF>(roles), AssociationRoleIF.EVENT_REMOVED);
     
     // Initialize object property event handlers
     handlers.put(TopicIF.EVENT_ADD_TYPE, new TopicIF_addType(topics));
     handlers.put(TopicIF.EVENT_REMOVE_TYPE, new TopicIF_removeType(topics));
 
-    handlers.put(TopicNameIF.EVENT_SET_TYPE, new TypedIF_setType(bnames));
-    handlers.put(OccurrenceIF.EVENT_SET_TYPE, new TypedIF_setType(occurs));
-    handlers.put(AssociationRoleIF.EVENT_SET_TYPE, new TypedIF_setType(roles));
-    handlers.put(AssociationIF.EVENT_SET_TYPE, new TypedIF_setType(assocs));
+    handlers.put(TopicNameIF.EVENT_SET_TYPE, new TypedIF_setType<TopicNameIF>(bnames));
+    handlers.put(OccurrenceIF.EVENT_SET_TYPE, new TypedIF_setType<OccurrenceIF>(occurs));
+    handlers.put(AssociationRoleIF.EVENT_SET_TYPE, new TypedIF_setType<AssociationRoleIF>(roles));
+    handlers.put(AssociationIF.EVENT_SET_TYPE, new TypedIF_setType<AssociationIF>(assocs));
 
     // Register dynamic index as event listener
     for (String handler : handlers.keySet()) {
@@ -205,12 +205,12 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   /**
    * EventHandler: TypedIF.setType
    */
-  class TypedIF_setType extends EventHandler {
-    protected CollectionMap objects;
-    TypedIF_setType(CollectionMap objects) {
+  class TypedIF_setType<T extends TypedIF> extends EventHandler<T, TopicIF> {
+    protected CollectionMap<TopicIF, T> objects;
+    TypedIF_setType(CollectionMap<TopicIF, T> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
+    public void processEvent(T object, String event, TopicIF new_value, TopicIF old_value) {
       objects.move(object, old_value, new_value);
     }
   }
@@ -218,16 +218,14 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   /**
    * EventHandler: TopicIF.addType
    */
-  class TopicIF_addType extends EventHandler {
-    protected CollectionMap objects;
-    TopicIF_addType(CollectionMap objects) {
+  class TopicIF_addType extends EventHandler<TopicIF, TopicIF> {
+    protected CollectionMap<TopicIF, TopicIF> objects;
+    TopicIF_addType(CollectionMap<TopicIF, TopicIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      TopicIF topic = (TopicIF)object;
-
+    public void processEvent(TopicIF topic, String event, TopicIF new_value, TopicIF old_value) {
       // Register types
-      Collection types = topic.getTypes();
+      Collection<TopicIF> types = topic.getTypes();
       if (types.isEmpty())
         // Unregister null type
         objects.remove(null, topic);
@@ -239,16 +237,14 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   /**
    * EventHandler: TopicIF.removeType
    */
-  class TopicIF_removeType extends EventHandler {
-    protected CollectionMap objects;
-    TopicIF_removeType(CollectionMap objects) {
+  class TopicIF_removeType extends EventHandler<TopicIF, TopicIF> {
+    protected CollectionMap<TopicIF, TopicIF> objects;
+    TopicIF_removeType(CollectionMap<TopicIF, TopicIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      TopicIF topic = (TopicIF)object;
-
+    public void processEvent(TopicIF topic, String event, TopicIF new_value, TopicIF old_value) {
       // Register types
-      Collection types = topic.getTypes();
+      Collection<TopicIF> types = topic.getTypes();
       if (types.size() == 1 && types.contains(old_value))
         // Unregister null type
         objects.add(null, topic);
@@ -261,47 +257,41 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   /**
    * EventHandler: TopicIF.added
    */
-  class TopicIF_added extends EventHandler {
-    protected CollectionMap objects;
+  class TopicIF_added extends EventHandler<Object, TopicIF> {
+    protected CollectionMap<TopicIF, TopicIF> objects;
     protected String child_event;
-    TopicIF_added(CollectionMap objects, String child_event) {
+    TopicIF_added(CollectionMap<TopicIF, TopicIF> objects, String child_event) {
       this.objects = objects;
       this.child_event = child_event;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      TopicIF added = (TopicIF)new_value;
-
+    public void processEvent(Object object, String event, TopicIF added, TopicIF old_value) {
       // Register types
-      Collection types = added.getTypes();
+      Collection<TopicIF> types = added.getTypes();
       if (types.isEmpty())
         // Register the null type 
         objects.add(null, added);
       else {
-        Object[] _types = types.toArray();
-        for (int i=0; i < _types.length; i++)
-          addEvent(added, child_event, _types[i]);
+        for (TopicIF type : types)
+          addEvent(added, child_event, type);
       }
     }
   }
   /**
    * EventHandler: TopicIF.removed
    */
-  class TopicIF_removed extends EventHandler {
-    protected CollectionMap objects;
+  class TopicIF_removed extends EventHandler<Object, TopicIF> {
+    protected CollectionMap<TopicIF, TopicIF> objects;
     protected String child_event;
-    TopicIF_removed(CollectionMap objects, String child_event) {
+    TopicIF_removed(CollectionMap<TopicIF, TopicIF> objects, String child_event) {
       this.objects = objects;
       this.child_event = child_event;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      TopicIF removed = (TopicIF)old_value;
-
+    public void processEvent(Object object, String event, TopicIF new_value, TopicIF removed) {
       // Unregister types
-      Collection types = removed.getTypes();
+      Collection<TopicIF> types = removed.getTypes();
       if (!types.isEmpty()) {
-        Object[] _types = types.toArray();
-        for (int i=0; i < _types.length; i++)
-          removeEvent(removed, child_event, _types[i]);
+        for (TopicIF type : types)
+          removeEvent(removed, child_event, type);
       }
       // Unregister null type
       objects.remove(null, removed);
@@ -311,13 +301,12 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   /**
    * EventHandler: TypedIF.added
    */
-  class TypedIF_added extends EventHandler {
-    protected CollectionMap objects;
-    TypedIF_added(CollectionMap objects) {
+  class TypedIF_added<T extends TypedIF> extends EventHandler<Object, T> {
+    protected CollectionMap<TopicIF, T> objects;
+    TypedIF_added(CollectionMap<TopicIF, T> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      TypedIF added = (TypedIF)new_value;
+    public void processEvent(Object object, String event, T added, T old_value) {
       // Register type
       objects.add(added.getType(), added);
     }
@@ -325,13 +314,12 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   /**
    * EventHandler: TypedIF.removed
    */
-  class TypedIF_removed extends EventHandler {
-    protected CollectionMap objects;
-    TypedIF_removed(CollectionMap objects) {
+  class TypedIF_removed<T extends TypedIF> extends EventHandler<Object, T> {
+    protected CollectionMap<TopicIF, T> objects;
+    TypedIF_removed(CollectionMap<TopicIF, T> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      TypedIF removed = (TypedIF)old_value;
+    public void processEvent(Object object, String event, T new_value, T removed) {
       // Unregister type
       objects.remove(removed.getType(), removed);
     }
