@@ -128,9 +128,9 @@ public class Consistify {
       while (it2.hasNext()) {
         TopicNameIF bn = (TopicNameIF) it2.next();
 
-        Iterator it3 =index.getTopics(bn.getValue(), bn.getScope()).iterator();
+        Iterator<TopicIF> it3 =index.getTopics(bn.getValue(), bn.getScope()).iterator();
         while (it3.hasNext()) {
-          TopicIF source = (TopicIF) it3.next();
+          TopicIF source = it3.next();
           if (source.equals(topic))
             continue;
           MergeUtils.mergeInto(topic, source);
