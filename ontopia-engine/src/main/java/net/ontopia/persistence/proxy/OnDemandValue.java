@@ -44,7 +44,6 @@ public class OnDemandValue {
   protected FieldInfoIF finfo;
 
   protected Object value;
-  protected boolean released;
   
   public OnDemandValue() {
   }
@@ -63,25 +62,9 @@ public class OnDemandValue {
   }
 
   public Object getValue() {
-    if (released)
-      throw new OntopiaRuntimeException("Cannot get value from released value.");
-    else
       return value;
   }
 
-  public void releaseValue() {
-    if (value != null) {
-      //! if (value instanceof Reader) {
-      //!   try {
-      //!     ((Reader)value).close();
-      //!   } catch (IOException e) {
-      //!     throw new OntopiaRuntimeException(e);
-      //!   }
-      //! }
-    }
-    released = true;
-  }
-  
   public Object getValue(TransactionIF txn) {
     try {
       RDBMSAccess access = (RDBMSAccess)txn.getStorageAccess();

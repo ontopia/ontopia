@@ -39,6 +39,8 @@ import net.ontopia.utils.ReaderInputStream;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public abstract class OccurrenceTest extends AbstractTypedScopedTest {
@@ -212,6 +214,12 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     } finally {
       in.close();
     }
+  }
+
+  public void testHugeReifiedOccurrenceMerge() throws Exception {
+    TopicMapIF source = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "huge-occurrence.ltm")).read();
+    MergeUtils.mergeInto(topicmap, source);
+    topicmap.getStore().commit();
   }
   
   // --- Internal methods

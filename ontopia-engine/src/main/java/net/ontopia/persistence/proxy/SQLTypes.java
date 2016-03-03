@@ -273,7 +273,6 @@ public class SQLTypes {
             stmt.setBinaryStream(index, blob, (int)blob.getLength());
           else
             stmt.setNull(index, sql_type);
-          odv.releaseValue();
         }
         break;
       case Types.CLOB:
@@ -288,7 +287,6 @@ public class SQLTypes {
             stmt.setCharacterStream(index, clob, (int)clob.getLength());
           else
             stmt.setNull(index, sql_type);
-          odv.releaseValue();
         } else {
           throw new OntopiaRuntimeException("Unsupported CLOB value: " + value);
         }
