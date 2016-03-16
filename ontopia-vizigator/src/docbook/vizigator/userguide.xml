@@ -23,7 +23,7 @@ other keystrokes affect search box; load config menu item; -->
            for scope filtering of associations. The localization
            support could perhaps also receive more mention.-->
       <para> This document introduces the reader to Vizigator. It provides
-        guidance on the use of Vizigator to: 
+        guidance on the use of Vizigator to: </para> 
         <itemizedlist> 
           <listitem> 
             <para>visualize and navigate topic maps;</para> 
@@ -36,7 +36,7 @@ other keystrokes affect search box; load config menu item; -->
             <para>embed a visualization window in web applications built using
               Ontopia.</para> 
           </listitem> 
-        </itemizedlist></para> 
+        </itemizedlist>
       <para>Reading this document assumes some basic knowledge about topic
         maps. If you are not familiar with topic maps, try reading one of the simple
         introductions, such as 
@@ -74,7 +74,7 @@ other keystrokes affect search box; load config menu item; -->
     <section> 
       <title>Components</title> 
       <para> Vizigator consists of three components which are related/dependent
-        on each other. 
+        on each other. </para> 
         <itemizedlist> 
           <listitem> 
             <para><emphasis role="bold">VizDesktop</emphasis> -
@@ -102,7 +102,7 @@ other keystrokes affect search box; load config menu item; -->
               topic currently under view in Omnigator. To find out more about navigating
               visually in Omnigator, see <xref linkend="vp01"/></para> 
           </listitem> 
-        </itemizedlist></para> 
+        </itemizedlist>
 
         <para>Vizigator uses TouchGraph, an open source toolkit for
         graph visualization, which is maintained as a Sourceforge
@@ -176,7 +176,7 @@ other keystrokes affect search box; load config menu item; -->
   <section id="vd01"> 
     <title>VizDesktop - Getting started with Vizigator</title> 
 
-      <para>VizDesktop provides: 
+      <para>VizDesktop provides: </para> 
         <itemizedlist> 
           <listitem> 
             <para>a simple graphical topic map browser;</para> 
@@ -185,7 +185,7 @@ other keystrokes affect search box; load config menu item; -->
             <para>tools to configure views for Omnigator (VizPlugin) or your
               own application (VizLet).</para> 
           </listitem> 
-        </itemizedlist></para> 
+        </itemizedlist>
       <note> 
         <para>The VizDesktop application is developed using the GUI
         toolkit (Java Foundation Classes(JFC)/Swing) provided with
@@ -201,7 +201,7 @@ other keystrokes affect search box; load config menu item; -->
       is a Java application and requires the Java Developer Kit (JDK),
       Standard Edition Version 1.3 (or higher).</para>
       
-      <para>Starting VizDesktop: 
+      <para>Starting VizDesktop: </para> 
         <orderedlist> 
           <listitem> 
             <para><emphasis role="bold">On Windows</emphasis> execute the
@@ -213,7 +213,7 @@ other keystrokes affect search box; load config menu item; -->
               <filename>vizdesktop.sh</filename> file in
               <filename>${ONTOPIA_HOME}/bin</filename>.</para> 
           </listitem> 
-        </orderedlist></para> 
+        </orderedlist>
       <para> To set the language used in the VizDesktop interface, you can edit
         the command line in the 
         <command>.bat</command> or 
@@ -222,7 +222,7 @@ other keystrokes affect search box; load config menu item; -->
         <command>&lt;lang&gt;</command> is a two-character designation of the
         language to be used. (See <xref linkend="locsupport"/> for the list of
         supported languages.) Alternatively, you can add the parameter when invoking
-        the batch files: 
+        the batch files: </para> 
         <orderedlist> 
           <listitem> 
             <para><emphasis role="bold">On Windows</emphasis>: 
@@ -232,7 +232,7 @@ other keystrokes affect search box; load config menu item; -->
             <para><emphasis role="bold">On UNIX/Linux</emphasis>: 
               <command>vizdesktop.sh --lang=&lt;lang&gt;</command></para> 
           </listitem> 
-        </orderedlist></para> 
+        </orderedlist>
       <para>Please send all comments to 
         <email>support@ontopia.net</email>. Bugs can be reported in 
         <ulink url="http://www.ontopia.net/bugs/">the bug
@@ -244,7 +244,7 @@ other keystrokes affect search box; load config menu item; -->
       <section> 
         <title>Primary graphical conventions</title> 
         <para>Conventions for visualization of topic map constructs are as
-          follows: 
+          follows: </para> 
           <itemizedlist> 
             <listitem> 
               <para><emphasis role="bold">Topics</emphasis> appear as nodes
@@ -257,7 +257,7 @@ other keystrokes affect search box; load config menu item; -->
                 have a name within a chosen scope, the <firstterm>unconstrained
                 scope</firstterm> topic name is used.</para> 
               <para>The algorithm for determining which topic name to display in
-                the unconstrained scope is as follows: 
+                the unconstrained scope is as follows: </para> 
                 <itemizedlist> 
                   <listitem> 
                     <para>use an unscoped name (randomly selected if more than
@@ -267,7 +267,7 @@ other keystrokes affect search box; load config menu item; -->
                     <para>else, use a scoped name (randomly selected if more
                       than 1).</para> 
                   </listitem> 
-                </itemizedlist> </para> 
+                </itemizedlist> 
               <para> 
                 <note> 
                   <para>Very long topic names will be shortened
@@ -298,7 +298,7 @@ other keystrokes affect search box; load config menu item; -->
                     VizDesktop, only in VizLet and VizPlugin.</para> 
                 </note></para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <para>If no predefined configuration is associated with a topic map,
           each type of topic and each type of association is automatically and randomly
           assigned a color each time the topic map is opened. These colors can be changed
@@ -398,7 +398,7 @@ other keystrokes affect search box; load config menu item; -->
       <section id="sl01"> 
         <title>Screen Layout</title> 
         <para>The VizDesktop window includes a main menu bar, three scroll
-          bars, a number control, and a search box: 
+          bars, a number control, and a search box: </para> 
           <itemizedlist> 
             <listitem> 
               <para><emphasis>VizDesktop Window</emphasis>. The file names of
@@ -454,7 +454,7 @@ other keystrokes affect search box; load config menu item; -->
                 just above the zoom bar at the top of the window. See <xref
                 linkend="search01"/> for details on the use of the search box.</para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <figure> 
           <title> VizDesktop user interface</title><graphic
           fileref="viz_desktop_ui_description.png"/> 
@@ -466,7 +466,7 @@ other keystrokes affect search box; load config menu item; -->
       </section> 
       <section id="menubar"> 
         <title>Menus</title> 
-        <para>The main menu bar consists of the following menu items: 
+        <para>The main menu bar consists of the following menu items: </para> 
           <itemizedlist> 
             <listitem> 
               <para><emphasis role="bold">File</emphasis> - menu choices
@@ -526,7 +526,7 @@ other keystrokes affect search box; load config menu item; -->
               <para><emphasis role="bold">Help</emphasis> - information on
                 Vizigator.</para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <note> 
           <para>If a menu item has been assigned a keyboard short cut, it is
             shown to the right of the item's name.</para> 
@@ -559,7 +559,7 @@ other keystrokes affect search box; load config menu item; -->
           </listitem> 
         </itemizedlist> 
         <para> Hints for achieving a sensible display of a very large topic
-          map: 
+          map: </para> 
           <itemizedlist> 
             <listitem> 
               <para>Setting the zoom bar furthest to the left will force the
@@ -592,12 +592,12 @@ other keystrokes affect search box; load config menu item; -->
               <para>To quickly find a specific topic, use the search box (see
                 <xref linkend="search01"/>).</para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
       </section> 
       <section id="nav"> 
         <title>Navigating the graph</title> 
         <para>The following section gives a short introduction and overview of
-          the default actions available using the mouse: 
+          the default actions available using the mouse: </para> 
           <itemizedlist> 
             <listitem> 
               <para><emphasis>left mouse button; single click on a
@@ -640,7 +640,7 @@ other keystrokes affect search box; load config menu item; -->
               <para><emphasis>mouse-over edge (association) </emphasis> -
                 displays the name of the association. </para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <note> 
           <para>For changing the default mouse actions, see
             <xref linkend="genoptions"/></para> 
@@ -787,7 +787,7 @@ other keystrokes affect search box; load config menu item; -->
       <section> 
         <title>The Properties box</title> 
         <para>The Properties box is accessed via a topic's context menu (right
-          mouse click). Where applicable, it contains: 
+          mouse click). Where applicable, it contains: </para> 
           <itemizedlist> 
             <listitem> 
               <para>The topic's Topic Name(s);</para> 
@@ -802,7 +802,7 @@ other keystrokes affect search box; load config menu item; -->
               <para>The list of Occurrences associated with the topic, grouped
                 by occurrence type.</para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <figure id="propertiesboxpix"> 
           <title>Properties Box</title><graphic fileref="propertiesbox.png"/> 
         </figure> 
@@ -831,7 +831,7 @@ other keystrokes affect search box; load config menu item; -->
       <section id="configcomponents"> 
         <title>Components of a configuration</title> 
         <para>A configuration is defined by the current state of each of the
-          items under the following menus: 
+          items under the following menus: </para> 
           <!-- these aren't command-line commands; menuchoice would work -->
           <itemizedlist> 
             <listitem> 
@@ -856,7 +856,7 @@ other keystrokes affect search box; load config menu item; -->
               <para> 
                 <command>Association Scoping</command></para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <para>Optionally, if a Start Topic is specified, it will be saved as
           part of the configuration.</para> 
         <note> 
@@ -936,7 +936,7 @@ default type.</para>
           <command>Options\General</command> menu item brings up the
           multi-tabbed 
           <command>General Options</command> dialog box, which is used to set
-          more general parameters: 
+          more general parameters: </para> 
           <itemizedlist> 
             <listitem> 
               <para><emphasis>Interaction</emphasis> - mouse button default
@@ -961,7 +961,7 @@ default type.</para>
                 <command>city</command>, regardless of whether instances of the
                 topic type are also removed.</para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
       </section>
 
 <section id="sect-type-precedence">
@@ -992,7 +992,7 @@ which is comes first in the precedence order.
           scoping topics available in the topic map (if any) to be applied to the
           Association Types of all topics. </para> 
         <para>The menu is divided into two sections. The top section has three
-          options: 
+          options: </para> 
           <itemizedlist> 
             <listitem> 
               <para><command>Show All</command>: In this mode, the scope filter
@@ -1009,7 +1009,7 @@ which is comes first in the precedence order.
                 filter is on, and all associations which are in the unconstrained scope or
                 whose scope contain all of the chosen scoping topics will be shown.</para> 
             </listitem> 
-          </itemizedlist></para> 
+          </itemizedlist>
         <para>The lower section contains one item for every topic that occurs
           in the scope of an association in the topic map, sorted alphabetically. If the
           scoping topics are instances of more than one type (say, if some are instances
@@ -1056,7 +1056,7 @@ which is comes first in the precedence order.
 
     <section> 
       <title>Comparing VizLet to VizDesktop</title> 
-      <para>The following restrictions apply to VizLet compared to VizDesktop: 
+      <para>The following restrictions apply to VizLet compared to VizDesktop: </para> 
         <itemizedlist> 
           <listitem> 
             <para>The configuration cannot be changed. That is, filter
@@ -1067,11 +1067,11 @@ which is comes first in the precedence order.
             <para>The topic map to be vizigated is given in the settings loaded
               from the server and cannot be changed.</para> 
           </listitem> 
-        </itemizedlist></para> 
-      <para>The following differences apply to VizLet compared to VizDesktop: 
+        </itemizedlist>
+      <para>The following differences apply to VizLet compared to VizDesktop:</para>  
         <itemizedlist> 
           <listitem> 
-            <para>Each time VizLet is entered, it will be: 
+            <para>Each time VizLet is entered, it will be: </para> 
               <itemizedlist> 
                 <listitem> 
                   <para>in Topic View;</para> 
@@ -1083,7 +1083,7 @@ which is comes first in the precedence order.
                   <para>with the topic used to initiate vizigation set as the
                     Focus Node.</para> 
                 </listitem> 
-              </itemizedlist> </para> 
+              </itemizedlist> 
           </listitem> 
           <listitem> 
             <para>There is no Map View.</para> 
@@ -1110,7 +1110,7 @@ which is comes first in the precedence order.
               scope of associations in the topic map fragment held by the VizLet at that
               time.</para> 
           </listitem> 
-        </itemizedlist></para> 
+        </itemizedlist>
     </section> 
     
 <section id="usevizlet"> 
@@ -1307,7 +1307,7 @@ url="http://www.w3.org/TR/html401/struct/objects.html#h-13.4">the HTML
         you only have a single configuration file you can just refer to it directly and
         store it on the server as a normal file.</para> 
       <para>If you experience unexpected results with VizLet, please do the
-        following: 
+        following: </para> 
         <itemizedlist> 
           <listitem> 
             <para>empty the browser cache, restart the brower, and try again,
@@ -1321,7 +1321,7 @@ url="http://www.w3.org/TR/html401/struct/objects.html#h-13.4">the HTML
             <para>check the Java Console for exceptions, which we would very
               much like to see in any bug reports.</para> 
           </listitem> 
-        </itemizedlist></para> 
+        </itemizedlist>
 
 
 <section id="sect-menufile">
