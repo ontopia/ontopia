@@ -36,7 +36,7 @@
 -->
 <article>
 <title>&ted;: The Topic Map Editor</title>
-<subtitle>User&#8217;s Guide</subtitle>
+<subtitle>User's Guide</subtitle>
 
 <!--Additions for future:
     - localization support;
@@ -55,7 +55,7 @@
 <releaseinfo>5.1</releaseinfo>
 
 <abstract>
-<para>This is the user guide for Ontopia&#8217;s self-configuring, ontology-driven
+<para>This is the user guide for Ontopia's self-configuring, ontology-driven
 Topic Maps editor, &ted;. A topic map consists of both an ontology
 and an instance of that ontology; with &ted;, you can edit each of these.
 The ontology defines the rules for what can go into the instance, and
@@ -90,8 +90,8 @@ this User Guide. Please send them to
 use your web browser, while the server is a web server bundled with the
 distribution. The server-side application is built using the
 <productname>Navigator Framework</productname> and <productname>Web
-Editor Framework</productname>, which are parts of the
-<productname>Ontopia Knowledge Suite&#x2122;</productname>. &ted; is
+Editor Framework</productname>, which are parts of 
+<productname>Ontopia</productname>. &ted; is
 accessible within &ots;, an application that provides easy access to
 &ted;, <productname>Omnigator</productname>, and
 <productname>Vizigator</productname>.</para>
@@ -112,7 +112,7 @@ accessible within &ots;, an application that provides easy access to
 <section id="overview">
 <title>Application architecture</title>
 
-<para>&ted;&#8217;s primary purpose is to enable the manual creation and
+<para>&ted;'s primary purpose is to enable the manual creation and
 maintenance of topic maps that may be based on a variety of ontologies.
 In order to be able to provide the most intuitive possible user
 interface for such a generic application, &ted; is
@@ -138,7 +138,7 @@ architecture and the navigation paths between the various parts of the
 application are shown in <xref linkend="int-ovr"/>.</para>
 
 <figure id="int-ovr">
-<title>Overview of &ted;&#8217;s architecture</title>
+<title>Overview of &ted;'s architecture</title>
 <graphic fileref="images/interface_overview.png"/>
 </figure>
 </section>
@@ -146,14 +146,14 @@ application are shown in <xref linkend="int-ovr"/>.</para>
 <section id="components">
 <title>Configuring and populating topic maps</title>
 
-<para>&ted;&#8217;s two primary functions provide a comprehensive Topic Maps
+<para>&ted;'s two primary functions provide a comprehensive Topic Maps
 editing environment.</para>
 
 <orderedlist>
 <listitem>
 <para><emphasis role="bold">Configuring a topic map</emphasis>: ontology
 and schema creation</para>
-<para>&ted;&#8217;s Type Configuration Pages are used by the ontology
+<para>&ted;'s Type Configuration Pages are used by the ontology
 designer to define the topic, name, association, association role, and
 occurrence types that will be available to creators of the instance
 topics. To take an example, when an author creates a topic of type
@@ -196,13 +196,13 @@ A</ulink>.</para>
 <title>Topic Map Index Page</title>
 
 <para>Before you can create either the ontology or the instance, you
-have to open a topic map, so let&#8217;s start there.</para>
+have to open a topic map, so let's start there.</para>
 
 <para>When you first access &ted; from &ots;, you are taken to the
 Topic Map Index Page, see <xref linkend="wel-pg-fig"/>. On the left, is a column
 for <guilabel>Ontopoly Topic Maps</guilabel>, in the middle is the list
 of <guilabel>Other Topic Maps</guilabel> (also referred to as
-&#8220;non-&ted; topic maps&#8221;), and on the right is the area for
+"non-&ted; topic maps"), and on the right is the area for
 creating new topic maps. Another column, <guilabel>Missing Topic
 Maps</guilabel>, will also appear on this page if an &ted; topic map has
 been deleted from outside &ted;. For more information on deleting &ted;
@@ -215,7 +215,7 @@ topic maps, please see <xref linkend="del-tm"/>.</para>
 
 <para>&ted; imports topic maps in the XTM 1.0 and 2.0, CTM, LTM, and
 TM/XML syntaxes; it will also import RDF. By default &ted; creates
-topic maps as XTM files in the Omnigator&#8217;s
+topic maps as XTM files in the Omnigator's
 <filename>topicmaps/</filename> directory. For information on
 exporting from &ted;, see <xref linkend="export"/>.</para>
 
@@ -229,7 +229,7 @@ along with it topics that let it interact with the &ted; application and
 topics that define the schema (the <firstterm>system
 topics</firstterm>). You can always export a topic map from &ted; to
 remove the system topics, but they are needed for the topic map to be
-understood within the application. (It&#8217;s the system topics that
+understood within the application. (It's the system topics that
 make it possible for &ted; to automatically configure its instance
 editor for maximum ease of use.) Similarly, pre-existing non-&ted; topic
 maps will need these system topics to be added. &ted; automatically adds
@@ -278,7 +278,7 @@ example, if occurrences of a particular type (say,
 <emphasis>person</emphasis> topic, then &ted; may create a rule allowing
 a maximum of one <emphasis>email</emphasis> occurrence per
 <emphasis>person</emphasis> topic. You may want to relax the rule,
-however, using &ted;&#8217;s ontology editor, in order to allow for the
+however, using &ted;'s ontology editor, in order to allow for the
 possibility of multiple <emphasis>email</emphasis> occurrences in the
 future. For this reason you should always examine the ontology generated
 by &ted; when importing an external topic map, and adjust it to reflect
@@ -307,10 +307,10 @@ used to generate a file name, with the extension
 <title>Our example topic map</title>
 
 <para>A simple topic map example will be used throughout the next two
-sections to illustrate &ted;&#8217;s functionality. It is a topic map
+sections to illustrate &ted;'s functionality. It is a topic map
 that captures information about artists, the albums they have made, and
-tracks on the album. We've called it <citetitle>Jill&#8217;s
-Music</citetitle> and it&#8217;s based on an ontology called
+tracks on the album. We've called it <citetitle>Jill's
+Music</citetitle> and it's based on an ontology called
 <citetitle>MyMusic</citetitle>; both are included in the Ontopoly
 distribution.</para>
 
@@ -330,15 +330,15 @@ relationships between those subjects. Each of the subjects will be of a
 certain type, e.g., Puccini and Verdi are composers, La Scala and Fenice
 are opera houses, Milan and Venice are cities, etc.</para>
 
-<para>Using &ted;&#8217;s Type Configuration Pages, you will create the
+<para>Using &ted;'s Type Configuration Pages, you will create the
 <firstterm>typing topics</firstterm> that will control your topic map: topic,
 association, occurrence, role and name types. You will also create the rules
 for how the typing topics are used together.</para>
 
-<para>To provide a practical introduction to &ted;&#8217;s
-functionality, we&#8217;ve created an ontology for a music organization
+<para>To provide a practical introduction to &ted;'s
+functionality, we've created an ontology for a music organization
 topic map, <citetitle>MyMusic</citetitle>, and an example topic map that
-uses that ontology, <citetitle>Jill&#8217;s Music</citetitle>.</para>
+uses that ontology, <citetitle>Jill's Music</citetitle>.</para>
 
 <para>Here are the topic types we will be working with:</para>
 
@@ -367,7 +367,7 @@ Is a Member of</literallayout>
 
 <para>When you open an existing or newly created topic map, you are
 taken to the Topic Type Index Page, see <xref linkend="tt1"/>. Here
-you&#8217;ll see menu buttons for each kind of typing topic: topic
+you'll see menu buttons for each kind of typing topic: topic
 types, occurrence types, association types, role types, and name types.
 The <emphasis role="bold">Ontology</emphasis> tab is available on every
 page in &ted;. Clicking on it will always bring you to the Topic Type
@@ -389,7 +389,7 @@ you to the appropriate Configuration Page, as described below.</para>
 </figure>
 
 <para>Creating an ontology is an iterative process. Through
-&ted;&#8217;s interface, you can navigate easily between the Type Index
+&ted;'s interface, you can navigate easily between the Type Index
 Pages and the Type Configuration Pages. In the following we describe
 each kind of Type Configuration Page in turn, but in your work you will
 find yourself moving back and forth throughout the process.</para>
@@ -438,7 +438,7 @@ created.</para>
 </listitem>
 <listitem id="tt-config-hidden">
 <para><guilabel>Hidden</guilabel>: In some cases topic types should only
-be seen by the ontology designer, and that&#8217;s the perfect use of
+be seen by the ontology designer, and that's the perfect use of
 this choice as the topic will not be available in the instance
 editor.</para>
 </listitem>
@@ -461,10 +461,10 @@ Configuration Page for a pre-existing type,
 <section id="tt-config-page">
 <title>Topic Type Configuration Page</title>
 <para>Configuration pages control what the instance authors will see as
-they create topics of a given type. Let&#8217;s look at the Topic Type
+they create topics of a given type. Let's look at the Topic Type
 Configuration Page in <xref linkend="tt-config-1"/>. <!-- Some standard
 components appear that are available on all pages. The page type
-(&#8220;Topic Type Configuration&#8221;) appears at the end of the
+("Topic Type Configuration") appears at the end of the
 Breadcrumbs, and the topic type being created
 (<emphasis>Artist</emphasis>) is just above that in red.--></para>
 
@@ -472,7 +472,7 @@ Breadcrumbs, and the topic type being created
 top part lists the core properties of the typing topic (its name,
 subject identifier and description fields plus abstract, superclass
 and subclass fields which are specific to topic types); the lower part
-of the page lists those properties, or &#8220;fields&#8221; (i.e.,
+of the page lists those properties, or "fields" (i.e.,
 names, identifiers, occurrences, and associations), that will apply to
 instances of the type; the right part contains operations, that can be
 performed on the topic type, and links to other relevant pages.</para>
@@ -544,7 +544,7 @@ associations (see <xref linkend="assoc-types"/> and <xref
 linkend="role-types"/>), you can check this box, rather than create a
 separate role type. In our example, we want to use
 <emphasis>Artist</emphasis> as a role type in associations of type
-&#8220;Album created by&#8221;, so this box is checked.</para>
+"Album created by", so this box is checked.</para>
 </listitem-->
 </itemizedlist>
 </section>
@@ -625,7 +625,7 @@ assign a new field for the given name type by clicking the
 &assign-field; icon. Only name types not already assigned to this
 topic type will be shown in the list. By default, there is just one
 name type: <emphasis>Name</emphasis>, which is for general-purpose,
-&#8220;untyped&#8221; names. In our sample topic map the
+"untyped" names. In our sample topic map the
 <emphasis>Name</emphasis> name is already assigned, but we get another
 name <emphasis>Nickname</emphasis> that we can assign from the
 list.</para>
@@ -729,7 +729,7 @@ Recommendations</ulink>.</para>
 </section>
 <section id="tt-config-existing-fields">
 <title>Editing existing fields</title>
-<para>Now let&#8217;s move on down to the existing fields. As you can
+<para>Now let's move on down to the existing fields. As you can
 see from the figure below the <emphasis>Artist</emphasis> topic type has
 five fields assigned. Each field is displayed in a separate table
 row.</para>
@@ -784,7 +784,7 @@ instead.</para>
 
 <para>We now know how to add fields to a topic type. However, most of
 these fields have to be defined by the ontology designer through the use
-of the other Configuration Pages, so let&#8217;s move on.</para>
+of the other Configuration Pages, so let's move on.</para>
 </section>
 </section>
 
@@ -951,9 +951,9 @@ uni-directional, i.e., Tosca is composed by Puccini. However, it also
 represents the relationship expressed as, for example, Puccini composed
 Tosca. Topic Maps accomplishes this bi-directionality, unambiguously, by
 assigning roles to the players. The relationship expressed in
-<xref linkend="assoc-bidirectional"/> can be described as, &#8220;In the
+<xref linkend="assoc-bidirectional"/> can be described as, "In the
 composed-by relationship, the role of composer is played by Puccini and
-the role of work is played by Tosca.&#8221;</para>
+the role of work is played by Tosca."</para>
 
 <!--
 <note>
@@ -968,7 +968,7 @@ role player.</para>
 <title>Associations are bi-directional</title>
 <graphic fileref="images/doc_assoc_bidirectional.png"/>
 </figure>
-<para>&ted;&#8217;s Association Type Configuration Page helps you to
+<para>&ted;'s Association Type Configuration Page helps you to
 define the association type, roles their role types and their
 corresponding role player types, and the labels for role fields as
 seen from the perspective of each role player.</para>
@@ -1006,7 +1006,7 @@ checkbox in the top portion of the form,
 which is the same from both (or all) directions. The teacher/pupil
 relation is not symmetric, because the two participants are doing
 different things, whereas the is-neighbour relation is symmetric,
-since there&#8217;s no difference between the two neighbours. In one
+since there's no difference between the two neighbours. In one
 sense, you can say the participants in a symmetric relationship are
 equal, which does not hold for created-by, killed-by, eaten-by, but
 does hold for works-with, is-a-friend-of, is-a-sibling-of,
@@ -1032,7 +1032,7 @@ association field which has two role fields.</para>
 cases, there will be two role players and therefore two role boxes. In
 symmetric associations (and unary associations), there is only one role
 box. It is also possible to have more than two role players (in what are
-known as &#8220;n-ary associations&#8221;); an example of a ternary
+known as "n-ary associations"); an example of a ternary
 association (one with three role players) would be a perpetrator, a
 victim, and a cause of death in a "killed / killed-by"
 association.</para>
@@ -1333,10 +1333,10 @@ number</para>
 
 <itemizedlist>
 <listitem>
-<para><guilabel>ID</guilabel> &#8212; the file name</para>
+<para><guilabel>ID</guilabel> - the file name</para>
 </listitem>
 <listitem>
-<para><guilabel>Ontology version</guilabel> &#8212; this refers to the
+<para><guilabel>Ontology version</guilabel> - this refers to the
 version of the &ted; system topics ontology.</para>
 </listitem>
 </itemizedlist-->
@@ -1359,7 +1359,7 @@ the Instance Editing Page for a topic that has been found to be invalid,
 and <emphasis>Individual Artist</emphasis> is a link to the Topic Type
 Configuration Page for the invalid topic. <emphasis>Create
 album</emphasis> is the invalid field and the reason is given as being a
-&#8220;missing required field&#8221;. To fix this error, an instance
+"missing required field". To fix this error, an instance
 author can add a value for this field. Alternatively, although less
 common, an ontology designer might decide that the field was erroneously
 given a required cardinality and adjust the rules via the Topic Type
@@ -1608,7 +1608,7 @@ validation errors.</para>
 </section>
 
 <section>
-<title>Changing a topic&#8217;s type</title>
+<title>Changing a topic's type</title>
 
 <para>Frequently, it is easier to create a new instance from another
 instance, rather than going back to the Instance Index Page. However
@@ -1623,7 +1623,7 @@ For example, in an employee database, employees might be typed by their
 status, such as probationary, tenured, retired, etc. As their status
 changes, their topic type might change as well.</para>
 
-<para>Changing a topic&#8217;s type can lead to a number of knock-on
+<para>Changing a topic's type can lead to a number of knock-on
 effects that require action. For illustration purposes in <xref
 linkend="change-type"/>, the <emphasis>Individual Artist</emphasis>
 type topic <emphasis>Sir Paul McCartney</emphasis> has been changed to
@@ -1642,7 +1642,7 @@ artist</emphasis> will again show the original fields with the
 original values.</para>
 
 <figure id="change-type">
-<title>Messages when changing a topic&#8217;s type</title>
+<title>Messages when changing a topic's type</title>
 <graphic fileref="images/doc_change_type.png" width="75%"/>
 </figure>
 </section>
@@ -2275,7 +2275,7 @@ privileges.</para>
 
 <appendix id="appA">
 <title>User interface conventions</title>
-<para>This section describes general aspects of &ted;&#8217;s user
+<para>This section describes general aspects of &ted;'s user
 interface.</para>
 
 <section>
@@ -2833,7 +2833,7 @@ configuration</para>
 licenses. In a Developer license, &ted; may be used by a single user. More
 significantly, &ted; can be built into a complete application that would be
 available to mutliple users using a Runtime license of the OKS. Application
-designers may also modify &ted;&#8217;s look-and-feel. User management is available
+designers may also modify &ted;'s look-and-feel. User management is available
 to grant or restrict access to the specific components, see
 <xref linkend="components"/></para>
 
@@ -2843,7 +2843,7 @@ held in memory until the user presses the
 file storage.</para>
 
 <para>In the Enterprise Edition, the edits are continually saved to
-the user&#8217;s choice of RDBMS.</para>
+the user's choice of RDBMS.</para>
 
 </listitem>
 </itemizedlist></para>
