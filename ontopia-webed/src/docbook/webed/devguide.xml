@@ -1869,8 +1869,11 @@ from scratch.
 There is one more situation in which this action is often used, and
 that is when the topic being edited only can have a single association
 of the edited type. Let's say that tasks can have a status (and only
-one), which is indicated with an association like this (in LTM):
+one), which is indicated with an association like this (in LTM):</para>
+
 <literallayout>has-status(implement-x : task, wait : status)</literallayout>.
+
+<para>
 This means the task is waiting for tasks it depends on to be finished.
 The example below shows how we would edit this type of association.
 </para>
