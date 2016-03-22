@@ -19,8 +19,7 @@ mapping vocabulary.
 
 <para>
 Please note that this document is not a formal specification from any
-recognized standards body, but a Technical Report published by <ulink
-url="http://www.ontopia.net">Ontopia</ulink>, a commercial company,
+recognized standards body, but a Technical Report published by Ontopia,
 for the convenience of all interested parties. The specification may
 be taken up by some standards body at some point, but no initiatives
 in this direction have been taken as yet.
@@ -389,15 +388,6 @@ topic item is found, create one.
 <!-- ===== BIBLIOGRAPHY ========================================================== -->
 <bibliography>
 
-<biblioentry id="tmdm">
-<abbrev>TMDM</abbrev>
-<title>ISO/IEC 13250-2: Topic Maps &#x2014; Data Model</title>
-<orgname>International Organization for Standardization</orgname>
-<address><city>Geneva</city>
-         <country>Switzerland</country></address>
-<releaseinfo>Forthcoming</releaseinfo>
-</biblioentry>
-
 <biblioentry id="rdfdm">
 <abbrev>RDF</abbrev>
 <title>Resource Description Framework (RDF): Concepts and Abstract
@@ -410,6 +400,14 @@ Syntax</title>
 <releaseinfo>W3C Recommendation 10 February 2004</releaseinfo>
 </biblioentry>
 
+<biblioentry id="tmdm">
+<abbrev>TMDM</abbrev>
+<title>ISO/IEC 13250-2: Topic Maps &#x2014; Data Model</title>
+<orgname>International Organization for Standardization</orgname>
+<address><city>Geneva</city>
+         <country>Switzerland</country></address>
+<releaseinfo>Forthcoming</releaseinfo>
+</biblioentry>
 </bibliography>
 
 
