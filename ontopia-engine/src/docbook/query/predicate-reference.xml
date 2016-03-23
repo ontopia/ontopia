@@ -124,79 +124,6 @@ predicate finds the type of the association.
 </refentry>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<refentry id="p-equal">
-<refnamediv>
-<refname>=</refname>
-<refpurpose>
-Compares two values to ensure they are equal.
-</refpurpose>
-</refnamediv>
-
-<refsect1>
-<title>Parameters</title>
-
-<informaltable>
-<tgroup cols="3">
-<thead>
-<row>
-<entry>Name</entry>
-<entry>Type</entry>
-<entry>Must be bound</entry>
-<entry>Required</entry>
-<entry>Description</entry>
-</row>
-</thead>
-<tbody>
-<row>
-<entry>v1</entry>
-<entry>object</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The first value to compare.</entry>
-</row>
-<row>
-<entry>v2</entry>
-<entry>object</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The second value to compare.</entry>
-</row>
-</tbody>
-</tgroup>
-</informaltable>
-</refsect1>
-
-<refsect1>
-<title>Description</title>
-
-<para>
-The predicate is true when the two values are equal using the same
-comparison rule as <xref linkend="p-not-equal"/>. Note that at least
-one of the values must be present. (That is, it cannot compare two
-unbound variables.)
-</para>
-
-<para>
-Note that unlike <xref linkend="p-not-equal"/> this predicate
-<emphasis>can</emphasis> produce new values in columns.
-</para>
-
-<example>
-<title>Find all operas premiered on a given date</title>
-<literallayout>premiere-date($OPERA, $DATE),
-$DATE = "1870 (22 Feb)"?</literallayout>
-</example>
-
-<para>
-This query will first set <symbol>$DATE</symbol> to the given date,
-then find all operas premiered on that date. (Thanks to the query
-optimizer; if that is turned off the query will be rather less
-efficient, if not really slow.)
-</para>
-</refsect1>
-</refentry>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <refentry id="p-less-than">
 <refnamediv>
 <refname>&lt;</refname>
@@ -316,6 +243,79 @@ only filter out matches.
 <literallayout>premiere-date($OPERA, $DATE),
 $DATE &lt;= "1900"?</literallayout>
 </example>
+</refsect1>
+</refentry>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<refentry id="p-equal">
+<refnamediv>
+<refname>=</refname>
+<refpurpose>
+Compares two values to ensure they are equal.
+</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Parameters</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Type</entry>
+<entry>Must be bound</entry>
+<entry>Required</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>v1</entry>
+<entry>object</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The first value to compare.</entry>
+</row>
+<row>
+<entry>v2</entry>
+<entry>object</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The second value to compare.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</refsect1>
+
+<refsect1>
+<title>Description</title>
+
+<para>
+The predicate is true when the two values are equal using the same
+comparison rule as <xref linkend="p-not-equal"/>. Note that at least
+one of the values must be present. (That is, it cannot compare two
+unbound variables.)
+</para>
+
+<para>
+Note that unlike <xref linkend="p-not-equal"/> this predicate
+<emphasis>can</emphasis> produce new values in columns.
+</para>
+
+<example>
+<title>Find all operas premiered on a given date</title>
+<literallayout>premiere-date($OPERA, $DATE),
+$DATE = "1870 (22 Feb)"?</literallayout>
+</example>
+
+<para>
+This query will first set <symbol>$DATE</symbol> to the given date,
+then find all operas premiered on that date. (Thanks to the query
+optimizer; if that is turned off the query will be rather less
+efficient, if not really slow.)
+</para>
 </refsect1>
 </refentry>
 
@@ -736,6 +736,74 @@ database.
 </refentry>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<refentry id="p-datatype">
+<refnamediv>
+<refname>datatype</refname>
+<refpurpose>
+Finds the datatype of an occurrence or variant name.
+</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Parameters</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Type</entry>
+<entry>Must be bound</entry>
+<entry>Required</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>object</entry>
+<entry>variant, occurrence</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The object having the datatype.</entry>
+</row>
+<row>
+<entry>datatype</entry>
+<entry>string</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The URI of the object's datatype, as a string.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</refsect1>
+
+<refsect1>
+<title>Description</title>
+
+<para>
+The predicate is true when the <symbol>object</symbol> has the
+<symbol>datatype</symbol> as its datatype URI. The predicate can be
+used to find the datatype of an object, all objects with a specific
+datatype, or all object/datatype combinations.
+</para>
+
+<example>
+<title>Find all occurrences with integer values</title>
+<literallayout>select $OCC from
+  occurrence($TOPIC, $OCC),
+  datatype($OCC, "http://www.w3.org/2001/XMLSchema#integer")?
+</literallayout>
+</example>
+
+<para>
+This query will find all occurrences in the topic map, then remove the
+ones whose datatype is not the XML Schema integer datatype.
+</para>
+</refsect1>
+</refentry>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <refentry id="p-direct-instance-of">
 <refnamediv>
 <refname>direct-instance-of</refname>
@@ -941,6 +1009,77 @@ abstract types. One example of this in the Italian Opera topic map is
 "place". There are lots of places, such as cities, regions, and
 countries, but they are always defined as instances of one of the more
 specific types, never as just "place".
+</para>
+</refsect1>
+</refentry>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<refentry id="p-item-identifier">
+<refnamediv>
+<refname>item-identifier</refname>
+<refpurpose>
+Used to query the item identifiers of a topic map construct.
+</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Parameters</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Type</entry>
+<entry>Must be bound</entry>
+<entry>Required</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>object</entry>
+<entry>topic map, topic, topic name, variant, occurrence, association,
+association role</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The object having the item identifier.</entry>
+</row>
+<row>
+<entry>locator</entry>
+<entry>string</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The item identifier of the object.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</refsect1>
+
+<refsect1>
+<title>Description</title>
+
+<para> The predicate is true when the <symbol>locator</symbol> is a
+item identifier for the <symbol>object</symbol>. This is useful for
+finding the item identifiers of a particular object, for looking up
+the object that has a particular item identifier, or for listing all
+item identifiers in the topic map.  </para>
+
+<example>
+<title>Find all non-topics which have item identifiers</title>
+<literallayout>select $OBJECT from
+  item-identifier($OBJECT, $LOC),
+  not(topic($OBJECT))?
+</literallayout>
+</example>
+
+<para>
+This query will, if run against a topic map that was loaded from an
+XTM file, find all objects in the topic map other than topics which
+had <symbol>id</symbol> attributes. It works by first finding all
+objects which have item identifiers (and the item identifiers), then
+remove the rows where the object is a topic.
 </para>
 </refsect1>
 </refentry>
@@ -1415,77 +1554,6 @@ names.
 </refentry>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<refentry id="p-item-identifier">
-<refnamediv>
-<refname>item-identifier</refname>
-<refpurpose>
-Used to query the item identifiers of a topic map construct.
-</refpurpose>
-</refnamediv>
-
-<refsect1>
-<title>Parameters</title>
-
-<informaltable>
-<tgroup cols="3">
-<thead>
-<row>
-<entry>Name</entry>
-<entry>Type</entry>
-<entry>Must be bound</entry>
-<entry>Required</entry>
-<entry>Description</entry>
-</row>
-</thead>
-<tbody>
-<row>
-<entry>object</entry>
-<entry>topic map, topic, topic name, variant, occurrence, association,
-association role</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The object having the item identifier.</entry>
-</row>
-<row>
-<entry>locator</entry>
-<entry>string</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The item identifier of the object.</entry>
-</row>
-</tbody>
-</tgroup>
-</informaltable>
-</refsect1>
-
-<refsect1>
-<title>Description</title>
-
-<para> The predicate is true when the <symbol>locator</symbol> is a
-item identifier for the <symbol>object</symbol>. This is useful for
-finding the item identifiers of a particular object, for looking up
-the object that has a particular item identifier, or for listing all
-item identifiers in the topic map.  </para>
-
-<example>
-<title>Find all non-topics which have item identifiers</title>
-<literallayout>select $OBJECT from
-  item-identifier($OBJECT, $LOC),
-  not(topic($OBJECT))?
-</literallayout>
-</example>
-
-<para>
-This query will, if run against a topic map that was loaded from an
-XTM file, find all objects in the topic map other than topics which
-had <symbol>id</symbol> attributes. It works by first finding all
-objects which have item identifiers (and the item identifiers), then
-remove the rows where the object is a topic.
-</para>
-</refsect1>
-</refentry>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <refentry id="p-subject-identifier">
 <refnamediv>
 <refname>subject-identifier</refname>
@@ -1704,6 +1772,67 @@ that have at least one name.
 </refentry>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<refentry id="p-topicmap">
+<refnamediv>
+<refname>topicmap</refname>
+<refpurpose>
+Finds the topic map.
+</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Parameters</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Type</entry>
+<entry>Must be bound</entry>
+<entry>Required</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>topicmap</entry>
+<entry>topic map</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The topic map.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</refsect1>
+
+<refsect1>
+<title>Description</title>
+
+<para>
+The predicate is true when the <symbol>topicmap</symbol> is the topic
+map itself. This is useful for finding the topic map.
+</para>
+
+<example>
+<title>Find the name of the topic map</title>
+<literallayout>select $VALUE from
+  topicmap($TM),
+  reifies($TMTOPIC, $TM),
+  topic-name($TMTOPIC, $NAME),
+  value($NAME, $VALUE)?
+</literallayout>
+</example>
+
+<para>
+This query will first find the topic map, then the topic that reifies
+it (if any), then all names of that topic, then their string values.
+</para>
+</refsect1>
+</refentry>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <refentry id="p-topic-name">
 <refnamediv>
 <refname>topic-name</refname>
@@ -1787,67 +1916,6 @@ use <xref linkend="p-value-like"/>.
 <para>
 This query will find all topics in the topic map, then remove the ones
 that have at least one name.
-</para>
-</refsect1>
-</refentry>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<refentry id="p-topicmap">
-<refnamediv>
-<refname>topicmap</refname>
-<refpurpose>
-Finds the topic map.
-</refpurpose>
-</refnamediv>
-
-<refsect1>
-<title>Parameters</title>
-
-<informaltable>
-<tgroup cols="3">
-<thead>
-<row>
-<entry>Name</entry>
-<entry>Type</entry>
-<entry>Must be bound</entry>
-<entry>Required</entry>
-<entry>Description</entry>
-</row>
-</thead>
-<tbody>
-<row>
-<entry>topicmap</entry>
-<entry>topic map</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The topic map.</entry>
-</row>
-</tbody>
-</tgroup>
-</informaltable>
-</refsect1>
-
-<refsect1>
-<title>Description</title>
-
-<para>
-The predicate is true when the <symbol>topicmap</symbol> is the topic
-map itself. This is useful for finding the topic map.
-</para>
-
-<example>
-<title>Find the name of the topic map</title>
-<literallayout>select $VALUE from
-  topicmap($TM),
-  reifies($TMTOPIC, $TM),
-  topic-name($TMTOPIC, $NAME),
-  value($NAME, $VALUE)?
-</literallayout>
-</example>
-
-<para>
-This query will first find the topic map, then the topic that reifies
-it (if any), then all names of that topic, then their string values.
 </para>
 </refsect1>
 </refentry>
@@ -1989,74 +2057,6 @@ This query will find all topic names in the topic map, then remove the
 ones whose string value is not <literal>"Tosca"</literal>. Note that
 this will only find names that match exactly. For inexact matching,
 use <xref linkend="p-value-like"/>.
-</para>
-</refsect1>
-</refentry>
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-<refentry id="p-datatype">
-<refnamediv>
-<refname>datatype</refname>
-<refpurpose>
-Finds the datatype of an occurrence or variant name.
-</refpurpose>
-</refnamediv>
-
-<refsect1>
-<title>Parameters</title>
-
-<informaltable>
-<tgroup cols="3">
-<thead>
-<row>
-<entry>Name</entry>
-<entry>Type</entry>
-<entry>Must be bound</entry>
-<entry>Required</entry>
-<entry>Description</entry>
-</row>
-</thead>
-<tbody>
-<row>
-<entry>object</entry>
-<entry>variant, occurrence</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The object having the datatype.</entry>
-</row>
-<row>
-<entry>datatype</entry>
-<entry>string</entry>
-<entry>no</entry>
-<entry>yes</entry>
-<entry>The URI of the object's datatype, as a string.</entry>
-</row>
-</tbody>
-</tgroup>
-</informaltable>
-</refsect1>
-
-<refsect1>
-<title>Description</title>
-
-<para>
-The predicate is true when the <symbol>object</symbol> has the
-<symbol>datatype</symbol> as its datatype URI. The predicate can be
-used to find the datatype of an object, all objects with a specific
-datatype, or all object/datatype combinations.
-</para>
-
-<example>
-<title>Find all occurrences with integer values</title>
-<literallayout>select $OCC from
-  occurrence($TOPIC, $OCC),
-  datatype($OCC, "http://www.w3.org/2001/XMLSchema#integer")?
-</literallayout>
-</example>
-
-<para>
-This query will find all occurrences in the topic map, then remove the
-ones whose datatype is not the XML Schema integer datatype.
 </para>
 </refsect1>
 </refentry>
