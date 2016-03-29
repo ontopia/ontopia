@@ -51,7 +51,7 @@ Omnigator we need a seed topic map containing the ontology. Since the CSV file o
 of a single type, with a name, and occurrences of a single type, the following LTM would work
 fine:
 
-````
+````ltm
 #PREFIX ex @"http://psi.example.org/"
 [ex:organization = "Organization"]
 [ex:homepage = "Homepage"]
@@ -61,7 +61,7 @@ The next thing we will need is an XML configuration file that describes the mapp
 file into our ontology. A configuration file that only defines our data source would look as
 follows:
 
-````
+````xml
 <db2tm name="demo">
   <sources>
     <csv path="./" ignoreFirstLines="1"/>
@@ -76,7 +76,7 @@ next step is to define the mapping from the `organizations.csv` file to the onto
 However, to do that we need to add a prefix declaration at the top of the file, as
 follows:
 
-````
+````xml
   <using prefix="ex" subject-identifier="http://psi.example.org/"/>
 ````
 
@@ -84,7 +84,7 @@ This one element says that the prefix 'ex' is a subject identifier prefix referr
 PSIs begin with `http://psi.example.org/`. With this in hand we can move on to the mapping of our
 one relation, which is done as follows:
 
-````
+````xml
   <relation name="organizations.csv" columns="id name url">
     <topic type="ex:organization">
       <item-identifier>#org${id}</item-identifier>
@@ -111,7 +111,7 @@ external occurrence, and so the URL is just treated as a string. To solve this w
 the datatype to be a URI. The easiest way to do this is to define a subject identifier prefix for
 the XML Schema data types, like this:
 
-````
+````xml
   <using prefix="xsd" subject-identifier="http://www.w3.org/2001/XMLSchema#"/>
 ````
 
@@ -127,7 +127,7 @@ java net.ontopia.topicmaps.db2tm.Execute --tm=ontology.ltm --out=tm.ltm add orga
 
 The result is the following LTM:
 
-````
+````ltm
 [org1 : id1 = "Ontopia"]
    {org1, id2, "http://www.ontopia.net"}
 [org2 : id1 = "United Nations"]
@@ -154,7 +154,7 @@ ID;GIVEN;FAMILY;EMPLOYER;PHONE
 The third column here is a foreign key reference to the `organizations.csv` file. To handle this
 relation we need to extend the LTM seed ontology as follows:
 
-````
+````ltm
 [ex:person = "Person"]
 [ex:employed-by = "Employed by"
                 = "Employs" / ex:employer]
@@ -165,7 +165,7 @@ relation we need to extend the LTM seed ontology as follows:
 
 Having done this we are ready to extend the configuration file with a new relation as follows:
 
-````
+````xml
   <relation name="people.csv" columns="id given family employer phone">
     <topic id="employer">
       <item-identifier>#org${employer}</item-identifier>
@@ -196,7 +196,7 @@ the id `employer`.
 
 And that's it. The result is that we get the following extra LTM:
 
-````
+````ltm
 [person1 : person = "Lars Marius Garshol"]
    {person1, phone, [[+47 90215550]]}
 [person2 : person = "Geir Ove Grønmo"]
@@ -224,7 +224,7 @@ Scope is supported through the `scope` attribute which can be used on the `topic
 associations](#mapping-relations-to-associations)) elements. An example of using the `scope`
 attribute might be:
 
-````
+````xml
   <relation name="nicknames.csv" columns="id nick">
     <topic>
       <item-identifier>#person${id}</item-identifier>
@@ -255,7 +255,7 @@ ORGANIZATION;COUNTRY
 
 To map this file into the topic map we would use the following `relation` mapping:
 
-````
+````xml
   <relation name="offices-in.csv" columns="organization country">
     <topic id="organization">
       <item-identifier>#org${organization}</item-identifier>
@@ -303,7 +303,7 @@ map, where these topic types are identified with the PSIs `http://example.org/or
 `http://example.org/company`. So how to do the mapping? The solution is to use a mapping table that
 translates the codes into the correct typing topics, as shown below.
 
-````
+````xml
 <relation name="organizations.csv" columns="id name url type">
   <mapping-column column='type' name='typepsi'>
     <map from='C' to='company'/>
@@ -345,7 +345,7 @@ ID;NAME;WEBSITE
 In this case, a mapping table is not going to help, but we can easily implement the correction we
 need in Java. All that's needed is something like this:
 
-````
+````text/x-java
 package net.ontopia.utils;
 
 // WARNING: this class does not actually exist in Ontopia!
@@ -363,7 +363,7 @@ public class ExampleUtils {
 
 We can now use this method (note that it is static) from the DB2TM configuration as follows:
 
-````
+````xml
 <relation name="organizations.csv" columns="id name url">
   <function-column name='goodurl' 
      method='net.ontopia.utils.ExampleUtils.correctURI'>
@@ -440,7 +440,7 @@ configuration file and a topic map to synchronize against.
 A command-line Java program that runs the same conversion that we saw in [Basics](#basics) could be
 written as follows:
 
-````
+````text/x-java
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.db2tm.DB2TM;
@@ -457,7 +457,7 @@ public class Convert {
 
 Here is a simple command-line Java program that performs synchronization:
 
-````
+````text/x-java
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.db2tm.DB2TM;
@@ -501,7 +501,7 @@ the data source.
 
 Let's say that we change the LTM topic map we produced in [Basics](#basics) to the following:
 
-````
+````ltm
 [org1 : id1 = "Ontopia"]
    {org1, id2, "http://www.ontopia.net"}
 located-in(ontopia : located, oslo : location)   
@@ -530,7 +530,7 @@ java net.ontopia.topicmaps.db2tm.Execute --tm=tm.ltm --out=sync.ltm sync organiz
 
 The result is the LTM fragment below:
 
-````
+````ltm
 [org1 : id1 = "Ontopia AS"]
    {org1, id2, [[http://www.ontopia.net]]}
 located-in(org1 : located, oslo : location )   
@@ -580,7 +580,7 @@ table. (Note that the `CHANGE` column is ignored, since version 5.2.0.)
 So what would we need to do to make use of this? The only thing we need to change is that we have to
 add the following inside the `relation` element, at the very end:
 
-````
+````xml
 <changelog table="organization-changes.csv"
            primary-key="ID"
            order-column="ORDER"/>
@@ -621,7 +621,7 @@ changetype
 To be able to set up a changelog for the organization table we need to fix both issues. This can be
 done as follows:
 
-````
+````xml
 <changelog table="organization-changes.csv"
            primary-key="PARSED_ID"
            order-column="TIMESTAMP"
@@ -659,7 +659,7 @@ the main organization table is where organizations are stored, and not here. So 
 and this is what the `primary` attribute is for. Using that, the mapping would look as
 follows:
 
-````
+````xml
   <relation name="articles.csv" columns="id url">
     <topic primary="false">
       <item-identifier>#org${id}</item-identifier>
@@ -681,7 +681,7 @@ One way to do this is to include a unary association in the mapping that says th
 from the database. This would mean that every topic created from the CSV file would look like
 this:
 
-````
+````ltm
 [ontopia : organization = "Ontopia"]
 stored-in-db(ontopia : stored)
 ````
@@ -689,7 +689,7 @@ stored-in-db(ontopia : stored)
 This is enough that we could distinguish these topics from the manually added ones, if we write the
 mapping like this:
 
-````
+````xml
     <topic type="ex:organization">
       <extent query="direct-instance-of($T, ex:organization),
                      ex:stored-in-db($T : ex:stored)?"/>
@@ -784,7 +784,7 @@ an attempt at explaining what each of the messages mean.
 Lets say that we have a table called `organizations`, with the mapping below, and that we have
 already added the contents of this relation into the topic map.
 
-````
+````xml
   <relation name="organizations" columns="id name url">
     <topic type="ex:organization">
       <subject-identifier>http://example.org/organization/${id}</subject-identifier>
@@ -811,7 +811,7 @@ The temporary mapping file also needs this element, but this time with only two 
 identify the topic and one field to add the new characteristic. In our case the relation mapping
 should look like this:
 
-````
+````xml
   <relation name="organizations" columns="id name url phone">
     <topic>
       <subject-identifier>http://example.org/organization/${id}</subject-identifier>
@@ -842,7 +842,7 @@ The organizations in the topic map should now have their respective phone number
 thing we need to do is update the original mapping file. Add the new `phone` column to the list of
 table columns and the new `occurrence` field to the relation mapping.
 
-````
+````xml
   <relation name="organizations" columns="id name url phone">
     <topic type="ex:organization">
       <subject-identifier>http://example.org/organization/${id}</subject-identifier>
