@@ -39,29 +39,35 @@ an example conversion.
 
 Let's say we have a file called `organizations.csv`, which contains the following:
 
-	ID;NAME;WEBSITE
-	1;Ontopia;http://www.ontopia.net
-	2;United Nations;http://www.un.org
-	3;Bouvet;http://www.bouvet.no
+````
+ID;NAME;WEBSITE
+1;Ontopia;http://www.ontopia.net
+2;United Nations;http://www.un.org
+3;Bouvet;http://www.bouvet.no
+````
 
 We can easily create a topic map of the data in this file with DB2TM, but to get a nice result in
 Omnigator we need a seed topic map containing the ontology. Since the CSV file only contains topics
 of a single type, with a name, and occurrences of a single type, the following LTM would work
 fine:
 
-	#PREFIX ex @"http://psi.example.org/"
-	[ex:organization = "Organization"]
-	[ex:homepage = "Homepage"]
+````
+#PREFIX ex @"http://psi.example.org/"
+[ex:organization = "Organization"]
+[ex:homepage = "Homepage"]
+````
 
 The next thing we will need is an XML configuration file that describes the mapping from the CSV
 file into our ontology. A configuration file that only defines our data source would look as
 follows:
 
-	<db2tm name="demo">
-	  <sources>
-	    <csv path="./" ignoreFirstLines="1"/>
-	  </sources>
-	</db2tm>
+````
+<db2tm name="demo">
+  <sources>
+    <csv path="./" ignoreFirstLines="1"/>
+  </sources>
+</db2tm>
+````
 
 This defines a CSV data source named 'files' for CSV files contained in the current directory
 (that's what './' means), and where the first line of every file will be ignored. Note that the
@@ -70,19 +76,23 @@ next step is to define the mapping from the `organizations.csv` file to the onto
 However, to do that we need to add a prefix declaration at the top of the file, as
 follows:
 
-	  <using prefix="ex" subject-identifier="http://psi.example.org/"/>
+````
+  <using prefix="ex" subject-identifier="http://psi.example.org/"/>
+````
 
 This one element says that the prefix 'ex' is a subject identifier prefix referring to topics whose
 PSIs begin with `http://psi.example.org/`. With this in hand we can move on to the mapping of our
 one relation, which is done as follows:
 
-	  <relation name="organizations.csv" columns="id name url">
-	    <topic type="ex:organization">
-	      <item-identifier>#org${id}</item-identifier>
-	      <topic-name>${name}</topic-name>
-	      <occurrence type="ex:homepage">${url}</occurrence>
-	    </topic>
-	  </relation>
+````
+  <relation name="organizations.csv" columns="id name url">
+    <topic type="ex:organization">
+      <item-identifier>#org${id}</item-identifier>
+      <topic-name>${name}</topic-name>
+      <occurrence type="ex:homepage">${url}</occurrence>
+    </topic>
+  </relation>
+````
 
 This is the key part, so let's walk through this slowly. The `name` attribute on the `relation`
 element gives the name of the CSV file. The `columns` attribute contains the names we will use for
@@ -101,7 +111,9 @@ external occurrence, and so the URL is just treated as a string. To solve this w
 the datatype to be a URI. The easiest way to do this is to define a subject identifier prefix for
 the XML Schema data types, like this:
 
-	  <using prefix="xsd" subject-identifier="http://www.w3.org/2001/XMLSchema#"/>
+````
+  <using prefix="xsd" subject-identifier="http://www.w3.org/2001/XMLSchema#"/>
+````
 
 Once this is in place we can add `datatype="xsd:anyURI"` on the `occurrence` element, and DB2TM will
 create external occurrences instead.
@@ -109,16 +121,20 @@ create external occurrences instead.
 Now that we have assembled all the pieces, the next step is to run the conversion, and this is done
 by issuing the following command on the command-line:
 
-	java net.ontopia.topicmaps.db2tm.Execute --tm=ontology.ltm --out=tm.ltm add organizations.xml
+````
+java net.ontopia.topicmaps.db2tm.Execute --tm=ontology.ltm --out=tm.ltm add organizations.xml
+````
 
 The result is the following LTM:
 
-	[org1 : id1 = "Ontopia"]
-	   {org1, id2, "http://www.ontopia.net"}
-	[org2 : id1 = "United Nations"]
-	   {org2, id2, "http://www.un.org"}
-	[org3 : id1 = "Bouvet"]
-	   {org3, id2, "http://www.bouvet.no"}
+````
+[org1 : id1 = "Ontopia"]
+   {org1, id2, "http://www.ontopia.net"}
+[org2 : id1 = "United Nations"]
+   {org2, id2, "http://www.un.org"}
+[org3 : id1 = "Bouvet"]
+   {org3, id2, "http://www.bouvet.no"}
+````
 
 The `id1` and `id2` references are found in the LTM because the LTM exporter doesn't have any IDs
 for these topics, just the PSIs, and it always refers to topics using ID.
@@ -128,36 +144,42 @@ for these topics, just the PSIs, and it always refers to topics using ID.
 So far we've mapped only one relation, and to get an interesting topic map we really need to handle
 more relations. The next one up is `people.csv`, which looks as follows:
 
-	ID;GIVEN;FAMILY;EMPLOYER;PHONE
-	1;Lars Marius;Garshol;1;+47 90215550
-	2;Geir Ove;Grønmo;1;
-	3;Kofi;Annan;2;
+````
+ID;GIVEN;FAMILY;EMPLOYER;PHONE
+1;Lars Marius;Garshol;1;+47 90215550
+2;Geir Ove;Grønmo;1;
+3;Kofi;Annan;2;
+````
 
 The third column here is a foreign key reference to the `organizations.csv` file. To handle this
 relation we need to extend the LTM seed ontology as follows:
 
-	[ex:person = "Person"]
-	[ex:employed-by = "Employed by"
-	                = "Employs" / ex:employer]
-	  [ex:employer = "Employer"]
-	  [ex:employee = "Employee"]
-	[ex:phone = "Phone"]
+````
+[ex:person = "Person"]
+[ex:employed-by = "Employed by"
+                = "Employs" / ex:employer]
+  [ex:employer = "Employer"]
+  [ex:employee = "Employee"]
+[ex:phone = "Phone"]
+````
 
 Having done this we are ready to extend the configuration file with a new relation as follows:
 
-	  <relation name="people.csv" columns="id given family employer phone">
-	    <topic id="employer">
-	      <item-identifier>#org${employer}</item-identifier>
-	    </topic>
-	    <topic type="ex:person">
-	      <item-identifier>#person${id}</item-identifier>
-	      <topic-name>${given} ${family}</topic-name>
-	      <occurrence type="ex:phone">${phone}</occurrence>
-	      <player atype="ex:employed-by" rtype="ex:employee">
-	        <other rtype="ex:employer" player="#employer"/>
-	      </player>
-	    </topic>
-	  </relation>
+````
+  <relation name="people.csv" columns="id given family employer phone">
+    <topic id="employer">
+      <item-identifier>#org${employer}</item-identifier>
+    </topic>
+    <topic type="ex:person">
+      <item-identifier>#person${id}</item-identifier>
+      <topic-name>${given} ${family}</topic-name>
+      <occurrence type="ex:phone">${phone}</occurrence>
+      <player atype="ex:employed-by" rtype="ex:employee">
+        <other rtype="ex:employer" player="#employer"/>
+      </player>
+    </topic>
+  </relation>
+````
 
 The first new thing to notice here is that we have two `topic` elements inside the `relation`
 element. The first is used to create the topic playing the employer role in the employed-by
@@ -174,15 +196,16 @@ the id `employer`.
 
 And that's it. The result is that we get the following extra LTM:
 
-	[person1 : person = "Lars Marius Garshol"]
-	   {person1, phone, [[+47 90215550]]}
-	[person2 : person = "Geir Ove Grønmo"]
-	[person3 : person = "Kofi Annan"]
-	
-	employed-by( org1 : employer, person1 : employee )
-	employed-by( org1 : employer, person2 : employee )
-	employed-by( org2 : employer, person3 : employee )
-	
+````
+[person1 : person = "Lars Marius Garshol"]
+   {person1, phone, [[+47 90215550]]}
+[person2 : person = "Geir Ove Grønmo"]
+[person3 : person = "Kofi Annan"]
+
+employed-by( org1 : employer, person1 : employee )
+employed-by( org1 : employer, person2 : employee )
+employed-by( org2 : employer, person3 : employee )
+````
 
 ### Advanced topics ###
 
@@ -201,12 +224,14 @@ Scope is supported through the `scope` attribute which can be used on the `topic
 associations](#mapping-relations-to-associations)) elements. An example of using the `scope`
 attribute might be:
 
-	  <relation name="nicknames.csv" columns="id nick">
-	    <topic>
-	      <item-identifier>#person${id}</item-identifier>
-	      <topic-name scope="ex:nick">${nick}</topic-name>
-	    </topic>
-	  </relation>
+````
+  <relation name="nicknames.csv" columns="id nick">
+    <topic>
+      <item-identifier>#person${id}</item-identifier>
+      <topic-name scope="ex:nick">${nick}</topic-name>
+    </topic>
+  </relation>
+````
 
 Here we use the `item-identifier` to match up with the topics from the `people.csv` file, and the
 `scope` attribute as explained above. Note that the `scope` attribute supports multiple topic
@@ -219,30 +244,34 @@ associations of a particular type. An example of such a relation might be the `o
 which lists which countries the various organizations have offices in. The contents of this file are
 given below:
 
-	ORGANIZATION;COUNTRY
-	1;578
-	1;826
-	2;840
-	2;756
-	3;578
+````
+ORGANIZATION;COUNTRY
+1;578
+1;826
+2;840
+2;756
+3;578
+````
 
 To map this file into the topic map we would use the following `relation` mapping:
 
-	  <relation name="offices-in.csv" columns="organization country">
-	    <topic id="organization">
-	      <item-identifier>#org${organization}</item-identifier>
-	    </topic>
-	
-	    <topic id="country">
-	      <subject-identifier
-	       >http://psi.oasis-open.org/iso/3166/#${country}</subject-identifier>
-	    </topic>
-	
-	    <association type="ex:has-offices-in">
-	      <role type="ex:organization" player="#organization"/>
-	      <role type="ex:country" player="#country"/>
-	    </association>
-	  </relation>
+````
+  <relation name="offices-in.csv" columns="organization country">
+    <topic id="organization">
+      <item-identifier>#org${organization}</item-identifier>
+    </topic>
+
+    <topic id="country">
+      <subject-identifier
+       >http://psi.oasis-open.org/iso/3166/#${country}</subject-identifier>
+    </topic>
+
+    <association type="ex:has-offices-in">
+      <role type="ex:organization" player="#organization"/>
+      <role type="ex:country" player="#country"/>
+    </association>
+  </relation>
+````
 
 Note that it's possible to use the same child elements inside `association` as inside `topic`. If
 these elements occur a topic reifying the association will be created, and the topic characteristics
@@ -261,10 +290,12 @@ The simplest way to map values is to use a mapping table, which is useful for ha
 and IDs which you do not want in your database. Let's say that the `organizations.csv` file
 contained an extra column, like this:
 
-	ID;NAME;WEBSITE;TYPE
-	1;Ontopia;http://www.ontopia.net;C
-	2;United Nations;http://www.un.org;O
-	3;Bouvet;http://www.bouvet.no;C
+````
+ID;NAME;WEBSITE;TYPE
+1;Ontopia;http://www.ontopia.net;C
+2;United Nations;http://www.un.org;O
+3;Bouvet;http://www.bouvet.no;C
+````
 
 The `TYPE` column here tells us what type of organization we are dealing with, and the choices are
 `O` (meaning organization) and `C` (meaning company). However, these codes do not occur in the topic
@@ -272,24 +303,24 @@ map, where these topic types are identified with the PSIs `http://example.org/or
 `http://example.org/company`. So how to do the mapping? The solution is to use a mapping table that
 translates the codes into the correct typing topics, as shown below.
 
-	
-	<relation name="organizations.csv" columns="id name url type">
-	  <mapping-column column='type' name='typepsi'>
-	    <map from='C' to='company'/>
-	    <map from='O' to='organization'/>
-	  </mapping-column>
-	
-	  <topic id='type'>
-	    <subject-identifier>http://example.org/${typepsi}</subject-identifier>
-	  </topic>
-	
-	  <topic type="#type">
-	    <item-identifier>#org${id}</item-identifier>
-	    <topic-name>${name}</topic-name>
-	    <occurrence type="ex:homepage">${url}</occurrence>
-	  </topic>
-	</relation>
-	
+````
+<relation name="organizations.csv" columns="id name url type">
+  <mapping-column column='type' name='typepsi'>
+    <map from='C' to='company'/>
+    <map from='O' to='organization'/>
+  </mapping-column>
+
+  <topic id='type'>
+    <subject-identifier>http://example.org/${typepsi}</subject-identifier>
+  </topic>
+
+  <topic type="#type">
+    <item-identifier>#org${id}</item-identifier>
+    <topic-name>${name}</topic-name>
+    <occurrence type="ex:homepage">${url}</occurrence>
+  </topic>
+</relation>
+````
 
 This creates a new virtual column with the name `typepsi`, which will contain `company` if the value
 in `type` is `C` and `organization` if it is `O`. The mapping of the `type` topic then converts this
@@ -303,49 +334,53 @@ these cases you can use a Java method to do the mapping. Let's imagine, for exam
 maintaining the database of organizations don't always bother to put in correct URLs, so that some
 of the rows are incorrect, as shown in the example below.
 
-	ID;NAME;WEBSITE
-	1;Ontopia;http://www.ontopia.net
-	2;United Nations;http://www.un.org
-	3;Bouvet;http://www.bouvet.no
-	4;OfficeNet;www.officenet.no
+````
+ID;NAME;WEBSITE
+1;Ontopia;http://www.ontopia.net
+2;United Nations;http://www.un.org
+3;Bouvet;http://www.bouvet.no
+4;OfficeNet;www.officenet.no
+````
 
 In this case, a mapping table is not going to help, but we can easily implement the correction we
 need in Java. All that's needed is something like this:
 
-	package net.ontopia.utils;
-	
-	// WARNING: this class does not actually exist in Ontopia!
-	public class ExampleUtils {
-	
-	  public static String correctURI(String baduri) {
-	    if (!baduri.startsWith("http://"))
-	      return "http://" + baduri;
-	    else
-	      return baduri; // not so bad, after all
-	  }
-	  
-	}
+````
+package net.ontopia.utils;
+
+// WARNING: this class does not actually exist in Ontopia!
+public class ExampleUtils {
+
+  public static String correctURI(String baduri) {
+    if (!baduri.startsWith("http://"))
+      return "http://" + baduri;
+    else
+      return baduri; // not so bad, after all
+  }
+  
+}
+````
 
 We can now use this method (note that it is static) from the DB2TM configuration as follows:
 
-	
-	<relation name="organizations.csv" columns="id name url">
-	  <function-column name='goodurl' 
-	     method='net.ontopia.utils.ExampleUtils.correctURI'>
-	    <param>${url}</param>
-	  </function-column>
-	
-	  <topic id='type'>
-	    <subject-identifier>http://example.org/${typepsi}</subject-identifier>
-	  </topic>
-	
-	  <topic type="#type">
-	    <item-identifier>#org${id}</item-identifier>
-	    <topic-name>${name}</topic-name>
-	    <occurrence type="ex:homepage">${goodurl}</occurrence>
-	  </topic>
-	</relation>
-	
+````
+<relation name="organizations.csv" columns="id name url">
+  <function-column name='goodurl' 
+     method='net.ontopia.utils.ExampleUtils.correctURI'>
+    <param>${url}</param>
+  </function-column>
+
+  <topic id='type'>
+    <subject-identifier>http://example.org/${typepsi}</subject-identifier>
+  </topic>
+
+  <topic type="#type">
+    <item-identifier>#org${id}</item-identifier>
+    <topic-name>${name}</topic-name>
+    <occurrence type="ex:homepage">${goodurl}</occurrence>
+  </topic>
+</relation>
+````
 
 This will produce a topic map where the topic for OfficeNet will have the URI
 `http://www.officenet.no`. Note that it is possible to pass static parameters to the methods by
@@ -375,9 +410,9 @@ Note that quoting characters in text strings are escaped by repeating them. In o
 use (") to quote your strings, and you want to put a " in a string, write it as "". Below is an
 example:
 
-	
-	40;"Foo";"This is a ""real"" example"
-	
+````
+40;"Foo";"This is a ""real"" example"
+````
 
 ##### JDBC data sources #####
 
@@ -405,33 +440,37 @@ configuration file and a topic map to synchronize against.
 A command-line Java program that runs the same conversion that we saw in [Basics](#basics) could be
 written as follows:
 
-	import net.ontopia.topicmaps.core.TopicMapIF;
-	import net.ontopia.topicmaps.utils.ImportExportUtils;
-	import net.ontopia.topicmaps.db2tm.DB2TM;
-	
-	public class Convert {
-	
-	  public static void main(String argv[]) throws java.io.IOException {
-	    TopicMapIF topicmap = ImportExportUtils.getReader("ontology.ltm").read();
-	    DB2TM.add("organizations.xml", topicmap);
-	    ImportExportUtils.getWriter("tm.ltm").write(topicmap);
-	  }
-	}
+````
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.db2tm.DB2TM;
+
+public class Convert {
+
+  public static void main(String argv[]) throws java.io.IOException {
+    TopicMapIF topicmap = ImportExportUtils.getReader("ontology.ltm").read();
+    DB2TM.add("organizations.xml", topicmap);
+    ImportExportUtils.getWriter("tm.ltm").write(topicmap);
+  }
+}
+````
 
 Here is a simple command-line Java program that performs synchronization:
 
-	import net.ontopia.topicmaps.core.TopicMapIF;
-	import net.ontopia.topicmaps.utils.ImportExportUtils;
-	import net.ontopia.topicmaps.db2tm.DB2TM;
-	
-	public class Synchronize {
-	
-	  public static void main(String argv[]) throws java.io.IOException {
-	    TopicMapIF topicmap = ImportExportUtils.getReader("ontology.ltm").read();
-	    DB2TM.sync("organizations.xml", topicmap);
-	    ImportExportUtils.getWriter("tm.ltm").write(topicmap);
-	  }
-	}
+````
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.db2tm.DB2TM;
+
+public class Synchronize {
+
+  public static void main(String argv[]) throws java.io.IOException {
+    TopicMapIF topicmap = ImportExportUtils.getReader("ontology.ltm").read();
+    DB2TM.sync("organizations.xml", topicmap);
+    ImportExportUtils.getWriter("tm.ltm").write(topicmap);
+  }
+}
+````
 
 #### Using the command-line tool with RDBMS topic maps ####
 
@@ -447,7 +486,9 @@ There is a special URI syntax that can be used in place of a file reference to p
 ID, and a system property which can be used to reference the RDBMS properties file. Using both would
 look like this:
 
-	java -Xmx512M -Dnet.ontopia.topicmaps.impl.rdbms.PropertyFile=rdbms.props net.ontopia.topicmaps.db2tm.Execute --tm=x-ontopia:tm-rdbms:id sync mapping-file.xml
+````
+java -Xmx512M -Dnet.ontopia.topicmaps.impl.rdbms.PropertyFile=rdbms.props net.ontopia.topicmaps.db2tm.Execute --tm=x-ontopia:tm-rdbms:id sync mapping-file.xml
+````
 
 ### Synchronization ###
 
@@ -460,36 +501,44 @@ the data source.
 
 Let's say that we change the LTM topic map we produced in [Basics](#basics) to the following:
 
-	[org1 : id1 = "Ontopia"]
-	   {org1, id2, "http://www.ontopia.net"}
-	located-in(ontopia : located, oslo : location)   
-	[org2 : id1 = "United Nations"]
-	   {org2, id2, "http://www.un.org"}
-	[org3 : id1 = "Bouvet"]
-	   {org3, id2, "http://www.bouvet.no"}
+````
+[org1 : id1 = "Ontopia"]
+   {org1, id2, "http://www.ontopia.net"}
+located-in(ontopia : located, oslo : location)   
+[org2 : id1 = "United Nations"]
+   {org2, id2, "http://www.un.org"}
+[org3 : id1 = "Bouvet"]
+   {org3, id2, "http://www.bouvet.no"}
+````
 
 The change here is that we added an association for Ontopia. At the same time, we've changed the CSV
 file as follows:
 
-	ID;NAME;WEBSITE
-	1;Ontopia AS;http://www.ontopia.net
-	3;Bouvet;http://www.bouvet.no
-	4;OfficeNet;http://www.officenet.no
+````
+ID;NAME;WEBSITE
+1;Ontopia AS;http://www.ontopia.net
+3;Bouvet;http://www.bouvet.no
+4;OfficeNet;http://www.officenet.no
+````
 
 Here we have deleted the United Nations, added OfficeNet, and changed Ontopia's name to end in "AS".
 We now run DB2TM with this command:
 
-	java net.ontopia.topicmaps.db2tm.Execute --tm=tm.ltm --out=sync.ltm sync organizations.xml
+````
+java net.ontopia.topicmaps.db2tm.Execute --tm=tm.ltm --out=sync.ltm sync organizations.xml
+````
 
 The result is the LTM fragment below:
 
-	[org1 : id1 = "Ontopia AS"]
-	   {org1, id2, [[http://www.ontopia.net]]}
-	located-in(org1 : located, oslo : location )   
-	[org3 : id1 = "Bouvet"]
-	   {org3, id2, [[http://www.bouvet.no]]}
-	[org4 : id1 = "OfficeNet"]
-	   {org4, id2, [[http://www.officenet.no]]}
+````
+[org1 : id1 = "Ontopia AS"]
+   {org1, id2, [[http://www.ontopia.net]]}
+located-in(org1 : located, oslo : location )   
+[org3 : id1 = "Bouvet"]
+   {org3, id2, [[http://www.bouvet.no]]}
+[org4 : id1 = "OfficeNet"]
+   {org4, id2, [[http://www.officenet.no]]}
+````
 
 As you can see, we have gotten all the changes in the CSV file into the topic map without losing any
 of the changes we made in the LTM. This is because DB2TM only synchronizes the topics and
@@ -513,11 +562,12 @@ Let's assume that we want to repeat what we did in the previous section, but thi
 changelog table. To do that we need to make a new CSV file which describes the changes. This file
 might look as follows:
 
-	ID;CHANGE;ORDER
-	2;D;1
-	1;C;2
-	4;A;3
-	
+````
+ID;CHANGE;ORDER
+2;D;1
+1;C;2
+4;A;3
+````
 
 The first row here refers to the row with ID 2 from [Basics](#basics) (that is, to the United
 Nations row), and the second column says it was deleted. The last column is there to tell us in what
@@ -530,11 +580,11 @@ table. (Note that the `CHANGE` column is ignored, since version 5.2.0.)
 So what would we need to do to make use of this? The only thing we need to change is that we have to
 add the following inside the `relation` element, at the very end:
 
-	
-	<changelog table="organization-changes.csv"
-	           primary-key="ID"
-	           order-column="ORDER"/>
-	
+````
+<changelog table="organization-changes.csv"
+           primary-key="ID"
+           order-column="ORDER"/>
+````
 
 This element tells DB2TM where the changelog is, which column contains the primary key reference,
 and what column to order the changes by.
@@ -558,7 +608,7 @@ table
 
 keys
 :    The primary key, encoded as a single string value. The scheme used is
-     colname1=value|colname2=value|...
+     `colname1=value|colname2=value|...`
 
 timestamp
 :    The time the change was made.
@@ -571,17 +621,17 @@ changetype
 To be able to set up a changelog for the organization table we need to fix both issues. This can be
 done as follows:
 
-	
-	<changelog table="organization-changes.csv"
-	           primary-key="PARSED_ID"
-	           order-column="TIMESTAMP"
-	           condition="table='organization'">
-	  <expression-column name="PARSED_ID">
-	    <!-- turns 'columnname=value' into 'value' --> 
-	    substring(KEYS, position('=', KEYS) + 1)
-	  </expression-column>
-	</changelog>
-	
+````
+<changelog table="organization-changes.csv"
+           primary-key="PARSED_ID"
+           order-column="TIMESTAMP"
+           condition="table='organization'">
+  <expression-column name="PARSED_ID">
+    <!-- turns 'columnname=value' into 'value' --> 
+    substring(KEYS, position('=', KEYS) + 1)
+  </expression-column>
+</changelog>
+````
 
 The `condition` attribute filters out changes to tables other than the one we're interested in. The
 `expression-column` takes care of the parsing of the primary key values so that DB2TM can join the
@@ -593,12 +643,14 @@ Let's say we had another table with information about our organizations, for exa
 external web sites that have articles about them. Each row in this table would map to an
 `article-about` occurrence, and the table might look like this:
 
-	ID;URL
-	1;http://www.ligent.net/company.jsp?id=107&bundle=162
-	1;http://www.techquila.com/topicmaps/tmworld/11770.html
-	1;http://www.knowledge-synergy.com/partner/partner.html#ontopia
-	2;http://en.wikipedia.org/wiki/United_Nations
-	2;http://topics.nytimes.com/top/reference/timestopics/organizations/u/united_nations/index.html?inline=nyt-org
+````
+ID;URL
+1;http://www.ligent.net/company.jsp?id=107&bundle=162
+1;http://www.techquila.com/topicmaps/tmworld/11770.html
+1;http://www.knowledge-synergy.com/partner/partner.html#ontopia
+2;http://en.wikipedia.org/wiki/United_Nations
+2;http://topics.nytimes.com/top/reference/timestopics/organizations/u/united_nations/index.html?inline=nyt-org
+````
 
 Doing a conversion from this would be straightforward, but on doing a sync we would run into
 problems. There are no articles about Bouvet in the table, and so DB2TM would delete Bouvet from the
@@ -607,14 +659,14 @@ the main organization table is where organizations are stored, and not here. So 
 and this is what the `primary` attribute is for. Using that, the mapping would look as
 follows:
 
-	
-	  <relation name="articles.csv" columns="id url">
-	    <topic primary="false">
-	      <item-identifier>#org${id}</item-identifier>
-	      <occurrence type="ex:article-about">${url}</occurrence>
-	    </topic>
-	  </relation>
-	
+````
+  <relation name="articles.csv" columns="id url">
+    <topic primary="false">
+      <item-identifier>#org${id}</item-identifier>
+      <occurrence type="ex:article-about">${url}</occurrence>
+    </topic>
+  </relation>
+````
 
 #### Incomplete mappings ####
 
@@ -629,24 +681,26 @@ One way to do this is to include a unary association in the mapping that says th
 from the database. This would mean that every topic created from the CSV file would look like
 this:
 
-	[ontopia : organization = "Ontopia"]
-	stored-in-db(ontopia : stored)
+````
+[ontopia : organization = "Ontopia"]
+stored-in-db(ontopia : stored)
+````
 
 This is enough that we could distinguish these topics from the manually added ones, if we write the
 mapping like this:
 
-	
-	    <topic type="ex:organization">
-	      <extent query="direct-instance-of($T, ex:organization),
-	                     ex:stored-in-db($T : ex:stored)?"/>
-	      <item-identifier>#org${id}</item-identifier>
-	      <topic-name>${name}</topic-name>
-	      <occurrence type="ex:homepage">${url}</occurrence>
-	
-	      <!-- static unary marker association -->
-	      <player atype="ex:stored-in-db" rtype="ex:stored"/>      
-	    </topic>
-	
+````
+    <topic type="ex:organization">
+      <extent query="direct-instance-of($T, ex:organization),
+                     ex:stored-in-db($T : ex:stored)?"/>
+      <item-identifier>#org${id}</item-identifier>
+      <topic-name>${name}</topic-name>
+      <occurrence type="ex:homepage">${url}</occurrence>
+
+      <!-- static unary marker association -->
+      <player atype="ex:stored-in-db" rtype="ex:stored"/>      
+    </topic>
+````
 
 The `extent` element defines a query that produces all topics in the topic map created from this
 table mapping. This enables DB2TM to recognize manually created organization topics, and not delete
@@ -686,7 +740,7 @@ an attempt at explaining what each of the messages mean.
 | ignoring relation: &lt;relation&gt; | Ignored relation as there was no &lt;relation&gt; definition for it. | 
 | adding relation: &lt;relation&gt; | Reading tuples from the given relation and adding them according to its &lt;relation&gt; definition. | 
 | removing relation: &lt;relation&gt; | Reading tuples from the given relation and removing them according to its &lt;relation&gt; definition. | 
-| synchronizing relation: &lt;relation&gt; type: &lt;synchronization-type&gt; | Reading tuples from the given relation and synchronizing them according to its &lt;relation&gt; definition. The synchronization type can be either 2 (rescan) or 4 (changelog). | 
+| synchronizing relation: &lt;relation&gt; type: &lt;synchronization-type&gt; | Reading tuples from the given relation and synchronizing them according to its &lt;relation&gt; definition. The synchronization type can be either `2` (rescan) or `4` (changelog). | 
 | &lt;number-of-tuples&gt; tuples, &lt;elapsed-time&gt; ms. | Processed the given number of tuples in the given number of milliseconds. | 
 | done: &lt;number-of-tuples&gt;, &lt;elapsed-time&gt; ms. | Processed the given number of tuples from all relations in the data source in the given number of milliseconds. | 
 
@@ -730,13 +784,15 @@ an attempt at explaining what each of the messages mean.
 Lets say that we have a table called `organizations`, with the mapping below, and that we have
 already added the contents of this relation into the topic map.
 
-	  <relation name="organizations" columns="id name url">
-	    <topic type="ex:organization">
-	      <subject-identifier>http://example.org/organization/${id}</subject-identifier>
-	      <topic-name>${name}</topic-name>
-	      <occurrence type="ex:homepage">${url}</occurrence>
-	    </topic>
-	  </relation>
+````
+  <relation name="organizations" columns="id name url">
+    <topic type="ex:organization">
+      <subject-identifier>http://example.org/organization/${id}</subject-identifier>
+      <topic-name>${name}</topic-name>
+      <occurrence type="ex:homepage">${url}</occurrence>
+    </topic>
+  </relation>
+````
 
 This means that all the data in the relation have already been mapped to topics and characteristics
 in the topic map. The problem is now that we cannot just add a new column to the mapping as DB2TM
@@ -755,12 +811,14 @@ The temporary mapping file also needs this element, but this time with only two 
 identify the topic and one field to add the new characteristic. In our case the relation mapping
 should look like this:
 
-	  <relation name="organizations" columns="id name url phone">
-	    <topic>
-	      <subject-identifier>http://example.org/organization/${id}</subject-identifier>
-	      <occurrence type="ex:phone">${phone}</occurrence>
-	    </topic>
-	  </relation>
+````
+  <relation name="organizations" columns="id name url phone">
+    <topic>
+      <subject-identifier>http://example.org/organization/${id}</subject-identifier>
+      <occurrence type="ex:phone">${phone}</occurrence>
+    </topic>
+  </relation>
+````
 
 Note that the new `phone` is now in the list of table columns. We now also have a
 `subject-identifier` field so that we can look up the existing topic, and finally the `occurrence`
@@ -769,26 +827,31 @@ field to add the new internal occurrence.
 The prefix declarations and the data sources can be the same as in the original mapping file, so
 just copy and paste those from the original mapping file.
 
+> **Warning**
 > Before we proceed make sure that you shut down your application so that cache inconsistency issues
 > do not arise.
 
 We can now have DB2TM add the contents of the new column to the topic map by running the following
 command.
 
-	  java net.ontopia.topicmaps.db2tm.Execute --relations=organizations add temporary.xml
+````
+  java net.ontopia.topicmaps.db2tm.Execute --relations=organizations add temporary.xml
+````
 
 The organizations in the topic map should now have their respective phone numbers added. The next
 thing we need to do is update the original mapping file. Add the new `phone` column to the list of
 table columns and the new `occurrence` field to the relation mapping.
 
-	  <relation name="organizations" columns="id name url phone">
-	    <topic type="ex:organization">
-	      <subject-identifier>http://example.org/organization/${id}</subject-identifier>
-	      <topic-name>${name}</topic-name>
-	      <occurrence type="ex:homepage">${url}</occurrence>
-	      <occurrence type="ex:phone">${phone}</occurrence>
-	    </topic>
-	  </relation>
+````
+  <relation name="organizations" columns="id name url phone">
+    <topic type="ex:organization">
+      <subject-identifier>http://example.org/organization/${id}</subject-identifier>
+      <topic-name>${name}</topic-name>
+      <occurrence type="ex:homepage">${url}</occurrence>
+      <occurrence type="ex:phone">${phone}</occurrence>
+    </topic>
+  </relation>
+````
 
 We are now done with the temporary mapping file and it can be discarded. The application can now be
 restarted.
