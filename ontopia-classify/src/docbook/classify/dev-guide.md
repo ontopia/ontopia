@@ -37,39 +37,41 @@ to help the classifier detect compound terms (like "Topic Maps" or "New York").
 
 As an example, below is the output of running the classification on this developer's guide:
 
-	
-	1: classifier 1.0, 10
-	2: Ontopia 0.9398362722937127, 2
-	3: automatic classification 0.6733045538011962, 2
-	4: topic map 0.32963578857473336, 7
-	5: Developer Guide 0.31782661003640583, 2
-	6: widget 0.31465856836714945, 2
-	7: fine-tune 0.2391013657364179, 1
-	8: single term 0.2283465338494093, 2
-	9: API 0.20243323677418937, 1
-	10: OOXML 0.19983477366712343, 2
-	11: XML 0.15688292149123131, 1
-	12: HTML 0.15535359913968713, 1
-	13: PDF 0.1549748891676282, 1
-	14: Powerpoint 0.15236326757637844, 1
-	15: ppt 0.15162942789649314, 1
-	16: WordProcessingML 0.15053865122008855, 1
-	17: docx 0.14981801021049407, 1
-	18: PresentationML 0.14874667734265895, 1
-	19: pptx 0.14803876861331663, 1
-	20: module 0.13035138155842613, 5
-	21: optionally 0.12971709388058605, 1
-	22: Microsoft 0.12555221252942206, 2
-	23: java 0.11704152864641565, 1
-	24: process content 0.11542729078259414, 2
-	25: URI 0.1055602118063965, 1
-	26: command-line 0.10543579259361881, 1
-	27: classification 0.10537143393837285, 8
-	28: TermDatabase 0.104641226752405, 1
-	29: textual 0.10399562569001171, 2
-	30: suggestions 0.10272639505645716, 3
-	Total: 186 terms.
-	
+````
+
+1: classifier 1.0, 10
+2: Ontopia 0.9398362722937127, 2
+3: automatic classification 0.6733045538011962, 2
+4: topic map 0.32963578857473336, 7
+5: Developer Guide 0.31782661003640583, 2
+6: widget 0.31465856836714945, 2
+7: fine-tune 0.2391013657364179, 1
+8: single term 0.2283465338494093, 2
+9: API 0.20243323677418937, 1
+10: OOXML 0.19983477366712343, 2
+11: XML 0.15688292149123131, 1
+12: HTML 0.15535359913968713, 1
+13: PDF 0.1549748891676282, 1
+14: Powerpoint 0.15236326757637844, 1
+15: ppt 0.15162942789649314, 1
+16: WordProcessingML 0.15053865122008855, 1
+17: docx 0.14981801021049407, 1
+18: PresentationML 0.14874667734265895, 1
+19: pptx 0.14803876861331663, 1
+20: module 0.13035138155842613, 5
+21: optionally 0.12971709388058605, 1
+22: Microsoft 0.12555221252942206, 2
+23: java 0.11704152864641565, 1
+24: process content 0.11542729078259414, 2
+25: URI 0.1055602118063965, 1
+26: command-line 0.10543579259361881, 1
+27: classification 0.10537143393837285, 8
+28: TermDatabase 0.104641226752405, 1
+29: textual 0.10399562569001171, 2
+30: suggestions 0.10272639505645716, 3
+Total: 186 terms.
+
+````
 
 The module is still fairly immature, and so it's hard to predict how well the module will perform on
 any given collection of content. In general, however, the longer the text and the more focused on
