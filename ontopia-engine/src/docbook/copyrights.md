@@ -1,18 +1,17 @@
+Third Party Licenses
+====================
 
-===============================================================================
-  COPYRIGHTS
-===============================================================================
-
+<p class="introduction">
 This document includes the copyright notices of software used by
 Ontopia, as required by the licenses of those software packages.
+</p>
 
--------------------------------------------------------------------------------
-Tomcat, Crimson, Xerces, Log4J, Lucene, Velocity, FileUpload, Taglibs, 
-Collections, ORO, Pool and DBCP, Axis/Java, POI, OpenCSV
--------------------------------------------------------------------------------
-URL: http://jakarta.apache.org/
-URL: http://opencsv.sourceforge.net/
+### Tomcat, Crimson, Xerces, Log4J, Lucene, Velocity, FileUpload, Taglibs,  Collections, ORO, Pool and DBCP, Axis/Java, POI, OpenCSV ###
 
+* http://jakarta.apache.org/
+* http://opencsv.sourceforge.net/
+
+````
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -214,12 +213,13 @@ URL: http://opencsv.sourceforge.net/
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+````
 
--------------------------------------------------------------------------------
-ANTLR
--------------------------------------------------------------------------------
+### ANTLR ###
+
 URL: http://antlr.org/
 
+````
 SOFTWARE RIGHTS
 
 ANTLR 1989-2000 Developed by jGuru.com (MageLang Institute), 
@@ -250,14 +250,15 @@ The primary ANTLR guy:
 Terence Parr
 http://www.jGuru.com
 parrt@jguru.com
+````
 
--------------------------------------------------------------------------------
-Java getopt, SLF4J, JGroups
--------------------------------------------------------------------------------
+### Java getopt, SLF4J, JGroups ###
+
 URL: http://www.urbanophile.com/arenn/hacking/download.html
 URL: http://www.slf4j.org/
 URL: http://www.jgroups.org/
 
+````
 		  GNU LIBRARY GENERAL PUBLIC LICENSE
 		       Version 2, June 1991
 
@@ -741,11 +742,13 @@ necessary.  Here is a sample; alter the names:
 
 That's all there is to it!
 
--------------------------------------------------------------------------------
-GNU Trove
--------------------------------------------------------------------------------
+````
+
+### GNU Trove ###
+
 URL: http://trove4j.sourceforge.net/
 
+````
 		  GNU LESSER GENERAL PUBLIC LICENSE
 		       Version 2.1, February 1999
 
@@ -1248,19 +1251,19 @@ necessary.  Here is a sample; alter the names:
   Ty Coon, President of Vice
 
 That's all there is to it!
+````
 
--------------------------------------------------------------------------------
-util.concurrent
--------------------------------------------------------------------------------
+### util.concurrent ###
+
 URL: http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html
 
 Public domain.
 
--------------------------------------------------------------------------------
-JAXP
--------------------------------------------------------------------------------
+### JAXP ###
+
 URL: http://java.sun.com/xml/jaxp/index.jsp
 
+````
 Sun Microsystems, Inc.  Binary Code License
 Agreement
 
@@ -1575,12 +1578,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+````
 
--------------------------------------------------------------------------------
-Jena
--------------------------------------------------------------------------------
+### Jena ###
+
 URL: http://jena.sourceforge.net/
 
+````
 /*
  * (c) Copyright 2000, 2001, 2002, 2003 Hewlett-Packard Development Company, LP
  * All rights reserved.
@@ -1611,12 +1615,13 @@ URL: http://jena.sourceforge.net/
 
 This product includes software developed by the
 Apache Software Foundation (http://www.apache.org/).
+````
 
--------------------------------------------------------------------------------
-ICU4J
--------------------------------------------------------------------------------
+### ICU4J ###
+
 URL: http://www.ibm.com/software/globalization/icu
 
+````
 Copyright (c) 1995-2003 International Business Machines Corporation and others
 All rights reserved.
 
@@ -1644,15 +1649,15 @@ Except as contained in this notice, the name of a copyright holder
 shall not be used in advertising or otherwise to promote the sale, use
 or other dealings in this Software without prior written authorization
 of the copyright holder.
+````
 
--------------------------------------------------------------------------------
-TouchGraph
--------------------------------------------------------------------------------
+### TouchGraph ###
+
 URL: http://touchgraph.sourceforge.net/
 
 TouchGraph LLC. Apache-Style Software License
 
-
+````
 Copyright (c) 2001-2002 Alexander Shapiro. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -1695,12 +1700,13 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ====================================================================
+````
 
--------------------------------------------------------------------------------
-ACME GIF Encoder
--------------------------------------------------------------------------------
+### ACME GIF Encoder ###
+
 URL: http://http://www.acme.com/java/
 
+````
 Copyright © 2000 by Jef Poskanzer <jef@mail.acme.com>.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -1724,11 +1730,13 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
--------------------------------------------------------------------------------
-JUnit
--------------------------------------------------------------------------------
+````
+
+#### JUnit ###
+
 URL: http://junit.sourceforge.net/
 
+````
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS COMMON
 PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF
 THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
@@ -1963,11 +1971,13 @@ party to this Agreement will bring a legal action under this Agreement
 more than one year after the cause of action arose. Each party waives
 its rights to a jury trial in any resulting litigation.
 
--------------------------------------------------------------------------------
-TMAPI
--------------------------------------------------------------------------------
+````
+
+### TMAPI ###
+
 URL: http://tmapi.org/
   
+````
 Version 1.0 of the Topic Maps API (TMAPI), created collectively by
 the membership of the tmapi-discuss mailing list 
 (http://lists.sourceforge.net/mailman/listinfo/tmapi-discuss), 
@@ -1987,12 +1997,13 @@ Stefan Lischke (lischke2 at users.sourceforge.net)
 Graham Moore (gra_moore at users.sourceforge.net)
 
 08 April 2004
+````
 
--------------------------------------------------------------------------------
-PDFBox
--------------------------------------------------------------------------------
+### PDFBox ###
+
 URL: http://www.pdfbox.org/
 
+````
 Copyright (c) 2002-2007, www.pdfbox.org
 All rights reserved.
 
@@ -2018,12 +2029,13 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+````
 
--------------------------------------------------------------------------------
-FontBox
--------------------------------------------------------------------------------
+### FontBox ###
+
 URL: http://www.pdfbox.org/
 
+````
 Copyright (c) 2003-2007, www.fontbox.org
 All rights reserved.
 
@@ -2049,12 +2061,13 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+`````
 
--------------------------------------------------------------------------------
-Bouncy Castle Provider + Mail (bcprov.jar and bcmail.jar)
--------------------------------------------------------------------------------
+### Bouncy Castle Provider + Mail (bcprov.jar and bcmail.jar) ###
+
 URL: http://www.bouncycastle.org/java.html
 
+````
 Copyright (c) 2000 - 2006 The Legion Of The Bouncy Castle (http://www.bouncycastle.org) 
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -2075,14 +2088,11 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+````
 
--------------------------------------------------------------------------------
-Tagsoup
--------------------------------------------------------------------------------
+### Tagsoup ###
 URL: http://ccil.org/~cowan/XML/tagsoup/
 
 Academic Free License version 3.0:
 http://www.opensource.org/licenses/afl-3.0.php
 
--------------------------------------------------------------------------------
-END
