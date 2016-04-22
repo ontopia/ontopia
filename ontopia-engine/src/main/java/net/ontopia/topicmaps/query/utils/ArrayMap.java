@@ -35,17 +35,17 @@ import java.util.Set;
  * modify it by modifying the underlying arrays.
  */
   
-public class ArrayMap extends AbstractMap {
+public class ArrayMap<K, V> extends AbstractMap<K, V> {
 
-  protected Object[] keys;
-  protected Object[] values;
+  protected K[] keys;
+  protected V[] values;
   protected int size;
     
-  public ArrayMap(Object[] keys) {
+  public ArrayMap(K[] keys) {
     setKeys(keys);
   }
 
-  public ArrayMap(Object[] keys, Object[] values) {
+  public ArrayMap(K[] keys, V[] values) {
     setKeys(keys);
     setValues(values);
   }
@@ -56,22 +56,22 @@ public class ArrayMap extends AbstractMap {
     return keys;
   }
   
-  public void setKeys(Object[] keys) {
+  public void setKeys(K[] keys) {
     this.keys = keys;
     this.size = keys.length;
   }
 
-  public Object[] getValues() {
+  public V[] getValues() {
     return values;
   }
   
-  public void setValues(Object[] values) {
+  public void setValues(V[] values) {
     this.values = values;
   }
 
   // --- required methods
 
-  public Object get(Object key) {
+  public V get(Object key) {
     for (int i=0; i < size; i++)
       if (keys[i].equals(key))
         return values[i];
@@ -106,19 +106,19 @@ public class ArrayMap extends AbstractMap {
     return size == 0;
   }
     
-  public Set keySet() {
-    return new HashSet(Arrays.asList(keys));
+  public Set<K> keySet() {
+    return new HashSet<K>(Arrays.asList(keys));
   }
     
-  public Set entrySet() {
+  public Set<Map.Entry<K, V>> entrySet() {
     // produce a entry set copy
-    Map map = new HashMap(size);
+    Map<K, V> map = new HashMap<K, V>(size);
     for (int i=0; i < size; i++)
       map.put(keys[i], values[i]);
     return map.entrySet();
   }
     
-  public Collection values() {
+  public Collection<V> values() {
     return Arrays.asList(values);
   }
 
@@ -126,7 +126,7 @@ public class ArrayMap extends AbstractMap {
     throw new UnsupportedOperationException();
   }
 
-  public Object remove(Object key) {
+  public V remove(Object key) {
     throw new UnsupportedOperationException();
   }
   
