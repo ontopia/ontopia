@@ -319,6 +319,15 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   public void close(boolean returnStore) {
     if (returnStore) {
+
+      // allow access to release connection, preventing loads of idle connections
+      if ((transaction != null) && transaction.isActive()) {
+        TransactionIF tnx = transaction.getTransaction();
+        if (tnx.isActive()) {
+          ((RDBMSAccess)tnx.getStorageAccess()).releaseConnection();
+        }
+      }
+
       // return store
       if (reference != null) {
         
