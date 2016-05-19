@@ -54,7 +54,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSMapping mapping;
   
   protected Connection conn_;
-  protected final Map<Thread, Connection> conn_map = new WeakHashMap<Thread, Connection>();
+  protected ThreadLocal<Connection> conn_map = new ThreadLocal<Connection>();
 
   protected boolean closed;
   
@@ -101,20 +101,16 @@ public class RDBMSAccess implements StorageAccessIF {
 
   protected Connection getConn() {
     if (readonly)
-      synchronized (conn_map) {
-        return conn_map.get(Thread.currentThread());
-      }
+      return conn_map.get();
     else
       return conn_;
   }
   protected void setConn(Connection conn) {
     if (readonly)
-      synchronized (conn_map) {
-        if (conn == null) {
-          this.conn_map.remove(Thread.currentThread());
-        } else {
-          this.conn_map.put(Thread.currentThread(), conn);
-        }
+      if (conn == null) {
+        this.conn_map.remove();
+      } else {
+        this.conn_map.set(conn);
       }
     else
       this.conn_ = conn;
@@ -302,25 +298,26 @@ public class RDBMSAccess implements StorageAccessIF {
       } else {
         log.debug(getId() + ": Storage access closed (no connection).");          
       }
-      
-      synchronized (conn_map) {
-        // close all the connections
-        for (Connection con : conn_map.values()) {
-          if (con != null) {
-            try {
-              con.close();
-            } catch (SQLException sqle) {
-              // ignore
-            }
-          }
-        }
-        conn_map.clear();
-      }
     } finally {
       closed = true;
     }
   }
   
+  public void releaseConnection() {
+    try {
+      if (!isReadOnly() && (conn_ != null)) {
+        resetConnection();
+      } else if (isReadOnly()) {
+        Connection conn = getConn();
+        if (conn != null) {
+          conn.close();
+        }
+      }
+    } catch (SQLException sqle) {
+      throw new OntopiaRuntimeException(sqle);
+    }
+  }
+
   public void flush() {
     // Return if nothing to flush
     if (flushable.isEmpty()) return;
