@@ -56,12 +56,12 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
   protected Collection<V> createCollection() {
     return new HashSet<V>();
   }
-  
+
   public void add(K key, V value) {
 
     // Get collection value
     Collection<V> coll = get(key);
-    
+
     // Add to collection
     if (coll != null) {
       // Add new value
@@ -72,35 +72,38 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
       coll.add(value);
       // Add new entry to index
       put(key, coll);
-    }     
+    }
   }
 
-  public void remove(K key, V value) {
+  //@Override disabled for java 7 backward compatibility
+  public boolean remove(Object key, Object value) {
 
     // Get collection value
     Collection<V> coll = get(key);
-    
+
     // Remove from collection
     if (coll != null) {
       // Remove value
-      coll.remove(value);
+      boolean removed = coll.remove(value);
       // Remove key
       if (drop_empty && coll.size() == 0) remove(key);
+      
+      return removed;
     }
-
+    return false;
   }
 
   public void move(V value, K old_key, K new_key) {
     remove(old_key, value);
     add(new_key, value);
   }
-  
-  
+
+
   // public void replace(Object key, Object old_value, Object new_value) {
-  // 
+  //
   //   // Get collection value
   //   Collection coll = (Collection)get(key);
-  //   
+  //
   //   // Remove from collection
   //   if (coll != null) {
   //     // Remove value
@@ -111,16 +114,12 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
   //     coll = createCollection();
   //     coll.add(new_value);
   //     // Add new entry to index
-  //     put(key, coll);      
+  //     put(key, coll);
   //   }
-  // 
+  //
   // }
 
-  // public void replaceAll(Object key, Object old_value, Object new_value) {  
+  // public void replaceAll(Object key, Object old_value, Object new_value) {
   // }
-  
+
 }
-
-
-
-
