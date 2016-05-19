@@ -73,7 +73,7 @@ public class CollectionMap<K, V> extends HashMap<K, Collection<V>> {
     }
   }
 
-  @Override
+  //@Override disabled for java 7 backward compatibility
   public boolean remove(Object key, Object value) {
 
     // Get collection value

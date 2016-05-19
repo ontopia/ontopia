@@ -75,7 +75,7 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
     }
   }
 
-  @Override
+  //@Override disabled for java 7 backward compatibility
   public boolean remove(Object key, Object value) {
 
     // Get collection value
