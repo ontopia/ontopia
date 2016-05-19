@@ -95,6 +95,12 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     int utimeout = (_utimeout == null ? -1 : Integer.parseInt(_utimeout));
     pool.setMaxWait(utimeout); // -1 = never
     
+    // EXPERIMENTAL!
+    String _etime = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.IdleTimeout", false);
+    int etime = (_etime == null ? -1 : Integer.parseInt(_etime));
+    pool.setTimeBetweenEvictionRunsMillis(etime);
+    pool.setSoftMinEvictableIdleTimeMillis(etime);
+    
    // Set soft maximum - emergency objects (default: true)
     boolean softmax = PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
     log.debug("Setting ConnectionPool.SoftMaximum '" + softmax + "'");
