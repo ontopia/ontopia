@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class Execute {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Execute.class.getName());
+  static Logger log = LoggerFactory.getLogger(Execute.class);
 
   Execute() {
   }
@@ -96,12 +96,12 @@ public class Execute {
 
     try {
       // Read mapping file
-      log.debug("Reading relation mapping file " + cfgfile);
+      log.debug("Reading relation mapping file {}", cfgfile);
       RelationMapping mapping = RelationMapping.read(new File(cfgfile));
       
       // open topic map
       String tmurl = ohandler.tm;    
-      log.debug("Opening topic map " + tmurl);
+      log.debug("Opening topic map {}", tmurl);
       TopicMapIF topicmap;
       if (tmurl == null || tmurl.equals("tm:in-memory:new"))
         topicmap = new InMemoryTopicMapStore().getTopicMap();
@@ -120,11 +120,11 @@ public class Execute {
         baseloc = (ohandler.baseuri == null ? URIUtils.getURI(tmurl) : URIUtils.getURI(ohandler.baseuri));
 
       // figure out which relations to actually process
-      Collection relations = null;
+      Collection<String> relations = null;
       if (ohandler.relations != null) {
         String[] relnames = StringUtils.split(ohandler.relations, ",");
         if (relnames.length > 0) {
-          relations = new HashSet(relnames.length);
+          relations = new HashSet<String>(relnames.length);
           CollectionUtils.addAll(relations, relnames);
         }
       }
@@ -143,7 +143,7 @@ public class Execute {
 
         // export topicmap
         if (outfile != null) {
-          log.debug("Exporting topic map to " + outfile);
+          log.debug("Exporting topic map to {}", outfile);
           TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
           writer.write(topicmap);
         }
@@ -196,6 +196,7 @@ public class Execute {
     String out;
     String relations;
     String forceRescan;
+    @Override
     public void processOption(char option, String value) {
       if (option == 't') tm = value;
       else if (option == 'b') baseuri = value;

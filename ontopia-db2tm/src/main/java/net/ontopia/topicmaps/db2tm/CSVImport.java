@@ -49,9 +49,9 @@ import org.slf4j.LoggerFactory;
 public class CSVImport {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVImport.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVImport.class);
   
-  protected Connection conn;
+  protected final Connection conn;
 
   protected String table;
   protected String[] columns;
@@ -95,16 +95,15 @@ public class CSVImport {
 
       if (cleartable) {
         String delsql = "delete from " + table;
-        System.out.println("DELETE:" + delsql);
-        log.debug("DELETE: " + delsql);
+        log.debug("DELETE: {}", delsql);
         Statement delstm = conn.createStatement();
         delstm.executeUpdate(delsql);
         //! conn.commit();
       }
 
       // get hold of column metadata
-      List colnames = new ArrayList();
-      List coltypes_ = new ArrayList();
+      List<String> colnames = new ArrayList<String>();
+      List<Integer> coltypes_ = new ArrayList<Integer>();
       ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
       try {
         while(rs.next()) {
@@ -118,7 +117,7 @@ public class CSVImport {
       }
       int[] coltypes = new int[coltypes_.size()];
       for (int i=0; i < coltypes.length; i++) {
-        coltypes[i] = ((Integer)coltypes_.get(i)).intValue();
+        coltypes[i] = coltypes_.get(i).intValue();
       }
 
       String[] qmarks = new String[coltypes.length];
@@ -128,8 +127,7 @@ public class CSVImport {
       
       String sql = "insert into " + table + " (" + StringUtils.join(colnames, ", ")
         + ") values (" + StringUtils.join(qmarks, ", ") + ")";
-      log.debug("INSERT: " + sql);
-      System.out.println("INSERT:" + sql);
+      log.debug("INSERT: {}", sql);
       PreparedStatement stm = conn.prepareStatement(sql);
       
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(csvfile));
@@ -146,13 +144,10 @@ public class CSVImport {
       JDBCUtils.df_datetime = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
       
       // Process input
-      log.debug("[" + StringUtils.join(colnames, ", ") + "]");
-      int lineno = 0;
+      log.debug("[{}]", StringUtils.join(colnames, ", "));
       String [] tuple = null;
       try {
         while ((tuple = csvreader.readNext()) != null) {
-          if (tuple == null) break;
-          
           for (int i=0; i < tuple.length; i++) {
             System.out.println("V:" + (i+1) + " " + colnames.get(i) + ":" + coltypes[i] + " " + tuple[i].length() + "'" + tuple[i] + "'");
             JDBCUtils.setObject(stm, i+1, tuple[i], coltypes[i]);
@@ -193,6 +188,7 @@ public class CSVImport {
     boolean stripquotes = false;
     char separator = ',';
     int ignorelines = 0;
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 's')
         separator = value.charAt(0);

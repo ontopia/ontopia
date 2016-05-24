@@ -48,9 +48,9 @@ import org.slf4j.LoggerFactory;
 public class JDBCDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
 
-  protected RelationMapping mapping;
+  protected final RelationMapping mapping;
   protected String propfile;
 
   protected String catalog;
@@ -85,6 +85,7 @@ public class JDBCDataSource implements DataSourceIF {
     return conn;
   }
 
+  @Override
   public void close() {
     if (conn != null) {
       try {
@@ -96,8 +97,9 @@ public class JDBCDataSource implements DataSourceIF {
     }
   }
   
-  public Collection getRelations() {
-    Collection relations = new ArrayList();
+  @Override
+  public Collection<Relation> getRelations() {
+    Collection<Relation> relations = new ArrayList<Relation>();
     Connection c = getConnection();
     try {
       DatabaseMetaData dbm = c.getMetaData();
@@ -119,7 +121,7 @@ public class JDBCDataSource implements DataSourceIF {
         if (relation != null)
           relations.add(relation);
         else
-          log.debug("No mapping found for table '" + table_name + "' in schema '" + schema_name + "'.");
+          log.debug("No mapping found for table '{}' in schema '{}'.", table_name, schema_name);
       }
       rs.close();
     } catch (Throwable t) {
@@ -128,12 +130,14 @@ public class JDBCDataSource implements DataSourceIF {
     return relations;
   }
 
+  @Override
   public TupleReaderIF getReader(String relation) {
     Relation rel = mapping.getRelation(relation);
     if (rel == null) throw new DB2TMException("Unknown relation: " + relation);
     return new TupleReader(rel);
   }
 
+  @Override
   public ChangelogReaderIF getChangelogReader(Changelog changelog, String startOrder) {
     try {
       return new ChangelogReader(changelog, startOrder);
@@ -142,6 +146,7 @@ public class JDBCDataSource implements DataSourceIF {
     }
   }
   
+  @Override
   public String getMaxOrderValue(Changelog changelog) {
     try {
       // get datatypes
@@ -164,7 +169,7 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(") from ");
       sb.append(changelog.getTable());
       String sql = sb.toString();
-      log.debug("max order value query: " + sql);
+      log.debug("max order value query: {}", sql);
 
       PreparedStatement pstm = null;
       ResultSet rs = null;
@@ -205,7 +210,7 @@ public class JDBCDataSource implements DataSourceIF {
   private Map<String, Integer> getColumnTypes(String schema,
                                               String table, Connection conn)
     throws SQLException {
-    Map datatypes = new HashMap();
+    Map<String, Integer> datatypes = new HashMap<String, Integer>();
     ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
     try {
       while(rs.next())
@@ -252,14 +257,11 @@ public class JDBCDataSource implements DataSourceIF {
 
   private class TupleReader implements TupleReaderIF {
 
-    protected Relation relation;
     PreparedStatement stm;
     ResultSet rs;
     int[] coltypes;
     
     private TupleReader(Relation relation) {
-      this.relation = relation;
-
       // build sql statement from relation definition
       StringBuilder sb = new StringBuilder();
       sb.append("select r.");
@@ -277,7 +279,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
 
       String sql = sb.toString();
-      log.debug("tuple query: " + sql);
+      log.debug("tuple query: {}", sql);
 
       // prepare query
       Connection conn = getConnection();
@@ -299,6 +301,7 @@ public class JDBCDataSource implements DataSourceIF {
       
     }
 
+    @Override
     public String[] readNext() {
       try {
         if (rs.next()) {
@@ -314,6 +317,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
+    @Override
     public void close() {
       try {
         if (rs != null) rs.close();
@@ -326,21 +330,16 @@ public class JDBCDataSource implements DataSourceIF {
   }
 
   private class ChangelogReader implements ChangelogReaderIF {
-    protected Changelog changelog;
     PreparedStatement stm;
     ResultSet rs;
     int[] coltypes;
     int ocoltype;
     
-    String orderValue;
     int tcix; // tuple start index
     int ocix;
     
     private ChangelogReader(Changelog changelog, String orderValue)
       throws SQLException {
-      this.changelog = changelog;
-      this.orderValue = orderValue;
-
       // FIXME: require primary key to be specified on both tables
       // add test case for it
       
@@ -455,30 +454,30 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(changelog.getOrderColumn());
 
       String sql = sb.toString();
-      log.debug("changelog query: " + sql);
+      log.debug("changelog query: {}", sql);
 
       Connection conn = getConnection();
 
         // get hold of column data types
-        Map rdatatypes = getColumnTypes(relation.getName(), conn);
+        Map<String, Integer> rdatatypes = getColumnTypes(relation.getName(), conn);
         if (rdatatypes.isEmpty())
           throw new DB2TMInputException("Relation '" + relation.getName() + "' does not exist.");
         coltypes = new int[rcols.length];
         for (int i=0; i < rcols.length; i++) {
           if (rdatatypes.containsKey(rcols[i])) {
-            coltypes[i] = ((Integer)rdatatypes.get(rcols[i])).intValue();
+            coltypes[i] = rdatatypes.get(rcols[i]).intValue();
           } else if (rdatatypes.containsKey(rcols[i].toUpperCase())) {
-            coltypes[i] = ((Integer)rdatatypes.get(rcols[i].toUpperCase())).intValue();
+            coltypes[i] = rdatatypes.get(rcols[i].toUpperCase()).intValue();
           } else {
             throw new DB2TMInputException("Column '" + rcols[i] + "' in relation '" + relation.getName() + "' does not exist.");
           }
         }
-        Map cdatatypes = getColumnTypes(changelog.getTable(), conn);
+        Map<String, Integer> cdatatypes = getColumnTypes(changelog.getTable(), conn);
         if (cdatatypes.isEmpty())
           throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
-        Integer oct = (Integer)cdatatypes.get(changelog.getOrderColumn());
+        Integer oct = cdatatypes.get(changelog.getOrderColumn());
         if (oct == null)
-          oct = (Integer)cdatatypes.get(changelog.getOrderColumn().toUpperCase());
+          oct = cdatatypes.get(changelog.getOrderColumn().toUpperCase());
         if (oct == null)
           throw new DB2TMInputException("Order column '" +
                                         changelog.getOrderColumn() +
@@ -493,7 +492,7 @@ public class JDBCDataSource implements DataSourceIF {
       // order value
       if (orderValue != null) {
         int cix = 1;
-        log.debug("changelog order value: " + orderValue);
+        log.debug("changelog order value: {}", orderValue);
         JDBCUtils.setHighPrecisionObject(this.stm, cix, orderValue, ocoltype);
       }
       this.rs = stm.executeQuery();        
@@ -507,6 +506,7 @@ public class JDBCDataSource implements DataSourceIF {
       return "r." + col;
     }
     
+    @Override
     public String[] readNext() {
       try {
         if (rs.next()) {
@@ -523,6 +523,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
+    @Override
     public ChangeType getChangeType() {
       try {
         // if the primary key is null, then obviously the row has been
@@ -537,6 +538,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
+    @Override
     public String getOrderValue() {
       try {
         return JDBCUtils.getHighPrecisionString(rs, ocix, ocoltype);
@@ -545,6 +547,7 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
     
+    @Override
     public void close() {
       try {
         if (rs != null) rs.close();

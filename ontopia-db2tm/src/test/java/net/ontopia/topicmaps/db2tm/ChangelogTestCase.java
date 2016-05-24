@@ -49,13 +49,11 @@ import org.junit.runners.Parameterized.Parameters;
  */
 @RunWith(Parameterized.class)
 public class ChangelogTestCase {
-  private Connection conn;
-  private Statement stm;
   
   private final static String testdataDirectory = "db2tm";
       
   @Parameters
-  public static List generateTests() throws IOException {
+  public static List<String[]> generateTests() throws IOException {
     TestFileUtils.transferTestInputDirectory(testdataDirectory + "/in/sync");
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in/sync", ".xml");
   }
@@ -121,7 +119,7 @@ public class ChangelogTestCase {
   // public so it can be accessed from FullRescanEventTest
   public static Connection getConnection() throws SQLException, IOException {
     String propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
-    Map props = PropertyUtils.loadProperties(propfile);
+    Map<Object, Object> props = PropertyUtils.loadProperties(propfile);
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
     DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
     return cf.requestConnection();

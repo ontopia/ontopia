@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.StorageIF;
 import net.ontopia.topicmaps.core.StoreDeletedException;
@@ -32,7 +31,6 @@ import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.StorePoolableObjectFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,6 +113,12 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
         pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
       else
         pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
+      
+      // EXPERIMENTAL!
+      String _etime = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.StorePool.IdleTimeout", false);
+      int etime = (_etime == null ? -1 : Integer.parseInt(_etime));
+      pool.setTimeBetweenEvictionRunsMillis(etime);
+      pool.setSoftMinEvictableIdleTimeMillis(etime);
     }
 
     // allow the user to fully overwrite exhausted options
@@ -304,8 +308,9 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
       log.debug("RTR: return " + getId() + " i: " + pool.getNumIdle() + " a: " + pool.getNumActive());
       try { 
         // return rw store to pool
-        if (!store.isReadOnly())
+        if (!store.isReadOnly()) {
           pool.returnObject(store);
+        }
       } catch (Exception e) {
         throw new OntopiaRuntimeException("Could not return topic map store '" + getId() + "' to pool.", e);
       }

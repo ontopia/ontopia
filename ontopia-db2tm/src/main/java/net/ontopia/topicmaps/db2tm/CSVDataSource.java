@@ -38,9 +38,9 @@ import org.slf4j.LoggerFactory;
 public class CSVDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVDataSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVDataSource.class);
 
-  protected RelationMapping mapping;
+  protected final RelationMapping mapping;
 
   protected File path;
 
@@ -85,8 +85,9 @@ public class CSVDataSource implements DataSourceIF {
     this.ignoreFirstLines = ignoreFirstLines;
   }
 
-  public Collection getRelations() {
-    Collection relations = new ArrayList();
+  @Override
+  public Collection<Relation> getRelations() {
+    Collection<Relation> relations = new ArrayList<Relation>();
     // scan directory to find csv files    
     String[] files = path.list();
     for (int i=0;  i< files.length; i++) {
@@ -97,25 +98,29 @@ public class CSVDataSource implements DataSourceIF {
       if (relation != null)
         relations.add(relation);
       else
-        log.debug("No mapping found for file '" + filename + "'.");
+        log.debug("No mapping found for file '{}'.", filename);
     }
     return relations;
   }
 
+  @Override
   public TupleReaderIF getReader(String relation) {
     File file = new File(path, relation);
     if (!file.exists()) throw new DB2TMException("Unknown relation: " + relation);
     return new TupleReader(file);
   }
 
+  @Override
   public ChangelogReaderIF getChangelogReader(Changelog changelog, String startOrder) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getMaxOrderValue(Changelog changelog) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void close() {
     // no-op
   }
@@ -125,33 +130,34 @@ public class CSVDataSource implements DataSourceIF {
   }
 
   private class TupleReader implements TupleReaderIF {
-    private CSVReader reader;
-    private Reader in;
+    private final CSVReader reader;
+    private final Reader in;
     
     private TupleReader(File csvfile) {
       try {
-        if (encoding == null)
-          in = new InputStreamReader(new FileInputStream(csvfile));
-        else
-          in = new InputStreamReader(new FileInputStream(csvfile), encoding);
+        in = (encoding == null)
+          ? new InputStreamReader(new FileInputStream(csvfile))
+          : new InputStreamReader(new FileInputStream(csvfile), encoding);
         this.reader = new CSVReader(in, separator, quoteCharacter);
         // ignore first N lines
         for (int i=0; i < ignoreFirstLines; i++) {
-          java.util.Arrays.asList(readNext());
+          readNext();
         }
       } catch (Throwable e) {
         throw new OntopiaRuntimeException(e);
       }
     }
 
+    @Override
     public String[] readNext() {
       try {
         return reader.readNext();
-      } catch (java.io.IOException e) {
+      } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }
     }
 
+    @Override
     public void close() {
       try {
         if (in != null)

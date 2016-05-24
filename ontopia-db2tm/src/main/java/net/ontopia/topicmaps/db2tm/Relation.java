@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +40,9 @@ public class Relation {
 
   protected String commit = null;
   
-  protected RelationMapping mapping;
-  protected List entities = new ArrayList(2);
-  protected Map virtualColumns = new HashMap(2);
+  protected final RelationMapping mapping;
+  protected List<Entity> entities = new ArrayList<Entity>(2);
+  protected Map<String, ValueIF> virtualColumns = new HashMap<String, ValueIF>(2);
 
   // field type enumeration
   public static final int SYNCHRONIZATION_UNKNOWN = 0;
@@ -52,7 +51,7 @@ public class Relation {
   public static final int SYNCHRONIZATION_CHANGELOG = 4;
   protected int synctype = SYNCHRONIZATION_UNKNOWN;
   
-  protected List syncs = new ArrayList(1);
+  protected List<Changelog> syncs = new ArrayList<Changelog>(1);
   
   Relation(RelationMapping mapping) {
     this.mapping = mapping;
@@ -105,7 +104,7 @@ public class Relation {
   // Entities
   // ---------------------------------------------------------------------------
 
-  public List getEntities() {
+  public List<Entity> getEntities() {
     return entities;
   }
 
@@ -118,7 +117,7 @@ public class Relation {
   }
 
   public Entity getPrimaryEntity() {
-    return (Entity)entities.get(0);
+    return entities.get(0);
   }
 
   // ---------------------------------------------------------------------------
@@ -145,7 +144,7 @@ public class Relation {
   }
 
   public ValueIF getVirtualColumn(String name) {
-    ValueIF vcol = (ValueIF)virtualColumns.get(name);
+    ValueIF vcol = virtualColumns.get(name);
     if (vcol == null)
       throw new DB2TMConfigException("Unknown virtual column: " + name);
     return vcol;
@@ -182,7 +181,7 @@ public class Relation {
     }
   }
   
-  public List getSyncs() {
+  public List<Changelog> getSyncs() {
     return syncs;
   }
 
@@ -203,9 +202,9 @@ public class Relation {
   // ---------------------------------------------------------------------------
   
   void compile() {
-    Iterator iter = entities.iterator();
-    while (iter.hasNext())
-      ((Entity)iter.next()).compile();
+    for (Entity entity : entities) {
+      entity.compile();
+    }
   }
 
 }

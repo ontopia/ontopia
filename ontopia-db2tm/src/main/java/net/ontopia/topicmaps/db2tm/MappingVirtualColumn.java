@@ -30,15 +30,15 @@ import java.util.HashMap;
  */
 public class MappingVirtualColumn implements ValueIF {
 
-  protected Relation relation;
-  protected String colname;
+  protected final Relation relation;
+  protected final String colname;
     
-  protected Map table = new HashMap();
+  protected Map<String, String> table = new HashMap<String, String>();
   protected String defaultValue;
   protected boolean defaultSpecified;
 
-  protected boolean isVirtualColumn;
-  protected String inputColumn;
+  protected final boolean isVirtualColumn;
+  protected final String inputColumn;
   protected int cix;
 
   MappingVirtualColumn(Relation relation, String colname, String inputColumn) {
@@ -54,10 +54,11 @@ public class MappingVirtualColumn implements ValueIF {
     }
   }
 
+  @Override
   public String getValue(String[] tuple) {
     String value = (isVirtualColumn ? relation.getVirtualColumn(inputColumn).getValue(tuple) : tuple[cix]);
     if (table.containsKey(value))
-      return (String)table.get(value);
+      return table.get(value);
     else
       if (defaultSpecified)
         return defaultValue;

@@ -60,7 +60,7 @@ public final class Values {
   
   static ValueIF getPatternValue(Relation relation, String value) {
     // use pattern value
-    List list = new ArrayList();
+    List<Object> list = new ArrayList<Object>();
     Matcher matcher = PATTERN.matcher(value);
     int colvals = 0;
     int ix = 0;
@@ -106,11 +106,9 @@ public final class Values {
     private TupleValue(int ix) {
       this.ix = ix;
     }
+    @Override
     public String getValue(String[] tuple) {
-      if (ix >= tuple.length)
-        return null;
-      else
-        return tuple[ix];
+      return (ix >= tuple.length) ? null : tuple[ix];
     }    
   }
   
@@ -119,6 +117,7 @@ public final class Values {
     private StaticValue(String value) {
       this.value = value;
     }
+    @Override
     public String getValue(String[] tuple) {
       return value;
     }
@@ -134,6 +133,7 @@ public final class Values {
       this.colvals = colvals;
     }
     
+    @Override
     public String getValue(String[] tuple) {
       int empties = 0;
       StringBuilder sb = new StringBuilder();

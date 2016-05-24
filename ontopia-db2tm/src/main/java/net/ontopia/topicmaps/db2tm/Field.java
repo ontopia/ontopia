@@ -40,8 +40,8 @@ public class Field {
   public static final int TYPE_ASSOCIATION_ROLE = 64;
 
   // field type
-  protected int ftype;
-  protected Entity entity;
+  protected final int ftype;
+  protected final Entity entity;
   
   // subject-locator, subject-identifier, item-identifier
   protected String column;
@@ -56,7 +56,7 @@ public class Field {
   protected String atype;
   protected String rtype;
   protected String player;
-  protected List oroles = new ArrayList();
+  protected List<Field> oroles = new ArrayList<Field>();
 
   public static final int OPTIONAL_DEFAULT = 0;
   public static final int OPTIONAL_TRUE = 1;
@@ -156,7 +156,7 @@ public class Field {
     oroles.add(orole);
   }
   
-  public List getOtherRoleFields() { // TYPE_PLAYER only
+  public List<Field> getOtherRoleFields() { // TYPE_PLAYER only
     return oroles;
   }
 
@@ -173,10 +173,9 @@ public class Field {
         getFieldType() != TYPE_ASSOCIATION_ROLE) {
       Relation relation = getEntity().getRelation();
       String column = getColumn();
-      if (column != null)
-        this.cvalue = Values.getColumnValue(relation, column);
-      else
-        this.cvalue = Values.getPatternValue(relation, getPattern());
+      this.cvalue = (column != null)
+        ? Values.getColumnValue(relation, column)
+        : Values.getPatternValue(relation, getPattern());
     }
   }
 

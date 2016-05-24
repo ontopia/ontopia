@@ -26,7 +26,7 @@ package net.ontopia.topicmaps.db2tm;
  * expression to produce a value inside the SQL query.
  */
 public class ExpressionVirtualColumn {
-  private String colname;
+  private final String colname;
   private String sqlexpression;
 
   public ExpressionVirtualColumn(String colname) {

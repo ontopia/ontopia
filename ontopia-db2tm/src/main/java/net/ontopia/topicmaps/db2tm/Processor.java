@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
 public class Processor {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Processor.class.getName());
+  static Logger log = LoggerFactory.getLogger(Processor.class);
   
   public static int NEVER_COMMIT_MODE = 0;
   public static int RELATIONAL_COMMIT_MODE = 1;
@@ -98,15 +98,15 @@ public class Processor {
   /**
    * INTERNAL: Runs a DB2TM process by adding tuples to the topic map.
    */
-  public static void addRelations(RelationMapping rmapping, Collection relnames, TopicMapIF topicmap, LocatorIF baseloc) {
+  public static void addRelations(RelationMapping rmapping, Collection<String> relnames, TopicMapIF topicmap, LocatorIF baseloc) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Adding relations: " + new Date());
+    if (log.isInfoEnabled()) log.info("Adding relations: {}", new Date());
 
     try {
       // verify relation mapping
-      Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
+      Map<DataSourceIF, Collection<Relation>> ds_relations = Utils.verifyRelationsForMapping(rmapping);
       
       // set up context object
       ctx.setMapping(rmapping);
@@ -134,23 +134,19 @@ public class Processor {
       }
       
       // loop over datasources
-      Iterator dsiter = ds_relations.keySet().iterator();
-      while (dsiter.hasNext()) {
-        DataSourceIF datasource = (DataSourceIF)dsiter.next();
-        log.debug("Adding tuples from data source " + datasource);
+      for (DataSourceIF datasource : ds_relations.keySet()) {
+        log.debug("Adding tuples from data source {}", datasource);
       
         // loop over relations
-        Collection rels = (Collection)ds_relations.get(datasource);
-        Iterator riter = rels.iterator();
-        while (riter.hasNext()) {
-          Relation relation = (Relation)riter.next();
+        for (Relation relation : ds_relations.get(datasource)) {
+          String relationName = relation.getName();
 
           // do not process non-listed relations
-          if (relnames != null && !relnames.contains(relation.getName())) {
-            log.debug("  ignoring relation: " + relation.getName());
+          if (relnames != null && !relnames.contains(relationName)) {
+            log.debug("  ignoring relation: {}", relationName);
             continue;
           } else {
-            log.info("  adding relation: " + relation.getName());
+            log.info("  adding relation: {}", relationName);
           }
       
           int rtuples = 0;
@@ -177,27 +173,20 @@ public class Processor {
           }
 
           // changelog synchronization; set start order values
-          Collection syncs = relation.getSyncs();
-          if (!syncs.isEmpty()) {
-            Iterator siter = syncs.iterator();
-            while (siter.hasNext()) {
-              Changelog sync = (Changelog)siter.next();
+            for (Changelog sync : relation.getSyncs()) {
               String maxOrderValue = datasource.getMaxOrderValue(sync);
-              log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
+              log.debug("New order value: {}={}", sync.getTable(), maxOrderValue);
               setStartOrder(sync, ctx, maxOrderValue);
             }
-          }
 
           if (usedCommitMode > NEVER_COMMIT_MODE) {
-            log.info("  using commit mode: " + commitModeToString(usedCommitMode, usedCommitCount));
+            log.info("  using commit mode: {}", commitModeToString(usedCommitMode, usedCommitCount));
           }
           
           // loop over tuples        
-          TupleReaderIF reader = datasource.getReader(relation.getName());
+          TupleReaderIF reader = datasource.getReader(relationName);
           String [] tuple = null;
           while ((tuple = reader.readNext()) != null) {
-            if (tuple == null) break;
-      
             // process individual tuple
             long time = System.currentTimeMillis();
             // FIXME: we could change to updateTuple here with no ill effects,
@@ -214,7 +203,7 @@ public class Processor {
             if ((usedCommitMode == COUNT_COMMIT_MODE) && (rtuples % usedCommitCount == 0)) {
               topicmap = doCommit(topicmap);
               ctx.setTopicMap(topicmap);
-              log.info("    committed after " + rtuples + " tuples ");
+              log.info("    committed after {} tuples ", rtuples);
             }
           }
 
@@ -224,8 +213,8 @@ public class Processor {
             ctx.setTopicMap(topicmap);
           }
 
-          log.info("    Added " + rtuples + " tuples from " + relation.getName() + ", " + 
-                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          log.info("    Added {} tuples from {}, {}/{} ms",
+                   new Object[] {rtuples, relationName, (System.currentTimeMillis()-rstime1), rstime2});
           ttuples += rtuples;
           reader.close();
         }
@@ -247,21 +236,21 @@ public class Processor {
       ctx.close();
     }
     if (log.isInfoEnabled())
-      log.info("done adding relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
+      log.info("done adding relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
   }
 
   /**
    * INTERNAL: Runs a DB2TM process by removing tuples from the topic map.
    */
-  public static void removeRelations(RelationMapping rmapping, Collection relnames, TopicMapIF topicmap, LocatorIF baseloc) {
+  public static void removeRelations(RelationMapping rmapping, Collection<String> relnames, TopicMapIF topicmap, LocatorIF baseloc) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Removing relations: " + new Date());
+    if (log.isInfoEnabled()) log.info("Removing relations: {}", new Date());
 
     try {
       // verify relation mapping
-      Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
+      Map<DataSourceIF, Collection<Relation>> ds_relations = Utils.verifyRelationsForMapping(rmapping);
       
       // set up context object
       ctx.setMapping(rmapping);
@@ -274,23 +263,19 @@ public class Processor {
       }
       
       // loop over datasources
-      Iterator dsiter = ds_relations.keySet().iterator();
-      while (dsiter.hasNext()) {
-        DataSourceIF datasource = (DataSourceIF)dsiter.next();
-        log.debug("Removing tuples from data source: " + datasource);
+      for (DataSourceIF datasource : ds_relations.keySet()) {
+        log.debug("Removing tuples from data source: {}", datasource);
       
         // loop over relations
-        Collection rels = (Collection)ds_relations.get(datasource);
-        Iterator riter = rels.iterator();
-        while (riter.hasNext()) {
-          Relation relation = (Relation)riter.next();
+        for (Relation relation : ds_relations.get(datasource)) {
+          String relationName = relation.getName();
       
           // do not process non-listed relations
-          if (relnames != null && !relnames.contains(relation.getName())) {
-            log.debug("  ignoring relation: " + relation.getName());
+          if (relnames != null && !relnames.contains(relationName)) {
+            log.debug("  ignoring relation: {}", relationName);
             continue;
           } else {
-            log.debug("  removing relation: " + relation.getName());
+            log.debug("  removing relation: {}", relationName);
           }
       
           int rtuples = 0;
@@ -301,20 +286,18 @@ public class Processor {
           ctx.setRelation(relation);
           
           // loop over tuples        
-          TupleReaderIF reader = datasource.getReader(relation.getName());
+          TupleReaderIF reader = datasource.getReader(relationName);
           
           String [] tuple = null;
           while ((tuple = reader.readNext()) != null) {
-            if (tuple == null) break;
-          
             // process individual tuple
             long time = System.currentTimeMillis();
             removeTuple(relation, tuple, ctx);
             rstime2 += (System.currentTimeMillis()-time);
             rtuples++;
           }
-          log.info("    Removed " + rtuples + " tuples from " + relation.getName() + ", " + 
-                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          log.info("    Removed {} tuples from {}, {}/{} ms",
+                   new Object[] {rtuples, relationName, (System.currentTimeMillis()-rstime1), rstime2});
           ttuples += rtuples;
         }
       }
@@ -324,15 +307,15 @@ public class Processor {
       ctx.close();
     }
     if (log.isInfoEnabled())
-      log.info("done removing relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
+      log.info("done removing relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
   }
   
   public static void addTuple(Relation relation, String[] tuple, Context ctx) {
-    if (log.isDebugEnabled()) log.debug("    a(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+    if (log.isDebugEnabled()) log.debug("    a({}),{}", StringUtils.join(tuple, "|"), tuple.length);
     
-    List entities = relation.getEntities();
+    List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
       try {
         Object o = addEntity(relation, entity, tuple, ctx);
         ctx.setEntityObject(i, o);
@@ -374,9 +357,9 @@ public class Processor {
         addTypes(topic, entity.getTypes(), entity, tuple, ctx);
         
       // add characteristics
-      List cfields = entity.getCharacteristicFields();
+      List<Field> cfields = entity.getCharacteristicFields();
       for (int i=0; i < cfields.size(); i++) {
-       Field field = (Field) cfields.get(i);
+       Field field = cfields.get(i);
           
        switch (field.getFieldType()) {
        case Field.TYPE_TOPIC_NAME:
@@ -405,24 +388,21 @@ public class Processor {
 
   protected static boolean checkCondition(Relation relation, Entity entity, String[] tuple, Context ctx) {
     ValueIF condition = entity.getConditionValue();    
-    if (condition != null && condition.getValue(tuple) == null)
-      return false;
-    else
-      return true;
+    return (condition == null || condition.getValue(tuple) != null);
   }
   
   protected static AssociationIF addAssociation(TopicIF reifier, Relation relation, Entity entity, 
                                                 String[] tuple, Context ctx) {
     
     // roles in association
-    List rfields = entity.getRoleFields();
+    List<Field> rfields = entity.getRoleFields();
     int rlen = rfields.size();
     
     // only create association when all mandatory players actually exist
     TopicIF[] rtypes = new TopicIF[rlen];
     TopicIF[] players = new TopicIF[rlen];
     for (int i=0; i < rlen; i++) {
-      Field role = (Field)rfields.get(i);
+      Field role = rfields.get(i);
       players[i] = Utils.getTopic(role.getPlayer(), ctx);
       // if player is null then we'll do nothing
       if (players[i] == null) {
@@ -455,14 +435,14 @@ public class Processor {
     if (assoc == null) {    
       // create association
       assoc = ctx.getBuilder().makeAssociation(atype);
-      log.trace("      +A "  + assoc + " " + atype);
+      log.trace("      +A {} {}", assoc, atype);
     
       // add roles
       int arity = 0;
       for (int i=0; i < rlen; i++) {
         if (players[i] != null) {
           arity++;
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
           if (arity == 1)
             ctx.characteristicsChanged(players[i]);
@@ -475,18 +455,18 @@ public class Processor {
       
     } else {
       // reuse association      
-      log.trace("      =A "  + assoc);
+      log.trace("      =A {}", assoc);
       assoc.setType(atype);
 
-      List oroles = new ArrayList(assoc.getRoles());
+      List<AssociationRoleIF> oroles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
       for (int i=0; i < rlen; i++) {
         AssociationRoleIF or = extractRoleOfType(oroles, rtypes[i]);
         if (or != null) {
           if (ObjectUtils.different(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
-          log.trace("      =R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
         if (i == 1)
@@ -494,9 +474,9 @@ public class Processor {
       }
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
-          AssociationRoleIF or = (AssociationRoleIF)oroles.get(i);
-          log.trace("      -R "  + or.getPlayer() + " :" + or.getType());
+          AssociationRoleIF or = oroles.get(i);
           TopicIF player = or.getPlayer();
+          log.trace("      -R {} :{}", player, or.getType());
           or.remove();
           if (player != null) ctx.characteristicsChanged(player);
         }
@@ -521,20 +501,20 @@ public class Processor {
 
   public static void removeTuple(Relation relation, String[] tuple, Context ctx) {
     if (log.isDebugEnabled())
-      log.trace("    r(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+      log.trace("    r({}),{}", StringUtils.join(tuple, "|"), tuple.length);
 
-    List entities = relation.getEntities();
+    List<Entity> entities = relation.getEntities();
     
     // first find entity objects with ids (used to look up other
     // characteristics)
     for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
       Object o = findTopicByIdentities(relation, entity, tuple, ctx);
       ctx.setEntityObject(i, o);
     }
     // then try to remove each of them (note: reverse order)
     for (int i=entities.size()-1; i >=0; i--) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
       try {
         removeEntity(relation, entity, tuple, ctx);
       } catch (Exception e) {
@@ -561,7 +541,7 @@ public class Processor {
         if (reified instanceof AssociationIF) {
           // remove association
           AssociationIF assoc = (AssociationIF)reified;
-          log.trace("      -A-reified "  + topic + " -> " + assoc + " " + assoc.getType());
+          log.trace("      -A-reified {} -> {} {}", new Object[] {topic, assoc, assoc.getType()});
           assoc.remove();
         }
         // remove reifier topic
@@ -579,41 +559,38 @@ public class Processor {
       // delete topic (and identities)
       deleteTopic(topic);
     } else {
-      log.debug("      >T "  + topic);
+      log.debug("      >T {}", topic);
 
       // TODO: reject if non-primary entity and relation.cardinality > 1 and field is dynamic
       // CONSTRAINT: primary entity cannot occur in multiple rows if changelog
     
       // remove characteristics, but not identities
-      List cfields = entity.getCharacteristicFields();
-      for (int c=0; c < cfields.size(); c++) {
-        Field field = (Field) cfields.get(c);
-
+      for (Field field : entity.getCharacteristicFields()) {
         switch (field.getFieldType()) {
         case Field.TYPE_TOPIC_NAME: {
-          List names = getTopicNames(topic, relation, entity, field, tuple, ctx);
+          List<TopicNameIF> names = getTopicNames(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < names.size(); i++) {
-            TopicNameIF _bn = (TopicNameIF)names.get(i);
-            log.trace("      -N "  + topic + " " + _bn);
+            TopicNameIF _bn = names.get(i);
+            log.trace("      -N {} {}", topic, _bn);
             _bn.remove();
           }
           //! removeTopicName(topic, relation, entity, field, tuple, ctx);
           break;
         } case Field.TYPE_OCCURRENCE: {
-          List occs = getOccurrences(topic, relation, entity, field, tuple, ctx);
+          List<OccurrenceIF> occs = getOccurrences(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < occs.size(); i++) {
-            OccurrenceIF _occ = (OccurrenceIF)occs.get(i);
-            log.trace("      -O "  + topic + " " + _occ);
+            OccurrenceIF _occ = occs.get(i);
+            log.trace("      -O {} {}", topic, _occ);
             _occ.remove();
           }
           //! removeOccurrence(topic, relation, entity, field, tuple, ctx);
           break;
         } case Field.TYPE_PLAYER: {
-          List roles = getPlayers(topic, relation, entity, field, tuple, ctx);
+          List<AssociationRoleIF> roles = getPlayers(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < roles.size(); i++) {
-            AssociationRoleIF role = (AssociationRoleIF)roles.get(i);
+            AssociationRoleIF role = roles.get(i);
             AssociationIF assoc = role.getAssociation();
-            log.trace("      -P "  + assoc + " " + assoc.getType());
+            log.trace("      -P {} {}", assoc, assoc.getType());
             assoc.remove();
           }
           //! removePlayer(topic, relation, entity, field, tuple, ctx);
@@ -629,27 +606,23 @@ public class Processor {
 
   protected static void deleteTopic(TopicIF topic) {
     // first remove all topics that reifies any of the topic's associations
-    Iterator iter = topic.getRoles().iterator();
-    while (iter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)iter.next();
+    for (AssociationRoleIF role : topic.getRoles()) {
       AssociationIF assoc = role.getAssociation();
       // if reifier topic found, then remove it
       TopicIF reifier = assoc.getReifier();
       if (reifier != null) {
         // remove reifier topic
-        log.trace("      -A-reifier "  + topic + " " + reifier + " -> " + assoc);
+        log.trace("      -A-reifier {} {} -> {}", new Object[] {topic, reifier, assoc});
         reifier.remove();
       }
     }
     // remove topic (and identities)
-    log.debug("      -T "  + topic);
+    log.debug("      -T {}", topic);
     topic.remove();
   }
   
   protected static TopicIF findTopicByIdentities(Relation relation, Entity entity, String[] tuple, Context ctx) {
-    List ifields = entity.getIdentityFields();
-    for (int i=0; i < ifields.size(); i++) {
-      Field field = (Field)ifields.get(i);
+    for (Field field : entity.getIdentityFields()) {
       TopicIF topic = findTopicByIdentity(relation, entity, field, tuple, ctx);
       if (topic != null) return topic;
     }
@@ -679,7 +652,7 @@ public class Processor {
         return (TopicIF)tmobject;
       } else {
         if (tmobject != null)
-          log.warn("Item identifier lookup returned non-topic: " + loc + " -> " + tmobject);
+          log.warn("Item identifier lookup returned non-topic: {} -> {}", loc, tmobject);
         return null;
       }
     } default:
@@ -689,9 +662,7 @@ public class Processor {
   
   protected static AssociationIF findAssociationByIdentities(Relation relation, Entity entity, String[] tuple, Context ctx) {
     // look up association object by item identifier
-    List ifields = entity.getIdentityFields();
-    for (int i=0; i < ifields.size(); i++) {
-      Field field = (Field)ifields.get(i);
+    for (Field field : entity.getIdentityFields()) {
       // associations can only have item identifiers
       if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
         LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
@@ -699,7 +670,7 @@ public class Processor {
         if (tmobject instanceof AssociationIF)
           return (AssociationIF)tmobject;
         else if (tmobject != null)
-          log.warn("Item identifier lookup returned non-association: " + loc + " -> " + tmobject);
+          log.warn("Item identifier lookup returned non-association: {} -> {}", loc, tmobject);
       }
     }
     return null;
@@ -712,12 +683,7 @@ public class Processor {
     TopicMapIF tm = ctx.getTopicMap();
 
     // Note: topic will be created only if entity is primary
-    List ifields = entity.getIdentityFields();
-    int iflen = ifields.size();
-    
-    for (int i=0; i < iflen; i++) {
-      Field field = (Field) ifields.get(i);
-
+    for (Field field : entity.getIdentityFields()) {
       TopicIF found = null;
       LocatorIF loc = null;
 
@@ -805,9 +771,7 @@ public class Processor {
                                       String[] tuple, Context ctx) {
     if (assoc == null)
       throw new NullPointerException("Cannot add identities to null association.");
-    List ifields = entity.getIdentityFields();
-    for (int i=0; i < ifields.size(); i++) {
-      Field field = (Field) ifields.get(i);
+    for (Field field : entity.getIdentityFields()) {
       if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
         LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
         if (loc == null) continue;        
@@ -832,7 +796,7 @@ public class Processor {
     // unless the set of types has actually changed
 
     // tracking old types with this
-    Set<TopicIF> oldtypes = new CompactHashSet(topic.getTypes());
+    Set<TopicIF> oldtypes = new CompactHashSet<TopicIF>(topic.getTypes());
 
     // loop over new list of types
     for (int i = 0; i < types.length; i++) {
@@ -873,18 +837,18 @@ public class Processor {
 
   protected static void updateScope(ScopedIF scoped, String[] scope, Entity entity, String[] tuple, Context ctx) {
     // clear existing scope
-    Collection _scope = scoped.getScope();
+    Collection<TopicIF> _scope = scoped.getScope();
     if (!_scope.isEmpty()) {
-      Object[] themes = _scope.toArray();
+      TopicIF[] themes = _scope.toArray(new TopicIF[0]);
       for (int i=0; i < themes.length; i++) {
-        scoped.removeTheme((TopicIF)themes[i]);
+        scoped.removeTheme(themes[i]);
       }
     }
     // add new scoping topics
     addScope(scoped, scope, entity, tuple, ctx);
   }
   
-  protected static boolean compareScope(String[] scope1, Collection scope2, Entity entity, String[] tuple, Context ctx) {
+  protected static boolean compareScope(String[] scope1, Collection<TopicIF> scope2, Entity entity, String[] tuple, Context ctx) {
     if (scope1.length != scope2.size()) return false; // ISSUE: what if scope attribute contains duplicates?
     for (int i=0; i < scope1.length; i++) {
       TopicIF theme = Utils.getTopic(scope1[i], ctx);
@@ -908,11 +872,11 @@ public class Processor {
       if (bn == null) {
         bn = ctx.getBuilder().makeTopicName(topic, type, value);
         addScope(bn, field.getScope(), entity, tuple, ctx);
-        log.trace("      +N "  + topic + " " + bn);
+        log.trace("      +N {} {}", topic, bn);
       } else {
         if (!bn.getValue().equals(value)) {
           bn.setValue(value);
-          log.trace("      =N "  + topic + " " + bn);
+          log.trace("      =N {} {}", topic, bn);
         }
       }
       // notify context
@@ -920,10 +884,9 @@ public class Processor {
     }
   }
 
-  protected static List getTopicNames(TopicIF topic, Relation relation,
+  protected static List<TopicNameIF> getTopicNames(TopicIF topic, Relation relation,
                                       Entity entity, Field field,
                                       String[] tuple, Context ctx) {
-    String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
     if (type == null) {
       if (field.getType() != null)
@@ -935,12 +898,12 @@ public class Processor {
     }
     
     // loop over names and update
-    List result = new ArrayList();
-    Collection bns = topic.getTopicNames();
+    List<TopicNameIF> result = new ArrayList<TopicNameIF>();
+    Collection<TopicNameIF> bns = topic.getTopicNames();
     if (!bns.isEmpty()) {
-      Object[] ba = bns.toArray();
+      TopicNameIF[] ba = bns.toArray(new TopicNameIF[0]);
       for (int i=0; i < ba.length; i++) {
-        TopicNameIF _bn = (TopicNameIF)ba[i];
+        TopicNameIF _bn = ba[i];
         // check type
         TopicIF _type = _bn.getType();
         if (ObjectUtils.different(_type, type))
@@ -975,19 +938,17 @@ public class Processor {
     }
 
     // loop over names and remove first matching
-    Iterator iter = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> iter = topic.getTopicNames().iterator();
     while (iter.hasNext()) {
-      TopicNameIF _bn = (TopicNameIF)iter.next();
+      TopicNameIF _bn = iter.next();
       // check value
-      String _value = _bn.getValue();
-      if (ObjectUtils.different(_value, value)) continue;                                                       
+      if (ObjectUtils.different(_bn.getValue(), value)) continue;
       // check type
-      TopicIF _type = _bn.getType();
-      if (ObjectUtils.different(_type, type)) continue;
+      if (ObjectUtils.different(_bn.getType(), type)) continue;
       // check scope
       if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) continue;
 
-      log.trace("      -N "  + topic + " " + _bn);
+      log.trace("      -N {} {}", topic, _bn);
       // remove matching name
       _bn.remove();
       // notify context
@@ -1022,12 +983,12 @@ public class Processor {
         // FIXME: rewrite so that we can set occurrence value directly
         oc = ctx.getBuilder().makeOccurrence(topic, type, occvalue, occDatatype); 
         addScope(oc, field.getScope(), entity, tuple, ctx);
-        log.trace("      +O "  + topic + " " + oc);
+        log.trace("      +O {} {}", topic, oc);
       } else {
         if (!oc.getValue().equals(occvalue) ||
             !oc.getDataType().equals(occDatatype)) {
           oc.setValue(occvalue, occDatatype);
-          log.trace("      =O "  + topic + " " + oc);
+          log.trace("      =O {} {}", topic, oc);
         }
       }
       // notify context
@@ -1035,9 +996,8 @@ public class Processor {
     }
   }
 
-  protected static List getOccurrences(TopicIF topic, Relation relation, Entity entity, Field field,
+  protected static List<OccurrenceIF> getOccurrences(TopicIF topic, Relation relation, Entity entity, Field field,
                                        String[] tuple, Context ctx) {
-    String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
     if (type == null)
       throw new DB2TMInputException("Occurrence type not found", entity, tuple, field.getType());
@@ -1045,15 +1005,14 @@ public class Processor {
     //! String datatype = (field.getDatatype() == null ? null : Utils.expandPrefixedValue(field.getDatatype(), ctx));    
 
     // loop over occurrences and clear
-    List result = new ArrayList();
-    Collection occs = topic.getOccurrences();
+    List<OccurrenceIF> result = new ArrayList<OccurrenceIF>();
+    Collection<OccurrenceIF> occs = topic.getOccurrences();
     if (!occs.isEmpty()) {
-      Object[] oa = occs.toArray();
+      OccurrenceIF[] oa = occs.toArray(new OccurrenceIF[0]);
       for (int i=0; i < oa.length; i++) {
-        OccurrenceIF _occ = (OccurrenceIF)oa[i];
+        OccurrenceIF _occ = oa[i];
         // check type
-        TopicIF _type = _occ.getType();
-        if (ObjectUtils.different(_type, type)) continue;
+        if (ObjectUtils.different(_occ.getType(), type)) continue;
 
 				// FIXME: compare datatype?
 
@@ -1076,22 +1035,20 @@ public class Processor {
     //! String datatype = (field.getDatatype() == null ? null : Utils.expandPrefixedValue(field.getDatatype(), ctx));
 
     // loop over occurrences and remove first matching
-    Iterator iter = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> iter = topic.getOccurrences().iterator();
     while (iter.hasNext()) {
-      OccurrenceIF _occ = (OccurrenceIF)iter.next();
+      OccurrenceIF _occ = iter.next();
       // check value or locator
-			String _value = _occ.getValue();
-			if (ObjectUtils.different(_value, value)) continue;
+			if (ObjectUtils.different(_occ.getValue(), value)) continue;
 
 			// FIXME: compare datatype?
 
       // check type
-      TopicIF _type = _occ.getType();
-      if (ObjectUtils.different(_type, type)) continue;                                                       
+      if (ObjectUtils.different(_occ.getType(), type)) continue;
       // check scope
       if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) continue;
 
-      log.trace("      -O "  + topic + " " + _occ);
+      log.trace("      -O {} {}", topic, _occ);
       // remove matching occurrence
       _occ.remove();
       // notify context
@@ -1105,14 +1062,14 @@ public class Processor {
                                   String[] tuple, Context ctx) {
     
     // other roles in association
-    List rfields = field.getOtherRoleFields();
+    List<Field> rfields = field.getOtherRoleFields();
     int rlen = rfields.size();
 
     // only create association when all mandatory players actually exist
     TopicIF[] rtypes = new TopicIF[rlen];
     TopicIF[] players = new TopicIF[rlen];
     for (int i=0; i < rlen; i++) {
-      Field role = (Field)rfields.get(i);
+      Field role = rfields.get(i);
       players[i] = Utils.getTopic(role.getPlayer(), ctx);
 
       // if player is null then we'll do nothing
@@ -1148,49 +1105,49 @@ public class Processor {
       
       // create association
       AssociationIF assoc = ctx.getBuilder().makeAssociation(atype);
-      log.trace("      +P "  + assoc + " " + atype);
+      log.trace("      +P {} {}", assoc, atype);
 
       // add scope
       addScope(assoc, field.getScope(), entity, tuple, ctx);
       
       // add current role
-      log.trace("      +R "  + topic + " :" + rtype);
+      log.trace("      +R {} :{}", topic, rtype);
       ctx.getBuilder().makeAssociationRole(assoc, rtype, topic);
       
       // add other roles
       for (int i=0; i < rlen; i++) {
         // do not create role if player is null
         if (players[i] != null) {
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         } else {
-          log.trace("      ?R "  + players[i] + " :" + rtypes[i]);          
+          log.trace("      ?R {} :{}", players[i], rtypes[i]);          
         }
       }
 
     } else {
       // reuse association
       AssociationIF assoc = ar.getAssociation();
-      log.trace("      =P "  + topic + " " + assoc);
+      log.trace("      =P {} {}", topic, assoc);
 
-      List oroles = new ArrayList(assoc.getRoles());
+      List<AssociationRoleIF> oroles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
       oroles.remove(ar);
       for (int i=0; i < rlen; i++) {
         AssociationRoleIF or = extractRoleOfType(oroles, rtypes[i]);
         if (or != null) {
           if (ObjectUtils.different(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
-          log.trace("      =R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
-          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
       }
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
-          AssociationRoleIF or = (AssociationRoleIF)oroles.get(i);
-          log.trace("      -R "  + or.getPlayer() + " :" + or.getType());
+          AssociationRoleIF or = oroles.get(i);
           TopicIF player = or.getPlayer();
+          log.trace("      -R {} :{}", player, or.getType());
           or.remove();
           if (player != null) ctx.characteristicsChanged(player);
         }
@@ -1200,10 +1157,10 @@ public class Processor {
     ctx.characteristicsChanged(topic);
   }
 
-  private static AssociationRoleIF extractRoleOfType(List roles, TopicIF rtype) {
+  private static AssociationRoleIF extractRoleOfType(List<AssociationRoleIF> roles, TopicIF rtype) {
     int length = roles.size();
     for (int i=0; i < length; i++) {
-      AssociationRoleIF r = (AssociationRoleIF)roles.get(i);
+      AssociationRoleIF r = roles.get(i);
       if (ObjectUtils.equals(rtype, r.getType())) {
         roles.remove(i);
         return r;
@@ -1212,7 +1169,7 @@ public class Processor {
     return null;
   }
   
-  protected static List getPlayers(TopicIF topic, Relation relation, Entity entity, Field field,
+  protected static List<AssociationRoleIF> getPlayers(TopicIF topic, Relation relation, Entity entity, Field field,
                                    String[] tuple, Context ctx) {    
     TopicIF atype = Utils.getTopic(field.getAssociationType(), ctx);
     if (atype == null)
@@ -1222,15 +1179,15 @@ public class Processor {
       throw new DB2TMInputException("Role type not found", entity, tuple, field.getRoleType());
 
     // loop over roles and update
-    List result = new ArrayList();
-    Collection troles = topic.getRoles();
+    List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
+    Collection<AssociationRoleIF> troles = topic.getRoles();
     if (!troles.isEmpty()) {
-      Object[] ra = troles.toArray();
-      Collection rfields = field.getOtherRoleFields();
+      AssociationRoleIF[] ra = troles.toArray(new AssociationRoleIF[0]);
+      Collection<Field> rfields = field.getOtherRoleFields();
       
       outer:
       for (int i=0; i < ra.length; i++) {
-        AssociationRoleIF role = (AssociationRoleIF)ra[i];
+        AssociationRoleIF role = ra[i];
         // check role type
         if (ObjectUtils.different(role.getType(), rtype_p)) continue;
         // check association type
@@ -1239,19 +1196,14 @@ public class Processor {
         // check scope
         if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
         // check association cardinality
-        Collection roles = assoc.getRoles();
+        Collection<AssociationRoleIF> roles = assoc.getRoles();
         if (roles.size() != (rfields.size() + 1)) continue;
-        Iterator ariter = roles.iterator();
-        while (ariter.hasNext()) {
-          AssociationRoleIF arole = (AssociationRoleIF)ariter.next();
+        for (AssociationRoleIF arole : roles) {
           if (arole.equals(role)) continue;
           TopicIF rtype = arole.getType();
-          TopicIF player = arole.getPlayer();
           // check role
           Field matching_rfield = null;
-          Iterator rfiter = rfields.iterator();
-          while (rfiter.hasNext()) {
-            Field rfield = (Field)rfiter.next();
+          for (Field rfield : rfields) {
             TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
             if (rtype_o == null)
               throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
@@ -1280,13 +1232,10 @@ public class Processor {
     if (rtype_p == null)
       throw new DB2TMInputException("Role type not found", entity, tuple, field.getRoleType());
 
-    Collection rfields = field.getOtherRoleFields();
-    
-    Iterator triter = topic.getRoles().iterator();
+    Collection<Field> rfields = field.getOtherRoleFields();
 
     outer:
-    while (triter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)triter.next();
+    for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
       if (ObjectUtils.different(role.getType(), rtype_p)) continue;
       // check association type
@@ -1295,19 +1244,15 @@ public class Processor {
       // check scope
       if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
       // check association cardinality
-      Collection roles = assoc.getRoles();
+      Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != (rfields.size() + 1)) continue;
-      Iterator ariter = roles.iterator();
-      while (ariter.hasNext()) {
-        AssociationRoleIF arole = (AssociationRoleIF)ariter.next();
+      for (AssociationRoleIF arole : roles) {
         if (arole.equals(role)) continue;
         TopicIF rtype = arole.getType();
         TopicIF player = arole.getPlayer();
         // check role
         Field matching_rfield = null;
-        Iterator rfiter = rfields.iterator();
-        while (rfiter.hasNext()) {
-          Field rfield = (Field)rfiter.next();
+        for (Field rfield : rfields) {
           TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
           if (rtype_o == null)
             throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
@@ -1326,7 +1271,7 @@ public class Processor {
       //! if (reifier != null)
       //!   // remove reifier topic
       //!   reifier.remove();
-      log.trace("      -P "  + assoc + " " + atype);
+      log.trace("      -P {} {}", assoc, atype);
       // remove association
       assoc.remove();
       // notify context
@@ -1340,8 +1285,8 @@ public class Processor {
     // TODO: needs improvement. take optional roles into account
     
     // use first role fields as starting point
-    List rfields = entity.getRoleFields();
-    Field pfield = (Field)rfields.get(0);
+    List<Field> rfields = entity.getRoleFields();
+    Field pfield = rfields.get(0);
     
     TopicIF atype = Utils.getTopic(entity.getAssociationType(), ctx);
     if (atype == null)
@@ -1355,28 +1300,24 @@ public class Processor {
     // if player topic is gone, then there won't be any matching associations either
     if (topic == null) return;
     
-    Iterator triter = topic.getRoles().iterator();
     outer:
-    while (triter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)triter.next();
+    for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
       if (ObjectUtils.different(role.getType(), rtype_p)) continue;
       // check association type
       AssociationIF assoc = role.getAssociation();
       if (ObjectUtils.different(assoc.getType(), atype)) continue;
       // check association cardinality
-      Collection roles = assoc.getRoles();
+      Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != rfields.size()) continue;
-      Iterator ariter = roles.iterator();
-      while (ariter.hasNext()) {
-        AssociationRoleIF arole = (AssociationRoleIF)ariter.next();
+      for (AssociationRoleIF arole : roles) {
         if (arole.equals(role)) continue;
         TopicIF rtype = arole.getType();
         TopicIF player = arole.getPlayer();
         // check role
         Field matching_rfield = null;
         for (int i=0; i < rfields.size(); i++) {
-          Field rfield = (Field)rfields.get(i);
+          Field rfield = rfields.get(i);
           if (rfield.equals(pfield)) continue;
           TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
           if (rtype_o == null)
@@ -1400,10 +1341,10 @@ public class Processor {
         removeTopic(reifier, relation, entity, tuple, ctx);
       // remove association
       if (entity.isPrimary()) {
-        log.trace("      -A "  + assoc + " " + atype);
+        log.trace("      -A {} {}", assoc, atype);
         assoc.remove();
       } else {
-        log.trace("      >A "  + assoc);
+        log.trace("      >A {}", assoc);
       }
       break;
     }    
@@ -1413,25 +1354,25 @@ public class Processor {
    * INTERNAL: Runs a DB2TM process by synchronizing the relations.
    */
   public static void synchronizeRelations(RelationMapping rmapping,
-                                          Collection relnames,
+                                          Collection<String> relnames,
                                           TopicMapIF topicmap,
                                           LocatorIF baseloc) {
     synchronizeRelations(rmapping, relnames, topicmap, baseloc, false);
   }
   
   public static void synchronizeRelations(RelationMapping rmapping,
-                                          Collection relnames,
+                                          Collection<String> relnames,
                                           TopicMapIF topicmap,
                                           LocatorIF baseloc,
                                           boolean forceRescan) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Synchronizing relations: " + new Date());
+    if (log.isInfoEnabled()) log.info("Synchronizing relations: {}", new Date());
 
     try {
       // verify relation mapping
-      Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
+      Map<DataSourceIF, Collection<Relation>> ds_relations = Utils.verifyRelationsForMapping(rmapping);
       
       // set up context object
       ctx.setMapping(rmapping);
@@ -1444,20 +1385,16 @@ public class Processor {
       }
       
       // loop over datasources
-      Iterator dsiter = ds_relations.keySet().iterator();
-      while (dsiter.hasNext()) {
-        DataSourceIF datasource = (DataSourceIF) dsiter.next();
-        log.debug("Synchronizing relations in data source: " + datasource);
+      for (DataSourceIF datasource : ds_relations.keySet()) {
+        log.debug("Synchronizing relations in data source: {}", datasource);
       
         // loop over relations
-        Collection rels = (Collection) ds_relations.get(datasource);
-        Iterator riter = rels.iterator();
-        while (riter.hasNext()) {
-          Relation relation = (Relation) riter.next();
+        for (Relation relation : ds_relations.get(datasource)) {
+          String relationName = relation.getName();
       
           // do not process non-listed relations
-          if (relnames != null && !relnames.contains(relation.getName())) {
-            log.debug("  ignoring relation: " + relation.getName());
+          if (relnames != null && !relnames.contains(relationName)) {
+            log.debug("  ignoring relation: {}", relationName);
             continue;
           }
       
@@ -1470,14 +1407,14 @@ public class Processor {
           if (synctype == Relation.SYNCHRONIZATION_UNKNOWN) {
             if (!relation.getSyncs().isEmpty()) {
               synctype = Relation.SYNCHRONIZATION_CHANGELOG;
-              log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+              log.debug("  defaulting synchronization type for relation {} to {}", relationName, synctype);
             } else {
               synctype = Relation.SYNCHRONIZATION_RESCAN;
-              log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+              log.debug("  defaulting synchronization type for relation {} to {}", relationName, synctype);
             }
           }
-          log.debug("  synchronizing relation: " + relation.getName() + " type: " +
-                    synctype + " " + Relation.getSynchronizationTypeName(synctype) + " force: " + forceRescan);
+          log.debug("  synchronizing relation: {} type: {} {} force: {}", 
+                    new Object[] {relation.getName(), synctype, Relation.getSynchronizationTypeName(synctype), forceRescan});
           
           int rtuples = 0;
           long rstime1 = System.currentTimeMillis();
@@ -1489,17 +1426,13 @@ public class Processor {
           // synchronize relation if configured to do so
           if (synctype == Relation.SYNCHRONIZATION_CHANGELOG) {
             // changelog synchronization
-            Collection syncs = relation.getSyncs();
-            if (!syncs.isEmpty()) {
-              Iterator siter = syncs.iterator();
-              while (siter.hasNext()) {
-                Changelog sync = (Changelog)siter.next();
-                log.debug("  changelog, table " + sync.getTable());
+              for (Changelog sync : relation.getSyncs()) {
+                log.debug("  changelog, table {}", sync.getTable());
                 
                 // get start order from topic map
                 String startOrder = getStartOrder(sync, ctx);
                 String highestOrder = startOrder;
-                log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
+                log.debug("Old order value: {}={}", sync.getTable(), startOrder);
                 ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
                 reader = new ChangelogReaderWrapper(reader, relation);
                 
@@ -1525,14 +1458,13 @@ public class Processor {
                   }
                   
                   // update start order
-                  log.debug("New order value: " + sync.getTable() + "=" + highestOrder);
+                  log.debug("New order value: {}={}", sync.getTable(), highestOrder);
                   setStartOrder(sync, ctx, highestOrder);
                   
                 } finally {
                   reader.close();
                 }
               }            
-            }
           }
           else if (synctype == Relation.SYNCHRONIZATION_RESCAN) {
             
@@ -1540,27 +1472,20 @@ public class Processor {
             ctx.loadExtents();
       
             // update start order values if there are changelogs declared
-            Collection syncs = relation.getSyncs();
-            if (!syncs.isEmpty()) {
-              Iterator siter = syncs.iterator();
-              while (siter.hasNext()) {
-                Changelog sync = (Changelog)siter.next();
+              for (Changelog sync : relation.getSyncs()) {
                 String maxOrderValue = datasource.getMaxOrderValue(sync);
-                log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
+                log.debug("New order value: {}={}", sync.getTable(), maxOrderValue);
                 setStartOrder(sync, ctx, maxOrderValue);
               }
-            }
             
             // full relation rescan
-            TupleReaderIF reader = datasource.getReader(relation.getName());
+            TupleReaderIF reader = datasource.getReader(relationName);
             
             try {
-              log.debug("  full rescan, table " + relation.getName());
+              log.debug("  full rescan, table {}", relationName);
                 
               String [] tuple = null;
               while ((tuple = reader.readNext()) != null) {
-                if (tuple == null) break;
-                  
                 // process individual tuple
                 long time = System.currentTimeMillis();
                   
@@ -1580,8 +1505,8 @@ public class Processor {
           // EXPERIMENTAL: remove expired field values (characteristics)
           ctx.removeOldValues();
           
-          log.info("    Synchronized " + rtuples + " tuples for " + relation.getName() + ", " + 
-                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          log.info("    Synchronized {} tuples for {}, {}/{} ms",
+                   new Object[] {rtuples, relationName, (System.currentTimeMillis()-rstime1), rstime2});
           ttuples += rtuples;
         }
       }
@@ -1589,7 +1514,7 @@ public class Processor {
       ctx.close();
     }
     if (log.isInfoEnabled())
-      log.info("done synchronizing relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
+      log.info("done synchronizing relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
   }
   
   /**
@@ -1610,9 +1535,7 @@ public class Processor {
         String syncname = sync.getTable();
         String prefix = procname + ":" + relname + ":" + syncname + ":";      
         // loop over occurrences to find appropriate value
-        Iterator iter = reifier.getOccurrences().iterator();
-        while (iter.hasNext()) {
-          OccurrenceIF occ = (OccurrenceIF)iter.next();
+        for (OccurrenceIF occ : reifier.getOccurrences()) {
           TopicIF otype_ = occ.getType();
           if (otype_ != null && otype_.equals(otype)) {
             String value = occ.getValue();
@@ -1646,9 +1569,7 @@ public class Processor {
       
       if (reifier != null && otype != null) {
         // loop over occurrences to find appropriate value
-        Iterator iter = reifier.getOccurrences().iterator();
-        while (iter.hasNext()) {
-          OccurrenceIF occ = (OccurrenceIF)iter.next();
+        for (OccurrenceIF occ : reifier.getOccurrences()) {
           TopicIF otype_ = occ.getType();
           if (otype_ != null && otype_.equals(otype)) {
             String value = occ.getValue();
@@ -1664,7 +1585,6 @@ public class Processor {
       if (match == null) {
         if (reifier == null) {
           // create reifier
-          LocatorIF srcloc = ctx.getBaseLocator().resolveAbsolute("#" + topicmap.getObjectId());
           reifier = ctx.getBuilder().makeTopic();
           topicmap.setReifier(reifier);
         }
@@ -1686,11 +1606,11 @@ public class Processor {
   private static void updateTuple(Relation relation, String[] tuple, Context ctx) {
 
     if (log.isDebugEnabled())
-      log.debug("    u(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+      log.debug("    u({}),{}", StringUtils.join(tuple, "|"), tuple.length);
     
-    List entities = relation.getEntities();
+    List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
       try {
         Object o = updateEntity(relation, entity, tuple, ctx);
         ctx.setEntityObject(i, o);
@@ -1722,11 +1642,11 @@ public class Processor {
         // can add new characteristics. it will also allow us to reuse
         // any of those values. note that this tracking will only
         // happen once per object per relation.
-        List cfields = entity.getCharacteristicFields();
+        List<Field> cfields = entity.getCharacteristicFields();
         if (firstTimeSeen) {
-          List[] existingValues = new List[cfields.size()];
+          List<?>[] existingValues = new List<?>[cfields.size()];
           for (int i=0; i < cfields.size(); i++) {
-            Field field = (Field) cfields.get(i);
+            Field field = cfields.get(i);
             switch (field.getFieldType()) {
             case Field.TYPE_TOPIC_NAME:
               existingValues[i] = getTopicNames(topic, relation, entity, field, tuple, ctx);
@@ -1758,7 +1678,7 @@ public class Processor {
 
         // update characteristics
         for (int i=0; i < cfields.size(); i++) {
-          Field field = (Field) cfields.get(i);
+          Field field = cfields.get(i);
           
           switch (field.getFieldType()) {
           case Field.TYPE_TOPIC_NAME:

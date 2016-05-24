@@ -25,7 +25,7 @@ package net.ontopia.topicmaps.core.index;
  * facilities to find topics used as types, and the instances of those
  * types, within a topic map.</p>
  */
-public interface StatisticsIndexIF {
+public interface StatisticsIndexIF extends IndexIF {
 
   /**
    * Returns the number of topics in the topicmap.

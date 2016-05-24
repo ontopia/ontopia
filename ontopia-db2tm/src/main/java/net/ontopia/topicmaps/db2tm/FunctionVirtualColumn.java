@@ -31,12 +31,12 @@ import net.ontopia.utils.DebugUtils;
  * to new value.
  */
 public class FunctionVirtualColumn implements ValueIF {
-  protected Relation relation;
-  protected String colname;
-  protected String fullMethodName;
+  protected final Relation relation;
+  protected final String colname;
+  protected final String fullMethodName;
   protected Method method;
   
-  protected List params = new ArrayList();
+  protected List<ValueIF> params = new ArrayList<ValueIF>();
 
   public FunctionVirtualColumn(Relation relation, String colname, String fullMethodName) {
     this.relation = relation;
@@ -69,8 +69,8 @@ public class FunctionVirtualColumn implements ValueIF {
     // look up Class.method(String, ..., String)
     try {
       ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-      Class klass = Class.forName(className, true, classLoader);
-      Class[] paramTypes = new Class[params.size()];
+      Class<?> klass = Class.forName(className, true, classLoader);
+      Class<?>[] paramTypes = new Class<?>[params.size()];
       for (int i=0; i < paramTypes.length; i++) {
         paramTypes[i] = String.class;
       }
@@ -97,11 +97,12 @@ public class FunctionVirtualColumn implements ValueIF {
     }
   }
   
+  @Override
   public String getValue(String[] tuple) {
     // get method argument values
     Object[] args = new String[params.size()];
     for (int i=0; i < args.length; i++) {
-      args[i] = ((ValueIF)params.get(i)).getValue(tuple);
+      args[i] = params.get(i).getValue(tuple);
     }
     // call method
     try {

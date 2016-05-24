@@ -48,7 +48,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
  * transaction, so commit before you close.<p>
  */
 
-public interface TopicMapStoreIF {
+public interface TopicMapStoreIF extends AutoCloseable {
 
   /**
    * PUBLIC: Constant that identifies the in-memory topic map

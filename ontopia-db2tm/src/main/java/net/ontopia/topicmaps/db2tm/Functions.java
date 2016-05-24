@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * the function-column element.
  */
 public class Functions {
-  static Logger log = LoggerFactory.getLogger(Functions.class.getName());
+  static Logger log = LoggerFactory.getLogger(Functions.class);
 
   /**
    * INTERNAL: Returns the string argument as-is. This is useful
@@ -47,9 +47,7 @@ public class Functions {
    * it returns null.
    */
   public static String toUpperCase(String str) {
-    if (str == null)
-      return null;
-    return str.toUpperCase();
+    return (str == null) ? null : str.toUpperCase();
   }
 
   /**
@@ -57,9 +55,7 @@ public class Functions {
    * it returns null.
    */
   public static String toLowerCase(String str) {
-    if (str == null)
-      return null;
-    return str.toLowerCase();
+    return (str == null) ? null : str.toLowerCase();
   }
 
   /**
@@ -67,9 +63,7 @@ public class Functions {
    * returns null.
    */
   public static String trim(String str) {
-    if (str == null)
-      return null;
-    return str.trim();
+    return (str == null) ? null : str.trim();
   }
 
   /**
@@ -181,8 +175,7 @@ public class Functions {
    * INTERNAL: Replace all occurrences of a regex in a string with a new value.
    */
   public static String stringReplaceAll(String str, String regex, String toValue) {
-    if (str == null) return null;
-    return str.replaceAll(regex, toValue);
+    return (str == null) ? null : str.replaceAll(regex, toValue);
   }
 
   /**
@@ -190,7 +183,7 @@ public class Functions {
    */
   public static String makePSI(String str) {
     if (Utils.isValueEmpty(str)) {
-      log.debug("No PSI suffix; empty string '" + str + "'");
+      log.debug("No PSI suffix; empty string '{}'", str);
       return null;
     }
 
@@ -209,7 +202,7 @@ public class Functions {
     }
 
     str = new String(tmp, 0, pos);
-    log.debug("Produced PSI suffix: '" + str + "'");
+    log.debug("Produced PSI suffix: '{}'", str);
     return str;
   }
 
@@ -218,6 +211,7 @@ public class Functions {
    * trim() in that internal spaces are also removed.
    */
   public static String stripSpaces(String str) {
+    if (str == null) { return null; }
     char[] buf = new char[str.length()];
     int pos = 0;
     for (int ix = 0; ix < buf.length; ix++) {

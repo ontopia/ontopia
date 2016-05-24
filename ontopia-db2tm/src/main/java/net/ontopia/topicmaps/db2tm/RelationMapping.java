@@ -28,8 +28,6 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
@@ -56,21 +54,21 @@ import org.xml.sax.helpers.AttributesImpl;
 public class RelationMapping extends SAXTracker {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(RelationMapping.class.getName());
+  static Logger log = LoggerFactory.getLogger(RelationMapping.class);
 
   protected XMLReader reader;
 
   protected String name;
   protected String commitMode;
   protected File baseDirectory;
-  protected Map datasources;
-  protected Map<String, Relation> relations;
-  protected Map iprefixes;
+  protected final Map<String, DataSourceIF> datasources;
+  protected final Map<String, Relation> relations;
+  protected final Map<String, Prefix> iprefixes;
 
   RelationMapping() {
-    this.datasources = new HashMap();
-    this.relations = new HashMap();
-    this.iprefixes = new HashMap();
+    this.datasources = new HashMap<String, DataSourceIF>();
+    this.relations = new HashMap<String, Relation>();
+    this.iprefixes = new HashMap<String, Prefix>();
 
     // default commit mode, never commit
     this.commitMode = null;
@@ -91,9 +89,7 @@ public class RelationMapping extends SAXTracker {
   }
 
   public void close() {
-    Iterator iter = getDataSources().iterator();
-    while (iter.hasNext()) {
-      DataSourceIF ds = (DataSourceIF)iter.next();
+    for (DataSourceIF ds : getDataSources()) {
       try {
         ds.close();
       } catch (Throwable t) {
@@ -124,12 +120,12 @@ public class RelationMapping extends SAXTracker {
     return commitMode;
   }
 
-  public Collection getDataSources() {
+  public Collection<DataSourceIF> getDataSources() {
     return datasources.values();
   }
 
   public DataSourceIF getDataSource(String id) {
-    return (DataSourceIF)datasources.get(id);
+    return datasources.get(id);
   }
 
   public void addDataSource(String id, DataSourceIF datasource) {
@@ -153,15 +149,16 @@ public class RelationMapping extends SAXTracker {
   }
 
   public Prefix getPrefix(String prefix) {
-    return (Prefix)iprefixes.get(prefix);
+    return iprefixes.get(prefix);
   }
 
   public String getQueryDeclarations() {
     // create prefix declaration string
     StringBuilder sb = new StringBuilder();
-    Iterator iter = iprefixes.values().iterator();
-    while(iter.hasNext()) {
-      Prefix prefix = (Prefix)iter.next();
+    boolean first = true;
+    for (Prefix prefix : iprefixes.values()) {
+      if (!first) { sb.append("\n"); }
+      first = false;
       sb.append("using ");
       sb.append(prefix.getId());
       sb.append(" for ");
@@ -178,7 +175,6 @@ public class RelationMapping extends SAXTracker {
       }
       sb.append(prefix.getLocator());
       sb.append("\"");
-      if (iter.hasNext()) sb.append("\n");
     }
     return sb.toString();
   }
@@ -194,7 +190,7 @@ public class RelationMapping extends SAXTracker {
     ClassLoader cloader = RelationMapping.class.getClassLoader();
     InputStream istream = cloader.getResourceAsStream(resource);
     if (istream != null) {
-      log.debug(resource + ": loading from classpath");
+      log.debug("{}: loading from classpath", resource);
       return read(istream, null);
     } else {
       throw new DB2TMConfigException("Resource '" + resource + "' not found on classpath.");
@@ -223,7 +219,7 @@ public class RelationMapping extends SAXTracker {
       // Parse input source
       parser.parse(new InputSource(istream));
     } catch (FileNotFoundException e) {
-      log.error("Resource not found: " + e.getMessage());
+      log.error("Resource not found: {}", e.getMessage());
       throw e;
     } catch (SAXParseException e) {
       throw new OntopiaRuntimeException("XML parsing problem: " + e.toString() + " at: "+
@@ -536,18 +532,16 @@ public class RelationMapping extends SAXTracker {
 
   protected String[] getValues(Attributes attrs, String name) {
     String value = getValue(attrs, name);
-    if (value == null)
-      return new String[] { };
-    else 
-      return StringUtils.tokenize(value, " \t\n\r,");
+    return (value == null)
+      ? new String[] { }
+      : StringUtils.tokenize(value, " \t\n\r,");
   }
 
   protected String[] getValues(Attributes attrs, String plural, String singular) {
     String value = getValue(attrs, singular);
-    if (value != null)
-      return new String[] { value };
-    else
-      return getValues(attrs, plural);
+    return (value != null)
+      ? new String[] { value }
+      : getValues(attrs, plural);
   }
 
   protected void addAttribute(AttributesImpl atts, String name, String type, String value) {
@@ -573,9 +567,7 @@ public class RelationMapping extends SAXTracker {
   protected void write(ContentHandler dh) throws SAXException {
 
     // initialize attributes
-    AttributesImpl empty = new AttributesImpl();
     AttributesImpl atts = new AttributesImpl();
-
 
     // <db2tm name="...">
     if (name != null) addAttribute(atts, "name", "CDATA", name);
@@ -585,9 +577,7 @@ public class RelationMapping extends SAXTracker {
     atts.clear();
 
     // prefixes
-    Iterator iter = iprefixes.values().iterator();
-    while(iter.hasNext()) {
-      Prefix prefix = (Prefix)iter.next();
+    for (Prefix prefix : iprefixes.values()) {
       addAttribute(atts, "prefix", "CDATA", prefix.getId());
 
       switch (prefix.getType()) {
@@ -629,10 +619,7 @@ public class RelationMapping extends SAXTracker {
   protected void outputEntities(Relation rel, ContentHandler dh) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
 
-    List entities = rel.getEntities();
-    for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
-
+    for (Entity entity : rel.getEntities()) {
       if (entity.getEntityType() == Entity.TYPE_TOPIC) {
         // <topic>
         if (entity.getId() != null)
@@ -666,28 +653,15 @@ public class RelationMapping extends SAXTracker {
   }
 
   protected void outputFields(Entity entity, ContentHandler dh) throws SAXException {
-
-    // identity fields
-    Iterator ifields = entity.getIdentityFields().iterator();
-    while (ifields.hasNext()) {
-      Field field = (Field)ifields.next();
+    for (Field field : entity.getIdentityFields()) {
       outputField(field, dh);
     }
-
-    // role fields
-    Iterator rfields = entity.getRoleFields().iterator();
-    while (rfields.hasNext()) {
-      Field field = (Field)rfields.next();
+    for (Field field : entity.getRoleFields()) {
       outputField(field, dh);
     }
-
-    // characteristic fields
-    Iterator cfields = entity.getCharacteristicFields().iterator();
-    while (cfields.hasNext()) {
-      Field field = (Field)cfields.next();
+    for (Field field : entity.getCharacteristicFields()) {
       outputField(field, dh);
     }
-
   }
 
   protected void outputField(Field field, ContentHandler dh) throws SAXException {
@@ -741,9 +715,7 @@ public class RelationMapping extends SAXTracker {
       dh.startElement("", "", "player", atts);
       atts.clear();
 
-      Iterator iter = field.getOtherRoleFields().iterator();
-      while (iter.hasNext()) {
-        Field orole = (Field)iter.next();
+      for (Field orole : field.getOtherRoleFields()) {
         addAttribute(atts, "rtype", "CDATA", orole.getRoleType());
         addAttribute(atts, "player", "CDATA", orole.getPlayer());
         dh.startElement("", "", "other", atts);

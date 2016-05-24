@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.db2tm;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +55,7 @@ import org.slf4j.LoggerFactory;
 public class Context {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Context.class.getName());
+  static Logger log = LoggerFactory.getLogger(Context.class);
 
   protected RelationMapping rmapping;
 
@@ -67,14 +68,14 @@ public class Context {
   protected DeclarationContextIF dc;
   
   protected Object[] entityObjects;
-  protected Collection[] extents;
+  protected Collection<Object>[] extents;
 
-  protected Collection newObjects;
-  protected Collection oldObjects;
-  protected Map oldValues;
+  protected Collection<Object> newObjects;
+  protected Collection<Object> oldObjects;
+  protected Map<Object, List<?>[]> oldValues;
   
   protected static final int MAX_DSCANDIDATES = 5000;
-  protected Set dsCandidates = new HashSet(MAX_DSCANDIDATES);
+  protected Set<TopicIF> dsCandidates = new HashSet<TopicIF>(MAX_DSCANDIDATES);
 
   Context() {
   }
@@ -105,14 +106,14 @@ public class Context {
     this.entityObjects = new Object[relation.getEntities().size()];
     if (this.newObjects == null ||
         !this.newObjects.isEmpty())
-      this.newObjects = new HashSet();
+      this.newObjects = new HashSet<Object>();
     if (this.oldObjects == null ||
         !this.oldObjects.isEmpty())
-      this.oldObjects = new HashSet();
+      this.oldObjects = new HashSet<Object>();
     if (this.oldValues == null ||
         !this.oldValues.isEmpty())
-      this.oldValues = new HashMap();
-    this.extents = new Collection[this.entityObjects.length];
+      this.oldValues = new HashMap<Object, List<?>[]>();
+    this.extents = (Collection<Object>[]) Array.newInstance(Collection.class, this.entityObjects.length);
   }
 
   /**
@@ -196,9 +197,9 @@ public class Context {
    * INTERNAL: Gets the entity object by id
    */    
   Object getEntityObjectById(String id) {
-    List entities = relation.getEntities();
+    List<Entity> entities = relation.getEntities();
     for (int i=0; i < entityObjects.length; i++) {
-      Entity e = (Entity)entities.get(i);
+      Entity e = entities.get(i);
       String eid = e.getId();
       if (id.equals(eid))
         return this.entityObjects[i];
@@ -248,7 +249,7 @@ public class Context {
   /**
    * INTERNAL: Register the existing field values of an old object.
    */    
-  void registerOldFieldValues(Object object, List[] values) {
+  void registerOldFieldValues(Object object, List<?>[] values) {
     this.oldValues.put(object, values);
   }
 
@@ -256,10 +257,10 @@ public class Context {
    * INTERNAL: Return the existing field values of an old object.
    */    
   Object reuseOldFieldValue(Object object, int fieldIndex) {
-    List[] fieldValues = (List[]) this.oldValues.get(object);
+    List<?>[] fieldValues = this.oldValues.get(object);
     if (fieldValues == null || fieldIndex > fieldValues.length-1)
       return null;
-    List values = fieldValues[fieldIndex];
+    List<?> values = fieldValues[fieldIndex];
     if (values == null || values.isEmpty())
       return null;
     // reuse last object
@@ -267,12 +268,9 @@ public class Context {
   }
 
   void removeOldValues() {
-    Iterator iter = this.oldValues.values().iterator();
-    while (iter.hasNext()) {
-      List[] fields = (List[])iter.next();
+    for (List<?>[] fields : this.oldValues.values()) {
       if (fields != null && fields.length != 0) {
-        for (int f=0; f < fields.length; f++) {
-          List value = fields[f];
+        for (List<?> value : fields) {
           if (value != null && !value.isEmpty()) {
             for (int v=0; v < value.size(); v++) {
               Object o = value.get(v);
@@ -281,7 +279,7 @@ public class Context {
                 TopicIF topic = bn.getTopic();
                 // remove existing characteristic
                 if (topic != null) {
-                  log.debug("      -N " + topic + " " + bn);
+                  log.debug("      -N {} {}", topic, bn);
                   bn.remove();
                   // notify context
                   characteristicsChanged(topic);
@@ -291,7 +289,7 @@ public class Context {
                 TopicIF topic = oc.getTopic();
                 // remove existing characteristic
                 if (topic != null) {
-                  log.debug("      -O " + topic + " " + oc);
+                  log.debug("      -O {} {}", topic, oc);
                   oc.remove();
                   // notify context
                   characteristicsChanged(topic);
@@ -303,7 +301,7 @@ public class Context {
                 AssociationIF a = r.getAssociation();
                 if (a != null) {
                   if (a.getTopicMap() != null) {
-                    log.debug("      -R "  + topic + " :" + r.getType());
+                    log.debug("      -R {} :{}", topic, r.getType());
                     a.remove();
                     // notify context
                     if (topic != null) characteristicsChanged(topic);
@@ -330,15 +328,15 @@ public class Context {
     // prepare extent collections. objects in these collections will
     // be removed from the extent when they are accessed as entity
     // objects.
-    List entities = relation.getEntities();    
+    List<Entity> entities = relation.getEntities();    
     for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
       if (entity.isPrimary()) {
-        List extentQueries = entity.getExtentQueries();
-        extents[i] = new HashSet();
+        List<String> extentQueries = entity.getExtentQueries();
+        extents[i] = new HashSet<Object>();
         if (!extentQueries.isEmpty()) {
           for (int q=0; q < extentQueries.size(); q++) {
-            accumulateObjectsFromQuery((String)extentQueries.get(q), null, extents[i]);
+            accumulateObjectsFromQuery(extentQueries.get(q), null, extents[i]);
           }
         } else {
           // check to see if the entity should have a defaulted extent query
@@ -350,11 +348,11 @@ public class Context {
                 TopicIF type = Utils.getTopic(types[t], this);
                 if (type != null) {
                   String extentQuery = "direct-instance-of($O, %TYPE%)?";
-                  Map params = Collections.singletonMap("TYPE", type);
-                  log.info("      defaulting extent query for topic type '" + types[t] + "': " + extentQuery);
+                  Map<String, ?> params = Collections.singletonMap("TYPE", type);
+                  log.info("      defaulting extent query for topic type '{}': {}", types[t], extentQuery);
                   accumulateObjectsFromQuery(extentQuery, params, extents[i]);
                 } else {
-                  log.warn("      not able to figure out default extent query for topic type '" + types[t] + "'");
+                  log.warn("      not able to figure out default extent query for topic type '{}'", types[t]);
                 }
               }
             }
@@ -365,11 +363,11 @@ public class Context {
               TopicIF type = Utils.getTopic(atype, this);
               if (type != null) {
                 String extentQuery = "association($O), type($O, %TYPE%)?";
-                Map params = Collections.singletonMap("TYPE", type);
-                log.info("      defaulting extent query for association type '" + atype + "': " + extentQuery);
+                Map<String, ?> params = Collections.singletonMap("TYPE", type);
+                log.info("      defaulting extent query for association type '{}': {}", atype, extentQuery);
                 accumulateObjectsFromQuery(extentQuery, params, extents[i]);
               } else {
-                log.warn("      not able to figure out default extent query for association type '" + atype + "'");
+                log.warn("      not able to figure out default extent query for association type '{}'", atype);
               }
             }
           }
@@ -380,36 +378,36 @@ public class Context {
 
   public void removeExtentObjects() {
     // remove leftover extent objects
-    List entities = relation.getEntities();
+    List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
-      Entity entity = (Entity)entities.get(i);
+      Entity entity = entities.get(i);
       if (entity.isPrimary()) {
         if (extents[i] != null) {
-          log.debug("      removing objects from relation " + relation.getName() + " extent '" + entity.getId() + "'");
-          Iterator iter = extents[i].iterator();
+          log.debug("      removing objects from relation {} extent '{}'", relation.getName(), entity.getId());
+          Iterator<?> iter = extents[i].iterator();
           if (entity.getEntityType() == Entity.TYPE_TOPIC) {
             while (iter.hasNext()) {
               TopicIF topic = (TopicIF)iter.next();
-              log.debug("      !" + topic);
+              log.debug("      !{}", topic);
               topic.remove();
             }
           } else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
             while (iter.hasNext()) {
               AssociationIF assoc = (AssociationIF)iter.next();
-              log.debug("      !" + assoc);
+              log.debug("      !{}", assoc);
               assoc.remove();
             }
           } else {
             throw new DB2TMInputException("Unknown entity type: " + entity.getEntityType());
           }
-          log.debug("      removed " + extents[i].size() + " objects from relation " + relation.getName() + " extent '" + entity.getId() + "'");
+          log.debug("      removed {} objects from relation {} extent '{}'", new Object[] {extents[i].size(), relation.getName(), entity.getId()});
           extents[i] = null;
         }
       }
     }
   }
   
-  private void accumulateObjectsFromQuery(String query, Map params, Collection objects) {
+  private void accumulateObjectsFromQuery(String query, Map<String, ?> params, Collection<Object> objects) {
     QueryProcessorIF qp = getQueryProcessor();
     try {
       QueryResultIF qr = (params == null ?
@@ -434,10 +432,8 @@ public class Context {
   void characteristicsChanged(TopicIF topic) {
     dsCandidates.add(topic);    
     if (dsCandidates.size() == MAX_DSCANDIDATES) {
-      log.debug("Suppressing duplicates: " + dsCandidates.size());
-      Iterator iter = dsCandidates.iterator();
-      while (iter.hasNext()) {
-        TopicIF candidate = (TopicIF)iter.next();
+      log.debug("Suppressing duplicates: {}", dsCandidates.size());
+      for (TopicIF candidate : dsCandidates) {
         if (candidate.getTopicMap() != null) {
           DuplicateSuppressionUtils.removeDuplicates(candidate);
           DuplicateSuppressionUtils.removeDuplicateAssociations(candidate);
@@ -449,10 +445,8 @@ public class Context {
   
   public void close() {
     if (dsCandidates.size() > 0) {
-      log.debug("Suppressing duplicates: " + dsCandidates.size());
-      Iterator iter = dsCandidates.iterator();
-      while (iter.hasNext()) {
-        TopicIF candidate = (TopicIF)iter.next();
+      log.debug("Suppressing duplicates: {}", dsCandidates.size());
+      for (TopicIF candidate : dsCandidates) {
         if (candidate.getTopicMap() != null) {
           DuplicateSuppressionUtils.removeDuplicates(candidate);
           DuplicateSuppressionUtils.removeDuplicateAssociations(candidate);

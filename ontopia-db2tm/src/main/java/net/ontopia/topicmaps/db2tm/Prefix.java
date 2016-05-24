@@ -29,9 +29,9 @@ public class Prefix {
   public static final int TYPE_SUBJECT_IDENTIFIER = 2;
   public static final int TYPE_SUBJECT_LOCATOR = 4;
 
-  protected String id;
-  protected String locator;
-  protected int type;
+  protected final String id;
+  protected final String locator;
+  protected final int type;
   
   Prefix(String id, String locator, int type) {
     this.id = id;

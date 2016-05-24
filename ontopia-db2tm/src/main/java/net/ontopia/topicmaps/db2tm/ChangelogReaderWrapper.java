@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * by sequence.
  */
 public class ChangelogReaderWrapper implements ChangelogReaderIF {
-  private ChangelogReaderIF source;
+  private final ChangelogReaderIF source;
   private int[] keycols; // contains index in relation of each key column
 
   // used for tracking next tuple
@@ -43,7 +43,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   private ChangeType prevchange;
   private String[] prevtuple;
 
-  static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class.getName());
+  static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class);
   
   public ChangelogReaderWrapper(ChangelogReaderIF source,
                                 Relation relation) {
@@ -61,14 +61,17 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
                                relation.getName() + "'");
   }
   
+  @Override
   public ChangeType getChangeType() {
     return prevchange;
   }
 
+  @Override
   public String getOrderValue() {
     return prevorder;
   }
 
+  @Override
   public String[] readNext() {
     // INVARIANT:
     //  (a) prevtuple is null, tuple is null, ready to start on first row
@@ -88,8 +91,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     // now read new tuples until we find one belonging to a new key
     while (true) {
       if (log.isTraceEnabled())
-        log.trace("State: " + prevchange + " Tuple: (" +
-                  (tuple == null ? "null" : StringUtils.join(tuple, "|")) + ")");
+        log.trace("State: {} Tuple: ({})", prevchange, (tuple == null ? "null" : StringUtils.join(tuple, "|")));
       
       // move one row forwards
       prevtuple = tuple;
@@ -110,6 +112,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     return prevtuple;
   }
 
+  @Override
   public void close() {
     source.close();
   }
