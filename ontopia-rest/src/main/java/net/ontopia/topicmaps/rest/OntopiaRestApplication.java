@@ -45,6 +45,8 @@ public class OntopiaRestApplication extends Application {
 	public OntopiaRestApplication() {
 		objectResolver = new DefaultParameterResolver(this);
 		topicmapResolver = new DefaultTopicMapResolver();
+		
+		setStatusService(new OntopiaStatusService());
 	}
 	
 	public TopicMapReferenceIF getTopicMapReference(Request request) {
