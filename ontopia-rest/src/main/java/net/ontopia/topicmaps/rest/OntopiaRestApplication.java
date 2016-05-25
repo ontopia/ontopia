@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.rest.core.ParameterResolverIF;
 import net.ontopia.topicmaps.rest.core.TopicMapResolverIF;
+import net.ontopia.topicmaps.rest.utils.DefaultParameterResolver;
 import net.ontopia.topicmaps.rest.utils.DefaultTopicMapResolver;
 import org.restlet.Application;
 import org.restlet.Request;
@@ -41,7 +42,7 @@ public class OntopiaRestApplication extends Application {
 	protected final TopicMapResolverIF topicmapResolver;
 	
 	public OntopiaRestApplication() {
-		objectResolver = null;
+		objectResolver = new DefaultParameterResolver(this);
 		topicmapResolver = new DefaultTopicMapResolver();
 	}
 	
