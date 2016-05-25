@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.rest.core.ParameterResolverIF;
 import net.ontopia.topicmaps.rest.core.TopicMapResolverIF;
+import net.ontopia.topicmaps.rest.resources.APIInfoResource;
 import net.ontopia.topicmaps.rest.utils.DefaultParameterResolver;
 import net.ontopia.topicmaps.rest.utils.DefaultTopicMapResolver;
 import org.restlet.Application;
@@ -64,11 +65,24 @@ public class OntopiaRestApplication extends Application {
 		versions.setRoutingMode(Router.MODE_BEST_MATCH);
 		versions.setName("Ontopia API root router");
 		
+		versions.attach("/", APIInfoResource.class);
+		
+		for (APIVersions version : APIVersions.values()) {
+			if (isEnabled(version)) {
+				logger.info("Exposing API {}", version.getName());
+				versions.attach("/" + version.getName(), new OntopiaAPIVersionFilter(getContext(), version.createChain(this), version));
+			}
+		}
+
 		return versions;
 	}
 
 	public DeclarationContextIF getDeclarationContext(TopicMapIF topicmap) {
 		return null; // todo
+	}
+
+	protected boolean isEnabled(APIVersions version) {
+		return true;
 	}
 
 	@Override
