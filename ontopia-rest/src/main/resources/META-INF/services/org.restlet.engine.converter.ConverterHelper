@@ -3,3 +3,4 @@ net.ontopia.topicmaps.rest.converters.LTMConverter
 net.ontopia.topicmaps.rest.converters.XTMConverter
 net.ontopia.topicmaps.rest.converters.TMXMLConverter
 net.ontopia.topicmaps.rest.converters.JTMConverter
+net.ontopia.topicmaps.rest.converters.jackson.JacksonConverterImpl
