@@ -56,6 +56,8 @@ public class OntopiaRestApplication extends Application {
 
 	@Override
 	public Restlet createInboundRoot() {
+		// encoding service that allows disabling
+		setEncoderService(new OntopiaEncoderService());
 		
 		Router versions = new Router(getContext());
 		versions.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
