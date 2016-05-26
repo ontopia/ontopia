@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.rest;
 
+import net.ontopia.topicmaps.rest.v1.topicmap.TopicMapRouter;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Restlet;
@@ -43,6 +44,8 @@ public enum APIVersions {
 			Router router = new Router(context);
 			router.setName("v1 main router");
 			encoder.setNext(router);
+			
+			router.attach("/topicmaps/{topicmap}", new TopicMapRouter(context));
 			
 			return encoder;
 		}
