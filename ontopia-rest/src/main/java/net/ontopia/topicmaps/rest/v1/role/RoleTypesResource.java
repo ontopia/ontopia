@@ -33,7 +33,7 @@ public class RoleTypesResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<TopicIF> getRoleTypes(FetchOptions options) {
-		AssociationIF association = getRequestParameter(Parameters.ID, true);
+		AssociationIF association = getRequestParameter(AssociationIF.class, Parameters.ID, true);
 		
 		if (association == null) {
 			return getIndex(ClassInstanceIndexIF.class).getAssociationRoleTypes();

@@ -26,14 +26,15 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
+import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.resource.Get;
 
 public class AssociationsResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<AssociationIF> getAssociations(FetchOptions options) {
-		TopicIF topic = getRequestParameter(TopicIF.class, "id", true);
-		TopicIF type = getRequestParameter(TopicIF.class, "type", true);
+		TopicIF topic = getRequestParameter(TopicIF.class, Parameters.ID, true);
+		TopicIF type = getRequestParameter(Parameters.TYPE, true);
 		
 		if (topic == null) {
 			if (type != null) {

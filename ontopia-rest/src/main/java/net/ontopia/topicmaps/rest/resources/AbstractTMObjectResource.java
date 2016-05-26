@@ -43,7 +43,7 @@ public abstract class AbstractTMObjectResource<TMO extends TMObjectIF> extends A
 	}
 	
 	public TMO resolve(FetchOptions options, boolean allowNull) throws OntopiaRestException {
-		return getRequestParameter(objectClass, allowNull);
+		return getRequestParameter(objectClass, Parameters.ID, allowNull);
 	}
 	
 	public TMO remove(TMO object) throws OntopiaRestException {

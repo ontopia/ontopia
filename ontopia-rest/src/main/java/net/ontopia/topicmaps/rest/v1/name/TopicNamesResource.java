@@ -33,7 +33,7 @@ public class TopicNamesResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<TopicNameIF> getTopicNames(FetchOptions options) {
-		TopicIF topic = getRequestParameter(TopicIF.class, Parameters.ID.toString(), true);
+		TopicIF topic = getRequestParameter(TopicIF.class, Parameters.ID, true);
 		TopicIF type = getRequestParameter(Parameters.TYPE, true);
 		
 		if (topic != null) {
