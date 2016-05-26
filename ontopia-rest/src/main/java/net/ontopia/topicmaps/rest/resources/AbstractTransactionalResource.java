@@ -81,11 +81,11 @@ public class AbstractTransactionalResource extends AbstractOntopiaResource {
 	}
 	
 	protected <C> C requiredRequestParameter(Parameters<C> parameter) {
-		return parameter.resolve(this, false);
+		return parameter.required(this);
 	}
 	
 	protected <C> C optionalRequestParameter(Parameters<C> parameter) {
-		return parameter.resolve(this, true);
+		return parameter.optional(this);
 	}
 	
 	@SuppressWarnings("unchecked")
