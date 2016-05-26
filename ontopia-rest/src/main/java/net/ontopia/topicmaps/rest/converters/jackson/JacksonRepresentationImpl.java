@@ -20,6 +20,25 @@
 
 package net.ontopia.topicmaps.rest.converters.jackson;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.rest.model.mixin.MAssociation;
+import net.ontopia.topicmaps.rest.model.mixin.MAssociationRole;
+import net.ontopia.topicmaps.rest.model.mixin.MLocator;
+import net.ontopia.topicmaps.rest.model.mixin.MOccurrence;
+import net.ontopia.topicmaps.rest.model.mixin.MTopic;
+import net.ontopia.topicmaps.rest.model.mixin.MTopicMapAsValue;
+import net.ontopia.topicmaps.rest.model.mixin.MTopicName;
+import net.ontopia.topicmaps.rest.model.mixin.MVariantName;
+import org.restlet.Response;
 import org.restlet.data.MediaType;
 import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
@@ -40,5 +59,29 @@ public class JacksonRepresentationImpl<T> extends JacksonRepresentation<T> {
 
 	public JacksonRepresentationImpl(T object) {
 		super(object);
+	}
+
+	@Override
+	protected ObjectMapper createObjectMapper() {
+		ObjectMapper mapper = super.createObjectMapper();
+		mapper.addMixInAnnotations(LocatorIF.class, MLocator.class);
+		mapper.addMixInAnnotations(TopicIF.class, MTopic.class);
+		mapper.addMixInAnnotations(TopicNameIF.class, MTopicName.class);
+		mapper.addMixInAnnotations(VariantNameIF.class, MVariantName.class);
+		mapper.addMixInAnnotations(OccurrenceIF.class, MOccurrence.class);
+		mapper.addMixInAnnotations(AssociationIF.class, MAssociation.class);
+		mapper.addMixInAnnotations(AssociationRoleIF.class, MAssociationRole.class);
+		mapper.addMixInAnnotations(TopicMapIF.class, MTopicMapAsValue.class);
+		
+		@SuppressWarnings("unchecked")
+		Map<Class<?>, Class<?>> additional = (Map<Class<?>, Class<?>>) Response.getCurrent().getAttributes().get(ADDITIONAL_MIXINS_ATTRIBUTE);
+
+		if ((additional != null) && (!additional.isEmpty())) {
+			for (Map.Entry<Class<?>, Class<?>> entry : additional.entrySet()) {
+				mapper.addMixInAnnotations(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		return mapper;
 	}
 }

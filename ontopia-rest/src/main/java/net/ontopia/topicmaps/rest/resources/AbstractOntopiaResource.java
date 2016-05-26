@@ -21,11 +21,15 @@
 package net.ontopia.topicmaps.rest.resources;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.rest.OntopiaRestApplication;
+import net.ontopia.topicmaps.rest.converters.jackson.JacksonRepresentationImpl;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.restlet.data.MediaType;
@@ -76,4 +80,18 @@ public class AbstractOntopiaResource extends ServerResource {
 		}
 	}
 
+	protected void addMixInAnnotations(Class<?> target, Class<?> mixin) {
+		getMixInAnnotationsMap().put(target, mixin);
+	}
+
+	protected Map<Class<?>, Class<?>> getMixInAnnotationsMap() {
+		ConcurrentMap<String, Object> attributes = getResponse().getAttributes();
+		@SuppressWarnings(value = "unchecked")
+		Map<Class<?>, Class<?>> mixins = (Map<Class<?>, Class<?>>) attributes.get(JacksonRepresentationImpl.ADDITIONAL_MIXINS_ATTRIBUTE);
+		if (mixins == null) {
+			mixins = new HashMap<>();
+			attributes.put(JacksonRepresentationImpl.ADDITIONAL_MIXINS_ATTRIBUTE, mixins);
+		}
+		return mixins;
+	}
 }
