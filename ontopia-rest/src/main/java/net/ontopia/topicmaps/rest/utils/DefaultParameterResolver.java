@@ -34,11 +34,11 @@ import net.ontopia.topicmaps.rest.core.ParameterResolverIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaClientException;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaServerException;
+import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.Request;
 import org.restlet.data.Status;
 
 public class DefaultParameterResolver implements ParameterResolverIF {
-	public static final String ID_ATTRIBUTE = "id";
 
 	protected final OntopiaRestApplication application;
 
@@ -48,7 +48,7 @@ public class DefaultParameterResolver implements ParameterResolverIF {
 
 	@Override
 	public <C> C resolve(TopicMapIF topicmap, Request request, Class<C> klass, boolean allowNull) {
-		return resolveAttribute(topicmap, request, ID_ATTRIBUTE, klass, allowNull);
+		return resolveAttribute(topicmap, request, Parameters.ID.toString(), klass, allowNull);
 	}
 
 	@Override
