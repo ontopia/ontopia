@@ -24,6 +24,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.rest.core.TopicMapResolverIF;
+import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class DefaultTopicMapResolver implements TopicMapResolverIF {
 	
 	@Override
 	public TopicMapReferenceIF resolve(Request request) {
-		String id = (String) request.getAttributes().get("topicmap"); // todo: constant
+		String id = (String) request.getAttributes().get(Parameters.TOPICMAP.toString());
 		return repository.getReferenceByKey(id);
 	}
 

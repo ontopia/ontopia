@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 
 public enum Parameters {
 
+	TOPICMAP(String.class),
 	ID(String.class),
 	TYPE(TopicIF.class),
 	ROLETYPE(TopicIF.class),
