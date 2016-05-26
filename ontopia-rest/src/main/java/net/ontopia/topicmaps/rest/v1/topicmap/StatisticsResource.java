@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.rest.v1.topicmap;
 
 import net.ontopia.topicmaps.core.index.StatisticsIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.model.mixin.MStatisticsIndex;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
@@ -29,7 +28,7 @@ import org.restlet.resource.Get;
 public class StatisticsResource extends AbstractTransactionalResource {
 
 	@Get
-	public StatisticsIndexIF getStatistics(FetchOptions options) {
+	public StatisticsIndexIF getStatistics() {
 		addMixInAnnotations(StatisticsIndexIF.class, MStatisticsIndex.class);
 		return getIndex(StatisticsIndexIF.class);
 	}
