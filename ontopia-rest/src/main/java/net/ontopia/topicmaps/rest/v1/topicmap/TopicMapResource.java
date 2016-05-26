@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.rest.v1.topicmap;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.model.mixin.MTopicMap;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
@@ -29,7 +28,7 @@ import org.restlet.resource.Get;
 public class TopicMapResource extends AbstractTransactionalResource {
 
 	@Get
-	public TopicMapIF getTopicMap(FetchOptions options) {
+	public TopicMapIF getTopicMap() {
 		addMixInAnnotations(TopicMapIF.class, MTopicMap.class);
 		return store.getTopicMap();
 	}
