@@ -35,7 +35,7 @@ public class TopicsResource extends AbstractTransactionalResource {
 	public Collection<TopicIF> getTopics(FetchOptions options) {
 		addMixInAnnotations(TopicIF.class, MFlatTopic.class);
 
-		TopicIF type = getRequestParameter(Parameters.TYPE, true);
+		TopicIF type = Parameters.TYPE.optional(this);
 		if (type != null) {
 			return getIndex(ClassInstanceIndexIF.class).getTopics(type);
 		} else {

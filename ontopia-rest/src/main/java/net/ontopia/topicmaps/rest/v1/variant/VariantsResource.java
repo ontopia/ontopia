@@ -32,7 +32,7 @@ public class VariantsResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<VariantNameIF> getVariantNames(FetchOptions options) {
-		TopicNameIF name = getRequestParameter(Parameters.TOPICNAME, false);
+		TopicNameIF name = Parameters.TOPICNAME.required(this);
 		return name.getVariants();
 	}
 }

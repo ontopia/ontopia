@@ -80,13 +80,12 @@ public class AbstractTransactionalResource extends AbstractOntopiaResource {
 		return getOntopia().getResolver().resolve(store.getTopicMap(), getRequest(), name, klass, allowNull);
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected <C> C getRequestParameter(Parameters parameter, boolean allowNull) {
-		return (C) getRequestParameter(parameter.getExpected(), parameter.toString(), allowNull);
+	protected <C> C requiredRequestParameter(Parameters<C> parameter) {
+		return parameter.resolve(this, false);
 	}
 	
-	protected <C> C getRequestParameter(Class<C> klass, Parameters parameter, boolean allowNull) {
-		return getRequestParameter(klass, parameter.toString(), allowNull);
+	protected <C> C optionalRequestParameter(Parameters<C> parameter) {
+		return parameter.resolve(this, true);
 	}
 	
 	@SuppressWarnings("unchecked")

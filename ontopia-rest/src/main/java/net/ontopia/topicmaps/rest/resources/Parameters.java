@@ -23,28 +23,51 @@ package net.ontopia.topicmaps.rest.resources;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 
-public enum Parameters {
+public class Parameters<C> {
 
-	TOPICMAP(String.class),
-	ID(String.class),
-	TYPE(TopicIF.class),
-	ROLETYPE(TopicIF.class),
-	ASSOCIATIONTYPE(TopicIF.class),
-	TOPIC(TopicIF.class),
-	TOPICNAME(TopicNameIF.class);
+	public static final Parameters<String> TOPICMAP = new Parameters<>("topicmap", String.class);
+	public static final Parameters<String> ID = new Parameters<>("id", String.class);
 
-	private final Class<?> expected;
+	public static final Parameters<TopicIF> TOPIC = new Parameters<>("topic", TopicIF.class);
+	public static final Parameters<TopicIF> TYPE = TOPIC.withName("type");
+	public static final Parameters<TopicIF> ROLETYPE = TOPIC.withName("roletype");
+	public static final Parameters<TopicIF> ASSOCIATIONTYPE = TOPIC.withName("associationtype");
+
+	public static final Parameters<TopicNameIF> TOPICNAME = new Parameters<>("", TopicNameIF.class);
+
+	private final Class<C> expected;
+	private final String name;
 	
-	private Parameters(Class<?> expected) {
+	protected Parameters(String name, Class<C> expected) {
 		this.expected = expected;
+		this.name = name;
 	}
 
-	public Class<?> getExpected() {
+	public Class<C> getExpected() {
 		return expected;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString().toLowerCase();
+	public String getName() {
+		return name;
+	}
+
+	public Parameters<C> withName(String name) {
+		return new Parameters<>(name, expected);
+	}
+
+	public <T> Parameters<T> withExpected(Class<T> expected) {
+		return new Parameters<>(name, expected);
+	}
+
+	public C required(AbstractTransactionalResource resource) {
+		return resolve(resource, false);
+	}
+
+	public C optional(AbstractTransactionalResource resource) {
+		return resolve(resource, true);
+	}
+
+	public C resolve(AbstractTransactionalResource resource, boolean allowNull) {
+		return resource.getRequestParameter(expected, name, allowNull);
 	}
 }

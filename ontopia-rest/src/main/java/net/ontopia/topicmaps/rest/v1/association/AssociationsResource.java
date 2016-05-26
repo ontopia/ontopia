@@ -33,8 +33,8 @@ public class AssociationsResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<AssociationIF> getAssociations(FetchOptions options) {
-		TopicIF topic = getRequestParameter(TopicIF.class, Parameters.ID, true);
-		TopicIF type = getRequestParameter(Parameters.TYPE, true);
+		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).optional(this);
+		TopicIF type = Parameters.TYPE.optional(this);
 		
 		if (topic == null) {
 			if (type != null) {

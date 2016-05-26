@@ -36,9 +36,9 @@ public class RolesResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<AssociationRoleIF> getRolesByType(FetchOptions options) {
-		TMObjectIF object = getRequestParameter(TMObjectIF.class, Parameters.ID, true);
-		TopicIF roleType = getRequestParameter(Parameters.ROLETYPE, true);
-		TopicIF associationType = getRequestParameter(Parameters.ASSOCIATIONTYPE, true);
+		TMObjectIF object = Parameters.ID.withExpected(TMObjectIF.class).optional(this);
+		TopicIF roleType = Parameters.ROLETYPE.optional(this);
+		TopicIF associationType = Parameters.ASSOCIATIONTYPE.optional(this);
 		
 		if (object == null) {
 			return getIndex(ClassInstanceIndexIF.class).getAssociationRoles(roleType);
