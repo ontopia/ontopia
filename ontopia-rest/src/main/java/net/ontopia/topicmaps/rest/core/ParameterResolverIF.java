@@ -25,7 +25,6 @@ import org.restlet.Request;
 
 public interface ParameterResolverIF {
 	
-	public <C> C resolve(TopicMapIF topicmap, Request request, Class<C> klass, boolean allowNull);
 	public <C> C resolve(TopicMapIF topicmap, Request request, String name, Class<C> klass, boolean allowNull);
 	
 }

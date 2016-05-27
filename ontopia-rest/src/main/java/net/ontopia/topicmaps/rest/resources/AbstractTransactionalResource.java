@@ -73,7 +73,7 @@ public class AbstractTransactionalResource extends AbstractOntopiaResource {
 	}
 	
 	protected <C> C getRequestParameter(Class<C> klass, boolean allowNull) {
-		return getOntopia().getResolver().resolve(store.getTopicMap(), getRequest(), klass, allowNull);
+		return Parameters.ID.withExpected(klass).resolve(this, allowNull);
 	}
 	
 	protected <C> C getRequestParameter(Class<C> klass, String name, boolean allowNull) {
