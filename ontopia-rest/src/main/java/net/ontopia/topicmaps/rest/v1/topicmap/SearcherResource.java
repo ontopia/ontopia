@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
-// todo: how to do FetchOptions
 public class SearcherResource extends AbstractTransactionalResource {
 	
 	@Get

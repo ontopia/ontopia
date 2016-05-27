@@ -27,7 +27,6 @@ import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
-// todo: how to add FetchOptions here?
 public class IndexResource extends AbstractTransactionalResource {
 	
 	@Get
