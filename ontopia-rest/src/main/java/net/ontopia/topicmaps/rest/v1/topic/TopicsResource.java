@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.rest.v1.topic;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.model.mixin.MFlatTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
@@ -32,7 +31,7 @@ import org.restlet.resource.Get;
 public class TopicsResource extends AbstractTransactionalResource {
 
 	@Get
-	public Collection<TopicIF> getTopics(FetchOptions options) {
+	public Collection<TopicIF> getTopics() {
 		addMixInAnnotations(TopicIF.class, MFlatTopic.class);
 
 		TopicIF type = Parameters.TYPE.optional(this);

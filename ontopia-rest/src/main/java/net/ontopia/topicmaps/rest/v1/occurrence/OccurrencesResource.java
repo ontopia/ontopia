@@ -24,7 +24,6 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.model.mixin.MOccurrenceWithoutTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
@@ -38,7 +37,7 @@ import org.restlet.resource.Get;
 public class OccurrencesResource extends AbstractTransactionalResource {
 	
 	@Get
-	public Collection<OccurrenceIF> getOccurrences(FetchOptions options) {
+	public Collection<OccurrenceIF> getOccurrences() {
 		addMixInAnnotations(OccurrenceIF.class, MOccurrenceWithoutTopic.class);
 		
 		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).optional(this);

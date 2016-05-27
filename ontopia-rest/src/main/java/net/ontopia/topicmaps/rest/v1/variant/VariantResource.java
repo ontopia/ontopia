@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.rest.v1.variant;
 
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 
@@ -32,7 +31,7 @@ public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 	}
 	
 	@Get
-	public VariantNameIF getVariant(FetchOptions options) {
-		return resolve(options);
+	public VariantNameIF getVariant() {
+		return resolve();
 	}
 }

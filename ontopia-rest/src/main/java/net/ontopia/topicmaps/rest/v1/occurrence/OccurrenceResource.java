@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.rest.v1.occurrence;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.rest.Constants;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
@@ -42,7 +41,7 @@ public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
 	}
 
 	@Get
-	public OccurrenceIF getOccurrence(FetchOptions options) {
-		return resolve(options);
+	public OccurrenceIF getOccurrence() {
+		return resolve();
 	}
 }

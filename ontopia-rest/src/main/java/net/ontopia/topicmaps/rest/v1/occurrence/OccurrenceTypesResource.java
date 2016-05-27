@@ -23,14 +23,13 @@ package net.ontopia.topicmaps.rest.v1.occurrence;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
 
 public class OccurrenceTypesResource extends AbstractTransactionalResource {
 	
 	@Get
-	public Collection<TopicIF> getOccurrenceTypes(FetchOptions options) {
+	public Collection<TopicIF> getOccurrenceTypes() {
 		return getIndex(ClassInstanceIndexIF.class).getOccurrenceTypes();
 	}
 }

@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.rest.resources;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaClientException;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import org.restlet.data.Status;
 
 public abstract class AbstractTMObjectResource<TMO extends TMObjectIF> extends AbstractTransactionalResource {
@@ -35,14 +34,10 @@ public abstract class AbstractTMObjectResource<TMO extends TMObjectIF> extends A
 	}
 
 	public TMO resolve() throws OntopiaRestException {
-		return resolve(null, false);
+		return resolve(false);
 	}
 	
-	public TMO resolve(FetchOptions options) throws OntopiaRestException {
-		return resolve(options, false);
-	}
-	
-	public TMO resolve(FetchOptions options, boolean allowNull) throws OntopiaRestException {
+	public TMO resolve(boolean allowNull) throws OntopiaRestException {
 		return Parameters.ID.withExpected(objectClass).resolve(this, allowNull);
 	}
 	

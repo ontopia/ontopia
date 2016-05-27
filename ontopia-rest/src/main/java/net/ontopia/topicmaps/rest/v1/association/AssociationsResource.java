@@ -24,7 +24,6 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.resource.Get;
@@ -32,7 +31,7 @@ import org.restlet.resource.Get;
 public class AssociationsResource extends AbstractTransactionalResource {
 	
 	@Get
-	public Collection<AssociationIF> getAssociations(FetchOptions options) {
+	public Collection<AssociationIF> getAssociations() {
 		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).optional(this);
 		TopicIF type = Parameters.TYPE.optional(this);
 		

@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.rest.v1.scoped;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.model.mixin.MFlatTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.data.Status;
@@ -32,7 +31,7 @@ import org.restlet.resource.Get;
 public class ScopesResource extends AbstractTransactionalResource {
 	
 	@Get
-	public Collection<TopicIF> getScopes(FetchOptions options) {
+	public Collection<TopicIF> getScopes() {
 		addMixInAnnotations(TopicIF.class, MFlatTopic.class);
 
 		ScopeIndexIF index = getIndex(ScopeIndexIF.class);

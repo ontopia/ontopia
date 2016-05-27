@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.rest.v1.scoped;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 
@@ -33,7 +32,7 @@ public class ScopedResource extends AbstractTMObjectResource<ScopedIF> {
 	}
 	
 	@Get
-	public Collection<TopicIF> getScope(FetchOptions options) {
-		return resolve(options).getScope();
+	public Collection<TopicIF> getScope() {
+		return resolve().getScope();
 	}
 }

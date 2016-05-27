@@ -24,7 +24,6 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.data.Status;
 import org.restlet.resource.Get;
@@ -36,8 +35,8 @@ public class ScopedResource extends AbstractTMObjectResource<TopicIF> {
 	}
 	
 	@Get
-	public Collection<? extends TMObjectIF> getScoped(FetchOptions options) {
-		TopicIF topic = resolve(options);
+	public Collection<? extends TMObjectIF> getScoped() {
+		TopicIF topic = resolve();
 		ScopeIndexIF index = getIndex(ScopeIndexIF.class);
 
 		switch (getAttribute("type").toUpperCase()) {

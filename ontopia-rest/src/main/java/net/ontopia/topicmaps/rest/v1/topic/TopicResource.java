@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.rest.v1.topic;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.rest.Constants;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
@@ -42,7 +41,7 @@ public class TopicResource extends AbstractTMObjectResource<TopicIF> {
 	}
 	
 	@Get
-	public TopicIF getTopic(FetchOptions options) {
-		return resolve(options);
+	public TopicIF getTopic() {
+		return resolve();
 	}
 }

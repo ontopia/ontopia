@@ -23,14 +23,13 @@ package net.ontopia.topicmaps.rest.v1.topic;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
 
 public class TopicTypesResource extends AbstractTransactionalResource {
 	
 	@Get
-	public Collection<TopicIF> getTopicTypes(FetchOptions options) {
+	public Collection<TopicIF> getTopicTypes() {
 		return getIndex(ClassInstanceIndexIF.class).getTopicTypes();
 	}
 }

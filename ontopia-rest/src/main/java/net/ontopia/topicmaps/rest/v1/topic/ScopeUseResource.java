@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 
@@ -35,8 +34,8 @@ public class ScopeUseResource extends AbstractTMObjectResource<TopicIF> {
 	}
 
 	@Get
-	public Map<String, Object> getScopeUse(FetchOptions options) {
-		TopicIF topic = resolve(options);
+	public Map<String, Object> getScopeUse() {
+		TopicIF topic = resolve();
 		
 		ScopeIndexIF index = getIndex(ScopeIndexIF.class);
 		

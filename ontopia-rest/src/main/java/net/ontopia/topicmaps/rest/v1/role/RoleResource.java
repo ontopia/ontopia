@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.rest.v1.role;
 
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 
@@ -32,7 +31,7 @@ public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 	}
 	
 	@Get
-	public AssociationRoleIF getRole(FetchOptions options) {
-		return resolve(options);
+	public AssociationRoleIF getRole() {
+		return resolve();
 	}
 }

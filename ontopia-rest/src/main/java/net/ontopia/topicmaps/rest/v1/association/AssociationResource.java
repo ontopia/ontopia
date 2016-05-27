@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.rest.v1.association;
 
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.rest.model.FetchOptions;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 
@@ -32,7 +31,7 @@ public class AssociationResource extends AbstractTMObjectResource<AssociationIF>
 	}
 
 	@Get
-	public AssociationIF getAssociation(FetchOptions options) {
-		return resolve(options);
+	public AssociationIF getAssociation() {
+		return resolve();
 	}
 }
