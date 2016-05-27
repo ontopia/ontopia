@@ -40,7 +40,7 @@ public class DefaultTopicMapResolver implements TopicMapResolverIF {
 	
 	@Override
 	public TopicMapReferenceIF resolve(Request request) {
-		String id = (String) request.getAttributes().get(Parameters.TOPICMAP.toString());
+		String id = (String) request.getAttributes().get(Parameters.TOPICMAP.getName());
 		return repository.getReferenceByKey(id);
 	}
 
