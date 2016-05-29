@@ -30,7 +30,7 @@ import net.ontopia.utils.OntopiaUnsupportedException;
 import org.restlet.data.Method;
 import org.restlet.resource.ResourceException;
 
-public class AbstractTransactionalResource extends AbstractOntopiaResource {
+public class AbstractTransactionalResource extends AbstractPagedResource {
 
 	protected TopicMapStoreIF store;
 	protected boolean openStore = true;
