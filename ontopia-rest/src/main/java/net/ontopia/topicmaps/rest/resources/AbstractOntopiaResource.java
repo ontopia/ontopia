@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.rest.OntopiaRestApplication;
 import net.ontopia.topicmaps.rest.converters.jackson.JacksonRepresentationImpl;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
+import net.ontopia.topicmaps.rest.utils.ClassUtils;
 import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
@@ -53,8 +54,8 @@ public class AbstractOntopiaResource extends ServerResource {
 	}
 
 	protected void setInfoHeaders() {
-		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Resource", getClass().getName());
-		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Application", getOntopia().getClass().getName());
+		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Resource", ClassUtils.collapsedName(getClass()));
+		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Application", ClassUtils.collapsedName(getOntopia().getClass()));
 	}
 	
 	/**
