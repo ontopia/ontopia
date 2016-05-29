@@ -94,4 +94,16 @@ public class AbstractOntopiaResource extends ServerResource {
 		}
 		return mixins;
 	}
+	
+	protected int getIntegerFromQuery(String name, int fallback) {
+		String value = getQueryValue(name);
+		if (value == null) {
+			return fallback;
+		}
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException nfe) {
+			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE.build(nfe, name, "integer", value);
+		}
+	}
 }
