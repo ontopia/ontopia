@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.rest.v1.name;
 
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.rest.Constants;
-import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
@@ -43,7 +42,7 @@ public class TopicNameResource extends AbstractTMObjectResource<TopicNameIF> {
 	}
 
 	@Get
-	public TopicNameIF getTopicName() throws OntopiaRestException {
+	public TopicNameIF getTopicName() {
 		return resolve();
 	}
 }
