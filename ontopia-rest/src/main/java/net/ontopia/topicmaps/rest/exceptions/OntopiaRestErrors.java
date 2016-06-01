@@ -34,6 +34,11 @@ public enum OntopiaRestErrors {
 	// Attribute/parameter failures
 	MANDATORY_ATTRIBUTE_IS_NULL(Status.CLIENT_ERROR_BAD_REQUEST, 201, "Attribute '%s' expected %s, found null"),
 	MANDATORY_ATTRIBUTE_IS_WRONG_TYPE(Status.CLIENT_ERROR_BAD_REQUEST, 202, "Attribute '%s' expected %s, found %s"), 
+	MANDATORY_FIELD_IS_NULL(Status.CLIENT_ERROR_BAD_REQUEST, 203, "Field '%s' expected, found null"),
+	MANDATORY_FIELD_IS_WRONG_TYPE(Status.CLIENT_ERROR_BAD_REQUEST, 204, "Field '%s' expected %s, found %s"),
+	MANDATORY_OBJECT_IS_NULL(Status.CLIENT_ERROR_BAD_REQUEST, 205, "Object of type '%s' expected, found null"),
+	MANDATORY_OBJECT_IS_WRONG_TYPE(Status.CLIENT_ERROR_BAD_REQUEST, 206, "Object of type '%s' expected, found %s"),
+	MALFORMED_LOCATOR(Status.CLIENT_ERROR_BAD_REQUEST, 207, "Invalid locator '%s'"),
 	
 	// mime mismatch
 	UNSUPPORTED_MIME_TYPE(Status.CLIENT_ERROR_NOT_ACCEPTABLE, 300, "%s cannot provide %s");
