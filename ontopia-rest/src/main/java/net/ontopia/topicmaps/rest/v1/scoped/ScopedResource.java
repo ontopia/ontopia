@@ -20,10 +20,14 @@
 package net.ontopia.topicmaps.rest.v1.scoped;
 
 import java.util.Collection;
+import java.util.Collections;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 
 public class ScopedResource extends AbstractTMObjectResource<ScopedIF> {
 
@@ -34,5 +38,31 @@ public class ScopedResource extends AbstractTMObjectResource<ScopedIF> {
 	@Get
 	public Collection<TopicIF> getScope() {
 		return resolve().getScope();
+	}
+	
+	@Put
+	public void addScope(Topic scope) {
+		addScope(Collections.singletonList(scope));
+	}
+
+	@Put
+	public void addScope(Collection<Topic> scopes) {
+		for (Topic scope : scopes) {
+			getController(ScopedController.class).add(resolve(), scope);
+		}
+		store.commit();
+	}
+	
+	@Delete
+	public void removeScope(Topic scope) {
+		removeScope(Collections.singletonList(scope));
+	}
+
+	@Delete
+	public void removeScope(Collection<Topic> scopes) {
+		for (Topic scope : scopes) {
+			getController(ScopedController.class).remove(resolve(), scope);
+		}
+		store.commit();
 	}
 }
