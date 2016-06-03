@@ -19,11 +19,18 @@
  */
 package net.ontopia.topicmaps.rest.model.mixin;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
-@JsonIgnoreProperties(value = {"readOnly", "topicMap", "store", "associations", "topics", "builder", "transaction", "reifier"})
-public interface MTopicMapAsValue extends MTopicMap {
+@JsonAutoDetect(
+		fieldVisibility = JsonAutoDetect.Visibility.NONE, 
+		getterVisibility = JsonAutoDetect.Visibility.NONE, 
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE, 
+		setterVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public interface MTopicMapAsValue extends TopicMapIF {
 
 	@Override
 	@JsonValue
