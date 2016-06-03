@@ -38,7 +38,7 @@ public class SearcherResource extends AbstractTransactionalResource {
 	@Get
 	@Post
 	public List<Map<String, Object>> search(String value) throws IOException {
-		final TopicMapIF tm = store.getTopicMap();
+		final TopicMapIF tm = getTopicMap();
 		SearcherIF index = getIndex(SearcherIF.class);
 		try {
 			final SearchResultIF result = index.search(value);
