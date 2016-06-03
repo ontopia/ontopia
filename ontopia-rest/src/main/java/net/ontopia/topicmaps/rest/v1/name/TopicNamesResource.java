@@ -24,9 +24,13 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.model.TopicName;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
+import org.restlet.data.Status;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 
 public class TopicNamesResource extends AbstractTransactionalResource {
 	
@@ -44,5 +48,29 @@ public class TopicNamesResource extends AbstractTransactionalResource {
 		} else {
 			return getIndex(ClassInstanceIndexIF.class).getTopicNames(type);
 		}
+	}
+	
+	@Put
+	public void addTopicName(TopicName name) {
+		
+		if (optionalRequestParameter(Parameters.TYPE) != null) {
+			setStatus(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return;
+		}
+
+		TopicNameIF result = getController(TopicNameController.class).add(
+				getTopicMap(), 
+				Parameters.ID.withExpected(TopicIF.class).required(this), 
+				name);
+		store.commit();
+
+		// todo: maybe this should be '302 Found' instead
+		redirectSeeOther("../../names/" + result.getObjectId()); // todo: how to make this stable?
+	}
+	
+	@Delete
+	public void removeTopicName(TopicName name) {
+		getController(TopicNameController.class).remove(getTopicMap(), name);
+		store.commit();
 	}
 }
