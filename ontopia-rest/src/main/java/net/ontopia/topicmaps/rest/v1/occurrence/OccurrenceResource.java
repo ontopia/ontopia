@@ -21,9 +21,16 @@
 package net.ontopia.topicmaps.rest.v1.occurrence;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
+import net.ontopia.topicmaps.rest.v1.topic.TopicController;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
+import org.restlet.resource.Put;
 import org.restlet.resource.ResourceException;
 
 public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
@@ -43,5 +50,27 @@ public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
 	@Get
 	public OccurrenceIF getOccurrence() {
 		return resolve();
+	}
+	
+	@Put
+	public void addOccurrence(Occurrence occurrence) {
+		TopicMapIF tm = getTopicMap();
+		TopicIF topic = getController(TopicController.class).resolve(tm, occurrence.getTopic());
+		OccurrenceIF result = getController(OccurrenceController.class).add(tm, topic, occurrence);
+		store.commit();
+		redirectSeeOther(result.getObjectId());
+	}
+	
+	@Post
+	public OccurrenceIF changeOccurrence(Occurrence occurrence) {
+		OccurrenceIF result = getController(OccurrenceController.class).change(getTopicMap(), occurrence);
+		store.commit();
+		return result;
+	}
+	
+	@Delete
+	public void removeOccurrence() {
+		getController(OccurrenceController.class).remove(resolve());
+		store.commit();
 	}
 }

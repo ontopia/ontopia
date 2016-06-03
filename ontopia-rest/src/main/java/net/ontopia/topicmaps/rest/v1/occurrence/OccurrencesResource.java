@@ -24,10 +24,14 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.model.mixin.MOccurrenceWithoutTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
+import org.restlet.data.Status;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 
 /**
  * Provides a rest point for {@link TopicIF#getOccurrences()}, 
@@ -52,5 +56,29 @@ public class OccurrencesResource extends AbstractTransactionalResource {
 		} else {
 			return getIndex(ClassInstanceIndexIF.class).getOccurrences(type);
 		}
+	}
+	
+	@Put
+	public void addOccurrence(Occurrence occurrence) {
+
+		if (optionalRequestParameter(Parameters.TYPE) != null) {
+			setStatus(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return;
+		}
+		
+		OccurrenceIF result = getController(OccurrenceController.class).add(
+				getTopicMap(),
+				Parameters.ID.withExpected(TopicIF.class).required(this), 
+				occurrence);
+		store.commit();
+		
+		// todo: maybe this should be '302 Found' instead
+		redirectSeeOther("../../occurrences/" + result.getObjectId()); // todo: how to make this stable?
+	}
+	
+	@Delete
+	public void removeOccurrence(Occurrence occurrence) {
+		getController(OccurrenceController.class).remove(getTopicMap(), occurrence);
+		store.commit();
 	}
 }
