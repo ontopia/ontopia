@@ -20,6 +20,11 @@
 
 package net.ontopia.topicmaps.rest.v1.topicmap;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.Collection;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
@@ -27,8 +32,35 @@ import org.restlet.resource.Get;
 public class TopicMapResource extends AbstractTransactionalResource {
 
 	@Get
-	@Override
-	public TopicMapReferenceIF getTopicMapReference() {
-		return super.getTopicMapReference();
+	public TopicMapWrapper getTopicMapInfo() {
+		return new TopicMapWrapper(getTopicMap(), getTopicMapReference());
+	}
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	public static class TopicMapWrapper {
+
+		private final TopicMapReferenceIF reference;
+		private final TopicMapIF tm;
+
+		public TopicMapWrapper(TopicMapIF tm, TopicMapReferenceIF reference) {
+			this.tm = tm;
+			this.reference = reference;
+		}
+		
+		public String getObjectId() {
+			return tm.getObjectId();
+		}
+		
+		public TopicIF getReifier() {
+			return tm.getReifier();
+		}
+
+		public Collection<LocatorIF> getItemIdentifiers() {
+			return tm.getItemIdentifiers();
+		}
+		
+		public TopicMapReferenceIF getReference() {
+			return reference;
+		}
 	}
 }
