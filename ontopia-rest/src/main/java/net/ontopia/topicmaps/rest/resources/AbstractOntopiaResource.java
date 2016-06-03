@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.rest.OntopiaRestApplication;
+import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.converters.jackson.JacksonRepresentationImpl;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.utils.ClassUtils;
@@ -106,5 +107,9 @@ public class AbstractOntopiaResource extends ServerResource {
 		} catch (NumberFormatException nfe) {
 			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE.build(nfe, name, "integer", value);
 		}
+	}
+	
+	protected <C extends AbstractController> C getController(Class<C> controllerClass) {
+		return getOntopia().getController(controllerClass);
 	}
 }
