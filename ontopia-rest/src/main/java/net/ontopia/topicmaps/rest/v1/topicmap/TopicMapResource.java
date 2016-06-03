@@ -26,14 +26,30 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.rest.model.TopicMap;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 
 public class TopicMapResource extends AbstractTransactionalResource {
 
 	@Get
 	public TopicMapWrapper getTopicMapInfo() {
 		return new TopicMapWrapper(getTopicMap(), getTopicMapReference());
+	}
+	
+	@Post
+	public TopicMapWrapper changeTopicMap(TopicMap topicmap) {
+		getController(TopicMapController.class).change(getTopicMapReference(), getTopicMap(), topicmap);
+		store.commit();
+		return getTopicMapInfo();
+	}
+	
+	@Delete
+	public void removeTopicMap() {
+		store.close();
+		getController(TopicMapController.class).remove(getTopicMapReference());
 	}
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
