@@ -30,12 +30,16 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.entry.TopicMapSourceIF;
 import net.ontopia.topicmaps.rest.model.mixin.MAssociation;
 import net.ontopia.topicmaps.rest.model.mixin.MAssociationRole;
 import net.ontopia.topicmaps.rest.model.mixin.MLocator;
 import net.ontopia.topicmaps.rest.model.mixin.MOccurrence;
 import net.ontopia.topicmaps.rest.model.mixin.MTopic;
 import net.ontopia.topicmaps.rest.model.mixin.MTopicMapAsValue;
+import net.ontopia.topicmaps.rest.model.mixin.MTopicMapReference;
+import net.ontopia.topicmaps.rest.model.mixin.MTopicMapSource;
 import net.ontopia.topicmaps.rest.model.mixin.MTopicName;
 import net.ontopia.topicmaps.rest.model.mixin.MVariantName;
 import org.restlet.Response;
@@ -72,6 +76,8 @@ public class JacksonRepresentationImpl<T> extends JacksonRepresentation<T> {
 		mapper.addMixInAnnotations(AssociationIF.class, MAssociation.class);
 		mapper.addMixInAnnotations(AssociationRoleIF.class, MAssociationRole.class);
 		mapper.addMixInAnnotations(TopicMapIF.class, MTopicMapAsValue.class);
+		mapper.addMixInAnnotations(TopicMapReferenceIF.class, MTopicMapReference.class);
+		mapper.addMixInAnnotations(TopicMapSourceIF.class, MTopicMapSource.class);
 		
 		@SuppressWarnings("unchecked")
 		Map<Class<?>, Class<?>> additional = (Map<Class<?>, Class<?>>) Response.getCurrent().getAttributes().get(ADDITIONAL_MIXINS_ATTRIBUTE);
