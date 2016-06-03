@@ -20,16 +20,15 @@
 
 package net.ontopia.topicmaps.rest.v1.topicmap;
 
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.rest.model.mixin.MTopicMap;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import org.restlet.resource.Get;
 
 public class TopicMapResource extends AbstractTransactionalResource {
 
 	@Get
-	public TopicMapIF getTopicMap() {
-		addMixInAnnotations(TopicMapIF.class, MTopicMap.class);
-		return store.getTopicMap();
+	@Override
+	public TopicMapReferenceIF getTopicMapReference() {
+		return super.getTopicMapReference();
 	}
 }
