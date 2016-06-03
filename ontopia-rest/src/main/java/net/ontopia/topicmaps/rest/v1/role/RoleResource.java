@@ -20,9 +20,16 @@
 
 package net.ontopia.topicmaps.rest.v1.role;
 
+import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.rest.model.AssociationRole;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
+import net.ontopia.topicmaps.rest.v1.association.AssociationController;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
+import org.restlet.resource.Put;
 
 public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 
@@ -33,5 +40,26 @@ public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 	@Get
 	public AssociationRoleIF getRole() {
 		return resolve();
+	}
+	
+	@Put
+	public void addAssociationRole(AssociationRole role) {
+		TopicMapIF tm = getTopicMap();
+		AssociationIF association = getController(AssociationController.class).resolve(tm, role.getAssociation());
+		AssociationRoleIF result = getController(RoleController.class).add(tm, association, role);
+		store.commit();
+		redirectSeeOther(result.getObjectId());
+	}
+	
+	@Post
+	public AssociationRoleIF changeAssociationRole(AssociationRole role) {
+		AssociationRoleIF result = getController(RoleController.class).change(getTopicMap(), role);
+		store.commit();
+		return result;
+	}
+	
+	@Delete
+	public void removeAssociationRole() {
+		getController(RoleController.class).remove(resolve());
 	}
 }

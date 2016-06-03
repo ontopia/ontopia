@@ -27,9 +27,13 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
+import net.ontopia.topicmaps.rest.model.AssociationRole;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
+import org.restlet.data.Status;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 
 public class RolesResource extends AbstractTransactionalResource {
 	
@@ -68,5 +72,29 @@ public class RolesResource extends AbstractTransactionalResource {
 		} else {
 			return association.getRoles();
 		}
+	}
+	
+	@Put
+	public void addAssociationRole(AssociationRole role) {
+
+		if ((optionalRequestParameter(Parameters.ROLETYPE) != null) || (optionalRequestParameter(Parameters.ASSOCIATIONTYPE) != null)) {
+			setStatus(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return;
+		}
+		
+		AssociationRoleIF result = getController(RoleController.class).add(
+				getTopicMap(),
+				Parameters.ID.withExpected(AssociationIF.class).required(this),
+				role);
+		store.commit();
+
+		// todo: maybe this should be '302 Found' instead
+		redirectSeeOther("../../occurrences/" + result.getObjectId()); // todo: how to make this stable?
+	}
+	
+	@Delete
+	public void removeAssociationRole(AssociationRole role) {
+		getController(RoleController.class).remove(getTopicMap(), role);
+		store.commit();
 	}
 }
