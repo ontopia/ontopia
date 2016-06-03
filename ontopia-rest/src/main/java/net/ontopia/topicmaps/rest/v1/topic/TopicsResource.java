@@ -22,11 +22,15 @@ package net.ontopia.topicmaps.rest.v1.topic;
 
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.model.mixin.MFlatTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 
 public class TopicsResource extends AbstractTransactionalResource {
 
@@ -38,7 +42,27 @@ public class TopicsResource extends AbstractTransactionalResource {
 		if (type != null) {
 			return getIndex(ClassInstanceIndexIF.class).getTopics(type);
 		} else {
-			return store.getTopicMap().getTopics();
+			return getTopicMap().getTopics();
 		}
+	}
+	
+	@Put
+	public void addTopic(Topic topic) {
+		TopicMapIF tm = getTopicMap();
+		TopicIF type = Parameters.TYPE.optional(this);
+		TopicIF result;
+		if (type != null) {
+			result = getController(TopicController.class).add(tm, type, topic);
+		} else {
+			result = getController(TopicController.class).add(tm, topic);
+		}
+		store.commit();
+		redirectSeeOther(result.getObjectId());
+	}
+	
+	@Delete
+	public void deleteTopic(Topic topic) {
+		getController(TopicController.class).remove(getTopicMap(), topic);
+		store.commit();
 	}
 }
