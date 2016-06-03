@@ -23,10 +23,15 @@ package net.ontopia.topicmaps.rest.v1.association;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.model.Association;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
+import org.restlet.data.Status;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 
 public class AssociationsResource extends AbstractTransactionalResource {
 	
@@ -39,7 +44,7 @@ public class AssociationsResource extends AbstractTransactionalResource {
 			if (type != null) {
 				return getIndex(ClassInstanceIndexIF.class).getAssociations(type);
 			} else {
-				return store.getTopicMap().getAssociations();
+				return getTopicMap().getAssociations();
 			}
 		} else {
 			if (type == null) {
@@ -48,5 +53,34 @@ public class AssociationsResource extends AbstractTransactionalResource {
 				return topic.getAssociationsByType(type);
 			}
 		}
+	}
+	
+	@Put
+	public void addAssociation(Association association) {
+		if (optionalRequestParameter(Parameters.ID) != null) {
+			setStatus(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return;
+		}
+		
+		TopicMapIF tm = getTopicMap();
+
+		TopicIF type = Parameters.TYPE.optional(this);
+
+		AssociationIF result;
+		if (type != null) {
+			result = getController(AssociationController.class).add(tm, type, association);
+		} else {
+			result = getController(AssociationController.class).add(tm, association);
+		}
+		store.commit();
+		
+		// todo: maybe this should be '302 Found' instead
+		redirectSeeOther("../../occurrences/" + result.getObjectId()); // todo: how to make this stable?
+	}
+	
+	@Delete
+	public void removeAssociation(Association association) {
+		getController(AssociationController.class).remove(getTopicMap(), association);
+		store.commit();
 	}
 }
