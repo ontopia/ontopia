@@ -24,12 +24,18 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
+import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.resource.Get;
 
 public class TopicTypesResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<TopicIF> getTopicTypes() {
-		return getIndex(ClassInstanceIndexIF.class).getTopicTypes();
+		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).optional(this);
+		if (topic != null) {
+			return topic.getTypes();
+		} else {
+			return getIndex(ClassInstanceIndexIF.class).getTopicTypes();
+		}
 	}
 }

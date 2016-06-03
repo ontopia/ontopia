@@ -48,6 +48,9 @@ public class TopicRouter extends Router {
 		// single
 		attach("/{id}", TopicResource.class);
 		
+		// types
+		attach("/{id}/types", TopicTypesResource.class);
+		
 		// names
 		attach("/{id}/names", TopicNamesResource.class);
 		attach("/{id}/names/{type}", TopicNamesResource.class);
