@@ -20,11 +20,15 @@
 
 package net.ontopia.topicmaps.rest;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
+import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.core.ParameterResolverIF;
 import net.ontopia.topicmaps.rest.core.TopicMapResolverIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaServerException;
 import net.ontopia.topicmaps.rest.resources.APIInfoResource;
 import net.ontopia.topicmaps.rest.utils.DefaultParameterResolver;
 import net.ontopia.topicmaps.rest.utils.DefaultTopicMapResolver;
@@ -41,6 +45,8 @@ public class OntopiaRestApplication extends Application {
 	
 	protected final ParameterResolverIF objectResolver;
 	protected final TopicMapResolverIF topicmapResolver;
+	
+	protected final Map<Class<? extends AbstractController>, AbstractController> controllers = new HashMap<>();
 	
 	public OntopiaRestApplication() {
 		objectResolver = new DefaultParameterResolver(this);
@@ -91,5 +97,21 @@ public class OntopiaRestApplication extends Application {
 	public synchronized void stop() throws Exception {
 		topicmapResolver.close();
 		super.stop();
+	}
+	
+	// docs: provided extension point for controllers
+	@SuppressWarnings("unchecked")
+	public synchronized <C extends AbstractController> C getController(Class<C> controllerClass) {
+		C controller = (C) controllers.get(controllerClass);
+		if (controller == null) {
+			try {
+				controller = controllerClass.newInstance();
+			} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException e) {
+				throw new OntopiaServerException(e);
+			}
+			controllers.put(controllerClass, controller);
+			controller.setOntopia(this);
+		}
+		return controller;
 	}
 }
