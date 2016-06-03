@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.rest.resources;
 
 import java.io.IOException;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -72,12 +73,16 @@ public class AbstractTransactionalResource extends AbstractPagedResource {
 		return Method.GET.equals(getMethod());
 	}
 	
+	protected TopicMapIF getTopicMap() {
+		return store.getTopicMap();
+	}
+
 	protected <C> C getRequestParameter(Class<C> klass, boolean allowNull) {
 		return Parameters.ID.withExpected(klass).resolve(this, allowNull);
 	}
 	
 	protected <C> C getRequestParameter(Class<C> klass, String name, boolean allowNull) {
-		return getOntopia().getResolver().resolve(store.getTopicMap(), getRequest(), name, klass, allowNull);
+		return getOntopia().getResolver().resolve(getTopicMap(), getRequest(), name, klass, allowNull);
 	}
 	
 	protected <C> C requiredRequestParameter(Parameters<C> parameter) {
@@ -92,7 +97,7 @@ public class AbstractTransactionalResource extends AbstractPagedResource {
 	protected <I extends IndexIF> I getIndex(Class<I> indexClass) {
 		try {
 			if (store != null) {
-				return (I) store.getTopicMap().getIndex(indexClass.getName());
+				return (I) getTopicMap().getIndex(indexClass.getName());
 			} else {
 				return null;
 			}
