@@ -53,6 +53,8 @@ public class OntopiaRestApplication extends Application {
 		topicmapResolver = new DefaultTopicMapResolver();
 		
 		setStatusService(new OntopiaStatusService());
+		
+		getConnegService().setStrict(true); // todo: optional
 	}
 	
 	public TopicMapReferenceIF getTopicMapReference(Request request) {
