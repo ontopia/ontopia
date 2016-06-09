@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.rest;
 
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
+import net.ontopia.topicmaps.rest.model.Error;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Status;
