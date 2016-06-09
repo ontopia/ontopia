@@ -30,6 +30,9 @@ public class OccurrenceRouter extends ScopedRouter {
 		
 		setName("Occurrence router");
 		setDescription("Binds the resources related to occurrence operations");
+
+		//add
+		attach("", OccurrenceResource.class);
 	
 		// list
 		// ClassInstanceIndexIF.getOccurrences

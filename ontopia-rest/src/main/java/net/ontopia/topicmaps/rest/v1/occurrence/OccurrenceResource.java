@@ -26,7 +26,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
-import net.ontopia.topicmaps.rest.v1.topic.TopicController;
+import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -55,10 +55,16 @@ public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
 	@Put
 	public void addOccurrence(Occurrence occurrence) {
 		TopicMapIF tm = getTopicMap();
-		TopicIF topic = getController(TopicController.class).resolve(tm, occurrence.getTopic());
-		OccurrenceIF result = getController(OccurrenceController.class).add(tm, topic, occurrence);
+		
+		TopicIF topic = Parameters.TOPIC.optional(this);
+		OccurrenceIF result;
+		if (topic != null) {
+			result = getController(OccurrenceController.class).add(tm, topic, occurrence);
+		} else {
+			result = getController(OccurrenceController.class).add(tm, occurrence);
+		}
 		store.commit();
-		redirectSeeOther(result.getObjectId());
+		redirectSeeOther("occurrences/" + result.getObjectId());
 	}
 	
 	@Post

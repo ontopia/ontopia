@@ -49,6 +49,10 @@ public class OccurrenceController extends AbstractController {
 		topics = getController(TopicController.class);
 	}
 
+	public OccurrenceIF add(TopicMapIF tm, Occurrence occurrence) {
+		return add(tm, topics.resolve(tm, occurrence.getTopic()), occurrence);
+	}
+	
 	public OccurrenceIF add(TopicMapIF tm, TopicIF topic, Occurrence occurrence) {
 		
 		requireNotNull(occurrence.getValue(), "value");
