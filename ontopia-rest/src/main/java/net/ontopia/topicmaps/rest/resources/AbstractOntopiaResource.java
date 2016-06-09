@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.rest.resources;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +37,7 @@ import net.ontopia.topicmaps.rest.utils.ClassUtils;
 import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
+import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -111,5 +113,21 @@ public class AbstractOntopiaResource extends ServerResource {
 	
 	protected <C extends AbstractController> C getController(Class<C> controllerClass) {
 		return getOntopia().getController(controllerClass);
+	}
+
+	@Override
+	protected void doError(Status status) {
+		if (status.equals(Status.CLIENT_ERROR_NOT_ACCEPTABLE) && (status.getThrowable() == null)) {
+			// we have an ontopia error for this
+			List<Preference<MediaType>> acceptedMediaTypes = getClientInfo().getAcceptedMediaTypes();
+			List<MediaType> accepted = new ArrayList<>(acceptedMediaTypes.size());
+			for (Preference<MediaType> mt : acceptedMediaTypes) {
+				accepted.add(mt.getMetadata());
+			}
+			
+			super.doError(OntopiaRestErrors.UNSUPPORTED_MIME_TYPE.build(getClass().getName(), Arrays.toString(accepted.toArray())).getStatus());
+		} else {
+			super.doError(status);
+		}
 	}
 }
