@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.rest;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.HashSet;
-import java.util.Set;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -59,41 +55,8 @@ public class OntopiaStatusService extends StatusService {
 	@Override
 	public Representation getRepresentation(Status status, Request request, Response response) {
 		//if (status.isClientError()) {
-			return new JacksonRepresentation<>(new ErrorJson(status));
+			return new JacksonRepresentation<>(new Error(status));
 		//}
 		//return null;
 	}
-
-	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	public static class ErrorJson {
-
-		@JsonProperty private int httpcode;
-		@JsonProperty private int code = -1;
-		@JsonProperty private String message;
-		@JsonProperty private String description;
-		@JsonProperty private String[] causes = new String[0];
-		
-		public ErrorJson(Status status) {
-			this.httpcode = status.getCode();
-			this.message = status.toString();
-			this.description = status.getDescription();
-
-			if (status.getThrowable() != null) {
-				Throwable t = status.getThrowable();
-				if (t instanceof OntopiaRestException) {
-					code = ((OntopiaRestException)t).getOntopiaCode();
-				}
-				
-				Set<String> c = new HashSet<>();
-				while (t.getCause() != null) {
-					t = t.getCause();
-					c.add(t.getClass().getName() + ": " + (t.getMessage() != null ? t.getMessage() : ""));
-				}
-				if (!c.isEmpty()) {
-					causes = c.toArray(causes);
-				}
-			}
-		}
-	}
-
 }
