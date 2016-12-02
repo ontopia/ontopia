@@ -221,9 +221,11 @@ public final class Ontopia {
     checkClass("org.apache.commons.collections4.map.LRUMap",   "commons-collections4.jar");
     checkClass("gnu.getopt.Getopt",                            "getopt.jar");
     checkClass("antlr.Parser",                                 "antlr.jar");
-    checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
-    checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
-    checkClass("com.hp.hpl.jena.iri.IRIFactory",               "iri.jar");
+
+    // moved to RDF module
+    // checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
+    // checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
+    // checkClass("com.hp.hpl.jena.iri.IRIFactory",               "iri.jar");
   }
 
   /**
