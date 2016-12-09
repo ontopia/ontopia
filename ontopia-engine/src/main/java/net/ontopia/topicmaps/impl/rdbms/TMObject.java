@@ -129,14 +129,14 @@ public abstract class TMObject extends AbstractRWPersistent
       throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
-      throw new ConstraintViolationException("Cannot modify source locators when object isn't attached to a topic map.");
+      throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
 
-    // Check to see if the source locator is already a source locator
+    // Check to see if the item identifier is already a item identifier
     // of this topic.    
     Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
     if (sources.contains(source_locator)) return;    
 
-    // Note: Need to morph it into source locator to ensure that it is
+    // Note: Need to morph it into item identifier to ensure that it is
     // correctly handled by the mapping.
 
     // FIXME: Since this is an aggregate field, the O/R mapper should
@@ -158,14 +158,14 @@ public abstract class TMObject extends AbstractRWPersistent
       throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
-      throw new ConstraintViolationException("Cannot modify source locators " +
+      throw new ConstraintViolationException("Cannot modify item identifiers " +
                                  "when object isn't attached to a topic map.");
     
-    // Check to see if source locator is a source locator of this topic.
+    // Check to see if item identifier is a item identifier of this topic.
     Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
     if (!sources.contains(source_locator)) return;
 
-    // Note: Need to morph it into source locator to ensure that it is
+    // Note: Need to morph it into item identifier to ensure that it is
     // correctly handled by the mapping.
     SourceLocator _source_locator = new SourceLocator(source_locator);
     _source_locator._setTMObject(this.getLongId());
