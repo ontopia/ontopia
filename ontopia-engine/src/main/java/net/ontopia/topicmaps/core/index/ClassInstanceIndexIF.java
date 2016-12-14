@@ -90,6 +90,18 @@ public interface ClassInstanceIndexIF extends IndexIF {
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type);
 
   /**
+   * PUBLIC: Gets all association roles that are of the given type and part of an association
+   * of given type.
+   *
+   * @param association_role_type The given role type; an object implementing TopicIF.
+   * @param association_type The given association type; an object implementing TopicIF.
+   *
+   * @return A collection of AssociationRoleIF objects; association roles with the type 
+   *         represented by the given topic and part of an association with given type.
+   */
+  public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type, TopicIF association_type);
+
+  /**
    * PUBLIC: Gets all topics that are used as topic types.
    *
    * @return A collection of TopicIF objects, each of which serves as a type
