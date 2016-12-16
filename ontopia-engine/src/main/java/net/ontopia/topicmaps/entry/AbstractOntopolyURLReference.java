@@ -26,7 +26,6 @@ import java.net.URL;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
@@ -46,15 +45,6 @@ public abstract class AbstractOntopolyURLReference
   public AbstractOntopolyURLReference(URL url, String id, String title,
                                       LocatorIF base) {
     super(id, title, url, base);
-  }
-
-  /**
-   * INTERNAL: Sets the topic map store instance. This method is
-   * intended to be called from the outside and by code that manually
-   * constructs the topic map reference.
-   */
-  void setLoadedTopicMapStore(TopicMapStoreIF store) {
-    this.store = store;
   }
 
   protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
