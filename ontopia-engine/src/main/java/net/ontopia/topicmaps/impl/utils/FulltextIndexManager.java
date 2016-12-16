@@ -24,11 +24,11 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import net.ontopia.infoset.fulltext.core.FulltextImplementationIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
+import net.ontopia.infoset.fulltext.impl.lucene.LuceneFulltextImplementation;
 import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapDocumentGenerator;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapDocumentGeneratorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -38,8 +38,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapTransaction;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 
 /**
  * INTERNAL: The indexer manager will keep track of base names,
@@ -49,16 +47,12 @@ import org.apache.lucene.store.FSDirectory;
  */
 public class FulltextIndexManager extends BasicIndex implements SearcherIF {
 
-  protected Directory luceneDirectory;
-  protected LuceneSearcher luceneSearcher;
-  
   protected Collection<TMObjectIF> added;
-
   protected Collection<String> removed;
-
   protected Collection<TMObjectIF> changed;
 
-  protected TopicMapDocumentGeneratorIF docgen = DefaultTopicMapDocumentGenerator.INSTANCE;
+  protected FulltextImplementationIF implementation = new LuceneFulltextImplementation();
+  protected SearcherIF searcher;
 
   /**
    * INTERNAL: Registers the fulltext index manager with the event system of the
@@ -102,25 +96,16 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     while (iter.hasNext())
       emanager.addListener(this, iter.next());
 
-    // register ourselves as index
-    AbstractIndexManager ixm = (AbstractIndexManager) store.getTransaction().getIndexManager();
-    ixm.registerIndex("net.ontopia.infoset.fulltext.core.SearcherIF", this);
-    
-    
     // lucene
     try {
-      this.luceneDirectory = FSDirectory.open(store.getIndexDirectory());
+      implementation.initialize(store);
     } catch (IOException ioe) {
       throw new OntopiaRuntimeException(ioe);
     }
-  }
 
-  public void setLuceneDirectory(Directory luceneDirectory) {
-      this.luceneDirectory = luceneDirectory;
-  }
-
-  public Directory getLuceneDirectory() {
-    return luceneDirectory;
+    // register ourselves as index
+    AbstractIndexManager ixm = (AbstractIndexManager) store.getTransaction().getIndexManager();
+    ixm.registerIndex("net.ontopia.infoset.fulltext.core.SearcherIF", this);
   }
 
   /**
@@ -145,6 +130,7 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
   public synchronized boolean synchronizeIndex(IndexerIF indexer)
       throws IOException {
     boolean changes = false;
+    TopicMapDocumentGeneratorIF docgen = DefaultTopicMapDocumentGenerator.INSTANCE;
 
     // delete removed objects
     if (!removed.isEmpty()) {
@@ -202,22 +188,22 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
       changes = true;
     }
     // if changes then invalide lucene searcher
-    if (changes && luceneSearcher != null) {
+    if (changes && searcher != null) {
       try {
-        luceneSearcher.close();
+        searcher.close();
       } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       } finally {
-        luceneSearcher = null;
+        searcher = null;
       }
     }
     return changes;
   }
   
-  public LuceneSearcher getSearcher() throws IOException {
-    if (luceneSearcher == null)
-      luceneSearcher = new LuceneSearcher(luceneDirectory);
-    return luceneSearcher;
+  public SearcherIF getSearcher() throws IOException {
+    if (searcher == null)
+      searcher = implementation.getSearcher();
+    return searcher;
   }
 
   // -----------------------------------------------------------------------------
@@ -229,13 +215,11 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
   }
   
    public synchronized void close() throws IOException {
-    if (luceneSearcher != null) { 
-      luceneSearcher.close();
-      luceneSearcher = null;
+    if (searcher != null) { 
+      searcher.close();
+      searcher = null;
     }
-    if (luceneDirectory != null) {
-      luceneDirectory.close();
-    }
+    implementation.close();
    }
   
   // -----------------------------------------------------------------------------
@@ -269,11 +253,11 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     
     try {
       if (replaceIndex)
-        indexer = new LuceneIndexer(luceneDirectory, replaceIndex);
+        indexer = implementation.getIndexer(replaceIndex);
 
       if (needSynchronization()) {      
         if (indexer == null)
-          indexer = new LuceneIndexer(luceneDirectory, replaceIndex);
+          indexer = implementation.getIndexer(replaceIndex);
 
         modified = synchronizeIndex(indexer);
         if (modified) indexer.flush();      
