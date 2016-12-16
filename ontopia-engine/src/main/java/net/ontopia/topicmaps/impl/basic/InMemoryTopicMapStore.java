@@ -23,18 +23,14 @@ package net.ontopia.topicmaps.impl.basic;
 import java.io.File;
 import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.fulltext.core.IndexerIF;
-import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
 import net.ontopia.topicmaps.core.StoreNotOpenException;
-import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.FulltextIndexManager;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.lucene.store.FSDirectory;
 
 /**
  * PUBLIC: The in-memory TopicMapStoreIF implementation.
@@ -54,11 +50,9 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
     // register fulltext index manager at this point, so that we can track
     // all events that occur at loading
     if (maintainFulltextIndex) {
-      this.ftmanager = FulltextIndexManager.manageTopicMap(getTopicMap());
+      this.ftmanager = new FulltextIndexManager(this);
       try {
-        this.ftmanager.setLuceneDirectory(FSDirectory.open(indexDirectory));
-        // create index
-        synchronizeFulltextIndex(true);
+        this.ftmanager.synchronizeIndex(true);
       } catch (IOException ioe) {
         throw new OntopiaRuntimeException(ioe);
       }
@@ -154,25 +148,7 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
   // INTERNAL
   public synchronized boolean synchronizeFulltextIndex(boolean replaceIndex)
       throws IOException {
-    
-    IndexerIF indexer = null;
-    boolean modified = false;
-    
-    try {
-      if (replaceIndex)
-        indexer = new LuceneIndexer(indexDirectory.getPath(), replaceIndex);
-
-      if (ftmanager != null && ftmanager.needSynchronization()) {      
-        if (indexer == null)
-          indexer = new LuceneIndexer(indexDirectory.getPath(), replaceIndex);
-
-        modified = ftmanager.synchronizeIndex(indexer);
-        if (modified) indexer.flush();      
-      }
-    } finally {
-      if (indexer != null) indexer.close();
-    }
-    return modified;
+    return ftmanager.synchronizeIndex(replaceIndex);
   }  
 
   public void deleteFullTextIndex() throws IOException {
@@ -183,6 +159,10 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
     }
     if (indexDirectory.exists())
       FileUtils.deleteDirectory(indexDirectory, true);
+  }
+
+  public File getIndexDirectory() {
+    return indexDirectory;
   }
 
   // ---------------------------------------------------------------------------

@@ -24,23 +24,22 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
+import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
 import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
 import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapDocumentGenerator;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapDocumentGeneratorIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapTransaction;
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 /**
  * INTERNAL: The indexer manager will keep track of base names,
@@ -61,10 +60,15 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
 
   protected TopicMapDocumentGeneratorIF docgen = DefaultTopicMapDocumentGenerator.INSTANCE;
 
-  protected FulltextIndexManager(TopicMapIF topicmap) {
+  /**
+   * INTERNAL: Registers the fulltext index manager with the event system of the
+   * specified topic map store.
+   * 
+   * @param store
+   */
+  public FulltextIndexManager(InMemoryTopicMapStore store) {
 
-    EventManagerIF emanager = (EventManagerIF) topicmap;
-		InMemoryTopicMapStore store = (InMemoryTopicMapStore)topicmap.getStore();
+    EventManagerIF emanager = store.getEventManager();
     ObjectTreeManager otree = ((InMemoryTopicMapTransaction) store
         .getTransaction()).getObjectTreeManager();
 
@@ -101,17 +105,14 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     // register ourselves as index
     AbstractIndexManager ixm = (AbstractIndexManager) store.getTransaction().getIndexManager();
     ixm.registerIndex("net.ontopia.infoset.fulltext.core.SearcherIF", this);
-  }
-
-  /**
-   * INTERNAL: Registers the fulltext index manager with the event system of the
-   * specified topic map.
-   * 
-   * @param topicmap
-   * @return The index manager for specified topicmap
-   */
-  public static FulltextIndexManager manageTopicMap(TopicMapIF topicmap) {
-    return new FulltextIndexManager(topicmap);
+    
+    
+    // lucene
+    try {
+      this.luceneDirectory = FSDirectory.open(store.getIndexDirectory());
+    } catch (IOException ioe) {
+      throw new OntopiaRuntimeException(ioe);
+    }
   }
 
   public void setLuceneDirectory(Directory luceneDirectory) {
@@ -259,6 +260,28 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     TMObjectIF tmo = (TMObjectIF) object;
     if (!added.contains(tmo) && !removed.contains(tmo.getObjectId()))
       changed.add(tmo);
+  }
+
+  public boolean synchronizeIndex(boolean replaceIndex) throws IOException {
+    
+    IndexerIF indexer = null;
+    boolean modified = false;
+    
+    try {
+      if (replaceIndex)
+        indexer = new LuceneIndexer(luceneDirectory, replaceIndex);
+
+      if (needSynchronization()) {      
+        if (indexer == null)
+          indexer = new LuceneIndexer(luceneDirectory, replaceIndex);
+
+        modified = synchronizeIndex(indexer);
+        if (modified) indexer.flush();      
+      }
+    } finally {
+      if (indexer != null) indexer.close();
+    }
+    return modified;
   }
 
   // -----------------------------------------------------------------------------
