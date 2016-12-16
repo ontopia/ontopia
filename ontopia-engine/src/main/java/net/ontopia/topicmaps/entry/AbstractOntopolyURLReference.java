@@ -23,12 +23,11 @@ package net.ontopia.topicmaps.entry;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
-import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.utils.TransactionEventListenerIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
