@@ -24,11 +24,11 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import net.ontopia.infoset.fulltext.core.FulltextImplementationIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneFulltextImplementation;
 import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapDocumentGenerator;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapDocumentGeneratorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -38,6 +38,7 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapTransaction;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.ServiceUtils;
 
 /**
  * INTERNAL: The indexer manager will keep track of base names,
@@ -51,7 +52,7 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
   protected Collection<String> removed;
   protected Collection<TMObjectIF> changed;
 
-  protected FulltextImplementationIF implementation = new LuceneFulltextImplementation();
+  protected FulltextImplementationIF implementation;
   protected SearcherIF searcher;
 
   /**
@@ -70,6 +71,11 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     added = new HashSet<TMObjectIF>();
     removed = new HashSet<String>();
     changed = new HashSet<TMObjectIF>();
+    
+    implementation = findFulltextImplementation();
+    if (implementation == null) {
+      return;
+    }
 
     // Initialize object tree event handlers [objects added or removed]
     EventListenerIF listener_add = new TMObjectIF_added();
@@ -96,7 +102,6 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     while (iter.hasNext())
       emanager.addListener(this, iter.next());
 
-    // lucene
     try {
       implementation.initialize(store);
     } catch (IOException ioe) {
@@ -266,6 +271,25 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
       if (indexer != null) indexer.close();
     }
     return modified;
+  }
+
+  private FulltextImplementationIF findFulltextImplementation() {
+    try {
+      Set<FulltextImplementationIF> implementations = ServiceUtils.loadServices(FulltextImplementationIF.class);
+      if (implementations.size() > 1) {
+        throw new OntopiaRuntimeException("Multiple FulltextImplementationIF instances found, this is not yet implemented!");
+      }
+      if (implementations.isEmpty()) {
+        return null;
+      }
+      return implementations.iterator().next();
+    } catch (IOException ioe) {
+      throw new OntopiaRuntimeException(ioe);
+    }
+  }
+
+  public FulltextImplementationIF getFulltextImplementation() {
+    return implementation;
   }
 
   // -----------------------------------------------------------------------------

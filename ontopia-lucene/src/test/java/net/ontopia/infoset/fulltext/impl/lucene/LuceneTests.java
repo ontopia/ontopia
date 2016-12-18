@@ -30,6 +30,8 @@ import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
+import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
+import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
 import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapIndexer;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicNameIF;

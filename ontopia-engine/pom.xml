@@ -68,10 +68,6 @@
 			<artifactId>jtidy</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>crimson</groupId>
 			<artifactId>crimson</artifactId>
 		</dependency>
