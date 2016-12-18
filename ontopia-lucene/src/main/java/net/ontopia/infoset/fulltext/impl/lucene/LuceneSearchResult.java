@@ -21,11 +21,9 @@
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.IOException;
-
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import org.apache.lucene.search.IndexSearcher;
-
 import org.apache.lucene.search.TopDocs;
   
 /**

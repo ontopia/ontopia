@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.util.Iterator;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
@@ -41,9 +40,6 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -55,6 +51,8 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The Lucene indexer implementation. This indexer uses the
@@ -268,7 +266,7 @@ public class LuceneIndexer implements IndexerIF {
     try {
       Class<?> aclass = Class.forName(acname);
       return (Analyzer)aclass.newInstance();
-    } catch (Throwable e) {
+    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
       throw new OntopiaRuntimeException("Could not create analyzer: " + acname , e);
     }
   }
@@ -358,7 +356,7 @@ public class LuceneIndexer implements IndexerIF {
       lucene_indexer.close();
       
     }
-    catch (Exception e) {
+    catch (OntopiaRuntimeException | IOException e) {
       e.printStackTrace();
       System.exit(3);
     }
@@ -393,20 +391,31 @@ public class LuceneIndexer implements IndexerIF {
     String preloaddir = System.getProperty("user.dir") + File.separator + "preloader";
     String acname;
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
-      if (option == 'e')
-        external = true;
-      else if (option == 's')
-        syntax = value;
-      else if (option == 'p')
-        propfile = value;
-      else if (option == 't')
-        timeout = Integer.parseInt(value);
-      else if (option == 'd')
-        preloaddir = value;
-      else if (option == 'x')
-        max_threads = Integer.parseInt(value);
-      else if (option == 'a')
-        acname = value;
+		switch (option) {
+			case 'e':
+				external = true;
+				break;
+			case 's':
+				syntax = value;
+				break;
+			case 'p':
+				propfile = value;
+				break;
+			case 't':
+				timeout = Integer.parseInt(value);
+				break;
+			case 'd':
+				preloaddir = value;
+				break;
+			case 'x':
+				max_threads = Integer.parseInt(value);
+				break;
+			case 'a':
+				acname = value;
+				break;
+			default:
+				break;
+		}
     }
   }
     

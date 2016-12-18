@@ -21,9 +21,7 @@
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.Reader;
-
 import net.ontopia.infoset.fulltext.core.FieldIF;
-
 import org.apache.lucene.document.Field;
   
 /**
@@ -62,6 +60,7 @@ public class LuceneField implements FieldIF {
     return field.isTokenized();
   }
 
+  @Override
   public String toString() {
     if (getReader() == null)
       return getName() + "=" + getValue() + " ";

@@ -22,7 +22,6 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.File;
 import java.io.IOException;
-
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
@@ -30,9 +29,6 @@ import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;
@@ -42,6 +38,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The Lucene search engine implementation. This searcher searches
