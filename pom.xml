@@ -196,8 +196,8 @@
 					<configuration>
 						<fork>true</fork>
 						<maxmem>512m</maxmem>
-						<source>1.5</source>
-						<target>1.5</target>
+						<source>1.7</source>
+						<target>1.7</target>
 					</configuration>
 				</plugin>
 				<plugin>
