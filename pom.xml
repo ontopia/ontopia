@@ -54,6 +54,7 @@
 		<module>ontopia-rdf</module>
 		<module>ontopia-schema</module>
 		<module>ontopia-jdbcspy7</module>
+		<module>ontopia-lucene</module>
 		
 		<!-- Web Apps -->
 		<module>webapp-root</module>
