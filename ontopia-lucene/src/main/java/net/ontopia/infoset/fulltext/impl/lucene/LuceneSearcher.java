@@ -31,13 +31,12 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +54,7 @@ public class LuceneSearcher implements SearcherIF {
   protected String path;
   protected Analyzer analyzer;
   protected IndexSearcher searcher;
+  protected DirectoryReader reader;
   protected String default_field = "content";
 
   /**
@@ -66,7 +66,7 @@ public class LuceneSearcher implements SearcherIF {
    * @param path The file system directory in which the index is located.
    */
   public LuceneSearcher(String path) throws IOException {
-    this(path, new StandardAnalyzer(Version.LUCENE_36));
+    this(path, new StandardAnalyzer());
   }
 
   /**
@@ -93,7 +93,7 @@ public class LuceneSearcher implements SearcherIF {
    * @since 3.0
    */
   public LuceneSearcher(Directory dir) throws IOException {
-    this(dir, new StandardAnalyzer(Version.LUCENE_36));
+    this(dir, new StandardAnalyzer());
   }
 
   /**
@@ -107,7 +107,8 @@ public class LuceneSearcher implements SearcherIF {
    */
   public LuceneSearcher(Directory dir, Analyzer analyzer) throws IOException {
     this.analyzer = analyzer;
-    this.searcher = new IndexSearcher(IndexReader.open(dir));
+    reader = DirectoryReader.open(dir);
+    this.searcher = new IndexSearcher(reader);
   }
 
   /**
@@ -137,9 +138,9 @@ public class LuceneSearcher implements SearcherIF {
     // ! Searcher searcher = new IndexSearcher(dir);
     try {
       log.debug("Searching for: '" + query + "'");
-      Query _query = new QueryParser(Version.LUCENE_36, this.default_field, this.analyzer).parse(query);
+      Query _query = new QueryParser(this.default_field, this.analyzer).parse(query);
       return new LuceneSearchResult(searcher, searcher.search(_query, Integer.MAX_VALUE));
-    } catch (org.apache.lucene.queryParser.ParseException e) {
+    } catch (org.apache.lucene.queryparser.classic.ParseException e) {
       log.info("Error parsing query: '" + e.getMessage() + "'");
       throw new IOException(e.getMessage());
     }
@@ -154,7 +155,7 @@ public class LuceneSearcher implements SearcherIF {
   }
 
   public void close() throws IOException {
-    searcher.close();
+    reader.close();
   }
 
   // -----------------------------------------------------------------------------

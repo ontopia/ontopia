@@ -41,7 +41,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.TestFileUtils;
-import org.apache.lucene.analysis.StopAnalyzer;
+import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.util.Version;
 
 public class LuceneTests extends TestCase {
