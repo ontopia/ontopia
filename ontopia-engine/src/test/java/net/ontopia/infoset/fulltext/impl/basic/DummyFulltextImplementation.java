@@ -52,11 +52,11 @@ public class DummyFulltextImplementation implements FulltextImplementationIF {
   public SearcherIF getSearcher() throws IOException {
     return new SearcherIF() {
       public SearchResultIF search(String query) throws IOException {
-        query = query.toLowerCase();
+        String _query = query.toLowerCase();
         final List<DocumentIF> hits = new ArrayList<DocumentIF>();
         for (TopicIF topic : tm.getTopics()) {
           for (OccurrenceIF occurrence : topic.getOccurrences()) {
-            if (occurrence.getValue().toLowerCase().contains(query)) {
+            if (occurrence.getValue().toLowerCase().contains(_query)) {
               DocumentIF d = new GenericDocument();
               d.addField(new GenericField("object_class", "O", true, true, false));
               d.addField(new GenericField("object_id", occurrence.getObjectId(), true, true, false));
@@ -64,14 +64,14 @@ public class DummyFulltextImplementation implements FulltextImplementationIF {
             }
           }
           for (TopicNameIF name : topic.getTopicNames()) {
-            if (name.getValue().toLowerCase().contains(query)) {
+            if (name.getValue().toLowerCase().contains(_query)) {
               DocumentIF d = new GenericDocument();
               d.addField(new GenericField("object_class", "B", true, true, false));
               d.addField(new GenericField("object_id", name.getObjectId(), true, true, false));
               hits.add(d);
             }
             for (VariantNameIF var : name.getVariants()) {
-              if (var.getValue().toLowerCase().contains(query)) {
+              if (var.getValue().toLowerCase().contains(_query)) {
                 DocumentIF d = new GenericDocument();
                 d.addField(new GenericField("object_class", "V", true, true, false));
                 d.addField(new GenericField("object_id", var.getObjectId(), true, true, false));
@@ -104,11 +104,25 @@ public class DummyFulltextImplementation implements FulltextImplementationIF {
 
   public IndexerIF getIndexer(boolean replaceIndex) throws IOException {
     return new IndexerIF() {
-      public void index(DocumentIF document) throws IOException { }
-      public void delete(String field, String value) throws IOException { }
-      public void flush() throws IOException { }
-      public void delete() throws IOException { }
-      public void close() throws IOException { }
+      public void index(DocumentIF document) throws IOException {
+        // no-op
+      }
+
+      public void delete(String field, String value) throws IOException {
+        // no-op
+      }
+
+      public void flush() throws IOException {
+        // no-op
+      }
+
+      public void delete() throws IOException {
+        // no-op
+      }
+
+      public void close() throws IOException {
+        // no-op
+      }
     };
   }
 

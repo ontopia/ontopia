@@ -24,27 +24,23 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import junit.framework.TestCase;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
 import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapIndexer;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.TestFileUtils;
-
 import org.apache.lucene.analysis.StopAnalyzer;
 import org.apache.lucene.util.Version;
 
@@ -60,6 +56,7 @@ public class LuceneTests extends TestCase {
     super(name);
   }
   
+  @Override
   public void setUp() throws IOException {
     TopicMapStoreIF store = new InMemoryTopicMapStore();
     topicmap = store.getTopicMap();
@@ -70,6 +67,7 @@ public class LuceneTests extends TestCase {
     TestFileUtils.verifyDirectory(root, "indexes");
   }
 
+  @Override
   protected void tearDown() throws IOException {
     // Close searcher
     if (searcher != null) {
@@ -243,7 +241,7 @@ public class LuceneTests extends TestCase {
     // Create a topic and an occurrence
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
-    OccurrenceIF occ = builder.makeOccurrence(topic, otype, makeLocator("http://www.ontopia.net"));
+    builder.makeOccurrence(topic, otype, makeLocator("http://www.ontopia.net"));
     
     // Index topic map
     index(topicmap);
@@ -262,7 +260,7 @@ public class LuceneTests extends TestCase {
     
     // Verify that index was deleted
     File idir = new File(indexDir);
-    assertTrue("Index directory exists after LuceneIndexer.delete() was called.", !idir.exists());
+    assertFalse("Index directory exists after LuceneIndexer.delete() was called.", idir.exists());
   }
   
   // ---- utilities
