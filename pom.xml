@@ -643,6 +643,34 @@
 	
 	<profiles>
 		<profile>
+			<!-- Profile used for generating a test coverage report -->
+			<id>jacoco</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.13</version>
+						<configuration>
+							<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} ${argLine}</argLine>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.9</version>
+						<executions>
+							<execution>
+								<id>default-prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<!-- Profile used for making the tomcat distribution -->
 			<id>ontopia-distribution-tomcat</id>
 			<build>
