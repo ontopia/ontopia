@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.xml;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 import net.ontopia.infoset.core.LocatorIF;
@@ -40,27 +39,27 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: Abstract SAX2 content handler used for reading various
- * kinds of topic map documents.</p>
+ * kinds of topic map documents.
  */
 public abstract class AbstractTopicMapContentHandler extends DefaultHandler {  
-  protected Collection propagated_themes;
+  protected Collection<TopicIF> propagated_themes;
 
   // The list of processed documents passed on to the current
   // document. Note that each document may contain multiple topic
   // maps.
-  protected Collection processed_documents_current;
+  protected Collection<LocatorIF> processed_documents_current;
   // The list of processed retrieved from the parent. Note that this
   // collection does not change until the endDocument event is
   // reached.
-  protected Collection processed_documents_from_parent;
+  protected Collection<LocatorIF> processed_documents_from_parent;
   // The list of documents processed up til the current document. The
   // processed documents for each topic map in the document is added
   // to this list.
-  protected Collection processed_documents_accumulated;
+  protected Collection<LocatorIF> processed_documents_accumulated;
   
   // Parse state info
-  protected Stack parents;
-  protected Map info;
+  protected Stack<String> parents;
+  protected Map<String, Object> info;
 
   /* current base uri, as modified by xml:base, is in the stack */
 
@@ -75,39 +74,40 @@ public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
   static Logger log = LoggerFactory.getLogger(AbstractTopicMapContentHandler.class.getName());
   
   public AbstractTopicMapContentHandler(LocatorIF base_address) {
-    this(base_address, new HashSet());
+    this(base_address, new HashSet<LocatorIF>());
  } 
 
-  public AbstractTopicMapContentHandler(LocatorIF base_address, Collection processed_documents_from_parent) {
+  public AbstractTopicMapContentHandler(LocatorIF base_address, Collection<LocatorIF> processed_documents_from_parent) {
     this.doc_address = base_address;
-    parents = new Stack();
-    info = new HashMap();
+    parents = new Stack<>();
+    info = new HashMap<>();
     this.processed_documents_from_parent = processed_documents_from_parent;
   }
   
-  public Collection getPropagatedThemes() {
+  public Collection<TopicIF> getPropagatedThemes() {
     return propagated_themes;
   }
   
-  public void setPropagatedThemes(Collection propagated_themes) {
+  public void setPropagatedThemes(Collection<TopicIF> propagated_themes) {
     this.propagated_themes = propagated_themes;
   }
 
   protected void propagateThemes(ScopedIF scoped) {
     if (propagated_themes != null) {
-      Iterator iter = propagated_themes.iterator();
-      while(iter.hasNext())
-        scoped.addTheme((TopicIF)iter.next());
+      for (TopicIF scope : propagated_themes) {
+        scoped.addTheme(scope);
+      }
     }
   }
   
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator;
   }
 
   /**
    * INTERNAL: Registers the content handler with the given XML reader
-   * object.</p>
+   * object.
    *
    * The content handler will register itself as the content handler of
    * the XML reader. It will also attempt to set the SAX core features
@@ -118,13 +118,6 @@ public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
   public void register(XMLReader parser) {
     
     // Set required parser features
-
-    try {
-      // Use interned strings for names.
-      parser.setFeature("http://xml.org/sax/features/string-interning", true);
-    } catch (SAXException e) {
-      log.warn("SAX string-interning feature not supported.");
-    }
 
     try {
       // Don't read the DTD (document type definition)
