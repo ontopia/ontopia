@@ -106,7 +106,7 @@ public class LinkTag extends BodyTagSupport {
     }
 
     // read-only state
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
         
     if (href != null)
       vc.put("href", href);

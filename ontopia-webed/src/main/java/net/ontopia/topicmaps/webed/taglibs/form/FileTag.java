@@ -86,7 +86,7 @@ public class FileTag extends BodyTagSupport {
       vc.put("name", name);
     }
     
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     vc.put("value", value);
 
     if (id != null) vc.put("id", id);

@@ -127,7 +127,7 @@ public class ListTag extends TagSupport {
     }    
 
     if (id != null) vc.put("id", id);
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     if (klass != null) vc.put("class", klass);
     vc.put("type", type);
 

@@ -95,7 +95,7 @@ public class ButtonTag extends TagSupport implements ActionInvokingTagIF {
     }
 
     if (id != null) vc.put("id", id);
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     if (klass != null) vc.put("class", klass);
 
     sub_actions = new ArrayList(); // we've used these now, can't retain them

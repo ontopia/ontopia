@@ -137,7 +137,7 @@ public class FormTag extends BodyTagSupport {
 
     boolean readonly =
       InteractionELSupport.getBooleanValue(this.readonly, false, pageContext);
-    request.setAttribute(Constants.OKS_FORM_READONLY, new Boolean(readonly));
+    request.setAttribute(Constants.OKS_FORM_READONLY, readonly);
 
     // put the name of the action group to page scope
     // to allow child tags to access this information
@@ -277,7 +277,7 @@ public class FormTag extends BodyTagSupport {
     // FIXME: Do we really need this line? Probably not, since each control
     // should now itself be responisible for determining whether it should be
     // readonly. Hence the individual control can overrule the form setting.
-    // vc.put("readonly", new Boolean(TagUtils.isFormReadOnly(request)));
+    // vc.put("readonly", TagUtils.isFormReadOnly(request));
 
     // content inside the form element
     BodyContent body = getBodyContent();

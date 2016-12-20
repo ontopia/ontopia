@@ -118,7 +118,7 @@ public class FieldTag extends BodyTagSupport {
     }
 
     // fill in attribute values
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     vc.put("value", value);
 
     if (id != null) vc.put("id", id);
