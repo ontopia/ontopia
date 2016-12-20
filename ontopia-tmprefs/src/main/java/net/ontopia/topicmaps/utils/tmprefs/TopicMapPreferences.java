@@ -19,7 +19,6 @@
  */
 package net.ontopia.topicmaps.utils.tmprefs;
 
-import java.util.prefs.Preferences;
 import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 

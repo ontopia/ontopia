@@ -21,9 +21,7 @@
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.Collection;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;

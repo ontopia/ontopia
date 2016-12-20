@@ -20,15 +20,11 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

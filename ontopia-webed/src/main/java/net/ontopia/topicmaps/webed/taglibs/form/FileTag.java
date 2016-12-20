@@ -25,7 +25,6 @@ import java.util.Collections;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 
 import org.apache.velocity.VelocityContext;

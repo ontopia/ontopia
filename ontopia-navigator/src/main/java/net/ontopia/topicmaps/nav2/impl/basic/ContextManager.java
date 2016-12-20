@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Stack;
 import java.util.Collection;
 import java.util.Collections;

@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 import junit.framework.TestCase;
 

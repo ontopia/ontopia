@@ -20,13 +20,10 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -37,7 +34,6 @@ import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
-import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.core.ValueProducingTagIF;
 import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
 import net.ontopia.topicmaps.nav2.impl.basic.DefaultIfDecider;

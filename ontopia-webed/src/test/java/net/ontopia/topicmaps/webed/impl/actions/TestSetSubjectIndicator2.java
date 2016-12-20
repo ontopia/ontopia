@@ -21,10 +21,8 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.webed.core.ActionIF;
 import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
-import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topic.SetSubjectIndicator2;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.infoset.core.LocatorIF;

@@ -28,8 +28,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.net.URLEncoder;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.ontopia.utils.OntopiaRuntimeException;

@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import javax.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
 /**

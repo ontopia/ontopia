@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;

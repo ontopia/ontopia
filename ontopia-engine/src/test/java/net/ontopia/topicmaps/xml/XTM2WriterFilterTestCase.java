@@ -22,11 +22,13 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.utils.TestFileUtils;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

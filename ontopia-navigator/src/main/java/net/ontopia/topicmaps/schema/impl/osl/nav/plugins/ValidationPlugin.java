@@ -24,8 +24,6 @@ import java.io.File;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.plugins.DefaultPlugin;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 

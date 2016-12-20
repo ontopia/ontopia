@@ -22,8 +22,6 @@ package net.ontopia.topicmaps.nav2.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletContext;

@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.webed.taglibs.form;
 
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Collections;
 

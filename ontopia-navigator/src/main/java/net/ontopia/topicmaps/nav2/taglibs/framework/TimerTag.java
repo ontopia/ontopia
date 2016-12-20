@@ -20,18 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
-import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.DecimalFormat;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
-import net.ontopia.topicmaps.nav2.core.OutputProducingTagIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

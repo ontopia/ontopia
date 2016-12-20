@@ -22,10 +22,8 @@ package net.ontopia.topicmaps.webed;
 
 import org.w3c.dom.Node;
 
-import com.meterware.httpunit.Button;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
-import com.meterware.httpunit.SubmitButton;
 
 /**
  * INTERNAL: Tests for the <webed:actionid> tag.

@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.Iterator;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;

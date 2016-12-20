@@ -19,14 +19,6 @@
  */
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
-import java.util.Collection;
-import net.ontopia.topicmaps.nav2.impl.basic.ContextManager;
-import net.ontopia.topicmaps.nav2.taglibs.tolog.ContextManagerMapWrapper;
-import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 public class ContextManagerMapWrapperTest {
   
 /*  @Test

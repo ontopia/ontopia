@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;

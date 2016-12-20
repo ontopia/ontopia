@@ -23,11 +23,6 @@ package net.ontopia.topicmaps.viz;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JApplet;
@@ -38,7 +33,6 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StreamUtils;
 
 /**
  * PUBLIC: Visualization applet. To learn how to use this applet, consult the

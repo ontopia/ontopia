@@ -21,8 +21,6 @@
 package net.ontopia.topicmaps.core.index;
 
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
-import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * Performs a series of tests on the index interfaces.

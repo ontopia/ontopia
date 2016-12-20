@@ -20,17 +20,11 @@
 
 package net.ontopia.topicmaps.query.parser;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import net.ontopia.topicmaps.utils.ctm.Template;
 import net.ontopia.topicmaps.utils.ctm.CTMLexer;
 import net.ontopia.topicmaps.utils.ctm.CTMParser;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;

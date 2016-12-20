@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 
-import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;

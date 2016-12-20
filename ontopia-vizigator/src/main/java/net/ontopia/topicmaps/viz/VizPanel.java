@@ -52,7 +52,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 import com.touchgraph.graphlayout.TGLensSet;
 import com.touchgraph.graphlayout.TGPanel;

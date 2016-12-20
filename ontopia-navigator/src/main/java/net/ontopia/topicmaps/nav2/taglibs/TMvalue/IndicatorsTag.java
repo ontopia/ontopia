@@ -28,7 +28,6 @@ import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 
 /**

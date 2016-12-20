@@ -56,7 +56,6 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.tmrap.TopicIndexIF;
 import net.ontopia.topicmaps.viz.TMClassInstanceAssociation.Key;
 import net.ontopia.topicmaps.viz.VizController.VizHoverHelpManager;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 import com.touchgraph.graphlayout.Edge;

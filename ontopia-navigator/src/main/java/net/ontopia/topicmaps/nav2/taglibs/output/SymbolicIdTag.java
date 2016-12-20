@@ -25,7 +25,6 @@ import java.util.Iterator;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;

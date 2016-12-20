@@ -27,7 +27,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.touchgraph.graphlayout.graphelements.ImmutableGraphEltSet;
-import com.touchgraph.graphlayout.graphelements.Locality;
 
 import net.ontopia.topicmaps.core.TopicIF;
 

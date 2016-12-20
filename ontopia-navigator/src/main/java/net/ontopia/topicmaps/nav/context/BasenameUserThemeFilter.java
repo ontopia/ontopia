@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.nav.context;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 

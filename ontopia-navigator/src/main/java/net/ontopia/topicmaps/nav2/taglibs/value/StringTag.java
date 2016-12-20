@@ -20,13 +20,11 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.BodyContent;
 
-import net.ontopia.topicmaps.nav2.core.ValueProducingTagIF;
 import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
 
 /**

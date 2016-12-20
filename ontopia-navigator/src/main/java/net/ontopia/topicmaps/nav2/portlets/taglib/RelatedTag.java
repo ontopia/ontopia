@@ -30,7 +30,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
-import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
