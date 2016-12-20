@@ -50,7 +50,7 @@ public class FieldInstanceAssociationUnaryField extends Panel {
         Topic currentTopic = fieldInstance.getInstance();
         
         RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
-        Boolean state = (Boolean)getModelObject();
+        Boolean state = getModelObject();
         
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
         if (state.booleanValue()) {

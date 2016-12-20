@@ -1388,7 +1388,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       }
 
       String retVal = baseId;
-      Integer suffix = (Integer)counters.get(baseId);
+      Integer suffix = counters.get(baseId);
       if (suffix == null) {
         if (forceSuffix) {
           retVal = baseId + "1";

@@ -77,7 +77,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
 
   public boolean hasFeature(String feature) {
     if (features.containsKey(feature))
-      return ((Boolean) features.get(feature)).booleanValue();
+      return (features.get(feature)).booleanValue();
     // get default if it exists
     for (int i = 0; i < dfeatures.length; i++) {
       if (dfeatures[i].name.equals(feature))
@@ -89,7 +89,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
   public boolean getFeature(String feature)
       throws FeatureNotRecognizedException {
     if (features.containsKey(feature))
-      return ((Boolean) features.get(feature)).booleanValue();
+      return (features.get(feature)).booleanValue();
     // get default if it exists
     for (int i = 0; i < dfeatures.length; i++) {
       if (dfeatures[i].name.equals(feature))
