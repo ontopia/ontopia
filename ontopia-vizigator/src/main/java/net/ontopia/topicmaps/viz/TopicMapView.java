@@ -2280,7 +2280,7 @@ public class TopicMapView {
   /**
    * INTERNAL: PRIVATE: Purpose: Output debug information
    */
-  protected class Debug extends Object {
+  protected class Debug {
 
     protected void execute(String operation) {
       if (operation.equals("count"))

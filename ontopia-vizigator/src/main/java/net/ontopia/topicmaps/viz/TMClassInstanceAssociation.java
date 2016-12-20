@@ -30,7 +30,7 @@ import net.ontopia.topicmaps.core.TopicIF;
  */
 public class TMClassInstanceAssociation extends TMAbstractEdge
     implements VizTMAssociationIF {
-  public static class Key extends Object {
+  public static class Key {
 
     private TopicIF instance;
     private TopicIF type;

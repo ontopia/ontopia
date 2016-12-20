@@ -1190,8 +1190,7 @@ public class VizController {
   /**
    * INTERNAL: Hover Help Manager
    */
-  protected class VizHoverHelpManager extends Object
-    implements TGPaintListener {
+  protected class VizHoverHelpManager implements TGPaintListener {
 
     protected ArrayList painters;
 
