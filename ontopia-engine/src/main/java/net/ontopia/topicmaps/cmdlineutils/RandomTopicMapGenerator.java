@@ -93,10 +93,6 @@ public class RandomTopicMapGenerator {
     this.b = tm.getBuilder();
   }
 
-  private double avg(int min, int max) {
-    return (min + max) / 2.0d;
-  }
-  
   public void populateTopicMap() {
     InstanceConfig ic = new InstanceConfig();
     DataPool dp = new DataPool();

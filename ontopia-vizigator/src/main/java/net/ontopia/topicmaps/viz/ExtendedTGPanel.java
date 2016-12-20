@@ -560,10 +560,6 @@ public class ExtendedTGPanel extends TGPanel {
     paintListeners.removeElement(pl);
   }
 
-  private void redraw() {
-    resetDamper();
-  }
-
   public void setMaintainMouseOver(boolean maintain) {
     maintainMouseOver = maintain;
   }

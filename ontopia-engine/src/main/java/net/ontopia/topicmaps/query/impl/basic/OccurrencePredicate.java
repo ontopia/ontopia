@@ -122,24 +122,4 @@ public class OccurrencePredicate implements BasicPredicateIF {
 
     return result;
   }
-
-  private QueryMatches filter(QueryMatches matches, int topicix, int occix) {
-
-    int nextix = 0;
-    for (int ix = 0; ix <= matches.last; ix++) {
-      if (!(matches.data[ix][occix] instanceof OccurrenceIF) ||
-          !(matches.data[ix][topicix] instanceof TopicIF))
-        continue;
-      
-      OccurrenceIF occ = (OccurrenceIF) matches.data[ix][occix];
-      TopicIF topic = (TopicIF) matches.data[ix][topicix];
-
-      if (occ.getTopic().equals(topic))
-        matches.data[nextix++] = matches.data[ix];
-    }
-
-    matches.last = nextix - 1;
-    return matches;
-  }
-  
 }

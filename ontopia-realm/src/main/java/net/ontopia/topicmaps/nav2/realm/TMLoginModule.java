@@ -234,15 +234,6 @@ public class TMLoginModule implements LoginModule {
     return net.ontopia.topicmaps.utils.TopicStringifiers.getDefaultStringifier().toString(topic);
   }
     
-  private static String getId(Object that) {
-    if (that instanceof TMObjectIF)
-      return NavigatorUtils.getStableId((TMObjectIF) that);
-    else if (that instanceof TopicMapReferenceIF) 
-      return ((TopicMapReferenceIF)that).getId();
-    else
-      return null;
-  }
-
   protected TopicMapIF getTopicMap() {
 
     TopicMapStoreIF store;

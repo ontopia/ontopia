@@ -421,15 +421,6 @@ public class TologQuery extends TologStatement {
       return false;
   }
 
-  private boolean isTMObject(Class aclass) {
-    Class[] ifs = aclass.getInterfaces();
-    for (int ix = 0; ix < ifs.length; ix++)
-      if (ifs[ix].equals(TMObjectIF.class) || isTMObject(ifs[ix]))
-        return true;
-    
-    return false;
-  }
-
   public void setLimit(int limit) {
     this.limit = limit;
   }

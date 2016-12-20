@@ -141,16 +141,6 @@ public class Wiki {
     return ix - 2;
   }
   
-  private static String debug(char ch) {
-    if (ch == ' ')
-      return "SPACE";
-    if (ch == '\n')
-      return "NEWLINE";
-    if (ch == '\r')
-      return "CR";
-    return "" + ch + " (" + ((int) ch) + ")";
-  }
-  
   private static String runQuery(String query, TopicMapIF topicmap, Map params) {
     try {
       StringBuilder out = new StringBuilder();

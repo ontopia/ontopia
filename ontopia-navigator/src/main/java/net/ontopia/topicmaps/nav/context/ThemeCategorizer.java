@@ -195,7 +195,6 @@ public class ThemeCategorizer {
       if (actSet.size() > 0) {
         // append string representation for theme class
         strBuf.append( stringifierThemeClass.toString( actThemeClass) );
-        // themeList = new ArrayList(stringifyTopics((Collection) actSet, stringifier));
         themeList = new ArrayList( actSet );
         Collections.sort( themeList, topicComparator );
         itRelThemes = themeList.iterator();
@@ -289,34 +288,4 @@ public class ThemeCategorizer {
     
     return strBuf.toString();
   }
-
-
-  //
-  // internal helper methods
-  //
-  
-  /**
-   * INTERNAL: generate new Collection of String objects out of
-   * stringified TopicIF Collection.
-   */
-  private static Collection stringifyTopics(Collection topics,
-                                            StringifierIF stringifier) {
-    Collection res = new ArrayList();
-    Iterator it = topics.iterator();
-    TopicIF actTopic;
-    String actTopicString;
-    while (it.hasNext()) {
-      actTopic = (TopicIF) it.next();
-      actTopicString = stringifier.toString( actTopic );
-      res.add(actTopicString);
-    }
-    return res;
-  }
-
 }
-
-
-
-
-
-

@@ -1279,19 +1279,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   }
   
   /**
-   * Checks if the give character is illegal in LTM identifiers.
-   * Currently matching non-ascii characters.
-   * @param id The string to check.
-   * @return true iff id matches any of the illegal characters.
-   */
-  private static boolean containsIllegalCharacter(String id) {
-    for (int index = 0; index < id.length(); index++)
-      if (id.charAt(index) > 127)
-        return true;
-    return false;
-  }
-
-  /**
    * @return true iff at least one of the subject indicators of the given topic
    *         matches the given uri
    */

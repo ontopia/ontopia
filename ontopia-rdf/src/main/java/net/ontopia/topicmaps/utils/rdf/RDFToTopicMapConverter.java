@@ -403,14 +403,6 @@ public class RDFToTopicMapConverter {
     return null;
   }
 
-  private TopicIF getTopic(Resource subject, String property, Model model)
-    throws JenaException, MalformedURLException {
-    LocatorIF loc = getTopicIndicator(subject, property, model);
-    if (loc == null)
-      return null;
-    return getTopic(loc);
-  }
-
   private TopicIF getTopic(LocatorIF loc) {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);
     if (topic == null) {

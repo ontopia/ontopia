@@ -214,10 +214,6 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     return result;
   }
 
-  private String roleDebug(AssociationRoleIF role) {
-    return "[" + role.getObjectId() + ", " + role.getPlayer() + "]";
-  }
-  
   /**
    * INTERNAL: Faster version of satisfy for use when one variable has
    * already been bound, because it is much faster in that case. It is
