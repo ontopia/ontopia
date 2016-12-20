@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -36,24 +36,24 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 
 public abstract class SAXTracker extends DefaultHandler {
-  protected Set          keepContentsOf;
+  protected Set<String>  keepContentsOf;
   protected Locator      locator;
   /**
    * The contents of the current element, or null if not
    * instructed to keep the contents of the current element.
    */
   protected StringBuilder content;
-  private   boolean      keepContents;
+  private   boolean       keepContents;
   /**
    * The stack of currently open elements.
    */
-  protected Stack        openElements;
+  protected Stack<String> openElements;
   
   // --- Configuration interface
   
   public SAXTracker() {
-    keepContentsOf = new HashSet();
-    openElements = new Stack();
+    keepContentsOf = new HashSet<>();
+    openElements = new Stack<>();
   }
 
   /**
