@@ -162,8 +162,6 @@ public class CSVImport {
     } catch (Exception e) {
       //conn.rollback();
       throw e;
-    } finally {
-      //if (conn != null) conn.close();
     }
   }
   
