@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;
-import java.net.MalformedURLException;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
