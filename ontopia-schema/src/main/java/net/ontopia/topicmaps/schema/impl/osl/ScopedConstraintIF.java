@@ -31,12 +31,12 @@ public interface ScopedConstraintIF extends ConstraintIF {
   /**
    * INTERNAL: Returns the object containing the scope specification.
    */
-  public ScopeSpecification getScopeSpecification();
+  ScopeSpecification getScopeSpecification();
 
   /**
    * INTERNAL: Sets the object containing the scope specification.
    */
-  public void setScopeSpecification(ScopeSpecification scope);
+  void setScopeSpecification(ScopeSpecification scope);
   
 }
 

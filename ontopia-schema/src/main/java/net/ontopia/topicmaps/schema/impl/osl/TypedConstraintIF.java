@@ -31,12 +31,12 @@ public interface TypedConstraintIF extends ConstraintIF {
   /**
    * INTERNAL: Returns the object specifying the allowed types.
    */
-  public TypeSpecification getTypeSpecification();
+  TypeSpecification getTypeSpecification();
 
   /**
    * INTERNAL: Sets the object specifying the allowed types.
    */
-  public void setTypeSpecification(TypeSpecification spec);
+  void setTypeSpecification(TypeSpecification spec);
   
 }
 

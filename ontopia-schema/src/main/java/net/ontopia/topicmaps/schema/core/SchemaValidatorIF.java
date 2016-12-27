@@ -36,7 +36,7 @@ public interface SchemaValidatorIF {
   /**
    * PUBLIC: Validates a topic against the schema.
    */
-  public void validate(TopicIF topic)
+  void validate(TopicIF topic)
     throws SchemaViolationException;
 
   /**
@@ -45,26 +45,26 @@ public interface SchemaValidatorIF {
    * ValidationHandlerIF interface are called before and after
    * validation.
    */
-  public void validate(TopicMapIF topicmap)
+  void validate(TopicMapIF topicmap)
     throws SchemaViolationException;
 
   /**
    * PUBLIC: Validates an association against the schema.
    */
-  public void validate(AssociationIF association)
+  void validate(AssociationIF association)
     throws SchemaViolationException;
 
   /**
    * PUBLIC: Sets the validation handler that violations of the
    * schema will be reported to.
    */
-  public void setValidationHandler(ValidationHandlerIF handler);
+  void setValidationHandler(ValidationHandlerIF handler);
 
   /**
    * PUBLIC: Returns the validation handler that violations are
    * currently reported to.
    */
-  public ValidationHandlerIF getValidationHandler();
+  ValidationHandlerIF getValidationHandler();
   
 }
 

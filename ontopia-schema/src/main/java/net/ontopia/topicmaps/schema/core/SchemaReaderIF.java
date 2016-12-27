@@ -39,7 +39,7 @@ public interface SchemaReaderIF {
    * @exception SchemaSyntaxException Thrown if the schema violates the
    *                                  schema language syntax.
    */
-  public SchemaIF read()
+  SchemaIF read()
     throws java.io.IOException, SchemaSyntaxException;
   
 }
