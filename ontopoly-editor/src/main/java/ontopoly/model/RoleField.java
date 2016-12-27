@@ -558,17 +558,17 @@ public class RoleField extends FieldDefinition {
   /**
    * Interface. This interface is implemented by the Value class.
    */
-  public static interface ValueIF {
+  public interface ValueIF {
 
-    public int getArity();
+    int getArity();
 
-    public RoleField[] getRoleFields();
+    RoleField[] getRoleFields();
 
-    public Topic[] getPlayers();
+    Topic[] getPlayers();
 
-    public void addPlayer(RoleField roleField, Topic player);
+    void addPlayer(RoleField roleField, Topic player);
 
-    public Topic getPlayer(RoleField roleField, Topic oplayer);
+    Topic getPlayer(RoleField roleField, Topic oplayer);
 
   }
 
