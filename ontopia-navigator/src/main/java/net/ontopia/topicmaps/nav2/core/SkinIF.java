@@ -28,22 +28,22 @@ public interface SkinIF {
   /**
    * INTERNAL: Returns the display title of the skin.
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * INTERNAL: Sets the display title of the skin.
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
   /**
    * INTERNAL: Returns the ID of the skin.
    */
-  public String getId();
+  String getId();
 
   /**
    * INTERNAL: Sets the ID of the skin.
    */
-  public void setId(String id);
+  void setId(String id);
   
 }
 

@@ -36,18 +36,18 @@ public interface UserThemeFilterIF {
    * @return boolean: true if this theme should not be displayed
    *                  for user context configuration
    */
-  public boolean shouldNotBeUsed(TopicIF actTheme);
+  boolean shouldNotBeUsed(TopicIF actTheme);
 
 
   /**
    * gets TopicMapIF object
    */
-  public TopicMapIF getTopicMap();
+  TopicMapIF getTopicMap();
 
   /**
    * set TopicMapIF object
    */
-  public void setTopicMap(TopicMapIF topicMap);
+  void setTopicMap(TopicMapIF topicMap);
 
 }
 

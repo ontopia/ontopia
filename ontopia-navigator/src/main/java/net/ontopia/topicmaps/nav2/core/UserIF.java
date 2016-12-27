@@ -32,27 +32,27 @@ import org.slf4j.Logger;
 public interface UserIF {
 
   /** Default User identifier */
-  public static final String COMMON_USER = "defaultUser";
+  String COMMON_USER = "defaultUser";
   
   /** Default Model name */
-  public static final String DEFAULT_MODEL = "complete";
+  String DEFAULT_MODEL = "complete";
 
   /** Default View/Template */
-  public static final String DEFAULT_VIEW = "no_frames";
+  String DEFAULT_VIEW = "no_frames";
 
   /** Default Skin/CSS */
-  public static final String DEFAULT_SKIN = "ontopia";
+  String DEFAULT_SKIN = "ontopia";
 
   /**
    * INTERNAL: Gets the user identifier.
    */
-  public String getId();
+  String getId();
   
   /**
    * INTERNAL: Gets the Filter Context object which stores for each
    * topicmap a set of themes the user has selected.
    */
-  public UserFilterContextStore getFilterContext();
+  UserFilterContextStore getFilterContext();
 
   /**
    * INTERNAL: Gets the last used objects (instances of Object,
@@ -61,7 +61,7 @@ public interface UserIF {
    *
    * @since 1.2.5
    */
-  public HistoryMap getHistory();
+  HistoryMap getHistory();
 
   /**
    * INTERNAL: Sets the last used objects that are in relation to the
@@ -69,7 +69,7 @@ public interface UserIF {
    *
    * @since 1.2.5
    */
-  public void setHistory(HistoryMap hm);
+  void setHistory(HistoryMap hm);
 
   /**
    * INTERNAL: Gets the Slf4J <code>Logger</code> object to which the
@@ -80,26 +80,26 @@ public interface UserIF {
    * @since 1.3.2
    * @deprecated Use addLogMessage() instead
    */
-  public Logger getLogger();
+  Logger getLogger();
 
   /**
    * INTERNAL: Adds a message to the user's log. The order of these
    * messages is preserved, but if too many messages are added, the
    * latest ones are lost.
    */
-  public void addLogMessage(String message);
+  void addLogMessage(String message);
 
   /**
    * INTERNAL: Clears the user's log.
    */
-  public void clearLog();
+  void clearLog();
   
   /**
    * INTERNAL: Gets the current log messages from the ring buffer.
    *
    * @since 1.3.2
    */
-  public List getLogMessages();
+  List getLogMessages();
 
   /**
    * INTERNAL: Stores a working bundle of objects under the specified
@@ -107,7 +107,7 @@ public interface UserIF {
    *
    * @since 1.3.2
    */
-  public void addWorkingBundle(String bundle_id, Object object);
+  void addWorkingBundle(String bundle_id, Object object);
 
   /**
    * INTERNAL: Gets an ordered lists of objects (parameter name as
@@ -116,14 +116,14 @@ public interface UserIF {
    *
    * @since 1.3.2
    */
-  public Object getWorkingBundle(String bundle_id);
+  Object getWorkingBundle(String bundle_id);
 
   /**
    * INTERNAL: Removes the specified working bundle.
    *
    * @since 1.3.2
    */
-  public void removeWorkingBundle(String bundle_id);   
+  void removeWorkingBundle(String bundle_id);   
   
   
   // -----------------------------------------------------------
@@ -133,31 +133,31 @@ public interface UserIF {
   /**
    * Get Model Setting for MVS.
    */
-  public String getModel();
+  String getModel();
 
   /**
    * Set Model Setting.
    */
-  public void setModel(String model);
+  void setModel(String model);
   
   /**
    * Get View (Template) Setting for MVS.
    */
-  public String getView();
+  String getView();
 
   /**
    * Set View Setting.
    */
-  public void setView(String view);
+  void setView(String view);
   
   /**
    * Get Skin (Stylesheet) Setting for MVS.
    */
-  public String getSkin();
+  String getSkin();
   
   /**
    * Set Skin Setting.
    */
-  public void setSkin(String skin);
+  void setSkin(String skin);
   
 }

@@ -31,6 +31,6 @@ public interface ValueAcceptingTagIF {
   /**
    * Accepts input collection and make it accessible for tag.
    */
-  public void accept(Collection value);
+  void accept(Collection value);
 
 }

@@ -204,27 +204,27 @@ public class Menu {
     /**
      * Get the title as a String.
      */
-    public String getTitle();
+    String getTitle();
     
     /**
      * Get the topic representing this MenuObjectIF as a String.
      */
-    public TopicIF getTopic();
+    TopicIF getTopic();
 
     /**
      * Check if this MenuObjectIF has children.
      */
-    public boolean getHasChildren();
+    boolean getHasChildren();
 
     /**
      * Sets the title.
      */
-    public void setTitle(String title);
+    void setTitle(String title);
     
     /**
      * Delete this child.
      */
-    public void delete();
+    void delete();
   }
 
   // --- ParentIF
@@ -233,19 +233,19 @@ public class Menu {
     /**
      * Get the children.
      */
-    public List getChildren();
+    List getChildren();
     
     /** 
      * Create new heading as child of this menu
      * @return The heading that was created.
      */
-    public Heading createHeading(String title);
+    Heading createHeading(String title);
 
     /** 
      * Create new item as child of this menu 
      * @return The item that was created.
      */
-    public Item createItem(String title);
+    Item createItem(String title);
   }
 
   // --- ChildIF
@@ -254,24 +254,24 @@ public class Menu {
     /**
      * Check whether this is a Heading.
      */
-    public boolean getIsHeading();
+    boolean getIsHeading();
     
     /**
      * Check whether this is an Item.
      */
-    public boolean getIsItem();
+    boolean getIsItem();
     
     /** 
      * Moves this child one step higher up the list of children on its parent.
      * has no effect if it is already first.
      */
-    public void moveOneUp();
+    void moveOneUp();
     
     /**
      * Moves this child one step further down its parent's list of children.
      * Has no effect if it is already last.
      */
-    public void moveOneDown();
+    void moveOneDown();
   }
 
   // --- Heading

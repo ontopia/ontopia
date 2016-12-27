@@ -25,18 +25,18 @@ package net.ontopia.topicmaps.nav.conf;
  */
 public interface ControlConfigIF {
 
-  public void update(String model, String view, String skin);
+  void update(String model, String view, String skin);
 
-  public String getModelPath();
-  public String getViewPath();
-  public String getSkinPath();
+  String getModelPath();
+  String getViewPath();
+  String getSkinPath();
 
-  public String getModel();
-  public String getView();
-  public String getSkin();
+  String getModel();
+  String getView();
+  String getSkin();
 
-  public String getBehaviour();
-  public String getContentType();
+  String getBehaviour();
+  String getContentType();
 
 }
 

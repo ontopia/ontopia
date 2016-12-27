@@ -28,17 +28,17 @@ public interface ScopeSupportIF {
 
   // --- constants
   // for specifying the scope type
-  final int SCOPE_BASENAMES    = 1;
-  final int SCOPE_VARIANTS     = 2;
-  final int SCOPE_OCCURRENCES  = 3;
-  final int SCOPE_ASSOCIATIONS = 4;
+  int SCOPE_BASENAMES    = 1;
+  int SCOPE_VARIANTS     = 2;
+  int SCOPE_OCCURRENCES  = 3;
+  int SCOPE_ASSOCIATIONS = 4;
 
   // for specifying the decider type
-  final String DEC_INTERSECTION  = "intersection";
-  final String DEC_APPLICABLE_IN = "applicableIn";
-  final String DEC_WITHIN        = "within";
-  final String DEC_SUPERSET      = "superset";
-  final String DEC_SUBSET        = "subset";
+  String DEC_INTERSECTION  = "intersection";
+  String DEC_APPLICABLE_IN = "applicableIn";
+  String DEC_WITHIN        = "within";
+  String DEC_SUPERSET      = "superset";
+  String DEC_SUBSET        = "subset";
 
 }
 

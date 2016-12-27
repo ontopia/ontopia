@@ -97,17 +97,17 @@ public class JSPEngineWrapper {
 
   interface WrapperIF {
 
-    public String getServletContextName(ServletContext context);
+    String getServletContextName(ServletContext context);
 
-    public JspException getJspException(String message, Exception exception);
+    JspException getJspException(String message, Exception exception);
 
-    public JspTagException getJspTagException(String message,
+    JspTagException getJspTagException(String message,
                                               Exception exception);
     
-    public void setRequestEncoding(ServletRequest request, String encoding)
+    void setRequestEncoding(ServletRequest request, String encoding)
       throws UnsupportedEncodingException;
 
-    public Map getParameterMap(ServletRequest request);
+    Map getParameterMap(ServletRequest request);
   }
 
   // --- JSP20Wrapper

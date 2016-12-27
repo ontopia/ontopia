@@ -37,13 +37,13 @@ public interface LinkGeneratorIF {
    * INTERNAL: Constant String value representing the name of a
    * template variable being replaced with the object id.
    */
-  public static final String LINK_ID_KEY = "%id%";
+  String LINK_ID_KEY = "%id%";
 
   /**
    * INTERNAL: Constant String value representing the name of a
    * template variable being replaced with the topicmap id.
    */
-  public static final String LINK_TOPICMAP_KEY = "%topicmap%";
+  String LINK_TOPICMAP_KEY = "%topicmap%";
   
   /**
    * INTERNAL: create a String which contains link
@@ -61,7 +61,7 @@ public interface LinkGeneratorIF {
    * @param template A template string which may contain
    *                 template variable(s) which are replaced.
    */
-  public String generate(ContextTag contextTag, TMObjectIF tmObj,
+  String generate(ContextTag contextTag, TMObjectIF tmObj,
                          String topicmapId, String template)
     throws NavigatorRuntimeException;
   
@@ -81,7 +81,7 @@ public interface LinkGeneratorIF {
    * @param template A template string which may contain
    *                 template variable(s) which are replaced.
    */
-  public String generate(ContextTag contextTag, TopicMapReferenceIF tmRefObj,
+  String generate(ContextTag contextTag, TopicMapReferenceIF tmRefObj,
                          String template)
     throws NavigatorRuntimeException;
   

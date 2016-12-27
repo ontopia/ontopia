@@ -30,9 +30,9 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
  */
 public interface PluginIF {
 
-  public static final int ACTIVATED = 0;
-  public static final int DEACTIVATED = 1;
-  public static final int ERROR = 2;
+  int ACTIVATED = 0;
+  int DEACTIVATED = 1;
+  int ERROR = 2;
   
   /**
    * INTERNAL: Called by the framework to make the plugin produce the
@@ -43,13 +43,13 @@ public interface PluginIF {
    *         string is null it means that the plugin does not wish to be
    *         displayed on this page.
    */
-  public String generateHTML(ContextTag context);
+  String generateHTML(ContextTag context);
   
   /**
    * INTERNAL: Called by the framework to finalize initialization.
    * Called when there are no more parameters.
    */
-  public void init();
+  void init();
 
   
   // ----------------------------------------------------------
@@ -59,59 +59,59 @@ public interface PluginIF {
   /**
    * INTERNAL: Returns the ID of this plugin.
    */
-  public String getId();
+  String getId();
 
   /**
    * INTERNAL: Sets the ID of this plugin.
    */
-  public void setId(String id);
+  void setId(String id);
 
   /**
    * INTERNAL: Returns the groups this plugin belongs to.  Each group is
    * represented by a string containing the group id.
    */
-  public List getGroups();
+  List getGroups();
 
   /**
    * INTERNAL: Reset all group settings for this plugin. After this
    * operation this plugin will belong to no group.
    */
-  public void resetGroups();
+  void resetGroups();
 
   /**
    * INTERNAL: Add the specified group to groups this plugin belongs to.
    */
-  public void addGroup(String groupId);
+  void addGroup(String groupId);
     
   /**
    * INTERNAL: Sets the groups this plugin belongs to.
    */
-  public void setGroups(List groups);
+  void setGroups(List groups);
 
   /**
    * INTERNAL: Returns the title of this plugin.
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * INTERNAL: Sets the title of this plugin.
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
   /**
    * INTERNAL: Gets the description of this plugin.
    */
-  public String getDescription();
+  String getDescription();
 
   /**
    * INTERNAL: Sets the description of this plugin.
    */
-  public void setDescription(String description);
+  void setDescription(String description);
 
   /**
    * INTERNAL: Returns the URI of this plugin.
    */
-  public String getURI();
+  String getURI();
 
   /**
    * INTERNAL: Sets the URI of this plugin.
@@ -121,51 +121,51 @@ public interface PluginIF {
    * <p>
    * Example: <code>plugins/hello/hello.jsp</code>
    */
-  public void setURI(String uri);
+  void setURI(String uri);
 
   /**
    * INTERNAL: Returns the URI frame target of this plugin.
    */
-  public String getTarget();
+  String getTarget();
 
   /**
    * INTERNAL: Sets the URI frame target of this plugin.
    */
-  public void setTarget(String target);
+  void setTarget(String target);
 
   /**
    * INTERNAL: Returns the state of this plugin.
    */
-  public int getState();
+  int getState();
 
   /**
    * INTERNAL: Sets the state of this plugin.
    */
-  public void setState(int state);
+  void setState(int state);
   
   /**
    * INTERNAL: Returns the value of the parameter.
    */
-  public String getParameter(String name);
+  String getParameter(String name);
   
   /**
    * INTERNAL: Called by the framework to give the plugin the value of a
    * configuration parameter.
    */
-  public void setParameter(String name, String value);
+  void setParameter(String name, String value);
 
   /**
    * INTERNAL: Returns the path to the plugin directory. This is the
    * path in the file system the server is running in, if the web
    * application is deployed as an unexploded WAR.
    */
-  public String getPluginDirectory();
+  String getPluginDirectory();
  
   /**
    * INTERNAL: Called by the framework to give the plugin the directory
    * its plugin.xml file was found in. This is useful for plugins
    * which wish to use other files found in the same directory.
    */
-  public void setPluginDirectory(String path);
+  void setPluginDirectory(String path);
   
 }
