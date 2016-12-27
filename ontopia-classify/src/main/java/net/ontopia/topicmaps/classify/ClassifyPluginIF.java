@@ -32,11 +32,11 @@ public interface ClassifyPluginIF {
    * INTERNAL: Returns true if the plug-in is able to locate
    * classifiable content for the given topic.
    */
-  public boolean isClassifiable(TopicIF topic);
+  boolean isClassifiable(TopicIF topic);
 
   /**
    * INTERNAL: Returns the classifiable content for the given topic.
    */
-  public ClassifiableContentIF getClassifiableContent(TopicIF topic);
+  ClassifiableContentIF getClassifiableContent(TopicIF topic);
   
 }
