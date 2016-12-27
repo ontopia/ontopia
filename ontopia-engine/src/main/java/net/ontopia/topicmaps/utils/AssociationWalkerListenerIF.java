@@ -39,7 +39,7 @@ public interface AssociationWalkerListenerIF
      * @param association The association in the triple; an object implementing AssociationIF.
      * @param rightRolePlayer The second topic in the triple; an object implementing TopicIF.
      */
-    public void  walkAssociation(TopicIF leftRolePlayer, AssociationIF association, TopicIF rightRolePlayer);
+    void  walkAssociation(TopicIF leftRolePlayer, AssociationIF association, TopicIF rightRolePlayer);
 
 }
 

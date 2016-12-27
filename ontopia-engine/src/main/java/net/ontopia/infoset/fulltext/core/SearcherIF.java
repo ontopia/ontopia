@@ -34,11 +34,11 @@ public interface SearcherIF extends IndexIF {
    * INTERNAL: Performs a query on an index. The actual query syntax is
    * search engine dependent.
    */
-  public SearchResultIF search(String query) throws IOException;
+  SearchResultIF search(String query) throws IOException;
   
   /**
    * INTERNAL: Releases resources associated with this searcher.
    */
-  public void close() throws IOException;
+  void close() throws IOException;
 
 }

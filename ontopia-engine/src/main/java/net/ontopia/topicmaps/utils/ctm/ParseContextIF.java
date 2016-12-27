@@ -27,39 +27,39 @@ import net.ontopia.topicmaps.core.TopicIF;
 
 public interface ParseContextIF {
 
-  public void addPrefix(String prefix, LocatorIF locator);
+  void addPrefix(String prefix, LocatorIF locator);
 
-  public void addIncludeUri(LocatorIF uri);
+  void addIncludeUri(LocatorIF uri);
   
-  public Set<LocatorIF> getIncludeUris();
+  Set<LocatorIF> getIncludeUris();
   
-  public LocatorIF resolveQname(String qname);
+  LocatorIF resolveQname(String qname);
 
-  public ValueGeneratorIF getTopicById(String id);
+  ValueGeneratorIF getTopicById(String id);
   
-  public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid);
+  ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid);
 
-  public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc);
+  ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc);
 
-  public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid);
+  ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid);
 
-  public ValueGeneratorIF getTopicByQname(String qname);
+  ValueGeneratorIF getTopicByQname(String qname);
 
-  public TopicIF makeTopicById(String id);
+  TopicIF makeTopicById(String id);
   
-  public TopicIF makeTopicByItemIdentifier(LocatorIF itemid);
+  TopicIF makeTopicByItemIdentifier(LocatorIF itemid);
 
-  public TopicIF makeTopicBySubjectLocator(LocatorIF subjloc);
+  TopicIF makeTopicBySubjectLocator(LocatorIF subjloc);
 
-  public TopicIF makeTopicBySubjectIdentifier(LocatorIF subjid);
+  TopicIF makeTopicBySubjectIdentifier(LocatorIF subjid);
   
-  public TopicIF makeAnonymousTopic();
+  TopicIF makeAnonymousTopic();
 
-  public TopicIF makeAnonymousTopic(String wildcard_name);
+  TopicIF makeAnonymousTopic(String wildcard_name);
 
-  public void registerTemplate(String name, Template template);
+  void registerTemplate(String name, Template template);
 
-  public Template getTemplate(String name, int paramcount);
+  Template getTemplate(String name, int paramcount);
 
-  public Map getTemplates();
+  Map getTemplates();
 }

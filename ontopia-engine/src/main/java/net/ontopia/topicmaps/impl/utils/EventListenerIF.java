@@ -29,7 +29,7 @@ public interface EventListenerIF<K, V> {
   /**
    * INTERNAL: A method that receives notification when an event has been triggered.
    */
-  public void processEvent(K object, String event, V new_value, V old_value);
+  void processEvent(K object, String event, V new_value, V old_value);
   
 }
 

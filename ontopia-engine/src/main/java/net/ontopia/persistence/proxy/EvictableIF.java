@@ -28,10 +28,10 @@ import java.util.Collection;
 
 public interface EvictableIF<K, E> {
 
-  public E remove(K key, boolean notifyCluster);
+  E remove(K key, boolean notifyCluster);
 
-  public void removeAll(Collection<K> keys, boolean notifyCluster);
+  void removeAll(Collection<K> keys, boolean notifyCluster);
 
-  public void clear(boolean notifyCluster);
+  void clear(boolean notifyCluster);
   
 }

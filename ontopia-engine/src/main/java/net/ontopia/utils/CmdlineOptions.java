@@ -142,13 +142,13 @@ public class CmdlineOptions {
    * instance.</p>
    */
 
-  public static interface ListenerIF {
+  public interface ListenerIF {
 
     /**
      * Method that is called by the command line option parser when an
      * option registered for the listener is found.
      */    
-    public void processOption(char option, String value) throws OptionsException;
+    void processOption(char option, String value) throws OptionsException;
 
   }
 

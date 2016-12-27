@@ -39,46 +39,46 @@ public interface FieldInfoIF extends FieldHandlerIF {
   /**
    * Flag indicating that the field represents a 1:1 relationship.
    */
-  public static final int ONE_TO_ONE = 1;
+  int ONE_TO_ONE = 1;
 
   /**
    * Flag indicating that the field represents a 1:M relationship.
    */
 
-  public static final int ONE_TO_MANY = 2;
+  int ONE_TO_MANY = 2;
 
   /**
    * Flag indicating that the field represents a M:M relationship.
    */
-  public static final int MANY_TO_MANY = 3;
+  int MANY_TO_MANY = 3;
 
   /**
    * INTERNAL: Gets the field name.
    */
-  public String getName();
+  String getName();
 
   /**
    * INTERNAL: Gets the value field index of this field. This is the
    * id (index) used by transactions and persistent instances to refer
    * to this particular object field.
    */
-  public int getIndex();
+  int getIndex();
 
   /**
    * INTERNAL: Gets the field cardinality.
    */
-  public int getCardinality();
+  int getCardinality();
 
   /**
    * INTERNAL: Returns true if this field is read-only field.
    */
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   /**
    * INTERNAL: Returns true if the field is a collection field (has a
    * cardinality of 1:1 or 1:M).
    */
-  public boolean isCollectionField();
+  boolean isCollectionField();
 
   //! NOTE: This method is now part of the FieldHandlerIF interface.
   //! /**
@@ -91,42 +91,42 @@ public interface FieldInfoIF extends FieldHandlerIF {
    * INTERNAL: Returns true if the field is a primitive field. Field
    * value must be of primitive type.
    */
-  public boolean isPrimitiveField();
+  boolean isPrimitiveField();
   
   /**
    * INTERNAL: Returns true if the field is a reference field. Field
    * value must be of identifiable type.
    */
-  public boolean isReferenceField();
+  boolean isReferenceField();
 
   /**
    * INTERNAL: Returns true if the field is an aggregate field. Field
    * value must be of aggregate type.
    */
-  public boolean isAggregateField();
+  boolean isAggregateField();
   
   /**
    * INTERNAL: Gets the class info for the field's object type.
    */
-  public ClassInfoIF getParentClassInfo();
+  ClassInfoIF getParentClassInfo();
 
   /**
    * INTERNAL: Gets the class info for the field's value type. Note
    * that primitive value classes don't have a class info.
    */
-  public ClassInfoIF getValueClassInfo();
+  ClassInfoIF getValueClassInfo();
 
   /**
    * INTERNAL: Gets the field value class. For primitive fields the
    * primitive wrapper class is returned.
    */
-  public Class<?> getValueClass();
+  Class<?> getValueClass();
   
   /**
    * INTERNAL: Gets the table in which the field value is stored (aka
    * the master table).
    */
-  public String getTable();
+  String getTable();
 
   /**
    * INTERNAL: Returns the number of columns that the field spans.
@@ -136,17 +136,17 @@ public interface FieldInfoIF extends FieldHandlerIF {
   /**
    * INTERNAL: Returns the names of the columns that the field spans.
    */
-  public String[] getValueColumns();
+  String[] getValueColumns();
 
   /**
    * INTERNAL: Gets the field value from the given object.
    */
-  public Object getValue(Object object) throws Exception;
+  Object getValue(Object object) throws Exception;
 
   /**
    * INTERNAL: Sets the field value for the given object.
    */
-  public void setValue(Object object, Object value) throws Exception;
+  void setValue(Object object, Object value) throws Exception;
 
   /// -- Copied from FieldDescriptor:
   
@@ -154,18 +154,18 @@ public interface FieldInfoIF extends FieldHandlerIF {
    * INTERNAL: Gets the name of the table which needs to be joined to
    * order to access the field value from the master table.
    */
-  public String getJoinTable();
+  String getJoinTable();
 
   /**
    * INTERNAL: Gets the columns in the join table that contains the
    * keys of the referencing object.
    */
-  public String[] getJoinKeys();
+  String[] getJoinKeys();
 
   /**
    * INTERNAL: Gets the columns in the join table that contains the
    * keys of the referenced object.
    */
-  public String[] getManyKeys();
+  String[] getManyKeys();
   
 }

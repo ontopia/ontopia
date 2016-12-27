@@ -34,7 +34,7 @@ public interface FlushableIF {
   /**
    * INTERNAL: Tells the object to flush itself.
    */
-  public void flush() throws Exception;
+  void flush() throws Exception;
   
 }
 

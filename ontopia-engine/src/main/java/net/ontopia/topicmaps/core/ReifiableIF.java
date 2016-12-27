@@ -32,12 +32,12 @@ package net.ontopia.topicmaps.core;
 
 public interface ReifiableIF extends TMObjectIF {
 
-  public static final String EVENT_SET_REIFIER = "ReifiableIF.setReifier";
+  String EVENT_SET_REIFIER = "ReifiableIF.setReifier";
   
   /**
    * PUBLIC: Returns the topic that reifies this object.
    */
-  public TopicIF getReifier();
+  TopicIF getReifier();
   
   /**
    * PUBLIC: Sets the reifier of this object.
@@ -45,6 +45,6 @@ public interface ReifiableIF extends TMObjectIF {
    * @exception DuplicateReificationException Thrown when the reifier
    *            already reifies another object.
    */
-  public void setReifier(TopicIF reifier) throws DuplicateReificationException;
+  void setReifier(TopicIF reifier) throws DuplicateReificationException;
 
 }

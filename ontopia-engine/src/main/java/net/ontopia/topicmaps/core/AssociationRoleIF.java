@@ -34,10 +34,10 @@ package net.ontopia.topicmaps.core;
 
 public interface AssociationRoleIF extends TypedIF, ReifiableIF {
 
-  public static final String EVENT_ADDED = "AssociationRoleIF.added";
-  public static final String EVENT_REMOVED = "AssociationRoleIF.removed";
-  public static final String EVENT_SET_TYPE = "AssociationRoleIF.setType";
-  public static final String EVENT_SET_PLAYER = "AssociationRoleIF.setPlayer";
+  String EVENT_ADDED = "AssociationRoleIF.added";
+  String EVENT_REMOVED = "AssociationRoleIF.removed";
+  String EVENT_SET_TYPE = "AssociationRoleIF.setType";
+  String EVENT_SET_PLAYER = "AssociationRoleIF.setPlayer";
 
   /**
    * PUBLIC: Gets the association to which this association role
@@ -46,7 +46,7 @@ public interface AssociationRoleIF extends TypedIF, ReifiableIF {
    * @return The association to which this association role belongs;
    *           an object implementing AssociationIF.
    */
-  public AssociationIF getAssociation();
+  AssociationIF getAssociation();
 
   /**
    * PUBLIC: Gets the topic that plays this association role (this member of the association).
@@ -54,7 +54,7 @@ public interface AssociationRoleIF extends TypedIF, ReifiableIF {
    * @return The topic (member) which plays this role in the association.
    *
   */
-  public TopicIF getPlayer();
+  TopicIF getPlayer();
 
   /**
    * PUBLIC: Sets the topic that plays this association role. Note
@@ -66,6 +66,6 @@ public interface AssociationRoleIF extends TypedIF, ReifiableIF {
    *            Can be null; if null, then the effect is that there is no player
    *            of this role in this association.
    */
-  public void setPlayer(TopicIF player);
+  void setPlayer(TopicIF player);
 
 }

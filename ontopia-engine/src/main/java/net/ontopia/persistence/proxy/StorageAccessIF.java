@@ -34,22 +34,22 @@ public interface StorageAccessIF {
    * INTERNAL: Gets the storage access id. This id is unique for a
    * given StorageIF instance.
    */
-  public String getId();
+  String getId();
 
   /**
    * INTERNAL: Returns the storage definition that the access uses.
    */
-  public StorageIF getStorage();
+  StorageIF getStorage();
 
   /**
    * INTERNAL: Returns true if the storage access is read-only.
    */
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   /**
    * INTERNAL: Gets the value of the specified property.
    */
-  public String getProperty(String property);
+  String getProperty(String property);
   
   // -----------------------------------------------------------------------------
   // StorageAccessIF (internal)
@@ -58,23 +58,23 @@ public interface StorageAccessIF {
   /**
    * INTERNAL: Returns true if the storage access is valid.
    */
-  public boolean validate();
+  boolean validate();
   
   /**
    * INTERNAL: Commits the changes performed in the transaction.
    */
-  public void commit();
+  void commit();
   
   /**
    * INTERNAL: Aborts all changes performed in the transaction.
    */
-  public void abort();
+  void abort();
 
   /**
    * INTERNAL: Closes the storage access, which allows it to free its
    * resources.
    */
-  public void close();
+  void close();
 
   /**
    * INTERNAL: Called when the transaction requires the transaction
@@ -90,7 +90,7 @@ public interface StorageAccessIF {
    * of its store method. It will do this so that it is sure that the
    * changes will be visible inside the data repository.<p>
    */
-  public void flush();
+  void flush();
 
   // -----------------------------------------------------------------------------
   // Data storage access and modifications
@@ -104,7 +104,7 @@ public interface StorageAccessIF {
    * @return true if object was found in the data store, false
    * otherwise.
    */
-  public boolean loadObject(AccessRegistrarIF registrar, IdentityIF identity);
+  boolean loadObject(AccessRegistrarIF registrar, IdentityIF identity);
   
   /**
    * INTERNAL: Requests the loading of the specified field for the
@@ -119,7 +119,7 @@ public interface StorageAccessIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field)
+  Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field)
     throws IdentityNotFoundException;
   
   /**
@@ -135,7 +135,7 @@ public interface StorageAccessIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
+  Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                                  IdentityIF current, Class<?> type, int field)
     throws IdentityNotFoundException;
 
@@ -144,7 +144,7 @@ public interface StorageAccessIF {
    * object to be created in the data repository. The ObjectAccessIF
    * object is used to access information about the object as needed.
    */
-  public void createObject(ObjectAccessIF oaccess, Object object);
+  void createObject(ObjectAccessIF oaccess, Object object);
 
   //! public void createObject(IdentityIF);
   
@@ -152,14 +152,14 @@ public interface StorageAccessIF {
    * INTERNAL: Called by the transaction when it requests the
    * object to be deleted in the data repository.
    */
-  public void deleteObject(ObjectAccessIF oaccess, Object object);
+  void deleteObject(ObjectAccessIF oaccess, Object object);
 
   //! public void deleteObject(ObjectAccessIF oaccess, Object object);
   
   /**
    * INTERNAL: Stores object fields that are dirty in the database.
    */
-  public void storeDirty(ObjectAccessIF oaccess, Object object);
+  void storeDirty(ObjectAccessIF oaccess, Object object);
   
   //! /**
   //!  * INTERNAL: Called by the transaction when it requests the object
@@ -199,7 +199,7 @@ public interface StorageAccessIF {
    * INTERNAL: Called by the application when it requests a new object
    * identity for a given object type.
    */
-  public IdentityIF generateIdentity(Class<?> type);
+  IdentityIF generateIdentity(Class<?> type);
 
   // -----------------------------------------------------------------------------
   // Queries
@@ -210,12 +210,12 @@ public interface StorageAccessIF {
   /**
    * INTERNAL: Creates a query instance for the given transaction.
    */
-  public QueryIF createQuery(String name, ObjectAccessIF oaccess, AccessRegistrarIF registrar);
+  QueryIF createQuery(String name, ObjectAccessIF oaccess, AccessRegistrarIF registrar);
   
   /**
    * INTERNAL: Build a QueryIF from the specified JDO query instance.
    */
-  public QueryIF createQuery(JDOQuery jdoquery, ObjectAccessIF oaccess, AccessRegistrarIF registrar, boolean lookup_identities);
+  QueryIF createQuery(JDOQuery jdoquery, ObjectAccessIF oaccess, AccessRegistrarIF registrar, boolean lookup_identities);
   
 }
 

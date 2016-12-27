@@ -215,7 +215,7 @@ public class ResourcesDirectoryReader {
   }
 
   public interface ResourcesFilterIF {
-    public boolean ok(String resourcePath);
+    boolean ok(String resourcePath);
   }
 
   public static class FilenameExtensionFilter implements ResourcesFilterIF {

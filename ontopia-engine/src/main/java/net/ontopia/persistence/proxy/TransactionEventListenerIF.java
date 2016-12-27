@@ -31,6 +31,6 @@ public interface TransactionEventListenerIF {
   /**
    * INTERNAL: Called when the transaction is stored.
    */  
-  public void transactionStored(TransactionIF txn);
+  void transactionStored(TransactionIF txn);
   
 }

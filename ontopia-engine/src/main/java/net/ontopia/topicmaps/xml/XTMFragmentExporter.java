@@ -548,7 +548,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
    * EXPERIMENTAL: Handler class used for processing locators.
    */
   public interface LocatorHandlerIF {
-    public LocatorIF process(LocatorIF locator);
+    LocatorIF process(LocatorIF locator);
   }  
 
 }

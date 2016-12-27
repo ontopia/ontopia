@@ -44,89 +44,89 @@ public interface PersistentIF {
   /**
    * INTERNAL: Returns the identity of the object.
    */
-  public IdentityIF _p_getIdentity();
+  IdentityIF _p_getIdentity();
 
   /**
    * INTERNAL: Sets the identity of the object.
    */
-  public void _p_setIdentity(IdentityIF identity);
+  void _p_setIdentity(IdentityIF identity);
 
   /**
    * INTERNAL: Returns the transaction that is responible for managing
    * the object.
    */
-  public TransactionIF _p_getTransaction();
+  TransactionIF _p_getTransaction();
 
   /**
    * INTERNAL: Sets the transaction that is responible for managing
    * the object.
    */
-  public void _p_setTransaction(TransactionIF transaction);
+  void _p_setTransaction(TransactionIF transaction);
   
   /**
    * INTERNAL: Returns the object.type. This information is used by
    * the transaction to handle the persistent mapping for the object.
    */
-  public Class<?> _p_getType();
+  Class<?> _p_getType();
 
-  public int _p_getFieldCount();
+  int _p_getFieldCount();
 
   // -----------------------------------------------------------------------------
   // State
   // -----------------------------------------------------------------------------
 
-  public boolean isTransient();
+  boolean isTransient();
 
-  public boolean isNewObject();
+  boolean isNewObject();
   
-  public void setNewObject(boolean newobject);
+  void setNewObject(boolean newobject);
 
-  public boolean isInDatabase();
+  boolean isInDatabase();
 
-  public void setInDatabase(boolean inDatabase);
+  void setInDatabase(boolean inDatabase);
 
-  public boolean isPersistent();
+  boolean isPersistent();
 
-  public void setPersistent(boolean persistent);
+  void setPersistent(boolean persistent);
 
-  public boolean isDeleted();
+  boolean isDeleted();
 
-  public void setDeleted(boolean deleted);
+  void setDeleted(boolean deleted);
 
   // -----------------------------------------------------------------------------
   // Data access
   // -----------------------------------------------------------------------------
 
-  public boolean isLoaded(int field);
+  boolean isLoaded(int field);
 
-  public Object loadValue(FieldInfoIF finfo);
+  Object loadValue(FieldInfoIF finfo);
 
   // -----------------------------------------------------------------------------
   // Dirty
   // -----------------------------------------------------------------------------
 
-  public boolean isDirty();
+  boolean isDirty();
 
-  public boolean isDirty(int field);
+  boolean isDirty(int field);
 
-  public int nextDirty(int start);
+  int nextDirty(int start);
 
-  public int nextDirty(int start, int end);
+  int nextDirty(int start, int end);
   
-  public void setDirtyFlushed(int field, boolean dirty);
+  void setDirtyFlushed(int field, boolean dirty);
 
   // -----------------------------------------------------------------------------
   // Reset
   // -----------------------------------------------------------------------------
 
-  public void clearAll();
+  void clearAll();
 
   // -----------------------------------------------------------------------------
   // Detach
   // -----------------------------------------------------------------------------
 
   // NOTE: metod is called when object is deleted from data store
-  public void detach();
+  void detach();
 
 }
 

@@ -33,7 +33,7 @@ public interface QueryExecuterIF {
   /**
    * INTERNAL: Executes the query, returning the results.
    */
-  public QueryResultIF execute(TologQuery query)
+  QueryResultIF execute(TologQuery query)
     throws InvalidQueryException;
   
 }

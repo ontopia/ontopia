@@ -44,7 +44,7 @@ public interface IndexManagerIF {
    *
    * @return The topic map store; an object implementing TopicMapStoreIF.
    */
-  public TopicMapTransactionIF getTransaction();
+  TopicMapTransactionIF getTransaction();
 
   /**
 
@@ -63,14 +63,14 @@ public interface IndexManagerIF {
    * @param name A string; the index name, usually the IndexIF
    * subinterface that it implements.
    */
-  public IndexIF getIndex(String name);
+  IndexIF getIndex(String name);
   
   /**
    * DEPRECATED: Returns the names of the indexes that this index
    * manager supports.
    * @return A collection of strings which are index names.
    */
-  public Collection<String> getSupportedIndexes();
+  Collection<String> getSupportedIndexes();
 
   /**
    * DEPRECATED: Returns true if the index is active. An active index
@@ -81,7 +81,7 @@ public interface IndexManagerIF {
    *
    * @return Boolean: true if the given index is populated, otherwise false.
    */
-  public boolean isActive(String name);
+  boolean isActive(String name);
 
   /**
    * DEPRECATED: Returns all the active indexes. An active index is an
@@ -89,7 +89,7 @@ public interface IndexManagerIF {
    *
    * @return A collection of IndexIF objects.
    */
-  public Collection<IndexIF> getActiveIndexes();
+  Collection<IndexIF> getActiveIndexes();
 
 }
 

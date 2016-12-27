@@ -33,23 +33,23 @@ public interface DocumentIF {
   /**
    * INTERNAL: Returns the field with the specified name.
    */
-  public FieldIF getField(String name);
+  FieldIF getField(String name);
   
   /**
    * INTERNAL: Returns all the fields of this document.
    *
    * @return A collection of FieldIF objects.
    */
-  public Collection<FieldIF> getFields();
+  Collection<FieldIF> getFields();
 
   /**
    * INTERNAL: Adds the given field to the document.
    */
-  public void addField(FieldIF field);
+  void addField(FieldIF field);
 
   /**
    * INTERNAL: Removes the given field from the document.
    */
-  public void removeField(FieldIF field);
+  void removeField(FieldIF field);
   
 }

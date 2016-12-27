@@ -33,7 +33,7 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public String getId();
+  String getId();
 
   /**
    * PUBLIC: Sets the id of the source. Note that this method is
@@ -44,27 +44,27 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public void setId(String id);
+  void setId(String id);
 
   /**
    * PUBLIC: Gets the title of the source.
    *
    * @since 3.0
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * PUBLIC: Sets the title of the source.<p>
    *
    * @since 3.0
    */
-  public void setTitle(String title);
+  void setTitle(String title);
   
   /**
    * PUBLIC: Returns an unmodifiable collection of {@link
    * TopicMapReferenceIF}s found by the topic map source.
    */
-  public Collection<TopicMapReferenceIF> getReferences();
+  Collection<TopicMapReferenceIF> getReferences();
   // returns TopicMapReferenceIF objects; unmodifiable
   // return existing reference collection (or create)
 
@@ -75,7 +75,7 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public void refresh();
+  void refresh();
   // update reference collection, do *NOT* mess with existing references,
   // unless removed (in which case, call reference.deactivate)
   // references are *NOT* refreshed, the collection of them is updated
@@ -86,7 +86,7 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 5.3.0
    */
-  public void close();
+  void close();
 
   /**
    * PUBLIC: Returns true if the source supports creating new
@@ -94,7 +94,7 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 3.0
    */
-  public boolean supportsCreate();
+  boolean supportsCreate();
 
   /**
    * PUBLIC: Returns true if the source supports deleting topic map
@@ -102,7 +102,7 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 3.4.1
    */
-  public boolean supportsDelete();
+  boolean supportsDelete();
 
   /**
    * PUBLIC: Creates a new topic map in the underlying source
@@ -112,6 +112,6 @@ public interface TopicMapSourceIF extends AutoCloseable {
    * @throws java.lang.UnsupportedOperationException
    * @since 3.0
    */
-  public TopicMapReferenceIF createTopicMap(String name, String baseAddressURI);
+  TopicMapReferenceIF createTopicMap(String name, String baseAddressURI);
 
 }

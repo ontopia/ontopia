@@ -34,13 +34,13 @@ import java.util.Collection;
 
 public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
 
-  public static final String EVENT_ADDED = "AssociationIF.added";
-  public static final String EVENT_REMOVED = "AssociationIF.removed";
-  public static final String EVENT_SET_TYPE = "AssociationIF.setType";
-  public static final String EVENT_ADD_ROLE = "AssociationIF.addRole";
-  public static final String EVENT_REMOVE_ROLE = "AssociationIF.removeRole";
-  public static final String EVENT_ADD_THEME = "AssociationIF.addTheme";
-  public static final String EVENT_REMOVE_THEME = "AssociationIF.removeTheme";
+  String EVENT_ADDED = "AssociationIF.added";
+  String EVENT_REMOVED = "AssociationIF.removed";
+  String EVENT_SET_TYPE = "AssociationIF.setType";
+  String EVENT_ADD_ROLE = "AssociationIF.addRole";
+  String EVENT_REMOVE_ROLE = "AssociationIF.removeRole";
+  String EVENT_ADD_THEME = "AssociationIF.addTheme";
+  String EVENT_REMOVE_THEME = "AssociationIF.removeTheme";
 
   /**
    * PUBLIC: Gets a Collection of association role types found
@@ -50,7 +50,7 @@ public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A Collection of TopicIF objects.
    */
-  public Collection<TopicIF> getRoleTypes();
+  Collection<TopicIF> getRoleTypes();
   
   /**
    * PUBLIC: Gets the association roles in this association which are of the given
@@ -61,7 +61,7 @@ public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A Collection of AssociationRoleIF objects.
    */
-  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype);
+  Collection<AssociationRoleIF> getRolesByType(TopicIF roletype);
 
   /**
    * PUBLIC: Gets all the association roles of the association. The
@@ -69,6 +69,6 @@ public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A collection of AssociationRoleIF objects.
    */
-  public Collection<AssociationRoleIF> getRoles();
+  Collection<AssociationRoleIF> getRoles();
 
 }

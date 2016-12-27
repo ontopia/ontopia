@@ -128,8 +128,8 @@ public abstract class ModificationFunctionStatement
   }
 
   interface ModificationFunctionIF {
-    public String getSignature();
-    public void modify(TMObjectIF object, Object value);
+    String getSignature();
+    void modify(TMObjectIF object, Object value);
   }
   
   static class FunctionSignature extends ArgumentValidator {

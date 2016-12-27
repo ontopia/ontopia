@@ -37,14 +37,14 @@ public interface LocatorIF {
 	 * Note that only the URI notation is supported in release OKS 4.0
    * and newer.
    */
-  public String getNotation();
+  String getNotation();
   
   /**
    * PUBLIC: Returns the locator address in absolute and normalized
    * form. Whether addresses are case-sensitive or not depends on the
    * locator notation.
    */
-  public String getAddress();
+  String getAddress();
   
   /**
    * PUBLIC: Given a locator address string that is relative to this
@@ -52,7 +52,7 @@ public interface LocatorIF {
    * is absolute the returned locator object will simply contain that
    * absolute locator address.
    */
-  public LocatorIF resolveAbsolute(String address);
+  LocatorIF resolveAbsolute(String address);
 
   /**
    * PUBLIC: Returns the address of the locator in external form; that
@@ -61,5 +61,5 @@ public interface LocatorIF {
    *
    * @since 2.0.3
    */
-  public String getExternalForm();
+  String getExternalForm();
 }

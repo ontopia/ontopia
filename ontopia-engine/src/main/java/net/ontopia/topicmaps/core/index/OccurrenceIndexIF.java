@@ -42,7 +42,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    *
    * @return A collection of OccurrenceIF objects.
    */
-  public Collection<OccurrenceIF> getOccurrences(String value);
+  Collection<OccurrenceIF> getOccurrences(String value);
 
   /**
    * INTERNAL: Gets all occurrences that have the specified value
@@ -60,7 +60,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    * @return A collection of OccurrenceIF objects.
    * @since 4.0
    */
-  public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype);
+  Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype);
 
   /**
    * INTERNAL: Gets all occurrences that have the specified value,
@@ -77,7 +77,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    *
    * @return A collection of OccurrenceIF objects.
    */
-  public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix);
+  Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix);
 
   /**
    * INTERNAL: Gets all occurrences that have the specifed datatype
@@ -86,17 +86,17 @@ public interface OccurrenceIndexIF extends IndexIF {
    * @return A collection of OccurrenceIF objects.
    * @since 4.0
    */
-  public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, LocatorIF datatype);
+  Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, LocatorIF datatype);
 
   /**
    * INTERNAL: Gets all occurrence values that are greather than or
    * equal to the given value.
    */
-  public Iterator<String> getValuesGreaterThanOrEqual(String value);
+  Iterator<String> getValuesGreaterThanOrEqual(String value);
 
   /**
    * INTERNAL: Gets all occurrence values that are smaller than or
    * equal to the given value.
    */
-  public Iterator<String> getValuesSmallerThanOrEqual(String value);
+  Iterator<String> getValuesSmallerThanOrEqual(String value);
 }

@@ -34,6 +34,6 @@ public interface EncodingSnifferIF {
    * encoding used.
    * @return the name of the encoding
    */
-  public String guessEncoding(PushbackInputStream stream) throws IOException;
+  String guessEncoding(PushbackInputStream stream) throws IOException;
   
 }

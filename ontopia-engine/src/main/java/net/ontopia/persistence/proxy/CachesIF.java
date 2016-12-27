@@ -29,14 +29,14 @@ import java.util.Map;
 
 public interface CachesIF {
   
-  public static final int QUERY_CACHE_SRCLOC = 2;
-  public static final int QUERY_CACHE_SUBIND = 4;
-  public static final int QUERY_CACHE_SUBLOC = 8;
-  public static final int QUERY_CACHE_RT1 = 16;
-  public static final int QUERY_CACHE_RT2 = 32;
+  int QUERY_CACHE_SRCLOC = 2;
+  int QUERY_CACHE_SUBIND = 4;
+  int QUERY_CACHE_SUBLOC = 8;
+  int QUERY_CACHE_RT1 = 16;
+  int QUERY_CACHE_RT2 = 32;
 
-  public <K, V> Map<K, V> createDataCache();
+  <K, V> Map<K, V> createDataCache();
 
-  public <K, V> CacheIF<K, V> createCache(int cacheType, IdentityIF namespace);
+  <K, V> CacheIF<K, V> createCache(int cacheType, IdentityIF namespace);
   
 }

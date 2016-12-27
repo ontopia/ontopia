@@ -31,20 +31,20 @@ public interface ValueGeneratorIF {
   /**
    * Returns true if this generator produces a topic.
    */
-  public boolean isTopic();
+  boolean isTopic();
   
-  public String getLiteral();
+  String getLiteral();
   
-  public LocatorIF getDatatype();
+  LocatorIF getDatatype();
 
   /**
    * Returns a locator if the literal is a locator. Otherwise it
    * throws an exception.
    */
-  public LocatorIF getLocator();
+  LocatorIF getLocator();
   
-  public ValueGeneratorIF copy();
+  ValueGeneratorIF copy();
 
-  public TopicIF getTopic();
+  TopicIF getTopic();
   
 }
