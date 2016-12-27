@@ -1079,26 +1079,26 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
    */
   private interface ConfigurationModelIF {
 
-    public void addAdditionalItems(List ttypes);
+    void addAdditionalItems(List ttypes);
 
-    public void buildGeneralConfigPanel(TypesConfigFrame frame, JPanel config);
+    void buildGeneralConfigPanel(TypesConfigFrame frame, JPanel config);
 
-    public int getWeight(VizController controller, TopicIF selectedType);
+    int getWeight(VizController controller, TopicIF selectedType);
 
-    public Collection getListItems(VizController controller);
+    Collection getListItems(VizController controller);
 
-    public int getShape(VizController controller, TopicIF selectedType);
+    int getShape(VizController controller, TopicIF selectedType);
 
-    public String getTitle();
+    String getTitle();
 
-    public void setWeight(VizController controller, TopicIF selectedType,
-                          int i);
+    void setWeight(VizController controller, TopicIF selectedType,
+                   int i);
 
-    public void setFilter(VizController controller, TopicIF selectedType, int i);
+    void setFilter(VizController controller, TopicIF selectedType, int i);
 
-    public void setShape(VizController controller, TopicIF selectedType, int i);
+    void setShape(VizController controller, TopicIF selectedType, int i);
 
-    public Color getColor(VizController controller, TopicIF selectedType);
+    Color getColor(VizController controller, TopicIF selectedType);
 
   }
   
