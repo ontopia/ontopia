@@ -110,14 +110,14 @@ public class NameImpl extends ScopedImpl implements Name {
 
   }
 
-  void addVariant(Variant variant) {
+  protected void addVariant(Variant variant) {
     if (wrappedVariants == null) {
       wrappedVariants = new HashSet<Variant>();
     }
     wrappedVariants.add(variant);
   }
   
-  void clearVariants() {
+  protected void clearVariants() {
     if (wrappedVariants != null) {
         wrappedVariants.clear();
     }
@@ -276,7 +276,7 @@ public class NameImpl extends ScopedImpl implements Name {
 
   }
 
-  void removeVariant(VariantImpl variantImpl) {
+  protected void removeVariant(VariantImpl variantImpl) {
     wrappedVariants.remove(variantImpl);
   }
 }

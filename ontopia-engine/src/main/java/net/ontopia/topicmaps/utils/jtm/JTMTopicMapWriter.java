@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * @since 5.1.0
  */
 public class JTMTopicMapWriter implements TopicMapWriterIF {
-  static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
       .getLogger(JTMTopicMapWriter.class.getName());
 
   private final static String VERSION = "1.0";

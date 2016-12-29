@@ -78,7 +78,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   protected TologParser parser; // the default parser (may have state)
 
   // --- initialize logging facility.
-  static Logger logger = LoggerFactory.getLogger(QueryProcessor.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(QueryProcessor.class.getName());
 
   public QueryProcessor(TopicMapIF topicmap) {
     this(topicmap, topicmap.getStore().getBaseAddress());

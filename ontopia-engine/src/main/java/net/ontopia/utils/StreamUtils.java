@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class StreamUtils {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(StreamUtils.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(StreamUtils.class.getName());
   
   /**
    * INTERNAL: Same as getInputStream(null, name);

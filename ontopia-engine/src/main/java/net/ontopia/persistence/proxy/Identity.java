@@ -34,7 +34,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public final class Identity implements IdentityIF, Externalizable {
 
-  static final long serialVersionUID = 5662829503505256457L;
+  private static final long serialVersionUID = 5662829503505256457L;
 
   private Class<?> type;
   private Object[] keys;

@@ -54,10 +54,10 @@ import net.ontopia.utils.UniqueSet;
 
 public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
 
-  static final long serialVersionUID = -1334945778216658155L;
+  private static final long serialVersionUID = -1334945778216658155L;
 
-  transient InMemoryTopicMapTransaction txn;  
-  transient CollectionFactoryIF cfactory;
+  protected transient InMemoryTopicMapTransaction txn;  
+  protected transient CollectionFactoryIF cfactory;
   public transient UniqueSet<TopicIF> setpool = new UniqueSet<TopicIF>();
   
   protected transient SubjectIdentityCache sicache;
@@ -117,11 +117,11 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     return getTransaction().getIndexManager().getIndex(name);
   }
 
-  SubjectIdentityCache getSubjectIdentityCache() {
+  protected SubjectIdentityCache getSubjectIdentityCache() {
     return sicache;
   }
   
-  void setSubjectIdentityCache(SubjectIdentityCache sicache) {
+  protected void setSubjectIdentityCache(SubjectIdentityCache sicache) {
     // Unregister topic map with old subject identity cache
     if (this.sicache != null)
       this.sicache.unregisterObject(this);

@@ -36,7 +36,7 @@ public class LocatorImpl implements Locator {
     this.wrapped = delegate;
   }
 
-  LocatorIF getWrapped() {
+  protected LocatorIF getWrapped() {
     return wrapped;
   }
 

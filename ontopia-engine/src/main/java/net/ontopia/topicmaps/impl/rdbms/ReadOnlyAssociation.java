@@ -94,11 +94,11 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
     }
   }
 
-  void addRole(AssociationRoleIF assoc_role) {
+  protected void addRole(AssociationRoleIF assoc_role) {
     throw new ReadOnlyException();
   }
 
-  void removeRole(AssociationRoleIF assoc_role) {
+  protected void removeRole(AssociationRoleIF assoc_role) {
     throw new ReadOnlyException();
   }
 

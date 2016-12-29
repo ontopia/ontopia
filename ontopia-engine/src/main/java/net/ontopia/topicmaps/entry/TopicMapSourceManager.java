@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
 public class TopicMapSourceManager implements TopicMapRepositoryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
 
   protected Set<TopicMapSourceIF> sources = new CompactHashSet<TopicMapSourceIF>();
 

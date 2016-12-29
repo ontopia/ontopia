@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class StatisticsCache implements StorageCacheIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(StatisticsCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(StatisticsCache.class.getName());
 
   protected int total_o;
   protected int total_f;

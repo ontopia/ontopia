@@ -68,7 +68,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
 
   protected ObjectTreeManager otree;
   protected TopicModificationManager topicmods;
-  TopicEvents te;
+  protected TopicEvents te;
   
   RDBMSTopicMapTransaction(RDBMSTopicMapStore store, long topicmap_id, boolean readonly) {
     this.store = store;

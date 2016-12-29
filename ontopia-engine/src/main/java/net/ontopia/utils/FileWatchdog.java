@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public abstract class FileWatchdog extends Thread {
 
   // initialization of logging facility
-  static Logger log = LoggerFactory.getLogger(FileWatchdog.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(FileWatchdog.class.getName());
   
   /**
    * The default delay between every file modification check, set to 6
@@ -52,10 +52,10 @@ public abstract class FileWatchdog extends Thread {
    */
   protected long delay = DEFAULT_DELAY; 
   
-  File file;
-  long lastModified = 0; 
-  boolean warnedAlready = false;
-  boolean interrupted = false;
+  private File file;
+  private long lastModified = 0; 
+  private boolean warnedAlready = false;
+  private boolean interrupted = false;
 
   protected FileWatchdog() {
     super();

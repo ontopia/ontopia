@@ -114,7 +114,7 @@ public class PredicateFactory implements PredicateFactoryIF {
   // --- The experimental module
 
   static class ExperimentalModule implements ModuleIF {
-    static final String MODULE_URI = "http://psi.ontopia.net/tolog/experimental/";
+    private static final String MODULE_URI = "http://psi.ontopia.net/tolog/experimental/";
     
     public PredicateIF getPredicate(String name) {
       if (name.equals("in"))

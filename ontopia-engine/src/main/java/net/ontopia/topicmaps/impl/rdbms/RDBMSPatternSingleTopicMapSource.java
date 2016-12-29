@@ -61,7 +61,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
   protected RDBMSStorage storage;
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSPatternSingleTopicMapSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSPatternSingleTopicMapSource.class.getName());
 
   // --- TopicMapSourceIF implementation
 

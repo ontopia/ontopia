@@ -43,7 +43,7 @@ import org.xml.sax.XMLReader;
 public class DefaultXMLReaderFactory {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
 
   private static final SAXParserFactory FACTORY = SAXParserFactory.newInstance();
 

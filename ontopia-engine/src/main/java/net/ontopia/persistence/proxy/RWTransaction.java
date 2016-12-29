@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class RWTransaction extends AbstractTransaction {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RWTransaction.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RWTransaction.class.getName());
   
   // Changes tracked for cache invalidation
   public boolean trackall;

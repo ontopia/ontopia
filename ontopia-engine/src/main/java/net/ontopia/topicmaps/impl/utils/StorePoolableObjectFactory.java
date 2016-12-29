@@ -41,7 +41,7 @@ public class StorePoolableObjectFactory
   implements org.apache.commons.pool.PoolableObjectFactory {
 
   // define a logging category.
-  static Logger log = LoggerFactory.getLogger(StorePoolableObjectFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(StorePoolableObjectFactory.class.getName());
   
   // topic map store factory
   protected TopicMapStoreFactoryIF sfactory;

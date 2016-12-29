@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class ClusterClientTest extends AbstractClusterTest {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ClusterClientTest.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ClusterClientTest.class.getName());
 
   Map tests;
   TopicMapIF topicmap;

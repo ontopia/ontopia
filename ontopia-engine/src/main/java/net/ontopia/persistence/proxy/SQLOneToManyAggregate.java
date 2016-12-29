@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class SQLOneToManyAggregate implements FieldAccessIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLOneToManyAggregate.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLOneToManyAggregate.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;

@@ -82,7 +82,7 @@ public class StatisticsPrinter {
    * and counts the number topics, associations and occurrences 
    * that have no types.
    */
-  void topicStats() {
+  private void topicStats() {
     //Count the number of topics, assocs, occrs, and print to screeen.
     countTopics();
           

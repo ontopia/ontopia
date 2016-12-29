@@ -46,7 +46,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class QueryDeclarations {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(QueryDeclarations.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(QueryDeclarations.class.getName());
   
   class QueriesHandler extends DefaultHandler {
 

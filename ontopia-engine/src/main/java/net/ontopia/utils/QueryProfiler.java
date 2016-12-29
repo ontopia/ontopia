@@ -33,14 +33,14 @@ import java.text.DecimalFormat;
  * or SQL.
  */
 public class QueryProfiler {
-  static DecimalFormat df = new DecimalFormat("0.#");
-  Map<String, Event> eStats;
+  private static DecimalFormat df = new DecimalFormat("0.#");
+  private Map<String, Event> eStats;
   /**
    * Tracks whether traversal events have been seen. The tolog profiler does
    * not provide these, and tracking this lets us leave out two unnecessary
    * columns in the report.
    */
-  boolean traverse;
+  private boolean traverse;
 
   public QueryProfiler() {
     eStats = new HashMap<String, Event>();
@@ -158,26 +158,26 @@ public class QueryProfiler {
   // --- Event 
 
   static class Event {
-    String name;
+    private String name;
 
-    long executeNum;
-    long executeTime;
-    float executeTimeMin = -1.0f;
-    float executeTimeMax = -1.0f;
+    private long executeNum;
+    private long executeTime;
+    private float executeTimeMin = -1.0f;
+    private float executeTimeMax = -1.0f;
 
-    long traverseTime;
-    long traverseNum;
+    private long traverseTime;
+    private long traverseNum;
 
     Event(String name) {
       this.name = name;
     }
 
-    void addExecuteUpdate(long startTime, long endTime, int affectedSize) {
+    private void addExecuteUpdate(long startTime, long endTime, int affectedSize) {
       addExecute(startTime, endTime);
       traverseNum += affectedSize;
     }
 
-    void addExecute(long startTime, long endTime) {
+    private void addExecute(long startTime, long endTime) {
       int time = (int)(endTime - startTime);
       if (executeTimeMax == -1.0f || time > executeTimeMax)
         executeTimeMax = (float)time;
@@ -188,7 +188,7 @@ public class QueryProfiler {
       executeNum++;
     }
 
-    void addExecute(long startTime, long endTime, int executeCount) {
+    private void addExecute(long startTime, long endTime, int executeCount) {
       int time = (int)(endTime - startTime);
       float timeAvg = (time/(executeCount*1.0f));
       if (executeTimeMax == -1.0f || timeAvg > executeTimeMax)
@@ -200,7 +200,7 @@ public class QueryProfiler {
       executeNum += executeCount;
     }
 
-    void addTraverse(boolean hasNext, long startTime, long endTime) {
+    private void addTraverse(boolean hasNext, long startTime, long endTime) {
       int time = (int)(endTime - startTime);
       executeTime = executeTime + time;
       traverseTime = traverseTime + time;

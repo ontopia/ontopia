@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
 public final class ParsedQuery implements ParsedQueryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ParsedQuery.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ParsedQuery.class.getName());
 
   protected TologQuery query;
 

@@ -48,7 +48,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   private static final long serialVersionUID = 4342065742305830481L;
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SubjectIdentityCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SubjectIdentityCache.class.getName());
 
   protected TopicMapTransactionIF txn;  
   protected TransactionIF ptxn;

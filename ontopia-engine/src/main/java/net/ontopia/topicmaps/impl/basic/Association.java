@@ -42,7 +42,7 @@ import net.ontopia.utils.UniqueSet;
 
 public class Association extends TMObject implements AssociationIF {
 
-  static final long serialVersionUID = -8986947932370957132L;
+  private static final long serialVersionUID = -8986947932370957132L;
   
   protected TopicIF reifier;
   protected TopicIF type;
@@ -61,7 +61,7 @@ public class Association extends TMObject implements AssociationIF {
   /**
    * INTERNAL: Sets the topic map that the object belongs to. [parent]
    */
-  void setTopicMap(TopicMap parent) {
+  protected void setTopicMap(TopicMap parent) {
     // (De)reference pooled sets
     if (scope != null) {
       if (parent == null)
@@ -107,7 +107,7 @@ public class Association extends TMObject implements AssociationIF {
     return Collections.unmodifiableSet(roles);
   }
 
-  void addRole(AssociationRoleIF _assoc_role) {
+  protected void addRole(AssociationRoleIF _assoc_role) {
     AssociationRole assoc_role = (AssociationRole)_assoc_role;
     if (assoc_role == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -129,7 +129,7 @@ public class Association extends TMObject implements AssociationIF {
       player.addRole(assoc_role);
   }
 
-  void removeRole(AssociationRoleIF _assoc_role) {
+  protected void removeRole(AssociationRoleIF _assoc_role) {
     AssociationRole assoc_role = (AssociationRole)_assoc_role;
     if (assoc_role == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);

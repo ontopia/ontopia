@@ -205,15 +205,15 @@ public class DatabaseProjectReader {
   
   static class ProjectHandler extends SAXTracker {
 
-    static final String EL_DBSCHEMA = "dbschema";
-    static final String EL_DATATYPES = "datatypes";
-    static final String EL_DATATYPE = "datatype";
-    static final String EL_TABLE = "table";
-    static final String EL_COLUMN = "column";
-    static final String EL_INDEX = "index";
-    static final String EL_PROPERTY = "property";
-    static final String EL_CREATE_ACTION = "create-action";
-    static final String EL_DROP_ACTION = "drop-action";
+    private static final String EL_DBSCHEMA = "dbschema";
+    private static final String EL_DATATYPES = "datatypes";
+    private static final String EL_DATATYPE = "datatype";
+    private static final String EL_TABLE = "table";
+    private static final String EL_COLUMN = "column";
+    private static final String EL_INDEX = "index";
+    private static final String EL_PROPERTY = "property";
+    private static final String EL_CREATE_ACTION = "create-action";
+    private static final String EL_DROP_ACTION = "drop-action";
 
     protected Project project;
     protected Map<String, Object> info;

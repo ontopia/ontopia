@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class CollectionParameterProcessor implements ParameterProcessorIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CollectionParameterProcessor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(CollectionParameterProcessor.class.getName());
 
   protected FieldHandlerIF[] param_fields;
   protected String[] param_names;

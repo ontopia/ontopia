@@ -115,7 +115,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLConfigSource {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XMLConfigSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XMLConfigSource.class.getName());
 
   /**
    * INTERNAL: Don't call constructor directly. Instead used static
@@ -287,11 +287,11 @@ public class XMLConfigSource {
   // ------------------------------------------------------------
   
   static class ConfigHandler extends DefaultHandler {
-    Map<String, String> environ;
+    private Map<String, String> environ;
     //Map params = new HashMap();
-    List<TopicMapSourceIF> sources = new ArrayList<TopicMapSourceIF>();
+    private List<TopicMapSourceIF> sources = new ArrayList<TopicMapSourceIF>();
     
-    TopicMapSourceIF source;
+    private TopicMapSourceIF source;
     
     ConfigHandler(Map<String, String> environ) {
       this.environ = environ;

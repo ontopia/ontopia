@@ -47,7 +47,7 @@ import org.apache.commons.io.IOUtils;
 
 public class Occurrence extends TMObject implements OccurrenceIF {
 
-  static final long serialVersionUID = -7364980697913079915L;
+  private static final long serialVersionUID = -7364980697913079915L;
 
   protected TopicIF reifier;
   protected TopicIF type;
@@ -77,7 +77,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   /**
    * INTERNAL: Set the topic that the occurrence belongs to. [parent]
    */
-  void setTopic(Topic parent) {
+  protected void setTopic(Topic parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
       throw new ConstraintViolationException("Cannot move objects across topic maps: "

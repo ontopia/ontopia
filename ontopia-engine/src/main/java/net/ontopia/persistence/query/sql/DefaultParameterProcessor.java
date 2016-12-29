@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultParameterProcessor implements ParameterProcessorIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DefaultParameterProcessor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DefaultParameterProcessor.class.getName());
 
   protected FieldHandlerIF[] param_fields;
   protected String[] param_names;

@@ -105,7 +105,7 @@ public class Topic extends TMObject implements TopicIF {
   /**
    * INTERNAL: Sets the topic map that the object belongs to. [parent]
    */
-  void setTopicMap(TopicMap topicmap) {
+  protected void setTopicMap(TopicMap topicmap) {
     // Notify transaction
     transactionChanged(topicmap);
     valueChanged(LF_topicmap, topicmap, true);
@@ -223,7 +223,7 @@ public class Topic extends TMObject implements TopicIF {
     return ((TopicMap)getTopicMap()).getTopicNamesByType(this, type);
   }
   
-  void addTopicName(TopicNameIF name) {
+  protected void addTopicName(TopicNameIF name) {
     if (name == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if name is already a member of this topic
@@ -240,7 +240,7 @@ public class Topic extends TMObject implements TopicIF {
     valueAdded(LF_names, name, false);
   }
   
-  void removeTopicName(TopicNameIF name) {
+  protected void removeTopicName(TopicNameIF name) {
     if (name == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if name is not a member of this topic
@@ -262,7 +262,7 @@ public class Topic extends TMObject implements TopicIF {
     return ((TopicMap)getTopicMap()).getOccurrencesByType(this, type);
   }
   
-  void addOccurrence(OccurrenceIF occurrence) {
+  protected void addOccurrence(OccurrenceIF occurrence) {
     if (occurrence == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if occurrence is already a member of this topic
@@ -280,7 +280,7 @@ public class Topic extends TMObject implements TopicIF {
     valueAdded(LF_occurrences, occurrence, false);
   }
   
-  void removeOccurrence(OccurrenceIF occurrence) {
+  protected void removeOccurrence(OccurrenceIF occurrence) {
     if (occurrence == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if occurrence is not a member of this topic
@@ -379,7 +379,7 @@ public class Topic extends TMObject implements TopicIF {
    * INTERNAL: Adds the association role to the set of association
    * roles in which the topic participates.
    */
-  void addRole(AssociationRoleIF assoc_role) {    
+  protected void addRole(AssociationRoleIF assoc_role) {    
     // Notify transaction
     valueAdded(LF_roles, assoc_role, false);
   }
@@ -388,7 +388,7 @@ public class Topic extends TMObject implements TopicIF {
    * INTERNAL: Removes the association role from the set of
    * association roles in which the topic participates.
    */
-  void removeRole(AssociationRoleIF assoc_role) {
+  protected void removeRole(AssociationRoleIF assoc_role) {
     // Notify transaction
     valueRemoved(LF_roles, assoc_role, false);
   }
@@ -430,7 +430,7 @@ public class Topic extends TMObject implements TopicIF {
     return (ReifiableIF) getTopicMap().getObjectById(reifiedId);
   }
 
-  void setReified(ReifiableIF reified) {
+  protected void setReified(ReifiableIF reified) {
     ReifiableIF oldReified = getReified();
     if (!Objects.equals(oldReified, reified)) {
       String reifiedId = (reified == null ? null : reified.getObjectId());

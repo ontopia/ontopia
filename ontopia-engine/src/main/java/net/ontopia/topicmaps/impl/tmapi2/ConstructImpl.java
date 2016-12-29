@@ -41,7 +41,7 @@ abstract class ConstructImpl implements Construct {
     this.topicMap = topicMap;
   }
 
-  abstract TMObjectIF getWrapped();
+  protected abstract TMObjectIF getWrapped();
 
   /*
    * (non-Javadoc)

@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class JNDIConnectionFactory implements ConnectionFactoryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(JNDIConnectionFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(JNDIConnectionFactory.class.getName());
 
   protected static final String propname = "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource";
   protected String jndiname;

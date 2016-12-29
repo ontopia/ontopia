@@ -49,21 +49,21 @@ import org.xml.sax.SAXException;
  */
 public class XFMLContentHandler extends AbstractTopicMapContentHandler {
 
-  static final String NO_URI = "URI";
+  private static final String NO_URI = "URI";
 
-  static final String EL_XFML        = "xfml";
-  static final String EL_FACET       = "facet";
-  static final String EL_TOPIC       = "topic";
-  static final String EL_NAME        = "name";
-  static final String EL_PSI         = "psi";
-  static final String EL_DESCRIPTION = "description";
-  static final String EL_PAGE        = "page";
-  static final String EL_TITLE       = "title";
-  static final String EL_CONNECT     = "connect";
-  static final String EL_OCCURRENCE  = "occurrence";
+  private static final String EL_XFML        = "xfml";
+  private static final String EL_FACET       = "facet";
+  private static final String EL_TOPIC       = "topic";
+  private static final String EL_NAME        = "name";
+  private static final String EL_PSI         = "psi";
+  private static final String EL_DESCRIPTION = "description";
+  private static final String EL_PAGE        = "page";
+  private static final String EL_TITLE       = "title";
+  private static final String EL_CONNECT     = "connect";
+  private static final String EL_OCCURRENCE  = "occurrence";
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XFMLContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XFMLContentHandler.class.getName());
 
   protected TopicMapStoreFactoryIF stores;
 

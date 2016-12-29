@@ -65,7 +65,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
 
-  TopicIF getWrapped() {
+  protected TopicIF getWrapped() {
     return wrapped;
   }
 

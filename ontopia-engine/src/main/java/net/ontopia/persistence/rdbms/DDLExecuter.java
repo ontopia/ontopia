@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class DDLExecuter {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DDLExecuter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DDLExecuter.class.getName());
   
   public static void main(String[] argv) throws Exception {
 

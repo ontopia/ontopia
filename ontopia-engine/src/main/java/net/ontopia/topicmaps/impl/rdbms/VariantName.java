@@ -131,14 +131,14 @@ public class VariantName extends TMObject implements VariantNameIF {
   /**
    * INTERNAL: Set the name that the variant name belongs to. [parent]
    */
-  void setTopicName(TopicNameIF name) {
+  protected void setTopicName(TopicNameIF name) {
     // Set parent topic map
     setTopicMap((name == null ? null : (TopicMap)name.getTopicMap()));
     // Notify transaction
     valueChanged(LF_name, name, true);    
   }
 
-  void setTopicMap(TopicMap topicmap) {
+  protected void setTopicMap(TopicMap topicmap) {
     // Notify transaction 
     transactionChanged(topicmap);
     valueChanged(LF_topicmap, topicmap, true);
@@ -265,7 +265,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     _addTheme(theme, true);
   }
   
-  void _addTheme(TopicIF theme, boolean validate) {
+  protected void _addTheme(TopicIF theme, boolean validate) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
@@ -279,7 +279,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     _removeTheme(theme, true);
   }
   
-  void _removeTheme(TopicIF theme, boolean validate) {
+  protected void _removeTheme(TopicIF theme, boolean validate) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);

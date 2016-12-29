@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
   
   protected StorageIF storage;
   protected Map<IdentityIF, CacheEntry> datacache;

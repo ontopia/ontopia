@@ -159,10 +159,10 @@ public class TopicMapConverter {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean xtm = false;
-    boolean validate = true;
-    String encoding = null;
-    String rdfmap = null;
+    private boolean xtm = false;
+    private boolean validate = true;
+    private String encoding = null;
+    private String rdfmap = null;
     
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {

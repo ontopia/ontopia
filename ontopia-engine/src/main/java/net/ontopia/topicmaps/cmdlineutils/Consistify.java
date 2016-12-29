@@ -181,9 +181,9 @@ public class Consistify {
   // --- Listener class
   
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean normalize = false;
-    boolean xtm = false;
-    String encoding = null;
+    private boolean normalize = false;
+    private boolean xtm = false;
+    private String encoding = null;
     
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {

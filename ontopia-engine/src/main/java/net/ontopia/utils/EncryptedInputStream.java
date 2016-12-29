@@ -29,8 +29,8 @@ import java.io.InputStream;
  */
 public class EncryptedInputStream extends InputStream {
 
-  final static int KEY = 0xFF;
-  InputStream myInput;
+  private final static int KEY = 0xFF;
+  private InputStream myInput;
   
   public EncryptedInputStream(InputStream myInputStream) {
     super();

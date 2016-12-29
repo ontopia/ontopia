@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
 public class ClusterMasterTest extends AbstractClusterTest implements java.io.Serializable {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ClusterMasterTest.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ClusterMasterTest.class.getName());
 
   transient List tests;
 

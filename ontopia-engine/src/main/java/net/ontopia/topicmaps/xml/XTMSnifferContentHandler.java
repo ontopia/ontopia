@@ -50,7 +50,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
   implements DeclHandler, LexicalHandler {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTMSnifferContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMSnifferContentHandler.class.getName());
 
   private XTMTopicMapReader reader;
   private XMLReader parser;

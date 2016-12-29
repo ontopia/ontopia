@@ -176,9 +176,9 @@ public class TologQuery {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean trace;
-    boolean debug;
-    boolean timeit;
+    private boolean trace;
+    private boolean debug;
+    private boolean timeit;
     
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {

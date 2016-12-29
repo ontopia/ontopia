@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
 public class TopicMapSynchronizer {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(TopicMapSynchronizer.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TopicMapSynchronizer.class.getName());
   
   /**
    * PUBLIC: Updates the target topic map against the source topic,

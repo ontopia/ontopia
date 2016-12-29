@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
 public class RoleTypeAssocTypeCache {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RoleTypeAssocTypeCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RoleTypeAssocTypeCache.class.getName());
   
   protected RDBMSAccess access;
   protected AccessRegistrarIF registrar;

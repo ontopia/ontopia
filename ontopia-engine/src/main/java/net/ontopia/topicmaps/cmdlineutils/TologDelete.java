@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class TologDelete {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
 
   TologDelete() {
   }
@@ -161,9 +161,9 @@ public class TologDelete {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    String tm;
-    String out;
-    String simulate;
+    private String tm;
+    private String out;
+    private String simulate;
     public void processOption(char option, String value) {
       if (option == 't') tm = value;
       else if (option == 'o') out = value;

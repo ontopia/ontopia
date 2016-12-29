@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractConnectionFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractConnectionFactory.class.getName());
 
   protected Map<String, String> properties;
   

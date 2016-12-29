@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class PropertyUtils {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(PropertyUtils.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(PropertyUtils.class.getName());
   
   /**
    * INTERNAL: Helper method used to get better error messages with

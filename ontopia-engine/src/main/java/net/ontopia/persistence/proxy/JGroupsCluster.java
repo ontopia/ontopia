@@ -40,9 +40,9 @@ import org.slf4j.LoggerFactory;
 public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
 
-  final static Integer DATA = new Integer(1); 
+  private final static Integer DATA = 1;
   
   protected JChannel dchannel;
   
@@ -54,7 +54,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
 
   // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
   
-  JGroupsCluster(String clusterId, String clusterProps, StorageIF storage) {
+  protected JGroupsCluster(String clusterId, String clusterProps, StorageIF storage) {
     this.clusterId = clusterId;
     this.clusterProps = clusterProps;
     this.storage = storage;

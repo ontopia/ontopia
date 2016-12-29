@@ -41,7 +41,7 @@ public class RDBMSDocument implements DocumentIF {
     this.score = score;
   }
 
-  float getScore() {
+  public float getScore() {
     return score;
   }
   

@@ -62,12 +62,12 @@ import org.xml.sax.helpers.DefaultHandler;
  * INTERNAL: Reads both XTM 2.0 and XTM 2.1.
  */
 public class XTM2ContentHandler extends DefaultHandler {
-  static final String NS_XTM2 = "http://www.topicmaps.org/xtm/";
-  static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
-  static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
+  public static final String NS_XTM2 = "http://www.topicmaps.org/xtm/";
+  public static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
+  public static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTM2ContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTM2ContentHandler.class.getName());
   
   private TopicMapIF topicmap;
   private LocatorIF doc_address;

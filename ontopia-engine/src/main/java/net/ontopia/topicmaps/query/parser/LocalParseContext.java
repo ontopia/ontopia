@@ -51,7 +51,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   private ParseContextIF subcontext;
   private Map<String, PrefixBinding> bindings;
   private Map predicates;
-  Set loading_modules = new CompactHashSet();
+  private Set loading_modules = new CompactHashSet();
 
   public LocalParseContext(ParseContextIF subcontext) {
     this.subcontext = subcontext;

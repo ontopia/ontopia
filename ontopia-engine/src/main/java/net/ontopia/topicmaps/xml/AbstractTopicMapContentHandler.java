@@ -71,7 +71,7 @@ public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
   protected ErrorHandler ehandler;
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractTopicMapContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractTopicMapContentHandler.class.getName());
   
   public AbstractTopicMapContentHandler(LocatorIF base_address) {
     this(base_address, new HashSet<LocatorIF>());

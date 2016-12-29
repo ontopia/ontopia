@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractClusterTest extends ReceiverAdapter {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractClusterTest.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractClusterTest.class.getName());
   
   transient protected JChannel channel;
 

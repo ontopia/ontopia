@@ -66,8 +66,8 @@ public class RDBMSSearcher extends AbstractSearcher {
 
   private class SearchResult extends AbstractSearchResult {
 
-    PreparedStatement pstm;
-    ResultSet rs;
+    private PreparedStatement pstm;
+    private ResultSet rs;
     
     SearchResult(String query) {
       TopicMapStoreIF store = topicmap.getStore();

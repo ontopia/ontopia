@@ -34,7 +34,7 @@ import net.ontopia.infoset.core.LocatorIF;
 
 public class GenericLocator extends AbstractLocator implements Externalizable {
 
-  static final long serialVersionUID = 3066225165288209215L;
+  private static final long serialVersionUID = 3066225165288209215L;
 
   protected String notation;
   protected String address;

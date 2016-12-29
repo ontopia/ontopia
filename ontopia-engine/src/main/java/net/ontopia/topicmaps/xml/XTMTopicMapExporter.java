@@ -48,7 +48,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * INTERNAL: Exports topic maps to the XTM 1.0 interchange format.
  */
 public class XTMTopicMapExporter extends AbstractTopicMapExporter {
-  static Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
 
   protected AttributesImpl atts;
 

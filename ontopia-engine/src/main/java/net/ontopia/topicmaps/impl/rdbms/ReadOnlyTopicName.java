@@ -79,11 +79,11 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
     return this.<VariantNameIF>loadCollectionField(TopicName.LF_variants);
   }
 
-  void addVariant(VariantNameIF variant) {
+  protected void addVariant(VariantNameIF variant) {
     throw new ReadOnlyException();
   }
 
-  void removeVariant(VariantNameIF variant) {
+  protected void removeVariant(VariantNameIF variant) {
     throw new ReadOnlyException();
   }
 

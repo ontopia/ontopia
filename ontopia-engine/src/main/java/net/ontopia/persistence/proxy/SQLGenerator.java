@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class SQLGenerator {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLGenerator.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLGenerator.class.getName());
   
   // -----------------------------------------------------------------------------
   // Statement generators

@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class XTMValidator {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTMValidator.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMValidator.class.getName());
 
   public static void main(String [] argv) {
 

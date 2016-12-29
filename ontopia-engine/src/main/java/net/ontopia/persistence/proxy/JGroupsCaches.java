@@ -32,9 +32,9 @@ import org.apache.commons.collections4.map.ReferenceMap;
 
 public class JGroupsCaches implements CachesIF {
 
-  final ClusterIF cluster;
+  private final ClusterIF cluster;
   
-  JGroupsCaches(ClusterIF cluster) {
+  protected JGroupsCaches(ClusterIF cluster) {
     this.cluster = cluster;
   }
   

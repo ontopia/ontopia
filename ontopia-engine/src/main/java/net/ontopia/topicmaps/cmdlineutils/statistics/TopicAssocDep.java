@@ -264,13 +264,13 @@ public class TopicAssocDep {
    */
   private class InternalAssociation {
 
-    AssociationIF association;
-    TopicIF associationtype;
-    HashMap roleTypes;
-    HashMap assocRoles;
-    int number_of_assocs;
-    Collection associations;
-    String[] roles;
+    private AssociationIF association;
+    private TopicIF associationtype;
+    private HashMap roleTypes;
+    private HashMap assocRoles;
+    private int number_of_assocs;
+    private Collection associations;
+    private String[] roles;
     
     InternalAssociation(AssociationIF association) {
       this.associationtype = association.getType();

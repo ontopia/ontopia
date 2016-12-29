@@ -154,9 +154,9 @@ public class Merger {
   // --- Listener class
   
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean xtm = false;
-    boolean enc = false;
-    boolean suppress = false;
+    private boolean xtm = false;
+    private boolean enc = false;
+    private boolean suppress = false;
     
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {

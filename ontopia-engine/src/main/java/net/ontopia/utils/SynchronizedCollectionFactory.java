@@ -33,7 +33,7 @@ import java.util.Set;
  */
 public class SynchronizedCollectionFactory implements CollectionFactoryIF, java.io.Serializable {
 
-  static final long serialVersionUID = -4670702015296061304L;
+  private static final long serialVersionUID = -4670702015296061304L;
   protected int initsize;
 
   public SynchronizedCollectionFactory() {

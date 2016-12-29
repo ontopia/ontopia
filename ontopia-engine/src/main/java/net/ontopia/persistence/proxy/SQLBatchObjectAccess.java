@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLBatchObjectAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLBatchObjectAccess.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_create;

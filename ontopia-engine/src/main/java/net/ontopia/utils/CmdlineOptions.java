@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class CmdlineOptions {
 
-  boolean parsed = false;
+  private boolean parsed = false;
 
   protected String application;
   protected String[] argv;

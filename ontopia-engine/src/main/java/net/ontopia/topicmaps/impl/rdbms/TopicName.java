@@ -110,14 +110,14 @@ public class TopicName extends TMObject implements TopicNameIF {
   /**
    * INTERNAL: Set the topic that the topic name belongs to. [parent]
    */
-  void setTopic(TopicIF topic) {
+  protected void setTopic(TopicIF topic) {
     // Set parent topic map
     setTopicMap((topic == null ? null : (TopicMap) topic.getTopicMap()));
     // Notify transaction
     valueChanged(LF_topic, topic, true);
   }
 
-  void setTopicMap(TopicMap topicmap) {
+  protected void setTopicMap(TopicMap topicmap) {
     // Notify transaction
     transactionChanged(topicmap);
     valueChanged(LF_topicmap, topicmap, true);
@@ -145,7 +145,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     return this.<VariantNameIF>loadCollectionField(LF_variants);
   }
 
-  void addVariant(VariantNameIF variant) {
+  protected void addVariant(VariantNameIF variant) {
     if (variant == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if variant is already a member of this topic name
@@ -167,7 +167,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       ((VariantName)variant)._addTheme(theme, false);
   }
 
-  void removeVariant(VariantNameIF variant) {
+  protected void removeVariant(VariantNameIF variant) {
     if (variant == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if variant is not a member of this topic name

@@ -38,7 +38,7 @@ public class InMemoryTopicMapTransaction extends AbstractTopicMapTransaction {
   
   protected ObjectTreeManager otree;
   protected TopicModificationManager topicmods;
-  TopicEvents te;
+  protected TopicEvents te;
 
   protected InMemoryTopicMapTransaction(InMemoryTopicMapStore store) {
     this(store, null);

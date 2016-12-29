@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class SQLStatement implements SQLStatementIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLStatement.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLStatement.class.getName());
 
   // TODO: Would be useful to get at parameter information from outside.
   

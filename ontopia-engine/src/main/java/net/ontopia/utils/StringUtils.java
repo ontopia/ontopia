@@ -154,7 +154,7 @@ public class StringUtils {
 
   // Accent-stripping and lowercasing map used for name->ID normalization
   // Auto-generated from unicodedata.txt
-  static final char[] charmap = new char[]{
+  private static final char[] charmap = new char[]{
     0, // discarded: <control>
     0, // discarded: <control>
     0, // discarded: <control>

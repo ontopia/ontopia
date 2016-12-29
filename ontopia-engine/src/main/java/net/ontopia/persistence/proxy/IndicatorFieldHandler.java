@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class IndicatorFieldHandler implements FieldHandlerIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(IndicatorFieldHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(IndicatorFieldHandler.class.getName());
 
   protected final ObjectRelationalMappingIF mapping;
   protected final Map<Object, Class<?>> indicators;

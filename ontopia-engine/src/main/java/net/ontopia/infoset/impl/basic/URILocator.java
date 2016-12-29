@@ -218,7 +218,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
     return toExternalForm(address);
   }
   
-  static String toExternalForm(String address) {
+  protected static String toExternalForm(String address) {
     // need to escape characters that are not unreserved or reserved
     char[] tmp = new char[address.length() * 6]; // worst case scenario
     int pos = 0;

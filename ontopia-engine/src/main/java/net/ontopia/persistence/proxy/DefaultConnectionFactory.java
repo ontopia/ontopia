@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultConnectionFactory extends AbstractConnectionFactory {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DefaultConnectionFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DefaultConnectionFactory.class.getName());
 
   protected boolean readOnly;
   

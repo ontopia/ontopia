@@ -47,7 +47,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   public static final String EXHAUSED_FAIL = "fail";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSTopicMapReference.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSTopicMapReference.class.getName());
 
   protected StorageIF storage;
 

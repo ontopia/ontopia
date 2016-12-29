@@ -41,9 +41,9 @@ import org.slf4j.LoggerFactory;
 public class FieldDescriptor {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(FieldDescriptor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(FieldDescriptor.class.getName());
 
-  final static Set<Class<?>> PRIMITIVE_TYPES;
+  private final static Set<Class<?>> PRIMITIVE_TYPES;
 
   static {
     Set<Class<?>> pt = new HashSet<Class<?>>();

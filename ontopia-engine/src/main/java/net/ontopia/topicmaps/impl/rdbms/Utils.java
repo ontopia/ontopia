@@ -47,7 +47,7 @@ public class Utils {
    *
    * @since 2.1.1
    */
-  static void clearTopicMap(TopicMapIF topicmap) throws SQLException {
+  protected static void clearTopicMap(TopicMapIF topicmap) throws SQLException {
     truncateTopicMap(topicmap, true);    
   }
 
@@ -58,7 +58,7 @@ public class Utils {
    *
    * @since 2.0
    */
-  static void deleteTopicMap(TopicMapIF topicmap) throws SQLException {
+  protected static void deleteTopicMap(TopicMapIF topicmap) throws SQLException {
     truncateTopicMap(topicmap, false);
   }
 

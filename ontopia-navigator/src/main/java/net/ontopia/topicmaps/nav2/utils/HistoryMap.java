@@ -40,7 +40,7 @@ public class HistoryMap<T> extends HashMap<Integer, T> {
   private int counter;
   
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(HistoryMap.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(HistoryMap.class.getName());
   
   /**
    * Default constructor which uses 20 entries as the default history

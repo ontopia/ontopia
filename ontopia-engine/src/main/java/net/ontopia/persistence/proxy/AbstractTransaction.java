@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTransaction implements TransactionIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractTransaction.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractTransaction.class.getName());
 
   protected boolean debug = log.isDebugEnabled();
 
@@ -297,7 +297,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   // Identity map management methods
   // -----------------------------------------------------------------------------
   
-  PersistentIF checkIdentityMapAndCreateInstance(IdentityIF identity) {
+  protected PersistentIF checkIdentityMapAndCreateInstance(IdentityIF identity) {
     // NOTE: now rechecking identity map because registrar might have
     // been here and created an instance for us. At this point we know
     // that the identity exists.
@@ -326,14 +326,14 @@ public abstract class AbstractTransaction implements TransactionIF {
     }
   }
   
-  PersistentIF checkIdentityMapNoLRU(IdentityIF identity) {
+  protected PersistentIF checkIdentityMapNoLRU(IdentityIF identity) {
     // WARNING: access to this method should be synchronized on identity_map
     
     // Check to see if somebody else has registered the same identity
     return identity_map.get(identity);
   }
   
-  PersistentIF removeIdentityMapNoLRU(IdentityIF identity) {
+  protected PersistentIF removeIdentityMapNoLRU(IdentityIF identity) {
     // WARNING: access to this method should be synchronized on identity_map
     // ISSUE: remove from lru as well?
     
@@ -341,7 +341,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     return identity_map.remove(identity);
   }
   
-  PersistentIF checkIdentityMap(IdentityIF identity) {
+  protected PersistentIF checkIdentityMap(IdentityIF identity) {
     // WARNING: access to this method should be synchronized on identity_map
     
     // Check to see if somebody else has registered the same identity

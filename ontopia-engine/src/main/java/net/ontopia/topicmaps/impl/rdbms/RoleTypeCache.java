@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 public class RoleTypeCache {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RoleTypeCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RoleTypeCache.class.getName());
 
   protected TopicMapIF tm;
 

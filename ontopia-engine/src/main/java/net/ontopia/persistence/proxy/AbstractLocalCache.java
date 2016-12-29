@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegistrarIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractLocalCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractLocalCache.class.getName());
 
   protected AbstractTransaction txn;
   protected StorageCacheIF pcache;

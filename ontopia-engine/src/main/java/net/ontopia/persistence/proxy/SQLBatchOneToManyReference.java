@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class SQLBatchOneToManyReference extends SQLOneToManyReference implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLBatchOneToManyReference.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLBatchOneToManyReference.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_add;

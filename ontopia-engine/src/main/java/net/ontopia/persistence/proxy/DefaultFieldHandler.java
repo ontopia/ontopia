@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultFieldHandler implements FieldHandlerIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DefaultFieldHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DefaultFieldHandler.class.getName());
 
   protected int sql_type;
 

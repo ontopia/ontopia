@@ -65,7 +65,7 @@ public class Association extends TMObject implements AssociationIF {
   // Data members
   // ---------------------------------------------------------------------------
 
-  static final String CLASS_INDICATOR = "A";
+  public static final String CLASS_INDICATOR = "A";
 
   public Association() {  
   }
@@ -101,7 +101,7 @@ public class Association extends TMObject implements AssociationIF {
   /**
    * INTERNAL: Sets the topic map that the object belongs to. [parent]
    */
-  void setTopicMap(TopicMap topicmap) {
+  protected void setTopicMap(TopicMap topicmap) {
     // Notify transaction
     transactionChanged(topicmap);
     valueChanged(LF_topicmap, topicmap, true);
@@ -142,7 +142,7 @@ public class Association extends TMObject implements AssociationIF {
     }
   }
 
-  void addRole(AssociationRoleIF assoc_role) {
+  protected void addRole(AssociationRoleIF assoc_role) {
     if (assoc_role == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if association role is already a member of this association
@@ -165,7 +165,7 @@ public class Association extends TMObject implements AssociationIF {
       player.addRole(assoc_role);
   }
 
-  void removeRole(AssociationRoleIF assoc_role) {
+  protected void removeRole(AssociationRoleIF assoc_role) {
     if (assoc_role == null)
       throw new NullPointerException("null is not a valid argument.");
     // Check to see if association role is not a member of this association

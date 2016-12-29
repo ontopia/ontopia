@@ -48,7 +48,7 @@ import org.apache.commons.io.IOUtils;
 
 public class VariantName extends TMObject implements VariantNameIF {
 
-  static final long serialVersionUID = -7350019735868904034L;
+  private static final long serialVersionUID = -7350019735868904034L;
 
   protected TopicIF reifier;
   protected String value;
@@ -81,7 +81,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   /**
    * INTERNAL: Set the topic name that the variant name belongs to. [parent]
    */
-  void setTopicName(TopicName parent) {
+  protected void setTopicName(TopicName parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
       throw new ConstraintViolationException("Cannot move objects across topic maps: "
@@ -171,7 +171,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   public void addTheme(TopicIF theme) {
     _addTheme(theme, true);
   }
-  void _addTheme(TopicIF theme, boolean validate) {
+  protected void _addTheme(TopicIF theme, boolean validate) {
     if (theme == null) throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
@@ -182,7 +182,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   public void removeTheme(TopicIF theme) {
     _removeTheme(theme, true);
   }
-  void _removeTheme(TopicIF theme, boolean validate) {
+  protected void _removeTheme(TopicIF theme, boolean validate) {
     if (theme == null) throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners

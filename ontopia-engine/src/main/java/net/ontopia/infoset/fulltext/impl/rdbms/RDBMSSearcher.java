@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSSearcher.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSSearcher.class.getName());
 
   protected final static int FT_PLATFORM_GENERIC = 1;
   protected final static int FT_PLATFORM_ORACLE_TEXT = 2;

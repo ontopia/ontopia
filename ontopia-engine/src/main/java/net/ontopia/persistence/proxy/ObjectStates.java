@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class ObjectStates {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ObjectStates.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ObjectStates.class.getName());
 
   public static final int STATE_CREATED = 1;
   public static final int STATE_DELETED = 2;

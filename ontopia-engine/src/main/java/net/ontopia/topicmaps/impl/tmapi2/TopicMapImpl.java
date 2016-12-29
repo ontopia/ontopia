@@ -80,7 +80,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     topicMap = this;
   }
 
-  TopicImpl getDefaultNameType() {
+  protected TopicImpl getDefaultNameType() {
     if (defaultNameType == null) {
       String psi = net.ontopia.topicmaps.utils.PSI.SAM_NAMETYPE;
       defaultNameType = createTopicBySubjectIdentifier(createLocator(psi));

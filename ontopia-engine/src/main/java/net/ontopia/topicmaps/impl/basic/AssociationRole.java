@@ -36,7 +36,7 @@ import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 
 public class AssociationRole extends TMObject implements AssociationRoleIF {
 
-  static final long serialVersionUID = 8387889553134058046L;
+  private static final long serialVersionUID = 8387889553134058046L;
 
   protected TopicIF reifier;
   protected TopicIF type;
@@ -57,7 +57,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   /**
    * INTERNAL: Sets the association that the association role belongs to. [parent]
    */
-  void setAssociation(Association parent) {
+  protected void setAssociation(Association parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
         throw new ConstraintViolationException(

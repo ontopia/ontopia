@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class SQLBatchOneToOne extends SQLOneToOne implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLBatchOneToOne.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLBatchOneToOne.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_set;

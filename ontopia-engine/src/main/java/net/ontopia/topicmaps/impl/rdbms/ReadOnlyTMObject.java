@@ -48,8 +48,8 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
    */
   public abstract String getClassIndicator();
   
-  long getLongId() {
-    return ((Long)id.getKey(0)).longValue();
+  protected long getLongId() {
+    return (Long) id.getKey(0);
   }
   
   // ---------------------------------------------------------------------------

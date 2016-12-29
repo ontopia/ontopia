@@ -34,9 +34,9 @@ import org.tmapi.core.FeatureNotSupportedException;
  */
 public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory {
 
-  Properties properties = new Properties();
-  Map<String, Boolean> features = new HashMap<String, Boolean>();
-  Feature[] dfeatures = new Feature[] {
+  protected Properties properties = new Properties();
+  protected Map<String, Boolean> features = new HashMap<String, Boolean>();
+  protected Feature[] dfeatures = new Feature[] {
       new Feature("http://tmapi.org/features/notation/URI", true, true),
       new Feature("http://tmapi.org/features/model/xtm1.0", true, true),
       new Feature("http://tmapi.org/features/model/xtm1.1", true, false),

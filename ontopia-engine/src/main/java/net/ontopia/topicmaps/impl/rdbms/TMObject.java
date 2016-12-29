@@ -39,15 +39,15 @@ public abstract class TMObject extends AbstractRWPersistent
   implements TMObjectIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(TMObject.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TMObject.class.getName());
   
   // ---------------------------------------------------------------------------
   // Field declarations
   // ---------------------------------------------------------------------------
 
   // Implementation specific field indexes
-  static final int LF_sources = 0;
-  static final int LF_topicmap = 1; // Note TopicMapIF.
+  protected static final int LF_sources = 0;
+  protected static final int LF_topicmap = 1; // Note TopicMapIF.
   
   // static String[] fields; // Defined in concrete class
   
@@ -55,7 +55,7 @@ public abstract class TMObject extends AbstractRWPersistent
   // Data members
   // ---------------------------------------------------------------------------
 
-  static String CLASS_INDICATOR;
+  public static String CLASS_INDICATOR;
 
   public TMObject() {
   }
@@ -96,7 +96,7 @@ public abstract class TMObject extends AbstractRWPersistent
     }
   }
   
-  long getLongId() {
+  protected long getLongId() {
     return ((Long)id.getKey(0)).longValue();
   }
   

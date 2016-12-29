@@ -62,9 +62,9 @@ import org.slf4j.LoggerFactory;
 public class RDBMSStorage implements StorageIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
 
-  static final Set<String> known_properties;
+  public static final Set<String> known_properties;
   static {
     known_properties = new HashSet<String>();
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.BatchUpdates");
@@ -730,7 +730,7 @@ public class RDBMSStorage implements StorageIF {
     return transactions.size();
   }
 
-  void transactionClosed(AbstractTransaction transaction) {
+  protected void transactionClosed(AbstractTransaction transaction) {
     transactions.remove(transaction);
   }
 

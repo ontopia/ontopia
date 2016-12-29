@@ -47,7 +47,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class ResourceTopicMapSource implements TopicMapSourceIF {
   // initialization of log facility
   @SuppressWarnings("unused")
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
       .getLogger(ResourceTopicMapSource.class.getName());
 
   public enum REF_TYPE {

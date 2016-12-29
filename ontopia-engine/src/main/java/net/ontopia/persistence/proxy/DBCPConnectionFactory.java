@@ -51,7 +51,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     public static final String EXHAUSED_FAIL = "fail";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
   protected GenericObjectPool pool;
   protected DataSource datasource;  

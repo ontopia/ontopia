@@ -127,14 +127,14 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   /**
    * INTERNAL: Set the topic that the occurrence belongs to. [parent]
    */
-  void setTopic(TopicIF topic) {
+  protected void setTopic(TopicIF topic) {
     // Set parent topic map
     setTopicMap((topic == null ? null : (TopicMap)topic.getTopicMap()));
     // Notify transaction
     valueChanged(LF_topic, topic, true);    
   }
 
-  void setTopicMap(TopicMap topicmap) {
+  protected void setTopicMap(TopicMap topicmap) {
     // Notify transaction
     transactionChanged(topicmap);
     valueChanged(LF_topicmap, topicmap, true);

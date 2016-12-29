@@ -61,7 +61,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   protected int MAX_ELEMENTS_IN = 0;
 
-  GenericSQLGenerator(Map properties) {
+  protected GenericSQLGenerator(Map properties) {
     if (properties != null) {
       this.MAX_ELEMENTS_IN = PropertyUtils.getInt((String)properties.get("net.ontopia.persistence.query.sql.InMaxElements"), MAX_ELEMENTS_IN);
     }
@@ -231,7 +231,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     protected int pindex;
     protected int cindex;
     
-    void resetValue(SQLValueIF value) {      
+    private void resetValue(SQLValueIF value) {      
       pindex = 0;
       cindex = 0;
       
@@ -252,7 +252,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
     }
     
-    void nextReference(StringBuilder sql, BuildInfo info) {
+    private void nextReference(StringBuilder sql, BuildInfo info) {
       // FIXME: why don't we just delegate to atomicSQLValueIF?
 
       switch (current.getType()) {

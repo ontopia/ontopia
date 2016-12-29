@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class SQLOneToOne implements FieldAccessIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLOneToOne.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLOneToOne.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  

@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class ClassDescriptor {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ClassDescriptor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ClassDescriptor.class.getName());
     
   protected ObjectRelationalMapping mapping;
   protected Class<?> klass;
@@ -173,14 +173,14 @@ public class ClassDescriptor {
   /**
    * INTERNAL: Returns the field names of the identity fields.
    */
-  String[] getIdentityFieldNames() {
+  protected String[] getIdentityFieldNames() {
     return identity_fields;
   }
   
   /**
    * INTERNAL: Sets the field names of the identity fields.
    */
-  void setIdentityFieldNames(String[] identity_fields) {
+  protected void setIdentityFieldNames(String[] identity_fields) {
     this.identity_fields = identity_fields;
   }
 

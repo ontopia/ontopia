@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class SQLObjectAccess implements ClassAccessIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLObjectAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLObjectAccess.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  

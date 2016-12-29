@@ -349,7 +349,7 @@ class WalkerState {
   /**
    * PROTECTED: The tree path currently being walked.
    */
-  Stack<TMObjectIF> currPath;
+  protected Stack<TMObjectIF> currPath;
 
   /**
    * PROTECTED: The topic to start walking from

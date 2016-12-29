@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractQueryProcessor {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(AbstractQueryProcessor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractQueryProcessor.class.getName());
   private static BasicPredicateIF NOT_PREDICATE = new NotPredicate();
 
   /**

@@ -33,7 +33,7 @@ import java.util.Arrays;
 
 public class CacheEntry implements Externalizable {
 
-  static final long serialVersionUID = 9010124046386798540L;
+  private static final long serialVersionUID = 9010124046386798540L;
 
   protected static final int[] MASKS;
 

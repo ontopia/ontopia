@@ -56,7 +56,7 @@ public class LazySet<T> extends AbstractSet<T> {
 
   class LazySetIterator implements Iterator {
 
-    Iterator iter;
+    protected Iterator iter;
 
     LazySetIterator(Iterator iter) {
       this.iter = iter;

@@ -55,7 +55,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
   protected TopicMapStoreFactoryIF store_factory;
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XFMLTopicMapReader.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XFMLTopicMapReader.class.getName());
 
   /**
    * Creates an XFML reader.

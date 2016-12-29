@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class GenericSQLProducer {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(GenericSQLProducer.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(GenericSQLProducer.class.getName());
     
   protected Project project;
   protected String[] platforms = new String[] { "generic" };

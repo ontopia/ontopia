@@ -46,7 +46,7 @@ public abstract class RDBMSIndex extends AbstractIndex implements IndexIF {
   // Query
   // ---------------------------------------------------------------------------
 
-  TopicMapIF getTopicMap() {
+  protected TopicMapIF getTopicMap() {
     return transaction.getTopicMap();
   }
 

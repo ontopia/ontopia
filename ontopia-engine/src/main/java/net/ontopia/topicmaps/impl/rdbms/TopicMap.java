@@ -146,7 +146,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     return this;
   }
 
-  void setTopicMap(TopicMapIF topicmap) {
+  protected void setTopicMap(TopicMapIF topicmap) {
     // Shouldn't do anything here.
   }
 
@@ -187,7 +187,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   /**
    * Adds a topic to the set of topics.
    */
-  void addTopic(TopicIF topic) {
+  protected void addTopic(TopicIF topic) {
     // Check to see if topic is already a member of this topic map
     if (topic.getTopicMap() == this)
       return;
@@ -205,7 +205,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   /**
    * Removes a topic from the set of topics.
    */
-  void removeTopic(TopicIF topic) {
+  protected void removeTopic(TopicIF topic) {
     // Check to see if topic is not a member of this topic map
     if (topic.getTopicMap() != this)
       return;
@@ -232,7 +232,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   /**
    * Adds an association to the set of associations.
    */
-  void addAssociation(AssociationIF association) {
+  protected void addAssociation(AssociationIF association) {
     // Check to see if association is already a member of this topic map
     if (association.getTopicMap() == this)
       return;
@@ -248,7 +248,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   /**
    * Removes an associations from the set of associations.
    */
-  void removeAssociation(AssociationIF association) {
+  protected void removeAssociation(AssociationIF association) {
     // Check to see if association is not a member of this topic map
     if (association.getTopicMap() != this)
       return;

@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public final class HighLowKeyGenerator implements KeyGeneratorIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(HighLowKeyGenerator.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(HighLowKeyGenerator.class.getName());
   
   protected ConnectionFactoryIF connfactory;
   

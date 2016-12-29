@@ -32,7 +32,7 @@ import java.util.HashSet;
 
 public class ContainmentDecider<T> implements DeciderIF<T> {
 
-    Collection<T> objects = new HashSet<T>();
+    private Collection<T> objects = new HashSet<T>();
     
     public ContainmentDecider(Collection<T> objects) {
       this.objects = objects;

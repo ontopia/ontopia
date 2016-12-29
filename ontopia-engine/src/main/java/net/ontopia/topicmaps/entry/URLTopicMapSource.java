@@ -47,7 +47,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class URLTopicMapSource implements TopicMapSourceIF {
 
   // initialization of log facility
-  private static Logger log = LoggerFactory.getLogger(URLTopicMapSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(URLTopicMapSource.class.getName());
   
   protected String id;
   protected String refid;

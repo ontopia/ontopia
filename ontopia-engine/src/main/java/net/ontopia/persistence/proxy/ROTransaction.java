@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class ROTransaction extends AbstractTransaction {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ROTransaction.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ROTransaction.class.getName());
   
   public ROTransaction(StorageAccessIF access) {
     super("TX" + access.getId(), access);

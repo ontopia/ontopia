@@ -56,7 +56,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
-  long topicmap_id;
+  protected long topicmap_id;
   protected RDBMSStorage storage;
   protected String propfile;
   protected Map<String, String> properties;
@@ -252,7 +252,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     }
   }
   
-  boolean delete(RDBMSTopicMapReference ref) {
+  protected boolean delete(RDBMSTopicMapReference ref) {
     delete(true);
     return deleted;
   }

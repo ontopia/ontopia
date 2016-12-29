@@ -39,7 +39,7 @@ import net.ontopia.utils.PropertyUtils;
 public class TologOptions {
   public static TologOptions defaults;
   private static Properties properties; // tolog.properties, if loaded
-  static Logger log = LoggerFactory.getLogger(TologOptions.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TologOptions.class.getName());
 
   private TologOptions parent;
   private Map<String, String> options;

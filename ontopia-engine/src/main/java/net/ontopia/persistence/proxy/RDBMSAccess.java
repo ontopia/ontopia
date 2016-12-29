@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class RDBMSAccess implements StorageAccessIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSAccess.class.getName());
   
   protected boolean debug = log.isDebugEnabled();
   
@@ -431,7 +431,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
-  void needsFlushing(FlushableIF handler) {
+  protected void needsFlushing(FlushableIF handler) {
     flushable.add(handler);
   }
   

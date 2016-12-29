@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * @since 5.1
  */
 public class JSONWriter {
-  static Logger log = LoggerFactory.getLogger(JSONWriter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(JSONWriter.class.getName());
 
   private final static int INDENT = 2;
 

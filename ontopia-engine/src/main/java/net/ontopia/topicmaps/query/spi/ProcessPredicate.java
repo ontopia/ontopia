@@ -47,13 +47,13 @@ public abstract class ProcessPredicate extends JavaPredicate {
 
   static class Result implements ResultIF {
 
-    QueryMatches input;
-    QueryMatches output;
+    private QueryMatches input;
+    private QueryMatches output;
     
-    int[] argindexes;
-    boolean[] boundparams;
+    private int[] argindexes;
+    private boolean[] boundparams;
 
-    int rownum;
+    private int rownum;
     
     Result(QueryMatches matches, Object[] arguments) {
       this.input = matches;

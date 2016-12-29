@@ -58,8 +58,8 @@ public class HTTPSearcher extends AbstractSearcher {
 
   private class HTTPSearchResult extends AbstractSearchResult {
     
-    Iterator hits;
-    Hit hit;
+    private Iterator hits;
+    private Hit hit;
     
     HTTPSearchResult(String query) {
       // construct url
@@ -124,7 +124,7 @@ public class HTTPSearcher extends AbstractSearcher {
   };
 
   private class SearchHandler extends SAXTracker {
-    List hits;
+    private List hits;
     public List getHits() {
       return hits;
     }

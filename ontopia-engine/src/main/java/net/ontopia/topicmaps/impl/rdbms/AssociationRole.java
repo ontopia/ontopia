@@ -116,14 +116,14 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   /**
    * INTERNAL: Sets the association that the association role belongs to. [parent]
    */
-  void setAssociation(AssociationIF assoc) {
+  protected void setAssociation(AssociationIF assoc) {
     // Set parent topic map
     setTopicMap((assoc == null ? null : (TopicMap)assoc.getTopicMap()));
     // Notify transaction
     valueChanged(LF_association, assoc, true);
   }
 
-  void setTopicMap(TopicMap topicmap) {    
+  protected void setTopicMap(TopicMap topicmap) {    
     // Notify player
     Topic player = (Topic)getPlayer();
     if (player != null)

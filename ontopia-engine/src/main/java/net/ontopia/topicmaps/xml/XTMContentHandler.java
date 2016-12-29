@@ -165,7 +165,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   public static final String SAX_DECL_HANDLER = "http://xml.org/sax/properties/declaration-handler";
   
   // Define a logging category.
-  private static Logger log = LoggerFactory.getLogger(XTMContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMContentHandler.class.getName());
   
   protected TopicMapStoreFactoryIF stores;
   

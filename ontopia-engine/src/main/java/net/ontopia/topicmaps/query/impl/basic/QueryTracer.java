@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QueryTracer {
   // --- initialize logging facility.
-  static Logger logger = LoggerFactory.getLogger(QueryTracer.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(QueryTracer.class.getName());
   
   private static List listeners = new java.util.ArrayList();
 

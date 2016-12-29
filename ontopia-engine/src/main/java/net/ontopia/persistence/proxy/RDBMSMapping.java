@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class RDBMSMapping implements ObjectRelationalMappingIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSMapping.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSMapping.class.getName());
 
   protected ObjectRelationalMapping mapping;
   protected Map<Object, ClassInfoIF> class_infos;

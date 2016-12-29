@@ -63,7 +63,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   protected Set alreadyExported;   // objids topics & assocs already exported
   protected boolean use_local_ids; // see setUseLocalIds
   private String tmid;
-  private static Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
   
   /**
    * PUBLIC: Initializes the exporter.

@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class CSVImport {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVImport.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(CSVImport.class.getName());
 
   protected Project project;
   protected Connection conn;
@@ -264,9 +264,9 @@ public class CSVImport {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean stripquotes = false;
-    String separator = ";";
-    int ignorelines = 0;
+    private boolean stripquotes = false;
+    private String separator = ";";
+    private int ignorelines = 0;
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 's')
         separator = value;

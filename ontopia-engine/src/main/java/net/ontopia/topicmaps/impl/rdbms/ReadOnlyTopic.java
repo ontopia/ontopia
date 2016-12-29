@@ -100,11 +100,11 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     return ((ReadOnlyTopicMap)getTopicMap()).getTopicNamesByType(this, type);
   }
   
-  void addTopicName(TopicNameIF name) {
+  protected void addTopicName(TopicNameIF name) {
     throw new ReadOnlyException();
   }
   
-  void removeTopicName(TopicNameIF name) {
+  protected void removeTopicName(TopicNameIF name) {
     throw new ReadOnlyException();
   }
   
@@ -116,11 +116,11 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     return ((ReadOnlyTopicMap)getTopicMap()).getOccurrencesByType(this, type);
   }
 
-  void addOccurrence(OccurrenceIF occurrence) {
+  protected void addOccurrence(OccurrenceIF occurrence) {
     throw new ReadOnlyException();
   }
   
-  void removeOccurrence(OccurrenceIF occurrence) {
+  protected void removeOccurrence(OccurrenceIF occurrence) {
     throw new ReadOnlyException();
   }
   

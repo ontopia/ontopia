@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class TopicEvents implements EventListenerIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(TopicEvents.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TopicEvents.class.getName());
 
   protected  RDBMSTopicMapStore store;
   
@@ -108,14 +108,14 @@ public class TopicEvents implements EventListenerIF {
   // -----------------------------------------------------------------------------
   
   // called when topic has just been added to the topic map
-  void addedTopic(TopicIF topic) {
+  protected void addedTopic(TopicIF topic) {
     if (store.topic_listeners != null) {
       topicsAdded.add(topic);
     }
   }
 
   // called when a topic is about to be removed from the topic map
-  void removingTopic(TopicIF topic) {
+  protected void removingTopic(TopicIF topic) {
     if (store.topic_listeners != null) {
       topicsAdded.remove(topic);
       if (!topicsRemoved.containsKey(topic))
@@ -127,7 +127,7 @@ public class TopicEvents implements EventListenerIF {
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
-  void registerListeners(EventManagerIF emanager) {
+  protected void registerListeners(EventManagerIF emanager) {
     // listen to topic modification events
     emanager.addListener(this, TopicIF.EVENT_MODIFIED);
     emanager.addListener(this, TopicMapTransactionIF.EVENT_COMMIT);

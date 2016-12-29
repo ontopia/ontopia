@@ -137,14 +137,14 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   /**
    * Adds a topic to the set of topics.
    */
-  void addTopic(TopicIF topic) {
+  protected void addTopic(TopicIF topic) {
     throw new ReadOnlyException();
   }
 
   /**
    * Removes a topic from the set of topics.
    */
-  void removeTopic(TopicIF topic) {
+  protected void removeTopic(TopicIF topic) {
     throw new ReadOnlyException();
   }
   
@@ -157,14 +157,14 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   /**
    * Adds an association to the set of associations.
    */
-  void addAssociation(AssociationIF association) {
+  protected void addAssociation(AssociationIF association) {
     throw new ReadOnlyException();
   }
   
   /**
    * Removes an associations from the set of associations.
    */
-  void removeAssociation(AssociationIF association) {
+  protected void removeAssociation(AssociationIF association) {
     throw new ReadOnlyException();
   }
 

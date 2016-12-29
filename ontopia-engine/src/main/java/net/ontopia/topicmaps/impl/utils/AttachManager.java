@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class AttachManager extends AbstractAttachManager {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AttachManager.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AttachManager.class.getName());
   
   protected Map<Class<?>, AttachHandlerIF> ahandlers;
   protected Map<Class<?>, DetachHandlerIF> dhandlers;

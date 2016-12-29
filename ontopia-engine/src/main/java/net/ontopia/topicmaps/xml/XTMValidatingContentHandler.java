@@ -42,7 +42,7 @@ import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
  * using Jing.</p>
  */
 public class XTMValidatingContentHandler implements ContentHandler {
-  static final String EL_TOPICMAP = "topicMap";
+  private static final String EL_TOPICMAP = "topicMap";
 
   private ContentHandler child; // validated events are passed here
   private ContentHandler validator; // validating handler

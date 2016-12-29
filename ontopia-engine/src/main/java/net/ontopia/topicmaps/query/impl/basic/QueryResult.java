@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: The query result representation used by the basic implementation.
  */
 public class QueryResult implements QueryResultIF {
-  private static Logger log = LoggerFactory.getLogger(QueryResult.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(QueryResult.class.getName());
 
-  QueryMatches matches;
+  protected QueryMatches matches;
 
   protected int current;
   protected int last;

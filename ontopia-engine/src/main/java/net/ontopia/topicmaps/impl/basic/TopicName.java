@@ -43,7 +43,7 @@ import net.ontopia.utils.UniqueSet;
  */
 public class TopicName extends TMObject implements TopicNameIF {
 
-  static final long serialVersionUID = -7350019735868904034L;
+  private static final long serialVersionUID = -7350019735868904034L;
 
   protected TopicIF reifier;
   protected String value;
@@ -66,7 +66,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   /**
    * INTERNAL: Set the topic that the topic name belongs to. [parent]
    */
-  void setTopic(Topic parent) {
+  protected void setTopic(Topic parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
       throw new ConstraintViolationException(
@@ -104,7 +104,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       return Collections.unmodifiableSet(variants);
   }
 
-  void addVariant(VariantNameIF _variant) {
+  protected void addVariant(VariantNameIF _variant) {
     VariantName variant = (VariantName) _variant;
     if (variant == null)
       throw new NullPointerException("null is not a valid argument.");
@@ -129,7 +129,7 @@ public class TopicName extends TMObject implements TopicNameIF {
         variant._addTheme(theme, false);
   }
 
-  void removeVariant(VariantNameIF _variant) {
+  protected void removeVariant(VariantNameIF _variant) {
     VariantName variant = (VariantName) _variant;
     if (variant == null)
       throw new NullPointerException("null is not a valid argument.");

@@ -183,14 +183,14 @@ public class RDBMSImport {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    long topicMapId = -1;
-    boolean validate = true;
-    boolean suppress = false;
-    boolean loadExternal = true;
-    String jdbcspyFile;
-    String topicMapTitle;
-    String topicMapComments;
-    boolean progress;
+    private long topicMapId = -1;
+    private boolean validate = true;
+    private boolean suppress = false;
+    private boolean loadExternal = true;
+    private String jdbcspyFile;
+    private String topicMapTitle;
+    private String topicMapComments;
+    private boolean progress;
     
     public void processOption(char option, String value) {
       if (option == 'i') topicMapId = ImportExportUtils.getTopicMapId(value);

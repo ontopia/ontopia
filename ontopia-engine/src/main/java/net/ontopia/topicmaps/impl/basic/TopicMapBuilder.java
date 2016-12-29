@@ -43,7 +43,7 @@ import net.ontopia.topicmaps.utils.PSI;
  * INTERNAL: The default topic map builder implementation.
  */
 public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
-  static final long serialVersionUID = 5405384048878296268L;
+  private static final long serialVersionUID = 5405384048878296268L;
 
   protected TopicMap tm;
   

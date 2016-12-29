@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class ClassInfo implements ClassInfoIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ClassInfo.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ClassInfo.class.getName());
 
   protected RDBMSMapping mapping;
   protected ClassDescriptor cdesc;
@@ -67,7 +67,7 @@ public class ClassInfo implements ClassInfoIF {
    * optimized form. Called from RDBSMapping, because calling it in
    * the constructor leads to never-ending recursion.
    */
-  void compile() {
+  protected void compile() {
     // compute identity fields
     identity_field = new IdentityFieldInfo(this, compileFieldInfos(this, cdesc.getIdentityFields()));
     

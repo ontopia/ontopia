@@ -72,7 +72,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   public static final String PROPERTY_FILTER = "filter";
   public static final String PROPERTY_PRESERVE_IDS = "preserveIds";
   
-  static Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
 
   protected String encoding; // the encoding reported on the first line
     
@@ -1548,7 +1548,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * equality(.equals) and, if not equal, orders arbitrarily.
    */
   private class AssociationRoleFrequencyComparator implements Comparator<AssociationRoleIF> {
-    AssociationRoleComparator associationRoleComparator;
+    private AssociationRoleComparator associationRoleComparator;
 
     public AssociationRoleFrequencyComparator() {
       associationRoleComparator = new AssociationRoleComparator();
@@ -1797,8 +1797,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Comparator for superclass-subclass associations.
    */
   private class SupersubComparator implements Comparator<AssociationIF> {
-    Comparator<Iterator<AssociationRoleIF>> iteratorComparator;
-    Comparator<AssociationRoleIF> supersubRoleComparator;
+    private Comparator<Iterator<AssociationRoleIF>> iteratorComparator;
+    private Comparator<AssociationRoleIF> supersubRoleComparator;
 
     public SupersubComparator() {
       supersubRoleComparator = new SupersubRoleComparator();

@@ -45,7 +45,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ObjectRelationalMapping {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ObjectRelationalMapping.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ObjectRelationalMapping.class.getName());
   
   class MappingHandler extends DefaultHandler {
 
