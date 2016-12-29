@@ -21,8 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A transactional storage cache implementation. The cache
@@ -31,9 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class StatisticsCache implements StorageCacheIF {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(StatisticsCache.class.getName());
 
   protected int total_o;
   protected int total_f;

@@ -49,8 +49,6 @@ import org.xml.sax.SAXException;
  */
 public class XFMLContentHandler extends AbstractTopicMapContentHandler {
 
-  private static final String NO_URI = "URI";
-
   private static final String EL_XFML        = "xfml";
   private static final String EL_FACET       = "facet";
   private static final String EL_TOPIC       = "topic";

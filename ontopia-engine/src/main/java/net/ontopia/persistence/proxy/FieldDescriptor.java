@@ -26,9 +26,6 @@ import java.util.HashSet;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Class used for holding object relational mapping field
  * declarations. It is used by the ObjectRelationalMapping class.<p>
@@ -39,9 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class FieldDescriptor {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(FieldDescriptor.class.getName());
 
   private final static Set<Class<?>> PRIMITIVE_TYPES;
 

@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: A JSON serializer. Take a look at the <a
@@ -56,7 +54,6 @@ import org.slf4j.LoggerFactory;
  * @since 5.1
  */
 public class JSONWriter {
-  private static final Logger log = LoggerFactory.getLogger(JSONWriter.class.getName());
 
   private final static int INDENT = 2;
 

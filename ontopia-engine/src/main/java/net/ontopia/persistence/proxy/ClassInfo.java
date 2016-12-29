@@ -23,8 +23,6 @@ package net.ontopia.persistence.proxy;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class descriptor-like class that is used by the RDBMS
@@ -32,9 +30,6 @@ import org.slf4j.LoggerFactory;
  * object relational class descriptor in an optimized manner.<p>
  */
 public class ClassInfo implements ClassInfoIF {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(ClassInfo.class.getName());
 
   protected RDBMSMapping mapping;
   protected ClassDescriptor cdesc;

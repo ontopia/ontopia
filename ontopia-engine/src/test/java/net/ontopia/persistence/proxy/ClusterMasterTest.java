@@ -41,8 +41,6 @@ import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import org.jgroups.Message;
 import org.junit.Ignore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Server test class that sends events to clients. The tests
@@ -58,9 +56,6 @@ import org.slf4j.LoggerFactory;
  */
 @Ignore //not to be ran by Maven's JUnit
 public class ClusterMasterTest extends AbstractClusterTest implements java.io.Serializable {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(ClusterMasterTest.class.getName());
 
   transient List tests;
 

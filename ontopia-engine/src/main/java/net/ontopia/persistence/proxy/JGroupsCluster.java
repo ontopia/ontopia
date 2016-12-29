@@ -42,8 +42,6 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
 
-  private final static Integer DATA = 1;
-  
   protected JChannel dchannel;
   
   protected String clusterId;

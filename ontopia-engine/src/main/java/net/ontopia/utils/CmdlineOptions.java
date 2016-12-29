@@ -32,8 +32,6 @@ import java.util.Map;
  */
 public class CmdlineOptions {
 
-  private boolean parsed = false;
-
   protected String application;
   protected String[] argv;
   
@@ -123,8 +121,6 @@ public class CmdlineOptions {
     for (int i = g.getOptind(); i < argv.length ; i++) {
       arguments.add(argv[i]);
     }
-    
-    parsed = true;
   }
 
   

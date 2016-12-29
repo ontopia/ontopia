@@ -33,9 +33,6 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapTransaction;
 import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: A generic RDBMS fulltext searcher implementation. Note that the class
  * only accepts an RDBMS topic map in its constructor.
@@ -43,9 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(RDBMSSearcher.class.getName());
 
   protected final static int FT_PLATFORM_GENERIC = 1;
   protected final static int FT_PLATFORM_ORACLE_TEXT = 2;

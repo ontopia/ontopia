@@ -37,8 +37,6 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.jgroups.Message;
 import org.junit.Ignore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Client test class that receives events from a master. The
@@ -46,9 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 @Ignore //not to be ran by Maven's JUnit
 public class ClusterClientTest extends AbstractClusterTest {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(ClusterClientTest.class.getName());
 
   Map tests;
   TopicMapIF topicmap;

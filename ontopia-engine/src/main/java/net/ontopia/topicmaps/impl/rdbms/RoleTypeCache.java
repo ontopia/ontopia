@@ -43,16 +43,10 @@ import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.utils.PropertyUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL:
  */
 public class RoleTypeCache {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(RoleTypeCache.class.getName());
 
   protected TopicMapIF tm;
 

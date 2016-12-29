@@ -22,8 +22,6 @@ package net.ontopia.persistence.proxy;
 
 import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.procedure.TObjectIntProcedure;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A data structure that keeps track of the objects that has
@@ -31,9 +29,6 @@ import org.slf4j.LoggerFactory;
  * objects are also maintained.
  */
 public class ObjectStates {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(ObjectStates.class.getName());
 
   public static final int STATE_CREATED = 1;
   public static final int STATE_DELETED = 2;

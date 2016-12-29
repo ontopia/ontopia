@@ -29,18 +29,12 @@ import net.ontopia.persistence.query.sql.SQLValueIF;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: The indicator field handler implementation that is able
  * to...<p>
  */
 
 public class IndicatorFieldHandler implements FieldHandlerIF {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(IndicatorFieldHandler.class.getName());
 
   protected final ObjectRelationalMappingIF mapping;
   protected final Map<Object, Class<?>> indicators;

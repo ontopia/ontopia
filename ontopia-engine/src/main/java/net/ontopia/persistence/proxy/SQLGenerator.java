@@ -23,17 +23,12 @@ package net.ontopia.persistence.proxy;
 import java.util.Collection;
 import java.util.Iterator;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Utility class that can generate SQL statements.
  */
 
 public class SQLGenerator {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(SQLGenerator.class.getName());
   
   // -----------------------------------------------------------------------------
   // Statement generators

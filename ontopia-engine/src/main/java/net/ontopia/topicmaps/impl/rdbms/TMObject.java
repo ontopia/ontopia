@@ -29,8 +29,6 @@ import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -38,9 +36,6 @@ import org.slf4j.LoggerFactory;
 public abstract class TMObject extends AbstractRWPersistent
   implements TMObjectIF {
 
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(TMObject.class.getName());
-  
   // ---------------------------------------------------------------------------
   // Field declarations
   // ---------------------------------------------------------------------------

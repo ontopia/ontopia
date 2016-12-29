@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class used for holding object relational mapping class
@@ -40,9 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class ClassDescriptor {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(ClassDescriptor.class.getName());
     
   protected ObjectRelationalMapping mapping;
   protected Class<?> klass;

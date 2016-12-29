@@ -33,9 +33,6 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: A class that configures event listeners for an object
  * tree manager object and figures out which objects have been
@@ -44,9 +41,6 @@ import org.slf4j.LoggerFactory;
 
 public class AttachManager extends AbstractAttachManager {
 
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(AttachManager.class.getName());
-  
   protected Map<Class<?>, AttachHandlerIF> ahandlers;
   protected Map<Class<?>, DetachHandlerIF> dhandlers;
   
