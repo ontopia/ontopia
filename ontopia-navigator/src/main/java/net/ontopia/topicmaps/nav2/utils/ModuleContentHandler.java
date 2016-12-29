@@ -29,8 +29,6 @@ import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.impl.basic.Function;
 import net.ontopia.utils.ontojsp.JSPContentHandler;
 import net.ontopia.utils.ontojsp.JSPTreeNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -41,10 +39,6 @@ import org.xml.sax.SAXException;
  * containing the element structure of navigator tags.
  */
 public class ModuleContentHandler extends JSPContentHandler {
-
-  // initialize logging facility
-  private static final Logger log = LoggerFactory
-    .getLogger(ModuleContentHandler.class.getName());
 
   /** Map with function names as keys and FunctionIF objects as values */
   protected Map functions;

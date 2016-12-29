@@ -20,9 +20,6 @@
 
 package net.ontopia.topicmaps.nav.conf;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /** 
  * PUBLIC: Provides model, view and skin information for the application
  * 
@@ -31,9 +28,6 @@ import org.slf4j.LoggerFactory;
  * configuration file. The new class must implement ControlConfigIF.
  */
 public class ControlConfig implements ControlConfigIF {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(ControlConfig.class.getName());
 
   // defaults designed to be overriden by implementors
   private String model = "simple";

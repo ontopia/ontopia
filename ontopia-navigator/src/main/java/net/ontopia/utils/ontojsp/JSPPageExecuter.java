@@ -32,16 +32,11 @@ import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class that executes a jsp page from a given root node.
  */
 public class JSPPageExecuter {
-
-  // initialize logging facility
-  private static final Logger logger = LoggerFactory.getLogger(JSPPageExecuter.class.getName());
 
   // members
   protected PageContext pageContext;
