@@ -48,7 +48,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   private static final long serialVersionUID = -3009179502068590303L;
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(SetTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // FIXME: replace this ugliness with a Map (but wait for tests)
   private static final String scopeNames[] = {
@@ -65,8 +65,8 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   };
 
   // members
-  Collection outValue;
-  String clonedVar;
+  private Collection outValue;
+  private String clonedVar;
 
   // tag attributes
   private String reqparam;

@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class SetContextTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(SetContextTag.class.getName());
   
   // tag attributes

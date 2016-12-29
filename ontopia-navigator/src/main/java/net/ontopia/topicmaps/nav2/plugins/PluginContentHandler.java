@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
 public class PluginContentHandler extends SAXTracker {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(PluginContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(PluginContentHandler.class.getName());
 
   // constants
   public static final String PLUGINS_ROOTDIR_PLACEHOLDER =

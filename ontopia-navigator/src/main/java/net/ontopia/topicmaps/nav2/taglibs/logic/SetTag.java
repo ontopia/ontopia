@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 public class SetTag extends TagSupport implements ValueAcceptingTagIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(SetTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // constants
   private static final StringifierIF DEF_TOPIC_STRINGIFIER = TopicStringifiers

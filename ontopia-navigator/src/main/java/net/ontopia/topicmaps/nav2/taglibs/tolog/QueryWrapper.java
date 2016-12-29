@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QueryWrapper {
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(QueryWrapper.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(QueryWrapper.class.getName());
 
   private Collection users;
   

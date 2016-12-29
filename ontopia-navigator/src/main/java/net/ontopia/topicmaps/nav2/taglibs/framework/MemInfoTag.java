@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public final class MemInfoTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(MemInfoTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(MemInfoTag.class.getName());
 
   // constants
   private final static NumberFormat formatter =

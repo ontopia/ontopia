@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class SymbolicIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(ObjectIdTag.class.getName());
   
   public final void generateOutput(JspWriter out, Object outObject)

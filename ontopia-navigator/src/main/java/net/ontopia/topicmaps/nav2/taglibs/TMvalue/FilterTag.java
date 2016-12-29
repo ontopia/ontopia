@@ -69,7 +69,7 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
   public static final String CLASS_LOCATOR  = "locator";
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(FilterTag.class.getName());
 
   // constants

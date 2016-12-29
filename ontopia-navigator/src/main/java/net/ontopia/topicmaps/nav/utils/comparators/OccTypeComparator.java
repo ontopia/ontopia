@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class OccTypeComparator extends TopicComparator {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(OccTypeComparator.class.getName());
 
   // members

@@ -33,24 +33,24 @@ import org.slf4j.LoggerFactory;
 public class ControlConfig implements ControlConfigIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ControlConfig.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ControlConfig.class.getName());
 
   // defaults designed to be overriden by implementors
-  String model = "simple";
-  String view = "no_frames";
-  String skin = "blue";
+  private String model = "simple";
+  private String view = "no_frames";
+  private String skin = "blue";
   
   // the get and set variables used by the jsp
-  String modelPath;
-  String viewPath;
-  String skinPath;
+  private String modelPath;
+  private String viewPath;
+  private String skinPath;
   
   // derived from the M,V,S
-  String behaviour;
-  String contentType;
+  private String behaviour;
+  private String contentType;
   
   // others
-  String resource;
+  private String resource;
 
   /**
    * Constructor which takes a path to the configuration file.

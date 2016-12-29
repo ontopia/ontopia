@@ -71,7 +71,7 @@ import org.xml.sax.SAXParseException;
 public final class NavigatorApplication implements NavigatorApplicationIF {
 
   // initialization of log facility
-  private static Logger log = LoggerFactory.getLogger(NavigatorApplication.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(NavigatorApplication.class.getName());
 
   // the name of a plug-in specification file in a plug-in directory
   private static final String PLUGIN_SPEC = "plugin.xml";

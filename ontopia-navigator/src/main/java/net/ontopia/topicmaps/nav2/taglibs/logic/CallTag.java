@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class CallTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(CallTag.class.getName());
   
   // members

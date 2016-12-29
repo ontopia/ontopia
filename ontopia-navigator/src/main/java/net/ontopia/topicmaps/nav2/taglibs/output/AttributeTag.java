@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class AttributeTag extends BodyTagSupport {
   
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(AttributeTag.class.getName());
 
   // tag attributes

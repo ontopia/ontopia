@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class ChooseTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(ChooseTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ChooseTag.class.getName());
   
   // members
   private boolean foundMatchingWhen;

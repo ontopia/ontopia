@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public final class TimerTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(TimerTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TimerTag.class.getName());
 
   // members
   private long startTime;

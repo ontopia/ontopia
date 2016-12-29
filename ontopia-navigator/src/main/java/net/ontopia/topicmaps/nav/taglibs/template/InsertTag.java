@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class InsertTag extends TagSupport {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(InsertTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(InsertTag.class.getName());
 
   
   public final static String TEMPL_STACK_KEY = "template-stack";

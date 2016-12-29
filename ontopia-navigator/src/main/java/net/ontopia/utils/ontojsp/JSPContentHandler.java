@@ -41,7 +41,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class JSPContentHandler extends DefaultHandler {
 
   // initialize logging facility
-  static Logger log = LoggerFactory.getLogger(JSPContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(JSPContentHandler.class.getName());
 
   protected JSPTreeNodeIF root;
   protected JSPTreeNodeIF current;

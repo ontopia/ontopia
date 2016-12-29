@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * collection of maps.
  */
 public class TologQueryTag extends BaseValueProducingTag {
-  private static Logger log = LoggerFactory.getLogger(TologQueryTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TologQueryTag.class.getName());
   
   // tag attributes
   private String query;

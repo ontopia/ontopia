@@ -43,10 +43,10 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
   public static final boolean TAGPOOLING_DEFAULT = false;
 
   // initialize logging facility
-  static Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
 
   // Map between tag names (with namespace prefix) and Java Classes
-  static Map<String, String> classes;
+  private static Map<String, String> classes;
 
   public TaglibTagFactory() {
     this(TAGPOOLING_DEFAULT);

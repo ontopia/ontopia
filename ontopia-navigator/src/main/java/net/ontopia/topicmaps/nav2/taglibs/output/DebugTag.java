@@ -48,7 +48,7 @@ public class DebugTag extends TagSupport
   implements OutputProducingTagIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(DebugTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DebugTag.class.getName());
 
   // members
   protected ContextTag contextTag;  

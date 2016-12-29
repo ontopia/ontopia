@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractTaglibTestCase {
 
-  private static Logger log = LoggerFactory.getLogger(AbstractTaglibTestCase.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractTaglibTestCase.class.getName());
   protected String jspfile;
   protected String topicmapId;
   protected Map<String, String[]> reqParams;

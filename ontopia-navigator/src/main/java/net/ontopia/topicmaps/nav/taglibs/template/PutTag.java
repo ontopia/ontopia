@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class PutTag extends AbstractTemplateTag {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(PutTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(PutTag.class.getName());
 
   // tag attributes
   private String content;

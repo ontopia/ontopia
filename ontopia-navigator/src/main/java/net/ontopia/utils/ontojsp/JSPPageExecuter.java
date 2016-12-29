@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class JSPPageExecuter {
 
   // initialize logging facility
-  static Logger logger = LoggerFactory.getLogger(JSPPageExecuter.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(JSPPageExecuter.class.getName());
 
   // members
   protected PageContext pageContext;

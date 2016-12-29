@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class Module implements ModuleIF {
 
   // initialization of log facility
-  private static Logger log = LoggerFactory.getLogger(Module.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(Module.class.getName());
 
   // types of module encodings
   public static final String TYPE_ENCRYPTED = "EncryptedModuleReader";

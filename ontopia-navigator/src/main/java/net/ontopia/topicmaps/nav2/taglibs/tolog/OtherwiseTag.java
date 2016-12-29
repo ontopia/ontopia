@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class OtherwiseTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
 
   // members
   protected ChooseTag parentChooser;

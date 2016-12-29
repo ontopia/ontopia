@@ -41,8 +41,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AutoSuggestServlet extends HttpServlet {
 
-  int limit = 25;
-  String query = "select $T, $DESC from value-like($TN, %TERM%), topic-name($T, $TN), { i\"http://purl.org/dc/elements/1.1/description\"($T, $DESC) } order by $T, $DESC desc?";
+  private int limit = 25;
+  private String query = "select $T, $DESC from value-like($TN, %TERM%), topic-name($T, $TN), { i\"http://purl.org/dc/elements/1.1/description\"($T, $DESC) } order by $T, $DESC desc?";
 
   public void init() throws ServletException {
   }

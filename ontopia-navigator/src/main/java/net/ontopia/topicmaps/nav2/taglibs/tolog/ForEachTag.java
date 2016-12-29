@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
 public class ForEachTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
 
   // members
   protected ForEachTag groupingAncestor; 

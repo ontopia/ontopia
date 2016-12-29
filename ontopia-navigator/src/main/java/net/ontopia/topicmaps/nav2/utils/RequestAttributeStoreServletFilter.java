@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 
 public class RequestAttributeStoreServletFilter implements Filter {
 
-  static Logger log = LoggerFactory.getLogger(RequestAttributeStoreServletFilter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RequestAttributeStoreServletFilter.class.getName());
   
   protected FilterConfig filterConfig;
   

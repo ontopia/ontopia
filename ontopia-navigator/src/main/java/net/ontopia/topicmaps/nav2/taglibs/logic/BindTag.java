@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class BindTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(BindTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(BindTag.class.getName());
 
   // members
   private ContextManagerIF ctxtMgr;

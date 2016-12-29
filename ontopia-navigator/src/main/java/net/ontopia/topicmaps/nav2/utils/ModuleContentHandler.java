@@ -43,7 +43,7 @@ import org.xml.sax.SAXException;
 public class ModuleContentHandler extends JSPContentHandler {
 
   // initialize logging facility
-  static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(ModuleContentHandler.class.getName());
 
   /** Map with function names as keys and FunctionIF objects as values */

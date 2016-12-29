@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 
 public class ThreadLocalStoreServletFilter implements Filter {
 
-  static Logger log = LoggerFactory.getLogger(ThreadLocalStoreServletFilter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ThreadLocalStoreServletFilter.class.getName());
 
   private static ThreadLocal data = new ThreadLocal();
   

@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(SuperclassesTag.class.getName());
 
   private static TypeHierarchyUtils hierUtils = new TypeHierarchyUtils();

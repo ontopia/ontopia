@@ -52,7 +52,7 @@ public class IfTag extends TagSupport
   implements ValueProducingTagIF, ValueAcceptingTagIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(IfTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(IfTag.class.getName());
 
   // members
   private NavigatorPageIF contextTag;

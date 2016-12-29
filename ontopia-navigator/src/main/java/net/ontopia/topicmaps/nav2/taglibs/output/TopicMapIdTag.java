@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class TopicMapIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(TopicMapIdTag.class.getName());
   
   public final void generateOutput(JspWriter out, Iterator iter)

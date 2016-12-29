@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class IfTag extends QueryExecutingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(IfTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(IfTag.class.getName());
 
   // tag attributes
   protected String var;

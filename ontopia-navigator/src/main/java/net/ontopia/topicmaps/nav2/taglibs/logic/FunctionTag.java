@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(FunctionTag.class.getName());
   
   // tag attributes

@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class DeclareTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(DeclareTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DeclareTag.class.getName());
   
   protected String declarations;
   

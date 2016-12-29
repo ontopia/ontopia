@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class ResponseTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(ResponseTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ResponseTag.class.getName());
 
   // tag attributes
   protected String content_type;

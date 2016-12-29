@@ -45,7 +45,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 public class GetTag extends AbstractTemplateTag {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(GetTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(GetTag.class.getName());
 
   private boolean fallback = false;
 

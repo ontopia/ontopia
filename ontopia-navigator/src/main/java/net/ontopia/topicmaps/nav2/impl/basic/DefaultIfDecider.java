@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultIfDecider implements NavigatorDeciderIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(DefaultIfDecider.class.getName());
   
   // members

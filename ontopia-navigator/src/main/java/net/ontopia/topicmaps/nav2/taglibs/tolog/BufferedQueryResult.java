@@ -33,7 +33,7 @@ public class BufferedQueryResult
         implements BufferedQueryResultIF {
   
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(BufferedQueryResult.class
+  private static final Logger log = LoggerFactory.getLogger(BufferedQueryResult.class
           .getName());
 
   protected QueryResultIF queryResult;      

@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class NavigatorConfigurationContentHandler extends SAXTracker {
 
   // Define a logging category.
-  static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(NavigatorConfigurationContentHandler.class.getName());
 
   // member
