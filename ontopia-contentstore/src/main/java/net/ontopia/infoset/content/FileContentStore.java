@@ -42,6 +42,8 @@ import org.apache.commons.io.IOUtils;
 public class FileContentStore implements ContentStoreIF {
   public static final int FILES_PER_DIRECTORY = 1000;
   public static final int KEY_BLOCK_SIZE = 10;
+  public static final int MAX_SPINS = 1000;
+  public static final int SPIN_TIMEOUT = 10;
 
   private int files_per_directory;
   private boolean open;
@@ -160,9 +162,6 @@ public class FileContentStore implements ContentStoreIF {
     last_key++;
     return last_key;
   }
-
-  static final int MAX_SPINS = 1000;
-  static final int SPIN_TIMEOUT = 10;
 
   private void allocateNewBlock() throws ContentStoreException {
     RandomAccessFile out = null;
