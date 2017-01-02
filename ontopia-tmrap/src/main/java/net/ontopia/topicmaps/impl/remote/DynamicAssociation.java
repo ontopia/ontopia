@@ -47,7 +47,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
   }
 
   // This should be AssociationIF when this class becomes a proper proxy
-  Association target;
+  private Association target;
 
   /*
    * (non-Javadoc)

@@ -85,7 +85,7 @@ public class RAPServlet extends HttpServlet {
   public static final String RAP_NAMESPACE = "http://psi.ontopia.net/tmrap/";
   
   // Used to register type listeners
-  Map<TopicIF, Map<String, String>> clientListeners = new HashMap<TopicIF, Map<String, String>>();
+  private Map<TopicIF, Map<String, String>> clientListeners = new HashMap<TopicIF, Map<String, String>>();
   
   private TMRAPConfiguration rapconfig;
 
@@ -577,15 +577,9 @@ public class RAPServlet extends HttpServlet {
     // Much wanted by Serializable. (The number is randomly typed).
     private static final long serialVersionUID = 7912425438445764224l;
 
-    String message;
-    
     public RAPServletException(String message) {
-      this.message = message;
+      super(message);
       log.warn(message, this);      
-    }
-    
-    public String getMessage() {
-      return message;
     }
   }
   

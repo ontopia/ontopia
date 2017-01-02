@@ -51,7 +51,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class TMRAPTestCaseContentHandler extends SAXTracker {
 
-  static Logger log = LoggerFactory
+  private static Logger log = LoggerFactory
     .getLogger(TMRAPTestCaseContentHandler.class.getName());
 
   protected ErrorHandler ehandler;
