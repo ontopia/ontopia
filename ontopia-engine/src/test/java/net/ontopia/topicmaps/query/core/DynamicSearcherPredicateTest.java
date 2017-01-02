@@ -166,11 +166,11 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     }
     
     private class ExactSearchResult extends AbstractSearchResult {
-      String query;
-      int c = 0;
+      private String query;
+      private int c = 0;
 
-      String[] o = new String[] { "a",  "b",  "c",  "d",  "e",  "d",  "f",  "g" };
-      float[] f = new float[] {  1.0f, 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f };
+      private String[] o = new String[] { "a",  "b",  "c",  "d",  "e",  "d",  "f",  "g" };
+      private float[] f = new float[] {  1.0f, 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f };
       
       ExactSearchResult(String query) {
         this.query = query;

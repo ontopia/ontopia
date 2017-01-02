@@ -37,27 +37,27 @@ import net.ontopia.utils.GrabberIF;
 
 public class NameGrabberTest extends TestCase {
 
-  InMemoryTopicMapStore store;
-  TopicMapBuilderIF builder;
-  TopicMapIF topicmap; 
-  TopicIF topicSort;
-  TopicIF topicPlay;
-  TopicIF topicWriter;
-  TopicIF topic1;
-  TopicNameIF basename1;
-  VariantNameIF variant1A;
-  TopicIF topic2;
-  TopicNameIF basename2;
-  VariantNameIF variant2A;
-  TopicIF topic3;
-  TopicNameIF basename3;
-  VariantNameIF variant3A;
-  TopicIF topic4;
-  TopicNameIF basename4;
-  VariantNameIF variant4A;
-  TopicIF topic5;
-  TopicNameIF basename5A, basename5B, basename5C;
-  VariantNameIF variant5A, variant5B, variant5C;
+  private InMemoryTopicMapStore store;
+  private TopicMapBuilderIF builder;
+  private TopicMapIF topicmap; 
+  private TopicIF topicSort;
+  private TopicIF topicPlay;
+  private TopicIF topicWriter;
+  private TopicIF topic1;
+  private TopicNameIF basename1;
+  private VariantNameIF variant1A;
+  private TopicIF topic2;
+  private TopicNameIF basename2;
+  private VariantNameIF variant2A;
+  private TopicIF topic3;
+  private TopicNameIF basename3;
+  private VariantNameIF variant3A;
+  private TopicIF topic4;
+  private TopicNameIF basename4;
+  private VariantNameIF variant4A;
+  private TopicIF topic5;
+  private TopicNameIF basename5A, basename5B, basename5C;
+  private VariantNameIF variant5A, variant5B, variant5C;
   
   public NameGrabberTest(String name) {
     super(name);

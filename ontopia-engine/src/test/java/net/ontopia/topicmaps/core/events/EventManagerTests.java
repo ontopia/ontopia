@@ -127,11 +127,11 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   
   // --- Test cases
 
-  class Event {
-    Object object;
-    String event;
-    Object new_value;
-    Object old_value;
+  protected class Event {
+    private Object object;
+    private String event;
+    private Object new_value;
+    private Object old_value;
     Event(Object object, String event, Object new_value, Object old_value) {
       this.object = object;
       this.event = event;
@@ -152,8 +152,8 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     }
   }
 
-  class TesterListener implements EventListenerIF {
-    List<Event> seenEvents = new ArrayList<Event>();
+  protected class TesterListener implements EventListenerIF {
+    private List<Event> seenEvents = new ArrayList<Event>();
 
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       seenEvents.add(new Event(object, event, new_value, old_value));

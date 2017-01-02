@@ -25,8 +25,8 @@ import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public class DefaultTopicMapSourceTest extends TestCase {
-  TopicMapStoreIF store;
-  DefaultTopicMapSource source;
+  private TopicMapStoreIF store;
+  private DefaultTopicMapSource source;
 
   public DefaultTopicMapSourceTest(String name) {
     super(name);

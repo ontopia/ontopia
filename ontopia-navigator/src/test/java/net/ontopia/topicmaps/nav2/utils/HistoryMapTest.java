@@ -28,11 +28,11 @@ public class HistoryMapTest extends TestCase {
     super(name);
   }
 
-  String s1 = "String1";
-  String s2 = "zwo";
-  String s3 = "Nummer tres";
-  String s4 = "viere";
-  String s5 = "zwo";
+  private static final String s1 = "String1";
+  private static final String s2 = "zwo";
+  private static final String s3 = "Nummer tres";
+  private static final String s4 = "viere";
+  private static final String s5 = "zwo";
   
   protected HistoryMap makeHistoryMap() {
     HistoryMap hm = new HistoryMap(3, true);

@@ -69,8 +69,8 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
   
   // --- Test cases
 
-  class TesterListener implements TopicMapListenerIF {
-    Collection snapshots = new HashSet();
+  protected class TesterListener implements TopicMapListenerIF {
+    private Collection snapshots = new HashSet();
     
     public void objectAdded(TMObjectIF o) {
     }

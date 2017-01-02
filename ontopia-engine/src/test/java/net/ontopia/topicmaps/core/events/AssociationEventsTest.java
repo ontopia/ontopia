@@ -82,7 +82,7 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
     builder = null;
   }
 
-  TopicIF getTopicBySubjectIdentifier(LocatorIF si) {
+  protected TopicIF getTopicBySubjectIdentifier(LocatorIF si) {
     TopicIF result = topicmap.getTopicBySubjectIdentifier(si);
     if(result == null) {
       throw new RuntimeException("topic " + si.getAddress() + " not found in the test topic map");
@@ -175,8 +175,8 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
   }
   
   public static class EventListener extends AbstractTopicMapListener {
-    ArrayList<EventTrace> traces = new ArrayList<EventTrace>();
-    String traceAnnotation = "";
+    private ArrayList<EventTrace> traces = new ArrayList<EventTrace>();
+    private String traceAnnotation = "";
 
     final public static String ADD = "add";
     final public static String MODIFIED = "modified";

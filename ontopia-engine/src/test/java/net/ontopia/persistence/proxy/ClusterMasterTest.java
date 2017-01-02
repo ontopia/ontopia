@@ -55,13 +55,13 @@ import org.junit.Ignore;
  * 
  */
 @Ignore //not to be ran by Maven's JUnit
-public class ClusterMasterTest extends AbstractClusterTest implements java.io.Serializable {
+public class ClusterMasterTest extends AbstractClusterTest {
 
-  transient List tests;
+  private List tests;
 
-  transient TopicMapStoreIF store;
-  transient TopicMapIF topicmap;
-  transient TopicMapBuilderIF builder;
+  private TopicMapStoreIF store;
+  private TopicMapIF topicmap;
+  private TopicMapBuilderIF builder;
 
   public ClusterMasterTest() {
     // for serialization

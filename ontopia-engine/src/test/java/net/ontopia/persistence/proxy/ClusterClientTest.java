@@ -45,12 +45,12 @@ import org.junit.Ignore;
 @Ignore //not to be ran by Maven's JUnit
 public class ClusterClientTest extends AbstractClusterTest {
 
-  Map tests;
-  TopicMapIF topicmap;
-  boolean testInitialProperties;
+  private Map tests;
+  private TopicMapIF topicmap;
+  private boolean testInitialProperties;
 
-  int testsRun;
-  int testsFailed;
+  private int testsRun;
+  private int testsFailed;
   
   public ClusterClientTest(String clusterId, String clusterProps) {
     super(clusterId, clusterProps);

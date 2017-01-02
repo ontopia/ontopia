@@ -28,7 +28,7 @@ public class EncryptionUtilsTest extends TestCase {
 
   private final static String testdataDirectory = "various";
 
-  String baseDir;
+  private String baseDir;
   
   public EncryptionUtilsTest(String name) {
     super(name);

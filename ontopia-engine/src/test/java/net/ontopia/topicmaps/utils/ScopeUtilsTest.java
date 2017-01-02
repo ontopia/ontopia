@@ -320,7 +320,7 @@ public class ScopeUtilsTest extends TestCase {
   // --- Helper classes
 
   public static class Scoped implements ScopedIF {
-    Collection scope;
+    private Collection scope;
     Scoped(Collection scope) {
       this.scope = scope;
     }

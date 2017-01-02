@@ -63,9 +63,9 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
 
   // --- Test cases
 
-  class TesterListener implements TopicMapListenerIF {
-    boolean topicAdded;
-    TopicIF snapshot;
+  protected class TesterListener implements TopicMapListenerIF {
+    private boolean topicAdded;
+    private TopicIF snapshot;
     
     // NOTE: to be called on commit
     public void objectAdded(TMObjectIF o) {
