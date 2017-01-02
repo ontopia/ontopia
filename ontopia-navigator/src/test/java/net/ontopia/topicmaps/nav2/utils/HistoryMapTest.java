@@ -24,15 +24,15 @@ import junit.framework.TestCase;
 
 public class HistoryMapTest extends TestCase {
 
-  public HistoryMapTest(String name) {
-    super(name);
-  }
-
   private static final String s1 = "String1";
   private static final String s2 = "zwo";
   private static final String s3 = "Nummer tres";
   private static final String s4 = "viere";
   private static final String s5 = "zwo";
+
+  public HistoryMapTest(String name) {
+    super(name);
+  }
   
   protected HistoryMap makeHistoryMap() {
     HistoryMap hm = new HistoryMap(3, true);
