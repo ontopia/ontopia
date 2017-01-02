@@ -47,8 +47,8 @@ import java.sql.Timestamp;
 
 public class SpyPreparedStatement extends SpyStatement implements PreparedStatement {
 
-  PreparedStatement pstm;
-  String sql;
+  protected PreparedStatement pstm;
+  protected String sql;
 
   public SpyPreparedStatement(SpyConnection conn, SpyStats stats, 
 			      String sql, PreparedStatement pstm) {

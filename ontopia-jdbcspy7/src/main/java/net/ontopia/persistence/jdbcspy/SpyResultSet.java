@@ -48,10 +48,10 @@ import java.sql.Timestamp;
 
 public class SpyResultSet implements ResultSet {
 
-  SpyStatement stm;
-  String sql;
-  SpyStats stats;
-  ResultSet rs;
+  protected SpyStatement stm;
+  protected String sql;
+  protected SpyStats stats;
+  protected ResultSet rs;
 
   public SpyResultSet(SpyPreparedStatement stm, SpyStats stats, ResultSet rs) {
     this.stm = stm;

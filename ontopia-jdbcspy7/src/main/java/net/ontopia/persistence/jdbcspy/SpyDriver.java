@@ -39,11 +39,11 @@ import org.slf4j.LoggerFactory;
 public class SpyDriver implements Driver {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SpyDriver.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SpyDriver.class.getName());
 
-  static SpyStats stats = new SpyStats();
+  protected static SpyStats stats = new SpyStats();
   
-  Driver driver;
+  protected Driver driver;
   
   public SpyDriver() {
   }
@@ -106,9 +106,9 @@ public class SpyDriver implements Driver {
     }
   }
 
-  static boolean initialized;
+  private static boolean initialized;
 
-  static void initialize() throws SQLException {
+  private static void initialize() throws SQLException {
     if (initialized) return;
 
     // register driver
@@ -119,7 +119,7 @@ public class SpyDriver implements Driver {
     SpyDriver.initialized = true;
   }
 
-  static void initDriver(String driverClass) {
+  private static void initDriver(String driverClass) {
     try {
       ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
       Class.forName(driverClass, true, classLoader);

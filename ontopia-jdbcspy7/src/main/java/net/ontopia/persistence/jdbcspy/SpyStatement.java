@@ -33,9 +33,9 @@ import java.util.Map;
 
 public class SpyStatement implements Statement {
 
-  SpyConnection conn;
-  SpyStats stats;
-  Statement stm;
+  protected SpyConnection conn;
+  protected SpyStats stats;
+  protected Statement stm;
 
   public SpyStatement(SpyConnection conn, SpyStats stats, Statement stm) {
     this.conn = conn;

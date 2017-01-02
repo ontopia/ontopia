@@ -45,8 +45,8 @@ import java.util.concurrent.Executor;
 
 public class SpyConnection implements Connection {
 
-  Connection conn;
-  SpyStats stats;
+  protected Connection conn;
+  protected SpyStats stats;
 
   //! public SpyConnection(Connection conn) {
   //!   this.conn = conn;
