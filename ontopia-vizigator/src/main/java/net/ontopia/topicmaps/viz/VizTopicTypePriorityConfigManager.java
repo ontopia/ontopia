@@ -35,7 +35,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class VizTopicTypePriorityConfigManager {
 
-  VizTopicMapConfigurationManager tmConfig;
+  private VizTopicMapConfigurationManager tmConfig;
 
   private TopicIF rankTopic;
   private TopicIF rankAssociationType;

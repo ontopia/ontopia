@@ -46,8 +46,8 @@ public class OSpinner extends JPanel {
   private int increment = 1;
   private int value = min;
 
-  JButton north;
-  JButton south;
+  private JButton north;
+  private JButton south;
   
   private Box buttonPanel = new Box(BoxLayout.Y_AXIS);
   private NumberFormat formatter = NumberFormat.getNumberInstance();

@@ -192,11 +192,11 @@ public class VizDebugUtils {
   }
   
   public static class CodeTimer {
-    String title;
-    boolean started;
-    long startTime;
-    int stopCount;
-    long totalTime;
+    private String title;
+    private boolean started;
+    private long startTime;
+    private int stopCount;
+    private long totalTime;
     
     public CodeTimer(String title) {
       if (!isDebugEnabled)

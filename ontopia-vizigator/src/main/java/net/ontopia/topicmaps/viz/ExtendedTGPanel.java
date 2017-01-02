@@ -157,16 +157,16 @@ public class ExtendedTGPanel extends TGPanel {
 
   protected Node select;
 
-  Node dragNode; // Node currently being dragged
+  private Node dragNode; // Node currently being dragged
 
   protected Point mousePos; // Mouse location, updated in the
                             // mouseMotionListener
 
-  Image offscreen;
+  private Image offscreen;
 
-  Dimension offscreensize;
+  private Dimension offscreensize;
 
-  Graphics offgraphics;
+  private Graphics offgraphics;
 
   private Vector graphListeners;
 
@@ -174,11 +174,11 @@ public class ExtendedTGPanel extends TGPanel {
 
   // Converts between a nodes visual position (drawx, drawy), and its absolute
   // position (x,y).
-  TGLensSet tgLensSet;
+  private TGLensSet tgLensSet;
 
-  TGPanel.AdjustOriginLens adjustOriginLens;
+  private TGPanel.AdjustOriginLens adjustOriginLens;
 
-  TGPanel.SwitchSelectUI switchSelectUI;
+  private TGPanel.SwitchSelectUI switchSelectUI;
 
   public Image image;
 
@@ -513,7 +513,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
-  void fireMovedEvent() {
+  private void fireMovedEvent() {
     Vector listeners;
 
     // The following condition was added because the synchronized line below
@@ -674,7 +674,7 @@ public class ExtendedTGPanel extends TGPanel {
     return dragNode;
   }
 
-  void setMousePos(Point p) {
+  private void setMousePos(Point p) {
     mousePos = p;
   }
 
@@ -816,9 +816,9 @@ public class ExtendedTGPanel extends TGPanel {
       setMouseOverE(null);
   }
 
-  TGPoint2D topLeftDraw = null;
+  private TGPoint2D topLeftDraw = null;
 
-  TGPoint2D bottomRightDraw = null;
+  private TGPoint2D bottomRightDraw = null;
 
   public TGPoint2D getTopLeftDraw() {
     return new TGPoint2D(topLeftDraw);
@@ -898,7 +898,7 @@ public class ExtendedTGPanel extends TGPanel {
     visibleLocality.forAllNodes(fen);
   }
 
-  Color myBrighter(Color c) {
+  private Color myBrighter(Color c) {
     int r = c.getRed();
     int g = c.getGreen();
     int b = c.getBlue();

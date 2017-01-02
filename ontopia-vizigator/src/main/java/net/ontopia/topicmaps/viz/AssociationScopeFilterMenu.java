@@ -153,8 +153,8 @@ public class AssociationScopeFilterMenu extends JMenu {
    */
   protected class ScopeFilterActionListener implements ActionListener {
     private TopicIF scope;
-    ActionListener parentListener;
-    VizController controller;
+    private ActionListener parentListener;
+    private VizController controller;
 
     /**
      * Create new.
@@ -215,9 +215,9 @@ public class AssociationScopeFilterMenu extends JMenu {
    * Listens for changes to the scrictness of the scope filter.
    */
   protected class StrictnessActionListener implements ActionListener {
-    VizController controller;
-    int strictnessLevel;
-    ActionListener parentListener;
+    private VizController controller;
+    private int strictnessLevel;
+    private ActionListener parentListener;
     
     /**
      * 

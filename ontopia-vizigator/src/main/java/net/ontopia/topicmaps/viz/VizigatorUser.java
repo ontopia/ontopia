@@ -51,12 +51,12 @@ public class VizigatorUser extends TimerTask {
   protected int undoCount;
   protected int redoCount;
 
-  VizController controller;
+  private VizController controller;
   protected boolean enabled;
-  Random random;
+  private Random random;
   
-  long millis;
-  Timer timer;  
+  private long millis;
+  private Timer timer;  
 
   public VizigatorUser(VizController controller, long millis) {
     this.controller = controller;

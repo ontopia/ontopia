@@ -130,7 +130,7 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    String lang = "en";
+    private String lang = "en";
     public void processOption(char option, String value) {
       if (option == 'l') lang = value;
     }

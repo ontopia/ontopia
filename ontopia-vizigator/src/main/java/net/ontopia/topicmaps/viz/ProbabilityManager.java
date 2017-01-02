@@ -39,8 +39,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class ProbabilityManager {
   private Map probabilities;
-  Random random;
-  boolean keysInOrder;
+  private Random random;
+  private boolean keysInOrder;
 
   public ProbabilityManager(Object key) {
     probabilities = new TreeMap();

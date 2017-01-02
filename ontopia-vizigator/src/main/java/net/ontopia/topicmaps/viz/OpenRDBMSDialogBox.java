@@ -53,7 +53,7 @@ import net.ontopia.utils.SimpleFileFilter;
  * INTERNAL: A General Configuration frame for the VizDesktop.
  */
 public class OpenRDBMSDialogBox extends JFrame {
-  VizDesktop desktop;
+  private VizDesktop desktop;
   private TopicMapReferenceIF tmReference;
   private Vector topicMaps;
   private Map idToTMReference;

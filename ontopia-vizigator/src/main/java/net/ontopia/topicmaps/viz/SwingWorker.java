@@ -30,24 +30,24 @@ import javax.swing.SwingUtilities;
  * the SwingWorker after creating it.
  */
 public abstract class SwingWorker {
-  Object value; // see getValue(), setValue()
+  private Object value; // see getValue(), setValue()
 
   /**
    * Class to maintain reference to current worker thread under separate
    * synchronization control.
    */
   static class ThreadVar {
-    Thread thread;
+    private Thread thread;
 
     ThreadVar(Thread t) {
       thread = t;
     }
 
-    synchronized Thread get() {
+    private synchronized Thread get() {
       return thread;
     }
 
-    synchronized void clear() {
+    private synchronized void clear() {
       thread = null;
     }
   }

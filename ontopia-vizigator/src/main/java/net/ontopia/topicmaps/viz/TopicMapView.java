@@ -98,13 +98,13 @@ public class TopicMapView {
   
   protected Debug debug;
 
-  Collection nodesUpdateCount;
+  protected Collection nodesUpdateCount;
   
   public PerformanceStat stat;
   public PerformanceStat stat1;
 
-  MotionKiller motionKiller;
-  VizigatorUser vizigatorUser;
+  protected MotionKiller motionKiller;
+  protected VizigatorUser vizigatorUser;
 
   /**
    * Creates the view and updates the TGPanel to show the new view. The TGPanel

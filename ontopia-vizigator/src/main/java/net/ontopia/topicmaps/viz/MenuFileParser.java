@@ -43,9 +43,9 @@ import org.apache.commons.io.IOUtils;
  */
 public class MenuFileParser {
   private String source;
-  Map enabled;
-  int lineIndex;
-  boolean succeeded;
+  private Map enabled;
+  private int lineIndex;
+  private boolean succeeded;
   
   /**
    * Create new from a given file.
@@ -240,7 +240,7 @@ public class MenuFileParser {
    * Indicates a parse or syntax error in MenuFileParser.
    */
   public class MenuFileParseError extends Exception {
-    String message;
+    private String message;
     
     public MenuFileParseError(String message) {
       this.message = message;

@@ -59,8 +59,8 @@ public class MotionKiller extends TimerTask {
   protected int maxCycle = 3;
   protected boolean enabled;
   
-  long millis;
-  Timer timer;  
+  private long millis;
+  private Timer timer;  
 
   /**
    * Create a MotionKiller for the given tgPanel, scheduled to run every

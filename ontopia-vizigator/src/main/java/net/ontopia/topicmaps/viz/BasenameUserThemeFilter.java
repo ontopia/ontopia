@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
 
   // initialize logging category
-  static Logger log = LoggerFactory.getLogger(BasenameUserThemeFilter.class.getName());
+  private static Logger log = LoggerFactory.getLogger(BasenameUserThemeFilter.class.getName());
 
   // members
   protected ScopeIndexIF scopeIndex;
