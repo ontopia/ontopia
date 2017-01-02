@@ -47,7 +47,7 @@ import org.xml.sax.XMLReader;
 
 @RunWith(Parameterized.class)
 public class SchemaTestCase extends AbstractSchemaTestCase {
-  static Logger log = LoggerFactory.getLogger(SchemaTestCase.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SchemaTestCase.class.getName());
 
   private final static String testdataDirectory = "schema";
 

@@ -172,11 +172,11 @@ public class TopicClass extends TopicConstraintCollection
 
   // --- Package-internal methods
 
-  void addSubclass(TopicClass subclass) {
+  protected void addSubclass(TopicClass subclass) {
     subclasses.add(subclass);
   }
 
-  void removeSubclass(TopicClass subclass) {
+  protected void removeSubclass(TopicClass subclass) {
     subclasses.remove(subclass);
   }
 }
