@@ -35,7 +35,7 @@ public class UserTest {
 
   private final static String testdataDirectory = "nav2";
 
-  UserIF user;
+  private UserIF user;
   
   @Before
   public void setUp() throws IOException, org.xml.sax.SAXException {

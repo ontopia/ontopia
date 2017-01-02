@@ -34,7 +34,7 @@ public class NavigatorConfigurationTest {
   
   private final static String testdataDirectory = "nav2";
 
-  NavigatorConfigurationIF navConf;
+  private NavigatorConfigurationIF navConf;
 
   @Before  
   public void setUp() throws IOException, SAXException {
