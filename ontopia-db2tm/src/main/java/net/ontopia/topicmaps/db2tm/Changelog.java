@@ -108,8 +108,4 @@ public class Changelog {
   public String toString() {
     return "Changelog(" + getTable() + ")";
   }
-  
-  void compile() {
-  }
-
 }

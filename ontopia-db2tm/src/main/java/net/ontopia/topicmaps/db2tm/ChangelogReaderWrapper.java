@@ -43,7 +43,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   private ChangeType prevchange;
   private String[] prevtuple;
 
-  static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class);
+  private static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class);
   
   public ChangelogReaderWrapper(ChangelogReaderIF source,
                                 Relation relation) {

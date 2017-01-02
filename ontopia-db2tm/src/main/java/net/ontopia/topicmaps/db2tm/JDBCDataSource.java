@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class JDBCDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
+  private static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
 
   protected final RelationMapping mapping;
   protected String propfile;
@@ -68,7 +68,7 @@ public class JDBCDataSource implements DataSourceIF {
     this.conn = conn;
   }
 
-  void setPropertyFile(String propfile) {
+  protected void setPropertyFile(String propfile) {
     this.propfile = propfile;
   }
 
@@ -257,9 +257,9 @@ public class JDBCDataSource implements DataSourceIF {
 
   private class TupleReader implements TupleReaderIF {
 
-    PreparedStatement stm;
-    ResultSet rs;
-    int[] coltypes;
+    private PreparedStatement stm;
+    private ResultSet rs;
+    private int[] coltypes;
     
     private TupleReader(Relation relation) {
       // build sql statement from relation definition
@@ -330,13 +330,13 @@ public class JDBCDataSource implements DataSourceIF {
   }
 
   private class ChangelogReader implements ChangelogReaderIF {
-    PreparedStatement stm;
-    ResultSet rs;
-    int[] coltypes;
-    int ocoltype;
+    private PreparedStatement stm;
+    private ResultSet rs;
+    private int[] coltypes;
+    private int ocoltype;
     
-    int tcix; // tuple start index
-    int ocix;
+    private int tcix; // tuple start index
+    private int ocix;
     
     private ChangelogReader(Changelog changelog, String orderValue)
       throws SQLException {

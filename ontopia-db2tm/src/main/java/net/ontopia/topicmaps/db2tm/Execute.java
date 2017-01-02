@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class Execute {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Execute.class);
+  private static Logger log = LoggerFactory.getLogger(Execute.class);
 
   Execute() {
   }
@@ -190,11 +190,11 @@ public class Execute {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    String tm;
-    String baseuri;
-    String out;
-    String relations;
-    String forceRescan;
+    private String tm;
+    private String baseuri;
+    private String out;
+    private String relations;
+    private String forceRescan;
     @Override
     public void processOption(char option, String value) {
       if (option == 't') tm = value;

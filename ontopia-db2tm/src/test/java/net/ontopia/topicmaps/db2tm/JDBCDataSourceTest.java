@@ -44,7 +44,7 @@ public class JDBCDataSourceTest {
   private static final boolean DEBUG_LTM = false; // keep off in CVS
 
   // NOTE: these are hardcoded for the time being
-  String propfile = "classpath:db2tm.h2.props";
+  private String propfile = "classpath:db2tm.h2.props";
 
   private final static String testdataDirectory = "db2tm";
 

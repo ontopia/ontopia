@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class CSVDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVDataSource.class);
+  private static Logger log = LoggerFactory.getLogger(CSVDataSource.class);
 
   protected final RelationMapping mapping;
 
@@ -54,7 +54,7 @@ public class CSVDataSource implements DataSourceIF {
     this.mapping = mapping;
   }
 
-  void setPath(String _path) {
+  protected void setPath(String _path) {
     File baseDirectory = mapping.getBaseDirectory();
     File path = new File(_path);
     if (baseDirectory != null && !path.isAbsolute())
@@ -65,15 +65,15 @@ public class CSVDataSource implements DataSourceIF {
       throw new DB2TMException("CSV data source path " + this.path + " does not exist.");
   }
   
-  void setEncoding(String encoding) {
+  protected void setEncoding(String encoding) {
     this.encoding = encoding;
   }
 
-  void setSeparator(char separator) {
+  protected void setSeparator(char separator) {
     this.separator = separator;
   }
 
-  void setQuoteCharacter(char quoteCharacter) {
+  protected void setQuoteCharacter(char quoteCharacter) {
     this.quoteCharacter = quoteCharacter;
   }
 
@@ -81,7 +81,7 @@ public class CSVDataSource implements DataSourceIF {
   //!   this.escaping = escaping;
   //! }
 
-  void setIgnoreFirstLines(int ignoreFirstLines) {
+  protected void setIgnoreFirstLines(int ignoreFirstLines) {
     this.ignoreFirstLines = ignoreFirstLines;
   }
 

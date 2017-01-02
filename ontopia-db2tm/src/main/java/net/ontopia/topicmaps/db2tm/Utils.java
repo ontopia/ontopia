@@ -104,7 +104,7 @@ public class Utils {
   // Utility methods
   // ---------------------------------------------------------------------------
   
-  static TopicIF getTopic(String id, Context ctx) {
+  protected static TopicIF getTopic(String id, Context ctx) {
     // Note: null values or empty strings are considered dead
     if (isValueEmpty(id))
       return null;
@@ -176,16 +176,16 @@ public class Utils {
     return newtopic;
   }
 
-  static String getValue(Relation relation, Entity entity, Field field,
+  protected static String getValue(Relation relation, Entity entity, Field field,
                                    String[] tuple, Context ctx) {
     return field.getValue(tuple);
   }
 
-  static boolean isValueEmpty(String value) {
+  protected static boolean isValueEmpty(String value) {
     return (value == null || value.equals(""));
   }
   
-  static LocatorIF getLocator(Relation relation, Entity entity, Field field,
+  protected static LocatorIF getLocator(Relation relation, Entity entity, Field field,
       String[] tuple, Context ctx) {
     String value = getValue(relation, entity, field, tuple, ctx);
     if (isValueEmpty(value)) return null;
@@ -195,7 +195,7 @@ public class Utils {
     return ctx.getBaseLocator().resolveAbsolute(value);
   }
 
-  static String expandPrefixedValue(String value, Context ctx) {
+  protected static String expandPrefixedValue(String value, Context ctx) {
     int cix = value.indexOf(':');
     if (cix >= 1) {
       // prefix reference

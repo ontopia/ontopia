@@ -201,7 +201,7 @@ public class Relation {
   // Compiling
   // ---------------------------------------------------------------------------
   
-  void compile() {
+  protected void compile() {
     for (Entity entity : entities) {
       entity.compile();
     }

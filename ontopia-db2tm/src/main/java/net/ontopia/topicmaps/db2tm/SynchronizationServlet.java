@@ -82,9 +82,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SynchronizationServlet extends HttpServlet {
 
-  static Logger log = LoggerFactory.getLogger(SynchronizationServlet.class);
+  private static Logger log = LoggerFactory.getLogger(SynchronizationServlet.class);
 
-  static DateFormat df = new SimpleDateFormat("HH:mm");
+  private static DateFormat df = new SimpleDateFormat("HH:mm");
   
   protected SynchronizationTask task;
   

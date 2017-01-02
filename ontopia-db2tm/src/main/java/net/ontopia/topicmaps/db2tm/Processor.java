@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
 public class Processor {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Processor.class);
+  private static Logger log = LoggerFactory.getLogger(Processor.class);
   
   public static int NEVER_COMMIT_MODE = 0;
   public static int RELATIONAL_COMMIT_MODE = 1;
@@ -80,9 +80,6 @@ public class Processor {
       store = reference.createStore(false);
     } //never forget!
     topicmap = store.getTopicMap();
-
-    // force a GC
-    System.gc();
 
     return topicmap;
   }

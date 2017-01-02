@@ -38,7 +38,7 @@ public final class Values {
   // Utility methods
   // -----------------------------------------------------------------------------
 
-  static ValueIF getColumnValue(Relation relation, String colname) {
+  protected static ValueIF getColumnValue(Relation relation, String colname) {
     if (relation.isVirtualColumn(colname)) {
       // use virtual column
       return relation.getVirtualColumn(colname);
@@ -51,14 +51,14 @@ public final class Values {
     }
   }
 
-  static ValueIF getColumnValue(Relation relation, int cix) {
+  protected static ValueIF getColumnValue(Relation relation, int cix) {
     if (cix < 0 || cix >= relation.getColumns().length)
       throw new DB2TMException("Cannot find column $" + cix + " in relation '" + relation.getName() + "'");
     return new TupleValue(cix);
   }
   
   
-  static ValueIF getPatternValue(Relation relation, String value) {
+  protected static ValueIF getPatternValue(Relation relation, String value) {
     // use pattern value
     List<Object> list = new ArrayList<Object>();
     Matcher matcher = PATTERN.matcher(value);
