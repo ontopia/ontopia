@@ -76,9 +76,9 @@ public class RDFToTopicMapConverter {
   private TopicMapBuilderIF builder;
   private boolean lenient;
 
-  static Logger logger = LoggerFactory.getLogger(RDFToTopicMapConverter.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(RDFToTopicMapConverter.class.getName());
 
-  static final String RTM_PREFIX = "http://psi.ontopia.net/rdf2tm/#";
+  protected static final String RTM_PREFIX = "http://psi.ontopia.net/rdf2tm/#";
   public static final String RTM_MAPSTO             = RTM_PREFIX + "maps-to";
   public static final String RTM_BASENAME           = RTM_PREFIX + "basename";
   public static final String RTM_INSTANCE_OF        = RTM_PREFIX + "instance-of";
