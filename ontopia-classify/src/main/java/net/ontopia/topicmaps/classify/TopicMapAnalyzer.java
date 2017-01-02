@@ -45,9 +45,6 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
 
   private TermDatabase tdb;
   
-  private TopicMapIF topicmap;
-
-  private QueryProcessorIF qp;
   private ParsedQueryIF pq_byName;
   
   private Collection<TopicIF> ctypes;
@@ -61,9 +58,8 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
   private double matchFactor = 4.0d;
   
   public TopicMapAnalyzer(TopicMapIF topicmap) {
-    this.topicmap = topicmap;
     try {
-      this.qp = QueryUtils.getQueryProcessor(topicmap);
+      QueryProcessorIF qp = QueryUtils.getQueryProcessor(topicmap);
       this.pq_byName = qp.parse("select $T from topic-name($T, $N), value($N, %VALUE%)?");
 
       this.ctypes = new HashSet<TopicIF>();
