@@ -59,9 +59,6 @@ public class MotionKiller extends TimerTask {
   protected int maxCycle = 3;
   protected boolean enabled;
   
-  private long millis;
-  private Timer timer;  
-
   /**
    * Create a MotionKiller for the given tgPanel, scheduled to run every
    * 'millis' number of milliseconds after creation.
@@ -72,8 +69,7 @@ public class MotionKiller extends TimerTask {
     this.tgPanel = tgPanel;
     waitUntil1 = 0;
     waitUntil2 = 0;
-    this.millis = millis;
-    timer = new Timer();
+    Timer timer = new Timer();
     timer.scheduleAtFixedRate(this, millis, millis);
     
     // Note: VizPanel assumes this assignment when building menus.

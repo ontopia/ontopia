@@ -182,6 +182,10 @@ public class ExtendedTGPanel extends TGPanel {
 
   public Image image;
 
+  private TGPoint2D topLeftDraw = null;
+
+  private TGPoint2D bottomRightDraw = null;
+
   // ............
 
   /**
@@ -674,10 +678,6 @@ public class ExtendedTGPanel extends TGPanel {
     return dragNode;
   }
 
-  private void setMousePos(Point p) {
-    mousePos = p;
-  }
-
   public Point getMousePos() {
     return mousePos;
   }
@@ -816,10 +816,6 @@ public class ExtendedTGPanel extends TGPanel {
       setMouseOverE(null);
   }
 
-  private TGPoint2D topLeftDraw = null;
-
-  private TGPoint2D bottomRightDraw = null;
-
   public TGPoint2D getTopLeftDraw() {
     return new TGPoint2D(topLeftDraw);
   }
@@ -896,18 +892,6 @@ public class ExtendedTGPanel extends TGPanel {
       }
     };
     visibleLocality.forAllNodes(fen);
-  }
-
-  private Color myBrighter(Color c) {
-    int r = c.getRed();
-    int g = c.getGreen();
-    int b = c.getBlue();
-
-    r = Math.min(r + 96, 255);
-    g = Math.min(g + 96, 255);
-    b = Math.min(b + 96, 255);
-
-    return new Color(r, g, b);
   }
 
   public synchronized void paint(Graphics g) {

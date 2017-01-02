@@ -30,17 +30,11 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Abstract class which provides access to filtering themes
  * out which are not relevant to the user context.
  */
 public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
-
-  // initialize logging category
-  private static Logger log = LoggerFactory.getLogger(BasenameUserThemeFilter.class.getName());
 
   // members
   protected ScopeIndexIF scopeIndex;
