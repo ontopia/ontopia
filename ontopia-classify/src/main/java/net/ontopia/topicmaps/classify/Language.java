@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class Language {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(Language.class.getName());
+  private static Logger log = LoggerFactory.getLogger(Language.class.getName());
 
   // Initializer
   private static List<Language> languages;
@@ -124,8 +124,8 @@ public class Language {
   }
 
   static class StopWordCounter extends TokenVisitor {
-    StopList stoplist;
-    int count;
+    private StopList stoplist;
+    private int count;
 
     public void visit(Token token) {
       if (token.getType() == Token.TYPE_VARIANT &&

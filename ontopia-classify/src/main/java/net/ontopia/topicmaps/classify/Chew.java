@@ -81,7 +81,7 @@ public class Chew {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    int terms = 30;
+    private int terms = 30;
     public void processOption(char option, String value) {
       if (option == 't') terms = Integer.valueOf(value).intValue();
     }

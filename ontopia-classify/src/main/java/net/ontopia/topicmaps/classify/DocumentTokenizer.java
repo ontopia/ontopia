@@ -27,10 +27,10 @@ import java.util.List;
  * INTERNAL: 
  */
 public class DocumentTokenizer {
-  TermDatabase tdb;
-  TokenizerIF tokenizer;
-  DelimiterTrimmerIF delimiterTrimmer;
-  List<TermNormalizerIF> termNormalizers = new ArrayList<TermNormalizerIF>();
+  private TermDatabase tdb;
+  private TokenizerIF tokenizer;
+  private DelimiterTrimmerIF delimiterTrimmer;
+  private List<TermNormalizerIF> termNormalizers = new ArrayList<TermNormalizerIF>();
 
   public DocumentTokenizer(TermDatabase tdb) {
     this.tdb = tdb;

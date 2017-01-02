@@ -52,11 +52,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class WebChew {
 
-  HttpServletRequest request;
-  HttpServletResponse response;
-  int visibleRows = Integer.MAX_VALUE;
+  private HttpServletRequest request;
+  private HttpServletResponse response;
+  private int visibleRows = Integer.MAX_VALUE;
 
-  String redirectURI; // link back to topic page
+  private String redirectURI; // link back to topic page
   
   public WebChew(HttpServletRequest request, HttpServletResponse response) {
     this.request = request;
@@ -281,8 +281,8 @@ public class WebChew {
   
   public class WebClassification {
 
-    TopicMapClassification tmc;
-    List<WebTerm> topterms;
+    private TopicMapClassification tmc;
+    private List<WebTerm> topterms;
     
     WebClassification(TopicMapClassification tmc) {
       this.tmc = tmc;
@@ -372,10 +372,10 @@ public class WebChew {
   
   public class WebTerm {
 
-    WebClassification wc;
-    Term term;
-    int sequenceId;
-    List<TopicIF> candidates;
+    private WebClassification wc;
+    private Term term;
+    private int sequenceId;
+    private List<TopicIF> candidates;
     
     WebTerm(WebClassification wc, Term term, int sequenceId) {
       this.wc = wc;

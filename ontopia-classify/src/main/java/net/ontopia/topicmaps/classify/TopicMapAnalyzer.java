@@ -43,22 +43,22 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class TopicMapAnalyzer implements TermAnalyzerIF {
 
-  TermDatabase tdb;
+  private TermDatabase tdb;
   
-  TopicMapIF topicmap;
+  private TopicMapIF topicmap;
 
-  QueryProcessorIF qp;
-  ParsedQueryIF pq_byName;
+  private QueryProcessorIF qp;
+  private ParsedQueryIF pq_byName;
   
-  Collection<TopicIF> ctypes;
-  List<TopicIF> ctypes_sorted;
-  Map<TopicIF, AssociationType> atypes;
+  private Collection<TopicIF> ctypes;
+  private List<TopicIF> ctypes_sorted;
+  private Map<TopicIF, AssociationType> atypes;
   
-  Collection<TopicIF> atopics = new HashSet<TopicIF>();
-  Map<String, Variant> smap = new HashMap<String, Variant>();
-  Map<String, Collection<TopicIF>> vtopics = new HashMap<String, Collection<TopicIF>>();
+  private Collection<TopicIF> atopics = new HashSet<TopicIF>();
+  private Map<String, Variant> smap = new HashMap<String, Variant>();
+  private Map<String, Collection<TopicIF>> vtopics = new HashMap<String, Collection<TopicIF>>();
 
-  double matchFactor = 4.0d;
+  private double matchFactor = 4.0d;
   
   public TopicMapAnalyzer(TopicMapIF topicmap) {
     this.topicmap = topicmap;

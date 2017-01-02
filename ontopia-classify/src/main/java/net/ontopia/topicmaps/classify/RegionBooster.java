@@ -28,8 +28,8 @@ import java.util.Map;
  */
 public class RegionBooster extends AbstractDocumentAnalyzer {
 
-  Map<String, Double> regions;
-  double boost = 1.0d;
+  private Map<String, Double> regions;
+  private double boost = 1.0d;
 
   public RegionBooster() {
     super(1);

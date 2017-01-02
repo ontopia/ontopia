@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class FormatModule implements FormatModuleIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(FormatModule.class.getName());
+  private static Logger log = LoggerFactory.getLogger(FormatModule.class.getName());
   
   protected List<FormatModuleIF> modules;
   protected FormatModuleIF fallout_module;

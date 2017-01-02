@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Term {
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(Term.class.getName());
+  private static Logger log = LoggerFactory.getLogger(Term.class.getName());
   
   protected String stem;  
   protected double score = 1.0d;

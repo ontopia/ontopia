@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class CharacterAnalyzer implements TermAnalyzerIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CharacterAnalyzer.class.getName());
+  private static Logger log = LoggerFactory.getLogger(CharacterAnalyzer.class.getName());
 
   private static final CharacterAnalyzer INSTANCE = new CharacterAnalyzer();
   private static double FACTOR_NO_LETTERS = 0.05d;

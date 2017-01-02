@@ -28,8 +28,8 @@ import java.util.List;
  */
 public class TextBlock {
 
-  StringBuilder sb;
-  List<Token> tokens = new ArrayList<Token>();
+  private StringBuilder sb;
+  private List<Token> tokens = new ArrayList<Token>();
 
   public String getText() {
     return (sb == null ? null : sb.toString());
