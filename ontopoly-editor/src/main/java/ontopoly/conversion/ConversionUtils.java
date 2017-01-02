@@ -64,17 +64,10 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ConversionUtils {
   
-  private static final LocatorIF psibase;
-  private static final LocatorIF xsdbase;
-  private static final LocatorIF xtmbase;
-  private static final LocatorIF teqbase;
-  
-  static {
-    psibase = URILocator.create("http://psi.ontopia.net/ontology/");
-    xsdbase = URILocator.create("http://www.w3.org/2001/XMLSchema");
-    xtmbase = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
-    teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
-  }
+  private static final LocatorIF psibase = URILocator.create("http://psi.ontopia.net/ontology/");
+  private static final LocatorIF xsdbase = URILocator.create("http://www.w3.org/2001/XMLSchema");
+  private static final LocatorIF xtmbase = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
+  private static final LocatorIF teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
   
   public static String upgradeExisting(TopicMap topicMap) {
     UpgradeUtils.upgradeTopicMap(topicMap);
@@ -559,12 +552,12 @@ public class ConversionUtils {
   }
 
   private static class FieldsComparator implements Comparator<Object> {
-    TopicIF ted_nt;
-    TopicIF ted_si;
-    TopicIF ted_sl;
-    TopicIF ted_ot;
-    TopicIF ted_at;
-    TopicIF ted_untyped_name;
+    private TopicIF ted_nt;
+    private TopicIF ted_si;
+    private TopicIF ted_sl;
+    private TopicIF ted_ot;
+    private TopicIF ted_at;
+    private TopicIF ted_untyped_name;
 
     private FieldsComparator(TopicMapIF tm, LocatorIF psibase) throws MalformedURLException {
       ted_nt = topicByPSI(psibase.resolveAbsolute("name-type"), tm);

@@ -492,7 +492,7 @@ public class TopicType extends AbstractTypingTopic {
     return fieldAssignments;
   }
 
-  static FieldDefinition findFieldDefinitionImpl(TopicMap tm, TopicIF fieldDefinitionTopic, TopicIF fieldDefinitionType) {
+  protected static FieldDefinition findFieldDefinitionImpl(TopicMap tm, TopicIF fieldDefinitionTopic, TopicIF fieldDefinitionType) {
     Collection<LocatorIF> identities = fieldDefinitionType.getSubjectIdentifiers();
     if (identities.contains(PSI.ON_OCCURRENCE_FIELD))
       return new OccurrenceField(fieldDefinitionTopic, tm);

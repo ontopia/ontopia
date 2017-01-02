@@ -82,8 +82,8 @@ public abstract class ModalFindPage<T> extends Panel {
   protected static Logger log = LoggerFactory.getLogger(ModalFindPage.class);
   protected FieldInstanceModel fieldInstanceModel;
 
-  AjaxLink<Object> searchTabLink;
-  AjaxLink<Object> browseTabLink;
+  private AjaxLink<Object> searchTabLink;
+  private AjaxLink<Object> browseTabLink;
   
   private boolean errorInSearch = false;
 

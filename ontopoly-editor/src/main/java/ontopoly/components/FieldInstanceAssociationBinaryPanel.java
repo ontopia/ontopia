@@ -149,7 +149,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         super.onBeforeRender();
       }
       public void populateItem(final ListItem<FieldValueModel> item) {        
-        FieldValueModel fieldValueModel = item.getModelObject();
+        final FieldValueModel fieldValueModel = item.getModelObject();
 
         // get topic
         Topic oplayer = null;

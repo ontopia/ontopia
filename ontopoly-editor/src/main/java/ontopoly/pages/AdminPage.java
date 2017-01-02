@@ -49,10 +49,10 @@ import org.apache.wicket.util.resource.IResourceStream;
 
 public class AdminPage extends OntopolyAbstractPage {
   
-  String content;
-  String syntax;
-  String action;
-  String filename;
+  private String content;
+  private String syntax;
+  private String action;
+  protected String filename;
   
   public AdminPage() {	  
   }

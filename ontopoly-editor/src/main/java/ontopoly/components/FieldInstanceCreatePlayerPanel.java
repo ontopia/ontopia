@@ -63,7 +63,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
   protected RoleFieldModel roleFieldModel;
   protected TopicTypeModel topicTypeModel;
   
-  int createAction;
+  private int createAction;
   
   public FieldInstanceCreatePlayerPanel(String id, 
       FieldInstanceModel _fieldInstanceModel, FieldsViewModel fieldsViewModel, 

@@ -38,7 +38,7 @@ public class UpgradeUtils {
   
   private static Object lock = new Object();
   
-  static void upgradeTopicMap(TopicMap topicMap) {
+  protected static void upgradeTopicMap(TopicMap topicMap) {
     TopicMapIF topicmap = topicMap.getTopicMapIF();
     
     synchronized (lock) {     

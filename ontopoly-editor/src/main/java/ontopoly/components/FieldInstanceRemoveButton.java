@@ -29,7 +29,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceRemoveButton extends OntopolyImageLink {
 
-  FieldValueModel fieldValueModel;
+  private FieldValueModel fieldValueModel;
   
   public FieldInstanceRemoveButton(String id, String image, FieldValueModel fieldValueModel) {
     super(id, image);

@@ -154,7 +154,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
 
   protected abstract void onRemove(FieldAssignmentModel fam, AjaxRequestTarget target);    
   
-  static Component getFieldType(String id, FieldDefinition fieldDefinition) {
+  protected static Component getFieldType(String id, FieldDefinition fieldDefinition) {
 
     switch (fieldDefinition.getFieldType()) {
     case FieldDefinition.FIELD_TYPE_ROLE: {

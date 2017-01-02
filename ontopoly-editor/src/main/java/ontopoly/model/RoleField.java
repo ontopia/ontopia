@@ -578,9 +578,9 @@ public class RoleField extends FieldDefinition {
    */
   private static class Value implements RoleField.ValueIF {
 
-    int offset;
-    RoleField[] roleFields;
-    Topic[] players;
+    private int offset;
+    private RoleField[] roleFields;
+    private Topic[] players;
 
     Value(int arity) {
       this.roleFields = new RoleField[arity];

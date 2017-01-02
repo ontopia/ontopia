@@ -82,7 +82,7 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
         super.onBeforeRender();
       }
 		  public void populateItem(final ListItem<FieldValueModel> item) {
-		    FieldValueModel fieldValueModel = item.getModelObject();
+		    final FieldValueModel fieldValueModel = item.getModelObject();
 
         // TODO: make sure non-existing value field gets focus if last edit happened there
         

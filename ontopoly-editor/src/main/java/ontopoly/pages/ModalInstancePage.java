@@ -33,12 +33,12 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 public abstract class ModalInstancePage extends Panel {
   
-  WebMarkupContainer popupContent;
-  TopicModel<Topic> topicModel;
-  TopicTypeModel topicTypeModel;
-  FieldsViewModel fieldsViewModel;
-  boolean isReadOnly;
-  boolean traversable = false; // FIXME: hardcoded
+  private WebMarkupContainer popupContent;
+  private TopicModel<Topic> topicModel;
+  private TopicTypeModel topicTypeModel;
+  private FieldsViewModel fieldsViewModel;
+  private boolean isReadOnly;
+  private boolean traversable = false; // FIXME: hardcoded
   
   public ModalInstancePage(String id, TopicModel<Topic> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
     super(id);

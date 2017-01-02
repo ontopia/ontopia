@@ -71,7 +71,7 @@ public class SchemaTracker {
    protected int count;
    protected int mincard = -1;
    protected int maxcard = -1;
-   void registerCardinality(int cardinality) {
+   protected void registerCardinality(int cardinality) {
      this.count += cardinality;
      if (cardinality > maxcard || maxcard == -1)
        this.maxcard = cardinality;

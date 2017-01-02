@@ -103,7 +103,7 @@ public class AjaxRadioGroupPanel extends Panel {
   /**  * Borrowed from RadioChoice suffix change record.  */ 
   private class SuffixChange extends Change {  
     private static final long serialVersionUID = 3344L;  
-    final String prevSuffix;  SuffixChange(String prevSuffix)  {   
+    private final String prevSuffix;  SuffixChange(String prevSuffix)  {   
       this.prevSuffix = prevSuffix;  
     }  
     public void undo()  {   

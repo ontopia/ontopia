@@ -40,7 +40,7 @@ import org.apache.wicket.util.convert.IConverter;
 
 public abstract class AssociationFieldAutoCompleteTextField extends Panel {
   
-  static final TopicConverter TOPIC_CONVERTER = new TopicConverter();
+  private static final TopicConverter TOPIC_CONVERTER = new TopicConverter();
   
   static final class TopicConverter implements IConverter {
     

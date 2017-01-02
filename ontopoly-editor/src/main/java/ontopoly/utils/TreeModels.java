@@ -121,11 +121,11 @@ public class TreeModels {
   
   private static class HierarchyDefinition {
 
-    TopicIF atype;
-    TopicIF prtype;
-    TopicIF crtype;
-    Collection<TopicIF> ptypes = new HashSet<TopicIF>();
-    Collection<TopicIF> ctypes = new HashSet<TopicIF>();
+    private TopicIF atype;
+    private TopicIF prtype;
+    private TopicIF crtype;
+    private Collection<TopicIF> ptypes = new HashSet<TopicIF>();
+    private Collection<TopicIF> ctypes = new HashSet<TopicIF>();
     
     HierarchyDefinition(TopicIF atype, TopicIF prtype, TopicIF crtype) {
       this.atype = atype;

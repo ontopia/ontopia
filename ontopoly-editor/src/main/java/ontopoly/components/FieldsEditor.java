@@ -59,11 +59,11 @@ public class FieldsEditor extends Panel {
 
   protected static final boolean ISSUE_329_ENABLED = true;
   
-  TopicTypeModel topicTypeModel;
-  boolean readonly;
+  private TopicTypeModel topicTypeModel;
+  private boolean readonly;
   
-  ListView<FieldAssignmentModel> listView;
-  MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
+  private ListView<FieldAssignmentModel> listView;
+  private MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
   
   public FieldsEditor(String id, TopicTypeModel _topicTypeModel, final boolean readonly) {
     super(id);

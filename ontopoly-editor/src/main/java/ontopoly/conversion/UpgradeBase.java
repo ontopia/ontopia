@@ -51,15 +51,15 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public abstract class UpgradeBase {
   
-  static final LocatorIF psibase = URILocator.create("http://psi.ontopia.net/ontology/");
-  static final LocatorIF xsdbase = URILocator.create("http://www.w3.org/2001/XMLSchema");
-  static final LocatorIF xtmbase = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
-  static final LocatorIF teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
+  protected static final LocatorIF psibase = URILocator.create("http://psi.ontopia.net/ontology/");
+  protected static final LocatorIF xsdbase = URILocator.create("http://www.w3.org/2001/XMLSchema");
+  protected static final LocatorIF xtmbase = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
+  protected static final LocatorIF teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
   
-  static final LocatorIF base_on = URILocator.create("http://psi.ontopia.net/ontology/"); 
-  static final LocatorIF base_tech = URILocator.create("http://www.techquila.com/psi/hierarchy/"); 
-  static final LocatorIF base_xtm = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
-  static final LocatorIF base_xsd = URILocator.create("http://www.w3.org/2001/XMLSchema#"); 
+  protected static final LocatorIF base_on = URILocator.create("http://psi.ontopia.net/ontology/"); 
+  protected static final LocatorIF base_tech = URILocator.create("http://www.techquila.com/psi/hierarchy/"); 
+  protected static final LocatorIF base_xtm = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
+  protected static final LocatorIF base_xsd = URILocator.create("http://www.w3.org/2001/XMLSchema#"); 
 
   protected TopicMap topicMap;
   protected TopicMapIF topicmap;
@@ -318,8 +318,8 @@ public abstract class UpgradeBase {
     //! private TopicIF atype;
     //! private TopicIF[] rtypes;
     //! private TopicIF[][] ptypes;
-    TopicIF afield;
-    TopicIF rfields[];
+    protected TopicIF afield;
+    protected TopicIF rfields[];
   }
   
   protected static void removeTopicIfExist(TopicMapIF topicmap, LocatorIF base_on, String ref) {

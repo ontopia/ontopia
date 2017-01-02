@@ -64,10 +64,6 @@ public final class FieldAssignment {
     this.cachedOrder = (cachedOrder == Integer.MAX_VALUE ? cachedOrder - 1 : cachedOrder);
   }
 
-  void refresh() {
-    this.cachedOrder = Integer.MAX_VALUE;
-  }
-
   /**
    * Returns the topic type.
    */
