@@ -190,13 +190,14 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   }
 
   public void writeReport(java.io.Writer out) throws java.io.IOException {
+    final String BR = "<br>\n";
     out.write("Active connections: " + pool.getNumActive() + " (max: " + pool.getMaxActive() + ")<br>\n");
     out.write("Idle connections: " + pool.getNumIdle() + " (min: " + pool.getMinIdle() + " max: " + pool.getMaxIdle() + ")<br>\n");
-    out.write("Connections created: " + pcfactory.objectsCreated + "<br>\n");
-    out.write("Connections destroyed: " + pcfactory.objectsDestroyed + "<br>\n");
-    out.write("Connections validated: " + pcfactory.objectsValidated + "<br>\n");
-    out.write("Connections activated: " + pcfactory.objectsActivated + "<br>\n");
-    out.write("Connections passivated: " + pcfactory.objectsPassivated + "<br>\n");
+    out.write("Connections created: " + pcfactory.objectsCreated + BR);
+    out.write("Connections destroyed: " + pcfactory.objectsDestroyed + BR);
+    out.write("Connections validated: " + pcfactory.objectsValidated + BR);
+    out.write("Connections activated: " + pcfactory.objectsActivated + BR);
+    out.write("Connections passivated: " + pcfactory.objectsPassivated + BR);
   }
 
   static private class TraceablePoolableConnectionFactory extends PoolableConnectionFactory {

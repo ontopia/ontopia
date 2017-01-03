@@ -151,7 +151,7 @@ public class LTMTemplateImporter {
         // FIXME: this doesn't check the base address!
         LocatorIF loc = it.next();
         String address = loc.getAddress();
-        int pos = address.indexOf("#");
+        int pos = address.indexOf('#');
         if (pos != -1)
           return address.substring(pos + 1);
       }

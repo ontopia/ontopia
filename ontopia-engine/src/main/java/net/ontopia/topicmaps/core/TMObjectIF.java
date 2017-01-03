@@ -35,6 +35,7 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 
 public interface TMObjectIF {
+  String MSG_NULL_ARGUMENT = "null is not a valid argument.";
 
   String EVENT_ADD_ITEMIDENTIFIER = "TMObjectIF.addItemIdentifier";
   String EVENT_REMOVE_ITEMIDENTIFIER = "TMObjectIF.removeItemIdentifier";

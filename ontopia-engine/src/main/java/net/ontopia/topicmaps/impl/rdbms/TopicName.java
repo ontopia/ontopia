@@ -147,7 +147,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   protected void addVariant(VariantNameIF variant) {
     if (variant == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     // Check to see if variant is already a member of this topic name
     if (variant.getTopicName() == this)
       return;
@@ -169,7 +169,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   protected void removeVariant(VariantNameIF variant) {
     if (variant == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     // Check to see if variant is not a member of this topic name
     if (variant.getTopicName() != this)
       return;
@@ -205,7 +205,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   public void addTheme(TopicIF theme) {
     if (theme == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);    
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_ADD_THEME, theme, null);
@@ -225,7 +225,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   public void removeTheme(TopicIF theme) {
     if (theme == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_REMOVE_THEME, null, theme);

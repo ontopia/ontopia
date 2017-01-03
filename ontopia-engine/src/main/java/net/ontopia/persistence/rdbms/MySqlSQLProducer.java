@@ -46,38 +46,33 @@ public class MySqlSQLProducer extends GenericSQLProducer {
     StringBuilder sb = new StringBuilder();
     String[] pkeys = table.getPrimaryKeys();
     // Create table
-    sb.append("create table ");
-    sb.append(table.getName());
-    sb.append(" (\n");
+    sb.append("create table ").append(table.getName()).append(" (\n");
     Iterator<Column> iter = table.getColumns().iterator();
     while (iter.hasNext()) {
       Column col = iter.next();
       DataType type = project.getDataTypeByName(col.getType(), platforms);
-      sb.append("  ");
-      sb.append(col.getName());
-      sb.append("  ");
+      sb.append("  ").append(col.getName()).append("  ");
       if (type.getType().equals("varchar") && Integer.parseInt(type.getSize()) > 255) {
         sb.append("TEXT");
       } else {        
-        sb.append(type.getType());
-        sb.append((type.isVariable() ? "(" + type.getSize() + ")" : ""));
+        sb.append(type.getType())
+            .append((type.isVariable() ? "(" + type.getSize() + ")" : ""));
       }
       sb.append((!col.isNullable() ? " not null" : ""));
       if (pkeys != null || iter.hasNext())
-        sb.append(",");
-      sb.append("\n");
+        sb.append(',');
+      sb.append('\n');
       
     }
     // Primary keys
     if (pkeys != null) {
-      sb.append("  constraint " + table.getName() +  "_pkey primary key (");
-      sb.append(StringUtils.join(pkeys, ", "));
-      sb.append(")");
-      sb.append("\n");
+      sb.append("  constraint " + table.getName() +  "_pkey primary key (")
+          .append(StringUtils.join(pkeys, ", "))
+          .append(')')
+          .append('\n');
     }
     
-    sb.append(") TYPE = InnoDB\n");    
-    statements.add(sb.toString());
+    statements.add(sb.append(") TYPE = InnoDB\n").toString());
     return statements;
   }
   
@@ -89,21 +84,21 @@ public class MySqlSQLProducer extends GenericSQLProducer {
     List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {
       Index index = indexes.get(i);
-      StringBuilder sb = new StringBuilder();
-      sb.append("create index ");
-      sb.append(index.getName());
-      sb.append(" on ");
-      sb.append(table.getName());
-      sb.append("(");      
+      StringBuilder sb = new StringBuilder()
+          .append("create index ")
+          .append(index.getName())
+          .append(" on ")
+          .append(table.getName())
+          .append('(');      
       String[] cols = index.getColumns();
       for (int x=0; x < cols.length; x++) {
         if (x > 0) sb.append(", ");
         sb.append(cols[x]);
         Column col = table.getColumnByName(cols[x]);
-        if (col.getType().equals("Blob") || col.getType().equals("Clob") || col.getType().equals("Text"))
+        if ("blob".equalsIgnoreCase(col.getType()) || "clob".equalsIgnoreCase(col.getType()) || "text".equalsIgnoreCase(col.getType()))
           sb.append("(255)");
       }
-      sb.append(")");
+      sb.append(')');
       statements.add(sb.toString());
     }
     return statements;

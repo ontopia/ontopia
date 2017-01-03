@@ -109,8 +109,7 @@ public class SQLParameter implements SQLValueIF {
     StringBuilder sb = new StringBuilder();
     for (int i=0; i < arity; i++) {
       if (i > 1) sb.append(", ");
-      sb.append("?");
-      sb.append(getName());
+      sb.append('?').append(getName());
     }
     return sb.toString();
   }

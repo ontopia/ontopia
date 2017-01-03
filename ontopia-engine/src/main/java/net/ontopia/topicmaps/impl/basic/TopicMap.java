@@ -256,25 +256,25 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
 
   public TMObjectIF getObjectById(String object_id) {
     if (object_id == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getObjectById(object_id);
   }
 
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     if (locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getObjectByItemIdentifier(locator);
   }
 
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) { 
     if (locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getTopicBySubjectLocator(locator);
   }
 
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     if (locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getTopicBySubjectIdentifier(locator);
   }
   

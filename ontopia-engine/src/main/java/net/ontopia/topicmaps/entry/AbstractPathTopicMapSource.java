@@ -259,7 +259,7 @@ public abstract class AbstractPathTopicMapSource
     ResourcesDirectoryReader reader = new ResourcesDirectoryReader(path.substring("classpath:".length()), suffix);
     for (URL resource : reader.getResources()) {
       String file = resource.getFile();
-      String id = file.substring(file.lastIndexOf("/") + 1);
+      String id = file.substring(file.lastIndexOf('/') + 1);
       TopicMapReferenceIF ref = createReference(resource, id, id);
       if (ref != null) {
         newmap.put(id, ref);

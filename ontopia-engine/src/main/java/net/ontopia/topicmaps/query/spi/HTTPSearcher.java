@@ -64,7 +64,7 @@ public class HTTPSearcher extends AbstractSearcher {
     HTTPSearchResult(String query) {
       // construct url
       String url = (String)parameters.get("url");
-      if (url.lastIndexOf("?") >= 0)
+      if (url.lastIndexOf('?') >= 0)
         url += "&query=" + URLEncoder.encode(query);
       else
         url += "?query=" + URLEncoder.encode(query);

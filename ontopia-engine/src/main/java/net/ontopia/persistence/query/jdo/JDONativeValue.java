@@ -91,8 +91,7 @@ public class JDONativeValue implements JDOValueIF {
   }
   
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(root.toString());
+    StringBuilder sb = new StringBuilder(root.toString());
     sb.append(".{");
     sb.append(StringUtils.join(args, ", "));
     sb.append('}');

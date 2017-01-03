@@ -239,25 +239,24 @@ public class GenericSQLProducer {
   protected List<String> createStatement(Table table, List<String> statements) throws IOException {
     String[] pkeys = table.getPrimaryKeys();
     // Create table
-    StringBuilder sb = new StringBuilder();
-    sb.append("create table ");
-    sb.append(table.getName());
-    sb.append(" (\n");
+    StringBuilder sb = new StringBuilder("create table ")
+        .append(table.getName())
+        .append(" (\n");
     Iterator<Column> iter = table.getColumns().iterator();
     while (iter.hasNext()) {
       Column col = iter.next();
       DataType type = project.getDataTypeByName(col.getType(), platforms);
       if (type == null)
         throw new OntopiaRuntimeException("Unknown datatype: '" + col.getType() + "'");
-      sb.append("  ");
-      sb.append(col.getName());      
-      sb.append("  ");
-      sb.append(type.getType());
-      sb.append((type.isVariable() ? "(" + type.getSize() + ")" : ""));
-      sb.append((!col.isNullable() ? " not null" : (supportsNullInColumnDefinition() ? " null" : "")));
+      sb.append("  ")
+          .append(col.getName())
+          .append("  ")
+          .append(type.getType())
+          .append((type.isVariable() ? "(" + type.getSize() + ")" : ""))
+          .append((!col.isNullable() ? " not null" : (supportsNullInColumnDefinition() ? " null" : "")));
       if (pkeys != null || iter.hasNext())
-        sb.append(",");
-      sb.append("\n");
+        sb.append(',');
+      sb.append('\n');
       
     }
     // Primary keys
@@ -266,7 +265,7 @@ public class GenericSQLProducer {
       sb.append(StringUtils.join(pkeys, ", "));
       sb.append(")\n");
     }    
-    sb.append(")");
+    sb.append(')');
     statements.add(sb.toString());    
     return statements;
   }
@@ -287,10 +286,7 @@ public class GenericSQLProducer {
    * INTERNAL: Generate the DDL statement(s) to drop the specified table.
    */
   protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
-    StringBuilder sb = new StringBuilder();
-    sb.append("drop table ");
-    sb.append(table.getName());
-    statements.add(sb.toString());
+    statements.add("drop table " + table.getName());
     return statements;
   }
 
@@ -310,19 +306,18 @@ public class GenericSQLProducer {
    * foreign keys need to be created by a separate statement.
    */
   protected List<String> addForeignKey(Table table, Column col, String keyname, List<String> statements) throws IOException {
-    StringBuilder sb = new StringBuilder();
-    sb.append("alter table ");
-    sb.append(table.getName());
-    sb.append(" add constraint ");
-    sb.append(keyname);
-    sb.append(" foreign key (");
-    sb.append(col.getName());
-    sb.append(") references ");
-    sb.append(col.getReferencedTable());
-    sb.append(" (");
-    sb.append(col.getReferencedColumn());
-    sb.append(") deferrable initially deferred");
-    statements.add(sb.toString());
+    statements.add(new StringBuilder("alter table ")
+        .append(table.getName())
+        .append(" add constraint ")
+        .append(keyname)
+        .append(" foreign key (")
+        .append(col.getName())
+        .append(") references ")
+        .append(col.getReferencedTable())
+        .append(" (")
+        .append(col.getReferencedColumn())
+        .append(") deferrable initially deferred")
+        .toString());
     return statements;
   }
   
@@ -332,12 +327,11 @@ public class GenericSQLProducer {
    * foreign keys need to be created by a separate statement.
    */
   protected List<String> dropConstraint(Table table, Column col, String keyname, List<String> statements) throws IOException {
-    StringBuilder sb = new StringBuilder();
-    sb.append("alter table ");
-    sb.append(table.getName());
-    sb.append(" drop constraint ");
-    sb.append(keyname);
-    statements.add(sb.toString());
+    statements.add(new StringBuilder("alter table ")
+        .append(table.getName())
+        .append(" drop constraint ")
+        .append(keyname)
+        .toString());
     return statements;
   }
   
@@ -349,15 +343,15 @@ public class GenericSQLProducer {
     List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {
       Index index = indexes.get(i);
-      StringBuilder sb = new StringBuilder();
-      sb.append("create index ");
-      sb.append(getIndexName(index));
-      sb.append(" on ");
-      sb.append(table.getName());
-      sb.append("(");
-      sb.append(StringUtils.join(index.getColumns(), ", "));
-      sb.append(")");
-      statements.add(sb.toString());
+      statements.add(new StringBuilder()
+          .append("create index ")
+          .append(getIndexName(index))
+          .append(" on ")
+          .append(table.getName())
+          .append('(')
+          .append(StringUtils.join(index.getColumns(), ", "))
+          .append(')')
+          .toString());
     }
     return statements;
   }

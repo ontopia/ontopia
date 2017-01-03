@@ -68,6 +68,7 @@ import org.slf4j.LoggerFactory;
  * @since 2.2
  */
 public class LTMTopicMapWriter implements TopicMapWriterIF {
+  private static final String COLON = " : ";
   public static final String PROPERTY_PREFIXES = "prefixes";
   public static final String PROPERTY_FILTER = "filter";
   public static final String PROPERTY_PRESERVE_IDS = "preserveIds";
@@ -590,7 +591,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       if (typesIt.hasNext()) {
         headerType = getElementId(typesIt.next());
-        typeString += " : " + headerType;
+        typeString += COLON + headerType;
       }
       while (typesIt.hasNext())
         typeString += " " + getElementId(typesIt.next());
@@ -650,7 +651,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
         boolean skip = false;
         if (prefixes.size() > 0) {
-          int colonIndex = id.indexOf(":");
+          int colonIndex = id.indexOf(':');
           if (colonIndex > -1) {
             String key = id.substring(0, colonIndex);
             String prefix = prefixes.get(key);
@@ -787,7 +788,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       throws IOException
   {
     out.write(lazyPlayerElementId(role));
-    out.write(" : " + lazyTypeElementId(role));
+    out.write(COLON + lazyTypeElementId(role));
 
     // Write the names of the reifying topics of this association role.
     writeReifiers(role, out);
@@ -1006,11 +1007,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Counts one association + role combination(increment counter by 1).
    */
   private void count(AssociationIF association, AssociationRoleIF role) {
-    String longkey = lazyTypeElementId(association) + " : "
-        + lazyPlayerElementId(role) + " : " + lazyTypeElementId(role);
+    String longkey = lazyTypeElementId(association) + COLON
+        + lazyPlayerElementId(role) + COLON + lazyTypeElementId(role);
     if (rolesCounted.get(longkey) == null) {
       Integer value = getCount(association, role);
-      String key = lazyTypeElementId(association) + " : "
+      String key = lazyTypeElementId(association) + COLON
           + lazyTypeElementId(role);
 
       roleCounter.put(key, new Integer(value.intValue() + 1));
@@ -1094,7 +1095,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Get the count for a given association + role combination.
    */
   private Integer getCount(AssociationIF association, AssociationRoleIF role) {
-    String key = lazyTypeElementId(association) + " : "
+    String key = lazyTypeElementId(association) + COLON
         + lazyTypeElementId(role);
     Integer retVal = roleCounter.get(key);
     if (retVal == null)
@@ -1385,7 +1386,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
           suffix = new Integer(2);
         }
       } else {
-        retVal = baseId + String.valueOf(suffix);
+        retVal = baseId + suffix;
         suffix = new Integer(suffix.intValue() + 1);
       }
 

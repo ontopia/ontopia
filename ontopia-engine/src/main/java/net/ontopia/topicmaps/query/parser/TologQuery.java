@@ -42,6 +42,7 @@ import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
  * INTERNAL: Used to represent parsed SELECT queries.
  */
 public class TologQuery extends TologStatement {
+  private static final String VARIABLE = "Variable ";
   protected List clauses;   // the actual predicates of the query part, if any
   protected Map arguments;  // external args used to resolve param refs
   protected Map vartypemap; // variable -> Object[] containing possible types
@@ -193,7 +194,7 @@ public class TologQuery extends TologStatement {
         if (ix > 0) buf.append(", ");
         buf.append(orderBy.get(ix));
       }
-      buf.append("\n");
+      buf.append('\n');
     }
 
     // limit/offset
@@ -202,7 +203,7 @@ public class TologQuery extends TologStatement {
     if (offset != -1)
       buf.append(" offset " + offset);
     
-    buf.append("?");
+    buf.append('?');
 
     // variable types
 //     buf.append("\n\n");
@@ -250,7 +251,7 @@ public class TologQuery extends TologStatement {
       } else
         throw new OntopiaRuntimeException("Unknown clause type:" + theClause);
 
-      buf.append("\n");
+      buf.append('\n');
     }
 
 //     Iterator it = rules.iterator();
@@ -327,7 +328,7 @@ public class TologQuery extends TologStatement {
   public void addVariable(Variable variable) throws AntlrWrapException {
     if (variables.contains(variable))
       throw new AntlrWrapException(
-              new InvalidQueryException("Variable " + variable +
+              new InvalidQueryException(VARIABLE + variable +
                                         " appears twice in select clause"));
     variables.add(variable);
   }
@@ -335,7 +336,7 @@ public class TologQuery extends TologStatement {
   public void addCountVariable(Variable variable) throws AntlrWrapException {
     if (variables.contains(variable))
       throw new AntlrWrapException(
-              new InvalidQueryException("Variable " + variable +
+              new InvalidQueryException(VARIABLE + variable +
                                         " appears twice in select clause"));
     variables.add(variable);
     countVariables.add(variable);
@@ -360,17 +361,17 @@ public class TologQuery extends TologStatement {
     // verify that SELECT variables actually exist
     for (int ix = 0; ix < variables.size(); ix++)
       if (!allVariables.contains(variables.get(ix)))
-        throw new InvalidQueryException("Variable " + variables.get(ix) + " in select clause not used in query");
+        throw new InvalidQueryException(VARIABLE + variables.get(ix) + " in select clause not used in query");
 
     // verify that ORDER BY variables actually exist (and are selected)
     for (int ix = 0; ix < orderBy.size(); ix++) {
       if (!allVariables.contains(orderBy.get(ix)))
-        throw new InvalidQueryException("Variable " + orderBy.get(ix) + " in order by clause not used in query");
+        throw new InvalidQueryException(VARIABLE + orderBy.get(ix) + " in order by clause not used in query");
 
       if (!(variables.isEmpty() && countVariables.isEmpty()) &&
           !variables.contains(orderBy.get(ix)) &&
           !countVariables.contains(orderBy.get(ix)))
-        throw new InvalidQueryException("Variable " + orderBy.get(ix) + " in order by clause not in select list");
+        throw new InvalidQueryException(VARIABLE + orderBy.get(ix) + " in order by clause not in select list");
     }
 
     // type analysis
@@ -386,7 +387,7 @@ public class TologQuery extends TologStatement {
         int seedType = getTypeIdentifier((Class)value[0]);
         for (int ix = 1; ix < value.length; ix++) {
           if (!isCompatibleTypes(seedType, getTypeIdentifier((Class)value[ix])))
-            throw new InvalidQueryException("Variable " + key + " can be bound to incompatible types: '" + 
+            throw new InvalidQueryException(VARIABLE + key + " can be bound to incompatible types: '" + 
                                             value[0] + "' and '" + value[ix] + "'");
         }
       }

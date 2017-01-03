@@ -40,6 +40,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
  * @since 3.4.4
  */
 public class QueryWrapper {
+  private static final String MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW = "Query produced more than one row";
   private TopicMapIF topicmap;
   private DeclarationContextIF context;
   private QueryProcessorIF processor;
@@ -164,7 +165,7 @@ public class QueryWrapper {
     else if (size == 1)
       return (Map) list.get(0);
     else
-      throw new OntopiaRuntimeException("Query produced more than one row");
+      throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
   }
 
   /**
@@ -196,7 +197,7 @@ public class QueryWrapper {
     
     public Object mapRow(QueryResultIF result, int rowno) {
       if (maxone && rowno == 1)
-        throw new OntopiaRuntimeException("Query produced more than one row");
+        throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
       Map row = new HashMap(result.getWidth());
       for (int ix = 0; ix < result.getWidth(); ix++)
         row.put(result.getColumnName(ix), result.getValue(ix));
@@ -222,7 +223,7 @@ public class QueryWrapper {
     List list = queryForList(query, new RowMapperIF(){
       public Object mapRow(QueryResultIF result, int rowno) {
         if (rowno == 1)
-          throw new OntopiaRuntimeException("Query produced more than one row");
+          throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
         return new Object();
       }
     }, params);
@@ -327,7 +328,7 @@ public class QueryWrapper {
     
     public Object mapRow(QueryResultIF result, int rowno) {
       if (maxone && rowno == 1)
-        throw new OntopiaRuntimeException("Query produced more than one row");
+        throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
       return result.getValue(0);
     }
   }

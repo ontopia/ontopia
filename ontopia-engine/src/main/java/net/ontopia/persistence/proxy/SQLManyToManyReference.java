@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SQLManyToManyReference implements FieldAccessIF {
+  private static final String BINDING_OBJECT_MESSAGE = "Binding object identity: ";
   
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(SQLManyToManyReference.class.getName());
@@ -149,7 +150,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
       
       // Bind identity columns
       if (debug)
-        log.debug("Binding object identity: " + identity);
+        log.debug(BINDING_OBJECT_MESSAGE + identity);
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
@@ -316,7 +317,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
   protected void add_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
@@ -352,7 +353,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
   protected void remove_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
@@ -383,7 +384,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
   protected void clear_bindParameters(PreparedStatement stm, IdentityIF identity) throws Exception {            
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
   }
   

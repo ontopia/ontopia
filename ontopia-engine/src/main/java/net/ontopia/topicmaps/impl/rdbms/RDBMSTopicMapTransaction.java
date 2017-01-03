@@ -227,7 +227,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
    * transaction.
    */
   public TransactionIF getTransaction() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return txn;
   }
   

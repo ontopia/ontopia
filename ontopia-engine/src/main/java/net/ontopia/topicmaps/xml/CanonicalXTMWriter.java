@@ -72,6 +72,19 @@ import org.xml.sax.helpers.AttributesImpl;
  * @since 2.0.3
  */
 public class CanonicalXTMWriter implements TopicMapWriterIF {
+  private static final String EL_SUBJECTLOCATORS = "subjectLocators";
+  private static final String EL_SUBJECTIDENTIFIERS = "subjectIdentifiers";
+  private static final String EL_ITEMIDENTIFIERS = "itemIdentifiers";
+  private static final String EL_SCOPE = "scope";
+  private static final String EL_ROLE = "role";
+  private static final String EL_ASSOCIATION = "association";
+  private static final String EL_OCCURRENCE = "occurrence";
+  private static final String EL_VARIANT = "variant";
+  private static final String EL_NAME = "name";
+  private static final String EL_TOPIC = "topic";
+  private static final String EL_TOPICMAP = "topicMap";
+  private static final String AT_NUMBER = "number";
+
   private CanonicalPrinter out;
   private AttributesImpl EMPTY;
   private Map tmIndex; // Maps TMObjectIFs to corresponding index within parent
@@ -130,17 +143,17 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     this.EMPTY = new AttributesImpl();
     this.startNewlineElem = new CompactHashSet(12);
     this.extraRoles = new HashMap();
-    startNewlineElem.add("topicMap");
-    startNewlineElem.add("topic");
-    startNewlineElem.add("name");
-    startNewlineElem.add("variant");
-    startNewlineElem.add("occurrence");
-    startNewlineElem.add("association");
-    startNewlineElem.add("role");
-    startNewlineElem.add("scope");
-    startNewlineElem.add("itemIdentifiers");
-    startNewlineElem.add("subjectIdentifiers");
-    startNewlineElem.add("subjectLocators");
+    startNewlineElem.add(EL_TOPICMAP);
+    startNewlineElem.add(EL_TOPIC);
+    startNewlineElem.add(EL_NAME);
+    startNewlineElem.add(EL_VARIANT);
+    startNewlineElem.add(EL_OCCURRENCE);
+    startNewlineElem.add(EL_ASSOCIATION);
+    startNewlineElem.add(EL_ROLE);
+    startNewlineElem.add(EL_SCOPE);
+    startNewlineElem.add(EL_ITEMIDENTIFIERS);
+    startNewlineElem.add(EL_SUBJECTIDENTIFIERS);
+    startNewlineElem.add(EL_SUBJECTLOCATORS);
   }
   
   public void write(TopicMapIF topicmap) {
@@ -155,8 +168,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     recordIndexes(topics, associations);
         
     out.startDocument();
-    startElement("topicMap", reifier(topicmap));
-    writeLocators(topicmap.getItemIdentifiers(), "itemIdentifiers");
+    startElement(EL_TOPICMAP, reifier(topicmap));
+    writeLocators(topicmap.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
     
     for (int ix = 0; ix < topics.length; ix++)
       write((TopicIF) topics[ix]);
@@ -164,7 +177,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     for (int ix = 0; ix < associations.length; ix++)
       write((AssociationIF) associations[ix], ix + 1);
 
-    endElement("topicMap");
+    endElement(EL_TOPICMAP);
     out.endDocument();
   }
  
@@ -209,13 +222,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   private void write(TopicIF topic) {
     AttributesImpl attributes = new AttributesImpl();
-    attributes.addAttribute("", "", "number", null, "" + tmIndex.get(topic));
+    attributes.addAttribute("", "", AT_NUMBER, null, "" + tmIndex.get(topic));
     
-    startElement("topic", attributes);
+    startElement(EL_TOPIC, attributes);
     attributes.clear();
-    writeLocators(topic.getSubjectIdentifiers(), "subjectIdentifiers");
-    writeLocators(topic.getSubjectLocators(), "subjectLocators");
-    writeLocators(topic.getItemIdentifiers(), "itemIdentifiers");
+    writeLocators(topic.getSubjectIdentifiers(), EL_SUBJECTIDENTIFIERS);
+    writeLocators(topic.getSubjectLocators(), EL_SUBJECTLOCATORS);
+    writeLocators(topic.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
 
     Object[] names = topic.getTopicNames().toArray();
     Arrays.sort(names, nameComparator);
@@ -246,14 +259,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       endElement("rolePlayed");
     }
     
-    endElement("topic");
+    endElement(EL_TOPIC);
   }
 
   private void write(TopicNameIF basename, int number) {
     AttributesImpl attributes = reifier(basename);
-    attributes.addAttribute("", "", "number", null, "" + number);
+    attributes.addAttribute("", "", AT_NUMBER, null, "" + number);
     
-    startElement("name", attributes);
+    startElement(EL_NAME, attributes);
     attributes.clear();
     write(basename.getValue());
     writeType(basename);
@@ -264,16 +277,16 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     for (int ix = 0; ix < variants.length; ix++)
       write((VariantNameIF) variants[ix], ix + 1);
 
-    writeLocators(basename.getItemIdentifiers(), "itemIdentifiers");
+    writeLocators(basename.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
 
-    endElement("name");
+    endElement(EL_NAME);
   }
   
   private void write(VariantNameIF variant, int number) {
     AttributesImpl attributes = reifier(variant);
-    attributes.addAttribute("", "", "number", null, "" + number);
+    attributes.addAttribute("", "", AT_NUMBER, null, "" + number);
     
-    startElement("variant", attributes);
+    startElement(EL_VARIANT, attributes);
     attributes.clear();
 
     if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
@@ -287,9 +300,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
     write(variant.getDataType(), "datatype");
     write(variant.getScope());
-    writeLocators(variant.getItemIdentifiers(), "itemIdentifiers");
+    writeLocators(variant.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
     
-    endElement("variant");
+    endElement(EL_VARIANT);
   }
 
   private Object[] makeFakes(Object[] occs) {
@@ -302,25 +315,25 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   
   private void write(OccurrenceIF occurrence, int number) {
     AttributesImpl attributes = reifier(occurrence);
-    attributes.addAttribute("", "", "number", null, "" + number);
+    attributes.addAttribute("", "", AT_NUMBER, null, "" + number);
     
-    startElement("occurrence", attributes);
+    startElement(EL_OCCURRENCE, attributes);
     attributes.clear();
 
     write(occurrence.getValue()); // normalized in FakeOccurrence below
     write(occurrence.getDataType(), "datatype");
     writeType(occurrence);
     write(occurrence.getScope());
-    writeLocators(occurrence.getItemIdentifiers(), "itemIdentifiers");
+    writeLocators(occurrence.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
 
-    endElement("occurrence");
+    endElement(EL_OCCURRENCE);
   }
 
   private void write(AssociationIF association, int number) {
     AttributesImpl attributes = reifier(association);
-    attributes.addAttribute("", "", "number", null, "" + number);
+    attributes.addAttribute("", "", AT_NUMBER, null, "" + number);
     
-    startElement("association", attributes);
+    startElement(EL_ASSOCIATION, attributes);
     attributes.clear();
     writeType(association);
     
@@ -330,32 +343,32 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       write((AssociationRoleIF) roles[ix], ix + 1);
 
     write(association.getScope());
-    writeLocators(association.getItemIdentifiers(), "itemIdentifiers");
+    writeLocators(association.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
 
-    endElement("association");
+    endElement(EL_ASSOCIATION);
   }
 
   private void write(AssociationRoleIF role, int number) {
     AttributesImpl attributes = reifier(role);
-    attributes.addAttribute("", "", "number", null, "" + number);
+    attributes.addAttribute("", "", AT_NUMBER, null, "" + number);
     
-    startElement("role", attributes);
+    startElement(EL_ROLE, attributes);
     attributes.clear();
 
     startElement("player", topicRef(role.getPlayer()));
     endElement("player");
 
     writeType(role);
-    writeLocators(role.getItemIdentifiers(), "itemIdentifiers");
+    writeLocators(role.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
 
-    endElement("role");
+    endElement(EL_ROLE);
   }
 
   private void write(Collection scope) {
     if (scope.isEmpty())
       return;
 
-    startElement("scope", EMPTY);
+    startElement(EL_SCOPE, EMPTY);
     Object[] topics = scope.toArray();
     Arrays.sort(topics, indexComparator);
     for (int ix = 0; ix < topics.length; ix++) {
@@ -363,7 +376,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       endElement("scopingTopic");
     }
 
-    endElement("scope");
+    endElement(EL_SCOPE);
   }
 
   private void writeType(TypedIF object) {

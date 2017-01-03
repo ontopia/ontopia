@@ -127,7 +127,7 @@ public class QueryMatchesCollection implements Collection {
 
   public String toString() {
     StringBuilder buf = new StringBuilder();
-    buf.append("[");
+    buf.append('[');
     
     Iterator i = iterator();
     boolean hasNext = i.hasNext();
@@ -139,7 +139,7 @@ public class QueryMatchesCollection implements Collection {
 	buf.append(", ");
     }
     
-    buf.append("]");
+    buf.append(']');
     return buf.toString();
   }
 

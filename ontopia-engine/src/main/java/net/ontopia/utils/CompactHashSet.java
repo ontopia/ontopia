@@ -33,6 +33,7 @@ import java.util.NoSuchElementException;
  * INTERNAL: Implements the Set interface more compactly than
  * java.util.HashSet by using a closed hashtable. 
  */
+@SuppressWarnings("unchecked")
 public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   
   protected final static int INITIAL_SIZE = 3;
@@ -69,7 +70,6 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Constructs a new, empty set.
    */
-  @SuppressWarnings("unchecked")
   public CompactHashSet(int size) {
     // NOTE: If array size is 0, we get a
     // "java.lang.ArithmeticException: / by zero" in add(Object).
@@ -152,7 +152,6 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    * @return <tt>true</tt> if the set did not already contain the specified
    * element.
    */
-  @SuppressWarnings("unchecked")
   public boolean add(Object o) {
     if (o == null) o = nullObject;
 
@@ -206,7 +205,6 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Removes the specified element from the set.
    */
-  @SuppressWarnings("unchecked")
   public boolean remove(Object o) {
     if (o == null) o = nullObject;
     
@@ -266,7 +264,6 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   }
 
   // not sure if this needs to have generics
-  @SuppressWarnings("unchecked")
   public <T> T[] toArray(T[] a) {
     int size = elements;
     if (a.length < size)
@@ -320,7 +317,6 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * INTERNAL: Rehashes the hashset to a bigger size.
    */
-  @SuppressWarnings("unchecked")
   protected void rehash(int newCapacity) {
     int oldCapacity = objects.length;
     @SuppressWarnings("unchecked")
@@ -377,7 +373,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
       return index < objects.length;
     }
 
-    @SuppressWarnings({"empty-statement", "unchecked"})
+    @SuppressWarnings("empty-statement")
     public T next() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
@@ -398,7 +394,6 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
         return (T) objects[lastReturned];
     }
 
-    @SuppressWarnings("unchecked")
     public void remove() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();

@@ -79,12 +79,11 @@ public class SQLAggregateReference implements SQLAggregateIF {
   }
   
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("ref:");
-    sb.append("(");
-    sb.append(refagg);
-    sb.append(")");
-    return sb.toString();
+    return new StringBuilder("ref:")
+        .append('(')
+        .append(refagg)
+        .append(')')
+        .toString();
   }
     
 }

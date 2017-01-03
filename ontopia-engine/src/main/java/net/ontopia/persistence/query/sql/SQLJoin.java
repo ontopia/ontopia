@@ -108,8 +108,7 @@ public class SQLJoin implements SQLExpressionIF {
   }
 
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("join:");
+    StringBuilder sb = new StringBuilder("join:");
     switch (getJoinType()) {
     case CROSS:
       sb.append("cross");
@@ -123,12 +122,12 @@ public class SQLJoin implements SQLExpressionIF {
     default:
       sb.append("unknown");
     }
-    sb.append("(");
-    sb.append(left);
-    sb.append(", ");
-    sb.append(right);
-    sb.append(")");
-    return sb.toString();    
+    return sb.append('(')
+        .append(left)
+        .append(", ")
+        .append(right)
+        .append(')')
+        .toString();    
   }
   
 }

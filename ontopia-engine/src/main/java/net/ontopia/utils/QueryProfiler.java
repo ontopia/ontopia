@@ -85,6 +85,7 @@ public class QueryProfiler {
 
   public synchronized void generateReport(String title, Writer out)
     throws IOException {
+    final String TD = "<td>";
     out.write("<h1>" + title + "</h1>\n");
 
     out.write("<table>\n");
@@ -113,26 +114,26 @@ public class QueryProfiler {
     for (int i=0; i < events.length; i++) {
       Event event = (Event)events[i];
 
-      out.write("<tr><td>");
+      out.write("<tr>" + TD);
       out.write(Integer.toString(i+1));
       out.write(". <td class=\"event\">");
       out.write(event.toString());
-      out.write("<td>");
+      out.write(TD);
       out.write(Long.toString(event.executeTime));
-      out.write("<td>");
+      out.write(TD);
       out.write(df.format((1.0f*event.executeTime / executeTime) * 100));
-      out.write("% <td>");
+      out.write("% " + TD);
       out.write(df.format((1.0f*event.executeTime)/event.executeNum));
-      out.write("<td>");
+      out.write(TD);
       out.write(df.format(event.executeTimeMin));
-      out.write("<td>");
+      out.write(TD);
       out.write(df.format(event.executeTimeMax));
-      out.write("<td>");
+      out.write(TD);
       out.write(Long.toString(event.executeNum));
       if (traverse) {
-        out.write("<td>");
+        out.write(TD);
         out.write(Long.toString(event.traverseTime));
-        out.write("<td>");
+        out.write(TD);
         out.write(Long.toString(event.traverseNum));
       }
       out.write("</tr>\n");

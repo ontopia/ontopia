@@ -34,6 +34,10 @@ import org.slf4j.LoggerFactory;
  * @since 1.3.3
  */
 public class StreamUtils {
+  public static final String CLASSPATH_PREFIX = "classpath:";
+  public static final String FILE_PREFIX = "file:";
+  private static final String MSG_FILE_LOADED_THROUGH_CLASS_LOADER = "File loaded through class loader: ";
+  private static final String MSG_FILE_LOADED_FROM_FILE_SYSTEM = "File loaded from file system: ";
   
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(StreamUtils.class.getName());
@@ -60,17 +64,17 @@ public class StreamUtils {
   public static InputStream getInputStream(File basedir, String name)
     throws IOException {
     InputStream istream;
-    if (name.startsWith("classpath:")) {
+    if (name.startsWith(CLASSPATH_PREFIX)) {
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
-      String resourceName = name.substring("classpath:".length());
+      String resourceName = name.substring(CLASSPATH_PREFIX.length());
       istream = cl.getResourceAsStream(resourceName);
       if (istream == null)
         throw new IOException("Resource '" + resourceName + "' not found through class loader.");
-      log.debug("File loaded through class loader: " + name);
-    } else if (name.startsWith("file:")) {
-      File f = makeFile(basedir, name.substring("file:".length()));
+      log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
+    } else if (name.startsWith(FILE_PREFIX)) {
+      File f = makeFile(basedir, name.substring(FILE_PREFIX.length()));
       if (f.exists()) {
-        log.debug("File loaded from file system: " + name);
+        log.debug(MSG_FILE_LOADED_FROM_FILE_SYSTEM + name);
         istream = new FileInputStream(f);
       } else
         throw new IOException("File '" + f + "' not found.");
@@ -79,13 +83,13 @@ public class StreamUtils {
     } else {
       File f = makeFile(basedir, name);
       if (f.exists()) {
-        log.debug("File loaded from file system: " + name);
+        log.debug(MSG_FILE_LOADED_FROM_FILE_SYSTEM + name);
         istream = new FileInputStream(f);
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         istream = cl.getResourceAsStream(name);
         if (istream != null)
-          log.debug("File loaded through class loader: " + name);
+          log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
       }
     }
     return istream;
@@ -109,17 +113,17 @@ public class StreamUtils {
    */
   public static URL getResource(String name) throws IOException {
     URL url;
-    if (name.startsWith("classpath:")) {
+    if (name.startsWith(CLASSPATH_PREFIX)) {
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
-      String resourceName = name.substring("classpath:".length());
+      String resourceName = name.substring(CLASSPATH_PREFIX.length());
       url = cl.getResource(resourceName);
       if (url == null)
         throw new FileNotFoundException("Resource '" + resourceName + "' not found through class loader.");
-      log.debug("File loaded through class loader: " + name);
-    } else if (name.startsWith("file:")) {
-      File f =  new File(name.substring("file:".length()));
+      log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
+    } else if (name.startsWith(FILE_PREFIX)) {
+      File f =  new File(name.substring(FILE_PREFIX.length()));
       if (f.exists()) {
-        log.debug("File loaded from file system: " + name);
+        log.debug(MSG_FILE_LOADED_FROM_FILE_SYSTEM + name);
         url = URIUtils.toURL(f);
       } else
         throw new IOException("File '" + f + "' not found.");
@@ -128,13 +132,13 @@ public class StreamUtils {
     } else {
       File f = new File(name);
       if (f.exists()) {
-        log.debug("File loaded from file system: " + name);
+        log.debug(MSG_FILE_LOADED_FROM_FILE_SYSTEM + name);
         url = URIUtils.toURL(f);
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         url = cl.getResource(name);
         if (url != null)
-          log.debug("File loaded through class loader: " + name);
+          log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
       }
     }
     return url;

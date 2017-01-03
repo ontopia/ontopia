@@ -37,15 +37,17 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * that easily.
  */
 public class PhantomAssociation implements AssociationIF {
+  private static final String MSG_CANNOT_ACCESS = "Cannot access phantom association";
+  private static final String MSG_CANNOT_MODIFY = "Cannot modify phantom association";
 
   // -- AssociationIF
 
   public Collection<TopicIF> getRoleTypes() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public Collection<AssociationRoleIF> getRoles() {
@@ -55,15 +57,15 @@ public class PhantomAssociation implements AssociationIF {
   // -- ScopedIF
 
   public Collection<TopicIF> getScope() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public void addTheme(TopicIF theme) {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
   public void removeTheme(TopicIF theme) {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
   // -- TypedIF
@@ -73,43 +75,43 @@ public class PhantomAssociation implements AssociationIF {
   }
 
   public void setType(TopicIF type) {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
   
   public String getObjectId() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public boolean isReadOnly() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public TopicMapIF getTopicMap() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public Collection<LocatorIF> getItemIdentifiers() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
   public void addItemIdentifier(LocatorIF srcloc) {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
   public void removeItemIdentifier(LocatorIF srcloc) {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
   
   public void remove() {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
   public TopicIF getReifier() {
-    throw new PhantomAccessException("Cannot access phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_ACCESS);
 	}
   
   public void setReifier(TopicIF reifier) {
-    throw new PhantomAccessException("Cannot modify phantom association");
+    throw new PhantomAccessException(MSG_CANNOT_MODIFY);
 	}
 
 }

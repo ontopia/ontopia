@@ -141,8 +141,7 @@ public class StatisticsCache implements StorageCacheIF {
   }
 
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.StatisticsCache@");
+    StringBuilder sb = new StringBuilder("proxy.StatisticsCache@");
     sb.append(System.identityHashCode(this));
     if (pcache != null)
       sb.append(" [parent = ").append(pcache).append(']');

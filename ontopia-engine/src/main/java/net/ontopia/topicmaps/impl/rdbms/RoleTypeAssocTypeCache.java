@@ -140,7 +140,7 @@ public class RoleTypeAssocTypeCache {
       else
         sb.append('?');
     }
-    sb.append(")");
+    sb.append(')');
     this.sql = sb.toString();
     
     this.sql_individual = "select r.id, a.id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.type_id = ? and r.assoc_id = a.id and a.topicmap_id = ? and a.type_id = ? and r.player_id = ?";

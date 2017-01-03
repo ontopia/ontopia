@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  */
 
 public abstract class TMObject implements TMObjectIF, java.io.Serializable {
-  protected static final String MSG_NULL_ARGUMENT = "null is not a valid argument.";
   
   protected TopicMap topicmap;
   protected String oid;

@@ -62,23 +62,23 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
 
     // LIMIT x OFFSET y clause
     if (limit > 0 && offset > 0) {
-      StringBuilder sb = new StringBuilder("select * from ( select a.*, rownum rnum from (");
-      sb.append(sql);
-      sb.append(") a where rownum <= ").append(offset+limit); // max
-      sb.append(") where rnum >= ").append(offset+1); // min
-      return sb.toString();
+      return new StringBuilder("select * from ( select a.*, rownum rnum from (")
+          .append(sql)
+          .append(") a where rownum <= ").append(offset+limit) // max
+          .append(") where rnum >= ").append(offset+1) // min
+          .toString();
 
     } else if (limit > 0) {
-      StringBuilder sb = new StringBuilder("select a.* from (");
-      sb.append(sql);
-      sb.append(") a where rownum <= ").append(limit); // max
-      return sb.toString();
+      return new StringBuilder("select a.* from (")
+          .append(sql)
+          .append(") a where rownum <= ").append(limit) // max
+          .toString();
 
     } else if (offset > 0) {
-      StringBuilder sb = new StringBuilder("select * from ( select a.*, rownum rnum from (");
-      sb.append(sql);
-      sb.append(") a ) where rnum >= ").append(offset+1); // min
-      return sb.toString();
+      return new StringBuilder("select * from ( select a.*, rownum rnum from (")
+          .append(sql)
+          .append(") a ) where rnum >= ").append(offset+1) // min
+          .toString();
       
     } else {
       return sql;

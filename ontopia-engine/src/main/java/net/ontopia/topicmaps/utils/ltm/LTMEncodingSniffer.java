@@ -62,7 +62,7 @@ public class LTMEncodingSniffer implements EncodingSnifferIF {
       
       // Get the encoding (if any) declared in the document.
       if (start.startsWith("@\"")) {
-        int end = start.indexOf("\"", 2);
+        int end = start.indexOf('"', 2);
         if (end != -1)
           encoding = start.substring(2, end);
       }

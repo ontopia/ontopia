@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SQLCollectionAccess implements ClassAccessIF {
+  private static final String EXECUTING = "Executing: ";
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(SQLCollectionAccess.class.getName());
@@ -141,7 +142,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
       
       // Execute statement
       if (debug)
-        log.debug("Executing: " + sql_load);
+        log.debug(EXECUTING + sql_load);
       ResultSet rs = stm.executeQuery();
 
       // Initialize collection value
@@ -208,7 +209,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
       bindParametersDelete(stm, oaccess.getIdentity(object));
       
       // Execute statement
-      if (debug) log.debug("Executing: " + sql_delete);
+      if (debug) log.debug(EXECUTING + sql_delete);
       stm.executeUpdate();
     } finally {
       if (stm != null) stm.close();
@@ -260,7 +261,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
         bindParametersAddRemove(stm, oaccess, identity, iter.next());
         
         // Execute statement
-        if (debug) log.debug("Executing: " + sql_add);
+        if (debug) log.debug(EXECUTING + sql_add);
         stm.executeUpdate();
       }   
     } finally {
@@ -309,7 +310,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
         bindParametersAddRemove(stm, oaccess, identity, iter.next());
         
         // Execute statement
-        if (debug) log.debug("Executing: " + sql_remove);
+        if (debug) log.debug(EXECUTING + sql_remove);
         stm.executeUpdate();
       }   
     } finally {

@@ -71,7 +71,7 @@ public class LuceneDocument implements DocumentIF {
       FieldIF field = iter.next();
       sb.append(field.toString());
     }
-    sb.append(">");
+    sb.append('>');
     return sb.toString();
   }
 }

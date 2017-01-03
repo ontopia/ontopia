@@ -87,8 +87,7 @@ public class RWLocalCache extends AbstractLocalCache {
   // -----------------------------------------------------------------------------
 
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.RWLocalCache@");
+    StringBuilder sb = new StringBuilder("proxy.RWLocalCache@");
     sb.append(System.identityHashCode(this));
     if (pcache != null)
       sb.append(" [parent = ").append(pcache).append(']');

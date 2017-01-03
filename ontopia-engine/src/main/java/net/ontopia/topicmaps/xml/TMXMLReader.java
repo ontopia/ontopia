@@ -397,7 +397,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     }
 
     private TopicIF getType(String uri, String name) throws SAXException {
-      if (uri == null || "".equals(uri))
+      if (uri == null || uri.isEmpty())
         return getTopicById(name);
       if (TMXMLWriter.NS_TM.equals(uri) && "topic".equals(name))
         return null; // element for typeless construct

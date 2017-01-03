@@ -76,7 +76,7 @@ public class PredicateClause extends AbstractClause {
       if (ix+1 < arguments.size())
         buf.append(", ");
     }
-    buf.append(")");
+    buf.append(')');
     return buf.toString();
   }
 

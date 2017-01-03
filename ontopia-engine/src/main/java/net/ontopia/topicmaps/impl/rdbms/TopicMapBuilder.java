@@ -65,7 +65,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public TopicIF makeTopic(TopicIF topic_type) {
     if (topic_type == null)
-      throw new NullPointerException("Topic type must not be null.");
+      throw new NullPointerException(MSG_TOPIC_TYPE_NOT_NULL);
     CrossTopicMapException.check(topic_type, this.tm);
     TopicIF topic = new Topic(txn);
     ((TopicMap)tm).addTopic(topic);
@@ -85,8 +85,8 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   }
 
   public TopicNameIF makeTopicName(TopicIF topic, String value) {
-    if (topic == null) throw new NullPointerException("Topic must not be null.");
-    if (value == null) throw new NullPointerException("Topic name value must not be null.");
+    if (topic == null) throw new NullPointerException(MSG_TOPIC_NOT_NULL);
+    if (value == null) throw new NullPointerException(MSG_TOPIC_NAME_VALUE_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
 		
     TopicIF bntype = getDefaultNameType();
@@ -99,9 +99,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public TopicNameIF makeTopicName(TopicIF topic, TopicIF bntype, String value) {
     if (topic == null)
-      throw new NullPointerException("Topic must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Topic name value must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_VALUE_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
     if (bntype != null)
       CrossTopicMapException.check(bntype, this.tm);
@@ -129,9 +129,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   
   public VariantNameIF makeVariantName(TopicNameIF name, String variant_name) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (variant_name == null)
-      throw new NullPointerException("Variant value must not be null.");
+      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     VariantNameIF vname = new VariantName(txn);
     ((TopicName)name).addVariant(vname);
@@ -141,9 +141,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (locator == null)
-      throw new NullPointerException("Variant locator must not be null.");
+      throw new NullPointerException(MSG_VARIANT_LOCATOR_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     VariantNameIF vname = new VariantName(txn);
     ((TopicName)name).addVariant(vname);
@@ -153,11 +153,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value) {
     if (topic == null)
-      throw new NullPointerException("Topic must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null)
-      throw new NullPointerException("Occurrence type must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Occurrence value must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_VALUE_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
     CrossTopicMapException.check(occurs_type, this.tm);
     OccurrenceIF occurs = new Occurrence(txn);
@@ -169,11 +169,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, LocatorIF locator) {
     if (topic == null)
-      throw new NullPointerException("Topic must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null)
-      throw new NullPointerException("Occurrence type must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
     if (locator == null)
-      throw new NullPointerException("Occurrence locator must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_LOCATOR_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
     CrossTopicMapException.check(occurs_type, this.tm);
     OccurrenceIF occurs = new Occurrence(txn);
@@ -185,7 +185,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public AssociationIF makeAssociation(TopicIF assoc_type) {
     if (assoc_type == null)
-      throw new NullPointerException("Association type must not be null.");
+      throw new NullPointerException(MSG_ASSOCIATION_TYPE_NOT_NULL);
     CrossTopicMapException.check(assoc_type, this.tm);
     AssociationIF assoc = new Association(txn);    
     ((TopicMap)tm).addAssociation(assoc);
@@ -195,11 +195,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   
   public AssociationRoleIF makeAssociationRole(AssociationIF assoc, TopicIF role_type, TopicIF player) {
     if (assoc == null)
-      throw new NullPointerException("Association must not be null.");
+      throw new NullPointerException(MSG_ASSOCATION_NOT_NULL);
     if (role_type == null)
-      throw new NullPointerException("Association role type must not be null.");
+      throw new NullPointerException(MSG_ASSOCIATION_ROLE_TYPE_NOT_NULL);
     if (player == null)
-      throw new NullPointerException("Association role player must not be null.");
+      throw new NullPointerException(MSG_ASSOCIATION_ROLE_PLAYER_NOT_NULL);
     CrossTopicMapException.check(assoc, this.tm);
     CrossTopicMapException.check(role_type, this.tm);
     CrossTopicMapException.check(player, this.tm);
@@ -229,9 +229,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection scope) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Variant value must not be null.");
+      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     checkCollection(scope);
     VariantNameIF vname = new VariantName(txn);
@@ -243,9 +243,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection scope) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (locator == null)
-      throw new NullPointerException("Variant locator must not be null.");
+      throw new NullPointerException(MSG_VARIANT_LOCATOR_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     checkCollection(scope);
     VariantNameIF vname = new VariantName(txn);
@@ -257,11 +257,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Variant value must not be null.");
+      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
     if (datatype == null)
-      throw new NullPointerException("Variant value datatype must not be null.");
+      throw new NullPointerException(MSG_VARIANT_DATATYPE_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     VariantNameIF vname = new VariantName(txn);
     ((TopicName)name).addVariant(vname);
@@ -271,11 +271,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection scope) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Variant value must not be null.");
+      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
     if (datatype == null)
-      throw new NullPointerException("Variant value datatype must not be null.");
+      throw new NullPointerException(MSG_VARIANT_DATATYPE_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     checkCollection(scope);
     VariantNameIF vname = new VariantName(txn);
@@ -287,11 +287,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Variant value must not be null.");
+      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
     if (datatype == null)
-      throw new NullPointerException("Variant value datatype must not be null.");
+      throw new NullPointerException(MSG_VARIANT_DATATYPE_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     VariantNameIF vname = new VariantName(txn);
     ((TopicName)name).addVariant(vname);
@@ -301,11 +301,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection scope) {
     if (name == null)
-      throw new NullPointerException("Topic name must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Variant value must not be null.");
+      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
     if (datatype == null)
-      throw new NullPointerException("Variant value datatype must not be null.");
+      throw new NullPointerException(MSG_VARIANT_DATATYPE_NOT_NULL);
     CrossTopicMapException.check(name, this.tm);
     checkCollection(scope);
     VariantNameIF vname = new VariantName(txn);
@@ -317,13 +317,13 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value, LocatorIF datatype) {
     if (topic == null)
-      throw new NullPointerException("Topic must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null)
-      throw new NullPointerException("Occurrence type must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Occurrence value must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_VALUE_NOT_NULL);
     if (datatype == null)
-      throw new NullPointerException("Occurrence value datatype must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_DATATYPE_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
     CrossTopicMapException.check(occurs_type, this.tm);
     OccurrenceIF occurs = new Occurrence(txn);
@@ -335,13 +335,13 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, Reader value, long length, LocatorIF datatype) {
     if (topic == null)
-      throw new NullPointerException("Topic must not be null.");
+      throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null)
-      throw new NullPointerException("Occurrence type must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
     if (value == null)
-      throw new NullPointerException("Occurrence value must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_VALUE_NOT_NULL);
     if (datatype == null)
-      throw new NullPointerException("Occurrence value datatype must not be null.");
+      throw new NullPointerException(MSG_OCCURRENCE_DATATYPE_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
     CrossTopicMapException.check(occurs_type, this.tm);
     OccurrenceIF occurs = new Occurrence(txn);
@@ -353,11 +353,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   public AssociationIF makeAssociation(TopicIF assoc_type, TopicIF role_type, TopicIF player) {
     if (assoc_type == null)
-      throw new NullPointerException("Association type must not be null.");
+      throw new NullPointerException(MSG_ASSOCIATION_TYPE_NOT_NULL);
     if (role_type == null)
-      throw new NullPointerException("Association role type must not be null.");
+      throw new NullPointerException(MSG_ASSOCIATION_ROLE_TYPE_NOT_NULL);
     if (player == null)
-      throw new NullPointerException("Association role player must not be null.");
+      throw new NullPointerException(MSG_ASSOCIATION_ROLE_PLAYER_NOT_NULL);
     CrossTopicMapException.check(assoc_type, this.tm);
     CrossTopicMapException.check(role_type, this.tm);
     CrossTopicMapException.check(player, this.tm);

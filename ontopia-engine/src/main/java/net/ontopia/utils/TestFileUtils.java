@@ -125,7 +125,7 @@ public class TestFileUtils {
                                  resourcesDirectory);
     List<String[]> tests = new ArrayList<String[]>();
     for (String resource : resources) {
-      int slashPos = resource.lastIndexOf("/") + 1;
+      int slashPos = resource.lastIndexOf('/') + 1;
       String root = resource.substring(0, slashPos);
       String filename = resource.substring(slashPos);
       tests.add(new String[] {root, filename});

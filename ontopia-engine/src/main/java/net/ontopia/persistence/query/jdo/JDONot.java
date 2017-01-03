@@ -55,11 +55,10 @@ public class JDONot implements JDOExpressionIF {
   }
 
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("!(");
-    sb.append(expression);
-    sb.append(")");
-    return sb.toString();
+    return new StringBuilder("!(")
+        .append(expression)
+        .append(')')
+        .toString();
   }
 
   public void visit(JDOVisitorIF visitor) {

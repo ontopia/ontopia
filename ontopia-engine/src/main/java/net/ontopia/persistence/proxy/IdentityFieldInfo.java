@@ -37,6 +37,7 @@ import net.ontopia.persistence.query.sql.SQLValueIF;
  */
 
 public class IdentityFieldInfo implements FieldInfoIF {
+  private static final String UNSUPPORTED_METHOD_MESSAGE = "This method should not be called for IdentityFieldInfo.";
   
   protected ClassInfoIF parent_cinfo;
   protected Class<?> parent_class;
@@ -79,11 +80,11 @@ public class IdentityFieldInfo implements FieldInfoIF {
   }
   
   public String getName() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public int getIndex() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
   
   public int getCardinality() {
@@ -119,15 +120,15 @@ public class IdentityFieldInfo implements FieldInfoIF {
   }
 
   public ClassInfoIF getValueClassInfo() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public Class<?> getValueClass() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public String getTable() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public int getColumnCount() {
@@ -174,23 +175,23 @@ public class IdentityFieldInfo implements FieldInfoIF {
   //! }
 
   public Object getValue(Object object) throws Exception {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public void setValue(Object object, Object value) throws Exception {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public String getJoinTable() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public String[] getJoinKeys() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   public String[] getManyKeys() {
-    throw new UnsupportedOperationException("This method should not be called for IdentityFieldInfo.");
+    throw new UnsupportedOperationException(UNSUPPORTED_METHOD_MESSAGE);
   }
 
   /// --- FieldHandlerIF implementation

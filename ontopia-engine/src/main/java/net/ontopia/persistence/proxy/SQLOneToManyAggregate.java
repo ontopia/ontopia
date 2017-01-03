@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SQLOneToManyAggregate implements FieldAccessIF {
+  private static final String BINDING_OBJECT_MESSAGE = "Binding object identity: ";
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(SQLOneToManyAggregate.class.getName());
@@ -124,7 +125,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
             
       // Bind identity columns
       if (debug)
-        log.debug("Binding object identity: " + identity);
+        log.debug(BINDING_OBJECT_MESSAGE + identity);
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
@@ -262,7 +263,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   protected void add_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
         
     // Bind value columns
@@ -298,7 +299,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   protected void remove_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {     
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
@@ -329,7 +330,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   protected void clear_bindParameters(PreparedStatement stm, IdentityIF identity) throws Exception {    
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
   }
 

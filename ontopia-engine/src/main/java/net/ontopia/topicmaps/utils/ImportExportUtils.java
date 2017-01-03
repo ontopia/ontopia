@@ -50,6 +50,11 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 public class ImportExportUtils {
+  private static final String ONTOPIA_RDBMS_URI_PREFIX = "x-ontopia:tm-rdbms:";
+  private static final String XTM_EXTENSION = ".xtm";
+  private static final String TMX_EXTENSION = ".tmx";
+  private static final String LTM_EXTENSION = ".ltm";
+  private static final String CTM_EXTENSION = ".ctm";
 
   private static Set<ImportExportServiceIF> services;
   
@@ -109,17 +114,17 @@ public class ImportExportUtils {
   private static TopicMapReaderIF getReader (URL url) {
     String address = url.toString();
     try {
-      if (address.startsWith ("x-ontopia:tm-rdbms:"))
+      if (address.startsWith (ONTOPIA_RDBMS_URI_PREFIX))
         return new RDBMSTopicMapReader (getTopicMapId (address));
-      else if (address.endsWith (".xtm"))
+      else if (address.endsWith (XTM_EXTENSION))
         return new XTMTopicMapReader (url);
-      else if (address.endsWith (".ltm"))
+      else if (address.endsWith (LTM_EXTENSION))
         return new LTMTopicMapReader (url);
-      else if (address.endsWith (".tmx"))
+      else if (address.endsWith (TMX_EXTENSION))
         return new TMXMLReader (url);
       else if (address.endsWith (".xml"))
         return new TMXMLReader(url); 
-      else if (address.endsWith (".ctm"))
+      else if (address.endsWith (CTM_EXTENSION))
         return new CTMTopicMapReader(url);
       else {
         for (ImportExportServiceIF service : services) {
@@ -153,9 +158,9 @@ public class ImportExportUtils {
    */
   public static TopicMapWriterIF getWriter (File tmfile, String encoding) throws IOException {
     String name = tmfile.getName();
-    if (name.endsWith(".ltm")) {
+    if (name.endsWith(LTM_EXTENSION)) {
       return new LTMTopicMapWriter(tmfile, encoding);
-    } else if (name.endsWith(".tmx")) {
+    } else if (name.endsWith(TMX_EXTENSION)) {
       return new TMXMLWriter(tmfile, encoding);
     } else if (name.endsWith(".xtm1")) {
       return new XTMTopicMapWriter(tmfile, encoding);
@@ -179,9 +184,9 @@ public class ImportExportUtils {
     int offset = 0;
     if (address.startsWith("M"))
       offset = 1;
-    else if (address.startsWith("x-ontopia:tm-rdbms:")) {
+    else if (address.startsWith(ONTOPIA_RDBMS_URI_PREFIX)) {
       // Syntax: x-ontopia:tm-rdbms:12345
-      offset = "x-ontopia:tm-rdbms:".length ();
+      offset = ONTOPIA_RDBMS_URI_PREFIX.length ();
       
       // Ignore M suffix on topic map id
       if (address.charAt (offset) == 'M')

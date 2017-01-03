@@ -63,6 +63,8 @@ import org.xml.sax.helpers.AttributesImpl;
  * For new code, please use the standard format.
  */
 public class CanonicalTopicMapWriter implements TopicMapWriterIF {
+  private static final String CDATA = "CDATA";
+  private static final String HREF = "href";
 
   protected ContentHandler out;
   
@@ -127,7 +129,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     dh.startDocument();
 
     AttributesImpl atts = new AttributesImpl();
-    atts.addAttribute("", "", "xmlns", "CDATA",
+    atts.addAttribute("", "", "xmlns", CDATA,
                       "http://www.topicmaps.org/cxtm/1.0/");
     dh.startElement("", "", "topicMap", atts);
     atts.clear();
@@ -187,7 +189,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
                            new StringifierComparator<LocatorIF>(new LocatorStringifier()));
       while (it.hasNext()) {
         LocatorIF loc = it.next();
-        atts.addAttribute("", "", "href", "CDATA", resolveRelative(loc));
+        atts.addAttribute("", "", HREF, CDATA, resolveRelative(loc));
         dh.startElement("", "", "subjectIndicatorRef", atts);
         atts.clear();
         dh.endElement("", "", "subjectIndicatorRef");
@@ -225,7 +227,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   private void writeInstanceOf(TopicIF topic, ContentHandler dh,
                                ContextHolder context) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
-    atts.addAttribute("", "", "href", "CDATA", "#" + context.getTopicId(topic));
+    atts.addAttribute("", "", HREF, CDATA, "#" + context.getTopicId(topic));
     dh.startElement("", "", "instanceOf", atts);
     dh.endElement("", "", "instanceOf");
   }
@@ -246,7 +248,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   private void writeTopicRef(TopicIF topic, ContentHandler dh,
                              ContextHolder context) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
-    atts.addAttribute("", "", "href", "CDATA", "#" + context.getTopicId(topic));
+    atts.addAttribute("", "", HREF, CDATA, "#" + context.getTopicId(topic));
     dh.startElement("", "", "topicRef", atts);
     dh.endElement("", "", "topicRef");
   }
@@ -254,7 +256,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   private void writeResourceRef(LocatorIF loc, ContentHandler dh)
     throws SAXException {
     AttributesImpl atts = new AttributesImpl();
-    atts.addAttribute("", "", "href", "CDATA", resolveRelative(loc));
+    atts.addAttribute("", "", HREF, CDATA, resolveRelative(loc));
     dh.startElement("", "", "resourceRef", atts);
     dh.endElement("", "", "resourceRef");
   }
@@ -344,7 +346,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       String address = locator.getExternalForm();
 
       String pbase = null;
-      int lix = base.lastIndexOf("/");
+      int lix = base.lastIndexOf('/');
       if (lix > 0) pbase = base.substring(0, lix+1);
 
       // TODO: walk up the entire path this way

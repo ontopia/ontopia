@@ -144,7 +144,7 @@ public class Association extends TMObject implements AssociationIF {
 
   protected void addRole(AssociationRoleIF assoc_role) {
     if (assoc_role == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     // Check to see if association role is already a member of this association
     if (assoc_role.getAssociation() == this)
       return;
@@ -167,7 +167,7 @@ public class Association extends TMObject implements AssociationIF {
 
   protected void removeRole(AssociationRoleIF assoc_role) {
     if (assoc_role == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     // Check to see if association role is not a member of this association
     if (assoc_role.getAssociation() != this)
       return;
@@ -206,7 +206,7 @@ public class Association extends TMObject implements AssociationIF {
 
   public void addTheme(TopicIF theme) {
     if (theme == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(AssociationIF.EVENT_ADD_THEME, theme, null);
@@ -216,7 +216,7 @@ public class Association extends TMObject implements AssociationIF {
 
   public void removeTheme(TopicIF theme) {
     if (theme == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(AssociationIF.EVENT_REMOVE_THEME, null, theme);

@@ -32,6 +32,10 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 
 public class TransactionNotActiveException extends OntopiaRuntimeException {
+  
+  public TransactionNotActiveException() {
+    super("Transaction is not active.");
+  }
 
   public TransactionNotActiveException(Throwable e) {
     super(e);

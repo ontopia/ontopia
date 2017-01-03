@@ -68,10 +68,10 @@ public class JDOAggregate implements JDOAggregateIF {
     default:
       throw new OntopiaRuntimeException("Unknown aggregate function type: " + type);
     }
-    sb.append("(");
-    sb.append(value);
-    sb.append(")");
-    return sb.toString();
+    return sb.append('(')
+        .append(value)
+        .append(')')
+        .toString();
   }
   
 }

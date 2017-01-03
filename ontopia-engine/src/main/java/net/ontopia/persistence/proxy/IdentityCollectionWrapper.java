@@ -127,7 +127,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
 
   public String toString() {
     StringBuilder buf = new StringBuilder();
-    buf.append("[");
+    buf.append('[');
     
     Iterator<E> i = iterator();
     boolean hasNext = i.hasNext();
@@ -139,7 +139,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
         buf.append(", ");
     }
     
-    buf.append("]");
+    buf.append(']');
     return buf.toString();
   }
 

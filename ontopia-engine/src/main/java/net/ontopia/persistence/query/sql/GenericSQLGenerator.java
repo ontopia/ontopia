@@ -44,6 +44,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 
 public class GenericSQLGenerator implements SQLGeneratorIF {
+  protected static final String AND = " and ";
 
   // FIXME: May have to tweak these based on empirical values
   protected static final int INIT_WIDTH_SELECT = 64;
@@ -458,12 +459,10 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     StringBuilder sql = new StringBuilder(INIT_WIDTH_SQL);
 
     // SELECT clause
-    sql.append("select ");
-    sql.append(sql_select);
+    sql.append("select ").append(sql_select)
 
     // FROM clause
-    sql.append(" from ");
-    sql.append(sql_from);
+    .append(" from ").append(sql_from);
     
     // WHERE clause
     if (sql_where != null && sql_where.length() != 0) {
@@ -474,14 +473,12 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
     // GROUP BY clause
     if (sql_group_by != null && sql_group_by.length() != 0) {
-      sql.append(" group by ");
-      sql.append(sql_group_by);
+      sql.append(" group by ").append(sql_group_by);
     }
     
     // ORDER BY clause
     if (sql_order_by != null && sql_order_by.length() != 0) {
-      sql.append(" order by ");
-      sql.append(sql_order_by);
+      sql.append(" order by ").append(sql_order_by);
     }
 
     // LIMIT x OFFSET y clause
@@ -1244,7 +1241,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   protected void whereSQLAnd(SQLAnd and, StringBuilder sql, BuildInfo info) {
     sql.append('(');
-    whereSQLExpressionIF(and.getExpressions(), " and ", sql, info);
+    whereSQLExpressionIF(and.getExpressions(), AND, sql, info);
     sql.append(')');
   }
   
@@ -1568,7 +1565,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append('.');
       sql.append(rcols[i]);
       if (i != length - 1)
-        sql.append(" and ");
+        sql.append(AND);
     }
     if (length > 1) sql.append(')');
   }
@@ -1603,7 +1600,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append(rcols[i]);
       sql.append("(+)");
       if (i != length - 1)
-        sql.append(" and ");
+        sql.append(AND);
     }
     if (length > 1) sql.append(')');
   }
@@ -1638,7 +1635,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append('.');
       sql.append(rcols[i]);
       if (i != length - 1)
-        sql.append(" and ");
+        sql.append(AND);
     }
     if (length > 1) sql.append(')');
   }
@@ -1714,7 +1711,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       viter.nextReference(sql, info);      
       sql.append(' ').append(operator);
       for (int i=1; i < arity; i++) {
-        sql.append(" and ");
+        sql.append(AND);
         viter.nextReference(sql, info);
         sql.append(operator);
       }
@@ -1759,7 +1756,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       viter2.nextReference(sql, info);
       
       for (int i=1; i < arity1; i++) {
-        sql.append(" and ");
+        sql.append(AND);
         viter1.nextReference(sql, info);      
         sql.append(' ').append(operator).append(' ');
         viter2.nextReference(sql, info);      

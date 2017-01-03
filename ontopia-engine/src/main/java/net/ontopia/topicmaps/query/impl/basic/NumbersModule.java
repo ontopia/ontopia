@@ -40,6 +40,7 @@ public class NumbersModule implements ModuleIF {
 
   public static final String MODULE_URI = 
     "http://psi.ontopia.net/tolog/numbers/";
+  private static final String SHARED_SIGNATURE = "n n! n!+";
 
   private Map<String, PredicateIF> predicates;
 
@@ -432,7 +433,7 @@ public class NumbersModule implements ModuleIF {
     }
 
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
     protected Number calculateResult(Integer[] values) {
@@ -461,7 +462,7 @@ public class NumbersModule implements ModuleIF {
     }
 
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
     protected Number calculateResult(Integer[] values) {
@@ -494,7 +495,7 @@ public class NumbersModule implements ModuleIF {
     }
 
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
     protected Number calculateResult(Integer[] values) {
@@ -523,7 +524,7 @@ public class NumbersModule implements ModuleIF {
     }
 
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
     protected Number calculateResult(Integer[] values) throws InvalidQueryException {
@@ -568,7 +569,7 @@ public class NumbersModule implements ModuleIF {
     }
 
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
     protected Number calculateResult(Integer[] values) {
@@ -609,7 +610,7 @@ public class NumbersModule implements ModuleIF {
     }
 
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
     protected Number calculateResult(Integer[] values) {

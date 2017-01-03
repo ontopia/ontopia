@@ -55,22 +55,22 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
   }
 
   public TopicMapBuilderIF getBuilder() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return builder;
   }
 
   public CollectionFactoryIF getCollectionFactory() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return cfactory;
   }
 
   public IndexManagerIF getIndexManager() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return imanager;
   }
 
   public TopicMapIF getTopicMap() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return topicmap;
   }
 
@@ -83,7 +83,7 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
   }
   
   public void commit() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     
     // notify topic map reference
     TopicMapReferenceIF ref = store.getReference();
@@ -92,7 +92,7 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
   }
   
   public void abort() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     abort(true);
   }
 

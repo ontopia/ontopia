@@ -96,7 +96,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
     ContentHandler outer_handler = null;
 
     if (XTMContentHandler.NS_XTM.equals(uri) ||
-        ("".equals(uri) && "topicMap".equals(qname))) {
+        (uri.isEmpty() && "topicMap".equals(qname))) {
       // We are reading XTM 1.0. Update accordingly.
       handler1 = new XTMContentHandler(store_factory,
                                        base_address);

@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
+  private static final String NULL = "null";
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
@@ -379,9 +380,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       for (Object key : stats.keySet()) {
         Integer val = stats.get(key);
           out.write("<tr><td>");
-          out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
+          out.write((key == null ? NULL : StringUtils.escapeHTMLEntities(key.toString())));
           out.write("</td><td>");
-          out.write((val == null ? "null" : StringUtils.escapeHTMLEntities(val.toString())));
+          out.write((val == null ? NULL : StringUtils.escapeHTMLEntities(val.toString())));
           out.write("</td></tr>\n");
       }
       out.write("</table><br>\n");
@@ -393,9 +394,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
             if (key == null) continue;
             CacheEntry val = datacache.get(key);
             out.write("<tr><td>");
-            out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
+            out.write((key == null ? NULL : StringUtils.escapeHTMLEntities(key.toString())));
             out.write("</td><td>");
-            out.write((val == null ? "null" : StringUtils.escapeHTMLEntities(val.toString())));
+            out.write((val == null ? NULL : StringUtils.escapeHTMLEntities(val.toString())));
             out.write("</td></tr>\n");
           }
           out.write("</table><br>\n");
@@ -411,10 +412,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // -----------------------------------------------------------------------------
   
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.SharedCache@");
-    sb.append(System.identityHashCode(this));
-    return sb.toString();
+    return new StringBuilder("proxy.SharedCache@")
+        .append(System.identityHashCode(this))
+        .toString();
   }
   
 }

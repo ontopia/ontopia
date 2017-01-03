@@ -32,6 +32,21 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 
 public interface TopicMapBuilderIF {
+  String MSG_TOPIC_TYPE_NOT_NULL = "Topic type must not be null.";
+  String MSG_TOPIC_NAME_VALUE_NOT_NULL = "Topic name value must not be null.";
+  String MSG_TOPIC_NOT_NULL = "Topic must not be null.";
+  String MSG_TOPIC_NAME_NOT_NULL = "Topic name must not be null.";
+  String MSG_VARIANT_VALUE_NOT_NULL = "Variant value must not be null.";
+  String MSG_VARIANT_LOCATOR_NOT_NULL = "Variant locator must not be null.";
+  String MSG_OCCURRENCE_TYPE_NOT_NULL = "Occurrence type must not be null.";
+  String MSG_OCCURRENCE_VALUE_NOT_NULL = "Occurrence value must not be null.";
+  String MSG_OCCURRENCE_LOCATOR_NOT_NULL = "Occurrence locator must not be null.";
+  String MSG_ASSOCIATION_TYPE_NOT_NULL = "Association type must not be null.";
+  String MSG_ASSOCATION_NOT_NULL = "Association must not be null.";
+  String MSG_ASSOCIATION_ROLE_PLAYER_NOT_NULL = "Association role player must not be null.";
+  String MSG_ASSOCIATION_ROLE_TYPE_NOT_NULL = "Association role type must not be null.";
+  String MSG_VARIANT_DATATYPE_NOT_NULL = "Variant value datatype must not be null.";
+  String MSG_OCCURRENCE_DATATYPE_NOT_NULL = "Occurrence value datatype must not be null.";
   
   /**
    * PUBLIC: Returns the topic map to which this builder belongs.
