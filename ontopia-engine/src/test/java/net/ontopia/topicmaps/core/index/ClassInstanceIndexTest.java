@@ -42,6 +42,13 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     clsix = (ClassInstanceIndexIF) super.setUp("ClassInstanceIndexIF");
     type = builder.makeTopic();
   }
+  
+  public void testEmptyTypesIndexes() {
+    assertTrue("AssociationRoleTypes not empty.", clsix.getAssociationRoleTypes().isEmpty());
+    assertTrue("AssociationTypes not empty.", clsix.getAssociationTypes().isEmpty());
+    assertTrue("OccurrenceTypes not empty", clsix.getOccurrenceTypes().isEmpty());
+    assertTrue("TopicTypes not empty", clsix.getTopicTypes().isEmpty());
+  }
 
   public void testTopicTypes() {
     // STATE 1: empty topic map
