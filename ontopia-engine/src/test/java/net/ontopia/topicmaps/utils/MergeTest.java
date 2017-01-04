@@ -652,6 +652,9 @@ public class MergeTest extends TestCase {
     TopicMapIF tm2 = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("query", "jill.xtm")).read();
 
     MergeUtils.mergeInto(tm1, tm2);
+    
+    assertEquals(tm1.getTopics().size(), tm2.getTopics().size());
+    assertEquals(tm1.getAssociations().size(), tm2.getAssociations().size());
   }
 
   public void testMergeReified() {
