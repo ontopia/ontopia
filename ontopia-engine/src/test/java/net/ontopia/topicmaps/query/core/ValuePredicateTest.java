@@ -66,14 +66,14 @@ public class ValuePredicateTest extends AbstractPredicateTest {
           addMatch(matches, "OBJ", occ, "VALUE", occ.getValue());
       }
     }
-    verifyQuery(matches, "value($OBJ, $VALUE)?");
+    assertQueryMatches(matches, "value($OBJ, $VALUE)?");
   }
 
   @Test
   public void testWithSpecificObject() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
     
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "value(topic1, $VALUES)?");
   }
 
@@ -82,7 +82,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "value(topic1, \"topic1\")?");
   }
   
@@ -90,7 +90,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
   public void testWithAnyObjectNoMatch() throws InvalidQueryException, IOException {
     load("family.ltm");
 
-    findNothing("select $TOPIC from " +
+    assertFindNothing("select $TOPIC from " +
                 "  value($BNAME, \"skalle\"), " +
                 "  topic-name($TOPIC, $BNAME)?");
   }
@@ -102,7 +102,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("lms"));
     
-    verifyQuery(matches, "select $TOPIC from " +
+    assertQueryMatches(matches, "select $TOPIC from " +
                          "  value($BNAME, \"Lars Magne Skalle\"), " +
                          "  topic-name($TOPIC, $BNAME)?");
   }
@@ -114,7 +114,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic1"));
     
-    verifyQuery(matches, "select $TOPIC from " +
+    assertQueryMatches(matches, "select $TOPIC from " +
                          "  value($OCC, \"topic1\"), " +
                          "  occurrence($TOPIC, $OCC)?");
   }
@@ -127,7 +127,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("petter"));
     
-    verifyQuery(matches, "select $TOPIC from " +
+    assertQueryMatches(matches, "select $TOPIC from " +
                          "  value($VNAME, \"2\"), " +
                          "  variant($BNAME, $VNAME), " +
                          "  topic-name($TOPIC, $BNAME)?");
@@ -140,7 +140,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "VALUE", "Lars Magne Skalle");
     
-    verifyQuery(matches, "select $VALUE from " +
+    assertQueryMatches(matches, "select $VALUE from " +
                          "  value($BNAME, $VALUE), " +
                          "  topic-name(lms, $BNAME)?");
   }
@@ -153,7 +153,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "TOPIC", getTopicById("thequeen"));
     addMatch(matches, "TOPIC", getTopicById("comment1"));
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "has-value($TOPIC, $VALUE) :- { " +
                 "  value($NAME, $VALUE), topic-name($TOPIC, $NAME) | " +
                 "  value($OCC, $VALUE), occurrence($TOPIC, $OCC) " +
@@ -167,14 +167,14 @@ public class ValuePredicateTest extends AbstractPredicateTest {
   @Test
   public void testValueOfValue() throws InvalidQueryException, IOException {
     load("family.ltm");
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "value($A, $A)?");
   }
 
   @Test
   public void testWithSingleQuote() throws InvalidQueryException, IOException {
     load("family.ltm");
-    findNothing("select $TOPIC from " +
+    assertFindNothing("select $TOPIC from " +
                 "  value($BNAME, \"foo'bar\"), " +
                 "  topic-name($TOPIC, $BNAME)?");
   }

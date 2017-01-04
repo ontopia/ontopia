@@ -42,32 +42,32 @@ public class CachedIndexTest {
 
   @Test
   public void testFind() {
-    check("larsga", "Lars Marius Garshol");
+    assertContainsAfterAdd("larsga", "Lars Marius Garshol");
   }
   
   @Test
   public void testFindMore() {
-    check("larsga", "Lars Marius Garshol");
-    check("grove", "Geir Ove Gronmo");
-    check("tine", "Tine Holst");
-    check("sylvias", "Sylvia Schwab");
-    check("pepper", "Steve Pepper");
-    check("hca", "Hans Christian Alsos");
-    check("niko", "Niko Schmuck");
-    check("pam", "Pamela Gennusa");
-    check("kal", "Kal Ahmed");
-    check("murray", "Murray Woodman");
+    assertContainsAfterAdd("larsga", "Lars Marius Garshol");
+    assertContainsAfterAdd("grove", "Geir Ove Gronmo");
+    assertContainsAfterAdd("tine", "Tine Holst");
+    assertContainsAfterAdd("sylvias", "Sylvia Schwab");
+    assertContainsAfterAdd("pepper", "Steve Pepper");
+    assertContainsAfterAdd("hca", "Hans Christian Alsos");
+    assertContainsAfterAdd("niko", "Niko Schmuck");
+    assertContainsAfterAdd("pam", "Pamela Gennusa");
+    assertContainsAfterAdd("kal", "Kal Ahmed");
+    assertContainsAfterAdd("murray", "Murray Woodman");
     
-    lookfor("larsga", "Lars Marius Garshol");
-    lookfor("grove", "Geir Ove Gronmo");
-    lookfor("tine", "Tine Holst");
-    lookfor("sylvias", "Sylvia Schwab");
-    lookfor("pepper", "Steve Pepper");
-    lookfor("hca", "Hans Christian Alsos");
-    lookfor("niko", "Niko Schmuck");
-    lookfor("pam", "Pamela Gennusa");
-    lookfor("kal", "Kal Ahmed");
-    lookfor("murray", "Murray Woodman");
+    assertContains("larsga", "Lars Marius Garshol");
+    assertContains("grove", "Geir Ove Gronmo");
+    assertContains("tine", "Tine Holst");
+    assertContains("sylvias", "Sylvia Schwab");
+    assertContains("pepper", "Steve Pepper");
+    assertContains("hca", "Hans Christian Alsos");
+    assertContains("niko", "Niko Schmuck");
+    assertContains("pam", "Pamela Gennusa");
+    assertContains("kal", "Kal Ahmed");
+    assertContains("murray", "Murray Woodman");
 
     Assert.assertTrue("non-existent key found",
            index.get("dummy") == null);
@@ -77,27 +77,27 @@ public class CachedIndexTest {
   public void testExpand() {
     index = new CachedIndex(new EmptyIndex(), 1000, 5, true);
     
-    check("larsga", "Lars Marius Garshol");
-    check("grove", "Geir Ove Gronmo");
-    check("tine", "Tine Holst");
-    check("sylvias", "Sylvia Schwab");
-    check("pepper", "Steve Pepper");
-    check("hca", "Hans Christian Alsos");
-    check("niko", "Niko Schmuck");
-    check("pam", "Pamela Gennusa");
-    check("kal", "Kal Ahmed");
-    check("murray", "Murray Woodman");
+    assertContainsAfterAdd("larsga", "Lars Marius Garshol");
+    assertContainsAfterAdd("grove", "Geir Ove Gronmo");
+    assertContainsAfterAdd("tine", "Tine Holst");
+    assertContainsAfterAdd("sylvias", "Sylvia Schwab");
+    assertContainsAfterAdd("pepper", "Steve Pepper");
+    assertContainsAfterAdd("hca", "Hans Christian Alsos");
+    assertContainsAfterAdd("niko", "Niko Schmuck");
+    assertContainsAfterAdd("pam", "Pamela Gennusa");
+    assertContainsAfterAdd("kal", "Kal Ahmed");
+    assertContainsAfterAdd("murray", "Murray Woodman");
 
-    lookfor("larsga", "Lars Marius Garshol");
-    lookfor("grove", "Geir Ove Gronmo");
-    lookfor("tine", "Tine Holst");
-    lookfor("sylvias", "Sylvia Schwab");
-    lookfor("pepper", "Steve Pepper");
-    lookfor("hca", "Hans Christian Alsos");
-    lookfor("niko", "Niko Schmuck");
-    lookfor("pam", "Pamela Gennusa");
-    lookfor("kal", "Kal Ahmed");
-    lookfor("murray", "Murray Woodman");
+    assertContains("larsga", "Lars Marius Garshol");
+    assertContains("grove", "Geir Ove Gronmo");
+    assertContains("tine", "Tine Holst");
+    assertContains("sylvias", "Sylvia Schwab");
+    assertContains("pepper", "Steve Pepper");
+    assertContains("hca", "Hans Christian Alsos");
+    assertContains("niko", "Niko Schmuck");
+    assertContains("pam", "Pamela Gennusa");
+    assertContains("kal", "Kal Ahmed");
+    assertContains("murray", "Murray Woodman");
 
     Assert.assertTrue("non-existent key found",
            index.get("dummy") == null);
@@ -119,21 +119,21 @@ public class CachedIndexTest {
 
   @Test
   public void testChange() {
-    check("larsga", "Lars Marius Garshol");
-    check("larsga", "LMG");
-    lookfor("larsga", "LMG");
-    check("larsga", "Lars Marius Garshol");
-    lookfor("larsga", "Lars Marius Garshol");
+    assertContainsAfterAdd("larsga", "Lars Marius Garshol");
+    assertContainsAfterAdd("larsga", "LMG");
+    assertContains("larsga", "LMG");
+    assertContainsAfterAdd("larsga", "Lars Marius Garshol");
+    assertContains("larsga", "Lars Marius Garshol");
   }
   
   // --- Helper methods
 
-  private void check(String key, String value) {
+  private void assertContainsAfterAdd(String key, String value) {
     index.put(key, value);
-    lookfor(key, value);
+    assertContains(key, value);
   }
 
-  private void lookfor(String key, String value) {
+  private void assertContains(String key, String value) {
     String found = (String) index.get(key);
     Assert.assertTrue("did not find value on lookup",
            found != null);

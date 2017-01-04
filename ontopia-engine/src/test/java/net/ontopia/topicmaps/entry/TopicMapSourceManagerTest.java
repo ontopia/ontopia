@@ -42,9 +42,9 @@ public class TopicMapSourceManagerTest {
 
   @Test
   public void testEmpty() {
-    verifyEmptyManager("");
+    assertEmptyManager("");
     manager.refresh();
-    verifyEmptyManager(" after refresh");
+    assertEmptyManager(" after refresh");
   }
 
   @Test
@@ -75,7 +75,7 @@ public class TopicMapSourceManagerTest {
 
     manager.removeSource(source);
     manager.refresh();
-    verifyEmptyManager(" after removal");
+    assertEmptyManager(" after removal");
 
     manager.removeSource(source); // checking that it's OK
   }
@@ -113,7 +113,7 @@ public class TopicMapSourceManagerTest {
 
     manager.removeSource(source);
     manager.refresh();
-    verifyEmptyManager(" after removal");
+    assertEmptyManager(" after removal");
 
     manager.removeSource(source); // checking that it's OK
   }
@@ -156,7 +156,7 @@ public class TopicMapSourceManagerTest {
     manager.removeSource(source);
     manager.removeSource(source2);
     manager.refresh();
-    verifyEmptyManager(" after removal");
+    assertEmptyManager(" after removal");
 
     manager.removeSource(source); // checking that it's OK
   }
@@ -164,7 +164,7 @@ public class TopicMapSourceManagerTest {
   
   // --- INTERNAL METHODS
 
-  private void verifyEmptyManager(String suffix) {
+  private void assertEmptyManager(String suffix) {
     Assert.assertTrue("id collection not empty" + suffix,
            manager.getReferenceKeys().size() == 0);
 

@@ -67,15 +67,15 @@ public class DeletionUtilsTopicMapTest {
       importer.importInto(tm);
     } catch (OntopiaRuntimeException ore) {
       // catch and re-throw to add filename to message
-      throw new OntopiaRuntimeException(ore.getMessage() + " in " + name, ore);
+      Assert.fail(ore.getMessage() + " in " + name);
     }
-    clearTopicMap(tm);
+    assertClearTopicMap(tm);
     tm.getStore().close();
   }
 
   // --- Helper methods
   
-  private void clearTopicMap(TopicMapIF tm) throws Exception {
+  private void assertClearTopicMap(TopicMapIF tm) throws Exception {
 
     // Remove all the objects from the topic map
     tm.clear();

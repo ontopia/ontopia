@@ -29,17 +29,17 @@ public class ImportExportUtilsTest {
 
   @Test
   public void testGetTopicMapId() {
-    testId("1", 1L);
-    testId("123", 123L);
-    testId("M1", 1L);
-    testId("M123", 123L);
-    testId("x-ontopia:tm-rdbms:1", 1L);
-    testId("x-ontopia:tm-rdbms:123", 123L);
-    testId("x-ontopia:tm-rdbms:M1", 1L);
-    testId("x-ontopia:tm-rdbms:M123", 123L);
+    assertCorrectId("1", 1L);
+    assertCorrectId("123", 123L);
+    assertCorrectId("M1", 1L);
+    assertCorrectId("M123", 123L);
+    assertCorrectId("x-ontopia:tm-rdbms:1", 1L);
+    assertCorrectId("x-ontopia:tm-rdbms:123", 123L);
+    assertCorrectId("x-ontopia:tm-rdbms:M1", 1L);
+    assertCorrectId("x-ontopia:tm-rdbms:M123", 123L);
   }
   
-  private void testId(String id, long y) {
+  private void assertCorrectId(String id, long y) {
     long x = ImportExportUtils.getTopicMapId(id);
     Assert.assertTrue("Invalid id: " + x + " (should have been: " + y + ")", x == y);
   }

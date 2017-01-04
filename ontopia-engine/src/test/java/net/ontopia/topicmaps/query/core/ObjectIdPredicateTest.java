@@ -80,7 +80,7 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "object-id($OBJECT, $ID)?");
+    assertQueryMatches(matches, "object-id($OBJECT, $ID)?");
     closeStore();
   }
 
@@ -93,7 +93,7 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "ID", horse.getObjectId());
     
-    verifyQuery(matches, "object-id(horse, $ID)?");
+    assertQueryMatches(matches, "object-id(horse, $ID)?");
     closeStore();
   }
 
@@ -105,7 +105,7 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
     TopicIF topic = getTopicById("thequeen");
     addMatch(matches, "TOPIC", topic);
     
-    verifyQuery(matches, "object-id($TOPIC, \"" + topic.getObjectId() + "\")?");
+    assertQueryMatches(matches, "object-id($TOPIC, \"" + topic.getObjectId() + "\")?");
     closeStore();
   }
 
@@ -113,7 +113,7 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
   public void testWithTopicNames() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "object-id(horse, $BN), topic-name($T, $BN)?");
     closeStore();
   }
@@ -127,7 +127,7 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
 
     TopicIF topic = getTopicById("thequeen");
     
-    verifyQuery(matches, "object-id(thequeen, \"" + topic.getObjectId() +"\")?");
+    assertQueryMatches(matches, "object-id(thequeen, \"" + topic.getObjectId() +"\")?");
     closeStore();
   }
   
@@ -138,7 +138,7 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     TopicIF topic = getTopicById("thequeen");
     
-    verifyQuery(matches, "object-id(equation, \"" + topic.getObjectId() + "\")?");
+    assertQueryMatches(matches, "object-id(equation, \"" + topic.getObjectId() + "\")?");
     closeStore();
   }
   

@@ -97,7 +97,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     prepareTopicMap();
     topicmap.addItemIdentifier(sourceLoc);
     reload();
-    check("topic map", topicmap);
+    assertXTM("topic map", topicmap);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     topic.addItemIdentifier(sourceLoc);
   
     reload();
-    check("topic", getTopicById(topicmap, "id"));
+    assertXTM("topic", getTopicById(topicmap, "id"));
   }
 
   @Test
@@ -120,7 +120,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     topic.addItemIdentifier(loc);
   
     reload();
-    check("topic", getTopicById(topicmap, "ide"), loc);
+    assertXTM("topic", getTopicById(topicmap, "ide"), loc);
   }
 
   @Test
@@ -144,7 +144,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     }
     
     Assert.assertNotNull("no topic found with a topic name after reload", topic);
-    check("base name", (TopicNameIF) topic.getTopicNames().iterator().next());
+    assertXTM("base name", (TopicNameIF) topic.getTopicNames().iterator().next());
   }
 
   @Test
@@ -170,7 +170,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     
     Assert.assertNotNull("no topic found with a topic name after reload", topic);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
-    check("variant name", (VariantNameIF) bn.getVariants().iterator().next());
+    assertXTM("variant name", (VariantNameIF) bn.getVariants().iterator().next());
   }
 
   @Test
@@ -186,7 +186,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
   
     reload();
     topic = topicmap.getTopicBySubjectIdentifier(loc);
-    check("occurrence", (OccurrenceIF) topic.getOccurrences().iterator().next());
+    assertXTM("occurrence", (OccurrenceIF) topic.getOccurrences().iterator().next());
   }
 
 //   @Test
@@ -320,6 +320,8 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     tmfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "duplicate-ids.xtm");
     topicmap = load("various", "duplicate-ids.xtm");
     reload();
+    
+    Assert.assertEquals(4, topicmap.getTopics().size());
   }
 
   /// skipping ids
@@ -411,6 +413,8 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     
     builder.makeAssociation(builder.makeTopic());
     reload(true); // validation will make this fail if bug #1024 is present
+    
+    Assert.assertEquals(0, topicmap.getAssociations().size());
   }
 
   @Test
@@ -465,11 +469,11 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     topicmap = reader.read();
   }  
 
-  private void check(String what, TMObjectIF obj) {
-    check(what, obj, sourceLoc);
+  private void assertXTM(String what, TMObjectIF obj) {
+    assertXTM(what, obj, sourceLoc);
   }
 
-  private void check(String what, TMObjectIF obj, LocatorIF srcloc) {
+  private void assertXTM(String what, TMObjectIF obj, LocatorIF srcloc) {
     Iterator it = obj.getItemIdentifiers().iterator();
     Assert.assertTrue(what + " id lost on export and re-import",
                it.hasNext());

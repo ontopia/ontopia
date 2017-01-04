@@ -230,6 +230,8 @@ public class CompactHashSetTest {
     set.add("hei2");
     set.clear();
 
+    Assert.assertTrue(set.isEmpty()); // for PMD
+    
     testEmpty();
   }
   
@@ -410,7 +412,7 @@ public class CompactHashSetTest {
   @Test
   public void testRemoveIteration() {
     testRemoveAll();
-    checkIterator();
+    assertIterator();
   }
 
   @Test
@@ -441,7 +443,7 @@ public class CompactHashSetTest {
     set.add("Ann Wrightson");
 
     Assert.assertTrue("wrong set size", set.size() == 8);
-    checkIterator();
+    assertIterator();
 
     set.remove("Kal Ahmed");
     set.remove("Pam Gennusa");
@@ -450,7 +452,7 @@ public class CompactHashSetTest {
     set.add("Niko Schmuck");
     
     Assert.assertTrue("wrong set size after modification (1)", set.size() == 5);
-    checkIterator();
+    assertIterator();
     Assert.assertTrue("element lost!", set.contains("Lars Marius"));
     Assert.assertTrue("element lost!", set.contains("Steve"));
     Assert.assertTrue("element lost!", set.contains("Geir Ove"));
@@ -466,7 +468,7 @@ public class CompactHashSetTest {
     set.remove("Niko Schmuck");
     
     Assert.assertTrue("wrong set size after modification (2)", set.size() == 4);
-    checkIterator();
+    assertIterator();
     Assert.assertTrue("element lost!", set.contains("Lars Marius"));
     Assert.assertTrue("element lost!", set.contains("Steve"));
     Assert.assertTrue("element lost!", set.contains("Geir Ove"));
@@ -478,7 +480,7 @@ public class CompactHashSetTest {
     set.add("Pam Gennusa");
 
     Assert.assertTrue("wrong set size after modification (3)", set.size() == 6);
-    checkIterator();
+    assertIterator();
     Assert.assertTrue("element lost!", set.contains("Lars Marius"));
     Assert.assertTrue("element lost!", set.contains("Steve"));
     Assert.assertTrue("element lost!", set.contains("Geir Ove"));
@@ -602,7 +604,7 @@ public class CompactHashSetTest {
                    !set.contains(value));
       }
 
-      checkIterator();
+      assertIterator();
       checkToArray();
     }
   }
@@ -671,7 +673,7 @@ public class CompactHashSetTest {
   
   // --- Internal helper methods
 
-  private void checkIterator() {
+  private void assertIterator() {
     List list = new ArrayList();
     Iterator it = set.iterator();
     while (it.hasNext())

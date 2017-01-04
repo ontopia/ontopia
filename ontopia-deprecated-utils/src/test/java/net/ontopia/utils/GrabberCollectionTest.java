@@ -29,8 +29,8 @@ import org.junit.Test;
 public class GrabberCollectionTest extends AbstractCollectionTest {
 
   @Override
-  protected void testCollection(Collection coll, Collection identical, Collection smaller) {
-    super.testCollection(coll, identical, smaller);
+  protected void assertCollection(Collection coll, Collection identical, Collection smaller) {
+    super.assertCollection(coll, identical, smaller);
 
     String[] strings = new String[intended_size];
     Assert.assertTrue("coll toarray[2]", coll.toArray(strings).length == intended_size);
@@ -57,8 +57,8 @@ public class GrabberCollectionTest extends AbstractCollectionTest {
   @Test
   public void testGrabberCollection() {
     UpperCaseGrabber grbU = new UpperCaseGrabber();
-    testCollection(new GrabberCollection(getCollectionLow(intended_size), grbU), getCollection(intended_size), getCollection(intended_size - 5));
-    testCollection(new GrabberCollection(getCollectionLow(intended_size), grbU, getDeciders(intended_size)), getCollection(intended_size), getCollection(intended_size - 5));
+    assertCollection(new GrabberCollection(getCollectionLow(intended_size), grbU), getCollection(intended_size), getCollection(intended_size - 5));
+    assertCollection(new GrabberCollection(getCollectionLow(intended_size), grbU, getDeciders(intended_size)), getCollection(intended_size), getCollection(intended_size - 5));
     intended_size = 10;
   }
 

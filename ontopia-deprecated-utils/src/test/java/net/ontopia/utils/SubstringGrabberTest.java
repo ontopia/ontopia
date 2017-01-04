@@ -28,9 +28,9 @@ public class SubstringGrabberTest extends AbstractGrabberTest {
   public void testSubstringGrabber() {
     String str = "Jazz is NOT dead, it JUST SMELLS funny";
       
-    testGrabber(new SubstringGrabber(2, 5).grab(str), str.substring(2, 5), str.substring(1,4));
-    testGrabber(new SubstringGrabber(0, 10).grab(str), str.substring(0, 10), str.substring(1, 10));
-    testGrabber(new SubstringGrabber(2, str.length()).grab(str), str.substring(2, str.length()), str.substring(2, str.length() - 1));
+    assertGrabberResult(new SubstringGrabber(2, 5).grab(str), str.substring(2, 5), str.substring(1,4));
+    assertGrabberResult(new SubstringGrabber(0, 10).grab(str), str.substring(0, 10), str.substring(1, 10));
+    assertGrabberResult(new SubstringGrabber(2, str.length()).grab(str), str.substring(2, str.length()), str.substring(2, str.length() - 1));
   }
 
 }

@@ -38,7 +38,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPICMAP", topicmap);
     
-    verifyQuery(matches, "topicmap($TOPICMAP)?");
+    assertQueryMatches(matches, "topicmap($TOPICMAP)?");
     closeStore();
   }
 
@@ -49,7 +49,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "topicmap(jillstm)?");
+    assertQueryMatches(matches, "topicmap(jillstm)?");
     closeStore();
   }
 
@@ -58,7 +58,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     load("jill.xtm");
 
     List matches = new ArrayList(); // should not match anything
-    verifyQuery(matches, OPT_TYPECHECK_OFF +
+    assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "topicmap(jill-ontopia-association)?");
     closeStore();
   }
@@ -68,7 +68,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     load("jill.xtm");
 
     List matches = new ArrayList(); // should not match anything
-    verifyQuery(matches, OPT_TYPECHECK_OFF +
+    assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "topic($NOTHING), topicmap($NOTHING)?");
     closeStore();
   }
@@ -80,7 +80,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList(); // should not match anything
     LocatorIF loc = topicmap.getItemIdentifiers().iterator().next();
     addMatch(matches, "SRCLOC", loc.getAddress());
-    verifyQuery(matches, "select $SRCLOC from topicmap($TM), item-identifier($TM, $SRCLOC)?");
+    assertQueryMatches(matches, "select $SRCLOC from topicmap($TM), item-identifier($TM, $SRCLOC)?");
     closeStore();
   }
     
@@ -88,7 +88,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
   public void testFiltering() throws InvalidQueryException, IOException {
     load("family.ltm");
 
-    findNothing("/* #OPTION: optimizer.reorder = false */ " +
+    assertFindNothing("/* #OPTION: optimizer.reorder = false */ " +
                 "$A = 1, topicmap($A)?");
   }
 }

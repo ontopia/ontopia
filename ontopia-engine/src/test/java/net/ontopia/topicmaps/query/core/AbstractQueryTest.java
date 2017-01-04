@@ -186,7 +186,7 @@ public abstract class AbstractQueryTest {
    * i.e. a query match with no unbound variables.
    * @param query The query to test.
    */
-  protected void verifyQuery(String query) throws InvalidQueryException {
+  protected void assertQuery(String query) throws InvalidQueryException {
     // verify that we do not get any parse or query errors
     QueryResultIF result = processor.execute(query);
     try {
@@ -198,22 +198,22 @@ public abstract class AbstractQueryTest {
     }
   }
   
-  protected void verifyQuery(List matches, String query)
+  protected void assertQueryMatches(List matches, String query)
     throws InvalidQueryException {
-    verifyQuery(matches, query, null, null);
+    assertQueryMatches(matches, query, null, null);
   }
   
-  protected void verifyQuery(List matches, String query, Map args)
+  protected void assertQueryMatches(List matches, String query, Map args)
     throws InvalidQueryException {
-    verifyQuery(matches, query, null, args);
+    assertQueryMatches(matches, query, null, args);
   }
   
-  protected void verifyQuery(List matches, String query, String ruleset)
+  protected void assertQueryMatches(List matches, String query, String ruleset)
     throws InvalidQueryException {
-    verifyQuery(matches, query, ruleset, null);
+    assertQueryMatches(matches, query, ruleset, null);
   }
   
-  protected void verifyQuery(List matches, String query, String ruleset, Map args)
+  protected void assertQueryMatches(List matches, String query, String ruleset, Map args)
     throws InvalidQueryException {
 
     matches = new ArrayList(matches); // avoid modifying caller's list
@@ -247,7 +247,7 @@ public abstract class AbstractQueryTest {
                matches.isEmpty());
   }
   
-  protected void verifyQuerySubset(List matches, String query)
+  protected void assertQuerySubset(List matches, String query)
     throws InvalidQueryException {
     verifyQuerySubset(matches, query, null, null);
   }
@@ -294,7 +294,7 @@ public abstract class AbstractQueryTest {
                matches.isEmpty());
   }
 
-  protected void verifyQueryPre(List matches, String decls, String query)
+  protected void assertQueryPre(List matches, String decls, String query)
     throws InvalidQueryException {
 
     // parse the declarations
@@ -324,7 +324,7 @@ public abstract class AbstractQueryTest {
                matches.isEmpty());
   }
   
-  protected void verifyQueryOrder(List matches, String query)
+  protected void assertQueryOrder(List matches, String query)
     throws InvalidQueryException {
 
     int pos = 0;
@@ -347,7 +347,7 @@ public abstract class AbstractQueryTest {
            matches.size() == pos);
   }
 
-  protected void findAny(String query) throws InvalidQueryException {
+  protected void assertFindAny(String query) throws InvalidQueryException {
     // verify that we do not get any parse or query errors
     QueryResultIF result = processor.execute(query);
     try {
@@ -359,7 +359,7 @@ public abstract class AbstractQueryTest {
     }
   }
 
-  protected void findNothing(String query) throws InvalidQueryException {
+  protected void assertFindNothing(String query) throws InvalidQueryException {
     QueryResultIF result = processor.execute(query);
     try {
       Assert.assertTrue("found values, but shouldn't have",
@@ -369,7 +369,7 @@ public abstract class AbstractQueryTest {
     }
   }
 
-  protected void findNothing(String query, Map args) throws InvalidQueryException {
+  protected void assertFindNothing(String query, Map args) throws InvalidQueryException {
     QueryResultIF result = processor.execute(query, args);
     try {
       Assert.assertTrue("found values, but shouldn't have",
@@ -384,38 +384,38 @@ public abstract class AbstractQueryTest {
     return QueryUtils.parseDeclarations(topicmap, decls);
   }
 
-  public int update(String query) throws InvalidQueryException {
+  public int assertUpdate(String query) throws InvalidQueryException {
     return processor.update(query);
   }
 
-  public int update(String query, DeclarationContextIF context)
+  public int assertUpdate(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     return processor.update(query, null, context);
   }
   
-  public int update(String query, Map params) throws InvalidQueryException {
+  public int assertUpdate(String query, Map params) throws InvalidQueryException {
     return processor.update(query, params);
   }
 
-  public int update(String query, Map params, DeclarationContextIF context)
+  public int assertUpdate(String query, Map params, DeclarationContextIF context)
     throws InvalidQueryException {
     return processor.update(query, params, context);
   }
   
-  public void updateError(String query) throws InvalidQueryException {
+  public void assertUpdateError(String query) throws InvalidQueryException {
     try {
-      update(query);
+      assertUpdate(query);
       Assert.fail("No error from query");
     } catch (InvalidQueryException e) {
       // as expected
     }
   }
   
-  protected void getParseError(String query) {
-    getParseError(query, Collections.EMPTY_MAP);
+  protected void assertGetParseError(String query) {
+    assertGetParseError(query, Collections.EMPTY_MAP);
   }
 
-  protected void getParseError(String query, Map parameters) {
+  protected void assertGetParseError(String query, Map parameters) {
     QueryResultIF result = null;
     try {
       result = processor.execute(query, parameters);

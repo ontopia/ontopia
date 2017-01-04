@@ -104,7 +104,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     
     List matches = new ArrayList();
  
-    verifyQuery(matches, "@" + atype.getObjectId() + "(@" + topic.getObjectId() +
+    assertQueryMatches(matches, "@" + atype.getObjectId() + "(@" + topic.getObjectId() +
                 " : @" + rtype1.getObjectId() + ", $PLAYER : @" +
                 rtype2.getObjectId() + ")?");
   }
@@ -115,21 +115,21 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
   @Test
   public void testAssocNomatches() throws InvalidQueryException, IOException{
     load("family.ltm");
-    findNothing("parenthood(petter : mother, may : father, $C : child)?");
+    assertFindNothing("parenthood(petter : mother, may : father, $C : child)?");
   }
 
   @Test
   public void testAssocNomatchesSyntaxProblem1()
     throws InvalidQueryException, IOException{
     load("family.ltm");
-    findNothing("parenthood(petter: mother, may : father, $C : child)?");
+    assertFindNothing("parenthood(petter: mother, may : father, $C : child)?");
   }
 
   @Test
   public void testAssocNomatchesSyntaxProblem2()
     throws InvalidQueryException, IOException{
     load("family.ltm");
-    findNothing("parenthood(petter : mother, may : father, $C: child)?");
+    assertFindNothing("parenthood(petter : mother, may : father, $C: child)?");
   }
   
   @Test
@@ -141,7 +141,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "C", getTopicById("tine"));
     addMatch(matches, "C", getTopicById("julie"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "parenthood(may : mother, petter : father, $C : child)?");
   }
 
@@ -157,7 +157,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "C", getTopicById("julie"),
              "F", getTopicById("petter"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "parenthood(may : mother, $F : father, $C : child)?");
   }
 
@@ -167,7 +167,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "borders-with($A : country, $A : country)?");
   }
 
@@ -185,7 +185,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "PARTNER", getTopicById("eurostep"),
              "POS", getTopicById("pos04"));
 
-    verifyQueryOrder(matches,
+    assertQueryOrder(matches,
                      "partnership(ontopia : partner, " +
                      "            $PARTNER : partner, " +
                      "            $POS : position) " +
@@ -216,7 +216,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
                       "C", getTopicById("kfg"),
                       "M", getTopicById("bjorg"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "parenthood(edvin : father, kjellaug : mother, $C : child)," +
                 "parenthood($C : father, $M : mother, $GC : child)?");
   }
@@ -240,7 +240,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "C1", getTopicById("russia"),  "C2", getTopicById("finland"));
     addMatch(matches, "C1", getTopicById("sweden"),  "C2", getTopicById("finland"));
     
-    verifyQuery(matches, "borders-with($C1 : country, $C2 : country), " +
+    assertQueryMatches(matches, "borders-with($C1 : country, $C2 : country), " +
                          "$C1 /= $C2?");
   }
 
@@ -252,7 +252,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "C", getTopicById("norway"));
     addMatch(matches, "C", getTopicById("finland"));
     
-    verifyQuery(matches, "select $C from " +
+    assertQueryMatches(matches, "select $C from " +
               "  borders-with($C : country, $N1 : country), " +
               "  borders-with($C : country, $N2 : country), $N1 /= $N2, " +
               "  borders-with($C : country, $N3 : country), $N1 /= $N3, $N2 /= $N3?");
@@ -267,7 +267,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "N", getTopicById("finland"));
     addMatch(matches, "N", getTopicById("russia"));
     
-    verifyQuery(matches, "borders-with(norway : country, $N : country)?");
+    assertQueryMatches(matches, "borders-with(norway : country, $N : country)?");
   }
 
   @Test
@@ -288,7 +288,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "PAPER", getTopicById("bienew01"),
              "AUTHOR", getTopicById("michel-biezunski"));
     
-    verifyQuery(matches, "is-author-of($PAPER : opus, $AUTHOR : author)?");
+    assertQueryMatches(matches, "is-author-of($PAPER : opus, $AUTHOR : author)?");
   }
 
   // inconsistent use of role types
@@ -302,7 +302,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "OPERA", getTopicById("tosca"),
              "PLACE", getTopicById("rome"));
     
-    verifyQuery(matches, "takes-place-in($OPERA : opera, $PLACE : place)?");
+    assertQueryMatches(matches, "takes-place-in($OPERA : opera, $PLACE : place)?");
   }  
 
   /// bug #655
@@ -313,7 +313,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     
-    verifyQuery(matches, "subclass-of($A : superclass, $B : subclass)?");
+    assertQueryMatches(matches, "subclass-of($A : superclass, $B : subclass)?");
   }
 
   /// type testing
@@ -326,7 +326,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     AssociationRoleIF role = (AssociationRoleIF) topic.getRoles().iterator().next();
     String rid = role.getObjectId();
     
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "example-of(@" + rid + " : illustrated, $E : example)?");
   }
 
@@ -334,7 +334,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
   public void testTypeWithBounds() throws InvalidQueryException, IOException {
     load("bug662.xtm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic($R1), association-role($A, $R2), " +
                 "example-of($R1 : illustrated, $R2 : example)?");
   }
@@ -343,7 +343,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
   public void testTypeWithBounds2() throws InvalidQueryException, IOException {
     load("bug662.xtm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic($R1), association-role($A, $R2), " +
                 "example-of($R2 : illustrated, $R1 : example)?");
   }
@@ -380,7 +380,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "SUICIDE", getTopicById("liu"));
 
     // NOTE: changed to subset matching when moving to opera.ltm from opera.hytm
-    verifyQuerySubset(matches, "killed-by($SUICIDE : victim, $SUICIDE : perpetrator)?"); 
+    assertQuerySubset(matches, "killed-by($SUICIDE : victim, $SUICIDE : perpetrator)?"); 
   }
 
 //   public void testBug1017() throws InvalidQueryException, IOException {

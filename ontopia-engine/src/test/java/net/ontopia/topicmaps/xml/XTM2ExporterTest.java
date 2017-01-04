@@ -69,7 +69,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
       new SearchAttributeValue("resourceRef", "href", loc.getExternalForm(),
                                SearchAttributeValue.REQUIRED);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
 
   @Test
@@ -88,7 +88,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
       new SearchAttributeValue("resourceRef", "href", loc.getExternalForm(),
                                SearchAttributeValue.REQUIRED);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
                                DataTypes.TYPE_STRING.getAddress(),
                                SearchAttributeValue.FORBIDDEN);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
 
   @Test
@@ -130,7 +130,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
       new SearchAttributeValue("itemIdentity", "href", iid.getAddress(),
                                SearchAttributeValue.FORBIDDEN, false);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
   
   @Test
@@ -190,6 +190,10 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     parser.parse(source);
   }
   
+  private void assertCorrectXTM2(SearchAttributeValue handler) {
+      handler.check();
+  }
+
   // --- Internal helper classes
 
   class SearchAttributeValue extends DefaultHandler {

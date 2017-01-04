@@ -228,6 +228,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     TopicMapIF source = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "huge-occurrence.ltm")).read();
     MergeUtils.mergeInto(topicmap, source);
     topicmap.getStore().commit();
+    Assert.assertTrue(true); // for PMD
   }
   
   // --- Internal methods

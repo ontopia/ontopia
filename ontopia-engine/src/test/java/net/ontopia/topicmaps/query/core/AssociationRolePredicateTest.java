@@ -50,7 +50,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "association-role($ASSOC, $ROLE)?");
+    assertQueryMatches(matches, "association-role($ASSOC, $ROLE)?");
     
     closeStore();
   }
@@ -69,7 +69,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
       addMatch(matches, "ROLE", role);
     }
     
-    verifyQuery(matches, "association-role(@" + assoc.getObjectId() + ", $ROLE)?");
+    assertQueryMatches(matches, "association-role(@" + assoc.getObjectId() + ", $ROLE)?");
     
     closeStore();
   }
@@ -84,7 +84,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     AssociationIF assoc = role.getAssociation();
     addMatch(matches, "ASSOC", assoc);
     
-    verifyQuery(matches, "association-role($ASSOC, @" + role.getObjectId() + ")?");
+    assertQueryMatches(matches, "association-role($ASSOC, @" + role.getObjectId() + ")?");
     
     closeStore();
   }
@@ -99,7 +99,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     AssociationIF assoc = role.getAssociation();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "association-role(@" + assoc.getObjectId() + ", @" + role.getObjectId() + ")?");
+    assertQueryMatches(matches, "association-role(@" + assoc.getObjectId() + ", @" + role.getObjectId() + ")?");
     
     closeStore();
   }
@@ -115,7 +115,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     AssociationRoleIF role2 = (AssociationRoleIF) it.next();
     AssociationIF assoc = role2.getAssociation();
     
-    verifyQuery(matches, "association-role(@" + assoc.getObjectId() + ", @" + role.getObjectId() + ")?");
+    assertQueryMatches(matches, "association-role(@" + assoc.getObjectId() + ", @" + role.getObjectId() + ")?");
     
     closeStore();
   } 
@@ -126,7 +126,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 OPT_TYPECHECK_OFF +
                 "role-player($TOPIC, $ROLE), " +
                 "association-role($ASSOC, $ROLE)?");
@@ -149,7 +149,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
         addMatch(matches, "ASSOC", assoc);
     }
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $ASSOC from " +
                 "  role-player($ROLE, white-horse), " +
                 "  association-role($ASSOC, $ROLE), " +

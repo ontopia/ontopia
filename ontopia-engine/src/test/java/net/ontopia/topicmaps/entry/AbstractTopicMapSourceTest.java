@@ -26,7 +26,7 @@ public abstract class AbstractTopicMapSourceTest {
   
   // --- utility methods
 
-  public static void doAbstractTopicMapSourceTests(TopicMapSourceIF source) {
+  public static void assertCompliesToAbstractTopicMapSource(TopicMapSourceIF source) {
     // test id
     String id = source.getId();
     Assert.assertTrue("Id default is not set", source.getId() != null);

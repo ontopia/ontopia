@@ -32,7 +32,7 @@ public class DeciderIteratorTest extends AbstractIteratorTest {
     
     Iterator iter = new DeciderIterator(o -> !"B".equals(o), getIterator(size));
 
-    testIterator(iter, size - 1);
+    assertIteratorSize(iter, size - 1);
   }
 
 }

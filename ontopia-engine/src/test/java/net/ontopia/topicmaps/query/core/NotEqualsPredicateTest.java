@@ -33,7 +33,7 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
   @Test
   public void testNotEqualsFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("topic1 /= topic1?");
+    assertFindNothing("topic1 /= topic1?");
   }
 
   @Test
@@ -41,7 +41,7 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches, "topic1 /= topic2?");
+    assertQueryMatches(matches, "topic1 /= topic2?");
   }
 
   @Test
@@ -53,7 +53,7 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "TOPIC", getTopicById("topic3"));
     addMatch(matches, "TOPIC", getTopicById("topic4"));
 
-    verifyQuery(matches, 
+    assertQueryMatches(matches, 
 		"select $TOPIC from occurrence($TOPIC, $O), " + 
 		"type($O, description), value($O, $DESC), " +
 		"$DESC /= \"topic2\"?");
@@ -68,7 +68,7 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "B", getTopicById("type1"));
 
     // if the bug is here we get a QueryException
-    processor.execute("borders-with($A : country, $B : country), " +
+    assertFindAny("borders-with($A : country, $B : country), " +
                       "borders-with($C : country, $D : country), " +
                       "$A /= $C?");
   }

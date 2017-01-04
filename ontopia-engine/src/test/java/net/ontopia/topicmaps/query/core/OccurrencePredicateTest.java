@@ -49,7 +49,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "occurrence($TOPIC, $OCC)?");
+    assertQueryMatches(matches, "occurrence($TOPIC, $OCC)?");
   }
 
   @Test
@@ -59,7 +59,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addOccurrences(matches, "OCC", getTopicById("horse"));
     
-    verifyQuery(matches, "occurrence(horse, $OCC)?");
+    assertQueryMatches(matches, "occurrence(horse, $OCC)?");
   }
 
   @Test
@@ -72,14 +72,14 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
 
     addMatch(matches, "TOPIC", topic);
     
-    verifyQuery(matches, "occurrence($TOPIC, @" + occ.getObjectId() + ")?");
+    assertQueryMatches(matches, "occurrence($TOPIC, @" + occ.getObjectId() + ")?");
   }
 
   @Test
   public void testWithTopicNames() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic-name(horse, $BN), occurrence($T, $BN)?");
   }
   
@@ -90,7 +90,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "occurrence(jill-ontopia-topic, jills-contract)?");
+    assertQueryMatches(matches, "occurrence(jill-ontopia-topic, jills-contract)?");
   }
   
   @Test
@@ -101,7 +101,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     TopicIF topic = getTopicById("thequeen");
     OccurrenceIF occ = (OccurrenceIF) topic.getOccurrences().iterator().next();
     
-    verifyQuery(matches, "occurrence(equation, @" + occ.getObjectId() + ")?");
+    assertQueryMatches(matches, "occurrence(equation, @" + occ.getObjectId() + ")?");
   }
 
   @Test
@@ -118,14 +118,14 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     topic = getTopicById("rider");
     addMatch(matches, "TOPIC", topic, "OBJ", getOccurrence(topic, description));
 
-    verifyQuery(matches, "value-like($OBJ, \"horse\"), occurrence($TOPIC, $OBJ)?");
+    assertQueryMatches(matches, "value-like($OBJ, \"horse\"), occurrence($TOPIC, $OBJ)?");
   }    
 
   @Test
   public void testNontopicVariable() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), occurrence($TM, $OCC)?");
   }
 
@@ -136,7 +136,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     Map args = new HashMap();
     args.put("TM", topicmap);
              
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "occurrence(%TM%, $OCC)?", args);
   }
 
@@ -148,7 +148,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "A", homepage, "B", homepage);
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "$A = homepage, $B = homepage, " +
                 "{ occurrence($A, $B) | $A = $B }?");

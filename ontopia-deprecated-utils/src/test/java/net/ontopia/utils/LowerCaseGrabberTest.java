@@ -28,7 +28,7 @@ public class LowerCaseGrabberTest extends AbstractGrabberTest {
   public void testLowerCaseGrabber() {
     String str = "Jazz is NOT dead, it JUST SMELLS funny";
       
-    testGrabber(new LowerCaseGrabber().grab(str), str.toLowerCase(), str);
+    assertGrabberResult(new LowerCaseGrabber().grab(str), str.toLowerCase(), str);
   }
 
 }

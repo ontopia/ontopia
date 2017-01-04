@@ -30,39 +30,40 @@ public class URIFragmentLocatorTest {
   // --- tests
   
   @Test
-  public void testGetExternalFormSimple() throws MalformedURLException {
-    testExternalForm("http://www.example.com", "fragment");
+  public void testGetExternalFormSimple() {
+    assertExternalForm("http://www.example.com", "fragment");
   }
 
   @Test
-  public void testGetExternalFormSimple2() throws MalformedURLException {
-    testExternalForm("http://www.example.com/index.jsp", "fragment");
+  public void testGetExternalFormSimple2() {
+    assertExternalForm("http://www.example.com/index.jsp", "fragment");
   }
 
   @Test
-  public void testGetExternalFormSimple3() throws MalformedURLException {
-    testExternalForm("http://www.example.com/index.jsp?bongo", "fragment");
+  public void testGetExternalFormSimple3() {
+    assertExternalForm("http://www.example.com/index.jsp?bongo", "fragment");
   }
 
   @Test
-  public void testGetExternalFormHostname() throws MalformedURLException {
-    testExternalForm("http://www.%F8l.no/", "fragment");
+  public void testGetExternalFormHostname() {
+    assertExternalForm("http://www.%F8l.no/", "fragment");
   }
 
   @Test
-  public void testGetExternalFormDirname() throws MalformedURLException {
-    testExternalForm("http://www.ontopia.no/%F8l.html", "fragment");
+  public void testGetExternalFormDirname() {
+    assertExternalForm("http://www.ontopia.no/%F8l.html", "fragment");
   }
 
   @Test
-  public void testGetExternalFormDirnameSpace() throws MalformedURLException {
-    testExternalForm("http://www.ontopia.no/space%20in%20url.html",
+  public void testGetExternalFormDirnameSpace() {
+    assertExternalForm("http://www.ontopia.no/space%20in%20url.html",
                      "fragment");
   }
 
   // --- helpers
   
-  private void testExternalForm(String uri, String frag) throws MalformedURLException {
+  private void assertExternalForm(String uri, String frag) {
+    try {
       LocatorIF base = new URILocator(uri);
       LocatorIF locator = base.resolveAbsolute("#" + frag);
 
@@ -72,5 +73,8 @@ public class URIFragmentLocatorTest {
       Assert.assertTrue("incorrect external form for URI '" + locator.getAddress() +
                  "': '" + external + "', correct '" + correct + "'",
                  external.equals(correct));
+    } catch (MalformedURLException e) {
+      Assert.fail("INTERNAL ERROR: " + e);
+    }
   }  
 }

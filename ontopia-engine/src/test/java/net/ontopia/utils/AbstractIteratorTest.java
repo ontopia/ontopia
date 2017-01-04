@@ -40,7 +40,7 @@ public abstract class AbstractIteratorTest {
     return list;
   }
   
-  protected void testIterator(Iterator iterator, int size) {
+  protected void assertIteratorSize(Iterator iterator, int size) {
     int count = 0;
     
     while (iterator.hasNext()) {

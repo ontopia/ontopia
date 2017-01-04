@@ -70,14 +70,14 @@ public class TypePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "type($TYPED, $TOPIC)?");
+    assertQueryMatches(matches, "type($TYPED, $TOPIC)?");
   }  
 
   @Test
   public void testCrossJoin() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic-name($TOPIC, $TNAME), type($TNAME, $TYPE), " +
                 "$TYPE /= i\"http://psi.topicmaps.org/iso13250/model/topic-name\"?");
   } 
@@ -90,7 +90,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
  
-    verifyQuery(matches, "type($THING, @" + type.getObjectId() + ")?");
+    assertQueryMatches(matches, "type($THING, @" + type.getObjectId() + ")?");
   }
 
   @Test
@@ -106,7 +106,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TYPE", type2);
  
-    verifyQuery(matches, "type(@" + bname2.getObjectId() + ", $TYPE)?");
+    assertQueryMatches(matches, "type(@" + bname2.getObjectId() + ", $TYPE)?");
   }
 
   @Test
@@ -122,7 +122,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "BNAME", bname2);
     
-    verifyQuery(matches, "type($BNAME, @" + type2.getObjectId() + ")?");
+    assertQueryMatches(matches, "type($BNAME, @" + type2.getObjectId() + ")?");
   }
 
   @Test
@@ -140,7 +140,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "BNAME", bname2, "TYPE", type2);
     addMatch(matches, "BNAME", bnameN, "TYPE", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
-    verifyQuery(matches, "type($BNAME, $TYPE)?");
+    assertQueryMatches(matches, "type($BNAME, $TYPE)?");
   }
 
   @Test
@@ -155,7 +155,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TYPE", rtype);
  
-    verifyQuery(matches, "type(@" + role.getObjectId() + ", $TYPE)?");
+    assertQueryMatches(matches, "type(@" + role.getObjectId() + ", $TYPE)?");
   }
 
   @Test
@@ -172,7 +172,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TYPE", rtype);
  
-    verifyQuery(matches, "type(@" + role.getObjectId() + ", $TYPE)?");
+    assertQueryMatches(matches, "type(@" + role.getObjectId() + ", $TYPE)?");
   }
 
   @Test
@@ -187,7 +187,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
  
-    verifyQuery(matches, "type($ROLE, @" + rtype.getObjectId() + ")?");
+    assertQueryMatches(matches, "type($ROLE, @" + rtype.getObjectId() + ")?");
   }
 
   @Test
@@ -205,7 +205,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "ROLE", role);
     addMatch(matches, "ROLE", role2);
  
-    verifyQuery(matches, "type($ROLE, @" + rtype.getObjectId() + ")?");
+    assertQueryMatches(matches, "type($ROLE, @" + rtype.getObjectId() + ")?");
   }
 
   @Test
@@ -222,7 +222,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
  
-    verifyQuery(matches, "type(@" + role.getObjectId() + ", @" + rtype.getObjectId() + ")?");
+    assertQueryMatches(matches, "type(@" + role.getObjectId() + ", @" + rtype.getObjectId() + ")?");
   }
 
   @Test
@@ -237,7 +237,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
  
-    verifyQuery(matches, "type(@" + role2.getObjectId() + ", @" + rtype.getObjectId() + ")?");
+    assertQueryMatches(matches, "type(@" + role2.getObjectId() + ", @" + rtype.getObjectId() + ")?");
   }
 
   // bug found by Stian Lavik
@@ -255,7 +255,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
         addMatch(matches, "ASSOC", role.getAssociation());
     }
     
-    verifyQuery(matches, "select $ASSOC from role-player($ROLE, horse), " +
+    assertQueryMatches(matches, "select $ASSOC from role-player($ROLE, horse), " +
                 "association-role($ASSOC, $ROLE), " +
                 "not(type($ASSOC, userownstopic)), " +
                 "not(type($ASSOC, topicbelongstosubject)), " +
@@ -269,7 +269,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
   @Test
   public void testTypeWithOneArgument() throws InvalidQueryException, IOException {
     makeEmpty();
-    getParseError("select $ATYPE, $RTYPE from " +
+    assertGetParseError("select $ATYPE, $RTYPE from " +
                   "  role-player($ROLE, $ANY), type($RTYPE), " +
                   "  association-role($ASSOC, $ROLE), type($ATYPE)?");
   }

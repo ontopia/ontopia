@@ -26,7 +26,7 @@ public abstract class AbstractGrabberTest {
 
   protected int intended_size = 8;
   
-  protected void testGrabber(Object grb, Object identical, Object different) {
+  protected void assertGrabberResult(Object grb, Object identical, Object different) {
     Assert.assertTrue("grabber is not equal", grb.equals(identical));
     Assert.assertTrue("grabber is equal", !grb.equals(different));
   }

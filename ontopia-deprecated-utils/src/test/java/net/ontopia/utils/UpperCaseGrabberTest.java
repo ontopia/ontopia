@@ -28,7 +28,7 @@ public class UpperCaseGrabberTest extends AbstractGrabberTest {
   public void testUpperCaseGrabber() {
     String str = "Don't you eat that YELLOW snow!";
       
-    testGrabber(new UpperCaseGrabber().grab(str), str.toUpperCase(), str);
+    assertGrabberResult(new UpperCaseGrabber().grab(str), str.toUpperCase(), str);
   }
 
 }

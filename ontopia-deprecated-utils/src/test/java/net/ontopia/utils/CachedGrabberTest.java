@@ -29,20 +29,20 @@ public class CachedGrabberTest extends AbstractGrabberTest {
     CachedGrabber grb = new CachedGrabber(new SubstringGrabber(5, 15));
     
     String str = "Jazz is not dead, it just smells funny!";
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
     str.replace(' ', '-');
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
     grb.refresh();
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
     str.replace('-', '_');
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
 
     grb.setGrabber(new UpperCaseGrabber());
-    testGrabber(grb.grab(str), grb.grab(str), grb.getGrabber().grab(str));
+    assertGrabberResult(grb.grab(str), grb.grab(str), grb.getGrabber().grab(str));
     grb.refresh();
-    testGrabber(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
+    assertGrabberResult(grb.grab(str), grb.getGrabber().grab(str), grb.getGrabber().grab(str.substring(2)));
   }
 
 }

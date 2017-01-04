@@ -27,25 +27,25 @@ public class StringUtilsTest {
   
   @Test
   public void testEscapeEntitiesAmp() {
-    verifyEscapedEquals("intro & Co", "intro &amp; Co");
+    assertEscapedEquals("intro & Co", "intro &amp; Co");
   }
 
   @Test
   public void testEscapeEntitiesLt() {
-    verifyEscapedEquals("23 < 42", "23 &lt; 42");
+    assertEscapedEquals("23 < 42", "23 &lt; 42");
   }
   
   @Test
   public void testEscapeEntitiesTag() {
-    verifyEscapedEquals("<boring>", "&lt;boring&gt;");
+    assertEscapedEquals("<boring>", "&lt;boring&gt;");
   }
   
   @Test
   public void testEscapeEntitiesQuot() {
-    verifyEscapedEquals("Do know \"So, what?\"", "Do know &quot;So, what?&quot;");
+    assertEscapedEquals("Do know \"So, what?\"", "Do know &quot;So, what?&quot;");
   }
   
-  protected void verifyEscapedEquals(String to_esc, String expected) {
+  protected void assertEscapedEquals(String to_esc, String expected) {
     String result = StringUtils.escapeHTMLEntities(to_esc);
     Assert.assertTrue("'" + result + "' did not equal the escaped string '" + expected +"'",
                result.equals(expected));

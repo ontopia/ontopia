@@ -60,7 +60,7 @@ public abstract class TopicMapPackageTest {
     LocatorIF locrt1 = base.resolveAbsolute("#removed-topic-1");
 
     // System.out.println("tm:" + tm);
-    tmobjectTest(tm, false, false);
+    assertTMObject(tm, false, false);
 
     // Topics
     Assert.assertTrue("getTopics (not null)", tm.getTopics() != null);
@@ -131,8 +131,8 @@ public abstract class TopicMapPackageTest {
     LocatorIF loc2 = base.resolveAbsolute("#topic-2");
     TopicIF topic1 = (TopicIF)tm.getObjectByItemIdentifier(loc1);
     TopicIF topic2 = (TopicIF)tm.getObjectByItemIdentifier(loc2);
-    tmobjectTest(topic1, true, false);
-    tmobjectTest(topic2, true, false);
+    assertTMObject(topic1, true, false);
+    assertTMObject(topic2, true, false);
 
     // SGML id (see testTopicMap for a complete test)
     Assert.assertTrue("getResId topic-1", topic1.getItemIdentifiers().contains(loc1));
@@ -207,7 +207,7 @@ public abstract class TopicMapPackageTest {
     Assert.assertTrue("getTypes (size check before add)", topic1.getTypes().size() == 2);
   }
 
-  protected void tmobjectTest(TMObjectIF tmobject, boolean typed,
+  protected void assertTMObject(TMObjectIF tmobject, boolean typed,
                               boolean scoped) {
     if (tmobject != tm)
       Assert.assertTrue("getTopicMap" + tmobject + tmobject.getClass() +
@@ -284,7 +284,7 @@ public abstract class TopicMapPackageTest {
     TopicNameIF topic_name = deciter.next();
     
     //TopicNameIF topic_name = (TopicNameIF)ScopeUtils.getInBroadScope(topic.getTopicNames(), dtheme).iterator().next();
-    tmobjectTest(topic_name, true, true);
+    assertTMObject(topic_name, true, true);
     Assert.assertTrue("getTopic", topic_name.getTopic() == topic);
     //      Assert.assertTrue("getTopicNames (size check before add)", topic_name.getTopicNames().size() == 2);  
     //      Assert.assertTrue("getDisplayNames (size check before add)", topic_name.getDisplayNames().size() == 2);  
@@ -305,7 +305,7 @@ public abstract class TopicMapPackageTest {
     LocatorIF loc = base.resolveAbsolute("#topic-2");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     TopicNameIF topic_name = (TopicNameIF)topic.getTopicNames().iterator().next();
-    tmobjectTest(topic_name, true, true);
+    assertTMObject(topic_name, true, true);
     Assert.assertTrue("getTopicName", topic_name.getTopic() == topic);
   }
 
@@ -316,7 +316,7 @@ public abstract class TopicMapPackageTest {
     Iterator iter = topic.getOccurrences().iterator();
     while (iter.hasNext()) {
       OccurrenceIF occurs = (OccurrenceIF)iter.next();
-      tmobjectTest(occurs, true, true);
+      assertTMObject(occurs, true, true);
     }
   }
   
@@ -326,7 +326,7 @@ public abstract class TopicMapPackageTest {
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     AssociationRoleIF assocrl = (AssociationRoleIF)topic.getRoles().iterator().next();
     AssociationIF association = assocrl.getAssociation();
-    tmobjectTest(association, true, true);
+    assertTMObject(association, true, true);
   }
 
   @Test
@@ -335,7 +335,7 @@ public abstract class TopicMapPackageTest {
     LocatorIF loc2 = base.resolveAbsolute("#topic-2");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     AssociationRoleIF assocrl = (AssociationRoleIF)topic.getRoles().iterator().next();
-    tmobjectTest(assocrl, true, false);
+    assertTMObject(assocrl, true, false);
     // Properties
     Assert.assertTrue("getPlayer (equal topic-1 before set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc));
     assocrl.setPlayer((TopicIF)tm.getObjectByItemIdentifier(loc2));

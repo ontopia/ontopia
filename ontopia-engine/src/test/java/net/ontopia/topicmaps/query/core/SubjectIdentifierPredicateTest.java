@@ -47,7 +47,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
                  "LOCATOR", ((LocatorIF) it2.next()).getAddress());
     }
     
-    verifyQuery(matches, "subject-identifier($TOPIC, $LOCATOR)?");
+    assertQueryMatches(matches, "subject-identifier($TOPIC, $LOCATOR)?");
     
     closeStore();    
   }
@@ -59,7 +59,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", "http://www.topicmaps.org/xtm/1.0/language.xtm#en");
     
-    verifyQuery(matches, "subject-identifier(english, $LOCATOR)?");
+    assertQueryMatches(matches, "subject-identifier(english, $LOCATOR)?");
     closeStore();
   }
 
@@ -70,7 +70,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("english"));
     
-    verifyQuery(matches, "subject-identifier($TOPIC, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
+    assertQueryMatches(matches, "subject-identifier($TOPIC, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
     closeStore();
   }
 
@@ -80,7 +80,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     
-    verifyQuery(matches, "subject-identifier(user, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
+    assertQueryMatches(matches, "subject-identifier(user, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
     closeStore();
   }
 
@@ -91,7 +91,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "subject-identifier(english, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
+    assertQueryMatches(matches, "subject-identifier(english, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
     closeStore();
   }
   

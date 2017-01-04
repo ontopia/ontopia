@@ -103,65 +103,65 @@ public class URILocatorTest extends AbstractLocatorTest {
 
   @Test
   public void testGetExternalFormSimple() {
-    testExternalForm("http://www.example.com", "http://www.example.com/");
+    assertExternalForm("http://www.example.com", "http://www.example.com/");
   }
 
   @Test
   public void testGetExternalFormSimple2() {
-    testExternalForm("http://www.example.com/index.jsp",
+    assertExternalForm("http://www.example.com/index.jsp",
                      "http://www.example.com/index.jsp");
   }
 
   @Test
   public void testGetExternalFormSimple3() {
-    testExternalForm("http://www.example.com/index.jsp?bongo",
+    assertExternalForm("http://www.example.com/index.jsp?bongo",
                      "http://www.example.com/index.jsp?bongo");
   }
 
   @Test
   public void testGetExternalFormSimple4() {
-    testExternalForm("http://www.example.com/index.jsp?bongo#bash",
+    assertExternalForm("http://www.example.com/index.jsp?bongo#bash",
                      "http://www.example.com/index.jsp?bongo#bash");
   }
 
   @Test
   public void testGetExternalFormHostname() {
-    testExternalForm("http://www.%F8l.no/", "http://www.%C3%B8l.no/");
+    assertExternalForm("http://www.%F8l.no/", "http://www.%C3%B8l.no/");
   }
   
   @Test
   public void testGetExternalFormDirname() {
-    testExternalForm("http://www.ontopia.no/%F8l.html",
+    assertExternalForm("http://www.ontopia.no/%F8l.html",
                      "http://www.ontopia.no/%C3%B8l.html");
   }
 
   @Test
   public void testGetExternalFormDirnameSpace() {
-    testExternalForm("http://www.ontopia.no/space%20in%20url.html",
+    assertExternalForm("http://www.ontopia.no/space%20in%20url.html",
                      "http://www.ontopia.no/space%20in%20url.html");
   }
 
   @Test
   public void testGetExternalFormDirnameSpace2() {
-    testExternalForm("http://www.ontopia.no/space+in+url.html",
+    assertExternalForm("http://www.ontopia.no/space+in+url.html",
                      "http://www.ontopia.no/space%20in%20url.html");
   }
 
   @Test
   public void testGetExternalFormOfWindowsFile() {
-    testExternalForm("file:///C|/topicmaps/opera/occurs/region.htm",
+    assertExternalForm("file:///C|/topicmaps/opera/occurs/region.htm",
                      "file:/C|/topicmaps/opera/occurs/region.htm");
   }
 
   @Test
   public void testGetExternalFormWithSillyPipe() {
-    testExternalForm("http://www.ontopia.net/this|that/",
+    assertExternalForm("http://www.ontopia.net/this|that/",
                      "http://www.ontopia.net/this%7Cthat/");
   }
 
   @Test
   public void testGetExternalFormBug2105() {
-    testExternalForm("http://en.wikipedia.org/wiki/Anton\u00EDn_Dvo\u0159\u00E1k",
+    assertExternalForm("http://en.wikipedia.org/wiki/Anton\u00EDn_Dvo\u0159\u00E1k",
                      "http://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k");
   }
   
@@ -169,40 +169,40 @@ public class URILocatorTest extends AbstractLocatorTest {
   public void testReferenceResolutionRFC3986() {
     String base = "http://a/b/c/d;p?q";
     
-    testAbsoluteResolution(base, "g:h", "g:h");
-    testAbsoluteResolution(base, "g", "http://a/b/c/g");
-    testAbsoluteResolution(base, "./g", "http://a/b/c/g");
-    testAbsoluteResolution(base, "g/", "http://a/b/c/g/");
-    testAbsoluteResolution(base, "/g", "http://a/g");
-    testAbsoluteResolution(base, "//g", "http://g");
+    assertAbsoluteResolution(base, "g:h", "g:h");
+    assertAbsoluteResolution(base, "g", "http://a/b/c/g");
+    assertAbsoluteResolution(base, "./g", "http://a/b/c/g");
+    assertAbsoluteResolution(base, "g/", "http://a/b/c/g/");
+    assertAbsoluteResolution(base, "/g", "http://a/g");
+    assertAbsoluteResolution(base, "//g", "http://g");
     //testAbsoluteResolution(base, "?y", "http://a/b/c/d;p?y");
-    testAbsoluteResolution(base, "g?y", "http://a/b/c/g?y");
-    testAbsoluteResolution(base, "#s", "http://a/b/c/d;p?q#s");
-    testAbsoluteResolution(base, "g#s", "http://a/b/c/g#s");
-    testAbsoluteResolution(base, "g?y#s", "http://a/b/c/g?y#s");
-    testAbsoluteResolution(base, ";x", "http://a/b/c/;x");
-    testAbsoluteResolution(base, "g;x", "http://a/b/c/g;x");
-    testAbsoluteResolution(base, "g;x?y#s", "http://a/b/c/g;x?y#s");
-    testAbsoluteResolution(base, "", "http://a/b/c/d;p?q");
-    testAbsoluteResolution(base, ".", "http://a/b/c/");
-    testAbsoluteResolution(base, "./", "http://a/b/c/");
-    testAbsoluteResolution(base, "..", "http://a/b/");
-    testAbsoluteResolution(base, "../", "http://a/b/");
-    testAbsoluteResolution(base, "../g", "http://a/b/g");
-    testAbsoluteResolution(base, "../..", "http://a/");
-    testAbsoluteResolution(base, "../../", "http://a/");
-    testAbsoluteResolution(base, "../../g", "http://a/g");
+    assertAbsoluteResolution(base, "g?y", "http://a/b/c/g?y");
+    assertAbsoluteResolution(base, "#s", "http://a/b/c/d;p?q#s");
+    assertAbsoluteResolution(base, "g#s", "http://a/b/c/g#s");
+    assertAbsoluteResolution(base, "g?y#s", "http://a/b/c/g?y#s");
+    assertAbsoluteResolution(base, ";x", "http://a/b/c/;x");
+    assertAbsoluteResolution(base, "g;x", "http://a/b/c/g;x");
+    assertAbsoluteResolution(base, "g;x?y#s", "http://a/b/c/g;x?y#s");
+    assertAbsoluteResolution(base, "", "http://a/b/c/d;p?q");
+    assertAbsoluteResolution(base, ".", "http://a/b/c/");
+    assertAbsoluteResolution(base, "./", "http://a/b/c/");
+    assertAbsoluteResolution(base, "..", "http://a/b/");
+    assertAbsoluteResolution(base, "../", "http://a/b/");
+    assertAbsoluteResolution(base, "../g", "http://a/b/g");
+    assertAbsoluteResolution(base, "../..", "http://a/");
+    assertAbsoluteResolution(base, "../../", "http://a/");
+    assertAbsoluteResolution(base, "../../g", "http://a/g");
   }
   
   @Test
   public void testEscapedAmpersand() {
-    testExternalForm("http://www.ontopia.net/?foo=bar%26baz",
+    assertExternalForm("http://www.ontopia.net/?foo=bar%26baz",
                      "http://www.ontopia.net/?foo=bar%26baz");
   }
 
   @Test
   public void testEscapedHash() {
-    testExternalForm("http://www.ontopia.net/?foo=bar%23baz",
+    assertExternalForm("http://www.ontopia.net/?foo=bar%23baz",
                      "http://www.ontopia.net/?foo=bar%23baz");
   }
 
@@ -221,7 +221,7 @@ public class URILocatorTest extends AbstractLocatorTest {
   
   // --- Internal
 
-  private void testAbsoluteResolution(String base, String uri, String external) {
+  private void assertAbsoluteResolution(String base, String uri, String external) {
     try {
       // tests based on http://tools.ietf.org/html/rfc3986#section-5.4.1
       LocatorIF baseURI = new URILocator(base);
@@ -234,7 +234,7 @@ public class URILocatorTest extends AbstractLocatorTest {
     }
   }
   
-  private void testExternalForm(String uri, String external) {
+  private void assertExternalForm(String uri, String external) {
     try {
       LocatorIF locator = new URILocator(uri);
       Assert.assertTrue("incorrect external form for URI '" + uri + "': '" +
