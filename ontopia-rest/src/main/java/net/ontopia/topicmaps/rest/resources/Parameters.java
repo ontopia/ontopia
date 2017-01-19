@@ -33,7 +33,7 @@ public class Parameters<C> {
 	public static final Parameters<TopicIF> ROLETYPE = TOPIC.withName("roletype");
 	public static final Parameters<TopicIF> ASSOCIATIONTYPE = TOPIC.withName("associationtype");
 
-	public static final Parameters<TopicNameIF> TOPICNAME = new Parameters<>("", TopicNameIF.class);
+	public static final Parameters<TopicNameIF> TOPICNAME = new Parameters<>("topicname", TopicNameIF.class);
 	
 	// paging
 	public static final Parameters<Integer> LIMIT = new Parameters<>("limit", Integer.class);
