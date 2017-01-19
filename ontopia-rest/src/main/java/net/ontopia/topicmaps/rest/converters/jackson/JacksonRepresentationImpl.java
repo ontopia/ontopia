@@ -20,7 +20,12 @@
 
 package net.ontopia.topicmaps.rest.converters.jackson;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -42,16 +47,25 @@ import net.ontopia.topicmaps.rest.model.mixin.MTopicMapReference;
 import net.ontopia.topicmaps.rest.model.mixin.MTopicMapSource;
 import net.ontopia.topicmaps.rest.model.mixin.MTopicName;
 import net.ontopia.topicmaps.rest.model.mixin.MVariantName;
+import net.ontopia.topicmaps.rest.utils.ContextUtils;
 import org.restlet.Response;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JacksonRepresentationImpl<T> extends JacksonRepresentation<T> {
-	private static final Logger logger = LoggerFactory.getLogger(JacksonRepresentationImpl.class);
 	public static final String ADDITIONAL_MIXINS_ATTRIBUTE = JacksonConverterImpl.class.getName() + ".mixins";
+
+	private static final Logger logger = LoggerFactory.getLogger(JacksonRepresentationImpl.class);
+
+	private static final String JSONPARSER_FEATURE = JsonParser.class.getName() + ".Feature.";
+	private static final String SERIALIZATION_FEATURE = SerializationFeature.class.getName() + ".";
+
+	private static final Collection<JsonParser.Feature> DEFAULT_PARSER_FEATURES = Arrays.asList(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES);
+	private static final Collection<SerializationFeature> DEFAULT_SERIALIZATION_FEATURES = Arrays.asList(SerializationFeature.INDENT_OUTPUT);
 	
 	public JacksonRepresentationImpl(MediaType mediaType, T object) {
 		super(mediaType, object);
@@ -88,6 +102,31 @@ public class JacksonRepresentationImpl<T> extends JacksonRepresentation<T> {
 			}
 		}
 		
+		for (JsonParser.Feature feature : JsonParser.Feature.values()) {
+			Parameter parameter = ContextUtils.getParameter(ContextUtils.getCurrentApplicationContext(), JSONPARSER_FEATURE + feature.name());
+			if (parameter != null) {
+				mapper.configure(feature, ContextUtils.getParameterAsBoolean(parameter, feature.enabledByDefault() || DEFAULT_PARSER_FEATURES.contains(feature)));
+			}
+		}
+		
 		return mapper;
+	}
+
+	@Override
+	protected ObjectWriter createObjectWriter() {
+		ObjectWriter writer = super.createObjectWriter();
+
+		for (SerializationFeature feature : SerializationFeature.values()) {
+			boolean hasDefault = DEFAULT_SERIALIZATION_FEATURES.contains(feature);
+			Parameter parameter = ContextUtils.getParameter(ContextUtils.getCurrentApplicationContext(), SERIALIZATION_FEATURE + feature.name());
+			if ((parameter != null) || hasDefault) {
+				if (ContextUtils.getParameterAsBoolean(parameter, feature.enabledByDefault() || hasDefault)) {
+					writer = writer.with(feature);
+				} else {
+					writer = writer.without(feature);
+				}
+			}
+		}
+		return writer;
 	}
 }
