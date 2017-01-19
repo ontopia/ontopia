@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.rest;
 
+import net.ontopia.topicmaps.rest.utils.ContextUtils;
 import net.ontopia.topicmaps.rest.v1.topicmap.TopicMapRouter;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -35,7 +36,10 @@ public enum APIVersions {
 			final Context context = application.getContext();
 			
 			// v1 has gzip compression
-			// todo: en/disable via options
+			
+			// can be disabled by parameter
+			application.getEncoderService().setEnabled(ContextUtils.getParameterAsBoolean(context, Constants.V1_COMPRESSION_PARAMETER, true));
+			
 			Filter encoder = application.getEncoderService().createInboundFilter(context);
 			encoder.setName("Response encoder");
 			encoder.setDescription("Allows Ontopia API call responses to be compressed");
