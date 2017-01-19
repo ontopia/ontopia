@@ -22,9 +22,11 @@ package net.ontopia.topicmaps.rest.v1.topicmap;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.TopicMap;
+import net.ontopia.topicmaps.rest.utils.ContextUtils;
 import net.ontopia.topicmaps.rest.v1.TMObjectController;
 
 public class TopicMapController extends AbstractController {
@@ -47,11 +49,14 @@ public class TopicMapController extends AbstractController {
 	}
 
 	public void remove(TopicMapReferenceIF reference) {
-		if (!reference.getSource().supportsDelete()) {
+		boolean supportDelete = reference.getSource().supportsDelete()
+				&& ContextUtils.getParameterAsBoolean(
+						Constants.V1_TOPICMAP_CONTROLLER_ALLOW_DELETE_PARAMETER,
+						Constants.V1_TOPICMAP_CONTROLLER_ALLOW_DELETE_FALLBACK);
+		
+		if (!supportDelete) {
 			throw OntopiaRestErrors.TOPICMAP_DELETE_NOT_SUPPORTED.build(reference.getId());
 		}
-
-		// todo: options to block this
 		
 		reference.delete();
 	}
