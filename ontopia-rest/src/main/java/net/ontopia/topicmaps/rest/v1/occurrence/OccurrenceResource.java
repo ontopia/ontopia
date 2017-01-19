@@ -24,6 +24,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
@@ -55,6 +56,10 @@ public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
 	@Put
 	public void addOccurrence(Occurrence occurrence) {
 		TopicMapIF tm = getTopicMap();
+		
+		if (occurrence == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Occurrence");
+		}
 		
 		TopicIF topic = Parameters.TOPIC.optional(this);
 		OccurrenceIF result;

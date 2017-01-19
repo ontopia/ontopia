@@ -50,12 +50,14 @@ public class OccurrenceController extends AbstractController {
 	}
 
 	public OccurrenceIF add(TopicMapIF tm, Occurrence occurrence) {
+		requireNotNull(occurrence.getTopic(), "topic");
 		return add(tm, topics.resolve(tm, occurrence.getTopic()), occurrence);
 	}
 	
 	public OccurrenceIF add(TopicMapIF tm, TopicIF topic, Occurrence occurrence) {
 		
 		requireNotNull(occurrence.getValue(), "value");
+		requireNotNull(occurrence.getType(), "type");
 		
 		TopicMapBuilderIF builder = tm.getBuilder();
 		TopicIF type = topics.resolve(tm, occurrence.getType());
