@@ -28,6 +28,28 @@ public final class Constants {
 		// don't call me
 	}
 	
+	public static final String N_O_T_R = Constants.class.getPackage().getName();
+	
+	public static final String LOG_CLIENT_ERRORS_PARAMETER = N_O_T_R + ".logging.clientErrors";
+	public static final boolean LOG_CLIENT_ERRORS_FALLBACK = false;
+	
+	// abstract ontopia resource
+	public static final String STRICT_MIME_MATCHING_PARAMETER = N_O_T_R + ".strict";
+
+	// abstract paged resource
+	public static final String DEFAULT_PAGING_LIMIT_PARAMETER = N_O_T_R + ".paging.limit";
+	public static final String DEFAULT_PAGING_OFFSET_PARAMETER = N_O_T_R + ".paging.offset";
+	public static final int PAGING_LIMIT_FALLBACK = 100;
+	public static final int PAGING_OFFSET_FALLBACK = 0;
+	
+	// v1
+	public static final String V1 = N_O_T_R + ".v1.";
+	public static final String V1_COMPRESSION_PARAMETER = V1 + "compression";
+	
+	// controllers
+	public static final String V1_TOPICMAP_CONTROLLER_ALLOW_DELETE_PARAMETER = V1 + "topicmap.supportDelete";
+	public static final boolean V1_TOPICMAP_CONTROLLER_ALLOW_DELETE_FALLBACK = false;
+	
 	public static final MediaType LTM_MEDIA_TYPE = new MediaType("text/ltm", "LTM topicmaps format");
 	public static final MediaType CTM_MEDIA_TYPE = new MediaType("text/ctm", "CTM topicmaps format");
 	public static final MediaType TMXML_MEDIA_TYPE = new MediaType("application/xml+tmxml", "TMXML topicmaps format");
