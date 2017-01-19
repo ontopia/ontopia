@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.rest.resources.APIInfoResource;
 import net.ontopia.topicmaps.rest.utils.DefaultParameterResolver;
 import net.ontopia.topicmaps.rest.utils.DefaultTopicMapResolver;
 import org.restlet.Application;
+import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
@@ -48,7 +49,8 @@ public class OntopiaRestApplication extends Application {
 	
 	protected final Map<Class<? extends AbstractController>, AbstractController> controllers = new HashMap<>();
 	
-	public OntopiaRestApplication() {
+	public OntopiaRestApplication(Context context) {
+		super(context);
 		objectResolver = new DefaultParameterResolver(this);
 		topicmapResolver = new DefaultTopicMapResolver();
 		

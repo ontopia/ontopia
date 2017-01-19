@@ -67,7 +67,7 @@ public class OntopiaServlet extends ServerServlet {
 		Application application = super.createApplication(parentContext);
 		
 		if (application == null) {
-			application = new OntopiaRestApplication();
+			application = new OntopiaRestApplication(parentContext.createChildContext());
 		}
 		
 		return application;
