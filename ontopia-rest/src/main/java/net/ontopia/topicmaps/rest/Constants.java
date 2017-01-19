@@ -22,7 +22,11 @@ package net.ontopia.topicmaps.rest;
 
 import org.restlet.data.MediaType;
 
-public class Constants {
+public final class Constants {
+	
+	private Constants() {
+		// don't call me
+	}
 	
 	public static final MediaType LTM_MEDIA_TYPE = new MediaType("text/ltm", "LTM topicmaps format");
 	public static final MediaType CTM_MEDIA_TYPE = new MediaType("text/ctm", "CTM topicmaps format");
