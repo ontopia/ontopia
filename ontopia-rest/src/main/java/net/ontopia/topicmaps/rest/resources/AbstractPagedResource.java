@@ -25,16 +25,28 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.utils.ContextUtils;
 import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.apache.commons.collections4.IteratorUtils;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
+import org.restlet.resource.ResourceException;
 
 public class AbstractPagedResource extends AbstractOntopiaResource {
 
-	protected boolean paging = true;
-	protected int offset = 0; // todo: default options
-	protected int limit = 100; // todo: default options
+	protected boolean paging = Constants.PAGING_FALLBACK;
+	protected int offset = Constants.PAGING_OFFSET_FALLBACK;
+	protected int limit = Constants.PAGING_LIMIT_FALLBACK;
+
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		
+		paging = ContextUtils.getParameterAsBoolean(Constants.PAGING_PARAMETER, paging);
+		offset = ContextUtils.getParameterAsInteger(Constants.DEFAULT_PAGING_OFFSET_PARAMETER, offset);
+		limit = ContextUtils.getParameterAsInteger(Constants.DEFAULT_PAGING_LIMIT_PARAMETER, limit);
+	}
 	
 	public long getOffset() {
 		return offset;
@@ -76,8 +88,8 @@ public class AbstractPagedResource extends AbstractOntopiaResource {
 	
 	protected <C> Iterator<C> page(Collection<C> collection) {
 		
-		offset = getIntegerFromQuery(Parameters.OFFSET.getName(), 0); // todo: default options
-		limit = getIntegerFromQuery(Parameters.LIMIT.getName(), 100); // todo: default options
+		offset = getIntegerFromQuery(Parameters.OFFSET.getName(), offset);
+		limit = getIntegerFromQuery(Parameters.LIMIT.getName(), limit);
 
 		addPagingHeaders(collection.size(), offset, limit);
 		

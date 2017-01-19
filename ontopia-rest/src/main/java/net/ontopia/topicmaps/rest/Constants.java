@@ -37,8 +37,10 @@ public final class Constants {
 	public static final String STRICT_MIME_MATCHING_PARAMETER = N_O_T_R + ".strict";
 
 	// abstract paged resource
+	public static final String PAGING_PARAMETER = N_O_T_R + ".paging";
 	public static final String DEFAULT_PAGING_LIMIT_PARAMETER = N_O_T_R + ".paging.limit";
 	public static final String DEFAULT_PAGING_OFFSET_PARAMETER = N_O_T_R + ".paging.offset";
+	public static final boolean PAGING_FALLBACK = true;
 	public static final int PAGING_LIMIT_FALLBACK = 100;
 	public static final int PAGING_OFFSET_FALLBACK = 0;
 	
