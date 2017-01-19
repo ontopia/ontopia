@@ -22,6 +22,8 @@ package net.ontopia.topicmaps.rest;
 
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
 import net.ontopia.topicmaps.rest.model.Error;
+import net.ontopia.topicmaps.rest.utils.ContextUtils;
+import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Status;
@@ -29,9 +31,20 @@ import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.service.StatusService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OntopiaStatusService extends StatusService {
-	
+	private static final Logger logger = LoggerFactory.getLogger(OntopiaStatusService.class);
+
+	protected boolean logClientErrors = Constants.LOG_CLIENT_ERRORS_FALLBACK;
+
+	@Override
+	public void setContext(Context context) {
+		super.setContext(context);
+		logClientErrors = ContextUtils.getParameterAsBoolean(context, Constants.LOG_CLIENT_ERRORS_PARAMETER, logClientErrors);
+	}
+
 	@Override
     public Status getStatus(Throwable throwable, Request request, Response response) {
 		
@@ -46,10 +59,15 @@ public class OntopiaStatusService extends StatusService {
 		
         if (throwable instanceof OntopiaRestException) {
 			OntopiaRestException re = (OntopiaRestException) throwable;
+			if (logClientErrors) {
+				logger.error("Request failed with code " + re.getOntopiaCode() + ": " + throwable.getMessage(), throwable);
+			}
             return re.getStatus();
 		}
 		
 		// fallback
+		
+		logger.error("Caught unhandled exception: " + throwable.getMessage(), throwable);
 		return new Status(Status.SERVER_ERROR_INTERNAL, throwable);
     }	
 
