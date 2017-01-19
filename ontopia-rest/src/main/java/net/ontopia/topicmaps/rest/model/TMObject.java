@@ -28,6 +28,13 @@ public class TMObject {
 
 	private String objectId;
 	private Collection<URILocator> itemIdentifiers = new CompactHashSet<>();
+
+	public TMObject() {
+	}
+
+	public TMObject(String objectId) {
+		this.objectId = objectId;
+	}
 	
 	public String getObjectId() {
 		return objectId;

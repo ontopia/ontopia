@@ -21,10 +21,18 @@
 package net.ontopia.topicmaps.rest.model;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class Scoped extends Reifiable {
 	
-	private Collection<Topic> scope;
+	private Collection<Topic> scope = new HashSet<>();
+
+	public Scoped() {
+	}
+
+	public Scoped(String objectId) {
+		super(objectId);
+	}
 	
 	public Collection<Topic> getScope() {
 		return scope;

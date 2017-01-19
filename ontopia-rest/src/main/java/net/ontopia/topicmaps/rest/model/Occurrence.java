@@ -20,27 +20,47 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.utils.PSI;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Occurrence extends Scoped {
 
 	private Topic topic;
 	private Topic type;
-	private URILocator datatype;
+	private URILocator dataType;
 	private String value;
+
+	public Occurrence() {
+	}
+
+	public Occurrence(String objectId) {
+		super(objectId);
+	}
 
 	public Topic getTopic() {
 		return topic;
 	}
 
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
+	
 	public URILocator getDataType() {
-		return datatype;
+		return dataType;
 	}
 
 	public void setDatatype(URILocator datatype) {
-		this.datatype = datatype;
+		this.dataType = datatype;
+	}
+
+	public void setDatatype(LocatorIF datatype) throws MalformedURLException {
+		this.dataType = new URILocator(datatype.getAddress());
 	}
 
 	public String getValue() {
@@ -51,12 +71,30 @@ public class Occurrence extends Scoped {
 		this.value = value;
 	}
 
+	@JsonIgnore
 	public void setLocator(LocatorIF locator) {
-		setValue(locator.getAddress());
-		setDatatype(PSI.getXSDURI());
+		if (locator != null) {
+			setValue(locator.getAddress());
+			setDatatype(PSI.getXSDURI());
+		}
+	}
+	
+	public LocatorIF getLocator() {
+		if (DataTypes.TYPE_URI.equals(dataType)) {
+			return URILocator.create(value);
+		}
+		return null;
+	}
+	
+	public int getLength() {
+		return value != null ? value.length() : 0;
 	}
 
 	public Topic getType() {
 		return type;
+	}
+
+	public void setType(Topic type) {
+		this.type = type;
 	}
 }

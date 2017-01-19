@@ -24,6 +24,13 @@ public class Reifiable extends TMObject {
 	
 	private Topic reifier;
 
+	public Reifiable() {
+	}
+
+	public Reifiable(String objectId) {
+		super(objectId);
+	}
+	
 	public Topic getReifier() {
 		return reifier;
 	}

@@ -20,19 +20,32 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import net.ontopia.infoset.impl.basic.URILocator;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Topic extends TMObject {
 
 	private Collection<URILocator> subjectLocators;
 	private Collection<URILocator> subjectIdentifiers;
 	private Collection<Topic> types;
 	
-	private Collection<TopicName> names;
+	private Collection<TopicName> topicNames;
 	private Collection<Occurrence> occurrences;
 	private Collection<AssociationRole> roles;
+	
+	@JsonIgnore
 	private Reifiable reified;
+
+	public Topic() {
+	}
+
+	public Topic(String objectId) {
+		super(objectId);
+	}
 
 	public Collection<URILocator> getSubjectLocators() {
 		return subjectLocators;
@@ -47,7 +60,7 @@ public class Topic extends TMObject {
 	}
 
 	public Collection<TopicName> getTopicNames() {
-		return names;
+		return topicNames;
 	}
 
 	public Collection<Occurrence> getOccurrences() {
@@ -58,6 +71,7 @@ public class Topic extends TMObject {
 		return roles;
 	}
 
+	@JsonProperty("reified")
 	public Reifiable getReified() {
 		return reified;
 	}
