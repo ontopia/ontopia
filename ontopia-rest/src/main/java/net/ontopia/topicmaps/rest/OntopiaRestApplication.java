@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.rest.core.ParameterResolverIF;
 import net.ontopia.topicmaps.rest.core.TopicMapResolverIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaServerException;
 import net.ontopia.topicmaps.rest.resources.APIInfoResource;
+import net.ontopia.topicmaps.rest.utils.ContextUtils;
 import net.ontopia.topicmaps.rest.utils.DefaultParameterResolver;
 import net.ontopia.topicmaps.rest.utils.DefaultTopicMapResolver;
 import org.restlet.Application;
@@ -56,7 +57,7 @@ public class OntopiaRestApplication extends Application {
 		
 		setStatusService(new OntopiaStatusService());
 		
-		getConnegService().setStrict(true); // todo: optional
+		getConnegService().setStrict(ContextUtils.getParameterAsBoolean(context, Constants.STRICT_MIME_MATCHING_PARAMETER, true));
 	}
 	
 	public TopicMapReferenceIF getTopicMapReference(Request request) {
