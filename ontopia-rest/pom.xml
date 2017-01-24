@@ -115,13 +115,40 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.19.v20160908</version>
 				<configuration>
-					<webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
-					<useTestClasspath>true</useTestClasspath>
-				</configuration>					
-			</plugin>			
+					<stopPort>9999</stopPort>
+					<stopKey>ontopia</stopKey>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<httpConnector>
+								<port>${ontopia.jetty.port}</port>
+							</httpConnector>
+							<webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
+							<useTestClasspath>true</useTestClasspath>
+							<webApp>
+								<contextPath>/</contextPath>
+							</webApp>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
