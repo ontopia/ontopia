@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.rest.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URLDecoder;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -109,6 +111,13 @@ public class DefaultParameterResolver implements ParameterResolverIF {
 		
 		// try as object id
 		TMObjectIF objectById = resolveAsObjectId(topicmap, stringId);
+		
+		// decode before going to locators
+		try {
+			stringId = URLDecoder.decode(stringId, "utf-8");
+		} catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException("Impossible unsupported utf-8: " + uee.getMessage(), uee);
+		}
 		
 		// try as prefixed locator
 		if ((objectById == null) && (context != null)) {
