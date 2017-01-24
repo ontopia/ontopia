@@ -4,5 +4,6 @@
 		<param name="path" value="${CWD}"/>
 		<param name="suffix" value=".ltm"/>
 		<param name="duplicateSuppression" value="true"/>
+		<param name="baseAddress" value="foo:"/>
 	</source>
 </repository>
