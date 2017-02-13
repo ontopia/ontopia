@@ -37,4 +37,8 @@ public class Scoped extends Reifiable {
 	public Collection<Topic> getScope() {
 		return scope;
 	}
+
+	public void setScope(Collection<Topic> scope) {
+		this.scope = scope;
+	}
 }
