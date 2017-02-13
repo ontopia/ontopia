@@ -45,7 +45,7 @@ public class ScopedResource extends AbstractTMObjectResource<TopicIF> {
 			case "NAMES": return index.getTopicNames(topic);
 			case "VARIANTS": return index.getVariants(topic);
 			default:
-				setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+				setStatus(Status.CLIENT_ERROR_NOT_FOUND, "Expected type one of associations, occurrences, names, variants");
 				return null;
 		}
 	}

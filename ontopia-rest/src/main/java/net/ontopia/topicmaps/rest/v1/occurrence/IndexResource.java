@@ -32,6 +32,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
+	private static final String TYPE_ERROR_MESSAGE = "Expected type one of value, prefix, gte, lte";
 	
 	@Get("text:")
 	@Post("text:")
@@ -45,7 +46,7 @@ public class IndexResource extends AbstractTransactionalResource {
 			case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
 			
 			default: 
-				setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+				setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
 				return null;
 		}
 	}
@@ -65,7 +66,7 @@ public class IndexResource extends AbstractTransactionalResource {
 			case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
 			
 			default: 
-				setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+				setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
 				return null;
 		}
 	}
