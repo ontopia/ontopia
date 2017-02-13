@@ -26,10 +26,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Error;
+import net.ontopia.topicmaps.rest.model.TMObject;
 import net.ontopia.topicmaps.rest.model.Topic;
 import org.junit.After;
 import org.junit.Assert;
@@ -155,5 +157,16 @@ public abstract class AbstractResourceTest {
 			ids.remove(t.getObjectId());
 		}
 		Assert.assertTrue(ids.isEmpty());
-	}	
+	}
+	
+	protected void removeById(Collection<? extends TMObject> collection, String id) {
+		if (collection == null) return;
+		Iterator<? extends TMObject> iterator = collection.iterator();
+		while (iterator.hasNext()) {
+			TMObject tmo = iterator.next();
+			if (id.equals(tmo.getObjectId())) {
+				iterator.remove();
+			}
+		}
+	}
 }
