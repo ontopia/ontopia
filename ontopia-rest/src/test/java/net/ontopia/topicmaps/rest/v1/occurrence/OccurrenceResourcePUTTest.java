@@ -58,6 +58,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals("12", added.getType().getObjectId());
 		Assert.assertNotNull(added.getDataType());
 		Assert.assertEquals(DataTypes.TYPE_STRING, added.getDataType());
+		Assert.assertEquals("foo", added.getValue());
 	}
 	
 	@Test
