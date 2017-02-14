@@ -20,13 +20,12 @@
 
 package net.ontopia.topicmaps.rest.v1.name;
 
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.TopicName;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
-import net.ontopia.topicmaps.rest.v1.topic.TopicController;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -56,8 +55,12 @@ public class TopicNameResource extends AbstractTMObjectResource<TopicNameIF> {
 	@Put
 	public void addTopicName(TopicName name) {
 		TopicMapIF tm = getTopicMap();
-		TopicIF topic = getController(TopicController.class).resolve(tm, name.getTopic());
-		TopicNameIF result = getController(TopicNameController.class).add(tm, topic, name);
+		
+		if (name == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("TopicName");
+		}
+		
+		TopicNameIF result = getController(TopicNameController.class).add(tm, name);
 		store.commit();
 		redirectTo(result);
 	}

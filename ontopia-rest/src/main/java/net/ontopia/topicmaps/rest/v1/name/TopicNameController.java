@@ -49,6 +49,11 @@ public class TopicNameController extends AbstractController {
 		topics = getController(TopicController.class);
 	}
 
+	public TopicNameIF add(TopicMapIF tm, TopicName name) {
+		requireNotNull(name.getTopic(), "topic");
+		return add(tm, getController(TopicController.class).resolve(tm, name.getTopic()), name);
+	}
+
 	public TopicNameIF add(TopicMapIF tm, TopicIF topic, TopicName name) {
 		
 		requireNotNull(name.getValue(), "value");
