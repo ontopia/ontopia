@@ -32,6 +32,9 @@ public class NamesRouter extends ScopedRouter {
 		setName("Names router");
 		setDescription("Binds the resources related to name operations");
 
+		//add
+		attach("", TopicNameResource.class);
+
 		// list
 		// ClassInstanceIndexIF.getTopicNames
 		attach("/typed/{type}", TopicNamesResource.class);
