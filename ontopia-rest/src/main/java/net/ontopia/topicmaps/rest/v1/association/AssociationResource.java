@@ -43,7 +43,7 @@ public class AssociationResource extends AbstractTMObjectResource<AssociationIF>
 	public void addAssociation(Association association) {
 		AssociationIF result = getController(AssociationController.class).add(getTopicMap(), association);
 		store.commit();
-		redirectSeeOther(result.getObjectId());
+		redirectTo(result);
 	}
 	
 	@Post

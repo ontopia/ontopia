@@ -69,7 +69,7 @@ public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
 			result = getController(OccurrenceController.class).add(tm, occurrence);
 		}
 		store.commit();
-		redirectSeeOther("occurrences/" + result.getObjectId());
+		redirectTo(result);
 	}
 	
 	@Post

@@ -48,7 +48,7 @@ public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 		AssociationIF association = getController(AssociationController.class).resolve(tm, role.getAssociation());
 		AssociationRoleIF result = getController(RoleController.class).add(tm, association, role);
 		store.commit();
-		redirectSeeOther(result.getObjectId());
+		redirectTo(result);
 	}
 	
 	@Post

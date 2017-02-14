@@ -46,7 +46,7 @@ public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 		TopicNameIF name = getController(TopicNameController.class).resolve(getTopicMap(), variant.getTopicName());
 		VariantNameIF result = getController(VariantNameController.class).add(getTopicMap(), name, variant);
 		store.commit();
-		redirectSeeOther(result.getObjectId());
+		redirectTo(result);
 	}
 	
 	@Post

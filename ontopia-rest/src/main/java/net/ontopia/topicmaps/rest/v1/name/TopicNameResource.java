@@ -59,7 +59,7 @@ public class TopicNameResource extends AbstractTMObjectResource<TopicNameIF> {
 		TopicIF topic = getController(TopicController.class).resolve(tm, name.getTopic());
 		TopicNameIF result = getController(TopicNameController.class).add(tm, topic, name);
 		store.commit();
-		redirectSeeOther(result.getObjectId());
+		redirectTo(result);
 	}
 
 	@Post
