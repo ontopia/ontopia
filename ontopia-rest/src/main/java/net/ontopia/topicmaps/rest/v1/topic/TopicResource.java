@@ -53,7 +53,7 @@ public class TopicResource extends AbstractTMObjectResource<TopicIF> {
 	public void addTopic(Topic topic) {
 		TopicIF result = getController(TopicController.class).add(getTopicMap(), topic);
 		store.commit();
-		redirectSeeOther(result.getObjectId());
+		redirectTo(result);
 	}
 	
 	@Post
