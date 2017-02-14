@@ -37,6 +37,10 @@ public class TopicName extends Scoped {
 		return topic;
 	}
 
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
+
 	public String getValue() {
 		return value;
 	}
