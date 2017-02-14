@@ -139,8 +139,8 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 		Occurrence changed = post("13", occurrence, Occurrence.class);
 		
-		Assert.assertNotNull(changed.getTopic());
-		Assert.assertEquals("1", changed.getTopic().getObjectId());
+		Assert.assertNotNull(changed.getType());
+		Assert.assertEquals("1", changed.getType().getObjectId());
 	}
 	
 	@Test
@@ -150,8 +150,8 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 		Occurrence changed = post("13", occurrence, Occurrence.class);
 		
-		Assert.assertNotNull(changed.getTopic());
-		Assert.assertEquals("1", changed.getTopic().getObjectId());
+		Assert.assertNotNull(changed.getType());
+		Assert.assertEquals("1", changed.getType().getObjectId());
 	}
 	
 	@Test
@@ -197,7 +197,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 		Occurrence changed = post("145", occurrence, Occurrence.class);
 		
-		Assert.assertNotNull(changed.getTopic());
+		Assert.assertNotNull(changed.getReifier());
 		Assert.assertEquals("287", changed.getReifier().getObjectId());
 	}
 	
