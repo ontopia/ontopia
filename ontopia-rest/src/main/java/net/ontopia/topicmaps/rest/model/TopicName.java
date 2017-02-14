@@ -20,15 +20,24 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Collection;
 import java.util.HashSet;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TopicName extends Scoped {
 
 	private String value;
 	private Topic type;
 	private Topic topic;
 	private Collection<VariantName> variants = new HashSet<>();
+
+	public TopicName() {
+	}
+
+	public TopicName(String objectId) {
+		super(objectId);
+	}
 
 	public Collection<VariantName> getVariants() {
 		return variants;
