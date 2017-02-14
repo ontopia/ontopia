@@ -21,13 +21,14 @@
 package net.ontopia.topicmaps.rest.model;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class TopicName extends Scoped {
 
 	private String value;
 	private Topic type;
 	private Topic topic;
-	private Collection<VariantName> variants;
+	private Collection<VariantName> variants = new HashSet<>();
 
 	public Collection<VariantName> getVariants() {
 		return variants;
