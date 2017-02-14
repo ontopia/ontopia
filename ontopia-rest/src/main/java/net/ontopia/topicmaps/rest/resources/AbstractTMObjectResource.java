@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.rest.resources;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaClientException;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
+import org.restlet.data.Reference;
 import org.restlet.data.Status;
 
 public abstract class AbstractTMObjectResource<TMO extends TMObjectIF> extends AbstractTransactionalResource {
@@ -52,5 +53,14 @@ public abstract class AbstractTMObjectResource<TMO extends TMObjectIF> extends A
 		object.remove();
 		store.commit();
 		return object;
+	}
+	
+	protected void redirectTo(TMO object) {
+		Reference baseRef = getRequest().getResourceRef().getBaseRef();
+		if (!baseRef.getLastSegment().endsWith("/")) {
+			baseRef = new Reference(baseRef.toString() + "/");
+		}
+		// todo: maybe this should be '302 Found' instead
+		redirectSeeOther(new Reference(baseRef, object.getObjectId()).getTargetRef());
 	}
 }
