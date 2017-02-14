@@ -89,7 +89,7 @@ public class RolesResource extends AbstractTransactionalResource {
 		store.commit();
 
 		// todo: maybe this should be '302 Found' instead
-		redirectSeeOther("../../occurrences/" + result.getObjectId()); // todo: how to make this stable?
+		redirectSeeOther("../../roles/" + result.getObjectId()); // todo: how to make this stable?
 	}
 	
 	@Delete
