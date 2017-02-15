@@ -32,6 +32,7 @@ import org.junit.Test;
 /*
 	NOTE: variants inherit scope from parent topicname, see
 	http://www.isotopicmaps.org/sam/sam-model/#sect-variant
+	There is however, no rule that specifies that the computed scope has to have at least one topic.
 */
 
 public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
@@ -123,6 +124,19 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(2, added.getScope().size());
 		assertContainsTopics(added.getScope(), "1", "5");
+	}
+
+	@Test
+	public void testWithoutScope() {
+		VariantName variant = new VariantName();
+		variant.setTopicName(new TopicName("2785")); // has no scope
+		variant.setValue("foo");
+		variant.getScope().clear();
+		
+		VariantName added = put(variant, VariantName.class);
+		Assert.assertNotNull(added);
+		Assert.assertNotNull(added.getScope());
+		Assert.assertTrue(added.getScope().isEmpty());
 	}
 
 	@Test
