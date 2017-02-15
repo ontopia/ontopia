@@ -21,6 +21,8 @@
 package net.ontopia.topicmaps.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.net.MalformedURLException;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"topic"})
@@ -47,6 +49,14 @@ public class VariantName extends Scoped {
 
 	public URILocator getDataType() {
 		return dataType;
+	}
+
+	public void setDatatype(URILocator datatype) {
+		this.dataType = datatype;
+	}
+
+	public void setDatatype(LocatorIF datatype) throws MalformedURLException {
+		this.dataType = new URILocator(datatype.getAddress());
 	}
 
 	public String getValue() {
