@@ -41,6 +41,10 @@ public class VariantName extends Scoped {
 		return topicName;
 	}
 
+	public void setTopicName(TopicName topicName) {
+		this.topicName = topicName;
+	}
+
 	public URILocator getDataType() {
 		return dataType;
 	}
