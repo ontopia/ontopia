@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.rest.v1.variant;
 
+import java.net.MalformedURLException;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.model.TopicName;
@@ -59,6 +61,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added.getTopicName());
 		Assert.assertEquals("4", added.getTopicName().getObjectId());
 		Assert.assertEquals("foo", added.getValue());
+		Assert.assertEquals(DataTypes.TYPE_STRING, added.getDataType());
 	}
 
 //	@Test
@@ -74,6 +77,32 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 //		Assert.assertNotNull(added.getTopic());
 //		Assert.assertEquals("261", added.getTopic().getObjectId());
 //	}
+
+	@Test
+	public void testAlternativeDatatype() throws MalformedURLException {
+		VariantName variant = createVariantName();
+		variant.setValue("1");
+		variant.setDatatype(DataTypes.TYPE_INTEGER);
+
+		VariantName added = put(variant, VariantName.class);
+		Assert.assertNotNull(added);
+		Assert.assertNotNull(added.getDataType());
+		Assert.assertEquals(DataTypes.TYPE_INTEGER, added.getDataType());
+		Assert.assertEquals("1", added.getValue());
+	}
+
+	@Test
+	public void testAlternativeDatatype2() {
+		VariantName variant = createVariantName();
+		variant.setValue("1");
+		variant.setDatatype(URILocator.create("dt:foo"));
+
+		VariantName added = put(variant, VariantName.class);
+		Assert.assertNotNull(added);
+		Assert.assertNotNull(added.getDataType());
+		Assert.assertEquals(URILocator.create("dt:foo"), added.getDataType());
+		Assert.assertEquals("1", added.getValue());
+	}
 
 	@Test
 	public void testWithItemIdentifier() {
@@ -117,7 +146,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScope() {
 		VariantName variant = createVariantName();
 		variant.getScope().add(new Topic("1"));
-		
+
 		VariantName added = put(variant, VariantName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
@@ -132,7 +161,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 		variant.setTopicName(new TopicName("2785")); // has no scope
 		variant.setValue("foo");
 		variant.getScope().clear();
-		
+
 		VariantName added = put(variant, VariantName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
