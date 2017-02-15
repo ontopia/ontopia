@@ -23,11 +23,11 @@ package net.ontopia.topicmaps.rest.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import net.ontopia.infoset.impl.basic.URILocator;
 
-@JsonIgnoreProperties(ignoreUnknown = true, value = "topic")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"topic"})
 public class VariantName extends Scoped {
 
-	private TopicName topicname;
-	private URILocator datatype;
+	private TopicName topicName;
+	private URILocator dataType;
 	private String value;
 
 	public VariantName() {
@@ -38,11 +38,11 @@ public class VariantName extends Scoped {
 	}
 
 	public TopicName getTopicName() {
-		return topicname;
+		return topicName;
 	}
 
 	public URILocator getDataType() {
-		return datatype;
+		return dataType;
 	}
 
 	public String getValue() {
@@ -58,6 +58,6 @@ public class VariantName extends Scoped {
 	}
 
 	public Topic getTopic() {
-		return topicname == null ? null : topicname.getTopic();
+		return topicName == null ? null : topicName.getTopic();
 	}
 }
