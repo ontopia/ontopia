@@ -31,6 +31,8 @@ public class VariantRouter extends ScopedRouter {
 		setName("Variant router");
 		setDescription("Binds the resources related to variant name operations");
 		
+		attach("", VariantResource.class);
+
 		attach("/index", IndexResource.class);
 		
 		attach("/{id}", VariantResource.class);
