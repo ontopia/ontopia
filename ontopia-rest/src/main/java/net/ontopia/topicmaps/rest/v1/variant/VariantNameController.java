@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.rest.v1.variant;
 
 import java.net.MalformedURLException;
 import java.util.Collection;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -58,19 +59,24 @@ public class VariantNameController extends AbstractController {
 	public VariantNameIF add(TopicMapIF tm, TopicNameIF name, VariantName variant) {
 		requireNotNull(variant.getValue(), "value");
 		requireNotNull(variant.getScope(), "scope");
+
+		LocatorIF dataType = variant.getDataType();
+		if (dataType == null) {
+			dataType = DataTypes.TYPE_STRING;
+		}
 		
 		TopicMapBuilderIF builder = tm.getBuilder();
 		Collection<TopicIF> resolvedScope = scoped.resolve(tm, variant.getScope());
 		
 		VariantNameIF result;
-		if ((variant.getDataType() != null) && (variant.getDataType().equals(DataTypes.TYPE_URI))) {
+		if (DataTypes.TYPE_URI.equals(dataType)) {
 			try {
 				result = builder.makeVariantName(name, new URILocator(variant.getValue()), resolvedScope);
 			} catch (MalformedURLException mufe) {
 				throw OntopiaRestErrors.MALFORMED_LOCATOR.build(mufe, variant.getValue());
 			}
 		} else {
-			result = builder.makeVariantName(name, variant.getValue(), resolvedScope);
+			result = builder.makeVariantName(name, variant.getValue(), dataType, resolvedScope);
 		}
 		
 		// ReifiableIF
