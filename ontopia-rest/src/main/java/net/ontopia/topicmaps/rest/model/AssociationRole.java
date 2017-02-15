@@ -20,6 +20,9 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssociationRole extends Reifiable {
 
 	private Association association;

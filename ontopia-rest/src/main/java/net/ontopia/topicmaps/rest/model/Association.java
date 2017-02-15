@@ -20,8 +20,10 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Collection;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Association extends Scoped {
 
 	private Collection<AssociationRole> roles;

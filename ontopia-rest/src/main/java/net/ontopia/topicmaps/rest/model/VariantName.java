@@ -20,8 +20,10 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import net.ontopia.infoset.impl.basic.URILocator;
 
+@JsonIgnoreProperties(ignoreUnknown = true, value = "topic")
 public class VariantName extends Scoped {
 
 	private TopicName topicname;
