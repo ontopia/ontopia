@@ -30,6 +30,13 @@ public class VariantName extends Scoped {
 	private URILocator datatype;
 	private String value;
 
+	public VariantName() {
+	}
+
+	public VariantName(String objectId) {
+		super(objectId);
+	}
+
 	public TopicName getTopicName() {
 		return topicname;
 	}
