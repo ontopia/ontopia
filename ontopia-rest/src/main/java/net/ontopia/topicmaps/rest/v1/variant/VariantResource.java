@@ -32,8 +32,8 @@ import org.restlet.resource.Put;
 
 public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 
-	public VariantResource(Class<VariantNameIF> objectClass) {
-		super(objectClass);
+	public VariantResource() {
+		super(VariantNameIF.class);
 	}
 	
 	@Get
