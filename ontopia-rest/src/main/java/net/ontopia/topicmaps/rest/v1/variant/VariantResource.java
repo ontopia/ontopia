@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.rest.v1.variant;
 
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.model.VariantName;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import net.ontopia.topicmaps.rest.v1.name.TopicNameController;
@@ -29,6 +30,7 @@ import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
+import org.restlet.resource.ResourceException;
 
 public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 
@@ -36,6 +38,14 @@ public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 		super(VariantNameIF.class);
 	}
 	
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		// CTM LTM, TMXML and XTM cannot export a single variant name
+		blockMimeType(Constants.CTM_MEDIA_TYPE, Constants.LTM_MEDIA_TYPE, 
+				Constants.TMXML_MEDIA_TYPE, Constants.XTM_MEDIA_TYPE);
+	}
+
 	@Get
 	public VariantNameIF getVariant() {
 		return resolve();
