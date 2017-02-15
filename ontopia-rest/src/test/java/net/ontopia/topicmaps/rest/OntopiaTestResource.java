@@ -53,7 +53,7 @@ public class OntopiaTestResource extends ClientResource {
 	@Override
 	public void doError(Status errorStatus) {
 		if (getOntopiaError() != null) {
-			throw new ResourceException(errorStatus, ontopiaErrorPojo.getMessage());
+			throw new OntopiaTestResourceException(errorStatus, ontopiaErrorPojo);
 		}
 		super.doError(errorStatus);
 	}
@@ -85,6 +85,22 @@ public class OntopiaTestResource extends ClientResource {
 			return handle(getMethod(), object, expected);
 		} finally {
 			release();
+		}
+	}
+	
+	public static class OntopiaTestResourceException extends ResourceException {
+
+		private static final long serialVersionUID = 1L;
+
+		private final Error error;
+
+		public OntopiaTestResourceException(Status status, Error error) {
+			super(status, error.getMessage());
+			this.error = error;
+		}
+
+		public Error getError() {
+			return error;
 		}
 	}
 }

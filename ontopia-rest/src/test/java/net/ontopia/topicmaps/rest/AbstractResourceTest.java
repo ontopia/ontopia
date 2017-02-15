@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import net.ontopia.topicmaps.rest.OntopiaTestResource.OntopiaTestResourceException;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Error;
 import net.ontopia.topicmaps.rest.model.TMObject;
@@ -89,7 +90,14 @@ public abstract class AbstractResourceTest {
 	/* -- Expected result requests -- */
 	
 	protected <T> T request(String url, Method method, Object object, Class<T> expected) {
-		return new OntopiaTestResource(method, getUrl(url), defaultMediatype).request(object, expected);
+		try {
+			return new OntopiaTestResource(method, getUrl(url), defaultMediatype).request(object, expected);
+		} catch (OntopiaTestResourceException e) {
+			Assert.fail("Unexpected request error encountered: " + e.getError().getMessage());
+		} catch (ResourceException re) {
+			Assert.fail("Unexpected request error encountered: " + re.getMessage() + " " + re.getStatus().getReasonPhrase());
+		}
+		return null;
 	}
 	protected <T> T get(String url, Class<T> expected) {
 		return request(url, Method.GET, null, expected);
@@ -120,8 +128,8 @@ public abstract class AbstractResourceTest {
 		try {
 			cr.request(object, Object.class);
 			Assert.fail("Expected Ontopia error " + expected.name() + ", but request succeeded");
-		} catch (ResourceException e) {
-			Error result = cr.getOntopiaError();
+		} catch (OntopiaTestResourceException e) {
+			Error result = e.getError();
 			try {
 				Assert.assertNotNull("Expected error, found null", result);
 				Assert.assertEquals("Ontopia error code mismatch", expected.getCode(), result.getCode());
@@ -131,6 +139,9 @@ public abstract class AbstractResourceTest {
 				Assert.fail("Expected ontopia error " + expected.name() + 
 						", but received [" + result.getHttpcode() + ":" + result.getCode() + ", " + result.getMessage() + "]");
 			}
+		} catch (ResourceException re) {
+			Assert.fail("Expected ontopia error " + expected.name() + 
+					", but received [" + re.getStatus().getCode() + ":" + re.getStatus().getDescription() + "]");
 		}
 	}
 	protected void assertGetFails(String url, OntopiaRestErrors expected) {
