@@ -34,6 +34,7 @@ import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.VariantName;
 import net.ontopia.topicmaps.rest.v1.ReifiableController;
 import net.ontopia.topicmaps.rest.v1.TMObjectController;
+import net.ontopia.topicmaps.rest.v1.name.TopicNameController;
 import net.ontopia.topicmaps.rest.v1.scoped.ScopedController;
 
 public class VariantNameController extends AbstractController {
@@ -49,6 +50,11 @@ public class VariantNameController extends AbstractController {
 		tmobject = getController(TMObjectController.class);
 	}
 	
+	public VariantNameIF add(TopicMapIF tm, VariantName variant) {
+		requireNotNull(variant.getTopicName(), "topicName");
+		TopicNameIF name = getController(TopicNameController.class).resolve(tm, variant.getTopicName());
+		return add(tm, name, variant);
+	}
 	public VariantNameIF add(TopicMapIF tm, TopicNameIF name, VariantName variant) {
 		requireNotNull(variant.getValue(), "value");
 		requireNotNull(variant.getScope(), "scope");

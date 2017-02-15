@@ -20,12 +20,11 @@
 
 package net.ontopia.topicmaps.rest.v1.variant;
 
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.VariantName;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
-import net.ontopia.topicmaps.rest.v1.name.TopicNameController;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -53,8 +52,12 @@ public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 	
 	@Put
 	public void addVariantName(VariantName variant) {
-		TopicNameIF name = getController(TopicNameController.class).resolve(getTopicMap(), variant.getTopicName());
-		VariantNameIF result = getController(VariantNameController.class).add(getTopicMap(), name, variant);
+		
+		if (variant == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("VariantName");
+		}
+		
+		VariantNameIF result = getController(VariantNameController.class).add(getTopicMap(), variant);
 		store.commit();
 		redirectTo(result);
 	}
