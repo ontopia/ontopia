@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestException;
 import net.ontopia.topicmaps.rest.model.Error;
 import net.ontopia.topicmaps.rest.utils.ContextUtils;
@@ -63,6 +64,11 @@ public class OntopiaStatusService extends StatusService {
 				logger.error("Request failed with code " + re.getOntopiaCode() + ": " + throwable.getMessage(), throwable);
 			}
             return re.getStatus();
+		}
+		
+		if (throwable instanceof JsonProcessingException) {
+			// error parsing json which is a client exception
+			return new Status(Status.CLIENT_ERROR_UNPROCESSABLE_ENTITY, throwable, throwable.getMessage());
 		}
 		
 		// fallback
