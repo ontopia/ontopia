@@ -43,4 +43,8 @@ public class TMObject {
 	public Collection<URILocator> getItemIdentifiers() {
 		return itemIdentifiers;
 	}
+
+	public void setItemIdentifiers(Collection<URILocator> itemIdentifiers) {
+		this.itemIdentifiers = itemIdentifiers;
+	}
 }
