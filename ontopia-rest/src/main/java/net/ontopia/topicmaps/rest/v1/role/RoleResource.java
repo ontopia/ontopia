@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.rest.v1.role;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.model.AssociationRole;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import net.ontopia.topicmaps.rest.v1.association.AssociationController;
@@ -30,6 +31,7 @@ import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
+import org.restlet.resource.ResourceException;
 
 public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 
@@ -37,6 +39,15 @@ public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 		super(AssociationRoleIF.class);
 	}
 	
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+
+		// CTM LTM, TMXML and XTM cannot export a single name
+		blockMimeType(Constants.CTM_MEDIA_TYPE, Constants.LTM_MEDIA_TYPE, 
+				Constants.TMXML_MEDIA_TYPE, Constants.XTM_MEDIA_TYPE);
+	}
+
 	@Get
 	public AssociationRoleIF getRole() {
 		return resolve();
