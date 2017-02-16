@@ -273,7 +273,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 	
 	@Test
-	public void testChangeByItemIdentifier() {
+	public void testChangeScopeByItemIdentifier() {
 		Occurrence occurrence = get("5796", Occurrence.class);
 		Topic topic = new Topic();
 		topic.getItemIdentifiers().add(URILocator.create("foo:#style"));
