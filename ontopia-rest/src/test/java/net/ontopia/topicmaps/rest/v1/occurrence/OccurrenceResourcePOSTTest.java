@@ -348,16 +348,16 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Occurrence occurrence = get("4337", Occurrence.class);
+		Occurrence occurrence = get("11", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
 		
-		occurrence = post("4337", occurrence, Occurrence.class);
+		occurrence = post("11", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		
 		occurrence.getItemIdentifiers().remove(locator);
 		occurrence.getItemIdentifiers().add(URILocator.create("foo:to-keep-occ"));
-		occurrence = post("4337", occurrence, Occurrence.class);
+		occurrence = post("11", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		Assert.assertEquals("foo:to-keep-occ", occurrence.getItemIdentifiers().iterator().next().getAddress());
