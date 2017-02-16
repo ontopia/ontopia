@@ -21,17 +21,27 @@
 package net.ontopia.topicmaps.rest.v1.association;
 
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.model.Association;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
+import org.restlet.resource.ResourceException;
 
 public class AssociationResource extends AbstractTMObjectResource<AssociationIF> {
 
-	public AssociationResource(Class<AssociationIF> objectClass) {
-		super(objectClass);
+	public AssociationResource() {
+		super(AssociationIF.class);
+	}
+	
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		// CTM LTM, TMXML and XTM cannot export a single occurrence
+		blockMimeType(Constants.CTM_MEDIA_TYPE, Constants.LTM_MEDIA_TYPE, 
+				Constants.TMXML_MEDIA_TYPE, Constants.XTM_MEDIA_TYPE);
 	}
 
 	@Get
