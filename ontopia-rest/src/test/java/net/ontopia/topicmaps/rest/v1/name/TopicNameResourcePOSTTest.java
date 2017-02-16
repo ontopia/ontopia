@@ -288,6 +288,76 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(2, changed.getItemIdentifiers().size());
 	}
 	
+	@Test
+	public void testRemoveItemIdentifier() {
+		final URILocator locator = URILocator.create("foo:to-remove");
+
+		TopicName name = get("787", TopicName.class);
+		name.getItemIdentifiers().add(locator);
+		
+		name = post("787", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertEquals(1, name.getItemIdentifiers().size());
+		
+		name.getItemIdentifiers().remove(locator);
+		name = post("787", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertTrue(name.getItemIdentifiers().isEmpty());
+	}
+
+	@Test
+	public void testClearItemIdentifiers() {
+		final URILocator locator = URILocator.create("foo:to-remove");
+
+		TopicName name = get("787", TopicName.class);
+		name.getItemIdentifiers().add(locator);
+		
+		name = post("787", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertEquals(1, name.getItemIdentifiers().size());
+		
+		name.getItemIdentifiers().clear();
+		name = post("787", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertTrue(name.getItemIdentifiers().isEmpty());
+	}
+	
+	@Test
+	public void testChangeItemIdentifier() {
+		final URILocator locator = URILocator.create("foo:to-remove");
+
+		TopicName name = get("537", TopicName.class);
+		name.getItemIdentifiers().add(locator);
+		
+		name = post("537", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertEquals(1, name.getItemIdentifiers().size());
+		
+		name.getItemIdentifiers().remove(locator);
+		name.getItemIdentifiers().add(URILocator.create("foo:to-keep-name"));
+		name = post("537", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertEquals(1, name.getItemIdentifiers().size());
+		Assert.assertEquals("foo:to-keep-name", name.getItemIdentifiers().iterator().next().getAddress());
+	}
+	
+	@Test
+	public void testChangeItemIdentifierVoid() {
+		final URILocator locator = URILocator.create("foo:to-keep-name-2");
+
+		TopicName name = get("2", TopicName.class);
+		name.getItemIdentifiers().add(locator);
+		
+		name = post("2", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertEquals(1, name.getItemIdentifiers().size());
+		
+		name.setItemIdentifiers(null);
+		name = post("2", name, TopicName.class);
+		Assert.assertNotNull(name.getItemIdentifiers());
+		Assert.assertEquals(1, name.getItemIdentifiers().size());
+	}
+
 	/* -- Failing requests -- */
 	
 	@Test
