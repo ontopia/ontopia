@@ -29,11 +29,22 @@ public class Association extends Scoped {
 	private Collection<AssociationRole> roles;
 	private Topic type;
 
+	public Association() {
+	}
+
+	public Association(String objectId) {
+		super(objectId);
+	}
+
 	public Collection<AssociationRole> getRoles() {
 		return roles;
 	}
 
 	public Topic getType() {
 		return type;
+	}
+
+	public void setType(Topic type) {
+		this.type = type;
 	}
 }
