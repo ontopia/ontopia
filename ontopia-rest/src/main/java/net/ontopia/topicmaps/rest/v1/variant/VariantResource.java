@@ -64,7 +64,7 @@ public class VariantResource extends AbstractTMObjectResource<VariantNameIF> {
 	
 	@Post
 	public VariantNameIF changeVariantName(VariantName variant) {
-		VariantNameIF result = getController(VariantNameController.class).change(getTopicMap(), variant);
+		VariantNameIF result = getController(VariantNameController.class).change(getTopicMap(), resolve(), variant);
 		store.commit();
 		return result;
 	}

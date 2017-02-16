@@ -58,7 +58,7 @@ public class TopicResource extends AbstractTMObjectResource<TopicIF> {
 	
 	@Post
 	public TopicIF changeTopic(Topic topic) {
-		TopicIF result = getController(TopicController.class).change(getTopicMap(), topic);
+		TopicIF result = getController(TopicController.class).change(getTopicMap(), resolve(), topic);
 		store.commit();
 		return result;
 	}

@@ -53,7 +53,7 @@ public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 	
 	@Post
 	public AssociationRoleIF changeAssociationRole(AssociationRole role) {
-		AssociationRoleIF result = getController(RoleController.class).change(getTopicMap(), role);
+		AssociationRoleIF result = getController(RoleController.class).change(getTopicMap(), resolve(), role);
 		store.commit();
 		return result;
 	}

@@ -48,7 +48,7 @@ public class AssociationResource extends AbstractTMObjectResource<AssociationIF>
 	
 	@Post
 	public AssociationIF changeAssociation(Association association) {
-		AssociationIF result = getController(AssociationController.class).change(getTopicMap(), association);
+		AssociationIF result = getController(AssociationController.class).change(getTopicMap(), resolve(), association);
 		store.commit();
 		return result;
 	}

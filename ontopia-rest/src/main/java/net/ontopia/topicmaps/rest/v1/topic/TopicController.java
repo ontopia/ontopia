@@ -114,9 +114,7 @@ public class TopicController extends AbstractController {
 		topic.remove();
 	}
 	
-	public TopicIF change(TopicMapIF tm, Topic topic) {
-		TopicIF result = resolve(tm, topic);
-		
+	public TopicIF change(TopicMapIF tm, TopicIF result, Topic topic) {
 		// TopicIF
 		setSubjectIdentifiers(result, topic);
 		setSubjectLocators(result, topic);

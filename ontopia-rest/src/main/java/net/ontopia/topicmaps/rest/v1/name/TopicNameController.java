@@ -88,8 +88,7 @@ public class TopicNameController extends AbstractController {
 		name.remove();
 	}
 
-	public TopicNameIF change(TopicMapIF topicMap, TopicName name) {
-		TopicNameIF result = resolve(topicMap, name);
+	public TopicNameIF change(TopicMapIF topicMap, TopicNameIF result, TopicName name) {
 		
 		// NameIF
 		if ((name.getValue() != null) && (!name.getValue().equals(result.getValue()))) {

@@ -74,7 +74,7 @@ public class OccurrenceResource extends AbstractTMObjectResource<OccurrenceIF> {
 	
 	@Post
 	public OccurrenceIF changeOccurrence(Occurrence occurrence) {
-		OccurrenceIF result = getController(OccurrenceController.class).change(getTopicMap(), occurrence);
+		OccurrenceIF result = getController(OccurrenceController.class).change(getTopicMap(), resolve(), occurrence);
 		store.commit();
 		return result;
 	}

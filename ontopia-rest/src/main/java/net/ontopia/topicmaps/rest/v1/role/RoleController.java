@@ -70,8 +70,7 @@ public class RoleController extends AbstractController {
 		role.remove();
 	}
 	
-	public AssociationRoleIF change(TopicMapIF tm, AssociationRole role) {
-		AssociationRoleIF result = resolve(tm, role);
+	public AssociationRoleIF change(TopicMapIF tm, AssociationRoleIF result, AssociationRole role) {
 		
 		// AssociationRoleIF
 		if (role.getPlayer() != null) {

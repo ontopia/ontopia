@@ -67,7 +67,7 @@ public class TopicNameResource extends AbstractTMObjectResource<TopicNameIF> {
 
 	@Post
 	public TopicNameIF changeTopicName(TopicName name) {
-		TopicNameIF result = getController(TopicNameController.class).change(getTopicMap(), name);
+		TopicNameIF result = getController(TopicNameController.class).change(getTopicMap(), resolve(), name);
 		store.commit();
 		return result;
 	}

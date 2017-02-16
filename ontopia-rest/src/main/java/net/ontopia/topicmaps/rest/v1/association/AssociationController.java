@@ -91,8 +91,7 @@ public class AssociationController extends AbstractController {
 		association.remove();
 	}
 	
-	public AssociationIF change(TopicMapIF tm, Association association) {
-		AssociationIF result = resolve(tm, association);
+	public AssociationIF change(TopicMapIF tm, AssociationIF result, Association association) {
 		
 		// todo: change roles?
 		

@@ -87,8 +87,7 @@ public class OccurrenceController extends AbstractController {
 		occurrence.remove();
 	}
 	
-	public OccurrenceIF change(TopicMapIF tm, Occurrence occurrence) {
-		OccurrenceIF result = resolve(tm, occurrence);
+	public OccurrenceIF change(TopicMapIF tm, OccurrenceIF result, Occurrence occurrence) {
 		
 		// OccurrenceIF
 		if ((occurrence.getValue() != null) && (!occurrence.getValue().equals(result.getValue()))) {

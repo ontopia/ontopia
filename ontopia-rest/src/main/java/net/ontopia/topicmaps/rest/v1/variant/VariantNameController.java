@@ -95,8 +95,7 @@ public class VariantNameController extends AbstractController {
 		variant.remove();
 	}
 	
-	public VariantNameIF change(TopicMapIF tm, VariantName variant) {
-		VariantNameIF result = resolve(tm, variant);
+	public VariantNameIF change(TopicMapIF tm, VariantNameIF result, VariantName variant) {
 		
 		// VariantNameIF
 		if ((variant.getValue() != null) && (!variant.getValue().equals(result.getValue()))) {
