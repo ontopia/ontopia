@@ -310,6 +310,76 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(2, changed.getItemIdentifiers().size());
 	}
 	
+	@Test
+	public void testRemoveItemIdentifier() {
+		final URILocator locator = URILocator.create("foo:to-remove");
+
+		Occurrence occurrence = get("4337", Occurrence.class);
+		occurrence.getItemIdentifiers().add(locator);
+		
+		occurrence = post("4337", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
+		
+		occurrence.getItemIdentifiers().remove(locator);
+		occurrence = post("4337", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertTrue(occurrence.getItemIdentifiers().isEmpty());
+	}
+
+	@Test
+	public void testClearItemIdentifiers() {
+		final URILocator locator = URILocator.create("foo:to-remove");
+
+		Occurrence occurrence = get("4337", Occurrence.class);
+		occurrence.getItemIdentifiers().add(locator);
+		
+		occurrence = post("4337", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
+		
+		occurrence.getItemIdentifiers().clear();
+		occurrence = post("4337", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertTrue(occurrence.getItemIdentifiers().isEmpty());
+	}
+	
+	@Test
+	public void testChangeItemIdentifier() {
+		final URILocator locator = URILocator.create("foo:to-remove");
+
+		Occurrence occurrence = get("4337", Occurrence.class);
+		occurrence.getItemIdentifiers().add(locator);
+		
+		occurrence = post("4337", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
+		
+		occurrence.getItemIdentifiers().remove(locator);
+		occurrence.getItemIdentifiers().add(URILocator.create("foo:to-keep-occ"));
+		occurrence = post("4337", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
+		Assert.assertEquals("foo:to-keep-occ", occurrence.getItemIdentifiers().iterator().next().getAddress());
+	}
+	
+	@Test
+	public void testChangeItemIdentifierVoid() {
+		final URILocator locator = URILocator.create("foo:to-keep-occ-2");
+
+		Occurrence occurrence = get("4338", Occurrence.class);
+		occurrence.getItemIdentifiers().add(locator);
+		
+		occurrence = post("4338", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
+		
+		occurrence.setItemIdentifiers(null);
+		occurrence = post("4338", occurrence, Occurrence.class);
+		Assert.assertNotNull(occurrence.getItemIdentifiers());
+		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
+	}
+	
 	/* -- Failing requests -- */
 	
 	@Test
