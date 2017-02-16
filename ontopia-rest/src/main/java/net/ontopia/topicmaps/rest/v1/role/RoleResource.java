@@ -33,8 +33,8 @@ import org.restlet.resource.Put;
 
 public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 
-	public RoleResource(Class<AssociationRoleIF> objectClass) {
-		super(objectClass);
+	public RoleResource() {
+		super(AssociationRoleIF.class);
 	}
 	
 	@Get
