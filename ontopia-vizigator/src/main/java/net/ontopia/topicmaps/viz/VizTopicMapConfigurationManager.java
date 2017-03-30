@@ -42,8 +42,6 @@ import javax.swing.UIManager;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.net.Base64Decoder;
-import net.ontopia.net.Base64Encoder;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -53,6 +51,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 
 import com.touchgraph.graphlayout.Node;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * INTERNAL: Stores and manages configuration. The configuration information is
@@ -1366,14 +1365,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
       if (base64 == null)
         return null;
 
-      ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-      try {
-        Base64Decoder.decode(base64, output);
-      } catch (IOException e) {
-        throw new OntopiaRuntimeException(e);
-      }
-      icon = new ImageIcon(output.toByteArray());
+      icon = new ImageIcon(Base64.decodeBase64(base64));
       iconCache.put(filename, icon);
     }
     return icon;
@@ -1401,9 +1393,8 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
       byte[] bytes = output.toByteArray();
       ImageIcon icon = new ImageIcon(bytes);
       iconCache.put(string, icon);
-      ByteArrayInputStream input = new ByteArrayInputStream(bytes);
       output.reset();
-      Base64Encoder.encode(input, output);
+      output.write(Base64.encodeBase64(bytes));
     } catch (IOException e) {
       // should never occur
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);

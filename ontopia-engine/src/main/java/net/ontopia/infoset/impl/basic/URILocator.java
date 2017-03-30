@@ -45,18 +45,6 @@ public class URILocator extends AbstractLocator implements Externalizable {
   protected short  lastSlash;     // last slash in directory path
   protected short  fragmentStart; // index of fragment '#'
   
-  static {
-    try {
-      net.ontopia.net.data.Handler.install();
-    } catch (SecurityException e) {
-      // Fail silently if there are security issues.
-    } catch (NoClassDefFoundError e) {
-      // This happens on Google AppEngine, but is not really a problem
-      // since the data-URL handler is rarely used. See
-      // https://github.com/ontopia/ontopia/issues/118
-    }
-  }
-
   /**
    * INTERNAL: No-argument constructor used by serialization. Do not
    * use this constructor in application code.

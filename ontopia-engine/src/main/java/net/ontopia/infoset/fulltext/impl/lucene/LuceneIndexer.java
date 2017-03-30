@@ -66,14 +66,6 @@ public class LuceneIndexer implements IndexerIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(LuceneIndexer.class.getName());
 
-  static {
-    try {
-      net.ontopia.net.data.Handler.install();
-    } catch (SecurityException e) {
-      // Fail silently if there are security issues.
-    }      
-  }
-  
   protected String path;
   protected Directory dir;
 

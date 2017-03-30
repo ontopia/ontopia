@@ -24,11 +24,11 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import net.ontopia.net.Base64;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ReaderInputStream;
 import ontopoly.models.TMObjectModel;
+import org.apache.commons.codec.binary.Base64InputStream;
 
 import org.apache.wicket.markup.html.WebResource;
 import org.apache.wicket.util.resource.AbstractResourceStream;
@@ -73,7 +73,7 @@ public class OccurrenceWebResource extends WebResource {
     
     public InputStream getInputStream() throws ResourceStreamNotFoundException {
       try {
-        return new Base64.InputStream(new ReaderInputStream(reader, "utf-8"), Base64.DECODE);
+        return new Base64InputStream(new ReaderInputStream(reader, "utf-8"), false);
       } catch (UnsupportedEncodingException e) {
         throw new OntopiaRuntimeException(e);
       }

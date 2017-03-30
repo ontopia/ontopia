@@ -32,7 +32,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
-import net.ontopia.net.Base64;
+//import net.ontopia.net.Base64;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.ReaderInputStream;
@@ -42,6 +42,8 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64InputStream;
 
 public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   protected OccurrenceIF occurrence;
@@ -195,7 +197,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   public void _testBinaryReader() throws Exception {
     // read file and store in occurrence
     String file = TestFileUtils.getTestInputFile("various", "blob.gif");
-    Reader ri = new InputStreamReader(new Base64.InputStream(new FileInputStream(file), Base64.ENCODE), "utf-8");
+    Reader ri = new InputStreamReader(new Base64InputStream(new FileInputStream(file), true), "utf-8");
     occurrence.setReader(ri, file.length(), DataTypes.TYPE_BINARY);
 
     assertTrue("Occurrence datatype is incorrect", ObjectUtils.equals(DataTypes.TYPE_BINARY, occurrence.getDataType()));
@@ -203,7 +205,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     // read and decode occurrence content
     Reader ro = occurrence.getReader();
     assertTrue("Reader value is null", ro != null);
-    InputStream in = new Base64.InputStream(new ReaderInputStream(ro, "utf-8"), Base64.DECODE);
+    InputStream in = new Base64InputStream(new ReaderInputStream(ro, "utf-8"), false);
     try {
       OutputStream out = new FileOutputStream("/tmp/blob.gif");
       try {
