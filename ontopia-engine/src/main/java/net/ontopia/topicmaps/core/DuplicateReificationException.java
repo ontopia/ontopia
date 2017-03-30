@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.core;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 /**
  * INTERNAL: Thrown when a reifiable object is reified by a topic that
@@ -55,6 +56,11 @@ public class DuplicateReificationException extends ConstraintViolationException 
     ReifiableIF existingReified = reifier.getReified();
     if (existingReified != null &&
         ObjectUtils.different(existingReified, reifiable)) {
+      if (existingReified instanceof TopicMapIF) {
+        throw new DuplicateReificationException("The topic " + reifier +
+           " cannot reify more than one reifiable object. 1: " + existingReified +
+           " 2: " + reifiable);
+      }
       String key1 = KeyGenerator.makeKey(reifiable);
       String key2 = KeyGenerator.makeKey(existingReified);
       if (!key1.equals(key2))

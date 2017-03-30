@@ -25,29 +25,21 @@ import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 
-import org.junit.Ignore;
-
 /**
  * INTERNAL:
  * PRIVATE:
  * TESTING:
  */
 
-@Ignore
-public class TestValueAction implements ActionIF {
+public class TestPeakAction implements ActionIF {
 
   public void perform(ActionParametersIF params, ActionResponseIF response)
       throws ActionRuntimeException {
-
-    String value = params.getStringValue();
-    if (value==null) value = (String) params.get(0);
-    String param = response.getParameter("value");
-    String result;
-    if (param==null) result = value;
-    else result = param + "-" + value;
-    
-    if (result != null) response.addParameter("value", result);
-
+  
+    ActionParametersIF target = params.getRequest().getActionParameters("dummy");
+    if (target == null) response.addParameter("value", "FAILURE: Failed to access 'dummy' action actions parameters");
+    else response.addParameter("value",target.getStringValue());
+  
   }
 
 }

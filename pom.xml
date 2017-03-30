@@ -85,6 +85,7 @@
 		<axis2.version>1.6.2</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
+		<jena.version>2.13.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
 	</properties>
 
@@ -453,30 +454,13 @@
 				<version>1.3.4</version>
 			</dependency>
 			<dependency>
-				<groupId>com.hp.hpl.jena</groupId>
-				<artifactId>jena</artifactId>
-				<version>2.6.2</version>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-core</artifactId>
+				<version>${jena.version}</version>
 				<exclusions>
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-log4j12</artifactId>
-					</exclusion>
 					<exclusion>
 						<groupId>log4j</groupId>
 						<artifactId>log4j</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xmlbeans</groupId>
-						<artifactId>xmlbeans-jsr173-api</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xerces</groupId>
-						<artifactId>xercesImpl</artifactId>
-					</exclusion>
-					<exclusion>
-						<!-- subdependency stax has compile dependency to junit -->
-						<groupId>junit</groupId>
-						<artifactId>junit</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -533,17 +517,17 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>
-				<version>3.6</version>
+				<version>3.12</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
-				<version>3.6</version>
+				<version>3.12</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-scratchpad</artifactId>
-				<version>3.6</version>
+				<version>3.12</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
@@ -609,18 +593,6 @@
 				<artifactId>javax.el-api</artifactId>
 				<version>2.2.1</version>
 				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>crimson</groupId>
-				<artifactId>crimson</artifactId>
-				<version>1.1.3</version>
-				<scope>runtime</scope>
-			</dependency>
-			<dependency>
-				<groupId>xerces</groupId>
-				<artifactId>xercesImpl</artifactId>
-				<version>2.7.1</version>
-				<scope>runtime</scope>
 			</dependency>
 
 			<!-- Test dependencies -->

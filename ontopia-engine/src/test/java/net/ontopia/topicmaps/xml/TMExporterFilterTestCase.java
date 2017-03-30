@@ -24,9 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -38,19 +36,17 @@ import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
-import org.xml.sax.SAXException;
 
 import java.util.List;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
+import net.ontopia.xml.PrettyPrinter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.xml.sax.SAXException;
 
 @RunWith(Parameterized.class)
 public class TMExporterFilterTestCase {
@@ -106,16 +102,15 @@ public class TMExporterFilterTestCase {
       Collection topics = sourceMap.getTopics();
 
       OutputStream outputStream = new FileOutputStream(xtm);
-      OutputFormat format = new OutputFormat();
+      PrettyPrinter prettyPrinter = new PrettyPrinter(outputStream);
       XTMFragmentExporter exporter = new XTMFragmentExporter();
       exporter.setExportSourceLocators(false);
       exporter.setAddIds(false);
       
       DeciderIF filter = new TestDecider();
-      XMLSerializer xmlSerialize = new XMLSerializer(outputStream, format);
       exporter.setFilter(filter);
       try {
-        exporter.exportAll(topics.iterator(), xmlSerialize);
+        exporter.exportAll(topics.iterator(), prettyPrinter);
       } catch (SAXException e) {
         throw new OntopiaRuntimeException(e);
       }

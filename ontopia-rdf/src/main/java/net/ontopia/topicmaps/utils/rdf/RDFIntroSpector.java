@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ALiteral;
-import com.hp.hpl.jena.rdf.arp.AResource;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
