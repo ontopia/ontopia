@@ -103,7 +103,6 @@
 				<configuration>
 					<webAppSourceDirectory>${basedir}/target/test-webapp</webAppSourceDirectory>
 					<contextPath>webedtest</contextPath>
-					<useTestClasspath>true</useTestClasspath>
 				</configuration>
 				<executions>
 					<execution>

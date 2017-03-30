@@ -748,10 +748,10 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
     public void startElement(String name, AttributeList atts) {
       super.startElement(name, atts);
-      if (name != "baseNameString" && 
-          name != "resourceData" && name != "topicRef" &&
-          name != "instanceOf" && name != "resourceRef" &&
-          name != "subjectIndicatorRef")
+      if (!"baseNameString".equals(name) && 
+          !"resourceData".equals(name) && !"topicRef".equals(name) &&
+          !"instanceOf".equals(name) && !"resourceRef".equals(name) &&
+          !"subjectIndicatorRef".equals(name))
         writer.print("\n");
     }
 

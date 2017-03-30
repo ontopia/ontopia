@@ -1,34 +1,37 @@
-<%@ page import="
-  java.io.*,
-  java.util.*,
-  org.xml.sax.helpers.*,
-  net.ontopia.xml.*,
-  net.ontopia.utils.*,
-  net.ontopia.infoset.core.LocatorIF,
-  net.ontopia.topicmaps.core.*,
-  net.ontopia.topicmaps.entry.*,
-  net.ontopia.topicmaps.nav2.core.*,
-  net.ontopia.topicmaps.utils.rdf.*"
+<%@page import="
+	java.io.IOException,
+	java.io.FileOutputStream,
+	java.io.OutputStreamWriter,
+	java.io.PrintWriter,
+	java.io.Writer,
+	java.util.Iterator,
+	java.util.Map,
+	net.ontopia.topicmaps.utils.rdf.RDFIntroSpector,
+	net.ontopia.topicmaps.utils.rdf.RDFPropertyMapping,
+	net.ontopia.utils.URIUtils,
+	net.ontopia.xml.PrettyPrinter,
+	org.xml.sax.helpers.AttributesImpl,
+	org.xml.sax.Attributes"
 %><%!
 
   private static void outputProperty(PrettyPrinter pp, String prop, String val,
-                                     AttributeListImpl atts)
+                                     AttributesImpl atts)
     throws IOException {
 
-    atts.addAttribute("rdf:resource", "CDATA", val);
-    pp.startElement(prop, atts);
+    atts.addAttribute("", "", "rdf:resource", "CDATA", val);
+	pp.startElement("", "", prop, atts);
     atts.clear();
-    pp.endElement(prop);
+    pp.endElement("", "", prop);
 
   }
 
   private static void outputMapping(PrettyPrinter pp,
                                     RDFPropertyMapping mapping,
-                                    AttributeListImpl atts)
+                                    AttributesImpl atts)
     throws IOException {
 
-    atts.addAttribute("rdf:about", "CDATA", mapping.getProperty());
-    pp.startElement("rdf:Description", atts);
+    atts.addAttribute("", "", "rdf:about", "CDATA", mapping.getProperty());
+    pp.startElement("", "", "rdf:Description", atts);
     atts.clear();
 
     outputProperty(pp, "rtm:maps-to", mapping.getMapsTo(), atts);
@@ -42,7 +45,7 @@
     if (mapping.getType() != null)
       outputProperty(pp, "rtm:type", mapping.getType(), atts);
     
-    pp.endElement("rdf:Description");
+    pp.endElement("", "", "rdf:Description");
     
   }
 
@@ -92,16 +95,16 @@
   }
 
   // helpers
-  AttributeListImpl atts = new AttributeListImpl();
+  AttributesImpl atts = new AttributesImpl();
 
   // walk through the mappings and save them
   Writer outf = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
   PrettyPrinter pp = new PrettyPrinter(outf, "utf-8");
   pp.startDocument();
 
-  atts.addAttribute("xmlns:rdf", "CDATA", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-  atts.addAttribute("xmlns:rtm", "CDATA", prefix);
-  pp.startElement("rdf:RDF", atts);
+  atts.addAttribute("", "", "xmlns:rdf", "CDATA", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+  atts.addAttribute("", "", "xmlns:rtm", "CDATA", prefix);
+  pp.startElement("", "", "rdf:RDF", atts);
   atts.clear();
 
   Iterator it = mappings.keySet().iterator();
@@ -111,7 +114,7 @@
     outputMapping(pp, mapping, atts);
   }
 
-  pp.endElement("rdf:RDF");
+  pp.endElement("", "", "rdf:RDF");
   pp.endDocument();
   outf.close();
 

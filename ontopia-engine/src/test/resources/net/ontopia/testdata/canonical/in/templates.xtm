@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- A test for bug #516 -->
 <!DOCTYPE topicMap PUBLIC "-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN"
-                          "">
+                          "http://www.topicmaps.org/xtm/1.0/xtm1.dtd">
 
 <topicMap id="CPAN-templates"
     xmlns="http://www.topicmaps.org/xtm/1.0/"

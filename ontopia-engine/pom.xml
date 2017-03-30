@@ -72,14 +72,6 @@
 			<artifactId>lucene-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>crimson</groupId>
-			<artifactId>crimson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>

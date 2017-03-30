@@ -21,25 +21,23 @@
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;
-import java.io.Writer;
-import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.xml.sax.DocumentHandler;
-import org.xml.sax.AttributeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributeListImpl;
-
-import net.ontopia.xml.PrettyPrinter;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
 import net.ontopia.topicmaps.schema.core.SchemaIF;
 import net.ontopia.topicmaps.schema.core.SchemaWriterIF;
-import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
 import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.PrettyPrinter;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * PUBLIC: Writes out an OSL schema using the OSL schema syntax.
@@ -49,7 +47,7 @@ public class OSLSchemaWriter implements SchemaWriterIF {
   protected String encoding;
 
   protected LocatorIF base;
-  protected AttributeListImpl EMPTY_ATTR_LIST;
+  protected AttributesImpl EMPTY_ATTR_LIST;
   
   /**
    * PUBLIC: Creates a schema writer bound to the given Writer object.
@@ -59,7 +57,7 @@ public class OSLSchemaWriter implements SchemaWriterIF {
     this.out = out;
     this.encoding = encoding;
     
-    EMPTY_ATTR_LIST = new AttributeListImpl();
+    EMPTY_ATTR_LIST = new AttributesImpl();
   }
   
   /**
@@ -72,7 +70,7 @@ public class OSLSchemaWriter implements SchemaWriterIF {
     this.out = new OutputStreamWriter(new FileOutputStream(file), encoding);
     this.encoding = encoding;
     
-    EMPTY_ATTR_LIST = new AttributeListImpl();
+    EMPTY_ATTR_LIST = new AttributesImpl();
   }
 
   // --- SchemaWriterIF methods
@@ -93,9 +91,9 @@ public class OSLSchemaWriter implements SchemaWriterIF {
 
   // --- Export methods
 
-  protected void export(OSLSchema schema, DocumentHandler dh)
+  protected void export(OSLSchema schema, ContentHandler dh)
     throws SAXException {
-    dh.startElement("tm-schema", getAttributes(schema.isStrict(),
+    dh.startElement("", "", "tm-schema", getAttributes(schema.isStrict(),
                                                "match", "strict", "loose"));
 
     Iterator it = schema.getRuleSets().iterator();
@@ -110,24 +108,24 @@ public class OSLSchemaWriter implements SchemaWriterIF {
     while (it.hasNext()) 
       export((AssociationClass) it.next(), dh);
     
-    dh.endElement("tm-schema");
+    dh.endElement("", "", "tm-schema");
   }
 
-  protected void export(RuleSet ruleset, DocumentHandler dh)
+  protected void export(RuleSet ruleset, ContentHandler dh)
     throws SAXException {
-    dh.startElement("ruleset", getAttributes("id", ruleset.getId()));
+    dh.startElement("", "", "ruleset", getAttributes("id", ruleset.getId()));
     export((TopicConstraintCollection) ruleset, dh);
-    dh.endElement("ruleset");
+    dh.endElement("", "", "ruleset");
   }
 
-  protected void export(TopicClass klass, DocumentHandler dh)
+  protected void export(TopicClass klass, ContentHandler dh)
     throws SAXException {
-    AttributeListImpl atts =
-      (AttributeListImpl) getAttributes(klass.isStrict(), 
+    AttributesImpl atts =
+      (AttributesImpl) getAttributes(klass.isStrict(), 
                                         "match", "strict", "loose");
     if (klass.getId() != null)
-      atts.addAttribute("id", "CDATA", klass.getId());
-    dh.startElement("topic", atts);
+      atts.addAttribute("", "", "id", "CDATA", klass.getId());
+    dh.startElement("", "", "topic", atts);
 
     exportInstanceOf(klass.getTypeSpecification(), dh);
 
@@ -135,37 +133,37 @@ public class OSLSchemaWriter implements SchemaWriterIF {
     Iterator it = klass.getOtherClasses().iterator();
     while (it.hasNext()) {
       TypeSpecification typespec = (TypeSpecification) it.next();
-      dh.startElement("otherClass", EMPTY_ATTR_LIST);
+      dh.startElement("", "", "otherClass", EMPTY_ATTR_LIST);
       export(typespec.getClassMatcher(), dh);
-      dh.endElement("otherClass");
+      dh.endElement("", "", "otherClass");
     }
     
     // superclass
     if (klass.getSuperclass() != null) {
       TopicClass superclass = klass.getSuperclass();
       // FIXME: what if no id?
-      dh.startElement("superclass", getAttributes("ref", superclass.getId()));
-      dh.endElement("superclass");
+      dh.startElement("", "", "superclass", getAttributes("ref", superclass.getId()));
+      dh.endElement("", "", "superclass");
     }
     
     export((TopicConstraintCollection) klass, dh);
     
-    dh.endElement("topic");
+    dh.endElement("", "", "topic");
   }
 
-  protected void export(AssociationClass klass, DocumentHandler dh)
+  protected void export(AssociationClass klass, ContentHandler dh)
     throws SAXException {
-    dh.startElement("association", EMPTY_ATTR_LIST);
+    dh.startElement("", "", "association", EMPTY_ATTR_LIST);
 
     exportInstanceOf(klass.getTypeSpecification(), dh);
     Iterator it = klass.getRoleConstraints().iterator();
     while (it.hasNext()) 
       export((AssociationRoleConstraint) it.next(), dh);
     
-    dh.endElement("association");
+    dh.endElement("", "", "association");
   }
 
-  protected void export(TopicConstraintCollection constraint, DocumentHandler dh)
+  protected void export(TopicConstraintCollection constraint, ContentHandler dh)
     throws SAXException {
 
     Iterator it = constraint.getSubRules().iterator();
@@ -187,9 +185,9 @@ public class OSLSchemaWriter implements SchemaWriterIF {
       export((TopicRoleConstraint) it.next(), dh);
   }
 
-  protected void export(TopicNameConstraint constraint, DocumentHandler dh)
+  protected void export(TopicNameConstraint constraint, ContentHandler dh)
     throws SAXException {
-    dh.startElement("baseName", getMinMax(constraint));
+    dh.startElement("", "", "baseName", getMinMax(constraint));
 
     exportScope(constraint, dh);
 
@@ -197,71 +195,71 @@ public class OSLSchemaWriter implements SchemaWriterIF {
     while (it.hasNext()) 
       export((VariantConstraint) it.next(), dh);
     
-    dh.endElement("baseName");
+    dh.endElement("", "", "baseName");
   }
 
-  protected void export(VariantConstraint constraint, DocumentHandler dh)
+  protected void export(VariantConstraint constraint, ContentHandler dh)
     throws SAXException {
-    dh.startElement("variant", getMinMax(constraint));
+    dh.startElement("", "", "variant", getMinMax(constraint));
 
     exportScope(constraint, dh);
     
-    dh.endElement("variant");
+    dh.endElement("", "", "variant");
   }
 
-  protected void export(OccurrenceConstraint constraint, DocumentHandler dh)
+  protected void export(OccurrenceConstraint constraint, ContentHandler dh)
     throws SAXException {
-    AttributeListImpl atts = (AttributeListImpl) getMinMax(constraint);
+    AttributesImpl atts = (AttributesImpl) getMinMax(constraint);
     String value = "either";
     if (constraint.getInternal() == OccurrenceConstraint.RESOURCE_INTERNAL)
       value = "yes";
     else if (constraint.getInternal() == OccurrenceConstraint.RESOURCE_EXTERNAL)
       value = "no";
-    atts.addAttribute("internal", "CDATA", value);
-    dh.startElement("occurrence", atts);
+    atts.addAttribute("", "", "internal", "CDATA", value);
+    dh.startElement("", "", "occurrence", atts);
 
     exportInstanceOf(constraint.getTypeSpecification(), dh);
     exportScope(constraint, dh);
     
-    dh.endElement("occurrence");
+    dh.endElement("", "", "occurrence");
   }
 
-  protected void export(TopicRoleConstraint constraint, DocumentHandler dh)
+  protected void export(TopicRoleConstraint constraint, ContentHandler dh)
     throws SAXException {
-    dh.startElement("playing", getMinMax(constraint));
+    dh.startElement("", "", "playing", getMinMax(constraint));
 
     exportInstanceOf(constraint.getTypeSpecification(), dh);
     Iterator it = constraint.getAssociationTypes().iterator();
     if (it.hasNext()) {
-      dh.startElement("in", EMPTY_ATTR_LIST);
+      dh.startElement("", "", "in", EMPTY_ATTR_LIST);
       while (it.hasNext()) {
         TypeSpecification spec = (TypeSpecification) it.next();
         exportInstanceOf(spec, dh);
       }
-      dh.endElement("in");
+      dh.endElement("", "", "in");
     }
     
-    dh.endElement("playing");
+    dh.endElement("", "", "playing");
   }
   
-  protected void export(AssociationRoleConstraint constraint, DocumentHandler dh)
+  protected void export(AssociationRoleConstraint constraint, ContentHandler dh)
     throws SAXException {
-    dh.startElement("role", getMinMax(constraint));
+    dh.startElement("", "", "role", getMinMax(constraint));
 
     exportInstanceOf(constraint.getTypeSpecification(), dh);
     Iterator it = constraint.getPlayerTypes().iterator();
     while (it.hasNext()) {
       TypeSpecification spec = (TypeSpecification) it.next();
-      dh.startElement("player", getAttributes(spec.getSubclasses(),
+      dh.startElement("", "", "player", getAttributes(spec.getSubclasses(),
                                               "subclasses", "yes", "no"));
       export(spec.getClassMatcher(), dh);
-      dh.endElement("player");
+      dh.endElement("", "", "player");
     }
     
-    dh.endElement("role");
+    dh.endElement("", "", "role");
   }
 
-  protected void export(TMObjectMatcherIF matcher, DocumentHandler dh)
+  protected void export(TMObjectMatcherIF matcher, ContentHandler dh)
     throws SAXException {
 
     if (matcher == null)
@@ -286,32 +284,32 @@ public class OSLSchemaWriter implements SchemaWriterIF {
       throw new OntopiaRuntimeException("INTERNAL: Unknown matcher " + matcher);    
   }
 
-  protected void exportScope(ScopedConstraintIF constraint, DocumentHandler dh)
+  protected void exportScope(ScopedConstraintIF constraint, ContentHandler dh)
     throws SAXException {
     if (constraint.getScopeSpecification() == null)
       return;
     
     int match = constraint.getScopeSpecification().getMatch();
     if (match == ScopeSpecification.MATCH_SUPERSET)
-      dh.startElement("scope", getAttributes("match", "superset"));
+      dh.startElement("", "", "scope", getAttributes("match", "superset"));
     else if (match == ScopeSpecification.MATCH_SUBSET)
-      dh.startElement("scope", getAttributes("match", "subset"));
+      dh.startElement("", "", "scope", getAttributes("match", "subset"));
     else
-      dh.startElement("scope", EMPTY_ATTR_LIST);
+      dh.startElement("", "", "scope", EMPTY_ATTR_LIST);
 
     exportMatchers(constraint.getScopeSpecification().getThemeMatchers(), dh);
-    dh.endElement("scope");   
+    dh.endElement("", "", "scope");   
   }
 
-  protected void exportInstanceOf(TypeSpecification spec, DocumentHandler dh)
+  protected void exportInstanceOf(TypeSpecification spec, ContentHandler dh)
     throws SAXException {
-    dh.startElement("instanceOf", getAttributes(spec.getSubclasses(),
+    dh.startElement("", "", "instanceOf", getAttributes(spec.getSubclasses(),
                                                 "subclasses", "yes", "no"));
     export(spec.getClassMatcher(), dh);
-    dh.endElement("instanceOf");   
+    dh.endElement("", "", "instanceOf");   
   }
 
-  protected void exportMatchers(Collection matchers, DocumentHandler dh)
+  protected void exportMatchers(Collection matchers, ContentHandler dh)
     throws SAXException {
 
     Iterator it = matchers.iterator();
@@ -321,41 +319,41 @@ public class OSLSchemaWriter implements SchemaWriterIF {
   
   // --- Internal helpers
 
-  protected AttributeList getAttributes(String name, String value) {
-    AttributeListImpl atts = new AttributeListImpl();
+  protected Attributes getAttributes(String name, String value) {
+    AttributesImpl atts = new AttributesImpl();
     if (value != null)
-      atts.addAttribute(name, "CDATA", value);
+      atts.addAttribute("", "", name, "CDATA", value);
     return atts;
   }
   
-  protected AttributeList getAttributes(boolean setting, String name,
+  protected Attributes getAttributes(boolean setting, String name,
                                         String tvalue, String fvalue) {
-    AttributeListImpl atts = new AttributeListImpl();
+    AttributesImpl atts = new AttributesImpl();
     if (setting)
-      atts.addAttribute(name, "CDATA", tvalue);
+      atts.addAttribute("", "", name, "CDATA", tvalue);
     else
-      atts.addAttribute(name, "CDATA", fvalue);
+      atts.addAttribute("", "", name, "CDATA", fvalue);
     return atts;
   }
   
-  protected AttributeList getMinMax(CardinalityConstraintIF constraint) {
-    AttributeListImpl atts = new AttributeListImpl();
+  protected Attributes getMinMax(CardinalityConstraintIF constraint) {
+    AttributesImpl atts = new AttributesImpl();
 
     if (constraint.getMinimum() != 0)
-      atts.addAttribute("min", "CDATA",
+      atts.addAttribute("", "", "min", "CDATA",
                         Integer.toString(constraint.getMinimum()));
 
     if (constraint.getMaximum() != CardinalityConstraintIF.INFINITY)
-      atts.addAttribute("max", "CDATA",
+      atts.addAttribute("", "", "max", "CDATA",
                         Integer.toString(constraint.getMaximum()));
     
     return atts;
   }
 
-  protected void emptyElement(DocumentHandler dh, String elem,
-                              AttributeList atts) throws SAXException {
-    dh.startElement(elem, atts);
-    dh.endElement(elem);
+  protected void emptyElement(ContentHandler dh, String elem,
+                              Attributes atts) throws SAXException {
+    dh.startElement("", "", elem, atts);
+    dh.endElement("", "", elem);
   }
 
   protected String getRelativeLocator(LocatorIF base, LocatorIF relative) {

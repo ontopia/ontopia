@@ -21,26 +21,24 @@
 package net.ontopia.persistence.rdbms;
 
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
-
 import org.xml.sax.Attributes;
-import org.xml.sax.DocumentHandler;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 /** 
  * INTERNAL: Class that can read a database schema definition from an
@@ -49,7 +47,9 @@ import org.xml.sax.helpers.AttributeListImpl;
 
 public class DatabaseProjectReader {
     
-  protected static final AttributeListImpl EMPTY_ATTR_LIST = new AttributeListImpl();
+  protected static final AttributesImpl EMPTY_ATTR_LIST = new AttributesImpl();
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
 
   private DatabaseProjectReader() { }
 
@@ -82,12 +82,12 @@ public class DatabaseProjectReader {
     print.close();
   }
 
-  public static void saveProject(Project project, DocumentHandler dh) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
+  public static void saveProject(Project project, ContentHandler dh) throws SAXException {
+    AttributesImpl atts = new AttributesImpl();
     
     dh.startDocument();
 
-    dh.startElement("dbschema", EMPTY_ATTR_LIST);
+    dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "dbschema", EMPTY_ATTR_LIST);
 
     Iterator<String> platforms = project.getDataTypePlatforms().iterator();
     if (platforms.hasNext()) {
@@ -95,20 +95,20 @@ public class DatabaseProjectReader {
         String platform = platforms.next();
         
         atts.clear();
-        atts.addAttribute("platform", "CDATA", platform);
-        dh.startElement("datatypes", atts);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "platform", "CDATA", platform);
+        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatypes", atts);
         
         Iterator<DataType> datatypes = project.getDataTypes(platform).iterator();
         while (datatypes.hasNext()) {
           // Platform datatypes
           DataType datatype = datatypes.next();
           atts.clear();
-          atts.addAttribute("name", "CDATA", (datatype.getName()));
-          atts.addAttribute("type", "CDATA", (datatype.getType()));
-          atts.addAttribute("size", "CDATA", (datatype.getSize() == null ? "" : datatype.getSize()));
-          atts.addAttribute("class", "CDATA", (datatype.isVariable() ? "variable" : "constant"));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "name", "CDATA", (datatype.getName()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "type", "CDATA", (datatype.getType()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "size", "CDATA", (datatype.getSize() == null ? "" : datatype.getSize()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "class", "CDATA", (datatype.isVariable() ? "variable" : "constant"));
           
-          dh.startElement("datatype", atts);
+          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", atts);
 
           // Datatype properties
           Iterator<String> properties = datatype.getProperties().iterator();
@@ -117,18 +117,18 @@ public class DatabaseProjectReader {
             String value = datatype.getProperty(name);
             if (value != null) {
               atts.clear();
-              atts.addAttribute("name", "CDATA", name);
-              atts.addAttribute("value", "CDATA", value);
-              dh.startElement("property", atts);
-              dh.endElement("property");
+              atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "name", "CDATA", name);
+              atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "value", "CDATA", value);
+              dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "property", atts);
+              dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "property");
             }
           }
           
-          dh.endElement("datatype");
+          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype");
           
         }
       }
-      dh.endElement("datatypes");
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatypes");
     }
     
     Iterator<Table> tables = project.getTables().iterator();
@@ -137,12 +137,12 @@ public class DatabaseProjectReader {
 
       // Table attributes
       atts.clear();
-      atts.addAttribute("name", "CDATA", table.getName());
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "name", "CDATA", table.getName());
       if (table.getShortName() != null)
-        atts.addAttribute("short", "CDATA", table.getShortName());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "short", "CDATA", table.getShortName());
       if (table.getPrimaryKeys() != null)
-        atts.addAttribute("pks", "CDATA", StringUtils.join(table.getPrimaryKeys(), " "));
-      dh.startElement("table", atts);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "pks", "CDATA", StringUtils.join(table.getPrimaryKeys(), " "));
+      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "table", atts);
 
       // Table properties
       Iterator<String> properties = table.getProperties().iterator();
@@ -151,10 +151,10 @@ public class DatabaseProjectReader {
         String value = table.getProperty(name);
         if (value != null) {
           atts.clear();
-          atts.addAttribute("name", "CDATA", name);
-          atts.addAttribute("value", "CDATA", value);
-          dh.startElement("property", atts);
-          dh.endElement("property");
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "name", "CDATA", name);
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "value", "CDATA", value);
+          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "property", atts);
+          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "property");
         }
       }
 
@@ -164,21 +164,21 @@ public class DatabaseProjectReader {
 
         // Column attributes
         atts.clear();
-        atts.addAttribute("name", "CDATA", column.getName());
-        atts.addAttribute("type", "CDATA", column.getType());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "name", "CDATA", column.getName());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "type", "CDATA", column.getType());
         
         if (column.isReference()) {
-          atts.addAttribute("reftab", "CDATA", column.getReferencedTable());
-          atts.addAttribute("refcol", "CDATA", column.getReferencedColumn());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reftab", "CDATA", column.getReferencedTable());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "refcol", "CDATA", column.getReferencedColumn());
         }
         
         if (column.getSize() != null)
-          atts.addAttribute("size", "CDATA", column.getName());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "size", "CDATA", column.getName());
         if (column.isNullable())
-          atts.addAttribute("null", "CDATA", "yes");
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "null", "CDATA", "yes");
         if (column.getDefault() != null)
-          atts.addAttribute("default", "CDATA", column.getDefault());
-        dh.startElement("column", atts);
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "default", "CDATA", column.getDefault());
+        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "column", atts);
       
         // Column properties
         Iterator<String> properties2 = column.getProperties().iterator();
@@ -187,19 +187,19 @@ public class DatabaseProjectReader {
           String value = column.getProperty(name);
           if (value != null) {
             atts.clear();
-            atts.addAttribute("name", "CDATA", name);
-            atts.addAttribute("value", "CDATA", value);
-            dh.startElement("property", atts);
-            dh.endElement("property");
+            atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "name", "CDATA", name);
+            atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "value", "CDATA", value);
+            dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "property", atts);
+            dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "property");
           }
         }        
-        dh.endElement("column");        
+        dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "column");        
       }
       
-      dh.endElement("table");      
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "table");      
     }
     
-    dh.endElement("dbschema");
+    dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "dbschema");
     dh.endDocument();
   }
   

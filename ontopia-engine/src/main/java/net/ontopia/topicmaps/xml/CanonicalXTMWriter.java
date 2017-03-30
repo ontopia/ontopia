@@ -754,7 +754,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
 
     protected int compareString(String s1, String s2) {
-      if (s1 == s2) return 0;
+      if ((s1 == null) && (s2 == null)) return 0;
 
       if (s1 == null) return -1;
       if (s2 == null) return 1;

@@ -40,11 +40,10 @@ import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 import org.xml.sax.SAXException;
 
 import java.util.List;
+import net.ontopia.xml.PrettyPrinter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -99,15 +98,14 @@ public class XTMFragmentExporterTestCase {
       Collection topics = sourceMap.getTopics();
 
       OutputStream outputStream = new FileOutputStream(xtm);
-      OutputFormat format = new OutputFormat();
       XTMFragmentExporter exporter = new XTMFragmentExporter();
       exporter.setExportSourceLocators(false);
       
       DeciderIF filter = new TestDecider();
-      XMLSerializer xmlSerialize = new XMLSerializer(outputStream, format);;
+      PrettyPrinter printer = new PrettyPrinter(outputStream);
       exporter.setFilter(filter);
       try {
-        exporter.exportAll(topics.iterator(), xmlSerialize);
+        exporter.exportAll(topics.iterator(), printer);
       } catch (SAXException e) {
         throw new OntopiaRuntimeException(e);
       }

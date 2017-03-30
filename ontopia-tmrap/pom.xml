@@ -19,17 +19,6 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>ontopia-navigator</artifactId>
 			<version>${project.version}</version>
-			<exclusions>
-				<!-- avoid having xml implementations added to the aar -->
-				<exclusion>
-					<groupId>crimson</groupId>
-					<artifactId>crimson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>

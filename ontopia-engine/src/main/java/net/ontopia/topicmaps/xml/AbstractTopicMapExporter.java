@@ -28,7 +28,7 @@ import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.CharacterSet;
 
@@ -37,6 +37,8 @@ import net.ontopia.utils.CharacterSet;
  * exporters.
  */
 public abstract class AbstractTopicMapExporter {
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
   protected DeciderIF filter;
   
   /**
@@ -94,10 +96,10 @@ public abstract class AbstractTopicMapExporter {
    */
   protected boolean add_ids = true;
 
-  protected void addId(AttributeListImpl atts, TMObjectIF tmobject) {
+  protected void addId(AttributesImpl atts, TMObjectIF tmobject) {
     String id = getElementId(tmobject);
     if (id != null)
-      atts.addAttribute("id", "ID", id);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "id", "ID", id);
   }
   
   /**
