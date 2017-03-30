@@ -1,4 +1,5 @@
 language: java
+install: true
 script: mvn clean install -Dontopia.jetty.port=9090
 cache:
   directories:
