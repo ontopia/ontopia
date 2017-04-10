@@ -20,16 +20,12 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import java.io.File;
-import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.StoreNotOpenException;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
-import net.ontopia.topicmaps.impl.utils.FulltextIndexManager;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -39,28 +35,8 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
 
   protected TopicMapTransactionIF transaction;
 
-  protected boolean maintainFulltextIndex = false;
-  protected File indexDirectory = null;
-  protected FulltextIndexManager ftmanager = null;
-  
-  public InMemoryTopicMapStore(boolean maintainFulltextIndex, File indexDirectory) {
-    this.maintainFulltextIndex = maintainFulltextIndex;
-    this.indexDirectory = indexDirectory;
-
-    // register fulltext index manager at this point, so that we can track
-    // all events that occur at loading
-    if (maintainFulltextIndex) {
-      this.ftmanager = new FulltextIndexManager(this);
-      try {
-        this.ftmanager.synchronizeIndex(true);
-      } catch (IOException ioe) {
-        throw new OntopiaRuntimeException(ioe);
-      }
-    }
-  }
- 
   public InMemoryTopicMapStore() {
-    this(false, null);
+    super();
   }
 
   public int getImplementation() {
@@ -116,55 +92,12 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
       open = false;
       closed = true;
     }
-    
-    // close and dereference ftmanager
-    try {
-      if (ftmanager != null) {
-        ftmanager.close();
-        ftmanager = null;
-      }
-    } catch (IOException e) {
-      throw new OntopiaRuntimeException(e);
-    }
   }
 
   public String getProperty(String propertyName) {
     return null; // TODO: add property support
   }
   
-  /**
-   * INTERNAL: Synchronizes the underlying fulltext index with the latest
-   * changes in the topic map.
-   * 
-   * @return True if index was modified.
-   */
-  public boolean synchronizeFulltextIndex() throws IOException {
-    if (maintainFulltextIndex)
-      return synchronizeFulltextIndex(false);
-    else
-      return false;
-  }
-
-  // INTERNAL
-  public synchronized boolean synchronizeFulltextIndex(boolean replaceIndex)
-      throws IOException {
-    return ftmanager.synchronizeIndex(replaceIndex);
-  }  
-
-  public void deleteFullTextIndex() throws IOException {
-    if (ftmanager != null) {
-      ftmanager.close();
-      maintainFulltextIndex = false;
-      ftmanager = null;
-    }
-    if (indexDirectory.exists())
-      FileUtils.deleteDirectory(indexDirectory, true);
-  }
-
-  public File getIndexDirectory() {
-    return indexDirectory;
-  }
-
   // ---------------------------------------------------------------------------
   // EventManagerIF: for testing purposes only
   // ---------------------------------------------------------------------------

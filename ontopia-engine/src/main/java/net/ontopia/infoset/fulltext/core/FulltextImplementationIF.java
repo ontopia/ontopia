@@ -19,16 +19,24 @@
  */
 package net.ontopia.infoset.fulltext.core;
 
-import java.io.IOException;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 /**
  * Interface that describes a fulltext indexation service for use in {@link InMemoryTopicMapStore}.
  */
 public interface FulltextImplementationIF {
-  
-  void initialize(InMemoryTopicMapStore store) throws IOException;
-  SearcherIF getSearcher() throws IOException;
-  IndexerIF getIndexer(boolean replaceIndex) throws IOException;
-  void close() throws IOException;
+
+  void install(TopicMapReferenceIF reference);
+
+  void storeOpened(TopicMapStoreIF store);
+
+  void deleteIndex();
+
+  void synchronize(TopicMapStoreIF store);
+
+  void reindex();
+
+  void close();
 }

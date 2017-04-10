@@ -34,6 +34,7 @@ import junit.framework.TestCase;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.fulltext.impl.basic.DummyFulltextSearcherIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -101,7 +102,7 @@ public abstract class AbstractQueryTest extends TestCase {
       indexDirectory = TestFileUtils.getTestOutputFile("indexes", filename.substring(filename.lastIndexOf("/")));
       indexDirectory.mkdirs();
     }
-    InMemoryTopicMapStore store = new InMemoryTopicMapStore(fulltext, indexDirectory);
+    InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     topicmap = store.getTopicMap();
     builder = store.getTopicMap().getBuilder();
     base = URIUtils.getURI(filename);
@@ -111,7 +112,9 @@ public abstract class AbstractQueryTest extends TestCase {
       ((XTMTopicMapReader) importer).setValidation(false);
     importer.importInto(topicmap);
 
-    store.synchronizeFulltextIndex();
+    if (fulltext) {
+      new DummyFulltextSearcherIF(store);
+    }
     
     processor = new QueryProcessor(topicmap, base);
   }
