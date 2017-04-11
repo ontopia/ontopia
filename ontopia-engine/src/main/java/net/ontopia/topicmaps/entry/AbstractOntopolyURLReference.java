@@ -79,12 +79,6 @@ public abstract class AbstractOntopolyURLReference
     // create empty topic map
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     
-    if (maintainFulltextIndexes) {
-      for (FulltextImplementationIF ft : ftmanagers) {
-        ft.storeOpened(store);
-      }
-    }
-
     if (base_address != null)
       store.setBaseAddress(base_address);
     TopicMapIF tm = store.getTopicMap();
@@ -95,6 +89,12 @@ public abstract class AbstractOntopolyURLReference
     // suppress duplicates
     if (getDuplicateSuppression())
       DuplicateSuppressionUtils.removeDuplicates(tm);
+
+    if (maintainFulltextIndexes) {
+      for (FulltextImplementationIF ft : ftmanagers) {
+        ft.storeOpened(store);
+      }
+    }
 
     return tm;
   }
@@ -130,7 +130,7 @@ public abstract class AbstractOntopolyURLReference
 
   @Override
   public synchronized void close() {
-    if (maintainFulltextIndexes) {
+    if (isopen && maintainFulltextIndexes) {
       for (FulltextImplementationIF ft : ftmanagers) {
         ft.close();
       }
