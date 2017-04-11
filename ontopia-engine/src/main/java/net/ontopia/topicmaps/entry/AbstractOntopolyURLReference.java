@@ -161,6 +161,7 @@ public abstract class AbstractOntopolyURLReference
 
   public void deleteFullTextIndex() {
     if (maintainFulltextIndexes) {
+      if (!isopen) open();
       for (FulltextImplementationIF ft : ftmanagers) {
         ft.deleteIndex();
       }
