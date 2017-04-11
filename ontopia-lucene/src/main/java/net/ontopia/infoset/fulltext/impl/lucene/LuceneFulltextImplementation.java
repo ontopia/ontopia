@@ -110,6 +110,8 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
 
   @Override
   public synchronized void reindex() {
+    deleteIndex();
+    
     try (TopicMapStoreIF store = reference.createStore(true)) {
       try (IndexWriter writer = getWriter()) {
         new TopicMapIteratorGenerator(store.getTopicMap(), new LuceneIndexer(writer), DefaultTopicMapDocumentGenerator.INSTANCE)
