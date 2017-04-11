@@ -64,6 +64,12 @@ public abstract class AbstractOntopolyURLReference
       }
     }
     super.open();
+
+    if (maintainFulltextIndexes && alwaysReindexOnLoad) {
+      for (FulltextImplementationIF ft : ftmanagers) {
+        ft.synchronize(store);
+      }
+    }
   }
 
   protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
@@ -76,9 +82,6 @@ public abstract class AbstractOntopolyURLReference
     if (maintainFulltextIndexes) {
       for (FulltextImplementationIF ft : ftmanagers) {
         ft.storeOpened(store);
-        if (alwaysReindexOnLoad) {
-          ft.reindex();
-        }
       }
     }
 
@@ -149,6 +152,7 @@ public abstract class AbstractOntopolyURLReference
   
   public void reindexFulltextIndex() {
     if (maintainFulltextIndexes) {
+      if (!isopen) open();
       for (FulltextImplementationIF ft : ftmanagers) {
         ft.reindex();
       }
