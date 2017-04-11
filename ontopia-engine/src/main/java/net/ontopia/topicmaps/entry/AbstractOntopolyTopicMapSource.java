@@ -199,11 +199,11 @@ public abstract class AbstractOntopolyTopicMapSource
     // avoid reference id collisions
     int cnt = 1;
     String id = name;
-    if (!name.toLowerCase().endsWith(".xtm"))
-      id += ".xtm";
+    if (!name.toLowerCase().endsWith(suffix))
+      id += suffix;
     
     while (refmap.containsKey(id))
-      id = name + '-' + (cnt++) + ".xtm";
+      id = name + '-' + (cnt++) + suffix;
 
     return id;
   } 
