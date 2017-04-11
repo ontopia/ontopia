@@ -24,27 +24,23 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import junit.framework.TestCase;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
-import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapIndexer;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.entry.StoreFactoryReference;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.TestFileUtils;
-
-import org.apache.lucene.analysis.StopAnalyzer;
-import org.apache.lucene.util.Version;
 
 public class LuceneTests extends TestCase {
   
@@ -53,33 +49,45 @@ public class LuceneTests extends TestCase {
   
   protected String indexDir;
   protected SearcherIF searcher;
+  private LuceneFulltextImplementation implementation;
   
   public LuceneTests(String name) {
     super(name);
   }
   
+  @Override
   public void setUp() throws IOException {
     TopicMapStoreIF store = new InMemoryTopicMapStore();
+    StoreFactoryReference reference = new StoreFactoryReference("test", "test", new SameStoreFactory(store));
+    
+    // manual installation of LuceneFulltextImplementation
+    implementation = new LuceneFulltextImplementation();
+    implementation.install(reference);
+    
     topicmap = store.getTopicMap();
     builder = topicmap.getBuilder();
 
     String root = TestFileUtils.getTestdataOutputDirectory();
     indexDir = root + File.separator + "indexes" + File.separator;
     TestFileUtils.verifyDirectory(root, "indexes");
+    implementation.setDirectoryFile(new File(indexDir));
+    implementation.reindex();
+    
+    implementation.storeOpened(store);
+    searcher = implementation.getSearcher();
   }
 
+  @Override
   protected void tearDown() throws IOException {
-    // Close searcher
-    if (searcher != null) {
-      searcher.close();
-      searcher = null;
+    if (implementation != null) {
+      implementation.close();
     }
   }
   
   // ---- test cases
 
   public void testEmpty() throws IOException {
-    index(topicmap);
+    index();
     assertTrue("hits found in empty topic map",
 	   findNothing(topicmap, "stuff"));
   }
@@ -87,7 +95,7 @@ public class LuceneTests extends TestCase {
   public void testTopicName() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
-    index(topicmap);
+    index();
 
     assertTrue("found non-existent base names in topic map",
 	   findNothing(topicmap, "foo"));
@@ -116,7 +124,7 @@ public class LuceneTests extends TestCase {
     String norsk = "\u00E6\u00F8\u00E5\u00C6\u00D8\u00C5";
     TopicNameIF bn2 = builder.makeTopicName(topic, norsk);
     
-    index(topicmap);
+    index();
 
     assertTrue("found non-existent base names in topic map",
 	   findNothing(topicmap, "foo"));
@@ -144,7 +152,7 @@ public class LuceneTests extends TestCase {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
     VariantNameIF vn = builder.makeVariantName(bn, "baz");
-    index(topicmap);
+    index();
 
     assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
@@ -168,7 +176,7 @@ public class LuceneTests extends TestCase {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
     VariantNameIF vn = builder.makeVariantName(bn, makeLocator("http://www.ontopia.net"));
-    index(topicmap);
+    index();
 
     assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
@@ -193,7 +201,7 @@ public class LuceneTests extends TestCase {
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, "value");
-    index(topicmap);
+    index();
 
     assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
@@ -217,7 +225,7 @@ public class LuceneTests extends TestCase {
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, makeLocator("http://www.ontopia.net"));
-    index(topicmap);
+    index();
 
     assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
@@ -241,66 +249,26 @@ public class LuceneTests extends TestCase {
     // Create a topic and an occurrence
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
-    OccurrenceIF occ = builder.makeOccurrence(topic, otype, makeLocator("http://www.ontopia.net"));
+    builder.makeOccurrence(topic, otype, makeLocator("http://www.ontopia.net"));
     
-    // Index topic map
-    index(topicmap);
+    index();
 
-    // Close searcher
-    if (searcher != null) {
-      searcher.close();
-      searcher = null;
-    }
-    
-    // Open index
-    IndexerIF indexer = new LuceneIndexer(indexDir, false);
-    
-    // Delete index
-    indexer.delete();
+    implementation.deleteIndex();
     
     // Verify that index was deleted
     File idir = new File(indexDir);
-    assertTrue("Index directory exists after LuceneIndexer.delete() was called.", !idir.exists());
+    assertFalse("Index directory exists after LuceneIndexer.delete() was called.", idir.exists());
   }
   
   // ---- utilities
 
-  protected void index(TopicMapIF topicmap) throws IOException {
-    // Close searcher
-    if (searcher != null) {
-      searcher.close();
-      searcher = null;
-    }
-    
-    //!IndexerIF indexer = new LuceneIndexer(indexDir, true);
-    IndexerIF indexer = new LuceneIndexer(indexDir, new StopAnalyzer(Version.LUCENE_36), true);
-    DefaultTopicMapIndexer ix = new DefaultTopicMapIndexer(indexer, false, "preloader");    
-    ix.index(topicmap);
-    ix.close();
-    indexer.close();
-
-    // Assign new searcher instance
-    //!searcher = new LuceneSearcher(indexDir);
-    searcher = new LuceneSearcher(indexDir, new StopAnalyzer(Version.LUCENE_36));    
+  protected void index() throws IOException {
+    implementation.synchronize(topicmap.getStore()); // reference is not AbstractOntopolyURLReference, so manual sync
   }
 
   protected void remove(TMObjectIF object) throws IOException {
-    // Close searcher
-    if (searcher != null) {
-      searcher.close();
-      searcher = null;
-    }
-
-    //!IndexerIF indexer = new LuceneIndexer(indexDir, false);
-    IndexerIF indexer = new LuceneIndexer(indexDir, new StopAnalyzer(Version.LUCENE_36), false);
-    DefaultTopicMapIndexer ix = new DefaultTopicMapIndexer(indexer, false, "preloader");    
-    ix.delete(object);
-    ix.close();
-    indexer.close();
-    
-    // Assign new searcher instance
-    //!searcher = new LuceneSearcher(indexDir);    
-    searcher = new LuceneSearcher(indexDir, new StopAnalyzer(Version.LUCENE_36));    
+    object.remove();
+    implementation.synchronize(topicmap.getStore()); // reference is not AbstractOntopolyURLReference, so manual sync
   }
 
   protected void findSingle(SearchResultIF result, TMObjectIF object, String m)

@@ -23,13 +23,10 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
-
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.index.IndexableField;
   
 /**
  * INTERNAL: DocumentIF wrapper for Lucene's own internal document class.<p>
@@ -44,15 +41,15 @@ public class LuceneDocument implements DocumentIF {
   }
   
   public FieldIF getField(String name) {
-    Field field = document.getField(name);
+    IndexableField field = document.getField(name);
     if (field == null) return null;
     return new LuceneField(field);
   }
   
   public Collection<FieldIF> getFields() {
     Collection<FieldIF> result = new ArrayList<FieldIF>();
-    for (Fieldable field : document.getFields()) {
-      result.add(new LuceneField((Field) field));
+    for (IndexableField field : document.getFields()) {
+      result.add(new LuceneField(field));
     }
     return result;
   }
@@ -65,6 +62,7 @@ public class LuceneDocument implements DocumentIF {
     throw new UnsupportedOperationException("Cannot modify wrapped document object.");
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("<lucene.Document ");
