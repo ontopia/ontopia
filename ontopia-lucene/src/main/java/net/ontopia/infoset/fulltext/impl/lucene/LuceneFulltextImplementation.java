@@ -46,7 +46,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -159,7 +158,7 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
   private synchronized IndexWriter getWriter() {
     openDirectory();
     try {
-      return new IndexWriter(directory, new IndexWriterConfig(Version.LATEST, ANALYZER));
+      return new IndexWriter(directory, new IndexWriterConfig(ANALYZER));
     } catch (IOException ioe) {
       throw new OntopiaRuntimeException("Could not open lucene index writer: " + ioe.getMessage(), ioe);
     }
@@ -168,7 +167,7 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
   private synchronized void openDirectory() {
     if (directory == null) {
       try {
-        directory = FSDirectory.open(directoryFile);
+        directory = FSDirectory.open(directoryFile.toPath());
       } catch (IOException ioe) {
         throw new OntopiaRuntimeException("Could not open lucene index reader: " + ioe.getMessage(), ioe);
       }

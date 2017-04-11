@@ -22,6 +22,7 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.Reader;
 import net.ontopia.infoset.fulltext.core.FieldIF;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
   
 /**
@@ -53,7 +54,7 @@ public class LuceneField implements FieldIF {
   }
 
   public boolean isIndexed() {
-    return field.fieldType().indexed();
+    return field.fieldType().indexOptions() != IndexOptions.NONE;
   }
 
   public boolean isTokenized() {
