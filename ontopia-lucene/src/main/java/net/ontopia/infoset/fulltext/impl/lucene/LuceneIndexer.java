@@ -29,6 +29,8 @@ import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.slf4j.Logger;
@@ -92,35 +94,23 @@ public class LuceneIndexer implements IndexerIF {
     Field lucene_field;
     if (field.getReader() != null) {
       if (!field.isStored() && field.isIndexed() && field.isTokenized())
-        lucene_field = new Field(field.getName(), field.getReader()); // Reader based field
+        lucene_field = new Field(field.getName(), field.getReader(), getFieldType(field)); // Reader based field
       else {
         lucene_field = new Field(field.getName(), getStringValue(field.getReader()),
-            getStoreSetting(field), getIndexSetting(field));
+            getFieldType(field));
       }
     } else {
-      lucene_field = new Field(field.getName(), field.getValue(), getStoreSetting(field), getIndexSetting(field));
+      lucene_field = new Field(field.getName(), field.getValue(), getFieldType(field));
     }
     return lucene_field;
   }
   
-  protected Field.Store getStoreSetting(FieldIF field) {
-    if (field.isStored()) {
-      return Field.Store.YES;
-    } else {
-      return Field.Store.NO;
-    }
-  }
-  
-  protected Field.Index getIndexSetting(FieldIF field) {
-    if (field.isIndexed()) {
-      if (field.isTokenized()) {
-        return Field.Index.ANALYZED;
-      } else {
-        return Field.Index.NOT_ANALYZED;
-      }
-    } else {
-      return Field.Index.NO;
-    }
+  protected FieldType getFieldType(FieldIF field) {
+    FieldType type = new FieldType();
+    type.setStored(field.isStored());
+    type.setTokenized(field.isTokenized());
+    type.setIndexOptions(field.isIndexed() ? IndexOptions.DOCS_AND_FREQS : IndexOptions.NONE);
+    return type;
   }
 
   protected String getStringValue(Reader reader) throws IOException {
