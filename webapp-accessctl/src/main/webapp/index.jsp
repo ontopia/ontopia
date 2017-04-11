@@ -8,6 +8,7 @@
 <BODY>
 
 <P>
+  <fmt:message key="AccessctlInfo"/><br/>
   <A href="protected/main.jsp?tm=userman.ltm&language=<%= language %>">
     <fmt:message key="ClickEnterAdminPage"/>
   </A>
