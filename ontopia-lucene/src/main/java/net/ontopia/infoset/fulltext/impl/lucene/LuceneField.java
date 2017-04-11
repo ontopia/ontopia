@@ -21,10 +21,9 @@
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.Reader;
-
 import net.ontopia.infoset.fulltext.core.FieldIF;
-
-import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexOptions;
+import org.apache.lucene.index.IndexableField;
   
 /**
  * INTERNAL: FieldIF wrapper for Lucene's own internal field class.<p>
@@ -32,9 +31,9 @@ import org.apache.lucene.document.Field;
 
 public class LuceneField implements FieldIF {
 
-  protected Field field;
+  protected IndexableField field;
   
-  LuceneField(Field field) {
+  LuceneField(IndexableField field) {
     this.field = field;
   }
   
@@ -51,17 +50,18 @@ public class LuceneField implements FieldIF {
   }
   
   public boolean isStored() {
-    return field.isStored();
+    return field.fieldType().stored();
   }
 
   public boolean isIndexed() {
-    return field.isIndexed();
+    return field.fieldType().indexOptions() != IndexOptions.NONE;
   }
 
   public boolean isTokenized() {
-    return field.isTokenized();
+    return field.fieldType().tokenized();
   }
 
+  @Override
   public String toString() {
     if (getReader() == null)
       return getName() + "=" + getValue() + " ";

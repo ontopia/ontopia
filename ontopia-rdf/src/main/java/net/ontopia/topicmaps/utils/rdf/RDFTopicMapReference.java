@@ -20,32 +20,28 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.shared.JenaException;
-import java.io.IOException;
 import java.net.URL;
-import net.ontopia.utils.URIUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.entry.AbstractURLTopicMapReference;
+import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: An RDF file topic map reference.
  */
-public class RDFTopicMapReference extends AbstractURLTopicMapReference {
+public class RDFTopicMapReference extends AbstractOntopolyURLReference {
   private String syntax;
   private String mapfile;
   private boolean generateNames;
   private boolean lenient;
   
   public RDFTopicMapReference(URL url, String id, String title) {
-    super(id, title, url, null);
+    super(url, id, title, URILocator.create(url.toString()));
   }
   
   public RDFTopicMapReference(URL url, String id, String title, LocatorIF base_address, String syntax) {
-    super(id, title, url, base_address);
+    super(url, id, title, base_address);
     this.syntax = syntax;
   }
 
@@ -98,8 +94,8 @@ public class RDFTopicMapReference extends AbstractURLTopicMapReference {
     return generateNames;
   }
   
-  protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
-    try {
+  @Override
+  protected TopicMapImporterIF getImporter() {
       RDFTopicMapReader reader = new RDFTopicMapReader(url.toString(), syntax);
       reader.setDuplicateSuppression(duplicate_suppression);
       if (mapfile != null)
@@ -107,16 +103,7 @@ public class RDFTopicMapReference extends AbstractURLTopicMapReference {
       reader.setGenerateNames(generateNames);
       reader.setLenient(lenient);
       
-      // Load topic map
-      InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-      store.setBaseAddress(new URILocator(url)); // bug #1550
-      TopicMapIF tm = store.getTopicMap();
-      reader.importInto(tm);
-
-      return tm;
-    } catch (JenaException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+      return reader;
   }
   
 }
