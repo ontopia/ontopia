@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
+import java.io.FileFilter;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
-import java.io.FileFilter;
 import net.ontopia.topicmaps.entry.AbstractPathTopicMapSource;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 

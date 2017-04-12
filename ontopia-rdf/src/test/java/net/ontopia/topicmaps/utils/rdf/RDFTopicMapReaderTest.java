@@ -27,7 +27,6 @@ import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 

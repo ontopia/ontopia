@@ -20,22 +20,22 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.shared.JenaException;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Collections;
-import java.net.MalformedURLException;
 import java.util.Map;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
+import org.apache.jena.shared.JenaException;
 
 /**
  * PUBLIC: Converts an RDF model to a topic map using a

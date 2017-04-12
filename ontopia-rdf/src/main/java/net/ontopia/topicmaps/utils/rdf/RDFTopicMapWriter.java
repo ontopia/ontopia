@@ -20,33 +20,18 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
-import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
-import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
-import com.hp.hpl.jena.rdf.model.AnonId;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import java.io.Writer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Collection;
-import java.net.MalformedURLException;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
-import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -60,6 +45,21 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.PSI;
+import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.jena.rdf.model.AnonId;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdfxml.xmlinput.ALiteral;
+import org.apache.jena.rdfxml.xmlinput.AResource;
+import org.apache.jena.rdfxml.xmlinput.StatementHandler;
 
 /**
  * PUBLIC: A topic map writer that can convert topic maps to RDF.  The
@@ -706,6 +706,11 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       return id;
     }
     
+    // required to avoid RDF/XML from creating multiple anonymous nodes for the same topic in jena > 2
+    @Override
+    public String getLabelString() {
+      return id;
+    }
   }
   
   /**
