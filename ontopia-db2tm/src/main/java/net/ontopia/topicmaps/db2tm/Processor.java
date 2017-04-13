@@ -491,10 +491,7 @@ public class Processor {
 
     // if reifier, handle reification
     if (reifier != null) {
-      // FIXME: might want to use existing source locator or db2tm-specific uri (db2tm:name:relation:#oid)
-      LocatorIF srcloc = ctx.getBaseLocator().resolveAbsolute("#" + assoc.getObjectId());
-      assoc.addItemIdentifier(srcloc);
-      reifier.addSubjectIdentifier(srcloc);
+      assoc.setReifier(reifier);
     }
     return assoc;
   }
