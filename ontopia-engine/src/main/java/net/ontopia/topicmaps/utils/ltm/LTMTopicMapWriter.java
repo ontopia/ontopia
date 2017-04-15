@@ -142,15 +142,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
    * @param out Where the output should be written.
-   * @deprecated
-   */
-  public LTMTopicMapWriter(Writer out) {
-    this(out, null);
-  }
-  
-  /**
-   * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
-   * @param out Where the output should be written.
    * @param encoding The encoding used by the writer. This is the encoding
    *   that will be declared on the first line of the LTM file. It must be
    *   reported, because there is no way for the LTMTopicMapWriter to know
