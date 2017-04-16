@@ -44,7 +44,7 @@ public class RDFTopicMapReaderTest {
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "simple-foaf.rdf");
     String base = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "simple-foaf.rdf");
     
-    RDFTopicMapReader reader = new RDFTopicMapReader(URIUtils.getURI(in));
+    RDFTopicMapReader reader = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in));
     reader.setMappingURL(URIUtils.getURI(map).getAddress());
     TopicMapIF tm = reader.read();
     new CanonicalTopicMapWriter(out).write(tm);
@@ -61,7 +61,7 @@ public class RDFTopicMapReaderTest {
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "simple-foaf-2.rdf");
     String base = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "simple-foaf.rdf");
     
-    RDFTopicMapReader reader = new RDFTopicMapReader(URIUtils.getURI(in));
+    RDFTopicMapReader reader = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in));
     reader.setMappingURL(URIUtils.getURI(map).getAddress());
     TopicMapIF tm = reader.read();
     new CanonicalTopicMapWriter(out).write(tm);
@@ -80,7 +80,7 @@ public class RDFTopicMapReaderTest {
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out",  "bug1339.rdf");
     String base = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "bug1339.rdf");
     
-    RDFTopicMapReader reader = new RDFTopicMapReader(URIUtils.getURI(in));
+    RDFTopicMapReader reader = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in));
     reader.setMappingURL(URIUtils.getURI(map).getAddress());
     TopicMapIF tm = reader.read();
     new CanonicalTopicMapWriter(out).write(tm);
@@ -97,7 +97,7 @@ public class RDFTopicMapReaderTest {
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "null-generated-name.rdf");
     String base = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "null-generated-name.rdf");
     
-    RDFTopicMapReader reader = new RDFTopicMapReader(URIUtils.getURI(in));
+    RDFTopicMapReader reader = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in));
     reader.setMappingURL(URIUtils.getURI(map).getAddress());
     reader.setGenerateNames(true);
     TopicMapIF tm = reader.read();

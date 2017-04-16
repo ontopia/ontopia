@@ -165,8 +165,8 @@ public class ImportExportUtils {
       return new CTMTopicMapReader(u, url);
     else {
       for (ImportExportServiceIF service : services) {
-        if (service.canRead(address)) {
-          return service.getReader(address);
+        if (service.canRead(u)) {
+          return service.getReader(u);
         }
       }
       // fallback
@@ -212,8 +212,8 @@ public class ImportExportUtils {
       return new CTMTopicMapReader(u, url);
     else {
       for (ImportExportServiceIF service : services) {
-        if (service.canRead(address)) {
-          return service.getImporter(address);
+        if (service.canRead(u)) {
+          return service.getImporter(u);
         }
       }
       // fallback
@@ -237,7 +237,7 @@ public class ImportExportUtils {
       return new XTMTopicMapWriter (new File (tmfile));
     else {
       for (ImportExportServiceIF service : services) {
-        if (service.canWrite(tmfile)) {
+        if (service.canWrite(new File(tmfile).toURI().toURL())) {
           return service.getWriter(new FileOutputStream(tmfile));
         }
       }

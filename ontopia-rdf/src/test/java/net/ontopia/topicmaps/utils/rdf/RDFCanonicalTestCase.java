@@ -67,7 +67,7 @@ public class RDFCanonicalTestCase {
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       String out = base + File.separator + "out" + File.separator + filename;
 
-      TopicMapIF source = new RDFTopicMapReader(URIUtils.getURI(in), syntax).read();
+      TopicMapIF source = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in), syntax).read();
       new CanonicalTopicMapWriter(out).write(source);
 
       // compare results

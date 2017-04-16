@@ -40,7 +40,7 @@ public interface ImportExportServiceIF {
    * @param resource The resource a reader is needed for
    * @return true if this service can provide the needed reader
    */
-  boolean canRead(String resource);
+  boolean canRead(URL resource);
 
   /**
    * PUBLIC: Indicates that the service can supply a TopicMapWriterIF implementation for the specified
@@ -48,7 +48,7 @@ public interface ImportExportServiceIF {
    * @param resource The resource a writer is needed for
    * @return true if this service can provide the needed writer
    */
-  boolean canWrite(String resource);
+  boolean canWrite(URL resource);
 
   /**
    * PUBLIC: Create and return a TopicMapWriterIF for the specified stream. This method should be 
@@ -68,7 +68,7 @@ public interface ImportExportServiceIF {
    * @param resource The resource to create a reader for
    * @return The TopicMapReaderIF created by this service
    */
-  TopicMapReaderIF getReader(String resource);
+  TopicMapReaderIF getReader(URL resource);
 
   /**
    * PUBLIC: Create and return a TopicMapImporterIF for the specified resource. For most
@@ -76,7 +76,7 @@ public interface ImportExportServiceIF {
    * @param resource The resource to create a importer for
    * @return The TopicMapImporterIF created by this service
    */
-  TopicMapImporterIF getImporter(String resource);
+  TopicMapImporterIF getImporter(URL resource);
 
   /**
    * PUBLIC: Creates an AbstractURLTopicMapReference for the specified url, using the appropriate

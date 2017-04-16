@@ -35,13 +35,14 @@ import net.ontopia.topicmaps.utils.ImportExportServiceIF;
  */
 public class RDFImporterExporterService implements ImportExportServiceIF {
 
-  public boolean canRead(String resource) {
-    return resource.toLowerCase().endsWith(".rdf")
-            || resource.toLowerCase().endsWith(".n3")
-            || resource.toLowerCase().endsWith(".nt");
+  public boolean canRead(URL resource) {
+    String resourceString = resource.toString().toLowerCase();
+    return resourceString.endsWith(".rdf")
+            || resourceString.endsWith(".n3")
+            || resourceString.endsWith(".nt");
   }
 
-  public boolean canWrite(String resource) {
+  public boolean canWrite(URL resource) {
     return canRead(resource);
   }
 
@@ -49,26 +50,27 @@ public class RDFImporterExporterService implements ImportExportServiceIF {
     return new RDFTopicMapWriter(stream);
   }
 
-  public TopicMapReaderIF getReader(String resource) {
+  public TopicMapReaderIF getReader(URL resource) {
     return new RDFTopicMapReader(resource, getSyntax(resource));
   }
 
-  public TopicMapImporterIF getImporter(String resource) {
+  public TopicMapImporterIF getImporter(URL resource) {
     return new RDFTopicMapReader(resource, getSyntax(resource));
   }
 
-  private String getSyntax(String resource) {
-    if (resource.toLowerCase().endsWith(".rdf")) {
+  private String getSyntax(URL resource) {
+    String resourceString = resource.toString().toLowerCase();
+    if (resourceString.endsWith(".rdf")) {
       return "RDF/XML";
-    } else if (resource.toLowerCase().endsWith(".n3")) {
+    } else if (resourceString.endsWith(".n3")) {
       return "N3";
-    } else if (resource.toLowerCase().endsWith(".nt")) {
+    } else if (resourceString.endsWith(".nt")) {
       return "N-TRIPLE";
     }
     return null;
   }
 
   public AbstractURLTopicMapReference createReference(URL url, String refid, String title, LocatorIF base_address) {
-    return new RDFTopicMapReference(url, refid, title, base_address, getSyntax(url.toString()));
+    return new RDFTopicMapReference(url, refid, title, base_address, getSyntax(url));
   }
 }

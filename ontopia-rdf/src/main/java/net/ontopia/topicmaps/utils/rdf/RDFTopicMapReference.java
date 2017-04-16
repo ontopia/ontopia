@@ -96,7 +96,7 @@ public class RDFTopicMapReference extends AbstractOntopolyURLReference {
   
   @Override
   protected TopicMapImporterIF getImporter() {
-      RDFTopicMapReader reader = new RDFTopicMapReader(url.toString(), syntax);
+      RDFTopicMapReader reader = new RDFTopicMapReader(url, syntax);
       reader.setDuplicateSuppression(duplicate_suppression);
       if (mapfile != null)
         reader.setMappingURL(URIUtils.getURI(mapfile).getAddress());

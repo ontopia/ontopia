@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
@@ -52,7 +53,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
   public static final String PROPERTY_MAPPING_FILE = "mappingFile";
   public static final String PROPERTY_MAPPING_URL = "mappingURL";
   public static final String PROPERTY_MAPPING_SYNTAX = "mappingSyntax";
-  protected String infileurl;
+  protected URL infileurl;
   protected String syntax;
   protected String mappingurl;
   protected String mappingsyntax;
@@ -63,28 +64,8 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
   /**
    * PUBLIC: Creates a reader that will read RDF/XML from the given file.
    */
-  public RDFTopicMapReader(File infile) {
+  public RDFTopicMapReader(File infile) throws MalformedURLException {
     this(infile, null);
-  }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.   
-   * @param url The URL of the topic map document.
-   */  
-  public RDFTopicMapReader(LocatorIF url) {
-    this(url.getExternalForm());
-  }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.   
-   * @param url The URL of the topic map document.
-   * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
-   *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
-   */  
-  public RDFTopicMapReader(LocatorIF url, String syntax) {
-    this(url.getExternalForm(), syntax);
   }
 
   /**
@@ -93,14 +74,14 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
-  public RDFTopicMapReader(File infile, String syntax) {
-    this(file2Locator(infile), syntax);
+  public RDFTopicMapReader(File infile, String syntax) throws MalformedURLException {
+    this(URIUtils.toURL(infile), syntax);
   }
   
   /**
    * PUBLIC: Creates a reader that will read RDF/XML from the given URL.
    */
-  public RDFTopicMapReader(String infileurl) {
+  public RDFTopicMapReader(URL infileurl) {
     this(infileurl, null);
   }
 
@@ -110,7 +91,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
-  public RDFTopicMapReader(String infileurl, String syntax) {
+  public RDFTopicMapReader(URL infileurl, String syntax) {
     this.infileurl = infileurl;
     this.syntax = syntax;
   }
