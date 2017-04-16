@@ -36,7 +36,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import javax.servlet.ServletException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URIFragmentLocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
@@ -194,8 +193,7 @@ public class TMRAPTestCase {
       Iterator sourcesIt = sources.iterator();
       while (sourcesIt.hasNext()) {
         LocatorIF currentLocator = (LocatorIF)sourcesIt.next();
-        if (currentLocator instanceof URIFragmentLocator
-            && currentLocator.getAddress().indexOf("unifying-topic") != -1)
+        if (currentLocator.getAddress().indexOf("unifying-topic") != -1)
           removables.add(currentLocator);
       }
       
