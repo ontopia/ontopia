@@ -32,12 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -48,15 +46,15 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ObjectUtils;
-import net.ontopia.xml.XMLReaderFactoryIF;
-
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -173,7 +171,6 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   static Logger log = LoggerFactory.getLogger(XTMContentHandler.class.getName());
   
   protected TopicMapStoreFactoryIF stores;
-  protected XMLReaderFactoryIF xrfactory;
   
   private TopicMapIF topicmap;
   private TopicMapBuilderIF builder;
@@ -196,18 +193,16 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   
   protected ExternalReferenceHandlerIF ref_handler;
   
-  public XTMContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address) {
+  public XTMContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address) {
     super(base_address);
     this.stores = stores;
-    this.xrfactory = xrfactory;
     this.entities = new HashMap();
     this.bases = new Stack();
   }
   
-  public XTMContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address, Collection processed_documents) {
+  public XTMContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address, Collection processed_documents) {
     super(base_address, processed_documents);
     this.stores = stores;
-    this.xrfactory = xrfactory;
     this.entities = new HashMap();
     this.bases = new Stack();
   }
@@ -1588,11 +1583,11 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       if (!processed_documents_current.contains(getLocator())) {
         
         // Create new parser object
-        XMLReader parser = xrfactory.createXMLReader();
+        XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
         
         // Initialize nested content handler
         TopicMapStoreFactoryIF sfactory = new SameStoreFactory(topicmap.getStore());
-        XTMContentHandler handler = new XTMContentHandler(sfactory, xrfactory, getLocator(),
+        XTMContentHandler handler = new XTMContentHandler(sfactory, getLocator(),
             processed_documents_current);
         // Copy handler configuration
         handler.setExternalReferenceHandler(getExternalReferenceHandler());

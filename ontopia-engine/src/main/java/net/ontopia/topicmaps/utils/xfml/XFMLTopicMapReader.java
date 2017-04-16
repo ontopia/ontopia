@@ -41,7 +41,7 @@ import net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.AbstractXMLFormatReader;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -150,7 +150,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     // Create new parser object
     XMLReader parser;
     try {
-      parser = getXMLReaderFactory().createXMLReader();
+      parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setEntityResolver(new IgnoreTopicMapDTDEntityResolver());
       parser.setFeature("http://xml.org/sax/features/namespaces", false);
     } catch (SAXException e) {
@@ -158,7 +158,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     }
     
     // Create content handler
-    XFMLContentHandler handler = new XFMLContentHandler(getStoreFactory(), getXMLReaderFactory(), base_address);
+    XFMLContentHandler handler = new XFMLContentHandler(getStoreFactory(), base_address);
     
     // Register parser with content handler
     handler.register(parser);

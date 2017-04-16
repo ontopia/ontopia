@@ -31,7 +31,6 @@ import org.xml.sax.InputSource;
 public abstract class AbstractXMLFormatReader {
   protected InputSource source;
   protected LocatorIF base_address;
-  protected XMLReaderFactoryIF xrfactory;
 
   /**
    * INTERNAL: Gets the SAX input source used by the reader.
@@ -66,34 +65,4 @@ public abstract class AbstractXMLFormatReader {
   public void setBaseAddress(LocatorIF base_address) {
     this.base_address = base_address;
   }
-
-  /**
-   * INTERNAL: Gets the XMLReaderFactoryIF that will be used to create
-   * XML parser objects inside the reader.
-   */
-  public XMLReaderFactoryIF getXMLReaderFactory() {
-    // Initialize default factory
-    if (xrfactory == null) {
-      ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-      xrfactory = cxrfactory;
-    }
-    return xrfactory;
-  }
-  
-  /**
-   * INTERNAL: Sets the XMLReaderFactoryIF that will be used to create
-   * XML parser objects inside the reader.</p>
-   *
-   * <p>Default: {@link net.ontopia.xml.ConfiguredXMLReaderFactory} using an
-   * {@link net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver}
-   * entity resolver.</p>
-   *
-   * <p>The factory is free to configure the XML reader object as it
-   * sees fit, but the reader will use its own internal content
-   * handler.
-   */
-  public void setXMLReaderFactory(XMLReaderFactoryIF xrfactory) {
-    this.xrfactory = xrfactory;
-  }
-
 }

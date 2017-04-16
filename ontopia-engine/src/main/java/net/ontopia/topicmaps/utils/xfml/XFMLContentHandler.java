@@ -37,7 +37,6 @@ import net.ontopia.topicmaps.utils.AssociationBuilder;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.AbstractTopicMapContentHandler;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.XMLReaderFactoryIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -67,7 +66,6 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   static Logger log = LoggerFactory.getLogger(XFMLContentHandler.class.getName());
 
   protected TopicMapStoreFactoryIF stores;
-  protected XMLReaderFactoryIF xrfactory;
 
   protected LocatorIF map_uri;
   private TopicMapIF topicmap;
@@ -83,16 +81,14 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   private AssociationBuilder occursBuilder;
   private TopicIF PSI_DESCRIPTION;
   
-  public XFMLContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address) {
+  public XFMLContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address) {
     super(base_address);
     this.stores = stores;
-    this.xrfactory = xrfactory;
   }
 
-  public XFMLContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address, Collection processed_documents) {
+  public XFMLContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address, Collection processed_documents) {
     super(base_address, processed_documents);
     this.stores = stores;
-    this.xrfactory = xrfactory;
   }
 
   /**

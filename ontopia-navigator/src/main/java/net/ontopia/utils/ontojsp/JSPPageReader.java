@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -56,14 +56,14 @@ public class JSPPageReader {
    * Creates an XMLReader object.
    */
   public XMLReader createXMLReader() {
-    ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
     try {
       // Set parser features
-      cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
+      XMLReader reader = DefaultXMLReaderFactory.createXMLReader();
+      reader.setFeature("http://xml.org/sax/features/namespaces", false);
       // cxrfactory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
-      cxrfactory.setFeature("http://xml.org/sax/features/validation", false);
+      reader.setFeature("http://xml.org/sax/features/validation", false);
       // Create new parser object
-      return cxrfactory.createXMLReader();
+      return reader;
     } catch (SAXException e) {
       throw new OntopiaRuntimeException(e);
     }

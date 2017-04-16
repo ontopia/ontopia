@@ -28,14 +28,12 @@ import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import net.ontopia.topicmaps.schema.core.SchemaValidatorIF;
 import net.ontopia.topicmaps.schema.core.SchemaViolationException;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import net.ontopia.xml.Slf4jSaxErrorHandler;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.TestFileUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.TestFileUtils;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +42,8 @@ import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 @RunWith(Parameterized.class)
 public class SchemaTestCase extends AbstractSchemaTestCase {
@@ -67,7 +67,7 @@ public class SchemaTestCase extends AbstractSchemaTestCase {
     InputStream in = StreamUtils.getInputStream(config);
     
     try {
-      XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
 
       TestCaseContentHandler handler = new TestCaseContentHandler();
       parser.setContentHandler(handler);

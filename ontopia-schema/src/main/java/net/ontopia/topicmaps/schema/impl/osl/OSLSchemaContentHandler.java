@@ -20,28 +20,26 @@
 
 package net.ontopia.topicmaps.schema.impl.osl;
 
-import java.util.Stack;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
-import org.xml.sax.Locator;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.LocatorImpl;
-import org.xml.sax.helpers.DefaultHandler;
-import net.ontopia.xml.XMLReaderFactoryIF;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Stack;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
 import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
 import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
+import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.LocatorImpl;
 
 /**
  * INTERNAL: SAX2 content handler used for importing OSL topic map
  * schemas into the schema object model.
  */
 public class OSLSchemaContentHandler extends DefaultHandler {
-  protected XMLReaderFactoryIF xrfactory;
   protected LocatorIF base_address;
   protected OSLSchema schema;
   protected String curelem;
@@ -51,9 +49,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
   protected Stack openObjects;
   protected List forwardrefs;
   
-  public OSLSchemaContentHandler(XMLReaderFactoryIF xrfactory,
-                                    LocatorIF base_address) {
-    this.xrfactory = xrfactory;
+  public OSLSchemaContentHandler(LocatorIF base_address) {
     this.base_address = base_address;
   }
 
