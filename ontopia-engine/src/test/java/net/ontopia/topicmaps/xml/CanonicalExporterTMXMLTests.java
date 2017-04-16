@@ -20,11 +20,12 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
 import java.io.IOException;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import java.util.List;
-import net.ontopia.utils.TestFileUtils;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
 public class CanonicalExporterTMXMLTests
@@ -71,7 +72,7 @@ public class CanonicalExporterTMXMLTests
 
     // Then we read back in
     TopicMapIF topicmap2 = getStoreFactory().createStore().getTopicMap();
-    TMXMLReader reader = new TMXMLReader(outfile);
+    TMXMLReader reader = new TMXMLReader(new File(outfile));
     reader.importInto(topicmap2);
     return topicmap2;
   }  

@@ -21,16 +21,16 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
-import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.utils.TestFileUtils;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Tests that verify that LocatorIF lookups work correctly
@@ -58,7 +58,7 @@ public class ObjectLookupTests extends TestCase {
     // Load topic map, commit and close
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();
     TopicMapIF tm = store.getTopicMap();
-    TopicMapImporterIF importer = new XTMTopicMapReader(URIUtils.getURI(file));
+    TopicMapImporterIF importer = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file));
     importer.importInto(tm);
     long topicmap_id = Long.parseLong(tm.getObjectId().substring(1));    
     store.commit();

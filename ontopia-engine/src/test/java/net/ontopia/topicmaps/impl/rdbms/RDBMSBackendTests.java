@@ -20,35 +20,32 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Arrays;
-import net.ontopia.utils.ObjectUtils;
+import java.util.Iterator;
+import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.StorageIF;
-import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionNotActiveException;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-import junit.framework.TestCase;
 
 /**
  * INTERNAL: Tests that tests various aspects about the RDBMS Backend
@@ -88,7 +85,7 @@ public class RDBMSBackendTests extends TestCase {
 
     // import sample topic map
     TopicMapStoreIF store = new RDBMSTopicMapStore(); // don't use storage
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(URIUtils.getURI(filename));
+    TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
     importer.importInto(store.getTopicMap());
 
     long topicmap_id = Long.parseLong(store.getTopicMap().getObjectId().substring(1)); 

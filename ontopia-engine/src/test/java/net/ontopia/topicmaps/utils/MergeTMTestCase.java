@@ -22,13 +22,12 @@ package net.ontopia.topicmaps.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,8 +65,8 @@ public class MergeTMTestCase {
       String out = base + File.separator + "out" + File.separator + filename;
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
             
-      TopicMapIF source1 = new XTMTopicMapReader(URIUtils.getURI(in)).read();
-      TopicMapIF source2 = new XTMTopicMapReader(URIUtils.getURI(in2)).read();
+      TopicMapIF source1 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+      TopicMapIF source2 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in2)).read();
 
       MergeUtils.mergeInto(source1, source2);
       new CanonicalTopicMapWriter(out).write(source1);

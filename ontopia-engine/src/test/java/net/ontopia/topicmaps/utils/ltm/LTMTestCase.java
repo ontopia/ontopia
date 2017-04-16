@@ -25,11 +25,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,7 +72,7 @@ public class LTMTestCase {
       String out = base + File.separator + "out" + File.separator +
         filename;
       
-      TopicMapIF source = new LTMTopicMapReader(URIUtils.getURI(in)).read();
+      TopicMapIF source = new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
       
       if (ltm13(filename)) {
         out += ".cxtm";

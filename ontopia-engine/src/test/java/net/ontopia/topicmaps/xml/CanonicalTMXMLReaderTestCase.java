@@ -22,8 +22,8 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import java.util.List;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -59,7 +59,7 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
 
   protected void canonicalize(String infile, String outfile)
     throws IOException {
-    TMXMLReader reader = new TMXMLReader(infile);
+    TMXMLReader reader = new TMXMLReader(TestFileUtils.getTestInputURL(infile));
     reader.setValidate(true); // we do want to validate
     TopicMapIF source = reader.read();
 

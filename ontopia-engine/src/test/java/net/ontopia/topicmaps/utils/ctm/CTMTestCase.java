@@ -23,14 +23,13 @@ package net.ontopia.topicmaps.utils.ctm;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import java.util.List;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +66,7 @@ public class CTMTestCase {
 
       TopicMapIF source = null;
       try {
-        source = new CTMTopicMapReader(URIUtils.getURI(in)).read();
+        source = new CTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
       } catch (Exception e) {
         throw new OntopiaRuntimeException("Error in " + in, e);
       }

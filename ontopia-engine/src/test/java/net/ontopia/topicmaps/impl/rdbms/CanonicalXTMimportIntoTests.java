@@ -26,7 +26,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.BeforeClass;
 
 public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.CanonicalXTMimportIntoTests {
@@ -48,7 +48,7 @@ public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.Canon
     // Get hold of topic map id
     long topicmap_id = Long.parseLong(source1.getObjectId().substring(1));
     
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
     reader.setValidation(false);
     reader.importInto(source1);
     

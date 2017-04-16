@@ -23,8 +23,6 @@ package net.ontopia.topicmaps.xml;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
-import org.xml.sax.SAXParseException;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -35,10 +33,11 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.PSI;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.xml.sax.SAXParseException;
 
 public class XTMReaderTest extends AbstractXMLTestCase {
 
@@ -51,7 +50,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
 
   protected TopicMapIF readTopicMap(String filename) throws IOException {
     filename = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(filename));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename));
     reader.setValidation(false);
     TopicMapIF tm = reader.read();
     Assert.assertTrue(
@@ -64,18 +63,18 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   protected TopicMapIF readTopicMap(String dir, String filename)
       throws IOException {
     filename = TestFileUtils.getTestInputFile(dir, filename);
-    return new XTMTopicMapReader(URIUtils.getURI(filename)).read();
+    return new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename)).read();
   }
 
   protected TopicMapIF readTopicMap(String dir, String subdir, String filename)
       throws IOException {
     filename = TestFileUtils.getTestInputFile(dir, subdir, filename);
-    return new XTMTopicMapReader(URIUtils.getURI(filename)).read();
+    return new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename)).read();
   }
 
   protected Collection readTopicMaps(String filename) throws IOException {
     filename = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(filename));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename));
     reader.setValidation(false);
     return reader.readAll();
   }
@@ -134,13 +133,13 @@ public class XTMReaderTest extends AbstractXMLTestCase {
     // Import first XTM file
     String file1 = TestFileUtils.getTestInputFile(testdataDirectory, "in",
         "latin1.xtm");
-    TopicMapImporterIF importer1 = new XTMTopicMapReader(URIUtils.getURI(file1));
+    TopicMapImporterIF importer1 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file1));
     importer1.importInto(tm);
 
     // Import second XTM file
     String file2 = TestFileUtils.getTestInputFile(testdataDirectory, "in",
         "mergeloop.xtm");
-    TopicMapImporterIF importer2 = new XTMTopicMapReader(URIUtils.getURI(file2));
+    TopicMapImporterIF importer2 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file2));
     importer2.importInto(tm);
 
     // Check the result
@@ -397,7 +396,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
 
     // then import the second one into it
     String file = TestFileUtils.getTestInputFile("various", "reification-bug-2.xtm");
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(file));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file));
     reader.importInto(tm); // this should not crash!
 
     // do some testing verifying that the XTM was interpreted correctly

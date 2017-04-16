@@ -22,19 +22,11 @@ package net.ontopia.topicmaps.utils.jtm;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.topicmaps.utils.jtm.JTMTopicMapReader;
-import net.ontopia.topicmaps.utils.jtm.JTMTopicMapWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
-import java.util.List;
-import net.ontopia.utils.URIUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,7 +68,7 @@ public class JTMTestCase {
       String out = base + File.separator + "out" + filename
           + ".cxtm";
 
-      TopicMapIF jtmMap = new JTMTopicMapReader(URIUtils.getURI(in)).read();
+      TopicMapIF jtmMap = new JTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
 
       // Canonicalize the imported jtm.
       FileOutputStream fos = new FileOutputStream(out);
@@ -114,7 +106,7 @@ public class JTMTestCase {
       String out = base + File.separator + "jtm-out" + File.separator + filename
           + ".cxtm";
 
-      TopicMapIF tm = new JTMTopicMapReader(URIUtils.getURI(in)).read();
+      TopicMapIF tm = new JTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
 
       // serialize the imported topic map into jtm again
       FileOutputStream fos = new FileOutputStream(jtm);

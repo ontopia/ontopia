@@ -21,14 +21,13 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import java.util.List;
-import net.ontopia.utils.TestFileUtils;
+import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
 public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
@@ -66,7 +65,7 @@ public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
 
     // Read document
     TopicMapIF source = store.getTopicMap();
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
     reader.setValidation(false);
     reader.importInto(source);
 

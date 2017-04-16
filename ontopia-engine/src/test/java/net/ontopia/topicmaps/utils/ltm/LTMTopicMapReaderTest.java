@@ -25,7 +25,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -98,6 +97,6 @@ public class LTMTopicMapReaderTest {
     file = TestFileUtils.getTestInputFile(testdataDirectory, "extra", 
                            file);
 
-    return new LTMTopicMapReader(URIUtils.getURI(file)).read();
+    return new LTMTopicMapReader(TestFileUtils.getTestInputURL(file)).read();
   }
 }  

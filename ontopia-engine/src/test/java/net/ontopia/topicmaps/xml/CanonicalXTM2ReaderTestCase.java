@@ -22,11 +22,10 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import java.util.List;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.runners.Parameterized.Parameters;
 
 public class CanonicalXTM2ReaderTestCase extends AbstractCanonicalTests {
@@ -49,7 +48,7 @@ public class CanonicalXTM2ReaderTestCase extends AbstractCanonicalTests {
   protected void canonicalize(String infile, String outfile)
     throws IOException {
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
     reader.setValidation(false);
     // FIXME: should we do a setXTM2Required(true) or something?
     reader.setStoreFactory(sfactory);

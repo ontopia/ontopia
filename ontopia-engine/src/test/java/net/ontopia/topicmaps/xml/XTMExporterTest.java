@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -455,6 +454,6 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     return load(dir + "/" + subdir, file);
   }
   private TopicMapIF load(String dir, String file) throws IOException {
-    return new XTMTopicMapReader(URIUtils.getURI(TestFileUtils.getTestInputFile(dir, file))).read();
+    return new XTMTopicMapReader(TestFileUtils.getTestInputURL(TestFileUtils.getTestInputFile(dir, file))).read();
   }
 }

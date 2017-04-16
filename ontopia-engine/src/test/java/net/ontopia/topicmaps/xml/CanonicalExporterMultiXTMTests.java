@@ -24,15 +24,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
-import net.ontopia.utils.URIUtils;
 
 public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTests {
   
@@ -74,7 +73,7 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
       
       // Read all topic maps from document
       String infile = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+      XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
       reader.setValidation(false);
       reader.setStoreFactory(sfactory);
       

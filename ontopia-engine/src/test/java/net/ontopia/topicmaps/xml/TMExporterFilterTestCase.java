@@ -25,21 +25,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.List;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-
-import java.util.List;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.xml.PrettyPrinter;
 import org.junit.Assert;
 import org.junit.Test;
@@ -227,7 +224,7 @@ public class TMExporterFilterTestCase {
 
       // Read the exported topic map for canonicalization
 
-      XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(xtm));
+      XTMTopicMapReader reader = new XTMTopicMapReader(new File(xtm));
       TopicMapIF exportedMap = reader.read();
 
       if (ENABLE_LTM) {

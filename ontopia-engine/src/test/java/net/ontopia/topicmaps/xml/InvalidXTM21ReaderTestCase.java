@@ -21,10 +21,9 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import net.ontopia.utils.OntopiaRuntimeException;
 import java.util.List;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -62,7 +61,7 @@ public class InvalidXTM21ReaderTestCase extends AbstractCanonicalTests {
 
     public void testFile() throws IOException {
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
-      XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(in));
+      XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in));
       reader.setValidation(false);
       // FIXME: should we do a setXTM2Required(true) or something?
 

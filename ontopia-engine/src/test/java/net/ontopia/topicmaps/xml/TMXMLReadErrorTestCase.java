@@ -21,8 +21,8 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import net.ontopia.utils.OntopiaRuntimeException;
 import java.util.List;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
@@ -54,7 +54,7 @@ public class TMXMLReadErrorTestCase extends AbstractCanonicalTests {
 
     public void testFile() throws IOException {
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
-      TMXMLReader reader = new TMXMLReader(in);
+      TMXMLReader reader = new TMXMLReader(TestFileUtils.getTestInputURL(in));
 
       try {
         reader.read();

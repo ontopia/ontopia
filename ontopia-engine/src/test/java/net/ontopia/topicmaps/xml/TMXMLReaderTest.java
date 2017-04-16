@@ -24,7 +24,6 @@ import java.io.IOException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,7 +38,7 @@ public class TMXMLReaderTest extends AbstractXMLTestCase {
 
   protected TopicMapIF readTopicMap(String filename) throws IOException {
     filename = TestFileUtils.getTestInputFile(testdataDirectory, "extra", filename);
-    TMXMLReader reader = new TMXMLReader(URIUtils.getURI(filename));
+    TMXMLReader reader = new TMXMLReader(TestFileUtils.getTestInputURL(filename));
     return reader.read();
   }
     

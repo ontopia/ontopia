@@ -22,14 +22,14 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.File;
 import java.io.IOException;
-import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.BeforeClass;
 
 public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.CanonicalExporterXTMTests {
@@ -55,7 +55,7 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
     // Get hold of topic map id
     long topicmap_id1 = Long.parseLong(source1.getObjectId().substring(1));
     
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
     reader.setValidation(false);
     reader.importInto(source1);
     store1.commit();
