@@ -20,21 +20,13 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.util.Set;
-import java.util.List;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.XMLReaderFactoryIF;
+import java.util.List;
+import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -51,12 +43,20 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: Reads both XTM 2.0 and XTM 2.1.
@@ -73,7 +73,6 @@ public class XTM2ContentHandler extends DefaultHandler {
   private LocatorIF doc_address;
   private TopicMapStoreFactoryIF store_factory;
   private TopicMapBuilderIF builder;
-  private XMLReaderFactoryIF xrfactory;
   private Set read_documents; // set of LocatorIFs for XTMs already read
 
   private boolean keep_content;
@@ -121,18 +120,15 @@ public class XTM2ContentHandler extends DefaultHandler {
   private static final int CONTEXT_REIFIER     = 12;
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
-                            XMLReaderFactoryIF xrfactory,
                             LocatorIF doc_address) {
-    this(store_factory, xrfactory, doc_address,
+    this(store_factory, doc_address,
          new CompactHashSet());
   }
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
-                            XMLReaderFactoryIF xrfactory,
                             LocatorIF doc_address,
                             Set read_documents) {
     this.store_factory = store_factory;
-    this.xrfactory = xrfactory;
     this.doc_address = doc_address;
     this.read_documents = read_documents;
     this.content = new StringBuilder();
@@ -636,12 +632,12 @@ public class XTM2ContentHandler extends DefaultHandler {
       return;
     
     // Create new parser object
-    XMLReader parser = xrfactory.createXMLReader();
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
         
     // Initialize nested content handler
     TopicMapStoreFactoryIF sfactory = new SameStoreFactory(topicmap.getStore());
     XTM2ContentHandler handler =
-      new XTM2ContentHandler(sfactory, xrfactory, mapuri, read_documents);
+      new XTM2ContentHandler(sfactory, mapuri, read_documents);
     parser.setContentHandler(handler);
     
     // Parse input source

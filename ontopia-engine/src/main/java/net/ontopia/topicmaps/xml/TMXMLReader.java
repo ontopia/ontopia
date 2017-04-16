@@ -20,47 +20,45 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.InputStream;
 import java.io.IOException;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Collections;
-import java.net.MalformedURLException;
-
-import net.ontopia.utils.URIUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.ValidatingContentHandler;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.AbstractXMLFormatReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.ReifiableIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-
+import net.ontopia.topicmaps.utils.ClassInstanceUtils;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.URIUtils;
+import net.ontopia.xml.AbstractXMLFormatReader;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.ValidatingContentHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 
 /**
  * PUBLIC: A reader importing topic maps (or fragments) from the
@@ -136,7 +134,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
     
     XMLReader parser;
     try {
-      parser = getXMLReaderFactory().createXMLReader();
+      parser = DefaultXMLReaderFactory.createXMLReader();
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " +
                             e.getMessage());
@@ -163,9 +161,6 @@ public class TMXMLReader extends AbstractXMLFormatReader
     return Collections.singleton(read());
   }
 
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-  }
-  
   // --- ContentHandler
 
   // constants for state

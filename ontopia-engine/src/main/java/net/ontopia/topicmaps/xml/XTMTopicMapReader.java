@@ -43,7 +43,7 @@ import net.ontopia.topicmaps.utils.NoFollowTopicRefExternalReferenceHandler;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.AbstractXMLFormatReader;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -228,7 +228,8 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
     // Create new parser object
     XMLReader parser;
     try {
-      parser = getXMLReaderFactory().createXMLReader();
+      parser = DefaultXMLReaderFactory.createXMLReader();
+      parser.setEntityResolver(new TopicMapDTDEntityResolver());
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
     }
@@ -326,12 +327,6 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
     readAll(new SameStoreFactory(store));
   }
 
-  // --- Internal methods
-  
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-    cxrfactory.setEntityResolver(new TopicMapDTDEntityResolver());
-  }
-  
   /**
    * Sets additional properties for the XTMTopicMapReader. Accepts properties 'validation' and 
    * 'externalReferenceHandler'. The value of 'validation' has to be a boolean and corresponds

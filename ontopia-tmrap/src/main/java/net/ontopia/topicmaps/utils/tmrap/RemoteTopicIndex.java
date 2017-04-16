@@ -38,16 +38,14 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.CharacteristicUtils;
+import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.xml.XMLReaderFactoryIF;
-
 import org.xml.sax.InputSource;
 
 /**
@@ -60,7 +58,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
   protected String viewBaseuri;
   protected TopicMapStoreFactoryIF storefactory;
   protected String tmid;
-  private XMLReaderFactoryIF xmlReaderFactory = new RemoteXMLReaderFactory();
 
   public RemoteTopicIndex(String editBaseuri, String viewBaseuri) {
     this(editBaseuri, viewBaseuri,
@@ -534,7 +531,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
     LocatorIF base = new URILocator(baseuri + request);
     XTMTopicMapReader reader = new XTMTopicMapReader(src, base);
     reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
-    reader.setXMLReaderFactory(xmlReaderFactory);
     reader.setValidation(false); // means we don't need Jing
     reader.importInto(topicmap);
   }

@@ -23,54 +23,44 @@ package net.ontopia.topicmaps.utils.tmrap;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Set;
-
 import javax.servlet.ServletException;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URIFragmentLocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
-import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.tmrap.RAPServlet;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ontojsp.FakeServletConfig;
 import net.ontopia.utils.ontojsp.FakeServletContext;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import org.junit.After;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.InputSource;
-
-import org.junit.Test;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 @RunWith(Parameterized.class)
 public class TMRAPTestCase {
@@ -87,7 +77,7 @@ public class TMRAPTestCase {
 
     // Parse the test configuration file to get all the test descriptors.
     try {
-      XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       TMRAPTestCaseContentHandler handler = new TMRAPTestCaseContentHandler();
       handler.register(parser);
       parser.parse(new InputSource(in));

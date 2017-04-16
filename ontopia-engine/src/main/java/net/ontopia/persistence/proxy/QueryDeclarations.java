@@ -240,7 +240,7 @@ public class QueryDeclarations {
     ContentHandler handler = new QueriesHandler();
     
     try {
-      XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(isource);
