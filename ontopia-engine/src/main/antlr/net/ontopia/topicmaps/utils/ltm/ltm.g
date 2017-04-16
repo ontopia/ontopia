@@ -5,6 +5,7 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import java.io.Reader;
   import java.io.IOException;
   import java.net.MalformedURLException;
+  import java.net.URL;
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.Collections;
@@ -392,7 +393,7 @@ options {
     try {
       TopicMapReaderIF reader = null;
       if (syntax.equalsIgnoreCase("xtm"))
-        reader = new XTMTopicMapReader(extloc.getAddress());
+        reader = new XTMTopicMapReader(new URL(extloc.getAddress()));
 
       MergeUtils.mergeInto(topicmap, reader.read());
     } catch (MalformedURLException e) {

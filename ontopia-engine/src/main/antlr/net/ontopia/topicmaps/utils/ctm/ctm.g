@@ -5,6 +5,7 @@ header { package net.ontopia.topicmaps.utils.ctm; }
   import java.io.Reader;
   import java.io.IOException;
   import java.net.MalformedURLException;
+  import java.net.URL;
   import java.util.Set;
   import java.util.Map;
   import java.util.List;
@@ -210,9 +211,9 @@ mergemap :
     try {
       TopicMapReaderIF reader = null;
       if (syntaxpsi.equals(PSI.getCTMSyntax()))
-        reader = new CTMTopicMapReader(docuri);
+        reader = new CTMTopicMapReader(new URL(docuri.getAddress()));
       else if (syntaxpsi.equals(PSI.getCTMXTMSyntax()))
-        reader = new XTMTopicMapReader(docuri);
+        reader = new XTMTopicMapReader(new URL(docuri.getAddress()));
       else
         throw new InvalidTopicMapException("Unknown mergemap syntax: " + 
                                            syntaxpsi.getAddress());
