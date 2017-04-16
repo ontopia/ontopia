@@ -72,7 +72,7 @@ public class HTTPSearcher extends AbstractSearcher {
       // Create new parser object
       XMLReader parser;
       try {
-        parser = new DefaultXMLReaderFactory().createXMLReader();
+        parser = DefaultXMLReaderFactory.createXMLReader();
         
       } catch (SAXException e) {
         throw new OntopiaRuntimeException("Problems occurred when creating SAX2 XMLReader", e);

@@ -151,7 +151,8 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     XMLReader parser;
     try {
       parser = getXMLReaderFactory().createXMLReader();
-      
+      parser.setEntityResolver(new IgnoreTopicMapDTDEntityResolver());
+      parser.setFeature("http://xml.org/sax/features/namespaces", false);
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
     }
@@ -206,13 +207,6 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     read();
   }
 
-  // --- Internal methods
-  
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-    cxrfactory.setEntityResolver(new IgnoreTopicMapDTDEntityResolver());
-    cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
-  }
-  
   /**
    * XFMLTopicMapReader has no additional options to set.
    * @param properties 

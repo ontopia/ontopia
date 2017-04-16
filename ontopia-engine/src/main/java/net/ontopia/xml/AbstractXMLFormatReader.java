@@ -75,7 +75,6 @@ public abstract class AbstractXMLFormatReader {
     // Initialize default factory
     if (xrfactory == null) {
       ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-      configureXMLReaderFactory(cxrfactory);
       xrfactory = cxrfactory;
     }
     return xrfactory;
@@ -97,8 +96,4 @@ public abstract class AbstractXMLFormatReader {
     this.xrfactory = xrfactory;
   }
 
-  // --- Internal methods
-
-  protected abstract void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory);
-  
 }

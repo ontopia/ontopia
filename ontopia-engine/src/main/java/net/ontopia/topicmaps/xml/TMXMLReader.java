@@ -163,9 +163,6 @@ public class TMXMLReader extends AbstractXMLFormatReader
     return Collections.singleton(read());
   }
 
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-  }
-  
   // --- ContentHandler
 
   // constants for state

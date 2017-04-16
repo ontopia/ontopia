@@ -80,6 +80,8 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
     XMLReader parser;
     try {
       parser = getXMLReaderFactory().createXMLReader();
+      parser.setFeature("http://xml.org/sax/features/namespaces", false);
+      parser.setEntityResolver(new IgnoreSchemaDTDEntityResolver());
       
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
@@ -110,13 +112,6 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
     }
     
     return handler.getSchema();
-  }
-
-  // --- Internal methods
-
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-    cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
-    cxrfactory.setEntityResolver(new IgnoreSchemaDTDEntityResolver());
   }
 
   // --- Entity resolver

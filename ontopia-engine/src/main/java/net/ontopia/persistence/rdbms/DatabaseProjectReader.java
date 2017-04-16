@@ -65,7 +65,7 @@ public class DatabaseProjectReader {
   public static Project loadProject(InputSource isource) throws IOException, SAXException {
     
     ProjectHandler handler = new ProjectHandler();
-    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();    
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();    
     parser.setContentHandler(handler);
     parser.parse(isource);
     

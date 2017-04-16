@@ -20,9 +20,9 @@
 
 package net.ontopia.xml;
 
-import java.util.Map;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -40,8 +40,6 @@ import org.xml.sax.XMLReader;
  */
 public class ConfiguredXMLReaderFactory implements XMLReaderFactoryIF {
 
-  protected XMLReaderFactoryIF xrfactory;
-
   protected ErrorHandler error_handler;
   protected EntityResolver entity_resolver;
   protected DTDHandler dtd_handler;
@@ -49,11 +47,6 @@ public class ConfiguredXMLReaderFactory implements XMLReaderFactoryIF {
   protected Map properties;
 
   public ConfiguredXMLReaderFactory() {
-    this(new DefaultXMLReaderFactory());
-  }
-  
-  public ConfiguredXMLReaderFactory(XMLReaderFactoryIF xrfactory) {
-    this.xrfactory = xrfactory;
     this.features = new HashMap();
     this.properties = new HashMap();
   }
@@ -157,7 +150,7 @@ public class ConfiguredXMLReaderFactory implements XMLReaderFactoryIF {
    */
   public XMLReader createXMLReader() throws SAXException {
     // Create reader
-    XMLReader reader = xrfactory.createXMLReader();
+    XMLReader reader = DefaultXMLReaderFactory.createXMLReader();
 
     // Configure reader
     if (error_handler != null) reader.setErrorHandler(error_handler);

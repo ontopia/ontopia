@@ -40,7 +40,7 @@ import org.xml.sax.XMLReader;
  * default.<p>
  */
 
-public class DefaultXMLReaderFactory implements XMLReaderFactoryIF {
+public class DefaultXMLReaderFactory {
 
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
@@ -52,7 +52,7 @@ public class DefaultXMLReaderFactory implements XMLReaderFactoryIF {
     FACTORY.setValidating(false);
   }
 
-  public XMLReader createXMLReader() throws SAXException {
+  public static XMLReader createXMLReader() throws SAXException {
     try {
       return FACTORY.newSAXParser().getXMLReader();
     } catch (ParserConfigurationException e) {
