@@ -126,7 +126,7 @@ public class VizController {
     try {
       configurl = vizFrontEnd.getConfigURL();
       if (configurl != null) {
-        tmConfig = new VizTopicMapConfigurationManager(configurl);
+        tmConfig = new VizTopicMapConfigurationManager(new URL(configurl));
       }
     } catch (MalformedURLException mue) {
       ErrorDialog.showError(vpanel, Messages.getString("Viz.ErrorLoadingConfig"), mue);
