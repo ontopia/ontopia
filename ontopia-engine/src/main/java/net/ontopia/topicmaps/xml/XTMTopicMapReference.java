@@ -121,18 +121,14 @@ public class XTMTopicMapReference extends AbstractOntopolyURLReference {
   // Abstract methods
   // ---------------------------------------------------------------------------
 
-  protected TopicMapImporterIF getImporter() {
+  protected TopicMapImporterIF getImporter() throws IOException {
     // create topic map importer
     XTMTopicMapReader reader;
     if (base_address == null) {
-      try {
-        reader = new XTMTopicMapReader(url.toString());
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e); // impossible error
-      }
-    } else
-      reader = new XTMTopicMapReader(new InputSource(url.toString()),
-                                     base_address);
+      reader = new XTMTopicMapReader(url);
+    } else {
+      reader = new XTMTopicMapReader(url, base_address);
+    }
     if (ref_handler != null)
       reader.setExternalReferenceHandler(ref_handler);
     else

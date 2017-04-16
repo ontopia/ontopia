@@ -86,13 +86,13 @@ public class TMXMLTopicMapReference extends AbstractOntopolyURLReference {
   // Abstract methods
   // --------------------------------------------------------------------------
 
-  protected TopicMapImporterIF getImporter() {
+  protected TopicMapImporterIF getImporter() throws IOException {
     // create topic map importer
     TMXMLReader reader;
     if (base_address == null)
-      reader = new TMXMLReader(url.toString());
+      reader = new TMXMLReader(url);
     else
-      reader = new TMXMLReader(new InputSource(url.toString()), base_address);
+      reader = new TMXMLReader(url, base_address);
     reader.setValidate(validate);
     return reader;
   }

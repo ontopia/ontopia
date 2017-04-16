@@ -20,7 +20,14 @@
 
 package net.ontopia.xml;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.utils.URIUtils;
 import org.xml.sax.InputSource;
 
 /**
@@ -32,6 +39,34 @@ public abstract class AbstractXMLFormatReader {
   protected InputSource source;
   protected LocatorIF base_address;
 
+  public AbstractXMLFormatReader() {
+  }
+
+  public AbstractXMLFormatReader(InputSource source, LocatorIF base_address) {
+    this.source = source;
+    this.base_address = base_address;
+  }
+
+  public AbstractXMLFormatReader(URL url) throws MalformedURLException {
+    this(new InputSource(url.toString()), new URILocator(url));
+  }
+  
+  public AbstractXMLFormatReader(URL url, LocatorIF base_address) {
+    this(new InputSource(url.toString()), base_address);
+  }
+  
+  public AbstractXMLFormatReader(Reader reader, LocatorIF base_address) {
+    this(new InputSource(reader), base_address);
+  }
+  
+  public AbstractXMLFormatReader(InputStream stream, LocatorIF base_address) {
+    this(new InputSource(stream), base_address);
+  }
+  
+  public AbstractXMLFormatReader(File file) throws MalformedURLException {
+    this(URIUtils.toURL(file));
+  }
+  
   /**
    * INTERNAL: Gets the SAX input source used by the reader.
    */

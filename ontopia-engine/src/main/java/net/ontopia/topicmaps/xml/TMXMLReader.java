@@ -20,9 +20,11 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,7 +52,6 @@ import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.AbstractXMLFormatReader;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.ValidatingContentHandler;
@@ -69,27 +70,26 @@ import org.xml.sax.XMLReader;
 public class TMXMLReader extends AbstractXMLFormatReader
                          implements TopicMapReaderIF, TopicMapImporterIF {
   public static final String PROPERTY_VALIDATE = "validate";
-  private LocatorIF base;
-  private boolean validate;
+  private boolean validate = true;
   
   // --- Constructors
 
   /**
-   * PUBLIC: Creates a reader reading from the given file name.
+   * PUBLIC: Creates a reader reading from the given url.
    */
-  public TMXMLReader(String filename) {
-    this.base = URIUtils.getURI(filename);
-    this.source = new InputSource(base.getAddress());
-    this.validate = true;
+  public TMXMLReader(URL url) throws MalformedURLException {
+    super(url);
+  }
+
+  public TMXMLReader(URL url, LocatorIF base_address) {
+    super(url, base_address);
   }
 
   /**
-   * PUBLIC: Creates a reader reading from the given location.
+   * PUBLIC: Creates a reader reading from the given file name.
    */
-  public TMXMLReader(LocatorIF base) {
-    this.base = base;
-    this.source = new InputSource(base.getAddress());
-    this.validate = true;
+  public TMXMLReader(File file) throws MalformedURLException {
+    super(file);
   }
 
   /**
@@ -97,9 +97,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
    * different base address.
    */
   public TMXMLReader(InputSource source, LocatorIF base) {
-    this.base = base;
-    this.source = source;
-    this.validate = true;
+    super(source, base);
   }
 
   // --- Accessors
@@ -116,7 +114,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
 
   public TopicMapIF read() throws IOException {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    store.setBaseAddress(base);
+    store.setBaseAddress(base_address);
     TopicMapIF topicmap = store.getTopicMap();
     importInto(topicmap);
 
@@ -141,7 +139,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
     }
     
     // Register content handlers
-    ContentHandler handler = new TMXMLContentHandler(topicmap, base);
+    ContentHandler handler = new TMXMLContentHandler(topicmap, base_address);
     if (validate)
       handler = new ValidatingContentHandler(handler, getTMXMLSchema(), true);
     parser.setContentHandler(handler);
@@ -371,7 +369,6 @@ public class TMXMLReader extends AbstractXMLFormatReader
       }
 
       } catch (Exception e) {
-        System.out.println("" + base + ": " + e);
         throw new OntopiaRuntimeException(e);
       }
     }

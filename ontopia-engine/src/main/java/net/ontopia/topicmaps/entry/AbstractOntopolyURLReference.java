@@ -184,6 +184,6 @@ public abstract class AbstractOntopolyURLReference
   // Abstract methods
   // --------------------------------------------------------------------------
 
-  protected abstract TopicMapImporterIF getImporter();
+  protected abstract TopicMapImporterIF getImporter() throws IOException;
   
 }

@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -96,6 +97,16 @@ public class TestFileUtils {
 
   public static String getTestInputFile(String directory, String filename) {
     return "classpath:" + testdataInputRoot + directory + "/" + filename;
+  }
+
+  public static URL getTestInputURL(String directory, String filename) {
+    return getTestInputURL(testdataInputRoot + directory + "/" + filename);
+  }
+
+  public static URL getTestInputURL(String resource) {
+    URL url = Thread.currentThread().getContextClassLoader().getResource(resource.startsWith("classpath:") ? resource.substring("classpath:".length()) : resource);
+    if (url == null) throw new OntopiaRuntimeException("Test resource " + resource + " not found");
+    return url;
   }
 
   public static String getTestInputFile(String directory, String subDirectory,

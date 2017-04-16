@@ -26,11 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
@@ -39,7 +39,6 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.AbstractXMLFormatReader;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
@@ -63,8 +62,8 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * Creates an XFML reader.
    * @param url The URL of the XFML document.
    */  
-  public XFMLTopicMapReader(String url) throws MalformedURLException {
-    this(new InputSource(new URILocator(url).getExternalForm()), new URILocator(url));
+  public XFMLTopicMapReader(URL url) throws MalformedURLException {
+    super(url);
   }
 
   /**
@@ -75,7 +74,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    */
 
   public XFMLTopicMapReader(Reader reader, LocatorIF base_address) {
-    this(new InputSource(reader), base_address);
+    super(reader, base_address);
   }
 
   /**
@@ -86,7 +85,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * relative references.
    */
   public XFMLTopicMapReader(InputStream stream, LocatorIF base_address) {
-    this(new InputSource(stream), base_address);
+    super(stream, base_address);
   }
 
   /**
@@ -94,18 +93,8 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * argument.   
    * @param file The file object from which to read the topic map.
    */
-  public XFMLTopicMapReader(File file) throws IOException {
-    try {
-      if (!file.exists())
-        throw new FileNotFoundException(file.toString());
-      
-      this.base_address = new URILocator(URIUtils.toURL(file));
-      this.source = new InputSource(base_address.getExternalForm());
-    }
-    catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException("Internal error. File " + file + " had " +
-                                        "invalid URL representation.");
-    }
+  public XFMLTopicMapReader(File file) throws MalformedURLException {
+    super(file);
   }
   
   /**
@@ -116,8 +105,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * relative references.
    */
   public XFMLTopicMapReader(InputSource source, LocatorIF base_address) {
-    this.source = source;
-    this.base_address = base_address;
+    super(source, base_address);
   }
 
   /**

@@ -52,8 +52,8 @@ public class LTMTopicMapReference extends AbstractOntopolyURLReference {
 
   private LTMTopicMapReader makeReader() throws IOException {
     if (base_address == null)
-      return new LTMTopicMapReader(url.toString());
+      return new LTMTopicMapReader(url);
     else
-      return new LTMTopicMapReader(new org.xml.sax.InputSource(url.toString()), base_address);      
+      return new LTMTopicMapReader(url, base_address);      
   }
 }

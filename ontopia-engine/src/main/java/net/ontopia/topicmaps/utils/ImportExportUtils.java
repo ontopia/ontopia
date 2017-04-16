@@ -23,6 +23,8 @@ package net.ontopia.topicmaps.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
@@ -142,19 +144,25 @@ public class ImportExportUtils {
    */
   public static TopicMapReaderIF getReader (LocatorIF url) {
     String address = url.getAddress ();
+    URL u;
+    try {
+      u = new URL(address);
+    } catch (MalformedURLException mufe) {
+      throw new OntopiaRuntimeException(mufe); // should not be possible
+    }
 
     if (address.startsWith ("x-ontopia:tm-rdbms:"))
       return new RDBMSTopicMapReader (getTopicMapId (address));
     else if (address.endsWith (".xtm"))
-      return new XTMTopicMapReader (url);
+      return new XTMTopicMapReader (u, url);
     else if (address.endsWith (".ltm"))
-      return new LTMTopicMapReader (url);
+      return new LTMTopicMapReader (u, url);
     else if (address.endsWith (".tmx"))
-      return new TMXMLReader (url);
+      return new TMXMLReader (u, url);
     else if (address.endsWith (".xml"))
-      return new TMXMLReader(url); 
+      return new TMXMLReader(u, url); 
     else if (address.endsWith (".ctm"))
-      return new CTMTopicMapReader(url);
+      return new CTMTopicMapReader(u, url);
     else {
       for (ImportExportServiceIF service : services) {
         if (service.canRead(address)) {
@@ -162,7 +170,7 @@ public class ImportExportUtils {
         }
       }
       // fallback
-      return new XTMTopicMapReader (url);
+      return new XTMTopicMapReader (u, url);
     }
   }
 
@@ -185,17 +193,23 @@ public class ImportExportUtils {
    */
   public static TopicMapImporterIF getImporter (LocatorIF url) {
     String address = url.getAddress ();
+    URL u;
+    try {
+      u = new URL(address);
+    } catch (MalformedURLException mufe) {
+      throw new OntopiaRuntimeException(mufe); // should not be possible
+    }
 
     if (address.endsWith (".xtm"))
-      return new XTMTopicMapReader (url);
+      return new XTMTopicMapReader (u, url);
     else if (address.endsWith (".ltm"))
-      return new LTMTopicMapReader (url);
+      return new LTMTopicMapReader (u, url);
     else if (address.endsWith (".tmx"))
-      return new TMXMLReader (url);
+      return new TMXMLReader (u, url);
     else if (address.endsWith (".xml"))
-      return new TMXMLReader(url); 
+      return new TMXMLReader(u, url); 
     else if (address.endsWith (".ctm"))
-      return new CTMTopicMapReader(url);
+      return new CTMTopicMapReader(u, url);
     else {
       for (ImportExportServiceIF service : services) {
         if (service.canRead(address)) {
@@ -203,7 +217,7 @@ public class ImportExportUtils {
         }
       }
       // fallback
-      return new XTMTopicMapReader (url);
+      return new XTMTopicMapReader (u, url);
     }
   }
 
