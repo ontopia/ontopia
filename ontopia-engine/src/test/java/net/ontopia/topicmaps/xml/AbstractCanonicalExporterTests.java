@@ -21,13 +21,16 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,15 +45,15 @@ public abstract class AbstractCanonicalExporterTests {
   /**
    * INTERNAL: Performs the actual canonicalization.
    */
-  protected void canonicalize(String infile, String tmpfile, String outfile)
+  protected void canonicalize(URL infile, File tmpfile, File outfile)
     throws IOException {
     // Get store factory
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
     
     // Read document
     TopicMapIF source1 = sfactory.createStore().getTopicMap();
-    if (infile.endsWith(".xtm")) {
-      XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
+    if (infile.getFile().endsWith(".xtm")) {
+      XTMTopicMapReader reader = new XTMTopicMapReader(infile);
       reader.setValidation(false);    
       reader.importInto(source1);
     } else
@@ -62,7 +65,7 @@ public abstract class AbstractCanonicalExporterTests {
 
     // Canonicalize reimported document
     CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
-    cwriter.setBaseLocator(new URILocator(file2URL(tmpfile)));      
+    cwriter.setBaseLocator(new URILocator(tmpfile));
     cwriter.write(source2);
 
     // Clean up
@@ -73,7 +76,7 @@ public abstract class AbstractCanonicalExporterTests {
    * INTERNAL: Exports the topic map using the exporter to be tested,
    * then reads it back in.
    */
-  protected abstract TopicMapIF exportAndReread(TopicMapIF tm, String outfile)
+  protected abstract TopicMapIF exportAndReread(TopicMapIF tm, File outfile)
     throws IOException;
 
   /**
@@ -92,6 +95,7 @@ public abstract class AbstractCanonicalExporterTests {
   // --- Test case class
 
     protected String base;
+    protected URL inputFile;
     protected String filename;
     protected String _testdataDirectory;
 
@@ -100,15 +104,11 @@ public abstract class AbstractCanonicalExporterTests {
       TestFileUtils.verifyDirectory(base, "out");
       
       // setup canonicalization filenames
-      String in = TestFileUtils.getTestInputFile(_testdataDirectory, "in", 
-        filename);
-      String tmp = base + File.separator + "out" + File.separator + 
-        "tmp-" + filename;
-      String out = base + File.separator + "out" + File.separator +
-        "exp-" + filename;
+      File tmp = new File(base + File.separator + "out" + File.separator + "tmp-" + filename);
+      File out = new File(base + File.separator + "out" + File.separator + "exp-" + filename);
       // produce canonical output
       try {
-        canonicalize(in, tmp, out);
+        canonicalize(inputFile, tmp, out);
       } catch (Throwable e) {
         if (e instanceof OntopiaRuntimeException &&
             ((OntopiaRuntimeException) e).getCause() != null)
@@ -118,11 +118,12 @@ public abstract class AbstractCanonicalExporterTests {
       }
 
       // compare results
-      String baseline = TestFileUtils.getTestInputFile(_testdataDirectory, "baseline", 
-                        filename);
-      Assert.assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
-                 + " != " + out + "), tmp=" + tmp,
-                 FileUtils.compareFileToResource(out,baseline));
+      URL baseline = new URL(inputFile, "../baseline/" + filename);
+      try (InputStream baselineIn = baseline.openStream()) {
+        Assert.assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
+                   + " != " + out + "), tmp=" + tmp,
+                StreamUtils.compareAndClose(new FileInputStream(out), baselineIn));
+      }
       // NOTE: we compare out/exp-* and baseline/*
   }
   

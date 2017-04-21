@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -28,34 +29,29 @@ import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
 
-public class XTMReadErrorTests extends AbstractCanonicalTests {
+public class XTMReadErrorTests {
 
   private final static String testdataDirectory = "canonical";
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "errors", ".xtm");
-  }
-  
-  protected String getFileDirectory() {
-    return "errors";
-  }
-  
-  protected void canonicalize(String infile, String outfile) {
-    // not used
+    return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "errors");
   }
   
   // --- Test case class
 
-    public XTMReadErrorTests(String root, String filename) {
+    private final String filename;
+    private final URL inputFile;
+
+    public XTMReadErrorTests(URL inputFile, String filename) {
       this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-      this._testdataDirectory = testdataDirectory;
+      this.inputFile = inputFile;
+//      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+//      this._testdataDirectory = testdataDirectory;
     }
 
     public void testFile() throws IOException {
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "errors", filename);
-      XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in));
+      XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
 
       try {
         reader.read();

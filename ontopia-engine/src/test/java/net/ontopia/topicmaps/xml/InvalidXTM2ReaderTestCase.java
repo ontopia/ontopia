@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -34,12 +36,12 @@ public class InvalidXTM2ReaderTestCase extends AbstractCanonicalTests {
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".xtm");
+    return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "invalid");
   }
   
   // --- Canonicalization type methods
 
-  protected void canonicalize(String infile, String outfile)
+  protected void canonicalize(URL infile, File outfile)
     throws IOException {
     // not used, since we are not canonicalizing
   }
@@ -54,15 +56,15 @@ public class InvalidXTM2ReaderTestCase extends AbstractCanonicalTests {
 
   // --- Test case class
 
-    public InvalidXTM2ReaderTestCase(String root, String filename) {
+    public InvalidXTM2ReaderTestCase(URL inputFile, String filename) {
       this.filename = filename;
+      this.inputFile = inputFile;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
       this._testdataDirectory = testdataDirectory;
     }
 
     public void testFile() throws IOException {
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
-      XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in));
+      XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(true);
       // FIXME: should we do a setXTM2Required(true) or something?
 

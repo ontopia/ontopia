@@ -27,7 +27,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -263,17 +262,12 @@ public abstract class AbstractPathTopicMapSource
     }
     Map newmap = new HashMap();
     ResourcesDirectoryReader reader = new ResourcesDirectoryReader(path.substring("classpath:".length()), suffix);
-    for (String resource : reader.getResources()) {
-      try {
-        String filename = resource.substring(resource.lastIndexOf("/") + 1);
-        String id = filename;
-        URL url = new URL(URIUtils.getURI("classpath:" + resource).getAddress());
-        TopicMapReferenceIF ref = createReference(url, id, filename);
-        if (ref != null) {
-          newmap.put(id, ref);
-        }
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e);
+    for (URL resource : reader.getResources()) {
+      String file = resource.getFile();
+      String id = file.substring(file.lastIndexOf("/") + 1);
+      TopicMapReferenceIF ref = createReference(resource, id, id);
+      if (ref != null) {
+        newmap.put(id, ref);
       }
     }
     return newmap;

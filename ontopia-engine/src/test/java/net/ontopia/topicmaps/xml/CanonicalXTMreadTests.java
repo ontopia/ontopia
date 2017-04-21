@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -33,8 +35,9 @@ public class CanonicalXTMreadTests extends AbstractCanonicalTests {
   
   private final static String testdataDirectory = "canonical";
 
-  public CanonicalXTMreadTests(String root, String filename) {
+  public CanonicalXTMreadTests(URL inputFile, String filename) {
     this.filename = filename;
+    this.inputFile = inputFile;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
@@ -49,20 +52,20 @@ public class CanonicalXTMreadTests extends AbstractCanonicalTests {
         return resourcePath.endsWith(".xtm");
       }
     };
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
+    return TestFileUtils.getTestInputURLs(filter, testdataDirectory, "in");
   }
 
   // --- Canonicalization type methods
 
-  protected void canonicalize(String infile, String outfile) throws IOException {
+  protected void canonicalize(URL infile, File outfile) throws IOException {
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
-    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(infile);
     reader.setValidation(false);
     reader.setStoreFactory(sfactory);
     TopicMapIF source = reader.read();
 
     CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
-    cwriter.setBaseLocator(new URILocator(file2URL(infile)));      
+    cwriter.setBaseLocator(new URILocator(infile));
     cwriter.write(source);
 
     source.getStore().close();

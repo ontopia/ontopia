@@ -20,8 +20,10 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
@@ -32,23 +34,24 @@ public class CanonicalXTM2ReaderTestCase extends AbstractCanonicalTests {
   
   private final static String testdataDirectory = "xtm2";
 
-  public CanonicalXTM2ReaderTestCase(String root, String filename) {
+  public CanonicalXTM2ReaderTestCase(URL inputFile, String filename) {
     this.filename = filename;
+    this.inputFile = inputFile;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
+    return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "in");
   }
 
   // --- Canonicalization type methods
 
-  protected void canonicalize(String infile, String outfile)
+  protected void canonicalize(URL infile, File outfile)
     throws IOException {
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
-    XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(infile);
     reader.setValidation(false);
     // FIXME: should we do a setXTM2Required(true) or something?
     reader.setStoreFactory(sfactory);
