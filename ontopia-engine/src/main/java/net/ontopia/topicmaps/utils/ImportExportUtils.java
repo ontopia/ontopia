@@ -120,8 +120,7 @@ public class ImportExportUtils {
    * 
    * @since 2.0
    */
-  public static TopicMapReaderIF getReader (java.io.File file)
-      throws java.io.IOException {
+  public static TopicMapReaderIF getReader (File file) throws IOException {
     return getReader (file.toURL ().toExternalForm ());
   }
 
@@ -227,8 +226,7 @@ public class ImportExportUtils {
    * what writer to create.  Supports '.xtm' and '.tmx'. If the suffix
    * is unknown, the default writer is a XTM writer.
    */
-  public static TopicMapWriterIF getWriter (String tmfile)
-      throws java.io.IOException {
+  public static TopicMapWriterIF getWriter (String tmfile) throws IOException {
     if (tmfile.endsWith (".ltm"))
       return new LTMTopicMapWriter (new FileOutputStream (tmfile));
     else if (tmfile.endsWith (".tmx"))
@@ -252,8 +250,7 @@ public class ImportExportUtils {
    * Supports '.xtm' and '.tmx'. If the suffix is unknown, the default
    * writer is a XTM writer.
    */
-  public static TopicMapWriterIF getWriter (String tmfile, String encoding)
-      throws java.io.IOException {
+  public static TopicMapWriterIF getWriter (String tmfile, String encoding) throws IOException {
     if (encoding == null)
       return getWriter(tmfile);
 
