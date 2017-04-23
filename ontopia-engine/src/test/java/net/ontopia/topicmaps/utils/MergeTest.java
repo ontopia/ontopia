@@ -984,7 +984,7 @@ public class MergeTest extends TestCase {
     TestFileUtils.verifyDirectory(root, "canonical", "out");
       
     String file = TestFileUtils.getTestInputFile("various", "houdini.xtm");
-    String outfile = root + sep + "canonical" + sep + "out" + sep + "houdini.xtm";
+    File outfile = new File(root + sep + "canonical" + sep + "out" + sep + "houdini.xtm");
     String baseline = TestFileUtils.getTestInputFile("various", "baseline-houdini.xtm");
 
     TopicMapIF topicmap = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file)).read();

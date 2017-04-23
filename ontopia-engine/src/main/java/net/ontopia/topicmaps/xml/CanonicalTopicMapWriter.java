@@ -78,16 +78,6 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * Creates a topic map writer bound to the file given in the arguments.
-   * @param filename The name of the file to which the topic map is to
-   * be written.
-   */
-  
-  public CanonicalTopicMapWriter(String filename) throws IOException {
-    this(new File(filename));
-  }
-
-  /**
-   * Creates a topic map writer bound to the file given in the arguments.
    * @param file The file object to which the topic map is to be written.
    */
   public CanonicalTopicMapWriter(File file) throws IOException {

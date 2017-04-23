@@ -22,12 +22,11 @@ package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,7 +64,7 @@ public class RDFCanonicalTestCase {
       
       // produce canonical output
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      String out = base + File.separator + "out" + File.separator + filename;
+      File out = new File(base + File.separator + "out" + File.separator + filename);
 
       TopicMapIF source = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in), syntax).read();
       new CanonicalTopicMapWriter(out).write(source);

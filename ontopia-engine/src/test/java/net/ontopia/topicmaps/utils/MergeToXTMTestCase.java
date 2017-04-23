@@ -76,7 +76,7 @@ public class MergeToXTMTestCase {
       new XTMTopicMapWriter(tmp).write(source1);
 
       // reload and write canonically
-      String out = base + File.separator + "out" + File.separator + filename;
+      File out = new File(base + File.separator + "out" + File.separator + filename);
       source1 = new XTMTopicMapReader(new File(tmp)).read();
       new CanonicalTopicMapWriter(out).write(source1);
 

@@ -69,13 +69,13 @@ public class LTMTestCase {
       // produce canonical output
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename);
-      String out = base + File.separator + "out" + File.separator +
-        filename;
+      File out = new File(base + File.separator + "out" + File.separator +
+        filename);
       
       TopicMapIF source = new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
       
       if (ltm13(filename)) {
-        out += ".cxtm";
+        out = new File(out.toString() + ".cxtm");
         new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
   
         // compare results

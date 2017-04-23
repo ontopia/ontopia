@@ -53,7 +53,7 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename.substring(0, filename.length() - 3) + "sub");
-      String out = base + File.separator + "out" + File.separator + filename;
+      File out = new File(base + File.separator + "out" + File.separator + filename);
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
 
 
