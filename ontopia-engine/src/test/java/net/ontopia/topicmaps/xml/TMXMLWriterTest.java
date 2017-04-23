@@ -110,7 +110,7 @@ public class TMXMLWriterTest {
   public void testFileClosing() throws IOException, SAXException {
     // make sure the writer closes streams it creates
     String file = getAbsoluteFilename("closing.tmx");
-    TMXMLWriter writer = new TMXMLWriter(file);
+    TMXMLWriter writer = new TMXMLWriter(new File(file));
     writer.setDocumentElement("test");
     writer.startTopicMap(topicmap);
     writer.endTopicMap();
@@ -125,7 +125,7 @@ public class TMXMLWriterTest {
   public void testFileClosing2() throws IOException, SAXException {
     // make sure the writer closes streams it creates
     String file = getAbsoluteFilename("closing.tmx");
-    TMXMLWriter writer = new TMXMLWriter(file, "iso-8859-1");
+    TMXMLWriter writer = new TMXMLWriter(new File(file), "iso-8859-1");
     writer.setDocumentElement("test");
     writer.startTopicMap(topicmap);
     writer.endTopicMap();

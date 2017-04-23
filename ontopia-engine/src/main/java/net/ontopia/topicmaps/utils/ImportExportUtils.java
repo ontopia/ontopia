@@ -230,7 +230,7 @@ public class ImportExportUtils {
     if (tmfile.endsWith (".ltm"))
       return new LTMTopicMapWriter (new FileOutputStream (tmfile));
     else if (tmfile.endsWith (".tmx"))
-      return new TMXMLWriter (tmfile);
+      return new TMXMLWriter (new File(tmfile));
     else if (tmfile.endsWith (".xtm1"))
       return new XTMTopicMapWriter (new File (tmfile));
     else {
@@ -255,7 +255,7 @@ public class ImportExportUtils {
       return getWriter(tmfile);
 
     if (tmfile.endsWith(".tmx"))
-      return new TMXMLWriter (tmfile, encoding);
+      return new TMXMLWriter (new File(tmfile), encoding);
     else if (tmfile.endsWith(".xtm1"))
       return new XTMTopicMapWriter(new File(tmfile), encoding);
     else

@@ -75,8 +75,8 @@ public class TMXMLTopicMapReference extends AbstractOntopolyURLReference {
       TMXMLPathTopicMapSource src = (TMXMLPathTopicMapSource) source;
       String path = src.getPath();
       if (path != null) {
-        String filename = path + File.separator + this.getId();
-        TopicMapWriterIF writer = new TMXMLWriter(filename);
+        File file = new File(path + File.separator + this.getId());
+        TopicMapWriterIF writer = new TMXMLWriter(file);
         writer.write(store.getTopicMap());
       }
     }

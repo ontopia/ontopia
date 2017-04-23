@@ -91,24 +91,6 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   // --- Constructors
 
   /**
-   * PUBLIC: Creates a writer writing to the given file in the utf-8
-   * character encoding.
-   */
-  public TMXMLWriter(String filename) throws IOException {
-    this(filename, "utf-8");
-  }
-
-  /**
-   * PUBLIC: Creates a writer writing to the given file in the given
-   * character encoding.
-   */
-  public TMXMLWriter(String filename, String encoding) throws IOException {
-    writer = new OutputStreamWriter(new FileOutputStream(filename), encoding);
-    this.out = makePrinter(writer, encoding);
-    init();
-  }
-
-  /**
    * PUBLIC: Creates a writer writing to the given writer in the utf-8
    * character encoding.
    */
@@ -137,6 +119,15 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     init();
   }
   
+  /**
+   * PUBLIC: Creates a writer writing to the given file in given encoding.
+   */
+  public TMXMLWriter(File out, String encoding) throws IOException {
+    writer = new OutputStreamWriter(new FileOutputStream(out), encoding);
+    this.out = makePrinter(writer, encoding);
+    init();
+  }
+
   /**
    * INTERNAL: Creates a writer writing to the given ContentHandler.
    */

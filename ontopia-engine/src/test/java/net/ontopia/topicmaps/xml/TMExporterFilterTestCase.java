@@ -153,8 +153,8 @@ public class TMExporterFilterTestCase {
         filename + ".cxtm");
 
       // Path to the exported xtm topic map document.
-      String tmxml = tmxmlBase + File.separator + "tmxml" + File.separator +
-          filename + ".xml";
+      File tmxml = new File(tmxmlBase + File.separator + "tmxml" + File.separator +
+          filename + ".xml");
 
       // Path to the output (canonicalized output of exported xtm topic map).
       String out = tmxmlBase + File.separator + "out" + File.separator +

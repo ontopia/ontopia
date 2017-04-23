@@ -81,8 +81,8 @@ public class TMXMLWriterGeneralTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       // Path to the exported tmxml topic map document.
-      String tmxml = base + File.separator + "tmxml" + File.separator + filename
-          + ".xml";
+      File tmxml = new File(base + File.separator + "tmxml" + File.separator + filename
+          + ".xml");
       // Path to the output (canonicalized output of exported tmxml topic map).
       String out = base + File.separator + "out" + File.separator + filename
           + ".xml.cxtm";
