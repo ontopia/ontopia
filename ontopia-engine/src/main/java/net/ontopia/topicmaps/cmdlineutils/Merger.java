@@ -146,7 +146,7 @@ public class Merger {
       if (encoding != null)
         new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
       else
-        new XTMTopicMapWriter(outfile).write(tm);
+        new XTMTopicMapWriter(new File(outfile)).write(tm);
     } else
       ImportExportUtils.getWriter(outfile, encoding).write(tm);
   }

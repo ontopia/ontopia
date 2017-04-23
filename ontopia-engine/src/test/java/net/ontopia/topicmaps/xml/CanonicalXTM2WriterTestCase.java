@@ -68,8 +68,8 @@ public class CanonicalXTM2WriterTestCase {
       String out = base + File.separator + "out" + File.separator 
         + "tmp-" + filename + ".cxtm";
       // Path to the temporary file
-      String tmp = base + File.separator + "out" + File.separator 
-        + "tmp-" + filename;
+      File tmp = new File(base + File.separator + "out" + File.separator 
+        + "tmp-" + filename);
   
       // Import topic map from arbitrary source.
       TopicMapIF tm = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();

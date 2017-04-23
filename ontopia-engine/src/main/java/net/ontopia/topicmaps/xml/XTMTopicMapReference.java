@@ -110,8 +110,8 @@ public class XTMTopicMapReference extends AbstractOntopolyURLReference {
       XTMPathTopicMapSource src = (XTMPathTopicMapSource) source;
       String path = src.getPath();
       if (path != null) {
-        String filename = path + File.separator + this.getId();
-        TopicMapWriterIF writer = new XTMTopicMapWriter(filename);
+        File file = new File(path + File.separator + this.getId());
+        TopicMapWriterIF writer = new XTMTopicMapWriter(file);
         writer.write(store.getTopicMap());
       }
     }

@@ -78,8 +78,8 @@ public class XTMWriterFilterTestCase {
       // Path to the baseline (canonicalized output of the source topic map).
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline", filename + ".cxtm");
       // Path to the exported xtm topic map document.
-      String xtm = base + File.separator + "filter-xtm" + File.separator
-          + filename + ".xtm";
+      File xtm = new File(base + File.separator + "filter-xtm" + File.separator
+          + filename + ".xtm");
       // Path to the output (canonicalized output of exported xtm topic map).
       String out = base + File.separator + "filter-out" + File.separator
           + filename + ".xtm.cxtm";

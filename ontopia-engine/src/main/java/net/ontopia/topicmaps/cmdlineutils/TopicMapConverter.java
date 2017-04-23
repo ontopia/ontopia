@@ -143,7 +143,7 @@ public class TopicMapConverter {
       if (options.encoding != null)
         new XTMTopicMapWriter(new File(outfile), options.encoding).write(tm);
       else
-        new XTMTopicMapWriter(outfile).write(tm);
+        new XTMTopicMapWriter(new File(outfile)).write(tm);
     } else
       ImportExportUtils.getWriter(outfile, options.encoding).write(tm);
 

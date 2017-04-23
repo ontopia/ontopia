@@ -65,17 +65,6 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
    * PUBLIC: Creates a topic map writer bound to the file given in the
    * arguments.  The topic map will be written out in the UTF-8
    * encoding.   
-   * @param filename The name of the file to which the topic map is to
-   * be written.
-   */ 
-  public XTMTopicMapWriter(String filename) throws IOException {
-    this(new File(filename), "utf-8");
-  }
-  
-  /**
-   * PUBLIC: Creates a topic map writer bound to the file given in the
-   * arguments.  The topic map will be written out in the UTF-8
-   * encoding.   
    * @param file The file object to which the topic map is to be written.
    */
   public XTMTopicMapWriter(File file) throws IOException {

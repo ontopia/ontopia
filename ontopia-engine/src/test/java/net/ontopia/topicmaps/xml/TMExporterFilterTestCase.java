@@ -207,8 +207,8 @@ public class TMExporterFilterTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "xtm/baseline", filename + ".cxtm");
 
       // Path to the exported xtm topic map document.
-      String xtm = xtmBase + File.separator + "xtm" + File.separator +
-          filename + ".xml";
+      File xtm = new File(xtmBase + File.separator + "xtm" + File.separator +
+          filename + ".xml");
 
       // Path to the output (canonicalized output of exported xtm topic map).
       String out = xtmBase + File.separator + "out" + File.separator +
@@ -224,7 +224,7 @@ public class TMExporterFilterTestCase {
 
       // Read the exported topic map for canonicalization
 
-      XTMTopicMapReader reader = new XTMTopicMapReader(new File(xtm));
+      XTMTopicMapReader reader = new XTMTopicMapReader(xtm);
       TopicMapIF exportedMap = reader.read();
 
       if (ENABLE_LTM) {
