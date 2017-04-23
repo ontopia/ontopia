@@ -35,10 +35,6 @@ import java.io.Writer;
  */
 public final class XTM21TopicMapWriter extends AbstractXTM2TopicMapWriter {
 
-  public XTM21TopicMapWriter(String filename) throws IOException {
-    super(filename);
-  }
-  
   public XTM21TopicMapWriter(File file) throws IOException {
     super(file);
   }
