@@ -52,7 +52,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     TopicMapEvents.addTopicListener(topicmapRef, listener);
     // load topic map
     topicmap = topicmapRef.createStore(false).getTopicMap();
-    ImportExportUtils.getImporter(TestFileUtils.getTestInputFile("various", "bart.ltm")).importInto(topicmap);
+    ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "bart.ltm")).importInto(topicmap);
     topicmap.getStore().commit();
     
     // get the builder of that topic map.

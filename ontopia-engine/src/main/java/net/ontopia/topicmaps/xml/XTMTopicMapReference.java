@@ -23,15 +23,10 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.xml.sax.InputSource;
-
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: An XTM document topic map reference.
@@ -121,7 +116,7 @@ public class XTMTopicMapReference extends AbstractOntopolyURLReference {
   // Abstract methods
   // ---------------------------------------------------------------------------
 
-  protected TopicMapImporterIF getImporter() throws IOException {
+  protected TopicMapReaderIF getImporter() throws IOException {
     // create topic map importer
     XTMTopicMapReader reader;
     if (base_address == null) {

@@ -36,7 +36,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
@@ -85,7 +85,7 @@ public class RDBMSBackendTests extends TestCase {
 
     // import sample topic map
     TopicMapStoreIF store = new RDBMSTopicMapStore(); // don't use storage
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
     importer.importInto(store.getTopicMap());
 
     long topicmap_id = Long.parseLong(store.getTopicMap().getObjectId().substring(1)); 

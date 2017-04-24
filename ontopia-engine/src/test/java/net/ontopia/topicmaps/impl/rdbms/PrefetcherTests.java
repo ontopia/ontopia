@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -28,13 +27,11 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.StorageIF;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
@@ -43,10 +40,10 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import junit.framework.TestCase;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 
 /** 
  * INTERNAL: Tests that tests the prefetching code used with the
@@ -78,7 +75,7 @@ public class PrefetcherTests extends TestCase {
 
     // import sample topic map
     TopicMapStoreIF store = new RDBMSTopicMapStore(); // don't use storage
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
     importer.importInto(store.getTopicMap());
 
     long topicmap_id = Long.parseLong(store.getTopicMap().getObjectId().substring(1)); 

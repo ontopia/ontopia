@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -60,7 +60,7 @@ public class DeletionUtilsTopicMapTest {
   public void testTopicMapDeletion() throws Exception {
     String name = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
     TopicMapIF tm = makeTopicMap();
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(name);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(name);
     if (name.endsWith(".xtm"))
       ((XTMTopicMapReader) importer).setValidation(false);
     try {

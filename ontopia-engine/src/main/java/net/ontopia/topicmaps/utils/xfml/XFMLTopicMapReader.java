@@ -32,7 +32,6 @@ import java.util.Collection;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -52,7 +51,7 @@ import org.xml.sax.XMLReader;
  * PUBLIC: A topic map reader that is capable of reading the XFML format
  * for faceted hierarchical metadata. 
  */
-public class XFMLTopicMapReader extends AbstractXMLFormatReader implements TopicMapReaderIF, TopicMapImporterIF {
+public class XFMLTopicMapReader extends AbstractXMLFormatReader implements TopicMapReaderIF {
   protected TopicMapStoreFactoryIF store_factory;
 
   // Define a logging category.

@@ -42,7 +42,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -67,8 +66,7 @@ import org.xml.sax.XMLReader;
  *
  * @since 3.1
  */
-public class TMXMLReader extends AbstractXMLFormatReader
-                         implements TopicMapReaderIF, TopicMapImporterIF {
+public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapReaderIF {
   public static final String PROPERTY_VALIDATE = "validate";
   private boolean validate = true;
   

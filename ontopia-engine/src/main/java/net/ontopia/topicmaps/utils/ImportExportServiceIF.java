@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractURLTopicMapReference;
@@ -69,14 +68,6 @@ public interface ImportExportServiceIF {
    * @return The TopicMapReaderIF created by this service
    */
   TopicMapReaderIF getReader(URL resource);
-
-  /**
-   * PUBLIC: Create and return a TopicMapImporterIF for the specified resource. For most
-   * implementations this will be quite similar to {@link #getReader(java.lang.String)}.
-   * @param resource The resource to create a importer for
-   * @return The TopicMapImporterIF created by this service
-   */
-  TopicMapImporterIF getImporter(URL resource);
 
   /**
    * PUBLIC: Creates an AbstractURLTopicMapReference for the specified url, using the appropriate

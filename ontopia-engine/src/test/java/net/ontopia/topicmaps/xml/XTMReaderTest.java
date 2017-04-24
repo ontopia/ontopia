@@ -28,7 +28,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
@@ -133,13 +133,13 @@ public class XTMReaderTest extends AbstractXMLTestCase {
     // Import first XTM file
     String file1 = TestFileUtils.getTestInputFile(testdataDirectory, "in",
         "latin1.xtm");
-    TopicMapImporterIF importer1 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file1));
+    TopicMapReaderIF importer1 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file1));
     importer1.importInto(tm);
 
     // Import second XTM file
     String file2 = TestFileUtils.getTestInputFile(testdataDirectory, "in",
         "mergeloop.xtm");
-    TopicMapImporterIF importer2 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file2));
+    TopicMapReaderIF importer2 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file2));
     importer2.importInto(tm);
 
     // Check the result

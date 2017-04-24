@@ -27,7 +27,7 @@ import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.FulltextImplementationIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
@@ -74,7 +74,7 @@ public abstract class AbstractOntopolyURLReference
 
   protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
     // create topic map importer
-    TopicMapImporterIF reader = getImporter();
+    TopicMapReaderIF reader = getImporter();
 
     // create empty topic map
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
@@ -184,6 +184,6 @@ public abstract class AbstractOntopolyURLReference
   // Abstract methods
   // --------------------------------------------------------------------------
 
-  protected abstract TopicMapImporterIF getImporter() throws IOException;
+  protected abstract TopicMapReaderIF getImporter() throws IOException;
   
 }

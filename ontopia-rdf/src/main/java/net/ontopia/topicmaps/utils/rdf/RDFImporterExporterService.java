@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractURLTopicMapReference;
@@ -51,10 +50,6 @@ public class RDFImporterExporterService implements ImportExportServiceIF {
   }
 
   public TopicMapReaderIF getReader(URL resource) {
-    return new RDFTopicMapReader(resource, getSyntax(resource));
-  }
-
-  public TopicMapImporterIF getImporter(URL resource) {
     return new RDFTopicMapReader(resource, getSyntax(resource));
   }
 

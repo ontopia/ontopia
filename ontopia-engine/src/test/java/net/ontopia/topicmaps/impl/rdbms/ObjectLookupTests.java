@@ -27,7 +27,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
@@ -58,7 +58,7 @@ public class ObjectLookupTests extends TestCase {
     // Load topic map, commit and close
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();
     TopicMapIF tm = store.getTopicMap();
-    TopicMapImporterIF importer = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file));
+    TopicMapReaderIF importer = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file));
     importer.importInto(tm);
     long topicmap_id = Long.parseLong(tm.getObjectId().substring(1));    
     store.commit();

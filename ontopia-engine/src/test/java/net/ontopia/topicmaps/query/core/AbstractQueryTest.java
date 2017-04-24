@@ -40,7 +40,7 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.query.impl.basic.QueryProcessor;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
@@ -107,7 +107,7 @@ public abstract class AbstractQueryTest extends TestCase {
     builder = store.getTopicMap().getBuilder();
     base = URIUtils.getURI(filename);
 
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
     if (importer instanceof XTMTopicMapReader)
       ((XTMTopicMapReader) importer).setValidation(false);
     importer.importInto(topicmap);

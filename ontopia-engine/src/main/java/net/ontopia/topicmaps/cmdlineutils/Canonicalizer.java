@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
@@ -109,7 +108,7 @@ public class Canonicalizer {
     
     try {
       if (readall) {
-        TopicMapImporterIF importer = ImportExportUtils.getImporter(stm);          
+        TopicMapReaderIF importer = ImportExportUtils.getReader(stm);          
         source = new InMemoryTopicMapStore().getTopicMap();
         importer.importInto(source);
       } else {

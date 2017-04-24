@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.utils.ctm;
 import java.io.IOException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -42,18 +42,14 @@ public class CTMTopicMapReference extends AbstractOntopolyURLReference {
 
   // using loadTopicMap inherited from AbstractOntopolyURLReference
 
-  public TopicMapImporterIF getImporter() {
+  public TopicMapReaderIF getImporter() {
     try {
-      return makeReader();
+      if (base_address == null)
+        return new CTMTopicMapReader(url);
+      else
+        return new CTMTopicMapReader(url, base_address);
     } catch (IOException e) {
       throw new OntopiaRuntimeException("Bad URL: " + url, e);
     }
-  }
-  
-  private CTMTopicMapReader makeReader() throws IOException {
-    if (base_address == null)
-      return new CTMTopicMapReader(url);
-    else
-      return new CTMTopicMapReader(url, base_address);
   }
 }

@@ -20,11 +20,9 @@
 
 package net.ontopia.topicmaps.query.impl.rdbms;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTestFactory;
 import net.ontopia.topicmaps.query.core.AbstractQueryTest;
@@ -32,7 +30,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.xml.sax.SAXException;
@@ -56,7 +53,7 @@ public class RDBMSTestUtils {
     test.base = URIUtils.getURI(filename);
     store.setBaseAddress(test.base);
 
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
     if (importer instanceof XTMTopicMapReader)
       ((XTMTopicMapReader) importer).setValidation(false);
     importer.importInto(test.topicmap);

@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -57,8 +56,7 @@ import org.xml.sax.XMLReader;
  * variety of possible input sources are accommodated, by overloading
  * the constructor.
  */
-public class XTMTopicMapReader extends AbstractXMLFormatReader
-  implements TopicMapReaderIF, TopicMapImporterIF {
+public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicMapReaderIF {
   public static final String PROPERTY_VALIDATION = "validation";
   public static final String PROPERTY_EXTERNAL_REFERENCE_HANDLER = "externalReferenceHandler";
   protected Iterator topicmaps;

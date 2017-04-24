@@ -30,12 +30,10 @@ import java.net.URL;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 
 /**
@@ -46,7 +44,7 @@ import net.ontopia.topicmaps.core.TopicMapReaderIF;
  *
  * @since 2.0
  */
-public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
+public class RDFTopicMapReader implements TopicMapReaderIF {
   public static final String PROPERTY_DUPLICATE_SUPPRESSION = "duplicateSuppression";
   public static final String PROPERTY_GENERATE_NAMES = "generateNames";
   public static final String PROPERTY_LENIENT = "lenient";

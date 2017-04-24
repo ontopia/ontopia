@@ -28,7 +28,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReader;
@@ -166,56 +165,6 @@ public class ImportExportUtils {
       for (ImportExportServiceIF service : services) {
         if (service.canRead(u)) {
           return service.getReader(u);
-        }
-      }
-      // fallback
-      return new XTMTopicMapReader (u, url);
-    }
-  }
-
-  /**
-   * PUBLIC: Given the file name or URL of a topic map, returns a
-   * topic map importer of the right class. Uses the file extension to
-   * determine what importer to create. Supports '.xtm', and '.ltm'.
-   * 
-   * @deprecated use {@link #getReader(java.lang.String)} 
-   */
-  public static TopicMapImporterIF getImporter (String filename_or_url) {
-    return getImporter (URIUtils.getURI (filename_or_url));
-  }
-
-  /**
-   * PUBLIC: Given a locator referring to a topic map, returns a topic
-   * map reader of the right class. Uses the file extension to
-   * determine what reader to create. Supports '.xtm', '.tmx', and
-   * '.ltm'.
-   * 
-   * @deprecated use {@link #getReader(net.ontopia.infoset.core.LocatorIF) } 
-   * @since 2.0
-   */
-  public static TopicMapImporterIF getImporter (LocatorIF url) {
-    String address = url.getAddress ();
-    URL u;
-    try {
-      u = new URL(address);
-    } catch (MalformedURLException mufe) {
-      throw new OntopiaRuntimeException(mufe); // should not be possible
-    }
-
-    if (address.endsWith (".xtm"))
-      return new XTMTopicMapReader (u, url);
-    else if (address.endsWith (".ltm"))
-      return new LTMTopicMapReader (u, url);
-    else if (address.endsWith (".tmx"))
-      return new TMXMLReader (u, url);
-    else if (address.endsWith (".xml"))
-      return new TMXMLReader(u, url); 
-    else if (address.endsWith (".ctm"))
-      return new CTMTopicMapReader(u, url);
-    else {
-      for (ImportExportServiceIF service : services) {
-        if (service.canRead(u)) {
-          return service.getImporter(u);
         }
       }
       // fallback

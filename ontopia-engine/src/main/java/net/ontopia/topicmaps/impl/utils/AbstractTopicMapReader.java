@@ -34,7 +34,6 @@ import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -46,9 +45,7 @@ import org.xml.sax.InputSource;
 /**
  * INTERNAL: Common abstract superclass for topic map readers.
  */
-public abstract class AbstractTopicMapReader
-  implements TopicMapReaderIF, TopicMapImporterIF {
-//  protected InputSource source;
+public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
   
   protected URL url;
   protected Reader reader;

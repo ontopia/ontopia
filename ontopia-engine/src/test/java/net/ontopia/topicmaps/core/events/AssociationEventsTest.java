@@ -60,7 +60,7 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
       TopicMapEvents.addTopicListener(topicmapRef, listener);
       // load topic map
       topicmap = topicmapRef.createStore(false).getTopicMap();
-      ImportExportUtils.getImporter(TestFileUtils.getTestInputFile("various", "alumni.xtm")).importInto(topicmap);
+      ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "alumni.xtm")).importInto(topicmap);
       topicmap.getStore().commit();
       
       // get the builder of that topic map.
