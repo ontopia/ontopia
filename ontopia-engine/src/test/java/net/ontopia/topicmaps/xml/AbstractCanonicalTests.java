@@ -27,10 +27,8 @@ import java.io.InputStream;
 import java.net.URL;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,16 +91,4 @@ public abstract class AbstractCanonicalTests {
                 StreamUtils.compareAndClose(new FileInputStream(out), baselineIn));
       }
     }
-
-  // -- internal
-
-  public static String file2URL(String filename) {
-    if (filename.startsWith("classpath:")) {
-      return net.ontopia.utils.URIUtils.getURI(filename).getExternalForm();
-    } else try {
-      return URIUtils.toURL(new File(filename)).toExternalForm();
-    } catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-  }
 }

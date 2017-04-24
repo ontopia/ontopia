@@ -86,12 +86,6 @@ public abstract class AbstractCanonicalExporterTests {
     return new InMemoryStoreFactory();
   }
 
-  // -- internal
-
-  protected String file2URL(String filename) {
-    return AbstractCanonicalTests.file2URL(filename);
-  }
-  
   // --- Test case class
 
     protected String base;

@@ -23,18 +23,18 @@ package net.ontopia.topicmaps.utils.rdf;
 import com.hp.hpl.jena.shared.JenaException;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 /**
  * PUBLIC: Converts an RDF model to a topic map using a
@@ -53,7 +53,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
   public static final String PROPERTY_MAPPING_SYNTAX = "mappingSyntax";
   protected URL infileurl;
   protected String syntax;
-  protected String mappingurl;
+  protected URL mappingurl;
   protected String mappingsyntax;
   protected boolean duplicate_suppression;
   protected boolean generate_names;
@@ -72,7 +72,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
-  public RDFTopicMapReader(File infile, String syntax) throws MalformedURLException {
+  public RDFTopicMapReader(File infile, String syntax) {
     this(URIUtils.toURL(infile), syntax);
   }
   
@@ -100,7 +100,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    * to be "RDF/XML".
    */
   public void setMappingFile(File mappingfile) {
-    this.mappingurl = file2Locator(mappingfile);
+    this.mappingurl = URIUtils.toURL(mappingfile);
   }
 
   /**
@@ -110,7 +110,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
   public void setMappingFile(File mappingfile, String syntax) {
-    this.mappingurl = file2Locator(mappingfile);
+    this.mappingurl = URIUtils.toURL(mappingfile);
     this.mappingsyntax = syntax;
   }
 
@@ -119,7 +119,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    * RDF-to-topic map mapping definition. The syntax will be assumed
    * to be "RDF/XML".
    */
-  public void setMappingURL(String url) {
+  public void setMappingURL(URL url) {
     this.mappingurl = url;
   }
 
@@ -129,7 +129,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
-  public void setMappingURL(String url, String syntax) {
+  public void setMappingURL(URL url, String syntax) {
     this.mappingurl = url;
     this.mappingsyntax = syntax;
   }
@@ -181,8 +181,8 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
 
   public void importInto(TopicMapIF topicmap) throws IOException {
     try {
-      RDFToTopicMapConverter.convert(infileurl, syntax, mappingurl, mappingsyntax,
-                                     topicmap, lenient);
+      RDFToTopicMapConverter.convert(infileurl, syntax, mappingurl == null ? null : mappingurl.toString(), 
+                                     mappingsyntax, topicmap, lenient);
       if (generate_names)
         RDFToTopicMapConverter.generateNames(topicmap);
     } catch (JenaException e) {
@@ -191,16 +191,6 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
 
     if (duplicate_suppression)
       DuplicateSuppressionUtils.removeDuplicates(topicmap);
-  }
-
-  // --- Internal methods
-
-  private static String file2Locator(File file) {
-    try {
-      return URIUtils.toURL(file).toExternalForm(); // FIXME: isn't right!
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
   }
 
   /**
@@ -239,7 +229,11 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
     }
     value = properties.get(PROPERTY_MAPPING_URL);
     if ((value != null) && (value instanceof String)) {
-      setMappingURL((String) value);
+      try {
+        setMappingURL(new URL((String) value));
+      } catch (MalformedURLException mufe) {
+        throw new OntopiaRuntimeException(mufe);
+      }
     }
     value = properties.get(PROPERTY_MAPPING_SYNTAX);
     if ((value != null) && (value instanceof String)) {

@@ -47,20 +47,6 @@ public class URIUtils {
   }
 
   /**
-   * INTERNAL: Given a File object, produce a corresponding URI string
-   * object in the file: URI scheme.
-   * @since 3.3.0
-   */
-  public static String getFileURIString(File file) {
-    try {
-      return toURL(file).toExternalForm();
-    }
-    catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException("Impossible error", e);
-    }
-  }
-
-  /**
    * INTERNAL: Given a URILocator in the file: URI scheme, produce the
    * corresponding File object.
    * @since 1.4
@@ -192,8 +178,12 @@ public class URIUtils {
   /**
    * INTERNAL: Use this method instead of File.toURL() to get URLs for files.
    */
-  public static URL toURL(File file) throws MalformedURLException {
-    return file.toURI().toURL();
+  public static URL toURL(File file) {
+    try {
+      return file.toURI().toURL();
+    } catch (MalformedURLException mufe) {
+      throw new OntopiaRuntimeException(mufe); // impossible
+    }
   }
 
 

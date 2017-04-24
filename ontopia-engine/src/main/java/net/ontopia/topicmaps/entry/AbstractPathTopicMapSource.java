@@ -241,17 +241,12 @@ public abstract class AbstractPathTopicMapSource
 
     // Loop over matched files.
     for (int i=0; i < files.length; i++) {
-      try {
-        String filename = files[i].getName();
-        String id = filename;
-        URL url = URIUtils.toURL(files[i]);
-        TopicMapReferenceIF ref = createReference(url, id, filename);
-        if (ref != null)
-          newmap.put(id, ref);
-        
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e);
-      }
+      String filename = files[i].getName();
+      String id = filename;
+      URL url = URIUtils.toURL(files[i]);
+      TopicMapReferenceIF ref = createReference(url, id, filename);
+      if (ref != null)
+        newmap.put(id, ref);
     }
     return newmap;
   }
