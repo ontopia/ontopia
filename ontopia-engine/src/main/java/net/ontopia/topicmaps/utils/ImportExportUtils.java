@@ -177,6 +177,8 @@ public class ImportExportUtils {
    * PUBLIC: Given the file name or URL of a topic map, returns a
    * topic map importer of the right class. Uses the file extension to
    * determine what importer to create. Supports '.xtm', and '.ltm'.
+   * 
+   * @deprecated use {@link #getReader(java.lang.String)} 
    */
   public static TopicMapImporterIF getImporter (String filename_or_url) {
     return getImporter (URIUtils.getURI (filename_or_url));
@@ -188,6 +190,7 @@ public class ImportExportUtils {
    * determine what reader to create. Supports '.xtm', '.tmx', and
    * '.ltm'.
    * 
+   * @deprecated use {@link #getReader(net.ontopia.infoset.core.LocatorIF) } 
    * @since 2.0
    */
   public static TopicMapImporterIF getImporter (LocatorIF url) {

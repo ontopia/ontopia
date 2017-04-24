@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.io.IOException;
-
 /**
  * PUBLIC: A topic map importer interface which enables the
  * destination of the importation to be given, but allows the source
@@ -30,17 +28,10 @@ import java.io.IOException;
  *
  * @see <code> net.ontopia.core.topicmaps.TopicMapReaderIF </code>
  * @see <code> net.ontopia.core.topicmaps.TopicMapWriterIF </code>
+ * @deprecated Merged with TopicMapReaderIF
  */
 
-public interface TopicMapImporterIF {
-
-  /**
-   * PUBLIC: Imports an implicitly designated topic map into the given topic map.
-   *
-   * @param topicmap The topic map into which the import will be done;
-   *                 an object implementing TopicMapIF.
-   */
-  public void importInto(TopicMapIF topicmap) throws IOException;
+public interface TopicMapImporterIF extends TopicMapReaderIF {
   
 }
 
