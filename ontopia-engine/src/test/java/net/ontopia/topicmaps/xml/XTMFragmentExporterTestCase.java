@@ -85,8 +85,8 @@ public class XTMFragmentExporterTestCase {
       File ltm = new File(base + File.separator + "ltm" + File.separator + filename
           + ".ltm");
       // Path to the output (canonicalized output of exported ltm topic map).
-      String out = base + File.separator + "out" + File.separator + filename
-          + ".xtm.cxtm";
+      File out = new File(base + File.separator + "out" + File.separator + filename
+          + ".xtm.cxtm");
       
       TopicMapIF sourceMap;
       sourceMap = ImportExportUtils.getReader(in).read();
@@ -116,7 +116,7 @@ public class XTMFragmentExporterTestCase {
       // out whenever submitted to CVS.
       new LTMTopicMapWriter(ltm).write(exportedMap);
 
-      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
+      new CanonicalXTMWriter(out).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized xtm fragment export of " + filename

@@ -20,9 +20,11 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,9 +104,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   
   private static final char[] LINEBREAK = { (char) 0x0A };
 
-  public CanonicalXTMWriter(OutputStream out)
-    throws UnsupportedEncodingException {
-    this.out = new CanonicalPrinter(out);
+  public CanonicalXTMWriter(File file) throws IOException {
+    this.out = new CanonicalPrinter(new FileOutputStream(file), true);
+    init();
+  }
+
+  public CanonicalXTMWriter(OutputStream out) {
+    this.out = new CanonicalPrinter(out, false);
     init();
   }
 
@@ -116,7 +122,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
    * method is <b>not</b> recommended.
    */
   public CanonicalXTMWriter(Writer out) {
-    this.out = new CanonicalPrinter(out);
+    this.out = new CanonicalPrinter(out, false);
     init();
   }
 

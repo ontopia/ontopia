@@ -21,19 +21,13 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,8 +36,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class TMXMLWriterGeneralTestCase {
-
-  protected boolean recanonicalizeSource = false;
 
   private final static String testdataDirectory = "tmxmlWriter";
 
@@ -84,18 +76,11 @@ public class TMXMLWriterGeneralTestCase {
       File tmxml = new File(base + File.separator + "tmxml" + File.separator + filename
           + ".xml");
       // Path to the output (canonicalized output of exported tmxml topic map).
-      String out = base + File.separator + "out" + File.separator + filename
-          + ".xml.cxtm";
+      File out = new File(base + File.separator + "out" + File.separator + filename
+          + ".xml.cxtm");
 
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
-
-      if (recanonicalizeSource) {
-        // Canonicalize the source topic map.
-        FileOutputStream fos = new FileOutputStream(baseline);
-        (new CanonicalXTMWriter(fos)).write(sourceMap);
-        fos.close();
-      }
 
       // Export the topic map to tmxml.
       TopicMapWriterIF writer = new TMXMLWriter(tmxml);
@@ -105,9 +90,7 @@ public class TMXMLWriterGeneralTestCase {
       TopicMapIF tmxmlMap = ImportExportUtils.getReader(tmxml).read();
 
       // Canonicalize the reimported tmxml.
-      FileOutputStream fos = new FileOutputStream(out);
-      (new CanonicalXTMWriter(fos)).write(tmxmlMap);
-      fos.close();
+      new CanonicalXTMWriter(out).write(tmxmlMap);
 
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename

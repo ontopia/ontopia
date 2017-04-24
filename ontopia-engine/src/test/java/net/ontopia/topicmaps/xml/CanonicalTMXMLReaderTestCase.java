@@ -21,12 +21,10 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.ResourcesDirectoryReader;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -67,11 +65,9 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
     reader.setValidate(true); // we do want to validate
     TopicMapIF source = reader.read();
 
-    FileOutputStream fos = new FileOutputStream(outfile);
-    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(fos);
+    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(outfile);
     cwriter.write(source);
 
-    fos.close();
     source.getStore().close();
   }  
 }

@@ -21,21 +21,18 @@
 package net.ontopia.topicmaps.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.FileOutputStream;
 import java.net.MalformedURLException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import junit.framework.TestCase;
-
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.DeciderUtils;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
@@ -202,9 +199,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
 
   private void canonicalize(String filename, TopicMapIF tm) throws IOException {
     String out = base + File.separator + "out" + File.separator + filename;
-    FileOutputStream str = new FileOutputStream(new File(out));
-    new CanonicalXTMWriter(str).write(tm);
-    str.close();
+    new CanonicalXTMWriter(new File(out)).write(tm);
 
     /*out += ".ltm";
     ImportExportUtils.getWriter(out).write(tm);*/

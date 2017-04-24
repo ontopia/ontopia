@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -76,7 +75,7 @@ public class LTMTestCase {
       
       if (ltm13(filename)) {
         out = new File(out.toString() + ".cxtm");
-        new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
+        new CanonicalXTMWriter(out).write(source);
   
         // compare results
         String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",

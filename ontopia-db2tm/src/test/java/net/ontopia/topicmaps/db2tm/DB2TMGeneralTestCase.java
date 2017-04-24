@@ -21,15 +21,14 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,9 +93,7 @@ public class DB2TMGeneralTestCase {
       }
       
       // Export the result topic map to cxtm
-      FileOutputStream out = new FileOutputStream(cxtm);
-      new CanonicalXTMWriter(out).write(topicmap);
-      out.close();
+      new CanonicalXTMWriter(cxtm).write(topicmap);
       
       // Check that the cxtm output matches the baseline.
       Assert.assertTrue("The canonicalized conversion from " + filename

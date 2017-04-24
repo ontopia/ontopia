@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.tmprefs;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -63,7 +62,7 @@ public class TopicMapPreferencesTest {
 		TestFileUtils.verifyDirectory(base, "ltm");
 		String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
 		String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename + ".cxtm");
-		String out = base + File.separator + "out" + File.separator + filename + ".cxtm";
+		File out = new File(base + File.separator + "out" + File.separator + filename + ".cxtm");
 		File ltm = new File(base + File.separator + "ltm" + File.separator + filename + ".ltm");
 		TestTMPrefsFactory.setFixedReference(in);
 		
@@ -75,9 +74,7 @@ public class TopicMapPreferencesTest {
 		
 		new LTMTopicMapWriter(ltm).write(topicmap);
 
-		FileOutputStream cxtmfos = new FileOutputStream(out);
-		new CanonicalXTMWriter(cxtmfos).write(topicmap);
-		cxtmfos.close();
+		new CanonicalXTMWriter(out).write(topicmap);
 
 		// // compare results
 		// Assert.assertTrue("Canonicalizing the test file " + filename +

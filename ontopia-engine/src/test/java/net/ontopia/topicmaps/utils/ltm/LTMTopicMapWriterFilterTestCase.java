@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -78,8 +77,8 @@ public class LTMTopicMapWriterFilterTestCase {
       File ltm = new File(base + File.separator + "filter-ltm" + File.separator
           + filename + ".ltm");
       // Path to the output (canonicalized output of exported ltm topic map).
-      String out = base + File.separator + "filter-out" + File.separator
-          + filename + ".cxtm";
+      File out = new File(base + File.separator + "filter-out" + File.separator
+          + filename + ".cxtm");
 
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
@@ -99,9 +98,7 @@ public class LTMTopicMapWriterFilterTestCase {
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
 
       // Canonicalize the reimported ltm.
-      FileOutputStream fos = new FileOutputStream(out);
-      new CanonicalXTMWriter(fos).write(ltmMap);
-      fos.close();
+      new CanonicalXTMWriter(out).write(ltmMap);
 
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename +

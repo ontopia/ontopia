@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -61,8 +60,8 @@ public class CTMTestCase {
       // produce canonical output
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename);
-      String out = base + File.separator + "out" + File.separator +
-        filename;
+      File out = new File(base + File.separator + "out" + File.separator +
+        filename);
 
       TopicMapIF source = null;
       try {
@@ -72,11 +71,7 @@ public class CTMTestCase {
       }
 
       DuplicateSuppressionUtils.removeDuplicates(source);
-      try {
-        new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException("Error in " + in, e);
-      }
+      new CanonicalXTMWriter(out).write(source);
   
       // compare results
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 

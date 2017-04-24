@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.FileOutputStream;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -343,9 +342,7 @@ public class SyncTest {
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
     
     // Export the result topic map to cxtm
-    FileOutputStream out = new FileOutputStream(cxtm);
-    (new CanonicalXTMWriter(out)).write(topicmap);
-    out.close();
+    new CanonicalXTMWriter(cxtm).write(topicmap);
     
       // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + name

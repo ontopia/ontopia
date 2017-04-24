@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -38,20 +39,27 @@ import org.xml.sax.SAXException;
  */
 public class CanonicalPrinter implements ContentHandler {
   protected PrintWriter writer;
+  private final boolean closeWRiter;
   
   /**
    * Creates a CanonicalPrinter that writes to the given OutputStream.
    * The encoding used is always utf-8.
    */
-  public CanonicalPrinter(OutputStream stream) throws UnsupportedEncodingException {
-    this.writer = new PrintWriter(new OutputStreamWriter(stream, "utf-8"));
+  public CanonicalPrinter(OutputStream stream, boolean closeWRiter) {
+    try {
+      this.writer = new PrintWriter(new OutputStreamWriter(stream, "utf-8"));
+    } catch (UnsupportedEncodingException use) {
+      throw new OntopiaRuntimeException(use);
+    }
+    this.closeWRiter = closeWRiter;
   }
 
   /**
    * Creates a CanonicalPrinter that writes to the given Writer.
    */
-  public CanonicalPrinter(Writer writer) {
+  public CanonicalPrinter(Writer writer, boolean closeWRiter) {
     this.writer = new PrintWriter(writer);
+    this.closeWRiter = closeWRiter;
   }  
 
   // Document events
@@ -112,6 +120,9 @@ public class CanonicalPrinter implements ContentHandler {
 
   public void endDocument() {
     writer.flush();
+    if (closeWRiter){
+      writer.close();
+    }
   }
 
   public void setDocumentLocator (Locator locator) {

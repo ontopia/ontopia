@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,7 +44,6 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.GrabberIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringifierComparator;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.xml.CanonicalPrinter;
@@ -68,9 +66,6 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   protected ContentHandler out;
   
-  // If stream is instantiated here we'll close it when we're done.
-  protected OutputStream stream;
-
   protected LocatorIF baseloc;
 
   // constants
@@ -81,12 +76,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
    * @param file The file object to which the topic map is to be written.
    */
   public CanonicalTopicMapWriter(File file) throws IOException {
-    this.stream = new FileOutputStream(file);
-    try {
-      this.out = new CanonicalXTMPrinter(stream);
-    } catch (UnsupportedEncodingException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    this.out = new CanonicalXTMPrinter(new FileOutputStream(file), true);
   }
 
   /**
@@ -97,17 +87,12 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
    */
     
   public CanonicalTopicMapWriter(OutputStream stream) {
-    try {
-      this.out = new CanonicalXTMPrinter(stream);
-    } catch (UnsupportedEncodingException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    this.out = new CanonicalXTMPrinter(stream, false);
   }
 
   public void write(TopicMapIF topicmap) throws IOException {
     try {
       export(topicmap, out);
-      if (stream != null) stream.close();
     }
     catch (SAXException e) {
       if (e.getException() instanceof IOException)
@@ -732,8 +717,8 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   public class CanonicalXTMPrinter extends CanonicalPrinter {
   
-    public CanonicalXTMPrinter(OutputStream stream) throws UnsupportedEncodingException {
-      super(stream);
+    public CanonicalXTMPrinter(OutputStream stream, boolean closeWriter) {
+      super(stream, closeWriter);
     }
 
     public void startElement(String uri, String localName, String name, Attributes atts) {

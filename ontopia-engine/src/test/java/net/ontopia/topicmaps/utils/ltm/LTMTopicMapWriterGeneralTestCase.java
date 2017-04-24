@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -37,7 +36,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class LTMTopicMapWriterGeneralTestCase {
-  protected boolean recanonicalizeSource = false;
 
   private final static String testdataDirectory = "ltmWriter";
 
@@ -77,20 +75,13 @@ public class LTMTopicMapWriterGeneralTestCase {
       File ltm = new File(base + File.separator + "ltm" + File.separator + filename
           + ".ltm");
       // Path to the output (canonicalized output of exported ltm topic map).
-      String out = base + File.separator + "out" + File.separator + filename
-          + ".cxtm";
+      File out = new File(base + File.separator + "out" + File.separator + filename
+          + ".cxtm");
 
       boolean isPrefixed = filename.startsWith("prefixed-");
 
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
-
-      if (recanonicalizeSource) {
-        // Canonicalize the source topic map.
-        FileOutputStream fos = new FileOutputStream(baseline);
-        new CanonicalXTMWriter(fos).write(sourceMap);
-        fos.close();
-      }
 
       // Export the topic map to ltm.
       LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(ltm);
@@ -103,20 +94,17 @@ public class LTMTopicMapWriterGeneralTestCase {
 
       if (isPrefixed) {
         // re-route baseline to reloaded original file
-        baseline = base + File.separator + "out" + File.separator +
-          filename + ".original.cxtm";
-        FileOutputStream fos = new FileOutputStream(baseline);
-        new CanonicalXTMWriter(fos).write(sourceMap);
-        fos.close();
+        File redirected = new File(base + File.separator + "out" + File.separator +
+          filename + ".original.cxtm");
+        new CanonicalXTMWriter(redirected).write(sourceMap);
+        baseline = redirected.toString();
       }
 
       // Reimport the exported ltm.
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
 
       // Canonicalize the reimported ltm.
-      FileOutputStream fos = new FileOutputStream(out);
-      (new CanonicalXTMWriter(fos)).write(ltmMap);
-      fos.close();
+      new CanonicalXTMWriter(out).write(ltmMap);
 
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename +

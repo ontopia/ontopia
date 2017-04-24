@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -136,8 +135,8 @@ public class TMRAPTestCase {
           + ".xtm";
 
       // Path to the canonicalized output.
-      String cxtm = base + "cxtm" + File.separator 
-          + id + ".cxtm";
+      File cxtm = new File(base + "cxtm" + File.separator 
+          + id + ".cxtm");
 
       // Path to the baseline.
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
@@ -160,9 +159,7 @@ public class TMRAPTestCase {
       filterUnifyingTopics(importedTM);
 
       // Canonicalize the reimported tm.
-      FileOutputStream fos = new FileOutputStream(cxtm);
-      (new CanonicalXTMWriter(fos)).write(importedTM);
-      fos.close();
+      new CanonicalXTMWriter(cxtm).write(importedTM);
       
       // NOTE: Only for observational purposes when making tests.
       // (new LTMTopicMapWriter(new FileOutputStream(base + "ltm" + File.separator

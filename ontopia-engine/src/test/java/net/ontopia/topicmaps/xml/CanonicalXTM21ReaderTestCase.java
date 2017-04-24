@@ -21,13 +21,11 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import net.ontopia.utils.ResourcesDirectoryReader;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -58,10 +56,8 @@ public class CanonicalXTM21ReaderTestCase extends AbstractCanonicalTests {
     reader.setStoreFactory(sfactory);
     TopicMapIF source = reader.read();
 
-    FileOutputStream out = new FileOutputStream(outfile);
-    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(out);
+    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(outfile);
     cwriter.write(source);
-    out.close();
 
     source.getStore().close();
   }

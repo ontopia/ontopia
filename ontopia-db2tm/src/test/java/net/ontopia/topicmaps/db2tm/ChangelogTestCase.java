@@ -21,23 +21,22 @@
 package net.ontopia.topicmaps.db2tm;
 
 import au.com.bytecode.opencsv.CSVReader;
-import java.util.Map;
-import java.util.List;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.PropertyUtils;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
+import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.PropertyUtils;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,9 +105,7 @@ public class ChangelogTestCase {
     DB2TM.sync(cfg, topicmap);
 
     // Canonicalize!
-    FileOutputStream fos = new FileOutputStream(out);
-    (new CanonicalXTMWriter(fos)).write(topicmap);
-    fos.close();
+    new CanonicalXTMWriter(out).write(topicmap);
       
     // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + casename

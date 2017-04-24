@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
@@ -124,10 +124,7 @@ public class Canonicalizer {
       return;
     }
 
-    FileOutputStream out = new FileOutputStream(ctm);
-    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(out);
-    cwriter.write(source);
-    out.close();
+    new CanonicalXTMWriter(new File(ctm)).write(source);
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {

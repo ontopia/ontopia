@@ -21,16 +21,14 @@
 package net.ontopia.topicmaps.utils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,8 +91,6 @@ public class TopicMapSynchronizerTests {
 
       TopicMapSynchronizer.update(target, sourcet);
 
-      FileOutputStream out = new FileOutputStream(outfile);
-      new CanonicalXTMWriter(out).write(target);
-      out.close();
+      new CanonicalXTMWriter(new File(outfile)).write(target);
     }
 }

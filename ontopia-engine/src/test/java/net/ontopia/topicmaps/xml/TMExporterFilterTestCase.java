@@ -91,8 +91,8 @@ public class TMExporterFilterTestCase {
           filename + ".xtm";
 
       // Path to the output (canonicalized output of exported xtm topic map).
-      String out = xtmFragBase + File.separator + "out" + File.separator +
-          filename + ".cxtm";
+      File out = new File(xtmFragBase + File.separator + "out" + File.separator +
+          filename + ".cxtm");
       
       TopicMapIF sourceMap;
       sourceMap = ImportExportUtils.getReader(in).read();
@@ -130,7 +130,7 @@ public class TMExporterFilterTestCase {
         new LTMTopicMapWriter(ltm).write(exportedMap);
       }
 
-      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
+      new CanonicalXTMWriter(out).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized xtm fragment export of " + filename
@@ -157,8 +157,8 @@ public class TMExporterFilterTestCase {
           filename + ".xml");
 
       // Path to the output (canonicalized output of exported xtm topic map).
-      String out = tmxmlBase + File.separator + "out" + File.separator +
-          filename + ".cxtm";
+      File out = new File(tmxmlBase + File.separator + "out" + File.separator +
+          filename + ".cxtm");
       
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
@@ -185,7 +185,7 @@ public class TMExporterFilterTestCase {
         new LTMTopicMapWriter(ltm).write(exportedMap);
       }
 
-      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
+      new CanonicalXTMWriter(out).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized tmxml export of " + filename
@@ -211,8 +211,8 @@ public class TMExporterFilterTestCase {
           filename + ".xml");
 
       // Path to the output (canonicalized output of exported xtm topic map).
-      String out = xtmBase + File.separator + "out" + File.separator +
-          filename + ".cxtm";
+      File out = new File(xtmBase + File.separator + "out" + File.separator +
+          filename + ".cxtm");
       
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
@@ -239,7 +239,7 @@ public class TMExporterFilterTestCase {
         new LTMTopicMapWriter(ltm).write(exportedMap);
       }
 
-      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
+      new CanonicalXTMWriter(out).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized xtm export of " + filename
@@ -266,8 +266,8 @@ public class TMExporterFilterTestCase {
         filename + ".xtm.cxtm");
 
       // Path to the output (canonicalized output of exported xtm topic map).
-      String out = ltmBase + File.separator + "out" + File.separator +
-          filename + ".cxtm";
+      File out = new File(ltmBase + File.separator + "out" + File.separator +
+          filename + ".cxtm");
       
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
@@ -281,9 +281,7 @@ public class TMExporterFilterTestCase {
       
       TopicMapIF exportedMap = ImportExportUtils.getReader(ltm).read();
 
-      CanonicalXTMWriter xtmWriter = new CanonicalXTMWriter(
-          new FileOutputStream(out)); 
-      xtmWriter.write(exportedMap);
+      new CanonicalXTMWriter(out).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized ltm export of " + filename
