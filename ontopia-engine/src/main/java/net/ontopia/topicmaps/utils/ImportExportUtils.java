@@ -81,7 +81,7 @@ public class ImportExportUtils {
    * @since 2.0
    */
   public static TopicMapReaderIF getReader (File file) throws IOException {
-    return getReader (file.toURL ().toExternalForm ());
+    return getReader(URIUtils.toURL(file));
   }
 
   /**
