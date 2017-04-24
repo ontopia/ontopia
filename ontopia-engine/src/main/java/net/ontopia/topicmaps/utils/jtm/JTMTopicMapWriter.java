@@ -26,23 +26,21 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

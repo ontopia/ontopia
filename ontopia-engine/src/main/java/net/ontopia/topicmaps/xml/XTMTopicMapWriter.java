@@ -28,12 +28,10 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Map;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.xml.PrettyPrinter;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
