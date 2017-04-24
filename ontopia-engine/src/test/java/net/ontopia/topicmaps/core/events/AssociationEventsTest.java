@@ -23,19 +23,16 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.events.AbstractTopicMapListener;
-import net.ontopia.topicmaps.core.events.TopicMapEvents;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public abstract class AssociationEventsTest extends AbstractTopicMapTest {
@@ -96,9 +93,9 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
   // --- Test Cases
   
   public void testRolePlayerEvent1() throws MalformedURLException {
-    TopicIF johnDoe = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#JohnDoe"));
-    TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#graduatedFrom"));
-    TopicIF alumnusRoleType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#Alumnus"));
+    TopicIF johnDoe = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#JohnDoe"));
+    TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#graduatedFrom"));
+    TopicIF alumnusRoleType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#Alumnus"));
   
     assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
     
@@ -115,11 +112,11 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
   }
   
   public void testRolePlayerEvent2() throws MalformedURLException {
-    TopicIF johnDoe = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#JohnDoe"));
-    TopicIF uOfSwhere = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#UniversityOfSomewhere"));
-    TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#graduatedFrom"));
-    TopicIF alumnusRoleType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#Alumnus"));
-    TopicIF almaMaterRoleType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#AlmaMater"));
+    TopicIF johnDoe = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#JohnDoe"));
+    TopicIF uOfSwhere = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#UniversityOfSomewhere"));
+    TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#graduatedFrom"));
+    TopicIF alumnusRoleType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#Alumnus"));
+    TopicIF almaMaterRoleType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#AlmaMater"));
   
     assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
     
