@@ -133,13 +133,13 @@ public class TestFileUtils {
     return "classpath:" + testdataInputRoot + directory + "/" + filename;
   }
 
-  public static URL getTestInputURL(String... path) {
+  public static URL getTestInputURL(String... path) throws FileNotFoundException {
     return getTestInputURL(testdataInputRoot + StringUtils.join(path, "/"));
   }
 
-  public static URL getTestInputURL(String resource) {
+  public static URL getTestInputURL(String resource) throws FileNotFoundException {
     URL url = Thread.currentThread().getContextClassLoader().getResource(resource.startsWith("classpath:") ? resource.substring("classpath:".length()) : resource);
-    if (url == null) throw new OntopiaRuntimeException("Test resource " + resource + " not found");
+    if (url == null) throw new FileNotFoundException("Test resource " + resource + " not found");
     return url;
   }
 
