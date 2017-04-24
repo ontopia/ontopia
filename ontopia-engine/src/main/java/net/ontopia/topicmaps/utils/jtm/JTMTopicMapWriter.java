@@ -19,6 +19,8 @@
  */
 package net.ontopia.topicmaps.utils.jtm;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -64,6 +66,29 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     IID,
     SID,
     SL
+  }
+  
+  /**
+   * PUBLIC: Create an JTMTopicMapWriter that writes to a given File in
+   * UTF-8. <b>Warning:</b> Use of this method is discouraged, as it is very
+   * easy to get character encoding errors with this method.
+   * 
+   * @param file Where the output should be written.
+   */
+  public JTMTopicMapWriter(File file) throws IOException {
+    this(new FileOutputStream(file), "utf-8");
+  }
+  
+  /**
+   * PUBLIC: Create an JTMTopicMapWriter that writes to a given File in
+   * the given encoding.
+   * 
+   * @param file Where the output should be written.
+   * @param encoding The desired character encoding.
+   */
+  public JTMTopicMapWriter(File file, String encoding) throws IOException {
+    this(new FileOutputStream(file), encoding);
+    writer.setCloseWriter(true);
   }
   
   /**
