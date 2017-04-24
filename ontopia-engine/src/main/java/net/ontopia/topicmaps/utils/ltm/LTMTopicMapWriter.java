@@ -81,6 +81,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   protected Map<String, Integer> roleCounter;
   protected Map<String, Boolean> rolesCounted;
   protected Writer out;
+  protected boolean closeWriter = false;
   protected Calendar calendar;
   protected String base;
 
@@ -134,6 +135,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   public LTMTopicMapWriter(File file, String encoding) throws IOException {
     this(new FileOutputStream(file), encoding);
+    closeWriter = true;
   }
 
   /**
@@ -141,6 +143,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * OutputStream in UTF-8. <b>Warning:</b> Use of this method is
    * discouraged, as it is very easy to get character encoding errors
    * with this method.
+   * Note: Caller is responsible for closing the stream!
    * @param stream Where the output should be written.
    */
   public LTMTopicMapWriter(OutputStream stream) throws IOException {
@@ -150,6 +153,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in the given encoding.
+   * Note: Caller is responsible for closing the stream!
    * @param stream Where the output should be written.
    * @param encoding The desired character encoding.
    */
@@ -160,6 +164,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
+   * Note: Caller is responsible for closing the writer!
    * @param out Where the output should be written.
    * @param encoding The encoding used by the writer. This is the encoding
    *   that will be declared on the first line of the LTM file. It must be
@@ -413,6 +418,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       writeAssociation(associationsIt.next(), out);
 
     out.flush();
+    
+    if (closeWriter) {
+      out.close();
+    }
   }
 
   /**
