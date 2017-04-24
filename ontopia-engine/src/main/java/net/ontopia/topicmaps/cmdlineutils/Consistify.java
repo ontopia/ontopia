@@ -29,11 +29,11 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.impl.basic.index.TNCIndex;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.StringUtils;
@@ -149,7 +149,7 @@ public class Consistify {
     if (format == 'e')
       new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
     else
-      ImportExportUtils.getWriter(outfile, encoding).write(tm);
+      ImportExportUtils.getWriter(new File(outfile), encoding).write(tm);
   }
 
   protected static void normalizeTopicNames(TopicMapIF tm) {

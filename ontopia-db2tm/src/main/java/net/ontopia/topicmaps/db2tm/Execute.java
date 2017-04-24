@@ -25,8 +25,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
@@ -144,7 +144,7 @@ public class Execute {
         // export topicmap
         if (outfile != null) {
           log.debug("Exporting topic map to {}", outfile);
-          TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
+          TopicMapWriterIF writer = ImportExportUtils.getWriter(new File(outfile));
           writer.write(topicmap);
         }
         

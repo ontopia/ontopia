@@ -20,6 +20,8 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -35,11 +37,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -48,18 +48,18 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
+import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.IteratorComparator;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,6 +116,25 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   protected String groupString1;
 
   private Map<String, String> prefixes = new HashMap<String, String>();
+
+  /**
+   * PUBLIC: Create an LTMTopicMapWriter that writes to a given
+   * File in UTF-8.
+   * @param file Where the output should be written to.
+   */
+  public LTMTopicMapWriter(File file) throws IOException {
+    this(new FileOutputStream(file), "utf-8");
+  }
+
+  /**
+   * PUBLIC: Create an LTMTopicMapWriter that writes to a given
+   * File in specified encoding.
+   * @param file Where the output should be written to.
+   * @param encoding The desired character encoding.
+   */
+  public LTMTopicMapWriter(File file, String encoding) throws IOException {
+    this(new FileOutputStream(file), encoding);
+  }
 
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given

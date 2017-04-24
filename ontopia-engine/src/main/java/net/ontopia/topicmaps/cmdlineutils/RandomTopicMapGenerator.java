@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -227,7 +228,7 @@ public class RandomTopicMapGenerator {
       rg.populateTopicMap();
 
       if (args.length > 2)
-        ImportExportUtils.getWriter(args[2]).write(tm);
+        ImportExportUtils.getWriter(new File(args[2])).write(tm);
       store.commit();
     } finally {
       store.close();

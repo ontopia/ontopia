@@ -221,45 +221,38 @@ public class ImportExportUtils {
   }
 
   /**
-   * PUBLIC: Given the file name of a topicmap, returns a topicmap
+   * PUBLIC: Given the file for a topicmap, returns a topicmap
    * writer of the right class. Uses the file extension to determine
    * what writer to create.  Supports '.xtm' and '.tmx'. If the suffix
    * is unknown, the default writer is a XTM writer.
    */
-  public static TopicMapWriterIF getWriter (String tmfile) throws IOException {
-    if (tmfile.endsWith (".ltm"))
-      return new LTMTopicMapWriter (new FileOutputStream (tmfile));
-    else if (tmfile.endsWith (".tmx"))
-      return new TMXMLWriter (new File(tmfile));
-    else if (tmfile.endsWith (".xtm1"))
-      return new XTMTopicMapWriter (new File (tmfile));
-    else {
+  public static TopicMapWriterIF getWriter (File tmfile) throws IOException {
+    return getWriter(tmfile, null);
+  }
+
+  /**
+   * PUBLIC: Given the file for a topicmap, returns a topicmap
+   * writer of the right class. Uses the file extension to determine
+   * what writer to create.  Supports '.xtm' and '.tmx'. If the suffix
+   * is unknown, the default writer is a XTM writer.
+   */
+  public static TopicMapWriterIF getWriter (File tmfile, String encoding) throws IOException {
+    String name = tmfile.getName();
+    if (name.endsWith(".ltm")) {
+      return new LTMTopicMapWriter(tmfile, encoding);
+    } else if (name.endsWith(".tmx")) {
+      return new TMXMLWriter(tmfile, encoding);
+    } else if (name.endsWith(".xtm1")) {
+      return new XTMTopicMapWriter(tmfile, encoding);
+    } else {
       for (ImportExportServiceIF service : services) {
-        if (service.canWrite(new File(tmfile).toURI().toURL())) {
+        if (service.canWrite(tmfile.toURI().toURL())) {
           return service.getWriter(new FileOutputStream(tmfile));
         }
       }
       // fallback
-      return new XTM2TopicMapWriter (new File (tmfile));
+      return new XTM2TopicMapWriter(tmfile);
     }
-  }
-
-  /**
-   * PUBLIC: Given the file name of a topicmap, returns a topicmap writer of the
-   * right class. Uses the file extension to determine what writer to create.
-   * Supports '.xtm' and '.tmx'. If the suffix is unknown, the default
-   * writer is a XTM writer.
-   */
-  public static TopicMapWriterIF getWriter (String tmfile, String encoding) throws IOException {
-    if (encoding == null)
-      return getWriter(tmfile);
-
-    if (tmfile.endsWith(".tmx"))
-      return new TMXMLWriter (new File(tmfile), encoding);
-    else if (tmfile.endsWith(".xtm1"))
-      return new XTMTopicMapWriter(new File(tmfile), encoding);
-    else
-      return new XTM2TopicMapWriter(new File(tmfile), encoding);
   }
 
   /**
