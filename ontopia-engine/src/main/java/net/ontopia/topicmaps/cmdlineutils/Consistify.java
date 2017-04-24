@@ -79,7 +79,7 @@ public class Consistify {
     }
 
     try {
-      TopicMapIF loaded = load(args[0]);
+      TopicMapIF loaded = ImportExportUtils.getReader(args[0]).read();
       if (ohandler.normalize)
         normalizeTopicNames(loaded);
       doTNCMerge(loaded);
@@ -109,10 +109,6 @@ public class Consistify {
     System.out.println("");
     System.out.println("    <input>: source topic map");
     System.out.println("    <output>: output topic map");
-  }
-
-  protected static TopicMapIF load(String stm) throws java.io.IOException {
-    return ImportExportUtils.getReader(stm).read();
   }
 
   protected static void doTNCMerge(TopicMapIF tm) {
