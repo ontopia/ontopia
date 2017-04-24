@@ -133,8 +133,8 @@ public class TestFileUtils {
     return "classpath:" + testdataInputRoot + directory + "/" + filename;
   }
 
-  public static URL getTestInputURL(String directory, String filename) {
-    return getTestInputURL(testdataInputRoot + directory + "/" + filename);
+  public static URL getTestInputURL(String... path) {
+    return getTestInputURL(testdataInputRoot + StringUtils.join(path, "/"));
   }
 
   public static URL getTestInputURL(String resource) {
