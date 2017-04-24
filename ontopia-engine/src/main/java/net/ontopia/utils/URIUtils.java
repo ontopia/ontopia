@@ -97,6 +97,14 @@ public class URIUtils {
                                         uri_or_filename, e);
     }    
   }
+  
+  public static URL toURL(String uri_or_filename) {
+    try {
+      return StreamUtils.getResource(uri_or_filename);
+    } catch (IOException ioe) {
+      throw new OntopiaRuntimeException(ioe);
+    }
+  }
 
   /**
    * INTERNAL: URL-encodes the string by encoding reserved characters
