@@ -89,7 +89,7 @@ public class XTMWriterFilterTestCase {
 
       // Export document
       XTMTopicMapWriter xtmWriter = new XTMTopicMapWriter(xtm);
-      xtmWriter.setVersion(1);
+      xtmWriter.setVersion(XTMVersion.XTM_1_0);
 
       // Set this writer to filter out the following topics.
       TMDecider tmFilter = new TMDecider();

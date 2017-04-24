@@ -66,7 +66,7 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
     throws IOException {
     // First we export
     XTMTopicMapWriter writer = new XTMTopicMapWriter(outfile);
-    writer.setVersion(1);
+    writer.setVersion(XTMVersion.XTM_1_0);
     writer.write(topicmap);
 
     // Then we read back in

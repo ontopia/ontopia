@@ -80,7 +80,7 @@ public class CanonicalExporterMultiXTMTests {
         File tempfile = new File(outputDirectory, "tmp-" + filename + "-" + counter);
         
         XTMTopicMapWriter writer = new XTMTopicMapWriter(tempfile);
-        writer.setVersion(1);
+        writer.setVersion(XTMVersion.XTM_1_0);
         writer.write(tm);
         tm.getStore().close();
         

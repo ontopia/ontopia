@@ -142,26 +142,6 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Set XTM version to use on export.
-   *
-   * @see #setVersion(XTMVersion).
-   * 
-   * @since 4.0.0
-   */
-  @Deprecated
-  public void setVersion(final int version) {
-    if (version == 1) {
-      setVersion(XTMVersion.XTM_1_0);
-    }
-    else if (version == 2) {
-      setVersion(XTMVersion.XTM_2_0);
-    }
-    else {
-      throw new IllegalArgumentException("Unknown XTM version: " + version);
-    }
-  }
-
-  /**
-   * PUBLIC: Set XTM version to use on export.
    * @since 5.1.0
    */
   public void setVersion(final XTMVersion version) {

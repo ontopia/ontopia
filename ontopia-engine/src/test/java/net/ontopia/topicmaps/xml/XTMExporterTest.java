@@ -44,7 +44,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
 
   @Before
   public void setVersion() {
-    version = 1; // ensure export() uses XTM 1.0
+    version = XTMVersion.XTM_1_0; // ensure export() uses XTM 1.0
   }
 
   // --- Test cases
@@ -54,7 +54,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     TopicMapIF tm = load(testdataDirectory, "in", "latin1.xtm");
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-latin1.xtm");
     XTMTopicMapWriter writer = new XTMTopicMapWriter(out, "iso-8859-1");
-    writer.setVersion(1);
+    writer.setVersion(XTMVersion.XTM_1_0);
     writer.write(tm);
     TopicMapIF tm2 = new XTMTopicMapReader(out).read();
     // check for a topic that has at least one name
@@ -73,7 +73,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     TopicMapIF tm = load(testdataDirectory, "in", "latin1.xtm");
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-utf-8.xtm");
     XTMTopicMapWriter writer = new XTMTopicMapWriter(out);
-    writer.setVersion(1);
+    writer.setVersion(XTMVersion.XTM_1_0);
     writer.write(tm);
     TopicMapIF tm2 = new XTMTopicMapReader(out).read();
     // check for a topic that has at least one name

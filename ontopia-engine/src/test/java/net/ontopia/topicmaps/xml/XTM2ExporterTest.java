@@ -45,7 +45,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
 
   @Before
   public void setVersion() {
-    version = 2; // ensure that export uses XTM 2.0
+    version = XTMVersion.XTM_2_0; // ensure that export uses XTM 2.0
   }
 
   // --- Test cases
