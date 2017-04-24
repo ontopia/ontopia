@@ -75,7 +75,7 @@ public class ChangelogTestCase {
     TestFileUtils.verifyDirectory(base, "out");
       
     String cfg = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".xml").getPath();
-    String tm = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm").getPath();
+    File tm = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm");
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", casename + ".cxtm");
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "in/sync/baseline", casename + ".cxtm");
       
@@ -91,7 +91,7 @@ public class ChangelogTestCase {
               false);
       
     // Import the topic map seed.
-    TopicMapIF topicmap = ImportExportUtils.getReader("file:" + tm).read();
+    TopicMapIF topicmap = ImportExportUtils.getReader(tm).read();
       
     // Extend the topic map seed with the the config file.
     DB2TM.add(cfg, topicmap);
