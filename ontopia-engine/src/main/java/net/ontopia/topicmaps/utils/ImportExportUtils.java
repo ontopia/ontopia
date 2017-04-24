@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReader;
@@ -91,7 +90,7 @@ public class ImportExportUtils {
    * determine what reader to create. Supports '.xtm', and '.ltm'.
    */
   public static TopicMapReaderIF getReader (String filename_or_url) {
-    return getReader (URIUtils.getURI (filename_or_url));
+    return getReader(URIUtils.toURL(filename_or_url));
   }
 
   /**
@@ -102,35 +101,32 @@ public class ImportExportUtils {
    * 
    * @since 2.0
    */
-  private static TopicMapReaderIF getReader (LocatorIF url) {
-    String address = url.getAddress ();
-    URL u;
+  private static TopicMapReaderIF getReader (URL url) {
+    String address = url.toString();
     try {
-      u = new URL(address);
-    } catch (MalformedURLException mufe) {
-      throw new OntopiaRuntimeException(mufe); // should not be possible
-    }
-
-    if (address.startsWith ("x-ontopia:tm-rdbms:"))
-      return new RDBMSTopicMapReader (getTopicMapId (address));
-    else if (address.endsWith (".xtm"))
-      return new XTMTopicMapReader (u, url);
-    else if (address.endsWith (".ltm"))
-      return new LTMTopicMapReader (u, url);
-    else if (address.endsWith (".tmx"))
-      return new TMXMLReader (u, url);
-    else if (address.endsWith (".xml"))
-      return new TMXMLReader(u, url); 
-    else if (address.endsWith (".ctm"))
-      return new CTMTopicMapReader(u, url);
-    else {
-      for (ImportExportServiceIF service : services) {
-        if (service.canRead(u)) {
-          return service.getReader(u);
+      if (address.startsWith ("x-ontopia:tm-rdbms:"))
+        return new RDBMSTopicMapReader (getTopicMapId (address));
+      else if (address.endsWith (".xtm"))
+        return new XTMTopicMapReader (url);
+      else if (address.endsWith (".ltm"))
+        return new LTMTopicMapReader (url);
+      else if (address.endsWith (".tmx"))
+        return new TMXMLReader (url);
+      else if (address.endsWith (".xml"))
+        return new TMXMLReader(url); 
+      else if (address.endsWith (".ctm"))
+        return new CTMTopicMapReader(url);
+      else {
+        for (ImportExportServiceIF service : services) {
+          if (service.canRead(url)) {
+            return service.getReader(url);
+          }
         }
+        // fallback
+        return new XTMTopicMapReader (url);
       }
-      // fallback
-      return new XTMTopicMapReader (u, url);
+    } catch (MalformedURLException mufe) {
+      throw new OntopiaRuntimeException(mufe);
     }
   }
 
