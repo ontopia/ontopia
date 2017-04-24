@@ -102,7 +102,7 @@ public class ImportExportUtils {
    * 
    * @since 2.0
    */
-  public static TopicMapReaderIF getReader (LocatorIF url) {
+  private static TopicMapReaderIF getReader (LocatorIF url) {
     String address = url.getAddress ();
     URL u;
     try {
