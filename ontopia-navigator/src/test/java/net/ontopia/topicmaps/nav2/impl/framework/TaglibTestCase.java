@@ -144,8 +144,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     try {
       // setup environment and execute single test case
       PageContext page = makePageContext();
-      String jspSource = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", jspfile);
-      JSPPageReader reader = new JSPPageReader(jspSource);
+      JSPPageReader reader = new JSPPageReader(TestFileUtils.getTestInputURL(testdataDirectory, "jsp", jspfile));
       JSPTreeNodeIF root = reader.read(useTagPooling);
       JSPPageExecuter exec = new JSPPageExecuter();
       log.info("Run testcase for " + generateTestCaseDescriptor());

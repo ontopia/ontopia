@@ -21,19 +21,20 @@
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTestFactory;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.core.AbstractQueryTest;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
-import org.xml.sax.SAXException;
 import org.junit.Ignore;
+import org.xml.sax.SAXException;
 
 @Ignore
 public class RDBMSTestUtils {
@@ -43,17 +44,17 @@ public class RDBMSTestUtils {
   // ===== Helper methods (topic maps)
 
   public static void load(AbstractQueryTest test, String filename) throws IOException {
-    filename = TestFileUtils.getTestInputFile(testdataDirectory, filename);
+    URL file = TestFileUtils.getTestInputURL(testdataDirectory, filename);
 
     checkDatabasePresence();
 
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();
     test.topicmap = store.getTopicMap();
     test.builder = store.getTopicMap().getBuilder();
-    test.base = URIUtils.getURI(filename);
+    test.base = new URILocator(file);
     store.setBaseAddress(test.base);
 
-    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(file.toString());
     if (importer instanceof XTMTopicMapReader)
       ((XTMTopicMapReader) importer).setValidation(false);
     importer.importInto(test.topicmap);
@@ -81,8 +82,8 @@ public class RDBMSTestUtils {
       test.topicmap = store.getTopicMap();
       test.builder = test.topicmap.getBuilder();
       //! test.processor = new QueryProcessor(test.topicmap);
-      String filename = TestFileUtils.getTestInputFile(testdataDirectory, "");
-      test.processor = QueryUtils.createQueryProcessor(test.topicmap, URIUtils.getURI(filename));
+      URL filename = TestFileUtils.getTestInputURL("");
+      test.processor = QueryUtils.createQueryProcessor(test.topicmap, new URILocator(filename));
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
     }

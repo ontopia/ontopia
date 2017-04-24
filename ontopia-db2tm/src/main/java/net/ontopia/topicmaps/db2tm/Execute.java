@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -117,7 +118,7 @@ public class Execute {
       String outfile = ohandler.out;
       LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : URIUtils.getFileURI(new File(outfile)));
       if (baseloc == null && tmurl != null)
-        baseloc = (ohandler.baseuri == null ? URIUtils.getURI(tmurl) : URIUtils.getURI(ohandler.baseuri));
+        baseloc = (ohandler.baseuri == null ? new URILocator(tmurl) : new URILocator(ohandler.baseuri));
 
       // figure out which relations to actually process
       Collection<String> relations = null;

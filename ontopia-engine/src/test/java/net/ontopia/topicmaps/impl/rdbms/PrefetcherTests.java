@@ -21,8 +21,10 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
+import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
@@ -32,18 +34,16 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
-import junit.framework.TestCase;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
 
 /** 
  * INTERNAL: Tests that tests the prefetching code used with the
@@ -71,11 +71,11 @@ public class PrefetcherTests extends TestCase {
     }
   }
 
-  protected long importTopicMap(String filename) throws IOException {
+  protected long importTopicMap(URL filename) throws IOException {
 
     // import sample topic map
     TopicMapStoreIF store = new RDBMSTopicMapStore(); // don't use storage
-    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(filename.toString());
     importer.importInto(store.getTopicMap());
 
     long topicmap_id = Long.parseLong(store.getTopicMap().getObjectId().substring(1)); 
@@ -110,8 +110,8 @@ public class PrefetcherTests extends TestCase {
     }
 
     // import topic map
-    String filename = TestFileUtils.getTestInputFile(testdataDirectory, "prefetch.ltm");
-    LocatorIF base = URIUtils.getURI(filename);
+    URL filename = TestFileUtils.getTestInputURL(testdataDirectory, "prefetch.ltm");
+    LocatorIF base = new URILocator(filename);
 
     // create reference
     long topicmap_id = importTopicMap(filename);
