@@ -121,16 +121,16 @@ public class TMExporterFilterTestCase {
       if (ENABLE_LTM) {
         TestFileUtils.verifyDirectory(xtmFragBase, "ltm");
         // Path to the ltm (only used when making test cases).
-        String ltm = xtmFragBase + File.separator + "ltm" + File.separator + filename
-            + ".ltm";
+        File ltm = new File(xtmFragBase + File.separator + "ltm" + File.separator + filename
+            + ".ltm");
         
         // Export the topic map to ltm.
         // This line is for use when developing tests, and should be commented
         // out whenever submitted to CVS.
-        (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(exportedMap);
+        new LTMTopicMapWriter(ltm).write(exportedMap);
       }
 
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(exportedMap);
+      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized xtm fragment export of " + filename
@@ -176,16 +176,16 @@ public class TMExporterFilterTestCase {
       if (ENABLE_LTM) {
         TestFileUtils.verifyDirectory(tmxmlBase, "ltm");
         // Path to the ltm (only used when making test cases).
-        String ltm = tmxmlBase + File.separator + "ltm" + File.separator + filename
-            + ".ltm";
+        File ltm = new File(tmxmlBase + File.separator + "ltm" + File.separator + filename
+            + ".ltm");
         
         // Export the topic map to ltm.
         // This line is for use when developing tests, and should be commented
         // out whenever submitted to CVS.
-        (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(exportedMap);
+        new LTMTopicMapWriter(ltm).write(exportedMap);
       }
 
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(exportedMap);
+      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized tmxml export of " + filename
@@ -230,16 +230,16 @@ public class TMExporterFilterTestCase {
       if (ENABLE_LTM) {
         TestFileUtils.verifyDirectory(xtmBase, "ltm");
         // Path to the ltm (only used when making test cases).
-        String ltm = xtmBase + File.separator + "ltm" + File.separator + 
-            filename + ".ltm";
+        File ltm = new File(xtmBase + File.separator + "ltm" + File.separator + 
+            filename + ".ltm");
         
         // Export the topic map to ltm.
         // This line is for use when developing tests, and should be commented
         // out whenever submitted to CVS.
-        (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(exportedMap);
+        new LTMTopicMapWriter(ltm).write(exportedMap);
       }
 
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(exportedMap);
+      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized xtm export of " + filename
@@ -258,8 +258,8 @@ public class TMExporterFilterTestCase {
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
 
       // Path to the ltm (only used when making test cases).
-      String ltm = ltmBase + File.separator + "ltm" + File.separator + filename
-          + ".ltm";
+      File ltm = new File(ltmBase + File.separator + "ltm" + File.separator + filename
+          + ".ltm");
       
       // Path to the baseline (canonicalized output of the source topic map).
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "ltm/baseline", 
@@ -271,8 +271,7 @@ public class TMExporterFilterTestCase {
       
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
-      LTMTopicMapWriter exporter = (new LTMTopicMapWriter(
-          new FileOutputStream(ltm)));
+      LTMTopicMapWriter exporter = new LTMTopicMapWriter(ltm);
       
       DeciderIF filter = new TestDecider();
       exporter.setFilter(filter);

@@ -24,31 +24,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
-
+import java.util.List;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import org.xml.sax.SAXException;
-
-import java.util.List;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.xml.PrettyPrinter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.xml.sax.SAXException;
 
 @RunWith(Parameterized.class)
 public class XTMFragmentExporterTestCase {
@@ -87,8 +82,8 @@ public class XTMFragmentExporterTestCase {
        // Path to the exported ltm topic map document.
       String xtm = base + File.separator + "xtm" + File.separator + filename
           + ".xtm";
-      String ltm = base + File.separator + "ltm" + File.separator + filename
-          + ".ltm";
+      File ltm = new File(base + File.separator + "ltm" + File.separator + filename
+          + ".ltm");
       // Path to the output (canonicalized output of exported ltm topic map).
       String out = base + File.separator + "out" + File.separator + filename
           + ".xtm.cxtm";
@@ -119,9 +114,9 @@ public class XTMFragmentExporterTestCase {
       // Export the topic map to ltm.
       // This line is for use when developing tests, and should be commented
       // out whenever submitted to CVS.
-      (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(exportedMap);
+      new LTMTopicMapWriter(ltm).write(exportedMap);
 
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(exportedMap);
+      new CanonicalXTMWriter(new FileOutputStream(out)).write(exportedMap);
 
       // compare results
       Assert.assertTrue("the canonicalized xtm fragment export of " + filename

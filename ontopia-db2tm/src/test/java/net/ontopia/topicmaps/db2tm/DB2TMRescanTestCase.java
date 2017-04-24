@@ -112,12 +112,12 @@ public class DB2TMRescanTestCase {
       // Export the result topic map to ltm, for manual inspection purposes.
       if (DEBUG_LTM) {
         File ltm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "rescan-" + name + ".ltm");
-        (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(topicmap);
+        new LTMTopicMapWriter(ltm).write(topicmap);
       }
       
       // Export the result topic map to cxtm
       FileOutputStream out = new FileOutputStream(cxtm);
-      (new CanonicalXTMWriter(out)).write(topicmap);
+      new CanonicalXTMWriter(out).write(topicmap);
       out.close();
       
       // Check that the cxtm output matches the baseline.

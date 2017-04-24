@@ -23,17 +23,12 @@ package net.ontopia.topicmaps.utils.ltm;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,8 +72,8 @@ public class LTMTopicMapWriterSpecialTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "x-baseline", 
           filename + ".cxtm");
       // Path to the exported ltm topic map document.
-      String ltm = base + File.separator + "x-ltm" + File.separator + filename
-          + ".ltm";
+      File ltm = new File(base + File.separator + "x-ltm" + File.separator + filename
+          + ".ltm");
       // Path to the output (canonicalized output of exported ltm topic map).
       String out = base + File.separator + "x-out" + File.separator + filename
           + ".cxtm";
@@ -87,8 +82,7 @@ public class LTMTopicMapWriterSpecialTestCase {
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
       // Export the topic map to ltm.
-      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(new FileOutputStream(
-          ltm));
+      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(ltm);
       ltmWriter.setPreserveIds(!filename.startsWith("generateId-"));
       ltmWriter.write(sourceMap);
 
@@ -97,7 +91,7 @@ public class LTMTopicMapWriterSpecialTestCase {
 
       // Canonicalize the reimported ltm.
       FileOutputStream fos = new FileOutputStream(out);
-      (new CanonicalXTMWriter(fos)).write(ltmMap);
+      new CanonicalXTMWriter(fos).write(ltmMap);
       fos.close();
 
       // compare results

@@ -20,28 +20,23 @@
 
 package net.ontopia.topicmaps.utils.tmprefs;
 
-import org.junit.Test;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
-import java.io.IOException;
-import java.util.prefs.Preferences;
-import java.util.prefs.BackingStoreException;
-
-import java.util.List;
-import java.io.FileOutputStream;
-import java.io.File;
-
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 @RunWith(Parameterized.class)
 public class TopicMapPreferencesTest {
@@ -69,7 +64,7 @@ public class TopicMapPreferencesTest {
 		String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
 		String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename + ".cxtm");
 		String out = base + File.separator + "out" + File.separator + filename + ".cxtm";
-		String ltm = base + File.separator + "ltm" + File.separator + filename + ".ltm";
+		File ltm = new File(base + File.separator + "ltm" + File.separator + filename + ".ltm");
 		TestTMPrefsFactory.setFixedReference(in);
 		
 		runPreferencesMethods();
@@ -78,12 +73,10 @@ public class TopicMapPreferencesTest {
 		TopicMapStoreIF store = reference.createStore(true);
 		TopicMapIF topicmap = store.getTopicMap();
 		
-		FileOutputStream ltmfos = new FileOutputStream(ltm);
-		(new LTMTopicMapWriter(ltmfos)).write(topicmap);
-		ltmfos.close();
+		new LTMTopicMapWriter(ltm).write(topicmap);
 
 		FileOutputStream cxtmfos = new FileOutputStream(out);
-		(new CanonicalXTMWriter(cxtmfos)).write(topicmap);
+		new CanonicalXTMWriter(cxtmfos).write(topicmap);
 		cxtmfos.close();
 
 		// // compare results

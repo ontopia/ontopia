@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -51,14 +50,12 @@ public class LTMTopicMapWriterTest {
     TestFileUtils.verifyDirectory(root, testdataDirectory);
     String thebase = root + File.separator + testdataDirectory + File.separator;
     TestFileUtils.verifyDirectory(thebase, "out");
-    String filename = thebase + File.separator + "out" + File.separator +
-      "testBadId.ltm";
+    File file = new File(thebase + File.separator + "out" + File.separator +
+      "testBadId.ltm");
     
-    FileOutputStream fos = new FileOutputStream(filename);
-    new LTMTopicMapWriter(fos).write(tm);
-    fos.close();
+    new LTMTopicMapWriter(file).write(tm);
 
-    tm = new LTMTopicMapReader(new File(filename)).read();
+    tm = new LTMTopicMapReader(file).read();
     topic = (TopicIF) tm.getTopics().iterator().next();
     LocatorIF itemid = (LocatorIF) topic.getItemIdentifiers().iterator().next();
     Assert.assertTrue("Bad item ID was not filtered out",

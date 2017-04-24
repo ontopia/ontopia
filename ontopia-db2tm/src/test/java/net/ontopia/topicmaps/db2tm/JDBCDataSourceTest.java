@@ -25,21 +25,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.ConnectionFactoryIF;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class JDBCDataSourceTest {
 
@@ -242,11 +242,11 @@ public class JDBCDataSourceTest {
     // Export the result topic map to ltm, for manual inspection purposes.
     if (DEBUG_LTM) {
       File ltm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", name + ".ltm");
-      (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(topicmap);
+      new LTMTopicMapWriter(ltm).write(topicmap);
     }
     
     // Export the result topic map to cxtm
-    (new CanonicalXTMWriter(new FileOutputStream(cxtm))).write(topicmap);
+    new CanonicalXTMWriter(new FileOutputStream(cxtm)).write(topicmap);
       
       // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + name

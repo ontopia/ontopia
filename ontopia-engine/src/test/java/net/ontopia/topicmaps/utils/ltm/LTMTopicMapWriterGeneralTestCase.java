@@ -23,17 +23,12 @@ package net.ontopia.topicmaps.utils.ltm;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,8 +74,8 @@ public class LTMTopicMapWriterGeneralTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename + ".cxtm");
       // Path to the exported ltm topic map document.
-      String ltm = base + File.separator + "ltm" + File.separator + filename
-          + ".ltm";
+      File ltm = new File(base + File.separator + "ltm" + File.separator + filename
+          + ".ltm");
       // Path to the output (canonicalized output of exported ltm topic map).
       String out = base + File.separator + "out" + File.separator + filename
           + ".cxtm";
@@ -93,28 +88,25 @@ public class LTMTopicMapWriterGeneralTestCase {
       if (recanonicalizeSource) {
         // Canonicalize the source topic map.
         FileOutputStream fos = new FileOutputStream(baseline);
-        (new CanonicalXTMWriter(fos))
-            .write(sourceMap);
+        new CanonicalXTMWriter(fos).write(sourceMap);
         fos.close();
       }
 
       // Export the topic map to ltm.
-      FileOutputStream fos = new FileOutputStream(ltm);
-      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(fos);
+      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(ltm);
       if (isPrefixed) {
         ltmWriter.addPrefix("a", "foo:bar/");
         ltmWriter.addPrefix("b", "bar:baz/");
         ltmWriter.addPrefix("m", "http://psi.topicmaps.org/iso13250/model/");
       }
       ltmWriter.write(sourceMap);
-      fos.close();
 
       if (isPrefixed) {
         // re-route baseline to reloaded original file
         baseline = base + File.separator + "out" + File.separator +
           filename + ".original.cxtm";
-        fos = new FileOutputStream(baseline);
-        (new CanonicalXTMWriter(fos)).write(sourceMap);
+        FileOutputStream fos = new FileOutputStream(baseline);
+        new CanonicalXTMWriter(fos).write(sourceMap);
         fos.close();
       }
 
@@ -122,7 +114,7 @@ public class LTMTopicMapWriterGeneralTestCase {
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
 
       // Canonicalize the reimported ltm.
-      fos = new FileOutputStream(out);
+      FileOutputStream fos = new FileOutputStream(out);
       (new CanonicalXTMWriter(fos)).write(ltmMap);
       fos.close();
 
