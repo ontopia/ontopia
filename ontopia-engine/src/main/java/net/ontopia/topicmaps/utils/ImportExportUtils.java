@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
@@ -73,43 +72,6 @@ public class ImportExportUtils {
   @SuppressWarnings("unchecked")
   public static Set<ImportExportServiceIF> getServices() {
     return UnmodifiableSet.unmodifiableSet(services);
-  }
-
-  /**
-   * PUBLIC: Given the topic map store properties file and file name
-   * or URL of a topic map, returns a topic map reader of the right
-   * class. Uses the file extension to determine what reader to
-   * create. Supports the suffixes '.xtm' and '.ltm' and URI schemes
-   * 'x-ontopia:tm-rdbms:'.
-   * 
-   * @since 1.2.4
-   */
-  public static TopicMapReaderIF getReader (String propfile,
-      String filename_or_url) {
-
-    if (filename_or_url.startsWith ("x-ontopia:tm-rdbms:"))
-      return new RDBMSTopicMapReader (propfile, getTopicMapId (filename_or_url));
-    // Otherwise fall back to the property-less getReader method
-    return getReader (filename_or_url);
-  }
-
-  /**
-   * PUBLIC: Given the topic map store properties and file name or URL
-   * of a topic map, returns a topic map reader of the right
-   * class. Uses the file extension to determine what reader to
-   * create. Supports the suffixes '.xtm' and '.ltm' and URI schemes
-   * 'x-ontopia:tm-rdbms:'.
-   * 
-   * @since 1.2.4
-   */
-  public static TopicMapReaderIF getReader (Map<String, String> properties,
-      String filename_or_url) {
-
-    if (filename_or_url.startsWith ("x-ontopia:tm-rdbms:"))
-      return new RDBMSTopicMapReader (properties,
-          getTopicMapId (filename_or_url));
-    // Otherwise fall back to the property-less getReader method
-    return getReader (filename_or_url);
   }
 
   /**
