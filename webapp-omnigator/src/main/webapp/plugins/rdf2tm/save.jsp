@@ -56,7 +56,7 @@
   file = net.ontopia.utils.StringUtils.replace(file, "+", " ");
 
   // read in the existing mapping
-  Map mappings = RDFIntroSpector.getPropertyMappings(URIUtils.getURI(file).getAddress(), false);
+  Map mappings = RDFIntroSpector.getPropertyMappings(URIUtils.toURL(file).toString(), false);
 
   String prefix = "http://psi.ontopia.net/rdf2tm/#";
 

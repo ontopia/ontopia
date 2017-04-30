@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -78,7 +79,10 @@ public final class ReqParamUtils {
           urlQuery.append("&");
         else
           seenFirstPair = true;
-        urlQuery.append(key).append("=").append(URIUtils.urlEncode(val, charenc));
+        if (charenc == null) {
+          charenc = "utf-8";
+        }
+        urlQuery.append(key).append("=").append(URLEncoder.encode(val, charenc));
       }
     }
     return urlQuery.toString();

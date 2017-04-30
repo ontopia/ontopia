@@ -126,7 +126,7 @@ Technical Report</a>.</p>
     return;
   }
 
-  String fileuri = URIUtils.getURI(file).getAddress();
+  String fileuri = URIUtils.toURL(file).toString();
   Map old_mappings = RDFIntroSpector.getPropertyMappings(fileuri, false);
 
   // read RDF file to find all properties (and existing mappings)
