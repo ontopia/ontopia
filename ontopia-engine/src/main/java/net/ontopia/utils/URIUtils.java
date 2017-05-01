@@ -24,7 +24,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 
 /**
  * INTERNAL: Utilities for working with URIs.
@@ -60,6 +59,4 @@ public class URIUtils {
       throw new OntopiaRuntimeException(mufe); // impossible
     }
   }
-
-
 }
