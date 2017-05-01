@@ -64,20 +64,6 @@ public class URIUtils {
   }
 
   /**
-   * INTERNAL: Make hex string for integer.
-   */
-  public static String toHexString(byte n) {
-    return "" + toHexDigit((byte) ((n & 0xF0) >> 4)) + toHexDigit((byte) (n & 0x0F));
-  }
-
-  private static char toHexDigit(byte n) {
-    if (n < 10)
-      return (char) ('0' + ((char) n));
-    else
-      return (char) (((char) (n - 10)) + 'A');
-  }
-  
-  /**
    * INTERNAL: Return URILocator from uri string.
    */
   public static URILocator getURILocator(String uri) {
