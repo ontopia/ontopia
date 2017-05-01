@@ -39,6 +39,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ServiceUtils;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.URIUtils;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.slf4j.LoggerFactory;
@@ -90,7 +91,11 @@ public class ImportExportUtils {
    * determine what reader to create. Supports '.xtm', and '.ltm'.
    */
   public static TopicMapReaderIF getReader (String filename_or_url) {
-    return getReader(URIUtils.toURL(filename_or_url));
+    try {
+      return getReader(StreamUtils.getResource(filename_or_url));
+    } catch (IOException ioe) {
+      throw new OntopiaRuntimeException(ioe);
+    }
   }
 
   /**

@@ -21,7 +21,6 @@
 package net.ontopia.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
@@ -64,14 +63,6 @@ public class URIUtils {
     return new File(address.substring(5));
   }
 
-  public static URL toURL(String uri_or_filename) {
-    try {
-      return StreamUtils.getResource(uri_or_filename);
-    } catch (IOException ioe) {
-      throw new OntopiaRuntimeException(ioe);
-    }
-  }
-  
   /**
    * INTERNAL: Make hex string for integer.
    */
