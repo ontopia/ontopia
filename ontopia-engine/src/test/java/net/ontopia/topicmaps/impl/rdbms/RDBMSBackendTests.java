@@ -45,7 +45,6 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Tests that tests various aspects about the RDBMS Backend
@@ -489,9 +488,9 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF topic1 = getTopic(tm1, "http://psi.kulturnett.no/person/eva_kernst");
       assertTrue("topic1 not found by indicator", topic1 != null);
 
-      LocatorIF subind = URIUtils.getURILocator("test:subind:eva_kernst");
-      LocatorIF subloc = URIUtils.getURILocator("test:subloc:eva_kernst");
-      LocatorIF srcloc = URIUtils.getURILocator("test:srcloc:eva_kernst");
+      LocatorIF subind = URILocator.create("test:subind:eva_kernst");
+      LocatorIF subloc = URILocator.create("test:subloc:eva_kernst");
+      LocatorIF srcloc = URILocator.create("test:srcloc:eva_kernst");
       
       topic1.addSubjectIdentifier(subind);
       topic1.addSubjectLocator(subloc);

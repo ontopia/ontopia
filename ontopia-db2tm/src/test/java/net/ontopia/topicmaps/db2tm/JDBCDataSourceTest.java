@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.ConnectionFactoryIF;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -36,7 +37,6 @@ import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -197,7 +197,7 @@ public class JDBCDataSourceTest {
       RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/JDBCDataSourceTest-secondary.xml");
 
       TopicMapStoreIF store = new InMemoryTopicMapStore();
-      LocatorIF baseloc = URIUtils.getURILocator("base:foo");
+      LocatorIF baseloc = URILocator.create("base:foo");
       store.setBaseAddress(baseloc);
       TopicMapIF topicmap = store.getTopicMap();
       

@@ -51,18 +51,6 @@ public class URIUtils {
   }
 
   /**
-   * INTERNAL: Return URILocator from uri string.
-   */
-  public static URILocator getURILocator(String uri) {
-    try {
-      return new URILocator(uri);
-    } catch (MalformedURLException e) {
-      // it wasn't a URI, so probably it was a reference to a non-existent file
-      throw new OntopiaRuntimeException("Malformed URI:" + uri, e);
-    }    
-  }
-
-  /**
    * INTERNAL: Use this method instead of File.toURL() to get URLs for files.
    */
   public static URL toURL(File file) {

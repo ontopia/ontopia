@@ -38,7 +38,6 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
@@ -69,7 +68,7 @@ public class SyncTest {
 
     // make empty TM
     TopicMapStoreIF store = new InMemoryTopicMapStore();
-    LocatorIF baseloc = URIUtils.getURILocator("base:foo");
+    LocatorIF baseloc = URILocator.create("base:foo");
     store.setBaseAddress(baseloc);
     topicmap = store.getTopicMap();
   }
@@ -313,14 +312,14 @@ public class SyncTest {
     t2.addType(topictype);
     Assert.assertTrue("t2 has no topic type", !t2.getTypes().isEmpty());
 
-    TopicIF t1 = topicmap.getTopicBySubjectIdentifier(URIUtils.getURILocator("http://example.org/test/1"));
+    TopicIF t1 = topicmap.getTopicBySubjectIdentifier(URILocator.create("http://example.org/test/1"));
     Assert.assertTrue("t1 was found", t1 == null);
 
     // synchronize
     mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/association-mapping.xml");
     Processor.synchronizeRelations(mapping, null, topicmap,
                                    topicmap.getStore().getBaseAddress());
-    t1 = topicmap.getTopicBySubjectIdentifier(URIUtils.getURILocator("http://example.org/test/1"));
+    t1 = topicmap.getTopicBySubjectIdentifier(URILocator.create("http://example.org/test/1"));
     Assert.assertTrue("t1 was not found", t1 != null);
     Assert.assertTrue("t1 did not have t2 as its type", t1.getTypes().size() == 1 && t1.getTypes().contains(t2));
 

@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,7 +48,6 @@ import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +66,7 @@ public class Processor {
   public static int DEFAULT_COMMIT_MODE = NEVER_COMMIT_MODE;
 
   private static final LocatorIF LOC_SYNCHRONIZATION_STATE =
-    URIUtils.getURILocator("http://psi.ontopia.net/db2tm/synchronization-state");
+    URILocator.create("http://psi.ontopia.net/db2tm/synchronization-state");
     
   private Processor() {
   }

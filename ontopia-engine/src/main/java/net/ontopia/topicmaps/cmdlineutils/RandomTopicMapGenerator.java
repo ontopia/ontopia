@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -36,7 +37,6 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Utility for randomly populating topic maps.
@@ -180,7 +180,7 @@ public class RandomTopicMapGenerator {
 
   private void addIdentities(TopicIF t, DataPool dp, int count) {
     for (int i=0; i < count; i++) {
-      t.addSubjectIdentifier(URIUtils.getURILocator("http://example.org/foo/" + t.getObjectId() + "/" + (i+1)));
+      t.addSubjectIdentifier(URILocator.create("http://example.org/foo/" + t.getObjectId() + "/" + (i+1)));
     }
   }
 
