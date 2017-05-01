@@ -38,28 +38,21 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.impl.remote.RemoteTopic;
 import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
-import net.ontopia.topicmaps.utils.tmrap.TopicPage;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.URIUtils;
 
 import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
