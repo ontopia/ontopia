@@ -37,7 +37,6 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +115,7 @@ public class Execute {
 
       // base locator
       String outfile = ohandler.out;
-      LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : URIUtils.getFileURI(new File(outfile)));
+      LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : new URILocator(new File(outfile)));
       if (baseloc == null && tmurl != null)
         baseloc = (ohandler.baseuri == null ? new URILocator(tmurl) : new URILocator(ohandler.baseuri));
 

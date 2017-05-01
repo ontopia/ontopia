@@ -33,19 +33,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 public class URIUtils {
 
   /**
-   * INTERNAL: Given a File object, produce a corresponding URILocator
-   * object in the file: URI scheme.
-   */
-  public static URILocator getFileURI(File file) {
-    try {
-      return new URILocator(toURL(file).toExternalForm());
-    }
-    catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException("Malformed URI for File: '" + file + "'", e);
-    }
-  }
-
-  /**
    * INTERNAL: Given a URILocator in the file: URI scheme, produce the
    * corresponding File object.
    * @since 1.4
