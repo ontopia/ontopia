@@ -128,6 +128,9 @@ public class Utils {
         throw new DB2TMConfigException("Unknown prefix: '" + prefix_id +
                                        "' (value='" + id + "')");
       String relloc = prefix.getLocator() + id.substring(cix + 1);
+      if (ctx.getBaseLocator() == null) {
+        throw new DB2TMException("Cannot resolve locator '" + relloc + "', missing a base locator");
+      }
       loc = ctx.getBaseLocator().resolveAbsolute(relloc);
       loctype = prefix.getType();
     } else {
@@ -185,9 +188,11 @@ public class Utils {
   static LocatorIF getLocator(Relation relation, Entity entity, Field field,
       String[] tuple, Context ctx) {
     String value = getValue(relation, entity, field, tuple, ctx);
-    return (isValueEmpty(value))
-      ? null
-      : ctx.getBaseLocator().resolveAbsolute(value);
+    if (isValueEmpty(value)) return null;
+    if (ctx.getBaseLocator() == null) {
+      throw new DB2TMException("Cannot resolve locator '" + value + "', missing a base locator");
+    }
+    return ctx.getBaseLocator().resolveAbsolute(value);
   }
 
   static String expandPrefixedValue(String value, Context ctx) {
