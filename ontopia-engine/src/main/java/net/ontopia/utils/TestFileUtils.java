@@ -235,7 +235,7 @@ public class TestFileUtils {
   public static void transferTestInputDirectory(ResourcesDirectoryReader directoryReader, String path) throws IOException {
     for (URL resource : directoryReader.getResources()) {
       String relative = resource.getFile();
-      relative = relative.substring(relative.indexOf(path));
+      relative = relative.substring(relative.lastIndexOf(path));
       File file = new File(new File(getTestdataOutputDirectory()), relative);
       file.getParentFile().mkdirs();
       StreamUtils.transferAndClose(resource.openStream(), new FileOutputStream(file));
