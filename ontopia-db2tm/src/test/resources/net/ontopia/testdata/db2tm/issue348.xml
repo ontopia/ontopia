@@ -1,0 +1,18 @@
+<db2tm name="issue348">
+  
+  <!--
+    Issue 348: NPE in DB2TM for topic maps without base locator
+  -->
+  
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="issue348.csv" columns="id v1 v2">
+    <topic id="superior">
+      <item-identifier>#${id}</item-identifier>
+    </topic>
+  </relation>
+</db2tm>
