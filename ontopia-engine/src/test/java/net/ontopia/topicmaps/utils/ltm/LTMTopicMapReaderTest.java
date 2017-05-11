@@ -94,9 +94,8 @@ public class LTMTopicMapReaderTest {
   // --- Helpers
 
   public TopicMapIF read(String file) throws IOException {
-    file = TestFileUtils.getTestInputFile(testdataDirectory, "extra", 
-                           file);
-
-    return new LTMTopicMapReader(TestFileUtils.getTestInputURL(file)).read();
+    return new LTMTopicMapReader(
+        TestFileUtils.getTestInputURL(testdataDirectory, "extra", file)
+    ).read();
   }
 }  
