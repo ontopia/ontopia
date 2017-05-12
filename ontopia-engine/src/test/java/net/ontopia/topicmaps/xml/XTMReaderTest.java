@@ -20,6 +20,9 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,6 +40,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
 public class XTMReaderTest extends AbstractXMLTestCase {
@@ -404,6 +408,49 @@ public class XTMReaderTest extends AbstractXMLTestCase {
     Assert.assertTrue("topic map is reified", tm.getReifier() != null);
     TopicIF reifier = getTopicById(tm, "reifier");
     Assert.assertTrue("topic has no name", !reifier.getTopicNames().isEmpty());
+  }
+
+  @Test
+  public void testReadFromURL() throws IOException {
+    TopicMapIF tm = new XTMTopicMapReader(TestFileUtils.getTestInputURL("various", "jill.xtm")).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(39, tm.getTopics().size());
+    
+  }
+
+  @Test
+  public void testReadFromFile() throws IOException {
+    TestFileUtils.transferTestInputDirectory("various");
+    TopicMapIF tm = new XTMTopicMapReader(TestFileUtils.getTransferredTestInputFile("various", "jill.xtm")).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(39, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromInputStream() throws IOException {
+    TestFileUtils.transferTestInputDirectory("various");
+    File file = TestFileUtils.getTransferredTestInputFile("various", "jill.xtm");
+    TopicMapIF tm = new XTMTopicMapReader(new FileInputStream(file), new URILocator(file)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(39, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromReader() throws IOException {
+    TestFileUtils.transferTestInputDirectory("various");
+    File file = TestFileUtils.getTransferredTestInputFile("various", "jill.xtm");
+    TopicMapIF tm = new XTMTopicMapReader(new FileReader(file), new URILocator(file)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(39, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromInputSource() throws IOException {
+    TestFileUtils.transferTestInputDirectory("various");
+    File file = TestFileUtils.getTransferredTestInputFile("various", "jill.xtm");
+    TopicMapIF tm = new XTMTopicMapReader(new InputSource(new FileReader(file)), new URILocator(file)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(39, tm.getTopics().size());
   }
 
   // --- Supporting methods

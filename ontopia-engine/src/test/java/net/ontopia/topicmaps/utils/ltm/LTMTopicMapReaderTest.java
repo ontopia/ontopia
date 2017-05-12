@@ -20,8 +20,12 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
@@ -33,6 +37,37 @@ public class LTMTopicMapReaderTest {
   private final static String testdataDirectory = "ltm";
     
   // --- Test cases
+
+  @Test
+  public void testReadFromURL() throws IOException {
+    TopicMapIF tm = read("tmreify.ltm");
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromFile() throws IOException {
+    File in = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "extra", "tmreify.ltm");
+    TopicMapIF tm = new LTMTopicMapReader(in).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromInputStream() throws IOException {
+    File in = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "extra", "tmreify.ltm");
+    TopicMapIF tm = new LTMTopicMapReader(new FileInputStream(in), new URILocator(in)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromReader() throws IOException {
+    File in = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "extra", "tmreify.ltm");
+    TopicMapIF tm = new LTMTopicMapReader(new FileReader(in), new URILocator(in)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
 
   @Test
   public void testReifiedTopicMap() throws IOException {

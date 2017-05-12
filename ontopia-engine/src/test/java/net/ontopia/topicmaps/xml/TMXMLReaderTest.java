@@ -20,12 +20,17 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.xml.sax.InputSource;
 
 public class TMXMLReaderTest extends AbstractXMLTestCase {
 
@@ -50,4 +55,43 @@ public class TMXMLReaderTest extends AbstractXMLTestCase {
     TopicIF reifier = tm.getReifier();
     Assert.assertTrue("Reification was not preserved", reifier != null);
   }    
+  
+  @Test
+  public void testReadFromURL() throws IOException {
+    TopicMapIF tm = new TMXMLReader(TestFileUtils.getTestInputURL("tmxml", "in", "empty-topic.xml")).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+    
+  }
+
+  @Test
+  public void testReadFromFile() throws IOException {
+    TopicMapIF tm = new TMXMLReader(TestFileUtils.getTransferredTestInputFile("tmxml", "in", "empty-topic.xml")).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromInputStream() throws IOException {
+    File file = TestFileUtils.getTransferredTestInputFile("tmxml", "in", "empty-topic.xml");
+    TopicMapIF tm = new TMXMLReader(new FileInputStream(file), new URILocator(file)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromReader() throws IOException {
+    File file = TestFileUtils.getTransferredTestInputFile("tmxml", "in", "empty-topic.xml");
+    TopicMapIF tm = new TMXMLReader(new FileReader(file), new URILocator(file)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
+
+  @Test
+  public void testReadFromInputSource() throws IOException {
+    File file = TestFileUtils.getTransferredTestInputFile("tmxml", "in", "empty-topic.xml");
+    TopicMapIF tm = new TMXMLReader(new InputSource(new FileReader(file)), new URILocator(file)).read();
+    Assert.assertNotNull(tm);
+    Assert.assertEquals(2, tm.getTopics().size());
+  }
 }
