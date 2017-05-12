@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
@@ -88,6 +89,22 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
    */
   public TMXMLReader(File file) throws MalformedURLException {
     super(file);
+  }
+
+  /**
+   * PUBLIC: Creates a reader reading from the given Reader using 
+   * the specified base address.
+   */
+  public TMXMLReader(Reader reader, LocatorIF base_address) {
+    super(reader, base_address);
+  }
+
+  /**
+   * PUBLIC: Creates a reader reading from the given InputStream using 
+   * the specified base address.
+   */
+  public TMXMLReader(InputStream stream, LocatorIF base_address) {
+    super(stream, base_address);
   }
 
   /**
