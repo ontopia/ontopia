@@ -21,7 +21,10 @@
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -30,19 +33,26 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class LTMTopicMapWriterTest {
 
   private final static String testdataDirectory = "ltmWriter";
+  private TopicMapBuilderIF builder;
+  private TopicMapIF tm;
 
   // --- Test cases
+  
+  @Before
+  public void setUp() {
+    tm = new InMemoryTopicMapStore().getTopicMap();
+    builder = tm.getBuilder();
+  }
 
   @Test
   public void testBadId() throws IOException {
     LocatorIF base = new URILocator("http://example.com");
-    TopicMapIF tm = new InMemoryTopicMapStore().getTopicMap();
-    TopicMapBuilderIF builder = tm.getBuilder();
     TopicIF topic = builder.makeTopic();
     topic.addItemIdentifier(base.resolveAbsolute("#22"));
     
@@ -61,4 +71,28 @@ public class LTMTopicMapWriterTest {
     Assert.assertTrue("Bad item ID was not filtered out",
                itemid.getAddress().endsWith("testBadId.ltm#id1"));
   }      
+
+  @Test
+  public void testWriteToFile() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("ltm", "io-f.ltm");
+    new LTMTopicMapWriter(file).write(tm);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToOutputStream() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("ltm", "io-o.ltm");
+    new LTMTopicMapWriter(new FileOutputStream(file)).write(tm);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToWriter() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("ltm", "io-w.ltm");
+    new LTMTopicMapWriter(new FileWriter(file), "utf-8").write(tm);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
 }  

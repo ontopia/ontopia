@@ -21,7 +21,10 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
@@ -423,6 +426,30 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     XTMTopicMapExporter exp = new XTMTopicMapExporter();
     String id = exp.getElementId(topic);
     Assert.assertTrue("unacceptable ID used", !id.equals(tid));
+  }
+  
+  @Test
+  public void testWriteToFile() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm", "io-f.xtm");
+    new XTMTopicMapWriter(tmfile).write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToOutputStream() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm", "io-o.xtm");
+    new XTMTopicMapWriter(new FileOutputStream(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToWriter() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm", "io-w.xtm");
+    new XTMTopicMapWriter(new FileWriter(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
   }
   
   // --- Internal helper methods
