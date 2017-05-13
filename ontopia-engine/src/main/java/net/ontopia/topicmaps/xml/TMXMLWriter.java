@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * character encoding.
    * @since 3.2
    */
-  public TMXMLWriter(Writer out, String encoding) throws IOException {
+  public TMXMLWriter(Writer out, String encoding) throws IOException, IOException, IOException {
     this.out = makePrinter(out, encoding);
     init();
   }
@@ -122,6 +123,12 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    */
   public TMXMLWriter(File out, String encoding) throws IOException {
     writer = new OutputStreamWriter(new FileOutputStream(out), encoding);
+    this.out = makePrinter(writer, encoding);
+    init();
+  }
+
+  public TMXMLWriter(OutputStream out, String encoding) throws IOException {
+    writer = new OutputStreamWriter(out, encoding);
     this.out = makePrinter(writer, encoding);
     init();
   }
