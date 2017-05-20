@@ -5,6 +5,8 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import java.io.Reader;
   import java.io.IOException;
   import java.net.MalformedURLException;
+  import java.net.URI;
+  import java.net.URISyntaxException;
   import java.net.URL;
   import java.util.ArrayList;
   import java.util.Collection;
@@ -34,7 +36,6 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
   import net.ontopia.utils.ObjectUtils;
-  import org.xml.sax.InputSource;
   import antlr.TokenStreamException;
   import antlr.SemanticException;
 }
@@ -357,9 +358,7 @@ options {
 
     Reader reader = null;
     try {
-      reader = AbstractTopicMapReader.makeReader(
-        new InputSource(extloc.getExternalForm()),
-        new LTMEncodingSniffer());
+      reader = AbstractTopicMapReader.makeReader(extloc, new LTMEncodingSniffer());
       LTMParser parser = new LTMParser(new LTMLexer(reader));
       parser.setBase(extloc);
       parser.setTopicMap(topicmap);

@@ -24,7 +24,6 @@ header { package net.ontopia.topicmaps.utils.ctm; }
   import net.ontopia.topicmaps.utils.PSI;
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.utils.ltm.AntlrWrapException;
-  import org.xml.sax.InputSource;
   import antlr.TokenStreamException;
 }
 
@@ -167,11 +166,10 @@ prefix_decl :
 include :
   INCLUDE iri_ref {
     LocatorIF docuri = literal.getLocator();
-    InputSource source = new InputSource(docuri.getExternalForm());
     ParseContextIF othercontext;
     Reader reader = null;
     try {
-      reader = CTMTopicMapReader.makeReader(source, new CTMEncodingSniffer());
+      reader = CTMTopicMapReader.makeReader(docuri, new CTMEncodingSniffer());
       CTMLexer lexer = new CTMLexer(reader);
       lexer.setDocuri(docuri.getExternalForm());
       CTMParser parser = new CTMParser(lexer);

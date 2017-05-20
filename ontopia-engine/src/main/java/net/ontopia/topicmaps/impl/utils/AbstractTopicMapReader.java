@@ -39,8 +39,8 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.URIUtils;
-import org.xml.sax.InputSource;
 
 /**
  * INTERNAL: Common abstract superclass for topic map readers.
@@ -174,24 +174,6 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
 
   // ===== HELPER METHODS
 
-  /**
-   * INTERNAL: Creates a correctly configured Reader from a SAX
-   * InputSource object.
-   */   
-  public static Reader makeReader(InputSource source, EncodingSnifferIF sniffer)
-    throws IOException {
-    Reader reader = source.getCharacterStream();
-    if (reader == null) {
-      if (source.getByteStream() != null) 
-        reader = makeReader(source.getByteStream(), source.getEncoding(), sniffer);
-      else {
-        URL url = new URL(source.getSystemId());
-        reader = makeReader(url.openStream(), null, sniffer);
-      }
-    }
-    return reader;
-  }
-  
   public static Reader makeReader(InputStream stream, String encoding,
                                   EncodingSnifferIF sniffer) throws IOException {
     if (encoding == null) {
@@ -201,6 +183,10 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
       encoding = sniffer.guessEncoding((PushbackInputStream) stream);
     }
     return new InputStreamReader(stream, encoding);
+  }
+  
+  public static Reader makeReader(LocatorIF locator, EncodingSnifferIF sniffer) throws IOException {
+    return makeReader(StreamUtils.getInputStream(locator.getExternalForm()), null, sniffer);
   }
   
   protected Reader makeReader(String encoding, EncodingSnifferIF sniffer) throws IOException {
