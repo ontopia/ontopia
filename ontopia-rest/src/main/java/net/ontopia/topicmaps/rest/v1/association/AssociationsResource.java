@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Association;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
@@ -62,6 +63,10 @@ public class AssociationsResource extends AbstractTransactionalResource {
 			return;
 		}
 		
+		if (association == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Association");
+		}
+
 		TopicMapIF tm = getTopicMap();
 
 		TopicIF type = Parameters.TYPE.optional(this);

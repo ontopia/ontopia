@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.rest.v1.association;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Association;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Delete;
@@ -51,6 +52,10 @@ public class AssociationResource extends AbstractTMObjectResource<AssociationIF>
 	
 	@Put
 	public void addAssociation(Association association) {
+		if (association == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Association");
+		}
+
 		AssociationIF result = getController(AssociationController.class).add(getTopicMap(), association);
 		store.commit();
 		redirectTo(result);
