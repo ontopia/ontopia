@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.topicmaps.rest.v1.topic.association;
+package net.ontopia.topicmaps.rest.v1.association;
 
 import java.io.IOException;
 import java.util.Map;

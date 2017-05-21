@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.topicmaps.rest.v1.topic.association;
+package net.ontopia.topicmaps.rest.v1.association;
 
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Occurrence;
