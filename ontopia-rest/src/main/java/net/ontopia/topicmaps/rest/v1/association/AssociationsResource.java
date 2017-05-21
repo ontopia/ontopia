@@ -75,7 +75,7 @@ public class AssociationsResource extends AbstractTransactionalResource {
 		store.commit();
 		
 		// todo: maybe this should be '302 Found' instead
-		redirectSeeOther("../../associations/" + result.getObjectId()); // todo: how to make this stable?
+		redirectSeeOther("associations/" + result.getObjectId()); // todo: how to make this stable?
 	}
 	
 	@Delete
