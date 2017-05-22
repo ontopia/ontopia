@@ -56,6 +56,7 @@ public class AssociationController extends AbstractController {
 	}
 
 	public AssociationIF add(TopicMapIF tm, Association association) {
+		requireNotNull(association.getType(), "type");
 		return add(tm, topics.resolve(tm, association.getType()), association);
 	}
 
