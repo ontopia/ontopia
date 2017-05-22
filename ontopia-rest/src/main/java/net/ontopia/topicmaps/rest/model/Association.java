@@ -22,11 +22,12 @@ package net.ontopia.topicmaps.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Collection;
+import java.util.HashSet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Association extends Scoped {
 
-	private Collection<AssociationRole> roles;
+	private Collection<AssociationRole> roles = new HashSet<>();
 	private Topic type;
 
 	public Association() {
@@ -38,6 +39,10 @@ public class Association extends Scoped {
 
 	public Collection<AssociationRole> getRoles() {
 		return roles;
+	}
+
+	public void setRoles(Collection<AssociationRole> roles) {
+		this.roles = roles;
 	}
 
 	public Topic getType() {

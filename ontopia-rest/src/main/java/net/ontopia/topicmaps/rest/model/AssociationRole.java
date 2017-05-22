@@ -29,6 +29,13 @@ public class AssociationRole extends Reifiable {
 	private Topic player;
 	private Topic type;
 
+	public AssociationRole() {
+	}
+
+	public AssociationRole(String objectId) {
+		super(objectId);
+	}
+
 	public Association getAssociation() {
 		return association;
 	}
@@ -39,5 +46,13 @@ public class AssociationRole extends Reifiable {
 
 	public Topic getType() {
 		return type;
+	}
+
+	public void setPlayer(Topic player) {
+		this.player = player;
+	}
+
+	public void setType(Topic type) {
+		this.type = type;
 	}
 }
