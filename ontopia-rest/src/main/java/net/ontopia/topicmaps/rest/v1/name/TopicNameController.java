@@ -95,8 +95,6 @@ public class TopicNameController extends AbstractController {
 			result.setValue(name.getValue());
 		}
 		
-		// todo: variants?
-		
 		// TypedIF
 		typed.setType(result, name.getType());
 		// ScopedIF

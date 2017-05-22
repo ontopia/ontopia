@@ -120,10 +120,6 @@ public class TopicController extends AbstractController {
 		setSubjectLocators(result, topic);
 		setTypes(result, topic);
 		
-		// todo: names?
-		// todo: occurrences?
-		// todo: roles? can we even?
-		
 		// TMObjectIF
 		tmobject.setItemIdentifiers(result, topic);
 		

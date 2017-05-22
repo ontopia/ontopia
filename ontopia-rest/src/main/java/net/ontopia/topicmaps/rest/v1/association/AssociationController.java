@@ -94,8 +94,6 @@ public class AssociationController extends AbstractController {
 	
 	public AssociationIF change(TopicMapIF tm, AssociationIF result, Association association) {
 		
-		// todo: change roles?
-		
 		// TypedIF
 		typed.setType(result, association.getType());
 		// ScopedIF
