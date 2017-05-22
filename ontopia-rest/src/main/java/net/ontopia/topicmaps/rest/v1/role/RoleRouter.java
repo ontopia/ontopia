@@ -35,7 +35,7 @@ public class RoleRouter extends Router {
 
 		// list
 		// ClassInstanceIndexIF.getAssociationRoles
-		attach("/typed/{type}", RolesResource.class);
+		attach("/typed/{roletype}", RolesResource.class);
 
 		// ClassInstanceIndexIF.getAssociationRoleTypes
 		attach("/types", RoleTypesResource.class);
