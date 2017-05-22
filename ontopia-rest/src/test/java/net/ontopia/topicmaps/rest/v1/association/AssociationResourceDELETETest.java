@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.rest.v1.association;
 
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
-import net.ontopia.topicmaps.rest.model.Occurrence;
+import net.ontopia.topicmaps.rest.model.Association;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class AssociationResourceDELETETest extends AbstractV1ResourceTest {
 
 	@Test
 	public void deleteAssociation() {
-		delete("8961", Occurrence.class);
+		delete("8961", Association.class);
 		assertGetFails("8961", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 
