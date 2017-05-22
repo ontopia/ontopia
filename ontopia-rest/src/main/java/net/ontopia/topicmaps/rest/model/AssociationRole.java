@@ -55,4 +55,8 @@ public class AssociationRole extends Reifiable {
 	public void setType(Topic type) {
 		this.type = type;
 	}
+
+	public void setAssociation(Association association) {
+		this.association = association;
+	}
 }

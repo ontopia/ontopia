@@ -82,6 +82,10 @@ public class RolesResource extends AbstractTransactionalResource {
 			return;
 		}
 		
+		if (role == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Role");
+		}
+		
 		AssociationRoleIF result = getController(RoleController.class).add(
 				getTopicMap(),
 				Parameters.ID.withExpected(AssociationIF.class).required(this),

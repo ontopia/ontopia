@@ -24,6 +24,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.AssociationRole;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import net.ontopia.topicmaps.rest.v1.association.AssociationController;
@@ -55,6 +56,10 @@ public class RoleResource extends AbstractTMObjectResource<AssociationRoleIF> {
 	
 	@Put
 	public void addAssociationRole(AssociationRole role) {
+		if (role == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Role");
+		}
+
 		TopicMapIF tm = getTopicMap();
 		AssociationIF association = getController(AssociationController.class).resolve(tm, role.getAssociation());
 		AssociationRoleIF result = getController(RoleController.class).add(tm, association, role);

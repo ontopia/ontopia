@@ -49,6 +49,10 @@ public class RoleController extends AbstractController {
 
 	public AssociationRoleIF add(TopicMapIF tm, AssociationIF association, AssociationRole role) {
 		TopicMapBuilderIF builder = tm.getBuilder();
+
+		requireNotNull(role.getType(), "type");
+		requireNotNull(role.getPlayer(), "player");
+		
 		TopicIF type = topics.resolve(tm, role.getType());
 		TopicIF player = topics.resolve(tm, role.getPlayer());
 		
