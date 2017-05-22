@@ -145,13 +145,13 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testNullType() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("9", Occurrence.class);
 		occurrence.setType(null);
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("9", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("1", changed.getType().getObjectId());
+		Assert.assertEquals("8", changed.getType().getObjectId());
 	}
 	
 	@Test

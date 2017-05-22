@@ -123,13 +123,13 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testNullType() {
-		TopicName topicname = get("2", TopicName.class);
+		TopicName topicname = get("2599", TopicName.class);
 		topicname.setType(null);
 
-		TopicName changed = post("2", topicname, TopicName.class);
+		TopicName changed = post("2599", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("1", changed.getType().getObjectId());
+		Assert.assertEquals("3", changed.getType().getObjectId());
 	}
 	
 	@Test
