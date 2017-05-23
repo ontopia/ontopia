@@ -33,6 +33,7 @@ public class Topic extends TMObject {
 	private Collection<URILocator> subjectIdentifiers;
 	private Collection<Topic> types;
 	
+	@JsonProperty("names")
 	private Collection<TopicName> topicNames;
 	private Collection<Occurrence> occurrences;
 	private Collection<AssociationRole> roles;
