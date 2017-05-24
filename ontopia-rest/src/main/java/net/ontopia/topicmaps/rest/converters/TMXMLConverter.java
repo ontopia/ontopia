@@ -59,6 +59,7 @@ public class TMXMLConverter extends AbstractConverter {
 		if (source instanceof TopicIF) {
 			TopicIF topic = (TopicIF) source;
 			try {
+				writer.gatherPrefixes(topic);
 				writer.startTopicMap(topic.getTopicMap());
 				writer.writeTopic(topic);
 				writer.endTopicMap();
