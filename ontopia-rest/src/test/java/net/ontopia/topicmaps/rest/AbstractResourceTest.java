@@ -38,6 +38,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
+import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,6 +109,9 @@ public abstract class AbstractResourceTest {
 				new TypeReference<Map<String, Object>>(){}
 		);
 	}
+	protected Representation getRaw(String url, MediaType mime) throws IOException {
+		return new OntopiaTestResource(Method.GET, getUrl(url), mime).request();
+	}
 	protected <T> T put(Object object, Class<T> expected) {
 		return request(null, Method.PUT, object, expected);
 	}
@@ -162,9 +166,9 @@ public abstract class AbstractResourceTest {
 	
 	/* -- Utility assertions -- */
 	
-	protected void assertContainsTopics(Collection<Topic> topics, String... expected) {
+	protected void assertContainsTopics(Collection<? extends TMObject> topics, String... expected) {
 		Set<String> ids = new HashSet<>(Arrays.asList(expected));
-		for (Topic t : topics) {
+		for (TMObject t : topics) {
 			ids.remove(t.getObjectId());
 		}
 		Assert.assertTrue(ids.isEmpty());
