@@ -105,7 +105,8 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 	public void testWithUnTyped() {
 		Topic topic = get("501", Topic.class);
 
-		Assert.assertNull(topic.getTypes());
+		Assert.assertNotNull(topic.getTypes());
+		Assert.assertTrue(topic.getTypes().isEmpty());
 	}
 
 	@Test
