@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.rest.v1.topic;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.rest.Constants;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
 import org.restlet.resource.Delete;
@@ -51,6 +52,10 @@ public class TopicResource extends AbstractTMObjectResource<TopicIF> {
 	
 	@Put
 	public void addTopic(Topic topic) {
+		if (topic == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Topic");
+		}
+
 		TopicIF result = getController(TopicController.class).add(getTopicMap(), topic);
 		store.commit();
 		redirectTo(result);

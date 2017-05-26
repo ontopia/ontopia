@@ -24,6 +24,7 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.model.mixin.MFlatTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
@@ -48,6 +49,10 @@ public class TopicsResource extends AbstractTransactionalResource {
 	
 	@Put
 	public void addTopic(Topic topic) {
+		if (topic == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Topic");
+		}
+		
 		TopicMapIF tm = getTopicMap();
 		TopicIF type = Parameters.TYPE.optional(this);
 		TopicIF result;

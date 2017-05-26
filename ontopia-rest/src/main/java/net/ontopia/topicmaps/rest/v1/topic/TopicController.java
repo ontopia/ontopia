@@ -30,17 +30,25 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
+import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.model.Topic;
+import net.ontopia.topicmaps.rest.model.TopicName;
 import net.ontopia.topicmaps.rest.v1.TMObjectController;
+import net.ontopia.topicmaps.rest.v1.name.TopicNameController;
+import net.ontopia.topicmaps.rest.v1.occurrence.OccurrenceController;
 import org.apache.commons.collections4.CollectionUtils;
 
 public class TopicController extends AbstractController {
 
 	private TMObjectController tmobject;
+	private TopicNameController topicname;
+	private OccurrenceController occurrence;
 
 	@Override
 	protected void init() {
 		tmobject = getController(TMObjectController.class);
+		topicname = getController(TopicNameController.class);
+		occurrence = getController(OccurrenceController.class);
 	}
 
 	// todo: somehow make use of ontopia.resolver?
@@ -96,8 +104,18 @@ public class TopicController extends AbstractController {
 		setSubjectLocators(result, topic);
 		setTypes(result, topic);
 		
-		// todo: names
-		// todo: occurrences
+		if (topic.getTopicNames() != null) {
+			for (TopicName name : topic.getTopicNames()) {
+				topicname.add(tm, result, name);
+			}
+		}
+		
+		if (topic.getOccurrences()!= null) {
+			for (Occurrence occ : topic.getOccurrences()) {
+				occurrence.add(tm, result, occ);
+			}
+		}
+		
 		// todo: roles? can we even?
 		
 		// TMObjectIF
@@ -156,11 +174,14 @@ public class TopicController extends AbstractController {
 			for (Topic t : pojo.getTypes()) {
 				TopicIF resolved = resolve(object.getTopicMap(), t);
 				newTypes.add(resolved);
-				object.addType(object);
 			}
 			
 			for (TopicIF remove : CollectionUtils.subtract(object.getTypes(), newTypes)) {
 				object.removeType(remove);
+			}
+			
+			for (TopicIF add : newTypes) {
+				object.addType(add);
 			}
 		}
 	}
