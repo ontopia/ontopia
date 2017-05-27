@@ -34,12 +34,12 @@ public class TopicsResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public TopicsResourceGETTest() {
-		super(OPERA_TM, null);
+		super(OPERA_TM, "topics");
 	}
 
 	@Test
 	public void testTopics() throws IOException {
-		Collection<Topic> topics = get("topics", REF);
+		Collection<Topic> topics = get(null, REF);
 
 		Assert.assertNotNull(topics);
 		Assert.assertEquals(100, topics.size()); // paged
@@ -47,7 +47,7 @@ public class TopicsResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicsByType() throws IOException {
-		Collection<Topic> topics = get("topics/typed/43", REF);
+		Collection<Topic> topics = get("typed/43", REF);
 
 		Assert.assertNotNull(topics);
 		Assert.assertEquals(100, topics.size()); // paged
@@ -55,7 +55,7 @@ public class TopicsResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicsByUnexistingType() throws IOException {
-		Collection<Topic> topics = get("topics/typed/unexisting", REF); // fallback to all topics
+		Collection<Topic> topics = get("typed/unexisting", REF); // fallback to all topics
 
 		Assert.assertNotNull(topics);
 		Assert.assertEquals(100, topics.size()); // paged
@@ -65,6 +65,6 @@ public class TopicsResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testInvalidTopicAssociationRoles() {
-		assertGetFails("topics/typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }
