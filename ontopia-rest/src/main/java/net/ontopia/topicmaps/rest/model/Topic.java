@@ -53,8 +53,16 @@ public class Topic extends TMObject {
 		return subjectLocators;
 	}
 
+	public void setSubjectLocators(Collection<URILocator> subjectLocators) {
+		this.subjectLocators = subjectLocators;
+	}
+
 	public Collection<URILocator> getSubjectIdentifiers() {
 		return subjectIdentifiers;
+	}
+
+	public void setSubjectIdentifiers(Collection<URILocator> subjectIdentifiers) {
+		this.subjectIdentifiers = subjectIdentifiers;
 	}
 
 	public Collection<Topic> getTypes() {
