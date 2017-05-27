@@ -109,6 +109,11 @@ public abstract class AbstractResourceTest {
 				new TypeReference<Map<String, Object>>(){}
 		);
 	}
+	protected <T> T get(String url, TypeReference<T> expected) throws IOException {
+		return new ObjectMapper().readValue(
+				new OntopiaTestResource(Method.GET, getUrl(url), defaultMediatype).request().getText(), expected
+		);
+	} 
 	protected Representation getRaw(String url, MediaType mime) throws IOException {
 		return new OntopiaTestResource(Method.GET, getUrl(url), mime).request();
 	}
