@@ -39,6 +39,9 @@ public class AssociationRouter extends ScopedRouter {
 		// ClassInstanceIndex.getAssociations
 		attach("/typed/{type}", AssociationsResource.class);
 		
+		// ClassInstanceIndex.getAssociationTypes
+		attach("/types", AssociationTypesResource.class);
+		
 		// single
 		attach("/{id}", AssociationResource.class);
 		
