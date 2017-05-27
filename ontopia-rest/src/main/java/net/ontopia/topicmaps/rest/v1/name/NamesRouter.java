@@ -40,7 +40,7 @@ public class NamesRouter extends ScopedRouter {
 		attach("/typed/{type}", TopicNamesResource.class);
 		
 		// ClassInstanceIndexIF.getTopicNameTypes
-		attach("/types/{type}", TopicNameTypesResource.class);
+		attach("/types", TopicNameTypesResource.class);
 		
 		// NameIndexIF.getTopicNames
 		attach("/index", IndexResource.class);
