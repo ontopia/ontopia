@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-@SuppressWarnings("unchecked")
 public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 
 	private final TypeReference<Collection<Association>> REF = new TypeReference<Collection<Association>>(){};
