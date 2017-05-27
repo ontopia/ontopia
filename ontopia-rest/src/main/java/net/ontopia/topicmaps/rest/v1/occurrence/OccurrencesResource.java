@@ -42,12 +42,12 @@ public class OccurrencesResource extends AbstractTransactionalResource {
 	
 	@Get
 	public Collection<OccurrenceIF> getOccurrences() {
-		addMixInAnnotations(OccurrenceIF.class, MOccurrenceWithoutTopic.class);
-		
 		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).optional(this);
 		TopicIF type = Parameters.TYPE.optional(this);
 
 		if (topic != null) {
+			addMixInAnnotations(OccurrenceIF.class, MOccurrenceWithoutTopic.class);
+
 			if (type != null) {
 				return topic.getOccurrencesByType(type);
 			} else {
