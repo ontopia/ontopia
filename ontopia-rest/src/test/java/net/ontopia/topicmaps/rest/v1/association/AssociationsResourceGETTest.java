@@ -48,11 +48,6 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testInvalidTopicAssociations() {
-		assertGetFails("topics/13/associations", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
-	}
-
-	@Test
 	public void testUnexistingTopicAssociations() throws IOException {
 		Collection<Association> associations = get("topics/unexisting/associations", REF);
 
@@ -67,11 +62,6 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(associations);
 		Assert.assertEquals(1, associations.size());
 		assertContainsTopics(associations, "27");
-	}
-
-	@Test
-	public void testInvalidTopicAssociationsByType() {
-		assertGetFails("topics/1/associations/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
@@ -97,5 +87,22 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(associations);
 		Assert.assertEquals(1, associations.size());
 		assertContainsTopics(associations, "27");
+	}
+
+	/* -- Failing requests -- */
+	
+	@Test
+	public void testInvalidTopicAssociations() {
+		assertGetFails("topics/13/associations", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+	}
+
+	@Test
+	public void testTopicAssociationsByInvalidType() {
+		assertGetFails("topics/1/associations/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+	}
+
+	@Test
+	public void testTopicmapAssociationsByInvalidType() {
+		assertGetFails("associations/typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }
