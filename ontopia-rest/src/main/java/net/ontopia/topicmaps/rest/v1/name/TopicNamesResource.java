@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.rest.model.TopicName;
+import net.ontopia.topicmaps.rest.model.mixin.MTopicNameWithoutTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.data.Status;
@@ -40,6 +41,8 @@ public class TopicNamesResource extends AbstractTransactionalResource {
 		TopicIF type = Parameters.TYPE.optional(this);
 		
 		if (topic != null) {
+			addMixInAnnotations(TopicNameIF.class, MTopicNameWithoutTopic.class);
+			
 			if (type == null) {
 				return topic.getTopicNames();
 			} else {
