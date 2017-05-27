@@ -171,7 +171,7 @@ public abstract class AbstractResourceTest {
 		for (TMObject t : topics) {
 			ids.remove(t.getObjectId());
 		}
-		Assert.assertTrue(ids.isEmpty());
+		Assert.assertTrue("Missing objects " + ids, ids.isEmpty());
 	}
 	
 	protected void removeById(Collection<? extends TMObject> collection, String id) {
