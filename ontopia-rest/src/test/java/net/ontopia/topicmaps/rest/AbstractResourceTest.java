@@ -80,10 +80,10 @@ public abstract class AbstractResourceTest {
 	protected String getUrl(String url) {
 		StringBuilder b = new StringBuilder(getAPIRoot());
 		if (tmid != null) {
-			b.append("topicmaps/").append(tmid).append("/");
+			b.append("topicmaps/").append(tmid);
 		}
 				
-		if (path != null) { b.append(path); }
+		if (path != null) { b.append("/").append(path); }
 		if (url != null) { b.append("/").append(url); }
 		return b.toString();
 	}
