@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.AssociationRole;
+import net.ontopia.topicmaps.rest.model.mixin.MAssociationRoleWithoutAssociation;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.data.Status;
@@ -67,6 +68,7 @@ public class RolesResource extends AbstractTransactionalResource {
 	}
 
 	private Collection<AssociationRoleIF> getAssociationRoles(AssociationIF association, TopicIF roleType) {
+		addMixInAnnotations(AssociationRoleIF.class, MAssociationRoleWithoutAssociation.class);
 		if (roleType != null) {
 			return association.getRolesByType(roleType);
 		} else {
