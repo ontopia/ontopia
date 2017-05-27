@@ -38,7 +38,7 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void getTopicAssociations() throws IOException {
+	public void testTopicAssociations() throws IOException {
 		Collection<Association> associations = get("topics/301/associations", REF);
 
 		Assert.assertNotNull(associations);
@@ -48,12 +48,12 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void getInvalidTopicAssociations() {
+	public void testInvalidTopicAssociations() {
 		assertGetFails("topics/13/associations", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
-	public void getUnexistingTopicAssociations() throws IOException {
+	public void testUnexistingTopicAssociations() throws IOException {
 		Collection<Association> associations = get("topics/unexisting/associations", REF);
 
 		Assert.assertNotNull(associations);
@@ -61,7 +61,7 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void getTopicAssociationsByType() throws IOException {
+	public void testTopicAssociationsByType() throws IOException {
 		Collection<Association> associations = get("topics/1/associations/26", REF);
 
 		Assert.assertNotNull(associations);
@@ -70,12 +70,12 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void getInvalidTopicAssociationsByType() {
+	public void testInvalidTopicAssociationsByType() {
 		assertGetFails("topics/1/associations/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
-	public void getUnexistingTopicAssociationsByType() throws IOException {
+	public void testUnexistingTopicAssociationsByType() throws IOException {
 		Collection<Association> associations = get("topics/301/associations/unexisting", REF);
 
 		Assert.assertNotNull(associations);
@@ -83,7 +83,7 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void getTopicmapAssociations() throws IOException {
+	public void testTopicmapAssociations() throws IOException {
 		Collection<Association> associations = get("associations", REF);
 
 		Assert.assertNotNull(associations);
@@ -91,7 +91,7 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void getTopicmapAssociationsByType() throws IOException {
+	public void testTopicmapAssociationsByType() throws IOException {
 		Collection<Association> associations = get("associations/typed/26", REF);
 
 		Assert.assertNotNull(associations);
