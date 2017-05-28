@@ -49,7 +49,7 @@ public class NamesRouter extends ScopedRouter {
 		attach("/{id}", TopicNameResource.class);
 		
 		// variants
-		attach("/{id}/variants", VariantsResource.class);
+		attach("/{topicname}/variants", VariantsResource.class);
 		
 	}
 }
