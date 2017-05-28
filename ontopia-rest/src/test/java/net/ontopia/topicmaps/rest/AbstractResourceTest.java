@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.rest.OntopiaTestResource.OntopiaTestResourceExcepti
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Error;
 import net.ontopia.topicmaps.rest.model.TMObject;
-import net.ontopia.topicmaps.rest.model.Topic;
 import org.junit.After;
 import org.junit.Assert;
 import org.restlet.data.MediaType;
@@ -113,7 +112,12 @@ public abstract class AbstractResourceTest {
 		return new ObjectMapper().readValue(
 				new OntopiaTestResource(Method.GET, getUrl(url), defaultMediatype).request().getText(), expected
 		);
-	} 
+	}
+	protected <T> T post(String url, TypeReference<T> expected, Object body) throws IOException {
+		return new ObjectMapper().readValue(
+				new OntopiaTestResource(Method.GET, getUrl(url), defaultMediatype).post(body).getText(), expected
+		);
+	}
 	protected Representation getRaw(String url, MediaType mime) throws IOException {
 		return new OntopiaTestResource(Method.GET, getUrl(url), mime).request();
 	}
