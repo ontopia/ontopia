@@ -24,12 +24,10 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
-import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
 	
-	@Get
 	@Post
 	public Collection<TopicNameIF> getTopicNames(String value) {
 		return getIndex(NameIndexIF.class).getTopicNames(value);

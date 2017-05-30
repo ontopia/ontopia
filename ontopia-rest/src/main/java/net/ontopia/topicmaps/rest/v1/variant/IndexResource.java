@@ -29,18 +29,15 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
-import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
 	
-	@Get("text:")
 	@Post("text:")
 	public Collection<VariantNameIF> getVariantNames(String value) {
 		return getIndex(NameIndexIF.class).getVariants(value);
 	}
 
-	@Get("json|form:")
 	@Post("json|form:")
 	public Collection<VariantNameIF> getVariantNames(Map<String, String> values) {
 		String value = values.get("value");

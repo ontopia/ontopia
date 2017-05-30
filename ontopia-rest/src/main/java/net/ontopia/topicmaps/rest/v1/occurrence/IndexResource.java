@@ -28,13 +28,11 @@ import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.utils.IteratorCollection;
 import org.restlet.data.Status;
-import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
 	private static final String TYPE_ERROR_MESSAGE = "Expected type one of value, prefix, gte, lte";
 	
-	@Get("text:")
 	@Post("text:")
 	public Collection<?> getOccurrences(String value) {
 		OccurrenceIndexIF index = getIndex(OccurrenceIndexIF.class);
@@ -51,7 +49,6 @@ public class IndexResource extends AbstractTransactionalResource {
 		}
 	}
 	
-	@Get("json|form:")
 	@Post("json|form:")
 	public Collection<?> getOccurrences(Map<String, String> values) {
 		String value = values.get("value");
