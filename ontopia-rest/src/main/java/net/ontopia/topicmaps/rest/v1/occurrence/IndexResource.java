@@ -53,7 +53,7 @@ public class IndexResource extends AbstractTransactionalResource {
 	
 	@Get("json|form:")
 	@Post("json|form:")
-	public Collection<?> getVariantNames(Map<String, String> values) {
+	public Collection<?> getOccurrences(Map<String, String> values) {
 		String value = values.get("value");
 		LocatorIF datatype = URILocator.create(values.get("datatype"));
 		
