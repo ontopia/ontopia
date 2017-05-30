@@ -25,6 +25,7 @@ import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.utils.IteratorCollection;
 import org.restlet.data.Status;
@@ -39,7 +40,7 @@ public class IndexResource extends AbstractTransactionalResource {
 		
 		switch (getAttribute("type").toUpperCase()) {
 			case "VALUE": return index.getOccurrences(value);
-			case "PREFIX": return index.getOccurrencesByPrefix(value);
+			case "PREFIX": return index.getOccurrencesByPrefix(notNull(value));
 			case "GTE": return new IteratorCollection<>(index.getValuesGreaterThanOrEqual(value));
 			case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
 			
@@ -58,7 +59,7 @@ public class IndexResource extends AbstractTransactionalResource {
 		
 		switch (getAttribute("type").toUpperCase()) {
 			case "VALUE": return index.getOccurrences(value, datatype);
-			case "PREFIX": return index.getOccurrencesByPrefix(value, datatype);
+			case "PREFIX": return index.getOccurrencesByPrefix(notNull(value), datatype);
 			case "GTE": return new IteratorCollection<>(index.getValuesGreaterThanOrEqual(value));
 			case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
 			
@@ -66,5 +67,12 @@ public class IndexResource extends AbstractTransactionalResource {
 				setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
 				return null;
 		}
+	}
+
+	private String notNull(String value) {
+		if (value == null) {
+			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String");
+		}
+		return value;
 	}
 }
