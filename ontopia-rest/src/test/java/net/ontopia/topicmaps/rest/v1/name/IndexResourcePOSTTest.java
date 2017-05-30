@@ -28,11 +28,11 @@ import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class IndexResourceGETTest extends AbstractV1ResourceTest {
+public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
 	private final TypeReference<Collection<TopicName>> REF = new TypeReference<Collection<TopicName>>(){};
 
-	public IndexResourceGETTest() {
+	public IndexResourcePOSTTest() {
 		super(OPERA_TM, "names/index");
 	}
 
