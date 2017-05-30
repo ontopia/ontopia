@@ -55,7 +55,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testEmoty() throws IOException {
+	public void testEmpty() throws IOException {
 		Collection<TopicName> names = post(null, REF, (Object) null);
 
 		Assert.assertNotNull(names);
