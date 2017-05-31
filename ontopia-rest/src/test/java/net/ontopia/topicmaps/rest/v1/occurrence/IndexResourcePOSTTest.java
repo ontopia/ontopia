@@ -33,7 +33,6 @@ import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
 import org.restlet.data.Form;
-import org.restlet.data.MediaType;
 
 public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
