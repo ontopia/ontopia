@@ -20,59 +20,63 @@
 
 package net.ontopia.topicmaps.rest.v1.occurrence;
 
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Map;
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.utils.IteratorCollection;
+import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
 	private static final String TYPE_ERROR_MESSAGE = "Expected type one of value, prefix, gte, lte";
-	
-	@Post("text:")
-	public Collection<?> getOccurrences(String value) {
-		OccurrenceIndexIF index = getIndex(OccurrenceIndexIF.class);
-		
-		switch (getAttribute("type").toUpperCase()) {
-			case "VALUE": return index.getOccurrences(value);
-			case "PREFIX": return index.getOccurrencesByPrefix(notNull(value));
-			case "GTE": return new IteratorCollection<>(index.getValuesGreaterThanOrEqual(value));
-			case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
-			
-			default: 
-				setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
-				return null;
-		}
-	}
-	
-	@Post("json|form:")
-	public Collection<?> getOccurrences(Map<String, String> values) {
-		String value = values.get("value");
-		LocatorIF datatype = URILocator.create(values.get("datatype"));
-		
-		OccurrenceIndexIF index = getIndex(OccurrenceIndexIF.class);
-		
-		switch (getAttribute("type").toUpperCase()) {
-			case "VALUE": return index.getOccurrences(value, datatype);
-			case "PREFIX": return index.getOccurrencesByPrefix(notNull(value), datatype);
-			case "GTE": return new IteratorCollection<>(index.getValuesGreaterThanOrEqual(value));
-			case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
-			
-			default: 
-				setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
-				return null;
-		}
-	}
 
-	private String notNull(String value) {
-		if (value == null) {
-			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String");
+	@Post("text:json")
+	public Collection<?> getOccurrences(String value) {
+		return getOccurrences(value, null);
+	}
+	
+	@Post("json:json")
+	public Collection<?> getOccurrences(Map<String, String> data) {
+		if (data == null) {
+			throw OntopiaRestErrors.EMPTY_ENTITY.build();
 		}
-		return value;
+		return getOccurrences(data.get("value"), data.get("datatype"));
+	}
+	
+	@Post("form:json")
+	public Collection<?> getOccurrences(Form data) {
+		if (data == null) {
+			throw OntopiaRestErrors.EMPTY_ENTITY.build();
+		}
+		return getOccurrences(data.getFirstValue("value"), data.getFirstValue("datatype"));
+	}
+	
+	protected Collection<?> getOccurrences(String value, String datatype) {
+		OccurrenceIndexIF index = getIndex(OccurrenceIndexIF.class);
+		
+		try {
+			switch (getAttribute("type").toUpperCase()) {
+				case "VALUE":
+					if (datatype == null) return index.getOccurrences(value);
+					else return index.getOccurrences(value, new URILocator(datatype));
+				case "PREFIX":
+					if (value == null) throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String");
+					if (datatype == null) return index.getOccurrencesByPrefix(value);
+					else return index.getOccurrencesByPrefix(value, new URILocator(datatype));
+				case "GTE": return new IteratorCollection<>(index.getValuesGreaterThanOrEqual(value));
+				case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
+
+				default: 
+					setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
+					return null;
+			}
+		} catch (MalformedURLException mufe) {
+			throw OntopiaRestErrors.MALFORMED_LOCATOR.build(mufe, datatype);
+		}
 	}
 }
