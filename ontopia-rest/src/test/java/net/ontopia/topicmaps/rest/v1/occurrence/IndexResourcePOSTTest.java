@@ -23,12 +23,17 @@ package net.ontopia.topicmaps.rest.v1.occurrence;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
+import org.restlet.data.Form;
+import org.restlet.data.MediaType;
 
 public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
@@ -37,6 +42,14 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
 	public IndexResourcePOSTTest() {
 		super(OPERA_TM, "occurrences/index");
+	}
+	
+	private Map<String, String> createMap(String... keyval) {
+		Map<String, String> map = new HashMap<>(keyval.length / 2);
+		for (int i = 0; i < keyval.length; i += 2) {
+			map.put(keyval[i], keyval[i + 1]);
+		}
+		return map;
 	}
 
 	@Test
@@ -49,7 +62,29 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testemptyValue() throws IOException {
+	public void testValueDatatypeJSON() throws IOException {
+		Collection<Occurrence> occurrences = post("value", REF, 
+				createMap("value", "$Revision: 2.1a $", "datatype", DataTypes.TYPE_STRING.getAddress()));
+
+		Assert.assertNotNull(occurrences);
+		Assert.assertEquals(1, occurrences.size());
+		assertContainsTopics(occurrences, "11");
+	}
+
+	@Test
+	public void testValueDatatypeFORM() throws IOException {
+		Form form = new Form();
+		form.add("value", "$Revision: 2.1a $");
+		form.add("datatype", DataTypes.TYPE_STRING.getAddress());
+		Collection<Occurrence> occurrences = post("value", REF, form);
+
+		Assert.assertNotNull(occurrences);
+		Assert.assertEquals(1, occurrences.size());
+		assertContainsTopics(occurrences, "11");
+	}
+
+	@Test
+	public void testNoResultsValue() throws IOException {
 		Collection<Occurrence> occurrences = post("value", REF, "Foobar");
 
 		Assert.assertNotNull(occurrences);
@@ -66,7 +101,29 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testEmptyPrefix() throws IOException {
+	public void testPrefixDatatypeJSON() throws IOException {
+		Collection<Occurrence> occurrences = post("prefix", REF, 
+				createMap("value", "This", "datatype", DataTypes.TYPE_STRING.getAddress()));
+
+		Assert.assertNotNull(occurrences);
+		Assert.assertEquals(2, occurrences.size());
+		assertContainsTopics(occurrences, "9", "4588");
+	}
+
+	@Test
+	public void testPrefixDatatypeFORM() throws IOException {
+		Form form = new Form();
+		form.add("value", "This");
+		form.add("datatype", DataTypes.TYPE_STRING.getAddress());
+		Collection<Occurrence> occurrences = post("prefix", REF, form);
+
+		Assert.assertNotNull(occurrences);
+		Assert.assertEquals(2, occurrences.size());
+		assertContainsTopics(occurrences, "9", "4588");
+	}
+
+	@Test
+	public void testNoResultsPrefix() throws IOException {
 		Collection<Occurrence> occurrences = post("prefix", REF, "Foobar");
 
 		Assert.assertNotNull(occurrences);
@@ -84,7 +141,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testEmptyGreater() throws IOException {
+	public void testNoResultsGreater() throws IOException {
 		Collection<String> occurrences = post("gte", REF2, "vstudent");
 
 		Assert.assertNotNull(occurrences);
@@ -102,15 +159,22 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testEmptyLesser() throws IOException {
-		Collection<String> occurrences = post("lte", REF2, "");
-
-		Assert.assertNotNull(occurrences);
-		Assert.assertTrue(occurrences.isEmpty());
+	public void testNullValue() throws IOException {
+		assertPostFails("value", null, OntopiaRestErrors.EMPTY_ENTITY);
 	}
 
 	@Test
 	public void testNullPrefix() throws IOException {
-		assertPostFails("prefix", null, OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
+		assertPostFails("prefix", null, OntopiaRestErrors.EMPTY_ENTITY);
+	}
+
+	@Test
+	public void testNullLesser() throws IOException {
+		assertPostFails("lte", null, OntopiaRestErrors.EMPTY_ENTITY);
+	}
+
+	@Test
+	public void testEmptyLesser() throws IOException {
+		assertPostFails("lte", "", OntopiaRestErrors.EMPTY_ENTITY);
 	}
 }
