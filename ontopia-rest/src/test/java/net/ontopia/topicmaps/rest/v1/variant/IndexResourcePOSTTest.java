@@ -35,7 +35,6 @@ import org.restlet.data.Form;
 public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	private final TypeReference<Collection<VariantName>> REF = new TypeReference<Collection<VariantName>>(){};
-	private final TypeReference<Collection<String>> REF2 = new TypeReference<Collection<String>>(){};
 
 	public IndexResourcePOSTTest() {
 		super(OPERA_TM, "variants/index");
