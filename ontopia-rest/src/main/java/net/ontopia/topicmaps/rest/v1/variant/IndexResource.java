@@ -23,37 +23,42 @@ package net.ontopia.topicmaps.rest.v1.variant;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Map;
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
+import org.restlet.data.Form;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
 	
-	@Post("text:")
+	@Post("text:json")
 	public Collection<VariantNameIF> getVariantNames(String value) {
-		return getIndex(NameIndexIF.class).getVariants(value);
+		return getVariantNames(value, null);
 	}
 
-	@Post("json|form:")
+	@Post("json:json")
 	public Collection<VariantNameIF> getVariantNames(Map<String, String> values) {
-		String value = values.get("value");
-		String datatype = values.get("datatype");
+		return getVariantNames(values.get("value"), values.get("datatype"));
+	}
+	
+	@Post("form:json")
+	public Collection<VariantNameIF> getVariantNames(Form values) {
+		return getVariantNames(values.getFirstValue("value"), values.getFirstValue("datatype"));
+	}
+	
+	protected Collection<VariantNameIF> getVariantNames(String value, String datatype) {
+		NameIndexIF index = getIndex(NameIndexIF.class);
 		
-		LocatorIF datatypeLocator = null;
-		if (datatype != null) {
-			try {
-				datatypeLocator = new URILocator(datatype);
-			} catch (MalformedURLException mufe) {
-				throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE.build(mufe, "datatype", "LocatorIF", datatype);
+		try {
+			if (datatype != null) {
+				return index.getVariants(value, new URILocator(datatype));
+			} else {
+				return index.getVariants(value);
 			}
-			
-			return getIndex(NameIndexIF.class).getVariants(value, datatypeLocator);
-		} else {
-			return getIndex(NameIndexIF.class).getVariants(value);
+		} catch (MalformedURLException mufe) {
+			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE.build(mufe, "datatype", "LocatorIF", datatype);
 		}
 	}
 }
