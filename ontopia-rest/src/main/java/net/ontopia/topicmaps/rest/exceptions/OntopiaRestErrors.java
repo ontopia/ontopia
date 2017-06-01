@@ -40,6 +40,7 @@ public enum OntopiaRestErrors {
 	MANDATORY_OBJECT_IS_NULL(Status.CLIENT_ERROR_BAD_REQUEST, 205, "Object of type '%s' expected, found null"),
 	MANDATORY_OBJECT_IS_WRONG_TYPE(Status.CLIENT_ERROR_BAD_REQUEST, 206, "Object of type '%s' expected, found %s"),
 	MALFORMED_LOCATOR(Status.CLIENT_ERROR_BAD_REQUEST, 207, "Invalid locator '%s'"),
+	EMPTY_ENTITY(Status.CLIENT_ERROR_BAD_REQUEST, 208, "Unexpected empty request entity"),
 	
 	// mime mismatch
 	UNSUPPORTED_MIME_TYPE(Status.CLIENT_ERROR_NOT_ACCEPTABLE, 300, "%s cannot provide %s");
