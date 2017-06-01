@@ -163,6 +163,11 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
+	public void testInvalidValueDatatypeJSON() throws IOException {
+		assertPostFails("value", createMap("value", "foo", "datatype", "notauri"), OntopiaRestErrors.MALFORMED_LOCATOR);
+	}
+
+	@Test
 	public void testNullPrefix() throws IOException {
 		assertPostFails("prefix", null, OntopiaRestErrors.EMPTY_ENTITY);
 	}
