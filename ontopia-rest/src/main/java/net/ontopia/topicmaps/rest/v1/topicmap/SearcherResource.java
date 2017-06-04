@@ -30,12 +30,10 @@ import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
-import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 public class SearcherResource extends AbstractTransactionalResource {
 	
-	@Get
 	@Post
 	public List<Map<String, Object>> search(String value) throws IOException {
 		final TopicMapIF tm = getTopicMap();
