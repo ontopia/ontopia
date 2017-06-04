@@ -60,7 +60,6 @@ public class ScopesResourceGETTest extends AbstractV1ResourceTest {
 
 		Assert.assertNotNull(scopes);
 		Assert.assertEquals(100, scopes.size()); // added to by tests, paged
-		assertContainsTopics(scopes, "29", "117");
 	}
 
 	@Test
