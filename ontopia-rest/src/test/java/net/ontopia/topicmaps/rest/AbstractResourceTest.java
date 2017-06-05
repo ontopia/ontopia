@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractResourceTest {
 	
-	private final String tmid;
+	protected String tmid;
 	private final String path;
 	protected MediaType defaultMediatype = MediaType.APPLICATION_JSON;
 	protected final Logger logger;
