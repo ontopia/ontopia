@@ -65,9 +65,13 @@ public abstract class AbstractOntopolyURLReference
     }
     super.open();
 
-    if (maintainFulltextIndexes && alwaysReindexOnLoad) {
+    if (maintainFulltextIndexes) {
       for (FulltextImplementationIF ft : ftmanagers) {
-        ft.synchronize(store);
+        if (alwaysReindexOnLoad) {
+          ft.reindex();
+        } else {
+          ft.synchronize(store);
+        }
       }
     }
   }
