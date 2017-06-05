@@ -30,12 +30,18 @@ import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
+import org.apache.commons.lang.StringUtils;
 import org.restlet.resource.Post;
 
 public class SearcherResource extends AbstractTransactionalResource {
 	
 	@Post
 	public List<Map<String, Object>> search(String value) throws IOException {
+
+		if (StringUtils.isEmpty(value)) {
+			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String");
+		}
+
 		final TopicMapIF tm = getTopicMap();
 		SearcherIF index = getIndex(SearcherIF.class);
 		try {
