@@ -31,6 +31,12 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>net.ontopia</groupId>
+			<artifactId>ontopia-lucene</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
