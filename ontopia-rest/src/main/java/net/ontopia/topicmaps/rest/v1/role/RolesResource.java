@@ -32,7 +32,6 @@ import net.ontopia.topicmaps.rest.model.mixin.MAssociationRoleWithoutAssociation
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.data.Status;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -96,11 +95,5 @@ public class RolesResource extends AbstractTransactionalResource {
 
 		// todo: maybe this should be '302 Found' instead
 		redirectSeeOther("../../roles/" + result.getObjectId()); // todo: how to make this stable?
-	}
-	
-	@Delete
-	public void removeAssociationRole(AssociationRole role) {
-		getController(RoleController.class).remove(getTopicMap(), role);
-		store.commit();
 	}
 }
