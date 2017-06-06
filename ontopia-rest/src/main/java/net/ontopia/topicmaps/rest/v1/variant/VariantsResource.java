@@ -26,7 +26,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.rest.model.VariantName;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -48,11 +47,5 @@ public class VariantsResource extends AbstractTransactionalResource {
 		
 		// todo: maybe this should be '302 Found' instead
 		redirectSeeOther("../../variants/" + result.getObjectId()); // todo: how to make this stable?
-	}
-	
-	@Delete
-	public void removeVariantName(VariantName variant) {
-		getController(VariantNameController.class).remove(getTopicMap(), variant);
-		store.commit();
 	}
 }
