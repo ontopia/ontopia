@@ -124,6 +124,9 @@ public abstract class AbstractResourceTest {
 	protected <T> T put(Object object, Class<T> expected) {
 		return request(null, Method.PUT, object, expected);
 	}
+	protected <T> T put(String url, Object object, Class<T> expected) {
+		return request(url, Method.PUT, object, expected);
+	}
 	protected <T> T post(String url, Object object, Class<T> expected) {
 		return request(url, Method.POST, object, expected);
 	}
@@ -165,6 +168,9 @@ public abstract class AbstractResourceTest {
 	}
 	protected void assertPutFails(Object object, OntopiaRestErrors expected) {
 		assertRequestFails(null, Method.PUT, object, expected);
+	}
+	protected void assertPutFails(String url, Object object, OntopiaRestErrors expected) {
+		assertRequestFails(url, Method.PUT, object, expected);
 	}
 	protected void assertPostFails(String url, Object object, OntopiaRestErrors expected) {
 		assertRequestFails(url, Method.POST, object, expected);
