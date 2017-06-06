@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.model.mixin.MFlatTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -67,11 +66,5 @@ public class TopicsResource extends AbstractTransactionalResource {
 		} else {
 			redirectSeeOther("topics/" + result.getObjectId());
 		}
-	}
-	
-	@Delete
-	public void deleteTopic(Topic topic) {
-		getController(TopicController.class).remove(getTopicMap(), topic);
-		store.commit();
 	}
 }
