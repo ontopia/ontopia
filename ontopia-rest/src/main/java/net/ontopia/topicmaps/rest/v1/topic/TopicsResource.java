@@ -62,7 +62,11 @@ public class TopicsResource extends AbstractTransactionalResource {
 			result = getController(TopicController.class).add(tm, topic);
 		}
 		store.commit();
-		redirectSeeOther("topics/" + result.getObjectId());
+		if (getRequestAttributes().containsKey(Parameters.TYPE.getName())) {
+			redirectSeeOther("../" + result.getObjectId());
+		} else {
+			redirectSeeOther("topics/" + result.getObjectId());
+		}
 	}
 	
 	@Delete
