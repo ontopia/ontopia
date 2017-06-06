@@ -25,7 +25,6 @@ import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.resources.AbstractTMObjectResource;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -49,19 +48,6 @@ public class ScopedResource extends AbstractTMObjectResource<ScopedIF> {
 	public void addScope(Collection<Topic> scopes) {
 		for (Topic scope : scopes) {
 			getController(ScopedController.class).add(resolve(), scope);
-		}
-		store.commit();
-	}
-	
-	@Delete
-	public void removeScope(Topic scope) {
-		removeScope(Collections.singletonList(scope));
-	}
-
-	@Delete
-	public void removeScope(Collection<Topic> scopes) {
-		for (Topic scope : scopes) {
-			getController(ScopedController.class).remove(resolve(), scope);
 		}
 		store.commit();
 	}
