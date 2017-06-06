@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.rest.model.mixin.MTopicNameWithoutTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.data.Status;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -69,11 +68,5 @@ public class TopicNamesResource extends AbstractTransactionalResource {
 
 		// todo: maybe this should be '302 Found' instead
 		redirectSeeOther("../../names/" + result.getObjectId()); // todo: how to make this stable?
-	}
-	
-	@Delete
-	public void removeTopicName(TopicName name) {
-		getController(TopicNameController.class).remove(getTopicMap(), name);
-		store.commit();
 	}
 }
