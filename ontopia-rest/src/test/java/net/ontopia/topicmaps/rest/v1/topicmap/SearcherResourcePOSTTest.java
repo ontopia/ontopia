@@ -76,4 +76,9 @@ public class SearcherResourcePOSTTest extends AbstractV1ResourceTest {
 	public void searchEmpty() {
 		assertPostFails(null, "", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
+
+	@Test
+	public void searchInvalid() {
+		assertPostFails(null, "*", OntopiaRestErrors.INDEX_USAGE_ERROR);
+	}
 }

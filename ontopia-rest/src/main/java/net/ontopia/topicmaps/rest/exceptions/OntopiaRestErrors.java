@@ -29,7 +29,7 @@ public enum OntopiaRestErrors {
 	CANNOT_OPEN_STORE(Status.SERVER_ERROR_INTERNAL, 101, "Could not open store"), 
 	COULD_NOT_READ_FRAGMENT(Status.CLIENT_ERROR_BAD_REQUEST, 102, "Could not read the provided topicmap fragment"),
 	INDEX_NOT_SUPPORTED(Status.CLIENT_ERROR_EXPECTATION_FAILED, 103, "This topicmap does not support index of type %s"),
-	INDEX_USAGE_ERROR(Status.SERVER_ERROR_INTERNAL, 104, "Error during index %s usage"),
+	INDEX_USAGE_ERROR(Status.CLIENT_ERROR_BAD_REQUEST, 104, "Error during index %s usage"),
 	TOPICMAP_DELETE_NOT_SUPPORTED(Status.CLIENT_ERROR_FORBIDDEN, 105, "Cannot remove topicmap %s, source does not support deletion"),
 	
 	// Attribute/parameter failures
