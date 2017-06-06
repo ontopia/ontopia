@@ -92,17 +92,16 @@ public class TopicController extends AbstractController {
 	public TopicIF add(TopicMapIF tm, TopicIF type, Topic topic) {
 		TopicMapBuilderIF builder = tm.getBuilder();
 		
-		TopicIF result;
-		if (type == null) {
-			result = builder.makeTopic();
-		} else {
-			result = builder.makeTopic(type);
-		}
+		TopicIF result = builder.makeTopic();
 		
 		// TopicIF
 		setSubjectIdentifiers(result, topic);
 		setSubjectLocators(result, topic);
 		setTypes(result, topic);
+		
+		if (type != null) {
+			result.addType(type);
+		}
 		
 		if (topic.getTopicNames() != null) {
 			for (TopicName name : topic.getTopicNames()) {
