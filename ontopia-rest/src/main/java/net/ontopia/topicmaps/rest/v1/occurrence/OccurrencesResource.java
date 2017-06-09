@@ -24,6 +24,7 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.model.mixin.MOccurrenceWithoutTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
@@ -65,6 +66,10 @@ public class OccurrencesResource extends AbstractTransactionalResource {
 			return;
 		}
 		
+		if (occurrence == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Occurrence");
+		}
+
 		OccurrenceIF result = getController(OccurrenceController.class).add(
 				getTopicMap(),
 				Parameters.ID.withExpected(TopicIF.class).required(this), 
