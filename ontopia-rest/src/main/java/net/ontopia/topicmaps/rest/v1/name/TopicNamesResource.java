@@ -24,6 +24,7 @@ import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.TopicName;
 import net.ontopia.topicmaps.rest.model.mixin.MTopicNameWithoutTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
@@ -58,6 +59,10 @@ public class TopicNamesResource extends AbstractTransactionalResource {
 		if (optionalRequestParameter(Parameters.TYPE) != null) {
 			setStatus(Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
 			return;
+		}
+
+		if (name == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("TopicName");
 		}
 
 		TopicNameIF result = getController(TopicNameController.class).add(
