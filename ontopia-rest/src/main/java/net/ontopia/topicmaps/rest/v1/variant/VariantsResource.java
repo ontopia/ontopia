@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.rest.v1.variant;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.VariantName;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
@@ -39,9 +40,14 @@ public class VariantsResource extends AbstractTransactionalResource {
 	
 	@Put
 	public void addVariantName(VariantName variant) {
+
+		if (variant == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("VariantName");
+		}
+
 		VariantNameIF result = getController(VariantNameController.class).add(
 				getTopicMap(), 
-				Parameters.ID.withExpected(TopicNameIF.class).required(this),
+				Parameters.TOPICNAME.required(this),
 				variant);
 		store.commit();
 		
