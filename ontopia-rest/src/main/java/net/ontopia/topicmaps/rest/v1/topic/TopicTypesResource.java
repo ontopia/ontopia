@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.rest.v1.topic;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
@@ -44,6 +45,11 @@ public class TopicTypesResource extends AbstractTransactionalResource {
 	@Put
 	public Collection<TopicIF> addType(Topic type) {
 		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).required(this);
+
+		if (type == null) {
+			throw OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL.build("Topic");
+		}
+
 		getController(TopicController.class).addType(topic, type);
 		store.commit();
 		return topic.getTypes();
