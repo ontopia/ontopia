@@ -20,7 +20,6 @@
 package net.ontopia.topicmaps.rest.v1.scoped;
 
 import java.util.Collection;
-import java.util.Collections;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.rest.model.Topic;
@@ -40,15 +39,10 @@ public class ScopedResource extends AbstractTMObjectResource<ScopedIF> {
 	}
 	
 	@Put
-	public void addScope(Topic scope) {
-		addScope(Collections.singletonList(scope));
-	}
-
-	@Put
-	public void addScope(Collection<Topic> scopes) {
-		for (Topic scope : scopes) {
-			getController(ScopedController.class).add(resolve(), scope);
-		}
+	public Collection<TopicIF> addScope(Topic scope) {
+		ScopedIF resolved = resolve();
+		getController(ScopedController.class).add(resolved, scope);
 		store.commit();
+		return resolved.getScope();
 	}
 }
