@@ -25,13 +25,21 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Topic;
+import net.ontopia.topicmaps.rest.model.mixin.MFlatTopic;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
+import org.restlet.resource.ResourceException;
 
 public class TopicTypesResource extends AbstractTransactionalResource {
-	
+
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		addMixInAnnotations(TopicIF.class, MFlatTopic.class);
+	}
+
 	@Get
 	public Collection<TopicIF> getTopicTypes() {
 		TopicIF topic = Parameters.ID.withExpected(TopicIF.class).optional(this);
