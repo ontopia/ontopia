@@ -26,13 +26,37 @@ import org.restlet.util.Series;
 
 public class HeaderUtils {
 
-	@SuppressWarnings("unchecked")
 	public static void addResponseHeader(Response response, String header, String value) {
-		Series<Header> responseHeaders = (Series<Header>) response.getAttributes().get("org.restlet.http.headers");
-		if (responseHeaders == null) {
-			responseHeaders = new Series<>(Header.class);
-			response.getAttributes().put("org.restlet.http.headers", responseHeaders);
+		getHeaders(response).add(new Header(header, value));
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Series<Header> getHeaders(Response response) {
+		Series<Header> headers = (Series<Header>) response.getAttributes().get("org.restlet.http.headers");
+		if (headers == null) {
+			headers = new Series<>(Header.class);
+			response.getAttributes().put("org.restlet.http.headers", headers);
 		}
-		responseHeaders.add(new Header(header, value));
+		return headers;
+	}
+	
+	public static int getCount(Response response) {
+		return getIntHeader(response, "X-Paging-Count");
+	}
+
+	public static int getLimit(Response response) {
+		return getIntHeader(response, "X-Paging-Limit");
+	}
+
+	public static int getOffset(Response response) {
+		return getIntHeader(response, "X-Paging-Offset");
+	}
+
+	private static int getIntHeader(Response response, String header) {
+		try {
+			return Integer.parseInt(getHeaders(response).getFirstValue(header));
+		} catch (NumberFormatException nfe) {
+			return -1;
+		}
 	}
 }
