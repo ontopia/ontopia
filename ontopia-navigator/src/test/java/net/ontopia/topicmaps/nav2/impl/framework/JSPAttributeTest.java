@@ -22,19 +22,17 @@ package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.io.IOException;
-import java.util.Map;
+import java.net.URL;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Collections;
-import javax.servlet.jsp.PageContext;
+import java.util.Map;
 import javax.servlet.jsp.JspException;
-
-import org.xml.sax.SAXException;
-
+import javax.servlet.jsp.PageContext;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ontojsp.FakeHttpSession;
@@ -45,11 +43,9 @@ import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.JSPPageExecuter;
 import net.ontopia.utils.ontojsp.JSPPageReader;
 import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-
 import org.junit.Assert;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: Test for OKS JSP attribute access.
@@ -173,7 +169,7 @@ public class JSPAttributeTest {
    */
   private void runJSPTest(String file, Map attributes)
     throws IOException, JspException, SAXException {
-    String jsp = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", file);
+    URL jsp = TestFileUtils.getTestInputURL(testdataDirectory, "jsp", file);
 
     // run test
     PageContext page = makePageContext(file, attributes);

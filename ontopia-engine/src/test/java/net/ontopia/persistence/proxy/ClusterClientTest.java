@@ -22,7 +22,7 @@ package net.ontopia.persistence.proxy;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.ontopia.infoset.core.Locators;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -82,15 +82,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("TopicMapIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicMapIF m = (TopicMapIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Topic map source locator is not set", m.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Topic map not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(m));
+          assertTrue("Topic map source locator is not set", m.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Topic map not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(m));
         }
       });
     tests.put("TopicMapIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicMapIF m = (TopicMapIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Topic map source locator is set", !m.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Topic map found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Topic map source locator is set", !m.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Topic map found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -116,15 +116,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("TopicIF.setSubject", new ClientTest() {
         public void run(MasterTest mt) {
           TopicIF t = (TopicIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Subject locator is not set", t.getSubjectLocators().contains(Locators.getURILocator("x:subject")));
-          assertTrue("Topic not found by subject locator", topicmap.getTopicBySubjectLocator(Locators.getURILocator("x:subject")).equals(t));
+          assertTrue("Subject locator is not set", t.getSubjectLocators().contains(URILocator.create("x:subject")));
+          assertTrue("Topic not found by subject locator", topicmap.getTopicBySubjectLocator(URILocator.create("x:subject")).equals(t));
         }
       });
     tests.put("TopicIF.setSubject:clear", new ClientTest() {
         public void run(MasterTest mt) {
           TopicIF t = (TopicIF)topicmap.getObjectById(mt.objectId);
           assertTrue("Subject locator is not null", t.getSubjectLocators().isEmpty());
-          assertTrue("Topic found by subject locator", topicmap.getTopicBySubjectLocator(Locators.getURILocator("x:subject")) == null);
+          assertTrue("Topic found by subject locator", topicmap.getTopicBySubjectLocator(URILocator.create("x:subject")) == null);
         }
       });
 
@@ -132,15 +132,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("TopicIF.addSubjectIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicIF t = (TopicIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Subject identifier is not set", t.getSubjectIdentifiers().contains(Locators.getURILocator("x:subject-indicator")));
-          assertTrue("Topic not found by subject identifier", topicmap.getTopicBySubjectIdentifier(Locators.getURILocator("x:subject-indicator")).equals(t));
+          assertTrue("Subject identifier is not set", t.getSubjectIdentifiers().contains(URILocator.create("x:subject-indicator")));
+          assertTrue("Topic not found by subject identifier", topicmap.getTopicBySubjectIdentifier(URILocator.create("x:subject-indicator")).equals(t));
         }
       });
     tests.put("TopicIF.removeSubjectIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicIF t = (TopicIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Subject identifier is set", !t.getSubjectIdentifiers().contains(Locators.getURILocator("x:subject-indicator")));
-          assertTrue("Topic found by subject identifier", topicmap.getTopicBySubjectIdentifier(Locators.getURILocator("x:subject-indicator")) == null);
+          assertTrue("Subject identifier is set", !t.getSubjectIdentifiers().contains(URILocator.create("x:subject-indicator")));
+          assertTrue("Topic found by subject identifier", topicmap.getTopicBySubjectIdentifier(URILocator.create("x:subject-indicator")) == null);
         }
       });
 
@@ -148,15 +148,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("TopicIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicIF t = (TopicIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Topic source locator is not set", t.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Topic not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(t));
+          assertTrue("Topic source locator is not set", t.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Topic not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(t));
         }
       });
     tests.put("TopicIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicIF t = (TopicIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Topic source locator is set", !t.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Topic found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Topic source locator is set", !t.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Topic found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -197,15 +197,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("TopicNameIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicNameIF bn = (TopicNameIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Base name source locator is not set", bn.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Base name not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(bn));
+          assertTrue("Base name source locator is not set", bn.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Base name not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(bn));
         }
       });
     tests.put("TopicNameIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           TopicNameIF bn = (TopicNameIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Base name source locator is set", !bn.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Base name found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Base name source locator is set", !bn.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Base name found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -274,15 +274,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("VariantNameIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           VariantNameIF vn = (VariantNameIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Variant name source locator is not set", vn.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Variant name not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(vn));
+          assertTrue("Variant name source locator is not set", vn.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Variant name not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(vn));
         }
       });
     tests.put("VariantNameIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           VariantNameIF vn = (VariantNameIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Variant name source locator is set", !vn.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Variant name found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Variant name source locator is set", !vn.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Variant name found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -320,13 +320,13 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("VariantNameIF.setLocator", new ClientTest() {
         public void run(MasterTest mt) {
           VariantNameIF vn = (VariantNameIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Variant name locator is not set", Locators.getURILocator("x:variant-locator").equals(vn.getLocator()));
+          assertTrue("Variant name locator is not set", URILocator.create("x:variant-locator").equals(vn.getLocator()));
         }
       });
     tests.put("VariantNameIF.setLocator:clear", new ClientTest() {
         public void run(MasterTest mt) {
           VariantNameIF vn = (VariantNameIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Variant name locator is not null", Locators.getURILocator("x:variant-locator:clear").equals(vn.getLocator()));
+          assertTrue("Variant name locator is not null", URILocator.create("x:variant-locator:clear").equals(vn.getLocator()));
         }
       });
     
@@ -367,15 +367,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("OccurrenceIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           OccurrenceIF o = (OccurrenceIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Occurrence source locator is not set", o.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Occurrence not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(o));
+          assertTrue("Occurrence source locator is not set", o.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Occurrence not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(o));
         }
       });
     tests.put("OccurrenceIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           OccurrenceIF o = (OccurrenceIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Occurrence source locator is set", !o.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Occurrence found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Occurrence source locator is set", !o.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Occurrence found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -406,7 +406,7 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("OccurrenceIF.setType:clear", new ClientTest() {
         public void run(MasterTest mt) {
           OccurrenceIF o = (OccurrenceIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Occurrence type is set", o.getType().getSubjectIdentifiers().contains(Locators.getURILocator("type:cleared")));
+          assertTrue("Occurrence type is set", o.getType().getSubjectIdentifiers().contains(URILocator.create("type:cleared")));
         }
       });
     
@@ -428,13 +428,13 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("OccurrenceIF.setLocator", new ClientTest() {
         public void run(MasterTest mt) {
           OccurrenceIF o = (OccurrenceIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Occurrence locator is not set", Locators.getURILocator("x:occurrence-locator").equals(o.getLocator()));
+          assertTrue("Occurrence locator is not set", URILocator.create("x:occurrence-locator").equals(o.getLocator()));
         }
       });
     tests.put("OccurrenceIF.setLocator:clear", new ClientTest() {
         public void run(MasterTest mt) {
           OccurrenceIF o = (OccurrenceIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Occurrence locator is not null", Locators.getURILocator("x:occurrence-locator:clear").equals(o.getLocator()));
+          assertTrue("Occurrence locator is not null", URILocator.create("x:occurrence-locator:clear").equals(o.getLocator()));
         }
       });
     
@@ -466,15 +466,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("AssociationIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           AssociationIF a = (AssociationIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Association source locator is not set", a.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Association not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(a));
+          assertTrue("Association source locator is not set", a.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Association not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(a));
         }
       });
     tests.put("AssociationIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           AssociationIF a = (AssociationIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Association source locator is set", !a.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Association found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Association source locator is set", !a.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Association found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -505,7 +505,7 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("AssociationIF.setType:clear", new ClientTest() {
         public void run(MasterTest mt) {
           AssociationIF a = (AssociationIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Association type is set", a.getType().getSubjectIdentifiers().contains(Locators.getURILocator("type:cleared")));
+          assertTrue("Association type is set", a.getType().getSubjectIdentifiers().contains(URILocator.create("type:cleared")));
         }
       });
 
@@ -528,15 +528,15 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("AssociationRoleIF.addItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           AssociationRoleIF r = (AssociationRoleIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Role source locator is not set", r.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Role not found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")).equals(r));
+          assertTrue("Role source locator is not set", r.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Role not found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")).equals(r));
         }
       });
     tests.put("AssociationRoleIF.removeItemIdentifier", new ClientTest() {
         public void run(MasterTest mt) {
           AssociationRoleIF r = (AssociationRoleIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Role source locator is set", !r.getItemIdentifiers().contains(Locators.getURILocator("x:source-locator")));
-          assertTrue("Role found by source locator", topicmap.getObjectByItemIdentifier(Locators.getURILocator("x:source-locator")) == null);
+          assertTrue("Role source locator is set", !r.getItemIdentifiers().contains(URILocator.create("x:source-locator")));
+          assertTrue("Role found by source locator", topicmap.getObjectByItemIdentifier(URILocator.create("x:source-locator")) == null);
         }
       });
 
@@ -551,7 +551,7 @@ public class ClusterClientTest extends AbstractClusterTest {
     tests.put("AssociationRoleIF.setType:clear", new ClientTest() {
         public void run(MasterTest mt) {
           AssociationRoleIF r = (AssociationRoleIF)topicmap.getObjectById(mt.objectId);
-          assertTrue("Role type is set", r.getType().getSubjectIdentifiers().contains(Locators.getURILocator("type:cleared")));
+          assertTrue("Role type is set", r.getType().getSubjectIdentifiers().contains(URILocator.create("type:cleared")));
         }
       });
 
@@ -568,7 +568,7 @@ public class ClusterClientTest extends AbstractClusterTest {
         public void run(MasterTest mt) {
           AssociationRoleIF r = (AssociationRoleIF)topicmap.getObjectById(mt.objectId);
           TopicIF player = (TopicIF)topicmap.getObjectById(mt.value);
-          assertTrue("Role player is set", r.getPlayer().getSubjectIdentifiers().contains(Locators.getURILocator("player:cleared")));
+          assertTrue("Role player is set", r.getPlayer().getSubjectIdentifiers().contains(URILocator.create("player:cleared")));
           assertTrue("Player roles is set", player.getRoles().isEmpty());
         }
       });

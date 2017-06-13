@@ -28,12 +28,10 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Map;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.xml.PrettyPrinter;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -61,17 +59,6 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
 
   private static XTMVersion DEFAULT_XTM_VERSION = XTMVersion.XTM_1_0;
 
-  /**
-   * PUBLIC: Creates a topic map writer bound to the file given in the
-   * arguments.  The topic map will be written out in the UTF-8
-   * encoding.   
-   * @param filename The name of the file to which the topic map is to
-   * be written.
-   */ 
-  public XTMTopicMapWriter(String filename) throws IOException {
-    this(new File(filename), "utf-8");
-  }
-  
   /**
    * PUBLIC: Creates a topic map writer bound to the file given in the
    * arguments.  The topic map will be written out in the UTF-8
@@ -151,26 +138,6 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
    */
   public void setAddIds(boolean add_ids) {
     this.add_ids = add_ids;
-  }
-
-  /**
-   * PUBLIC: Set XTM version to use on export.
-   *
-   * @see #setVersion(XTMVersion).
-   * 
-   * @since 4.0.0
-   */
-  @Deprecated
-  public void setVersion(final int version) {
-    if (version == 1) {
-      setVersion(XTMVersion.XTM_1_0);
-    }
-    else if (version == 2) {
-      setVersion(XTMVersion.XTM_2_0);
-    }
-    else {
-      throw new IllegalArgumentException("Unknown XTM version: " + version);
-    }
   }
 
   /**

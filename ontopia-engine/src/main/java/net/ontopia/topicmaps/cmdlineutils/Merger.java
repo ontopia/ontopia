@@ -23,10 +23,10 @@ package net.ontopia.topicmaps.cmdlineutils;
 import java.io.File;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 
@@ -146,9 +146,9 @@ public class Merger {
       if (encoding != null)
         new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
       else
-        new XTMTopicMapWriter(outfile).write(tm);
+        new XTMTopicMapWriter(new File(outfile)).write(tm);
     } else
-      ImportExportUtils.getWriter(outfile, encoding).write(tm);
+      ImportExportUtils.getWriter(new File(outfile), encoding).write(tm);
   }
 
   // --- Listener class

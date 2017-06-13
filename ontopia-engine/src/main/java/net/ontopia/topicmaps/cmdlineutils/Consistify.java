@@ -29,11 +29,11 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.impl.basic.index.TNCIndex;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.StringUtils;
@@ -79,7 +79,7 @@ public class Consistify {
     }
 
     try {
-      TopicMapIF loaded = load(args[0]);
+      TopicMapIF loaded = ImportExportUtils.getReader(args[0]).read();
       if (ohandler.normalize)
         normalizeTopicNames(loaded);
       doTNCMerge(loaded);
@@ -109,10 +109,6 @@ public class Consistify {
     System.out.println("");
     System.out.println("    <input>: source topic map");
     System.out.println("    <output>: output topic map");
-  }
-
-  protected static TopicMapIF load(String stm) throws java.io.IOException {
-    return ImportExportUtils.getReader(stm).read();
   }
 
   protected static void doTNCMerge(TopicMapIF tm) {
@@ -149,7 +145,7 @@ public class Consistify {
     if (format == 'e')
       new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
     else
-      ImportExportUtils.getWriter(outfile, encoding).write(tm);
+      ImportExportUtils.getWriter(new File(outfile), encoding).write(tm);
   }
 
   protected static void normalizeTopicNames(TopicMapIF tm) {

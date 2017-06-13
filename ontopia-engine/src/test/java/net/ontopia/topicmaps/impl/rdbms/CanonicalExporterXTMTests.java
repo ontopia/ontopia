@@ -22,14 +22,15 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.File;
 import java.io.IOException;
-import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
+import java.net.URL;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.BeforeClass;
 
 public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.CanonicalExporterXTMTests {
@@ -39,15 +40,15 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
     RDBMSTestFactory.checkDatabasePresence();
   }
 
-  public CanonicalExporterXTMTests(String root, String filename) {
-    super(root, filename);
+  public CanonicalExporterXTMTests(URL inputFile, String filename) {
+    super(inputFile, filename);
   }
 
   protected boolean getExportReadOnly() {
     return false;
   }
 
-  protected void canonicalize(String infile, String tmpfile, String outfile) throws IOException {    
+  protected void canonicalize(URL infile, File tmpfile, File outfile) throws IOException {    
     // Import document
     TopicMapStoreIF store1 = new RDBMSTopicMapStore();
     TopicMapIF source1 = store1.getTopicMap();
@@ -55,7 +56,7 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
     // Get hold of topic map id
     long topicmap_id1 = Long.parseLong(source1.getObjectId().substring(1));
     
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(infile);
     reader.setValidation(false);
     reader.importInto(source1);
     store1.commit();
@@ -65,7 +66,7 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
     TopicMapStoreIF store2 = new RDBMSTopicMapStore(topicmap_id1);
     ((AbstractTopicMapStore)store2).setReadOnly(getExportReadOnly());
     TopicMapIF source2 = store2.getTopicMap();
-    new XTMTopicMapWriter(new File(tmpfile)).write(source2);
+    new XTMTopicMapWriter(tmpfile).write(source2);
     store2.close();    
     TopicMapStoreIF store2_ = new RDBMSTopicMapStore(topicmap_id1);
     store2_.delete(true);
@@ -73,7 +74,7 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
     // Read exported document
     TopicMapStoreIF store3 = new RDBMSTopicMapStore();
     TopicMapIF source3 = store3.getTopicMap();    
-    reader = new XTMTopicMapReader(new File(tmpfile));
+    reader = new XTMTopicMapReader(tmpfile);
     reader.setValidation(false);
     reader.importInto(source3);
     store3.commit();
@@ -88,7 +89,7 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
     TopicMapIF source4 = store4.getTopicMap();
 
     CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
-    cwriter.setBaseLocator(new URILocator(file2URL(tmpfile)));      
+    cwriter.setBaseLocator(new URILocator(tmpfile));
     cwriter.write(source4);
 
     // Make sure topic map goes away

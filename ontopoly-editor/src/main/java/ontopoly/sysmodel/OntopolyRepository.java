@@ -21,7 +21,6 @@
 package ontopoly.sysmodel;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +29,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -282,9 +280,7 @@ public class OntopolyRepository {
     try {
       LocatorIF base = systemtm.getStore().getBaseAddress();
       File file = URIUtils.getURIFile(base);
-      FileOutputStream stream = new FileOutputStream(file);
-      new LTMTopicMapWriter(stream).write(systemtm);
-      stream.close();
+      new LTMTopicMapWriter(file).write(systemtm);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }

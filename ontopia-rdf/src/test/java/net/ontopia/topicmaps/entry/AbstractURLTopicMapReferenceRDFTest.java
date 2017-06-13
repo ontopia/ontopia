@@ -23,7 +23,6 @@ import java.net.URL;
 import static junit.framework.Assert.assertTrue;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapReferenceTest {
 
@@ -35,8 +34,8 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
   public void testRDFRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "instance-of.rdf";
     String title = "RDFTM";
-    String file = TestFileUtils.getTestInputFile("rdf", "in", id);
-    RDFTopicMapReference ref = new RDFTopicMapReference(new URL(URIUtils.getURI(file).getAddress()), id, title);
+    URL file = TestFileUtils.getTestInputURL("rdf", "in", id);
+    RDFTopicMapReference ref = new RDFTopicMapReference(file, id, title);
 
     // test mapping file
     String mf = ref.getMappingFile();

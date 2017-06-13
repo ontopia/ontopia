@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.utils.ltm;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +52,7 @@ public class LTMErrorTestCase {
         filename);
 
       try {
-        new LTMTopicMapReader(URIUtils.getURI(in)).read();
+        new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
         Assert.fail("test file " + filename + " parsed without error");
       } catch (java.io.IOException e) {
       } catch (net.ontopia.topicmaps.core.UniquenessViolationException e) {

@@ -26,14 +26,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -57,14 +56,13 @@ import org.xml.sax.XMLReader;
  * variety of possible input sources are accommodated, by overloading
  * the constructor.
  */
-public class XTMTopicMapReader extends AbstractXMLFormatReader
-  implements TopicMapReaderIF, TopicMapImporterIF {
+public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicMapReaderIF {
   public static final String PROPERTY_VALIDATION = "validation";
   public static final String PROPERTY_EXTERNAL_REFERENCE_HANDLER = "externalReferenceHandler";
   protected Iterator topicmaps;
   protected TopicMapStoreFactoryIF store_factory;
   protected ExternalReferenceHandlerIF ref_handler;
-  protected boolean validate;
+  protected boolean validate = true;
 
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(XTMTopicMapReader.class.getName());
@@ -74,19 +72,12 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
    * arguments.   
    * @param url The URL of the topic map document.
    */  
-  public XTMTopicMapReader(String url) throws MalformedURLException {
-    this(new InputSource(new URILocator(url).getExternalForm()),
-         new URILocator(url));
+  public XTMTopicMapReader(URL url) throws MalformedURLException {
+    super(url);
   }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.   
-   * @param url The URL of the topic map document.
-   * @since 2.0
-   */  
-  public XTMTopicMapReader(LocatorIF url) {
-    this(new InputSource(url.getExternalForm()), url);
+  
+  public XTMTopicMapReader(URL url, LocatorIF base_address) {
+    super(url, base_address);
   }
   
   /**
@@ -97,7 +88,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
    * relative references.
    */
   public XTMTopicMapReader(Reader reader, LocatorIF base_address) {
-    this(new InputSource(reader), base_address);
+    super(reader, base_address);
   }
 
   /**
@@ -108,7 +99,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
    * relative references.
    */
   public XTMTopicMapReader(InputStream stream, LocatorIF base_address) {
-    this(new InputSource(stream), base_address);
+    super(stream, base_address);
   }
 
   /**
@@ -117,12 +108,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
    * @param file The file object from which to read the topic map.
    */
   public XTMTopicMapReader(File file) throws IOException {
-    if (!file.exists())
-      throw new FileNotFoundException(file.toString());
-      
-    this.base_address = new URILocator(file);
-    this.source = new InputSource(base_address.getExternalForm());
-    this.validate = true;
+    super(file);
   }
   
   /**
@@ -133,9 +119,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
    * relative references.
    */
   public XTMTopicMapReader(InputSource source, LocatorIF base_address) {
-    this.source = source;
-    this.base_address = base_address;
-    this.validate = true;
+    super(source, base_address);
   }
 
   /**

@@ -21,14 +21,13 @@
 package net.ontopia.topicmaps.entry;
 
 import java.net.URL;
-import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
+import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceTest {
 
@@ -79,8 +78,8 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
   public void testXTMRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "jill.xtm";
     String title = "XTMTM";
-    String file = TestFileUtils.getTestInputFile("various", id);
-    XTMTopicMapReference ref = new XTMTopicMapReference(new URL(URIUtils.getURI(file).getAddress()), id, title);
+    URL file = TestFileUtils.getTestInputURL("various", id);
+    XTMTopicMapReference ref = new XTMTopicMapReference(file, id, title);
 
     // test validation
     assertTrue("Validation default is not true", ref.getValidation());   
@@ -106,8 +105,8 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
   public void testLTMRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "small-test.ltm";
     String title = "LTMTM";
-    String file = TestFileUtils.getTestInputFile("various", id);
-    LTMTopicMapReference ref = new LTMTopicMapReference(new URL(URIUtils.getURI(file).getAddress()), id, title);
+    URL file = TestFileUtils.getTestInputURL("various", id);
+    LTMTopicMapReference ref = new LTMTopicMapReference(file, id, title);
 
     // run abstract url topic map reference tests
     doAbstractURLTopicMapReferenceTests(ref);

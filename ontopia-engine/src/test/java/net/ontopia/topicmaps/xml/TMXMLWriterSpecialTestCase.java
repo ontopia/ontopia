@@ -21,14 +21,12 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,11 +73,11 @@ public class TMXMLWriterSpecialTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "x-baseline", 
           filename + ".cxtm");
       // Path to the exported TMXML topic map document.
-      String tmxml = base + File.separator + "x-tmxml" + File.separator +
-          filename + ".xml";
+      File tmxml = new File(base + File.separator + "x-tmxml" + File.separator +
+          filename + ".xml");
       // Path to the output (canonicalized output of exported tmxml topic map).
-      String out = base + File.separator + "x-out" + File.separator + filename
-          + ".xml.cxtm";
+      File out = new File(base + File.separator + "x-out" + File.separator + filename
+          + ".xml.cxtm");
 
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
@@ -92,7 +90,7 @@ public class TMXMLWriterSpecialTestCase {
       TopicMapIF tmxmlMap = ImportExportUtils.getReader(tmxml).read();
 
       // Canonicalize the reimported TMXML.
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(tmxmlMap);
+      new CanonicalXTMWriter(out).write(tmxmlMap);
 
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename

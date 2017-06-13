@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -30,14 +31,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -45,13 +44,13 @@ import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.PrettyPrinter;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -91,24 +90,6 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   // --- Constructors
 
   /**
-   * PUBLIC: Creates a writer writing to the given file in the utf-8
-   * character encoding.
-   */
-  public TMXMLWriter(String filename) throws IOException {
-    this(filename, "utf-8");
-  }
-
-  /**
-   * PUBLIC: Creates a writer writing to the given file in the given
-   * character encoding.
-   */
-  public TMXMLWriter(String filename, String encoding) throws IOException {
-    writer = new OutputStreamWriter(new FileOutputStream(filename), encoding);
-    this.out = makePrinter(writer, encoding);
-    init();
-  }
-
-  /**
    * PUBLIC: Creates a writer writing to the given writer in the utf-8
    * character encoding.
    */
@@ -121,7 +102,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * character encoding.
    * @since 3.2
    */
-  public TMXMLWriter(Writer out, String encoding) throws IOException {
+  public TMXMLWriter(Writer out, String encoding) throws IOException, IOException, IOException {
     this.out = makePrinter(out, encoding);
     init();
   }
@@ -137,6 +118,21 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     init();
   }
   
+  /**
+   * PUBLIC: Creates a writer writing to the given file in given encoding.
+   */
+  public TMXMLWriter(File out, String encoding) throws IOException {
+    writer = new OutputStreamWriter(new FileOutputStream(out), encoding);
+    this.out = makePrinter(writer, encoding);
+    init();
+  }
+
+  public TMXMLWriter(OutputStream out, String encoding) throws IOException {
+    writer = new OutputStreamWriter(out, encoding);
+    this.out = makePrinter(writer, encoding);
+    init();
+  }
+
   /**
    * INTERNAL: Creates a writer writing to the given ContentHandler.
    */

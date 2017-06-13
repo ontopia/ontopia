@@ -29,7 +29,7 @@ import java.nio.channels.FileChannel;
 import java.util.Properties;
 import org.xml.sax.InputSource;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.TopicMap;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
@@ -105,7 +105,7 @@ public class RDBMSImport {
     for (int i=1; i < args.length; i++) {
       
       String filename = args[i];
-      TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+      TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
       
       // disable XTM validation
       if (importer instanceof XTMTopicMapReader && !ohandler.validate)

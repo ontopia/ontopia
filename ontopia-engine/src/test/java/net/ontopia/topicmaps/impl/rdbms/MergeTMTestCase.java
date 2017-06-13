@@ -23,12 +23,11 @@ package net.ontopia.topicmaps.impl.rdbms;
 import java.io.File;
 import java.io.IOException;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
@@ -54,7 +53,7 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename.substring(0, filename.length() - 3) + "sub");
-      String out = base + File.separator + "out" + File.separator + filename;
+      File out = new File(base + File.separator + "out" + File.separator + filename);
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
 
 
@@ -65,7 +64,7 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
       try {
         source1 = store1.getTopicMap();
         topicmap_id1 = Long.parseLong(source1.getObjectId().substring(1));    
-        new XTMTopicMapReader(URIUtils.getURI(in)).importInto(source1);
+        new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).importInto(source1);
         store1.commit();
       } finally {
         store1.close();
@@ -78,7 +77,7 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
       try {
         source2 = store2.getTopicMap();
         topicmap_id2 = Long.parseLong(source2.getObjectId().substring(1));    
-        new XTMTopicMapReader(URIUtils.getURI(in2)).importInto(source2);
+        new XTMTopicMapReader(TestFileUtils.getTestInputURL(in2)).importInto(source2);
         store2.commit();
       } finally {
         store2.close();

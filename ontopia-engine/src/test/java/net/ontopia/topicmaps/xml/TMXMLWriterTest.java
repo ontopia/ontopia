@@ -24,7 +24,10 @@ import java.util.Map;
 import java.io.IOException;
 import java.io.Writer;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -110,7 +113,7 @@ public class TMXMLWriterTest {
   public void testFileClosing() throws IOException, SAXException {
     // make sure the writer closes streams it creates
     String file = getAbsoluteFilename("closing.tmx");
-    TMXMLWriter writer = new TMXMLWriter(file);
+    TMXMLWriter writer = new TMXMLWriter(new File(file));
     writer.setDocumentElement("test");
     writer.startTopicMap(topicmap);
     writer.endTopicMap();
@@ -125,7 +128,7 @@ public class TMXMLWriterTest {
   public void testFileClosing2() throws IOException, SAXException {
     // make sure the writer closes streams it creates
     String file = getAbsoluteFilename("closing.tmx");
-    TMXMLWriter writer = new TMXMLWriter(file, "iso-8859-1");
+    TMXMLWriter writer = new TMXMLWriter(new File(file), "iso-8859-1");
     writer.setDocumentElement("test");
     writer.startTopicMap(topicmap);
     writer.endTopicMap();
@@ -159,6 +162,30 @@ public class TMXMLWriterTest {
     // if bug 2116 occurs we'll get an NPE on the previous line and never
     // get here.
   }
+  
+  @Test
+  public void testWriteToFile() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("tmxml", "io-f.xtm");
+    new TMXMLWriter(file).write(topicmap);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToOutputStream() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("tmxml", "io-o.xtm");
+    new TMXMLWriter(new FileOutputStream(file), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToWriter() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("tmxml", "io-w.xtm");
+    new TMXMLWriter(new FileWriter(file), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }  
   
   // --- Helpers
 

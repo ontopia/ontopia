@@ -53,6 +53,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 
 import com.touchgraph.graphlayout.Node;
+import java.net.URL;
 
 /**
  * INTERNAL: Stores and manages configuration. The configuration information is
@@ -204,7 +205,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
    * Constructor initializes the configuration by loading a topic map from the
    * URL given in the parameter.
    */
-  public VizTopicMapConfigurationManager(String tmurl) throws IOException {
+  public VizTopicMapConfigurationManager(URL tmurl) throws IOException {
     super(tmurl);
     setupPriorityManager();
   }

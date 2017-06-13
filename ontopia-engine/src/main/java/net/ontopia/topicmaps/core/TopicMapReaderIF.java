@@ -68,6 +68,14 @@ public interface TopicMapReaderIF {
   public Collection<TopicMapIF> readAll() throws IOException;
   
   /**
+   * PUBLIC: Imports an implicitly designated topic map into the given topic map.
+   *
+   * @param topicmap The topic map into which the import will be done;
+   *                 an object implementing TopicMapIF.
+   */
+  public void importInto(TopicMapIF topicmap) throws IOException;  
+
+  /**
    * PUBLIC: set additional properties to the topic map reader. The
    * set of accepted properties differs per reader implementation, see
    * the specific reader documentation for details on accepted properties.

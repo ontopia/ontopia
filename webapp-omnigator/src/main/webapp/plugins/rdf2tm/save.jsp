@@ -8,7 +8,7 @@
 	java.util.Map,
 	net.ontopia.topicmaps.utils.rdf.RDFIntroSpector,
 	net.ontopia.topicmaps.utils.rdf.RDFPropertyMapping,
-	net.ontopia.utils.URIUtils,
+	net.ontopia.utils.StreamUtils,
 	net.ontopia.xml.PrettyPrinter,
 	org.xml.sax.helpers.AttributesImpl,
 	org.xml.sax.Attributes"
@@ -56,7 +56,7 @@
   file = net.ontopia.utils.StringUtils.replace(file, "+", " ");
 
   // read in the existing mapping
-  Map mappings = RDFIntroSpector.getPropertyMappings(URIUtils.getURI(file).getAddress(), false);
+  Map mappings = RDFIntroSpector.getPropertyMappings(StreamUtils.getResource(file).toString(), false);
 
   String prefix = "http://psi.ontopia.net/rdf2tm/#";
 

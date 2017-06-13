@@ -110,7 +110,7 @@ public class RDFToTopicMapConverter {
    *        correctly mapped (for example, a statement type is mapped to a
    *        topic name, but has a URI value).
    */
-  public static void convert(String infileurl, String syntax,
+  public static void convert(URL infileurl, String syntax,
                              String mappingurl, String mappingsyntax,
                              TopicMapIF topicmap, boolean lenient)
     throws JenaException, IOException {
@@ -221,21 +221,15 @@ public class RDFToTopicMapConverter {
     this.lenient = lenient;
   }
 
-  private void doConversion(String url, String syntax)
+  private void doConversion(URL url, String syntax)
     throws JenaException, IOException {
 
     if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
       RDFUtils.parseRDFXML(url, new ToTMStatementHandler());
 
     else {
-      URL uri;
-      try {
-        uri = new URL(url);
-      } catch (MalformedURLException mufe) {
-        throw new IOException(mufe);
-      }
       Model model = ModelFactory.createDefaultModel();
-      model.read(uri.openStream(), url, syntax);
+      model.read(url.openStream(), url.toString(), syntax);
       if (mappings == null)
         buildMappings(model);
 

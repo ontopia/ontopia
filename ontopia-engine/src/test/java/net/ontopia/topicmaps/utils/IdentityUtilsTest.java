@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.utils;
 import junit.framework.TestCase;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -44,7 +44,7 @@ public class IdentityUtilsTest extends TestCase {
   
   protected TopicMapIF makeTopicMap() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    store.setBaseAddress(Locators.getURILocator("http://example.org/base/"));
+    store.setBaseAddress(URILocator.create("http://example.org/base/"));
     return store.getTopicMap();
   }
 

@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 
 /**
@@ -95,11 +97,16 @@ public class RDFTopicMapReference extends AbstractOntopolyURLReference {
   }
   
   @Override
-  protected TopicMapImporterIF getImporter() {
-      RDFTopicMapReader reader = new RDFTopicMapReader(url.toString(), syntax);
+  protected TopicMapReaderIF getImporter() {
+      RDFTopicMapReader reader = new RDFTopicMapReader(url, syntax);
       reader.setDuplicateSuppression(duplicate_suppression);
-      if (mapfile != null)
-        reader.setMappingURL(URIUtils.getURI(mapfile).getAddress());
+      if (mapfile != null) {
+        try {
+          reader.setMappingURL(new URL(mapfile));
+        } catch (MalformedURLException mufe) {
+          throw new OntopiaRuntimeException(mufe);
+        }
+      }
       reader.setGenerateNames(generateNames);
       reader.setLenient(lenient);
       
