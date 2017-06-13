@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<repository>
+	<source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+		<param name="path" value="${CWD}"/>
+		<param name="suffix" value=".ltm"/>
+		<param name="duplicateSuppression" value="true"/>
+		<param name="baseAddress" value="foo:"/>
+		<param name="maintainFulltextIndexes" value="true"/>
+		<param name="indexDirectory" value="${CWD}/indexes"/>
+		<param name="alwaysReindexOnLoad" value="true"/>
+	</source>
+	<source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+		<param name="path" value="${CWD}"/>
+		<param name="suffix" value=".xtm"/>
+		<param name="duplicateSuppression" value="true"/>
+		<param name="baseAddress" value="foo:"/>
+	</source>
+</repository>

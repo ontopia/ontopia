@@ -20,47 +20,46 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.InputStream;
+import java.io.File;
 import java.io.IOException;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
-import java.net.MalformedURLException;
-
-import net.ontopia.utils.URIUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.ValidatingContentHandler;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.AbstractXMLFormatReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.ReifiableIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-
+import net.ontopia.topicmaps.utils.ClassInstanceUtils;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.xml.AbstractXMLFormatReader;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.ValidatingContentHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 
 /**
  * PUBLIC: A reader importing topic maps (or fragments) from the
@@ -68,30 +67,44 @@ import org.xml.sax.InputSource;
  *
  * @since 3.1
  */
-public class TMXMLReader extends AbstractXMLFormatReader
-                         implements TopicMapReaderIF, TopicMapImporterIF {
+public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapReaderIF {
   public static final String PROPERTY_VALIDATE = "validate";
-  private LocatorIF base;
-  private boolean validate;
+  private boolean validate = true;
   
   // --- Constructors
 
   /**
-   * PUBLIC: Creates a reader reading from the given file name.
+   * PUBLIC: Creates a reader reading from the given url.
    */
-  public TMXMLReader(String filename) {
-    this.base = URIUtils.getURI(filename);
-    this.source = new InputSource(base.getAddress());
-    this.validate = true;
+  public TMXMLReader(URL url) throws MalformedURLException {
+    super(url);
+  }
+
+  public TMXMLReader(URL url, LocatorIF base_address) {
+    super(url, base_address);
   }
 
   /**
-   * PUBLIC: Creates a reader reading from the given location.
+   * PUBLIC: Creates a reader reading from the given file name.
    */
-  public TMXMLReader(LocatorIF base) {
-    this.base = base;
-    this.source = new InputSource(base.getAddress());
-    this.validate = true;
+  public TMXMLReader(File file) throws MalformedURLException {
+    super(file);
+  }
+
+  /**
+   * PUBLIC: Creates a reader reading from the given Reader using 
+   * the specified base address.
+   */
+  public TMXMLReader(Reader reader, LocatorIF base_address) {
+    super(reader, base_address);
+  }
+
+  /**
+   * PUBLIC: Creates a reader reading from the given InputStream using 
+   * the specified base address.
+   */
+  public TMXMLReader(InputStream stream, LocatorIF base_address) {
+    super(stream, base_address);
   }
 
   /**
@@ -99,9 +112,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
    * different base address.
    */
   public TMXMLReader(InputSource source, LocatorIF base) {
-    this.base = base;
-    this.source = source;
-    this.validate = true;
+    super(source, base);
   }
 
   // --- Accessors
@@ -118,7 +129,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
 
   public TopicMapIF read() throws IOException {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    store.setBaseAddress(base);
+    store.setBaseAddress(base_address);
     TopicMapIF topicmap = store.getTopicMap();
     importInto(topicmap);
 
@@ -136,14 +147,14 @@ public class TMXMLReader extends AbstractXMLFormatReader
     
     XMLReader parser;
     try {
-      parser = getXMLReaderFactory().createXMLReader();
+      parser = DefaultXMLReaderFactory.createXMLReader();
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " +
                             e.getMessage());
     }
     
     // Register content handlers
-    ContentHandler handler = new TMXMLContentHandler(topicmap, base);
+    ContentHandler handler = new TMXMLContentHandler(topicmap, base_address);
     if (validate)
       handler = new ValidatingContentHandler(handler, getTMXMLSchema(), true);
     parser.setContentHandler(handler);
@@ -163,9 +174,6 @@ public class TMXMLReader extends AbstractXMLFormatReader
     return Collections.singleton(read());
   }
 
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-  }
-  
   // --- ContentHandler
 
   // constants for state
@@ -228,8 +236,8 @@ public class TMXMLReader extends AbstractXMLFormatReader
         break;
       case TOPIC:
         // this has to be some property of the topic
-        if (uri == TMXMLWriter.NS_TM &&
-            (name == "identifier" || name == "locator"))
+        if (TMXMLWriter.NS_TM.equals(uri) &&
+            ("identifier".equals(name) || "locator".equals(name)))
           state = IDENTIFIER;
         else if (atts.getValue("", "role") != null) {
           // it's an association, of some kind
@@ -261,7 +269,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
         break;
       case MAYBETOPICNAME:
         // could be occurrence, could be topic name
-        if (uri == TMXMLWriter.NS_TM && name == "value") {
+        if (TMXMLWriter.NS_TM.equals(uri) && "value".equals(name)) {
           // ok, it was a topic name
           state = BASENAME;
           // we were collecting chars in case it was an occurrence; now dump
@@ -269,7 +277,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
         }
         break;
       case TOPICNAME:
-        if (uri == TMXMLWriter.NS_TM && name == "variant") {
+        if (TMXMLWriter.NS_TM.equals(uri) && "variant".equals(name)) {
           state = VARIANT;
           scope = getScope(atts);
           reifier = atts.getValue("", "reifier");
@@ -319,9 +327,9 @@ public class TMXMLReader extends AbstractXMLFormatReader
         LocatorIF loc = createLocator(buffer.toString());
         buffer.setLength(0);
 
-        if (name == "identifier")
+        if ("identifier".equals(name))
           registerSubjectIndicator(topic, loc);
-        else if (name == "locator")
+        else if ("locator".equals(name))
           registerSubjectLocator(topic, loc);
         break;
       case BASENAME:
@@ -376,7 +384,6 @@ public class TMXMLReader extends AbstractXMLFormatReader
       }
 
       } catch (Exception e) {
-        System.out.println("" + base + ": " + e);
         throw new OntopiaRuntimeException(e);
       }
     }
@@ -390,9 +397,9 @@ public class TMXMLReader extends AbstractXMLFormatReader
     }
 
     private TopicIF getType(String uri, String name) throws SAXException {
-      if (uri == null || uri == "")
+      if (uri == null || "".equals(uri))
         return getTopicById(name);
-      if (uri == TMXMLWriter.NS_TM && name == "topic")
+      if (TMXMLWriter.NS_TM.equals(uri) && "topic".equals(name))
         return null; // element for typeless construct
       
       try {

@@ -37,6 +37,9 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.impl.basic.NavigatorApplication;
+import net.ontopia.topicmaps.query.core.DeclarationContextIF;
+import net.ontopia.topicmaps.query.parser.ParseContextIF;
+import net.ontopia.topicmaps.query.parser.QName;
 
 /**
  * INTERNAL: A utility class with miscellaneous helper methods used by
@@ -192,6 +195,26 @@ public final class NavigatorUtils {
    * @return A matched object, or null.
    */
   public final static TMObjectIF stringID2Object(TopicMapIF tm, String s) {
+    return stringID2Object(tm, s, null);
+  }
+
+  /**
+   * INTERNAL: Tries to convert a string which should contain a subject
+   * identifier, XML ID, or object ID to a <code>TMObjectIF</code>
+   * object in the following order:   
+   * <ul>
+   *  <li>try to match a subject indicator (tm.getTopicBySubjectIdentifier)</li>
+   *  <li>try to match a source locator (tm.getObjectByItemIdentifier)</li>
+   *  <li>try to match a topic id (tm.getObjectById)</li>
+   *  <li>try to match a subject identifier with a prefix defined in the DeclarationContextIF</li>
+   * </ul>
+   *
+   * @param tm      the topic map object
+   * @param s       the String which should be investigated.
+   * @param context the context to lookup the prefix in
+   * @return A matched object, or null.
+   */
+  public final static TMObjectIF stringID2Object(TopicMapIF tm, String s, DeclarationContextIF context) {
     TMObjectIF t = null;
 
     if (tm == null || s == null || s.equals(""))
@@ -216,6 +239,16 @@ public final class NavigatorUtils {
     // 3. try to match a topic id
     if (t == null)
       t = tm.getObjectById(s);
+
+    // 4. try to match a prefixed subject identifier
+    if ((t == null) && (context != null)) {
+      try {
+        ParseContextIF pc = (ParseContextIF) context;
+        t = pc.getObject(new QName(s));
+      } catch (Exception e) {
+        // not found, ignore
+      }
+    }
 
     return t;
   }

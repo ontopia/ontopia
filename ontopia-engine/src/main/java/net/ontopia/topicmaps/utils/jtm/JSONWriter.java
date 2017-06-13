@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,6 +65,7 @@ public class JSONWriter {
   private int depth;
   private boolean comma;
   private boolean startOfDocument;
+  private boolean closeWriter = false;
 
   /**
    * PUBLIC: Create an JSONWriter that writes to a given OutputStream in UTF-8.
@@ -122,6 +122,13 @@ public class JSONWriter {
   }
 
   /**
+   * PUBLIC: Sets whether the writer should close the underlying IO when finished.
+   */
+  public void setCloseWriter(boolean closeWriter) {
+    this.closeWriter = closeWriter;
+  }
+
+  /**
    * PUBLIC: Finish the serialization process, flushes the underlying stream.
    */
   public void finish() throws IOException {
@@ -129,6 +136,10 @@ public class JSONWriter {
       out.write('\n');
     }
     out.flush();
+    
+    if (closeWriter) {
+      out.close();
+    }
   }
   
   /**

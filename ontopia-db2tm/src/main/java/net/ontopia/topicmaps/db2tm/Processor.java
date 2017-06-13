@@ -48,7 +48,6 @@ import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +66,7 @@ public class Processor {
   public static int DEFAULT_COMMIT_MODE = NEVER_COMMIT_MODE;
 
   private static final LocatorIF LOC_SYNCHRONIZATION_STATE =
-    URIUtils.getURILocator("http://psi.ontopia.net/db2tm/synchronization-state");
+    URILocator.create("http://psi.ontopia.net/db2tm/synchronization-state");
     
   private Processor() {
   }
@@ -491,10 +490,7 @@ public class Processor {
 
     // if reifier, handle reification
     if (reifier != null) {
-      // FIXME: might want to use existing source locator or db2tm-specific uri (db2tm:name:relation:#oid)
-      LocatorIF srcloc = ctx.getBaseLocator().resolveAbsolute("#" + assoc.getObjectId());
-      assoc.addItemIdentifier(srcloc);
-      reifier.addSubjectIdentifier(srcloc);
+      assoc.setReifier(reifier);
     }
     return assoc;
   }

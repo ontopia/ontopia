@@ -20,16 +20,16 @@
 
 package net.ontopia.infoset.fulltext.topicmaps.nav.plugins;
 
-import java.io.File;
-
+import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-
+import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.plugins.DefaultPlugin;
 import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.OntopiaUnsupportedException;
 
 public class FulltextPlugin extends DefaultPlugin {
 
@@ -44,13 +44,26 @@ public class FulltextPlugin extends DefaultPlugin {
     String tm = context.getTopicMapId();
 
     // does the index exist?
-    boolean exists;
+    boolean exists = false;
     String path = ctxt.getRealPath("/WEB-INF/indexes/" + tm);
     TopicMapIF topicmap = context.getTopicMap();
-    if (topicmap != null && topicmap.getStore().getProperty("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type") != null) {
-      exists = true;
-    } else {
-      exists = new File(path).exists();
+    
+    if (topicmap != null) {
+      SearcherIF searcher = null;
+      try {
+        searcher = (SearcherIF) topicmap.getIndex(SearcherIF.class.getName());
+        exists = true;
+      } catch (OntopiaUnsupportedException e) {
+        exists = false;
+      } finally {
+        if (searcher != null) {
+          try {
+            searcher.close();
+          } catch (IOException e) {
+            //ignore
+          }
+        }
+      }
     }
     if (!exists) {
       // resource is not available, so display ft-admin instead

@@ -22,10 +22,9 @@ package net.ontopia.topicmaps.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.net.MalformedURLException;
+import java.util.Iterator;
 import junit.framework.TestCase;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -37,12 +36,12 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public class MergeTest extends TestCase {
   protected TopicMapIF    topicmap1; 
@@ -985,10 +984,10 @@ public class MergeTest extends TestCase {
     TestFileUtils.verifyDirectory(root, "canonical", "out");
       
     String file = TestFileUtils.getTestInputFile("various", "houdini.xtm");
-    String outfile = root + sep + "canonical" + sep + "out" + sep + "houdini.xtm";
+    File outfile = new File(root + sep + "canonical" + sep + "out" + sep + "houdini.xtm");
     String baseline = TestFileUtils.getTestInputFile("various", "baseline-houdini.xtm");
 
-    TopicMapIF topicmap = new XTMTopicMapReader(URIUtils.getURI(file)).read();
+    TopicMapIF topicmap = new XTMTopicMapReader(TestFileUtils.getTestInputURL(file)).read();
     
     // save
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();

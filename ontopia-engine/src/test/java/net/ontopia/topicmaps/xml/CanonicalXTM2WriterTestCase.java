@@ -21,15 +21,13 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import java.util.List;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,14 +64,14 @@ public class CanonicalXTM2WriterTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       // Path to the canonicalized output.
-      String out = base + File.separator + "out" + File.separator 
-        + "tmp-" + filename + ".cxtm";
+      File out = new File(base + File.separator + "out" + File.separator 
+        + "tmp-" + filename + ".cxtm");
       // Path to the temporary file
-      String tmp = base + File.separator + "out" + File.separator 
-        + "tmp-" + filename;
+      File tmp = new File(base + File.separator + "out" + File.separator 
+        + "tmp-" + filename);
   
       // Import topic map from arbitrary source.
-      TopicMapIF tm = new XTMTopicMapReader(URIUtils.getURI(in)).read();
+      TopicMapIF tm = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
       LocatorIF base = tm.getStore().getBaseAddress();
 
       // Export to XTM 2.0
@@ -90,9 +88,7 @@ public class CanonicalXTM2WriterTestCase {
       TestUtils.fixItemIds(tm, base);
 
       // Output CXTM
-      FileOutputStream os = new FileOutputStream(out);
-      new CanonicalXTMWriter(os).write(tm);
-      os.close();
+      new CanonicalXTMWriter(out).write(tm);
       
       // compare results
       Assert.assertTrue("The test file " + filename + " is different from the baseline: " + out + " " + baseline,

@@ -20,9 +20,10 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
+import java.io.File;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
@@ -128,7 +129,7 @@ public class TologDelete {
         if (ohandler.out != null) {
           String outfile = ohandler.out;
           log.debug("Exporting topic map to " + outfile);
-          TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
+          TopicMapWriterIF writer = ImportExportUtils.getWriter(new File(outfile));
           writer.write(store.getTopicMap());
         }
         

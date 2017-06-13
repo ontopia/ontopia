@@ -21,11 +21,10 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;
+import java.util.List;
+import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.topicmaps.xml.InvalidTopicMapException;
-import java.util.List;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,7 +54,7 @@ public class CTMInvalidTestCase {
         filename);
 
       try {
-        new CTMTopicMapReader(URIUtils.getURI(in)).read();
+        new CTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
         Assert.fail("no error in reading " + filename);
       } catch (IOException e) {
       } catch (InvalidTopicMapException e) {

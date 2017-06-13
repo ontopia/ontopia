@@ -24,7 +24,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -44,18 +43,10 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  * @since 2.0
  */
 public class LastModifiedAt implements ActionIF {
-  private static final String PSI_URI = "http://psi.ontopia.net/xtm/occurrence-type/last-modified-at";
-  private LocatorIF psi;
-  protected DateFormat formatter;
+  private LocatorIF psi = URILocator.create("http://psi.ontopia.net/xtm/occurrence-type/last-modified-at");
+  protected DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
   
   public LastModifiedAt() {
-    try {
-      psi = new URILocator(PSI_URI);
-    } catch (java.net.MalformedURLException e) {
-      throw new net.ontopia.utils.OntopiaRuntimeException(e);
-    }
-
-    formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
   }
 
   public void perform(ActionParametersIF params,

@@ -25,8 +25,8 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -35,7 +35,7 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.topicmaps.utils.tmrap.TopicPage;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * EXPERIMENTAL: Application context for the Vizlet.
@@ -132,17 +132,21 @@ public class AppletContext extends ApplicationContext {
 
   private TopicIF getTopicFrom(TopicMapIF aTopicmap, String type, 
                                String value) {
-    LocatorIF locator = URIUtils.getURILocator(value);
-    Set srclocs = Collections.EMPTY_SET;
-    Set subjids = Collections.EMPTY_SET;
-    Set sublocs = Collections.EMPTY_SET;
-    if (type.equals("source"))
-      srclocs = Collections.singleton(locator);
-    else if (type.equals("indicator"))
-      subjids = Collections.singleton(locator);
-    else
-      sublocs = Collections.singleton(locator);
-    return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
+    try {
+      LocatorIF locator = new URILocator(value);
+      Set srclocs = Collections.EMPTY_SET;
+      Set subjids = Collections.EMPTY_SET;
+      Set sublocs = Collections.EMPTY_SET;
+      if (type.equals("source"))
+        srclocs = Collections.singleton(locator);
+      else if (type.equals("indicator"))
+        subjids = Collections.singleton(locator);
+      else
+        sublocs = Collections.singleton(locator);
+      return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
+    } catch (MalformedURLException m) {
+      throw new OntopiaRuntimeException(m);
+    }
   }
 
   private TopicIF getConfiguredScopingTopic(TopicMapIF aTopicmap) {
@@ -194,7 +198,12 @@ public class AppletContext extends ApplicationContext {
     if (idValue == null)
       throw new VizigatorReportException("The required \"idvalue\" parameter" +
           " has not been set.");
-    LocatorIF locator = URIUtils.getURILocator(idValue);
+    LocatorIF locator;
+    try {
+      locator = new URILocator(idValue);
+    } catch (MalformedURLException m) {
+      throw new OntopiaRuntimeException(m);
+    }
     
     String idtype = vizlet.getParameter("idtype");
     if (idtype == null)

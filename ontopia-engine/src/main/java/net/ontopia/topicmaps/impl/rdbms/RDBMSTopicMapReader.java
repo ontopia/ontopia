@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.utils.MergeUtils;
 
 /**
  * INTERNAL: Topic map reader that reads topic maps from the RDBMS
@@ -71,5 +73,10 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
    */
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
+  }
+
+  @Override
+  public void importInto(TopicMapIF topicmap) throws IOException {
+    MergeUtils.mergeInto(topicmap, read());
   }
 }

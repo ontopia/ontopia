@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.db2tm;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -50,7 +51,7 @@ public class FullRescanEventTest {
     
     String casename = "EVENTS";
     String cfg = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".xml").getPath();
-    String tm = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".ltm").getPath();
+    File tm = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".ltm");
       
     // Connect to the DB
     Connection conn = ChangelogTestCase.getConnection();
@@ -61,7 +62,7 @@ public class FullRescanEventTest {
     conn.commit(); // necessary to avoid timeout from DB2TM connection
       
     // Import the topic map seed.
-    TopicMapIF topicmap = ImportExportUtils.getReader("file:" + tm).read();
+    TopicMapIF topicmap = ImportExportUtils.getReader(tm).read();
       
     // Extend the topic map seed with the the config file.
     DB2TM.add(cfg, topicmap);

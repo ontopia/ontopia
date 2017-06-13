@@ -23,19 +23,15 @@ package net.ontopia.topicmaps.nav2.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
-import org.xml.sax.XMLReader;
+import net.ontopia.topicmaps.nav2.core.ModuleReaderIF;
+import net.ontopia.utils.EncryptedInputStream;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.EncryptedInputStream;
-import net.ontopia.topicmaps.nav2.core.ModuleReaderIF;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: Default implementation of the interface ModuleReaderIF
@@ -87,8 +83,7 @@ public class ModuleReader implements ModuleReaderIF {
   
   protected XMLReader getXMLParser() throws SAXException {
     if (parser == null) {
-      ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-      parser = cxrfactory.createXMLReader();
+      parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setFeature("http://xml.org/sax/features/string-interning", true);
       parser.setFeature("http://xml.org/sax/features/namespaces", false);
       logger.info("using parser: " + parser);

@@ -20,7 +20,10 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
@@ -34,6 +37,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +49,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
 
   @Before
   public void setVersion() {
-    version = 2; // ensure that export uses XTM 2.0
+    version = XTMVersion.XTM_2_0; // ensure that export uses XTM 2.0
   }
 
   // --- Test cases
@@ -129,6 +133,54 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
                                SearchAttributeValue.FORBIDDEN, false);
     parseFile(handler);
     handler.check();
+  }
+  
+  @Test
+  public void testWriteXTM2ToFile() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm2", "io-f.xtm");
+    new XTM2TopicMapWriter(tmfile).write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteXTM2ToOutputStream() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm2", "io-o.xtm");
+    new XTM2TopicMapWriter(new FileOutputStream(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteXTM2ToWriter() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm2", "io-w.xtm");
+    new XTM2TopicMapWriter(new FileWriter(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+  
+  @Test
+  public void testWriteXTM21ToFile() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm21", "io-f.xtm");
+    new XTM21TopicMapWriter(tmfile).write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteXTM21ToOutputStream() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm21", "io-o.xtm");
+    new XTM21TopicMapWriter(new FileOutputStream(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteXTM21ToWriter() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm21", "io-w.xtm");
+    new XTM21TopicMapWriter(new FileWriter(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
   }
   
   // --- Internal helper methods

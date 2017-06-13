@@ -313,7 +313,7 @@ public class ObjectRelationalMapping {
     ContentHandler handler = new MappingHandler(this);
     
     try {
-      XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(isource);

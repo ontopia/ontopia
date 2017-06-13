@@ -21,20 +21,13 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,18 +71,18 @@ public class XTMWriterFilterTestCase {
       // Path to the baseline (canonicalized output of the source topic map).
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline", filename + ".cxtm");
       // Path to the exported xtm topic map document.
-      String xtm = base + File.separator + "filter-xtm" + File.separator
-          + filename + ".xtm";
+      File xtm = new File(base + File.separator + "filter-xtm" + File.separator
+          + filename + ".xtm");
       // Path to the output (canonicalized output of exported xtm topic map).
-      String out = base + File.separator + "filter-out" + File.separator
-          + filename + ".xtm.cxtm";
+      File out = new File(base + File.separator + "filter-out" + File.separator
+          + filename + ".xtm.cxtm");
 
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
       // Export document
       XTMTopicMapWriter xtmWriter = new XTMTopicMapWriter(xtm);
-      xtmWriter.setVersion(1);
+      xtmWriter.setVersion(XTMVersion.XTM_1_0);
 
       // Set this writer to filter out the following topics.
       TMDecider tmFilter = new TMDecider();
@@ -105,7 +98,7 @@ public class XTMWriterFilterTestCase {
       TestUtils.fixItemIds(xtmMap, sourceMap.getStore().getBaseAddress());
 
       // Canonicalize the reimported xtm.
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(xtmMap);
+      new CanonicalXTMWriter(out).write(xtmMap);
 
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename

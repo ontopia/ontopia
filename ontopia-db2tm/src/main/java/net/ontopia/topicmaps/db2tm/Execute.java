@@ -24,9 +24,10 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
@@ -36,7 +37,6 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,9 +115,9 @@ public class Execute {
 
       // base locator
       String outfile = ohandler.out;
-      LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : URIUtils.getFileURI(new File(outfile)));
+      LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : new URILocator(new File(outfile)));
       if (baseloc == null && tmurl != null)
-        baseloc = (ohandler.baseuri == null ? URIUtils.getURI(tmurl) : URIUtils.getURI(ohandler.baseuri));
+        baseloc = (ohandler.baseuri == null ? new URILocator(tmurl) : new URILocator(ohandler.baseuri));
 
       // figure out which relations to actually process
       Collection<String> relations = null;
@@ -144,7 +144,7 @@ public class Execute {
         // export topicmap
         if (outfile != null) {
           log.debug("Exporting topic map to {}", outfile);
-          TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
+          TopicMapWriterIF writer = ImportExportUtils.getWriter(new File(outfile));
           writer.write(topicmap);
         }
         

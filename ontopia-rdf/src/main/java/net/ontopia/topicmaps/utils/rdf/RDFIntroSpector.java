@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ALiteral;
-import com.hp.hpl.jena.rdf.arp.AResource;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -33,6 +33,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * INTERNAL: Used by the RDF2TM plugin.
@@ -81,7 +82,7 @@ public class RDFIntroSpector {
 
   private static void parseRDFXML(GrabMappingsHandler handler, String infileurl)
     throws IOException {
-    RDFUtils.parseRDFXML(infileurl, handler);
+    RDFUtils.parseRDFXML(new URL(infileurl), handler);
   }
 
   private static void parseN3(GrabMappingsHandler handler, String infileurl) {

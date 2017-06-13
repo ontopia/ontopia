@@ -21,48 +21,34 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.net.URL;
 import java.util.List;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
 
-public class InvalidXTM21ReaderValidatingTestCase extends AbstractCanonicalTests {
+public class InvalidXTM21ReaderValidatingTestCase {
   
   private final static String testdataDirectory = "xtm21";
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".xtm");
-  }
-
-  // --- Canonicalization type methods
-
-  protected void canonicalize(String infile, String outfile)
-    throws IOException {
-    // not used, since we are not canonicalizing
-  }
-
-  protected String getFileDirectory() {
-    return "invalid";
-  }
-
-  protected String getOutFilename(String infile) {
-    return infile + ".cxtm";
+    return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "invalid");
   }
 
   // --- Test case class
 
-    public InvalidXTM21ReaderValidatingTestCase(String root, String filename) {
+    private final String filename;
+    private final URL inputFile;
+
+    public InvalidXTM21ReaderValidatingTestCase(URL inputFile, String filename) {
       this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-      this._testdataDirectory = testdataDirectory;
+      this.inputFile = inputFile;
     }
 
     public void testFile() throws IOException {
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
-      XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(in));
+      XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(true);
       // FIXME: should we do a setXTM2Required(true) or something?
 

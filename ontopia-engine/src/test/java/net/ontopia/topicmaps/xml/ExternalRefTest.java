@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -49,7 +48,7 @@ public class ExternalRefTest
     try {
 
       String testfile = TestFileUtils.getTestInputFile(testdataDirectory, fileName);
-      XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(testfile));
+      XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(testfile));
       reader.setExternalReferenceHandler(extRefHandler);
       reader.read();
     } catch (MalformedURLException ex) {

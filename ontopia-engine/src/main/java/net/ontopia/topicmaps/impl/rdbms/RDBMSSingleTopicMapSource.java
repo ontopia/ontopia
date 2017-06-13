@@ -28,7 +28,6 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -103,7 +102,7 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
               if (_base_address == null) {
                 String loc = rs.getString(2);
                 if (loc != null)
-                  _base_address = Locators.getURILocator(loc);
+                  _base_address = new URILocator(loc);
               }
             }
             rs.close();

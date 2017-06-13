@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,14 +44,13 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.GrabberIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringifierComparator;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.xml.CanonicalPrinter;
-import org.xml.sax.AttributeList;
-import org.xml.sax.DocumentHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * PUBLIC: A topic map writer that writes topic maps out to Ontopia's
@@ -66,37 +64,19 @@ import org.xml.sax.helpers.AttributeListImpl;
  */
 public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
-  protected DocumentHandler out;
+  protected ContentHandler out;
   
-  // If stream is instantiated here we'll close it when we're done.
-  protected OutputStream stream;
-
   protected LocatorIF baseloc;
 
   // constants
-  private AttributeListImpl empty = new AttributeListImpl();
-
-  /**
-   * Creates a topic map writer bound to the file given in the arguments.
-   * @param filename The name of the file to which the topic map is to
-   * be written.
-   */
-  
-  public CanonicalTopicMapWriter(String filename) throws IOException {
-    this(new File(filename));
-  }
+  private AttributesImpl empty = new AttributesImpl();
 
   /**
    * Creates a topic map writer bound to the file given in the arguments.
    * @param file The file object to which the topic map is to be written.
    */
   public CanonicalTopicMapWriter(File file) throws IOException {
-    this.stream = new FileOutputStream(file);
-    try {
-      this.out = new CanonicalXTMPrinter(stream);
-    } catch (UnsupportedEncodingException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    this.out = new CanonicalXTMPrinter(new FileOutputStream(file), true);
   }
 
   /**
@@ -107,17 +87,12 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
    */
     
   public CanonicalTopicMapWriter(OutputStream stream) {
-    try {
-      this.out = new CanonicalXTMPrinter(stream);
-    } catch (UnsupportedEncodingException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    this.out = new CanonicalXTMPrinter(stream, false);
   }
 
   public void write(TopicMapIF topicmap) throws IOException {
     try {
       export(topicmap, out);
-      if (stream != null) stream.close();
     }
     catch (SAXException e) {
       if (e.getException() instanceof IOException)
@@ -143,18 +118,18 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   // ===== THE EXPORT CODE =================================================
 
   /**
-   * PUBLIC: Exports the topic map to the given DocumentHandler.
+   * PUBLIC: Exports the topic map to the given ContentHandler.
    */
   
-  public void export(TopicMapIF topicmap, DocumentHandler dh)
+  public void export(TopicMapIF topicmap, ContentHandler dh)
     throws IOException, SAXException {
 
     dh.startDocument();
 
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("xmlns", "CDATA",
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "xmlns", "CDATA",
                       "http://www.topicmaps.org/cxtm/1.0/");
-    dh.startElement("topicMap", atts);
+    dh.startElement("", "", "topicMap", atts);
     atts.clear();
 
     // topics
@@ -168,7 +143,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     while (ait.hasNext()) 
       writeAssociation(ait.next(), dh, context);
         
-    dh.endElement("topicMap");
+    dh.endElement("", "", "topicMap");
     dh.endDocument();
   }
     
@@ -184,11 +159,11 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     return context;
   }
 
-  private void writeTopic(TopicIF topic, DocumentHandler dh,
+  private void writeTopic(TopicIF topic, ContentHandler dh,
                           ContextHolder context) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("id", "ID", context.getTopicId(topic));
-    dh.startElement("topic", atts);
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "id", "ID", context.getTopicId(topic));
+    dh.startElement("", "", "topic", atts);
     atts.clear();
 
     // instanceOf
@@ -201,7 +176,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     // subjectIdentity
     if (topic.getSubjectLocators().size() > 0 || 
         topic.getSubjectIdentifiers().size() > 0) {
-      dh.startElement("subjectIdentity", empty);
+      dh.startElement("", "", "subjectIdentity", empty);
 
       Iterator<LocatorIF> it = orderedIterator(topic.getSubjectLocators(),
                            new StringifierComparator<LocatorIF>(new LocatorStringifier()));
@@ -212,13 +187,13 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
                            new StringifierComparator<LocatorIF>(new LocatorStringifier()));
       while (it.hasNext()) {
         LocatorIF loc = it.next();
-        atts.addAttribute("href", "CDATA", resolveRelative(loc));
-        dh.startElement("subjectIndicatorRef", atts);
+        atts.addAttribute("", "", "href", "CDATA", resolveRelative(loc));
+        dh.startElement("", "", "subjectIndicatorRef", atts);
         atts.clear();
-        dh.endElement("subjectIndicatorRef");
+        dh.endElement("", "", "subjectIndicatorRef");
       }
                 
-      dh.endElement("subjectIdentity");
+      dh.endElement("", "", "subjectIdentity");
     }
         
     // baseName
@@ -233,7 +208,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
                          new StringifierComparator<OccurrenceIF>(new OccurrenceStringifier()));
     while (it.hasNext()) {
       OccurrenceIF occ = it.next();
-      dh.startElement("occurrence", empty);
+      dh.startElement("", "", "occurrence", empty);
       if (occ.getType() != null)
         writeInstanceOf(occ.getType(), dh, context);
       writeScope(occ, dh, context);
@@ -241,98 +216,98 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
         writeResourceRef(occ.getLocator(), dh);
       else
         writeResourceData(occ.getValue(), dh);
-      dh.endElement("occurrence");
+      dh.endElement("", "", "occurrence");
     }
             
-    dh.endElement("topic");
+    dh.endElement("", "", "topic");
   }
 
-  private void writeInstanceOf(TopicIF topic, DocumentHandler dh,
+  private void writeInstanceOf(TopicIF topic, ContentHandler dh,
                                ContextHolder context) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("href", "CDATA", "#" + context.getTopicId(topic));
-    dh.startElement("instanceOf", atts);
-    dh.endElement("instanceOf");
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "href", "CDATA", "#" + context.getTopicId(topic));
+    dh.startElement("", "", "instanceOf", atts);
+    dh.endElement("", "", "instanceOf");
   }
 
-  private void writeScope(ScopedIF scoped, DocumentHandler dh,
+  private void writeScope(ScopedIF scoped, ContentHandler dh,
                           ContextHolder context) throws SAXException {
     if (scoped.getScope().size() > 0) {
-      dh.startElement("scope", empty);
+      dh.startElement("", "", "scope", empty);
         
       Iterator<TopicIF> it = context.topicRefsInOrder(scoped.getScope());
       while (it.hasNext())
         writeTopicRef(it.next(), dh, context);
 
-      dh.endElement("scope");
+      dh.endElement("", "", "scope");
     }
   }
 
-  private void writeTopicRef(TopicIF topic, DocumentHandler dh,
+  private void writeTopicRef(TopicIF topic, ContentHandler dh,
                              ContextHolder context) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("href", "CDATA", "#" + context.getTopicId(topic));
-    dh.startElement("topicRef", atts);
-    dh.endElement("topicRef");
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "href", "CDATA", "#" + context.getTopicId(topic));
+    dh.startElement("", "", "topicRef", atts);
+    dh.endElement("", "", "topicRef");
   }
     
-  private void writeResourceRef(LocatorIF loc, DocumentHandler dh)
+  private void writeResourceRef(LocatorIF loc, ContentHandler dh)
     throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("href", "CDATA", resolveRelative(loc));
-    dh.startElement("resourceRef", atts);
-    dh.endElement("resourceRef");
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "href", "CDATA", resolveRelative(loc));
+    dh.startElement("", "", "resourceRef", atts);
+    dh.endElement("", "", "resourceRef");
   }
 
-  private void writeResourceData(String data, DocumentHandler dh)
+  private void writeResourceData(String data, ContentHandler dh)
     throws SAXException {
-    dh.startElement("resourceData", empty);
+    dh.startElement("", "", "resourceData", empty);
     if (data != null) {
       char[] chars = data.toCharArray();
       dh.characters(chars, 0, chars.length);
     }
-    dh.endElement("resourceData");
+    dh.endElement("", "", "resourceData");
   }
     
-  private void writeTopicName(TopicNameIF basename, DocumentHandler dh,
+  private void writeTopicName(TopicNameIF basename, ContentHandler dh,
                              ContextHolder context) throws SAXException {
-    dh.startElement("baseName", empty);
+    dh.startElement("", "", "baseName", empty);
     if (basename.getType() != null)
       writeInstanceOf(basename.getType(), dh, context);
     writeScope(basename, dh, context);
 
-    dh.startElement("baseNameString", empty);
+    dh.startElement("", "", "baseNameString", empty);
     if (basename.getValue() != null) {
       char[] chars = basename.getValue().toCharArray();
       dh.characters(chars, 0, chars.length);
     }
-    dh.endElement("baseNameString");
+    dh.endElement("", "", "baseNameString");
 
     if (basename.getVariants().size() > 0) {
       Iterator<VariantNameIF> it = context.variantsInOrder(basename.getVariants());
       while (it.hasNext()) 
         writeVariant(it.next(), dh, context);
     }
-    dh.endElement("baseName");
+    dh.endElement("", "", "baseName");
   }
 
-  private void writeVariant(VariantNameIF variant, DocumentHandler dh,
+  private void writeVariant(VariantNameIF variant, ContentHandler dh,
                             ContextHolder context) throws SAXException {
-    dh.startElement("variant", empty);
+    dh.startElement("", "", "variant", empty);
     writeScope(variant, dh, context);
 
-    dh.startElement("variantName", empty);
+    dh.startElement("", "", "variantName", empty);
     if (variant.getLocator() == null) 
       writeResourceData(variant.getValue(), dh);
     else
       writeResourceRef(variant.getLocator(), dh);
-    dh.endElement("variantName");    
-    dh.endElement("variant");
+    dh.endElement("", "", "variantName");    
+    dh.endElement("", "", "variant");
   }
 
-  private void writeAssociation(AssociationIF assoc, DocumentHandler dh,
+  private void writeAssociation(AssociationIF assoc, ContentHandler dh,
                                 ContextHolder context) throws SAXException {
-    dh.startElement("association", empty);
+    dh.startElement("", "", "association", empty);
     if (assoc.getType() != null)
       writeInstanceOf(assoc.getType(), dh, context);
     writeScope(assoc, dh, context);
@@ -340,15 +315,15 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     Iterator<AssociationRoleIF> it = context.rolesInOrder(assoc.getRoles());
     while (it.hasNext()) {
       AssociationRoleIF role = it.next();
-      dh.startElement("member", empty);
+      dh.startElement("", "", "member", empty);
       if (role.getType() != null)
         writeInstanceOf(role.getType(), dh, context);
       if (role.getPlayer() != null)
         writeTopicRef(role.getPlayer(), dh, context);
-      dh.endElement("member");
+      dh.endElement("", "", "member");
     }
         
-    dh.endElement("association");
+    dh.endElement("", "", "association");
   }
 
   // --- Utility methods
@@ -742,21 +717,21 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   public class CanonicalXTMPrinter extends CanonicalPrinter {
   
-    public CanonicalXTMPrinter(OutputStream stream) throws UnsupportedEncodingException {
-      super(stream);
+    public CanonicalXTMPrinter(OutputStream stream, boolean closeWriter) {
+      super(stream, closeWriter);
     }
 
-    public void startElement(String name, AttributeList atts) {
-      super.startElement(name, atts);
-      if (name != "baseNameString" && 
-          name != "resourceData" && name != "topicRef" &&
-          name != "instanceOf" && name != "resourceRef" &&
-          name != "subjectIndicatorRef")
+    public void startElement(String uri, String localName, String name, Attributes atts) {
+      super.startElement("", "", name, atts);
+      if (!"baseNameString".equals(name) && 
+          !"resourceData".equals(name) && !"topicRef".equals(name) &&
+          !"instanceOf".equals(name) && !"resourceRef".equals(name) &&
+          !"subjectIndicatorRef".equals(name))
         writer.print("\n");
     }
 
-    public void endElement(String name) {
-      super.endElement(name);
+    public void endElement(String uri, String localName, String name) {
+      super.endElement("", "", name);
       writer.print("\n");
     }
     

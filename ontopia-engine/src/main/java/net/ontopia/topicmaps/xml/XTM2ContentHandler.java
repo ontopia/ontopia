@@ -20,21 +20,13 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.util.Set;
-import java.util.List;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.XMLReaderFactoryIF;
+import java.util.List;
+import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -51,12 +43,20 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: Reads both XTM 2.0 and XTM 2.1.
@@ -73,7 +73,6 @@ public class XTM2ContentHandler extends DefaultHandler {
   private LocatorIF doc_address;
   private TopicMapStoreFactoryIF store_factory;
   private TopicMapBuilderIF builder;
-  private XMLReaderFactoryIF xrfactory;
   private Set read_documents; // set of LocatorIFs for XTMs already read
 
   private boolean keep_content;
@@ -121,18 +120,15 @@ public class XTM2ContentHandler extends DefaultHandler {
   private static final int CONTEXT_REIFIER     = 12;
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
-                            XMLReaderFactoryIF xrfactory,
                             LocatorIF doc_address) {
-    this(store_factory, xrfactory, doc_address,
+    this(store_factory, doc_address,
          new CompactHashSet());
   }
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
-                            XMLReaderFactoryIF xrfactory,
                             LocatorIF doc_address,
                             Set read_documents) {
     this.store_factory = store_factory;
-    this.xrfactory = xrfactory;
     this.doc_address = doc_address;
     this.read_documents = read_documents;
     this.content = new StringBuilder();
@@ -168,11 +164,11 @@ public class XTM2ContentHandler extends DefaultHandler {
   
   public void startElement_(String uri, String name, String qname,
                             Attributes atts) throws SAXException {
-    if (uri != NS_XTM2) // we only react to XTM 2.0 elements
+    if (!NS_XTM2.equals(uri)) // we only react to XTM 2.0 elements
       return;
 
     // <TOPICMAP
-    if (name == "topicMap") {
+    if ("topicMap".equals(name)) {
       TopicMapStoreIF store = store_factory.createStore();
       topicmap = store.getTopicMap();
       builder = topicmap.getBuilder();
@@ -186,7 +182,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       handleTopicMapReifier(getReifier(atts));
 
       // <TOPIC
-    } else if (name == "topic") {
+    } else if ("topic".equals(name)) {
       topic = builder.makeTopic();
       seenIdentity = false;
       final String id = atts.getValue("", "id");
@@ -199,7 +195,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       context = CONTEXT_TOPIC;
 
       // <ITEMIDENTITY
-    } else if (name == "itemIdentity") {
+    } else if ("itemIdentity".equals(name)) {
       LocatorIF loc = makeLocator(atts.getValue("", "href"));
       if (context == CONTEXT_TOPIC_MAP)
         topicmap.addItemIdentifier(loc);
@@ -215,7 +211,7 @@ public class XTM2ContentHandler extends DefaultHandler {
         throw new OntopiaRuntimeException("UNKNOWN CONTEXT: " + context);
 
       // <SUBJECTLOCATOR
-    } else if (name == "subjectLocator") {
+    } else if ("subjectLocator".equals(name)) {
       seenIdentity = true;
       LocatorIF sl = makeLocator(atts.getValue("", "href"));
       TopicIF other = topicmap.getTopicBySubjectLocator(sl);
@@ -225,7 +221,7 @@ public class XTM2ContentHandler extends DefaultHandler {
         merge(topic, other);
 
       // <SUBJECTIDENTIFIER
-    } else if (name == "subjectIdentifier") {
+    } else if ("subjectIdentifier".equals(name)) {
       seenIdentity = true;
       LocatorIF si = makeLocator(atts.getValue("", "href"));
       TopicIF other = topicmap.getTopicBySubjectIdentifier(si);
@@ -235,51 +231,51 @@ public class XTM2ContentHandler extends DefaultHandler {
         merge(topic, other);
 
       // <VALUE
-    } else if (name == "value")
+    } else if ("value".equals(name))
       keep_content = true;
 
       // <RESOURCEDATA
-    else if (name == "resourceData") {
+    else if ("resourceData".equals(name)) {
       keep_content = true;
       datatype = atts.getValue("", "datatype");
     
       // <TYPE
-    } else if (name == "type") {
+    } else if ("type".equals(name)) {
       nextContext = context;
       context = CONTEXT_TYPE;
 
       // <TOPICREF
-    } else if (name == "topicRef") {
+    } else if ("topicRef".equals(name)) {
       handleTopicReference(getTopicByIid(makeLocator(atts.getValue("", "href"))));
 
       // <SUBJECTIDENTIFIERREF
-    } else if (name == "subjectIdentifierRef") {
+    } else if ("subjectIdentifierRef".equals(name)) {
       if (!xtm21) {
         throw new InvalidTopicMapException("The <subjectIdentifierRef/> is illegal in XTM 2.0");
       }
       handleTopicReference(getTopicBySid(makeLocator(atts.getValue("", "href"))));
       
       // <SUBJECTLOCATORREF
-    } else if (name == "subjectLocatorRef") {
+    } else if ("subjectLocatorRef".equals(name)) {
       if (!xtm21) {
         throw new InvalidTopicMapException("The <subjectLocatorRef/> is illegal in XTM 2.0");
       }
       handleTopicReference(getTopicBySlo(makeLocator(atts.getValue("", "href"))));
       
       // <SCOPE
-    } else if (name == "scope")
+    } else if ("scope".equals(name))
       context = CONTEXT_SCOPE;
 
       // <INSTANCEOF
-    else if (name == "instanceOf")
+    else if ("instanceOf".equals(name))
       context = CONTEXT_INSTANCEOF;
 
       // <RESOURCEREF
-    else if (name == "resourceRef")
+    else if ("resourceRef".equals(name))
       locator = makeLocator(atts.getValue("", "href"));
 
       // <ROLE
-    else if (name == "role") {
+    else if ("role".equals(name)) {
       if (association == null) {
         association = builder.makeAssociation(type);
         addScope(association);
@@ -291,33 +287,33 @@ public class XTM2ContentHandler extends DefaultHandler {
       reifier = getReifier(atts);
 
       // <MERGEMAP
-    } else if (name == "mergeMap")
+    } else if ("mergeMap".equals(name))
       loadMap(makeLocator(atts.getValue("", "href")));
 
       // <VARIANT
-    else if (name == "variant") {
+    else if ("variant".equals(name)) {
       context = CONTEXT_VARIANT;
       if (basename == null)
         makeTopicName(); // can't store properties across the variants
       reifier = getReifier(atts);
 
       // <NAME
-    } else if (name == "name") {
+    } else if ("name".equals(name)) {
       context = CONTEXT_TOPIC_NAME;
       reifier = getReifier(atts);
       
       // <OCCURRENCE
-    } else if (name == "occurrence") {
+    } else if ("occurrence".equals(name)) {
       context = CONTEXT_OCCURRENCE;
       reifier = getReifier(atts);
 
       // <ASSOCIATION
-    } else if (name == "association") {
+    } else if ("association".equals(name)) {
       context = CONTEXT_ASSOCIATION;
       stacked_reifier = getReifier(atts);
       
       // <REIFIER
-    } else if (name == "reifier") {
+    } else if ("reifier".equals(name)) {
       if (!xtm21)
         throw new InvalidTopicMapException("The <reifier/> is illegal in XTM 2.0");
       if (seenReifier)
@@ -335,25 +331,25 @@ public class XTM2ContentHandler extends DefaultHandler {
   
   public void endElement_(String uri, String name, String qName)
     throws MalformedURLException {
-    if (uri != NS_XTM2) // we only react to XTM 2.0 elements
+    if (!NS_XTM2.equals(uri)) // we only react to XTM 2.0 elements
       return;
 
-    if (name == "topic") {
+    if ("topic".equals(name)) {
       if (!seenIdentity)
         throw new InvalidTopicMapException("The topic has neither id, subject identifier, item identifier, nor subject locator");
     }
       // </VALUE
-    else if (name == "value" || name == "resourceData")
+    else if ("value".equals(name) || "resourceData".equals(name))
       keep_content = false;
 
       // </NAME
-    else if (name == "name") {
+    else if ("name".equals(name)) {
       if (basename == null)
         makeTopicName();
       basename = null; // no more variants now
       
       // </OCCURRENCE
-    } else if (name == "occurrence") {
+    } else if ("occurrence".equals(name)) {
       OccurrenceIF occ;
       if (locator == null && datatype == null)
         occ = builder.makeOccurrence(topic, type, content.toString());
@@ -374,7 +370,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       clear();
 
       // </ROLE
-    } else if (name == "role") {
+    } else if ("role".equals(name)) {
       AssociationRoleIF role =
         builder.makeAssociationRole(association, type, player);
       if (reifier != null && reifier.getReified() != null) 
@@ -389,7 +385,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       clear();
 
       // </ASSOCIATION
-    } else if (name == "association") {
+    } else if ("association".equals(name)) {
       if (stacked_itemids != null) {
         itemids = stacked_itemids;
         stacked_itemids = null;
@@ -404,7 +400,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       }
 
       // </VARIANT>
-    } else if (name == "variant") {
+    } else if ("variant".equals(name)) {
       VariantNameIF variant;
       if (locator == null && datatype == null)
         variant = builder.makeVariantName(basename, content.toString());
@@ -636,12 +632,12 @@ public class XTM2ContentHandler extends DefaultHandler {
       return;
     
     // Create new parser object
-    XMLReader parser = xrfactory.createXMLReader();
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
         
     // Initialize nested content handler
     TopicMapStoreFactoryIF sfactory = new SameStoreFactory(topicmap.getStore());
     XTM2ContentHandler handler =
-      new XTM2ContentHandler(sfactory, xrfactory, mapuri, read_documents);
+      new XTM2ContentHandler(sfactory, mapuri, read_documents);
     parser.setContentHandler(handler);
     
     // Parse input source

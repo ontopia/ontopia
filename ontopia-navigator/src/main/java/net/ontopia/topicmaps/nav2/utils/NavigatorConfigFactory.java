@@ -23,20 +23,16 @@ package net.ontopia.topicmaps.nav2.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.Slf4jSaxErrorHandler;
+import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
-import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
-import net.ontopia.topicmaps.nav2.utils.NavigatorConfigurationContentHandler;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: Provide easy access for reading in an action
@@ -62,8 +58,7 @@ public class NavigatorConfigFactory {
   private static NavigatorConfigurationIF getConfiguration(InputSource src)
     throws SAXException, IOException {
     
-    ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-    XMLReader parser = cxrfactory.createXMLReader();
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
     try {
       parser.setFeature("http://xml.org/sax/features/string-interning", true);
     } catch (SAXException e) {

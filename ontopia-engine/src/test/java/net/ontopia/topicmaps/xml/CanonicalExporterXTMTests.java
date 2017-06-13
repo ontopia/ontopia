@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import java.util.List;
 import net.ontopia.utils.TestFileUtils;
@@ -32,8 +33,9 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
   
   private final static String testdataDirectory = "canonical";
 
-  public CanonicalExporterXTMTests(String root, String filename) {
+  public CanonicalExporterXTMTests(URL inputFile, String filename) {
     this.filename = filename;
+    this.inputFile = inputFile;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
@@ -51,7 +53,7 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
         return resourcePath.endsWith(".xtm");
       }
     };
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
+    return TestFileUtils.getTestInputURLs(filter, testdataDirectory, "in");
   }
 
   protected String getTestdataDirectory() {
@@ -60,16 +62,16 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
 
   // --- Canonicalization type methods
 
-  protected TopicMapIF exportAndReread(TopicMapIF topicmap, String outfile)
+  protected TopicMapIF exportAndReread(TopicMapIF topicmap, File outfile)
     throws IOException {
     // First we export
     XTMTopicMapWriter writer = new XTMTopicMapWriter(outfile);
-    writer.setVersion(1);
+    writer.setVersion(XTMVersion.XTM_1_0);
     writer.write(topicmap);
 
     // Then we read back in
     TopicMapIF topicmap2 = getStoreFactory().createStore().getTopicMap();
-    XTMTopicMapReader reader = new XTMTopicMapReader(new File(outfile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(outfile);
     reader.setValidation(false);
     reader.importInto(topicmap2);
 

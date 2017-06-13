@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
+import java.io.File;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
@@ -67,7 +68,7 @@ public class RDBMSExport {
     TopicMapIF tm = store.getTopicMap();
     String id = tm.getObjectId();
     
-    TopicMapWriterIF writer = ImportExportUtils.getWriter(args[2]);
+    TopicMapWriterIF writer = ImportExportUtils.getWriter(new File(args[2]));
 
     System.out.println("Exporting " + id + " to " + args[2] + ".");
     long start = System.currentTimeMillis();      

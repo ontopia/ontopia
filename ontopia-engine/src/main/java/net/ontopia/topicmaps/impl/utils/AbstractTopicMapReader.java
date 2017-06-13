@@ -20,50 +20,70 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PushbackInputStream;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.net.URL;
-
-import org.xml.sax.InputSource;
-
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Common abstract superclass for topic map readers.
  */
-public abstract class AbstractTopicMapReader
-  implements TopicMapReaderIF, TopicMapImporterIF {
-  protected InputSource source;
+public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
+  
+  protected URL url;
+  protected Reader reader;
+  protected InputStream stream;
   protected LocatorIF base_address;
   protected TopicMapStoreFactoryIF store_factory;
 
-  /**
-   * PUBLIC: Gets the SAX input source used by the reader.
-   */
-  public InputSource getInputSource() {
-    return source;
+  public AbstractTopicMapReader(URL url) throws MalformedURLException {
+    this(url, new URILocator(url));
   }
 
-  /**
-   * PUBLIC: Sets the SAX input source used by the reader.
-   */
-  public void setInputSource(InputSource source) {
-    this.source = source;
+  public AbstractTopicMapReader(URL url, LocatorIF base_address) {
+    this.url = url;
+    this.base_address = base_address;
   }
-  
+
+  public AbstractTopicMapReader(Reader reader, LocatorIF base_address) {
+    this.reader = reader;
+    this.base_address = base_address;
+  }
+
+  public AbstractTopicMapReader(InputStream stream, LocatorIF base_address) {
+    this.stream = stream;
+    this.base_address = base_address;
+  }
+
+  public AbstractTopicMapReader(File file) throws MalformedURLException {
+    this(URIUtils.toURL(file));
+  }
+
+  public Reader getReader() {
+    return reader;
+  }
+
+  public void setReader(Reader reader) {
+    this.reader = reader;
+  }
+
   /**
    * PUBLIC: Gets the top level base address of the input source.
    */
@@ -154,24 +174,6 @@ public abstract class AbstractTopicMapReader
 
   // ===== HELPER METHODS
 
-  /**
-   * INTERNAL: Creates a correctly configured Reader from a SAX
-   * InputSource object.
-   */   
-  public static Reader makeReader(InputSource source, EncodingSnifferIF sniffer)
-    throws IOException {
-    Reader reader = source.getCharacterStream();
-    if (reader == null) {
-      if (source.getByteStream() != null) 
-        reader = makeReader(source.getByteStream(), source.getEncoding(), sniffer);
-      else {
-        URL url = new URL(source.getSystemId());
-        reader = makeReader(url.openStream(), null, sniffer);
-      }
-    }
-    return reader;
-  }
-  
   public static Reader makeReader(InputStream stream, String encoding,
                                   EncodingSnifferIF sniffer) throws IOException {
     if (encoding == null) {
@@ -181,5 +183,16 @@ public abstract class AbstractTopicMapReader
       encoding = sniffer.guessEncoding((PushbackInputStream) stream);
     }
     return new InputStreamReader(stream, encoding);
+  }
+  
+  public static Reader makeReader(LocatorIF locator, EncodingSnifferIF sniffer) throws IOException {
+    return makeReader(StreamUtils.getInputStream(locator.getExternalForm()), null, sniffer);
+  }
+  
+  protected Reader makeReader(String encoding, EncodingSnifferIF sniffer) throws IOException {
+    if (reader != null) return reader;
+    if (stream != null) return makeReader(stream, encoding, sniffer);
+    if (url != null) return makeReader(url.openStream(), encoding, sniffer);
+    return null;
   }
 }

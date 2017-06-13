@@ -23,9 +23,11 @@ package net.ontopia.xml;
 import java.io.StringWriter;
 import junit.framework.TestCase;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 public class PrettyPrinterTest extends TestCase {
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
   private static final String NL = System.getProperty("line.separator");
     
   public PrettyPrinterTest(String name) {
@@ -36,8 +38,8 @@ public class PrettyPrinterTest extends TestCase {
     try {
       StringWriter writer = new StringWriter();
       PrettyPrinter printer = setUpPrinter(writer);
-      printer.startElement("doc", new AttributeListImpl());
-      printer.endElement("doc");
+      printer.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc", new AttributesImpl());
+      printer.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc");
       printer.endDocument();
 
       verify(writer,
@@ -55,15 +57,15 @@ public class PrettyPrinterTest extends TestCase {
       StringWriter writer = new StringWriter();
       PrettyPrinter printer = setUpPrinter(writer);
 
-      AttributeListImpl attrs = new AttributeListImpl();
-      attrs.addAttribute("a", "CDATA", "v");
-      printer.startElement("doc", attrs);
+      AttributesImpl attrs = new AttributesImpl();
+      attrs.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "a", "CDATA", "v");
+      printer.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc", attrs);
       printer.processingInstruction("pi", "data");
       String str = "A bit of character data!";
       printer.characters(str.toCharArray(), 0, str.length());
       str = "    ";
       printer.ignorableWhitespace(str.toCharArray(), 0, str.length());
-      printer.endElement("doc");
+      printer.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc");
       printer.endDocument();
 
       verify(writer,
@@ -81,10 +83,10 @@ public class PrettyPrinterTest extends TestCase {
       StringWriter writer = new StringWriter();
       PrettyPrinter printer = setUpPrinter(writer);
 
-      printer.startElement("doc", new AttributeListImpl());
+      printer.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc", new AttributesImpl());
       String str = "A <, and a & and a >.";
       printer.characters(str.toCharArray(), 0, str.length());
-      printer.endElement("doc");
+      printer.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc");
       printer.endDocument();
 
       verify(writer,
@@ -101,10 +103,10 @@ public class PrettyPrinterTest extends TestCase {
       StringWriter writer = new StringWriter();
       PrettyPrinter printer = setUpPrinter(writer);
 
-      AttributeListImpl attrs = new AttributeListImpl();
-      attrs.addAttribute("a", "CDATA", "\"<&");
-      printer.startElement("doc", attrs);
-      printer.endElement("doc");
+      AttributesImpl attrs = new AttributesImpl();
+      attrs.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "a", "CDATA", "\"<&");
+      printer.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc", attrs);
+      printer.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "doc");
       printer.endDocument();
 
       verify(writer,
