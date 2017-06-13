@@ -39,12 +39,12 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicAssociationRoles() throws IOException {
-		Collection<AssociationRole> roles = get("topics/6721/roles", REF);
+		Collection<AssociationRole> roles = get("topics/5772/roles", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(3, roles.size());
+		Assert.assertEquals(22, roles.size());
 		Assert.assertEquals(AssociationRole.class, roles.iterator().next().getClass());
-		assertContainsTopics(roles, "10259", "11153", "17593");
+		assertContainsTopics(roles, "9694", "9706", "9709");
 	}
 
 	@Test
@@ -57,38 +57,38 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("topics/6721/roles/355", REF);
+		Collection<AssociationRole> roles = get("topics/5772/roles/434", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(2, roles.size());
-		assertContainsTopics(roles, "10259", "11153");
+		Assert.assertEquals(1, roles.size());
+		assertContainsTopics(roles, "15344");
 	}
 
 	@Test
 	public void testUnexistingTopicAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("topics/6721/roles/unexisting", REF); // fallback to all roles
+		Collection<AssociationRole> roles = get("topics/5772/roles/unexisting", REF); // fallback to all roles
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(3, roles.size());
-		assertContainsTopics(roles, "10259", "11153", "17593");
+		Assert.assertEquals(22, roles.size());
+		assertContainsTopics(roles, "9694", "9706", "9709");
 	}
 
 	@Test
 	public void testTopicAssociationRolesByTypes() throws IOException {
-		Collection<AssociationRole> roles = get("topics/6721/roles/355/447", REF);
+		Collection<AssociationRole> roles = get("topics/5772/roles/301/441", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(1, roles.size());
-		assertContainsTopics(roles, "10259");
+		Assert.assertEquals(15, roles.size());
+		assertContainsTopics(roles, "9694");
 	}
 
 	@Test
 	public void testUnexistingTopicAssociationRolesByTypes() throws IOException {
-		Collection<AssociationRole> roles = get("topics/6721/roles/355/unexisting", REF); // fallback to all roles by type
+		Collection<AssociationRole> roles = get("topics/5772/roles/434/unexisting", REF); // fallback to all roles by type
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(2, roles.size());
-		assertContainsTopics(roles, "10259", "11153");
+		Assert.assertEquals(1, roles.size());
+		assertContainsTopics(roles, "15344");
 	}
 
 	@Test
