@@ -93,11 +93,11 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationRoles() throws IOException {
-		Collection<AssociationRole> roles = get("associations/10257/roles", REF);
+		Collection<AssociationRole> roles = get("associations/15343/roles", REF);
 
 		Assert.assertNotNull(roles);
 		Assert.assertEquals(2, roles.size());
-		assertContainsTopics(roles, "10259", "10258");
+		assertContainsTopics(roles, "15344", "15345");
 	}
 
 	@Test
@@ -110,11 +110,11 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("associations/10257/roles/263", REF);
+		Collection<AssociationRole> roles = get("associations/15343/roles/434", REF);
 
 		Assert.assertNotNull(roles);
 		Assert.assertEquals(1, roles.size());
-		assertContainsTopics(roles, "10258");
+		assertContainsTopics(roles, "15344");
 	}
 
 	@Test
@@ -127,11 +127,11 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationRolesByUnexistingType() throws IOException {
-		Collection<AssociationRole> roles = get("associations/10257/roles/unexisting", REF); // fallback to assoc.getRoles
+		Collection<AssociationRole> roles = get("associations/15343/roles/unexisting", REF); // fallback to assoc.getRoles
 
 		Assert.assertNotNull(roles);
 		Assert.assertEquals(2, roles.size());
-		assertContainsTopics(roles, "10259", "10258");
+		assertContainsTopics(roles, "15344", "15345");
 	}
 
 	@Test
