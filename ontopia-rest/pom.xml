@@ -18,6 +18,13 @@
 		<restlet.version>2.2.2</restlet.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>Restlet</id>
+			<url>http://maven.restlet.org</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>net.ontopia</groupId>
