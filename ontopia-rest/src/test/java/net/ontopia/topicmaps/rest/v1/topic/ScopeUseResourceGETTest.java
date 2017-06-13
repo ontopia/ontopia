@@ -34,13 +34,37 @@ public class ScopeUseResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testScopeUse() throws IOException {
-		Map<String, Object> use = getAsJson("1/scope/use");
+	public void testOccurrenceScopeUse() throws IOException {
+		Map<String, Object> use = getAsJson("5490/scope/use");
 
 		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsOccurrenceTheme"));
+		Assert.assertEquals(true, (Boolean) use.get("usedAsTheme"));
+	}
+
+	@Test
+	public void testAssociationScopeUse() throws IOException {
+		Map<String, Object> use = getAsJson("2965/scope/use");
+
+		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsAssociationTheme"));
+		Assert.assertEquals(true, (Boolean) use.get("usedAsTheme"));
+	}
+
+	@Test
+	public void testVariantScopeUse() throws IOException {
+		Map<String, Object> use = getAsJson("589/scope/use");
+
+		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsVariantTheme"));
+		Assert.assertEquals(true, (Boolean) use.get("usedAsTheme"));
+	}
+
+	@Test
+	public void testNameScopeUse() throws IOException {
+		Map<String, Object> use = getAsJson("3931/scope/use");
+
+		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsTopicNameTheme"));
 		Assert.assertEquals(true, (Boolean) use.get("usedAsTheme"));
 	}

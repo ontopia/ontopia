@@ -48,7 +48,7 @@ public class VariantsResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testEmptyVariants() throws IOException {
-		Collection<VariantName> variants = get("names/2/variants", REF);
+		Collection<VariantName> variants = get("names/1176/variants", REF);
 
 		Assert.assertNotNull(variants);
 		Assert.assertTrue(variants.isEmpty());

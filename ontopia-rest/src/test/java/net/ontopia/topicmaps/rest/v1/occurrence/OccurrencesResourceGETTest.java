@@ -39,12 +39,12 @@ public class OccurrencesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicOccurrences() throws IOException {
-		Collection<Occurrence> occurrences = get("topics/6721/occurrences", REF);
+		Collection<Occurrence> occurrences = get("topics/3096/occurrences", REF);
 
 		Assert.assertNotNull(occurrences);
 		Assert.assertEquals(2, occurrences.size());
 		Assert.assertEquals(Occurrence.class, occurrences.iterator().next().getClass());
-		assertContainsTopics(occurrences, "6725", "6726");
+		assertContainsTopics(occurrences, "5750", "5749");
 	}
 
 	@Test
@@ -57,12 +57,12 @@ public class OccurrencesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicOccurrencesByType() throws IOException {
-		Collection<Occurrence> occurrences = get("topics/6721/occurrences/511", REF);
+		Collection<Occurrence> occurrences = get("topics/3096/occurrences/527", REF);
 
 		Assert.assertNotNull(occurrences);
 		Assert.assertEquals(1, occurrences.size());
 		Assert.assertEquals(Occurrence.class, occurrences.iterator().next().getClass());
-		assertContainsTopics(occurrences, "6725");
+		assertContainsTopics(occurrences, "5750");
 	}
 
 	@Test

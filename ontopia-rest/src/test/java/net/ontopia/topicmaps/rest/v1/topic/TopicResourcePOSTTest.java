@@ -228,12 +228,20 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testRemoveSubjectLocator() {
-		Topic topic = get("146", Topic.class);
-		topic.getSubjectLocators().remove(URILocator.create("http://home.prcn.org/~pauld/opera/"));
+		Topic topic = get("3213", Topic.class);
+		
+		// first add
+		topic.getSubjectLocators().add(URILocator.create("http://example.com/to-remove"));
+		Topic changed = post("3213", topic, Topic.class);
 
-		Assert.assertTrue(topic.getSubjectLocators().isEmpty());
+		Assert.assertFalse(changed.getSubjectLocators().isEmpty());
 
-		Topic changed = post("146", topic, Topic.class);
+		// then remove
+		changed.getSubjectLocators().remove(URILocator.create("http://example.com/to-remove"));
+		
+		Assert.assertTrue(changed.getSubjectLocators().isEmpty());
+
+		changed = post("3213", changed, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectLocators());
