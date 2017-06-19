@@ -43,7 +43,11 @@ public enum OntopiaRestErrors {
 	EMPTY_ENTITY(Status.CLIENT_ERROR_BAD_REQUEST, 208, "Unexpected empty request entity"),
 	
 	// mime mismatch
-	UNSUPPORTED_MIME_TYPE(Status.CLIENT_ERROR_NOT_ACCEPTABLE, 300, "%s cannot provide %s");
+	UNSUPPORTED_MIME_TYPE(Status.CLIENT_ERROR_NOT_ACCEPTABLE, 300, "%s cannot provide %s"),
+	
+	// query
+	UNKNOWN_QUERY_LANGUAGE(Status.CLIENT_ERROR_BAD_REQUEST, 400, "Unknown query language '%s'"),
+	INVALID_QUERY(Status.CLIENT_ERROR_BAD_REQUEST, 401, "Invalid query: %s");
 
 	private final Status status;
 	private final int code;

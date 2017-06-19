@@ -38,6 +38,9 @@ public class Parameters<C> {
 	// paging
 	public static final Parameters<Integer> LIMIT = new Parameters<>("limit", Integer.class);
 	public static final Parameters<Integer> OFFSET = new Parameters<>("offset", Integer.class);
+	
+	// query
+	public static final Parameters<String> LANGUAGE = new Parameters<>("language", String.class);
 
 	private final Class<C> expected;
 	private final String name;
