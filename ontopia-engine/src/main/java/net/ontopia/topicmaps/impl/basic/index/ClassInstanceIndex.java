@@ -37,6 +37,8 @@ import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.CollectionMap;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 
 /**
  * INTERNAL: The basic dynamic class instance index implementation.
@@ -133,6 +135,18 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
             Collections.<AssociationRoleIF>unmodifiableCollection(
                     new ArrayList<AssociationRoleIF>(roles.get(association_role_type))) :
             Collections.<AssociationRoleIF>emptyList();
+  }
+
+  public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type, final TopicIF association_type) {
+    if (roles.containsKey(association_role_type)) {
+      return CollectionUtils.select(roles.get(association_role_type), new Predicate<AssociationRoleIF>() {
+        public boolean evaluate(AssociationRoleIF role) {
+          return role.getAssociation().getType().equals(association_type);
+        }
+      });
+    } else {
+      return Collections.<AssociationRoleIF>emptyList();
+    }
   }
 
   public Collection<TopicIF> getTopicTypes() {

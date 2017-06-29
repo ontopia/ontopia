@@ -104,6 +104,16 @@ public class ClassInstanceIndex extends RDBMSIndex
     }
   }
 
+  public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type, TopicIF association_type) {
+    if ((association_role_type == null) || (association_type == null)) {
+      return Collections.emptySet();
+    } else {
+      Object[] params = new Object[] { getTopicMap(), association_role_type, getTopicMap(), association_type };
+      return new QueryCollection<AssociationRoleIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getAssociationRolesRTAT_size", params,
+                                 "ClassInstanceIndexIF.getAssociationRolesRTAT", params);
+    }
+  }
+
   public Collection<TopicIF> getTopicTypes() {
     return (Collection<TopicIF>)executeQuery("ClassInstanceIndexIF.getTopicTypes",
                                     new Object[] { getTopicMap() });
