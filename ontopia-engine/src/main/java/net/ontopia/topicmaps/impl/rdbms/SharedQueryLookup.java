@@ -30,38 +30,43 @@ import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
  * INTERNAL: Non-shared locator lookup index.
  */
 
-public class SharedQueryLookup implements TransactionalLookupIndexIF {
+public class SharedQueryLookup<E> implements TransactionalLookupIndexIF<ParameterArray, E> {
 
   protected StorageAccessIF access;
-  protected QueryCache qcache;
+  protected QueryCache<ParameterArray, E> qcache;
 
-  public SharedQueryLookup(StorageAccessIF access, QueryCache qcache) {
+  public SharedQueryLookup(StorageAccessIF access, QueryCache<ParameterArray, E> qcache) {
     this.access = access;
     this.qcache = qcache;
   }
   
-  public Object get(Object key) {
+  @Override
+  public E get(ParameterArray params) {
     // check cache
-    ParameterArray params = (ParameterArray)key;
     return qcache.executeQuery(access, params, params.getArray());
   }
 
-  public Object put(Object key, Object value) {
+  @Override
+  public E put(ParameterArray key, E value) {
     throw new UnsupportedOperationException();
   }
 
-  public Object remove(Object key) {
+  @Override
+  public E remove(ParameterArray key) {
     throw new UnsupportedOperationException();
   }
 
-  public void removeAll(Collection keys) {
+  @Override
+  public void removeAll(Collection<ParameterArray> keys) {
     qcache.removeAll(keys);
   }
 
+  @Override
   public void commit() {    
     // no-op
   }
 
+  @Override
   public void abort() {
     // no-op
   }

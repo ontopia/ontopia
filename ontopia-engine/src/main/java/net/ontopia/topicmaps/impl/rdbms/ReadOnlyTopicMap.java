@@ -26,6 +26,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.QueryCollection;
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -263,7 +264,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // Role type cache
   // ---------------------------------------------------------------------------
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype) {
     return transaction.getRolesByType(player, rtype);
   }
 
@@ -272,7 +273,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // ---------------------------------------------------------------------------
 
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return transaction.getRolesByType(player, rtype, atype);
   }
   

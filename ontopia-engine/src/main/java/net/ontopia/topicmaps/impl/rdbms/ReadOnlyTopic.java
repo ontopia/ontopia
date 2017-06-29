@@ -142,7 +142,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     }
   }
   
-  public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type) {
     // lookup roles by type
     if (roletype == null) {
       ReadOnlyTopicMap tm = (ReadOnlyTopicMap)getTopicMap();
