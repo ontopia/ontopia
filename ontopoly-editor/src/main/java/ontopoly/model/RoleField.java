@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -37,7 +37,7 @@ import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.StringUtils;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.Ordering;
 import ontopoly.utils.TopicComparator;
@@ -337,8 +337,6 @@ public class RoleField extends FieldDefinition {
   }
 
   private static class MapValueComparator implements Comparator<ValueIF> {
-    //! private static final String DEFAULT_ORDER_VALUE = "999999999";    
-    private static final String DEFAULT_ORDER_VALUE = null; // sorts before "000000000"    
     private Map<Topic, OccurrenceIF> entries;
     private RoleField ofield;
     private Topic oplayer;
@@ -353,9 +351,7 @@ public class RoleField extends FieldDefinition {
         Topic p2 = v2.getPlayer(ofield, oplayer);
         OccurrenceIF oc1 = entries.get(p1);
         OccurrenceIF oc2 = entries.get(p2);
-        Comparable<String> c1 = (oc1 == null ? DEFAULT_ORDER_VALUE : oc1.getValue());
-        Comparable<String> c2 = (oc2 == null ? DEFAULT_ORDER_VALUE : oc2.getValue());
-        return ObjectUtils.compare(c1, c2);
+        return StringUtils.compare(oc1 == null ? null : oc1.getValue(), oc2 == null ? null : oc2.getValue());
       } catch (Exception e) {
         // should not fail when comparing. bergen kommune has had an issue where this happens. we thus ignore for now.
         //        e.printStackTrace();
@@ -537,7 +533,7 @@ public class RoleField extends FieldDefinition {
         AssociationRoleIF orole = (AssociationRoleIF) roles[i];
         if (matched.contains(orole))
           continue;
-        if (ObjectUtils.equals(orole.getType(), ortype.getTopicIF())) {
+        if (Objects.equals(orole.getType(), ortype.getTopicIF())) {
           matched.add(orole);
           value.addPlayer(ofield, new Topic(orole.getPlayer(), topicMap));
           match = true;
@@ -616,7 +612,7 @@ public class RoleField extends FieldDefinition {
         RoleField rf = roleFields[i];
         if (rf.equals(ofield)) {
           Topic player = players[i];
-          if (ObjectUtils.different(player, oPlayer))
+          if (!Objects.equals(player, oPlayer))
             return player;
           else
             xPlayer = oPlayer;
@@ -707,7 +703,7 @@ public class RoleField extends FieldDefinition {
     List<OccurrenceIF> occs = new ArrayList<OccurrenceIF>(topics_occs.values());
     Collections.sort(occs, new Comparator<OccurrenceIF>() {
       public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
-        return ObjectUtils.compare(occ1.getValue(), occ2.getValue());
+        return StringUtils.compare(occ1.getValue(), occ2.getValue());
       }
     });
 

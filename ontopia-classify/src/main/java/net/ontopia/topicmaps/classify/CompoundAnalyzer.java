@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.ontopia.utils.ObjectUtils;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -247,7 +246,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
       this.f = f;
     }    
     public int compare(Variant v1, Variant v2) {
-      return ObjectUtils.compare(f.getScore(v2), f.getScore(v1));
+      return Double.compare(f.getScore(v2), f.getScore(v1));
     }
   };
   

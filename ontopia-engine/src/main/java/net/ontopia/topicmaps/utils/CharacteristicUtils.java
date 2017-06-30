@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -33,7 +34,6 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Characteristic processing utilities.
@@ -170,7 +170,7 @@ public class CharacteristicUtils {
       Iterator<AssociationRoleIF> riter = assoc.getRoles().iterator();
       while (riter.hasNext()) {
         AssociationRoleIF role2 = riter.next();
-        if (ObjectUtils.equals(role1, role2)) continue;
+        if (Objects.equals(role1, role2)) continue;
         TopicIF other = role2.getPlayer();
         if (other != null) result.add(other);
       }

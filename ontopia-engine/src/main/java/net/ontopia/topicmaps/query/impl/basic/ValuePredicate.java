@@ -23,21 +23,20 @@ package net.ontopia.topicmaps.query.impl.basic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.parser.Variable;
-import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Implements the 'value' predicate.
@@ -213,7 +212,7 @@ public class ValuePredicate implements BasicPredicateIF {
     Iterator iter = occs.iterator();
     while (iter.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) iter.next();
-      if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_URI))
+      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
         result.add(occ);
     }
     return result;
@@ -224,7 +223,7 @@ public class ValuePredicate implements BasicPredicateIF {
     Iterator iter = vns.iterator();
     while (iter.hasNext()) {
       VariantNameIF vn = (VariantNameIF) iter.next();
-      if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI))
+      if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI))
         result.add(vn);
     }
     return result;

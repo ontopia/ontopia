@@ -35,6 +35,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import net.ontopia.infoset.core.LocatorIF;
@@ -57,7 +58,6 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.IteratorComparator;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import org.slf4j.Logger;
@@ -905,7 +905,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private void writeVariant(VariantNameIF variant, Writer out)
       throws IOException {
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
       String value = variant.getValue();
       if (value != null) {
         out.write("(\"");

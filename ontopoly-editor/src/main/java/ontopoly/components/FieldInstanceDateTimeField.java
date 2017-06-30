@@ -21,19 +21,17 @@ package ontopoly.components;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.jquery.DatePickerBehavior;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.validators.DateFormatValidator;
 import ontopoly.validators.ExternalValidation;
-
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
 
@@ -88,7 +86,7 @@ public class FieldInstanceDateTimeField extends TextField<String> implements ITe
     super.onModelChanged();
     // TODO: replace "HH:mm:ss" pattern with "12:00:00"
     String newValue = getModelObject();
-    if (ObjectUtils.equals(newValue, oldValue)) return;
+    if (Objects.equals(newValue, oldValue)) return;
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
     if (fieldValueModel.isExistingValue() && oldValue != null)

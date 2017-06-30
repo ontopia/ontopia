@@ -22,8 +22,7 @@ package ontopoly.components;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
@@ -32,7 +31,6 @@ import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
-
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -72,7 +70,7 @@ public class ViewsFunctionBoxPanel extends Panel {
       pageParametersMap.put("topicMapId", tm.getId());
       pageParametersMap.put("topicId", topic.getId());
       pageParametersMap.put("topicTypeId", topicType.getId());
-      if (ObjectUtils.different(view, defaultView))
+      if (!Objects.equals(view, defaultView))
         pageParametersMap.put("viewId", view.getId());
       if (topic.isOntologyTopic())
         pageParametersMap.put("ontology", "true");
@@ -80,7 +78,7 @@ public class ViewsFunctionBoxPanel extends Panel {
       String viewName = view.getName();
       OntopolyBookmarkablePageLink link =
         new OntopolyBookmarkablePageLink("link", InstancePage.class, new PageParameters(pageParametersMap), viewName);
-      link.setEnabled(ObjectUtils.different(currentView, view));
+      link.setEnabled(!Objects.equals(currentView, view));
       
       parent.add(link);
     }

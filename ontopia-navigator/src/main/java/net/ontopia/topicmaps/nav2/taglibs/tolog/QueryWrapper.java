@@ -20,15 +20,13 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Arrays;
-import java.util.ArrayList;
-
+import java.util.Objects;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
@@ -39,8 +37,6 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.utils.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,7 +163,7 @@ public class QueryWrapper {
     * Test if two given elements are equal, i.e. the same or otherwise equivalent.
   */
   private boolean sameElements(Object elem1, Object elem2) {
-    return ObjectUtils.equals(elem1, elem2);
+    return Objects.equals(elem1, elem2);
   }
     
   /**
@@ -289,7 +285,7 @@ public class QueryWrapper {
 
   protected boolean equalGroup(boolean[] groupColumns, Object[] row1, Object[] row2) {
     for (int i=0; i < row1.length; i++) {
-      if (groupColumns[i] && !ObjectUtils.equals(row1[i], row2[i])) return false;        
+      if (groupColumns[i] && !Objects.equals(row1[i], row2[i])) return false;        
     }
     return true;
   }

@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -58,7 +59,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -292,7 +292,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     while (it2.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it2.next();
       
-      if (ObjectUtils.equals(occ.getDataType(), DataTypes.TYPE_URI))
+      if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
         statement(subject, getResource(occ.getType()),
                   getResource(occ.getLocator()), occ);
       else

@@ -22,21 +22,20 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CollectionMap;
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: The basic dynamic name index implementation.
@@ -86,7 +85,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     return CollectionUtils.filterSet(extractExactValues(basenames, value), new DeciderIF<TopicNameIF>() {
       @Override
       public boolean ok(TopicNameIF topicName) {
-        return ObjectUtils.equals(topicName.getType(), topicNameType);
+        return Objects.equals(topicName.getType(), topicNameType);
       }
     });
   }
@@ -98,7 +97,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   public Collection<VariantNameIF> getVariants(String value, final LocatorIF datatype) {
     return CollectionUtils.filterSet(extractExactValues(variants, value), new DeciderIF<VariantNameIF>() {
         public boolean ok(VariantNameIF vn) {
-          return ObjectUtils.equals(vn.getDataType(), datatype);
+          return Objects.equals(vn.getDataType(), datatype);
         }
       });
   }

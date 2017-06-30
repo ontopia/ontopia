@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
 import net.ontopia.infoset.core.LocatorIF;
@@ -1097,7 +1098,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   protected TopicIF registerSubjectLocator(TopicIF topic, LocatorIF locator) {
     // merge with existing, if any
     TopicIF existing = topicmap.getTopicBySubjectLocator(locator);
-    if (existing != null && ObjectUtils.different(existing, topic)) {
+    if (existing != null && !Objects.equals(existing, topic)) {
       existing.merge(topic);
       topic = existing;
     }

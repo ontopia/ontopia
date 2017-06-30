@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -322,7 +323,7 @@ public class CollectionUtils {
       // remove all but first occurrence
       T elem = list.get(index);
       for (int i=index+1; i < size; i++) {
-        if (ObjectUtils.equals(elem, list.get(i))) {
+        if (Objects.equals(elem, list.get(i))) {
           list.remove(i);
           size--;
         }

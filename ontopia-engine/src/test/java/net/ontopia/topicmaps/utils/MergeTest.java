@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Iterator;
+import java.util.Objects;
 import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -40,7 +41,6 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public class MergeTest extends TestCase {
@@ -884,7 +884,7 @@ public class MergeTest extends TestCase {
     Iterator iter = newnrole.getAssociation().getRoles().iterator();
     while (iter.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF)iter.next();
-      if (ObjectUtils.different(newnrole, role)) {
+      if (!Objects.equals(newnrole, role)) {
         newdrole = role;
         break;
       }

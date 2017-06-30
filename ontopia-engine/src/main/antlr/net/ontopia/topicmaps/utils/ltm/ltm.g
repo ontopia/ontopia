@@ -15,6 +15,7 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import java.util.HashSet;
   import java.util.List;
   import java.util.Map;
+  import java.util.Objects;
   import java.util.Set;
   import java.util.Iterator;
   import net.ontopia.infoset.core.LocatorIF;
@@ -35,7 +36,6 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import net.ontopia.topicmaps.utils.PSI;
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
-  import net.ontopia.utils.ObjectUtils;
   import antlr.TokenStreamException;
   import antlr.SemanticException;
 }
@@ -246,7 +246,7 @@ options {
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
       TopicIF roleType = role.getType();
-      if (roleType != null && ObjectUtils.different(nullTopic, roleType)) continue;
+      if (roleType != null && !Objects.equals(nullTopic, roleType)) continue;
       Iterator it2 = role.getPlayer().getTypes().iterator();
       if (it2.hasNext())
         role.setType((TopicIF) it2.next());

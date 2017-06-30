@@ -34,6 +34,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -56,7 +57,6 @@ import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.IteratorComparator;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.CanonicalPrinter;
 import org.xml.sax.Attributes;
@@ -276,7 +276,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     startElement("variant", attributes);
     attributes.clear();
 
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
       LocatorIF locator = variant.getLocator();
       if (locator != null)
         write(normaliseLocatorReference(locator.getAddress()));

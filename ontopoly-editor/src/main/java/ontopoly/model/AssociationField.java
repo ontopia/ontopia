@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.StringUtils;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
@@ -148,7 +149,7 @@ public class AssociationField extends Topic {
     }
 
     public int compare(RoleField rf1, RoleField rf2) {
-      return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
+      return StringUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }
 

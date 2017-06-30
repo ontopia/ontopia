@@ -20,11 +20,10 @@
 
 package net.ontopia.topicmaps.classify;
 
+import gnu.trove.iterator.TObjectIntIterator;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import java.util.Arrays;
 import java.util.Comparator;
-import net.ontopia.utils.ObjectUtils;
-import gnu.trove.map.hash.TObjectIntHashMap;
-import gnu.trove.iterator.TObjectIntIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
@@ -182,13 +181,13 @@ public class Term {
   protected static Comparator<Term> SCORE_COMPARATOR =
     new Comparator<Term>() {
       public int compare(Term t1, Term t2) {
-        return ObjectUtils.compare(t2.getScore(), t1.getScore()); // NOTE: reverse order
+        return Double.compare(t2.getScore(), t1.getScore()); // NOTE: reverse order
       }
     };
   
   private class VariantComparator implements Comparator<Variant> {    
     public int compare(Variant v1, Variant v2) {
-      int c = ObjectUtils.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
+      int c = Integer.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
       if (c != 0) return c;
       return v1.getValue().compareTo(v2.getValue());
     }

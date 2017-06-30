@@ -26,11 +26,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.DeciderUtils;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -84,7 +84,7 @@ public class MergeUtils {
     // should merge if they reify the same object
     ReifiableIF r1 = t1.getReified();
     ReifiableIF r2 = t2.getReified();
-    if (r1 != null && ObjectUtils.equals(r1, r2))
+    if (r1 != null && Objects.equals(r1, r2))
       return true;
 
     return false;

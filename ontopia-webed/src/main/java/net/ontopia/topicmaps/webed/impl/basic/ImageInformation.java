@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.basic;
 
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 
 /**
  * INTERNAL: Default implementation of the ImageInformationIF
@@ -84,12 +84,12 @@ public class ImageInformation implements ImageInformationIF {
     if (!(obj instanceof ImageInformation))
       return false;
     ImageInformation compObj = (ImageInformation) obj;
-    return (ObjectUtils.equals(compObj.getName(), name)
-            && ObjectUtils.equals(compObj.getRelativeURL(), relative_url)
-            && ObjectUtils.equals(compObj.getWidth(), width)
-            && ObjectUtils.equals(compObj.getHeight(), height)
-            && ObjectUtils.equals(compObj.getBorder(), border)
-            && ObjectUtils.equals(compObj.getAlign(), align));
+    return (Objects.equals(compObj.getName(), name)
+            && Objects.equals(compObj.getRelativeURL(), relative_url)
+            && Objects.equals(compObj.getWidth(), width)
+            && Objects.equals(compObj.getHeight(), height)
+            && Objects.equals(compObj.getBorder(), border)
+            && Objects.equals(compObj.getAlign(), align));
   }
 
   public String toString() {

@@ -28,11 +28,11 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.Collections;
-import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public abstract class VariantNameTest extends AbstractScopedTest {
@@ -84,7 +84,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
       variant.setLocator(loc);
       assertTrue("locator identity not maintained after set",
              variant.getLocator().equals(loc));            
-			assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI));
+			assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(variant.getDataType(), DataTypes.TYPE_URI));
             
 			try {
 				variant.setLocator(null);
@@ -142,14 +142,14 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     variant.setValue("testfaen");
     assertTrue("name not set correctly",
 							 variant.getValue().equals("testfaen"));
-		assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING));
+		assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING));
 
 		try {
 			variant.setValue(null);
 			fail("value could be set to null");
 		} catch (NullPointerException e) {
 		}
-		assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING));
+		assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING));
   }
 
   public void testReader() throws Exception {
@@ -161,7 +161,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
 		long inlen = filein.length();
     variant.setReader(ri, inlen, DataTypes.TYPE_BINARY);
 
-    assertTrue("Variant datatype is incorrect", ObjectUtils.equals(DataTypes.TYPE_BINARY, variant.getDataType()));
+    assertTrue("Variant datatype is incorrect", Objects.equals(DataTypes.TYPE_BINARY, variant.getDataType()));
                  
     // read and decode content
     Reader ro = variant.getReader();

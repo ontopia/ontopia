@@ -19,13 +19,12 @@
  */
 package ontopoly.pages;
 
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.components.InstancePanel;
 import ontopoly.model.Topic;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -48,7 +47,7 @@ public abstract class ModalInstancePage extends Panel {
     this.fieldsViewModel = fieldsViewModel;
     
     // page is read-only if topic type is read-only
-    this.isReadOnly = ((topicTypeModel != null && topicTypeModel.getTopicType().isReadOnly()) || (ObjectUtils.equals(getRequest().getParameter("ro"), "true")));
+    this.isReadOnly = ((topicTypeModel != null && topicTypeModel.getTopicType().isReadOnly()) || (Objects.equals(getRequest().getParameter("ro"), "true")));
 
     this.popupContent = new WebMarkupContainer("popupContent");
     popupContent.setOutputMarkupId(true);

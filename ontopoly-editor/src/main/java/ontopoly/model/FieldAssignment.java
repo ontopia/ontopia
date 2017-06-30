@@ -26,15 +26,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import ontopoly.utils.OntopolyModelUtils;
-import ontopoly.utils.Ordering;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.utils.OntopolyModelUtils;
+import ontopoly.utils.Ordering;
 
 /**
  * Represents a field as assigned to a topic type. The field itself is a
@@ -169,7 +168,7 @@ public final class FieldAssignment {
    */
   public void moveAfter(FieldAssignment other) {
 
-    if (ObjectUtils.different(getTopicType(), other.getTopicType()))
+    if (!Objects.equals(getTopicType(), other.getTopicType()))
       throw new RuntimeException("Cannot reorder fields that are assigned to different topic types.");
 
     List<FieldAssignment> fieldAssignments = getTopicType().getFieldAssignments();
@@ -213,7 +212,7 @@ public final class FieldAssignment {
         other.setOrder(nextAvailableOrder);
         for (int i=indexOfThis+1; i < length; i++) {
           FieldAssignment fa = fieldAssignments.get(i);
-          if (!ObjectUtils.equals(fa, other)) {
+          if (!Objects.equals(fa, other)) {
             nextAvailableOrder += Ordering.ORDER_INCREMENTS;
             fa.setOrder(nextAvailableOrder);
           }

@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.query.impl.basic;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,13 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.text.Collator;
-
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -46,25 +40,28 @@ import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
-import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
 import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
-import net.ontopia.topicmaps.query.utils.TologSpy;
+import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
 import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
-import net.ontopia.topicmaps.query.parser.ParseContextIF;
-import net.ontopia.topicmaps.query.parser.TologParser;
-import net.ontopia.topicmaps.query.parser.TologOptions;
-import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.ModificationStatement;
+import net.ontopia.topicmaps.query.parser.ParseContextIF;
+import net.ontopia.topicmaps.query.parser.TologOptions;
+import net.ontopia.topicmaps.query.parser.TologParser;
+import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.Variable;
+import net.ontopia.topicmaps.query.utils.TologSpy;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.StringifierIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -566,8 +563,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           } else {
             Object x1 = row1[orderColumns[ix]];
             Object x2 = row2[orderColumns[ix]];
-            String id1 = (x1 instanceof TMObjectIF ? ((TMObjectIF) x1).getObjectId() : ObjectUtils.toString(x1));
-            String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : ObjectUtils.toString(x2));
+            String id1 = (x1 instanceof TMObjectIF ? ((TMObjectIF) x1).getObjectId() : String.valueOf(x1));
+            String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : String.valueOf(x2));
             comp = id1.compareTo(id2);
           }
           break;

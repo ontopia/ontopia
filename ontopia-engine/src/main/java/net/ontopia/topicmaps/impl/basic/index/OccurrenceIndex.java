@@ -22,24 +22,22 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.SortedMap;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CollectionSortedMap;
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: The basic dynamic locator index implementation.
@@ -97,7 +95,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
       @Override
       public boolean ok(OccurrenceIF occurrence) {
-        return ObjectUtils.equals(occurrence.getType(), occurrenceType);
+        return Objects.equals(occurrence.getType(), occurrenceType);
       }
     });
   }
@@ -105,7 +103,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype) {
     return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
         public boolean ok(OccurrenceIF occ) {
-          return ObjectUtils.equals(occ.getDataType(), datatype);
+          return Objects.equals(occ.getDataType(), datatype);
         }
       });
   }
@@ -115,8 +113,8 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
       @Override
       public boolean ok(OccurrenceIF occurrence) {
-        return ObjectUtils.equals(occurrence.getType(), occurrenceType)
-            && ObjectUtils.equals(occurrence.getDataType(), datatype);
+        return Objects.equals(occurrence.getType(), occurrenceType)
+            && Objects.equals(occurrence.getDataType(), datatype);
       }
     });
   }
@@ -128,7 +126,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, final LocatorIF datatype) {
     return CollectionUtils.filterSet(extractPrefixValues(occurs, prefix), new DeciderIF<OccurrenceIF>() {
         public boolean ok(OccurrenceIF occ) {
-          return ObjectUtils.equals(occ.getDataType(), datatype);
+          return Objects.equals(occ.getDataType(), datatype);
         }
       });
   }

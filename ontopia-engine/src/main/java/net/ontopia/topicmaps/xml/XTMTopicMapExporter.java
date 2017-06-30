@@ -25,21 +25,19 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.PrettyPrinter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
@@ -397,7 +395,7 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
       throws SAXException {
 
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "variantName", EMPTY_ATTR_LIST);
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
 			LocatorIF varloc = variant.getLocator();
 			if (varloc != null) {
 				String notation = varloc.getNotation();
@@ -470,7 +468,7 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
       writeScope(occr.getScope(), dh);
 
       // Write resourceRef
-			if (ObjectUtils.equals(occr.getDataType(), DataTypes.TYPE_URI)) {
+			if (Objects.equals(occr.getDataType(), DataTypes.TYPE_URI)) {
 				LocatorIF occloc = occr.getLocator();
 				if (occloc != null) {
 					//! String notation = occloc.getNotation();

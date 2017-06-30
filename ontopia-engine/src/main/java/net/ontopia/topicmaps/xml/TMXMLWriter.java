@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -47,7 +48,6 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.PrettyPrinter;
@@ -306,7 +306,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         scope = getScope(vn);
         if (scope != null)
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
-        if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_STRING))
+        if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_STRING))
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", "CDATA", vn.getDataType().getAddress());
 
         addReifierAttribute(vn, atts);
@@ -330,7 +330,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String scope = getScope(occ);
       if (scope != null && filterOk(scope))
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
-      if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_STRING))
+      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_STRING))
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", "CDATA", occ.getDataType().getAddress());
 
       addReifierAttribute(occ, atts);

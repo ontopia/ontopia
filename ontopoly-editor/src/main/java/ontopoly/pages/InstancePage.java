@@ -24,8 +24,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.OntopolyAccessStrategy.Privilege;
 import ontopoly.OntopolySession;
 import ontopoly.components.AddOrRemoveTypeFunctionBoxPanel;
@@ -57,7 +56,6 @@ import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.utils.NoSuchTopicException;
 import ontopoly.utils.OntopolyUtils;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
@@ -121,7 +119,7 @@ public class InstancePage extends OntopolyAbstractPage {
 
     // page is read-only if topic type is read-only
     setReadOnlyPage(tt.isReadOnly() || 
-        ObjectUtils.equals(getRequest().getParameter("ro"), "true") || 
+        Objects.equals(getRequest().getParameter("ro"), "true") || 
         !((AbstractOntopolyPage)this).filterTopic(topic) ||
         privilege != Privilege.EDIT);
 

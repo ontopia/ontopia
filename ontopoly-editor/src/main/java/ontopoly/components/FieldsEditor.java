@@ -25,9 +25,9 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.StringUtils;
 import ontopoly.model.AssociationType;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
@@ -45,7 +45,6 @@ import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.MutableLoadableDetachableModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.AbstractOntopolyPage;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -248,7 +247,7 @@ public class FieldsEditor extends Panel {
   private void replaceListView(FieldDefinitionTypeLink typeLink) {
     String typeLinkId = typeLink.getMarkupId();
     ListView<FieldDefinitionModel> afListView;
-    if (ObjectUtils.different(typeLinkId, selectedTypeLinkId)) {      
+    if (!Objects.equals(typeLinkId, selectedTypeLinkId)) {      
       // replaces the existing listview with a new one
       selectedTypeLinkId = typeLinkId;
       afListView = createListView(filterAndWrapInFieldDefinitions(typeLink.getFieldDefinitions()));
@@ -281,7 +280,7 @@ public class FieldsEditor extends Panel {
       public int compare(FieldDefinitionModel o1, FieldDefinitionModel o2) {
         FieldDefinition fd1 = o1.getFieldDefinition();
         FieldDefinition fd2 = o2.getFieldDefinition();
-        return ObjectUtils.compare(fd1.getFieldName(), fd2.getFieldName());
+        return StringUtils.compare(fd1.getFieldName(), fd2.getFieldName());
       }      
     });
     return result;

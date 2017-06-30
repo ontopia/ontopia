@@ -23,8 +23,8 @@ package net.ontopia.persistence.proxy;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.collections4.map.LRUMap;
 
@@ -61,7 +61,7 @@ public class QueryCache<K, E> implements EvictableIF<K, E> {
       } else {
         // cache hit
         lru.put(cachekey, result);
-        return (ObjectUtils.equals(NULLOBJECT, result) ? null : result);
+        return (Objects.equals(NULLOBJECT, result) ? null : result);
       }
     } catch (RuntimeException e1) {
       throw e1;

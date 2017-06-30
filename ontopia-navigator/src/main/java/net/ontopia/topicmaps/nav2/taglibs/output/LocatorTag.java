@@ -22,20 +22,18 @@ package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;
 import java.util.Iterator;
-import javax.servlet.jsp.JspWriter;
+import java.util.Objects;
 import javax.servlet.jsp.JspTagException;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.OntopiaRuntimeException;
+import javax.servlet.jsp.JspWriter;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.utils.ObjectUtils;
-
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Output Producing Tag for writing out the URI of the
@@ -60,7 +58,7 @@ public class LocatorTag extends BaseOutputProducingTag
     try {
       OccurrenceIF occ = (OccurrenceIF) elem;
       // could be also an internal occurrence
-      if (ObjectUtils.equals(DataTypes.TYPE_URI, occ.getDataType()))
+      if (Objects.equals(DataTypes.TYPE_URI, occ.getDataType()))
         locator = occ.getLocator();
     }
     // --- otherwise try other instances 

@@ -24,13 +24,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.ObjectUtils;
 
 public class ValuePredicateTest extends AbstractPredicateTest {
   
@@ -61,7 +60,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
         Iterator it3 = bn.getVariants().iterator();
         while (it3.hasNext()) {
           VariantNameIF vn = (VariantNameIF) it3.next();
-          if (vn.getValue() != null && ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI))
+          if (vn.getValue() != null && !Objects.equals(vn.getDataType(), DataTypes.TYPE_URI))
             addMatch(matches, "OBJ", vn, "VALUE", vn.getValue());
         }
       }
@@ -69,7 +68,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
       it2 = topic.getOccurrences().iterator();
       while (it2.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it2.next();
-        if (occ.getValue() != null && ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_URI))
+        if (occ.getValue() != null && !Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
           addMatch(matches, "OBJ", occ, "VALUE", occ.getValue());
       }
     }

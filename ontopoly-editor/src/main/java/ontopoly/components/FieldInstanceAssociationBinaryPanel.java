@@ -23,8 +23,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.LockManager;
 import ontopoly.OntopolySession;
 import ontopoly.jquery.DraggableBehavior;
@@ -47,7 +46,6 @@ import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.pages.ModalFindPage;
 import ontopoly.utils.RoleFieldValueComparator;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.PageParameters;
@@ -373,7 +371,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
           RoleField selectedField = (RoleField)currentField.getFieldsForOtherRoles().iterator().next();
 
           // check with page to see if add is allowed
-          if (ObjectUtils.different(currentField, selectedField) ||
+          if (!Objects.equals(currentField, selectedField) ||
               // if assoc type is symmetric currentField == selectedField,
               // but we're still OK to go ahead, so checking for that
               // (this is issue 457)

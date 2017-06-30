@@ -19,14 +19,13 @@
  */
 package ontopoly.components;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.validators.ExternalValidation;
 import ontopoly.validators.RegexValidator;
-
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
@@ -77,7 +76,7 @@ public class FieldInstanceNumberField extends TextField<String> {
   protected void onModelChanged() {
     super.onModelChanged();
     String newValue = (String)getModelObject();
-    if (ObjectUtils.equals(newValue, oldValue)) return;
+    if (Objects.equals(newValue, oldValue)) return;
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
     if (fieldValueModel.isExistingValue() && oldValue != null)
