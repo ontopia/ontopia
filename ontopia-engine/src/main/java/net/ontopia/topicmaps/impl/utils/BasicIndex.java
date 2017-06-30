@@ -49,8 +49,8 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   // Event handlers
   // -----------------------------------------------------------------------------
 
-  public abstract class EventHandler implements EventListenerIF {
-    public abstract void processEvent(Object object, String event, Object new_value, Object old_value);
+  public abstract class EventHandler<K, V> implements EventListenerIF<K, V> {
+    public abstract void processEvent(K object, String event, V new_value, V old_value);
     protected void addEvent(Object object, String event, Object value) {
       handlers.get(event).processEvent(object, event, value, null);
     }

@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.rest.v1.topicmap;
 import net.ontopia.topicmaps.rest.v1.association.AssociationRouter;
 import net.ontopia.topicmaps.rest.v1.name.NamesRouter;
 import net.ontopia.topicmaps.rest.v1.occurrence.OccurrenceRouter;
+import net.ontopia.topicmaps.rest.v1.query.QueryResource;
 import net.ontopia.topicmaps.rest.v1.role.RoleRouter;
 import net.ontopia.topicmaps.rest.v1.scoped.ScopesResource;
 import net.ontopia.topicmaps.rest.v1.topic.TopicRouter;
@@ -56,5 +57,9 @@ public class TopicMapRouter extends Router {
 
 		// SearchIF
 		attach("/search", SearcherResource.class);
+
+		// Query
+		attach("/query", QueryResource.class);
+		attach("/query/{language}", QueryResource.class);
 	}
 }

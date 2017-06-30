@@ -25,6 +25,7 @@ import java.util.Collection;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.utils.GrabberIF;
@@ -47,8 +48,18 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrences", new Object[] { getTopicMap(), value });
   }
   
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, TopicIF occurrenceType) {
+    return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByType", new Object[] { getTopicMap(), value, occurrenceType });
+  }
+
   public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype) {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByDataType", new Object[] { getTopicMap(), value, datatype.getAddress() });
+  }
+
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype, TopicIF occurrenceType) {
+    return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByDataTypeAndType", new Object[] { getTopicMap(), value, datatype.getAddress(), occurrenceType });
   }
 
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix) {

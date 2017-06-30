@@ -143,6 +143,10 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
            clsix.getAssociationRoles(type).size() == 1);
     assertTrue("Expected <role> as instance of <type>", 
            clsix.getAssociationRoles(type).contains(role));
+    assertTrue("Expected one association role of type <type> with at of <type>", 
+           clsix.getAssociationRoles(type, type).size() == 1);
+    assertTrue("Expected <role> as instance of <type> with at of <type>", 
+           clsix.getAssociationRoles(type, type).contains(role));
 
     // STATE 4: Topic map has duplicates
     AssociationIF dup = builder.makeAssociation(type);
@@ -161,6 +165,11 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
            clsix.getAssociationRoles(type).contains(dupRole));
     assertTrue("duplicate role types not suppressed",
            clsix.getAssociationRoleTypes().size() == 1);
+
+    assertTrue("role type not found", 
+           clsix.getAssociationRoles(type, type).size() == 2);
+    assertTrue("roles not found via type",
+           clsix.getAssociationRoles(type, type).contains(dupRole));
   }
 
   public void testOccurrenceTypes() {

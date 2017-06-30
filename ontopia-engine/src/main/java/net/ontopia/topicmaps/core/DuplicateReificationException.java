@@ -73,7 +73,7 @@ public class DuplicateReificationException extends ConstraintViolationException 
     TopicIF existingReifier = reifiable.getReifier();
     if (existingReifier != null &&
         ObjectUtils.different(existingReifier, reifier)) {
-      MergeUtils.mergeInto(existingReifier, reifier);
+      MergeUtils.mergeInto(reifier, existingReifier);
       return true;
     }
     return false;

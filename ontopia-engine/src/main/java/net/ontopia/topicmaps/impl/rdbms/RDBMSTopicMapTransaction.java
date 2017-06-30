@@ -31,6 +31,7 @@ import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.QueryCollection;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -314,7 +315,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // Role type cache
   // ---------------------------------------------------------------------------
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype) {
     return rtcache.getRolesByType(player, rtype);
   }
 
@@ -322,7 +323,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // Role type and association type cache
   // ---------------------------------------------------------------------------
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return rtatcache.getRolesByType(player, rtype, atype);
   }
 

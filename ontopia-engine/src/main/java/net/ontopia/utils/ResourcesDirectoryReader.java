@@ -191,7 +191,15 @@ public class ResourcesDirectoryReader {
             && (resourcePath.startsWith(directoryPath)) 
             && (searchSubdirectories || !resourcePath.substring(directoryPath.length()).contains("/"))
             && (filtersApply(resourcePath))) {
-          resources.add(new URL(jarPath, resourcePath));
+          // cannot do new URL(jarPath, resourcePath), somehow leads to duplicated path
+          // retest on java 8
+          Enumeration<URL> urls = classLoader.getResources(resourcePath);
+          while(urls.hasMoreElements()) {
+            URL url = urls.nextElement();
+            if (url.toExternalForm().startsWith(jarPath.toExternalForm())) {
+              resources.add(url);
+            }
+          }
         }
       }
     } catch (IOException e) { }
