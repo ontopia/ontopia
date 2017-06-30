@@ -53,7 +53,6 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
@@ -781,7 +780,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     }
   } catch (Throwable e) {
     if (logError()) log.error("Exception was thrown from within startElement", e);
-    ObjectUtils.throwRuntimeException(e);
+    throw new OntopiaRuntimeException(e);
   }
   }
 
@@ -1016,7 +1015,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     
   } catch (Throwable e) {
     if (logError()) log.error("Exception was thrown from within endElement", e);
-    ObjectUtils.throwRuntimeException(e);
+    throw new OntopiaRuntimeException(e);
   }
     
   }

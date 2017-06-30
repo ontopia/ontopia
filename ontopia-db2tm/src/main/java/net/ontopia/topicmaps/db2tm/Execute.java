@@ -35,7 +35,6 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -162,7 +161,7 @@ public class Execute {
       }
       
     } catch (Exception e) {
-      Throwable cause = ObjectUtils.getRealCause(e);
+      Throwable cause = e.getCause();
       if (cause instanceof DB2TMException)
         System.err.println("Error: " + e.getMessage());
       else

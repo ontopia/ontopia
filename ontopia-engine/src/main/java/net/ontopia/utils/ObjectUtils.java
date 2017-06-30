@@ -42,35 +42,4 @@ public class ObjectUtils {
       throw new OntopiaRuntimeException(e);
     }
   }
-
-  /**
-   * INTERNAL: Extract real exception from wrapper exception.
-   */
-  public static Throwable getRealCause(Throwable t) {
-    Throwable cause;
-    if (t instanceof OntopiaRuntimeException)
-      cause = ((OntopiaRuntimeException)t).getCause();
-    else if (t instanceof org.xml.sax.SAXException)
-      cause = ((org.xml.sax.SAXException)t).getException();
-    else
-      cause = null; // may want to support 1.4 getCause method
-    
-    if (cause != null)
-      return getRealCause(cause);
-    else
-      return t;
-  }
-
-  /**
-   * INTERNAL: Extract real exception from wrapper exception and
-   * rethrow as a RuntimeException.
-   */
-  public static void throwRuntimeException(Throwable t) {
-    Throwable x = getRealCause(t);
-    if (x instanceof RuntimeException)
-      throw ((RuntimeException)x);
-    else
-      throw new OntopiaRuntimeException(x);
-  }
-  
 }
