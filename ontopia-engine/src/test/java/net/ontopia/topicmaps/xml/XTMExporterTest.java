@@ -21,7 +21,10 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
@@ -34,7 +37,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +47,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
 
   @Before
   public void setVersion() {
-    version = 1; // ensure export() uses XTM 1.0
+    version = XTMVersion.XTM_1_0; // ensure export() uses XTM 1.0
   }
 
   // --- Test cases
@@ -55,7 +57,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     TopicMapIF tm = load(testdataDirectory, "in", "latin1.xtm");
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-latin1.xtm");
     XTMTopicMapWriter writer = new XTMTopicMapWriter(out, "iso-8859-1");
-    writer.setVersion(1);
+    writer.setVersion(XTMVersion.XTM_1_0);
     writer.write(tm);
     TopicMapIF tm2 = new XTMTopicMapReader(out).read();
     // check for a topic that has at least one name
@@ -74,7 +76,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     TopicMapIF tm = load(testdataDirectory, "in", "latin1.xtm");
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-utf-8.xtm");
     XTMTopicMapWriter writer = new XTMTopicMapWriter(out);
-    writer.setVersion(1);
+    writer.setVersion(XTMVersion.XTM_1_0);
     writer.write(tm);
     TopicMapIF tm2 = new XTMTopicMapReader(out).read();
     // check for a topic that has at least one name
@@ -426,6 +428,30 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     Assert.assertTrue("unacceptable ID used", !id.equals(tid));
   }
   
+  @Test
+  public void testWriteToFile() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm", "io-f.xtm");
+    new XTMTopicMapWriter(tmfile).write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToOutputStream() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm", "io-o.xtm");
+    new XTMTopicMapWriter(new FileOutputStream(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToWriter() throws IOException {
+    prepareTopicMap();
+    tmfile = TestFileUtils.getTestOutputFile("xtm", "io-w.xtm");
+    new XTMTopicMapWriter(new FileWriter(tmfile), "utf-8").write(topicmap);
+    Assert.assertTrue(Files.size(tmfile.toPath()) > 0);
+  }
+  
   // --- Internal helper methods
 
   private void reload() throws IOException {
@@ -455,6 +481,6 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     return load(dir + "/" + subdir, file);
   }
   private TopicMapIF load(String dir, String file) throws IOException {
-    return new XTMTopicMapReader(URIUtils.getURI(TestFileUtils.getTestInputFile(dir, file))).read();
+    return new XTMTopicMapReader(TestFileUtils.getTestInputURL(TestFileUtils.getTestInputFile(dir, file))).read();
   }
 }

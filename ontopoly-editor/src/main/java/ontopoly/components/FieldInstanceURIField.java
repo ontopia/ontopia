@@ -19,9 +19,9 @@
  */
 package ontopoly.components;
 
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
@@ -29,7 +29,6 @@ import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.validators.ExternalValidation;
 import ontopoly.validators.IdentityValidator;
 import ontopoly.validators.URIValidator;
-
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.ExternalLink;
@@ -83,7 +82,7 @@ public class FieldInstanceURIField extends Panel {
       protected void onModelChanged() {
         super.onModelChanged();
         String newValue = getModelObject();
-        if (ObjectUtils.equals(newValue, oldValue)) return;
+        if (Objects.equals(newValue, oldValue)) return;
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
         FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
         if (fieldValueModel.isExistingValue() && oldValue != null)

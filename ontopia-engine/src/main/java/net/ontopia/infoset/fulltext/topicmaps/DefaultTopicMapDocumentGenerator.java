@@ -20,6 +20,7 @@
 
 package net.ontopia.infoset.fulltext.topicmaps;
 
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.GenericField;
@@ -32,7 +33,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: The default topic map document generator that generates
@@ -104,7 +104,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     DocumentIF doc = createDocument();
     // Add fields
     addObjectFields(doc, occur, "O");
-    if (ObjectUtils.equals(occur.getDataType(), DataTypes.TYPE_URI))
+    if (Objects.equals(occur.getDataType(), DataTypes.TYPE_URI))
 			addLocatorField(doc, occur.getLocator());
 		else
 			addContentField(doc, occur.getValue());
@@ -116,7 +116,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     DocumentIF doc = createDocument();
     // Add fields
     addObjectFields(doc, variant, "N");
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI))
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI))
 			addLocatorField(doc, variant.getLocator());
 		else
     addContentField(doc, variant.getValue());

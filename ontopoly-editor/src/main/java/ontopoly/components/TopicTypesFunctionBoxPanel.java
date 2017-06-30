@@ -23,8 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
@@ -33,7 +32,6 @@ import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
-
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -60,7 +58,7 @@ public class TopicTypesFunctionBoxPanel extends Panel {
     Iterator<TopicType> iter =  types.iterator();
     while (iter.hasNext()) {
       TopicType topicType = iter.next();      
-      boolean isCurrentTopicType = ObjectUtils.equals(currentTopicType, topicType);
+      boolean isCurrentTopicType = Objects.equals(currentTopicType, topicType);
       
       WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId());
       rv.add(parent);

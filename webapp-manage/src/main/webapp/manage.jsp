@@ -8,11 +8,8 @@
     net.ontopia.topicmaps.core.*,
     net.ontopia.topicmaps.nav2.core.*,
     net.ontopia.topicmaps.nav2.utils.*,
-    net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator,
-    net.ontopia.infoset.fulltext.core.*,
-    net.ontopia.infoset.fulltext.impl.lucene.*,
-    net.ontopia.infoset.fulltext.topicmaps.*" 
-%>
+    net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator
+"%>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'     %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
@@ -141,55 +138,6 @@ if (action != null) {
         synchronized (ref) {
           if (ref.isOpen()) ref.close();
             ref.open();
-        }
-
-        // === Reindex when fulltext index exists
-        String fullpath = application.getRealPath("/") + "../omnigator/WEB-INF/indexes/" + id;
-        File file = new File(fullpath);
-        if (file.exists()) {
-          // === delete index
-          try {
-            // Delete all the files in the directory.
-            File[] files = file.listFiles();
-            if (files != null) {
-              for (int i = 0; i < files.length; i++) {
-                files[i].delete();
-              }
-            }
-            // Delete the index directory
-            if (!file.delete()) 
-              report += "Could not delete index.<br>";
-            else 
-              report += "Deleted the index for: " + id + ".<br>";
-          } catch (Exception e){
-            report += "Failed to delete index: " + id + ".<br>" +
-              "<span class=error>" + e.getMessage() + "</span>";
-          }
-          
-          // === create new index
-
-          // Create a Lucene indexer
-          IndexerIF lucene_indexer = new LuceneIndexer(fullpath, true);
-          try {
-            // Creates an instance of the default topic map indexer.
-            DefaultTopicMapIndexer imanager = new DefaultTopicMapIndexer(lucene_indexer, false, "");
-            
-            // Indexes the topic map
-            TopicMapIF topicmap = navApp.getTopicMapById(id);
-            try {
-              imanager.index(topicmap);
-              imanager.close();
-            } finally {
-              navApp.returnTopicMap(topicmap);
-            }
-            report += "Indexed " + id + ".<br>";
-          } catch (java.lang.Exception e) {
-            e.printStackTrace();
-            report += "Failed to index: " + id + ".<br>" +
-              "<span class=error>" + e.getMessage() + "</span>";
-          } finally {
-            lucene_indexer.close();
-          }
         }
 
         // === Redirect to another page

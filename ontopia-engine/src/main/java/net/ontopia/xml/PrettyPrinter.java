@@ -20,27 +20,22 @@
 
 package net.ontopia.xml;
 
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.xml.sax.AttributeList;
-import org.xml.sax.DocumentHandler;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
-import org.xml.sax.Parser;
-import org.xml.sax.helpers.ParserFactory;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: SAX document handler that writes pretty-printed XML to a
  * Writer.
  */
-public class PrettyPrinter implements DocumentHandler {
+public class PrettyPrinter implements ContentHandler {
   private static final String NL = System.getProperty("line.separator");
   
   protected Writer writer;
@@ -81,33 +76,6 @@ public class PrettyPrinter implements DocumentHandler {
     makeStartLineBuffer(100);
   }  
 
-  /**
-   * Main method to allow PrettyPrinter to be used from the command-line.
-   */
-  public static void main(String[] args) throws Exception {
-    if (args.length != 2) {
-      System.out.println("Usage: java " + PrettyPrinter.class.getName() + " [inputFilename] [outputFilename]");
-      System.exit(0);
-    }
-    
-    String in_filename = args[0];
-    String out_filename = args[1];
-    
-    // Get instances of our handlers
-    DocumentHandler prettyPrinter = new PrettyPrinter(new FileOutputStream(out_filename), "iso-8859-1");
-    ErrorHandler errorHandler = new OntopiaErrorHandler();
-    
-    InputSource inSource = new InputSource( new FileReader(in_filename) );
-
-    // get parser instance and connect to our handlers
-    Parser parser = ParserFactory.makeParser("com.jclark.xml.sax.Driver");
-    parser.setDocumentHandler( prettyPrinter );
-    parser.setErrorHandler( errorHandler );
-
-    // beautify
-    parser.parse(inSource);
-  }
-  
   // --------------------------------------------------------------------------
   // Document events
   // --------------------------------------------------------------------------
@@ -121,15 +89,15 @@ public class PrettyPrinter implements DocumentHandler {
     level = 0;
   }
 
-  public void startElement(String name, AttributeList atts) {
+  public void startElement(String uri, String localName, String qName, Attributes atts) {
     if (level > 0)
       indent();
     // Write start tag
     write(writer, '<');
-    write(writer, name);
+    write(writer, qName);
     for (int i = 0; i < atts.getLength(); i++) {
       write(writer, ' ');
-      write(writer, atts.getName(i));
+      write(writer, atts.getQName(i));
       write(writer, "=\"");
       escapeAttrValue(atts.getValue(i), writer);
       write(writer, "\"");
@@ -152,12 +120,12 @@ public class PrettyPrinter implements DocumentHandler {
     subelements[level] = false;
   }
 
-  public void endElement(String name) {
+  public void endElement(String uri, String localName, String qName) {
     if (subelements[level--])
       indent();
 
     write(writer, "</");
-    write(writer, name);
+    write(writer, qName);
     write(writer, '>');
   }
 
@@ -333,4 +301,15 @@ public class PrettyPrinter implements DocumentHandler {
     subelements = subs;
   }
   
+  public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    
+  }
+
+  public void endPrefixMapping(String prefix) throws SAXException {
+    
+  }
+
+  public void skippedEntity(String name) throws SAXException {
+    
+  }
 }

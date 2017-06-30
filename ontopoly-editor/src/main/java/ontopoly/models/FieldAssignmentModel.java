@@ -22,15 +22,13 @@ package ontopoly.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
-
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignment> {
@@ -97,7 +95,7 @@ public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignmen
       return false;
     
     FieldAssignmentModel fam = (FieldAssignmentModel)other;
-    return ObjectUtils.equals(getFieldAssignment(), fam.getFieldAssignment());
+    return Objects.equals(getFieldAssignment(), fam.getFieldAssignment());
   }
   @Override
   public int hashCode() {

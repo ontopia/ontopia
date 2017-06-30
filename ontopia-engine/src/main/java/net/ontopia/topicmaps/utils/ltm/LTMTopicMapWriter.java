@@ -20,6 +20,8 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -33,13 +35,12 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -48,18 +49,17 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
+import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.IteratorComparator;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +81,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   protected Map<String, Integer> roleCounter;
   protected Map<String, Boolean> rolesCounted;
   protected Writer out;
+  protected boolean closeWriter = false;
   protected Calendar calendar;
   protected String base;
 
@@ -119,9 +120,30 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
+   * File in UTF-8.
+   * @param file Where the output should be written to.
+   */
+  public LTMTopicMapWriter(File file) throws IOException {
+    this(new FileOutputStream(file), "utf-8");
+  }
+
+  /**
+   * PUBLIC: Create an LTMTopicMapWriter that writes to a given
+   * File in specified encoding.
+   * @param file Where the output should be written to.
+   * @param encoding The desired character encoding.
+   */
+  public LTMTopicMapWriter(File file, String encoding) throws IOException {
+    this(new FileOutputStream(file), encoding);
+    closeWriter = true;
+  }
+
+  /**
+   * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in UTF-8. <b>Warning:</b> Use of this method is
    * discouraged, as it is very easy to get character encoding errors
    * with this method.
+   * Note: Caller is responsible for closing the stream!
    * @param stream Where the output should be written.
    */
   public LTMTopicMapWriter(OutputStream stream) throws IOException {
@@ -131,6 +153,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in the given encoding.
+   * Note: Caller is responsible for closing the stream!
    * @param stream Where the output should be written.
    * @param encoding The desired character encoding.
    */
@@ -141,15 +164,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
-   * @param out Where the output should be written.
-   * @deprecated
-   */
-  public LTMTopicMapWriter(Writer out) {
-    this(out, null);
-  }
-  
-  /**
-   * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
+   * Note: Caller is responsible for closing the writer!
    * @param out Where the output should be written.
    * @param encoding The encoding used by the writer. This is the encoding
    *   that will be declared on the first line of the LTM file. It must be
@@ -403,6 +418,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       writeAssociation(associationsIt.next(), out);
 
     out.flush();
+    
+    if (closeWriter) {
+      out.close();
+    }
   }
 
   /**
@@ -886,7 +905,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private void writeVariant(VariantNameIF variant, Writer out)
       throws IOException {
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
       String value = variant.getValue();
       if (value != null) {
         out.write("(\"");

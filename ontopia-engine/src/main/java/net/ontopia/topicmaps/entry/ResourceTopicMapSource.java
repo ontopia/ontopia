@@ -328,7 +328,7 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
     case RDF: {
       AbstractURLTopicMapReference ref = null;
       for (ImportExportServiceIF service : ImportExportUtils.getServices()) {
-        if (service.canRead(url.toString())) {
+        if (service.canRead(url)) {
           ref = service.createReference(url, refid, title, base_address);
           break;
         }

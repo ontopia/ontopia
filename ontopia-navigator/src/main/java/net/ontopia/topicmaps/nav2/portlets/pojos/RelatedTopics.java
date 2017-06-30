@@ -20,36 +20,31 @@
 
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.List;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Collection;
 import java.util.Collections;
-
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.utils.KeyGenerator;
-
-import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.query.core.ParsedQueryIF;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.impl.basic.QueryProcessor;
+import net.ontopia.topicmaps.query.core.ParsedQueryIF;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * PUBLIC: This component can produce a model representing the
@@ -594,7 +589,7 @@ public class RelatedTopics {
     // NOTE: helper method that compares object in much the same way as 
     if (o1 instanceof String && o2 instanceof String) {
       // sort string case insensitively
-      return ObjectUtils.compareIgnoreCase((String)o1, (String)o2);
+      return StringUtils.compareToIgnoreCase((String)o1, (String)o2);
     } else if (o1 instanceof Comparable && o2 instanceof Comparable) {
       // compare comparable objects
       return ((Comparable)o1).compareTo((Comparable)o2);
@@ -604,7 +599,7 @@ public class RelatedTopics {
       TopicIF t2 = (TopicIF)o2;
       String s1 = sort.toString(t1);
       String s2 = sort.toString(t2);
-      return ObjectUtils.compareIgnoreCase(s1, s2);      
+      return StringUtils.compareToIgnoreCase(s1, s2);      
     }
     //! else if (o1 instanceof TMObjectIF && o2 instanceof TMObjectIF) {
     //!   // compare tmobjects

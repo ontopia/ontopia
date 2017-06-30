@@ -20,10 +20,11 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
-import net.ontopia.topicmaps.core.TopicMapIF;
+import java.net.URL;
 import java.util.List;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -35,7 +36,8 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
   
   private final static String testdataDirectory = "tmxml";
 
-  public CanonicalTMXMLReaderTestCase(String root, String filename) {
+  public CanonicalTMXMLReaderTestCase(URL inputFile, String filename) {
+    this.inputFile = inputFile;
     this.filename = filename;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
@@ -43,7 +45,7 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xml");
+    return TestFileUtils.getFilteredTestInputURLs(".xml", testdataDirectory, "in");
   }
 
   // --- Canonicalization type methods
@@ -57,17 +59,15 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
     return filename.endsWith(".xml");
   }
 
-  protected void canonicalize(String infile, String outfile)
+  protected void canonicalize(URL infile, File outfile)
     throws IOException {
     TMXMLReader reader = new TMXMLReader(infile);
     reader.setValidate(true); // we do want to validate
     TopicMapIF source = reader.read();
 
-    FileOutputStream fos = new FileOutputStream(outfile);
-    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(fos);
+    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(outfile);
     cwriter.write(source);
 
-    fos.close();
     source.getStore().close();
   }  
 }

@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Map;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
-import net.ontopia.utils.NullObject;
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.collections4.map.ReferenceMap;
@@ -32,56 +31,63 @@ import org.apache.commons.collections4.map.ReferenceMap;
 /**
  * INTERNAL: Non-shared locator lookup index.
  */
-public class QueryLookup implements TransactionalLookupIndexIF {
+public class QueryLookup<V> implements TransactionalLookupIndexIF<ParameterArray, V> {
   protected String qname;
   protected TransactionIF txn;
 
-  protected Map cache;
-  protected Map lru;
+  protected Map<ParameterArray, V> cache;
+  protected Map<Object, Object> lru;
+  private final V NULLOBJECT;
 
-  public QueryLookup(String qname, TransactionIF txn, int lrusize) {
+  public QueryLookup(String qname, TransactionIF txn, int lrusize, V nullObject) {
     this.qname = qname;
     this.txn = txn;
     this.cache = new ReferenceMap(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
     this.lru = new LRUMap(lrusize);
+	NULLOBJECT = nullObject;
   }
 
   // ISSUE: soft reference string keys or identity values?
   
-  public Object get(Object key) {
+  @Override
+  public V get(ParameterArray params) {
     // check cache
-    ParameterArray params = (ParameterArray)key;
-    Object retval = cache.get(params);
+    V retval = cache.get(params);
     if (retval == null) {
       // cache miss
-      retval = txn.executeQuery(qname, params.getArray());
+      retval = (V) txn.executeQuery(qname, params.getArray());
       // update cache and lru
-      cache.put(params, (retval == null ? NullObject.INSTANCE : retval));
-      lru.put(params, (retval == null ? NullObject.INSTANCE : retval));
+      cache.put(params, (retval == null ? NULLOBJECT : retval));
+      lru.put(params, (retval == null ? NULLOBJECT : retval));
       return retval;      
     } else {
       // cache hit
       lru.put(params, retval);
-      return (retval == NullObject.INSTANCE ? null : retval);
+      return (retval == NULLOBJECT ? null : retval);
     }
   }
 
-  public Object put(Object key, Object value) {
+  @Override
+  public V put(ParameterArray key, V value) {
     throw new UnsupportedOperationException();
   }
 
-  public Object remove(Object key) {
+  @Override
+  public V remove(ParameterArray key) {
     throw new UnsupportedOperationException();
   }
 
-  public void removeAll(Collection keys) {
+  @Override
+  public void removeAll(Collection<ParameterArray> keys) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void commit() {    
     // no-op
   }
 
+  @Override
   public void abort() {
     // no-op
   }

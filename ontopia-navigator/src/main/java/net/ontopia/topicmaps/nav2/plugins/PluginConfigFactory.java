@@ -20,20 +20,19 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.SAXException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL.
@@ -52,8 +51,7 @@ public class PluginConfigFactory {
                                             String pluginPath,
                                             String pluginsRootURI) {
     try {
-      ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-      XMLReader parser = cxrfactory.createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setFeature("http://xml.org/sax/features/namespaces", false);
       PluginContentHandler handler =
         new PluginContentHandler(pluginsRootURI);

@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ALiteral;
-import com.hp.hpl.jena.rdf.arp.AResource;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -35,12 +35,15 @@ import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.shared.JenaException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.MergeUtils;
@@ -59,6 +62,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.utils.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,7 +110,7 @@ public class RDFToTopicMapConverter {
    *        correctly mapped (for example, a statement type is mapped to a
    *        topic name, but has a URI value).
    */
-  public static void convert(String infileurl, String syntax,
+  public static void convert(URL infileurl, String syntax,
                              String mappingurl, String mappingsyntax,
                              TopicMapIF topicmap, boolean lenient)
     throws JenaException, IOException {
@@ -217,7 +221,7 @@ public class RDFToTopicMapConverter {
     this.lenient = lenient;
   }
 
-  private void doConversion(String url, String syntax)
+  private void doConversion(URL url, String syntax)
     throws JenaException, IOException {
 
     if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
@@ -225,8 +229,7 @@ public class RDFToTopicMapConverter {
 
     else {
       Model model = ModelFactory.createDefaultModel();
-      model.read(url, syntax);
-
+      model.read(url.openStream(), url.toString(), syntax);
       if (mappings == null)
         buildMappings(model);
 

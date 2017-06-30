@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0">
+	
+	<display-name>Ontopia Rest web application</display-name>
+	<description>Ontopia Rest web application</description>
+
+	<!--
+		Specify the topicmap source configuration to use, defaults to 
+		'classpath:tm-sources.xml'
+	-->
+	<!--
+	<context-param>
+		<param-name>source_config</param-name>
+		<param-value>classpath:foo/bar/tm-sources.xml</param-value>
+	</context-param>
+	-->
+
+	<servlet>
+		<servlet-name>OntopiaREST</servlet-name>
+		<servlet-class>net.ontopia.topicmaps.rest.OntopiaServlet</servlet-class>
+		
+		<!-- 
+			Change the application that is loaded by the servlet. Allows you to create a subclass of the 
+			OntopiaRestApplication.
+			Defaults to net.ontopia.topicmaps.rest.OntopiaRestApplication
+		-->
+		<!-- 
+		<init-param>
+			<param-name>org.restlet.application</param-name>
+			<param-value>my.own.SubOntopiaRestApplication</param-value>
+		</init-param>
+		-->
+		
+		<!-- 
+			Change the logging facade used by Restlet. Set to 'false' to fallback to JUL.
+			Defaults to org.restlet.ext.slf4j.Slf4jLoggerFacade
+		-->
+		<!-- 
+		<init-param>
+			<param-name>org.restlet.engine.log.LoggerFacade</param-name>
+			<param-value>my.own.RestletLoggerFacade</param-value>
+		</init-param>
+		-->
+		
+		<!-- 
+			Change the logger name used by the LogService.
+			Defaults to net.ontopia.topicmaps.rest.logger
+		-->
+		<!-- 
+		<init-param>
+			<param-name>org.restlet.service.LogService.logger</param-name>
+			<param-value>my.own.logger.Name</param-value>
+		</init-param>
+		-->
+		
+		<!-- 
+			Change the logger format used by the LogService.
+			Defaults to "{p} {m} {rp} {rq} {emt} {S}"
+		-->
+		<!-- 
+		<init-param>
+			<param-name>org.restlet.service.LogService.format</param-name>
+			<param-value>{m} {rp} {rq}</param-value>
+		</init-param>
+		-->
+	</servlet>
+	
+	<!--
+		Specify the url pattern of requests that are passed to the 
+		OntopiaRestApplication services
+	-->
+	<servlet-mapping>
+		<servlet-name>OntopiaREST</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>

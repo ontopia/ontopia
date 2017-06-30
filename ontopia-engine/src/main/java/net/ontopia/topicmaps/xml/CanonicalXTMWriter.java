@@ -20,24 +20,24 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import org.xml.sax.AttributeList;
-import org.xml.sax.helpers.AttributeListImpl;
-import net.ontopia.xml.CanonicalPrinter;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -55,10 +55,12 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.utils.IteratorComparator;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.IteratorComparator;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.CanonicalPrinter;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * PUBLIC: A topic map writer that writes topic maps out to the format
@@ -71,7 +73,7 @@ import net.ontopia.utils.CompactHashSet;
  */
 public class CanonicalXTMWriter implements TopicMapWriterIF {
   private CanonicalPrinter out;
-  private AttributeListImpl EMPTY;
+  private AttributesImpl EMPTY;
   private Map tmIndex; // Maps TMObjectIFs to corresponding index within parent
   private Map extraRoles; // TopicIF -> List<AssocRoleIFs for type-instance>
   private String base;
@@ -102,9 +104,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   
   private static final char[] LINEBREAK = { (char) 0x0A };
 
-  public CanonicalXTMWriter(OutputStream out)
-    throws UnsupportedEncodingException {
-    this.out = new CanonicalPrinter(out);
+  public CanonicalXTMWriter(File file) throws IOException {
+    this.out = new CanonicalPrinter(new FileOutputStream(file), true);
+    init();
+  }
+
+  public CanonicalXTMWriter(OutputStream out) {
+    this.out = new CanonicalPrinter(out, false);
     init();
   }
 
@@ -116,12 +122,12 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
    * method is <b>not</b> recommended.
    */
   public CanonicalXTMWriter(Writer out) {
-    this.out = new CanonicalPrinter(out);
+    this.out = new CanonicalPrinter(out, false);
     init();
   }
 
   private void init() {
-    this.EMPTY = new AttributeListImpl();
+    this.EMPTY = new AttributesImpl();
     this.startNewlineElem = new CompactHashSet(12);
     this.extraRoles = new HashMap();
     startNewlineElem.add("topicMap");
@@ -202,8 +208,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   private void write(TopicIF topic) {
-    AttributeListImpl attributes = new AttributeListImpl();
-    attributes.addAttribute("number", null, "" + tmIndex.get(topic));
+    AttributesImpl attributes = new AttributesImpl();
+    attributes.addAttribute("", "", "number", null, "" + tmIndex.get(topic));
     
     startElement("topic", attributes);
     attributes.clear();
@@ -230,12 +236,12 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     for (int ix = 0; ix < roles.length; ix++) {
       AssociationRoleIF currentRole = (AssociationRoleIF)roles[ix];
       AssociationIF currentAssociation = currentRole.getAssociation();
-      AttributeListImpl roleAttributes = new AttributeListImpl();
+      AttributesImpl roleAttributes = new AttributesImpl();
       String refValue = "association." 
               + tmIndex.get(currentAssociation)
               + ".role."
               + tmIndex.get(currentRole);
-      roleAttributes.addAttribute("ref", null, refValue);
+      roleAttributes.addAttribute("", "", "ref", null, refValue);
       startElement("rolePlayed", roleAttributes);
       endElement("rolePlayed");
     }
@@ -244,8 +250,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   private void write(TopicNameIF basename, int number) {
-    AttributeListImpl attributes = reifier(basename);
-    attributes.addAttribute("number", null, "" + number);
+    AttributesImpl attributes = reifier(basename);
+    attributes.addAttribute("", "", "number", null, "" + number);
     
     startElement("name", attributes);
     attributes.clear();
@@ -264,13 +270,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
   
   private void write(VariantNameIF variant, int number) {
-    AttributeListImpl attributes = reifier(variant);
-    attributes.addAttribute("number", null, "" + number);
+    AttributesImpl attributes = reifier(variant);
+    attributes.addAttribute("", "", "number", null, "" + number);
     
     startElement("variant", attributes);
     attributes.clear();
 
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
       LocatorIF locator = variant.getLocator();
       if (locator != null)
         write(normaliseLocatorReference(locator.getAddress()));
@@ -295,8 +301,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
   
   private void write(OccurrenceIF occurrence, int number) {
-    AttributeListImpl attributes = reifier(occurrence);
-    attributes.addAttribute("number", null, "" + number);
+    AttributesImpl attributes = reifier(occurrence);
+    attributes.addAttribute("", "", "number", null, "" + number);
     
     startElement("occurrence", attributes);
     attributes.clear();
@@ -311,8 +317,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   private void write(AssociationIF association, int number) {
-    AttributeListImpl attributes = reifier(association);
-    attributes.addAttribute("number", null, "" + number);
+    AttributesImpl attributes = reifier(association);
+    attributes.addAttribute("", "", "number", null, "" + number);
     
     startElement("association", attributes);
     attributes.clear();
@@ -330,8 +336,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   private void write(AssociationRoleIF role, int number) {
-    AttributeListImpl attributes = reifier(role);
-    attributes.addAttribute("number", null, "" + number);
+    AttributesImpl attributes = reifier(role);
+    attributes.addAttribute("", "", "number", null, "" + number);
     
     startElement("role", attributes);
     attributes.clear();
@@ -409,14 +415,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   // --- XML handling
    
-  private void startElement(String element, AttributeList atts) {
-    out.startElement(element, atts);
+  private void startElement(String element, Attributes atts) {
+    out.startElement("", "", element, atts);
     if (startNewlineElem.contains(element))
       writeln();
   }
 
   private void endElement(String element) {
-    out.endElement(element);
+    out.endElement("", "", element);
     writeln();
   }
 
@@ -426,13 +432,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   
   // --- Helpers
 
-  private AttributeListImpl reifier(ReifiableIF reified) {
+  private AttributesImpl reifier(ReifiableIF reified) {
     TopicIF reifier = reified.getReifier();
     if (reifier == null)
       return EMPTY;
 
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("reifier", null,
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "reifier", null,
         String.valueOf(tmIndex.get(reifier)));
     return atts;
   }
@@ -440,9 +446,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   /**
    * @return an attribute list with a reference to a given topic.
    */
-  private AttributeList topicRef(TopicIF topic) {
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("topicref", null, "" + tmIndex.get(topic));
+  private Attributes topicRef(TopicIF topic) {
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "topicref", null, "" + tmIndex.get(topic));
     return atts;
   }
 
@@ -754,7 +760,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
 
     protected int compareString(String s1, String s2) {
-      if (s1 == s2) return 0;
+      if ((s1 == null) && (s2 == null)) return 0;
 
       if (s1 == null) return -1;
       if (s2 == null) return 1;

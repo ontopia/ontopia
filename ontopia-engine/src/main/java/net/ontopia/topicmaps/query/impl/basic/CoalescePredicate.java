@@ -20,10 +20,10 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
+import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 
 /**
  * INTERNAL: Implements the 'coalesce' predicate.
@@ -63,7 +63,7 @@ public class CoalescePredicate implements BasicPredicateIF {
         Object coalescedValue = matches.data[ix][colindexes[i]];
         if (coalescedValue != null) {
           // if bound then compare and filter
-          if (isBound && ObjectUtils.different(matches.data[ix][colindexes[0]], coalescedValue))
+          if (isBound && !Objects.equals(matches.data[ix][colindexes[0]], coalescedValue))
             break;
         
           Object[] newRow = (Object[]) matches.data[ix].clone();

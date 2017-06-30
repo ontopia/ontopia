@@ -24,18 +24,15 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
-
-import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
@@ -48,7 +45,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicTreeNode;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * EXPERIMENTAL: This class can output a nice collapsing/expanding
@@ -451,7 +447,7 @@ public class DynamicTreeWidget {
         for (int i=0; i < cl.size(); i=i+2) {
           TopicTreeNode c = (TopicTreeNode)cl.get(i);
           TopicTreeNode p = (TopicTreeNode)cl.get(i+1);
-          if (ObjectUtils.equals(p.getTopic(), parent)) {
+          if (Objects.equals(p.getTopic(), parent)) {
             cn = c;
             pmap.put(parent, p);
             break;

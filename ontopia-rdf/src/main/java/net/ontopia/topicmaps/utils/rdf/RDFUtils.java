@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ARP;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
-import java.net.URL;
-import java.net.URLConnection;
+import com.hp.hpl.jena.rdfxml.xmlinput.ARP;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -37,20 +37,20 @@ public class RDFUtils {
   /**
    * Parses the RDF/XML at the given URL into the given StatementHandler.
    */
-  public static void parseRDFXML(String url, StatementHandler handler)
+  public static void parseRDFXML(URL url, StatementHandler handler)
     throws IOException {
     ARP parser = new ARP();
     parser.getHandlers().setStatementHandler(handler);
 
-    URLConnection conn = new URL(url).openConnection();
+    URLConnection conn = url.openConnection();
     String encoding = conn.getContentEncoding();
     InputStream in = null;
     try {
       in = conn.getInputStream();
       if (encoding == null)
-        parser.load(in, url);
+        parser.load(in, url.toString());
       else
-        parser.load(new InputStreamReader(in, encoding), url);
+        parser.load(new InputStreamReader(in, encoding), url.toString());
       in.close();
     } catch (org.xml.sax.SAXException e) {
       throw new OntopiaRuntimeException(e);

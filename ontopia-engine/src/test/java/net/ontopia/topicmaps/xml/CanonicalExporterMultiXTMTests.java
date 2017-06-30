@@ -22,59 +22,50 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
-import net.ontopia.utils.URIUtils;
 
-public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTests {
+public class CanonicalExporterMultiXTMTests {
   
   private final static String testdataDirectory = "canonical";
+  private final String filename;
+  private final URL inputFile;
+  private final File outputDirectory;
 
-  public CanonicalExporterMultiXTMTests(String root, String filename) {
+  public CanonicalExporterMultiXTMTests(URL inputFile, String filename) {
     this.filename = filename;
-    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    this._testdataDirectory = testdataDirectory;
+    this.inputFile = inputFile;
+    this.outputDirectory = TestFileUtils.getOutputDirectory(testdataDirectory, "out");
   }
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm.multi");
+    return TestFileUtils.getFilteredTestInputURLs(".xtm.multi", testdataDirectory, "in");
   }
 
   protected String getTestdataDirectory() {
     return testdataDirectory;
   }
 
-  // --- Canonicalization type methods
-
-  // canonicalize NOT USED!
-  
-  protected TopicMapIF exportAndReread(TopicMapIF topicmap, String outfile) {
-    return null; // not needed, because we don't use canonicalize
-  }
-
   // --- Test case class
 
     public void testExport() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
-      
-      // setup canonicalization filenames
-      String outpath = base + File.separator + "out" + File.separator;
       
       // Get store factory
-      TopicMapStoreFactoryIF sfactory = getStoreFactory();
+      TopicMapStoreFactoryIF sfactory = new InMemoryStoreFactory();
       
       // Read all topic maps from document
-      String infile = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+      XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(false);
       reader.setStoreFactory(sfactory);
       
@@ -86,23 +77,23 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
         TopicMapIF tm = (TopicMapIF)iter.next();
         counter++;
 
-        String tempfile = outpath + "tmp-" + filename + "-" + counter;
+        File tempfile = new File(outputDirectory, "tmp-" + filename + "-" + counter);
         
         XTMTopicMapWriter writer = new XTMTopicMapWriter(tempfile);
-        writer.setVersion(1);
+        writer.setVersion(XTMVersion.XTM_1_0);
         writer.write(tm);
         tm.getStore().close();
         
         // Read exported document (Note: guaranteed to be only one
         // topic map per document)        
         TopicMapIF source2 = sfactory.createStore().getTopicMap();
-        new XTMTopicMapReader(new File(tempfile)).importInto(source2);
+        new XTMTopicMapReader(tempfile).importInto(source2);
         
         // Canonicalize the result
-        String outfile = outpath + "exp-" + filename + "-" + counter;
+        File outfile = new File(outputDirectory, "exp-" + filename + "-" + counter);
 
         CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
-        cwriter.setBaseLocator(new URILocator(file2URL(tempfile)));
+        cwriter.setBaseLocator(new URILocator(tempfile));
         cwriter.write(source2);
 
         source2.getStore().close();

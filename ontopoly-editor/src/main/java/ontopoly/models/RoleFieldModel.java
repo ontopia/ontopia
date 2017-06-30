@@ -24,13 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
 import ontopoly.model.RoleField;
 import ontopoly.model.TopicMap;
-
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
@@ -79,8 +77,8 @@ public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof RoleFieldModel)
-      return ObjectUtils.equals(topicMapId, ((RoleFieldModel)obj).topicMapId) &&
-        ObjectUtils.equals(fieldId, ((RoleFieldModel)obj).fieldId);
+      return Objects.equals(topicMapId, ((RoleFieldModel)obj).topicMapId) &&
+        Objects.equals(fieldId, ((RoleFieldModel)obj).fieldId);
     else
       return false;
   }

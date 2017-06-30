@@ -23,10 +23,9 @@ package net.ontopia.topicmaps.nav2.taglibs.tolog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-
+import javax.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
@@ -34,6 +33,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
+import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,9 +113,10 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
         else {
           if (topicmap == null)
             throw new JspTagException("<tolog:set> found no topic map");
+          DeclarationContextIF declarationContext = contextTag.getDeclarationContext();
           for (int i= 0; i < ids.length; i++) {
             TMObjectIF tempOutValue =
-                    NavigatorUtils.stringID2Object(topicmap, ids[i]);
+                    NavigatorUtils.stringID2Object(topicmap, ids[i], declarationContext);
             if (tempOutValue != null)
               outValue.add(tempOutValue);
           }

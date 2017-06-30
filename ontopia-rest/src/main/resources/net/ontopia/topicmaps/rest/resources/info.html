@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ontopia API info</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+		<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->		
+		<style>
+			ul.list-indented ul.list-indented {
+			}
+			
+			ul.list-indented span.glyphicon {
+				margin-right: .5em;
+			}
+			
+			code.code-class {
+				color: brown;
+				float: right;
+				clear: right;
+			}
+
+			code.code-path {
+				color: darkblue;
+			}
+			
+			ul.list-indented, ul.list-indented ul.list-indented {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAKAQMAAABPHKYJAAAAA1BMVEWIiIhYZW6zAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH1ggGExMZBky19AAAAAtJREFUCNdjYMAEAAAUAAHlhrBKAAAAAElFTkSuQmCC);
+				background-repeat: repeat-y;
+			}
+
+			ul.list-indented li {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAUAQMAAACK1e4oAAAABlBMVEUAAwCIiIgd2JB2AAAAAXRSTlMAQObYZgAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YIBhQIJYVaFGwAAAARSURBVAjXY2hgQIf/GTDFGgDSkwqATqpCHAAAAABJRU5ErkJggg==);
+				background-repeat: no-repeat;
+				padding-left: 1em;
+			}
+
+			ul.list-indented li:last-child {
+				background-color: #fff;
+				background-repeat: no-repeat;
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAUAQMAAACK1e4oAAAABlBMVEUAAwCIiIgd2JB2AAAAAXRSTlMAQObYZgAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YIBhQIIhs+gc8AAAAQSURBVAjXY2hgQIf/GbAAAKCTBYBUjWvCAAAAAElFTkSuQmCC);
+			}
+			li { clear: both; }
+			
+			
+		</style>
+		
+	</head>
+	<body>
+		<div class="container">
+			<h1>Ontopia API info</h1>
+
+			<ul class="list-unstyled list-indented">
+			#route($root)
+			</ul>
+			
+		</div>
+	</body>
+</html>
+
+#macro (route $restlet)
+	#if ($util.isRouter($restlet))
+		#node("router", "random", $restlet)
+		<ul class="list-unstyled list-indented">
+		#foreach($r in $restlet.Routes)
+			#route($r.Next)
+		#end
+		</ul>
+	</li>
+	#elseif ($util.isFinder($restlet))
+		## finder has no usable name
+		<li class="finder">
+			<span class="glyphicon glyphicon-file"></span>
+			<code class="code-path">$routes.get($restlet)</code> <code class="code-class">$cutil.collapsedName($restlet.TargetClass)</code>
+		</li>
+	#elseif ($util.isFilter($restlet))
+		#if ($restlet.SupportedEncodings)
+			#node("filter", "compressed", $restlet)
+		#else
+			#node("filter", "transfer", $restlet)
+		#end
+			<ul class="list-unstyled list-indented">
+				#route($restlet.Next)
+			</ul>
+		</li>
+	#end
+#end
+
+#macro (node $cl $icon $restlet)
+<li class="$cl">
+	<span class="glyphicon glyphicon-$icon"></span>
+	#if (!$restlet.Name.contains("@"))
+		<span>$restlet.Name</span>
+	#end
+	##if ($restlet.Description)
+	##	<p>$restlet.Description</p>
+	##end
+	<code class="code-class">$cutil.collapsedName($restlet.Class)</code>
+#end

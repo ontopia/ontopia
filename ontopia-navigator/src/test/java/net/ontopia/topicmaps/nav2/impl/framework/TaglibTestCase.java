@@ -45,7 +45,7 @@ import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.JSPPageExecuter;
 import net.ontopia.utils.ontojsp.JSPPageReader;
 import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +88,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     InputStream in = StreamUtils.getInputStream(
             TestFileUtils.getTestInputFile(testdataDirectory, "config", "tests.xml"));
 
-    XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
     TestCaseContentHandler handler = new TestCaseContentHandler();
     handler.register(parser);
     parser.parse(new InputSource(in));
@@ -144,8 +144,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     try {
       // setup environment and execute single test case
       PageContext page = makePageContext();
-      String jspSource = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", jspfile);
-      JSPPageReader reader = new JSPPageReader(jspSource);
+      JSPPageReader reader = new JSPPageReader(TestFileUtils.getTestInputURL(testdataDirectory, "jsp", jspfile));
       JSPTreeNodeIF root = reader.read(useTagPooling);
       JSPPageExecuter exec = new JSPPageExecuter();
       log.info("Run testcase for " + generateTestCaseDescriptor());

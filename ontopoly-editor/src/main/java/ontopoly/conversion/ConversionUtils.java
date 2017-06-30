@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -53,10 +53,8 @@ import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import ontopoly.OntopolyApplication;
 import ontopoly.OntopolyContext;
 import ontopoly.model.PSI;
@@ -132,7 +130,7 @@ public class ConversionUtils {
       TopicMapIF tm = store.getTopicMap();
       Collection<LocatorIF> reifier_subinds = new HashSet<LocatorIF>();
       
-      LocatorIF versionTopicPSI = URIUtils.getURILocator("http://psi.ontopia.net/ontology/ted-ontology-version");
+      LocatorIF versionTopicPSI = URILocator.create("http://psi.ontopia.net/ontology/ted-ontology-version");
       if (newtopicmap) {
         // get hold of old reifier
         TopicIF oreifier = oldstore.getTopicMap().getReifier();
@@ -190,7 +188,7 @@ public class ConversionUtils {
         }
           
       } else {
-        if (oreifier != null && ObjectUtils.different(oreifier, nreifier))
+        if (oreifier != null && !Objects.equals(oreifier, nreifier))
           MergeUtils.mergeInto(nreifier, oreifier);
       }
       // make topic map reifier and instance of on:topic-map

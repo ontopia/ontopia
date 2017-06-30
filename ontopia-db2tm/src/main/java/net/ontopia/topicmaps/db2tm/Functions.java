@@ -20,10 +20,10 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
-import net.ontopia.utils.ObjectUtils;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +80,7 @@ public class Functions {
    * third argument is returned, if not the fourth one is.
    */
   public static String ifEqualThenElse(String str1, String str2, String thenval, String elseval) {
-    return (ObjectUtils.equals(str1, str2) ? thenval : elseval);
+    return (Objects.equals(str1, str2) ? thenval : elseval);
   }
 
   /**
@@ -96,7 +96,7 @@ public class Functions {
    * different. If they are equal null is returned.
    */
   public static String useFirstIfDifferent(String str1, String str2) {
-    return (ObjectUtils.equals(str1, str2) ? null : str1);
+    return (Objects.equals(str1, str2) ? null : str1);
   }
   
   /**
@@ -104,7 +104,7 @@ public class Functions {
    * equal. If they are different null is returned.
    */
   public static String useFirstIfEqual(String str1, String str2) {
-    return (ObjectUtils.equals(str1, str2) ? str1 : null);
+    return (Objects.equals(str1, str2) ? str1 : null);
   }
 
   /**

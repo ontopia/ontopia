@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -48,7 +49,6 @@ import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +67,7 @@ public class Processor {
   public static int DEFAULT_COMMIT_MODE = NEVER_COMMIT_MODE;
 
   private static final LocatorIF LOC_SYNCHRONIZATION_STATE =
-    URIUtils.getURILocator("http://psi.ontopia.net/db2tm/synchronization-state");
+    URILocator.create("http://psi.ontopia.net/db2tm/synchronization-state");
     
   private Processor() {
   }
@@ -462,7 +462,7 @@ public class Processor {
       for (int i=0; i < rlen; i++) {
         AssociationRoleIF or = extractRoleOfType(oroles, rtypes[i]);
         if (or != null) {
-          if (ObjectUtils.different(or.getPlayer(), players[i]))
+          if (!Objects.equals(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
           log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
@@ -491,10 +491,7 @@ public class Processor {
 
     // if reifier, handle reification
     if (reifier != null) {
-      // FIXME: might want to use existing source locator or db2tm-specific uri (db2tm:name:relation:#oid)
-      LocatorIF srcloc = ctx.getBaseLocator().resolveAbsolute("#" + assoc.getObjectId());
-      assoc.addItemIdentifier(srcloc);
-      reifier.addSubjectIdentifier(srcloc);
+      assoc.setReifier(reifier);
     }
     return assoc;
   }
@@ -906,7 +903,7 @@ public class Processor {
         TopicNameIF _bn = ba[i];
         // check type
         TopicIF _type = _bn.getType();
-        if (ObjectUtils.different(_type, type))
+        if (!Objects.equals(_type, type))
           continue;
         // check scope
         if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx))
@@ -942,9 +939,9 @@ public class Processor {
     while (iter.hasNext()) {
       TopicNameIF _bn = iter.next();
       // check value
-      if (ObjectUtils.different(_bn.getValue(), value)) continue;
+      if (!Objects.equals(_bn.getValue(), value)) continue;
       // check type
-      if (ObjectUtils.different(_bn.getType(), type)) continue;
+      if (!Objects.equals(_bn.getType(), type)) continue;
       // check scope
       if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) continue;
 
@@ -1012,7 +1009,7 @@ public class Processor {
       for (int i=0; i < oa.length; i++) {
         OccurrenceIF _occ = oa[i];
         // check type
-        if (ObjectUtils.different(_occ.getType(), type)) continue;
+        if (!Objects.equals(_occ.getType(), type)) continue;
 
 				// FIXME: compare datatype?
 
@@ -1039,12 +1036,12 @@ public class Processor {
     while (iter.hasNext()) {
       OccurrenceIF _occ = iter.next();
       // check value or locator
-			if (ObjectUtils.different(_occ.getValue(), value)) continue;
+			if (!Objects.equals(_occ.getValue(), value)) continue;
 
 			// FIXME: compare datatype?
 
       // check type
-      if (ObjectUtils.different(_occ.getType(), type)) continue;
+      if (!Objects.equals(_occ.getType(), type)) continue;
       // check scope
       if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) continue;
 
@@ -1135,7 +1132,7 @@ public class Processor {
       for (int i=0; i < rlen; i++) {
         AssociationRoleIF or = extractRoleOfType(oroles, rtypes[i]);
         if (or != null) {
-          if (ObjectUtils.different(or.getPlayer(), players[i]))
+          if (!Objects.equals(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
           log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
@@ -1161,7 +1158,7 @@ public class Processor {
     int length = roles.size();
     for (int i=0; i < length; i++) {
       AssociationRoleIF r = roles.get(i);
-      if (ObjectUtils.equals(rtype, r.getType())) {
+      if (Objects.equals(rtype, r.getType())) {
         roles.remove(i);
         return r;
       }
@@ -1189,10 +1186,10 @@ public class Processor {
       for (int i=0; i < ra.length; i++) {
         AssociationRoleIF role = ra[i];
         // check role type
-        if (ObjectUtils.different(role.getType(), rtype_p)) continue;
+        if (!Objects.equals(role.getType(), rtype_p)) continue;
         // check association type
         AssociationIF assoc = role.getAssociation();
-        if (ObjectUtils.different(assoc.getType(), atype)) continue;
+        if (!Objects.equals(assoc.getType(), atype)) continue;
         // check scope
         if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
         // check association cardinality
@@ -1208,7 +1205,7 @@ public class Processor {
             if (rtype_o == null)
               throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
             // check role type
-            if (ObjectUtils.different(rtype, rtype_o))
+            if (!Objects.equals(rtype, rtype_o))
               continue;
             // role field matched
             matching_rfield = rfield;
@@ -1237,10 +1234,10 @@ public class Processor {
     outer:
     for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
-      if (ObjectUtils.different(role.getType(), rtype_p)) continue;
+      if (!Objects.equals(role.getType(), rtype_p)) continue;
       // check association type
       AssociationIF assoc = role.getAssociation();
-      if (ObjectUtils.different(assoc.getType(), atype)) continue;
+      if (!Objects.equals(assoc.getType(), atype)) continue;
       // check scope
       if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
       // check association cardinality
@@ -1257,8 +1254,8 @@ public class Processor {
           if (rtype_o == null)
             throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
           // check role type and player
-          if (ObjectUtils.different(rtype, rtype_o) ||
-              ObjectUtils.different(player, Utils.getTopic(rfield.getPlayer(), ctx)))
+          if (!Objects.equals(rtype, rtype_o) ||
+              !Objects.equals(player, Utils.getTopic(rfield.getPlayer(), ctx)))
             continue;
           // role field matched
           matching_rfield = rfield;
@@ -1303,10 +1300,10 @@ public class Processor {
     outer:
     for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
-      if (ObjectUtils.different(role.getType(), rtype_p)) continue;
+      if (!Objects.equals(role.getType(), rtype_p)) continue;
       // check association type
       AssociationIF assoc = role.getAssociation();
-      if (ObjectUtils.different(assoc.getType(), atype)) continue;
+      if (!Objects.equals(assoc.getType(), atype)) continue;
       // check association cardinality
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != rfields.size()) continue;
@@ -1323,8 +1320,8 @@ public class Processor {
           if (rtype_o == null)
             throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
           // check role type and player
-          if (ObjectUtils.different(rtype, rtype_o) ||
-              ObjectUtils.different(player, Utils.getTopic(rfield.getPlayer(), ctx)))
+          if (!Objects.equals(rtype, rtype_o) ||
+              !Objects.equals(player, Utils.getTopic(rfield.getPlayer(), ctx)))
             continue;
           // role field matched
           matching_rfield = rfield;

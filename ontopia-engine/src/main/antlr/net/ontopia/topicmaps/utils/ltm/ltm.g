@@ -5,6 +5,9 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import java.io.Reader;
   import java.io.IOException;
   import java.net.MalformedURLException;
+  import java.net.URI;
+  import java.net.URISyntaxException;
+  import java.net.URL;
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.Collections;
@@ -12,6 +15,7 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import java.util.HashSet;
   import java.util.List;
   import java.util.Map;
+  import java.util.Objects;
   import java.util.Set;
   import java.util.Iterator;
   import net.ontopia.infoset.core.LocatorIF;
@@ -32,8 +36,6 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import net.ontopia.topicmaps.utils.PSI;
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
-  import net.ontopia.utils.ObjectUtils;
-  import org.xml.sax.InputSource;
   import antlr.TokenStreamException;
   import antlr.SemanticException;
 }
@@ -244,7 +246,7 @@ options {
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
       TopicIF roleType = role.getType();
-      if (roleType != null && ObjectUtils.different(nullTopic, roleType)) continue;
+      if (roleType != null && !Objects.equals(nullTopic, roleType)) continue;
       Iterator it2 = role.getPlayer().getTypes().iterator();
       if (it2.hasNext())
         role.setType((TopicIF) it2.next());
@@ -356,9 +358,7 @@ options {
 
     Reader reader = null;
     try {
-      reader = AbstractTopicMapReader.makeReader(
-        new InputSource(extloc.getExternalForm()),
-        new LTMEncodingSniffer());
+      reader = AbstractTopicMapReader.makeReader(extloc, new LTMEncodingSniffer());
       LTMParser parser = new LTMParser(new LTMLexer(reader));
       parser.setBase(extloc);
       parser.setTopicMap(topicmap);
@@ -392,7 +392,7 @@ options {
     try {
       TopicMapReaderIF reader = null;
       if (syntax.equalsIgnoreCase("xtm"))
-        reader = new XTMTopicMapReader(extloc.getAddress());
+        reader = new XTMTopicMapReader(new URL(extloc.getAddress()));
 
       MergeUtils.mergeInto(topicmap, reader.read());
     } catch (MalformedURLException e) {

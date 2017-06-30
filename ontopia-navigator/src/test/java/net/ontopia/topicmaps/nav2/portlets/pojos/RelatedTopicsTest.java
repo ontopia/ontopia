@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
-import java.io.File;
 import java.io.StringReader;
 import java.io.IOException;
 import java.util.List;
@@ -30,14 +29,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
-import net.ontopia.topicmaps.nav2.portlets.pojos.RelatedTopics;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Assert;
@@ -851,7 +848,7 @@ public class RelatedTopicsTest {
   }
   
   private TopicIF getTopicByPSI(TopicMapIF topicmap, String psi) {
-    return topicmap.getTopicBySubjectIdentifier(Locators.getURILocator(psi));
+    return topicmap.getTopicBySubjectIdentifier(URILocator.create(psi));
   }
 
   @Test

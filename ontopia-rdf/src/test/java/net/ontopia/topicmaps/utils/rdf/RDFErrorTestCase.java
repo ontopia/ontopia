@@ -53,7 +53,7 @@ public class RDFErrorTestCase {
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "err", filename);
 
       try {
-        new RDFTopicMapReader(URIUtils.getURI(in)).read();
+        new RDFTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
         Assert.fail("Read in '" + filename + "' with no errors");
       } catch (RDFMappingException e) {
       }

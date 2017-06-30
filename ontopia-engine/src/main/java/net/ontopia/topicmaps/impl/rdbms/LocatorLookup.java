@@ -27,7 +27,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.NullObject;
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.collections4.map.ReferenceMap;
@@ -36,63 +35,70 @@ import org.apache.commons.collections4.map.ReferenceMap;
  * INTERNAL: Non-shared locator lookup index.
  */
 // <LocatorIF, TMObjectIF>
-public class LocatorLookup implements TransactionalLookupIndexIF {
+public class LocatorLookup<E> implements TransactionalLookupIndexIF<LocatorIF, E> {
   protected String qname;
   protected TransactionIF txn;
   protected TopicMapIF tm;
   protected int lrusize;
+  private E NULLOBJECT;
 
-  protected Map cache;
-  protected Map lru;
+  protected Map<LocatorIF, E> cache;
+  protected Map<LocatorIF, E> lru;
 
-  public LocatorLookup(String qname, TransactionIF txn, TopicMapIF tm, int lrusize) {
+  public LocatorLookup(String qname, TransactionIF txn, TopicMapIF tm, int lrusize, E nullObject) {
     this.qname = qname;
     this.txn = txn;
     this.tm = tm;
     this.lrusize = lrusize;
-    this.cache = new ReferenceMap(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
-    this.lru = new LRUMap(lrusize);
+    this.cache = new ReferenceMap<LocatorIF, E>(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
+    this.lru = new LRUMap<LocatorIF, E>(lrusize);
+    NULLOBJECT = nullObject;
   }
 
   // ISSUE: soft reference string keys or identity values?
   
-  public Object get(Object key) {
+  @Override
+  public E get(LocatorIF key) {
     // check cache
-    Object retval = cache.get(key);
+    E retval = cache.get(key);
     if (retval == null) {
       // cache miss
-      LocatorIF locator = (LocatorIF)key;
-      retval = txn.executeQuery(qname, new Object[] { tm, locator.getAddress() });
+      retval = (E) txn.executeQuery(qname, new Object[] { tm, key.getAddress() });
       // update cache and lru
-      cache.put(key, (retval == null ? NullObject.INSTANCE : retval));
-      lru.put(key, (retval == null ? NullObject.INSTANCE : retval)); // ISSUE: does it make sense to LRU misses?
+      cache.put(key, (retval == null ? NULLOBJECT : retval));
+      lru.put(key, (retval == null ? NULLOBJECT : retval)); // ISSUE: does it make sense to LRU misses?
       return retval;      
     } else {
       // cache hit
       lru.put(key, retval);
-      return (retval == NullObject.INSTANCE ? null : retval);
+      return (retval == NULLOBJECT ? null : retval);
     }
   }
 
-  public Object put(Object key, Object value) {
+  @Override
+  public E put(LocatorIF key, E value) {
     return cache.put(key, value);
   }
 
-  public Object remove(Object key) {
+  @Override
+  public E remove(LocatorIF key) {
     return cache.remove(key);
   }
 
-  public void removeAll(Collection keys) {
-    Iterator iter = keys.iterator();
+  @Override
+  public void removeAll(Collection<LocatorIF> keys) {
+    Iterator<LocatorIF> iter = keys.iterator();
     while (iter.hasNext()) {
       cache.remove(iter.next());
     }
   }
 
+  @Override
   public void commit() {    
     // no-op
   }
 
+  @Override
   public void abort() {
     // no-op
   }

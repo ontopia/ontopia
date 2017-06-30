@@ -65,6 +65,11 @@
 			<artifactId>ontopia-jdbcspy7</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-lucene</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		
 		<!-- Webapps -->
 		<dependency>
@@ -211,7 +216,7 @@
 						<configuration>
 							<optimizations>false</optimizations>
 							<patchDirectory>src/main/patches</patchDirectory>
-							<naturalOrderProcessing>true</naturalOrderProcessing>
+							<patches>001.catalina.properties.patch, 002.server.xml.patch</patches>
 							<targetDirectory>target/${project.build.finalName}/apache-tomcat/</targetDirectory>
 						</configuration>
 					</plugin>

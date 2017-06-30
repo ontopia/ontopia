@@ -20,16 +20,16 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Collection of toString implementations for the various
@@ -77,7 +77,7 @@ public class ObjectStrings {
     String id = "unassigned";
     try {
       if (occurs.getTopicMap() != null) id = occurs.getObjectId();
-      if (ObjectUtils.equals(occurs.getDataType(), DataTypes.TYPE_URI)) {
+      if (Objects.equals(occurs.getDataType(), DataTypes.TYPE_URI)) {
         return "[" + impl + ", " + id + " (" + occurs.getValue() + ")]";
       } else {
         String value = occurs.getValue();
@@ -134,7 +134,7 @@ public class ObjectStrings {
     String id = "unassigned";
     try {
       if (variant.getTopicMap() != null) id = variant.getObjectId();
-      if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
+      if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
         return "[" + impl + ", " + id + " (" + variant.getValue() + ")]";
       } else {
         String value = variant.getValue();

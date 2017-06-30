@@ -19,21 +19,35 @@
  */
 package net.ontopia.topicmaps.utils.jtm;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.file.Files;
 import java.util.Collection;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.jtm.JTMTopicMapReader;
-
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class JTMTopicMapWriterTest {
+
+  private TopicMapBuilderIF builder;
+  private TopicMapIF tm;
+  
+  @Before
+  public void setUp() {
+    tm = new InMemoryTopicMapStore().getTopicMap();
+    builder = tm.getBuilder();
+  }
 
   /**
    * TODO: rewrite tests, this is just a proof-of-concept test.
@@ -62,5 +76,29 @@ public class JTMTopicMapWriterTest {
     // TMObjectIF obj =
     // tm.getObjectByItemIdentifier(base.resolveAbsolute("#mother"));
     //writer.write((TopicNameIF) wendy.getTopicNames().iterator().next());
+  }
+
+  @Test
+  public void testWriteToFile() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("jtm", "io-f.jtm");
+    new JTMTopicMapWriter(file).write(tm);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToOutputStream() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("jtm", "io-o.jtm");
+    new JTMTopicMapWriter(new FileOutputStream(file)).write(tm);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
+  }
+
+  @Test
+  public void testWriteToWriter() throws IOException {
+    builder.makeTopic();
+    File file = TestFileUtils.getTestOutputFile("jtm", "io-w.jtm");
+    new JTMTopicMapWriter(new FileWriter(file)).write(tm);
+    Assert.assertTrue(Files.size(file.toPath()) > 0);
   }
 }

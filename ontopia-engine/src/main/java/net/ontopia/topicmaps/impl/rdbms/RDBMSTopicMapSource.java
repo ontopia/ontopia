@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -217,7 +216,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
         LocatorIF _base_address = this.base_address;
         if (_base_address == null) {
           if (loc != null)
-            _base_address = Locators.getURILocator(loc);
+            _base_address = new URILocator(loc);
         }
         
         // Create a new reference

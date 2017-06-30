@@ -469,6 +469,7 @@
     <jsp file="ttl-set-request.jsp" id="cyrillic|foo|cirth|bar|n|landa|kaithi"/>
     <jsp file="ttl-set-var-query.jsp"/>
     <jsp file="ttl-set-var-value.jsp"/>
+    <jsp file="ttl-set-var-si.jsp" id="i18n:script"/>
     <jsp file="ttl-when-empty-collection.jsp"/>
 
     <!-- Cases that raise (and should raise) an exception.-->

@@ -23,6 +23,7 @@ package net.ontopia.persistence.proxy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.persistence.query.sql.EqualsSQLOptimizer;
@@ -41,7 +43,9 @@ import net.ontopia.persistence.query.sql.SQLBuilder;
 import net.ontopia.persistence.query.sql.SQLGeneratorIF;
 import net.ontopia.persistence.query.sql.SQLQuery;
 import net.ontopia.persistence.query.sql.SQLStatementIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.impl.rdbms.ParameterArray;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
@@ -131,6 +135,14 @@ public class RDBMSStorage implements StorageIF {
   private ClusterIF cluster;
 
   private final Set<AbstractTransaction> transactions = Collections.newSetFromMap(new WeakHashMap<AbstractTransaction, Boolean>());
+
+  private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
+    public Class<?> getType() { throw new UnsupportedOperationException(); }
+    public int getWidth() { throw new UnsupportedOperationException(); }
+    public Object getKey(int index) { throw new UnsupportedOperationException(); }
+    public Object createInstance() throws Exception { throw new UnsupportedOperationException(); }
+    public Object clone() { throw new UnsupportedOperationException(); }
+  };
   
   /**
    * INTERNAL: Creates a storage definition which gets its settings
@@ -450,8 +462,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_srcloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.srcloc.lru"), 2000);
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SRCLOC, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize_srcloc);
+          CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SRCLOC, namespace);
+          qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_srcloc, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
         }
         return qc;
@@ -461,8 +473,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_subind = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru"), 1000);
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SUBIND, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize_subind);
+          CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SUBIND, namespace);
+          qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_subind, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
         }
         return qc;
@@ -472,8 +484,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_subloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru"), 100);    
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SUBLOC, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize_subloc);
+          CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SUBLOC, namespace);
+          qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_subloc, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
         }
         return qc;
@@ -483,8 +495,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype.lru"), 1000);
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_RT1, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize);
+          CacheIF<ParameterArray, Collection<AssociationRoleIF>> cache = caches.<ParameterArray, Collection<AssociationRoleIF>>createCache(CachesIF.QUERY_CACHE_RT1, namespace);
+          qc = new QueryCache<ParameterArray, Collection<AssociationRoleIF>>(createDetachedQuery(name), cache, lrusize, Collections.<AssociationRoleIF>emptySet());
           qcm.put(name, qc);
         }
         return qc;

@@ -22,6 +22,7 @@ package net.ontopia.utils;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -143,7 +144,7 @@ public class ArrayUtils {
   private static int findFirst(Object[] array, Object o, int offset) {
     int result = offset;
     for (int i=offset-1; i >= 0; i--) {
-      if (ObjectUtils.different(array[i], o)) 
+      if (!Objects.equals(array[i], o)) 
         return result;
       else
         result = i;

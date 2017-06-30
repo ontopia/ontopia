@@ -19,13 +19,12 @@
  */
 package ontopoly.components;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.resources.Resources;
-
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -70,7 +69,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
       protected void onModelChanged() {
         super.onModelChanged();
         String newValue = (String)getModelObject();
-        if (ObjectUtils.equals(newValue, oldValue)) return;
+        if (Objects.equals(newValue, oldValue)) return;
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
         FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
         if (fieldValueModel.isExistingValue() && oldValue != null)

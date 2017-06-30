@@ -25,11 +25,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 

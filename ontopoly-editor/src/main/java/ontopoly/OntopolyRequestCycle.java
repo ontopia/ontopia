@@ -23,14 +23,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.model.TopicMap;
 import ontopoly.pages.ConvertPage;
@@ -38,7 +37,6 @@ import ontopoly.pages.InternalErrorPageWithException;
 import ontopoly.pages.PageExpiredErrorPage;
 import ontopoly.pages.StartPage;
 import ontopoly.pages.UpgradePage;
-
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Request;
@@ -180,8 +178,8 @@ public class OntopolyRequestCycle extends WebRequestCycle {
     // check if topic map contains ontopoly ontology
     Class<? extends Page> pageClass = this.getResponsePageClass();
     if (pageClass != null) {
-      boolean performingUpgrade = ObjectUtils.equals(ConvertPage.class, pageClass);
-      boolean performingConvert = ObjectUtils.equals(UpgradePage.class, pageClass);
+      boolean performingUpgrade = Objects.equals(ConvertPage.class, pageClass);
+      boolean performingConvert = Objects.equals(UpgradePage.class, pageClass);
   
       if (!performingUpgrade && !performingConvert) {
         if (!tm.containsOntology()) {

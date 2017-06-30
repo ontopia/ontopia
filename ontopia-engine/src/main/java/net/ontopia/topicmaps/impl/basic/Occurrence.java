@@ -159,7 +159,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   //! }
   //! 
   //! public boolean isBinary() {
-  //!   return ObjectUtils.equals(getDataType(), DataTypes.TYPE_BINARY);
+  //!   return Objects.equals(getDataType(), DataTypes.TYPE_BINARY);
   //! }
   
   public LocatorIF getLocator() {

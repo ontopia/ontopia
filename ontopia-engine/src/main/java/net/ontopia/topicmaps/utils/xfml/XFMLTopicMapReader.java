@@ -26,22 +26,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.AbstractXMLFormatReader;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -53,7 +51,7 @@ import org.xml.sax.XMLReader;
  * PUBLIC: A topic map reader that is capable of reading the XFML format
  * for faceted hierarchical metadata. 
  */
-public class XFMLTopicMapReader extends AbstractXMLFormatReader implements TopicMapReaderIF, TopicMapImporterIF {
+public class XFMLTopicMapReader extends AbstractXMLFormatReader implements TopicMapReaderIF {
   protected TopicMapStoreFactoryIF store_factory;
 
   // Define a logging category.
@@ -63,8 +61,8 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * Creates an XFML reader.
    * @param url The URL of the XFML document.
    */  
-  public XFMLTopicMapReader(String url) throws MalformedURLException {
-    this(new InputSource(new URILocator(url).getExternalForm()), new URILocator(url));
+  public XFMLTopicMapReader(URL url) throws MalformedURLException {
+    super(url);
   }
 
   /**
@@ -75,7 +73,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    */
 
   public XFMLTopicMapReader(Reader reader, LocatorIF base_address) {
-    this(new InputSource(reader), base_address);
+    super(reader, base_address);
   }
 
   /**
@@ -86,7 +84,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * relative references.
    */
   public XFMLTopicMapReader(InputStream stream, LocatorIF base_address) {
-    this(new InputSource(stream), base_address);
+    super(stream, base_address);
   }
 
   /**
@@ -94,18 +92,8 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * argument.   
    * @param file The file object from which to read the topic map.
    */
-  public XFMLTopicMapReader(File file) throws IOException {
-    try {
-      if (!file.exists())
-        throw new FileNotFoundException(file.toString());
-      
-      this.base_address = new URILocator(URIUtils.toURL(file));
-      this.source = new InputSource(base_address.getExternalForm());
-    }
-    catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException("Internal error. File " + file + " had " +
-                                        "invalid URL representation.");
-    }
+  public XFMLTopicMapReader(File file) throws MalformedURLException {
+    super(file);
   }
   
   /**
@@ -116,8 +104,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * relative references.
    */
   public XFMLTopicMapReader(InputSource source, LocatorIF base_address) {
-    this.source = source;
-    this.base_address = base_address;
+    super(source, base_address);
   }
 
   /**
@@ -150,14 +137,15 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     // Create new parser object
     XMLReader parser;
     try {
-      parser = getXMLReaderFactory().createXMLReader();
-      
+      parser = DefaultXMLReaderFactory.createXMLReader();
+      parser.setEntityResolver(new IgnoreTopicMapDTDEntityResolver());
+      parser.setFeature("http://xml.org/sax/features/namespaces", false);
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
     }
     
     // Create content handler
-    XFMLContentHandler handler = new XFMLContentHandler(getStoreFactory(), getXMLReaderFactory(), base_address);
+    XFMLContentHandler handler = new XFMLContentHandler(getStoreFactory(), base_address);
     
     // Register parser with content handler
     handler.register(parser);
@@ -206,13 +194,6 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     read();
   }
 
-  // --- Internal methods
-  
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-    cxrfactory.setEntityResolver(new IgnoreTopicMapDTDEntityResolver());
-    cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
-  }
-  
   /**
    * XFMLTopicMapReader has no additional options to set.
    * @param properties 

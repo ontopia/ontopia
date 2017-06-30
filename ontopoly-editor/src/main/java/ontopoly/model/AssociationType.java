@@ -29,9 +29,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import ontopoly.utils.OntopolyModelUtils;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -40,7 +37,8 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.ObjectIdComparator;
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.StringUtils;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents an association type.
@@ -235,7 +233,7 @@ public class AssociationType extends AbstractTypingTopic {
     }
 
     public int compare(RoleField rf1, RoleField rf2) {
-      return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
+      return StringUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }
 

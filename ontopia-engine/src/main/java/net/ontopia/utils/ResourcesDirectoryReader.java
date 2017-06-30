@@ -21,18 +21,24 @@
 package net.ontopia.utils;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Transformer;
 
 public class ResourcesDirectoryReader {
 
@@ -42,7 +48,7 @@ public class ResourcesDirectoryReader {
   private final String directoryPath;
   private final boolean searchSubdirectories;
   private Set<ResourcesFilterIF> filters;
-  private Set<String> resources = null;
+  private List<URL> resources = null;
 
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath) {
     this(classLoader, directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE);
@@ -51,7 +57,7 @@ public class ResourcesDirectoryReader {
     this.classLoader = classLoader;
     this.directoryPath = (directoryPath.endsWith("/")) ? directoryPath : (directoryPath + "/");
     this.searchSubdirectories = searchSubdirectories;
-    this.filters = new HashSet<ResourcesFilterIF>();
+    this.filters = new HashSet<>();
   }
 
   // Constructors without classloader default to Thread.currentThread().getContextClassLoader()
@@ -100,22 +106,37 @@ public class ResourcesDirectoryReader {
     this.filters.add(filter);
   }
 
-  public Set<String> getResources() {
-	if (resources == null) {
-		findResources();
-	}
+  public List<URL> getResources() {
+    if (resources == null) {
+      findResources();
+    }
     return resources;
   }
-  public Set<InputStream> getResourcesAsStreams() {
-    Set<InputStream> streams = new HashSet<InputStream>();
-    for (String resource : resources) {
-      streams.add(classLoader.getResourceAsStream(resource));
+  public Collection<String> getResourcesAsStrings() {
+    if (resources == null) {
+      findResources();
+    }
+    return CollectionUtils.collect(resources, new Transformer<URL, String>() {
+      @Override
+      public String transform(URL url) {
+        try {
+          return URLDecoder.decode(url.toString(), "utf-8");
+        } catch (UnsupportedEncodingException uee) {
+          throw new OntopiaRuntimeException(uee);
+        }
+      }
+    });
+  }
+  public Set<InputStream> getResourcesAsStreams() throws IOException {
+    Set<InputStream> streams = new HashSet<>();
+    for (URL resource : resources) {
+      streams.add(resource.openStream());
     }
     return streams;
   }
 
   private void findResources() {
-    resources = new TreeSet<String>();
+    resources = new ArrayList<>();
     for (URL directoryURL : getResourceDirectories()) {
       String protocol = directoryURL.getProtocol();
       if ("file".equals(protocol)) {
@@ -146,9 +167,12 @@ public class ResourcesDirectoryReader {
             findResourcesFromFile(file, path + file.getName() + "/");
           }
         } else {
-          String resourcePath = path + file.getName();
-          if (filtersApply(resourcePath)) {
-            resources.add(resourcePath);
+          if (filtersApply(path + file.getName())) {
+            try {
+              resources.add(file.toURI().toURL());
+            } catch (MalformedURLException mufe) {
+              throw new OntopiaRuntimeException(mufe); // impossible as it only finds existing files
+            }
           }
         }
       }
@@ -167,7 +191,15 @@ public class ResourcesDirectoryReader {
             && (resourcePath.startsWith(directoryPath)) 
             && (searchSubdirectories || !resourcePath.substring(directoryPath.length()).contains("/"))
             && (filtersApply(resourcePath))) {
-          resources.add(resourcePath);
+          // cannot do new URL(jarPath, resourcePath), somehow leads to duplicated path
+          // retest on java 8
+          Enumeration<URL> urls = classLoader.getResources(resourcePath);
+          while(urls.hasMoreElements()) {
+            URL url = urls.nextElement();
+            if (url.toExternalForm().startsWith(jarPath.toExternalForm())) {
+              resources.add(url);
+            }
+          }
         }
       }
     } catch (IOException e) { }
@@ -186,7 +218,7 @@ public class ResourcesDirectoryReader {
     public boolean ok(String resourcePath);
   }
 
-  public class FilenameExtensionFilter implements ResourcesFilterIF {
+  public static class FilenameExtensionFilter implements ResourcesFilterIF {
     private final String filenameFilter;
     public FilenameExtensionFilter(String filenameFilter) {
       this.filenameFilter = filenameFilter;

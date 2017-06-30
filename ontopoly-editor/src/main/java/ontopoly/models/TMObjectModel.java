@@ -20,11 +20,10 @@
 package ontopoly.models;
 
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
 import ontopoly.model.TopicMap;
-
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
@@ -67,8 +66,8 @@ public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof TMObjectModel)
-      return ObjectUtils.equals(topicMapId, ((TMObjectModel)obj).topicMapId) &&
-        ObjectUtils.equals(objectId, ((TMObjectModel)obj).objectId);
+      return Objects.equals(topicMapId, ((TMObjectModel)obj).topicMapId) &&
+        Objects.equals(objectId, ((TMObjectModel)obj).objectId);
     else
       return false;
   }

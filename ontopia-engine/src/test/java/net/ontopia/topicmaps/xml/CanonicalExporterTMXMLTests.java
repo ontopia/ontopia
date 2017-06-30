@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.xml;
 
+import java.io.File;
 import java.io.IOException;
-import net.ontopia.topicmaps.core.TopicMapIF;
+import java.net.URL;
 import java.util.List;
-import net.ontopia.utils.TestFileUtils;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.runners.Parameterized.Parameters;
 
 public class CanonicalExporterTMXMLTests
@@ -32,8 +34,9 @@ public class CanonicalExporterTMXMLTests
   
   private final static String testdataDirectory = "canonical";
 
-  public CanonicalExporterTMXMLTests(String root, String filename) {
+  public CanonicalExporterTMXMLTests(URL inputFile, String filename) {
     this.filename = filename;
+    this.inputFile = inputFile;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
@@ -53,7 +56,7 @@ public class CanonicalExporterTMXMLTests
         return resourcePath.endsWith(".xtm");
       }
     };
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
+    return TestFileUtils.getTestInputURLs(filter, testdataDirectory, "in");
   }
 
   protected String getTestdataDirectory() {
@@ -62,7 +65,7 @@ public class CanonicalExporterTMXMLTests
 
   // --- Canonicalization type methods
 
-  protected TopicMapIF exportAndReread(TopicMapIF topicmap, String outfile)
+  protected TopicMapIF exportAndReread(TopicMapIF topicmap, File outfile)
     throws IOException {
     // First we export
     TMXMLWriter writer = new TMXMLWriter(outfile);

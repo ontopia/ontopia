@@ -21,22 +21,20 @@
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Objects;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
-
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.utils.ObjectUtils;
+import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Output Producing Tag for writing out the content of an
@@ -96,7 +94,7 @@ public class ContentTag extends BaseOutputProducingTag implements StringifierIF 
     // --- OccurrenceIF
     if (object instanceof OccurrenceIF) {
       OccurrenceIF occ = (OccurrenceIF) object;
-      if (ObjectUtils.equals(DataTypes.TYPE_STRING, occ.getDataType()))
+      if (Objects.equals(DataTypes.TYPE_STRING, occ.getDataType()))
         content = occ.getValue();
       NULL_VALUE = NavigatorConfigurationIF.OCCURRENCE_NULLVALUE;
       NULL_VALUE_ALT = NavigatorConfigurationIF.DEFVAL_OCC_NULLVALUE;

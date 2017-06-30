@@ -136,12 +136,7 @@ public abstract class AbstractOntopolyTopicMapSource
     String id = createReferenceId(name);
     File path = new File(this.path);
     File file = new File(path, id);
-    URL url;
-    try {
-      url = URIUtils.toURL(file);
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    URL url = URIUtils.toURL(file);
 
     // create new store    
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
@@ -199,11 +194,11 @@ public abstract class AbstractOntopolyTopicMapSource
     // avoid reference id collisions
     int cnt = 1;
     String id = name;
-    if (!name.toLowerCase().endsWith(".xtm"))
-      id += ".xtm";
+    if (!name.toLowerCase().endsWith(suffix))
+      id += suffix;
     
     while (refmap.containsKey(id))
-      id = name + '-' + (cnt++) + ".xtm";
+      id = name + '-' + (cnt++) + suffix;
 
     return id;
   } 

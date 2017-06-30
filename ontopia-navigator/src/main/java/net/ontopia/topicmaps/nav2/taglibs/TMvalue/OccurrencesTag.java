@@ -24,16 +24,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Objects;
 import javax.servlet.jsp.JspTagException;
-
-import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.utils.FilterIF;
-import net.ontopia.utils.ObjectUtils;
-
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
+import net.ontopia.utils.FilterIF;
 
 /**
  * INTERNAL: Value Producing Tag for finding all the occurrences
@@ -93,7 +91,7 @@ public class OccurrencesTag extends BaseScopedTag {
             filteredOccs = new ArrayList(occs.size());
             while (iterOccs.hasNext()) {
               occ = (OccurrenceIF) iterOccs.next();
-              if (ObjectUtils.equals(DataTypes.TYPE_STRING, occ.getDataType()))
+              if (Objects.equals(DataTypes.TYPE_STRING, occ.getDataType()))
                 filteredOccs.add(occ);
             }
             break;
@@ -104,7 +102,7 @@ public class OccurrencesTag extends BaseScopedTag {
             filteredOccs = new ArrayList(occs.size());
             while (iterOccs.hasNext()) {
               occ = (OccurrenceIF) iterOccs.next();
-              if (ObjectUtils.equals(DataTypes.TYPE_URI, occ.getDataType()))
+              if (Objects.equals(DataTypes.TYPE_URI, occ.getDataType()))
                 filteredOccs.add(occ);
             }
             break;

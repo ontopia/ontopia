@@ -22,19 +22,19 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.CompactHashSet;
 
 /**
@@ -432,7 +432,7 @@ public class Topic extends TMObject implements TopicIF {
 
   void setReified(ReifiableIF reified) {
     ReifiableIF oldReified = getReified();
-    if (ObjectUtils.different(oldReified, reified)) {
+    if (!Objects.equals(oldReified, reified)) {
       String reifiedId = (reified == null ? null : reified.getObjectId());
       valueChanged(LF_reified, reifiedId, true);
     }

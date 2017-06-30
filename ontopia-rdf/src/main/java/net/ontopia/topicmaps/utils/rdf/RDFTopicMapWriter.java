@@ -20,33 +20,28 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.AResource;
-import com.hp.hpl.jena.rdf.arp.ALiteral;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-import java.io.Writer;
+import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Collection;
-import java.net.MalformedURLException;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Map;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
-import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -60,6 +55,11 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.PSI;
+import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * PUBLIC: A topic map writer that can convert topic maps to RDF.  The
@@ -292,7 +292,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     while (it2.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it2.next();
       
-      if (ObjectUtils.equals(occ.getDataType(), DataTypes.TYPE_URI))
+      if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
         statement(subject, getResource(occ.getType()),
                   getResource(occ.getLocator()), occ);
       else

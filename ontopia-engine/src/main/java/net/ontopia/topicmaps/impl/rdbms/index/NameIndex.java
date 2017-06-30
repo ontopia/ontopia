@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.impl.rdbms.index;
 
 import java.util.Collection;
-
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
@@ -44,6 +44,11 @@ public class NameIndex extends RDBMSIndex implements NameIndexIF {
   public Collection<TopicNameIF> getTopicNames(String value) {
     return (Collection<TopicNameIF>)executeQuery("NameIndexIF.getTopicNames",
                                     new Object[] { getTopicMap(), value });
+  }
+
+  @Override
+  public Collection<TopicNameIF> getTopicNames(String value, TopicIF topicNameType) {
+    return (Collection<TopicNameIF>)executeQuery("NameIndexIF.getTopicNamesByType", new Object[] { getTopicMap(), value, topicNameType });
   }
 
   public Collection<VariantNameIF> getVariants(String value) {

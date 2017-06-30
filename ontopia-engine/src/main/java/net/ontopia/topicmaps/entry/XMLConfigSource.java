@@ -258,8 +258,7 @@ public class XMLConfigSource {
       environ.put("CWD", file.getParent());
     }
 
-    String url = URIUtils.getURI(config_file).getAddress();
-    return readSources(new InputSource(url), environ);
+    return readSources(new InputSource(URIUtils.toURL(new File(config_file)).toString()), environ);
   }
 
   // ------------------------------------------------------------
@@ -270,7 +269,7 @@ public class XMLConfigSource {
     ConfigHandler handler = new ConfigHandler(environ);
     
     try {
-      XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(inp_source);

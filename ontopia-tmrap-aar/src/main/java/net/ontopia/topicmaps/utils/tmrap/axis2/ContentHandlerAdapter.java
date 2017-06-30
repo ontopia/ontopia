@@ -20,15 +20,14 @@
 package net.ontopia.topicmaps.utils.tmrap.axis2;
 
 import java.util.Enumeration;
-import org.xml.sax.AttributeList;
+import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
-import org.xml.sax.DocumentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.NamespaceSupport;
 
-public class ContentHandlerAdapter implements DocumentHandler {
+public class ContentHandlerAdapter implements ContentHandler {
 
   private ContentHandler ch;
   private NamespaceSupport sup;
@@ -50,10 +49,10 @@ public class ContentHandlerAdapter implements DocumentHandler {
     this.ch.endDocument();
   }
 
-  public void startElement(String name, AttributeList atts) throws SAXException {
+  public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
     this.sup.pushContext();
     for (int i = 0; i < atts.getLength(); ++i) {
-      String aName = atts.getName(i);
+      String aName = atts.getQName(i);
       if (aName.startsWith("xmlns:")){
         this.sup.declarePrefix(aName.substring("xmlns:".length()), atts.getValue(i));
       } else if (aName.equals("xmlns")) {
@@ -63,7 +62,7 @@ public class ContentHandlerAdapter implements DocumentHandler {
     String[] parts = new String[3];
     AttributesImpl ai = new AttributesImpl();
     for (int i = 0; i < atts.getLength(); ++i) {
-      String aName = atts.getName(i);
+      String aName = atts.getQName(i);
       if ((aName.startsWith("xmlns:")) || (aName.equals("xmlns"))) {
         continue;
       }
@@ -74,13 +73,13 @@ public class ContentHandlerAdapter implements DocumentHandler {
     for (Enumeration e = this.sup.getDeclaredPrefixes(); e.hasMoreElements(); this.ch.startPrefixMapping(p, this.sup.getURI(p))) {
       p = (String) e.nextElement();
     }
-    parts = this.sup.processName(name, parts, false);
+    parts = this.sup.processName(qName, parts, false);
     this.ch.startElement(parts[0], parts[1], parts[2], ai);
   }
 
-  public void endElement(String name) throws SAXException {
+  public void endElement(String uri, String localName, String qName) throws SAXException {
     String[] parts = new String[3];
-    parts = this.sup.processName(name, parts, false);
+    parts = this.sup.processName(qName, parts, false);
     this.ch.endElement(parts[0], parts[1], parts[2]);
     String p;
     for (Enumeration e = this.sup.getDeclaredPrefixes(); e.hasMoreElements(); this.ch.endPrefixMapping(p)) {
@@ -101,4 +100,12 @@ public class ContentHandlerAdapter implements DocumentHandler {
     this.ch.processingInstruction(target, data);
   }
 
+  public void startPrefixMapping(String prefix, String uri) throws SAXException {
+  }
+
+  public void endPrefixMapping(String prefix) throws SAXException {
+  }
+
+  public void skippedEntity(String name) throws SAXException {
+  }
 }

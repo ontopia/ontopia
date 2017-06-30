@@ -22,8 +22,7 @@ package net.ontopia.topicmaps.webed.impl.actions.topic;
 
 import java.net.MalformedURLException;
 import java.util.Iterator;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -82,7 +81,7 @@ public class SetSubjectLocator implements ActionIF {
 			Iterator iter = topic.getSubjectLocators().iterator();
 			while (iter.hasNext()) {
 				LocatorIF oldloc = (LocatorIF)iter.next();
-				if (ObjectUtils.equals(oldloc, newloc)) continue;
+				if (Objects.equals(oldloc, newloc)) continue;
 				topic.removeSubjectLocator(oldloc);
 			}
 			// add new

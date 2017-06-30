@@ -26,17 +26,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
 import javax.servlet.http.HttpSession;
-
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.CollectionUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -387,9 +384,9 @@ public class NamedLockManager {
     public boolean equals(Object o) {
       if (!(o instanceof TMObjectIFHandle)) return false;
       TMObjectIFHandle other = (TMObjectIFHandle)o;
-      return (ObjectUtils.equals(this.objectId, other.objectId) &&
-              ObjectUtils.equals(this.topicmapId, other.topicmapId) &&
-              ObjectUtils.equals(this.referenceId, other.referenceId));
+      return (Objects.equals(this.objectId, other.objectId) &&
+              Objects.equals(this.topicmapId, other.topicmapId) &&
+              Objects.equals(this.referenceId, other.referenceId));
     }
 
     public int hashCode() {

@@ -20,30 +20,29 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 import java.util.TreeSet;
-
-import net.ontopia.utils.UniqueSet;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.CompactHashSet;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.UniqueSet;
   
 /**
  * INTERNAL: The basic topic implementation.
@@ -402,7 +401,7 @@ public class Topic extends TMObject implements TopicIF {
 
   void setReified(ReifiableIF reified) {
     ReifiableIF oldReified = getReified();
-    if (ObjectUtils.different(oldReified, reified)) {
+    if (!Objects.equals(oldReified, reified)) {
       // remove reifier from old reifiable
       this.reified = reified;
     }

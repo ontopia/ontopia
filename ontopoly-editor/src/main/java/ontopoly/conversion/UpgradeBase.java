@@ -38,7 +38,7 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
@@ -87,7 +87,7 @@ public abstract class UpgradeBase {
     
     // import ltm fragment
     Reader reader = new StringReader(sb.toString());    
-    TopicMapImporterIF importer = new LTMTopicMapReader(reader, URILocator.create("http://psi.ontopia.net/ontology/"));
+    TopicMapReaderIF importer = new LTMTopicMapReader(reader, URILocator.create("http://psi.ontopia.net/ontology/"));
     try {
       importer.importInto(topicmap);
     } catch (IOException e1) {
