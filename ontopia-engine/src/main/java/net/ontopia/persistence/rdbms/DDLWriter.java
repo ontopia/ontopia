@@ -22,10 +22,9 @@ package net.ontopia.persistence.rdbms;
 
 import java.io.FileWriter;
 import java.io.Writer;
-
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /** 
  * INTERNAL: Command line tool for producing DDL files for creating

@@ -20,28 +20,25 @@
 
 package net.ontopia.topicmaps.nav2.utils;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
+import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.JspTagException;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.topicmaps.query.parser.QName;
-import net.ontopia.topicmaps.query.parser.ParseContextIF;
-import net.ontopia.topicmaps.query.parser.AntlrWrapException;
+import javax.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
-import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
-import net.ontopia.topicmaps.nav2.impl.framework.User;
+import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
+import net.ontopia.topicmaps.nav2.impl.framework.User;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
-
+import net.ontopia.topicmaps.query.parser.AntlrWrapException;
+import net.ontopia.topicmaps.query.parser.ParseContextIF;
+import net.ontopia.topicmaps.query.parser.QName;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -178,12 +175,8 @@ public final class FrameworkUtils {
                                PageContext.REQUEST_SCOPE);
     ParseContextIF pctxt = (ParseContextIF) ctxt.getDeclarationContext();
 
-    // Replace sequences of special characters like \n and \t with single space.
-    // Needed since StringUtils.split() treats special characters as tokens.
-    String paramsNormalized = StringUtils.normalizeWhitespace(params.trim());
-    
     // get the values
-    String[] names = StringUtils.split(paramsNormalized);
+    String[] names = StringUtils.split(params);
     List varlist = new ArrayList(names.length);
     for (int i = 0; i < names.length; i++) {
       Collection values;

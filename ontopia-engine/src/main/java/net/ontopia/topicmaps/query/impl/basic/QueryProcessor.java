@@ -60,8 +60,8 @@ import net.ontopia.topicmaps.query.utils.TologSpy;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

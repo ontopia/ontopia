@@ -30,11 +30,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
 import net.ontopia.xml.ValidatingContentHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -534,7 +534,7 @@ public class RelationMapping extends SAXTracker {
     String value = getValue(attrs, name);
     return (value == null)
       ? new String[] { }
-      : StringUtils.tokenize(value, " \t\n\r,");
+      : StringUtils.split(value, " \t\n\r,");
   }
 
   protected String[] getValues(Attributes attrs, String plural, String singular) {

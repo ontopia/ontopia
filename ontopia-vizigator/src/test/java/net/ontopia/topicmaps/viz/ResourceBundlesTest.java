@@ -20,15 +20,13 @@
 
 package net.ontopia.topicmaps.viz;
 
-import java.io.InputStream;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-
-import net.ontopia.utils.StringUtils;
-
 import junit.framework.TestCase;
+import org.apache.commons.lang3.StringUtils;
 
 public class ResourceBundlesTest extends TestCase {
 

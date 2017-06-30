@@ -21,9 +21,8 @@
 package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: JDOQL value: instance field. Represents the traversal
@@ -125,7 +124,7 @@ public class JDOField implements JDOValueIF {
   public String toString() {
     StringBuilder sb = new StringBuilder(root.toString());
     sb.append('.');
-    StringUtils.join(path, ".", sb);
+    sb.append(StringUtils.join(path, "."));
     if (!getEvaluatable()) sb.append('*');
     return sb.toString();
   }

@@ -37,7 +37,7 @@ import net.ontopia.persistence.proxy.FieldHandlerIF;
 import net.ontopia.persistence.proxy.SQLTypes;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Generic SQL statement generator.
@@ -786,7 +786,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
     
     // Join tables using a comma separator
-    StringUtils.join(info.fg_from, ", ", sql);
+    sql.append(StringUtils.join(info.fg_from, ", "));
   }
   
   //! protected void produceFrom(StringBuilder sql, BuildInfo info) {

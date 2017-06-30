@@ -10,6 +10,7 @@
 	net.ontopia.topicmaps.utils.rdf.RDFPropertyMapping,
 	net.ontopia.utils.StreamUtils,
 	net.ontopia.xml.PrettyPrinter,
+	org.apache.commons.lang3.StringUtils,
 	org.xml.sax.helpers.AttributesImpl,
 	org.xml.sax.Attributes"
 %><%!
@@ -53,7 +54,7 @@
   // ---------------------------------------------------------------
   // find the file to save to
   String file = request.getParameter("mapfile");
-  file = net.ontopia.utils.StringUtils.replace(file, "+", " ");
+  file = StringUtils.replace(file, "+", " ");
 
   // read in the existing mapping
   Map mappings = RDFIntroSpector.getPropertyMappings(StreamUtils.getResource(file).toString(), false);

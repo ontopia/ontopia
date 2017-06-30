@@ -26,9 +26,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -134,7 +134,7 @@ public class ObjectRelationalMapping {
         // Extends
         String _extends = atts.getValue("extends");
         if (_extends != null) {
-          String[] _class_names = StringUtils.split(_extends, " ");
+          String[] _class_names = StringUtils.split(_extends);
           Class<?>[] _classes = new Class<?>[_class_names.length];
           for (int i=0; i < _class_names.length; i++) {
             _classes[i] = getClassByName(_class_names[i]);
@@ -145,7 +145,7 @@ public class ObjectRelationalMapping {
         // Interfaces
         String _interfaces = atts.getValue("interfaces");
         if (_interfaces != null) {
-          String[] _class_names = StringUtils.split(_interfaces, " ");
+          String[] _class_names = StringUtils.split(_interfaces);
           Class<?>[] _classes = new Class<?>[_class_names.length];
           for (int i=0; i < _class_names.length; i++) {
             _classes[i] = getClassByName(_class_names[i]);
@@ -217,7 +217,7 @@ public class ObjectRelationalMapping {
           String columns = atts.getValue("columns");
           if (columns != null)
             //throw new OntopiaRuntimeException("field.columns must be specified: " + fdesc.getName());
-            fdesc.setColumns(StringUtils.split(columns, " "));    
+            fdesc.setColumns(StringUtils.split(columns));
         }
         else if (type.equals("1:M")) {
           fdesc.setCardinality(FieldDescriptor.ONE_TO_MANY);
@@ -229,7 +229,7 @@ public class ObjectRelationalMapping {
           String manykey = atts.getValue("many-keys");
           if (manykey == null)
             throw new OntopiaRuntimeException("field.many-keys must be specified: " + fdesc.getName());         
-          fdesc.setManyKeys(StringUtils.split(manykey, " "));     
+          fdesc.setManyKeys(StringUtils.split(manykey));
         }
         else {
           throw new OntopiaRuntimeException("field.type contains invalid value: " + type);
@@ -252,7 +252,7 @@ public class ObjectRelationalMapping {
             throw new OntopiaRuntimeException("field.join-keys must be specified: " + fdesc.getName());
           }
         } else {
-          fdesc.setJoinKeys(StringUtils.split(joinkeys, " "));
+          fdesc.setJoinKeys(StringUtils.split(joinkeys));
         }
 
         // Collection

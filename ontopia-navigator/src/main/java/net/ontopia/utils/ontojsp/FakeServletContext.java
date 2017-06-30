@@ -44,8 +44,8 @@ import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

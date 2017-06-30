@@ -26,7 +26,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.DefaultFileItemFactory;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
@@ -54,7 +54,7 @@ public class ClassifyUtils {
   }
 
   public static ClassifiableContentIF getClassifiableContent(byte[] content) {
-    return getClassifiableContent(content, "content-" + StringUtils.md5_32(new String(content)));
+    return getClassifiableContent(content, "content-" + DigestUtils.md5Hex(content));
   }
 
   private static ClassifiableContentIF getClassifiableContent(byte[] content, String identifier) {

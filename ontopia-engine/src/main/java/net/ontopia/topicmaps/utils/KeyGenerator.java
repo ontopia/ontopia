@@ -35,8 +35,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * PUBLIC: Utilities for generating keys from complex topic map

@@ -20,23 +20,22 @@
 
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
-import java.util.Map;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.io.Writer;
-import java.io.IOException;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * PUBLIC: This component can render wiki formatting a la MediaWiki

@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**

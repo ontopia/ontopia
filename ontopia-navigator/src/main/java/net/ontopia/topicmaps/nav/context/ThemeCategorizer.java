@@ -30,14 +30,14 @@ import java.util.Iterator;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.LexicalComparator;
-import net.ontopia.utils.GrabberStringifier;
-import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.topicmaps.nav.utils.comparators.ContextNameGrabber;
+import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.topicmaps.utils.NameStringifier;
 import net.ontopia.topicmaps.utils.PSI;
+import net.ontopia.utils.GrabberStringifier;
+import net.ontopia.utils.LexicalComparator;
+import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Class for categorizing a collection of themes according to

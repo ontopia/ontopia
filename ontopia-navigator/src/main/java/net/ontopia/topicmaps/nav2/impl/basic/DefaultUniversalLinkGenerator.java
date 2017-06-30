@@ -24,7 +24,7 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.LinkGeneratorIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Default link generator which produces links to any kind

@@ -21,10 +21,9 @@
 package net.ontopia.persistence.query.sql;
 
 import java.util.Arrays;
-
 import net.ontopia.persistence.proxy.DefaultFieldHandler;
 import net.ontopia.persistence.proxy.FieldHandlerIF;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Represents a set of columns from a given table. The

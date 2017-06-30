@@ -54,13 +54,13 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import ontopoly.OntopolyApplication;
 import ontopoly.OntopolyContext;
 import ontopoly.model.PSI;
 import ontopoly.model.TopicMap;
 import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.sysmodel.TopicMapSource;
+import org.apache.commons.lang3.StringUtils;
 
 public class ConversionUtils {
   
@@ -552,7 +552,7 @@ public class ConversionUtils {
       }
       
       // create new field order
-      OccurrenceIF occ = tmbuilder.makeOccurrence(curTopic, ted_field_order, StringUtils.pad(fOrder, '0', 9));
+      OccurrenceIF occ = tmbuilder.makeOccurrence(curTopic, ted_field_order, StringUtils.leftPad(Integer.toString(fOrder), 9, '0'));
       occ.addTheme((TopicIF)f[2]);
       fOrder = fOrder + 1000;
     }

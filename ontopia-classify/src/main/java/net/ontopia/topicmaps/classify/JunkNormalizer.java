@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.classify;
 
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: 
@@ -29,7 +29,7 @@ public class JunkNormalizer implements TermNormalizerIF {
   
   public String normalize(String term) {
     // strip out repeated whitespace characters
-    term = StringUtils.normalizeIsWhitespace(term);
+    term = StringUtils.normalizeSpace(term);
     // drop 's endings
     if (term.length() >= 2 && term.endsWith("'s")) {
       term = term.substring(0, term.length()-2);

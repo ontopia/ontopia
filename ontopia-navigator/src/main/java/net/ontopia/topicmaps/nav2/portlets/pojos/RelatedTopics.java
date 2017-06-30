@@ -43,8 +43,8 @@ import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * PUBLIC: This component can produce a model representing the
@@ -589,7 +589,7 @@ public class RelatedTopics {
     // NOTE: helper method that compares object in much the same way as 
     if (o1 instanceof String && o2 instanceof String) {
       // sort string case insensitively
-      return StringUtils.compareToIgnoreCase((String)o1, (String)o2);
+      return StringUtils.compareIgnoreCase((String)o1, (String)o2);
     } else if (o1 instanceof Comparable && o2 instanceof Comparable) {
       // compare comparable objects
       return ((Comparable)o1).compareTo((Comparable)o2);
@@ -599,7 +599,7 @@ public class RelatedTopics {
       TopicIF t2 = (TopicIF)o2;
       String s1 = sort.toString(t1);
       String s2 = sort.toString(t2);
-      return StringUtils.compareToIgnoreCase(s1, s2);      
+      return StringUtils.compareIgnoreCase(s1, s2);      
     }
     //! else if (o1 instanceof TMObjectIF && o2 instanceof TMObjectIF) {
     //!   // compare tmobjects

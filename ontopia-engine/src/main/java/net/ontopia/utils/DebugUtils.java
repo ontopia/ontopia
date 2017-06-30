@@ -20,6 +20,8 @@
 
 package net.ontopia.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * INTERNAL: Useful debugging methods.
  */

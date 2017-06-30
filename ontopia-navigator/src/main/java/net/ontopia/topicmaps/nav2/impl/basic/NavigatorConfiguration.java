@@ -31,12 +31,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.impl.framework.MVSConfig;
+import net.ontopia.topicmaps.nav2.plugins.PluginComparator;
 import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.plugins.PluginUtils;
-import net.ontopia.topicmaps.nav2.plugins.PluginComparator;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

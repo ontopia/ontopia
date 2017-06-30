@@ -20,7 +20,7 @@
 
 package net.ontopia.persistence.query.sql;
 
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: SQL logical expression: or

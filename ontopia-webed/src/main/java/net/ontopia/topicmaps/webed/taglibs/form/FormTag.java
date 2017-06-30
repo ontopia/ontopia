@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -34,7 +33,6 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
@@ -50,11 +48,10 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionData;
 import net.ontopia.topicmaps.webed.impl.utils.LockResult;
 import net.ontopia.topicmaps.webed.impl.utils.NamedLockManager;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
-import net.ontopia.utils.StringUtils;
-
+import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.VelocityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.VelocityContext;
 
 /**
  * INTERNAL: Custom tag that represents an (HTML) input form holding different
@@ -446,7 +443,7 @@ public class FormTag extends BodyTagSupport {
     }
 
     public String getEscapedPattern() {
-      return StringUtils.replace(StringUtils.replace(pattern, '\\', "\\\\"), '"',
+      return StringUtils.replace(StringUtils.replace(pattern, "\\", "\\\\"), "\"",
           "\\\"");
     }
 

@@ -21,8 +21,8 @@ package ontopoly.utils;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import net.ontopia.utils.StringUtils;
 import ontopoly.model.Topic;
+import org.apache.commons.lang3.StringUtils;
 
 public class TopicIdComparator implements Comparator<Topic>, Serializable {
 

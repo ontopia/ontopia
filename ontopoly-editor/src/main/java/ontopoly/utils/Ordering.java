@@ -20,7 +20,7 @@
 
 package ontopoly.utils;
 
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class Ordering {
 
@@ -32,7 +32,7 @@ public final class Ordering {
   }
 
   public static String orderToString(int order) {
-    return StringUtils.pad(order, '0', 9);
+    return StringUtils.leftPad(Integer.toString(order), 9, '0');
   }
 
 }
