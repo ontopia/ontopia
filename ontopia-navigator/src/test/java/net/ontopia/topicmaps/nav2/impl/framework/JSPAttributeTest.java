@@ -33,7 +33,6 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ontojsp.FakeHttpSession;
 import net.ontopia.utils.ontojsp.FakePageContext;
@@ -183,7 +182,7 @@ public class JSPAttributeTest {
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", file);
     File outfile  = TestFileUtils.getTestOutputFile(testdataDirectory, "out", file);
     Assert.assertTrue("result not equal to baseline for file '" + file + "'",
-               FileUtils.compareFileToResource(outfile, baseline));
+               TestFileUtils.compareFileToResource(outfile, baseline));
   }
 
   /**

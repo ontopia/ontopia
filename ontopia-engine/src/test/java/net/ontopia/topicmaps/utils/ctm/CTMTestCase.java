@@ -26,7 +26,6 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
@@ -77,7 +76,7 @@ public class CTMTestCase {
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-                 FileUtils.compareFileToResource(out, baseline));
+                 TestFileUtils.compareFileToResource(out, baseline));
     }
 
 }

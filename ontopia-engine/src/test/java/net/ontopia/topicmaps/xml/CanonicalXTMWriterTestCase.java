@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,6 +71,6 @@ public class CanonicalXTMWriterTestCase {
    
       // compare results
       Assert.assertTrue("The test file " + out + " is different from the baseline.",
-                 FileUtils.compareFileToResource(out, baseline));
+                 TestFileUtils.compareFileToResource(out, baseline));
     }
 }

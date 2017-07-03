@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.DeciderUtils;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public class TopicMapSynchronizerBKTest extends TestCase {
@@ -209,6 +208,6 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     String out = base + File.separator + "out" + File.separator + filename;
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
     assertTrue("test file " + filename + " canonicalized wrongly",
-               FileUtils.compareFileToResource(out, baseline));
+               TestFileUtils.compareFileToResource(out, baseline));
   }
 }

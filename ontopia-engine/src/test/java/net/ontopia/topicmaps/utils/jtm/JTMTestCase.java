@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -76,7 +75,7 @@ public class JTMTestCase {
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename
           + " gives a different result than canonicalizing the jtm export of "
-          + filename + ".", FileUtils.compareFileToResource(out, baseline));
+          + filename + ".", TestFileUtils.compareFileToResource(out, baseline));
 
     }
 
@@ -119,6 +118,6 @@ public class JTMTestCase {
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename
           + " gives a different result than canonicalizing the jtm export of "
-          + filename + ".", FileUtils.compareFileToResource(out, baseline));
+          + filename + ".", TestFileUtils.compareFileToResource(out, baseline));
     }
 }

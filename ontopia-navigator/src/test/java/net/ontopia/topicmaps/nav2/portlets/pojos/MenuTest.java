@@ -20,26 +20,19 @@
 
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.nav2.portlets.pojos.Menu;
 import net.ontopia.topicmaps.nav2.portlets.pojos.Menu.Heading;
 import net.ontopia.topicmaps.nav2.portlets.pojos.Menu.Item;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 

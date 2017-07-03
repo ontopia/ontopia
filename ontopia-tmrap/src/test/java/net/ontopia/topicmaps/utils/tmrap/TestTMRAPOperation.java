@@ -21,14 +21,14 @@
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.File;
-import java.io.Writer;
-import java.io.Reader;
-import java.io.FileWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,14 +36,6 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.StringTokenizer;
 import javax.servlet.ServletException;
-
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.ontojsp.FakeServletConfig;
-import net.ontopia.utils.ontojsp.FakeServletContext;
-import net.ontopia.utils.ontojsp.FakeServletRequest;
-import net.ontopia.utils.ontojsp.FakeServletResponse;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -51,11 +43,15 @@ import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
-import net.ontopia.topicmaps.utils.tmrap.RAPServlet;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.TestFileUtils;
+import net.ontopia.utils.ontojsp.FakeServletConfig;
+import net.ontopia.utils.ontojsp.FakeServletContext;
+import net.ontopia.utils.ontojsp.FakeServletRequest;
+import net.ontopia.utils.ontojsp.FakeServletResponse;
 import org.junit.After;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
@@ -266,7 +262,7 @@ public abstract class TestTMRAPOperation {
     // Compare results
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
     Assert.assertTrue(filename + " did not match baseline",
-               FileUtils.compareFileToResource(xtmfile + ".cxtm", baseline));
+               TestFileUtils.compareFileToResource(xtmfile + ".cxtm", baseline));
   }
   
   @After

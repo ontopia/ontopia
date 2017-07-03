@@ -40,7 +40,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public class MergeTest extends TestCase {
@@ -1001,7 +1000,7 @@ public class MergeTest extends TestCase {
 
     new CanonicalTopicMapWriter(outfile).write(newtm);
     assertTrue("Topic map created by merging over topics not equal to original",
-               FileUtils.compareFileToResource(outfile, baseline));
+               TestFileUtils.compareFileToResource(outfile, baseline));
   }
 
   public void testMergeReifiedNames() {

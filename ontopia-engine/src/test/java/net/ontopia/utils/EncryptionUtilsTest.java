@@ -57,7 +57,7 @@ public class EncryptionUtilsTest extends TestCase {
   }
 
   protected boolean compareToBaseline(String out_name, String baseline_name) throws IOException {
-    return FileUtils.compareFileToResource(new File(baseDir, out_name), TestFileUtils.getTestInputFile(testdataDirectory, baseline_name));
+    return TestFileUtils.compareFileToResource(new File(baseDir, out_name), TestFileUtils.getTestInputFile(testdataDirectory, baseline_name));
   }
 
 }

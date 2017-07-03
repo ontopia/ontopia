@@ -20,19 +20,15 @@
 
 package net.ontopia.topicmaps.utils.tmrap;
 
-import java.io.Writer;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
-
+import java.io.Writer;
 import javax.servlet.ServletException;
-
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class TestGetTopic extends TestTMRAPOperation {
 

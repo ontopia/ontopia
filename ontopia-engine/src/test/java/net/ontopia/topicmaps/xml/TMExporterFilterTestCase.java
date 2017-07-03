@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.xml.PrettyPrinter;
@@ -134,7 +133,7 @@ public class TMExporterFilterTestCase {
 
       // compare results
       Assert.assertTrue("the canonicalized xtm fragment export of " + filename
-          + " does not match the baseline.", FileUtils.compareFileToResource(out, baseline));
+          + " does not match the baseline.", TestFileUtils.compareFileToResource(out, baseline));
 
     }
 
@@ -189,7 +188,7 @@ public class TMExporterFilterTestCase {
 
       // compare results
       Assert.assertTrue("the canonicalized tmxml export of " + filename
-          + " does not match the baseline.", FileUtils.compareFileToResource(out,baseline));
+          + " does not match the baseline.", TestFileUtils.compareFileToResource(out,baseline));
 
     }
 
@@ -243,7 +242,7 @@ public class TMExporterFilterTestCase {
 
       // compare results
       Assert.assertTrue("the canonicalized xtm export of " + filename
-          + " does not match the baseline.", FileUtils.compareFileToResource(out, baseline));
+          + " does not match the baseline.", TestFileUtils.compareFileToResource(out, baseline));
     }
 
     // Need to work on the LTM test cases to make them always produce the same output.
@@ -285,7 +284,7 @@ public class TMExporterFilterTestCase {
 
       // compare results
       Assert.assertTrue("the canonicalized ltm export of " + filename
-          + " does not match the baseline.", FileUtils.compareFileToResource(out, baseline));
+          + " does not match the baseline.", TestFileUtils.compareFileToResource(out, baseline));
 
     }
 

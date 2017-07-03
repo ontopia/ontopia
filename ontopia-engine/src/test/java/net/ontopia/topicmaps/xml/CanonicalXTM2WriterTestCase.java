@@ -26,7 +26,6 @@ import java.util.List;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -92,6 +91,6 @@ public class CanonicalXTM2WriterTestCase {
       
       // compare results
       Assert.assertTrue("The test file " + filename + " is different from the baseline: " + out + " " + baseline,
-              FileUtils.compareFileToResource(out, baseline));
+              TestFileUtils.compareFileToResource(out, baseline));
     }
 }

@@ -27,7 +27,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -103,7 +102,7 @@ public class LTMTopicMapWriterFilterTestCase {
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename +
           " produces " + out + " which is different from " +
-          baseline, FileUtils.compareFileToResource(out, baseline));
+          baseline, TestFileUtils.compareFileToResource(out, baseline));
     }
 
 }

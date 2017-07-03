@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.xml.PrettyPrinter;
@@ -121,7 +120,7 @@ public class XTMFragmentExporterTestCase {
       // compare results
       Assert.assertTrue("the canonicalized xtm fragment export of " + filename
           + " Does not match the baseline.", 
-          FileUtils.compareFileToResource(out,baseline));
+          TestFileUtils.compareFileToResource(out,baseline));
 
     }
 

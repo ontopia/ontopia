@@ -33,7 +33,6 @@ import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -110,7 +109,7 @@ public class ChangelogTestCase {
     // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + casename
                       + " does not match the baseline: " + out + " " + baseline,
-                      FileUtils.compareFileToResource(out, baseline));
+                      TestFileUtils.compareFileToResource(out, baseline));
   }
 
   // public so it can be accessed from FullRescanEventTest

@@ -21,6 +21,7 @@
 package net.ontopia.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -283,5 +284,18 @@ public class TestFileUtils {
     }
     return testdataOutputRoot;
   }
+  
+  /**
+    * INTERNAL: Compares the contents of a file and a resource that will be loaded from classpath
+    */
+  public static boolean compareFileToResource(String fileName, String resourceName) throws IOException {
+    return StreamUtils.compareAndClose(new FileInputStream(fileName), StreamUtils.getInputStream(resourceName));
+  }
 
+  /**
+    * INTERNAL: Compares the contents of a file and a resource that will be loaded from classpath
+    */
+  public static boolean compareFileToResource(File file, String resourceName) throws IOException {
+    return StreamUtils.compareAndClose(new FileInputStream(file), StreamUtils.getInputStream(resourceName));
+  }
 }

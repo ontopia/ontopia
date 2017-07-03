@@ -30,7 +30,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
@@ -102,7 +101,7 @@ public class CanonicalExporterMultiXTMTests {
         String basefile = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename + "-" + counter);
         Assert.assertTrue("test file " + filename + " canonicalized wrongly, " +
                    outfile + " not equal to " + basefile,
-                   FileUtils.compareFileToResource(outfile, basefile));
+                   TestFileUtils.compareFileToResource(outfile, basefile));
       }      
     }
   

@@ -26,7 +26,6 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -99,6 +98,6 @@ public class TMXMLWriterFilterTestCase {
       // compare results
       Assert.assertTrue("canonicalizing the test file " + filename
           + " gives a different result than canonicalizing the tmxml export: "
-          + out + " " + baseline, FileUtils.compareFileToResource(out, baseline));
+          + out + " " + baseline, TestFileUtils.compareFileToResource(out, baseline));
     }
 }

@@ -20,28 +20,17 @@
 
 package net.ontopia.topicmaps.utils.tmrap;
 
-import java.io.Writer;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
-
 import javax.servlet.ServletException;
-
-import org.xml.sax.InputSource;
-
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.utils.tmrap.RAPServlet;
-import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
-import net.ontopia.topicmaps.utils.tmrap.TopicPage;
-
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
+import org.xml.sax.InputSource;
 
 /**
  * RemoteTopicIndex is used by the Vizlet to retrieve information from
