@@ -36,8 +36,9 @@ import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
 import net.ontopia.utils.CollectionSortedMap;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.DeciderIF;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.AndPredicate;
 
 /**
  * INTERNAL: The basic dynamic locator index implementation.
@@ -92,31 +93,17 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
 
   @Override
   public Collection<OccurrenceIF> getOccurrences(String value, final TopicIF occurrenceType) {
-    return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
-      @Override
-      public boolean ok(OccurrenceIF occurrence) {
-        return Objects.equals(occurrence.getType(), occurrenceType);
-      }
-    });
+    return CollectionUtils.select(extractExactValues(occurs, value), new TypedPredicate(occurrenceType));
   }
 
   public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype) {
-    return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
-        public boolean ok(OccurrenceIF occ) {
-          return Objects.equals(occ.getDataType(), datatype);
-        }
-      });
+    return CollectionUtils.select(extractExactValues(occurs, value), new DataTypePredicate(datatype));
   }
 
   @Override
   public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype, final TopicIF occurrenceType) {
-    return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF<OccurrenceIF>() {
-      @Override
-      public boolean ok(OccurrenceIF occurrence) {
-        return Objects.equals(occurrence.getType(), occurrenceType)
-            && Objects.equals(occurrence.getDataType(), datatype);
-      }
-    });
+    return CollectionUtils.select(extractExactValues(occurs, value), 
+            new AndPredicate<>(new DataTypePredicate(datatype), new TypedPredicate(occurrenceType)));
   }
 
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix) {
@@ -124,11 +111,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   }
 
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, final LocatorIF datatype) {
-    return CollectionUtils.filterSet(extractPrefixValues(occurs, prefix), new DeciderIF<OccurrenceIF>() {
-        public boolean ok(OccurrenceIF occ) {
-          return Objects.equals(occ.getDataType(), datatype);
-        }
-      });
+    return CollectionUtils.select(extractPrefixValues(occurs, prefix), new DataTypePredicate(datatype));
   }
 
   public Iterator<String> getValuesGreaterThanOrEqual(String value) {
@@ -171,6 +154,20 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
       
     }
     return (result == null ? new HashSet<E>() : result);
+  }
+
+  private class DataTypePredicate implements Predicate<OccurrenceIF> {
+
+    private final LocatorIF datatype;
+
+    public DataTypePredicate(LocatorIF datatype) {
+      this.datatype = datatype;
+    }
+    
+    @Override
+    public boolean evaluate(OccurrenceIF occurrence) {
+      return Objects.equals(occurrence.getDataType(), datatype);
+    }
   }
 
   // -----------------------------------------------------------------------------

@@ -28,10 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.CompactHashSet;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -51,6 +47,10 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.DeciderUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * PUBLIC: Utilities for merging topics and topic maps. This class
@@ -70,15 +70,15 @@ public class MergeUtils {
    */
   public static boolean shouldMerge(TopicIF t1, TopicIF t2) {
     // check subject locators
-    if (CollectionUtils.overlaps(t1.getSubjectLocators(), t2.getSubjectLocators()))
+    if (CollectionUtils.containsAny(t1.getSubjectLocators(), t2.getSubjectLocators()))
       return true;
     
     // check subject indicators and source locators
-    if (CollectionUtils.overlaps(t1.getSubjectIdentifiers(), t2.getSubjectIdentifiers()) ||
-        CollectionUtils.overlaps(t1.getItemIdentifiers(), t2.getSubjectIdentifiers()))
+    if (CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getSubjectIdentifiers()) ||
+        CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getSubjectIdentifiers()))
       return true;
-    if (CollectionUtils.overlaps(t1.getItemIdentifiers(), t2.getItemIdentifiers()) ||
-        CollectionUtils.overlaps(t1.getSubjectIdentifiers(), t2.getItemIdentifiers()))
+    if (CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getItemIdentifiers()) ||
+        CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getItemIdentifiers()))
       return true;
 
     // should merge if they reify the same object

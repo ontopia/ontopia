@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import net.ontopia.infoset.core.LocatorIF;
@@ -34,7 +35,6 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,7 +124,7 @@ public class Execute {
         String[] relnames = StringUtils.split(ohandler.relations, ",");
         if (relnames.length > 0) {
           relations = new HashSet<String>(relnames.length);
-          CollectionUtils.addAll(relations, relnames);
+          relations.addAll(Arrays.asList(relnames));
         }
       }
       

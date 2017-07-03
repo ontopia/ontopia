@@ -34,8 +34,8 @@ import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
 import net.ontopia.utils.CollectionMap;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.DeciderIF;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 
 /**
  * INTERNAL: The basic dynamic name index implementation.
@@ -82,12 +82,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   
   @Override
   public Collection<TopicNameIF> getTopicNames(String value, final TopicIF topicNameType) {
-    return CollectionUtils.filterSet(extractExactValues(basenames, value), new DeciderIF<TopicNameIF>() {
-      @Override
-      public boolean ok(TopicNameIF topicName) {
-        return Objects.equals(topicName.getType(), topicNameType);
-      }
-    });
+    return CollectionUtils.select(extractExactValues(basenames, value), new TypedPredicate(topicNameType));
   }
 
   public Collection<VariantNameIF> getVariants(String value) {
@@ -95,11 +90,12 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   }
   
   public Collection<VariantNameIF> getVariants(String value, final LocatorIF datatype) {
-    return CollectionUtils.filterSet(extractExactValues(variants, value), new DeciderIF<VariantNameIF>() {
-        public boolean ok(VariantNameIF vn) {
-          return Objects.equals(vn.getDataType(), datatype);
-        }
-      });
+    return CollectionUtils.select(extractExactValues(variants, value), new Predicate<VariantNameIF>() {
+      @Override
+      public boolean evaluate(VariantNameIF vn) {
+        return Objects.equals(vn.getDataType(), datatype);
+      }
+    });
   }
 
   // -----------------------------------------------------------------------------

@@ -22,7 +22,11 @@ package net.ontopia.topicmaps.impl.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
+import org.apache.commons.collections4.Predicate;
 
 /**
  * INTERNAL: An abstract dynamic index superclass.
@@ -59,4 +63,17 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
     }
   }
   
+  protected class TypedPredicate implements Predicate<TypedIF> {
+
+    private final TopicIF type;
+
+    public TypedPredicate(TopicIF type) {
+      this.type = type;
+    }
+    
+    @Override
+    public boolean evaluate(TypedIF typed) {
+      return Objects.equals(typed.getType(), type);
+    }
+  }
 }
