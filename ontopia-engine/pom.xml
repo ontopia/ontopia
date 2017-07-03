@@ -60,10 +60,6 @@
 			<artifactId>antlr</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>concurrent</groupId>
-			<artifactId>concurrent</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>

@@ -23,7 +23,6 @@ package net.ontopia.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -271,29 +270,14 @@ public class CollectionUtils {
    * INTERNAL: Creates new concurrent java.util.Map instance.
    */
   public static <K, V> Map<K, V> createConcurrentMap() {
-    try {
-      Class<?> klass = Class.forName("java.util.concurrent.ConcurrentHashMap");
-      return (Map<K, V>)klass.newInstance();
-    } catch (Exception e1) {
-      try {
-        Class<?> klass = Class.forName("EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap");
-        return (Map<K, V>)klass.newInstance();
-      } catch (Exception e2) {
-        return Collections.synchronizedMap(new HashMap<K, V>());
-      }
-    }
+    return new java.util.concurrent.ConcurrentHashMap<>();
   }
 
   /**
    * INTERNAL: Creates new concurrent java.util.Set instance.
    */
   public static <T> Set<T> createConcurrentSet() {
-    try {
-      Class<?> klass = Class.forName("EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArraySet");
-      return (Set<T>)klass.newInstance();
-    } catch (Exception e1) {
-      return Collections.synchronizedSet(new HashSet<T>());
-    }
+    return Collections.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<T, Boolean>());
   }
 
   /**
