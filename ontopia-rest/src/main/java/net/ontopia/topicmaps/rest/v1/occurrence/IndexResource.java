@@ -27,7 +27,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
-import net.ontopia.utils.IteratorCollection;
+import org.apache.commons.collections4.IteratorUtils;
 import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.resource.Post;
@@ -68,8 +68,8 @@ public class IndexResource extends AbstractTransactionalResource {
 					if (value == null) throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String");
 					if (datatype == null) return index.getOccurrencesByPrefix(value);
 					else return index.getOccurrencesByPrefix(value, new URILocator(datatype));
-				case "GTE": return new IteratorCollection<>(index.getValuesGreaterThanOrEqual(value));
-				case "LTE": return new IteratorCollection<>(index.getValuesSmallerThanOrEqual(value));
+				case "GTE": return IteratorUtils.toList(index.getValuesGreaterThanOrEqual(value));
+				case "LTE": return IteratorUtils.toList(index.getValuesSmallerThanOrEqual(value));
 
 				default: 
 					setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);

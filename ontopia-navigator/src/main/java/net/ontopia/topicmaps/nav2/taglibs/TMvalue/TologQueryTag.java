@@ -35,16 +35,17 @@ import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorCompileException;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
-import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
+import net.ontopia.topicmaps.nav2.impl.basic.JSPEngineWrapper;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingTag;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.topicmaps.nav2.impl.basic.JSPEngineWrapper;
+import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryResultIterator;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.utils.CollectionUtils;
+import org.apache.commons.collections4.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +131,7 @@ public class TologQueryTag extends BaseValueProducingTag {
       return net.ontopia.topicmaps.query.impl.basic.QueryResultWrappers.getWrapper(result);
     else {
       // FIXME: Should pass collection size if available.
-      return new net.ontopia.utils.IteratorCollection(new QueryResultIterator(result));
+      return IteratorUtils.toList(new QueryResultIterator(result));
     }
   }
     
