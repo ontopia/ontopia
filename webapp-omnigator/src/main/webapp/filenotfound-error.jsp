@@ -1,7 +1,6 @@
 <%@ page language="java"
          import="java.io.StringWriter, java.io.PrintWriter,
-                 java.util.Properties, java.io.FileNotFoundException,
-                 net.ontopia.utils.FileUtils" %>
+                 java.util.Properties, java.io.FileNotFoundException" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 <framework:response/>

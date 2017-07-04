@@ -32,8 +32,8 @@ import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.io.IOUtils;
 
 public abstract class VariantNameTest extends AbstractScopedTest {
   protected VariantNameIF variant;
@@ -168,7 +168,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     try {
       Writer wo = new FileWriter(fileout);
       try {
-        StreamUtils.transfer(ro, wo);
+        IOUtils.copy(ro, wo);
       } finally {
         wo.close();
       }
@@ -181,7 +181,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
       ro = new FileReader(fileout); 
 			long outlen = variant.getLength();
       try {
-        assertTrue("Variant value put in is not the same as the one we get out.", StreamUtils.compare(ro, ri));
+        assertTrue("Variant value put in is not the same as the one we get out.", IOUtils.contentEquals(ro, ri));
         assertTrue("Variant value length is different", inlen == outlen);
       } finally {
         ri.close();

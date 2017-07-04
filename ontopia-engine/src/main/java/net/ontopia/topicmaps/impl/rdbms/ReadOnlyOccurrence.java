@@ -32,7 +32,7 @@ import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: The read-only rdbms occurrence implementation.
@@ -91,7 +91,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
       try {
         Reader r = (Reader)odv.getValue(_p_getTransaction());
         try {
-          return StreamUtils.readString(r, getLength());
+          return IOUtils.toString(r);
         } finally {
           r.close();
         }

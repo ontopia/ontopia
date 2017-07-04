@@ -21,16 +21,15 @@
 package net.ontopia.infoset.content;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
-
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: A content store implementation based on the file system.
@@ -115,7 +114,7 @@ public class FileContentStore implements ContentStoreIF {
 
       // store data
       OutputStream out = new FileOutputStream(file);
-      StreamUtils.transfer(data, out);
+      IOUtils.copy(data, out);
       out.close();
     } catch (IOException e) {
       throw new ContentStoreException("Error writing data to content store.", e);

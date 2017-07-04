@@ -27,8 +27,8 @@ import java.io.InputStream;
 import java.net.URL;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -86,9 +86,9 @@ public abstract class AbstractCanonicalTests {
       
       // compare results
       URL baselineURL = new URL(inputFile, "../baseline/" + getOutFilename(filename));
-      try (InputStream baselineIn = baselineURL.openStream()) {
+      try (InputStream baselineIn = baselineURL.openStream(); FileInputStream in = new FileInputStream(out)) {
         Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-                StreamUtils.compareAndClose(new FileInputStream(out), baselineIn));
+                IOUtils.contentEquals(in, baselineIn));
       }
     }
 }

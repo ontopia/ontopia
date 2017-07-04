@@ -23,10 +23,10 @@ package net.ontopia.infoset.content;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.HashMap;
-import net.ontopia.utils.StreamUtils;
+import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: Content store implementation that saves everything in memory.
@@ -68,7 +68,7 @@ public class InMemoryContentStore implements ContentStoreIF {
 
   public int add(InputStream data, int length) throws ContentStoreException {
     try {
-      content.put(new Integer(nextKey), StreamUtils.read(data, length));
+      content.put(nextKey, IOUtils.toByteArray(data));
       return nextKey++;
     } catch (IOException e) {
       throw new ContentStoreException(e);

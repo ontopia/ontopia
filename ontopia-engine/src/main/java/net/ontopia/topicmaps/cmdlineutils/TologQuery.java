@@ -28,11 +28,11 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryTracer;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * PUBLIC: Runs tolog queries against a given topic map.
@@ -125,7 +125,7 @@ public class TologQuery {
     if (qryfile.trim().endsWith("?"))
       query = qryfile;
     else
-      query = StreamUtils.read(new java.io.FileReader(qryfile));
+      query = IOUtils.toString(new java.io.FileReader(qryfile));
 
     QueryProcessorIF processor = QueryUtils.getQueryProcessor(tm);
     ParsedQueryIF pquery = processor.parse(query);

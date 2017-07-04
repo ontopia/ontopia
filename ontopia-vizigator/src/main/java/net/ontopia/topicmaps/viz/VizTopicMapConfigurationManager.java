@@ -47,8 +47,8 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: Stores and manages configuration. The configuration information is
@@ -1385,7 +1385,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
 
     try {
       FileInputStream file = new FileInputStream(string);
-      StreamUtils.transfer(file, output);
+      IOUtils.copy(file, output);
       file.close();
       byte[] bytes = output.toByteArray();
       ImageIcon icon = new ImageIcon(bytes);

@@ -23,13 +23,14 @@ package net.ontopia.topicmaps.classify;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.servlet.http.HttpServletRequest;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.DefaultFileItemFactory;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: 
@@ -39,8 +40,8 @@ public class ClassifyUtils {
   public static byte[] getContent(String file_or_url) {
     File file = new File(file_or_url);
     if (file.exists()) {
-      try {
-        return StreamUtils.readAndClose(new FileInputStream(file));
+      try (InputStream in = new FileInputStream(file)){
+        return IOUtils.toByteArray(in);
       } catch (IOException e) {
         // ignore
       }

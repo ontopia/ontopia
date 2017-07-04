@@ -41,7 +41,7 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
   
 /**
  * INTERNAL: The rdbms variant name implementation.
@@ -165,7 +165,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       try {
         Reader r = (Reader)odv.getValue(_p_getTransaction());
         try {
-          return StreamUtils.readString(r, getLength());
+          return IOUtils.toString(r);
         } finally {
           r.close();
         }

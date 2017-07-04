@@ -42,6 +42,7 @@ import net.ontopia.utils.ReaderInputStream;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.apache.commons.codec.binary.Base64InputStream;
+import org.apache.commons.io.IOUtils;
 
 public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   protected OccurrenceIF occurrence;
@@ -169,7 +170,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     try {
       Writer wo = new FileWriter(fileout);
       try {
-        StreamUtils.transfer(ro, wo);
+        IOUtils.copy(ro, wo);
       } finally {
         wo.close();
       }
@@ -182,7 +183,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
       ro = new FileReader(fileout); 
 			long outlen = occurrence.getLength();
       try {
-        assertTrue("Occurrence value put in is not the same as the one we get out.", StreamUtils.compare(ro, ri));
+        assertTrue("Occurrence value put in is not the same as the one we get out.", IOUtils.contentEquals(ro, ri));
         assertTrue("Occurrence value length is different", inlen == outlen);
       } finally {
         ri.close();
@@ -207,7 +208,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     try {
       OutputStream out = new FileOutputStream("/tmp/blob.gif");
       try {
-        StreamUtils.transfer(in, out);
+        IOUtils.copy(in, out);
       } finally {
         out.close();
       }

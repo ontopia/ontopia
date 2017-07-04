@@ -26,12 +26,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
 import org.apache.commons.collections4.Transformer;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class TestFileUtils {
@@ -165,7 +167,7 @@ public class TestFileUtils {
     // transfer test data from resource to file
     InputStream streamin = StreamUtils.getInputStream(filein);
     FileOutputStream streamout = new FileOutputStream(fileout);
-    StreamUtils.transfer(streamin, streamout);
+    IOUtils.copy(streamin, streamout);
     streamout.close();
     streamin.close();
     return fileout;
@@ -240,7 +242,9 @@ public class TestFileUtils {
       relative = relative.substring(relative.lastIndexOf(path));
       File file = new File(new File(getTestdataOutputDirectory()), relative);
       file.getParentFile().mkdirs();
-      StreamUtils.transferAndClose(resource.openStream(), new FileOutputStream(file));
+      try (InputStream in = resource.openStream(); OutputStream out = new FileOutputStream(file)) {
+        IOUtils.copy(in, out);
+      }
     }
   }
 
@@ -289,13 +293,17 @@ public class TestFileUtils {
     * INTERNAL: Compares the contents of a file and a resource that will be loaded from classpath
     */
   public static boolean compareFileToResource(String fileName, String resourceName) throws IOException {
-    return StreamUtils.compareAndClose(new FileInputStream(fileName), StreamUtils.getInputStream(resourceName));
+    try (FileInputStream in1 = new FileInputStream(fileName); InputStream in2 = StreamUtils.getInputStream(resourceName)) {
+      return IOUtils.contentEquals(in1, in2);
+    }
   }
 
   /**
     * INTERNAL: Compares the contents of a file and a resource that will be loaded from classpath
     */
   public static boolean compareFileToResource(File file, String resourceName) throws IOException {
-    return StreamUtils.compareAndClose(new FileInputStream(file), StreamUtils.getInputStream(resourceName));
+    try (FileInputStream in1 = new FileInputStream(file); InputStream in2 = StreamUtils.getInputStream(resourceName)) {
+      return IOUtils.contentEquals(in1, in2);
+    }
   }
 }
