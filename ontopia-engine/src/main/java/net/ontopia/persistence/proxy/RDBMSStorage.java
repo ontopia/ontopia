@@ -285,7 +285,7 @@ public class RDBMSStorage implements StorageIF {
         global_entry, Integer.parseInt(kbprop), database, properties);
     
     // Create query builders
-    this.sqlbuilder = new SQLBuilder(getMapping(), PropertyUtils.isTrue(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
+    this.sqlbuilder = new SQLBuilder(getMapping(), Boolean.parseBoolean(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
     this.sqlgen = GenericSQLGenerator.getSQLGenerator(getPlatforms(), properties);
     
     // Register jdbcspy driver

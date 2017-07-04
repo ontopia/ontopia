@@ -37,7 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
@@ -341,7 +340,7 @@ public class XMLConfigSource {
                 break;
               }
               else if (props[i].getPropertyType().equals(boolean.class)) {
-                setter.invoke(source, new Object[] {new Boolean(PropertyUtils.isTrue(param_value))});
+                setter.invoke(source, new Object[] {Boolean.parseBoolean(param_value)});
                 found_property = true;
                 break;
               }

@@ -114,7 +114,7 @@ public class ChangelogTestCase {
 
   // public so it can be accessed from FullRescanEventTest
   public static Connection getConnection() throws SQLException, IOException {
-    String propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
+    File propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties");
     Map<Object, Object> props = PropertyUtils.loadProperties(propfile);
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
     DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
