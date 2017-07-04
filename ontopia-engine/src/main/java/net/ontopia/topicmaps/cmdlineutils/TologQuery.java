@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
@@ -139,7 +140,7 @@ public class TologQuery {
       while (it.hasNext()) {
         String var = (String) it.next();
         System.out.println(var + ": " +
-                           net.ontopia.utils.DebugUtils.toString(pq.getVariableTypes(var)));
+                           Arrays.toString(pq.getVariableTypes(var)));
       }
     }
 

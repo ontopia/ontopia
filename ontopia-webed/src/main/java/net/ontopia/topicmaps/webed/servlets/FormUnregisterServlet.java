@@ -21,21 +21,18 @@
 package net.ontopia.topicmaps.webed.servlets;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.webed.impl.utils.Parameters;
 import net.ontopia.topicmaps.webed.impl.utils.ReqParamUtils;
-import net.ontopia.utils.DebugUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +122,7 @@ public final class FormUnregisterServlet extends HttpServlet {
     while (it.hasNext()) {
       String paramname = (String) it.next();
       logger.debug("Param '" + paramname + "': '" +
-                   DebugUtils.toString(params.getValues(paramname)) + "'");
+                   Arrays.toString(params.getValues(paramname)) + "'");
     }
   }
 }
