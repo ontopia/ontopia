@@ -30,7 +30,6 @@ import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.HistoryMap;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.RingBuffer;
 import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +56,7 @@ public class User implements UserIF, Serializable {
   // https://github.com/ontopia/ontopia/issues/135
   protected transient UserFilterContextStore filterContext;
   protected transient HistoryMap history;
-  protected transient RingBuffer log;
+  protected transient HistoryMap log;
   protected transient Map workingBundles;
 
   // Time stamps for the workingBundles.
@@ -132,23 +131,23 @@ public class User implements UserIF, Serializable {
   public List getLogMessages() {
     synchronized (this) {
       if (log == null)
-        log = new RingBuffer();
-      return log.getElements();
+        log = new HistoryMap(50, false);
+      return (List) log.getEntries();
     }
   }
 
   public void addLogMessage(String message) {
     synchronized (this) {
       if (log == null)
-        log = new RingBuffer();
-      log.addElement(message);
+        log = new HistoryMap(50, false);
+      log.add(message);
     }
   }
 
   public void clearLog() {
     synchronized (this) {
       if (log == null)
-        log = new RingBuffer();
+        log = new HistoryMap(50, false);
       log.clear();
     }
   }
