@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.Map;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.TraceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -321,7 +320,7 @@ public class RDBMSAccess implements StorageAccessIF {
     if (flushable.isEmpty()) return;
     
     try {
-      TraceUtils.enter("RDBMSAccess.flush");
+      log.trace(Thread.currentThread() + " RDBMSAccess.flush enter");
       // Flush flushable handlers
       for (FlushableIF object : flushable) {
         object.flush();
@@ -330,7 +329,7 @@ public class RDBMSAccess implements StorageAccessIF {
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      TraceUtils.leave("RDBMSAccess.flush");
+      log.trace(Thread.currentThread() + " RDBMSAccess.flush leave");
     }
   }
   
