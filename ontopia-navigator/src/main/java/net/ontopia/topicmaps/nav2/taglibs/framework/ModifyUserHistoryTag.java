@@ -22,11 +22,9 @@ package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import net.ontopia.utils.HistoryMap;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-
+import net.ontopia.topicmaps.nav2.utils.HistoryMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

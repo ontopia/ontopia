@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.utils;
+package net.ontopia.topicmaps.nav2.utils;
 
 import junit.framework.TestCase;
 

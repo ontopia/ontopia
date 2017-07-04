@@ -20,19 +20,17 @@
 
 package net.ontopia.topicmaps.nav2.impl.framework;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.io.Serializable;
-
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.utils.HistoryMap;
+import net.ontopia.topicmaps.nav2.utils.HistoryMap;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.RingBuffer;
-
 import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
