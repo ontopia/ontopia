@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.utils.PSI;
@@ -73,6 +74,22 @@ public class ClassInstanceIndex extends RDBMSIndex
                                  "ClassInstanceIndexIF.getTopicNames", params);
     }
   }
+
+  @Override
+  public Collection<TopicNameIF> getAllTopicNames() {
+    Object[] params = new Object[] { transaction.getTopicMap() };
+    return new QueryCollection<TopicNameIF>(transaction.getTransaction(),
+                                 "ClassInstanceIndexIF.getAllTopicNames_size", params,
+                                 "ClassInstanceIndexIF.getAllTopicNames", params);
+  }
+
+  @Override
+  public Collection<VariantNameIF> getAllVariantNames() {
+    Object[] params = new Object[] { transaction.getTopicMap() };
+    return new QueryCollection<VariantNameIF>(transaction.getTransaction(),
+                                 "ClassInstanceIndexIF.getAllVariantNames_size", params,
+                                 "ClassInstanceIndexIF.getAllVariantNames", params);
+  }
   
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
     if (occurrence_type == null) {
@@ -82,6 +99,14 @@ public class ClassInstanceIndex extends RDBMSIndex
       return new QueryCollection<OccurrenceIF>(transaction.getTransaction(), "ClassInstanceIndexIF.getOccurrences_size", params,
                                  "ClassInstanceIndexIF.getOccurrences", params);
     }
+  }
+
+  @Override
+  public Collection<OccurrenceIF> getAllOccurrences() {
+    Object[] params = new Object[] { transaction.getTopicMap() };
+    return new QueryCollection<OccurrenceIF>(transaction.getTransaction(),
+                                 "ClassInstanceIndexIF.getAllOccurrences_size", params,
+                                 "ClassInstanceIndexIF.getAllOccurrences", params);
   }
   
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {

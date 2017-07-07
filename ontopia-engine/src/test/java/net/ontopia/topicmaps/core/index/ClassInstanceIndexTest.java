@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.core.index;
 
+import java.util.Collections;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.PSI;
 
 public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
@@ -267,6 +269,68 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     assertTrue("not exactly one untyped basename",
            clsix.getTopicNames(defaultNameType).size() == 1);
     
+  }
+
+  public void testAllTopicNames() {
+    assertEquals(0, clsix.getAllTopicNames().size());
+    
+    TopicIF topic = builder.makeTopic();
+    TopicNameIF tn = builder.makeTopicName(topic, "foo");
+    TopicNameIF tn2 = builder.makeTopicName(topic, topic, "bar");
+    assertEquals(2, clsix.getAllTopicNames().size());
+    assertTrue(clsix.getAllTopicNames().contains(tn));
+    assertTrue(clsix.getAllTopicNames().contains(tn2));
+    
+    tn.setType(topic);
+    assertEquals(2, clsix.getAllTopicNames().size());
+    
+    tn.remove();
+    assertEquals(1, clsix.getAllTopicNames().size());
+    assertFalse(clsix.getAllTopicNames().contains(tn));
+    
+    topic.remove();
+    assertEquals(0, clsix.getAllTopicNames().size());
+    assertFalse(clsix.getAllTopicNames().contains(tn2));
+  }
+
+  public void testAllVariantNames() {
+    assertEquals(0, clsix.getAllVariantNames().size());
+    
+    TopicIF topic = builder.makeTopic();
+    TopicNameIF tn = builder.makeTopicName(topic, "foo");
+    VariantNameIF vn = builder.makeVariantName(tn, "bar", Collections.singleton(topic));
+    VariantNameIF vn2 = builder.makeVariantName(tn, "bar2", Collections.singleton(topic));
+    assertEquals(2, clsix.getAllVariantNames().size());
+    assertTrue(clsix.getAllVariantNames().contains(vn));
+    assertTrue(clsix.getAllVariantNames().contains(vn2));
+    
+    vn2.remove();
+    assertEquals(1, clsix.getAllVariantNames().size());
+    assertFalse(clsix.getAllVariantNames().contains(vn2));
+    
+    tn.remove();
+    assertEquals(0, clsix.getAllVariantNames().size());
+    assertFalse(clsix.getAllVariantNames().contains(vn));
+  }
+
+  public void testAllOccurrences() {
+    assertEquals(0, clsix.getAllOccurrences().size());
+    
+    TopicIF topic = builder.makeTopic();
+    
+    OccurrenceIF o = builder.makeOccurrence(topic, topic, "foo");
+    OccurrenceIF o2 = builder.makeOccurrence(topic, topic, "bar");
+    assertEquals(2, clsix.getAllOccurrences().size());
+    assertTrue(clsix.getAllOccurrences().contains(o));
+    assertTrue(clsix.getAllOccurrences().contains(o2));
+    
+    o.remove();
+    assertEquals(1, clsix.getAllOccurrences().size());
+    assertFalse(clsix.getAllOccurrences().contains(o));
+    
+    topic.remove();
+    assertEquals(0, clsix.getAllOccurrences().size());
+    assertFalse(clsix.getAllOccurrences().contains(o2));
   }
 
   public void testBug1438_basenames() {

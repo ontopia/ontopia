@@ -402,6 +402,39 @@
      query="select distinct t1.type_id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id is not null"/>
   </query>
 
+  <query name="ClassInstanceIndexIF.getAllTopicNames" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+    <param  class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic" query="SELECT n.id from tm_topic_name n where n.topicmap_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAllTopicNames_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param  class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic" query="SELECT count(n.id) from tm_topic_name n where n.topicmap_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAllVariantNames" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
+    <param  class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic" query="SELECT v.id from tm_variant_name v where v.topicmap_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAllVariantNames_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param  class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic" query="SELECT count(v.id) from tm_variant_name v where v.topicmap_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAllOccurrences" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+    <param  class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic" query="SELECT o.id from tm_occurrence o where o.topicmap_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAllOccurrences_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param  class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic" query="SELECT count(o.id) from tm_occurrence o where o.topicmap_id = ?"/>
+  </query>
+
   // -----------------------------------------------------------------------------
   // OccurrenceIndexIF
   // -----------------------------------------------------------------------------

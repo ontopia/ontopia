@@ -26,6 +26,7 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * PUBLIC: Interface implemented by objects providing quick lookup
@@ -60,6 +61,22 @@ public interface ClassInstanceIndexIF extends IndexIF {
   public Collection<TopicNameIF> getTopicNames(TopicIF name_type);
   
   /**
+   * PUBLIC: Gets all topic names that are in the topic map.
+   *
+   * @return A collection of TopicNameIF objects
+   * @since %NEXT%
+   */
+  public Collection<TopicNameIF> getAllTopicNames();
+
+  /**
+   * PUBLIC: Gets all variant names that are in the topic map.
+   *
+   * @return A collection of VariantNameIF objects
+   * @since %NEXT%
+   */
+  public Collection<VariantNameIF> getAllVariantNames();
+
+  /**
    * PUBLIC: Gets all occurrences that are of the given type.
    *
    * @param occurrence_type The given type; an object implementing TopicIF.
@@ -69,6 +86,14 @@ public interface ClassInstanceIndexIF extends IndexIF {
    */
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type);
   
+  /**
+   * PUBLIC: Gets all occurrences that are in the topic map.
+   *
+   * @return A collection of OccurrenceIF objects
+   * @since %NEXT%
+   */
+  public Collection<OccurrenceIF> getAllOccurrences();
+
   /**
    * PUBLIC: Gets all associations that are of the given type.
    *

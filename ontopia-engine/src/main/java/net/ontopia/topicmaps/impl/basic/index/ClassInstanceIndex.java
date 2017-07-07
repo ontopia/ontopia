@@ -26,10 +26,12 @@ import java.util.Collections;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
@@ -39,6 +41,8 @@ import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.CollectionMap;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.Transformer;
+import org.apache.commons.collections4.collection.CompositeCollection;
 
 /**
  * INTERNAL: The basic dynamic class instance index implementation.
@@ -116,11 +120,37 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
             Collections.<TopicNameIF>emptyList();
   }
   
+  @Override
+  public Collection<TopicNameIF> getAllTopicNames() {
+    return Collections.<TopicNameIF>unmodifiableCollection(
+            createComposite(bnames.values())
+    );
+  }
+
+  @Override
+  public Collection<VariantNameIF> getAllVariantNames() {
+    Collection<Collection<VariantNameIF>> collected = CollectionUtils.collect(getAllTopicNames(), 
+            new Transformer<TopicNameIF, Collection<VariantNameIF>>() {
+      @Override
+      public Collection<VariantNameIF> transform(TopicNameIF input) {
+        return input.getVariants();
+      }
+    });
+    return createComposite(collected);
+  }
+
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
     return occurs.containsKey(occurrence_type) ? 
             Collections.<OccurrenceIF>unmodifiableCollection(
                     new ArrayList<OccurrenceIF>(occurs.get(occurrence_type))) :
             Collections.<OccurrenceIF>emptyList();
+  }
+
+  @Override
+  public Collection<OccurrenceIF> getAllOccurrences() {
+    return Collections.<OccurrenceIF>unmodifiableCollection(
+            createComposite(occurs.values())
+    );
   }
   
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {
@@ -210,6 +240,21 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
             assocs.containsKey(topic) ||
             roles.containsKey(topic) ||
             bnames.containsKey(topic));
+  }
+
+  // -----------------------------------------------------------------------------
+  // Utilities
+  // -----------------------------------------------------------------------------
+
+  /**
+   * Avoids creating a generic array, which is converted back to list in CompositeCollection.
+   */
+  private <T extends TMObjectIF> CompositeCollection<T> createComposite(Collection<Collection<T>> collections) {
+    CompositeCollection<T> result = new CompositeCollection<>();
+    for (Collection<T> collection : collections) {
+      result.addComposited(collection);
+    }
+    return result;
   }
 
   // -----------------------------------------------------------------------------
