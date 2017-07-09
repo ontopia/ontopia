@@ -36,7 +36,7 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Consistifies a topic map by merging topics based on the
@@ -156,7 +156,7 @@ public class Consistify {
       Iterator it2 = topic.getTopicNames().iterator();
       while (it2.hasNext()) {
         TopicNameIF bn = (TopicNameIF) it2.next();
-        bn.setValue(StringUtils.normalizeWhitespace(bn.getValue()));
+        bn.setValue(StringUtils.normalizeSpace(bn.getValue()));
       }
     }
   }

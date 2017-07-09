@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
@@ -250,7 +249,7 @@ public class JDBCDataSourceTest {
       // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + name
                + " does not match the baseline.",
-               FileUtils.compareFileToResource(cxtm, baseline));
+               TestFileUtils.compareFileToResource(cxtm, baseline));
   }
   
 }

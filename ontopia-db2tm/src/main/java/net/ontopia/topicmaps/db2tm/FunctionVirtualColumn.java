@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.db2tm;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.List;
 import java.util.ArrayList;
-import net.ontopia.utils.DebugUtils;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * INTERNAL: Virtual column that uses a function to map from old value
@@ -115,7 +115,7 @@ public class FunctionVirtualColumn implements ValueIF {
           val = val.substring(0, 100) + "...";
         dispargs[i] = val;
       }
-      throw new DB2TMInputException("Error occurred when invoking function column '" + colname + "' on " + DebugUtils.toString(dispargs), e);
+      throw new DB2TMInputException("Error occurred when invoking function column '" + colname + "' on " + Arrays.toString(dispargs), e);
     }
   }
 

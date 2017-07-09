@@ -21,8 +21,7 @@
 package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: JDOQL value: native value expression. Represents the
@@ -95,7 +94,7 @@ public class JDONativeValue implements JDOValueIF {
     StringBuilder sb = new StringBuilder();
     sb.append(root.toString());
     sb.append(".{");
-    StringUtils.join(args, ", ", sb);
+    sb.append(StringUtils.join(args, ", "));
     sb.append('}');
     return sb.toString();
   }

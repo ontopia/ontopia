@@ -33,10 +33,9 @@ import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,12 +109,12 @@ public class ChangelogTestCase {
     // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + casename
                       + " does not match the baseline: " + out + " " + baseline,
-                      FileUtils.compareFileToResource(out, baseline));
+                      TestFileUtils.compareFileToResource(out, baseline));
   }
 
   // public so it can be accessed from FullRescanEventTest
   public static Connection getConnection() throws SQLException, IOException {
-    String propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
+    File propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties");
     Map<Object, Object> props = PropertyUtils.loadProperties(propfile);
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
     DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);

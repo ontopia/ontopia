@@ -26,7 +26,6 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,7 +80,7 @@ public class LTMTestCase {
         String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename + ".cxtm");
         Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-              FileUtils.compareFileToResource(out, baseline));
+              TestFileUtils.compareFileToResource(out, baseline));
       } else {
         new CanonicalTopicMapWriter(out).write(source);
   
@@ -89,7 +88,7 @@ public class LTMTestCase {
         String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename);
         Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-              FileUtils.compareFileToResource(out, baseline));
+              TestFileUtils.compareFileToResource(out, baseline));
       }
     }
 }

@@ -24,18 +24,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.KeyedObjectPoolFactory;
+import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
@@ -102,7 +100,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     pool.setSoftMinEvictableIdleTimeMillis(etime);
     
    // Set soft maximum - emergency objects (default: true)
-    boolean softmax = PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
+    boolean softmax = MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
     log.debug("Setting ConnectionPool.SoftMaximum '" + softmax + "'");
     if (softmax)
       pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
@@ -130,7 +128,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
    // Statement pool
     GenericKeyedObjectPoolFactory stmpool = null;
-    if (PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
+    if (MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
       log.debug("Using prepared statement pool: Yes");
       stmpool = new GenericKeyedObjectPoolFactory(null, 
                                                   -1, // unlimited maxActive (per key)

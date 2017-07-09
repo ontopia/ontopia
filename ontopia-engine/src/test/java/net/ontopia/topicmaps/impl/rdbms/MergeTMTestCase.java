@@ -26,7 +26,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -111,7 +110,7 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
 
       // compare results
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-             FileUtils.compareFileToResource(out, baseline));
+             TestFileUtils.compareFileToResource(out, baseline));
     }
 }
 

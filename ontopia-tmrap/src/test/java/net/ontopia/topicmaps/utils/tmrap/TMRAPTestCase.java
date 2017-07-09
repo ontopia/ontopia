@@ -42,7 +42,6 @@ import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
@@ -167,7 +166,7 @@ public class TMRAPTestCase {
 
       // Compare 'out' with 'baseline'.
       Assert.assertTrue("The output of the test with id " + id
-          + " does not match the baseline: " + cxtm + " " + baseline, FileUtils.compareFileToResource(cxtm, baseline));
+          + " does not match the baseline: " + cxtm + " " + baseline, TestFileUtils.compareFileToResource(cxtm, baseline));
     }
   
   /**

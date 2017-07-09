@@ -26,7 +26,6 @@ import java.awt.Frame;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -35,9 +34,8 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import net.ontopia.Ontopia;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 public class AboutFrame extends JDialog {
   public AboutFrame(Frame parent) {
@@ -77,7 +75,7 @@ public class AboutFrame extends JDialog {
     if (input == null) return null;
     
     try {
-      StreamUtils.transfer(input, output);
+      IOUtils.copy(input, output);
     } catch (IOException e) {
       e.printStackTrace();
       return null;

@@ -27,7 +27,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -77,7 +76,7 @@ public class TopicMapSynchronizerTests {
 
       // compare results
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-                 FileUtils.compareFileToResource(out, baseline));
+                 TestFileUtils.compareFileToResource(out, baseline));
     }
 
     private void canonicalize(String infile1, String infile2, String outfile)

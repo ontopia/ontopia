@@ -37,10 +37,10 @@ import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.utils.StringUtils;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.Ordering;
 import ontopoly.utils.TopicComparator;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents a role field.

@@ -22,26 +22,25 @@ package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.utils.FileUtils;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.TestFileUtils;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class SyncTest {
   private Connection conn;
@@ -347,6 +346,6 @@ public class SyncTest {
     Assert.assertTrue("The canonicalized conversion from " + name
                       + " does not match the baseline: " + cxtm + " != " +
                       baseline,
-                      FileUtils.compareFileToResource(cxtm, baseline));
+                      TestFileUtils.compareFileToResource(cxtm, baseline));
   }
 }

@@ -20,15 +20,14 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
-
 import net.ontopia.topicmaps.query.impl.utils.QueryTraceListenerIF;
 import net.ontopia.topicmaps.query.parser.AbstractClause;
 import net.ontopia.topicmaps.query.parser.NotClause;
 import net.ontopia.topicmaps.query.parser.OrClause;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,14 +78,14 @@ public class QueryTracer {
   }
 
   public static void trace(String msg, int[] array) {
-    write(msg + ": " + net.ontopia.utils.DebugUtils.toString(array) + "\n");
+    write(msg + ": " + Arrays.toString(array) + "\n");
   }
   
   public static void trace(String msg, Object[] array) {
     Iterator it = listeners.iterator();
     while (it.hasNext()) {
       QueryTraceListenerIF listener = (QueryTraceListenerIF) it.next();
-      listener.trace(msg + ": " + net.ontopia.utils.DebugUtils.toString(array) + "\n");
+      listener.trace(msg + ": " + Arrays.toString(array) + "\n");
     }
   }
   

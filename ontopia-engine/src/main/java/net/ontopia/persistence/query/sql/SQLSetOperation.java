@@ -21,9 +21,8 @@
 package net.ontopia.persistence.query.sql;
 
 import java.util.List;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: SQL set operation.
@@ -86,7 +85,7 @@ public class SQLSetOperation implements SQLExpressionIF {
       throw new OntopiaRuntimeException("Unsupported set operator: '" + operator + "'");
     }
     sb.append("(");
-    StringUtils.join(sets, op, sb);
+    sb.append(StringUtils.join(sets, op));
     sb.append(")");
     return sb.toString();
   }

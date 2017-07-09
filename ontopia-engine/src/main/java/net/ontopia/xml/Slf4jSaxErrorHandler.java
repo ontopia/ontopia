@@ -53,7 +53,7 @@ public class Slf4jSaxErrorHandler implements ErrorHandler {
       log.warn(e.toString());      
     }
     if (propval != null)
-      this.ignoreNamespaceErrors = PropertyUtils.isTrue(propval);
+      this.ignoreNamespaceErrors = Boolean.parseBoolean(propval);
   }
 
   /**

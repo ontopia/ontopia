@@ -27,9 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
 import junit.framework.TestCase;
+import net.ontopia.utils.StringUtils;
+import org.apache.commons.io.IOUtils;
 
 public abstract class AbstractContentStoreTest extends TestCase {
   protected ContentStoreIF store;
@@ -145,7 +145,7 @@ public abstract class AbstractContentStoreTest extends TestCase {
   protected void compare(int key, byte[] CONTENT)
     throws ContentStoreException, IOException {
     ContentInputStream cis = store.get(key);
-    byte[] content = StreamUtils.read(cis, cis.getLength());
+    byte[] content = IOUtils.toByteArray(cis);
     cis.close();
 
     assertTrue("Returned content of wrong length",

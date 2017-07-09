@@ -30,8 +30,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -113,10 +113,10 @@ public abstract class AbstractCanonicalExporterTests {
 
       // compare results
       URL baseline = new URL(inputFile, "../baseline/" + filename);
-      try (InputStream baselineIn = baseline.openStream()) {
+      try (InputStream baselineIn = baseline.openStream(); FileInputStream in = new FileInputStream(out)) {
         Assert.assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
                    + " != " + out + "), tmp=" + tmp,
-                StreamUtils.compareAndClose(new FileInputStream(out), baselineIn));
+                IOUtils.contentEquals(in, baselineIn));
       }
       // NOTE: we compare out/exp-* and baseline/*
   }

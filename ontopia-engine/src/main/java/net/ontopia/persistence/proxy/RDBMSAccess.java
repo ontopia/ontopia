@@ -28,10 +28,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.WeakHashMap;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.TraceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +68,7 @@ public class RDBMSAccess implements StorageAccessIF {
     this.mapping = storage.getMapping();
     
     // Enable or disable batch updates
-    if (PropertyUtils.isTrue(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates")))
+    if (Boolean.parseBoolean(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates")))
       batch_updates = true;
     
     handlers = new HashMap<Class<?>, ClassAccessIF>();

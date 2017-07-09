@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -43,8 +42,7 @@ import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringTemplateUtils;
-import net.ontopia.utils.StringUtils;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +73,7 @@ public class EvaluateLTM implements ActionIF {
       String strval = params.getStringValue();
       if (strval != null) {
         // escape quotes so LTM will parse correctly
-        String value = StringUtils.replace(strval, '"', "\"\"");
+        String value = StringUtils.replace(strval, "\"", "\"\"");
         values = Collections.singleton(value);
       }
     } else
@@ -124,7 +122,7 @@ public class EvaluateLTM implements ActionIF {
     LocatorIF base = topicmap.getStore().getBaseAddress();
     
     do {
-      id = StringUtils.makeRandomId(10);
+      id = net.ontopia.utils.StringUtils.makeRandomId(10);
       tmobj = topicmap.getObjectByItemIdentifier(base.resolveAbsolute("#" + id));
     } while (tmobj != null);
 
@@ -185,7 +183,7 @@ public class EvaluateLTM implements ActionIF {
       else if (key.equals("new"))
         o = randid;
       // keys of form newXXX where XXX is an integer
-      else if (key.startsWith("new") && StringUtils.isInteger(key.substring(3))) {
+      else if (key.startsWith("new") && isInteger(key.substring(3))) {
         if (newkeys.containsKey(key))
           o = newkeys.get(key);
         else {
@@ -215,5 +213,17 @@ public class EvaluateLTM implements ActionIF {
     public Set entrySet() {
       throw new net.ontopia.utils.OntopiaRuntimeException("INTERNAL ERROR");
     }
+  }
+  
+  /**
+   * INTERNAL: Returns true if the string is a valid integer.
+   */
+  private static boolean isInteger(String candidate) {
+    try {
+      Integer.parseInt(candidate);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }    
   }
 }

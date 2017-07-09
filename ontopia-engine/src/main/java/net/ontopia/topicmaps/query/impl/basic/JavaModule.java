@@ -25,10 +25,10 @@ import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.parser.ModuleIF;
 import net.ontopia.topicmaps.query.parser.PredicateIF;
-import net.ontopia.topicmaps.query.spi.SearcherIF;
 import net.ontopia.topicmaps.query.spi.JavaPredicate;
+import net.ontopia.topicmaps.query.spi.SearcherIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * EXPERIMENTAL: A query module that is able to instantiate predicates

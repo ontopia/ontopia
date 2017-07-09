@@ -22,12 +22,12 @@ package net.ontopia.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
@@ -52,45 +52,16 @@ public class PropertyUtils {
    * INTERNAL: Helper method used to get better error messages with
    * less typing.
    */
-  public static String getProperty(Map<String, String> properties, String name,
-                                   boolean required) {
+  public static String getProperty(Map<String, String> properties, String name, boolean required) {
     String value = properties.get(name);
-    if (value == null) {
-      if (!required)
-        return null;
-      else
-        throw new IllegalArgumentException("No value for required property '" +
-                                           name + "'");
+    if ((value == null) && required) {
+        throw new IllegalArgumentException("No value for required property '" + name + "'");
     }
     return value;
   }
-
-  /**
-   * INTERNAL: Helper method used to get the value of boolean
-   * properties. This method will return true if the property has the
-   * values 'yes', 'true'. Otherwise the default value is returned.
-   */
-  public static boolean isTrue(Map<String, String> properties, String name, boolean default_value) {
-    return isTrue(properties.get(name), default_value);
-  }
-  
-  /**
-   * INTERNAL: Same as isTrue(Map, String, boolean) with the default
-   * set to false;
-   */
-  public static boolean isTrue(Map<String, String> properties, String name) {
-    return isTrue(properties, name, false);
-  }
-  
-  public static boolean isTrue(String property_value) {
-    return isTrue(property_value, false);
-  }
   
   public static boolean isTrue(String property_value, boolean default_value) {
-    if (property_value == null)
-      return default_value;
-    else
-      return (property_value.equalsIgnoreCase("true") || property_value.equalsIgnoreCase("yes"));
+    return BooleanUtils.toBooleanDefaultIfNull(BooleanUtils.toBooleanObject(property_value), default_value);
   }
   
   /**
@@ -113,13 +84,6 @@ public class PropertyUtils {
     return Integer.parseInt(property_value);
   }
 
-  /**
-   * INTERNAL; Reads properties from a file. 
-   */
-  public static Properties loadProperties(String propfile) throws IOException {
-    return loadProperties(new File(propfile));
-  }
-  
   /**
    * INTERNAL; Reads properties from a file. 
    */

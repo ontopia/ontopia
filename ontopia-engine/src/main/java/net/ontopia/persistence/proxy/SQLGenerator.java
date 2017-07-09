@@ -22,9 +22,7 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
 import java.util.Iterator;
-
-import net.ontopia.utils.StringUtils;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

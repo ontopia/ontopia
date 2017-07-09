@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -34,7 +33,7 @@ import net.ontopia.topicmaps.query.parser.Parameter;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Object used to hold query results during computation.
@@ -686,7 +685,7 @@ public class QueryMatches {
   public String dump() {
     StringBuilder sb = new StringBuilder();
     sb.append("------------------------------------------------------------------------------\n");
-    StringUtils.join(columnDefinitions, " | ", sb);
+    sb.append(StringUtils.join(columnDefinitions, " | "));
     sb.append("\n");
     sb.append("------------------------------------------------------------------------------\n");
     for (int r=0; r <= last; r++) {

@@ -57,8 +57,8 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
       loadSpyDriver();
     }
 
-    username = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.UserName", false);
-    password = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.Password", false);
+    username = properties.get("net.ontopia.topicmaps.impl.rdbms.UserName");
+    password = properties.get("net.ontopia.topicmaps.impl.rdbms.Password");
   }
   
   public abstract Connection requestConnection() throws SQLException;

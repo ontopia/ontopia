@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import javax.servlet.jsp.PageContext;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
@@ -210,11 +209,11 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     if (shouldFail) {
       Assert.assertTrue("This testcase should have failed, but the result from the JSP file" +
                  " is the same as the baseline. [" + infile + "]",
-                 !FileUtils.compareFileToResource(outfile, infile));
+                 !TestFileUtils.compareFileToResource(outfile, infile));
     } else {
       Assert.assertTrue("Result from the JSP file is not the same as baseline. [" +
                  infile + "]",
-                 FileUtils.compareFileToResource(outfile, infile));
+                 TestFileUtils.compareFileToResource(outfile, infile));
     }
   }
 

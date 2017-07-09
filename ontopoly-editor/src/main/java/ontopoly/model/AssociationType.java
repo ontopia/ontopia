@@ -37,8 +37,8 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.ObjectIdComparator;
-import net.ontopia.utils.StringUtils;
 import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents an association type.

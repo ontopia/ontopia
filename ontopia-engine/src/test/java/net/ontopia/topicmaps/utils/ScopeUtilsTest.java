@@ -24,15 +24,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import junit.framework.TestCase;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.StringUtils;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.DeciderIF;
+import org.apache.commons.lang3.StringUtils;
 
 public class ScopeUtilsTest extends TestCase {
   protected TopicMapIF    topicmap; 

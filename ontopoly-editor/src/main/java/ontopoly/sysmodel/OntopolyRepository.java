@@ -46,11 +46,11 @@ import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
 import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
 import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
   
 /**
  * INTERNAL: Represents the system topic map describing all the topic
@@ -62,7 +62,7 @@ public class OntopolyRepository {
 
   private static final Comparator<TopicMapReference> REFERENCE_COMPARATOR = new Comparator<TopicMapReference>() {
     public int compare(TopicMapReference r1, TopicMapReference r2) {
-        return StringUtils.compareToIgnoreCase(r1.getName(), r2.getName());
+        return StringUtils.compareIgnoreCase(r1.getName(), r2.getName());
     }
   };
 

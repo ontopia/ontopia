@@ -20,14 +20,11 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.IOException;
-
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -38,11 +35,11 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
-import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.topicmaps.impl.utils.LocatorInterningTable;
-import net.ontopia.utils.UniqueSet;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.UniqueSet;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: The basic occurrence implementation.
@@ -148,7 +145,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     try {
-      setValue(StreamUtils.readString(value, length), datatype);
+      setValue(IOUtils.toString(value), datatype);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }

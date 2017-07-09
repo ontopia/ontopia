@@ -30,15 +30,13 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Parses menu configuration files.
@@ -192,7 +190,7 @@ public class MenuFileParser {
     Reader reader = new InputStreamReader(stream, "iso-8859-1");
 
     StringWriter writer = new StringWriter();
-    StreamUtils.transfer(reader, writer);
+    IOUtils.copy(reader, writer);
 
     stream.close();
 

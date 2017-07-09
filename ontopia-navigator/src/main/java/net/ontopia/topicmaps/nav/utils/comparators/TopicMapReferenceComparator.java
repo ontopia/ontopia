@@ -21,8 +21,8 @@
 package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.util.Comparator;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: A Comparator for ordering TopicMapReferences lexically. It
@@ -42,7 +42,7 @@ public class TopicMapReferenceComparator implements Comparator<TopicMapReference
   public int compare(TopicMapReferenceIF tmr1, TopicMapReferenceIF tmr2) {
     String title1 = tmr1.getTitle();
     String title2 = tmr2.getTitle();
-    return StringUtils.compareToIgnoreCase(title1, title2);
+    return StringUtils.compareIgnoreCase(title1, title2);
   }
   
 }

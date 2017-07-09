@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.StorePoolableObjectFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +90,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     this.pool = new GenericObjectPool(ofactory);
     this.pool.setTestOnBorrow(true);
 
-    Map properties = storage.getProperties();
+    Map<String, String> properties = storage.getProperties();
     if (properties != null) {
       // Set minimum pool size (default: 0)
       String _minsize = PropertyUtils.getProperty(properties,
@@ -106,8 +107,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
       pool.setMaxActive(maxsize); // 0 = no limit
 
       // Set soft maximum - emergency objects (default: false)
-      boolean softmax = PropertyUtils.isTrue(properties,
-          "net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum", false);
+      boolean softmax = MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum", false);
       log.debug("Setting StorePool.SoftMaximum '" + softmax + "'");
       if (softmax)
         pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);

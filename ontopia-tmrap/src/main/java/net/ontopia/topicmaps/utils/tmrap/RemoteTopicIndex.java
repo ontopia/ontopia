@@ -45,7 +45,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.InputSource;
 
 /**

@@ -29,10 +29,10 @@ import java.util.Iterator;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -319,7 +319,7 @@ public class DatabaseProjectReader {
         
         String pkeys = atts.getValue("pks");
         if (pkeys != null)
-          table.setPrimaryKeys(StringUtils.split(pkeys, " "));
+          table.setPrimaryKeys(StringUtils.split(pkeys));
 
         // Add table to project
         project.addTable(table);
@@ -453,7 +453,7 @@ public class DatabaseProjectReader {
     protected Map<String, String> parseAttribs(String content) {
       Map<String, String> result = new HashMap<String, String>();
       
-      String[] fields = StringUtils.split(content.toString(), "\n");
+      String[] fields = StringUtils.split(content.toString());
       for (int i=0; i < fields.length; i++) {
         String field = fields[i];
         String[] entry = StringUtils.split(field, "=");

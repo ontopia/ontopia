@@ -28,12 +28,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpSession;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,21 +44,16 @@ import org.slf4j.LoggerFactory;
 public class NamedLockManager {
 
   // initialization of logging facility
-  private static Logger logger = LoggerFactory.getLogger(NamedLockManager.class
-      .getName());
+  private static Logger logger = LoggerFactory.getLogger(NamedLockManager.class);
 
-  private Map locked;  // key: Object(locked object), value: UserIF
-  private Map nameLocks; // key: String(name), value: NamedLock
-  private Map userLocks; // key: UserIF(user), value: NamedLock[]
-  private Map objectLocks; // key: Object(locked object), value: NamedLock
+  private Map<Object, Object> locked = new ConcurrentHashMap<>();  // key: Object(locked object), value: UserIF
+  private Map<String, NamedLock> nameLocks = new ConcurrentHashMap<>(); // key: String(name), value: NamedLock
+  private Map<UserIF, Collection<NamedLock>> userLocks = new ConcurrentHashMap<>(); // key: UserIF(user), value: NamedLock[]
+  private Map<Object, NamedLock> objectLocks = new ConcurrentHashMap<>(); // key: Object(locked object), value: NamedLock
 
   private UniqueStringCreator suffixCreator = new UniqueStringCreator();
   
   public NamedLockManager() {
-    locked = CollectionUtils.createConcurrentMap();
-    nameLocks = CollectionUtils.createConcurrentMap();
-    userLocks = CollectionUtils.createConcurrentMap();
-    objectLocks = CollectionUtils.createConcurrentMap();
     logger.info("NamedLockManager initialised");
   }
   
@@ -94,9 +89,9 @@ public class NamedLockManager {
       logger.info("Registered locked objects under '" + name + "'.");
       
       // Update list of user's locks
-      Collection nlocks = (Collection)userLocks.get(user);
+      Collection nlocks = userLocks.get(user);
       if (nlocks == null) {
-        nlocks = CollectionUtils.createConcurrentSet();
+        nlocks = Collections.newSetFromMap(new ConcurrentHashMap<UserIF, Boolean>());
         userLocks.put(user, nlocks);
       }
       nlocks.add(nlock);

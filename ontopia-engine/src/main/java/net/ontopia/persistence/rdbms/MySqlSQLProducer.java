@@ -23,8 +23,7 @@ package net.ontopia.persistence.rdbms;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /** 
  * INTERNAL: Class that generates DDL statements for the mysql

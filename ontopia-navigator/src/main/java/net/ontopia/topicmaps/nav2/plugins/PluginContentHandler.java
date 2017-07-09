@@ -20,12 +20,12 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
-import net.ontopia.xml.SAXTracker;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
+import net.ontopia.xml.SAXTracker;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;

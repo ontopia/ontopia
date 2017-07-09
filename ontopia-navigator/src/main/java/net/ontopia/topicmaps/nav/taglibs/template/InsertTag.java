@@ -20,20 +20,17 @@
 
 package net.ontopia.topicmaps.nav.taglibs.template;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Stack;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.UserIF;
+import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
 /**
  * INTERNAL: Defines the template JSP to forward the request to, once

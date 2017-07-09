@@ -26,13 +26,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.StringUtils;
 import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents an association field.

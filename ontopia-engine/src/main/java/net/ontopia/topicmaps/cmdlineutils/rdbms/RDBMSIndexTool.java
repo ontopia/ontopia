@@ -42,7 +42,7 @@ import net.ontopia.persistence.rdbms.Table;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * EXPERIMENTAL: A tool that inspects a database to see if the proper

@@ -21,10 +21,8 @@ package ontopoly.utils;
 
 import java.io.Serializable;
 import java.util.Comparator;
-
 import ontopoly.model.Topic;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class TopicComparator implements Comparator<Topic>, Serializable {
 
@@ -40,7 +38,7 @@ public class TopicComparator implements Comparator<Topic>, Serializable {
       return 1;
     else if (t2 == null)
       return -1;
-    return StringUtils.compareToIgnoreCase(t1.getName(), t2.getName());
+    return StringUtils.compareIgnoreCase(t1.getName(), t2.getName());
   }
 
 }

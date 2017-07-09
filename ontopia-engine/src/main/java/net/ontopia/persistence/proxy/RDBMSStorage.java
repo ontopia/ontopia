@@ -50,7 +50,7 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -285,7 +285,7 @@ public class RDBMSStorage implements StorageIF {
         global_entry, Integer.parseInt(kbprop), database, properties);
     
     // Create query builders
-    this.sqlbuilder = new SQLBuilder(getMapping(), PropertyUtils.isTrue(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
+    this.sqlbuilder = new SQLBuilder(getMapping(), Boolean.parseBoolean(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
     this.sqlgen = GenericSQLGenerator.getSQLGenerator(getPlatforms(), properties);
     
     // Register jdbcspy driver

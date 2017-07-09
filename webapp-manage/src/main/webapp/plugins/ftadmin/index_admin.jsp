@@ -9,7 +9,7 @@
             net.ontopia.infoset.fulltext.core.*,
             net.ontopia.infoset.fulltext.impl.lucene.*,
             net.ontopia.infoset.fulltext.topicmaps.*,
-            net.ontopia.utils.FileUtils,
+			org.apache.commons.io.FileUtils,
             net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator" %>
 
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'     %>
@@ -51,7 +51,7 @@
             
             File alternative = new File(fullpath);
             if (alternative.exists()) {
-              FileUtils.deleteDirectory(alternative, true);
+              FileUtils.deleteDirectory(alternative);
             }
             
             report = "Deleted index of " + id + ". ";

@@ -28,8 +28,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,7 +106,7 @@ public class DB2TMRescanTestCase {
       Processor.synchronizeRelations(mapping, null, topicmap, baseloc);
 
       // Get rid of temporary target file
-      FileUtils.deleteFile(target);
+      FileUtils.forceDelete(after);
       
       // Export the result topic map to ltm, for manual inspection purposes.
       if (DEBUG_LTM) {
@@ -120,7 +120,7 @@ public class DB2TMRescanTestCase {
       // Check that the cxtm output matches the baseline.
       Assert.assertTrue("The canonicalized conversion from " + filename
           + " does not match the baseline: " + cxtm + " " + baseline,
-                 FileUtils.compareFileToResource(cxtm, baseline));
+                 TestFileUtils.compareFileToResource(cxtm, baseline));
     }
   
 }

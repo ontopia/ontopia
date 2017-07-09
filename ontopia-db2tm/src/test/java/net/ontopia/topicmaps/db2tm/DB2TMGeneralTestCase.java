@@ -27,7 +27,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -98,7 +97,7 @@ public class DB2TMGeneralTestCase {
       // Check that the cxtm output matches the baseline.
       Assert.assertTrue("The canonicalized conversion from " + filename
           + " does not match the baseline: " + cxtm + " " + baseline,
-                 FileUtils.compareFileToResource(cxtm, baseline));
+                 TestFileUtils.compareFileToResource(cxtm, baseline));
     }
 
 }

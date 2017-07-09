@@ -714,7 +714,7 @@ STRING :
  '"' (~('"' | '\n') | '\n' { newline(); } | '"' '"' { quoted = true; } )* '"'
  {
    if (quoted)
-     setText(net.ontopia.utils.StringUtils.replace(unescapeUnicode(new 
+     setText(org.apache.commons.lang3.StringUtils.replace(unescapeUnicode(new 
              String(text.getBuffer(), _begin+1, (text.length()-_begin)-2)), 
                      "\"\"", "\""));
    else

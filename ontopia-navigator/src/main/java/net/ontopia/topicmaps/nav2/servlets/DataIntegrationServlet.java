@@ -20,70 +20,42 @@
 
 package net.ontopia.topicmaps.nav2.servlets;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.io.CharArrayReader;
 import java.io.CharArrayWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.ContainmentDecider;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.entry.TopicMaps;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
-import net.ontopia.topicmaps.utils.IdentityUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.utils.QueryUtils;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerConfigurationException;
-
-import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.entry.TopicMaps;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.IdentityUtils;
+import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.utils.ContainmentDecider;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.StreamUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.FileOutputStream;
 
 /**
  * INTERNAL: Experimental data integration servlet.

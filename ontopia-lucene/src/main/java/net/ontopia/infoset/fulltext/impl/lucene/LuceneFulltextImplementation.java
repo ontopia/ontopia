@@ -33,8 +33,8 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.AbstractIndexManager;
 import net.ontopia.topicmaps.impl.utils.FulltextIndexManager;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
@@ -128,7 +128,7 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
 
     if ((directoryFile != null) && (directoryFile.exists())) {
       try {
-        FileUtils.deleteDirectory(directoryFile, true);
+        FileUtils.deleteDirectory(directoryFile);
       } catch (IOException ioe) {
         throw new OntopiaRuntimeException("Could not delete lucene index directory: " + ioe.getMessage(), ioe);
       }

@@ -37,19 +37,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Reads store configuration parameters from an XML
@@ -341,7 +340,7 @@ public class XMLConfigSource {
                 break;
               }
               else if (props[i].getPropertyType().equals(boolean.class)) {
-                setter.invoke(source, new Object[] {new Boolean(PropertyUtils.isTrue(param_value))});
+                setter.invoke(source, new Object[] {Boolean.parseBoolean(param_value)});
                 found_property = true;
                 break;
               }

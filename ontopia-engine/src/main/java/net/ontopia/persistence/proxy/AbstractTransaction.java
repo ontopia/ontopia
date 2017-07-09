@@ -27,9 +27,9 @@ import java.util.HashSet;
 import java.util.Map;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.ReferenceMap;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -524,9 +524,9 @@ public abstract class AbstractTransaction implements TransactionIF {
         IdentityIF key = entry.getKey();
         PersistentIF val = entry.getValue();
         out.write("<tr><td>");
-        out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
+        out.write((key == null ? "null" : net.ontopia.utils.StringUtils.escapeHTMLEntities(key.toString())));
         out.write("</td><td>");
-        out.write((val == null ? "null" : StringUtils.escapeHTMLEntities(val.toString())));
+        out.write((val == null ? "null" : net.ontopia.utils.StringUtils.escapeHTMLEntities(val.toString())));
         out.write("</td></tr>\n");
       }
       out.write("</table><br>\n");
