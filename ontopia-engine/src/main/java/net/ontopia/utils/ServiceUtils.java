@@ -48,20 +48,7 @@ public class ServiceUtils {
    * @throws IOException 
    */
   public static <T> Set<T> loadServices(Class<T> clazz) throws IOException {
-    return loadServices(clazz, SERVICES_ROOT + clazz.getName());
-  }
-
-  /**
-   * Calls {@link #loadServices(java.lang.Class, java.lang.String, java.lang.ClassLoader)}
-   * with the current Thread's context class loader.
-   * @param <T> The type of the services to load
-   * @param clazz The class that the services have to implement
-   * @param resource The name of the resource on the classpath to check for services
-   * @return The service instances found on the classpath
-   * @throws IOException 
-   */
-  public static <T> Set<T> loadServices(Class<T> clazz, String resource) throws IOException {
-    return loadServices(clazz, resource, Thread.currentThread().getContextClassLoader());
+    return loadServices(clazz, SERVICES_ROOT + clazz.getName(), Thread.currentThread().getContextClassLoader());
   }
 
   /**
@@ -76,7 +63,7 @@ public class ServiceUtils {
    * @return The service instances found on the classpath
    * @throws IOException 
    */
-  public static <T> Set<T> loadServices(Class<T> clazz, String resource, ClassLoader loader) throws IOException {
+  private static <T> Set<T> loadServices(Class<T> clazz, String resource, ClassLoader loader) throws IOException {
     Set<T> services = new HashSet<T>();
     Enumeration<URL> resources = loader.getResources(resource);
     while (resources.hasMoreElements()) {
@@ -97,7 +84,7 @@ public class ServiceUtils {
    * @return The service instances found in the resource
    * @throws IOException 
    */
-  public static <T> Set<T> loadServices(URL resource, Class<T> clazz, ClassLoader loader) throws IOException {
+  private static <T> Set<T> loadServices(URL resource, Class<T> clazz, ClassLoader loader) throws IOException {
     Set<T> services = new HashSet<T>();
     BufferedReader reader = null;
     try {
