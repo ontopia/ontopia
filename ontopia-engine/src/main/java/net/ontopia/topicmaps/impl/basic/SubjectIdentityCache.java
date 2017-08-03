@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import java.util.Collection;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.utils.AbstractSubjectIdentityCache;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.utils.CollectionFactoryIF;
 
 /**
@@ -96,6 +96,18 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     return subject_indicators.get(locator);    
+  }
+
+  // --------------------------------------------------------------------------
+  // IdentifierIndexIF lookup methods
+  // --------------------------------------------------------------------------
+
+  public Collection<LocatorIF> getItemIdentifiers() {
+    return source_locators.keySet();
+  }
+
+  public Collection<LocatorIF> getSubjectIdentifiers() {
+    return subject_indicators.keySet();
   }
 
   // --------------------------------------------------------------------------

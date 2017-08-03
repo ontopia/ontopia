@@ -27,6 +27,7 @@ import net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapTransaction;
 import net.ontopia.topicmaps.core.TransactionNotActiveException;
+import net.ontopia.topicmaps.core.index.IdentifierIndexIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 import net.ontopia.topicmaps.impl.utils.AbstractIndexManager;
@@ -60,6 +61,8 @@ public class IndexManager extends AbstractIndexManager {
                 new StatisticsIndex(this));
     indexes.put("net.ontopia.infoset.fulltext.core.SearcherIF",
                 new RDBMSSearcher((RDBMSTopicMapTransaction)transaction));
+    indexes.put(IdentifierIndexIF.class.getName(),
+                new IdentifierIndex(this));
   }
 
   public TopicMapTransactionIF getTransaction() {

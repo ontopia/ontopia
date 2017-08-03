@@ -75,7 +75,7 @@ public class InMemoryTopicMapTransaction extends AbstractTopicMapTransaction {
     ((TopicMap)topicmap).setSubjectIdentityCache(sicache);
 
     // Create new index manager
-    this.imanager = new IndexManager(this, cfactory, emanager, otree);
+    this.imanager = new IndexManager(this, cfactory, emanager, otree, sicache);
   }
 
   public boolean validate() {
