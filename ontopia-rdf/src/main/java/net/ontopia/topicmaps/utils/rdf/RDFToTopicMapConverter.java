@@ -124,6 +124,33 @@ public class RDFToTopicMapConverter {
 
   /**
    * EXPERIMENTAL: Converts an RDF model into the topic map using the
+   * given mapping.
+   * @param input the InputStream to read the input data from
+   * @param syntax the syntax of the input data. Values are "RDF/XML", "N3",
+   *               and "N-TRIPLE". Defaults to "RDF/XML" if null.
+   * @param mappingurl the URL to read the mapping from. If null the mapping
+   *                   is taken from the input data.
+   * @param mappingsyntax the syntax of the mapping. Values are "RDF/XML", "N3",
+   *                   and "N-TRIPLE". Defaults to "RDF/XML" if null.
+   * @param topicmap The topic map to add the converted data to.
+   * @param lenient When false, errors are thrown if the RDF data cannot be
+   *        correctly mapped (for example, a statement type is mapped to a
+   *        topic name, but has a URI value).
+   */
+  public static void convert(InputStream input, String syntax,
+                             String mappingurl, String mappingsyntax,
+                             TopicMapIF topicmap, boolean lenient)
+    throws JenaException, IOException {
+
+    RDFToTopicMapConverter converter =
+      new RDFToTopicMapConverter(mappingurl, mappingsyntax, topicmap);
+    converter.setLenient(lenient);
+    converter.doConversion(input, syntax);
+
+  }
+
+  /**
+   * EXPERIMENTAL: Converts an RDF model into the topic map using the
    * mapping found within the RDF model.
    */
   public static void convert(Model model, TopicMapIF topicmap)
@@ -230,6 +257,22 @@ public class RDFToTopicMapConverter {
     else {
       Model model = ModelFactory.createDefaultModel();
       model.read(url.openStream(), url.toString(), syntax);
+      if (mappings == null)
+        buildMappings(model);
+
+      doConversion(model);
+    }
+  }
+
+  private void doConversion(InputStream input, String syntax)
+    throws JenaException, IOException {
+
+    if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
+      RDFUtils.parseRDFXML(input, new ToTMStatementHandler());
+
+    else {
+      Model model = ModelFactory.createDefaultModel();
+      model.read(input, input.toString(), syntax);
       if (mappings == null)
         buildMappings(model);
 

@@ -59,4 +59,22 @@ public class RDFUtils {
         in.close();
     }
   }
+
+  /**
+   * Parses the RDF/XML at the given InputStream into the given StatementHandler.
+   */
+  public static void parseRDFXML(InputStream in, StatementHandler handler)
+    throws IOException {
+    ARP parser = new ARP();
+    parser.getHandlers().setStatementHandler(handler);
+
+    try {
+      parser.load(in);
+    } catch (org.xml.sax.SAXException e) {
+      throw new OntopiaRuntimeException(e);
+    } finally {
+      if (in != null)
+        in.close();
+    }
+  }
 }

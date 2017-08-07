@@ -23,11 +23,13 @@ package net.ontopia.topicmaps.utils.rdf;
 import com.hp.hpl.jena.shared.JenaException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
@@ -52,12 +54,14 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
   public static final String PROPERTY_MAPPING_URL = "mappingURL";
   public static final String PROPERTY_MAPPING_SYNTAX = "mappingSyntax";
   protected URL infileurl;
+  protected InputStream inputStream;
   protected String syntax;
   protected URL mappingurl;
   protected String mappingsyntax;
   protected boolean duplicate_suppression;
   protected boolean generate_names;
   protected boolean lenient;
+  protected LocatorIF baseAddress;
 
   /**
    * PUBLIC: Creates a reader that will read RDF/XML from the given file.
@@ -91,6 +95,17 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    */
   public RDFTopicMapReader(URL infileurl, String syntax) {
     this.infileurl = infileurl;
+    this.syntax = syntax;
+  }
+
+  /**
+   * PUBLIC: Creates a reader that will read RDF from the given InputStream in
+   * the indicated syntax.
+   * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
+   *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
+   */
+  public RDFTopicMapReader(InputStream inputStream, String syntax) {
+    this.inputStream = inputStream;
     this.syntax = syntax;
   }
 
@@ -162,13 +177,27 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
   public void setLenient(boolean lenient) {
     this.lenient = lenient;
   }
+
+  /**
+   * PUBLIC: Sets the base address of the topic maps retrieved from
+   * the source.
+   */
+  public void setBaseAddress(LocatorIF baseAddress) {
+    this.baseAddress = baseAddress;
+  }
   
   // --- TopicMapReaderIF implementation
   
   public TopicMapIF read() throws IOException {
     TopicMapIF topicmap = new InMemoryTopicMapStore().getTopicMap();
+    
+    LocatorIF base = baseAddress;
+    if ((baseAddress == null) && (infileurl != null)){
+      base = new URILocator(infileurl);
+    }
+    
     ((InMemoryTopicMapStore) topicmap.getStore()).
-      setBaseAddress(new URILocator(infileurl));
+      setBaseAddress(base);
     importInto(topicmap);
     return topicmap;
   }
@@ -181,8 +210,13 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
 
   public void importInto(TopicMapIF topicmap) throws IOException {
     try {
-      RDFToTopicMapConverter.convert(infileurl, syntax, mappingurl == null ? null : mappingurl.toString(), 
-                                     mappingsyntax, topicmap, lenient);
+      if (inputStream != null) {
+        RDFToTopicMapConverter.convert(inputStream, syntax, mappingurl == null ? null : mappingurl.toString(), 
+                                       mappingsyntax, topicmap, lenient);
+      } else {
+        RDFToTopicMapConverter.convert(infileurl, syntax, mappingurl == null ? null : mappingurl.toString(), 
+                                       mappingsyntax, topicmap, lenient);
+      }
       if (generate_names)
         RDFToTopicMapConverter.generateNames(topicmap);
     } catch (JenaException e) {

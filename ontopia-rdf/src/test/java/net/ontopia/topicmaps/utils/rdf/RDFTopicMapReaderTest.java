@@ -53,6 +53,23 @@ public class RDFTopicMapReaderTest {
   }
     
   @Test  
+  public void testInputStream() throws IOException {
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "various", "simple-foaf.rdf");
+    URL map = TestFileUtils.getTestInputURL(testdataDirectory, "various", "simple-foaf-map.rdf");
+    File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "simple-foaf.rdf");
+    String base = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "simple-foaf.rdf");
+    
+    RDFTopicMapReader reader = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in).openStream(), null);
+    reader.setMappingURL(map);
+    TopicMapIF tm = reader.read();
+    new CanonicalTopicMapWriter(out).write(tm);
+      
+    // compare results
+    Assert.assertTrue("Wrong canonicalization using external mapping file",
+               TestFileUtils.compareFileToResource(out, base));    
+  }
+    
+  @Test  
   public void testBug1317() throws IOException {
     String in = TestFileUtils.getTestInputFile(testdataDirectory, "various", "simple-foaf.rdf");
     URL map = TestFileUtils.getTestInputURL(testdataDirectory, "various", "simple-foaf-map-2.rdf");
