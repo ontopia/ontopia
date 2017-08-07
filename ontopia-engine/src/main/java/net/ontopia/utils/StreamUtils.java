@@ -74,6 +74,8 @@ public class StreamUtils {
         istream = new FileInputStream(f);
       } else
         throw new IOException("File '" + f + "' not found.");
+    } else if (name.startsWith("jar:")) {
+      return new URL(name).openStream();
     } else {
       File f = makeFile(basedir, name);
       if (f.exists()) {
@@ -121,6 +123,8 @@ public class StreamUtils {
         url = URIUtils.toURL(f);
       } else
         throw new IOException("File '" + f + "' not found.");
+    } else if (name.startsWith("jar:")) {
+      return new URL(name);
     } else {
       File f = new File(name);
       if (f.exists()) {
