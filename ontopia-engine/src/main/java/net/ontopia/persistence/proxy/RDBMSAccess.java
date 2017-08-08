@@ -51,7 +51,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSMapping mapping;
   
   protected Connection conn_;
-  protected ThreadLocal<Connection> conn_map = new ThreadLocal<Connection>();
+  protected ThreadLocal<Connection> conn_map = new InheritableThreadLocal<>();
 
   protected boolean closed;
   
