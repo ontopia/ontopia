@@ -160,6 +160,14 @@ public class RDBMSAccess implements StorageAccessIF {
     else
       return false;    
   }
+
+  /**
+   * INTERNAL: exposes the ThreadLocal of connections cached in this access.
+   * @since %NEXT%
+   */
+  public ThreadLocal<Connection> getConnections() {
+    return conn_map;
+  }
   
   // -----------------------------------------------------------------------------
   // Handlers

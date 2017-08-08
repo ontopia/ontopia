@@ -733,4 +733,12 @@ public class RDBMSStorage implements StorageIF {
   void transactionClosed(AbstractTransaction transaction) {
     transactions.remove(transaction);
   }
+
+  /**
+   * INTERNAL: exposes the set of active transactions.
+   * @since %NEXT%
+   */
+  public Set<AbstractTransaction> getTransactions() {
+    return transactions;
+  }
 }
