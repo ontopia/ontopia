@@ -300,21 +300,6 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
-  public void releaseConnection() {
-    try {
-      if (!isReadOnly() && (conn_ != null)) {
-        resetConnection();
-      } else if (isReadOnly()) {
-        Connection conn = getConn();
-        if (conn != null) {
-          conn.close();
-        }
-      }
-    } catch (SQLException sqle) {
-      throw new OntopiaRuntimeException(sqle);
-    }
-  }
-
   public void flush() {
     // Return if nothing to flush
     if (flushable.isEmpty()) return;
