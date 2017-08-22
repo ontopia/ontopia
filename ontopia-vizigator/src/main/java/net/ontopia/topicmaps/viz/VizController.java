@@ -57,6 +57,7 @@ import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
 import com.touchgraph.graphlayout.TGPanel;
 import com.touchgraph.graphlayout.graphelements.Locality;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
