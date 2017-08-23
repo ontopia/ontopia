@@ -113,26 +113,38 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     pageName = pageName.substring(pageName.lastIndexOf('/') + 1);
 
     log.debug("Visiting " + pageName);
-    if (pageName.equals("index.jsp"))
-      visitIndex();
-    else if (pageName.equals("main.jsp"))
-      visitMain();
-    else if (pageName.equals("password.jsp"))
-      visitPassword();
-    else if (pageName.equals("privilege.jsp"))
-      visitPrivilege();
-    else if (pageName.equals("privileges.jsp"))
-      visitPrivileges();
-    else if (pageName.equals("user.jsp"))
-      visitUser();
-    else if (pageName.equals("users.jsp"))
-      visitUsers();
-    else if (pageName.equals("userGroup.jsp"))
-      visitUserGroup();
-    else if (pageName.equals("userGroups.jsp"))
-      visitUserGroups();
-    else
-      log.debug("Don't recognize " + pageName);
+    switch (pageName) {
+      case "index.jsp":
+        visitIndex();
+        break;
+      case "main.jsp":
+        visitMain();
+        break;
+      case "password.jsp":
+        visitPassword();
+        break;
+      case "privilege.jsp":
+        visitPrivilege();
+        break;
+      case "privileges.jsp":
+        visitPrivileges();
+        break;
+      case "user.jsp":
+        visitUser();
+        break;
+      case "users.jsp":
+        visitUsers();
+        break;
+      case "userGroup.jsp":
+        visitUserGroup();
+        break;
+      case "userGroups.jsp":
+        visitUserGroups();
+        break;
+      default:
+        log.debug("Don't recognize " + pageName);
+        break;
+    }
   }
   
   /**
@@ -309,8 +321,8 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
    */
   public void clickFiltered(WebLink link) throws IOException, SAXException {
     String text = link.asText();
-    if (!(text.equals("John Doe") || text.equals("Gold Users") 
-        || text.equals("Private Administrative Users"))) {
+    if (!("John Doe".equals(text) || "Gold Users".equals(text) 
+        || "Private Administrative Users".equals(text))) {
       log.debug("Clicing Link: " + text);
       link.click();
       resp = wc.getCurrentPage();

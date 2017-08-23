@@ -105,7 +105,7 @@ public class URIFragmentLocator extends AbstractLocator {
       // there were slashes, use constructor for unnormalized URIs,
       // so that the normalizer resolves the directory for us
       // (also do this if rel is "." or "..")
-      if (ix < length || rel.equals(".") || rel.equals("..")) {
+      if (ix < length || ".".equals(rel) || "..".equals(rel)) {
         if (lastSlash == -1) // no directory part
           return new URILocator(address.substring(0, authorityEnd + 1) + rel);
         else

@@ -95,13 +95,13 @@ public class PredicateFactory implements PredicateFactoryIF {
   }
   
   public ModuleIF createModule(String uri) {
-    if (uri.equals(ExperimentalModule.MODULE_URI))
+    if (ExperimentalModule.MODULE_URI.equals(uri))
       return new ExperimentalModule();
-    else if (uri.equals(StringModule.MODULE_URI))
+    else if (StringModule.MODULE_URI.equals(uri))
       return new StringModule();
     else if (uri.startsWith(JavaModule.MODULE_PREFIX))
       return new JavaModule(topicmap, uri);
-    else if (uri.equals(NumbersModule.MODULE_URI))
+    else if (NumbersModule.MODULE_URI.equals(uri))
       return new NumbersModule();
     else
       return null;
@@ -117,20 +117,16 @@ public class PredicateFactory implements PredicateFactoryIF {
     private static final String MODULE_URI = "http://psi.ontopia.net/tolog/experimental/";
     
     public PredicateIF getPredicate(String name) {
-      if (name.equals("in"))
-        return new InPredicate();
-      else if (name.equals("gt"))
-        return new GreaterThanPredicate();
-      else if (name.equals("lt"))
-        return new LessThanPredicate();
-      else if (name.equals("gteq"))
-        return new GreaterThanEqualsPredicate();
-      else if (name.equals("lteq"))
-        return new LessThanEqualsPredicate();
-      else if (name.equals("name"))
-        return new NamePredicate();
-      else
-        return null;
+      if (null == name) return null;
+      else switch (name) {
+        case "in":   return new InPredicate();
+        case "gt":   return new GreaterThanPredicate();
+        case "lt":   return new LessThanPredicate();
+        case "gteq": return new GreaterThanEqualsPredicate();
+        case "lteq": return new LessThanEqualsPredicate();
+        case "name": return new NamePredicate();
+        default:     return null;
+      }
     }
   }
 

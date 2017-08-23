@@ -390,7 +390,7 @@ public class TreeWidget {
             + (level * 30) + " height=5>" + "<img border=0 src=" + imageurl
             + "boxed.gif>");
       else
-        renderNodeButton(topline, level, action.equals("open") ? OPEN : CLOSE,
+        renderNodeButton(topline, level, "open".equals(action) ? OPEN : CLOSE,
             id, writer);
 
       writer.write("<a name=" + id + "></a>");
@@ -417,13 +417,13 @@ public class TreeWidget {
     if (action == null)
       action = "close";
 
-    if (action.equals("open"))
+    if ("open".equals(action))
       return OPEN;
-    else if (action.equals("close"))
+    else if ("close".equals(action))
       return CLOSE;
-    else if (action.equals("expandall"))
+    else if ("expandall".equals(action))
       return EXPAND_ALL;
-    else if (action.equals("closeall"))
+    else if ("closeall".equals(action))
       return CLOSE_ALL;
     else
       return -1;

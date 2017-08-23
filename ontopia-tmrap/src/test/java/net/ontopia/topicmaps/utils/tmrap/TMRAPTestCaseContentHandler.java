@@ -85,9 +85,9 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
 
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) {
-    if (qname.equals("tests"))
+    if ("tests".equals(qname))
       tests = new ArrayList();
-    if (qname.equals("test")) {    
+    if ("test".equals(qname)) {    
       String id = attrs.getValue("id");
       String edit = attrs.getValue("edit");
       String uri = attrs.getValue("uri");

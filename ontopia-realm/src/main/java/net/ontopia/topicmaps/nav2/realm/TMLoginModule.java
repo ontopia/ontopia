@@ -262,14 +262,14 @@ public class TMLoginModule implements LoginModule {
   public static String hashPassword(String username, String password,
                                     String hashMethod) {
     String encodedPassword;
-    if (hashMethod.equals("base64")) {
+    if ("base64".equals(hashMethod)) {
       try {
         encodedPassword = Base64.encodeBase64String((username+password).getBytes("ISO-8859-1"));
       } catch (Exception e) {
         throw new OntopiaRuntimeException(
                 "Problem occurred when attempting to hash password", e);
       }
-    } else if (hashMethod.equals("md5")) {
+    } else if ("md5".equals(hashMethod)) {
       try {
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] digest = messageDigest.digest((username+password).getBytes("ISO-8859-1"));
@@ -278,7 +278,7 @@ public class TMLoginModule implements LoginModule {
         throw new OntopiaRuntimeException(
                 "Problems occurrend when attempting to hash password", e);
       }
-    } else if (hashMethod.equals("plaintext")) {
+    } else if ("plaintext".equals(hashMethod)) {
       encodedPassword = password;
     } else {
       throw new OntopiaRuntimeException("Invalid password encoding: "

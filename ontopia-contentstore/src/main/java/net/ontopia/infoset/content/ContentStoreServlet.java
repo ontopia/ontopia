@@ -81,9 +81,9 @@ public class ContentStoreServlet extends HttpServlet {
 
     if (request.getParameter("view") != null) {
       String value = request.getParameter("ctype").trim().toLowerCase();
-      if (value.equals("true"))
+      if ("true".equals(value))
         view = true;
-      else if (!value.equals("false"))
+      else if (!"false".equals(value))
         throw new ServletException("Request parameter 'view' must hold 'true' or 'false'");
     }
     

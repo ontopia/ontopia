@@ -1347,7 +1347,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
         }
       }
     } else {
-      if (fname.equals(">") || fname.equals(">=") || fname.equals("<=") || fname.equals("<")) {
+      if (">".equals(fname) || ">=".equals(fname) || "<=".equals(fname) || "<".equals(fname)) {
         referenceSQLValueIFOpBinary(args[0], fname, args[1], sql, info);
       } else {
         sql.append(func.getName()).append('(');
@@ -1999,15 +1999,15 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   public static SQLGeneratorIF getSQLGenerator(String platform, Map properties) {
     // ADD: sapdb, firebird
-    if (platform.equals("generic"))
+    if ("generic".equals(platform))
       return new GenericSQLGenerator(properties);
     else if (platform.startsWith("oracle"))
       return new OracleSQLGenerator(properties);
-    else if (platform.equals("postgresql"))
+    else if ("postgresql".equals(platform))
       return new PostgreSQLGenerator(properties);
-    else if (platform.equals("sqlserver"))
+    else if ("sqlserver".equals(platform))
       return new SQLServerSQLGenerator(properties);
-    else if (platform.equals("mysql"))
+    else if ("mysql".equals(platform))
       return new MySQLGenerator(properties);
     else
       return null;

@@ -2284,19 +2284,19 @@ public class TopicMapView {
     private boolean reportAndCrash = false;
 
     protected void execute(String operation) {
-      if (operation.equals("count"))
+      if ("count".equals(operation))
         counts();
-      if (operation.equals("gc"))
+      if ("gc".equals(operation))
         collectGarbage();
-      if (operation.equals("paint"))
+      if ("paint".equals(operation))
         paintNodes(true);
-      if (operation.equals("paint-h"))
+      if ("paint-h".equals(operation))
         paintNodes(false);
-      if (operation.equals("paint-all"))
+      if ("paint-all".equals(operation))
         paintNodes();
-      if (operation.equals("assoc-v"))
+      if ("assoc-v".equals(operation))
         outputAssociaitonNames(true);
-      if (operation.equals("h-assoc-h"))
+      if ("h-assoc-h".equals(operation))
         outputAssociaitonNames(false);
     }
 

@@ -189,7 +189,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
       // there were slashes, use constructor for unnormalized URIs,
       // so that the normalizer resolves the directory for us
       // (also do this if rel is "." or "..")
-      if (ix < length || rel.equals(".") || rel.equals("..")) {
+      if (ix < length || ".".equals(rel) || "..".equals(rel)) {
         if (lastSlash == -1) // no directory part
           // the "/" here is important, as it was normalized away and needs
           // to be added back

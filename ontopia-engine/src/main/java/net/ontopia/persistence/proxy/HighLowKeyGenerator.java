@@ -112,12 +112,12 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     // not all databases support this.
     
     String sql_select;
-    if (lkw == null && (database.equals("sqlserver"))) {
+    if (lkw == null && ("sqlserver".equals(database))) {
       sql_select = "select " + valcol + " from " + table + " with (XLOCK) where " + keycol + " = ?";
       
     } else {
       if (lkw == null) {      
-        if (database.equals("sapdb"))
+        if ("sapdb".equals(database))
           lkw = "with lock";
         else 
           lkw = "for update";

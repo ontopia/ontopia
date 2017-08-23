@@ -155,8 +155,8 @@ public class FakeServletContext implements ServletContext {
     for (String component : components) {
       logger.debug(" - comp: " + component);
       logger.debug(" - current " + current);
-      if (component.equals("") || component.equals(".")) {
-      } else if (component.equals("..")) {
+      if ("".equals(component) || ".".equals(component)) {
+      } else if ("..".equals(component)) {
         current = current.getParentFile();
       } else {
         current = new File(current, component);

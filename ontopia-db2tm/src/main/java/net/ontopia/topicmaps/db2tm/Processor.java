@@ -114,8 +114,8 @@ public class Processor {
       // figure out the commit mode
       String cm = rmapping.getCommitMode();
       if (cm != null) {
-        if (cm.equals("relation")) topLevelCommitMode = RELATIONAL_COMMIT_MODE;
-        if (cm.equals("tuple")) topLevelCommitMode = TUPLE_COMMIT_MODE;
+        if ("relation".equals(cm)) topLevelCommitMode = RELATIONAL_COMMIT_MODE;
+        if ("tuple".equals(cm)) topLevelCommitMode = TUPLE_COMMIT_MODE;
         if (cm.startsWith("count:")) {
           topLevelCommitMode = COUNT_COMMIT_MODE;
           topLevelCommitCount = Integer.parseInt(cm.substring(6));
@@ -160,8 +160,8 @@ public class Processor {
             usedCommitMode = topLevelCommitMode;
             usedCommitCount = topLevelCommitCount;
           } else {
-            if (cm.equals("relation")) usedCommitMode = RELATIONAL_COMMIT_MODE;
-            if (cm.equals("tuple")) usedCommitMode = TUPLE_COMMIT_MODE;
+            if ("relation".equals(cm)) usedCommitMode = RELATIONAL_COMMIT_MODE;
+            if ("tuple".equals(cm)) usedCommitMode = TUPLE_COMMIT_MODE;
             if (cm.startsWith("count:")) {
               usedCommitMode = COUNT_COMMIT_MODE;
               usedCommitCount = Integer.parseInt(cm.substring(6));

@@ -98,7 +98,7 @@ public class ScopeUtilsTest extends TestCase {
     String[] tokens = StringUtils.split(spec, ",");
     for (int ix = 0; ix < tokens.length; ix++) {
       String token = tokens[ix].trim();
-      if (!token.equals("")) 
+      if (!token.isEmpty()) 
         scope.add(getTopic(token));
     }
     return scope;

@@ -70,7 +70,7 @@ public class QueryDeclarations {
     }
 
     public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
-      if (name.equals("query")) {
+      if ("query".equals(name)) {
         // Get query name
         String query_name = atts.getValue("name");
         if (query_name == null) 
@@ -100,7 +100,7 @@ public class QueryDeclarations {
 	}
 
       }
-      else if (name.equals("select")) {
+      else if ("select".equals(name)) {
 
         // Get class type
         String klass = atts.getValue("class");
@@ -118,11 +118,11 @@ public class QueryDeclarations {
           }
         }
       }
-      else if (name.equals("param")) {
+      else if ("param".equals(name)) {
         // Add parameter class
         params.add(getClassByName(atts.getValue("class")));
       }
-      else if (name.equals("statement")) {
+      else if ("statement".equals(name)) {
         // Get statement platform       
         String platform = atts.getValue("platform");
         if (platform == null) 
@@ -137,7 +137,7 @@ public class QueryDeclarations {
         // Add query statement
         qdesc.addStatement(platforms, query);
       }
-      else if (name.equals("class-indicator")) {
+      else if ("class-indicator".equals(name)) {
         // Get indicator name
         indname = atts.getValue("name");
         if (indname == null) 
@@ -145,7 +145,7 @@ public class QueryDeclarations {
 
         indics = new HashMap<String, Class<?>>();
       }
-      else if (name.equals("indicator")) {
+      else if ("indicator".equals(name)) {
         // Get indicator token
         String token = atts.getValue("token");
         if (token == null) 
@@ -157,7 +157,7 @@ public class QueryDeclarations {
         // Put indicator on map
         indics.put(token, klass);
       }
-      else if (name.equals("queries")) {
+      else if ("queries".equals(name)) {
         // Ignore
       }
       else {
@@ -166,7 +166,7 @@ public class QueryDeclarations {
     }
 
     public void endElement (String uri, String name, String qName) throws SAXException {
-      if (name.equals("query")) {
+      if ("query".equals(name)) {
         // Set query selects
         qdesc.setSelects(selects);
         
@@ -181,7 +181,7 @@ public class QueryDeclarations {
         selects = null;
         params = null;
       } 
-      else if (name.equals("class-indicator")) {
+      else if ("class-indicator".equals(name)) {
         // Register class indicator with query declaration manager
         addIndicator(indname, indics);
         // Reset handler fields

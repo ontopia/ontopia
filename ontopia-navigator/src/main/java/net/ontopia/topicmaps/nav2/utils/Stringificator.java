@@ -208,7 +208,7 @@ public final class Stringificator {
     protected String getValue(String value) {
       if (value == null)
         return stringValueNull;
-      else if (value.equals(""))
+      else if (value.isEmpty())
         return stringValueEmpty;
       else
         return value;

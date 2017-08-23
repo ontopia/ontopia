@@ -60,10 +60,10 @@ public class ModuleContentHandler extends JSPContentHandler {
 
   public void startElement(String uri, String lname, String qname,
                            Attributes atts) throws SAXException {
-    if (qname.equals("module")) {
+    if ("module".equals(qname)) {
       // root level element found
       // only allowed element herein is: <function>
-    } else if (qname.equals("function")) {
+    } else if ("function".equals(qname)) {
       // a new function definition starts
       root = new JSPTreeNode("ROOT", null);
       current = root;

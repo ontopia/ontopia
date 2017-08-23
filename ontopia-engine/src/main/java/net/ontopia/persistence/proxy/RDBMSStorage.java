@@ -246,32 +246,50 @@ public class RDBMSStorage implements StorageIF {
     // Get platforms
     String _platforms = getProperty("net.ontopia.topicmaps.impl.rdbms.Platforms");
     if (_platforms == null) {
-      if (database.equals("oracle") || database.equals("oracle8") || database.equals("oracle8i"))
-        _platforms = "oracle8,oracle,generic";
-      else if (database.equals("oracle9") || database.equals("oracle9i"))
-        _platforms = "oracle9i,oracle,generic";
-      else if (database.equals("oracle10") || database.equals("oracle10g"))
-        _platforms = "oracle10g,oracle,generic";
-      else if (database.equals("postgresql"))
-        _platforms = "postgresql,generic";
-      else if (database.equals("mysql"))
-        _platforms = "mysql,generic";
-      else if (database.equals("db2"))
-        _platforms = "db2,generic";
-      else if (database.equals("sapdb"))
-        _platforms = "sabdb,generic";
-      else if (database.equals("firebird"))
-        _platforms = "firebird,generic";
-      else if (database.equals("derby"))
-        _platforms = "derby,generic";
-      else if (database.equals("sqlserver"))
-        _platforms = "sqlserver,generic";
-      else if (database.equals("h2"))
-        _platforms = "h2,generic";
-      else if (database.equals("generic"))
-        _platforms = "generic";
-      else
-        throw new OntopiaRuntimeException("The datatype type is unknown and the property 'net.ontopia.topicmaps.impl.rdbms.Platforms' is not set.");
+      switch (database) {
+        case "oracle":
+        case "oracle8":
+        case "oracle8i":
+          _platforms = "oracle8,oracle,generic";
+          break;
+        case "oracle9":
+        case "oracle9i":
+          _platforms = "oracle9i,oracle,generic";
+          break;
+        case "oracle10":
+        case "oracle10g":
+          _platforms = "oracle10g,oracle,generic";
+          break;
+        case "postgresql":
+          _platforms = "postgresql,generic";
+          break;
+        case "mysql":
+          _platforms = "mysql,generic";
+          break;
+        case "db2":
+          _platforms = "db2,generic";
+          break;
+        case "sapdb":
+          _platforms = "sabdb,generic";
+          break;
+        case "firebird":
+          _platforms = "firebird,generic";
+          break;
+        case "derby":
+          _platforms = "derby,generic";
+          break;
+        case "sqlserver":
+          _platforms = "sqlserver,generic";
+          break;
+        case "h2":
+          _platforms = "h2,generic";
+          break;
+        case "generic":
+          _platforms = "generic";
+          break;
+        default:
+          throw new OntopiaRuntimeException("The datatype type is unknown and the property 'net.ontopia.topicmaps.impl.rdbms.Platforms' is not set.");
+      }
     }    
     this.platforms = StringUtils.split(_platforms, ",");
     

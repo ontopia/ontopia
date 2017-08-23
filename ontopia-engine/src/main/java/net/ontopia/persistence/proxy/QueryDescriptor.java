@@ -174,16 +174,13 @@ public class QueryDescriptor {
   }
 
   protected DetachedQueryIF createDetachedQuery(SQLStatementIF stm, String type, boolean lookup_identities) {
-    if (type.equals("object"))
-      return new RDBMSObjectQuery(stm, lookup_identities);
-    else if (type.equals("collection"))
-      return new RDBMSCollectionQuery(stm, lookup_identities);
-    else if (type.equals("matrix"))
-      return new RDBMSMatrixQuery(stm, lookup_identities);
-    else if (type.equals("map"))
-      return new RDBMSMapQuery(stm, lookup_identities);
-    else
-      throw new OntopiaRuntimeException("Invalid query type: " + type);
+    switch (type) {
+      case "object": return new RDBMSObjectQuery(stm, lookup_identities);
+      case "collection": return new RDBMSCollectionQuery(stm, lookup_identities);
+      case "matrix": return new RDBMSMatrixQuery(stm, lookup_identities);
+      case "map": return new RDBMSMapQuery(stm, lookup_identities);
+      default: throw new OntopiaRuntimeException("Invalid query type: " + type);
+    }
   }
   
   protected FieldHandlerIF[] getSelectFieldHandlers(ObjectRelationalMappingIF mapping, SelectField[] selects) {

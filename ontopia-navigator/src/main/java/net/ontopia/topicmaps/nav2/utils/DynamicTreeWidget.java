@@ -689,16 +689,13 @@ public class DynamicTreeWidget {
     if (action == null)
       action = "close";
 
-    if (action.equals("open"))
-      return OPEN;
-    else if (action.equals("close"))
-      return CLOSE;
-    else if (action.equals("expandall"))
-      return EXPAND_ALL;
-    else if (action.equals("closeall"))
-      return CLOSE_ALL;
-    else
-      return -1;
+    switch (action) {
+      case "open": return OPEN;
+      case "close": return CLOSE;
+      case "expandall": return EXPAND_ALL;
+      case "closeall": return CLOSE_ALL;
+      default: return -1;
+    }
   }
 
   // --- Utilities

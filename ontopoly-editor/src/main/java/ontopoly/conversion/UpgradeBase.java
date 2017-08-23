@@ -488,9 +488,9 @@ public abstract class UpgradeBase {
     TopicMapIF topicmap = topicMap.getTopicMapIF();    
     TopicMapBuilderIF builder = topicmap.getBuilder();
     LocatorIF dt;
-    if (datatype.equals("datatype-string"))
+    if ("datatype-string".equals(datatype))
       dt = DataTypes.TYPE_STRING;
-    else if (datatype.equals("datatype-number"))
+    else if ("datatype-number".equals(datatype))
       dt = DataTypes.TYPE_DECIMAL;
     else
       throw new RuntimeException("Unsupported datatype: " + datatype);

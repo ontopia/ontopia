@@ -68,7 +68,7 @@ public class ChangelogTestCase {
   public void testFile() throws IOException, SQLException {
     // this particular test file is for FullRescanEventTest, and we don't
     // want to test it again here. we lack the -changelog.csv in any case.
-    if (casename.equals("EVENTS"))
+    if ("EVENTS".equals(casename))
       return;
     
     TestFileUtils.verifyDirectory(base, "out");

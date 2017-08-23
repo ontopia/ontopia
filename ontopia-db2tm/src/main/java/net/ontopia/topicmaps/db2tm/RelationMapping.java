@@ -265,11 +265,11 @@ public class RelationMapping extends SAXTracker {
       String synctype = getValue(attrs, "synctype");
       if (synctype == null)
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_UNKNOWN);
-      else if (synctype.equals("none"))
+      else if ("none".equals(synctype))
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_NONE);
-      else if (synctype.equals("rescan"))
+      else if ("rescan".equals(synctype))
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_RESCAN);
-      else if (synctype.equals("changelog"))
+      else if ("changelog".equals(synctype))
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
       addRelation(currel);
     }

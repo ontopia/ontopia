@@ -42,7 +42,7 @@ public class TestCaseContentHandler extends SAXTracker {
   public void startElement(String nsuri, String lname, String qname,
           Attributes attrs) throws SAXException {
 
-    if (qname.equals("test")) {
+    if ("test".equals(qname)) {
       tests.add(new String[]{attrs.getValue("topicmap"), attrs.getValue("schema"),
           attrs.getValue("valid")});
     }

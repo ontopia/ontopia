@@ -136,10 +136,10 @@ public class WebChew {
               
                 String termid = selected[i];
                 String at = request.getParameter("at-" + termid);
-                if (at == null || at.equals("-")) continue;
+                if (at == null || "-".equals(at)) continue;
                 String cn = request.getParameter("cn-" + termid);
                 String ct = request.getParameter("ct-" + termid);
-                if (ct == null || ct.equals("-")) continue;
+                if (ct == null || "-".equals(ct)) continue;
 
                 // create new candidate topic
                 TopicIF ctopic;
@@ -150,7 +150,7 @@ public class WebChew {
                     throw new OntopiaRuntimeException("Cannot find topic type: " + ct + " " + ctoid);
                   ctopic = builder.makeTopic(ctype);
                   builder.makeTopicName(ctopic, cn);
-                } else if (ct.equals("-")) {
+                } else if ("-".equals(ct)) {
                   continue; // ignore
                 } else {
                   ctopic = (TopicIF)topicmap.getObjectById(ct);

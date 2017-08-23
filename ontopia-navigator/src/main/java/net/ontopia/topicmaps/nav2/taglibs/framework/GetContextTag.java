@@ -71,14 +71,22 @@ public class GetContextTag extends TagSupport {
 
     Collection result = Collections.EMPTY_SET;
     if (context != null) {
-      if (context.equals("basename"))
-        result = userContext.getScopeTopicNames(topicmap);
-      else if (context.equals("variant"))
-        result = userContext.getScopeVariantNames(topicmap);
-      else if (context.equals("association"))
-        result = userContext.getScopeAssociations(topicmap);
-      else if (context.equals("occurrence"))
-        result = userContext.getScopeOccurrences(topicmap);
+      switch (context) {
+        case "basename":
+          result = userContext.getScopeTopicNames(topicmap);
+          break;
+        case "variant":
+          result = userContext.getScopeVariantNames(topicmap);
+          break;
+        case "association":
+          result = userContext.getScopeAssociations(topicmap);
+          break;
+        case "occurrence":
+          result = userContext.getScopeOccurrences(topicmap);
+          break;
+        default:
+          break;
+      }
     }
 
     // kick it over to the accepting tag
@@ -96,10 +104,10 @@ public class GetContextTag extends TagSupport {
   
   public void setContext(String var) throws NavigatorRuntimeException {
     context = var;
-    if (!context.equals("basename") &&
-        !context.equals("variant") &&
-        !context.equals("occurrence") &&
-        !context.equals("association"))
+    if (!"basename".equals(context) &&
+        !"variant".equals(context) &&
+        !"occurrence".equals(context) &&
+        !"association".equals(context))
       throw new NavigatorRuntimeException("Incorrect value ('" + var + "')" +
                                           " given for attribute 'context' in" +
                                           " element 'getcontext'.");

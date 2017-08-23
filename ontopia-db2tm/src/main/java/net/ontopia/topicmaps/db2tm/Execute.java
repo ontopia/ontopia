@@ -102,9 +102,9 @@ public class Execute {
       String tmurl = ohandler.tm;    
       log.debug("Opening topic map {}", tmurl);
       TopicMapIF topicmap;
-      if (tmurl == null || tmurl.equals("tm:in-memory:new"))
+      if (tmurl == null || "tm:in-memory:new".equals(tmurl))
         topicmap = new InMemoryTopicMapStore().getTopicMap();
-      else if (tmurl.equals("tm:rdbms:new"))
+      else if ("tm:rdbms:new".equals(tmurl))
         topicmap = new RDBMSTopicMapStore().getTopicMap();      
       else {
         TopicMapReaderIF reader = ImportExportUtils.getReader(tmurl);

@@ -332,7 +332,7 @@ public class TreeWidget {
         writer.write("<img border=0 src=" + imageurl + "spacer.gif width=" + (level * 30) + " height=5>" +
                      "<img border=0 src=" + imageurl + "boxed.gif>");
       else
-        renderNodeButton(topline, level, action.equals("open") ? OPEN : CLOSE,
+        renderNodeButton(topline, level, "open".equals(action) ? OPEN : CLOSE,
                          id, writer);
 
       writer.write("<a name=" + id + "></a>");
@@ -358,16 +358,13 @@ public class TreeWidget {
     if (action == null)
       action = "close";
 
-    if (action.equals("open"))
-      return OPEN;
-    else if (action.equals("close"))
-      return CLOSE;
-    else if (action.equals("expandall"))
-      return EXPAND_ALL;
-    else if (action.equals("closeall"))
-      return CLOSE_ALL;
-    else
-      return -1;
+    switch (action) {
+      case "open": return OPEN;
+      case "close": return CLOSE;
+      case "expandall": return EXPAND_ALL;
+      case "closeall": return CLOSE_ALL;
+      default: return -1;
+    }
   }
 
   private Set getOpenNodes(HttpServletRequest request) {

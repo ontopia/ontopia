@@ -40,8 +40,7 @@ public class DeciderIteratorTest extends AbstractIteratorTest {
     
     DeciderIF decider = new DeciderIF() {
       public boolean ok(Object object) {
-        if (object.equals("B")) return false;
-        return true;
+        return !"B".equals(object);
       }
     };
     

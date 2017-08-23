@@ -135,7 +135,7 @@ public class UpgradeUtils {
     String versionNumber = versionOcc.getValue();
     if (versionNumber == null)
       return 0;
-    else if (versionNumber.equals("[1.0]"))
+    else if ("[1.0]".equals(versionNumber))
       return 1.0f;
     
     try {

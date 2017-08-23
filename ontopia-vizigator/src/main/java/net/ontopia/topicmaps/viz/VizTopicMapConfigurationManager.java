@@ -1251,9 +1251,9 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
                  VizTopicMapConfigurationManager.FILTER_DEFAULT;
       
     }
-    if (visibility.equals("true"))
+    if ("true".equals(visibility))
       return VizTopicMapConfigurationManager.FILTER_IN;
-    if (visibility.equals("false"))
+    if ("false".equals(visibility))
       return VizTopicMapConfigurationManager.FILTER_OUT;
 
     // The following should never happen, and is an error in the configuration.

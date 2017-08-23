@@ -58,7 +58,7 @@ public class CustomNameStringifier implements StringifierIF {
       stringName = ((VariantNameIF) name).getValue();
     if (stringName == null)
       stringName = stringValueNull;
-    else if (stringName.equals(""))
+    else if (stringName.isEmpty())
       stringName = stringValueEmpty;
     return stringName;
   }

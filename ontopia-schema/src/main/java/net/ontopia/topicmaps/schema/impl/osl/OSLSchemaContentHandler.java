@@ -94,9 +94,9 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       String internal = attrs.getValue("internal");
       if (internal == null || internal.equalsIgnoreCase("either"))
         constraint.setInternal(OccurrenceConstraint.RESOURCE_EITHER);
-      else if (internal.equals("yes"))
+      else if ("yes".equals(internal))
         constraint.setInternal(OccurrenceConstraint.RESOURCE_INTERNAL);
-      else if (internal.equals("no"))
+      else if ("no".equals(internal))
         constraint.setInternal(OccurrenceConstraint.RESOURCE_EXTERNAL);
       else
         throw getException("Attribute 'internal' had illegal value " +

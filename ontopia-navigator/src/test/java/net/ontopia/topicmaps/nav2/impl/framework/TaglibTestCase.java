@@ -118,7 +118,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     }
     if (params.containsKey("fail")) {
       String test = (String) params.get("fail");
-      if (test.equals("true"))
+      if ("true".equals(test))
         shouldFail = true;
       else
         shouldFail = false;

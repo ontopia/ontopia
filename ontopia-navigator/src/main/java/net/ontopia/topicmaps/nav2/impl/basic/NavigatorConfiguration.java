@@ -250,18 +250,18 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
 
     // generate Property name to look up
     StringBuilder propName = new StringBuilder(PLUGINS_ORDER);
-    if (!groupId.equals(""))
+    if (!groupId.isEmpty())
       propName.append("_" + groupId);
     
     // get string which specifies sort order of plugins
     String orderProp = getProperty(propName.toString());
-    if ((orderProp == null || orderProp.equals("")) && groupId.equals(""))
+    if ((orderProp == null || orderProp.isEmpty()) && groupId.isEmpty())
       return plugins.values();
 
     List orderedPlugins = new ArrayList();
 
     // -- first put in plugins which are specified by sort order
-    if (!orderProp.equals("")) {
+    if (!orderProp.isEmpty()) {
       String[] order = StringUtils.split(orderProp);
       for (int ix = 0; ix < order.length; ix++) {
         PluginIF plugin = (PluginIF) plugins.get(order[ix]);

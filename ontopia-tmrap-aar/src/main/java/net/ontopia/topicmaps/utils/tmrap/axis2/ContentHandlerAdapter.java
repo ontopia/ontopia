@@ -55,7 +55,7 @@ public class ContentHandlerAdapter implements ContentHandler {
       String aName = atts.getQName(i);
       if (aName.startsWith("xmlns:")){
         this.sup.declarePrefix(aName.substring("xmlns:".length()), atts.getValue(i));
-      } else if (aName.equals("xmlns")) {
+      } else if ("xmlns".equals(aName)) {
         this.sup.declarePrefix("", atts.getValue(i));
       }
     }
@@ -63,7 +63,7 @@ public class ContentHandlerAdapter implements ContentHandler {
     AttributesImpl ai = new AttributesImpl();
     for (int i = 0; i < atts.getLength(); ++i) {
       String aName = atts.getQName(i);
-      if ((aName.startsWith("xmlns:")) || (aName.equals("xmlns"))) {
+      if ((aName.startsWith("xmlns:")) || ("xmlns".equals(aName))) {
         continue;
       }
       parts = this.sup.processName(aName, parts, true);

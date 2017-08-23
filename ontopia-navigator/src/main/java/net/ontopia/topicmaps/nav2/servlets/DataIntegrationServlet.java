@@ -113,7 +113,7 @@ public class DataIntegrationServlet extends HttpServlet {
         qr.close();
       }
 
-      if (action.equals("updated") || action.equals("created")) {
+      if ("updated".equals(action) || "created".equals(action)) {
 
         DeciderIF tfilter = new DeciderIF() {
             public boolean ok(Object o) {
@@ -147,7 +147,7 @@ public class DataIntegrationServlet extends HttpServlet {
           // synchronize topic
           TopicMapSynchronizer.update(target, src, tfilter, sfilter);
         }
-      } else if (action.equals("deleted")) {
+      } else if ("deleted".equals(action)) {
 
         Iterator iter = candidates.iterator();
         while (iter.hasNext()) {

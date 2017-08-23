@@ -167,7 +167,7 @@ public class TextValidationHandler implements ValidationHandlerIF {
       return "<null>";
       
     String name = stringifier.toString(topic);
-    if (name.equals("[No name]"))
+    if ("[No name]".equals(name))
       return topic.toString();
     else
       return name;

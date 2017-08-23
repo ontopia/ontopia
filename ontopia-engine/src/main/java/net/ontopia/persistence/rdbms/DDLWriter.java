@@ -68,21 +68,30 @@ public class DDLWriter {
     
     Project project = DatabaseProjectReader.loadProject(schema);
     
-    GenericSQLProducer producer = null;
-    if (dbtype.equals("postgresql"))
-      producer = new PostgreSQLProducer(project, platforms);
-    else if (dbtype.equals("oracle"))
-      producer = new OracleSQLProducer(project, platforms);
-    else if (dbtype.equals("sqlserver"))
-      producer = new SQLServerSQLProducer(project, platforms);
-    else if (dbtype.equals("mysql"))
-      producer = new MySqlSQLProducer(project, platforms);
-    else if (dbtype.equals("db2"))
-      producer = new DB2SQLProducer(project, platforms);
-    else if (dbtype.equals("firebird"))
-      producer = new FirebirdSQLProducer(project, platforms);
-    else
-      producer = new GenericSQLProducer(project, platforms);
+    GenericSQLProducer producer;
+    switch (dbtype) {
+      case "postgresql":
+        producer = new PostgreSQLProducer(project, platforms);
+        break;
+      case "oracle":
+        producer = new OracleSQLProducer(project, platforms);
+        break;
+      case "sqlserver":
+        producer = new SQLServerSQLProducer(project, platforms);
+        break;
+      case "mysql":
+        producer = new MySqlSQLProducer(project, platforms);
+        break;
+      case "db2":
+        producer = new DB2SQLProducer(project, platforms);
+        break;
+      case "firebird":
+        producer = new FirebirdSQLProducer(project, platforms);
+        break;
+      default:
+        producer = new GenericSQLProducer(project, platforms);
+        break;
+    }
       
     // Generate create file
     Writer cwriter = new FileWriter(createfile);

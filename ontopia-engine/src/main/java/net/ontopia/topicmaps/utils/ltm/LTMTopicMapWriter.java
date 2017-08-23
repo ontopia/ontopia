@@ -600,7 +600,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       // then write a header comment for this topic type.
       if (writeHeaders && !headerType.equals(groupString1)) {
         out.write("\n/* -- TT: ");
-        if (headerType.equals(""))
+        if (headerType.isEmpty())
           out.write("(untyped)");
         else
           out.write(headerType);
@@ -1077,7 +1077,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     String name = TopicStringifiers.toString(topic);
 
     String retVal;
-    if (name.equals("[No name]"))
+    if ("[No name]".equals(name))
       retVal = idManager.makeId(topic, "id", true);
     else {
       String generatedId = StringUtils.normalizeId(name);

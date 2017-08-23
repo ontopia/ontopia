@@ -137,9 +137,9 @@ public class AppletContext extends ApplicationContext {
       Set srclocs = Collections.EMPTY_SET;
       Set subjids = Collections.EMPTY_SET;
       Set sublocs = Collections.EMPTY_SET;
-      if (type.equals("source"))
+      if ("source".equals(type))
         srclocs = Collections.singleton(locator);
-      else if (type.equals("indicator"))
+      else if ("indicator".equals(type))
         subjids = Collections.singleton(locator);
       else
         sublocs = Collections.singleton(locator);
@@ -210,9 +210,9 @@ public class AppletContext extends ApplicationContext {
       throw new VizigatorReportException("The required \"idtype\" parameter" +
           " has not been set. It should be set to \"indicator\", \"source\" " +
           "or \"subject\".");
-    Collection indicators = (idtype.equals("indicator") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-    Collection sources = (idtype.equals("source") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-    Collection subject = (idtype.equals("subject") ? Collections.singleton(locator) : Collections.EMPTY_SET);
+    Collection indicators = ("indicator".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
+    Collection sources = ("source".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
+    Collection subject = ("subject".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
     RemoteTopicMapStore store = (RemoteTopicMapStore)aTopicmap.getStore();
     RemoteTopicIndex tindex = store.getTopicIndex();
 

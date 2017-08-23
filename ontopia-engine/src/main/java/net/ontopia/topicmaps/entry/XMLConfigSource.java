@@ -166,7 +166,7 @@ public class XMLConfigSource {
     // build configuration environment
     if (environ == null)
       environ = new HashMap<String, String>(1);
-    if (url.getProtocol().equals("file")) {
+    if ("file".equals(url.getProtocol())) {
       String file = url.getFile();
       environ.put(CWD, file.substring(0, file.lastIndexOf('/')));
     } else
@@ -300,7 +300,7 @@ public class XMLConfigSource {
     
     public void startElement(String uri, String name, String qName,
                               Attributes atts) throws SAXException {
-      if (qName.equals("source")) {
+      if ("source".equals(qName)) {
         // Clear source member
         source = null;
         try {
@@ -317,7 +317,7 @@ public class XMLConfigSource {
           log.error("Exception: " + e.getClass().getName() + ": " + e.getMessage());
         }
       }
-      else if (qName.equals("param") && source != null) {
+      else if ("param".equals(qName) && source != null) {
         String param_name = atts.getValue("name");
         String param_value = atts.getValue("value");
         Iterator<String> iter = environ.keySet().iterator();
@@ -361,7 +361,7 @@ public class XMLConfigSource {
     }
 
     public void endElement(String uri, String name, String qName) throws SAXException {
-      if (qName.equals("source")) {     
+      if ("source".equals(qName)) {     
         source = null;
       }
     }

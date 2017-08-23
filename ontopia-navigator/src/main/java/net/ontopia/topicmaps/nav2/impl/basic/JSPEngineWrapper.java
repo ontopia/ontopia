@@ -83,14 +83,11 @@ public class JSPEngineWrapper {
 
     JspEngineInfo engine = JspFactory.getDefaultFactory().getEngineInfo();
     String version = engine.getSpecificationVersion();
-    if (version.equals("2.0"))
-      wrapper = new JSP20Wrapper();
-    else if (version.equals("1.2"))
-      wrapper = new JSP12Wrapper();
-    else
-      wrapper = new JSP11Wrapper();
-
-    return wrapper;
+    switch (version) {
+      case "2.0": return new JSP20Wrapper();
+      case "1.2": return new JSP12Wrapper();
+      default: return new JSP11Wrapper();
+    }
   }
 
   // --- WrapperIF

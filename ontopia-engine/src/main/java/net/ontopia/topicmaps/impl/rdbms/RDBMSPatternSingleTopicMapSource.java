@@ -98,9 +98,9 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       try {
 
         String sqlquery;
-        if (match.equals("title"))
+        if ("title".equals(match))
           sqlquery = "select max(M.id), M.title, M.base_address from TM_TOPIC_MAP M where M.title = ? group by M.title, M.base_address order by max(M.id) desc";
-        else if (match.equals("comments"))
+        else if ("comments".equals(match))
           sqlquery = "select max(M.id), M.title, M.base_address from TM_TOPIC_MAP M where M.comments = ? group by M.title, M.base_address order by max(M.id) desc";
         else
           throw new OntopiaRuntimeException("match property contains illegal value '" + match + "' on source with id '" + getId() + "'.");

@@ -285,9 +285,9 @@ public class SQLBuilder {
         if (value.getType() == JDOValueIF.FUNCTION) {
           JDOFunction func = (JDOFunction)value;
           String fname = func.getName();
-          if (fname.equals(">") || fname.equals(">=") ||
-              fname.equals("<") || fname.equals("<=") ||
-              fname.equals("substring")) {
+          if (">".equals(fname) || ">=".equals(fname) ||
+              "<".equals(fname) || "<=".equals(fname) ||
+              "substring".equals(fname)) {
             JDOValueIF[] args = func.getArguments();
             analyzeCompatible(args[0], args[1]);
           }

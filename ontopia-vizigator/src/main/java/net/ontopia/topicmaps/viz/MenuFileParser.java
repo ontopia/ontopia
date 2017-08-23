@@ -147,7 +147,7 @@ public class MenuFileParser {
     VizDebugUtils.debug("value: " + value);
     validateValue(value);
     
-    enabled.put(name, value.equals("on") ? Boolean.TRUE : Boolean.FALSE);
+    enabled.put(name, "on".equals(value) ? Boolean.TRUE : Boolean.FALSE);
   }
   
   private void validateName (String name) throws MenuFileParseError {
@@ -176,7 +176,7 @@ public class MenuFileParser {
   
   private void validateValue (String value) throws MenuFileParseError {
     // Value must be either "on" or "off".
-    if (!(value.equals("on") || value.equals("off")))
+    if (!("on".equals(value) || "off".equals(value)))
       throw new MenuFileParseError("The value \"" + value +
           "\" is not on the form \"on\" or \"off\"");
   }

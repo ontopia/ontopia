@@ -132,11 +132,11 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     //log.debug("S: '" + uri + "' " + qName);
 
     // ----- <xfml> -----------------------------------------------------------
-    if (qName == EL_XFML) {
+    if (EL_XFML.equals(qName)) {
       String version = atts.getValue("version");
       if (version == null)
         log.warn("No version attribute on 'xfml' element");
-      if (!version.equals("1.0"))
+      if (!"1.0".equals(version))
         log.warn("Unsupported XFML version: " + version);
 
       String mapurl = atts.getValue("url");

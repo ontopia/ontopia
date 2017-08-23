@@ -67,9 +67,9 @@ public class ControlConfig implements ControlConfigIF {
    * @param skin    a string representing the skin choice   
    */
   public void update(String model, String view, String skin) {
-    if (model != null && !model.equals("")) this.model = model;
-    if (view  != null && !view.equals(""))  this.view = view;
-    if (skin  != null && !skin.equals(""))  this.skin = skin; 
+    if (model != null && !model.isEmpty()) this.model = model;
+    if (view  != null && !view.isEmpty())  this.view = view;
+    if (skin  != null && !skin.isEmpty())  this.skin = skin; 
     makePaths();
   }
 
@@ -81,21 +81,21 @@ public class ControlConfig implements ControlConfigIF {
   private void makePaths() {
 
     // fix dodgy path
-    if (resource == null || resource.equals("/index.html")) 
+    if (resource == null || "/index.html".equals(resource)) 
       resource = "/index.jsp"; 
                 
     // ModelPath
-    if (resource.equals("/topic.jsp"))
+    if ("/topic.jsp".equals(resource))
       modelPath = "/models/topic_" + model + ".jsp";
-    else if (resource.equals("/topicmap.jsp"))
+    else if ("/topicmap.jsp".equals(resource))
       modelPath = "/models/topicmap_" + model + ".jsp";
     else
       modelPath = "/models" + resource;
    
     // ViewPath
-    if (resource.equals("/def_topic_occ.jsp") || 
-        resource.equals("/def_topicmap_occ.jsp") || 
-        resource.equals("/blank.jsp"))
+    if ("/def_topic_occ.jsp".equals(resource) || 
+        "/def_topicmap_occ.jsp".equals(resource) || 
+        "/blank.jsp".equals(resource))
       viewPath = "/views/template_plain.jsp";
     else 
       viewPath = "/views/template_" + view + ".jsp";
@@ -105,12 +105,12 @@ public class ControlConfig implements ControlConfigIF {
 
     // Behaviour
     behaviour = "no_frames";
-    if (view.equals("frames"))
+    if ("frames".equals(view))
       behaviour = "frames"; 
     
     // ContentType
     contentType = "text/html";
-    if (view.equals("xml"))
+    if ("xml".equals(view))
       contentType = "text/xml";
   }
 

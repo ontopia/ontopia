@@ -36,6 +36,6 @@ public class ParsedMenuFile {
     if (enabledItemIds.containsKey(itemId))
       return ((Boolean)enabledItemIds.get(itemId)).booleanValue();
     else
-      return !itemId.equals("copy.name");
+      return !"copy.name".equals(itemId);
   }
 }
