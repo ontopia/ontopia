@@ -44,10 +44,7 @@ public class TidyHTML implements Runnable {
   private String errOutFileName;
   private boolean xmlOut;
 
-  protected Logger log;
-  {
-    log = LoggerFactory.getLogger(this.getClass());
-  }
+  protected Logger log = LoggerFactory.getLogger(this.getClass());
   
 
   /**
