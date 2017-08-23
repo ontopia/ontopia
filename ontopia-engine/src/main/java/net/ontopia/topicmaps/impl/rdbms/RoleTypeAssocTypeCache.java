@@ -90,6 +90,13 @@ public class RoleTypeAssocTypeCache {
   protected Map<ParameterArray, Collection<AssociationRoleIF>> radd = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
   protected Map<ParameterArray, Collection<AssociationRoleIF>> rrem = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
   
+  private final static int[] Prefetcher_RBT_fields = 
+    new int[] { Prefetcher.AssociationIF_roles,
+    Prefetcher.AssociationRoleIF_player };
+  
+  private final static boolean[] Prefetcher_RBT_traverse =
+    new boolean[] { false, false };
+  
   public RoleTypeAssocTypeCache(TopicMapTransactionIF txn, EventManagerIF emanager,
       EventManagerIF otree) {
     this.txn = txn;
@@ -316,13 +323,6 @@ public class RoleTypeAssocTypeCache {
       throw new OntopiaRuntimeException(e);
     }
   }
-  
-  private final static int[] Prefetcher_RBT_fields = 
-    new int[] { Prefetcher.AssociationIF_roles,
-    Prefetcher.AssociationRoleIF_player };
-  
-  private final static boolean[] Prefetcher_RBT_traverse =
-    new boolean[] { false, false };
   
   public Collection<AssociationRoleIF> getRolesByType(TopicIF player, 
       TopicIF rtype, TopicIF atype) {   

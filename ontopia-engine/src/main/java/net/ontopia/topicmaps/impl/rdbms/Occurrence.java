@@ -48,6 +48,8 @@ import org.apache.commons.io.IOUtils;
 
 public class Occurrence extends TMObject implements OccurrenceIF {
   
+  public static final String CLASS_INDICATOR = "O";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -78,8 +80,6 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "O";
 
   public Occurrence() {  
   }

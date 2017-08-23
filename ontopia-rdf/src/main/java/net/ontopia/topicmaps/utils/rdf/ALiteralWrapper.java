@@ -35,6 +35,8 @@ import com.hp.hpl.jena.shared.JenaException;
 public class ALiteralWrapper implements ALiteral {
   public Literal literal;
 
+  private boolean tainted;
+
   public boolean isWellFormedXML() {
     return literal.isWellFormedXML();
   }
@@ -58,8 +60,6 @@ public class ALiteralWrapper implements ALiteral {
   public String getDatatypeURI() {
     return null;
   }
-
-  private boolean tainted;
 
   public void taint() {
     tainted = true;

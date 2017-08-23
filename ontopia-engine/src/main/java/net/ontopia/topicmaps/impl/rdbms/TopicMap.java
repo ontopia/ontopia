@@ -52,6 +52,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class TopicMap extends TMObject implements TopicMapIF {
   
+  public static final String CLASS_INDICATOR = "M";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -64,6 +66,8 @@ public class TopicMap extends TMObject implements TopicMapIF {
 
   protected static final String[] fields = {"sources", "title", "base_address", "comments", "reifier"}; // TODO: take these away
 
+  protected transient RDBMSTopicMapTransaction transaction;  
+
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_reifier);
@@ -72,10 +76,6 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "M";
-
-  protected transient RDBMSTopicMapTransaction transaction;  
 
   public TopicMap() {  
   }

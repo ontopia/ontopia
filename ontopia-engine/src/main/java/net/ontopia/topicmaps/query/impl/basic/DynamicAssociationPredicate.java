@@ -39,6 +39,17 @@ import net.ontopia.topicmaps.query.parser.Variable;
  * INTERNAL: Implements association type predicates.
  */
 public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
+
+  // -- Prefetcher constants
+  
+  private final static int[] Prefetcher_RBT_fields = 
+    new int[] { Prefetcher.AssociationRoleIF_association,
+                Prefetcher.AssociationIF_roles,
+                Prefetcher.AssociationRoleIF_player };
+  
+  private final static boolean[] Prefetcher_RBT_traverse =
+    new boolean[] { true, false, false }; // ISSUE: traverse R.player?
+
   protected TopicMapIF topicmap;
   protected ClassInstanceIndexIF index;
   
@@ -476,15 +487,4 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       return "<AP$ArgPair " + ix + ":" + roleType + ">";
     }
   }
-
-  // -- Prefetcher constants
-  
-  private final static int[] Prefetcher_RBT_fields = 
-    new int[] { Prefetcher.AssociationRoleIF_association,
-                Prefetcher.AssociationIF_roles,
-                Prefetcher.AssociationRoleIF_player };
-  
-  private final static boolean[] Prefetcher_RBT_traverse =
-    new boolean[] { true, false, false }; // ISSUE: traverse R.player?
-    
 }

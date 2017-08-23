@@ -48,6 +48,8 @@ import org.apache.commons.io.IOUtils;
  */
 public class VariantName extends TMObject implements VariantNameIF {
   
+  public static final String CLASS_INDICATOR = "N";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -76,8 +78,6 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "N";
 
   public VariantName() {  
   }

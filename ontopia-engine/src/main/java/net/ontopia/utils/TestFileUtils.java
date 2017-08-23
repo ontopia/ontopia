@@ -38,6 +38,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TestFileUtils {
 	
+  public static final String testdataInputRoot = "net/ontopia/testdata/";
+  private static String testdataOutputRoot = null;
+
   public static void verifyDirectory(String dir) {
     File thedir = new File(dir);
     if (!thedir.exists())
@@ -65,9 +68,6 @@ public class TestFileUtils {
     out.mkdirs();
     return out;
   }
-
-  public static final String testdataInputRoot = "net/ontopia/testdata/";
-  private static String testdataOutputRoot = null;
 
   public static List<Object[]> getTestInputURLs(String... pathParts) {
     return getTestInputURLs(null, pathParts);

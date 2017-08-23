@@ -106,6 +106,13 @@ public class TopicMapView {
   protected MotionKiller motionKiller;
   protected VizigatorUser vizigatorUser;
 
+  protected List foregroundQueue = new ArrayList();
+  private int maxTopicNameLength = VizTopicMapConfigurationManager
+      .DEFAULT_MAX_TOPIC_NAME_LENGTH;
+  
+  public static int NODE_LOCALITY = 0;
+  public static int EDGE_LOCALITY = 1;
+
   /**
    * Creates the view and updates the TGPanel to show the new view. The TGPanel
    * may be showing an old view.
@@ -1149,10 +1156,6 @@ public class TopicMapView {
     return node;
   }
   
-  protected List foregroundQueue = new ArrayList();
-  private int maxTopicNameLength = VizTopicMapConfigurationManager
-      .DEFAULT_MAX_TOPIC_NAME_LENGTH;
-  
   protected void queueInForeground(TMAbstractNode node) {
     foregroundQueue.add(node);
   }
@@ -1697,9 +1700,6 @@ public class TopicMapView {
         .NODE_ORIENTED;
   }
   
-  public static int NODE_LOCALITY = 0;
-  public static int EDGE_LOCALITY = 1;
-
   private void createAllRoles(TMAssociationNode node, boolean create) {
     Collection roles = new ArrayList(node.getAssociation().getRoles());
 
@@ -2281,6 +2281,7 @@ public class TopicMapView {
    * INTERNAL: PRIVATE: Purpose: Output debug information
    */
   protected class Debug {
+    private boolean reportAndCrash = false;
 
     protected void execute(String operation) {
       if (operation.equals("count"))
@@ -2844,8 +2845,6 @@ public class TopicMapView {
       // System.out.println("EXITING VIZIGATOR");
       // System.exit(1);
     }
-    
-    private boolean reportAndCrash = false;
     
     private String leadCap(String source) {
       String lead = source.substring(0, 1);

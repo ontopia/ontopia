@@ -24,10 +24,6 @@ import org.restlet.data.MediaType;
 
 public final class Constants {
 	
-	private Constants() {
-		// don't call me
-	}
-	
 	public static final String N_O_T_R = Constants.class.getPackage().getName();
 	
 	public static final String LOG_CLIENT_ERRORS_PARAMETER = N_O_T_R + ".logging.clientErrors";
@@ -58,4 +54,7 @@ public final class Constants {
 	public static final MediaType XTM_MEDIA_TYPE = new MediaType("application/xml+xtm", "XTM 2.1 topicmaps format");
 	public static final MediaType JTM_MEDIATYPE = new MediaType("application/jtm", "JTM 1.1 topicmap json format");
 
+	private Constants() {
+		// don't call me
+	}
 }

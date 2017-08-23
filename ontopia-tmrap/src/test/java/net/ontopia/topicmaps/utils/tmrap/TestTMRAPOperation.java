@@ -65,6 +65,11 @@ public abstract class TestTMRAPOperation {
   protected String uriPrefix;
   protected RAPServlet rapServlet;
 
+  // FIXME: aaaarghgh! This is evil! Kill it!
+  protected static final Hashtable paramsTable = createParamsTable();
+
+  private static int counter = 0;
+
   @BeforeClass
   public static void transferInputFiles() throws IOException {
     TestFileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");
@@ -161,9 +166,7 @@ public abstract class TestTMRAPOperation {
     return response.getStatus();
   }
 
-  // FIXME: aaaarghgh! This is evil! Kill it!
   // <evil>
-  protected static final Hashtable paramsTable = createParamsTable();
   protected static Hashtable createParamsTable() {
     Map paramsMap = new HashMap();
     String viewURI = "http://localhost:8080/omnigator/plugins/viz/get-topic" +
@@ -194,7 +197,6 @@ public abstract class TestTMRAPOperation {
     rapServlet.init(servletConfig);
   }
 
-  private static int counter = 0;
   protected String canonicalizeXTM(String XTM) throws IOException {
     // Figure out base URL
     String root = TestFileUtils.getTestdataOutputDirectory() +

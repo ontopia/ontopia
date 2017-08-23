@@ -80,6 +80,14 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   // --- initialize logging facility.
   private static Logger logger = LoggerFactory.getLogger(QueryProcessor.class.getName());
 
+  // -- Prefetcher constants
+
+  private final static int[] Prefetcher_OB_fields = new int[] {
+      Prefetcher.TopicIF_names, Prefetcher.TopicNameIF_variants };
+
+  private final static boolean[] Prefetcher_OB_traverse = new boolean[] {
+      false, false };
+
   public QueryProcessor(TopicMapIF topicmap) {
     this(topicmap, topicmap.getStore().getBaseAddress());
   }
@@ -628,14 +636,6 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       return true;
     }
   }
-
-  // -- Prefetcher constants
-
-  private final static int[] Prefetcher_OB_fields = new int[] {
-      Prefetcher.TopicIF_names, Prefetcher.TopicNameIF_variants };
-
-  private final static boolean[] Prefetcher_OB_traverse = new boolean[] {
-      false, false };
 
   // -- Collation handling
 

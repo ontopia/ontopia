@@ -33,6 +33,16 @@ import java.util.Set;
  */
 public class UniqueSet<E> extends CompactHashSet<E> {
   
+  // Number of external references to this particular set
+  private int refcount;
+  //! private final static UniqueSet EMPTY_SET = new UniqueSet();
+  
+  private final static int OP_ADD = 1;
+  private final static int OP_REMOVE = 2;
+
+  protected int hc;
+  protected int hc_modCount = -1;
+  
   public UniqueSet() {
     super();
   }
@@ -48,13 +58,6 @@ public class UniqueSet<E> extends CompactHashSet<E> {
       super.add(e.next());
     }
   }
-
-  // Number of external references to this particular set
-  private int refcount;
-  //! private final static UniqueSet EMPTY_SET = new UniqueSet();
-  
-  private final static int OP_ADD = 1;
-  private final static int OP_REMOVE = 2;
 
   public UniqueSet(UniqueSet<E> s) {
     super(s.objects.length);
@@ -302,9 +305,6 @@ public class UniqueSet<E> extends CompactHashSet<E> {
   public String toString() {
     return super.toString() + getReferenceCount();
   }
-  
-  protected int hc;
-  protected int hc_modCount = -1;
   
   public int hashCode() {
     // recompute hashcode only when neccessary

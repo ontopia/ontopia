@@ -55,6 +55,22 @@ import com.touchgraph.graphlayout.TGPanel;
 public abstract class TMAbstractEdge extends Edge
   implements VizTMObjectIF, TGPaintListener {
 
+  protected int lineWeight = TMRoleEdge.DEFAULT_LINE_WEIGHT;
+  protected int shape = TMRoleEdge.DEFAULT_SHAPE;
+  protected Icon icon;
+  protected Font font;
+  protected StringifierIF stringifier;
+  protected boolean underMouse = false;
+  static protected final int LOADING = 50;
+  
+  public static final int SHAPE_BOWTIE = 1;
+  public static final int SHAPE_LINE = 2;
+  public static int DEFAULT_SHAPE = SHAPE_BOWTIE;
+  public static int DEFAULT_LINE_WEIGHT = 4;
+  protected static int[] intBuffer = new int[64];
+  protected boolean shouldDisplayRoleHoverHelp;
+  protected TopicIF scopingTopic;
+
   /** 
    * setVisible is not supported in Vizigator.
    */
@@ -65,14 +81,6 @@ public abstract class TMAbstractEdge extends Edge
     super(f, t);
     super.setVisible(true);
   }
-
-  protected int lineWeight = TMRoleEdge.DEFAULT_LINE_WEIGHT;
-  protected int shape = TMRoleEdge.DEFAULT_SHAPE;
-  protected Icon icon;
-  protected Font font;
-  protected StringifierIF stringifier;
-  protected boolean underMouse = false;
-  static protected final int LOADING = 50;
 
   protected double calculateMidPointBetween(double from, double to) {
     return (from + to) / 2;
@@ -412,14 +420,6 @@ public abstract class TMAbstractEdge extends Edge
     g.drawString(string, xPosition, yPosition + a);
   }
 
-  public static final int SHAPE_BOWTIE = 1;
-  public static final int SHAPE_LINE = 2;
-  public static int DEFAULT_SHAPE = SHAPE_BOWTIE;
-  public static int DEFAULT_LINE_WEIGHT = 4;
-  protected static int[] intBuffer = new int[64];
-  protected boolean shouldDisplayRoleHoverHelp;
-  protected TopicIF scopingTopic;
-  
   public void paint(Graphics g, TGPanel tgPanel) {
     underMouse = (tgPanel.getMouseOverE() == this);
   

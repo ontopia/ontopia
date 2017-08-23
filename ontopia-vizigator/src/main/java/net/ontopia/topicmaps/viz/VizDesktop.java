@@ -70,6 +70,33 @@ import com.touchgraph.graphlayout.Node;
 public class VizDesktop implements VizFrontEndIF {
   private static final String ONTOPIA_VIZDESKTOP_TITLE = "Ontopia VizDesktop";
 
+  private VizPanel vPanel;
+  private VizController controller;
+  private JMenu recentTopicMapFilesMenu;
+  private JMenu visibleAssocTypesMenu;
+  private JMenu visibleTopicTypesMenu;
+  private JMenuItem focusStartTopicItem;
+
+  private TypesConfigFrame topicFrame;
+  private TypesConfigFrame assocFrame;
+
+  private TopicMapIF currentTopicMap;
+  private HashMap topicTypeButtonMap;
+  private HashMap associationTypeButtonMap;
+  private JMenu styleMenu;
+  private JMenu optionsMenu;
+  private JMenu viewMenu;
+  private GeneralConfigFrame generalFrame;
+  private TypesPrecedenceFrame precedenceFrame;
+  private JFrame frame;
+  private JMenuItem mapViewMenu;
+  private JMenuItem clearStartMenu;
+  private JMenu scopingTopicsMenu;
+  private StringifierIF stringifier;
+  private TopicIF currentScope;
+  private OpenRDBMSDialogBox openBox;
+  private static final boolean enableRDBMSImport = true;
+
   /**
    * Simple main to allow stand-alone startup. Optionally can provide an initial
    * topicmap to load.
@@ -135,33 +162,6 @@ public class VizDesktop implements VizFrontEndIF {
       if (option == 'l') lang = value;
     }
   }
-
-  private VizPanel vPanel;
-  private VizController controller;
-  private JMenu recentTopicMapFilesMenu;
-  private JMenu visibleAssocTypesMenu;
-  private JMenu visibleTopicTypesMenu;
-  private JMenuItem focusStartTopicItem;
-
-  private TypesConfigFrame topicFrame;
-  private TypesConfigFrame assocFrame;
-
-  private TopicMapIF currentTopicMap;
-  private HashMap topicTypeButtonMap;
-  private HashMap associationTypeButtonMap;
-  private JMenu styleMenu;
-  private JMenu optionsMenu;
-  private JMenu viewMenu;
-  private GeneralConfigFrame generalFrame;
-  private TypesPrecedenceFrame precedenceFrame;
-  private JFrame frame;
-  private JMenuItem mapViewMenu;
-  private JMenuItem clearStartMenu;
-  private JMenu scopingTopicsMenu;
-  private StringifierIF stringifier;
-  private TopicIF currentScope;
-  private OpenRDBMSDialogBox openBox;
-  private static final boolean enableRDBMSImport = true;
 
   private void disableMenuItems() {
     this.setEnableMenuItems(false);

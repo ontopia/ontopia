@@ -53,6 +53,8 @@ import org.xml.sax.InputSource;
  * servers using the TM RAP protocol.
  */
 public class RemoteTopicIndex implements TopicIndexIF {
+
+  public static final String VIRTUAL_URN = "urn:x-oks-virtual:";
   
   protected String editBaseuri;
   protected String viewBaseuri;
@@ -554,8 +556,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
   //-------------------------------------------------------------------
   // Virtual locators
   //--------------------------------------------------------------------
-
-  public static final String VIRTUAL_URN = "urn:x-oks-virtual:";
   
   public static boolean isVirtualReference(String address) {
     return address.startsWith(VIRTUAL_URN);

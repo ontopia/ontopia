@@ -36,6 +36,30 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   protected IdentityIF id;
   protected TransactionIF txn;
 
+  protected static final int[] MASKS;
+
+  private static final byte STATE_NEW = 1; // object exists in database
+  private static final byte STATE_IN_DATABASE = 2; // object exists in database
+  private static final byte STATE_PERSISTENT = 4; // object persistent/created in transaction
+  private static final byte STATE_DELETED = 8; // object deleted in transaction
+  private static final byte STATE_HOLLOW = 16; // object retrieved in previous transaction(s)
+
+  // bit-masks
+  private int lflags; // is field specified (loaded)
+  private int dflags; // is field dirty (not flushed)
+  private int fflags; // is field dirty (flushed)
+  private byte pstate; // new OR persistent/deleted OR in-database
+
+  public Object[] values = new Object[_p_getFieldCount()]; // field values
+  
+  static {
+    int[] masks = new int[32];
+    for (int i=0; i < 32; i++) {
+      masks[i] = (int)Math.pow(2, i);
+    }
+    MASKS = masks;
+  }  
+
   public AbstractRWPersistent() {
   }
 
@@ -310,30 +334,6 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   // -----------------------------------------------------------------------------
   // Object data and metadata
   // -----------------------------------------------------------------------------
-
-  protected static final int[] MASKS;
-
-  static {
-    int[] masks = new int[32];
-    for (int i=0; i < 32; i++) {
-      masks[i] = (int)Math.pow(2, i);
-    }
-    MASKS = masks;
-  }
-
-  private static final byte STATE_NEW = 1; // object exists in database
-  private static final byte STATE_IN_DATABASE = 2; // object exists in database
-  private static final byte STATE_PERSISTENT = 4; // object persistent/created in transaction
-  private static final byte STATE_DELETED = 8; // object deleted in transaction
-  private static final byte STATE_HOLLOW = 16; // object retrieved in previous transaction(s)
-
-  // bit-masks
-  private int lflags; // is field specified (loaded)
-  private int dflags; // is field dirty (not flushed)
-  private int fflags; // is field dirty (flushed)
-  private byte pstate; // new OR persistent/deleted OR in-database
-
-  public Object[] values = new Object[_p_getFieldCount()]; // field values
 
   // -- persistent state
 

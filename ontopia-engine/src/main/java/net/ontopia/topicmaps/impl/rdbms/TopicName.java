@@ -41,6 +41,8 @@ import net.ontopia.topicmaps.utils.PSI;
  */
 public class TopicName extends TMObject implements TopicNameIF {
 
+  public static final String CLASS_INDICATOR = "B";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -69,8 +71,6 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "B";
 
   public TopicName() {
   }

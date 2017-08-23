@@ -71,6 +71,18 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
   public static final String PROPERTY_VALIDATE = "validate";
   private boolean validate = true;
   
+  // constants for state
+  private static final int START          = 0; // before document element
+  private static final int TOP            = 1; // inside doc elem, outside topic
+  private static final int TOPIC          = 2; // inside topic
+  private static final int IDENTIFIER     = 3; // inside tm:identifier
+  private static final int MAYBETOPICNAME = 4; // inside characteristic
+  private static final int BASENAME       = 5; // ...
+  private static final int TOPICNAME      = 6;
+  private static final int VARIANT        = 7;
+  private static final int ASSOCIATION    = 8;
+  private static final int ROLE           = 9;
+
   // --- Constructors
 
   /**
@@ -175,18 +187,6 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
   }
 
   // --- ContentHandler
-
-  // constants for state
-  private static final int START          = 0; // before document element
-  private static final int TOP            = 1; // inside doc elem, outside topic
-  private static final int TOPIC          = 2; // inside topic
-  private static final int IDENTIFIER     = 3; // inside tm:identifier
-  private static final int MAYBETOPICNAME = 4; // inside characteristic
-  private static final int BASENAME       = 5; // ...
-  private static final int TOPICNAME      = 6;
-  private static final int VARIANT        = 7;
-  private static final int ASSOCIATION    = 8;
-  private static final int ROLE           = 9;
 
   final class TMXMLContentHandler extends AbstractTopicMapContentHandler {
     private Map nsprefixes;

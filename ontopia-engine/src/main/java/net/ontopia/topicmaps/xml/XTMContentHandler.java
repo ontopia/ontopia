@@ -164,6 +164,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   public static final String NS_XTM = "http://www.topicmaps.org/xtm/1.0/";
   public static final String NS_XLINK = "http://www.w3.org/1999/xlink";
   public static final String NS_NS = "http://www.w3.org/XML/1998/namespace";
+  public static final LocatorIF nullPSI = URILocator.create("http://psi.ontopia.net/xtm/1.0/null-topic");
   
   public static final String SAX_LEXICAL_HANDLER = "http://xml.org/sax/properties/lexical-handler";
   public static final String SAX_DECL_HANDLER = "http://xml.org/sax/properties/declaration-handler";
@@ -1680,8 +1681,6 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // --------------------------------------------------------------------------
   // Null topic
   // --------------------------------------------------------------------------
-
-  public static LocatorIF nullPSI = URILocator.create("http://psi.ontopia.net/xtm/1.0/null-topic");
 
   public static TopicIF getNullTopic(TopicMapIF topicmap) {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);

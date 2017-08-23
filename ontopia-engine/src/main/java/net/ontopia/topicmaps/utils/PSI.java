@@ -73,6 +73,39 @@ public class PSI {
   public static final String CTM_CTM = CTM_BASE + "ctm";
   public static final String CTM_XTM = CTM_BASE + "xtm";
   
+  // --- Internal cache
+
+  private static URILocator xtmDisplay;
+  private static URILocator xtmSort;
+
+  private static URILocator xtmClassInstance;
+  private static URILocator xtmClass;
+  private static URILocator xtmInstance;
+  private static URILocator xtmOccurrence;
+
+  private static URILocator xtmSuperclassSubclass;
+  private static URILocator xtmSuperclass;
+  private static URILocator xtmSubclass;
+
+  private static URILocator samTypeInstance;
+  private static URILocator samType;
+  private static URILocator samInstance;
+  private static URILocator samNameType;
+  private static URILocator samSupertypeSubtype;
+  private static URILocator samSubtype;
+  private static URILocator samSupertype;
+
+  private static URILocator xsdString;
+  private static URILocator xsdInteger;
+  private static URILocator xsdDecimal;
+  private static URILocator xsdDate;
+  private static URILocator xsdDatetime;
+  private static URILocator xsdUri;
+
+  private static URILocator ctmInteger;
+  private static URILocator ctmCtm;
+  private static URILocator ctmXtm;
+  
   // --- Locator objects
         
   public static URILocator getXTMDisplay() {
@@ -227,39 +260,6 @@ public class PSI {
       ctmXtm = makeLocator(CTM_XTM);
     return ctmXtm;
   }
-  
-  // --- Internal cache
-
-  private static URILocator xtmDisplay;
-  private static URILocator xtmSort;
-
-  private static URILocator xtmClassInstance;
-  private static URILocator xtmClass;
-  private static URILocator xtmInstance;
-  private static URILocator xtmOccurrence;
-
-  private static URILocator xtmSuperclassSubclass;
-  private static URILocator xtmSuperclass;
-  private static URILocator xtmSubclass;
-
-  private static URILocator samTypeInstance;
-  private static URILocator samType;
-  private static URILocator samInstance;
-  private static URILocator samNameType;
-  private static URILocator samSupertypeSubtype;
-  private static URILocator samSubtype;
-  private static URILocator samSupertype;
-
-  private static URILocator xsdString;
-  private static URILocator xsdInteger;
-  private static URILocator xsdDecimal;
-  private static URILocator xsdDate;
-  private static URILocator xsdDatetime;
-  private static URILocator xsdUri;
-
-  private static URILocator ctmInteger;
-  private static URILocator ctmCtm;
-  private static URILocator ctmXtm;
   
   private static URILocator makeLocator(String loc) {
     try {

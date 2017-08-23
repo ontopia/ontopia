@@ -38,6 +38,18 @@ public class FormatModule implements FormatModuleIF {
   protected List<FormatModuleIF> modules;
   protected FormatModuleIF fallout_module;
   
+  private static byte[][] boms = new byte[][] {
+    new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF }, // UTF-8
+    new byte[] { (byte)0xFE, (byte)0xFF }, // UTF-16 Big Endian
+    new byte[] { (byte)0xFF, (byte)0xFE }, // UTF-16 Little Endian
+    new byte[] { (byte)0x00, (byte)0x00, (byte)0xFE, (byte)0xFF }, // UTF-32 Big Endian
+    new byte[] { (byte)0xFF, (byte)0xFE, (byte)0x00, (byte)0x00 } // UTF-32 Little Endian
+  };
+  
+  private static String[] bomnames = new String[] {
+    "UTF-8", "UTF-16BE", "UTF-16LE", "UTF-32BE", "UTF-32LE"
+  };
+
   public FormatModule() {
     modules = new ArrayList<FormatModuleIF>();
     modules.add(new XMLFormatModule());
@@ -105,18 +117,6 @@ public class FormatModule implements FormatModuleIF {
   // --------------------------------------------------------------------------
   // content matching
   // --------------------------------------------------------------------------
-
-  private static byte[][] boms = new byte[][] {
-    new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF }, // UTF-8
-    new byte[] { (byte)0xFE, (byte)0xFF }, // UTF-16 Big Endian
-    new byte[] { (byte)0xFF, (byte)0xFE }, // UTF-16 Little Endian
-    new byte[] { (byte)0x00, (byte)0x00, (byte)0xFE, (byte)0xFF }, // UTF-32 Big Endian
-    new byte[] { (byte)0xFF, (byte)0xFE, (byte)0x00, (byte)0x00 } // UTF-32 Little Endian
-  };
-  
-  private static String[] bomnames = new String[] {
-    "UTF-8", "UTF-16BE", "UTF-16LE", "UTF-32BE", "UTF-32LE"
-  };
 
   public static String getCharSetName(int charSet) {
     return bomnames[charSet];

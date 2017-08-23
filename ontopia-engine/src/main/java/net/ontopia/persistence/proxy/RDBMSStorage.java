@@ -144,6 +144,8 @@ public class RDBMSStorage implements StorageIF {
     public Object clone() { throw new UnsupportedOperationException(); }
   };
   
+  protected Map<IdentityIF, Map<String, EvictableIF>> qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
+
   /**
    * INTERNAL: Creates a storage definition which gets its settings
    * from system variables.
@@ -445,7 +447,6 @@ public class RDBMSStorage implements StorageIF {
   
   // NOTE: query caches are indexed by name spaces. There is typically
   // one query cache instance per topicmap id + query name.
-  protected Map<IdentityIF, Map<String, EvictableIF>> qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
   
   public synchronized EvictableIF getHelperObject(int identifier, IdentityIF namespace) {
     if (isSharedCache()) {

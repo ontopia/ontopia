@@ -56,6 +56,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
+  protected static final Class[] types = new Class[] { Association.class, AssociationRole.class, TopicName.class, Occurrence.class, Topic.class, TopicMap.class, VariantName.class };
+
   protected long topicmap_id;
   protected RDBMSStorage storage;
   protected String propfile;
@@ -531,8 +533,6 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   // ---------------------------------------------------------------------------
   // Prefetching
   // ---------------------------------------------------------------------------
-
-  protected static final Class[] types = new Class[] { Association.class, AssociationRole.class, TopicName.class, Occurrence.class, Topic.class, TopicMap.class, VariantName.class };
 
   public boolean prefetch(int type, int field, boolean traverse, Collection objects) {
     TransactionIF txn = transaction.getTransaction();

@@ -54,6 +54,13 @@ public class TMAssociationNode extends TMAbstractNode
   private static final String SHORT_NAME = "http://psi.ontopia.net/basename/" +
       "#short-name";
 
+  private AssociationIF association;
+
+  private int lineWeight = TMAbstractEdge.DEFAULT_LINE_WEIGHT;
+
+  private TopicIF scopingTopic;
+  private boolean shouldDisplayScopedAssociationNames;
+
   protected static String getAssociationText(AssociationIF association,
                                              boolean displScopedAssocNames,
                                              TopicIF scopingTopic) {
@@ -99,13 +106,6 @@ public class TMAssociationNode extends TMAbstractNode
     }
     return main;
   }
-
-  private AssociationIF association;
-
-  private int lineWeight = TMAbstractEdge.DEFAULT_LINE_WEIGHT;
-
-  private TopicIF scopingTopic;
-  private boolean shouldDisplayScopedAssociationNames;
 
   public void setEdgeCount(int visibleEdgeCount) {
     visibleEdgeCnt = visibleEdgeCount;

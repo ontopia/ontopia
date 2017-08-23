@@ -40,6 +40,9 @@ public class SQLObjectAccess implements ClassAccessIF {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(SQLObjectAccess.class.getName());
+
+  public static int batchSize = 50;
+
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  
@@ -216,8 +219,6 @@ public class SQLObjectAccess implements ClassAccessIF {
       throw new OntopiaRuntimeException(e);
     }
   }
-
-  public static int batchSize = 50;
 
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                                   IdentityIF current, int field) {

@@ -47,6 +47,9 @@ public abstract class AbstractTopicMapReference
 
   protected TopicMapSourceIF source;
 
+  protected List<TopicMapListenerIF> listeners;
+  protected TopicMapListenerIF[] topic_listeners;  
+
   public AbstractTopicMapReference(String id, String title) {
     this.id = id;
     this.title = title;
@@ -130,9 +133,6 @@ public abstract class AbstractTopicMapReference
   // ---------------------------------------------------------------------------
   // TopicMapListenerIF implementation
   // ---------------------------------------------------------------------------
-
-  protected List<TopicMapListenerIF> listeners;
-  protected TopicMapListenerIF[] topic_listeners;  
 
   protected TopicMapListenerIF[] getTopicListeners() {
     return topic_listeners;

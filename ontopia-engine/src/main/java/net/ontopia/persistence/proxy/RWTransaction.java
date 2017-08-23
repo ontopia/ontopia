@@ -52,6 +52,8 @@ public class RWTransaction extends AbstractTransaction {
   protected Set<PersistentIF> chgdty = new CompactIdentityHashSet<PersistentIF>(5);
   protected Map<IdentityIF, IdentityIF> merges = new LinkedHashMap<IdentityIF, IdentityIF>();
   
+  protected boolean flushing;
+
   public RWTransaction(StorageAccessIF access) {
     super("TX" + access.getId(), access);
     
@@ -213,8 +215,6 @@ public class RWTransaction extends AbstractTransaction {
   // -----------------------------------------------------------------------------
   // Lifecycle
   // -----------------------------------------------------------------------------
-  
-  protected boolean flushing;
   
   public synchronized void flush() {
     // Flushing is non-reentrant

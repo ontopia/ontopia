@@ -47,6 +47,9 @@ public class QueryDeclarations {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(QueryDeclarations.class.getName());
+
+  protected Map<String, QueryDescriptor> queries = new HashMap<String, QueryDescriptor>();
+  protected Map<String, Map<String, Class<?>>> indicators = new HashMap<String, Map<String, Class<?>>>();
   
   class QueriesHandler extends DefaultHandler {
 
@@ -189,9 +192,6 @@ public class QueryDeclarations {
 
   }
 
-  protected Map<String, QueryDescriptor> queries = new HashMap<String, QueryDescriptor>();
-  protected Map<String, Map<String, Class<?>>> indicators = new HashMap<String, Map<String, Class<?>>>();
-  
   public QueryDeclarations(InputStream istream) {
     loadQueries(istream);
   }

@@ -44,6 +44,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   
   protected StorageIF storage;
   protected Map<IdentityIF, CacheEntry> datacache;
+  protected Map<Object, Integer> field_counts = new HashMap<Object, Integer>();
 
   protected long current_ticket_value;
   protected TicketIF current_ticket;
@@ -320,8 +321,6 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // -----------------------------------------------------------------------------
   // CacheEntry initialization
   // -----------------------------------------------------------------------------
-  
-  protected Map<Object, Integer> field_counts = new HashMap<Object, Integer>();
   
   protected int getFieldsCount(Class<?> type) {
     synchronized (field_counts) {

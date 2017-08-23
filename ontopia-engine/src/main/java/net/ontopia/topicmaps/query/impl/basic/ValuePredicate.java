@@ -46,6 +46,12 @@ public class ValuePredicate implements BasicPredicateIF {
   protected NameIndexIF nameindex;
   protected OccurrenceIndexIF occindex;
 
+  // used to see what types the object parameter may have
+  private static final int NO_TYPES  = 0;
+  private static final int NAME_TYPE = 1;
+  private static final int OCC_TYPE  = 2;
+  private static final int ALL_TYPES = 3;
+  
   public ValuePredicate(TopicMapIF topicmap) {
     this.topicmap = topicmap;
     this.nameindex = (NameIndexIF) topicmap
@@ -163,12 +169,6 @@ public class ValuePredicate implements BasicPredicateIF {
 
   // --- Helpers
 
-  // used to see what types the object parameter may have
-  private static final int NO_TYPES  = 0;
-  private static final int NAME_TYPE = 1;
-  private static final int OCC_TYPE  = 2;
-  private static final int ALL_TYPES = 3;
-  
   private int getObjectTypes(QueryMatches matches, int objix) {
     QueryContext context = matches.getQueryContext();
     String varname = ((Variable) matches.getColumnDefinition(objix)).getName();

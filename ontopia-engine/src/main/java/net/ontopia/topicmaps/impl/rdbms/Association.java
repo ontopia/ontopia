@@ -42,6 +42,8 @@ import net.ontopia.utils.CompactHashSet;
 
 public class Association extends TMObject implements AssociationIF {
   
+  public static final String CLASS_INDICATOR = "A";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -64,8 +66,6 @@ public class Association extends TMObject implements AssociationIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "A";
 
   public Association() {  
   }

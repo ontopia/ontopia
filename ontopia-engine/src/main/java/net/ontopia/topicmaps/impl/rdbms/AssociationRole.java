@@ -39,6 +39,8 @@ import net.ontopia.topicmaps.impl.utils.PhantomAssociation;
 
 public class AssociationRole extends TMObject implements AssociationRoleIF {
   
+  public static final String CLASS_INDICATOR = "R";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -69,8 +71,6 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "R";
 
   public AssociationRole() {
   }

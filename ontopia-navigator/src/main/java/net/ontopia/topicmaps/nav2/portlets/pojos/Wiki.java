@@ -42,6 +42,11 @@ import org.apache.commons.lang3.StringUtils;
  * into HTML.
  */
 public class Wiki {
+  private static StringifierIF strify =
+    TopicStringifiers.getDefaultStringifier();
+  private static StringifierIF linker =
+    new Linker();
+
   public static void render(String text, Writer out, TopicMapIF topicmap,
                             Map params) throws IOException {
     out.write("<p>");
@@ -165,11 +170,6 @@ public class Wiki {
       throw new OntopiaRuntimeException(e);
     }
   }
-  
-  private static StringifierIF strify =
-    TopicStringifiers.getDefaultStringifier();
-  private static StringifierIF linker =
-    new Linker();
   
   private static String getString(Object value, Map params) {
     if (value instanceof TopicIF) {

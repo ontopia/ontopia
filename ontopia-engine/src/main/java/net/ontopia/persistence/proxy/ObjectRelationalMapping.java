@@ -47,6 +47,8 @@ public class ObjectRelationalMapping {
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(ObjectRelationalMapping.class.getName());
   
+  protected Map<Class<?>, ClassDescriptor> cdescs = new HashMap<Class<?>, ClassDescriptor>();
+  
   class MappingHandler extends DefaultHandler {
 
     protected ObjectRelationalMapping mapping;
@@ -293,8 +295,6 @@ public class ObjectRelationalMapping {
 
   }
 
-  protected Map<Class<?>, ClassDescriptor> cdescs = new HashMap<Class<?>, ClassDescriptor>();
-  
   /**
    * INTERNAL: Creates an object relational mapping instance that is
    * to read its definition from the specified mapping file. The

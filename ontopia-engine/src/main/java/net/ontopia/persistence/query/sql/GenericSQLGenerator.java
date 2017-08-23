@@ -101,6 +101,22 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     protected ColumnValueIterator viter1 = new ColumnValueIterator();
     protected ColumnValueIterator viter2 = new ColumnValueIterator();
 
+    // Flag used to indicate whether SQLColumns tables should be registered.
+    protected boolean register_tables = false;
+    
+    // Tables referenced
+    protected Set rtables = new HashSet();
+    // Tables joined
+    protected Set jtables = new HashSet();
+    // Tables selected
+    protected Set stables = new HashSet();
+
+    // Table joins
+    protected Set joins = new HashSet();    
+
+    // FROM fragments (strings that later get joined)
+    protected List fg_from = new ArrayList();
+
     BuildInfo() {
     }
     
@@ -205,23 +221,6 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       }
       return indexes;
     }
-    
-    // Flag used to indicate whether SQLColumns tables should be registered.
-    protected boolean register_tables = false;
-    
-    // Tables referenced
-    protected Set rtables = new HashSet();
-    // Tables joined
-    protected Set jtables = new HashSet();
-    // Tables selected
-    protected Set stables = new HashSet();
-
-    // Table joins
-    protected Set joins = new HashSet();    
-
-    // FROM fragments (strings that later get joined)
-    protected List fg_from = new ArrayList();
-    
   }
 
   class ColumnValueIterator {

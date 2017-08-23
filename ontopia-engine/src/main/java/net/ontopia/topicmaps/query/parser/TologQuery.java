@@ -58,6 +58,12 @@ public class TologQuery extends TologStatement {
 
   protected List selected_variables; // cached unmodifiable collection
   
+  // Note: class types mapped to type identifiers in order to make it
+  // easier and faster to check for incompatibilities.
+  protected int TYPE_TMObjectIF = 1;
+  protected int TYPE_String = 2;
+  protected int TYPE_Number = 4;
+
   public TologQuery() {
     clauses = new ArrayList();
     orderBy = new ArrayList();
@@ -395,12 +401,6 @@ public class TologQuery extends TologStatement {
 
     ptypemap = bc.getParameterTypes();
   }
-
-  // Note: class types mapped to type identifiers in order to make it
-  // easier and faster to check for incompatibilities.
-  protected int TYPE_TMObjectIF = 1;
-  protected int TYPE_String = 2;
-  protected int TYPE_Number = 4;
 
   private int getTypeIdentifier(Class type) throws InvalidQueryException {
     if (TMObjectIF.class.isAssignableFrom(type))

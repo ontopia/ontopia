@@ -47,6 +47,8 @@ public class QueryWrapper {
   // initialization of logging facility
   private static final Logger log = LoggerFactory.getLogger(QueryWrapper.class.getName());
 
+  protected ArrayList lookAhead = new ArrayList();
+  
   private Collection users;
   
   private ContextTag contextTag;
@@ -253,8 +255,6 @@ public class QueryWrapper {
     }
   }
 
-  protected ArrayList lookAhead = new ArrayList();
-  
   protected boolean isOnlyChild(boolean[] parentGroupColumns, boolean[] childGroupColumns) {
     // look ahead to see if the current child is the only direct child of the parent
 

@@ -149,6 +149,7 @@ public class RDFIntroSpector {
 
   private static class ALiteralImpl implements ALiteral {
     private Literal literal;
+    private boolean tainted;
 
     public String getDatatypeURI() {
       throw new UnsupportedOperationException();
@@ -173,8 +174,6 @@ public class RDFIntroSpector {
     public void setLiteral(Literal literal) {
       this.literal = literal;
     }
-
-    private boolean tainted;
 
     public void taint() {
       tainted = true;

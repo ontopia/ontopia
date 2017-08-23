@@ -32,6 +32,8 @@ import javax.swing.SwingUtilities;
 public abstract class SwingWorker {
   private Object value; // see getValue(), setValue()
 
+  private ThreadVar threadVar;
+
   /**
    * Class to maintain reference to current worker thread under separate
    * synchronization control.
@@ -51,8 +53,6 @@ public abstract class SwingWorker {
       thread = null;
     }
   }
-
-  private ThreadVar threadVar;
 
   /**
    * Get the value produced by the worker thread, or null if it hasn't been

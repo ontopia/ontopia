@@ -42,6 +42,8 @@ import net.ontopia.utils.CompactHashSet;
  */
 public class Topic extends TMObject implements TopicIF {
   
+  public static final String CLASS_INDICATOR = "T";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -72,8 +74,6 @@ public class Topic extends TMObject implements TopicIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-  
-  public static final String CLASS_INDICATOR = "T";
   
   public Topic() {
   }

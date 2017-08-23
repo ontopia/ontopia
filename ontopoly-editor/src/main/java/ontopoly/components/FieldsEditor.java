@@ -61,6 +61,7 @@ public class FieldsEditor extends Panel {
   
   private TopicTypeModel topicTypeModel;
   private boolean readonly;
+  private String selectedTypeLinkId;
   
   private ListView<FieldAssignmentModel> listView;
   private MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
@@ -242,8 +243,6 @@ public class FieldsEditor extends Panel {
     return listView;
   }
 
-  private String selectedTypeLinkId;
-  
   private void replaceListView(FieldDefinitionTypeLink typeLink) {
     String typeLinkId = typeLink.getMarkupId();
     ListView<FieldDefinitionModel> afListView;

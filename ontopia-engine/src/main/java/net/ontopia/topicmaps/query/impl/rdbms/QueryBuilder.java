@@ -53,6 +53,7 @@ public class QueryBuilder {
   protected TologQuery query;
   protected QueryBuilder parent;
   protected Map attributes;
+  protected Set unsupported = new HashSet();
 
   protected int vncounter = 1;
 
@@ -64,6 +65,18 @@ public class QueryBuilder {
   protected Map params = new HashMap();
   // Query processor
   protected QueryProcessor qp;
+
+  public static Map typemap = new HashMap();
+  static {
+    // The type map is used to map interface types to actual types used by the O/R-mapper
+    typemap.put(net.ontopia.topicmaps.core.AssociationIF.class, net.ontopia.topicmaps.impl.rdbms.Association.class);
+    typemap.put(net.ontopia.topicmaps.core.AssociationRoleIF.class, net.ontopia.topicmaps.impl.rdbms.AssociationRole.class);
+    typemap.put(net.ontopia.topicmaps.core.TopicNameIF.class, net.ontopia.topicmaps.impl.rdbms.TopicName.class);
+    typemap.put(net.ontopia.topicmaps.core.OccurrenceIF.class, net.ontopia.topicmaps.impl.rdbms.Occurrence.class);
+    typemap.put(net.ontopia.topicmaps.core.TopicIF.class, net.ontopia.topicmaps.impl.rdbms.Topic.class);
+    typemap.put(net.ontopia.topicmaps.core.TopicMapIF.class, net.ontopia.topicmaps.impl.rdbms.TopicMap.class);
+    typemap.put(net.ontopia.topicmaps.core.VariantNameIF.class, net.ontopia.topicmaps.impl.rdbms.VariantName.class);
+  }
 
   QueryBuilder(TologQuery query, QueryProcessor qp) {
     this(query, null, qp);
@@ -165,8 +178,6 @@ public class QueryBuilder {
 
   /* ---- Unsupported variables */
 
-  protected Set unsupported = new HashSet();
-  
   public boolean isSupportedVariable(Variable var) {
     return !unsupported.contains(var);
   }
@@ -369,17 +380,4 @@ public class QueryBuilder {
       return argument.getClass();
     }    
   }
-
-  public static Map typemap = new HashMap();
-  static {
-    // The type map is used to map interface types to actual types used by the O/R-mapper
-    typemap.put(net.ontopia.topicmaps.core.AssociationIF.class, net.ontopia.topicmaps.impl.rdbms.Association.class);
-    typemap.put(net.ontopia.topicmaps.core.AssociationRoleIF.class, net.ontopia.topicmaps.impl.rdbms.AssociationRole.class);
-    typemap.put(net.ontopia.topicmaps.core.TopicNameIF.class, net.ontopia.topicmaps.impl.rdbms.TopicName.class);
-    typemap.put(net.ontopia.topicmaps.core.OccurrenceIF.class, net.ontopia.topicmaps.impl.rdbms.Occurrence.class);
-    typemap.put(net.ontopia.topicmaps.core.TopicIF.class, net.ontopia.topicmaps.impl.rdbms.Topic.class);
-    typemap.put(net.ontopia.topicmaps.core.TopicMapIF.class, net.ontopia.topicmaps.impl.rdbms.TopicMap.class);
-    typemap.put(net.ontopia.topicmaps.core.VariantNameIF.class, net.ontopia.topicmaps.impl.rdbms.VariantName.class);
-  }
-  
 }

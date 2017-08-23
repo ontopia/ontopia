@@ -37,6 +37,9 @@ import net.ontopia.topicmaps.impl.basic.TopicMap;
 
 public class DynamicAssociation extends Association implements AssociationIF {
 
+  // This should be AssociationIF when this class becomes a proper proxy
+  private Association target;
+
   /**
    * @param tm
    */
@@ -45,9 +48,6 @@ public class DynamicAssociation extends Association implements AssociationIF {
     super(tm);
 
   }
-
-  // This should be AssociationIF when this class becomes a proper proxy
-  private Association target;
 
   /*
    * (non-Javadoc)

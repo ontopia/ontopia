@@ -606,6 +606,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
   class ALiteralWrapper implements ALiteral {
     private String value;
+    private boolean tainted;
 
     public ALiteralWrapper(String value) {
       this.value = value;
@@ -631,8 +632,6 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       return null;
     }
 
-    private boolean tainted;
-  
     public void taint() {
       tainted = true;
     }

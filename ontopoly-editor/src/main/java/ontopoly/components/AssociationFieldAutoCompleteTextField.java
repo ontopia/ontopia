@@ -41,6 +41,7 @@ import org.apache.wicket.util.convert.IConverter;
 public abstract class AssociationFieldAutoCompleteTextField extends Panel {
   
   private static final TopicConverter TOPIC_CONVERTER = new TopicConverter();
+  protected AutoCompleteTextField<Topic> textField;
   
   static final class TopicConverter implements IConverter {
     
@@ -64,8 +65,6 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
       return topic.getTopicMap().getId() + "::" + topic.getId();
     }
   }
-  
-  protected AutoCompleteTextField<Topic> textField;
   
   public AssociationFieldAutoCompleteTextField(String id, IModel<Topic> model, final RoleFieldModel valueFieldModel) {
     super(id);

@@ -30,6 +30,13 @@ import net.ontopia.topicmaps.core.TopicIF;
  */
 public class TMClassInstanceAssociation extends TMAbstractEdge
     implements VizTMAssociationIF {
+
+  private TopicIF type;
+  private Key key;
+  
+  private TopicIF classTopic;
+  private TopicIF instanceTopic;
+
   public static class Key {
 
     private TopicIF instance;
@@ -53,13 +60,6 @@ public class TMClassInstanceAssociation extends TMAbstractEdge
       return this.type;
     }
   }
-
-
-  private TopicIF type;
-  private Key key;
-  
-  private TopicIF classTopic;
-  private TopicIF instanceTopic;
 
   public TMClassInstanceAssociation(TMTopicNode classType, TMTopicNode instance,
       TopicIF topicType) {

@@ -77,6 +77,17 @@ public class NavigateUI extends TGUserInterface {
 
   private ParsedMenuFile enabledItemIds;
   
+  private static final int OP_EXPAND_NODE = 0;
+  private static final int OP_COLLAPSE_NODE = 1;
+  private static final int OP_HIDE_NODE = 2;
+  private static final int OP_SET_AS_START_NODE = 3;
+  private static final int OP_GO_TO_TOPIC = 4;
+  private static final int OP_DEBUG = 5;
+  private static final int OP_OPEN_PROPERTIES = 6;
+  private static final int OP_STICKY = 7;
+  private static final int OP_COPY_NAME = 8;
+  protected JCheckBoxMenuItem stickyMenu;
+
   public NavigateUI(VizPanel glp, VizController controller) {
     this.glPanel = glp;
     this.controller = controller;
@@ -373,17 +384,6 @@ public class NavigateUI extends TGUserInterface {
   }
 
   // --- Node menu class
-
-  private static final int OP_EXPAND_NODE = 0;
-  private static final int OP_COLLAPSE_NODE = 1;
-  private static final int OP_HIDE_NODE = 2;
-  private static final int OP_SET_AS_START_NODE = 3;
-  private static final int OP_GO_TO_TOPIC = 4;
-  private static final int OP_DEBUG = 5;
-  private static final int OP_OPEN_PROPERTIES = 6;
-  private static final int OP_STICKY = 7;
-  private static final int OP_COPY_NAME = 8;
-  protected JCheckBoxMenuItem stickyMenu;
 
   class NodeMenuListener implements ActionListener {
     private int opcode;

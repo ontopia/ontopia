@@ -45,6 +45,18 @@ public class SpyDriver implements Driver {
   
   protected Driver driver;
   
+  // -- init
+  
+  private static boolean initialized;
+
+  static {
+    try {
+      initialize();
+    } catch (Exception e) {
+      e.printStackTrace();      
+    }
+  }
+
   public SpyDriver() {
   }
 
@@ -95,18 +107,6 @@ public class SpyDriver implements Driver {
   protected String getRealURL(String url) {
     return (url.startsWith("jdbcspy:") ? url.substring("jdbcspy:".length()) : null);
   }
-
-  // -- init
-  
-  static {
-    try {
-      initialize();
-    } catch (Exception e) {
-      e.printStackTrace();      
-    }
-  }
-
-  private static boolean initialized;
 
   private static void initialize() throws SQLException {
     if (initialized) return;
