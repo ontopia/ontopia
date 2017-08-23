@@ -52,8 +52,7 @@ public class GenericLocatorTest extends AbstractLocatorTest {
   public void testEquals() {
     LocatorIF locator = createLocator(NOTATION, ADDRESS);
     assertEquals("locator does not equal itself", locator, locator);
-    assertTrue("locator equals null",
-	   !locator.equals(null));
+    assertFalse("locator equals null", locator.equals(null));
     
     LocatorIF locator2 = createLocator("generic", ADDRESS);
     assertEquals("comparison of notation name not case-insensitive", locator2, locator);
