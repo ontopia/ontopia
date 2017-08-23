@@ -387,7 +387,7 @@ public class ExtendedTGPanel extends TGPanel {
     synchronized (localityUtils) {
       if (visibleLocality.deleteNode(node)) {
         // delete from visibleLocality, *AND completeEltSet
-        if (node == select)
+        if (node.equals(select))
           clearSelect();
         resetDamper();
         return true;
@@ -414,7 +414,7 @@ public class ExtendedTGPanel extends TGPanel {
     if (dragNode != null || maintainMouseOver)
       return; // So you don't accidentally switch nodes while dragging
 
-    if (mouseOverN != node) {
+    if (!mouseOverN.equals(node)) {
       mouseOverN = node;
     }
   }
@@ -487,7 +487,7 @@ public class ExtendedTGPanel extends TGPanel {
   public synchronized void setMouseOverE(Edge edge) {
     if (dragNode != null || maintainMouseOver)
       return; // No funny business while dragging
-    if (mouseOverE != edge) {
+    if (!mouseOverE.equals(edge)) {
       mouseOverE = edge;
     }
   }
@@ -509,7 +509,7 @@ public class ExtendedTGPanel extends TGPanel {
   public class SwitchSelectUI extends TGAbstractClickUI {
     public void mouseClicked(MouseEvent e) {
       if (mouseOverN != null) {
-        if (mouseOverN != select)
+        if (!mouseOverN.equals(select))
           setSelect(mouseOverN);
         else
           clearSelect();
@@ -664,7 +664,7 @@ public class ExtendedTGPanel extends TGPanel {
 
   public void hideEdge(Edge hideEdge) {
     visibleLocality.removeEdge(hideEdge);
-    if (mouseOverE == hideEdge)
+    if (mouseOverE.equals(hideEdge))
       setMouseOverE(null);
     resetDamper();
   }
@@ -738,7 +738,7 @@ public class ExtendedTGPanel extends TGPanel {
         Node oldMouseOverN = mouseOverN;
         findMouseOver();
 
-        if (oldMouseOverE != mouseOverE || oldMouseOverN != mouseOverN) {
+        if (!oldMouseOverE.equals(mouseOverE) || !oldMouseOverN.equals(mouseOverN)) {
           repaint();
         }
       }

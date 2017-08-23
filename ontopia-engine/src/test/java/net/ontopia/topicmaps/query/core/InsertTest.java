@@ -207,8 +207,8 @@ public class InsertTest extends AbstractQueryTest {
                !topic2.getTypes().isEmpty());
     TopicIF type1 = (TopicIF) topic1.getTypes().iterator().next();
     TopicIF type2 = (TopicIF) topic2.getTypes().iterator().next();
-    assertTrue("topics have the same type",
-               type1 != type2);
+    assertFalse("topics have the same type",
+               type1.equals(type2));
   }
 
   public void testWildcard3() throws InvalidQueryException {

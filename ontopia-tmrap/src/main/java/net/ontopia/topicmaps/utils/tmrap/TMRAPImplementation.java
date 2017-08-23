@@ -635,7 +635,7 @@ public class TMRAPImplementation {
       while (it2.hasNext()) {
         AssociationRoleIF other = it2.next();
         TopicIF refd = other.getPlayer();
-        if (refd != source)
+        if (!refd.equals(source))
           copyTopic(tm, refd);
       }
     }

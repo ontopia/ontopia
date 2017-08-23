@@ -426,7 +426,7 @@ public class RelatedTopics {
     Iterator it = assoc.getRoles().iterator();
     while (it.hasNext()) {
       AssociationRoleIF other = (AssociationRoleIF) it.next();
-      if (other == role)
+      if (other.equals(role))
         continue;
 
       if (isTopicHidden(other.getPlayer(), hide, pquery))

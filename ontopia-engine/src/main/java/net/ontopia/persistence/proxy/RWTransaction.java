@@ -157,7 +157,7 @@ public class RWTransaction extends AbstractTransaction {
       lru.put(identity, object);
       
       // ISSUE: What if identity is already registered?
-      if (other != null && other != object)
+      if (other != null && !other.equals(object))
         log.warn("Created object replaced existing object: " + identity);
     }
     

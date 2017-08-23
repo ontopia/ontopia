@@ -383,7 +383,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         Iterator it2 = assoc.getRoles().iterator();
         while (it2.hasNext()) {
           AssociationRoleIF r = (AssociationRoleIF) it2.next();
-          if (r != role) {
+          if (!r.equals(role)) {
             otherrole = r;
             break;
           }
@@ -406,7 +406,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         Iterator it2 = assoc.getRoles().iterator();
         while (it2.hasNext()) {
           AssociationRoleIF r = (AssociationRoleIF) it2.next();
-          if (r == role)
+          if (r.equals(role))
             continue; // this is our role, which is already covered
 
           atts.clear();

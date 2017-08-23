@@ -987,7 +987,7 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        if (pclause == theclause)
+        if (pclause.equals(theclause))
           return bound.contains(var);
         bound.addAll(pclause.getAllVariables());
         

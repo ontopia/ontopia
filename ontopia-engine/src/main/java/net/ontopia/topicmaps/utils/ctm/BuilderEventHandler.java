@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils.ctm;
 import java.util.List;
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -243,15 +244,15 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   }
 
   private void merge(TopicIF topic, TopicIF other) {
-    if (topic == other)
+    if (Objects.equals(topic, other))
       return;
 
     // make sure hard-wired references to "ako" topics are not lost
-    if (assoctype == other)
+    if (Objects.equals(assoctype, other))
       assoctype = topic;
-    else if (subtype == other)
+    else if (Objects.equals(subtype, other))
       subtype = topic;
-    else if (supertype == other)
+    else if (Objects.equals(supertype, other))
       supertype = topic;
     
     MergeUtils.mergeInto(topic, other);

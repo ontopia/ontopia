@@ -310,7 +310,7 @@ public class ConversionUtils {
     Iterator<TopicIF> nsiter = tracker.getSuspectNameScopes().iterator();
     while (nsiter.hasNext()) {
       TopicIF ntheme = nsiter.next();
-      if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme == reifier) continue;
+      if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme.equals(reifier)) continue;
       nstypes.add(ntheme);
       
       // translate name scope into name type

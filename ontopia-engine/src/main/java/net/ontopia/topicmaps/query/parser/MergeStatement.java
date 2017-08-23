@@ -39,7 +39,7 @@ public class MergeStatement extends ModificationStatement {
     throws InvalidQueryException {
     TopicIF topic1 = (TopicIF) getValue(litlist.get(0), arguments);
     TopicIF topic2 = (TopicIF) getValue(litlist.get(1), arguments);
-    if (topic1 != topic2)
+    if (!topic1.equals(topic2))
       topic1.merge(topic2);
     return 1;
   }
@@ -63,7 +63,7 @@ public class MergeStatement extends ModificationStatement {
 
       TopicIF topic1 = (TopicIF) arg1;
       TopicIF topic2 = (TopicIF) arg2;
-      if (topic1 != topic2 &&
+      if (!topic1.equals(topic2) &&
           topic1.getTopicMap() != null &&
           topic2.getTopicMap() != null) {
         topic1.merge(topic2);

@@ -94,7 +94,7 @@ public class DeletionUtils {
       }
       // Remove instances of the topic
       for (TopicIF object : cindex.getTopics(topic)) {
-        if (object != topic) {
+        if (!object.equals(topic)) {
           object.remove();
         }
       }

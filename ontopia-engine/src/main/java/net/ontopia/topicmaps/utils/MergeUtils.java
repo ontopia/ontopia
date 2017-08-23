@@ -114,7 +114,7 @@ public class MergeUtils {
       throw new IllegalArgumentException("Source topic has no topic map");
     if (!target.getTopicMap().equals(source.getTopicMap()))
       throw new IllegalArgumentException("Topics not in same topic map");
-    if (target == source)
+    if (target.equals(source))
       throw new IllegalArgumentException("Cannot merge topic with itself!");
 
     // move reified
@@ -591,7 +591,7 @@ public class MergeUtils {
         AssociationRoleIF rtarget = 
           builder.makeAssociationRole(atarget,
                                       resolveTopic(builder.getTopicMap(), rsource.getType()),
-                                      (rsource == rstart ? target : copyTopic(targettm, rsource.getPlayer())));
+                                      (rsource.equals(rstart) ? target : copyTopic(targettm, rsource.getPlayer())));
         rtarget = resolveIdentities(rtarget, rsource);
         copyReifier(rtarget, rsource);
       }
@@ -658,7 +658,7 @@ public class MergeUtils {
       if (targetReifier == null) {
         if (sourceReifier != null) target.setReifier(sourceReifier);
       } else if (sourceReifier != null) {
-        if (targetReifier != sourceReifier)
+        if (!targetReifier.equals(sourceReifier))
           mergeInto(targetReifier, sourceReifier);
       }
     }
@@ -686,7 +686,7 @@ public class MergeUtils {
       LocatorIF loc = it.next();
       TopicIF found = targettm.getTopicBySubjectLocator(loc);
       if (found != null) {
-        if (found != target) {
+        if (!found.equals(target)) {
           mergeInto(found, target);
           target = found;
         }

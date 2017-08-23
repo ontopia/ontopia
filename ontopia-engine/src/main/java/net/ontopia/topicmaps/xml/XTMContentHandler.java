@@ -578,7 +578,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
               // Set subject resource
               current_topic.addSubjectLocator(subject);
               
-            } else if (other_topic != current_topic) {
+            } else if (!other_topic.equals(current_topic)) {
               if (log.isInfoEnabled())
                 log.debug(MSG_TOPIC + current_topic + MSG_MERGED_WITH + other_topic +
                     " because they both have the same addressable subject: " + subject);
@@ -694,7 +694,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
             TopicIF current_topic = (TopicIF)info.get(EL_TOPIC);
             TopicIF rtopic = registerSubjectIndicator(current_topic, indicator);
             // update info map
-            if (rtopic != current_topic) info.put(EL_TOPIC, rtopic);
+            if (!rtopic.equals(current_topic)) info.put(EL_TOPIC, rtopic);
           }
           
         } else {
@@ -1118,7 +1118,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     TopicIF tsrcloc = resolveSourceLocatorOrSubjectIndicator(locator);
     
     if (tsrcloc != null) {
-      if (topic != null && tsrcloc != topic) {
+      if (topic != null && !topic.equals(tsrcloc)) {
         if (log.isInfoEnabled())
           log.debug(MSG_TOPIC + topic + MSG_MERGED_WITH + tsrcloc +
               " because the subject indicator is the same as the source locator of the other: " + locator);
@@ -1307,7 +1307,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     else if (EL_SUBJECTIDENTITY.equals(parent_type)) {
       TopicIF current_topic = (TopicIF)info.get(EL_TOPIC);
       
-      if (current_topic != referenced_topic) {
+      if (!current_topic.equals(referenced_topic)) {
         if (log.isInfoEnabled())
           log.debug(MSG_TOPIC + current_topic + MSG_MERGED_WITH + referenced_topic +
           " because it is an addressable subject (subjectIndentity>:<topicRef>)");

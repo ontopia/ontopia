@@ -483,7 +483,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         return;
       }
 
-      if (other != topic)
+      if (!other.equals(topic))
         MergeUtils.mergeInto(topic, other);
     }
     

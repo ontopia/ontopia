@@ -137,7 +137,7 @@ public class TypesPrecedenceFrame extends JFrame {
     while (iterator.hasNext()) {
       TopicIF type = (TopicIF) iterator.next();
       
-      if (type == defaultPrecedence)
+      if (type.equals(defaultPrecedence))
         topicTypes.add(new TopicListItem(type,
             Messages.getString("Viz.UnknownTypes")));
       else 

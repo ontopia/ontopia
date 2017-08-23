@@ -640,7 +640,7 @@ public class VizDesktop implements VizFrontEndIF {
     while (ttypes.hasNext()) {
       TopicIF type = (TopicIF) ttypes.next();
 
-      if (type == defaultAssociationType)
+      if (type.equals(defaultAssociationType))
         continue;
       
       ColouredSquareMenuItem mItem = setupAssociationMenuItem(type);
@@ -673,7 +673,7 @@ public class VizDesktop implements VizFrontEndIF {
       TopicIF type = (TopicIF) ttypes.next();
       
       // Skip default type (treated separately.
-      if (type == defaultType)
+      if (type.equals(defaultType))
         continue;
       
       ColouredSquareMenuItem mItem = setupTopicMenuItem(type);

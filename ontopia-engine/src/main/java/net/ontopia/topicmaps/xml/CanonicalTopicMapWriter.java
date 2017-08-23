@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -487,7 +488,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       return instance;      
     }
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
-      if (bn1 == bn2) return 0;
+      if (Objects.equals(bn1, bn2)) return 0;
       
       // Compare basename values
       int cval1 = compareObjects(bn1.getValue(), bn2.getValue());
@@ -564,7 +565,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       return instance;      
     }
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
-      if (assoc1 == assoc2) return 0;
+      if (Objects.equals(assoc1, assoc2)) return 0;
       
       // Compare type
       int cval1 = compareObjects(assoc1.getType(), assoc2.getType(),
@@ -589,7 +590,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       return instance;      
     }
     public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
-      if (role1 == role2) return 0;
+      if (Objects.equals(role1, role2)) return 0;
       
       // Compare types
       int cval2 = compareObjects(role1.getType(), role2.getType(),

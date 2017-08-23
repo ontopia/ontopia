@@ -885,7 +885,7 @@ public class VizController {
 
     TMAbstractNode target = (TMAbstractNode) panel.getSelect();
     
-    if (node == target)
+    if (node.equals(target))
       view.hideNode(node);
     else if (target == null)
       // If we are in Map view, use default behaviour

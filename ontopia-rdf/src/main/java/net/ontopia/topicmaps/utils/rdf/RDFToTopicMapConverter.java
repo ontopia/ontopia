@@ -603,7 +603,7 @@ public class RDFToTopicMapConverter {
       }
 
       TopicIF other = topicmap.getTopicBySubjectIdentifier(loc);
-      if (other != null && other != topic)
+      if (other != null && !other.equals(topic))
         MergeUtils.mergeInto(other, topic);
       else
         topic.addSubjectIdentifier(loc);
@@ -636,7 +636,7 @@ public class RDFToTopicMapConverter {
       TMObjectIF other = topicmap.getObjectByItemIdentifier(loc);
       if (other instanceof TopicIF) {
         TopicIF othert = (TopicIF) other;
-        if (othert != null && othert != topic)
+        if (othert != null && !othert.equals(topic))
           MergeUtils.mergeInto(othert, topic);
         else
           topic.addItemIdentifier(loc);

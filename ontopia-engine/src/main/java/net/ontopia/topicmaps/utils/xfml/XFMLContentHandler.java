@@ -163,7 +163,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <facet> ----------------------------------------------------------
-    else if (qName == EL_FACET) {
+    else if (EL_FACET.equals(qName)) {
       String id = atts.getValue("id");
       // FIXME: complain if no id
 
@@ -174,7 +174,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <topic> ----------------------------------------------------------
-    else if (qName == EL_TOPIC) {
+    else if (EL_TOPIC.equals(qName)) {
       String id = atts.getValue("id");
       // FIXME: complain if no id
 
@@ -191,7 +191,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <page> -----------------------------------------------------------
-    else if (qName == EL_PAGE) {
+    else if (EL_PAGE.equals(qName)) {
       String url = atts.getValue("url");
       // FIXME: complain if no url
 
@@ -200,7 +200,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <occurrence>------------------------------------------------------
-    else if (qName == EL_OCCURRENCE) {
+    else if (EL_OCCURRENCE.equals(qName)) {
       String topicid = atts.getValue("topicid");
       // FIXME: complain if none
 
@@ -213,8 +213,8 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // ----- <description> ----------------------------------------------------
     // ----- <title> ----------------------------------------------------------
     // ----- <connect> --------------------------------------------------------
-    else if (qName == EL_NAME || qName == EL_PSI || qName == EL_DESCRIPTION ||
-             qName == EL_TITLE || qName == EL_CONNECT) 
+    else if (EL_NAME.equals(qName) || EL_PSI.equals(qName) || EL_DESCRIPTION.equals(qName) ||
+            EL_TITLE.equals(qName) || EL_CONNECT.equals(qName)) 
       keep_content = true;   
     
     } catch (RuntimeException e) {

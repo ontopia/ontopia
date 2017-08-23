@@ -275,7 +275,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
 
       // Check subject locator uniqueness
       TopicIF existing = _getTopicBySubjectLocator((LocatorIF)new_value);
-      if (existing != null && existing != object)
+      if (existing != null && !existing.equals(object))
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this subject locator: " + new_value + " ("
             + object + ")");
@@ -311,7 +311,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
             + object + ")");
       // Check for source locator clash
       TMObjectIF existing_tmo = _getObjectByItemIdentifier((LocatorIF)new_value);
-      if (existing_tmo != null && existing_tmo != object
+      if (existing_tmo != null && !existing_tmo.equals(object)
           && (existing_tmo instanceof TopicIF))
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing_tmo
             + " already has this subject identifier as its item identifier: "
@@ -350,11 +350,11 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       if (existing != null && existing != object)
         throw new UniquenessViolationException("Another object " + existing
             + " already has this item identifier: " + new_value + " (" + object
-            + ") " + (existing == object));
+            + ") " + existing.equals(object));
       
       // Check for subject identifier clash
       existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
-      if (existing != null && existing != object && (object instanceof TopicIF))
+      if (existing != null && !existing.equals(object) && (object instanceof TopicIF))
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this item identifier as its subject identifier: "
             + new_value + " (" + object + ")");

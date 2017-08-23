@@ -73,7 +73,7 @@ public class SimilarTopics {
       List<TopicIF> similars = getRelated(related);
       float score = 100.0f / similars.size();
       for (TopicIF similar : similars) {
-        if (similar == topic)
+        if (similar.equals(topic))
           continue;
         Float prev = points.get(similar);
         if (prev == null)

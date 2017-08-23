@@ -782,7 +782,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
 
     protected int compareLocator(LocatorIF l1, LocatorIF l2) {
-      if (l1 == l2) return 0;
+      if (Objects.equals(l1, l2)) return 0;
       if (l1 == null) return -1;
       if (l2 == null) return 1;
 
@@ -794,7 +794,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
 
     protected int compareTopic(TopicIF t1, TopicIF t2) {
-      if (t1 == t2) return 0;
+      if (Objects.equals(t1, t2)) return 0;
       if (t1 == null) return -1;
       if (t2 == null) return 1;
       
@@ -804,7 +804,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
     
     protected int compareAssociation(AssociationIF a1, AssociationIF a2) {
-      if (a1 == a2) return 0;
+      if (Objects.equals(a1, a2)) return 0;
       if (a1 == null) return -1;
       if (a2 == null) return 1;
 
@@ -1008,7 +1008,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
 
     public int compare(Object o1, Object o2) {
-      if (o1 == o2) return 0;
+      if (Objects.equals(o1, o2)) return 0;
 
       Collection c1 = (Collection)o1;
       Collection c2 = (Collection)o2;

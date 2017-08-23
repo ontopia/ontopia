@@ -383,7 +383,7 @@ public class SQLBuilder {
       
       // Return if a value does not reference a root value or they're
       // referencing the same value.
-      if (rvalue1 == null || rvalue2 == null || rvalue1 == rvalue2) return;
+      if (rvalue1 == null || rvalue2 == null || rvalue1.equals(rvalue2)) return;
 
       // Figure out if value types are identifiable
       boolean identifiable1 = isIdentifiableValueType(rvalue1, this);
@@ -1850,7 +1850,7 @@ public class SQLBuilder {
     
     // Check that types are compatible
     //! if (!(type1.isAssignableFrom(type2) || type2.isAssignableFrom(type1)))
-    if (type1 != type2) {
+    if (!type1.equals(type2)) {
 			// HACK: string/reader compatibility hack
 			if (type1 == String.class && type2 == java.io.Reader.class)
 				return String.class;

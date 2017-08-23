@@ -1619,7 +1619,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     }
 
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
-      if (bn1 == bn2)
+      if (Objects.equals(bn1, bn2))
         return 0;
 
       int retVal = scopeComparator.compare(filterCollection(bn1.getScope()),
@@ -1682,7 +1682,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     }
 
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
-      if (vn1 == vn2)
+      if (Objects.equals(vn1, vn2))
         return 0;
 
       int retVal = scopeComparator.compare(filterCollection(vn1.getScope()),
