@@ -79,7 +79,7 @@ public class PluginContentHandler extends SAXTracker {
                            Attributes attrs) throws SAXException {
     super.startElement(nsuri, lname, qname, attrs);
 
-    if (qname == "plugin") {
+    if ("plugin".equals(qname)) {
       String klass = attrs.getValue("class");
       if (klass == null)
         cplugin = new DefaultPlugin();
@@ -100,7 +100,7 @@ public class PluginContentHandler extends SAXTracker {
         cplugin.setGroups(groups);
       }
         
-    } else if (qname == "parameter") {
+    } else if ("parameter".equals(qname)) {
       param_name = attrs.getValue("name");
       if (attrs.getValue("value") != null)
         cplugin.setParameter(attrs.getValue("name"),
@@ -111,17 +111,17 @@ public class PluginContentHandler extends SAXTracker {
   public void endElement(String nsuri, String lname, String qname) throws SAXException {
     super.endElement(nsuri, lname, qname);
 
-    if (qname == "plugin")
+    if ("plugin".equals(qname))
       plugins.add(cplugin);
-    else if (qname == "title")
+    else if ("title".equals(qname))
       cplugin.setTitle(content.toString());
-    else if (qname == "descr")
+    else if ("descr".equals(qname))
       cplugin.setDescription(content.toString());
-    else if (qname == "target")
+    else if ("target".equals(qname))
       cplugin.setTarget(content.toString());
-    else if (qname == "uri")
+    else if ("uri".equals(qname))
       cplugin.setURI(processURI(content.toString()));
-    else if (qname == "activated") {
+    else if ("activated".equals(qname)) {
       String value = content.toString();
 
       if (cplugin.getState() != PluginIF.ERROR) {
@@ -131,7 +131,7 @@ public class PluginContentHandler extends SAXTracker {
           cplugin.setState(PluginIF.ACTIVATED);
       }
     }
-    else if (qname == "parameter") {
+    else if ("parameter".equals(qname)) {
       // If parameter hasn't yet been set use the content of the parameter element.
       if (cplugin.getParameter(param_name) == null)
         cplugin.setParameter(param_name, content.toString());

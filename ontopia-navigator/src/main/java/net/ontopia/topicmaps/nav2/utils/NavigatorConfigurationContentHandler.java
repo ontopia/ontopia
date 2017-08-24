@@ -74,42 +74,42 @@ public class NavigatorConfigurationContentHandler extends SAXTracker {
     // ==== TODO
     log.debug("startElement: q("+qname+") l("+lname+")");
     
-    if (qname == "configuration") {
+    if ("configuration".equals(qname)) {
       // TODO: use attribute "type" 
       //       for distinguishing between app and topicmap config
       // String configType = attrs.getValue("type");
       // --- if (configType.equals("application"))
     }
-    else if (qname == "autoload") {
+    else if ("autoload".equals(qname)) {
       // should be embedded in <autoloads>
       navConfig.addAutoloadTopicMap(attrs.getValue("topicmapid"));
       log.debug("added autoload topic map.");
     }
-    else if (qname == "class") {
+    else if ("class".equals(qname)) {
       // should be embedded in <classmap>
       navConfig.addClass(attrs.getValue("shortcut"), attrs.getValue("fullname"));
       log.debug("added class mapping.");
     }
-    else if (qname == "property") {
+    else if ("property".equals(qname)) {
       // should be embedded in <properties>
       navConfig.addProperty(attrs.getValue("name"), attrs.getValue("value"));
       log.debug("added property.");
     }
-    else if (qname == "model") {
+    else if ("model".equals(qname)) {
       // should be embedded in <mvs>
       navConfig.addModel(attrs.getValue("name"), attrs.getValue("title"),
                          (attrs.getValue("default") != null) ?
                          attrs.getValue("default").equalsIgnoreCase("yes") : false);
       log.debug("added model.");
     }
-    else if (qname == "view") {
+    else if ("view".equals(qname)) {
       // should be embedded in <mvs>
       navConfig.addView(attrs.getValue("name"), attrs.getValue("title"),
                         (attrs.getValue("default") != null) ?
                         attrs.getValue("default").equalsIgnoreCase("yes") : false);
       log.debug("added view.");
     }
-    else if (qname == "skin") {
+    else if ("skin".equals(qname)) {
       // should be embedded in <mvs>
       navConfig.addSkin(attrs.getValue("name"), attrs.getValue("title"),
                         (attrs.getValue("default") != null) ?

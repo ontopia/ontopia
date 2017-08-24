@@ -1436,8 +1436,7 @@ public class TopicMapView {
 
     // Find a potential duplicate
     Node collidingNode = tgPanel.getGES().findNode(node.getID());
-    if (collidingNode != null && collidingNode.getClass().getName() == 
-                                 node.getClass().getName()) {
+    if (collidingNode != null && collidingNode.getClass().getName().equals(node.getClass().getName())) {
       // First try to find the collision. If found, remove it and try again
       if (node instanceof TMTopicNode) {
         TMTopicNode tNode = (TMTopicNode)node;

@@ -116,15 +116,15 @@ public class ActionConfigContentHandler extends SAXTracker {
     try {
     
     // ==== classMap ========================================
-    if (lname == "classMap") {
+    if ("classMap".equals(lname)) {
       classMap = new HashMap();
     } // ----------------------------------------------------
-    else if (lname == "class") {
+    else if ("class".equals(lname)) {
       String shortcut = attrs.getValue("", "shortcut");
       String fullname = attrs.getValue("", "fullname");
       classMap.put(shortcut, fullname);
     } // === buttonMap ======================================
-    else if (lname == "image") {
+    else if ("image".equals(lname)) {
       String name = attrs.getValue("", "name");
       // generate a absolute path regarding to the web application or use the absolute src if provided.
       String src = attrs.getValue("", "absolutesrc");
@@ -140,7 +140,7 @@ public class ActionConfigContentHandler extends SAXTracker {
       registry.addImage(img);
       
     } // ==== fieldMap ======================================
-    else if (lname == "field") {
+    else if ("field".equals(lname)) {
       String name = attrs.getValue("", "name");
       String type = attrs.getValue("", "type");
       String maxlength = attrs.getValue("", "maxlength");
@@ -150,11 +150,11 @@ public class ActionConfigContentHandler extends SAXTracker {
                                                       columns, rows);
       registry.addField(field);
     } // ==== globalForwards ================================
-    else if (lname == "globalForwards") {
+    else if ("globalForwards".equals(lname)) {
       globalForwards = new HashMap();
     } // ----------------------------------------------------
     //                 also allowed as element in actionGroup
-    else if (lname == "forward") {
+    else if ("forward".equals(lname)) {
       // --- required
       currentForwardName = attrs.getValue("", "name");
       String path = attrs.getValue("", "path");
@@ -186,31 +186,31 @@ public class ActionConfigContentHandler extends SAXTracker {
       currentForwardPage = new ActionForwardPage(getAbsolutePathFor(path), frame, nextActionTempl,
                                                  paramRule);
     } // ----------------------------------------------------
-    else if (lname == "reqParam") {
+    else if ("reqParam".equals(lname)) {
       String name = attrs.getValue("", "name");
       // value is optional, if not fixed, it will be retrieved
       // from request scope.
       String value = attrs.getValue("", "value");
       currentForwardPage.addParameter(name, value);
     } // ----------------------------------------------------
-    else if (lname == "actionType") {
+    else if ("actionType".equals(lname)) {
       currentActionType = attrs.getValue("", "class");
     } // ----------------------------------------------------
-    else if (lname == "actionGroup") {
+    else if ("actionGroup".equals(lname)) {
       String name = attrs.getValue("", "name");
       currentActionGroup = new ActionGroup(name);
       currentActions = new HashMap();
       currentForwards = new HashMap();
     } // ----------------------------------------------------
-    else if (lname == "inputField" || lname == "action"){
+    else if ("inputField".equals(lname) || "action".equals(lname)){
       currentActionName = attrs.getValue("", "name");
       currentActionClass = attrs.getValue("", "class");
       currentActionExclusive = attrs.getValue("", "exclusive");
     } // ----------------------------------------------------
-    else if (lname == "forwardRules") {
+    else if ("forwardRules".equals(lname)) {
       currentForwardRules = new HashMap();
     } // ----------------------------------------------------
-    else if (lname == "forwardDefault") {
+    else if ("forwardDefault".equals(lname)) {
       // first try if attribute 'forward' is set
       String defaultForwardName = attrs.getValue("", "forward");
       if (defaultForwardName != null) {
@@ -243,7 +243,7 @@ public class ActionConfigContentHandler extends SAXTracker {
       }
       
     } // ----------------------------------------------------
-    else if (lname == "forwardLocked") {
+    else if ("forwardLocked".equals(lname)) {
       // try to resolve 'path' attribute
       String path = attrs.getValue("", "path");
       if (path == null) {
@@ -256,7 +256,7 @@ public class ActionConfigContentHandler extends SAXTracker {
       ActionForwardPageIF fp = new ActionForwardPage(getAbsolutePathFor(path), frame);
       currentActionGroup.setLockedForwardPage(fp);
     } // ----------------------------------------------------
-    else if (lname == "forwardRule") {
+    else if ("forwardRule".equals(lname)) {
       String forwardName = attrs.getValue("", "forward");
       String actionName = attrs.getValue("", "action");
       ForwardPageResponseComposite fprc = getForward(forwardName);
@@ -291,7 +291,7 @@ public class ActionConfigContentHandler extends SAXTracker {
     super.endElement(nsuri, lname, lname);
 
     // ======================================================
-    if (lname == "forward") {
+    if ("forward".equals(lname)) {
       int respType = Constants.FORWARD_GENERIC;
       if (currentForwardType.equals("success"))
         respType = Constants.FORWARD_SUCCESS;
@@ -307,10 +307,10 @@ public class ActionConfigContentHandler extends SAXTracker {
         currentForwards.put(currentForwardName, fpr);
       }
     } // ====================================================
-    else if (lname == "actionGroup") {
+    else if ("actionGroup".equals(lname)) {
       registry.addActionGroup(currentActionGroup);
     } // ====================================================
-    else if (lname == "action") {
+    else if ("action".equals(lname)) {
       boolean exclusive = (currentActionExclusive != null &&
                            currentActionExclusive.trim().equalsIgnoreCase("true"));
       
@@ -319,12 +319,12 @@ public class ActionConfigContentHandler extends SAXTracker {
       currentActionGroup.addAction(aig);
       currentActions.put(currentActionName, aig);
     } // ====================================================
-    else if (lname == "inputField") {
+    else if ("inputField".equals(lname)) {
       ActionIF action = createActionInstance(currentActionClass);
       ActionInGroup aig = new ActionInGroup(action, currentActionName, false);
       currentActionGroup.addAction(aig);
     } // ====================================================
-    else if (lname == "forwardRules") {
+    else if ("forwardRules".equals(lname)) {
       Iterator it = currentForwardRules.keySet().iterator();
       while (it.hasNext()) {
         ActionInGroup action = (ActionInGroup) it.next();

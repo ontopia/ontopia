@@ -232,26 +232,26 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // log.debug("E: " + qName);
 
     // ----- </facet> ---------------------------------------------------------
-    if (qName == EL_FACET)
+    if (EL_FACET.equals(qName))
       builder.makeTopicName(current_topic, content.toString());
     
     // ----- </name> ----------------------------------------------------------
     // ----- </title> ---------------------------------------------------------
-    else if ((qName == EL_NAME || qName == EL_TITLE) &&
+    else if ((EL_NAME.equals(qName) || EL_TITLE.equals(qName)) &&
              current_topic != null)
       builder.makeTopicName(current_topic, content.toString());
     
     // ----- </psi> -----------------------------------------------------------
-    else if (qName == EL_PSI)
+    else if (EL_PSI.equals(qName))
       addSubjectIdentifier(current_topic, createLocator(content.toString()));
     
     // ----- </description> ---------------------------------------------------
-    else if (qName == EL_DESCRIPTION) {
+    else if (EL_DESCRIPTION.equals(qName)) {
       OccurrenceIF occ = builder.makeOccurrence(current_topic, PSI_DESCRIPTION, content.toString());
     }
 
     // ----- </connect> -------------------------------------------------------
-    else if (qName == EL_CONNECT) 
+    else if (EL_CONNECT.equals(qName)) 
       current_topic.addItemIdentifier(createLocator(content.toString()));
     
     keep_content = false;

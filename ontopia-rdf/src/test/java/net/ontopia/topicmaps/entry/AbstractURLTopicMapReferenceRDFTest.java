@@ -43,7 +43,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     ref.setMappingFile("foo");
     assertTrue("Mappingfile not equals 'foo'", "foo".equals(ref.getMappingFile()));
     ref.setMappingFile(mf);
-    assertTrue("Mappingfile != " + mf, mf == ref.getMappingFile());
+    assertTrue("Mappingfile != " + mf, mf.equals(ref.getMappingFile()));
 
     // test syntax
     String sx = ref.getSyntax();
@@ -51,7 +51,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     ref.setSyntax("foo");
     assertTrue("Syntax not equals 'foo'", "foo".equals(ref.getSyntax()));
     ref.setSyntax(sx);
-    assertTrue("Syntax != " + sx, sx == ref.getSyntax());
+    assertTrue("Syntax != " + sx, sx.equals(ref.getSyntax()));
 
     // test generate names
     boolean gg = ref.getGenerateNames();

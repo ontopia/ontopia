@@ -59,20 +59,20 @@ public class OSLSchemaContentHandler extends DefaultHandler {
     throws java.net.MalformedURLException, SAXException {
     curelem = name;
     
-    if (name == "ruleset") {
+    if ("ruleset".equals(name)) {
       OSLSchema parent = getSchema();
       RuleSet ruleset = new RuleSet(parent, attrs.getValue("id"));
       parent.addRuleSet(ruleset);
       openObjects.push(ruleset);
 
-    } else if (name == "tm-schema") {
+    } else if ("tm-schema".equals(name)) {
       if (attrs.getValue("match") != null)
         schema.setIsStrict(getTrueFalse(attrs.getValue("match"), 
                                         "strict", "loose"));
 
       openObjects.push(schema);
       
-    } else if (name == "baseName") {
+    } else if ("baseName".equals(name)) {
       TopicConstraintCollection parent = getTopicConstraintCollection();
       TopicNameConstraint constraint = new TopicNameConstraint(parent);
       setMinMax(constraint, attrs);
@@ -80,7 +80,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addTopicNameConstraint(constraint);
       openObjects.push(constraint);
       
-    } else if (name == "variant") {
+    } else if ("variant".equals(name)) {
       TopicNameConstraint parent = getTopicNameConstraint();
       VariantConstraint constraint = new VariantConstraint(parent);
       setMinMax(constraint, attrs);
@@ -88,7 +88,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addVariantConstraint(constraint);
       openObjects.push(constraint);
       
-    } else if (name == "occurrence") {
+    } else if ("occurrence".equals(name)) {
       TopicConstraintCollection parent = getTopicConstraintCollection();
       OccurrenceConstraint constraint = new OccurrenceConstraint(parent);
       String internal = attrs.getValue("internal");
@@ -106,18 +106,18 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addOccurrenceConstraint(constraint);
       openObjects.push(constraint);
       
-    } else if (name == "playing") {
+    } else if ("playing".equals(name)) {
       TopicConstraintCollection parent = getTopicConstraintCollection();
       TopicRoleConstraint constraint = new TopicRoleConstraint(parent);
       setMinMax(constraint, attrs);
       parent.addRoleConstraint(constraint);
       openObjects.push(constraint);
       
-    } else if (name == "in") {
+    } else if ("in".equals(name)) {
       TopicRoleConstraint parent = getTopicRoleConstraint();
       openObjects.push(parent);
       
-    } else if (name == "scope") {
+    } else if ("scope".equals(name)) {
       ScopedConstraintIF parent = getScopedConstraint();
       ScopeSpecification spec = new ScopeSpecification();
 
@@ -136,7 +136,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.setScopeSpecification(spec);
       openObjects.push(spec);
       
-    } else if (name == "topic") {
+    } else if ("topic".equals(name)) {
       OSLSchema parent = getSchema();
       TopicClass topicClass = new TopicClass(parent, attrs.getValue("id"));
       if (attrs.getValue("match") != null) 
@@ -145,13 +145,13 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addTopicClass(topicClass);
       openObjects.push(topicClass);
 
-    } else if (name == "association") {
+    } else if ("association".equals(name)) {
       OSLSchema parent = getSchema();
       AssociationClass assocClass = new AssociationClass(parent);
       parent.addAssociationClass(assocClass);
       openObjects.push(assocClass);
 
-    } else if (name == "role") {
+    } else if ("role".equals(name)) {
       AssociationClass parent = getAssociationClass();
       AssociationRoleConstraint constraint =
         new AssociationRoleConstraint(parent);
@@ -159,7 +159,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addRoleConstraint(constraint);
       openObjects.push(constraint);
 
-    } else if (name == "player") {
+    } else if ("player".equals(name)) {
       AssociationRoleConstraint parent = getAssociationRoleConstraint();
       TypeSpecification spec = new TypeSpecification();
       if (attrs.getValue("subclasses") != null)
@@ -168,7 +168,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addPlayerType(spec);
       openObjects.push(spec);
 
-    } else if (name == "otherClass") {
+    } else if ("otherClass".equals(name)) {
       TopicClass parent = getTopicClass();
       TypeSpecification spec = new TypeSpecification();
       if (attrs.getValue("subclasses") != null)
@@ -177,7 +177,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       parent.addOtherClass(spec);
       openObjects.push(spec);
       
-    } else if (name == "instanceOf") {
+    } else if ("instanceOf".equals(name)) {
       TypeSpecification spec = new TypeSpecification();
       if (attrs.getValue("subclasses") != null)
         spec.setSubclasses(getTrueFalse(attrs.getValue("subclasses"),
@@ -192,47 +192,47 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       
       openObjects.push(spec);
       
-    } else if (name == "topicRef" || name == "subjectIndicatorRef" ||
-               name == "internalTopicRef") {
+    } else if ("topicRef".equals(name) || "subjectIndicatorRef".equals(name) ||
+            "internalTopicRef".equals(name)) {
       String href = attrs.getValue("href");
       if (href == null)
         throw getException("The href attribute on " + name + " is required");
 
       TMObjectMatcherIF matcher;
-      if (name == "topicRef")
+      if ("topicRef".equals(name))
         matcher = new SourceLocatorMatcher(base_address.resolveAbsolute(href));
-      else if (name == "subjectIndicatorRef")
+      else if ("subjectIndicatorRef".equals(name))
         matcher = new SubjectIndicatorMatcher(base_address.resolveAbsolute(href));
-      else if (name == "internalTopicRef")
+      else if ("internalTopicRef".equals(name))
         matcher = new InternalTopicRefMatcher(href);
       else
         throw new OntopiaRuntimeException("INTERNAL ERROR!");
 
       String parent = (String) openElements.peek();
-      if (parent == "scope")
+      if ("scope".equals(parent))
         getScopeSpecification().addThemeMatcher(matcher);
-      else if (parent == "instanceOf" || parent == "player" ||
-               parent == "otherClass")
+      else if ("instanceOf".equals(parent) || "player".equals(parent) ||
+              "otherClass".equals(parent))
         getTypeSpecification().setClassMatcher(matcher);
       else
         throw getException(name + " must have scope, instanceOf, otherClass, or player as parent");
       
       openObjects.push(null);
       
-    } else if (name == "any") {
+    } else if ("any".equals(name)) {
       TMObjectMatcherIF matcher = new AnyTopicMatcher();
 
       String parent = (String) openElements.peek();
-      if (parent == "scope")
+      if ("scope".equals(parent))
         getScopeSpecification().addThemeMatcher(matcher);
-      else if (parent == "instanceOf" || parent == "player")
+      else if ("instanceOf".equals(parent) || "player".equals(parent))
         getTypeSpecification().setClassMatcher(matcher);
       else
         throw getException("topicRef must have scope, instanceOf, or player as parent");
       
       openObjects.push(null);
       
-    } else if (name == "ruleref") {
+    } else if ("ruleref".equals(name)) {
       String ruleid = attrs.getValue("rule");
       if (ruleid == null)
         throw getException("rule attribute on ruleref must have a value");
@@ -244,7 +244,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
       getTopicConstraintCollection().addSubRule(rule);
       openObjects.push(rule);
       
-    } else if (name == "superclass") {
+    } else if ("superclass".equals(name)) {
       String refid = attrs.getValue("ref");
       if (refid == null)
         throw getException("ref attribute on superclass must have a value");
@@ -269,15 +269,15 @@ public class OSLSchemaContentHandler extends DefaultHandler {
   }
 
   public void stopElement(String name) throws SAXException {   
-    if ((name == "topic" || name == "role" || name == "playing" ||
-         name == "association" || name == "occurrence") &&
+    if (("topic".equals(name) || "role".equals(name) || "playing".equals(name) ||
+            "association".equals(name) || "occurrence".equals(name)) &&
          getTypedConstraint().getTypeSpecification() == null)
       throw getException("<" + name + "> element with no type specification");
-    else if ((name == "variant" || name == "baseName") &&
+    else if (("variant".equals(name) || "baseName".equals(name)) &&
              getScopedConstraint().getScopeSpecification() == null)
       throw getException("<" + name + "> element with no scope specification");
 
-    if (name == "variant") {
+    if ("variant".equals(name)) {
       VariantConstraint variant = getVariantConstraint();
       inheritScope(variant.getParent(), variant);
     }
