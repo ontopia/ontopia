@@ -40,12 +40,14 @@ public class LuceneDocument implements DocumentIF {
     this.document = document;
   }
   
+  @Override
   public FieldIF getField(String name) {
     IndexableField field = document.getField(name);
     if (field == null) return null;
     return new LuceneField(field);
   }
   
+  @Override
   public Collection<FieldIF> getFields() {
     Collection<FieldIF> result = new ArrayList<FieldIF>();
     for (IndexableField field : document.getFields()) {
@@ -54,10 +56,12 @@ public class LuceneDocument implements DocumentIF {
     return result;
   }
 
+  @Override
   public void addField(FieldIF field) {
     throw new UnsupportedOperationException("Cannot modify wrapped document object.");
   }
 
+  @Override
   public void removeField(FieldIF field) {
     throw new UnsupportedOperationException("Cannot modify wrapped document object.");
   }
