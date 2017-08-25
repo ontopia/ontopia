@@ -64,9 +64,6 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
   private TopicMapReferenceIF reference;
   private String defaultField = "content";
 
-  static {
-  }
-
   @Override
   public synchronized void install(TopicMapReferenceIF reference) {
     this.reference = reference;
