@@ -376,6 +376,7 @@ public class NamedLockManager {
         this.referenceId = ref.getId();
     }
     
+    @Override
     public boolean equals(Object o) {
       if (!(o instanceof TMObjectIFHandle)) return false;
       TMObjectIFHandle other = (TMObjectIFHandle)o;
@@ -384,6 +385,7 @@ public class NamedLockManager {
               Objects.equals(this.referenceId, other.referenceId));
     }
 
+    @Override
     public int hashCode() {
       return objectId.hashCode();
     }

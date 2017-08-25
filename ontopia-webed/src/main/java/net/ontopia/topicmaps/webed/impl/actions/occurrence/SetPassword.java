@@ -51,6 +51,7 @@ public class SetPassword implements ActionIF {
     }
   }
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 
     String password = params.getStringValue().trim();

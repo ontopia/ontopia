@@ -44,6 +44,7 @@ public class SetSubjectIndicator2 implements ActionIF {
   private ActionIF set = new SetSubjectIndicator();
   private ActionIF remove = new RemoveSubjectIndicator();
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 
     // test params

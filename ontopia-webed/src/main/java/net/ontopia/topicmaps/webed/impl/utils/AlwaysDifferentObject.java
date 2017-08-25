@@ -28,6 +28,7 @@ package net.ontopia.topicmaps.webed.impl.utils;
  */
 public class AlwaysDifferentObject {
 
+  @Override
   public boolean equals(Object other) {
     return false;
   }

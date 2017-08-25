@@ -39,6 +39,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  */
 public class CreateAssoc extends AbstractTopicMapAction {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     // create new association
     

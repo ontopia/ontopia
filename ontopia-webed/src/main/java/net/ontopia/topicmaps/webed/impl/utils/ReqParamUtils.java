@@ -185,18 +185,22 @@ public final class ReqParamUtils {
       this.file = file;
     }
     
+    @Override
     public String getFileName() {
       return file.getName();
     }
 
+    @Override
     public InputStream getContents() throws IOException {
       return file.getInputStream();
     }
 
+    @Override
     public long getLength() {
       return file.getSize();
     }
 
+    @Override
     public String getContentType() {
       return file.getContentType();
     }    

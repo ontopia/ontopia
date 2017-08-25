@@ -28,6 +28,7 @@ import java.util.List;
 
 public class FormTagBeanInfo extends SimpleBeanInfo {
   
+  @Override
   public PropertyDescriptor[] getPropertyDescriptors() {
     List proplist = new ArrayList();
     

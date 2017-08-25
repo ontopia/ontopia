@@ -45,6 +45,7 @@ public class NamedLockManagerTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     session = new FakeHttpSession(new FakeServletContext());
     session.addSessionListener(new SessionListener());
@@ -53,6 +54,7 @@ public class NamedLockManagerTest extends TestCase {
     navConf = new NavigatorConfiguration();
   }
 
+  @Override
   public void tearDown() {
     lockMan.clear();
   }

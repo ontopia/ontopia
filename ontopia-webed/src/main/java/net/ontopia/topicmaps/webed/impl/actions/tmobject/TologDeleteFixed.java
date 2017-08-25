@@ -44,6 +44,7 @@ import net.ontopia.topicmaps.webed.impl.basic.Constants;
  */
 public class TologDeleteFixed implements ActionIF {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     QueryProcessorIF processor =
       QueryUtils.getQueryProcessor((TopicMapIF) params.get(1));

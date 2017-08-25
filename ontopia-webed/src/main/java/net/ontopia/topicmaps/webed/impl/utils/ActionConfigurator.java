@@ -112,6 +112,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
     return registry;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(89);
     sb.append("contextPath: ").append(contextPath)
@@ -125,10 +126,12 @@ public class ActionConfigurator implements ConfigurationObservableIF {
   // implementation of ConfigurationObservableIF interface
   // -----------------------------------------------------------------
 
+  @Override
   public void addObserver(ConfigurationObserverIF o) {
     observers.add(o);
   }
   
+  @Override
   public void removeObserver(ConfigurationObserverIF o) {
     observers.remove(o);
   }

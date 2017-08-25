@@ -57,6 +57,7 @@ public class FileTag extends BodyTagSupport {
    * Stores the body content, which becomes the value of the file
    * control.
    */
+  @Override
   public int doAfterBody() throws JspException {    
     if (bodyContent.getString() != null)
       value = bodyContent.getString().trim();
@@ -69,6 +70,7 @@ public class FileTag extends BodyTagSupport {
   /**
    * Renders the input field element with its content.
    */
+  @Override
   public int doEndTag() throws JspException {
     // retrieve the action group
     String group_name = TagUtils.getActionGroup(pageContext);
@@ -103,6 +105,7 @@ public class FileTag extends BodyTagSupport {
   /**
    * Release any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     id = null;
@@ -120,6 +123,7 @@ public class FileTag extends BodyTagSupport {
    * Sets the id of the tag. This value will be used as the value of
    * an ID attribute in the generated output.
    */
+  @Override
   public void setId(String id) {
     this.id = id;
   }

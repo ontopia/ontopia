@@ -57,6 +57,7 @@ public class EvaluateLTM implements ActionIF {
   // initialization of logging facility
   private static Logger log = LoggerFactory.getLogger(EvaluateLTM.class.getName());
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     
     // test params
@@ -171,10 +172,12 @@ public class EvaluateLTM implements ActionIF {
       this.newkeys = new HashMap();
     }
     
+    @Override
     public boolean containsKey(Object key) {
       return get(key) != null;
     }
 
+    @Override
     public Object get(Object keyy) {
       String key = (String) keyy;
       Object o = null;
@@ -206,10 +209,12 @@ public class EvaluateLTM implements ActionIF {
       return o;
     }
 
+    @Override
     public int size() {
       return 3; // a smallish number, that's all
     }
 
+    @Override
     public Set entrySet() {
       throw new net.ontopia.utils.OntopiaRuntimeException("INTERNAL ERROR");
     }

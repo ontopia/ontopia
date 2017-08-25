@@ -47,6 +47,7 @@ public final class FormUnregisterServlet extends HttpServlet {
   /**
    * INTERNAL: Handles an HTTP GET request.
    */
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     processRequest(request, response);
@@ -55,6 +56,7 @@ public final class FormUnregisterServlet extends HttpServlet {
   /**
    * INTERNAL: Handles an HTTP POST request.
    */
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     processRequest(request, response);

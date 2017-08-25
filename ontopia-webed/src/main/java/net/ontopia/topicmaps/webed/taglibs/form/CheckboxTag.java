@@ -62,6 +62,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   /**
    * Process the start tag, do nothing.
    */
+  @Override
   public int doStartTag() {
     return EVAL_BODY_INCLUDE;
   }
@@ -69,6 +70,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   /**
    * Generate the required input tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     VelocityContext vc = TagUtils.getVelocityContext(pageContext);
 
@@ -122,6 +124,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   /**
    * Release any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     id = null;
@@ -136,6 +139,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   // ActionInvokingTagIF
   // ------------------------------------------------------------
 
+  @Override
   public void addAction(ActionData action) {
     sub_actions.add(action);
   }
@@ -148,6 +152,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
    * Sets the id of the tag. This value will be used as the value of
    * an ID attribute in the generated output.
    */
+  @Override
   public void setId(String id) {
     this.id = id;
   }

@@ -34,6 +34,7 @@ public class TestSetSubjectIndicator2 extends TestSetSubjectIndicator {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetSubjectIndicator2();
@@ -41,6 +42,7 @@ public class TestSetSubjectIndicator2 extends TestSetSubjectIndicator {
 
   // --- Tests
 
+  @Override
   public void testEmptyURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
     LocatorIF newSL = new URILocator("http://www.slashdot.org");

@@ -34,10 +34,12 @@ import net.ontopia.topicmaps.nav2.core.UserIF;
 
 public class SessionListener implements HttpSessionListener {
 
+  @Override
   public void sessionCreated(HttpSessionEvent event) {
   // Do nothing, we are not interested in this information at the moment
   }
 
+  @Override
   public void sessionDestroyed(HttpSessionEvent event) {
     HttpSession session = event.getSession();
     UserIF user = (UserIF)session

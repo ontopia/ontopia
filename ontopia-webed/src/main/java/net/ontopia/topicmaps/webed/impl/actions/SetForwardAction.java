@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  */
 public class SetForwardAction implements ActionIF {
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response)
     throws ActionRuntimeException {
     

@@ -53,6 +53,7 @@ public class TologDelete implements ActionIF {
   // initialization of logging facility
   private static Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     //test params
     ActionSignature paramsType = ActionSignature.getSignature("s&");

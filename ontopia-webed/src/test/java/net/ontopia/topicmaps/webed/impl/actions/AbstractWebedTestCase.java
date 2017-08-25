@@ -60,6 +60,7 @@ public abstract class AbstractWebedTestCase extends TestCase {
   
   // helper methods
   
+  @Override
   public void setUp() {
     try {
       tm = ImportExportUtils.getReader(TestFileUtils.getTestInputFile(testdataDirectory, "football.ltm")).read();

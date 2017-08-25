@@ -38,6 +38,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class TestActionParameters implements ActionIF {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response)
       throws ActionRuntimeException {
   

@@ -42,6 +42,7 @@ public class TestSetSubjectLocator extends AbstractWebedTestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetSubjectLocator();

@@ -46,26 +46,32 @@ public class ImageInformation implements ImageInformationIF {
     this.align = align;
   }
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getRelativeURL() {
     return relative_url;
   }
 
+  @Override
   public String getWidth() {
     return width;
   }
 
+  @Override
   public String getHeight() {
     return height;
   }
 
+  @Override
   public String getBorder() {
     return border;
   }
 
+  @Override
   public String getAlign() {
     return align;
   }
@@ -73,6 +79,7 @@ public class ImageInformation implements ImageInformationIF {
 
   // --- overwrite methods from java.lang.Object
 
+  @Override
   public int hashCode() {
     StringBuilder sb = new StringBuilder(32);
     sb.append(name).append(relative_url).append(width).append(height)
@@ -80,6 +87,7 @@ public class ImageInformation implements ImageInformationIF {
     return sb.toString().hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof ImageInformation))
       return false;
@@ -92,6 +100,7 @@ public class ImageInformation implements ImageInformationIF {
             && Objects.equals(compObj.getAlign(), align));
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(48);
     sb.append("[ImageInformation: ").append(name).append(", ")

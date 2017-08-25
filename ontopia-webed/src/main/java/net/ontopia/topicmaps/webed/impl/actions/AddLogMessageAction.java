@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
  */
 public class AddLogMessageAction implements ActionIF {
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     
     String message = (String) params.get(0);

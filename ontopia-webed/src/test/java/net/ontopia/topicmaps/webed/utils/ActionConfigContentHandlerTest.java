@@ -50,6 +50,7 @@ public class ActionConfigContentHandlerTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     if (registry == null) {

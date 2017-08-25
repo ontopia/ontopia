@@ -82,28 +82,34 @@ public class ActionGroup implements ActionGroupIF {
   // implementation of ActionGroupIF
   // -------------------------------------------------------------------
   
+  @Override
   public String getName() {
     return name;
   }
   
+  @Override
   public void addAction(ActionInGroup action) {
     actionsByName.put(action.getName(), action);
     actionsInOrder.add(action);
   }
 
+  @Override
   public List getActions() {
     return actionsInOrder;
   }
 
+  @Override
   public ActionInGroup getAction(String name) {
     return (ActionInGroup) actionsByName.get(name);
   }
 
+  @Override
   public void setDefaultForwardPage(int responseType,
                                     ActionForwardPageIF forwardPage) {
     defaultForwardPages.put(new Integer(responseType), forwardPage);
   }
   
+  @Override
   public ActionForwardPageIF getDefaultForwardPage(int responseType) {
     ActionForwardPageIF fw = (ActionForwardPageIF)
       defaultForwardPages.get(new Integer(responseType));
@@ -113,20 +119,24 @@ public class ActionGroup implements ActionGroupIF {
     return fw;
   }
 
+  @Override
   public Map getDefaultForwardPages() {
     return defaultForwardPages;
   }
 
    
+  @Override
   public void setLockedForwardPage(ActionForwardPageIF forwardPage) {
     this.lockedForwardPage = forwardPage;
   }
    
+  @Override
   public ActionForwardPageIF getLockedForwardPage() {
      return lockedForwardPage;
   }
 
   
+  @Override
   public void setForwardPage(ActionInGroup action,
                              int responseType,
                              ActionForwardPageIF forwardPage) {
@@ -134,6 +144,7 @@ public class ActionGroup implements ActionGroupIF {
                  forwardPage);
   }
 
+  @Override
   public ActionForwardPageIF getForwardPage(ActionInGroup action,
                                             boolean error) {
     int responseType = Constants.FORWARD_SUCCESS;
@@ -151,12 +162,14 @@ public class ActionGroup implements ActionGroupIF {
     return null;
   }
 
+  @Override
   public Map getForwardPages() {
     return forwardPages;
   }
   
   // --- overridden method(s) from Object implementation
   
+  @Override
   public String toString() {
     return "[ActionGroup: name = " + name +
       ", actions = " + actionsByName +
@@ -164,11 +177,13 @@ public class ActionGroup implements ActionGroupIF {
       ", forwardPages = " + forwardPages + "]";
   }
 
+  @Override
   public int hashCode() {
     return name.hashCode() + forwardPages.hashCode() +
       defaultForwardPages.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof ActionGroupIF))
       return false;

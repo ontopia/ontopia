@@ -57,14 +57,17 @@ public class ActionContext implements ActionContextIF {
   // implement ActionContextIF methods
   // -------------------------------------------------------------
 
+  @Override
   public UserIF getUser() {
     return user;
   }
   
+  @Override
   public Map getParameters() {
     return params.getMap();
   }
 
+  @Override
   public String[] getParameterValues(String paramName) {
     if (log.isDebugEnabled()) {
       log.debug("getParameterValues("+paramName+"): "+params.getValues(paramName));
@@ -72,6 +75,7 @@ public class ActionContext implements ActionContextIF {
     return params.getValues(paramName);
   }
 
+  @Override
   public String getParameterSingleValue(String paramName) {
     if (params.getValues(paramName) == null)
       return null;
@@ -83,10 +87,12 @@ public class ActionContext implements ActionContextIF {
     return values[0];
   }
   
+  @Override
   public Collection getParameterNames() {
     return params.getNames();
   }
 
+  @Override
   public Collection getAllActions() {
     String request_id = params.get(Constants.RP_REQUEST_ID);
     if (request_id == null)
@@ -108,14 +114,17 @@ public class ActionContext implements ActionContextIF {
   // overwrite Object methods
   // -------------------------------------------------------------
   
+  @Override
   public int hashCode() {
     return params.hashCode();
   }
 
+  @Override
   public String toString() {
     return "[Params: " + params + "]";
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof ActionContext))
       return false;

@@ -41,10 +41,12 @@ public abstract class AbstractTopicMapAction
   // implementation of interface ActionSchemaIF
   // ------------------------------------------------------------
     
+  @Override
   public OSLSchema getSchema() {
     return schema;
   }
 
+  @Override
   public void setSchema(OSLSchema schema) {
     this.schema = schema;
   }
