@@ -59,6 +59,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class ContentStoreServlet extends HttpServlet {
   
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException {
     // default values

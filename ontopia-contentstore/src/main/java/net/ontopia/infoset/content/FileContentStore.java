@@ -78,11 +78,13 @@ public class FileContentStore implements ContentStoreIF {
 
   // --- ContentStoreIF implementation
   
+  @Override
   public synchronized boolean containsKey(int key) throws ContentStoreException {
     checkOpen();
     return getFileForKey(key).exists();
   }
 
+  @Override
   public synchronized ContentInputStream get(int key) throws ContentStoreException {
     checkOpen();
     File file = getFileForKey(key);
@@ -96,10 +98,12 @@ public class FileContentStore implements ContentStoreIF {
     }
   }
   
+  @Override
   public int add(ContentInputStream data) throws ContentStoreException {
     return add(data, data.getLength());
   }
   
+  @Override
   public synchronized int add(InputStream data, int length)
     throws ContentStoreException {
     checkOpen();
@@ -131,12 +135,14 @@ public class FileContentStore implements ContentStoreIF {
     return key;
   }
 
+  @Override
   public synchronized boolean remove(int key) throws ContentStoreException {
     checkOpen();
     File file = getFileForKey(key);
     return file.delete();
   }
 
+  @Override
   public synchronized void close() throws ContentStoreException {
     checkOpen();
     open = false;

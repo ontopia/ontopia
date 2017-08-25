@@ -41,10 +41,12 @@ public class JDBCBinaryInputStream extends ContentInputStream {
     this.rs = rs;
   }
 
+  @Override
   public int available() throws IOException {
     return stream.available();
   }
 
+  @Override
   public void close() throws IOException {
     try {
       stream.close();
@@ -64,30 +66,37 @@ public class JDBCBinaryInputStream extends ContentInputStream {
     }
   }
   
+  @Override
   public void mark(int readlimit) {
     stream.mark(readlimit);
   }
 
+  @Override
   public boolean markSupported() {
     return stream.markSupported();
   }
   
+  @Override
   public int read() throws IOException {
     return stream.read();
   }
   
+  @Override
   public int read(byte[] b) throws IOException {
     return stream.read(b);
   }
   
+  @Override
   public int read(byte[] b, int off, int len) throws IOException {
     return stream.read(b, off, len);
   }
   
+  @Override
   public void reset() throws IOException {
     stream.reset();
   }
   
+  @Override
   public long skip(long n) throws IOException {
     return stream.skip(n);
   }

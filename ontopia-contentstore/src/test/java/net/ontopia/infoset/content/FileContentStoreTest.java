@@ -31,6 +31,7 @@ public class FileContentStoreTest extends AbstractContentStoreTest {
     super(name);
   }
 
+  @Override
   public void setUp() throws IOException, ContentStoreException {
     File tstdir = getTestDirectory("content");
 
