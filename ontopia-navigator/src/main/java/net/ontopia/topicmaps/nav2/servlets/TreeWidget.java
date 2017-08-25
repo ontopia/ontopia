@@ -294,7 +294,6 @@ public class TreeWidget {
   private void writeHTML(TopicTreeNode node, int topline, Writer writer) throws IOException {
     int nodes = countNodes(node);
     staticurl = ownpage + "topline=";    
-    startRender(writer);
 
     if (topline > 1)
       renderBackButton(writer, topline);
@@ -317,7 +316,6 @@ public class TreeWidget {
     if (topline + windowSize < nodes)
       renderForwardButton(writer, topline);
 
-    endRender(writer);
   }
   
   private int writeNode(TopicTreeNode node, int topline, Writer writer, int level, int lineno, boolean indoc) throws IOException {
@@ -517,11 +515,6 @@ public class TreeWidget {
     out.write("<a href=\"" + staticurl + (topline + windowSize) + "\" title='Show next page'><img border=0 src=" + imageurl + "nav_next.gif></a>");
   }
   
-  protected void startRender(Writer out) throws IOException {
-  }
-  
-  protected void endRender(Writer out) throws IOException {
-  }
 
   // --- UniversalSet class
 

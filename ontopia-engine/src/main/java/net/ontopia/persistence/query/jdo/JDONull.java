@@ -28,9 +28,6 @@ package net.ontopia.persistence.query.jdo;
 
 public class JDONull implements JDOValueIF {
 
-  public JDONull() {
-  }
-
   public int getType() {
     return NULL;
   }
@@ -52,6 +49,7 @@ public class JDONull implements JDOValueIF {
   }
 
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

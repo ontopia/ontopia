@@ -70,9 +70,6 @@ public class QueryTracer {
     }
   }
   
-  public static void trace(BasicPredicateIF predicate, List arguments) {
-  }
-
   public static void trace(String msg) {
     write(msg + "\n");
   }

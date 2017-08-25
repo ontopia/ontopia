@@ -33,9 +33,6 @@ public class CachedIndexTest extends TestCase {
     index = new CachedIndex(new EmptyIndex());
   }
 
-  protected void tearDown() {
-  }
-
   // --- Test cases
 
   public void testEmpty() {

@@ -41,9 +41,6 @@ public class CompactHashSetTest extends TestCase {
     set = new CompactHashSet();
   }
 
-  protected void tearDown() {
-  }
-
   // --- Test cases
 
   public void testEmpty() {

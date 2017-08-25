@@ -28,12 +28,6 @@ public class StringUtilsTest extends TestCase {
     super(name);
   }
 
-  protected void setUp() {
-  }
-
-  protected void tearDown() {
-  }
-
   public void testEscapeEntitiesAmp() {
     verifyEscapedEquals("intro & Co", "intro &amp; Co");
   }

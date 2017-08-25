@@ -41,7 +41,6 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
     if (attached) {
       attached = false;
       transientModelObject = null;
-      onDetach();
     }
   }
   
@@ -49,7 +48,6 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
     if (!attached) {
       attached = true;
       transientModelObject = load();
-      onAttach();
     }
     return transientModelObject;
   }
@@ -72,11 +70,5 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
   }
 
   protected abstract T load();
-
-  protected void onAttach() {
-  }
-
-  protected void onDetach() {
-  }
   
 }

@@ -28,9 +28,6 @@ public abstract class AbstractDocumentAnalyzer implements DocumentAnalyzerIF {
   protected int iterations = 1;
   protected int iteration;
   
-  public AbstractDocumentAnalyzer() {
-  }
-  
   public AbstractDocumentAnalyzer(int iterations) {
     this.iterations = iterations;
   }
@@ -56,17 +53,21 @@ public abstract class AbstractDocumentAnalyzer implements DocumentAnalyzerIF {
   }
 
   public void startRegion(Region region) {
+    // no-op
   }
   
   public abstract void analyzeToken(TextBlock parent, Token token, int index);
 
   public void endRegion(Region region) {
+    // no-op
   }
 
   public void endDocument(Document doc) {
+    // no-op
   }
 
   public void endAnalysis() {
+    // no-op
   }
 
   // --------------------------------------------------------------------------

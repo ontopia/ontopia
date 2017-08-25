@@ -71,16 +71,6 @@ public abstract class BaseOutputProducingTag extends TagSupport
   }
 
   /**
-   */
-  protected final void setEscapeEntities(boolean escapeEntities) {
-  }
-
-  /**
-   */
-  protected final void setSuppressEmptyCollection(boolean suppressEmptyCollection) {
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

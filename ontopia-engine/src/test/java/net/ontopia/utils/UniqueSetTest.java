@@ -32,12 +32,6 @@ public class UniqueSetTest extends TestCase {
     super(name);
   }
 
-  public void setUp() {
-  }
-
-  protected void tearDown() {
-  }
-
   // --- Test cases
 
   public void testUniqueSetGarbageCollect() {

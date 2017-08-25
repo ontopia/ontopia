@@ -56,9 +56,6 @@ public class DebugTag extends TagSupport
   // tag attributes
   protected String variableName;
 
-  public DebugTag() {
-  }
-
   /**
    * INTERNAL: Process the start tag for this instance.
    */
@@ -104,6 +101,7 @@ public class DebugTag extends TagSupport
   // have to define this to keep the compiler happy... :(
   public void generateOutput(JspWriter out, Iterator iterator)
     throws JspTagException, IOException {
+    // no-op
   }
   
   // -----------------------------------------------------------------

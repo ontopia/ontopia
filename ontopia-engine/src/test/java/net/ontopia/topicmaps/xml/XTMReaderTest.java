@@ -47,9 +47,6 @@ public class XTMReaderTest extends AbstractXMLTestCase {
 
   private final static String testdataDirectory = "canonical";
 
-  public void setUp() {
-  }
-
   // --- Utilities
 
   protected TopicMapIF readTopicMap(String filename) throws IOException {
