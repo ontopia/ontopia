@@ -71,6 +71,7 @@ public class OccurrenceWebResource extends WebResource {
       this.reader = reader;
     }
     
+    @Override
     public InputStream getInputStream() throws ResourceStreamNotFoundException {
       try {
         return new Base64InputStream(new ReaderInputStream(reader, "utf-8"), false);
@@ -79,6 +80,7 @@ public class OccurrenceWebResource extends WebResource {
       }
     }
 
+    @Override
     public void close() throws IOException {
       reader.close();
     }

@@ -89,6 +89,7 @@ public class ModalGeoPickerPage extends Panel {
     popupContent.add(ajaxurllabel);
   }
 
+  @Override
   protected void onBeforeRender() {
     super.onBeforeRender();
 
@@ -209,6 +210,7 @@ public class ModalGeoPickerPage extends Panel {
       this.parent = parent;
     }
     
+    @Override
     protected void respond(final AjaxRequestTarget target) {
       parent.onSetPosition(target);
     }

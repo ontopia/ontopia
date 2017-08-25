@@ -81,6 +81,7 @@ public class FieldInstanceDateField extends TextField<String> implements ITextFo
     super.onComponentTag(tag);
   }
   
+  @Override
   public String getTextFormat() {
     return DATE_FORMAT;
   }

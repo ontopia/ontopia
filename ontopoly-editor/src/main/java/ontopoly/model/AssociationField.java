@@ -97,6 +97,7 @@ public class AssociationField extends Topic {
     
     List<RoleField> roleFields = qm.queryForList(query,
         new RowMapperIF<RoleField>() {
+          @Override
           public RoleField mapRow(QueryResultIF result, int rowno) {
 						TopicIF roleFieldTopic = (TopicIF)result.getValue(0);
 						return new RoleField(roleFieldTopic, getTopicMap());
@@ -146,6 +147,7 @@ public class AssociationField extends Topic {
       return INSTANCE;
     }
 
+    @Override
     public int compare(RoleField rf1, RoleField rf2) {
       return StringUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }

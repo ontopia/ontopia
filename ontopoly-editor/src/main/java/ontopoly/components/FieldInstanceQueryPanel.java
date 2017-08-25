@@ -85,6 +85,7 @@ public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
     fieldValuesModel.getObject();
     
     this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
+      @Override
       public void populateItem(final ListItem<FieldValueModel> item) {
         final FieldValueModel fieldValueModel = item.getModelObject();
 

@@ -82,6 +82,7 @@ public class FieldsEditor extends Panel {
     };
     
     this.listView = new ListView<FieldAssignmentModel>("existingFields", fieldAssignmentModels) {
+      @Override
       public void populateItem(final ListItem<FieldAssignmentModel> item) {
         
         FieldAssignmentModel fieldAssignmentModel = item.getModelObject();
@@ -215,6 +216,7 @@ public class FieldsEditor extends Panel {
 
   private ListView<FieldDefinitionModel> createListView(final List<FieldDefinitionModel> fieldDefinitionModels) {
     ListView<FieldDefinitionModel> listView = new ListView<FieldDefinitionModel>("addFields", fieldDefinitionModels) {
+      @Override
       public void populateItem(final ListItem<FieldDefinitionModel> item) {
         
         FieldDefinitionModel fieldDefinitionModel = item.getModelObject();
@@ -276,6 +278,7 @@ public class FieldsEditor extends Panel {
         result.add(new FieldDefinitionModel(fieldDefinition));
     }
     Collections.sort(result, new Comparator<FieldDefinitionModel>() {
+      @Override
       public int compare(FieldDefinitionModel o1, FieldDefinitionModel o2) {
         FieldDefinition fd1 = o1.getFieldDefinition();
         FieldDefinition fd2 = o2.getFieldDefinition();
@@ -296,6 +299,7 @@ public class FieldsEditor extends Panel {
       replaceListView(this);
       target.addComponent(FieldsEditor.this);
     }
+    @Override
     public String getAjaxIndicatorMarkupId() {         
       return "ajaxIndicator";   
     }  

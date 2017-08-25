@@ -34,6 +34,7 @@ public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> 
     return (Topic)(object instanceof IModel ? ((IModel)object).getObject() : object);    
   }
   
+  @Override
   public Object getDisplayValue(Topic object) {
     String name = object.getName();
     if (name == null || name.equals(""))
@@ -42,6 +43,7 @@ public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> 
       return name;
   }
 
+  @Override
   public String getIdValue(Topic object, int index) {
     Topic topic = getTopic(object);
     return topic.getId();

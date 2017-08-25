@@ -36,6 +36,7 @@ public class AjaxOntopolyTextField extends TextField<String> {
     setOutputMarkupId(true);
 
     add(new AjaxFormComponentUpdatingBehavior("onchange") {
+      @Override
       protected void onUpdate(AjaxRequestTarget target) {
         AjaxOntopolyTextField.this.onUpdate(target);
       }

@@ -57,6 +57,7 @@ public class AssociationType extends AbstractTypingTopic {
     return PSI.ON_ASSOCIATION_TYPE;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof AssociationType))
       return false;
@@ -98,6 +99,7 @@ public class AssociationType extends AbstractTypingTopic {
     QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
     return qm.queryForList(query,
         new RowMapperIF<RoleField>() {
+          @Override
           public RoleField mapRow(QueryResultIF result, int rowno) {
 						TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
 						TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
@@ -151,6 +153,7 @@ public class AssociationType extends AbstractTypingTopic {
 	      tuple.add(new RoleType(role.getType(), getTopicMap()));
 	    }
 	    Collections.sort(tuple, new Comparator<RoleType>() {
+        @Override
         public int compare(RoleType o1, RoleType o2) {
           return ObjectIdComparator.INSTANCE.compare(o1.getTopicIF(), o2.getTopicIF());
         }
@@ -232,6 +235,7 @@ public class AssociationType extends AbstractTypingTopic {
       return INSTANCE;
     }
 
+    @Override
     public int compare(RoleField rf1, RoleField rf2) {
       return StringUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }

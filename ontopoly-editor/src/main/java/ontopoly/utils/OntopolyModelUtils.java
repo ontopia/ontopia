@@ -55,6 +55,7 @@ public class OntopolyModelUtils {
   private static class RowMapperOneColumn<T> implements RowMapperIF<T> {
     public static final RowMapperIF<Object> INSTANCE = new RowMapperOneColumn<Object>();
     @SuppressWarnings("unchecked")
+    @Override
     public T mapRow(QueryResultIF queryResult, int rowno) {
       // return the value in the first column
       return (T)queryResult.getValue(0);

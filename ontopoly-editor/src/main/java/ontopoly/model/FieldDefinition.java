@@ -134,6 +134,7 @@ public abstract class FieldDefinition extends Topic {
 
   public abstract void removeValue(Topic topic, Object _value, LifeCycleListener listener);
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof FieldDefinition))
       return false;
@@ -142,6 +143,7 @@ public abstract class FieldDefinition extends Topic {
     return getTopicIF().equals(other.getTopicIF());
   }
 
+  @Override
   public int hashCode() {
     return getTopicIF().hashCode();
   }

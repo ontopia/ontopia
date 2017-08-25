@@ -46,6 +46,7 @@ public class OccurrenceType extends AbstractTypingTopic {
     return PSI.ON_OCCURRENCE_TYPE;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof OccurrenceType))
       return false;
@@ -62,6 +63,7 @@ public class OccurrenceType extends AbstractTypingTopic {
     QueryMapper<OccurrenceField> qm = getTopicMap().newQueryMapper(OccurrenceField.class);
     return qm.queryForList(query,
         new RowMapperIF<OccurrenceField>() {
+          @Override
           public OccurrenceField mapRow(QueryResultIF result, int rowno) {
               TopicIF fieldTopic = (TopicIF)result.getValue(0);
               return new OccurrenceField(fieldTopic, getTopicMap(), new OccurrenceType(getTopicIF(), getTopicMap()));

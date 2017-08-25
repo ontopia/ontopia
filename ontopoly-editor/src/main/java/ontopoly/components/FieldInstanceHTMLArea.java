@@ -85,6 +85,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
     add(textArea);
     
     add(new WebComponent("fieldScript") {
+      @Override
       protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
         StringBuilder sb = new StringBuilder();
         //sb.append("\ntinyMCE.onLoad();");
@@ -103,6 +104,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
     });
   }
 
+  @Override
   public void renderHead(IHeaderResponse response) {
     // import script    
     response.renderJavascriptReference(reference);

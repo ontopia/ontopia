@@ -32,16 +32,19 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 public class FocusOnLoadBehaviour extends AbstractBehavior { 
   private Component component; 
 
+  @Override
   public void bind(Component component) { 
     this.component = component; 
     component.setOutputMarkupId(true); 
   } 
 
+  @Override
   public void renderHead(IHeaderResponse iHeaderResponse) { 
     super.renderHead(iHeaderResponse); 
     iHeaderResponse.renderOnLoadJavascript("var focusElement = document.getElementById('"+ component.getMarkupId() + "'); if (focusElement != null) focusElement.focus();"); 
   } 
  
+  @Override
   public boolean isTemporary() {
     // remove the behavior after component has been rendered       
     return true;

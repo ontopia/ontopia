@@ -95,9 +95,11 @@ public class AdminPage extends OntopolyAbstractPage {
       
     RadioChoice<String> syntaxRadioChoice = new RadioChoice<String>("syntax", new PropertyModel<String>(this, "syntax"), syntaxCategories, 
       new IChoiceRenderer<String>() {
+        @Override
         public Object getDisplayValue(String object) {
           return new ResourceModel("AdminPage.export.syntax." + object).getObject(); // "export.syntax.ltm", "export.syntax.xtm1", "export.syntax.xtm2", "export.syntax.rdf" ...
         }
+        @Override
         public String getIdValue(String object, int index) {
           return object;
         }
@@ -134,6 +136,7 @@ public class AdminPage extends OntopolyAbstractPage {
       @Override
       public IResourceStream getResourceStream() {
         AbstractResourceStreamWriter abstractResourceStreamWriter = new AbstractResourceStreamWriter() {
+          @Override
           public void write(OutputStream output) {
             ExportUtils.Content contentchoice =
               ExportUtils.Content.ENTIRE_TOPIC_MAP;
@@ -148,6 +151,7 @@ public class AdminPage extends OntopolyAbstractPage {
             }
             
           }
+          @Override
           public String getContentType() { 
             return syntax.equalsIgnoreCase("ltm") ? "text/plain" : "text/xml";
           }         

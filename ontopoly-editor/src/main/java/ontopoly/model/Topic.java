@@ -394,6 +394,7 @@ public class Topic {
     return getTopicIF().hashCode();
   }
 
+  @Override
   public String toString() {
     return super.toString() + "[" + getTopicIF() + "]";
   }

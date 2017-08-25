@@ -37,6 +37,7 @@ public class QueryMapper<T> {
   private QueryProcessorIF processor;
   
   private final RowMapperIF<T> FIRST_COLUMN_MAPPER = new RowMapperIF<T>() {
+    @Override
     public T mapRow(QueryResultIF queryResult, int rowno) {
       return wrapValue(queryResult.getValue(0));
     }

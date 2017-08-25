@@ -42,6 +42,7 @@ public class FieldsView extends Topic {
     super(topic, tm);
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof FieldsView))
       return false;

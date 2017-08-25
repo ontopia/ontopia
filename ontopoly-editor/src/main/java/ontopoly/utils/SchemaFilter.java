@@ -39,6 +39,7 @@ public class SchemaFilter implements DeciderIF {
   
   protected TypeHierarchyUtils thutils = new TypeHierarchyUtils();
   
+  @Override
   public boolean ok(Object object) {
     if (object instanceof TopicIF) {
       return includeTopic((TopicIF)object);

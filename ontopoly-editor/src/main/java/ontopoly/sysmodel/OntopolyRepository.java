@@ -61,6 +61,7 @@ public class OntopolyRepository {
   public static final String ONTOLOGY_TOPIC_MAP_ID = "ontopoly-ontology.xtm";
 
   private static final Comparator<TopicMapReference> REFERENCE_COMPARATOR = new Comparator<TopicMapReference>() {
+    @Override
     public int compare(TopicMapReference r1, TopicMapReference r2) {
         return StringUtils.compareIgnoreCase(r1.getName(), r2.getName());
     }
@@ -142,6 +143,7 @@ public class OntopolyRepository {
 
   public List<TopicMapSource> getEditableSources() {
     return getSources(new DeciderIF() {
+      @Override
       public boolean ok(Object o) {
         TopicMapSourceIF source = (TopicMapSourceIF)o;
         return source.supportsCreate() && source.getId() != null;

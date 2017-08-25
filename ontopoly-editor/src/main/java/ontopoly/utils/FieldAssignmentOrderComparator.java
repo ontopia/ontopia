@@ -30,6 +30,7 @@ public class FieldAssignmentOrderComparator implements Comparator<FieldAssignmen
 	private FieldAssignmentOrderComparator() {
 	}
 
+  @Override
 	public int compare(FieldAssignment fa1, FieldAssignment fa2) {
       return (fa1.getOrder() < fa2.getOrder() ? -1 : 1);
   }

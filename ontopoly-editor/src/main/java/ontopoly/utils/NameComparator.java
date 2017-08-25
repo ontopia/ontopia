@@ -28,6 +28,7 @@ public class NameComparator implements Comparator<Object>, Serializable {
 
   public static final NameComparator INSTANCE = new NameComparator();
   
+  @Override
   public int compare(Object o1, Object o2) {
     TopicNameIF n1 = (TopicNameIF)o1;
     TopicNameIF n2 = (TopicNameIF)o2;    

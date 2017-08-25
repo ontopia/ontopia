@@ -46,6 +46,7 @@ public abstract class TreePanel extends Panel {
     super(id, treeModelModel);
     
     final WebMarkupContainer treeContainer = new WebMarkupContainer("treeContainer") {
+      @Override
       protected void onComponentTag(ComponentTag tag) {
         TreeModel treeModel = (TreeModel)TreePanel.this.getDefaultModelObject();
         if (treeModel.getChildCount(treeModel.getRoot()) == 0) {

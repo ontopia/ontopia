@@ -117,6 +117,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
     // then remove the combination that is valid according to declaration
     List<RoleType> declaredRoleTypes = associationType.getDeclaredRoleTypes();
     Collections.sort(declaredRoleTypes, new Comparator<RoleType>() {
+      @Override
       public int compare(RoleType rt1, RoleType rt2) {
         return ObjectIdComparator.INSTANCE.compare(rt1.getTopicIF(), rt2.getTopicIF());
       }      

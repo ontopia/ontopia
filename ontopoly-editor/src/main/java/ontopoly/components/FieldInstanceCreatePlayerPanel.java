@@ -214,6 +214,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     createModal.setCookieName("createModal");
     
     createModal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
+      @Override
       public boolean onCloseButtonClicked(AjaxRequestTarget target) {
     	// modal already closed, now update parent 
         FieldInstanceCreatePlayerPanel.this.hideInstancePage(target);

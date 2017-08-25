@@ -28,6 +28,7 @@ public class OccurrenceComparator implements Comparator<Object>, Serializable {
 
   public static final OccurrenceComparator INSTANCE = new OccurrenceComparator();
   
+  @Override
   public int compare(Object o1, Object o2) {
     OccurrenceIF occ1 = (OccurrenceIF)o1;
     OccurrenceIF occ2 = (OccurrenceIF)o2;    

@@ -88,6 +88,7 @@ public class StartPage extends AbstractProtectedOntopolyPage {
     };
 
     ListView<TopicMapReference> eachTopicMap = new ListView<TopicMapReference>("eachOntopolyTopicMap", eachTopicMapModel) {
+      @Override
       protected void populateItem(ListItem<TopicMapReference> item) {
         final TopicMapReference ref = item.getModelObject();
         PageParameters pageParameters = new PageParameters("topicMapId=" + ref.getId());
@@ -130,12 +131,14 @@ public class StartPage extends AbstractProtectedOntopolyPage {
     add(missingTopicMapContainer);
 
     eachTopicMap = new ListView<TopicMapReference>("eachMissingOntopolyTopicMap", eachMissingTopicMapModel) {
+      @Override
       protected void populateItem(ListItem<TopicMapReference> item) {
         final TopicMapReference ref = item.getModelObject();
         item.add(new Label("missingOntTMTitle", ref.getName()));
         item.add(new Label("missingOntTMFilename", ref.getId()));
 
         AjaxFallbackLink<Object> removeLink = new AjaxFallbackLink<Object>("missingOntTMDeleteLink") {
+          @Override
           public void onClick(AjaxRequestTarget target) {
             // delete the item representing the topicMapReference from the list eachMissingOntopolyTopicMap.
             ((List<TopicMapReference>)eachMissingTopicMapModel.getObject()).remove(ref);
@@ -163,6 +166,7 @@ public class StartPage extends AbstractProtectedOntopolyPage {
     }; 
 
     ListView<TopicMapReference> eachTopicMap = new ListView<TopicMapReference>("eachNonOntopolyTopicMap", eachNonOntopolyTopicMapModel) {
+      @Override
       protected void populateItem(ListItem<TopicMapReference> item) {
         final TopicMapReference ref = item.getModelObject();
         Map<String,String> pageParameterMap = new HashMap<String,String>();

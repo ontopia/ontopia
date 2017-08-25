@@ -32,6 +32,7 @@ public class TopicIdComparator implements Comparator<Topic>, Serializable {
     // don't call me
   }
   
+  @Override
   public int compare(Topic t1, Topic t2) {
     return StringUtils.compare(t1.getId(), t2.getId());
   }

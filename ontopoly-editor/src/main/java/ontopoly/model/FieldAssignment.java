@@ -217,6 +217,7 @@ public final class FieldAssignment {
     }
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof FieldAssignment))
       return false;
@@ -226,6 +227,7 @@ public final class FieldAssignment {
 			fieldDefinition.getTopicIF().equals(fa.getFieldDefinition().getTopicIF()));
   }
 
+  @Override
   public int hashCode() {
     return topicType.getTopicIF().hashCode() * fieldDefinition.getTopicIF().hashCode();
   }

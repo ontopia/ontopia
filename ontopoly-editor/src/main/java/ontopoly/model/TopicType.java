@@ -472,6 +472,7 @@ public class TopicType extends AbstractTypingTopic {
 
     List<FieldAssignment> fieldAssignments = qm.queryForList(query,
         new RowMapperIF<FieldAssignment>() {
+      @Override
       public FieldAssignment mapRow(QueryResultIF result, int rowno) {
         TopicIF topicType = (TopicIF)result.getValue(0);
         TopicIF fieldDefinitionTopic = (TopicIF)result.getValue(1);
@@ -636,6 +637,7 @@ public class TopicType extends AbstractTypingTopic {
     QueryMapper<FieldsView> qm = getTopicMap().newQueryMapperNoWrap();
     return qm.queryForList(query,
         new RowMapperIF<FieldsView>() {
+          @Override
           public FieldsView mapRow(QueryResultIF result, int rowno) {
             TopicIF viewTopic = (TopicIF)result.getValue(0);
             if (viewTopic == null)

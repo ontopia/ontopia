@@ -46,6 +46,7 @@ public class IdentityType extends AbstractTypingTopic {
     return PSI.ON_IDENTITY_TYPE;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof IdentityType))
       return false;
@@ -62,6 +63,7 @@ public class IdentityType extends AbstractTypingTopic {
     QueryMapper<IdentityField> qm = getTopicMap().newQueryMapper(IdentityField.class);    
     return qm.queryForList(query,
         new RowMapperIF<IdentityField>() {
+          @Override
           public IdentityField mapRow(QueryResultIF result, int rowno) {
 						TopicIF fieldTopic = (TopicIF)result.getValue(0);
 						return new IdentityField(fieldTopic, getTopicMap(), new IdentityType(getTopicIF(), getTopicMap()));

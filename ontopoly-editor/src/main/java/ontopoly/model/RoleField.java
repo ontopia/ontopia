@@ -81,6 +81,7 @@ public class RoleField extends FieldDefinition {
     return PSI.ON_ROLE_FIELD;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof RoleField))
       return false;
@@ -345,6 +346,7 @@ public class RoleField extends FieldDefinition {
       this.ofield = ofield;
       this.oplayer = oplayer;
     }
+    @Override
     public int compare(ValueIF v1, ValueIF v2) {
       try {
         Topic p1 = v1.getPlayer(ofield, oplayer);
@@ -587,24 +589,29 @@ public class RoleField extends FieldDefinition {
       this.players = new Topic[arity];
     }
 
+    @Override
     public int getArity() {
       return roleFields.length;
     }
 
+    @Override
     public RoleField[] getRoleFields() {
       return roleFields;
     }
 
+    @Override
     public Topic[] getPlayers() {
       return players;
     }
 
+    @Override
     public void addPlayer(RoleField roleField, Topic player) {
       roleFields[offset] = roleField;
       players[offset] = player;
       offset++;
     }
 
+    @Override
     public Topic getPlayer(RoleField ofield, Topic oPlayer) {
       // NOTE: all this logic is here to cater for symmetric associations
       Topic xPlayer = null;
@@ -702,6 +709,7 @@ public class RoleField extends FieldDefinition {
 
     List<OccurrenceIF> occs = new ArrayList<OccurrenceIF>(topics_occs.values());
     Collections.sort(occs, new Comparator<OccurrenceIF>() {
+      @Override
       public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
         return StringUtils.compare(occ1.getValue(), occ2.getValue());
       }

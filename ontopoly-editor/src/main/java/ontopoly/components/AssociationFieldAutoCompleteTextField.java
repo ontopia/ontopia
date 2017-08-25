@@ -45,6 +45,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
   
   static final class TopicConverter implements IConverter {
     
+    @Override
     public Object convertToObject(String value, Locale locale) {
       if (value != null) {
         String[] split = value.split("::");
@@ -56,6 +57,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
       }
     }
 
+    @Override
     public String convertToString(Object value, Locale locale) {
       return convertToString(value);
     }

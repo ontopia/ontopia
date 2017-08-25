@@ -43,6 +43,7 @@ public class DatePickerBehavior extends JQueryBehavior {
     c.setOutputMarkupId(true);
   }
   
+  @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     

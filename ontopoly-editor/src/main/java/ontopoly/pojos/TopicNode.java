@@ -73,12 +73,14 @@ public class TopicNode implements Serializable {
     return tm.getTopicById(topicId);
   }
   
+  @Override
   public boolean equals(Object o) {
     if (!(o instanceof TopicNode)) return false;
     TopicNode other = (TopicNode)o;
     return topicId.equals(other.topicId) && topicMapId.equals(other.topicMapId);
   }
   
+  @Override
   public int hashCode() {
     return topicMapId.hashCode() + topicId.hashCode();
   }

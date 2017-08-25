@@ -77,6 +77,7 @@ public class FieldInstanceDateTimeField extends TextField<String> implements ITe
     super.onComponentTag(tag);
   }
   
+  @Override
   public String getTextFormat() {
     return "yyyy-MM-dd HH:mm:ss";
   }

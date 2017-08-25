@@ -38,6 +38,7 @@ public class RoleFieldsValueComparator implements Comparator<Object>, Serializab
     this.roleFieldModels = roleFieldModels;
   }
   
+  @Override
   public int compare(Object o1, Object o2) {
 	RoleField.ValueIF rfv1 = (RoleField.ValueIF)o1;
 	RoleField.ValueIF rfv2 = (RoleField.ValueIF)o2;

@@ -55,6 +55,7 @@ public class AjaxRadioGroupPanel extends Panel {
         final Radio rc = new Radio("radiochoice", new Model(radioitem));    
         // Must use AjaxFormSubmitBehavior for this type of component    
         rc.add(new AjaxFormSubmitBehavior(form, "onclick")    {     
+          @Override
           protected void onSubmit(AjaxRequestTarget target)     {      
             if(target != null) {
               int size = ajaxTargets.size();
@@ -107,10 +108,12 @@ public class AjaxRadioGroupPanel extends Panel {
     private final String prevSuffix;  SuffixChange(String prevSuffix)  {   
       this.prevSuffix = prevSuffix;  
     }  
+    @Override
     public void undo()  {   
       setSuffix(prevSuffix);  
     }  
     
+    @Override
     public String toString()  {   
       return "SuffixChange[component: " + getPath() + ", suffix: "     + prevSuffix + "]";  
     } 

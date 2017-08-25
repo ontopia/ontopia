@@ -29,6 +29,7 @@ import junit.framework.TestCase;
 public class StartPageTest extends TestCase {
   private WicketTester tester;
   
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     tester = new WicketTester(new OntopolyApplication());

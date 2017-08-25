@@ -133,11 +133,13 @@ public class TreeModels {
       this.crtype = crtype;
     }
       
+    @Override
     public boolean equals(Object other) {
       HierarchyDefinition o = (HierarchyDefinition)other;
       return atype.equals(o.atype) && prtype.equals(o.prtype) && crtype.equals(o.crtype);
     }
     
+    @Override
     public int hashCode() {
       return atype.hashCode() + prtype.hashCode() + crtype.hashCode();
     }

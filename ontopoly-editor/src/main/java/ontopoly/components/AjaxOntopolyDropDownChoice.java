@@ -36,6 +36,7 @@ public class AjaxOntopolyDropDownChoice<T> extends DropDownChoice<T> {
     setOutputMarkupId(true);
   
     add(new AjaxFormComponentUpdatingBehavior("onchange") {
+      @Override
       protected void onUpdate(AjaxRequestTarget target) {
         AjaxOntopolyDropDownChoice.this.onUpdate(target);
       }

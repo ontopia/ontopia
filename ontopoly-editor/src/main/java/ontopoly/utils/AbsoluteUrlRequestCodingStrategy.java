@@ -48,38 +48,47 @@ public class AbsoluteUrlRequestCodingStrategy implements IRequestCodingStrategy 
     }
   }
   
+  @Override
   public RequestParameters decode(Request request) {
     return defaultStrategy.decode(request);
   }
 
+  @Override
   public CharSequence encode(RequestCycle requestCycle, IRequestTarget requestTarget) {
     return toAbsoluteUrl(defaultStrategy.encode(requestCycle, requestTarget).toString());
   }
 
+  @Override
   public String rewriteStaticRelativeUrl(String string) {
     return defaultStrategy.rewriteStaticRelativeUrl(string);
   }
 
+  @Override
   public void addIgnoreMountPath(String path) {
     defaultStrategy.addIgnoreMountPath(path);
   }
 
+  @Override
   public void mount(IRequestTargetUrlCodingStrategy urlCodingStrategy) {
     defaultStrategy.mount(urlCodingStrategy);
   }
 
+  @Override
   public CharSequence pathForTarget(IRequestTarget requestTarget) {
     return defaultStrategy.pathForTarget(requestTarget);
   }
 
+  @Override
   public IRequestTarget targetForRequest(RequestParameters requestParameters) {
     return defaultStrategy.targetForRequest(requestParameters);
   }
 
+  @Override
   public void unmount(String path) {
     defaultStrategy.unmount(path);
   }
 
+  @Override
   public IRequestTargetUrlCodingStrategy urlCodingStrategyForPath(String path) {
     return new AbsoluteUrlCodingStrategy(defaultStrategy.urlCodingStrategyForPath(path));
   }
@@ -92,22 +101,27 @@ public class AbsoluteUrlRequestCodingStrategy implements IRequestCodingStrategy 
       this.defaultStrategy = defaultStrategy;    
     }
     
+    @Override
     public IRequestTarget decode(RequestParameters requestParameters) {
       return defaultStrategy.decode(requestParameters);
     }
     
+    @Override
     public CharSequence encode(IRequestTarget requestTarget) {
       return AbsoluteUrlRequestCodingStrategy.toAbsoluteUrl(defaultStrategy.encode(requestTarget).toString());
     }
     
+    @Override
     public String getMountPath() {
       return defaultStrategy.getMountPath();
     }
     
+    @Override
     public boolean matches(IRequestTarget requestTarget) {
       return defaultStrategy.matches(requestTarget);
     }
     
+    @Override
     public boolean matches(String path, boolean caseSensitive) {
       return defaultStrategy.matches(path, caseSensitive);
     }

@@ -28,6 +28,7 @@ public class IdentityComparator implements Comparator<Object>, Serializable {
 
   public static final IdentityComparator INSTANCE = new IdentityComparator();
   
+  @Override
   public int compare(Object o1, Object o2) {
     LocatorIF i1 = (LocatorIF)o1;
     LocatorIF i2 = (LocatorIF)o2;
