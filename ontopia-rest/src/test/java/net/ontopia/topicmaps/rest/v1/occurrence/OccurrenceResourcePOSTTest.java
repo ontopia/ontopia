@@ -28,8 +28,11 @@ import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.JVM)
 public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	public OccurrenceResourcePOSTTest() {
