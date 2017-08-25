@@ -45,6 +45,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
  */
 public class DisplayHierarchyFunction extends AbstractFunction {
   
+  @Override
   public Collection execute(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException {
 
