@@ -30,12 +30,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class AssocInfoStorageComparator implements Comparator {
 
   /**
-   * INTERNAL: Default constructor.
-   */
-  public AssocInfoStorageComparator() {
-  }
-
-  /**
    * INTERNAL: Compares two AssocInfoStorage objects.
    */
   public int compare(Object o1, Object o2) {

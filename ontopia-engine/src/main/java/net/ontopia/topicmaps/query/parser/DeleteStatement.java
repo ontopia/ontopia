@@ -44,10 +44,6 @@ public class DeleteStatement extends ModificationFunctionStatement {
     functions.put("reifies", new ReifiesFunction());
   }
   
-  public DeleteStatement() {
-    super();
-  }
-
   // doStaticUpdates is inherited from ModificationFunctionStatement
 
   public int doUpdates(QueryMatches matches) throws InvalidQueryException {

@@ -47,9 +47,6 @@ public class JDOQuery {
   protected List select = new ArrayList();  // never empty
   protected List orderby;
 
-  public JDOQuery() {
-  }
-
   public boolean isSetQuery() {
     return (getFilter() instanceof JDOSetOperation);
   }

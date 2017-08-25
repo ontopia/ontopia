@@ -44,9 +44,6 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   
   protected TopicMapReferenceIF reference;
 
-  public AbstractTopicMapStore() {
-  }
-  
   public boolean isOpen() {
     return open;
   }

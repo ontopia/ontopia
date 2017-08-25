@@ -102,9 +102,6 @@ public class RelatedTopics {
 
   private boolean useOntopolyNames;
 
-  public RelatedTopics() {
-  }
-
   // configuration
 
   /**

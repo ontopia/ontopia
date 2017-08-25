@@ -28,9 +28,6 @@ import java.util.StringTokenizer;
 public class DefaultTokenizer implements TokenizerIF {
   private StringTokenizer tokenizer;
 
-  public DefaultTokenizer() {
-  }
-
   public void setText(String text) {
     this.tokenizer = new StringTokenizer(text, " \t\n\r\f");
   }

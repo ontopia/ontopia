@@ -44,10 +44,6 @@ public abstract class ModificationFunctionStatement
   protected String funcname; // name of delete function to be called, if any
   protected static Map<String, ModificationFunctionIF> functions = new HashMap<String, ModificationFunctionIF>();
 
-  public ModificationFunctionStatement() {
-    super();
-  }
-
   public void setFunction(String name) {
     this.funcname = name;
   }

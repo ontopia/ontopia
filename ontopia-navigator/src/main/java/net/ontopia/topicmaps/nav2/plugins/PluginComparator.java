@@ -31,12 +31,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class PluginComparator implements Comparator {
 
   /**
-   * INTERNAL: default constructor.
-   */
-  public PluginComparator() {
-  }
-
-  /**
    * INTERNAL: Compares two PluginIF objects.
    */
   public int compare(Object o1, Object o2) {

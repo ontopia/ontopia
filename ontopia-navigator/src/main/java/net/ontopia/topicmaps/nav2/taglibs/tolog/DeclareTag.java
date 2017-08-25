@@ -46,13 +46,6 @@ public class DeclareTag extends BodyTagSupport {
   protected String declarations;
   
   /**
-   * Default constructor.
-   */
-  public DeclareTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

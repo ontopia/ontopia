@@ -31,9 +31,6 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
  */
 public class InPredicate implements BasicPredicateIF {
 
-  public InPredicate() {
-  }
-  
   public String getName() {
     return "in";
   }

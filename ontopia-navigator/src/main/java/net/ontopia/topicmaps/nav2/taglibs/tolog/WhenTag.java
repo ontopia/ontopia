@@ -40,13 +40,6 @@ public class WhenTag extends IfTag {
   protected ChooseTag parentChooser;
   
   /**
-   * Default constructor.
-   */
-  public WhenTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

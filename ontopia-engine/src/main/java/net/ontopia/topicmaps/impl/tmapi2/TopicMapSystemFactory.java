@@ -47,9 +47,6 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
 
   public final String STORE_PROPERTY = "net.ontopia.topicmaps.store"; 
   
-  public TopicMapSystemFactory() {
-  }
-
   /**
    * <p>
    * Create a new TopicMapSystem instance based on the properties set so far.

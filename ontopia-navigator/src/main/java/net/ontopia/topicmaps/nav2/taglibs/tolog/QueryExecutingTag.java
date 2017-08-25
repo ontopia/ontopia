@@ -57,13 +57,6 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
   protected String query;
 
   /**
-   * Default constructor.
-   */
-  public QueryExecutingTag() {
-    super();
-  }
-
-  /**
    * Process the start tag for this instance.
    * Post: queryResult and columnNames have values, but nothing is done to them.
    * It is up to the child class to make use of these.

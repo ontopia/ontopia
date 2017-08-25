@@ -42,13 +42,6 @@ public class JSPPageExecuter {
   protected PageContext pageContext;
   
   /**
-   * Default constructor.
-   */
-  public JSPPageExecuter() {
-    //! indentLevel = 0;
-  }
-  
-  /**
    * Runs a JSP page (resp. function), represented by the specified
    * root node. It must get the corresponding page context object. The
    * <code>parentTag</code> is supposed to be null in a standalone

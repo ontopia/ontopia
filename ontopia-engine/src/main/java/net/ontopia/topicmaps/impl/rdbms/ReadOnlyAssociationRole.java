@@ -36,13 +36,6 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   implements AssociationRoleIF {
   
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-
-  public ReadOnlyAssociationRole() {
-  }
-
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 

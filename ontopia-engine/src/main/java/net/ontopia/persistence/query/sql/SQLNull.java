@@ -34,9 +34,6 @@ public class SQLNull implements SQLValueIF {
   protected Class vtype;
   protected FieldHandlerIF fhandler;
   
-  public SQLNull() {
-  }
-
   public int getType() {
     return NULL;
   }

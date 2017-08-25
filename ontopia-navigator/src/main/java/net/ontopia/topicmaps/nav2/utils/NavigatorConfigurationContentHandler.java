@@ -46,13 +46,6 @@ public class NavigatorConfigurationContentHandler extends SAXTracker {
   // member
   private NavigatorConfiguration navConfig;
 
-  /**
-   * INTERNAL: default constructor.
-   */
-  public NavigatorConfigurationContentHandler() {
-    super();
-  }
-
   public NavigatorConfigurationIF getNavigatorConfiguration() {
     return navConfig;
   }

@@ -38,13 +38,6 @@ import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-  
-  public ReadOnlyTopic() {
-  }
-  
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
   

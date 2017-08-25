@@ -141,9 +141,6 @@ public class Template {
   static class ParameterGenerator implements ValueGeneratorIF {
     private ValueGeneratorIF gen;
 
-    public ParameterGenerator() {
-    }
-
     public void setGenerator(ValueGeneratorIF gen) {
       this.gen = gen;
     }

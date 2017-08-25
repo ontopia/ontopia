@@ -49,14 +49,6 @@ public class QueryTag extends BodyTagSupport {
   protected String query;
   protected String name;
 
-
-  /**
-   * Default constructor.
-   */
-  public QueryTag() {
-    super();
-  }
-
   /**
    * Process the start tag for this instance.
    */

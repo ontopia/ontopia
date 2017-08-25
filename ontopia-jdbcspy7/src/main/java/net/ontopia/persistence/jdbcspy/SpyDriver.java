@@ -57,9 +57,6 @@ public class SpyDriver implements Driver {
     }
   }
 
-  public SpyDriver() {
-  }
-
   public int getMajorVersion() {
     return driver.getMajorVersion();
   }

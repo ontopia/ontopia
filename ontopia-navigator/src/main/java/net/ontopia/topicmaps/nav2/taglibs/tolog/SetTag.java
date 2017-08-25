@@ -76,13 +76,6 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
 
 
   /**
-   * Default constructor.
-   */
-  public SetTag() {
-    super();
-  }
-
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

@@ -49,13 +49,6 @@ public class OtherwiseTag extends BodyTagSupport {
   protected ChooseTag parentChooser;
   
   /**
-   * Default constructor.
-   */
-  public OtherwiseTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

@@ -61,10 +61,6 @@ public class InsertStatement extends ModificationStatement {
   private CTMParseContext context;
   private List<String> parameters; // the order of the parameters to the CTM part
 
-  public InsertStatement() {
-    super();
-  }
-
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
     BuilderEventHandler handler =

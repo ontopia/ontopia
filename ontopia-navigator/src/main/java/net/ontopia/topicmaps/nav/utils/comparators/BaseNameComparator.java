@@ -31,13 +31,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 public class BaseNameComparator implements Comparator<TopicNameIF> {
 
   /**
-   * Empty constructor, which will compare TopicNameIFs using no
-   * context.
-   */
-  public BaseNameComparator() {
-  }
-  
-  /**
    * Compares two TopicNameIFs.
    */
   public int compare(TopicNameIF o1, TopicNameIF o2) {

@@ -37,13 +37,6 @@ import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantNameIF {
   
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-
-  public ReadOnlyVariantName() {  
-  }
-
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 

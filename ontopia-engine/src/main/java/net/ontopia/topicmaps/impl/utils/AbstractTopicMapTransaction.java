@@ -46,9 +46,6 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
   protected CollectionFactoryIF cfactory;
   protected IndexManagerIF imanager;
   
-  public AbstractTopicMapTransaction() {
-  }
-
   public boolean isActive() {
     // Return flag
     return active;

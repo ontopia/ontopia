@@ -28,9 +28,6 @@ public class ClassifiableContent implements ClassifiableContentIF {
   protected String identifier;
   protected byte[] content;
 
-  public ClassifiableContent() {
-  }
-
   public String getIdentifier() {
     return identifier;
   }

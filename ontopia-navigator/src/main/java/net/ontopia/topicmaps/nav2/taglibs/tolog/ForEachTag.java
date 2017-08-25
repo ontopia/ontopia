@@ -103,13 +103,6 @@ public class ForEachTag extends BodyTagSupport {
   protected String separator;
   
   /**
-   * Default constructor.
-   */
-  public ForEachTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    * Depending on the input, chooses between evaluating an input query or
    * continuing iteration over a queryResult obtained in an ancestor ForEachTag.

@@ -42,13 +42,6 @@ public class ChooseTag extends BodyTagSupport {
   private boolean foundWhen;
     
   /**
-   * Default constructor.
-   */
-  public ChooseTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

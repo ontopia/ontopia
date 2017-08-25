@@ -40,13 +40,6 @@ import org.apache.commons.io.IOUtils;
 public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF {
   
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-
-  public ReadOnlyOccurrence() {  
-  }
-
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 

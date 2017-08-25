@@ -50,12 +50,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class RDBMSSearcher extends AbstractSearcher {
 
-  /**
-   * PUBLIC: The mandatory default constructor.
-   */
-  public RDBMSSearcher() {
-  }
-  
   public int getValueType() {
     return SearcherIF.OBJECT_ID;
   }

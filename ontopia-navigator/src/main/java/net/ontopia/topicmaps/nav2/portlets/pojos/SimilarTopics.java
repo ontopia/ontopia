@@ -38,9 +38,6 @@ import net.ontopia.topicmaps.query.utils.QueryWrapper;
  */
 public class SimilarTopics {
 
-  public SimilarTopics() {
-  }
-
   // --- Configuration
 
   // set a limit for how many similar topics to include

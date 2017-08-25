@@ -197,9 +197,6 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
 
   private class LuceneSearcher implements SearcherIF {
 
-    public LuceneSearcher() {
-    }
-
     @Override
     public SearchResultIF search(String query) throws IOException {
       synchronized (READER_LOCK) {

@@ -34,9 +34,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  */
 public abstract class ReadOnlyTMObject extends AbstractROPersistent implements TMObjectIF {
 
-  public ReadOnlyTMObject() {
-  }
-  
   // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------

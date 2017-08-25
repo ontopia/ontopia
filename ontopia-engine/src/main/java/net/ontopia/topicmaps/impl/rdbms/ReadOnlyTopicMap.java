@@ -51,9 +51,6 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
 
   protected transient RDBMSTopicMapTransaction transaction;  
 
-  public ReadOnlyTopicMap() {  
-  }
-
   public LocatorIF getBaseAddress() {
     String base_address = this.<String>loadField(TopicMap.LF_base_address);
     if (base_address == null) return null;

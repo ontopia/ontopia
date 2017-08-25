@@ -49,13 +49,6 @@ public class OutTag extends BaseOutputProducingTag {
   protected String scope;
 
   /**
-   * Default constructor.
-   */
-  public OutTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public void generateOutput(JspWriter out, Object outObject)

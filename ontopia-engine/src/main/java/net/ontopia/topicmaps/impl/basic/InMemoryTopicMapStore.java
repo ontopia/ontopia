@@ -35,10 +35,6 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
 
   protected TopicMapTransactionIF transaction;
 
-  public InMemoryTopicMapStore() {
-    super();
-  }
-
   public int getImplementation() {
     return TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION;
   }

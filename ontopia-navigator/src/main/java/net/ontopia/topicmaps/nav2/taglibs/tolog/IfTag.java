@@ -46,13 +46,6 @@ public class IfTag extends QueryExecutingTag {
   protected String var;
 
   /**
-   * Default constructor.
-   */
-  public IfTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {

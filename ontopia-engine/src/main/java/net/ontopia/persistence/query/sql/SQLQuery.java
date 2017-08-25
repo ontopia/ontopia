@@ -45,9 +45,6 @@ public class SQLQuery {
   // List of tuples/values to be ordered by
   protected List orderby;
 
-  public SQLQuery() {
-  }
-  
   public boolean isSetQuery() {
     return (getFilter() instanceof SQLSetOperation);
   }

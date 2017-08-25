@@ -1400,8 +1400,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Comparator for Objects of type TopicIF.
    */
   private class TopicComparator implements Comparator<TopicIF> {
-    public TopicComparator() {
-    }
 
     public int compare(TopicIF t1, TopicIF t2) {
       int retVal = 0;
@@ -1437,9 +1435,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Order TMObjects by their elementId.
    */
   private class ElementIdComparator implements Comparator<TopicIF> {
-
-    public ElementIdComparator() {
-    }
 
     public int compare(TopicIF o1, TopicIF o2) {
       return lazyStringCompare(getElementId(o1),
@@ -1516,8 +1511,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares roles by comparing their types.
    */
   private class RoleTypeComparator implements Comparator<AssociationRoleIF> {
-    public RoleTypeComparator() {
-    }
 
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
@@ -1531,8 +1524,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares roles by comparing their players.
    */
   private class RolePlayerComparator implements Comparator<AssociationRoleIF> {
-    public RolePlayerComparator() {
-    }
 
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyPlayerElementId(ar1),
@@ -1582,9 +1573,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class AssociationRoleComparator implements Comparator<AssociationRoleIF> {
 
-    public AssociationRoleComparator() {
-    }
-
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Compare the IDs of the role types.
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
@@ -1615,9 +1603,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class TopicNameComparator implements Comparator<TopicNameIF> {
 
-    public TopicNameComparator() {
-    }
-
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
       if (Objects.equals(bn1, bn2))
         return 0;
@@ -1635,9 +1620,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares occurrences for correct output order.
    */
   private class OccurrenceComparator implements Comparator<OccurrenceIF> {
-
-    public OccurrenceComparator() {
-    }
 
     public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
       if (occ1 == occ2)
@@ -1677,9 +1659,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares variant names for correct output order.
    */
   private class VariantComparator implements Comparator<VariantNameIF> {
-
-    public VariantComparator() {
-    }
 
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
       if (Objects.equals(vn1, vn2))
@@ -1820,8 +1799,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * order.
    */
   private class SupersubRoleComparator implements Comparator<AssociationRoleIF> {
-    public SupersubRoleComparator() {
-    }
 
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = 0;

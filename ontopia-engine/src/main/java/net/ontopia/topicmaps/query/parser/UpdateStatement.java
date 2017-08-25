@@ -42,10 +42,6 @@ public class UpdateStatement extends ModificationFunctionStatement {
     functions.put("resource", new ResourceFunction());
   }
 
-  public UpdateStatement() {
-    super();
-  }
-
   // doStaticUpdates is inherited from ModificationFunctionStatement
 
   public int doUpdates(QueryMatches matches) throws InvalidQueryException {

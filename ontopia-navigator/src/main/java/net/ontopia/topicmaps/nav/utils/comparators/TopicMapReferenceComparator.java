@@ -31,12 +31,6 @@ import org.apache.commons.lang3.StringUtils;
 public class TopicMapReferenceComparator implements Comparator<TopicMapReferenceIF> {
 
   /**
-   * INTERNAL: Creates a reference comparator.
-   */
-  public TopicMapReferenceComparator() {
-  }
-  
-  /**
    * INTERNAL: Compares two TopicMapReferenceIFs.
    */
   public int compare(TopicMapReferenceIF tmr1, TopicMapReferenceIF tmr2) {

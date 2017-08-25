@@ -42,12 +42,6 @@ import net.ontopia.xml.DefaultXMLReaderFactory;
 
 public class HTTPSearcher extends AbstractSearcher {
   
-  /**
-   * PUBLIC: The mandatory default constructor.
-   */
-  public HTTPSearcher() {
-  }
-  
   public int getValueType() {
     return SearcherIF.STRING_VALUE; // TODO: should support other identities as well
   }

@@ -36,13 +36,6 @@ import net.ontopia.utils.CompactHashSet;
 public class ReadOnlyAssociation extends ReadOnlyTMObject implements AssociationIF {
 
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-
-  public ReadOnlyAssociation() {  
-  }
-
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
