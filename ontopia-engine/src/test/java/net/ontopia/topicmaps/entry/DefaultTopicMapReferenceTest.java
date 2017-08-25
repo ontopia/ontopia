@@ -33,6 +33,7 @@ public class DefaultTopicMapReferenceTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     store = new InMemoryTopicMapStore();
     source = new DefaultTopicMapSource();

@@ -57,6 +57,7 @@ public class TopicName extends TMObject implements TopicNameIF {
                                             "scope", "type", "value",
                                             "variants", "reifier"};
 
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_topicmap);
@@ -83,6 +84,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -91,10 +93,12 @@ public class TopicName extends TMObject implements TopicNameIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
@@ -103,6 +107,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // NameIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getTopic() {
     return this.<TopicIF>loadField(LF_topic);
   }
@@ -128,10 +133,12 @@ public class TopicName extends TMObject implements TopicNameIF {
     }
   }
 
+  @Override
   public String getValue() {
     return this.<String>loadField(LF_value);
   }
 
+  @Override
   public void setValue(String value) {
     if (value == null)
       throw new NullPointerException("Topic name value must not be null.");
@@ -141,6 +148,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     valueChanged(LF_value, value, true);
   }
 
+  @Override
   public Collection<VariantNameIF> getVariants() {
     return this.<VariantNameIF>loadCollectionField(LF_variants);
   }
@@ -187,6 +195,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     valueRemoved(LF_variants, variant, false);
   }
 
+  @Override
   public void remove() {
     Topic parent = (Topic) getTopic();
     if (parent != null) {
@@ -199,10 +208,12 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -223,6 +234,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     }
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -248,10 +260,12 @@ public class TopicName extends TMObject implements TopicNameIF {
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return this.<TopicIF>loadField(LF_type);
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null) {
       type = getDefaultNameType();
@@ -279,10 +293,12 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(LF_reifier);
   }
 
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
@@ -302,6 +318,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.TopicName", (TopicNameIF) this);
   }

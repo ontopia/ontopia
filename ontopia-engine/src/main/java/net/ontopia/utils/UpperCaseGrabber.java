@@ -26,6 +26,7 @@ package net.ontopia.utils;
 
 public class UpperCaseGrabber implements GrabberIF<Object, String> {
   
+  @Override
   public String grab(Object object) {
     return object.toString().toUpperCase();
   }

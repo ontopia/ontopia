@@ -40,14 +40,17 @@ public class DynamicFailurePredicate
 
   // --- JDOPredicateIF implementation
 
+  @Override
   public boolean isRecursive() {
     return false;
   }
 
+  @Override
   public void prescan(QueryBuilder builder, List arguments) {
     // no-op
   }
 
+  @Override
   public boolean buildQuery(QueryBuilder builder, List expressions, List arguments)
     throws InvalidQueryException {
     

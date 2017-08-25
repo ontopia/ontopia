@@ -42,6 +42,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     TopicIF topic = builder.makeTopic();
@@ -259,6 +260,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     
   // --- Internal methods
 
+  @Override
   protected TMObjectIF makeObject() {
     TopicIF    topic = builder.makeTopic();
     TopicNameIF basename = builder.makeTopicName(topic, "");

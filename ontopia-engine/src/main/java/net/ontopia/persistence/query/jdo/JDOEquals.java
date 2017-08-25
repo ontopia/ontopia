@@ -35,6 +35,7 @@ public class JDOEquals implements JDOExpressionIF {
     this.right = right;
   }
   
+  @Override
   public int getType() {
     return EQUALS;
   }
@@ -47,10 +48,12 @@ public class JDOEquals implements JDOExpressionIF {
     return right;
   }
   
+  @Override
   public int hashCode() {
     return left.hashCode() + right.hashCode() + EQUALS;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOEquals) {
@@ -61,10 +64,12 @@ public class JDOEquals implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return left + " = " + right;
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(left);
     visitor.visitable(right);

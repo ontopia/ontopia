@@ -30,11 +30,13 @@ public class EqualsSQLOptimizer extends BooleanSQLOptimizer {
   // + RULE 1: 'A == A'  =>  true
   // + RULE 2: 'A != A'  =>  false
   
+  @Override
   public SQLQuery optimize(SQLQuery query) {
     optimizeQuery(query);
     return query;    
   }
 
+  @Override
   protected int optimizeEquals(SQLEquals expr) {
     // RULE 1: 'A == A'  =>  true
     if (expr.getLeft().equals(expr.getRight())) {
@@ -48,6 +50,7 @@ public class EqualsSQLOptimizer extends BooleanSQLOptimizer {
     }
   }
 
+  @Override
   protected int optimizeNotEquals(SQLNotEquals expr) {
     // RULE 2: 'A != A'  =>  false
     if (expr.getLeft().equals(expr.getRight())) {

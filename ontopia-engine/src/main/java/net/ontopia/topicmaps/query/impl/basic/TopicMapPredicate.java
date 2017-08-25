@@ -34,14 +34,17 @@ public class TopicMapPredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "topicmap";
   }
 
+  @Override
   public String getSignature() {
     return "m";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -49,6 +52,7 @@ public class TopicMapPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

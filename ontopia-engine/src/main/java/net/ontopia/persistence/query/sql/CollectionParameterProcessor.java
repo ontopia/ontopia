@@ -87,6 +87,7 @@ public class CollectionParameterProcessor implements ParameterProcessorIF {
     return sb.toString();
   }
 
+  @Override
   public ResultSet executeQuery(Connection conn, String sql, Map params) throws SQLException {
     if (param_names == null)
       throw new OntopiaRuntimeException("Cannot use named parameters when query not defined with parameter names.");
@@ -99,6 +100,7 @@ public class CollectionParameterProcessor implements ParameterProcessorIF {
     return executeQuery(conn, sql, _params);
   }
   
+  @Override
   public ResultSet executeQuery(Connection conn, String sql, Object[] params) throws SQLException {
     
     // Embed collection parameters

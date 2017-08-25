@@ -171,10 +171,12 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return storage;
   }
 
+  @Override
   public int getImplementation() {
     return TopicMapStoreIF.RDBMS_IMPLEMENTATION;
   }
   
+  @Override
   public boolean isTransactional() {
     return true;
   }
@@ -189,6 +191,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       return ((TopicMap)getTopicMap()).getBaseAddress();
   }
 
+  @Override
   public void setBaseAddress(LocatorIF base_address) {
     this.base_address = null;
     // update persistent field
@@ -212,6 +215,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return txn.getTransaction();
   }
 
+  @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
     if (!isOpen()) open();
@@ -302,6 +306,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   /**
    * INTERNAL: Gets the value of the specified store property.
    */
+  @Override
   public String getProperty(String name) {
     return getStorage().getProperty(name);
   }
@@ -314,11 +319,13 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   /* -- store pool -- */
   
+  @Override
   public void close() {
     // return to reference or close
     close((reference != null));
   }
 
+  @Override
   public void close(boolean returnStore) {
     if (returnStore) {
 

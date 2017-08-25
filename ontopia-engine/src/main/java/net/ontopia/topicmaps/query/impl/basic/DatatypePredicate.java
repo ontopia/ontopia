@@ -47,14 +47,17 @@ public class DatatypePredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "datatype";
   }
   
+  @Override
   public String getSignature() {
     return "ov s";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -67,6 +70,7 @@ public class DatatypePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

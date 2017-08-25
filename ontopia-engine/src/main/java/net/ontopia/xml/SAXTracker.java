@@ -76,6 +76,7 @@ public abstract class SAXTracker extends DefaultHandler {
   
   // --- ContentHandler interface
 
+  @Override
   public void startElement(String nsuri, String lname, String qname,
 			   Attributes attrs) throws SAXException {
     openElements.push(qname);
@@ -85,16 +86,19 @@ public abstract class SAXTracker extends DefaultHandler {
       content = new StringBuilder();
   }
 
+  @Override
   public void characters(char[] chars, int start, int length) {
     if (keepContents)
       content.append(chars, start, length);
   }
     
+  @Override
   public void endElement(String nsuri, String lname, String qname) throws SAXException {
     keepContents = false;
     openElements.pop();
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator;
   }

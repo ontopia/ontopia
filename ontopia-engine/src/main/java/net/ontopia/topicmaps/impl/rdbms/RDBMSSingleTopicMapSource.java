@@ -65,16 +65,19 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
 
   // --- TopicMapSourceIF implementation
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized Collection getReferences() {
     if (reference == null) refresh();
     if (reference == null) return Collections.EMPTY_SET;
     return Collections.singleton(reference);
   }
   
+  @Override
   public synchronized void refresh() {
     // FIXME: for now don't recreate reference if already exists
     if (reference != null) return;
@@ -152,26 +155,32 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
     }
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
   
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }

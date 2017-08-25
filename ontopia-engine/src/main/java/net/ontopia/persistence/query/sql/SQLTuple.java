@@ -57,30 +57,37 @@ public class SQLTuple implements SQLValueIF {
     }
   }
 
+  @Override
   public int getType() {
     return TUPLE;
   }
   
+  @Override
   public int getArity() {
     return arity;
   }
 
+  @Override
   public int getValueArity() {
     return value_arity;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
@@ -93,22 +100,27 @@ public class SQLTuple implements SQLValueIF {
     this.values = values;
   }
 
+  @Override
   public Class getValueType() {    
     return vtype;
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
 
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return fhandler;
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLTuple) {
       SQLTuple other = (SQLTuple)obj;
@@ -118,6 +130,7 @@ public class SQLTuple implements SQLValueIF {
     return false;
   }
 
+  @Override
   public String toString() {    
     StringBuilder sb = new StringBuilder();
     sb.append("tuple:").append(arity).append(":(");

@@ -36,6 +36,7 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
     super(name);
   }
 
+  @Override
   protected void setUp() throws Exception {
     ix = (ScopeIndexIF)super.setUp("ScopeIndexIF");
     theme1 = builder.makeTopic();

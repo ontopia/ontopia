@@ -37,6 +37,7 @@ public class EncryptedInputStream extends InputStream {
     this.myInput = myInputStream;
   }
 
+  @Override
   public int read() throws IOException {
     int b = myInput.read();
     int plain;

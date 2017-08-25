@@ -38,18 +38,22 @@ public class JDOAggregate implements JDOAggregateIF {
     this.type = type;
   }
   
+  @Override
   public int getType() {
     return type;
   }
   
+  @Override
   public JDOValueIF getValue() {
     return value;
   }
 
+  @Override
   public int hashCode() {
     return value.hashCode() + type;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof JDOAggregateIF) {
       JDOAggregateIF other = (JDOAggregateIF)obj;    
@@ -59,6 +63,7 @@ public class JDOAggregate implements JDOAggregateIF {
     return false;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     switch (type) {

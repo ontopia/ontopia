@@ -41,6 +41,7 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
 
   private final static String testdataDirectory = "cxtm";
 
+  @Override
   public void setUp() throws IOException {
     topicmap = makeEmptyTopicMap();
     String root = TestFileUtils.getTestdataOutputDirectory();

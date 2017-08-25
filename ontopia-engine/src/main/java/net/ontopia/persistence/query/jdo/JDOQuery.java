@@ -207,6 +207,7 @@ public class JDOQuery {
     addOrderBy(new JDOOrderBy(aggregate, JDOOrderBy.DESCENDING));
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("select ");

@@ -73,6 +73,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   // NameIndexIF
   // -----------------------------------------------------------------------------
   
+  @Override
   public Collection<TopicNameIF> getTopicNames(String value) {
     Collection<TopicNameIF> result = basenames.get(value);
     if (result == null) return new ArrayList<TopicNameIF>();
@@ -85,10 +86,12 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     return CollectionUtils.select(extractExactValues(basenames, value), new TypedPredicate(topicNameType));
   }
 
+  @Override
   public Collection<VariantNameIF> getVariants(String value) {
 		return extractExactValues(variants, value);
   }
   
+  @Override
   public Collection<VariantNameIF> getVariants(String value, final LocatorIF datatype) {
     return CollectionUtils.select(extractExactValues(variants, value), new Predicate<VariantNameIF>() {
       @Override
@@ -110,6 +113,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     TopicNameIF_setValue(CollectionMap<String, TopicNameIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(TopicNameIF object, String event, String new_value, String old_value) {
       objects.move(object, old_value, new_value);
     }
@@ -123,6 +127,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     TopicNameIF_added(CollectionMap<String, TopicNameIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, TopicNameIF new_value, TopicNameIF old_value) {
       objects.add(new_value.getValue(), new_value);
     }
@@ -135,6 +140,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     TopicNameIF_removed(CollectionMap<String, TopicNameIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, TopicNameIF new_value, TopicNameIF old_value) {
       objects.remove(old_value.getValue(), old_value);
     }
@@ -148,6 +154,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     VariantNameIF_setValue(CollectionMap<String, VariantNameIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(VariantNameIF object, String event, String new_value, String old_value) {
       objects.move(object, old_value, new_value);
     }
@@ -161,6 +168,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     VariantNameIF_added(CollectionMap<String, VariantNameIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, VariantNameIF new_value, VariantNameIF old_value) {
       objects.add(new_value.getValue(), new_value);
     }
@@ -173,6 +181,7 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     VariantNameIF_removed(CollectionMap<String, VariantNameIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, VariantNameIF new_value, VariantNameIF old_value) {
       objects.remove(old_value.getValue(), old_value);
     }

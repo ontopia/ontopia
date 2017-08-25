@@ -137,6 +137,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
     
   }
   
+  @Override
   public Object load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception {
     // Prepare result collection
     Collection<IdentityIF> result = new HashSet<IdentityIF>();
@@ -208,6 +209,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
     return result;
   }
   
+  @Override
   public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities,
       IdentityIF current) throws Exception {
     // Prepare result collection
@@ -362,6 +364,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
     value_field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
+  @Override
   public void clear(IdentityIF identity) throws Exception {
     // Prepare statement
     PreparedStatement stm = clear_getStatement();
@@ -391,6 +394,7 @@ public class SQLManyToManyReference implements FieldAccessIF {
   // -----------------------------------------------------------------------------
   // Store dirty
   
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception {
     // Get field value
     TrackableCollectionIF value = (TrackableCollectionIF)oaccess.getValue(object, field);

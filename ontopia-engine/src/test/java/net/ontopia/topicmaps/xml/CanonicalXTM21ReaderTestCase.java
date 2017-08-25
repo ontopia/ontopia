@@ -47,6 +47,7 @@ public class CanonicalXTM21ReaderTestCase extends AbstractCanonicalTests {
 
   // --- Canonicalization type methods
 
+  @Override
   protected void canonicalize(URL infile, File outfile)
     throws IOException {
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
@@ -62,6 +63,7 @@ public class CanonicalXTM21ReaderTestCase extends AbstractCanonicalTests {
     source.getStore().close();
   }
 
+  @Override
   protected String getOutFilename(String infile) {
     return infile + ".cxtm";
   }

@@ -30,18 +30,22 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
  */
 public class CoalescePredicate implements BasicPredicateIF {
 
+  @Override
   public String getName() {
     return "coalesce";
   }
 
+  @Override
   public String getSignature() {
     return ". . .+"; // must have at least three arguments
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     return PredicateDrivenCostEstimator.getComparisonPredicateCost(boundparams);
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

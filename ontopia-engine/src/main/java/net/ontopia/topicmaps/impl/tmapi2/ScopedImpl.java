@@ -43,6 +43,7 @@ public abstract class ScopedImpl extends ReifiableImpl implements Scoped {
    * @see org.tmapi.core.Scoped#getScope()
    */
   
+  @Override
   public Set<Topic> getScope() {
     return topicMap.wrapSet(((ScopedIF) getWrapped()).getScope());
   }
@@ -53,6 +54,7 @@ public abstract class ScopedImpl extends ReifiableImpl implements Scoped {
    * @see org.tmapi.core.Scoped#addTheme(org.tmapi.core.Topic)
    */
   
+  @Override
   public void addTheme(Topic theme) {
     Check.themeNotNull(this, theme);
     Check.scopeInTopicMap(getTopicMap(), theme);
@@ -65,6 +67,7 @@ public abstract class ScopedImpl extends ReifiableImpl implements Scoped {
    * @see org.tmapi.core.Scoped#removeTheme(org.tmapi.core.Topic)
    */
   
+  @Override
   public void removeTheme(Topic theme) {
     Check.themeNotNull(this, theme);
     ((ScopedIF) getWrapped()).removeTheme(topicMap.unwrapTopic(theme));

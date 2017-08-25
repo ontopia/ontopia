@@ -103,6 +103,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   // ClassInstanceIndexIF
   // -----------------------------------------------------------------------------
   
+  @Override
   public Collection<TopicIF> getTopics(TopicIF topic_type) {
     return topics.containsKey(topic_type) ? 
             Collections.<TopicIF>unmodifiableCollection(
@@ -110,6 +111,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
             Collections.<TopicIF>emptyList();
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNames(TopicIF basename_type) {
     if (basename_type == null) {
       basename_type = topicmap.getTopicBySubjectIdentifier(PSI.getSAMNameType());
@@ -139,6 +141,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     return createComposite(collected);
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
     return occurs.containsKey(occurrence_type) ? 
             Collections.<OccurrenceIF>unmodifiableCollection(
@@ -153,6 +156,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     );
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {
     return assocs.containsKey(association_type) ? 
             Collections.<AssociationIF>unmodifiableCollection(
@@ -160,6 +164,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
             Collections.<AssociationIF>emptyList();
   }
 
+  @Override
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type) {
     return roles.containsKey(association_role_type) ? 
             Collections.<AssociationRoleIF>unmodifiableCollection(
@@ -167,9 +172,11 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
             Collections.<AssociationRoleIF>emptyList();
   }
 
+  @Override
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type, final TopicIF association_type) {
     if (roles.containsKey(association_role_type)) {
       return CollectionUtils.select(roles.get(association_role_type), new Predicate<AssociationRoleIF>() {
+        @Override
         public boolean evaluate(AssociationRoleIF role) {
           return role.getAssociation().getType().equals(association_type);
         }
@@ -179,6 +186,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     }
   }
 
+  @Override
   public Collection<TopicIF> getTopicTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(topics.keySet());
@@ -186,6 +194,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     return Collections.unmodifiableCollection(result);
   }
   
+  @Override
   public Collection<TopicIF> getTopicNameTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(bnames.keySet());
@@ -193,6 +202,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     return Collections.unmodifiableCollection(result);
   }
   
+  @Override
   public Collection<TopicIF> getOccurrenceTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(occurs.keySet());
@@ -200,6 +210,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     return Collections.unmodifiableCollection(result);
   }
   
+  @Override
   public Collection<TopicIF> getAssociationTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(assocs.keySet());
@@ -207,6 +218,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     return Collections.unmodifiableCollection(result);
   }
   
+  @Override
   public Collection<TopicIF> getAssociationRoleTypes() {
     // Create new collection
     Collection<TopicIF> result = new ArrayList<TopicIF>(roles.keySet());
@@ -214,26 +226,32 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     return Collections.unmodifiableCollection(result);
   }
   
+  @Override
   public boolean usedAsTopicType(TopicIF topic) {
     return topics.containsKey(topic);
   }
 
+  @Override
   public boolean usedAsTopicNameType(TopicIF topic) {
     return bnames.containsKey(topic);
   }
 
+  @Override
   public boolean usedAsOccurrenceType(TopicIF topic) {
     return occurs.containsKey(topic);
   }
 
+  @Override
   public boolean usedAsAssociationType(TopicIF topic) {
     return assocs.containsKey(topic);
   }
   
+  @Override
   public boolean usedAsAssociationRoleType(TopicIF topic) {
     return roles.containsKey(topic);
   }
   
+  @Override
   public boolean usedAsType(TopicIF topic) {
     return (topics.containsKey(topic) ||
             occurs.containsKey(topic) ||
@@ -269,6 +287,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     TypedIF_setType(CollectionMap<TopicIF, T> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(T object, String event, TopicIF new_value, TopicIF old_value) {
       objects.move(object, old_value, new_value);
     }
@@ -282,6 +301,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     TopicIF_addType(CollectionMap<TopicIF, TopicIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(TopicIF topic, String event, TopicIF new_value, TopicIF old_value) {
       // Register types
       Collection<TopicIF> types = topic.getTypes();
@@ -301,6 +321,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     TopicIF_removeType(CollectionMap<TopicIF, TopicIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(TopicIF topic, String event, TopicIF new_value, TopicIF old_value) {
       // Register types
       Collection<TopicIF> types = topic.getTypes();
@@ -323,6 +344,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
       this.objects = objects;
       this.child_event = child_event;
     }
+    @Override
     public void processEvent(Object object, String event, TopicIF added, TopicIF old_value) {
       // Register types
       Collection<TopicIF> types = added.getTypes();
@@ -345,6 +367,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
       this.objects = objects;
       this.child_event = child_event;
     }
+    @Override
     public void processEvent(Object object, String event, TopicIF new_value, TopicIF removed) {
       // Unregister types
       Collection<TopicIF> types = removed.getTypes();
@@ -365,6 +388,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     TypedIF_added(CollectionMap<TopicIF, T> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, T added, T old_value) {
       // Register type
       objects.add(added.getType(), added);
@@ -378,6 +402,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     TypedIF_removed(CollectionMap<TopicIF, T> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, T new_value, T removed) {
       // Unregister type
       objects.remove(removed.getType(), removed);

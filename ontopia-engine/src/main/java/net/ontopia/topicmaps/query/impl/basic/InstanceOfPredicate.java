@@ -45,16 +45,19 @@ public class InstanceOfPredicate extends AbstractInstanceOfPredicate {
     superTypeCache = new HashMap();
   }
   
+  @Override
   public String getName() {
     return "instance-of";
   }
 
   // --- Data interface implementation
 
+  @Override
   protected void start() {
     superTypeCache.clear();
   }
   
+  @Override
   protected Collection getClasses(TopicIF instance) {
     Set types = new CompactHashSet();
     Iterator it = instance.getTypes().iterator();
@@ -63,6 +66,7 @@ public class InstanceOfPredicate extends AbstractInstanceOfPredicate {
     return types;
   }
 
+  @Override
   protected Collection getInstances(TopicIF klass) {
     Set instances = new CompactHashSet();
     Iterator it = getSubtypes(klass).iterator();
@@ -71,6 +75,7 @@ public class InstanceOfPredicate extends AbstractInstanceOfPredicate {
     return instances;
   }
 
+  @Override
   protected Collection getTypes() {
     Set types = new CompactHashSet();
     Iterator it = index.getTopicTypes().iterator();
@@ -82,6 +87,7 @@ public class InstanceOfPredicate extends AbstractInstanceOfPredicate {
     return types;
   }
 
+  @Override
   protected Collection getSupertypes(TopicIF type) {
     Collection supers = (Collection) superTypeCache.get(type);
     if (supers == null) {

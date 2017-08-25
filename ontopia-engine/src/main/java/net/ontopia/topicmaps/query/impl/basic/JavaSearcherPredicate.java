@@ -53,10 +53,12 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
     this.searcher = searcher;
   }
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getSignature() {
     int valtype = searcher.getValueType();
     switch (valtype) {
@@ -75,10 +77,12 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
     }
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     return PredicateDrivenCostEstimator.FILTER_RESULT; // FIXME: is this right?
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

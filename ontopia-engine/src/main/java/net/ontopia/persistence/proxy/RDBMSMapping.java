@@ -51,6 +51,7 @@ public class RDBMSMapping implements ObjectRelationalMappingIF {
     return mapping;
   }
   
+  @Override
   public synchronized ClassInfoIF getClassInfo(Class<?> type) {
     ClassInfoIF ci = class_infos.get(type);
     if (ci == null) {
@@ -71,6 +72,7 @@ public class RDBMSMapping implements ObjectRelationalMappingIF {
     return ci;
   }
 
+  @Override
   public boolean isDeclared(Class<?> type) {
     return (mapping.getDescriptorByClass(type) != null);
   }

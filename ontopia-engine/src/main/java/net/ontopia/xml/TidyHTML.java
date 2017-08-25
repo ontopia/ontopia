@@ -66,6 +66,7 @@ public class TidyHTML implements Runnable {
   /**
    * start the tidification
    */
+  @Override
   public void run() {
     URL url;
     BufferedInputStream in;

@@ -58,6 +58,7 @@ public class DeciderIterator<T> implements Iterator<T> {
     done = true;
   }
   
+  @Override
   public boolean hasNext() {
     // If we're done there are no more elements in this iterator.
     if (done) return false;
@@ -65,6 +66,7 @@ public class DeciderIterator<T> implements Iterator<T> {
     return true;
   }
 
+  @Override
   public T next() {
     // Throw exception if there are no more elements.
     if (done) throw new NoSuchElementException();
@@ -75,6 +77,7 @@ public class DeciderIterator<T> implements Iterator<T> {
     return object;
   }
 
+  @Override
   public void remove() {
     // Delegate remove to underlying iterator.
     iterator.remove();

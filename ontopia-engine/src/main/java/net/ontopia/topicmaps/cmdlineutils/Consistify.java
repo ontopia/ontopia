@@ -185,6 +185,7 @@ public class Consistify {
     private boolean xtm = false;
     private String encoding = null;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 'n') normalize = true;

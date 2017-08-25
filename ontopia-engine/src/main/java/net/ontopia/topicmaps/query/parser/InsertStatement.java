@@ -61,6 +61,7 @@ public class InsertStatement extends ModificationStatement {
   private CTMParseContext context;
   private List<String> parameters; // the order of the parameters to the CTM part
 
+  @Override
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
     BuilderEventHandler handler =
@@ -69,6 +70,7 @@ public class InsertStatement extends ModificationStatement {
     return 1;
   }
 
+  @Override
   public int doUpdates(QueryMatches matches)
     throws InvalidQueryException {
     TopicMapIF topicmap = matches.getQueryContext().getTopicMap();
@@ -99,6 +101,7 @@ public class InsertStatement extends ModificationStatement {
     return matches.last + 1;
   }
 
+  @Override
   public String toString() {
     String str = "insert ..."; // FIXME: stringfy CTM part
     if (query != null)
@@ -199,58 +202,72 @@ public class InsertStatement extends ModificationStatement {
       this.wildcards = new HashMap<String, TopicIF>();
     }
 
+    @Override
     public void addPrefix(String prefix, LocatorIF locator) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void addIncludeUri(LocatorIF uri) {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public Set getIncludeUris() {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public LocatorIF resolveQname(String qname) {
       return tologctx.resolveQName(new QName(qname));
     }
 
+    @Override
     public ValueGeneratorIF getTopicById(String id) {
       return ctmctx.getTopicById(id);
     }
   
+    @Override
     public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
       return ctmctx.getTopicByItemIdentifier(itemid);
     }
 
+    @Override
     public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
       return ctmctx.getTopicBySubjectLocator(subjloc);
     }
 
+    @Override
     public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
       return ctmctx.getTopicBySubjectIdentifier(subjid);
     }
 
+    @Override
     public ValueGeneratorIF getTopicByQname(String qname) {
       return ctmctx.getTopicBySubjectIdentifier(resolveQname(qname));
     }
 
+    @Override
     public TopicIF makeTopicById(String id) {
       return ctmctx.makeTopicById(id);
     }
     
+    @Override
     public TopicIF makeTopicByItemIdentifier(LocatorIF itemid) {
       return ctmctx.makeTopicByItemIdentifier(itemid);
     }
 
+    @Override
     public TopicIF makeTopicBySubjectLocator(LocatorIF subjloc) {
       return ctmctx.makeTopicBySubjectLocator(subjloc);
     }
 
+    @Override
     public TopicIF makeTopicBySubjectIdentifier(LocatorIF subjid) {
       return ctmctx.makeTopicBySubjectIdentifier(subjid);
     }
   
+    @Override
     public TopicIF makeAnonymousTopic() {
       TopicMapIF topicmap = tologctx.getTopicMap();
       TopicMapBuilderIF builder = topicmap.getBuilder();
@@ -258,6 +275,7 @@ public class InsertStatement extends ModificationStatement {
       return topic;
     }
 
+    @Override
     public TopicIF makeAnonymousTopic(String wildcard_name) {
       TopicIF topic = wildcards.get(wildcard_name);
       if (topic == null) {
@@ -267,14 +285,17 @@ public class InsertStatement extends ModificationStatement {
       return topic;
     }
 
+    @Override
     public void registerTemplate(String name, Template template) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public Template getTemplate(String name , int paramcount) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public Map getTemplates() {
       throw new UnsupportedOperationException();
     }

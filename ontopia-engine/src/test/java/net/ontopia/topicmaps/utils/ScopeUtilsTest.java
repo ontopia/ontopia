@@ -42,6 +42,7 @@ public class ScopeUtilsTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap = makeTopicMap();
     makeTopic("A");
@@ -324,21 +325,31 @@ public class ScopeUtilsTest extends TestCase {
     Scoped(Collection scope) {
       this.scope = scope;
     }
+    @Override
     public Collection getScope() {
       return scope;
     }
+    @Override
     public void addTheme(TopicIF theme) {
       scope.add(theme);
     }
+    @Override
     public void removeTheme(TopicIF theme) {
       scope.remove(theme);
     }   
+    @Override
     public String getObjectId() {return "";}
+    @Override
     public boolean isReadOnly() {return false;}
+    @Override
     public TopicMapIF getTopicMap() {return null;}
+    @Override
     public Collection getItemIdentifiers() {return Collections.EMPTY_SET;}
+    @Override
     public void addItemIdentifier(LocatorIF source_locator) { /* no-op */ }  
+    @Override
     public void removeItemIdentifier(LocatorIF source_locator) { /* no-op */ }
+    @Override
     public void remove() { /* no-op */ }
       
   }

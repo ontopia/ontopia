@@ -64,26 +64,32 @@ public class GenericField implements FieldIF {
     return new GenericField(name, value, true, true, true);
   }
   
+  @Override
   public String getName() {
     return name;
   }
   
+  @Override
   public String getValue() {
     return value;
   }
 
+  @Override
   public Reader getReader() {
     return reader;
   }
 
+  @Override
   public boolean isStored() {
     return store;
   }
 
+  @Override
   public boolean isIndexed() {
     return index;
   }
 
+  @Override
   public boolean isTokenized() {
     return tokenize;
   }

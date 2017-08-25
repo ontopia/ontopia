@@ -51,6 +51,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     this.tm = tm;
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return tm;
   }
@@ -61,10 +62,12 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return topic;
   }
   
+  @Override
   public TopicIF makeTopic() {
     return createTopic();
   }
 
+  @Override
   public TopicIF makeTopic(TopicIF topic_type) {
     if (topic_type == null)
       throw new NullPointerException(MSG_TOPIC_TYPE_NOT_NULL);
@@ -75,6 +78,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   }
 
 
+  @Override
   public TopicIF makeTopic(Collection<TopicIF> topic_types) {
     checkCollection(topic_types);
     TopicIF topic = createTopic();
@@ -84,6 +88,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return topic;
   }
 
+  @Override
   public TopicNameIF makeTopicName(TopicIF topic, String value) {
     if (topic == null) throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (value == null) throw new NullPointerException(MSG_TOPIC_NAME_VALUE_NOT_NULL);
@@ -96,6 +101,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return name;
   }
 
+  @Override
   public TopicNameIF makeTopicName(TopicIF topic, TopicIF bntype, String value) {
     if (topic == null)
       throw new NullPointerException(MSG_TOPIC_NOT_NULL);
@@ -124,6 +130,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return nameType;
   }
   
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, String variant_name) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (variant_name == null) throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
@@ -134,6 +141,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (locator == null) throw new NullPointerException(MSG_VARIANT_LOCATOR_NOT_NULL);
@@ -144,6 +152,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
   
+  @Override
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value) {
     if (topic == null) throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null) throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
@@ -157,6 +166,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return occurs;
   }
   
+  @Override
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, LocatorIF locator) {
     if (topic == null) throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null) throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
@@ -176,6 +186,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return assoc;
   }
 
+  @Override
   public AssociationIF makeAssociation(TopicIF assoc_type) {
     if (assoc_type == null) throw new NullPointerException(MSG_ASSOCIATION_TYPE_NOT_NULL);
     CrossTopicMapException.check(assoc_type, this.tm);
@@ -185,6 +196,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return assoc;
   }
   
+  @Override
   public AssociationRoleIF makeAssociationRole(AssociationIF assoc, TopicIF role_type, TopicIF player) {
     if (assoc == null) throw new NullPointerException(MSG_ASSOCATION_NOT_NULL);
     if (role_type == null) throw new NullPointerException(MSG_ASSOCIATION_ROLE_TYPE_NOT_NULL);
@@ -212,6 +224,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
       scoped.addTheme(theme);
   }
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection<TopicIF> scope) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null) throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
@@ -224,6 +237,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection<TopicIF> scope) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (locator == null) throw new NullPointerException(MSG_VARIANT_LOCATOR_NOT_NULL);
@@ -236,6 +250,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, String variant_name, LocatorIF datatype) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (variant_name == null) throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
@@ -247,6 +262,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection<TopicIF> scope) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null) throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
@@ -260,6 +276,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null) throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
@@ -271,6 +288,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
 	}
 
+  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection<TopicIF> scope) {
     if (name == null) throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
     if (value == null) throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
@@ -284,6 +302,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return vname;
   }
 
+  @Override
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value, LocatorIF datatype) {
     if (topic == null) throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null) throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
@@ -298,6 +317,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return occurs;
   }
 
+  @Override
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, Reader value, long length, LocatorIF datatype) {
     if (topic == null) throw new NullPointerException(MSG_TOPIC_NOT_NULL);
     if (occurs_type == null) throw new NullPointerException(MSG_OCCURRENCE_TYPE_NOT_NULL);
@@ -312,6 +332,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return occurs;
   }
 
+  @Override
   public AssociationIF makeAssociation(TopicIF assoc_type, TopicIF role_type, TopicIF player) {
     if (assoc_type == null) throw new NullPointerException(MSG_ASSOCIATION_TYPE_NOT_NULL);
     if (role_type == null) throw new NullPointerException(MSG_ASSOCIATION_ROLE_TYPE_NOT_NULL);

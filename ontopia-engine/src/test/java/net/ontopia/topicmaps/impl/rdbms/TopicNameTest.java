@@ -27,6 +27,7 @@ public class TopicNameTest extends net.ontopia.topicmaps.core.TopicNameTest {
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();
   }

@@ -59,6 +59,7 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
     }    
   }
 
+  @Override
   public Connection requestConnection() throws SQLException {
     log.debug("Requesting connection from default connection factory");
     

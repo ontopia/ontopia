@@ -33,6 +33,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

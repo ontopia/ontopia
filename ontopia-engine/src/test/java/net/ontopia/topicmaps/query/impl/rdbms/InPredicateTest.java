@@ -31,10 +31,12 @@ public class InPredicateTest
     super(name);
   }
   
+  @Override
   protected void load(String filename) throws IOException {
     RDBMSTestUtils.load(this, filename);
   }
   
+  @Override
   protected void makeEmpty() {
     RDBMSTestUtils.makeEmpty(this);
   }

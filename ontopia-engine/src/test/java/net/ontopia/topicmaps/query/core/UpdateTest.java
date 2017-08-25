@@ -40,6 +40,7 @@ public class UpdateTest extends AbstractQueryTest {
 
   /// context management
 
+  @Override
   public void tearDown() {
     closeStore();
   }

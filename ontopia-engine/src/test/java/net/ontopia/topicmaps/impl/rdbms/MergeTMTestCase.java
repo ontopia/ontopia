@@ -45,6 +45,7 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
       super(root, filename);
     }
 
+  @Override
     public void testMergeTM() throws IOException {
       TestFileUtils.verifyDirectory(base, "out");
       

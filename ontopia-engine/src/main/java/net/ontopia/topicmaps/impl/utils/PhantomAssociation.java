@@ -42,74 +42,91 @@ public class PhantomAssociation implements AssociationIF {
 
   // -- AssociationIF
 
+  @Override
   public Collection<TopicIF> getRoleTypes() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     return Collections.emptySet();
   }
 
   // -- ScopedIF
 
+  @Override
   public Collection<TopicIF> getScope() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
   // -- TypedIF
 
+  @Override
   public TopicIF getType() {
     return null;
   }
 
+  @Override
   public void setType(TopicIF type) {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
   
+  @Override
   public String getObjectId() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public boolean isReadOnly() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF srcloc) {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF srcloc) {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
   
+  @Override
   public void remove() {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
   }
 
+  @Override
   public TopicIF getReifier() {
     throw new PhantomAccessException(MSG_CANNOT_ACCESS);
 	}
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new PhantomAccessException(MSG_CANNOT_MODIFY);
 	}

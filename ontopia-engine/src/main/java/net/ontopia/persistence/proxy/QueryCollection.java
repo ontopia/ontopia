@@ -50,14 +50,17 @@ public class QueryCollection<E> extends AbstractCollection<E> {
     this.params_iterator = params_iterator;
   }
 
+  @Override
   public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
@@ -72,10 +75,12 @@ public class QueryCollection<E> extends AbstractCollection<E> {
   //!   throw new UnsupportedOperationException("Not yet supported.");
   //! }
   
+  @Override
   public boolean isEmpty() {
     return (size() == 0);
   }
   
+  @Override
   public Iterator<E> iterator() {
     QueryResultIF result = null;
     try {
@@ -88,18 +93,22 @@ public class QueryCollection<E> extends AbstractCollection<E> {
     }
   }
   
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public int size() {
     QueryResultIF result = null;
     try {
@@ -115,6 +124,7 @@ public class QueryCollection<E> extends AbstractCollection<E> {
     }
   }
 
+  @Override
   public Object[] toArray() {
     List result = new ArrayList();
     Iterator it = iterator();
@@ -124,6 +134,7 @@ public class QueryCollection<E> extends AbstractCollection<E> {
     return result.toArray();
   }
   
+  @Override
   public <T> T[] toArray(T a[]) {
     List<E> result = new ArrayList<E>();
     Iterator<E> it = iterator();

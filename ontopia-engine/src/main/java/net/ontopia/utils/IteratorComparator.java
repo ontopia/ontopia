@@ -36,6 +36,7 @@ public class IteratorComparator<T> implements Comparator<Iterator<T>> {
     this.elementComparator = elementComparator;
   }
   
+  @Override
   public int compare(Iterator<T> it1, Iterator<T> it2) {
     int retVal = 0;
     

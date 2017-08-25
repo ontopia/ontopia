@@ -175,11 +175,13 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     }
   }
 
+    @Override
   public Connection requestConnection() throws SQLException {
     log.debug("Requesting connection from dbcp pool.");
     return datasource.getConnection();
   }
 
+    @Override
   public void close() {
     // Release generic pool
     try {
@@ -214,28 +216,33 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     // PoolableObjectFactory implementation
 
+    @Override
     public Object makeObject() throws Exception {
       Object o = super.makeObject();
       objectsCreated++;
       return o;
     }
 
+    @Override
     public void destroyObject(Object obj) throws Exception {
       super.destroyObject(obj);
       objectsDestroyed++;
     }
 
+    @Override
     public boolean validateObject(Object obj) {
       boolean result = super.validateObject(obj);
       objectsValidated++;
       return result;
     }
 
+    @Override
     public void activateObject(Object obj) throws Exception {
       super.activateObject(obj);
       objectsActivated++;
     }
 
+    @Override
     public void passivateObject(Object obj) throws Exception {
       super.passivateObject(obj);
       objectsPassivated++;

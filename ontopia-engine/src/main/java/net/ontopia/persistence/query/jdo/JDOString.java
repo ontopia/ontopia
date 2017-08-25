@@ -37,6 +37,7 @@ public class JDOString implements JDOValueIF {
     this.value = value;
   }
 
+  @Override
   public int getType() {
     return STRING;
   }
@@ -45,10 +46,12 @@ public class JDOString implements JDOValueIF {
     return value;
   }
   
+  @Override
   public int hashCode() {
     return value.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOString) {
@@ -58,10 +61,12 @@ public class JDOString implements JDOValueIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return "\"" + value + "\"";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     // no-op
   }

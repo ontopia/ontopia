@@ -41,15 +41,18 @@ public class InvalidXTM21ReaderTestCase extends AbstractCanonicalTests {
 
   // --- Canonicalization type methods
 
+  @Override
   protected void canonicalize(URL infile, File outfile)
     throws IOException {
     // not used, since we are not canonicalizing
   }
 
+  @Override
   protected String getFileDirectory() {
     return "invalid";
   }
 
+  @Override
   protected String getOutFilename(String infile) {
     return infile + ".cxtm";
   }
@@ -63,6 +66,7 @@ public class InvalidXTM21ReaderTestCase extends AbstractCanonicalTests {
       this._testdataDirectory = testdataDirectory;
     }
 
+  @Override
     public void testFile() throws IOException {
       XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(false);

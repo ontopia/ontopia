@@ -71,6 +71,7 @@ public interface VariantNameIF extends NameIF, ScopedIF, ReifiableIF {
    * method will return null if the length
    * of the value exceeds the supported maximum size.
    */
+  @Override
   String getValue();
 
   /**
@@ -87,6 +88,7 @@ public interface VariantNameIF extends NameIF, ScopedIF, ReifiableIF {
    * DataTypes.TYPE_STRING)</code>. This method is here primarily for
    * backwards compatibility.
    */
+  @Override
   void setValue(String value);
   
   /**

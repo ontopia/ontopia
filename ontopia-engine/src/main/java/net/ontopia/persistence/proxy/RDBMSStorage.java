@@ -137,10 +137,15 @@ public class RDBMSStorage implements StorageIF {
   private final Set<AbstractTransaction> transactions = Collections.newSetFromMap(new WeakHashMap<AbstractTransaction, Boolean>());
 
   private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
+    @Override
     public Class<?> getType() { throw new UnsupportedOperationException(); }
+    @Override
     public int getWidth() { throw new UnsupportedOperationException(); }
+    @Override
     public Object getKey(int index) { throw new UnsupportedOperationException(); }
+    @Override
     public Object createInstance() throws Exception { throw new UnsupportedOperationException(); }
+    @Override
     public Object clone() { throw new UnsupportedOperationException(); }
   };
   
@@ -363,6 +368,7 @@ public class RDBMSStorage implements StorageIF {
       this.cluster.join();
   }
   
+  @Override
   public RDBMSMapping getMapping() {
     return mapping;
   }
@@ -375,10 +381,12 @@ public class RDBMSStorage implements StorageIF {
     return keygen.generateKey(type);
   }
   
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }
   
+  @Override
   public String getProperty(String property) {
     return properties.get(property);
   }
@@ -397,6 +405,7 @@ public class RDBMSStorage implements StorageIF {
     return new RDBMSAccess(id, this, readonly);
   }
 
+  @Override
   public TransactionIF createTransaction(boolean readonly) {
     AbstractTransaction transaction;
     if (readonly)
@@ -411,10 +420,12 @@ public class RDBMSStorage implements StorageIF {
     return transaction;
   }
   
+  @Override
   public boolean isSharedCache() {
     return (scache != null);
   }
   
+  @Override
   public StorageCacheIF getStorageCache() {
     return scache;
   }
@@ -433,6 +444,7 @@ public class RDBMSStorage implements StorageIF {
     return platforms;
   }
   
+  @Override
   public void close() {
     if (cluster != null) {
       try {
@@ -451,6 +463,7 @@ public class RDBMSStorage implements StorageIF {
   // Cluster
   // -----------------------------------------------------------------------------
 
+  @Override
   public void notifyCluster() {
     if (cluster != null) cluster.flush();
   }
@@ -466,6 +479,7 @@ public class RDBMSStorage implements StorageIF {
   // NOTE: query caches are indexed by name spaces. There is typically
   // one query cache instance per topicmap id + query name.
   
+  @Override
   public synchronized EvictableIF getHelperObject(int identifier, IdentityIF namespace) {
     if (isSharedCache()) {
       // get query cache map for namespace 

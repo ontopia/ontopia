@@ -74,6 +74,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     }
   }
     
+  @Override
   public DocumentIF generate(AssociationIF assoc) {
     // Create document
     DocumentIF doc = createDocument();
@@ -82,6 +83,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     return doc;
   }
   
+  @Override
   public DocumentIF generate(AssociationRoleIF assocrl) {
     // Create document
     DocumentIF doc = createDocument();
@@ -90,6 +92,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     return doc;
   }
 
+  @Override
   public DocumentIF generate(TopicNameIF basename) {
     // Create document
     DocumentIF doc = createDocument();
@@ -99,6 +102,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     return doc;
   }
 
+  @Override
   public DocumentIF generate(OccurrenceIF occur) {
     // Create document
     DocumentIF doc = createDocument();
@@ -111,6 +115,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     return doc;
   }
 
+  @Override
   public DocumentIF generate(VariantNameIF variant) {
     // Create document
     DocumentIF doc = createDocument();
@@ -123,6 +128,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     return doc;
   }
 
+  @Override
   public DocumentIF generate(TopicIF topic) {
     // Create document
     DocumentIF doc = createDocument();
@@ -131,6 +137,7 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     return doc;
   }
   
+  @Override
   public DocumentIF generate(TopicMapIF topicmap) {
     // Create document
     DocumentIF doc = createDocument();

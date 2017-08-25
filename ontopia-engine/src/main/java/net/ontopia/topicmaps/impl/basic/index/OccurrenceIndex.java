@@ -72,6 +72,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   protected static final Comparator<String> STRING_PREFIX_COMPARATOR = new Comparator<String>() {
       // NOTE: need this comparator because otherwise we will get
       // null pointer exceptions when comparing with null values.
+      @Override
       public int compare(String s1, String s2) {
         if (s1 == null) {
           return s2 == null ? 0 : -1;
@@ -86,6 +87,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   // OccurrenceIndexIF
   // ----------------------------------------------------------------------------
   
+  @Override
   public Collection<OccurrenceIF> getOccurrences(String value) {
     return extractExactValues(occurs, value);
   }
@@ -96,6 +98,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     return CollectionUtils.select(extractExactValues(occurs, value), new TypedPredicate(occurrenceType));
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype) {
     return CollectionUtils.select(extractExactValues(occurs, value), new DataTypePredicate(datatype));
   }
@@ -106,18 +109,22 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
             new AndPredicate<>(new DataTypePredicate(datatype), new TypedPredicate(occurrenceType)));
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix) {
     return extractPrefixValues(occurs, prefix);
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, final LocatorIF datatype) {
     return CollectionUtils.select(extractPrefixValues(occurs, prefix), new DataTypePredicate(datatype));
   }
 
+  @Override
   public Iterator<String> getValuesGreaterThanOrEqual(String value) {
     return occurs.tailMap(value).keySet().iterator();
   }
 
+  @Override
   public Iterator<String> getValuesSmallerThanOrEqual(String value) {
     return occurs.headMap(value, true).navigableKeySet().descendingIterator();
   }
@@ -182,6 +189,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     OccurrenceIF_setValue(CollectionSortedMap<String, OccurrenceIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(OccurrenceIF object, String event, String new_value, String old_value) {
       objects.move(object, old_value, new_value);
     }
@@ -195,6 +203,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     OccurrenceIF_added(CollectionSortedMap<String, OccurrenceIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, OccurrenceIF new_value, OccurrenceIF old_value) {
       objects.add(new_value.getValue(), new_value);
     }
@@ -207,6 +216,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     OccurrenceIF_removed(CollectionSortedMap<String, OccurrenceIF> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, OccurrenceIF new_value, OccurrenceIF old_value) {
       objects.remove(old_value.getValue(), old_value);
     }

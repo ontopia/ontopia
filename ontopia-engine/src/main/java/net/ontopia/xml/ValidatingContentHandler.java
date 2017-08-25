@@ -63,54 +63,65 @@ public class ValidatingContentHandler implements ContentHandler {
     }
   }
   
+  @Override
   public void startDocument () throws SAXException {
     validator.startDocument();
     child.startDocument();
   }
   
+  @Override
   public void endDocument () throws SAXException {
     validator.endDocument();
     child.endDocument();    
   }
   
+  @Override
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     validator.startElement(uri, name, qName, atts);
     child.startElement(uri, name, qName, atts);
   }
   
+  @Override
   public void characters (char ch[], int start, int length) throws SAXException {
     validator.characters(ch, start, length);
     child.characters(ch, start, length);
   }
   
+  @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
     validator.endElement(uri, name, qName);
     child.endElement(uri, name, qName);
   }
   
+  @Override
   public void startPrefixMapping(java.lang.String prefix, java.lang.String uri)  throws SAXException {
     validator.startPrefixMapping(prefix, uri);
     child.startPrefixMapping(prefix, uri);
   }
   
+  @Override
   public void endPrefixMapping(java.lang.String prefix) throws SAXException {
     validator.endPrefixMapping(prefix);
     child.endPrefixMapping(prefix);
   }
 
+  @Override
   public void skippedEntity(String entityname) {
     // no-op
   }
 
+  @Override
   public void processingInstruction(String target, String data) {
     // no-op
   }
 
+  @Override
   public void ignorableWhitespace(char ch[], int start, int length) throws SAXException {
     validator.characters(ch, start, length);
     child.characters(ch, start, length);
   }
 
+  @Override
   public void setDocumentLocator(Locator docloc) {
     validator.setDocumentLocator(docloc);
     child.setDocumentLocator(docloc);

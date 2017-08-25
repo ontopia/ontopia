@@ -211,18 +211,22 @@ public abstract class AbstractQueryProcessor {
   static class NotPredicate implements BasicPredicateIF {
     private static final String MSG_INTERNAL_ERROR = "INTERNAL ERROR";
     
+    @Override
     public String getName() {
       throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
 
+    @Override
     public String getSignature() {
       throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
 
+    @Override
     public int getCost(boolean[] boundparam) {
       throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
   
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
       throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);

@@ -76,6 +76,7 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     max_value = -1;
   }
   
+  @Override
   public synchronized IdentityIF generateKey(Class<?> type) {
     
     // If we've used up the reserved interval fetch a new one from the database.

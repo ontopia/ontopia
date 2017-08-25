@@ -230,15 +230,18 @@ public class DatabaseProjectReader {
       keepContentsOf("drop-action");
     }
 
+    @Override
     public void startDocument() {
       project = new Project();
       info = new HashMap<String, Object>();
     }
 
+    @Override
     public void endDocument() {
       info = null;
     }
     
+    @Override
     public void startElement(String uri, String name, String qname, Attributes atts) throws SAXException {
       super.startElement(uri, name, qname, atts);
 
@@ -421,6 +424,7 @@ public class DatabaseProjectReader {
       }
     }
     
+    @Override
     public void endElement(String uri, String name, String qname) throws SAXException {
       super.endElement(uri, name, qname);
 

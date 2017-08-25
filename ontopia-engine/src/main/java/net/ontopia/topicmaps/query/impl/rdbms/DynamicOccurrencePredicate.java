@@ -46,16 +46,19 @@ public class DynamicOccurrencePredicate
 
   // --- JDOPredicateIF implementation
 
+  @Override
   public boolean isRecursive() {
     return false;
   }
 
+  @Override
   public void prescan(QueryBuilder builder, List arguments) {
     // variable as second argument is an unsupported variabel
     if (arguments.get(1) instanceof Variable)
       builder.addUnsupportedVariable((Variable)arguments.get(1));
   }
 
+  @Override
   public boolean buildQuery(QueryBuilder builder, List expressions, List arguments)
     throws InvalidQueryException {
 

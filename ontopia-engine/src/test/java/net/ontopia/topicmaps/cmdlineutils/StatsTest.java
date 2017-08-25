@@ -30,6 +30,7 @@ public class StatsTest extends CommandLineUtilsTest {
     super(name);
   }
 
+  @Override
   protected void setUp() {
 
     XTMTopicMapReader reader  = null;
@@ -43,6 +44,7 @@ public class StatsTest extends CommandLineUtilsTest {
 
   }
 
+  @Override
   protected void tearDown() {
     tm = null;
   }

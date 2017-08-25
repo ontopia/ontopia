@@ -92,6 +92,7 @@ public class TopicEvents implements EventListenerIF {
     emanager.addListener(this, TopicIF.EVENT_MODIFIED);
   }
   
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (TopicIF.EVENT_MODIFIED.equals(event)) {
       TopicIF topic = (TopicIF)object;

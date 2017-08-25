@@ -35,28 +35,34 @@ public class DirectInstanceOfPredicate extends AbstractInstanceOfPredicate {
     super(topicmap);
   }
   
+  @Override
   public String getName() {
     return "direct-instance-of";
   }
 
   // --- Data interface implementation
 
+  @Override
   protected void start() {
     // no-op
   }
   
+  @Override
   protected Collection getClasses(TopicIF instance) {
     return instance.getTypes();
   }
 
+  @Override
   protected Collection getInstances(TopicIF klass) {
     return index.getTopics(klass);
   }
 
+  @Override
   protected Collection getTypes() {
     return index.getTopicTypes();
   }
 
+  @Override
   protected Collection getSupertypes(TopicIF type) {
     return Collections.singleton(type);
   }  

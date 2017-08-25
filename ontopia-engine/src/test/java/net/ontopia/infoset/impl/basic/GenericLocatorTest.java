@@ -31,10 +31,12 @@ public class GenericLocatorTest extends AbstractLocatorTest {
     super(name);
   }
 
+  @Override
   protected LocatorIF createLocator() {
     return createLocator(NOTATION, ADDRESS);
   }
 
+  @Override
   protected LocatorIF createLocator(String notation, String address) {
     return new GenericLocator(notation, address);
   }

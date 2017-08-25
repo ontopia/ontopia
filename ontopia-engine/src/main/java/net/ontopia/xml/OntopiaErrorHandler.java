@@ -40,6 +40,7 @@ public class OntopiaErrorHandler implements ErrorHandler {
    * @param exception <code>SAXParseException</code> that occurred.
    * @throws <code>SAXException</code> when things go wrong
    */
+  @Override
   public void warning(SAXParseException exception)
     throws SAXException {
  
@@ -61,6 +62,7 @@ public class OntopiaErrorHandler implements ErrorHandler {
    * @param exception <code>SAXParseException</code> that occurred.
    * @throws <code>SAXException</code> when things go wrong
    */
+  @Override
   public void error(SAXParseException exception)
     throws SAXException {
  
@@ -82,6 +84,7 @@ public class OntopiaErrorHandler implements ErrorHandler {
    * @param exception <code>SAXParseException</code> that occurred.
    * @throws <code>SAXException</code> when things go wrong
    */
+  @Override
   public void fatalError(SAXParseException exception)
     throws SAXException {
  

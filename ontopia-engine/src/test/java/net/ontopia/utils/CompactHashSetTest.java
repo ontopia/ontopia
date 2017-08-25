@@ -37,6 +37,7 @@ public class CompactHashSetTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     set = new CompactHashSet();
   }
@@ -681,14 +682,17 @@ public class CompactHashSetTest extends TestCase {
       this.name = name;
     }
     
+    @Override
     public int hashCode() {
       return 0;
     }
 
+    @Override
     public String toString() {
       return "<ObjectWithStupidHashCode " + name + ">";
     }
 
+    @Override
     public boolean equals(Object other) {
       return ((ObjectWithStupidHashCode) other).name.equals(name);
     }

@@ -46,6 +46,7 @@ public class NameGrabberTest extends TestCase {
     super(name);
   }
   
+  @Override
   public void setUp() throws MalformedURLException {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     TopicMapBuilderIF builder = store.getTopicMap().getBuilder();

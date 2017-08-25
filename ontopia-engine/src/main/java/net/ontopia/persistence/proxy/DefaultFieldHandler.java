@@ -52,10 +52,12 @@ public class DefaultFieldHandler implements FieldHandlerIF {
     this.sql_type = sql_type;
   }
   
+  @Override
   public int getColumnCount() {
     return 1;
   }
   
+  @Override
   public boolean isIdentityField() {
     return false;
   }

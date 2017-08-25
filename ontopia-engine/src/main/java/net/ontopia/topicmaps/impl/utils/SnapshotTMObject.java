@@ -46,30 +46,37 @@ public abstract class SnapshotTMObject implements TMObjectIF {
   // TMObjectIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public String getObjectId() {
     return objectId;
   }
   
+  @Override
   public boolean isReadOnly() {
     return true;
   }
   
+  @Override
   public TopicMapIF getTopicMap() {
     return null;
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     return (srclocs == null ? Collections.<LocatorIF>emptyList() : srclocs);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF locator) throws ConstraintViolationException {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF locator) {
     throw new ReadOnlyException();
   }
   
+  @Override
   public void remove() {
     throw new ReadOnlyException();
   }

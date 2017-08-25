@@ -435,6 +435,7 @@ public class FieldDescriptor {
     this.collection_class = collection_class;
   }
 
+  @Override
   public String toString() {
     return "<FieldDescriptor " + getName() + ">";
   }

@@ -36,6 +36,7 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return TopicName.fields.length;
   }
@@ -44,10 +45,12 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return TopicName.CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : TopicName.CLASS_INDICATOR + id.getKey(0));
   }
@@ -56,18 +59,22 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // NameIF implementation
   // ---------------------------------------------------------------------------
   
+  @Override
   public TopicIF getTopic() {
     return this.<TopicIF>loadField(TopicName.LF_topic);
   }
   
+  @Override
   public String getValue() {
     return this.<String>loadField(TopicName.LF_value);    
   }
   
+  @Override
   public void setValue(String value) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public Collection<VariantNameIF> getVariants() {
     return this.<VariantNameIF>loadCollectionField(TopicName.LF_variants);
   }
@@ -84,14 +91,17 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(TopicName.LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
@@ -100,10 +110,12 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return this.<TopicIF>loadField(TopicName.LF_type);
   }
 
+  @Override
   public void setType(TopicIF type) {
     throw new ReadOnlyException();
   }
@@ -112,10 +124,12 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(TopicName.LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
   }
@@ -124,6 +138,7 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyTopicName", (TopicNameIF)this);
   }

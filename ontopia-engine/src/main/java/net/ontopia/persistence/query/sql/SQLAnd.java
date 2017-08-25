@@ -43,6 +43,7 @@ public class SQLAnd implements SQLExpressionIF {
     this.expressions = expressions;
   }
 
+  @Override
   public int getType() {
     return AND;
   }
@@ -55,6 +56,7 @@ public class SQLAnd implements SQLExpressionIF {
     this.expressions = expressions;
   }
 
+  @Override
   public String toString() {
     return "(" + StringUtils.join(expressions, " and ") + ")";
   }

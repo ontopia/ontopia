@@ -108,6 +108,7 @@ public interface QueryResultIF extends AutoCloseable {
    *
    * @since 1.3.4
    */
+  @Override
   void close();
   
 }

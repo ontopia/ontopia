@@ -51,19 +51,23 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
   // TMObjectIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public String getObjectId() {
     return oid;
   }
 
+  @Override
   public boolean isReadOnly() {
     if (!isConnected()) return true;
     return topicmap.getStore().isReadOnly();
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return isConnected() ? topicmap : null;
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     if (sources == null)
       return Collections.emptySet();
@@ -71,6 +75,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
       return Collections.unmodifiableSet(sources);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
     if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
@@ -86,6 +91,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
     sources.add(source_locator);
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
     if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
     // Notify topic map

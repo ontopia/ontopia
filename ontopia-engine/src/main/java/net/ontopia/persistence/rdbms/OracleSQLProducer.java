@@ -38,6 +38,7 @@ public class OracleSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
   
+  @Override
   protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
     statements.add(new StringBuilder()
       .append("drop table ")
@@ -49,10 +50,12 @@ public class OracleSQLProducer extends GenericSQLProducer {
 
   // -- flags
 
+  @Override
   protected boolean supportsForeignKeys() {
     return true;
   }
 
+  @Override
   protected boolean supportsNullInColumnDefinition() {
     return false;
   }

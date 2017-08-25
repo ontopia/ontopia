@@ -47,10 +47,12 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
   /// context management
 
+  @Override
   public void setUp() {
     QueryMatches.initialSize = 1;
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

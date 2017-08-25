@@ -86,18 +86,22 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
     this.resourceName = resourceName;
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -246,12 +250,14 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
 
   // ----
 
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (reflist == null)
       refresh();
     return reflist;
   }
 
+  @Override
   public synchronized void refresh() {
     if (resourceName == null)
       throw new OntopiaRuntimeException(
@@ -355,14 +361,17 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
     // Do nothing
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException(
         "Can not create a new topic map referenced by a ReferenceTopicMapSource.");

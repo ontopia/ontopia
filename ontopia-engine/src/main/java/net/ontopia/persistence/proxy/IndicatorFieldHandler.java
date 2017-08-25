@@ -49,6 +49,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     this.indicators = indicators;
   }
   
+  @Override
   public int getColumnCount() {
     if (common_handler == null)
       // Register common handler by pulling out first indicated class.
@@ -56,6 +57,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     return 1 + common_handler.getColumnCount();
   }
   
+  @Override
   public boolean isIdentityField() {
     return true;
   }

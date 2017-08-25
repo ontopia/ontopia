@@ -32,6 +32,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 public class EqualsFilter extends FilterPredicate {
 
+  @Override
   public boolean filter(Object[] objects) throws InvalidQueryException {
     // return true if  all objects are equal.
     if (objects.length > 1) {

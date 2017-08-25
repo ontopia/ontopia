@@ -196,6 +196,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.added
    */
   class AssociationRoleAddedHandler implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF added = (AssociationRoleIF) new_value;
@@ -214,6 +215,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.removed
    */
   class AssociationRoleRemovedHandler implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF removed = (AssociationRoleIF) old_value;
@@ -232,6 +234,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.setType
    */
   class EH01 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF arole = (AssociationRoleIF) object;
@@ -251,6 +254,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.setPlayer
    */
   class EH02 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF arole = (AssociationRoleIF) object;

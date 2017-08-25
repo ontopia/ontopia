@@ -180,6 +180,7 @@ public class TologQuery {
     private boolean debug;
     private boolean timeit;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 't') trace = true;
@@ -189,10 +190,12 @@ public class TologQuery {
   }
 
   private static class OutQueryTracer extends QueryTracer.TracePrinter {
+    @Override
     public boolean isEnabled() {
       return true;
     }
 
+    @Override
     public void output(String message) {
       System.out.println(message);
       System.out.flush();

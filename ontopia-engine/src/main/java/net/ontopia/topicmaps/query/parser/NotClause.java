@@ -48,6 +48,7 @@ public class NotClause extends AbstractClause {
     return clauses;
   }
 
+  @Override
   public Collection getAllVariables() {
     Collection vars = new HashSet();
 
@@ -59,6 +60,7 @@ public class NotClause extends AbstractClause {
     return vars;
   }
 
+  @Override
   public Collection getAllLiterals() {
     Collection literals = new HashSet();
 
@@ -70,6 +72,7 @@ public class NotClause extends AbstractClause {
     return literals;
   }
   
+  @Override
   public List getArguments() {
     Collection items = new HashSet();
 
@@ -83,6 +86,7 @@ public class NotClause extends AbstractClause {
     return list;
   }
   
+  @Override
   public String toString() {
     return "not(" + StringUtils.join(clauses, ", ") + ")";
   }

@@ -85,11 +85,13 @@ public class AttachManager extends AbstractAttachManager {
   // Attach/detach handler initializer methods
   // -----------------------------------------------------------------------------
 
+  @Override
   public AttachHandlerIF getAttachHandler(Class<?> klass) {
     if (!ahandlers.containsKey(klass)) throw new OntopiaRuntimeException("AttachHandler missing: " + klass);
     return ahandlers.get(klass);
   }
   
+  @Override
   public DetachHandlerIF getDetachHandler(Class<?> klass) {
     if (!dhandlers.containsKey(klass)) throw new OntopiaRuntimeException("DetachHandler missing: " + klass);
     return dhandlers.get(klass);
@@ -107,18 +109,22 @@ public class AttachManager extends AbstractAttachManager {
     AttachHandler(Collection<Object> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       // Object has been added so we should register it with the unit of work.
       // log.debug("Adding object: " + new_value + " to parent " + object);
       // Object is no longer detached.
       objects.remove(new_value);
     }
+    @Override
     public boolean isAttached(Object object) {
       throw new UnsupportedOperationException("");
     }
+    @Override
     public Collection<Object> getAttached() {
       throw new UnsupportedOperationException("");
     }
+    @Override
     public void refresh() {
       objects.clear();
     }
@@ -131,18 +137,22 @@ public class AttachManager extends AbstractAttachManager {
     DetachHandler(Collection<Object> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       // Object has been added so we should register it with the unit of work.
       // log.debug("Removing object " + old_value + " from parent " + object);
       // Put object on list of detached objects.
       objects.add(old_value);
     }
+    @Override
     public boolean isDetached(Object object) {
       return objects.contains(object);
     }
+    @Override
     public Collection<Object> getDetached() {
       return objects;
     }
+    @Override
     public void refresh() {
       objects.clear();
     }

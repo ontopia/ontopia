@@ -57,6 +57,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     super(name);
   }
   
+  @Override
   public void setUp() throws Exception {
     // get a new topic map object from the factory.
     factory = getFactory();
@@ -116,6 +117,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     }
   }
 
+  @Override
   public void tearDown() {
     // Inform the factory that the topic map is not needed anymore.
     topicmap.getStore().close();
@@ -138,10 +140,12 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
       this.new_value = new_value;
       this.old_value = old_value;
     }
+    @Override
     public String toString() {
         return event + " " + object;
     }
 
+    @Override
     public boolean equals(Object o) {
       if (o instanceof Event) {
         Event oevent = (Event)o;
@@ -155,6 +159,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   protected class TesterListener implements EventListenerIF {
     private List<Event> seenEvents = new ArrayList<Event>();
 
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       seenEvents.add(new Event(object, event, new_value, old_value));
     }

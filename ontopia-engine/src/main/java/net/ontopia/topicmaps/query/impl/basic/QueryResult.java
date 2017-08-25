@@ -61,15 +61,18 @@ public class QueryResult implements QueryResultIF {
 
   // --- QueryResultIF implementation
     
+  @Override
   public boolean next() {
     current++;
     return current < last;
   }
 
+  @Override
   public Object getValue(int ix) {
     return matches.data[current][ix];
   }
   
+  @Override
   public Object getValue(String colname) {
     int index = matches.getVariableIndex(colname);
     if (index < 0)
@@ -77,14 +80,17 @@ public class QueryResult implements QueryResultIF {
     return matches.data[current][index];
   }
 
+  @Override
   public int getWidth() {
     return matches.colcount;
   }
 
+  @Override
   public int getIndex(String colname) {
     return matches.getVariableIndex(colname);
   }
 
+  @Override
   public String[] getColumnNames() {
     String[] names = new String[matches.colcount];
     for (int ix = 0; ix < matches.colcount; ix++)
@@ -92,20 +98,24 @@ public class QueryResult implements QueryResultIF {
     return names;
   }
 
+  @Override
   public String getColumnName(int ix) {
     return ((Variable)matches.columnDefinitions[ix]).getName();
   }
 
+  @Override
   public Object[] getValues() {
     return matches.data[current];
   }
   
+  @Override
   public Object[] getValues(Object[] values) {
     Object[] row = matches.data[current];
     System.arraycopy(row, 0, values, 0, row.length);
     return values;
   }
 
+  @Override
   public void close() {
     matches = null; // lets the (potentially big) QueryMatches object be GC-ed
   }

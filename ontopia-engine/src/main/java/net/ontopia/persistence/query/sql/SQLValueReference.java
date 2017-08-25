@@ -37,54 +37,67 @@ public class SQLValueReference implements SQLValueIF {
     this.refvalue = refvalue;
   }
   
+  @Override
   public int getType() {
     return refvalue.getType();
   }
 
+  @Override
   public int getArity() {
     return refvalue.getArity();
   }
 
+  @Override
   public int getValueArity() {
     return refvalue.getArity();
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return true;
   }
   
+  @Override
   public SQLValueIF getReference() {
     return refvalue;
   }
 
+  @Override
   public Class getValueType() {    
     return refvalue.getValueType();
   }
 
+  @Override
   public void setValueType(Class vtype) {
     refvalue.setValueType(vtype);
   }
 
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return refvalue.getFieldHandler();
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     refvalue.setFieldHandler(fhandler);
   }
   
+  @Override
   public int hashCode() {
     return refvalue.hashCode();
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLValueReference) {
       SQLValueReference other = (SQLValueReference)obj;
@@ -94,6 +107,7 @@ public class SQLValueReference implements SQLValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
     return new StringBuilder("ref:")
         .append('(')

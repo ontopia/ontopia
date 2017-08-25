@@ -59,6 +59,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     this.queue = new ConcurrentLinkedQueue<JGroupsEvent>();
   }
   
+  @Override
   public synchronized void join() {   
     try {
       String joinMessage = "Joining JGroups cluster: '" + clusterId + "'";
@@ -92,6 +93,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     }
   }
   
+  @Override
   public synchronized void leave() {
     log.info("Leaving cluster: '" + clusterId + "'");
     flush();
@@ -101,6 +103,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     }
   }
   
+  @Override
   public void evictIdentity(IdentityIF identity) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_IDENTITY_EVICT;
@@ -108,6 +111,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
   
+  @Override
   public void evictFields(IdentityIF identity) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_FIELDS_EVICT;
@@ -115,6 +119,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
   
+  @Override
   public void evictField(IdentityIF identity, int field) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_FIELD_EVICT;
@@ -123,12 +128,14 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
 
+  @Override
   public void clearDatacache() {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_CLEAR;
     queue(e);
   }
   
+  @Override
   public void evictCache(IdentityIF namespace, int cacheType, Object key) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = cacheType; // event type is same as cache type
@@ -137,6 +144,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
   
+  @Override
   public void evictCache(IdentityIF namespace, int cacheType, Collection keys) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = cacheType; // event type is same as cache type
@@ -145,6 +153,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
 
+  @Override
   public void clearCache(IdentityIF namespace, int cacheType) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = cacheType + 1; // event type is same as cache type + 1
@@ -160,6 +169,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
   // Event I/O
   // -----------------------------------------------------------------------------
 
+  @Override
   public synchronized void flush() {
     // retrieve all pending events from event queue
     JGroupsEvent o = queue.poll();

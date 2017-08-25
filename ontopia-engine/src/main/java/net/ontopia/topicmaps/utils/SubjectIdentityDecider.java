@@ -61,6 +61,7 @@ public class SubjectIdentityDecider<T extends TMObjectIF> implements DeciderIF<T
    * identifier (directly or indirectly)
    */ 
 
+  @Override
   public boolean ok(T object) {
     if (object instanceof TopicIF) {
       TopicIF topic = (TopicIF) object;

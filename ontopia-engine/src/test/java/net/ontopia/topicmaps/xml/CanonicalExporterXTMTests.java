@@ -43,6 +43,7 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
   @Parameters
   public static List generateTests() {
     ResourcesFilterIF filter = new ResourcesFilterIF() {
+      @Override
       public boolean ok(String resourcePath) {
         // Ignore importInto-specific file.
         if (resourcePath.endsWith("multiple-tms-read.xtm") ||
@@ -62,6 +63,7 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
 
   // --- Canonicalization type methods
 
+  @Override
   protected TopicMapIF exportAndReread(TopicMapIF topicmap, File outfile)
     throws IOException {
     // First we export

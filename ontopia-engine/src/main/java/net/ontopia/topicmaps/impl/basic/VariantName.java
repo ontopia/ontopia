@@ -67,6 +67,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // TopicNameIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public TopicIF getTopic() {
     if (parent == null)
       return null;
@@ -74,6 +75,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       return (TopicIF)((TopicName)parent).parent;
   }
 
+  @Override
   public TopicNameIF getTopicName() {
     return (TopicNameIF)parent;
   }
@@ -98,6 +100,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     this.parent = parent;
   }
 
+  @Override
   public LocatorIF getDataType() {
     return datatype;    
   }
@@ -108,14 +111,17 @@ public class VariantName extends TMObject implements VariantNameIF {
     this.datatype = LocatorInterningTable.intern(datatype);
   }
   
+  @Override
   public String getValue() {
     return value;
   }
   
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     if (value == null) throw new NullPointerException("Variant value must not be null.");
     if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
@@ -127,10 +133,12 @@ public class VariantName extends TMObject implements VariantNameIF {
     this.value = value;
   }
 
+  @Override
   public Reader getReader() {
     return (value == null ? null : new StringReader(value));
   }
   
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     if (value == null) throw new NullPointerException("Variant value must not be null.");
     if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
@@ -143,12 +151,14 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
   
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     if (locator == null) throw new NullPointerException("Variant locator must not be null.");
     if (!"URI".equals(locator.getNotation()))
@@ -156,6 +166,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
+  @Override
   public long getLength() {
     return (value == null ? 0 : value.length());
   }
@@ -164,10 +175,12 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
     return scope;
   }
+  @Override
   public void addTheme(TopicIF theme) {
     _addTheme(theme, true);
   }
@@ -179,6 +192,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     // Add theme to scope
     scope = topicmap.setpool.add(scope, theme, true);
   }
+  @Override
   public void removeTheme(TopicIF theme) {
     _removeTheme(theme, true);
   }
@@ -196,6 +210,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
 
+  @Override
   public void remove() {
     if (parent != null) {
       DeletionUtils.removeDependencies(this);
@@ -207,10 +222,12 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ReifiableIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     if (DuplicateReificationException.check(this, _reifier)) { return; }
@@ -227,11 +244,13 @@ public class VariantName extends TMObject implements VariantNameIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
     if (parent == null || parent.parent == null) return;
     else topicmap.processEvent(this, event, new_value, old_value);
   }
 
+  @Override
   protected boolean isConnected() {
     if (parent != null && parent.parent != null)
       return true;
@@ -239,6 +258,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       return false;
   }
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.VariantName", (VariantNameIF)this);
   }

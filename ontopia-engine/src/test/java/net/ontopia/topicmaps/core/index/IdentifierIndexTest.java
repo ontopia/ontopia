@@ -37,6 +37,7 @@ public abstract class IdentifierIndexTest extends AbstractIndexTest {
     super(name);
   }
 
+  @Override
   protected void setUp() throws Exception {
     ix = (IdentifierIndexIF) super.setUp("IdentifierIndexIF");
   }

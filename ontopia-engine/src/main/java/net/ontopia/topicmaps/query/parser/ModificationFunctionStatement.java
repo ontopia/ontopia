@@ -58,6 +58,7 @@ public abstract class ModificationFunctionStatement
     return funcname + "(" + toStringLitlist() + ")";
   }
 
+  @Override
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
     if (funcname == null)

@@ -32,6 +32,7 @@ public class SQLServerSQLGenerator extends GenericSQLGenerator {
     super(properties);
   }
 
+  @Override
   protected void whereSQLFalse(SQLFalse expr, StringBuilder sql, BuildInfo info) {
     sql.append("1 = 2");
   }

@@ -42,6 +42,7 @@ public class JDOCollection implements JDOValueIF {
     this.eltype = eltype;
   }
 
+  @Override
   public int getType() {
     return COLLECTION;
   }
@@ -58,10 +59,12 @@ public class JDOCollection implements JDOValueIF {
     return coll;
   }
   
+  @Override
   public int hashCode() {
     return coll.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOCollection) {
@@ -71,10 +74,12 @@ public class JDOCollection implements JDOValueIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return coll.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     // no-op
   }

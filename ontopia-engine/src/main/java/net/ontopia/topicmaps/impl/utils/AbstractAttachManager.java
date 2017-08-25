@@ -181,6 +181,7 @@ public abstract class AbstractAttachManager {
   public interface AttachHandlerIF extends EventListenerIF, CachedIF {
     boolean isAttached(Object object);
     Collection<Object> getAttached();
+    @Override
     void refresh();
   }
   
@@ -190,6 +191,7 @@ public abstract class AbstractAttachManager {
   public interface DetachHandlerIF extends EventListenerIF, CachedIF {
     boolean isDetached(Object object);
     Collection<Object> getDetached();
+    @Override
     void refresh();
   }
 }

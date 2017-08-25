@@ -74,6 +74,7 @@ public class Association extends TMObject implements AssociationIF {
     this.parent = parent;
   }
 
+  @Override
   public Collection<TopicIF> getRoleTypes() {
     Collection<TopicIF> result = topicmap.cfactory.makeSmallSet();
     synchronized (roles) {    
@@ -88,6 +89,7 @@ public class Association extends TMObject implements AssociationIF {
     return result;
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null) throw new NullPointerException("Role type must not be null.");
     CrossTopicMapException.check(roletype, this);
@@ -103,6 +105,7 @@ public class Association extends TMObject implements AssociationIF {
     return result;
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     return Collections.unmodifiableSet(roles);
   }
@@ -148,6 +151,7 @@ public class Association extends TMObject implements AssociationIF {
     assoc_role.setAssociation(null);
   }
 
+  @Override
   public void remove() {
     if (topicmap != null) {
       DeletionUtils.removeDependencies(this);
@@ -159,11 +163,13 @@ public class Association extends TMObject implements AssociationIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
     return (scope == null ? Collections.<TopicIF>emptyList() : scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -177,6 +183,7 @@ public class Association extends TMObject implements AssociationIF {
     scope = topicmap.setpool.add(scope, theme, true);
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -193,10 +200,12 @@ public class Association extends TMObject implements AssociationIF {
   // TypedIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return type;
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null) throw new NullPointerException("Association type must not be null.");
     CrossTopicMapException.check(type, this);
@@ -209,10 +218,12 @@ public class Association extends TMObject implements AssociationIF {
   // ReifiableIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     if (DuplicateReificationException.check(this, _reifier)) { return; }
@@ -229,6 +240,7 @@ public class Association extends TMObject implements AssociationIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
   
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.Association", (AssociationIF)this);
   }

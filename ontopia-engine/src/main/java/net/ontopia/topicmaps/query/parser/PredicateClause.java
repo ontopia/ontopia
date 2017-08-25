@@ -49,6 +49,7 @@ public class PredicateClause extends AbstractClause {
     this.arguments = arguments;
   }
 
+  @Override
   public List getArguments() {
     return arguments;
   }
@@ -66,6 +67,7 @@ public class PredicateClause extends AbstractClause {
     arguments.add(object);
   }
 
+  @Override
   public String toString() {
     StringBuilder buf = new StringBuilder(predicate.getName() + "(");
     for (int ix = 0; ix < arguments.size(); ix++) {
@@ -80,6 +82,7 @@ public class PredicateClause extends AbstractClause {
     return buf.toString();
   }
 
+  @Override
   public Collection getAllVariables() {
     List vars = new ArrayList();
     
@@ -97,6 +100,7 @@ public class PredicateClause extends AbstractClause {
     return vars;
   }
 
+  @Override
   public Collection getAllLiterals() {
     List literals = new ArrayList();
     

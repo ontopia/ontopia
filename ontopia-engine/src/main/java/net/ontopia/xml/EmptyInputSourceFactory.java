@@ -29,6 +29,7 @@ import org.xml.sax.InputSource;
  */
 public class EmptyInputSourceFactory implements InputSourceFactoryIF {
 
+  @Override
   public InputSource createInputSource() {
     return new InputSource(new StringReader(""));
   }

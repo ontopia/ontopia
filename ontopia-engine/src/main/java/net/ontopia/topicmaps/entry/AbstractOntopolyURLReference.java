@@ -76,6 +76,7 @@ public abstract class AbstractOntopolyURLReference
     }
   }
 
+  @Override
   protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
     // create topic map importer
     TopicMapReaderIF reader = getImporter();
@@ -122,6 +123,7 @@ public abstract class AbstractOntopolyURLReference
     this.alwaysReindexOnLoad = alwaysReindexOnLoad;
   }
 
+  @Override
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -176,10 +178,12 @@ public abstract class AbstractOntopolyURLReference
   // TransactionEventListenerIF implementation
   // --------------------------------------------------------------------------
 
+  @Override
   public void transactionCommit(TopicMapTransactionIF transaction) {
     synchronizeFulltextIndex(transaction.getStore());
   }
 
+  @Override
   public void transactionAbort(TopicMapTransactionIF transaction) {
     synchronizeFulltextIndex(transaction.getStore());
   }

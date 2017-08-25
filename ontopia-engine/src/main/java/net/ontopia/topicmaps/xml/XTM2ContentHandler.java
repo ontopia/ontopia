@@ -142,6 +142,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   
   // --- ContentHandler interface
 
+  @Override
   public void startElement(String uri, String name, String qname,
                            Attributes atts) {
     try {
@@ -153,6 +154,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     }
   }
 
+  @Override
   public void endElement(String uri, String name, String qname) {
     try {
       endElement_(uri, name, qname);
@@ -325,6 +327,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     }
   }
 
+  @Override
   public void characters(char ch[], int start, int length) {
     if (keep_content) 
       content.append(ch, start, length);      

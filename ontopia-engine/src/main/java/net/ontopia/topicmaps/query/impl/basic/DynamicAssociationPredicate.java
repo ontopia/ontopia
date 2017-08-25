@@ -60,10 +60,12 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
   }
 
+  @Override
   public String getSignature() {
     return "p+";
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     int open = 0;
     int closed = 0;
@@ -82,6 +84,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       return PredicateDrivenCostEstimator.BIG_RESULT - closed;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
     

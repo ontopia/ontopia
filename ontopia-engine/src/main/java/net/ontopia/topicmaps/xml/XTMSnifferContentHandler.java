@@ -76,6 +76,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
     this.entities = new HashMap();
   }
 
+  @Override
   public void startElement(String uri, String name, String qname,
                            Attributes atts) throws SAXException {
     try {
@@ -144,16 +145,19 @@ public class XTMSnifferContentHandler extends DefaultHandler
     stack_depth++;
   }
 
+  @Override
   public void endElement(String uri, String name, String qname) {
     stack_depth--;
   }
 
+  @Override
   public void endDocument() {
     // if we get here it means we never found any 1.0 or 2.0 TMs
     if (reader.getValidation())
       throw new InvalidTopicMapException("XTM input is neither 1.0 nor 2.0");
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator; // store it so we can pass it on
   }
@@ -162,52 +166,63 @@ public class XTMSnifferContentHandler extends DefaultHandler
   // This is here so we can pass on entity information to the XTM 1.0
   // handler which makes use of this information.
   
+  @Override
   public void externalEntityDecl(String name,  String publicId, 
                                  String systemId) {
     if (systemId != null)
       entities.put(name, systemId);
   }
   
+  @Override
   public void attributeDecl(String eName, String aName, String type,
                             String mode, String value) {
     // no-op
   }
   
+  @Override
   public void elementDecl(String name, String model) {
     // no-op
   }
   
+  @Override
   public void internalEntityDecl(String name, String value) {
     // no-op
   }
 
   // --- LexicalHandler
+  @Override
   public void startEntity(String name) {
     if (handler1 != null)
       handler1.startEntity(name);
   }
   
+  @Override
   public void endEntity(String name) {
     if (handler1 != null)
       handler1.endEntity(name);
   }
   
+  @Override
   public void comment(char[] ch, int start, int length) {
     // no-op
   }
   
+  @Override
   public void startCDATA() {
     // no-op
   }
   
+  @Override
   public void endCDATA() {
     // no-op
   }
   
+  @Override
   public void startDTD(String name, String publicId, String systemId) {
     // no-op
   }
   
+  @Override
   public void endDTD() {
     // no-op
   }

@@ -33,6 +33,7 @@ import java.util.Iterator;
  */
 public class TMDecider implements DeciderIF<Object> {
 
+  @Override
   public boolean ok(Object object) {
 
     // a topic can be disallowed by being named "Disallowed Topic"

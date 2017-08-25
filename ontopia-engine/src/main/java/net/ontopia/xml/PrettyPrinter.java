@@ -80,6 +80,7 @@ public class PrettyPrinter implements ContentHandler {
   // Document events
   // --------------------------------------------------------------------------
   
+  @Override
   public void startDocument() {
     if (encoding != null) {
       write(writer, "<?xml version=\"1.0\" encoding=\"");
@@ -89,6 +90,7 @@ public class PrettyPrinter implements ContentHandler {
     level = 0;
   }
 
+  @Override
   public void startElement(String uri, String localName, String qName, Attributes atts) {
     if (level > 0)
       indent();
@@ -120,6 +122,7 @@ public class PrettyPrinter implements ContentHandler {
     subelements[level] = false;
   }
 
+  @Override
   public void endElement(String uri, String localName, String qName) {
     if (subelements[level--])
       indent();
@@ -129,6 +132,7 @@ public class PrettyPrinter implements ContentHandler {
     write(writer, '>');
   }
 
+  @Override
   public void characters(char ch[], int start, int length) {
     // Encode characters as decimal character entities
     for (int i = start; i < start + length; i++) {
@@ -163,10 +167,12 @@ public class PrettyPrinter implements ContentHandler {
     }
   }
 
+  @Override
   public void ignorableWhitespace(char ch[], int start, int length) {
     // no-op
   }
 
+  @Override
   public void processingInstruction(String target, String data) {
     // Write processing instruction
     write(writer, "<?");
@@ -176,11 +182,13 @@ public class PrettyPrinter implements ContentHandler {
     write(writer, "?>");
   }
 
+  @Override
   public void endDocument() {
     write(writer, NL);
     flush(writer);
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     // no-op
   }
@@ -303,14 +311,17 @@ public class PrettyPrinter implements ContentHandler {
     subelements = subs;
   }
   
+  @Override
   public void startPrefixMapping(String prefix, String uri) throws SAXException {
     // no-op
   }
 
+  @Override
   public void endPrefixMapping(String prefix) throws SAXException {
     // no-op
   }
 
+  @Override
   public void skippedEntity(String name) throws SAXException {
     // no-op
   }

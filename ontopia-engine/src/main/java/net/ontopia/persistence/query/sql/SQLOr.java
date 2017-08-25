@@ -42,6 +42,7 @@ public class SQLOr implements SQLExpressionIF {
     this.expressions = new SQLExpressionIF[] {expr1, expr2, expr3};
   }
 
+  @Override
   public int getType() {
     return OR;
   }
@@ -54,6 +55,7 @@ public class SQLOr implements SQLExpressionIF {
     this.expressions = expressions;
   }
 
+  @Override
   public String toString() {
     return "(" + StringUtils.join(getExpressions(), " or ") + ")";
   }

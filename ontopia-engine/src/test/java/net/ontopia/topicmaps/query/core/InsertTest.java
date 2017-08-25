@@ -38,6 +38,7 @@ public class InsertTest extends AbstractQueryTest {
 
   /// context management
 
+  @Override
   public void tearDown() {
     closeStore();
   }

@@ -225,6 +225,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     TopicIF topic = builder.makeTopic();
@@ -236,6 +237,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     typed = occurrence;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     TopicIF topic = builder.makeTopic();
 		TopicIF otype = builder.makeTopic();

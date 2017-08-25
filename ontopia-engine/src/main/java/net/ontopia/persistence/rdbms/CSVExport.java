@@ -148,6 +148,7 @@ public class CSVExport {
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
     private String separator = ";";
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 's')
         separator = value;

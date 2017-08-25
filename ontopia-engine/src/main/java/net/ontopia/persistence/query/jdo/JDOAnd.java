@@ -75,6 +75,7 @@ public class JDOAnd implements JDOExpressionIF {
     this.expressions = expressions;
   }
   
+  @Override
   public int getType() {
     return AND;
   }
@@ -83,6 +84,7 @@ public class JDOAnd implements JDOExpressionIF {
     return expressions;
   }
 
+  @Override
   public int hashCode() {
     int hashCode = 0;
     for (int ix = 0; ix < expressions.length; ix++) {
@@ -92,6 +94,7 @@ public class JDOAnd implements JDOExpressionIF {
     return hashCode;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOAnd) {
@@ -102,6 +105,7 @@ public class JDOAnd implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append('(');
@@ -113,6 +117,7 @@ public class JDOAnd implements JDOExpressionIF {
     return sb.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(expressions);
   }

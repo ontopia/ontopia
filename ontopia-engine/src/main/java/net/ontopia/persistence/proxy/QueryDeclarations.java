@@ -69,6 +69,7 @@ public class QueryDeclarations {
       }
     }
 
+    @Override
     public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
       if ("query".equals(name)) {
         // Get query name
@@ -165,6 +166,7 @@ public class QueryDeclarations {
       }
     }
 
+    @Override
     public void endElement (String uri, String name, String qName) throws SAXException {
       if ("query".equals(name)) {
         // Set query selects

@@ -79,14 +79,17 @@ public class PredicateFactory implements PredicateFactoryIF {
     //predicatesById.put("name", new NamePredicate());
   }
   
+  @Override
   public PredicateIF createPredicate(String name) {
     return (PredicateIF) predicatesById.get(name);
   }
 
+  @Override
   public PredicateIF createPredicate(ParsedRule rule) {
     return new RulePredicate(rule);
   }
 
+  @Override
   public PredicateIF createPredicate(TopicIF type, boolean assoc) {
     if (assoc) 
       return new DynamicAssociationPredicate(topicmap, base, type);
@@ -94,6 +97,7 @@ public class PredicateFactory implements PredicateFactoryIF {
       return new DynamicOccurrencePredicate(topicmap, base, type);
   }
   
+  @Override
   public ModuleIF createModule(String uri) {
     if (ExperimentalModule.MODULE_URI.equals(uri))
       return new ExperimentalModule();
@@ -107,6 +111,7 @@ public class PredicateFactory implements PredicateFactoryIF {
       return null;
   }
 
+  @Override
   public boolean isBuiltInPredicate(String name) {
     return predicatesById.containsKey(name);
   }
@@ -116,6 +121,7 @@ public class PredicateFactory implements PredicateFactoryIF {
   static class ExperimentalModule implements ModuleIF {
     private static final String MODULE_URI = "http://psi.ontopia.net/tolog/experimental/";
     
+    @Override
     public PredicateIF getPredicate(String name) {
       if (null == name) return null;
       else switch (name) {

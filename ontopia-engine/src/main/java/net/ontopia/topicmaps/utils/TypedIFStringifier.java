@@ -51,6 +51,7 @@ public class TypedIFStringifier<T extends TypedIF> implements StringifierIF<T> {
    * @return The string that results from applying the configured
    * stringifier to the type extracted from the typed object.
    */
+  @Override
   public String toString(T typed) {
     TopicIF type = grabber.grab(typed);
     return topic_stringifier.toString(type);

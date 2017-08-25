@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.impl.utils.EncodingSnifferIF;
  */
 public class LTMEncodingSniffer implements EncodingSnifferIF {
   
+  @Override
   public String guessEncoding(PushbackInputStream stream) throws IOException {
     String encoding;
 

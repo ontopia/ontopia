@@ -35,14 +35,17 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
 
   protected TopicMapTransactionIF transaction;
 
+  @Override
   public int getImplementation() {
     return TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION;
   }
 
+  @Override
   public boolean isTransactional() {
     return false;
   }
 
+  @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
     if (!isOpen()) open();
@@ -54,17 +57,20 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
     return transaction;
   }
 
+  @Override
   public void setBaseAddress(LocatorIF base_address) {
     this.base_address = base_address;
   }
 
   /* -- store pool -- */
   
+  @Override
   public void close() {
     // return to reference or close
     close((reference != null));
   }
   
+  @Override
   public void close(boolean returnStore) {
     
     if (returnStore) {
@@ -90,6 +96,7 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
     }
   }
 
+  @Override
   public String getProperty(String propertyName) {
     return null; // TODO: add property support
   }

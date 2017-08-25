@@ -44,6 +44,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     super(name);
   }
   
+  @Override
   public void setUp() throws Exception {
     // get a new topic map object from the factory.
     factory = getFactory();
@@ -62,6 +63,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     bart = topicmap.getTopicBySubjectIdentifier(URILocator.create("test:bart"));
   }
 
+  @Override
   public void tearDown() {
     TopicMapEvents.removeTopicListener(topicmapRef, listener);
     super.tearDown();
@@ -72,14 +74,17 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
   protected class TesterListener implements TopicMapListenerIF {
     private Collection snapshots = new HashSet();
     
+    @Override
     public void objectAdded(TMObjectIF o) {
       // no-op
     }
 
+    @Override
     public void objectModified(TMObjectIF snapshot) {      
       this.snapshots.add(((TopicIF)snapshot).getObjectId());
     }
     
+    @Override
     public void objectRemoved(TMObjectIF o) {
       // no-op
     }

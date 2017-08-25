@@ -65,10 +65,12 @@ public class IndexManager extends AbstractIndexManager {
                 new IdentifierIndex(this));
   }
 
+  @Override
   public TopicMapTransactionIF getTransaction() {
     return transaction;
   }
   
+  @Override
   public IndexIF getIndex(String name) {
     // Check to see if transaction is active.
     if (!transaction.isActive())
@@ -86,18 +88,22 @@ public class IndexManager extends AbstractIndexManager {
     }
   }
 
+  @Override
   public Collection<String> getSupportedIndexes() {
     return indexes.keySet();
   }
 
+  @Override
   public Collection<IndexIF> getActiveIndexes() {
     return indexes.values();
   }
 
+  @Override
   public boolean isActive(String name) {
     return indexes.containsKey(name);
   }
 
+  @Override
   public void registerIndex(String name, IndexIF index) {
     indexes.put(name, index);
   }

@@ -250,6 +250,7 @@ public class QueryDescriptor {
       return value;
     }
 
+    @Override
     public String toString() {
       return "<SelectField " + type + " " + value + ">";
     }

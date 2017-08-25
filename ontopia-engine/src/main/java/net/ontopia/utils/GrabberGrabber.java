@@ -68,6 +68,7 @@ public class GrabberGrabber<O, G> implements GrabberIF<O, G> {
     additionalGrabbers.add(grabber);
   }
   
+  @Override
   public G grab(O object) {
     // run firstGrabber
     Object grabbed = firstGrabber.grab(object);

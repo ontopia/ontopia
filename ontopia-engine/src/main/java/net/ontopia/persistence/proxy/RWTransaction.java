@@ -81,10 +81,12 @@ public class RWTransaction extends AbstractTransaction {
     this.oaccess = new PersistentObjectAccess(this);
   }
 
+  @Override
   public boolean isClean() {
     return ostates.isClean();
   }
   
+  @Override
   public boolean isReadOnly() {
     return false;
   }
@@ -93,6 +95,7 @@ public class RWTransaction extends AbstractTransaction {
   // Life cycle
   // -----------------------------------------------------------------------------
   
+  @Override
   public void assignIdentity(PersistentIF object) {
     // FIXME: this method is currently being used in TMObject
     // constructor. should consider getting rid of it.
@@ -109,6 +112,7 @@ public class RWTransaction extends AbstractTransaction {
     object.setNewObject(true);
   }
   
+  @Override
   public void create(PersistentIF object) {
     if (!isactive) throw new TransactionNotActiveException();
     
@@ -171,6 +175,7 @@ public class RWTransaction extends AbstractTransaction {
     
   }
   
+  @Override
   public void delete(PersistentIF object) {    
     if (!isactive) throw new TransactionNotActiveException();
     
@@ -216,6 +221,7 @@ public class RWTransaction extends AbstractTransaction {
   // Lifecycle
   // -----------------------------------------------------------------------------
   
+  @Override
   public synchronized void flush() {
     // Flushing is non-reentrant
     if (flushing) return;
@@ -311,6 +317,7 @@ public class RWTransaction extends AbstractTransaction {
   // Object modification callbacks (called by PersistentIFs)
   // -----------------------------------------------------------------------------
   
+  @Override
   public synchronized void objectDirty(PersistentIF object) {
     if (!isactive) throw new TransactionNotActiveException();
     
@@ -322,18 +329,22 @@ public class RWTransaction extends AbstractTransaction {
     if (trackall) ostates.dirty(object._p_getIdentity());
   }
 
+  @Override
   public void objectRead(IdentityIF identity) {
     if (trackall) ostates.read(identity);
   }
 
+  @Override
   public void objectCreated(PersistentIF object) {
     if (trackall) ostates.created(object._p_getIdentity());
   }
 
+  @Override
   public void objectDeleted(PersistentIF object) {
     if (trackall) ostates.deleted(object._p_getIdentity());
   }
 
+  @Override
   public boolean isObjectClean(IdentityIF identity) {
     return ostates.isClean(identity);
   }
@@ -374,10 +385,12 @@ public class RWTransaction extends AbstractTransaction {
   // Transaction boundary callbacks
   // -----------------------------------------------------------------------------
   
+  @Override
   protected synchronized void transactionPreCommit() {
     // no-op
   }
   
+  @Override
   protected synchronized void transactionPostCommit() {
     // clear change sets
     chgcre.clear();
@@ -401,6 +414,7 @@ public class RWTransaction extends AbstractTransaction {
             txncache.registerEviction();
             try {
               ostates.forEachEntry(new TObjectIntProcedure<IdentityIF>() {
+                @Override
                   public boolean execute(IdentityIF identity, int s) {
                     if ((s & ObjectStates.STATE_CREATED) == ObjectStates.STATE_CREATED) {
                       // no-op
@@ -429,10 +443,12 @@ public class RWTransaction extends AbstractTransaction {
     }
   }
   
+  @Override
   protected synchronized void transactionPreAbort() {
     // no-op
   }
   
+  @Override
   protected synchronized void transactionPostAbort() {
     // clear change sets
     chgcre.clear();
@@ -458,6 +474,7 @@ public class RWTransaction extends AbstractTransaction {
             txncache.registerEviction();
             try {
               ostates.forEachEntry(new TObjectIntProcedure<IdentityIF>() {
+                @Override
                   public boolean execute(IdentityIF identity, int s) {
                     if (((s & ObjectStates.STATE_CREATED) == ObjectStates.STATE_CREATED) ||
                         ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED)) {
@@ -488,11 +505,13 @@ public class RWTransaction extends AbstractTransaction {
   // Prefetching
   // -----------------------------------------------------------------------------
 
+  @Override
   public void prefetch(Class<?> type, int field, boolean traverse, Collection<IdentityIF> identities) {
     // do not prefetch when no shared cache
     if (!trackall) super.prefetch(type, field, traverse, identities);
   }
 
+  @Override
   public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection<IdentityIF> identities) {
     // do not prefetch when no shared cache
     if (!trackall) super.prefetch(type, fields, traverse, identities);

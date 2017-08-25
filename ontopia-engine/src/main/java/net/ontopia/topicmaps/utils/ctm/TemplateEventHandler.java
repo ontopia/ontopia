@@ -42,100 +42,124 @@ public class TemplateEventHandler implements ParseEventHandlerIF {
 
   // --- ParseEventHandlerIF implementation
   
+  @Override
   public void startTopicItemIdentifier(ValueGeneratorIF loc) {
     template.addEvent(new GenericParseEvent("startTopicItemIdentifier", loc));
   }
   
+  @Override
   public void startTopicSubjectIdentifier(ValueGeneratorIF loc) {
     template.addEvent(new GenericParseEvent("startTopicSubjectIdentifier", loc));
   }
   
+  @Override
   public void startTopicSubjectLocator(ValueGeneratorIF loc) {
     template.addEvent(new GenericParseEvent("startTopicSubjectLocator", loc));
   }
 
+  @Override
   public void startTopic(ValueGeneratorIF topicgen) {
     template.addEvent(new GenericParseEvent("startTopic", topicgen));
   }
   
+  @Override
   public void addItemIdentifier(ValueGeneratorIF locator) {
     template.addEvent(new GenericParseEvent("addItemIdentifier", locator));
   }
   
+  @Override
   public void addSubjectIdentifier(ValueGeneratorIF locator) {
     template.addEvent(new GenericParseEvent("addSubjectIdentifier", locator));
   }
   
+  @Override
   public void addSubjectLocator(ValueGeneratorIF locator) {
     template.addEvent(new GenericParseEvent("addSubjectLocator", locator));
   }
 
+  @Override
   public void addTopicType(ValueGeneratorIF type) {
     template.addEvent(new GenericParseEvent("addTopicType", type));
   }
 
+  @Override
   public void addSubtype(ValueGeneratorIF subtype) {
     template.addEvent(new GenericParseEvent("addSubtype", subtype));
   }
   
+  @Override
   public void startName(ValueGeneratorIF type, ValueGeneratorIF value) {
     template.addEvent(new GenericParseEvent("startName", type, value));
   }
   
+  @Override
   public void addScopingTopic(ValueGeneratorIF topic) {
     template.addEvent(new GenericParseEvent("addScopingTopic", topic));
   }
   
+  @Override
   public void addReifier(ValueGeneratorIF topic) {
     template.addEvent(new GenericParseEvent("addReifier", topic));
   }
 
+  @Override
   public void startVariant(ValueGeneratorIF value) {
     template.addEvent(new GenericParseEvent("startVariant", value));
   }
   
+  @Override
   public void endName() {
     template.addEvent(new GenericParseEvent("endName"));
   }
 
+  @Override
   public void startOccurrence(ValueGeneratorIF type, ValueGeneratorIF value) {
     template.addEvent(new GenericParseEvent("startOccurrence", type, value));
   }
 
+  @Override
   public void endOccurrence() {
     template.addEvent(new GenericParseEvent("endOccurrence"));
   }
   
+  @Override
   public void endTopic() {
     template.addEvent(new GenericParseEvent("endTopic"));
   }
 
+  @Override
   public void startAssociation(ValueGeneratorIF type) {
     template.addEvent(new GenericParseEvent("startAssociation", type));
   }
   
+  @Override
   public void addRole(ValueGeneratorIF type, ValueGeneratorIF player) {
     template.addEvent(new GenericParseEvent("addRole", type, player));
   }
 
+  @Override
   public void endRoles() {
     template.addEvent(new GenericParseEvent("endRoles"));
   }
   
+  @Override
   public void endAssociation() {
     template.addEvent(new GenericParseEvent("endAssociation"));
   }
 
+  @Override
   public void startEmbeddedTopic() {
     template.addEvent(new GenericParseEvent("startEmbeddedTopic"));
   }
 
+  @Override
   public ValueGeneratorIF endEmbeddedTopic() {
     GenericParseEvent event = new GenericParseEvent("endEmbeddedTopic");
     template.addEvent(event);
     return new EventTopicGenerator(event);
   }
 
+  @Override
   public void templateInvocation(String name, List arguments) {
     template.addEvent(new GenericParseEvent("templateInvocation",
                                             name, arguments));
@@ -172,6 +196,7 @@ public class TemplateEventHandler implements ParseEventHandlerIF {
       parameters[1] = copy(p2);
     }
 
+    @Override
     public void replay(ParseEventHandlerIF handler) throws InvalidTopicMapException {
       try {
         value = method.invoke(handler, parameters);
@@ -213,11 +238,13 @@ public class TemplateEventHandler implements ParseEventHandlerIF {
       this.event = event;
     }
     
+    @Override
     public TopicIF getTopic() {
       ValueGeneratorIF gen = (ValueGeneratorIF) event.getValue();
       return gen.getTopic();
     }
 
+    @Override
     public ValueGeneratorIF copy() {
       return this;
     }

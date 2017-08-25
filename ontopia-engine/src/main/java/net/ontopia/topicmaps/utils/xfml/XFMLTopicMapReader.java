@@ -133,6 +133,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
 
   // Actual reading of the XFML document
   
+  @Override
   public TopicMapIF read() throws IOException {
     // Create new parser object
     XMLReader parser;
@@ -176,6 +177,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     return handler.getTopicMap();
   }
 
+  @Override
   public Collection readAll() throws IOException {
     Collection result = new ArrayList();
     TopicMapIF tm = read();
@@ -184,6 +186,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
     return result;      
   }
 
+  @Override
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
@@ -198,6 +201,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * XFMLTopicMapReader has no additional options to set.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }

@@ -44,6 +44,7 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
   // OccurrenceIndexIF
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<OccurrenceIF> getOccurrences(String value) {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrences", new Object[] { getTopicMap(), value });
   }
@@ -53,6 +54,7 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByType", new Object[] { getTopicMap(), value, occurrenceType });
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype) {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByDataType", new Object[] { getTopicMap(), value, datatype.getAddress() });
   }
@@ -62,30 +64,36 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByDataTypeAndType", new Object[] { getTopicMap(), value, datatype.getAddress(), occurrenceType });
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix) {
     //! String ltval = prefix + Character.MAX_VALUE;
     String ltval = (prefix == null ? null : prefix.substring(0, prefix.length()- 1) + (char)(prefix.charAt(prefix.length()-1)+1));
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesBetween", new Object[] { getTopicMap(), prefix, ltval });
   }
   
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, LocatorIF datatype) {
     //! String ltval = prefix + Character.MAX_VALUE;
     String ltval = (prefix == null ? null : prefix.substring(0, prefix.length()- 1) + (char)(prefix.charAt(prefix.length()-1)+1));
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesBetween_datatype", new Object[] { getTopicMap(), prefix, ltval, datatype.getAddress() });
   }
 
+  @Override
   public Iterator<String> getValuesGreaterThanOrEqual(String value) {
     Collection<OccurrenceIF> coll = (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesGreaterThanOrEqual", new Object[] { getTopicMap(), value });
     return new GrabberIterator<OccurrenceIF, String>(coll.iterator(), new GrabberIF<OccurrenceIF, String>() {
+      @Override
         public String grab(OccurrenceIF o) {
           return o.getValue();
         }
       });
   }  
 
+  @Override
   public Iterator<String> getValuesSmallerThanOrEqual(String value) {
     Collection<OccurrenceIF> coll = (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesLessThanOrEqual", new Object[] { getTopicMap(), value });
     return new GrabberIterator<OccurrenceIF, String>(coll.iterator(), new GrabberIF<OccurrenceIF, String>() {
+      @Override
         public String grab(OccurrenceIF o) {
           return o.getValue();
         }

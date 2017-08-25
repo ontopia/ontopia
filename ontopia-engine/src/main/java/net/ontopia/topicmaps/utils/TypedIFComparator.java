@@ -62,6 +62,7 @@ public class TypedIFComparator implements Comparator<TypedIF> {
    * @return int; result from the comparator given to the constructor, when it compares the 
    *            types of the given objects
    */ 
+  @Override
   public int compare(TypedIF obj1, TypedIF obj2) {
     //! return subcomparator.compare(grabber.grab(obj1), grabber.grab(obj2));
     return subcomparator.compare(obj1.getType(), obj2.getType());

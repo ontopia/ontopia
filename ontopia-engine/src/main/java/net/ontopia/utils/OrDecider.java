@@ -65,6 +65,7 @@ public class OrDecider implements DeciderIF {
     deciders.remove(decider);
   }
   
+  @Override
   public boolean ok(Object object) {
     Iterator iter = deciders.iterator();
     while (iter.hasNext()) {

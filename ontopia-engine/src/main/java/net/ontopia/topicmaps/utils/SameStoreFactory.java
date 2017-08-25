@@ -48,6 +48,7 @@ public class SameStoreFactory implements TopicMapStoreFactoryIF {
    *
    * @return The store received through the object's constructor.
    */
+  @Override
   public TopicMapStoreIF createStore() {
     return store;
   }    

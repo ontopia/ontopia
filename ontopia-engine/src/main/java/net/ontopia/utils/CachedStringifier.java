@@ -56,6 +56,7 @@ public class CachedStringifier<T> implements StringifierIF<T>, CachedIF {
     this.stringifier = stringifier;
   }
     
+  @Override
   public String toString(T object) {
     if (object == null) return "null";
     String string = cache.get(object);
@@ -65,6 +66,7 @@ public class CachedStringifier<T> implements StringifierIF<T>, CachedIF {
     return stringified;
   }
 
+  @Override
   public void refresh() {
     cache.clear();
   }

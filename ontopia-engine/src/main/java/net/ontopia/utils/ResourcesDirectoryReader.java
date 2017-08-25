@@ -223,6 +223,7 @@ public class ResourcesDirectoryReader {
     public FilenameExtensionFilter(String filenameFilter) {
       this.filenameFilter = filenameFilter;
     }
+    @Override
     public boolean ok(String resourcePath) {
       return resourcePath.endsWith(filenameFilter);
     }

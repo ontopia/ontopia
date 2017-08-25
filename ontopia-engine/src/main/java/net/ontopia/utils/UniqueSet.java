@@ -272,6 +272,7 @@ public class UniqueSet<E> extends CompactHashSet<E> {
   }
   
   @SuppressWarnings("unchecked")
+  @Override
   public void dump() {
     System.out.println("Reference count: " + refcount);
     Iterator<E> iter = iterator();
@@ -283,29 +284,37 @@ public class UniqueSet<E> extends CompactHashSet<E> {
   
   // ---- Set is immutable
   
+  @Override
 	public boolean add(Object o) {
     throw new UnsupportedOperationException();
   }  
+  @Override
 	public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public boolean addAll(Collection<? extends E> coll) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public boolean removeAll(Collection<?> coll) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public boolean retainAll(Collection<?> coll) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String toString() {
     return super.toString() + getReferenceCount();
   }
   
+  @Override
   public int hashCode() {
     // recompute hashcode only when neccessary
     if (modCount != hc_modCount) {

@@ -164,6 +164,7 @@ public class TopicMapConverter {
     private String encoding = null;
     private String rdfmap = null;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 'x') xtm = true;

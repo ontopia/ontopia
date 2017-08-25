@@ -38,6 +38,7 @@ public class ContainmentDecider<T> implements DeciderIF<T> {
       this.objects = objects;
     }
     
+    @Override
     public boolean ok(T o) {
       return objects.contains(o);
     }

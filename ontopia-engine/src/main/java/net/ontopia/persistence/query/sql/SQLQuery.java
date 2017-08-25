@@ -136,6 +136,7 @@ public class SQLQuery {
     this.filter = filter;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("select ");
     if (getDistinct())

@@ -52,10 +52,15 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   protected TransactionalLookupIndexIF<LocatorIF, IdentityIF> subjects;
         
   private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
+    @Override
     public Class<?> getType() { throw new UnsupportedOperationException(); }
+    @Override
     public int getWidth() { throw new UnsupportedOperationException(); }
+    @Override
     public Object getKey(int index) { throw new UnsupportedOperationException(); }
+    @Override
     public Object createInstance() throws Exception { throw new UnsupportedOperationException(); }
+    @Override
     public Object clone() { throw new UnsupportedOperationException(); }
   };
 
@@ -123,20 +128,24 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
 
   // These methods are called by the topic map object.
   
+  @Override
   public TMObjectIF getObjectById(String object_id) {
     throw new UnsupportedOperationException("This method should not be called.");
   }
   
+  @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     IdentityIF o = source_locators.get(locator);
     return (TMObjectIF)(o == null ? null : ptxn.getObject(o));
   }
   
+  @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
     IdentityIF o = subjects.get(locator);
     return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
   
+  @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     IdentityIF o = subject_indicators.get(locator);
     return (TopicIF)(o == null ? null : ptxn.getObject(o));
@@ -149,41 +158,50 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   // The following methods populate the various caches when object
   // model events are triggered.
   
+  @Override
   protected TMObjectIF _getObjectByItemIdentifier(LocatorIF source_locator) {
     IdentityIF o = source_locators.get(source_locator);
     return (TMObjectIF)(o == null ? null : ptxn.getObject(o));
   }
 
+  @Override
   protected void registerSourceLocator(LocatorIF source_locator, TMObjectIF object) {
     source_locators.put(source_locator, ((PersistentIF)object)._p_getIdentity());
   }
   
+  @Override
   protected void unregisterSourceLocator(LocatorIF source_locator) {
     source_locators.remove(source_locator);
   }
 
+  @Override
   protected TopicIF _getTopicBySubjectIdentifier(LocatorIF subject_indicator) {
     IdentityIF o = subject_indicators.get(subject_indicator);
     return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
 
+  @Override
   protected void registerSubjectIndicator(LocatorIF subject_indicator, TopicIF object) {
     subject_indicators.put(subject_indicator, ((PersistentIF)object)._p_getIdentity());
   }
   
+  @Override
   protected void unregisterSubjectIndicator(LocatorIF subject_indicator) {
     subject_indicators.remove(subject_indicator);
   }
 
+  @Override
   protected TopicIF _getTopicBySubjectLocator(LocatorIF subject) {
     IdentityIF o = subjects.get(subject);
     return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
 
+  @Override
   protected void registerSubject(LocatorIF subject, TopicIF object) {
     subjects.put(subject, ((PersistentIF)object)._p_getIdentity());
   }
   
+  @Override
   protected void unregisterSubject(LocatorIF subject) {
     subjects.remove(subject);
   }

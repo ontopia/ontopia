@@ -47,6 +47,7 @@ public class ClassInstanceIndex extends RDBMSIndex
   // ClassInstanceIndexIF
   // ---------------------------------------------------------------------------
   
+  @Override
   public Collection<TopicIF> getTopics(TopicIF topic_type) {
     if (topic_type == null) {
       Object[] params = new Object[] { getTopicMap() };
@@ -61,6 +62,7 @@ public class ClassInstanceIndex extends RDBMSIndex
     }
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNames(TopicIF name_type) {
     if (name_type == null) {
       name_type = getTopicMap().getTopicBySubjectIdentifier(PSI.getSAMNameType());
@@ -91,6 +93,7 @@ public class ClassInstanceIndex extends RDBMSIndex
                                  "ClassInstanceIndexIF.getAllVariantNames", params);
   }
   
+  @Override
   public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type) {
     if (occurrence_type == null) {
       return Collections.emptySet();
@@ -109,6 +112,7 @@ public class ClassInstanceIndex extends RDBMSIndex
                                  "ClassInstanceIndexIF.getAllOccurrences", params);
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations(TopicIF association_type) {
     if (association_type == null) {
       return Collections.emptySet();
@@ -119,6 +123,7 @@ public class ClassInstanceIndex extends RDBMSIndex
     }
   }
 
+  @Override
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type) {
     if (association_role_type == null) {
       return Collections.emptySet();
@@ -129,6 +134,7 @@ public class ClassInstanceIndex extends RDBMSIndex
     }
   }
 
+  @Override
   public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type, TopicIF association_type) {
     if ((association_role_type == null) || (association_type == null)) {
       return Collections.emptySet();
@@ -139,51 +145,62 @@ public class ClassInstanceIndex extends RDBMSIndex
     }
   }
 
+  @Override
   public Collection<TopicIF> getTopicTypes() {
     return (Collection<TopicIF>)executeQuery("ClassInstanceIndexIF.getTopicTypes",
                                     new Object[] { getTopicMap() });
   }
   
+  @Override
   public Collection<TopicIF> getTopicNameTypes() {
     return (Collection<TopicIF>)executeQuery("ClassInstanceIndexIF.getTopicNameTypes",
                                     new Object[] { getTopicMap() });
   }
   
+  @Override
   public Collection<TopicIF> getOccurrenceTypes() {
     return (Collection<TopicIF>)executeQuery("ClassInstanceIndexIF.getOccurrenceTypes",
                                     new Object[] { getTopicMap() });
   }
   
+  @Override
   public Collection<TopicIF> getAssociationTypes() {
     return (Collection<TopicIF>)executeQuery("ClassInstanceIndexIF.getAssociationTypes",
                                     new Object[] { getTopicMap() });
   }
   
+  @Override
   public Collection<TopicIF> getAssociationRoleTypes() {
     return (Collection<TopicIF>)executeQuery("ClassInstanceIndexIF.getAssociationRoleTypes",
                                     new Object[] { getTopicMap() });
   }
   
+  @Override
   public boolean usedAsTopicType(TopicIF topic) {
     return !(getTopics(topic).isEmpty());    
   }
 
+  @Override
   public boolean usedAsTopicNameType(TopicIF topic) {
     return !(getTopicNames(topic).isEmpty());
   }
 
+  @Override
   public boolean usedAsOccurrenceType(TopicIF topic) {
     return !(getOccurrences(topic).isEmpty());
   }
 
+  @Override
   public boolean usedAsAssociationType(TopicIF topic) {
     return !(getAssociations(topic).isEmpty());
   }
   
+  @Override
   public boolean usedAsAssociationRoleType(TopicIF topic) {
     return !(getAssociationRoles(topic).isEmpty());
   }
   
+  @Override
   public boolean usedAsType(TopicIF topic) {
     if (topic == null) return false;
     return (usedAsTopicType(topic) ||

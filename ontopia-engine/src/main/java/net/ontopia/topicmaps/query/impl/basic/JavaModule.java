@@ -46,6 +46,7 @@ public class JavaModule implements ModuleIF {
     this.moduleURI = moduleURI;
   }
   
+  @Override
   public PredicateIF getPredicate(String name) {
     // figure out which class to use
     String className = moduleURI.substring(MODULE_PREFIX.length());

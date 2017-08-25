@@ -135,6 +135,7 @@ public class SQLOneToOne implements FieldAccessIF {
     // UPDATE TM_TOPIC set subject_notation = ? where id = ?
   }
   
+  @Override
   public Object load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception {
     // Prepare result value
     Object result = null;
@@ -208,6 +209,7 @@ public class SQLOneToOne implements FieldAccessIF {
     return result;
   }
 
+  @Override
   public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities,
                              IdentityIF current) throws Exception {
     // Prepare result value
@@ -334,6 +336,7 @@ public class SQLOneToOne implements FieldAccessIF {
     return result;
   }
 
+  @Override
   public void clear(IdentityIF identity) throws Exception {
     throw new OntopiaRuntimeException("The clear method is not supported (1:1 relation).");
   }
@@ -341,6 +344,7 @@ public class SQLOneToOne implements FieldAccessIF {
   // -----------------------------------------------------------------------------
   // Store dirty
 
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception {
 
     // Update all 1:1 fields

@@ -54,6 +54,7 @@ public class Association extends TMObject implements AssociationIF {
   protected static final int LF_reifier = 5;
   protected static final String[] fields = {"sources", "topicmap", "scope", "type", "roles", "reifier"};
 
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_topicmap);
@@ -78,6 +79,7 @@ public class Association extends TMObject implements AssociationIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -86,10 +88,12 @@ public class Association extends TMObject implements AssociationIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
@@ -112,6 +116,7 @@ public class Association extends TMObject implements AssociationIF {
     }
   }
 
+  @Override
   public Collection<TopicIF> getRoleTypes() {
     Collection<TopicIF> result = new CompactHashSet<TopicIF>();
     for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles)) {
@@ -122,6 +127,7 @@ public class Association extends TMObject implements AssociationIF {
     return result;
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null)
       throw new NullPointerException("Role type must not be null.");
@@ -133,6 +139,7 @@ public class Association extends TMObject implements AssociationIF {
     return result;
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     try {
       return this.<AssociationRoleIF>loadCollectionField(LF_roles);
@@ -188,6 +195,7 @@ public class Association extends TMObject implements AssociationIF {
     }
   }
 
+  @Override
   public void remove() {
     TopicMap topicmap = (TopicMap)getTopicMap();
     if (topicmap != null) {
@@ -200,10 +208,12 @@ public class Association extends TMObject implements AssociationIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -214,6 +224,7 @@ public class Association extends TMObject implements AssociationIF {
     valueAdded(LF_scope, theme, true);
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -228,6 +239,7 @@ public class Association extends TMObject implements AssociationIF {
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     try {
       return this.<TopicIF>loadField(LF_type);
@@ -237,6 +249,7 @@ public class Association extends TMObject implements AssociationIF {
     }
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null)
       throw new NullPointerException("Association type must not be null.");
@@ -251,6 +264,7 @@ public class Association extends TMObject implements AssociationIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     try {
       return this.<TopicIF>loadField(LF_reifier);
@@ -260,6 +274,7 @@ public class Association extends TMObject implements AssociationIF {
     }
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
@@ -277,6 +292,7 @@ public class Association extends TMObject implements AssociationIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
   
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.Association", (AssociationIF) this);
   }

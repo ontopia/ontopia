@@ -37,6 +37,7 @@ public class NullResolvingExternalReferenceHandler
   /**
    * PUBLIC: always returns null
    */
+  @Override
   public LocatorIF externalTopicMap(LocatorIF parm1) {
     return null;
   }
@@ -44,6 +45,7 @@ public class NullResolvingExternalReferenceHandler
   /**
    * PUBLIC: always returns null
    */
+  @Override
   public LocatorIF externalTopic(LocatorIF parm1) {
     return null;
   }

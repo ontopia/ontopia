@@ -44,14 +44,17 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
     this.namespace = namespace;    
   }
 
+  @Override
   public synchronized V get(K key) {
     return cache.get(key);
   }
 
+  @Override
   public synchronized V put(K key, V value) {
     return cache.put(key, value);
   }
   
+  @Override
   public synchronized V remove(K key, boolean notifyCluster) {
     V o = cache.remove(key);
     // notify cluster
@@ -60,6 +63,7 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
     return o;
   }
   
+  @Override
   public synchronized void removeAll(Collection<K> keys, boolean notifyCluster) {
     for (K key : keys) {
       cache.remove(key);
@@ -69,6 +73,7 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
       cluster.evictCache(namespace, cacheType, keys);
   }
 
+  @Override
   public synchronized void clear(boolean notifyCluster) {
     cache.clear();
     // notify cluster
@@ -76,6 +81,7 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
       cluster.clearCache(namespace, cacheType);
   }
   
+  @Override
   public void writeReport(java.io.Writer out, boolean dumpCache) throws java.io.IOException {
     synchronized (cache) {
       out.write("<p>Cache size: " + cache.size() + "</p>\n");

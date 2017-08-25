@@ -58,6 +58,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Starts the fragment.
    */
+  @Override
   public void startTopicMap() throws IOException {
     try {
       exporter.startTopicMap(dh);
@@ -71,6 +72,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
    * PUBLIC: Exports all the topics returned by the iterator, and
    * wraps them with startTopicMap() and endTopicMap() calls.
    */
+  @Override
   public void exportAll(Iterator<TopicIF> it) throws IOException {
     try {
       exporter.exportAll(it, dh);
@@ -83,6 +85,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Exports all the topics returned by the iterator.
    */
+  @Override
   public void exportTopics(Iterator<TopicIF> it) throws IOException {
     try {
       exporter.exportTopics(it, dh);
@@ -95,6 +98,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Exports the given topic.
    */
+  @Override
   public void exportTopic(TopicIF topic) throws IOException {
     exportTopics(Collections.singleton(topic).iterator());
   }
@@ -102,6 +106,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Ends the fragment.
    */
+  @Override
   public void endTopicMap() throws IOException {
     try {
       exporter.endTopicMap(dh);

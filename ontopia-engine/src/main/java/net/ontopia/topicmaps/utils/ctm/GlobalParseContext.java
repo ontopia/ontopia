@@ -54,6 +54,7 @@ public class GlobalParseContext implements ParseContextIF {
     this.include_uris = new CompactHashSet<LocatorIF>();
   }
 
+  @Override
   public void addPrefix(String prefix, LocatorIF locator) {
     LocatorIF boundto = prefixes.get(prefix);
     if (boundto != null && !boundto.equals(locator))
@@ -65,14 +66,17 @@ public class GlobalParseContext implements ParseContextIF {
     prefixes.put(prefix, locator);
   }
 
+  @Override
   public void addIncludeUri(LocatorIF uri) {
     include_uris.add(uri);
   }
 
+  @Override
   public Set<LocatorIF> getIncludeUris() {
     return include_uris;
   }
   
+  @Override
   public LocatorIF resolveQname(String qname) {
     int ix = qname.indexOf(':');
     String prefix = qname.substring(0, ix);
@@ -90,6 +94,7 @@ public class GlobalParseContext implements ParseContextIF {
     }
   }
   
+  @Override
   public ValueGeneratorIF getTopicById(String id) {
     if (base == null)
       // when no base locator only absolute URIs are allowed
@@ -100,28 +105,34 @@ public class GlobalParseContext implements ParseContextIF {
     return new TopicByItemIdentifierGenerator(this, itemid, id);
   }
   
+  @Override
   public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
     return new TopicByItemIdentifierGenerator(this, itemid);
   }
 
+  @Override
   public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
     return new TopicBySubjectLocatorGenerator(this, subjloc);
   }
 
+  @Override
   public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
     return new TopicBySubjectIdentifierGenerator(this, subjid);
   }
 
+  @Override
   public ValueGeneratorIF getTopicByQname(String qname) {
     return new TopicBySubjectIdentifierGenerator(this, resolveQname(qname));
   }
   
+  @Override
   public TopicIF makeAnonymousTopic() {
     counter++;
     LocatorIF itemid = base.resolveAbsolute("#$__" + counter);
     return makeTopicByItemIdentifier(itemid);
   }
 
+  @Override
   public TopicIF makeAnonymousTopic(String wildcard_name) {
     counter++;
     LocatorIF itemid = base.resolveAbsolute("#$__" + counter + '.' +
@@ -129,6 +140,7 @@ public class GlobalParseContext implements ParseContextIF {
     return makeTopicByItemIdentifier(itemid);
   }
 
+  @Override
   public void registerTemplate(String name, Template template) {
     String key = name + template.getParameterCount();
     if (templates.containsKey(key))
@@ -137,18 +149,22 @@ public class GlobalParseContext implements ParseContextIF {
     templates.put(key, template);
   }
 
+  @Override
   public Template getTemplate(String name, int paramcount) {
     return templates.get(name + paramcount);
   }
 
+  @Override
   public Map getTemplates() {
     return templates;
   }
   
+  @Override
   public TopicIF makeTopicById(String id) {
     return makeTopicByItemIdentifier(base.resolveAbsolute('#' + id));
   }
 
+  @Override
   public TopicIF makeTopicByItemIdentifier(LocatorIF itemid) {
     TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(itemid);
     if (topic == null) {
@@ -158,6 +174,7 @@ public class GlobalParseContext implements ParseContextIF {
     return topic;
   }
 
+  @Override
   public TopicIF makeTopicBySubjectLocator(LocatorIF subjloc) {
     TopicIF topic = topicmap.getTopicBySubjectLocator(subjloc);
     if (topic == null) {
@@ -167,6 +184,7 @@ public class GlobalParseContext implements ParseContextIF {
     return topic;
   }
 
+  @Override
   public TopicIF makeTopicBySubjectIdentifier(LocatorIF subjid) {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(subjid);
     if (topic == null) {
@@ -187,20 +205,24 @@ public class GlobalParseContext implements ParseContextIF {
       this.locator = locator;
     }
     
+    @Override
     public ValueGeneratorIF copy() {
       return this; // FIXME: this is safe as long as we keep making new generators
     }
     
+    @Override
     public String getLiteral() {
       throw new InvalidTopicMapException("Topic reference passed, but literal "+
                                          "expected: " + getDescription());
     }
   
+    @Override
     public LocatorIF getDatatype() {
       throw new InvalidTopicMapException("Topic reference passed, but literal "+
                                          "expected: " + getDescription());
     }
 
+    @Override
     public LocatorIF getLocator() {
       throw new InvalidTopicMapException("Topic reference passed, but locator "+
                                          "expected: " + getDescription());
@@ -224,6 +246,7 @@ public class GlobalParseContext implements ParseContextIF {
       this.id = id;
     }
     
+    @Override
     public TopicIF getTopic() {
       TopicIF topic = context.makeTopicByItemIdentifier(locator);
       if (id != null && !context.getIncludeUris().isEmpty()) {
@@ -236,6 +259,7 @@ public class GlobalParseContext implements ParseContextIF {
       return topic;
     }
 
+    @Override
     protected String getDescription() {
       if (id != null)
         return "item identifier #" + id;
@@ -251,10 +275,12 @@ public class GlobalParseContext implements ParseContextIF {
       super(context, locator);
     }
     
+    @Override
     public TopicIF getTopic() {
       return context.makeTopicBySubjectIdentifier(locator);
     }
 
+    @Override
     protected String getDescription() {
       return "subject identifier " + locator.getExternalForm();
     }
@@ -267,10 +293,12 @@ public class GlobalParseContext implements ParseContextIF {
       super(context, locator);
     }
     
+    @Override
     public TopicIF getTopic() {
       return context.makeTopicBySubjectLocator(locator);
     }
     
+    @Override
     protected String getDescription() {
       return "subject locator " + locator.getExternalForm();
     }

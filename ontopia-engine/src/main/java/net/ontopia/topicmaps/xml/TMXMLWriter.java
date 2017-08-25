@@ -189,6 +189,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * @exception IOException Thrown if writing the topic map fails.
    * @param topicmap The topic map to be exported.
    */
+  @Override
   public void write(TopicMapIF topicmap) throws IOException {
     try {
       gatherPrefixes(topicmap.getTopics());
@@ -651,6 +652,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * </ul>
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_DOCUMENT_ELEMENT);
     if ((value != null) && (value instanceof String)) {

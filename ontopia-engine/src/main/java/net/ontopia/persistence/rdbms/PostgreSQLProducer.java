@@ -37,6 +37,7 @@ public class PostgreSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
 
+  @Override
   protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
     statements.add(new StringBuilder()
         .append("drop table ")
@@ -48,6 +49,7 @@ public class PostgreSQLProducer extends GenericSQLProducer {
   
   // -- flags
   
+  @Override
   protected boolean supportsForeignKeys() {
     return true;
   }

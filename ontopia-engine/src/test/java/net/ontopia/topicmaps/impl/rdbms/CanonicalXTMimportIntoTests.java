@@ -41,6 +41,7 @@ public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.Canon
     super(inputFile, filename);
   }
 
+  @Override
   protected void canonicalize(URL infile, File outfile) throws IOException {
     // Import document
     TopicMapStoreIF store1 = new RDBMSTopicMapStore();

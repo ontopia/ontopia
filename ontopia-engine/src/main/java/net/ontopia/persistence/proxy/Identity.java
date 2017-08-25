@@ -57,22 +57,27 @@ public final class Identity implements IdentityIF, Externalizable {
     this.hashcode = computeHashCode();
   }
 
+  @Override
   public Class<?> getType() {
     return type;
   }
 
+  @Override
   public int getWidth() {
     return keys.length;
   }
 
+  @Override
   public Object getKey(int index) {
     return keys[index];
   }
 
+  @Override
   public Object createInstance() throws Exception {
     return ((Class)type).newInstance();
   }
   
+  @Override
   public int hashCode() {
     return hashcode;
   }
@@ -86,6 +91,7 @@ public final class Identity implements IdentityIF, Externalizable {
     return hashcode;
   }
 
+  @Override
   public boolean equals(Object object) {
     if (object instanceof IdentityIF) {
       // Compare types    
@@ -110,6 +116,7 @@ public final class Identity implements IdentityIF, Externalizable {
     }
   }
   
+  @Override
   public String toString() {
     return "<Identity " + Arrays.asList(keys) + " " + type + ">";
   }
@@ -118,17 +125,20 @@ public final class Identity implements IdentityIF, Externalizable {
   // Externalization
   // -----------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(type);
     out.writeObject(keys);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     type = (Class<?>)in.readObject();
     keys = (Object[])in.readObject();
     this.hashcode = computeHashCode();
   }
 
+  @Override
   public Object clone() {
     try {
       return super.clone();

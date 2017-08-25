@@ -40,6 +40,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return VariantName.fields.length;
   }
@@ -48,10 +49,12 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return VariantName.CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : VariantName.CLASS_INDICATOR + id.getKey(0));
   }
@@ -60,6 +63,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // TopicNameIF implementation
   // ---------------------------------------------------------------------------
   
+  @Override
   public TopicIF getTopic() {
     TopicNameIF name = getTopicName();
     if (name == null)
@@ -67,10 +71,12 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
     return name.getTopic();
   }
 
+  @Override
   public TopicNameIF getTopicName() {
     return this.<TopicNameIF>loadField(VariantName.LF_name);
   }
 
+  @Override
   public LocatorIF getDataType() {
     return this.<LocatorIF>loadField(VariantName.LF_datatype);    
   }
@@ -79,36 +85,44 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
     throw new ReadOnlyException();
   }
 
+  @Override
   public String getValue() {
     return this.<String>loadField(VariantName.LF_value);    
   }
 
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public Reader getReader() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public long getLength() {
     Number length = this.<Number>loadField(VariantName.LF_length);
     long len = (length == null ? 0 : length.longValue());
@@ -122,14 +136,17 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(VariantName.LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
@@ -138,10 +155,12 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(VariantName.LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
   }
@@ -150,6 +169,7 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyVariantName", (VariantNameIF)this);
   }

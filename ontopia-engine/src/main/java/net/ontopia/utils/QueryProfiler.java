@@ -208,6 +208,7 @@ public class QueryProfiler {
       if (hasNext) traverseNum++;
     }
 
+    @Override
     public String toString() {
       if (name == null)
         return null;
@@ -218,6 +219,7 @@ public class QueryProfiler {
 
   static class EventComparator implements Comparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       Event e1 = (Event)o1;
       Event e2 = (Event)o2;

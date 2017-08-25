@@ -252,6 +252,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * PUBLIC: Writes out the given topic map.
    */
+  @Override
   public void write(TopicMapIF tm) throws IOException {
     LocatorIF baseLocator = tm.getStore().getBaseAddress();
     base = (baseLocator == null) ? null : baseLocator.getExternalForm();
@@ -1401,6 +1402,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class TopicComparator implements Comparator<TopicIF> {
 
+    @Override
     public int compare(TopicIF t1, TopicIF t2) {
       int retVal = 0;
 
@@ -1436,6 +1438,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class ElementIdComparator implements Comparator<TopicIF> {
 
+    @Override
     public int compare(TopicIF o1, TopicIF o2) {
       return lazyStringCompare(getElementId(o1),
           getElementId(o2));
@@ -1465,6 +1468,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
           new AssociationRoleFrequencyComparator());
     }
 
+    @Override
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       int retVal = lazyStringCompare(lazyTypeElementId(assoc1),
           lazyTypeElementId(assoc2));
@@ -1512,6 +1516,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class RoleTypeComparator implements Comparator<AssociationRoleIF> {
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
           lazyTypeElementId(ar2));
@@ -1525,6 +1530,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class RolePlayerComparator implements Comparator<AssociationRoleIF> {
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyPlayerElementId(ar1),
           lazyPlayerElementId(ar2));
@@ -1546,6 +1552,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       associationRoleComparator = new AssociationRoleComparator();
     }
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Lookup how many times the current combination of association,
       // role-type and role-player occurrs in this topic map.
@@ -1573,6 +1580,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class AssociationRoleComparator implements Comparator<AssociationRoleIF> {
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Compare the IDs of the role types.
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
@@ -1603,6 +1611,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class TopicNameComparator implements Comparator<TopicNameIF> {
 
+    @Override
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
       if (Objects.equals(bn1, bn2))
         return 0;
@@ -1621,6 +1630,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class OccurrenceComparator implements Comparator<OccurrenceIF> {
 
+    @Override
     public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
       if (occ1 == occ2)
         return 0;
@@ -1660,6 +1670,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class VariantComparator implements Comparator<VariantNameIF> {
 
+    @Override
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
       if (Objects.equals(vn1, vn2))
         return 0;
@@ -1710,6 +1721,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       iteratorComparator = new IteratorComparator<E>(betweenComp);
     }
 
+    @Override
     public int compare(Collection<E> c1, Collection<E> c2) {
       if (c1 == c2)
         return 0;
@@ -1754,6 +1766,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       this.withinComp = withinComparator;
     }
 
+    @Override
     public int compare(Collection<E> o1, Collection<E> o2) {
       if (o1 == o2)
         return 0;
@@ -1786,6 +1799,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     }
 
+    @Override
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       // Compare the sortes sets of roles element-wise.
       return iteratorComparator.compare(sort(assoc1.getRoles(),
@@ -1800,6 +1814,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class SupersubRoleComparator implements Comparator<AssociationRoleIF> {
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = 0;
 
@@ -1843,6 +1858,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * @param properties 
    */
   @SuppressWarnings("unchecked")
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_PRESERVE_IDS);
     if ((value != null) && (value instanceof Boolean)) {

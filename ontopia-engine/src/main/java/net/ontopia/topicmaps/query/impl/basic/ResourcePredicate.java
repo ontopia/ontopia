@@ -53,14 +53,17 @@ public class ResourcePredicate implements BasicPredicateIF {
       .getIndex("net.ontopia.topicmaps.core.index.OccurrenceIndexIF");
   }
   
+  @Override
   public String getName() {
     return "resource";
   }
 
+  @Override
   public String getSignature() {
     return "ov s";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -72,6 +75,7 @@ public class ResourcePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.BIG_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

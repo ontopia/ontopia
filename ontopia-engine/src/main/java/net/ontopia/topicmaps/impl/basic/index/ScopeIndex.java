@@ -197,6 +197,7 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
     ScopedIF_addTheme(CollectionMap<TopicIF, S> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(S scoped, String event, TopicIF new_value, TopicIF old_value) {
       // Register scope
       Collection<TopicIF> scope = scoped.getScope();
@@ -216,6 +217,7 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
     ScopedIF_removeTheme(CollectionMap<TopicIF, S> objects) {
       this.objects = objects;
     }
+    @Override
     public void processEvent(S scoped, String event, TopicIF new_value, TopicIF old_value) {
       // Register themes
       Collection<TopicIF> scope = scoped.getScope();
@@ -238,6 +240,7 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
       this.objects = objects;
       this.child_event = child_event;
     }
+    @Override
     public void processEvent(Object object, String event, S added, S old_value) {
       // Register themes
       Collection<TopicIF> scope = added.getScope();
@@ -260,6 +263,7 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
       this.objects = objects;
       this.child_event = child_event;
     }
+    @Override
     public void processEvent(Object object, String event, S new_value, S removed) {
       // Unregister themes
       Collection<TopicIF> scope = removed.getScope();

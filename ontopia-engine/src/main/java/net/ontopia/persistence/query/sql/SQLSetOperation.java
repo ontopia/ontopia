@@ -55,10 +55,12 @@ public class SQLSetOperation implements SQLExpressionIF {
     return sets;
   }
 
+  @Override
   public int getType() {
     return SET_OPERATION;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     String op;

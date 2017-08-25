@@ -43,6 +43,7 @@ public abstract class ReifiableImpl extends ConstructImpl implements
    * @see org.tmapi.core.Reifiable#getReifier()
    */
   
+  @Override
   public TopicImpl getReifier() {
     return topicMap.wrapTopic(((ReifiableIF) getWrapped()).getReifier());
   }
@@ -53,6 +54,7 @@ public abstract class ReifiableImpl extends ConstructImpl implements
    * @see org.tmapi.core.Reifiable#setReifier(org.tmapi.core.Topic)
    */
   
+  @Override
   public void setReifier(Topic reifier)
       throws ModelConstraintException {
     if (reifier!=null)

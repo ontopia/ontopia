@@ -38,6 +38,7 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     super(name);
   }
 
+  @Override
   protected void setUp() throws Exception {
     clsix = (ClassInstanceIndexIF) super.setUp("ClassInstanceIndexIF");
     type = builder.makeTopic();

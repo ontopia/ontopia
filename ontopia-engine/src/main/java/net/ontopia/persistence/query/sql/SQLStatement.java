@@ -70,14 +70,17 @@ public class SQLStatement implements SQLStatementIF {
     this.select_offsets = FieldUtils.getResultSetOffsets(select_fields);
   }
 
+  @Override
   public void setObjectAccess(ObjectAccessIF oaccess) {
     this.oaccess = oaccess;
   }
 
+  @Override
   public void setAccessRegistrar(AccessRegistrarIF registrar) {
     this.registrar = registrar;
   }
 
+  @Override
   public TicketIF getTicket() {
     return registrar.getTicket();
   }
@@ -86,6 +89,7 @@ public class SQLStatement implements SQLStatementIF {
     this.fetchSize = fetchSize;
   }
 
+  @Override
   public int getWidth() {
     return width;
   }
@@ -102,6 +106,7 @@ public class SQLStatement implements SQLStatementIF {
   //!   return select_fields;
   //! }
   
+  @Override
   public ResultSet executeQuery(Connection conn) throws Exception {
     if (log.isDebugEnabled()) log.debug("Executing: " + sql);
     PreparedStatement stm = conn.prepareStatement(sql);
@@ -109,14 +114,17 @@ public class SQLStatement implements SQLStatementIF {
     return stm.executeQuery();
   }
   
+  @Override
   public ResultSet executeQuery(Connection conn, Object[] params) throws Exception {
     return param_processor.executeQuery(conn, sql, params);
   }
 
+  @Override
   public ResultSet executeQuery(Connection conn, Map params) throws Exception {
     return param_processor.executeQuery(conn, sql, params);
   }
   
+  @Override
   public Object readValue(TicketIF ticket, ResultSet rs, int index, boolean lookup_identity) throws Exception {
               
     // FIXME: Should possibly skip the inline data retrieval if
@@ -157,6 +165,7 @@ public class SQLStatement implements SQLStatementIF {
     }
   }
 
+  @Override
   public Object[] readValues(TicketIF ticket, ResultSet rs, Object[] values, boolean lookup_identities) throws Exception {
     for (int i=0; i < width; i++) {
       values[i] = readValue(ticket, rs, i, lookup_identities);
@@ -164,6 +173,7 @@ public class SQLStatement implements SQLStatementIF {
     return values;
   }
   
+  @Override
   public Object[] readValues(TicketIF ticket, ResultSet rs, boolean lookup_identities) throws Exception {
     Object[] values = new Object[width];
     for (int i=0; i < width; i++) {
@@ -172,6 +182,7 @@ public class SQLStatement implements SQLStatementIF {
     return values;
   }
 
+  @Override
   public String toString() {
     return getSQL();
   }

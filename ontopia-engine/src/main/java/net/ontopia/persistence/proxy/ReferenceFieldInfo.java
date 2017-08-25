@@ -60,18 +60,22 @@ public class ReferenceFieldInfo extends AbstractFieldInfo {
     this.column_count = (value_columns == null ? 0 : value_columns.length);
   }
 
+  @Override
   public ClassInfoIF getValueClassInfo() {
     return value_cinfo;
   }
 
+  @Override
   public int getColumnCount() {
     return column_count;
   }
   
+  @Override
   public boolean isIdentityField() {
     return true;
   }
   
+  @Override
   public String[] getValueColumns() {
     return value_columns;
   }

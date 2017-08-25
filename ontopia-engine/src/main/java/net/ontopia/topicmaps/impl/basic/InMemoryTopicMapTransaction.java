@@ -78,10 +78,12 @@ public class InMemoryTopicMapTransaction extends AbstractTopicMapTransaction {
     this.imanager = new IndexManager(this, cfactory, emanager, otree, sicache);
   }
 
+  @Override
   public boolean validate() {
     return !invalid;
   }
 
+  @Override
   public TopicMapTransactionIF createNested() {
     // Nested transactions are not supported
     throw new OntopiaUnsupportedException("Nested transactions not supported.");

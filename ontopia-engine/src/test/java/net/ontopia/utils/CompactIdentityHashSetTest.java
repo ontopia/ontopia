@@ -26,10 +26,12 @@ public class CompactIdentityHashSetTest extends CompactHashSetTest {
     super(name);
   }
 
+  @Override
   public void setUp() {
     set = new CompactIdentityHashSet();
   }
 
+  @Override
   public void testProbabilistic() {
     // NOTE: This test won't work with the IdentityHashSet since it
     // uses pointer comparsion, and none of the generated objects are

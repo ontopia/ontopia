@@ -128,10 +128,12 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
 
   // ==== READER IMPLEMENTATION ====
   
+  @Override
   public TopicMapIF read() throws IOException {
     return read(getStoreFactory());
   }
 
+  @Override
   public Collection<TopicMapIF> readAll() throws IOException {
     return readAll(getStoreFactory());
   }
@@ -152,12 +154,14 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
    * Default implemenentation does not accept any additional properties
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }
 
   // ==== IMPORTER IMPLEMENTATION ====
 
+  @Override
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();

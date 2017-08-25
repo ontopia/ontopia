@@ -30,6 +30,7 @@ public class TopicMapSourceManagerTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     manager = new TopicMapSourceManager();
   }

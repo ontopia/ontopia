@@ -65,10 +65,12 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
 
   // --- TopicMapSourceIF implementation
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized Collection getReferences() {
     if (reference == null) refresh();
     if (reference == null)
@@ -77,6 +79,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       return Collections.singleton(reference);
   }
   
+  @Override
   public synchronized void refresh() {
     if (match == null)
       throw new OntopiaRuntimeException("match property must be specified on source with id '" + getId() + "'.");
@@ -169,18 +172,22 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
     }
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
   
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -217,10 +224,12 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
     this.pattern = pattern;
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }

@@ -47,10 +47,12 @@ public class TologQueryProcessorFactory implements QueryProcessorFactoryIF {
   private static String PROP_IMPLEMENTATION =
     "net.ontopia.topicmaps.query.core.QueryProcessorIF";
   
+  @Override
   public String getQueryLanguage() {
     return NAME;
   }
 
+  @Override
   public QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
       LocatorIF base, Map<String, String> properties) {
     String propval = null;

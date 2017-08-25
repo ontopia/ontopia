@@ -67,6 +67,7 @@ public class ChainedIndex<K, E> implements LookupIndexIF<K, E> {
     this.rsize = removers.length;
   }
   
+  @Override
   public E get(K key) {
     // Return result of first non-null get(key) call.
     for (int i=0; i < gsize; i++) {
@@ -97,6 +98,7 @@ public class ChainedIndex<K, E> implements LookupIndexIF<K, E> {
     this.missvalue = missvalue;
   }
   
+  @Override
   public E put(K key, E value) {
     // Call put(key) on all putters
     E rval = null;
@@ -106,6 +108,7 @@ public class ChainedIndex<K, E> implements LookupIndexIF<K, E> {
     return rval;
   }
   
+  @Override
   public E remove(K key) {
     // Call remove(key) on all removers
     E rval = null;

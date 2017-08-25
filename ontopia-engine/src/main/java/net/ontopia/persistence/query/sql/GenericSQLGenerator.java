@@ -317,6 +317,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
+  @Override
   public SQLStatementIF createSQLStatement(SQLQuery query) {
 
     // Create SQL query from query components
@@ -1981,6 +1982,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // Features supported
   // -----------------------------------------------------------------------------
 
+  @Override
   public boolean supportsLimitOffset() {
     return true;
   }

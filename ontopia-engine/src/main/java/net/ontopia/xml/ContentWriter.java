@@ -41,6 +41,7 @@ public class ContentWriter extends DefaultHandler {
     out = new OutputStreamWriter(new FileOutputStream(file), encoding);
   }
   
+  @Override
   public void startElement(String namespaceURI,
                            String localName,
                            String qName,
@@ -60,6 +61,7 @@ public class ContentWriter extends DefaultHandler {
     content = false;
   }
 
+  @Override
   public void characters(char[] buf, int start, int len) throws SAXException {
     try {
       out.write(buf, start, len);
@@ -70,6 +72,7 @@ public class ContentWriter extends DefaultHandler {
     content = true;
   }
   
+  @Override
   public void endElement(String namespaceURI,
                          String localName,
                          String qName) throws SAXException {
@@ -85,6 +88,7 @@ public class ContentWriter extends DefaultHandler {
     content = true;
   }
 
+  @Override
   public void endDocument() throws SAXException {
     try {
       out.close();

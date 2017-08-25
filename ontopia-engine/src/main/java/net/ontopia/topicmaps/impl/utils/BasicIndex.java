@@ -35,6 +35,7 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   
   protected Map<String, EventListenerIF> handlers = new HashMap<String, EventListenerIF>();
 
+  @Override
   public IndexIF getIndex() {
     return this;
   }
@@ -43,6 +44,7 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (handlers.containsKey(event)) {
       handlers.get(event).processEvent(object, event, new_value, old_value);
@@ -54,6 +56,7 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   // -----------------------------------------------------------------------------
 
   public abstract class EventHandler<K, V> implements EventListenerIF<K, V> {
+    @Override
     public abstract void processEvent(K object, String event, V new_value, V old_value);
     protected void addEvent(Object object, String event, Object value) {
       handlers.get(event).processEvent(object, event, value, null);

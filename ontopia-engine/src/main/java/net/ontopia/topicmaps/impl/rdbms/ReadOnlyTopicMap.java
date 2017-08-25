@@ -77,6 +77,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return TopicMap.fields.length;
   }
@@ -85,14 +86,17 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return TopicMap.CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : TopicMap.CLASS_INDICATOR + id.getKey(0));
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return this;
   }
@@ -101,6 +105,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // TopicMapIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicMapStoreIF getStore() {
     return transaction.getStore();
   }
@@ -109,10 +114,12 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     return transaction;
   }
 
+  @Override
   public TopicMapBuilderIF getBuilder() {
     return getTransaction().getBuilder();
   }
 
+  @Override
   public Object getIndex(String name) {
     return getTransaction().getIndexManager().getIndex(name);
   }
@@ -125,6 +132,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     this.transaction = transaction;
   }
   
+  @Override
   public Collection<TopicIF> getTopics() {
     Object[] params = new Object[] { getTopicMap() };
     return new QueryCollection(txn, "TopicMap.getTopics_size", params,
@@ -145,6 +153,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     throw new ReadOnlyException();
   }
   
+  @Override
   public Collection getAssociations() {
     Object[] params = new Object[] { getTopicMap() };
     return new QueryCollection(txn, "TopicMap.getAssociations_size", params,
@@ -165,6 +174,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     throw new ReadOnlyException();
   }
 
+  @Override
   public TMObjectIF getObjectById(String object_id) {
     if (object_id == null) throw new NullPointerException("null is not a valid argument.");
 
@@ -229,6 +239,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     }
   }
 
+  @Override
   public void clear() {
     throw new ReadOnlyException();    
   }
@@ -237,6 +248,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyTopicMap", (TopicMapIF)this);
   }
@@ -245,14 +257,17 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // Subject identity cache
   // ---------------------------------------------------------------------------
 
+  @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     return transaction.getObjectByItemIdentifier(locator);
   }
 
+  @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
     return transaction.getTopicBySubjectLocator(locator);
   }
 
+  @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     return transaction.getTopicBySubjectIdentifier(locator);
   }
@@ -298,10 +313,12 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(TopicMap.LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
   }

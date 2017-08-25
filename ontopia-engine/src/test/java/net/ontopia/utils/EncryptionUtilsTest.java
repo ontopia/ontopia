@@ -34,6 +34,7 @@ public class EncryptionUtilsTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws IOException {
     String root = TestFileUtils.getTestdataOutputDirectory();
     TestFileUtils.verifyDirectory(root, testdataDirectory);

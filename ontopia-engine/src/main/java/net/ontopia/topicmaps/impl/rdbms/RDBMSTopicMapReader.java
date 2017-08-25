@@ -53,6 +53,7 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
     this.topicmap_id = topicmap_id;
   }
   
+  @Override
   public TopicMapIF read() throws java.io.IOException {
     if (properties != null)
       return new RDBMSTopicMapStore(properties, topicmap_id).getTopicMap();
@@ -62,6 +63,7 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
       return new RDBMSTopicMapStore(topicmap_id).getTopicMap();
   }
 
+  @Override
   public Collection<TopicMapIF> readAll() throws java.io.IOException {
     return (Collection<TopicMapIF>) Collections.singleton(read());
   }        
@@ -71,6 +73,7 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
    * properties file.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }

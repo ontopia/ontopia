@@ -42,6 +42,7 @@ public class LTMTopicMapReference extends AbstractOntopolyURLReference {
 
   // using loadTopicMap inherited from AbstractOntopolyURLReference
 
+  @Override
   public TopicMapReaderIF getImporter() {
     try {
       if (base_address == null)

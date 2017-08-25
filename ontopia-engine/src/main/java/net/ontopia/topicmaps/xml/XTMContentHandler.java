@@ -245,6 +245,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
    * INTERNAL: Registers the handler with the parser and configures the
    * parser.
    */
+  @Override
   public void register(XMLReader parser) {
     super.register(parser);
     try {
@@ -264,6 +265,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // Document events
   // --------------------------------------------------------------------------
   
+  @Override
   public void startDocument () {
     
     // Initialize variables
@@ -298,6 +300,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     this.processed_documents_from_parent.add(getBaseAddress());
   }
   
+  @Override
   public void endDocument () {
     // Copy list of accumulated processed documents to parent list
     this.processed_documents_from_parent.addAll(processed_documents_accumulated);
@@ -306,6 +309,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // log.debug("Info map: " + info);
   }
   
+  @Override
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     try {
     
@@ -786,11 +790,13 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   }
   }
 
+  @Override
   public void characters (char ch[], int start, int length) {
     if (keep_content) 
       content.append(ch, start, length);      
   }
   
+  @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
     //System.out.println("E: " + qName + " (" + getLocationInfo() + ")");
     try {
@@ -1022,10 +1028,12 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     
   }
   
+  @Override
   public void startPrefixMapping(String prefix, String uri) {
     // log.debug("Start prefix:   {" + uri + "} '" + prefix + "'");
   }
   
+  @Override
   public void endPrefixMapping(String prefix) {
     // log.debug("End prefix: '" + prefix + "'");
   }
@@ -1380,58 +1388,76 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     protected List<LocatorIF> sourceLocators = new ArrayList<>();
 
     // implementations of methods collecting lazy data
+    @Override
     public void addSubjectLocator(LocatorIF subject) throws ConstraintViolationException {
       this.subjectLocators.add(subject);
     }
+    @Override
     public void addSubjectIdentifier(LocatorIF subject_identifier) throws ConstraintViolationException {
       this.subjectIndicators.add(subject_identifier);
     }
+    @Override
     public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
       this.sourceLocators.add(source_locator);
     }
     // methods below should never be invoked  
+    @Override
     public Collection<LocatorIF> getSubjectLocators() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<LocatorIF> getSubjectIdentifiers() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void removeSubjectLocator(LocatorIF subject_identifier) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void removeSubjectIdentifier(LocatorIF subject_identifier) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void removeItemIdentifier(LocatorIF source_locator) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<TopicNameIF> getTopicNames() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<OccurrenceIF> getOccurrences() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationRoleIF> getRoles() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationIF> getAssociations() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void merge(TopicIF topic) {
       throw new UnsupportedOperationException();
     }
@@ -1444,30 +1470,39 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     public void removeTheme(TopicIF theme) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public String getObjectId() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public boolean isReadOnly() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public TopicMapIF getTopicMap() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<LocatorIF> getItemIdentifiers() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<TopicIF> getTypes() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void addType(TopicIF type) {
       this.types.add(type);
     }
+    @Override
     public void removeType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public ReifiableIF getReified() {
       throw new UnsupportedOperationException();
     }
@@ -1630,33 +1665,40 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // the purpose of this machinery is to ensure that URIs are resolved
   // correctly inside external entities.
   
+  @Override
   public void startEntity(String name) {
     String sysid = entities.get(name);
     if (sysid != null)
       bases.push(createLocator(sysid));
   }
   
+  @Override
   public void endEntity(String name) {
     if (entities.get(name) != null)
       bases.pop();
   }
   
+  @Override
   public void comment(char[] ch, int start, int length) {
     // no-op
   }
   
+  @Override
   public void startCDATA() {
     // no-op
   }
   
+  @Override
   public void endCDATA() {
     // no-op
   }
   
+  @Override
   public void startDTD(String name, String publicId, String systemId) {
     // no-op
   }
   
+  @Override
   public void endDTD() {
     // no-op
   }
@@ -1667,21 +1709,25 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   
   // we must intercept these events in order to know the URIs of entities
   
+  @Override
   public void externalEntityDecl(String name,  String publicId, 
                                  String systemId) {
     if (systemId != null)
       entities.put(name, systemId);
   }
   
+  @Override
   public void attributeDecl(String eName, String aName, String type,
                             String mode, String value) {
     // no-op
   }
   
+  @Override
   public void elementDecl(String name, String model) {
     // no-op
   }
   
+  @Override
   public void internalEntityDecl(String name, String value) {
     // no-op
   }

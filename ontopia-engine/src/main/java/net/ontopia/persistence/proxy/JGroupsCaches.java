@@ -38,10 +38,12 @@ public class JGroupsCaches implements CachesIF {
     this.cluster = cluster;
   }
   
+  @Override
   public <K, V> Map<K, V> createDataCache() {
     return Collections.synchronizedMap(this.<K, V>createSoftHashMap());
   }
   
+  @Override
   public <K, V>CacheIF<K, V> createCache(int cacheType, IdentityIF namespace) {
     switch (cacheType) {
     case CachesIF.QUERY_CACHE_SRCLOC:

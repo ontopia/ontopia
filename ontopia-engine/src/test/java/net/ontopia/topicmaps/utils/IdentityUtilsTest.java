@@ -37,6 +37,7 @@ public class IdentityUtilsTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap = makeTopicMap();
     builder = topicmap.getBuilder();

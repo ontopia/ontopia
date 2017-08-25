@@ -49,10 +49,12 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
     occindex = (OccurrenceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.OccurrenceIndexIF");
   }
 
+  @Override
   public String getSignature() {
     return "t s z?"; // third arg is PredicateOptions, inserted by optimizer
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -64,6 +66,7 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
       return PredicateDrivenCostEstimator.BIG_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

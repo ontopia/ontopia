@@ -44,6 +44,7 @@ public class BasicCountComponent implements QueryComponentIF {
     this.qproc = qproc;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Map arguments)
     throws InvalidQueryException {
     return qproc.count(query, matches);

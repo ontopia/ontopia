@@ -101,6 +101,7 @@ public abstract class AbstractClusterTest extends ReceiverAdapter {
   // JGroups MessageListener implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public abstract void receive(Message msg);
 
   // -----------------------------------------------------------------------------

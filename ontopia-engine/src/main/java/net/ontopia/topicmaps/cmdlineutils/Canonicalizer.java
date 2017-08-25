@@ -123,6 +123,7 @@ public class Canonicalizer {
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
     private boolean readall = false;
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 'a')
         readall = true;

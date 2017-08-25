@@ -32,6 +32,7 @@ public class NotDecider<T> implements DeciderIF<T> {
     this.decider = decider;
   }
   
+  @Override
   public boolean ok(T object) {
     return !decider.ok(object);
   }

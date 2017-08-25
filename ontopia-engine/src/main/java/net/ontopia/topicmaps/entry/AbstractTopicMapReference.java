@@ -55,48 +55,59 @@ public abstract class AbstractTopicMapReference
     this.title = title;
   }
   
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
 
+  @Override
   public TopicMapSourceIF getSource() {
     return source;
   }
 
+  @Override
   public void setSource(TopicMapSourceIF source) {
     this.source = source;
   }
 
+  @Override
   public boolean isOpen() {
     return isopen;
   }
 
+  @Override
   public synchronized void open() {
     if (isDeleted()) 
       throw new StoreDeletedException("Topic map has been deleted through this reference.");
     this.isopen = true;
   }
 
+  @Override
   public synchronized void close() {
     this.isopen = false;
   }
 
+  @Override
   public boolean isDeleted() {
     return deleted;
   }
 
+  @Override
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -111,6 +122,7 @@ public abstract class AbstractTopicMapReference
     this.deleted = true;
   }
 
+  @Override
   public synchronized void clear() throws IOException {
     // naive implementation that gets a store and clears it
     TopicMapStoreIF store = null;
@@ -122,11 +134,13 @@ public abstract class AbstractTopicMapReference
     }
   }
 
+  @Override
   public abstract TopicMapStoreIF createStore(boolean readonly)
     throws IOException;
 
   // -- store pooling
 
+  @Override
   public void storeClosed(TopicMapStoreIF store) {
     // no-op
   }

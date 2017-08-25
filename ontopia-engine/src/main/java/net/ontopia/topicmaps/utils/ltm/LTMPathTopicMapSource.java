@@ -55,6 +55,7 @@ public class LTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     super(path, filter);
   }
 
+  @Override
   public TopicMapReferenceIF createReference(URL url, String id, String title,
                                              LocatorIF base) {
     LTMTopicMapReference ref = new LTMTopicMapReference(url, id, title, base);
@@ -66,6 +67,7 @@ public class LTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     return ref;
   }
 
+  @Override
   public TopicMapWriterIF getWriter(File file) throws IOException {
     return new LTMTopicMapWriter(file);
   }

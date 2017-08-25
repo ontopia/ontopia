@@ -139,6 +139,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
 
   // --- TopicMapReaderIF implementation
 
+  @Override
   public TopicMapIF read() throws IOException {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     store.setBaseAddress(base_address);
@@ -151,6 +152,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     return topicmap;
   }
   
+  @Override
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
@@ -182,6 +184,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     }
   }
 
+  @Override
   public Collection readAll() throws IOException {
     return Collections.singleton(read());
   }
@@ -214,6 +217,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
       this.nsprefixes = new HashMap();
     }
 
+    @Override
     public void startElement(String uri, String name, String qName,
                              Attributes atts)
       throws SAXException {
@@ -301,6 +305,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
 //       }
     }
 
+    @Override
     public void characters(char ch[], int start, int length) {
       if (state == IDENTIFIER ||
           state == BASENAME ||
@@ -309,6 +314,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         buffer.append(ch, start, length);
     }
 
+    @Override
     public void endElement(String uri, String name, String qName)
       throws SAXException {
       //System.out.println("</" + name + ": " + state);
@@ -388,10 +394,12 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
       }
     }
 
+    @Override
     public void startPrefixMapping(String prefix, String uri) {
       nsprefixes.put(prefix, uri);
     }
 
+    @Override
     public void endPrefixMapping(String prefix) {
       nsprefixes.remove(prefix);
     }
@@ -540,6 +548,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
    * corresponds to the {@link #setValidate(boolean)} method. Only accepts a boolean value.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_VALIDATE);
     if ((value != null) && (value instanceof Boolean)) {

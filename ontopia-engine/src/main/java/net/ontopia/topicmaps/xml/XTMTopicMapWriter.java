@@ -148,6 +148,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
     xtm_version = version;
   }
 
+  @Override
   public void write(TopicMapIF topicmap) throws IOException {
     try {
       if (xtm_version == XTMVersion.XTM_1_0) {
@@ -202,6 +203,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
    * </ul>
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_ADD_IDS);
     if ((value != null) && (value instanceof Boolean)) {

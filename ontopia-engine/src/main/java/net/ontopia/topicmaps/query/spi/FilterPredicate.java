@@ -34,6 +34,7 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
  */
 public abstract class FilterPredicate extends JavaPredicate {
 
+  @Override
   public final QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
     // validate arguments

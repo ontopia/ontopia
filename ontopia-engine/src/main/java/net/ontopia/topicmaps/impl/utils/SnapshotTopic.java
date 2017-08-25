@@ -103,88 +103,109 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   // TopicIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<LocatorIF> getSubjectLocators() {
     return (sublocs == null ? Collections.<LocatorIF>emptyList() : sublocs);
 	}
 
+  @Override
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
     throw new UnsupportedOperationException();
     // should this be throw new ReadOnlyException(); ?
 	}
 
+  @Override
 	public void removeSubjectLocator(LocatorIF subject_locator) {
     throw new UnsupportedOperationException();
     // should this be throw new ReadOnlyException(); ?
 	}
 
+  @Override
   public Collection<LocatorIF> getSubjectIdentifiers() {
     return (subinds == null ? Collections.<LocatorIF>emptyList() : subinds);
   }
 
+  @Override
   public void addSubjectIdentifier(LocatorIF locator) throws ConstraintViolationException {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void removeSubjectIdentifier(LocatorIF loc) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public Collection<TopicIF> getTypes() {
     return (types == null ? Collections.<TopicIF>emptyList() : types);
   }
   
+  @Override
   public void addType(TopicIF type) {
     throw new ReadOnlyException();
   }
   
+  @Override
   public void removeType(TopicIF type) {
     throw new ReadOnlyException();
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNames() {
     return (basenames == null ? Collections.<TopicNameIF>emptyList() : basenames);
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
     return Collections.emptyList();
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrences() {
     return (occurrences == null ? Collections.<OccurrenceIF>emptyList() : occurrences);
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
     return Collections.emptyList();
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     return Collections.emptyList();
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF rtype) {
     return Collections.emptyList();
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF rtype, TopicIF atype) {
     return Collections.emptyList();
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations() {
     return Collections.emptyList();
   }
 
+  @Override
   public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
     return Collections.emptyList();
   }
 
+  @Override
   public void merge(TopicIF topic) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public String toString() {
     return "[SnapshotTopic, " + getObjectId() + "]";
   }
   
+  @Override
 	public ReifiableIF getReified() {
 		return reified;
 	}

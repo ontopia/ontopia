@@ -50,6 +50,7 @@ public class DeciderUtils {
       this.value = value;
     }
     
+    @Override
     public boolean ok(T object) {
       return value;
     }

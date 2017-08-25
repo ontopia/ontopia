@@ -99,6 +99,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    * @return an Iterator over the elements in this set.
    * @see ConcurrentModificationException
    */
+  @Override
   public Iterator<E> iterator() {
     return new CompactHashIterator<E>();
   }
@@ -106,6 +107,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Returns the number of elements in this set (its cardinality).
    */
+  @Override
   public int size() {
     return elements;
   }
@@ -113,6 +115,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Returns <tt>true</tt> if this set contains no elements.
    */
+  @Override
   public boolean isEmpty() {
     return elements == 0;
   }
@@ -123,6 +126,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    * @param o element whose presence in this set is to be tested.
    * @return <tt>true</tt> if this set contains the specified element.
    */
+  @Override
   public boolean contains(Object o) {
     if (o == null) o = nullObject;
     
@@ -152,6 +156,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    * @return <tt>true</tt> if the set did not already contain the specified
    * element.
    */
+  @Override
   public boolean add(Object o) {
     if (o == null) o = nullObject;
 
@@ -205,6 +210,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Removes the specified element from the set.
    */
+  @Override
   public boolean remove(Object o) {
     if (o == null) o = nullObject;
     
@@ -240,6 +246,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Removes all of the elements from this set.
    */
+  @Override
   public void clear() {
     elements = 0;
     for (int ix = 0; ix < objects.length; ix++)
@@ -248,6 +255,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
     modCount++;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] result = new Object[elements];
     Object[] objects = this.objects;
@@ -264,6 +272,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   }
 
   // not sure if this needs to have generics
+  @Override
   public <T> T[] toArray(T[] a) {
     int size = elements;
     if (a.length < size)
@@ -369,11 +378,13 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
       expectedModCount = modCount;
     }
 
+    @Override
     public boolean hasNext() {
       return index < objects.length;
     }
 
     @SuppressWarnings("empty-statement")
+    @Override
     public T next() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
@@ -394,6 +405,7 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
         return (T) objects[lastReturned];
     }
 
+    @Override
     public void remove() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();

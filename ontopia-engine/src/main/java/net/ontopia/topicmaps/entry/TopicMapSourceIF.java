@@ -86,6 +86,7 @@ public interface TopicMapSourceIF extends AutoCloseable {
    *
    * @since 5.3.0
    */
+  @Override
   void close();
 
   /**

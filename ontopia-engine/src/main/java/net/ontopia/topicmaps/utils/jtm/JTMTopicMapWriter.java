@@ -130,6 +130,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param tm The topic map to be serialized as JTM.
    */
+  @Override
   public void write(TopicMapIF tm) throws IOException {
     write((TMObjectIF) tm);
   }
@@ -747,6 +748,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * JTMTopicMapWriter has no additional properties.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }

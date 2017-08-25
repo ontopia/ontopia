@@ -85,6 +85,7 @@ public class JDOField implements JDOValueIF {
     this.evaluatable = evaluatable;
   }
 
+  @Override
   public int getType() {
     return FIELD;
   }
@@ -101,6 +102,7 @@ public class JDOField implements JDOValueIF {
     return evaluatable;
   }
 
+  @Override
   public int hashCode() {
     int hashCode = root.hashCode();
     for (int ix = 0; ix < path.length; ix++) {
@@ -110,6 +112,7 @@ public class JDOField implements JDOValueIF {
     return hashCode;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOField) {
@@ -121,6 +124,7 @@ public class JDOField implements JDOValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(root.toString());
     sb.append('.');
@@ -129,6 +133,7 @@ public class JDOField implements JDOValueIF {
     return sb.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(root);
   }

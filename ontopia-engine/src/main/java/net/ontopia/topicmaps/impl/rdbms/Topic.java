@@ -59,6 +59,7 @@ public class Topic extends TMObject implements TopicIF {
                                             "indicators", "types", "names",
                                             "occurs", "roles", "reified"};
   
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_topicmap);
@@ -86,6 +87,7 @@ public class Topic extends TMObject implements TopicIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
   
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -94,10 +96,12 @@ public class Topic extends TMObject implements TopicIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
   
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
   
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
@@ -124,10 +128,12 @@ public class Topic extends TMObject implements TopicIF {
   // TopicIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<LocatorIF> getSubjectLocators() {
     return this.<LocatorIF>loadCollectionField(LF_subjects);
   }
 
+  @Override
   public void addSubjectLocator(LocatorIF subject_locator)
     throws ConstraintViolationException {
     if (subject_locator == null)
@@ -150,6 +156,7 @@ public class Topic extends TMObject implements TopicIF {
     valueAdded(LF_subjects, subject_locator, true);
   }
 
+  @Override
   public void removeSubjectLocator(LocatorIF subject_locator) {
     if (subject_locator == null) throw new NullPointerException(MSG_NULL_ARGUMENT);
     // Notify topic map
@@ -170,10 +177,12 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_subjects, subject_locator, true);
   }
 
+  @Override
   public Collection<LocatorIF> getSubjectIdentifiers() {
     return this.<LocatorIF>loadCollectionField(LF_indicators);
   }
 
+  @Override
   public void addSubjectIdentifier(LocatorIF subject_indicator)
     throws ConstraintViolationException {
     if (subject_indicator == null) throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -195,6 +204,7 @@ public class Topic extends TMObject implements TopicIF {
     valueAdded(LF_indicators, subject_indicator, true);
   }
 
+  @Override
   public void removeSubjectIdentifier(LocatorIF subject_indicator) {
     if (subject_indicator == null) throw new NullPointerException(MSG_NULL_ARGUMENT);
     // Notify topic map
@@ -215,10 +225,12 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_indicators, subject_indicator, true);
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNames() {
     return this.<TopicNameIF>loadCollectionField(LF_names);
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
     return ((TopicMap)getTopicMap()).getTopicNamesByType(this, type);
   }
@@ -254,10 +266,12 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_names, name, false);
   }
   
+  @Override
   public Collection<OccurrenceIF> getOccurrences() {
     return this.<OccurrenceIF>loadCollectionField(LF_occurrences);
   }
   
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
     return ((TopicMap)getTopicMap()).getOccurrencesByType(this, type);
   }
@@ -294,10 +308,12 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_occurrences, occurrence, false);
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     return this.<AssociationRoleIF>loadCollectionField(LF_roles);
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null)
       throw new NullPointerException("Role type cannot be null.");
@@ -324,6 +340,7 @@ public class Topic extends TMObject implements TopicIF {
     }
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype,
                                                       TopicIF assoc_type) {
     if (roletype == null)
@@ -362,14 +379,17 @@ public class Topic extends TMObject implements TopicIF {
     }
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations() {
     return ((TopicMap)getTopicMap()).getAssocations(this);
   }
 
+  @Override
   public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
     return ((TopicMap)getTopicMap()).getAssociationsByType(this, type);
   }
   
+  @Override
   public void merge(TopicIF topic) {
     CrossTopicMapException.check(topic, this);
     net.ontopia.topicmaps.utils.MergeUtils.mergeInto(this, topic);
@@ -393,16 +413,19 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_roles, assoc_role, false);
   }
 
+  @Override
   public void remove() {
     TopicMap topicmap = (TopicMap)getTopicMap();
     if (topicmap != null)
       topicmap.removeTopic(this);
   }
   
+  @Override
   public Collection<TopicIF> getTypes() {
     return this.<TopicIF>loadCollectionField(LF_types);
   }
   
+  @Override
   public void addType(TopicIF type) {
     if (type == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -413,6 +436,7 @@ public class Topic extends TMObject implements TopicIF {
     valueAdded(LF_types, type, true);
   }
   
+  @Override
   public void removeType(TopicIF type) {
     if (type == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -423,6 +447,7 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_types, type, true);
   }
 
+  @Override
   public ReifiableIF getReified() {
     String reifiedId = this.<String>loadField(Topic.LF_reified);
     if (reifiedId == null)
@@ -442,6 +467,7 @@ public class Topic extends TMObject implements TopicIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
   
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.Topic", (TopicIF) this);
   }

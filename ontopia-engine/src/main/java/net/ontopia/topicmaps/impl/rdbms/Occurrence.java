@@ -64,6 +64,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   protected static final int LF_reifier = 9;
   protected static final String[] fields = {"sources", "topicmap", "topic", "scope", "type", "datatype", "length", "hashcode", "value", "reifier"};
 
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_topicmap);
@@ -92,6 +93,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -100,10 +102,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
@@ -112,6 +116,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // OccurrenceIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public void remove() {
     Topic parent = (Topic)getTopic();
     if (parent != null) {
@@ -120,6 +125,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     }
   }
 
+  @Override
   public TopicIF getTopic() {
     return this.<TopicIF>loadField(LF_topic);
   }
@@ -140,6 +146,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     valueChanged(LF_topicmap, topicmap, true);
   }
 
+  @Override
   public LocatorIF getDataType() {
     return this.<LocatorIF>loadField(LF_datatype);    
   }
@@ -152,6 +159,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     valueChanged(LF_datatype, _datatype, true);
   }
 
+  @Override
   public String getValue() {
     Object value = loadField(LF_value);
     if (value instanceof String) {
@@ -175,10 +183,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     }
   }
 
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     if (value == null)
       throw new NullPointerException("Occurrence value must not be null.");
@@ -199,6 +209,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     valueChanged(LF_value, value, true);
   }
 
+  @Override
   public Reader getReader() {
     Object value = loadField(LF_value);
     if (value instanceof String) {
@@ -213,6 +224,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     }
   }
 
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     if (value == null)
       throw new NullPointerException("Occurrence value must not be null.");
@@ -225,6 +237,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
   }
 
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType()))
       return null;
@@ -232,6 +245,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     if (locator == null)
       throw new NullPointerException("Occurrence locator must not be null.");
@@ -240,6 +254,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
+  @Override
   public long getLength() {
     Number length = this.<Number>loadField(LF_length);
     long len = (length == null ? 0 : length.longValue());
@@ -253,10 +268,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
@@ -267,6 +284,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     valueAdded(LF_scope, theme, true);
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
@@ -281,10 +299,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return this.<TopicIF>loadField(LF_type);
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null)
       throw new NullPointerException("Occurrence type must not be null.");
@@ -299,10 +319,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
@@ -322,6 +344,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.Occurrence", (OccurrenceIF)this);
   }

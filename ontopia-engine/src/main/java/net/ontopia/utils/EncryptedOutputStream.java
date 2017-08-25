@@ -37,6 +37,7 @@ public class EncryptedOutputStream extends OutputStream {
     this.myOutput = myOutputStream;
   }
 
+  @Override
   public void write(int b) throws IOException {
     int cipher = b ^ KEY;
     myOutput.write(cipher);

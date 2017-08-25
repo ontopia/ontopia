@@ -196,6 +196,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
     return validate;
   }
   
+  @Override
   public TopicMapIF read() throws IOException {
     return read(getStoreFactory());
   }
@@ -283,6 +284,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
     return (TopicMapIF)topicmaps.next();
   }
 
+  @Override
   public Collection readAll() throws IOException {
     return readAll(getStoreFactory());
   }
@@ -297,6 +299,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
     return result;      
   }
 
+  @Override
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
@@ -320,6 +323,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
    * method.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object o = properties.get(PROPERTY_VALIDATION);
     if ((o != null) && (o instanceof Boolean)) {

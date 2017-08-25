@@ -298,6 +298,7 @@ public class XMLConfigSource {
       this.environ = environ;
     }
     
+    @Override
     public void startElement(String uri, String name, String qName,
                               Attributes atts) throws SAXException {
       if ("source".equals(qName)) {
@@ -360,6 +361,7 @@ public class XMLConfigSource {
       }
     }
 
+    @Override
     public void endElement(String uri, String name, String qName) throws SAXException {
       if ("source".equals(qName)) {     
         source = null;

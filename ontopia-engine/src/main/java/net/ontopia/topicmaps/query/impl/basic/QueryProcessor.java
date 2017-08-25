@@ -115,29 +115,35 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   
   // / query processor implementation
 
+  @Override
   public QueryResultIF execute(String query) throws InvalidQueryException {
     return execute(parseQuery(query, null));
   }
 
+  @Override
   public QueryResultIF execute(String query, DeclarationContextIF context)
       throws InvalidQueryException {
     return execute(parseQuery(query, context));
   }
 
+  @Override
   public QueryResultIF execute(String query, Map arguments)
       throws InvalidQueryException {
     return execute(parseQuery(query, null), arguments);
   }
 
+  @Override
   public QueryResultIF execute(String query, Map arguments,
       DeclarationContextIF context) throws InvalidQueryException {
     return execute(parseQuery(query, context), arguments);
   }
 
+  @Override
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return new ParsedQuery(this, parseQuery(query, null));
   }
 
+  @Override
   public ParsedQueryIF parse(String query, DeclarationContextIF context)
       throws InvalidQueryException {
     return new ParsedQuery(this, parseQuery(query, context));
@@ -155,10 +161,12 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     return optimize(localparser.parseQuery(query));
   }
 
+  @Override
   public void load(String ruleset) throws InvalidQueryException {
     parser.load(ruleset);
   }
 
+  @Override
   public void load(Reader ruleset) throws InvalidQueryException, IOException {
     parser.load(ruleset);
   }
@@ -200,31 +208,37 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     return new QueryResult(matches, query.getLimit(), query.getOffset());
   }
 
+  @Override
   public int update(String query) throws InvalidQueryException {
     return update(query, null, null);
   }
 
+  @Override
   public int update(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     return update(query, null, context);
   }
   
+  @Override
   public int update(String query, Map<String, ?> params)
     throws InvalidQueryException {
     return update(query, params, null);
   }
 
+  @Override
   public int update(String query, Map<String, ?> params,
                     DeclarationContextIF context)
     throws InvalidQueryException {
     return runUpdate(parseUpdateStatement(query, context), params);
   }
 
+  @Override
   public ParsedModificationStatementIF parseUpdate(String statement)
     throws InvalidQueryException {
     return parseUpdate(statement, null);
   }
 
+  @Override
   public ParsedModificationStatementIF parseUpdate(String statement,
                                                    DeclarationContextIF context)
     throws InvalidQueryException {
@@ -497,6 +511,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       sort = TopicStringifiers.getFastSortNameStringifier(tm);
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
       Object[] row1 = (Object[]) o1;
       Object[] row2 = (Object[]) o2;
@@ -619,10 +634,12 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
     }
 
+    @Override
     public int hashCode() {
       return hashCode;
     }
 
+    @Override
     public boolean equals(Object o) {
       // this class is only used here, so we are making some simplifying
       // assumptions:
@@ -691,14 +708,17 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       this.stmt = stmt;
     }
 
+    @Override
     public int update() throws InvalidQueryException {
       return runUpdate(stmt, null);
     }
 
+    @Override
     public int update(Map<String, ?> params) throws InvalidQueryException {
       return runUpdate(stmt, params);
     }
 
+    @Override
     public String toString() {
       return stmt.toString();
     }

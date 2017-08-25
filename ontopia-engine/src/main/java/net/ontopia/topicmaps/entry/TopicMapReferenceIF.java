@@ -107,6 +107,7 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
+  @Override
   void close();
   // includes closing store, removing reference 
 

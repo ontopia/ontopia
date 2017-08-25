@@ -76,18 +76,22 @@ public class RDBMSAccess implements StorageAccessIF {
     log.debug(getId() + ": Storage access created");    
   }
   
+  @Override
   public String getId() {
     return id;
   }
   
+  @Override
   public StorageIF getStorage() {
     return storage;
   }
 
+  @Override
   public boolean isReadOnly() {
     return readonly;
   }
   
+  @Override
   public String getProperty(String property) {
     return storage.getProperty(property);
   }
@@ -208,6 +212,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Connection validation
   // -----------------------------------------------------------------------------
   
+  @Override
   public boolean validate() {
     Connection conn = getConn();
     return !(closed || (conn == null ? false : !validateConnection(conn)));
@@ -252,6 +257,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Transactions
   // -----------------------------------------------------------------------------
   
+  @Override
   public void commit() {
     Connection conn = getConn();
     if (conn != null) {
@@ -266,6 +272,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void abort() {
     Connection conn = getConn();
     if (conn != null) {
@@ -287,6 +294,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void close() {
     try {
       // Close/release connections
@@ -308,6 +316,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void flush() {
     // Return if nothing to flush
     if (flushable.isEmpty()) return;
@@ -326,6 +335,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public boolean loadObject(AccessRegistrarIF registrar, IdentityIF identity) {
     try {
       if (debug)
@@ -349,6 +359,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) {
     try {
       if (debug)
@@ -372,6 +383,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
       IdentityIF current, Class<?> type, int field) {
     try {
@@ -401,6 +413,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void createObject(ObjectAccessIF oaccess, Object object) {
     try {
       if (debug)
@@ -411,6 +424,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void deleteObject(ObjectAccessIF oaccess, Object object) {
     try {
       if (debug)
@@ -421,6 +435,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) {
     try {
       if (debug)
@@ -439,10 +454,12 @@ public class RDBMSAccess implements StorageAccessIF {
   // Queries
   // -----------------------------------------------------------------------------
   
+  @Override
   public QueryIF createQuery(String name, ObjectAccessIF oaccess, AccessRegistrarIF registrar) {
     return storage.createQuery(name, this, oaccess, registrar);
   }
   
+  @Override
   public QueryIF createQuery(JDOQuery jdoquery, ObjectAccessIF oaccess, AccessRegistrarIF registrar, boolean lookup_identities) {
     return storage.createQuery(jdoquery, this, oaccess, registrar, lookup_identities);
   }
@@ -451,6 +468,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Identity generator
   // -----------------------------------------------------------------------------
   
+  @Override
   public IdentityIF generateIdentity(Class<?> type) {
     return storage.generateIdentity(type);
   }

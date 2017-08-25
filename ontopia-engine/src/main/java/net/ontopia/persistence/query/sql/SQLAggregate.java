@@ -39,34 +39,42 @@ public class SQLAggregate implements SQLAggregateIF {
     this.type = type;
   }
   
+  @Override
   public int getType() {
     return type;
   }
 
+  @Override
   public SQLValueIF getValue() {
     return value;
   }
 
+  @Override
   public void setValue(SQLValueIF value) {
     this.value = value;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLAggregateIF getReference() {
     throw new UnsupportedOperationException("SQLAggregateIF is not a reference, so this method should not be called.");
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     switch (type) {

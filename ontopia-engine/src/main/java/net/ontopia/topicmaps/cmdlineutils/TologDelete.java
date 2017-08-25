@@ -164,6 +164,7 @@ public class TologDelete {
     private String tm;
     private String out;
     private String simulate;
+    @Override
     public void processOption(char option, String value) {
       if (option == 't') tm = value;
       else if (option == 'o') out = value;

@@ -83,6 +83,7 @@ public class TMXMLTopicMapReference extends AbstractOntopolyURLReference {
   // Abstract methods
   // --------------------------------------------------------------------------
 
+  @Override
   protected TopicMapReaderIF getImporter() throws IOException {
     // create topic map importer
     TMXMLReader reader;

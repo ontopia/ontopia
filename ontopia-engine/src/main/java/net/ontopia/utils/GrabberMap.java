@@ -60,6 +60,7 @@ public class GrabberMap<O, KG, VG> implements Map<KG, Collection<VG>>, CachedIF 
    * and regrabbing keys and values. Any changes done to the previous
    * collection will be lost.
    */
+  @Override
   public void refresh() {
     if (grabbed_map == null)
       grabbed_map = new HashMap<KG, Collection<VG>>();
@@ -84,59 +85,73 @@ public class GrabberMap<O, KG, VG> implements Map<KG, Collection<VG>>, CachedIF 
     return grabbed_map;
   }
 
+  @Override
   public void clear() {
     getMap().clear();
   }
 
+  @Override
   public boolean containsKey(Object key) {
     return getMap().containsKey(key);
   }
 
+  @Override
   public boolean containsValue(Object value) {
     return getMap().containsValue(value);
   }
 
+  @Override
   public Set entrySet() {
     return getMap().entrySet();
   }
   
 
+  @Override
   public boolean equals(Object o) {
     return getMap().equals(o);
   }
 
+  @Override
   public Collection<VG> get(Object key) {
     return getMap().get(key);
   }
 
+  @Override
   public int hashCode() {
     return getMap().hashCode();
   }
 
+  @Override
   public boolean isEmpty() {
     return getMap().isEmpty();
   }
 
+  @Override
   public Set keySet() {
     return getMap().keySet();
   }
 
+  @Override
   public Collection<VG> put(KG key, Collection<VG> value) {
     return getMap().put(key, value);
   }
 
+  @Override
   public void putAll(Map t) {
     getMap().putAll(t);
   }
 
+  @Override
   public Collection<VG> remove(Object key) {
     return getMap().remove(key);
   }
 
+  @Override
   public int size() {
     return getMap().size();
   }
 
+  @Override
   public Collection values() {
     return getMap().values();
   }

@@ -170,6 +170,7 @@ public class TologQuery extends TologStatement {
 
   /// Object implementation
   
+  @Override
   public String toString() {
     StringBuilder buf = new StringBuilder();
     
@@ -354,6 +355,7 @@ public class TologQuery extends TologStatement {
       orderDescending.add(variable.getName());
   }
   
+  @Override
   public void close() throws InvalidQueryException {
     // compute the variables we calculate
     allVariables = new CompactHashSet<Variable>();

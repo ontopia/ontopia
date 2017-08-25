@@ -42,44 +42,54 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
   
   // -- immutable collection
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
   // -- other
 
+  @Override
   public int size() {
     return other.size();
   }
 
+  @Override
   public boolean isEmpty() {
     return other.isEmpty();
   }
 
+  @Override
   public boolean contains(Object o) {    
     return other.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
+  @Override
   public boolean containsAll(Collection<?> c) {
     Iterator<?> e = c.iterator();
     while (e.hasNext()) {
@@ -89,6 +99,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
     return true;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] result = new Object[size()];
     Iterator it = iterator();
@@ -106,6 +117,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
     }
   }
 
+  @Override
   public <T> T[] toArray(T[] a) {
     int size = size();
     if (a.length < size)
@@ -125,6 +137,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
   
   // -- object
 
+  @Override
   public String toString() {
     StringBuilder buf = new StringBuilder();
     buf.append('[');
@@ -145,6 +158,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
 
   // -- iterator
 
+  @Override
   public Iterator<E> iterator() {
     return new IdentityCollectionIterator<E>(other.iterator());
   }
@@ -159,6 +173,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
       this.iter = iter;
     }
 
+    @Override
     public boolean hasNext() {
       while (has_next == -1)
         _next(); // updates has_next
@@ -166,6 +181,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
       return has_next == 1;
     }
 
+    @Override
     public F next() {
       if (has_next == 0) {
         throw new NoSuchElementException();
@@ -210,6 +226,7 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
       }
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }

@@ -80,6 +80,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   protected void init() {
     // store factory
     TopicMapStoreFactoryIF sfactory = new TopicMapStoreFactoryIF() {
+      @Override
       public TopicMapStoreIF createStore() {
        return _createStore(false);
       }
@@ -139,6 +140,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
 
   }
 
+  @Override
   public synchronized void open() {
     // ignore if already open
     if (isOpen())
@@ -151,6 +153,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     this.isopen = true;
   }
 
+  @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly) {
     if (!isOpen())
       open();
@@ -228,6 +231,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void close() {
     // ISSUE: should block until all stores are returned to pool?
     this.isopen = false;
@@ -248,6 +252,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void clear() {
     if (isDeleted())
       throw new StoreDeletedException(
@@ -268,6 +273,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -287,6 +293,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     this.deleted = store.delete(this);
   }
 
+  @Override
   public String toString() {
     return super.toString() + " [" + topicmap_id + "]";
   }
@@ -299,6 +306,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   
   // --- store pooling
   
+  @Override
   public synchronized void storeClosed(TopicMapStoreIF store) {
     if (!store.isReadOnly()) {
       // dereference listeners

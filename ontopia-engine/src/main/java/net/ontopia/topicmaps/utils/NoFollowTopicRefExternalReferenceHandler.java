@@ -37,6 +37,7 @@ public class NoFollowTopicRefExternalReferenceHandler
   /**
    * PUBLIC: External topic maps are resolved.
    */
+  @Override
   public LocatorIF externalTopicMap(LocatorIF loc) {
     return loc;
   }
@@ -44,6 +45,7 @@ public class NoFollowTopicRefExternalReferenceHandler
   /**
    * PUBLIC: External topics are not resolved.
    */
+  @Override
   public LocatorIF externalTopic(LocatorIF loc) {
     return null;
   }

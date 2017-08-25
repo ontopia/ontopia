@@ -46,6 +46,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
   }
 
   
+  @Override
   public AssociationIF getWrapped() {
     return wrapped;
   }
@@ -54,6 +55,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    * @see org.tmapi.core.Association#createRole(org.tmapi.core.Topic, org.tmapi.core.Topic)
    */
   
+  @Override
   public RoleImpl createRole(Topic type, Topic player) {
     Check.typeNotNull(this, type);
     Check.playerNotNull(this, player);
@@ -67,6 +69,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    * @see org.tmapi.core.Association#getParent()
    */
   
+  @Override
   public TopicMapImpl getParent() {
     return getTopicMap();
   }
@@ -75,6 +78,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    * @see org.tmapi.core.Association#getRoleTypes()
    */
   
+  @Override
   public Set<Topic> getRoleTypes() {
     return topicMap.wrapSet(wrapped.getRoleTypes());
   }
@@ -83,6 +87,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    * @see org.tmapi.core.Association#getRoles()
    */
   
+  @Override
   public Set<Role> getRoles() {
     return topicMap.wrapSet(wrapped.getRoles());
   }
@@ -91,6 +96,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    * @see org.tmapi.core.Association#getRoles(org.tmapi.core.Topic)
    */
   
+  @Override
   public Set<Role> getRoles(Topic type) {
     Check.typeNotNull(type);
     return topicMap.wrapSet(wrapped.getRolesByType(topicMap.unwrapTopic(type)));
@@ -100,6 +106,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    * @see org.tmapi.core.Typed#getType()
    */
   
+  @Override
   public Topic getType() {
     return topicMap.wrapTopic(wrapped.getType());
   }
@@ -107,6 +114,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
   /* (non-Javadoc)
    * @see org.tmapi.core.Typed#setType(org.tmapi.core.Topic)
    */
+  @Override
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
     Check.typeInTopicMap(getTopicMap(), type);

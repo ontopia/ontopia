@@ -44,6 +44,7 @@ public class BasicReduceComponent implements QueryComponentIF {
     this.qproc = qproc;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Map arguments)
     throws InvalidQueryException {
     return qproc.reduce(query, matches);

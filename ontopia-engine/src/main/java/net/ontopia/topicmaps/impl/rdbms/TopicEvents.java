@@ -134,6 +134,7 @@ public class TopicEvents implements EventListenerIF {
     emanager.addListener(this, TopicMapTransactionIF.EVENT_ABORT);
   }
   
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (store.topic_listeners != null && TopicIF.EVENT_MODIFIED.equals(event)) {
       topicsModified.add((TopicIF)object);

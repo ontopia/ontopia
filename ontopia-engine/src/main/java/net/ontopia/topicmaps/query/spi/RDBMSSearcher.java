@@ -50,10 +50,12 @@ import org.apache.commons.lang3.StringUtils;
 
 public class RDBMSSearcher extends AbstractSearcher {
 
+  @Override
   public int getValueType() {
     return SearcherIF.OBJECT_ID;
   }
 
+  @Override
   public SearchResultIF getResult(String query) {
     return new SearchResult(query);
   }
@@ -102,6 +104,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       return sql;
     }
     
+    @Override
     public boolean next() {
       if (rs == null) return false;
       try {
@@ -111,6 +114,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public Object getValue() {
       try {
         return rs.getString(1);
@@ -119,6 +123,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public float getScore() {
       try {
         return rs.getFloat(2);
@@ -127,6 +132,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public void close() {
       try {
         if (rs != null) rs.close();

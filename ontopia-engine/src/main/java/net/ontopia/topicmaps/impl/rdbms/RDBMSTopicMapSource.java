@@ -94,18 +94,22 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     return (refmap != null);
   }
   
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -158,6 +162,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     return queryfile;
   }
 
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (!isInitialized()) refresh();
     return refmap.values();
@@ -180,6 +185,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     return storage;
   }
   
+  @Override
   public synchronized void refresh() {    
     Connection conn = null;
     try {
@@ -271,6 +277,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     return new RDBMSTopicMapReference(referenceId, title, storage, topicmapId, baseAddress);
   }
 
+  @Override
   public boolean supportsCreate() {
     return getSupportsCreate();
   }
@@ -283,6 +290,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     this.supportsCreate = supportsCreate;
   }
 
+  @Override
   public boolean supportsDelete() {
     return getSupportsDelete();
   }
@@ -295,6 +303,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     this.supportsDelete = supportsDelete;
   }
 
+  @Override
   public synchronized TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     if (!supportsCreate())
       throw new UnsupportedOperationException("This source does not support creating new topic maps.");

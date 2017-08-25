@@ -53,6 +53,7 @@ public class StorePoolableObjectFactory
     this.sfactory = sfactory;
   }
 
+  @Override
   public Object makeObject()
     throws Exception {
     // tell store factory to create a new store instance
@@ -62,6 +63,7 @@ public class StorePoolableObjectFactory
     return o;
   }
   
+  @Override
   public void destroyObject(Object o)
     throws Exception {
     log.debug("destroyObject " + o);
@@ -71,6 +73,7 @@ public class StorePoolableObjectFactory
     if (s.isOpen()) s.close(false);    
   }
 
+  @Override
   public boolean validateObject(Object o) {
     log.debug("validateObject " + o);
     // ask store to validate itself
@@ -80,11 +83,13 @@ public class StorePoolableObjectFactory
     return valid;
   }
 
+  @Override
   public void activateObject(Object o)
     throws Exception {
     log.debug("activateObject " + o);
   }
 
+  @Override
   public void passivateObject(Object o)
     throws Exception {
     log.debug("passivateObject " + o);

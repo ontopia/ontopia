@@ -82,18 +82,22 @@ public abstract class AbstractPathTopicMapSource
   }
 
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -192,23 +196,28 @@ public abstract class AbstractPathTopicMapSource
     this.duplicate_suppression = duplicate_suppression;
   }
   
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (refmap == null) refresh();
     return refmap.values();
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized void refresh() {
     if (path == null)
       throw new OntopiaRuntimeException("'path' property has not been set.");
@@ -314,6 +323,7 @@ public abstract class AbstractPathTopicMapSource
    * if it is not a directory and the filename ends with the specified
    * suffix.
    */
+  @Override
   public boolean accept(File file) {
     // default FileFilter implementation
     return (!file.isDirectory() && file.getName().endsWith(suffix));

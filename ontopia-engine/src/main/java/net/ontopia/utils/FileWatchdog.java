@@ -118,6 +118,7 @@ public abstract class FileWatchdog extends Thread {
     }
   }
 
+  @Override
   public void run() {
     while (!interrupted) {
       try {

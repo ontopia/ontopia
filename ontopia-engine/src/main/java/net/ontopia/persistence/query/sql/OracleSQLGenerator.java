@@ -33,6 +33,7 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
     super(properties);
   }
 
+  @Override
   public SQLStatementIF createSQLStatement(SQLQuery query) {
     // NOTE: the following does not work, since ROWNUM > 1 always fails
     
@@ -56,6 +57,7 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
     return super.createSQLStatement(query);
   }
 
+  @Override
   protected String createStatement(SQLExpressionIF filter, List selects, boolean distinct, int offset, int limit, 
                                    List orderby, boolean issetquery, BuildInfo info) {
     String sql = super.createStatement(filter, selects, distinct, offset, limit, orderby, issetquery, info);
@@ -94,14 +96,17 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
     // Do nothing, since it is being specified in the where clause
   }
   
+  @Override
   protected void whereSQLLeftOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLLeftOuterJoin_ORACLE(join, sql, info);
   }
   
+  @Override
   protected void whereSQLRightOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
     whereSQLRightOuterJoin_ORACLE(join, sql, info);
   }
 
+  @Override
   protected String getSetOperator(int operator) {
     if (operator == SQLSetOperation.EXCEPT)
       return "minus";
@@ -111,15 +116,18 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
       return super.getSetOperator(operator);
   }
   
+  @Override
   protected StringBuilder createOffsetLimitClause(int offset, int limit, BuildInfo info) {    
     // no-op, since oracle uses ROWNUM for this. see elsewhere.
     return null;
   }
 
+  @Override
   public boolean supportsLimitOffset() {
     return true;
   }
 
+  @Override
   protected void whereSQLFalse(SQLFalse expr, StringBuilder sql, BuildInfo info) {
     sql.append("1 = 2");
   }

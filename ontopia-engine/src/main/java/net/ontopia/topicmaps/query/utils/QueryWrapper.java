@@ -195,6 +195,7 @@ public class QueryWrapper {
       this.maxone = maxone;
     }
     
+    @Override
     public Object mapRow(QueryResultIF result, int rowno) {
       if (maxone && rowno == 1)
         throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
@@ -221,6 +222,7 @@ public class QueryWrapper {
     */
   public boolean isTrue(String query, Map params) {
     List list = queryForList(query, new RowMapperIF(){
+      @Override
       public Object mapRow(QueryResultIF result, int rowno) {
         if (rowno == 1)
           throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
@@ -326,6 +328,7 @@ public class QueryWrapper {
       this.maxone = maxone;
     }
     
+    @Override
     public Object mapRow(QueryResultIF result, int rowno) {
       if (maxone && rowno == 1)
         throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);

@@ -39,6 +39,7 @@ public class TypedIFGrabber<T extends TypedIF> implements GrabberIF<T, TopicIF> 
    * @return object which is the type; an object implementing TopicIF
    */  
 
+  @Override
   public TopicIF grab(T typed) {
     return typed.getType();
   }

@@ -304,6 +304,7 @@ public class BindingContext {
   
   // --- Misc
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append('{');

@@ -35,6 +35,7 @@ public class MergeTest extends AbstractQueryTest {
 
   /// context management
 
+  @Override
   public void tearDown() {
     closeStore();
   }

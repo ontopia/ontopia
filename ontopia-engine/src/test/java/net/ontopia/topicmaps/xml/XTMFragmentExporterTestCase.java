@@ -126,6 +126,7 @@ public class XTMFragmentExporterTestCase {
 
   public class TestDecider implements DeciderIF {
 
+    @Override
     public boolean ok(Object object) {
       if (object instanceof TopicIF) {
         TopicIF topic = (TopicIF)object;

@@ -35,6 +35,7 @@ public class JDOParameter implements JDOValueIF {
     this.name = name;
   }
   
+  @Override
   public int getType() {
     return PARAMETER;
   }
@@ -43,10 +44,12 @@ public class JDOParameter implements JDOValueIF {
     return name;
   }
 
+  @Override
   public int hashCode() {
     return name.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOParameter) {
@@ -56,10 +59,12 @@ public class JDOParameter implements JDOValueIF {
     return false;  
   }
 
+  @Override
   public String toString() {
     return "?" + name;
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     // no-op
   }

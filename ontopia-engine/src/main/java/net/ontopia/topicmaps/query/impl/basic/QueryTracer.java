@@ -206,6 +206,7 @@ public class QueryTracer {
       logger.debug(message);
     }
 
+    @Override
     public void startQuery() {
       if (isEnabled()) {
         Info info = new Info();
@@ -220,6 +221,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void endQuery() {
       long memoryDelta = 0l;
       float elapsed = 0f;
@@ -244,6 +246,7 @@ public class QueryTracer {
         logger.warn("Query execution exceeded time elapsed threshold " + elapsed + " seconds", new RuntimeException());      
     }
     
+    @Override
     public void enter(BasicPredicateIF predicate, AbstractClause clause, 
                       QueryMatches input) {
       if (isEnabled()) {
@@ -253,6 +256,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void leave(QueryMatches result) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -277,6 +281,7 @@ public class QueryTracer {
       return clause.toString();
     }
     
+    @Override
     public void enter(OrClause clause, QueryMatches input) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -285,16 +290,19 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void enter(List branch) {
       if (!isEnabled())
         return;
     }
 
+    @Override
     public void leave(List branch) {
       if (!isEnabled())
         return;
     }
 
+    @Override
     public void enterOrderBy() {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -303,6 +311,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void leaveOrderBy() {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -311,6 +320,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void enterSelect(QueryMatches result) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -319,6 +329,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void leaveSelect(QueryMatches result) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -327,6 +338,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void trace(String message) {
       if (isEnabled()) {
         Info info = (Info)ti.get();

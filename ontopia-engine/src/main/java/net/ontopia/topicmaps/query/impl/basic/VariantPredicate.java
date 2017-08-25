@@ -42,14 +42,17 @@ public class VariantPredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "variant";
   }
   
+  @Override
   public String getSignature() {
     return "b v";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -62,6 +65,7 @@ public class VariantPredicate implements BasicPredicateIF {
   }
 
   // variant(topic-name, variant)
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

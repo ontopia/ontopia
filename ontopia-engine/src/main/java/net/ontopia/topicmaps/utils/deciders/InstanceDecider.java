@@ -53,6 +53,7 @@ public class InstanceDecider implements DeciderIF<Object> {
    * Returns true if the type of a TypedIF object matches and returns
    * true if one of the types of a MultiTyped match .
    */
+  @Override
   public boolean ok(Object object) {
     if (object instanceof TypedIF) {
       // TypedIF can only have one type

@@ -92,6 +92,7 @@ public abstract class AbstractOntopolyTopicMapSource
     this.alwaysReindexOnLoad = alwaysReindexOnLoad;
   }
 
+  @Override
   public boolean supportsCreate() {
     return getSupportsCreate();
   }
@@ -111,6 +112,7 @@ public abstract class AbstractOntopolyTopicMapSource
     this.supportsCreate = supportsCreate;
   }
 
+  @Override
   public boolean supportsDelete() {
     return getSupportsDelete();
   }
@@ -123,6 +125,7 @@ public abstract class AbstractOntopolyTopicMapSource
     this.supportsDelete = supportsDelete;
   }
   
+  @Override
   public synchronized TopicMapReferenceIF createTopicMap(String name,
                                                          String baseAddress) {
     if (!supportsCreate())
@@ -161,6 +164,7 @@ public abstract class AbstractOntopolyTopicMapSource
     return ref;
   }
 
+  @Override
   public abstract TopicMapReferenceIF createReference(URL url, String id,
                                                       String title,
                                                       LocatorIF base_address);  

@@ -32,6 +32,7 @@ public class PackageTest extends TopicMapPackageTest {
     super(name);
   }
 
+  @Override
   protected void setUp() {
     if (tm == null) {
       try {
@@ -46,6 +47,7 @@ public class PackageTest extends TopicMapPackageTest {
     }
   }
 
+  @Override
   protected void tearDown() {
     //tm = null;
   }

@@ -93,11 +93,13 @@ class CountingRefHandler implements ExternalReferenceHandlerIF
   public Collection getTMRefs() { return tmrefs; }
   public Collection getTopicRefs() { return topicrefs; }
 
+  @Override
   public LocatorIF externalTopicMap(LocatorIF address) {
     tmrefs.add(address);
     return null;
   }
 
+  @Override
   public LocatorIF externalTopic(LocatorIF address) {
     topicrefs.add(address);
     return null;

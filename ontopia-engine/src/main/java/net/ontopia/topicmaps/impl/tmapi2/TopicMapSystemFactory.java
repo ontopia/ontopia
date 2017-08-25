@@ -64,6 +64,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
    * </ul>
    * </p>
    */
+  @Override
   public TopicMapSystem newTopicMapSystem() throws TMAPIException {
     String store = properties.getProperty(STORE_PROPERTY);
     if (store != null && store.equalsIgnoreCase("rdbms") )
@@ -72,6 +73,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
       return new MemoryTopicMapSystemImpl(this);
   }
 
+  @Override
   public boolean hasFeature(String feature) {
     if (features.containsKey(feature))
       return (features.get(feature)).booleanValue();
@@ -83,6 +85,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
     return false;
   }
 
+  @Override
   public boolean getFeature(String feature)
       throws FeatureNotRecognizedException {
     if (features.containsKey(feature))
@@ -96,6 +99,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
         + feature + "' is not recognized.");
   }
 
+  @Override
   public void setFeature(String feature, boolean value)
       throws FeatureNotSupportedException,
       FeatureNotRecognizedException {
@@ -123,6 +127,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
     features.put(feature, (value ? Boolean.TRUE : Boolean.FALSE));
   }
 
+  @Override
   public String getProperty(String propname) {
     return properties.getProperty(propname);
   }

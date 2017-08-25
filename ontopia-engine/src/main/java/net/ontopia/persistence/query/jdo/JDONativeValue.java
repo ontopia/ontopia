@@ -54,6 +54,7 @@ public class JDONativeValue implements JDOValueIF {
     this.value_type = value_type;
   }
 
+  @Override
   public int getType() {
     return NATIVE_VALUE;
   }
@@ -70,6 +71,7 @@ public class JDONativeValue implements JDOValueIF {
     return value_type;
   }
 
+  @Override
   public int hashCode() {
     int hashCode = root.hashCode();
     for (int ix = 0; ix < args.length; ix++) {
@@ -79,6 +81,7 @@ public class JDONativeValue implements JDOValueIF {
     return hashCode;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDONativeValue) {
@@ -90,6 +93,7 @@ public class JDONativeValue implements JDOValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(root.toString());
     sb.append(".{");
@@ -98,6 +102,7 @@ public class JDONativeValue implements JDOValueIF {
     return sb.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(root);
   }

@@ -74,6 +74,7 @@ public class ScopedIFComparator<T extends ScopedIF> implements Comparator<T> {
    * @param obj2 An object implementing ScopedIF.
    * @return See {@link java.util.Comparator#compare(Object,Object)}
    */
+  @Override
   public int compare(T obj1, T obj2) {
     // Collect the scope of both objects
     Collection<TopicIF> scope1 = obj1.getScope();

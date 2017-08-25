@@ -46,6 +46,7 @@ public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
   @Parameters
   public static List generateTests() {
     ResourcesFilterIF filter = new ResourcesFilterIF() {
+      @Override
       public boolean ok(String resourcePath) {
         // Ignore importInto-specific file.
         if (resourcePath.endsWith("multiple-tms-read.xtm")) return false;
@@ -58,6 +59,7 @@ public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
 
   // --- Canonicalization type methods
 
+  @Override
   protected void canonicalize(URL infile, File outfile) throws IOException {
     // Get store factory
     TopicMapStoreFactoryIF sfactory = getStoreFactory();

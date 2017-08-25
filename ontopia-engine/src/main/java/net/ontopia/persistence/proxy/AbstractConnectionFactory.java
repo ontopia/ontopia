@@ -55,8 +55,10 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
     password = properties.get("net.ontopia.topicmaps.impl.rdbms.Password");
   }
   
+  @Override
   public abstract Connection requestConnection() throws SQLException;
 
+  @Override
   public void close() {
     // no-op
   }

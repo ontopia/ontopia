@@ -42,6 +42,7 @@ public class ApplicableInContextDecider implements DeciderIF<ScopedIF> {
     this.context = context;
   }
   
+  @Override
   public boolean ok(ScopedIF scoped) {
     return ScopeUtils.isApplicableInContext(scoped, context);
   }

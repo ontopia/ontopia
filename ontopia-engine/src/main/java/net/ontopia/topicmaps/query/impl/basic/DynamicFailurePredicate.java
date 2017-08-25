@@ -43,14 +43,17 @@ public class DynamicFailurePredicate extends AbstractDynamicPredicate {
     super(type, base);
   }
   
+  @Override
   public String getSignature() {
     return ".+";
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     return PredicateDrivenCostEstimator.FAIL_RESULT;
   }
   
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

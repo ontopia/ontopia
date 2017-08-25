@@ -52,6 +52,7 @@ public class MergeTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap1 = makeTopicMap();
     topicmap2 = makeTopicMap();

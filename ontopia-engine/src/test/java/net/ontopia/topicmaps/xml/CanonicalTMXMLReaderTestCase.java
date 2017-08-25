@@ -51,6 +51,7 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
   // --- Canonicalization type methods
 
   // this is actually the file name of the baseline file
+  @Override
   protected String getOutFilename(String infile) {
     return infile + ".cxtm";
   }
@@ -59,6 +60,7 @@ public class CanonicalTMXMLReaderTestCase extends AbstractCanonicalTests {
     return filename.endsWith(".xml");
   }
 
+  @Override
   protected void canonicalize(URL infile, File outfile)
     throws IOException {
     TMXMLReader reader = new TMXMLReader(infile);

@@ -37,6 +37,7 @@ public class ObjectIdGrabber<T extends TMObjectIF> implements GrabberIF<T, Strin
    * @param object TMObjectIF
    * @return String which is the objectId of the given TMObjectIF
    */ 
+  @Override
   public String grab(T object) {
     return object.getObjectId();
 

@@ -46,6 +46,7 @@ public class SimpleCostEstimator extends CostEstimator {
    * @param rulename The name of the current rule (so we can delay
    *                 recursive evaluation).
    */
+  @Override
   public int computeCost(Set context, AbstractClause clause,
                          Set literalvars, String rulename) {
     int cost = 0;

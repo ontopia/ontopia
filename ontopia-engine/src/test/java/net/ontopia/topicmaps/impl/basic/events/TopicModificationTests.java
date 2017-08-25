@@ -28,6 +28,7 @@ public class TopicModificationTests extends net.ontopia.topicmaps.core.events.To
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

@@ -122,6 +122,7 @@ public class CmdlineUtils {
 
   static class LoggingOptionsListener implements CmdlineOptions.ListenerIF {
     
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
 
       switch (option)

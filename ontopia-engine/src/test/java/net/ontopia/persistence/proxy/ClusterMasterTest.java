@@ -71,6 +71,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     super(clusterId, clusterProps);
   }
 
+  @Override
   public void setUp() {
     // join test cluster
     joinCluster();
@@ -97,6 +98,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     Map shared = new HashMap();
     
     tests.add(new MasterTest(shared, "test:start") {
+      @Override
         public void run() {
           done = false;
         }
@@ -106,6 +108,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicMapIF.addItemIdentifier
     tests.add(new MasterTest(shared, "TopicMapIF.addItemIdentifier") {
+      @Override
         public void run() {
           topicmap.addItemIdentifier(URILocator.create("x:source-locator"));
           this.objectId = topicmap.getObjectId();
@@ -114,6 +117,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicMapIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "TopicMapIF.removeItemIdentifier") {
+      @Override
         public void run() {
           topicmap.removeItemIdentifier(URILocator.create("x:source-locator"));
           this.objectId = topicmap.getObjectId();
@@ -124,6 +128,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // TopicMapIF.addTopic
     tests.add(new MasterTest(shared, "TopicMapIF.addTopic") {
+      @Override
         public void run() {
           TopicIF t = builder.makeTopic();
           this.data.put("TopicIF", t);
@@ -133,6 +138,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // TopicIF.setSubject
     tests.add(new MasterTest(shared, "TopicIF.setSubject") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           t.addSubjectLocator(URILocator.create("x:subject"));
@@ -140,6 +146,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "TopicIF.setSubject:clear") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           t.removeSubjectLocator(URILocator.create("x:subject"));
@@ -149,6 +156,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // TopicIF.addSubjectIdentifier
     tests.add(new MasterTest(shared, "TopicIF.addSubjectIdentifier") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           t.addSubjectIdentifier(URILocator.create("x:subject-indicator"));
@@ -158,6 +166,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.removeSubjectIdentifier
     tests.add(new MasterTest(shared, "TopicIF.removeSubjectIdentifier") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           t.removeSubjectIdentifier(URILocator.create("x:subject-indicator"));
@@ -167,6 +176,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.addType
     tests.add(new MasterTest(shared, "TopicIF.addType") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           TopicIF type = builder.makeTopic();
@@ -179,6 +189,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.removeType
     tests.add(new MasterTest(shared, "TopicIF.removeType") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           TopicIF type = (TopicIF)this.data.remove("type");
@@ -190,6 +201,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.addItemIdentifier
     tests.add(new MasterTest(shared, "TopicIF.addItemIdentifier") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           t.addItemIdentifier(URILocator.create("x:source-locator"));
@@ -199,6 +211,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "TopicIF.removeItemIdentifier") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           t.removeItemIdentifier(URILocator.create("x:source-locator"));
@@ -210,6 +223,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.addTopicName
     tests.add(new MasterTest(shared, "TopicIF.addTopicName") {
+      @Override
         public void run() {
           TopicNameIF bn = builder.makeTopicName(getTopic(), "");
           this.data.put("TopicNameIF", bn);
@@ -219,6 +233,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicNameIF.addItemIdentifier
     tests.add(new MasterTest(shared, "TopicNameIF.addItemIdentifier") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           bn.addItemIdentifier(URILocator.create("x:source-locator"));
@@ -228,6 +243,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicNameIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "TopicNameIF.removeItemIdentifier") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           bn.removeItemIdentifier(URILocator.create("x:source-locator"));
@@ -237,6 +253,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicNameIF.addTheme
     tests.add(new MasterTest(shared, "TopicNameIF.addTheme") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           TopicIF theme = builder.makeTopic();
@@ -249,6 +266,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicNameIF.removeTheme
     tests.add(new MasterTest(shared, "TopicNameIF.removeTheme") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           TopicIF theme = (TopicIF)this.data.remove("scope");
@@ -260,6 +278,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicNameIF.setType
     tests.add(new MasterTest(shared, "TopicNameIF.setType") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           TopicIF type = builder.makeTopic(); // create type
@@ -270,6 +289,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "TopicNameIF.setType:clear") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           TopicIF type = builder.makeTopic(); // create type
@@ -282,6 +302,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // TopicNameIF.setValue
     tests.add(new MasterTest(shared, "TopicNameIF.setValue") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           bn.setValue("New name");
@@ -289,6 +310,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "TopicNameIF.setValue:clear") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           bn.setValue("");
@@ -300,6 +322,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // TopicNameIF.addVariant
     tests.add(new MasterTest(shared, "TopicNameIF.addVariant") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           VariantNameIF vn = builder.makeVariantName(bn, "");
@@ -310,6 +333,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // VariantNameIF.addItemIdentifier
     tests.add(new MasterTest(shared, "VariantNameIF.addItemIdentifier") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           vn.addItemIdentifier(URILocator.create("x:source-locator"));
@@ -319,6 +343,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // VariantNameIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "VariantNameIF.removeItemIdentifier") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           vn.removeItemIdentifier(URILocator.create("x:source-locator"));
@@ -328,6 +353,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // VariantNameIF.addTheme
     tests.add(new MasterTest(shared, "VariantNameIF.addTheme") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           TopicIF theme = builder.makeTopic();
@@ -340,6 +366,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // VariantNameIF.removeTheme
     tests.add(new MasterTest(shared, "VariantNameIF.removeTheme") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           TopicIF theme = (TopicIF)this.data.remove("scope");
@@ -351,6 +378,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // VariantNameIF.setValue
     tests.add(new MasterTest(shared, "VariantNameIF.setValue") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           vn.setValue("New variant");
@@ -358,6 +386,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "VariantNameIF.setValue:clear") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           vn.setValue("");
@@ -367,6 +396,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // VariantNameIF.setLocator
     tests.add(new MasterTest(shared, "VariantNameIF.setLocator") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           vn.setLocator(URILocator.create("x:variant-locator"));
@@ -374,6 +404,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "VariantNameIF.setLocator:clear") {
+      @Override
         public void run() {
           VariantNameIF vn = getVariantName();
           vn.setLocator(URILocator.create("x:variant-locator:clear"));
@@ -383,6 +414,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicNameIF.removeVariant
     tests.add(new MasterTest(shared, "TopicNameIF.removeVariant") {
+      @Override
         public void run() {
           TopicNameIF bn = getTopicName();
           VariantNameIF vn = (VariantNameIF)this.data.remove("VariantNameIF");
@@ -393,6 +425,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
          
     // TopicIF.removeTopicName
     tests.add(new MasterTest(shared, "TopicIF.removeTopicName") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           TopicNameIF bn = (TopicNameIF)this.data.remove("TopicNameIF");
@@ -405,6 +438,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicIF.addOccurrence
     tests.add(new MasterTest(shared, "TopicIF.addOccurrence") {
+      @Override
         public void run() {
           OccurrenceIF o = builder.makeOccurrence(getTopic(), getTopic(), "");
           this.data.put("OccurrenceIF", o);
@@ -414,6 +448,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // OccurrenceIF.addItemIdentifier
     tests.add(new MasterTest(shared, "OccurrenceIF.addItemIdentifier") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           o.addItemIdentifier(URILocator.create("x:source-locator"));
@@ -423,6 +458,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // OccurrenceIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "OccurrenceIF.removeItemIdentifier") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           o.removeItemIdentifier(URILocator.create("x:source-locator"));
@@ -432,6 +468,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // OccurrenceIF.addTheme
     tests.add(new MasterTest(shared, "OccurrenceIF.addTheme") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           TopicIF theme = builder.makeTopic();
@@ -444,6 +481,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // OccurrenceIF.removeTheme
     tests.add(new MasterTest(shared, "OccurrenceIF.removeTheme") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           TopicIF theme = (TopicIF)this.data.remove("scope");
@@ -455,6 +493,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // OccurrenceIF.setType
     tests.add(new MasterTest(shared, "OccurrenceIF.setType") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           TopicIF type = builder.makeTopic(); // create type
@@ -465,6 +504,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "OccurrenceIF.setType:clear") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           TopicIF type = builder.makeTopic(); // create type
@@ -478,6 +518,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // OccurrenceIF.setValue
     tests.add(new MasterTest(shared, "OccurrenceIF.setValue") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           o.setValue("New occurrence");
@@ -485,6 +526,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "OccurrenceIF.setValue:clear") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           o.setValue("");
@@ -494,6 +536,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // OccurrenceIF.setLocator
     tests.add(new MasterTest(shared, "OccurrenceIF.setLocator") {
+      @Override
         public void run() {
           OccurrenceIF o = getOccurrence();
           o.setLocator(URILocator.create("x:occurrence-locator"));
@@ -503,6 +546,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
          
     // TopicIF.removeOccurrence
     tests.add(new MasterTest(shared, "TopicIF.removeOccurrence") {
+      @Override
         public void run() {
           TopicIF t = getTopic();
           OccurrenceIF o = (OccurrenceIF)this.data.remove("OccurrenceIF");
@@ -515,6 +559,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // TopicMapIF.addAssocation
     tests.add(new MasterTest(shared, "TopicMapIF.addAssociation") {
+      @Override
         public void run() {
           AssociationIF a = builder.makeAssociation(builder.makeTopic());
           this.data.put("AssociationIF", a);
@@ -524,6 +569,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationIF.addItemIdentifier
     tests.add(new MasterTest(shared, "AssociationIF.addItemIdentifier") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           a.addItemIdentifier(URILocator.create("x:source-locator"));
@@ -533,6 +579,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "AssociationIF.removeItemIdentifier") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           a.removeItemIdentifier(URILocator.create("x:source-locator"));
@@ -542,6 +589,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationIF.addTheme
     tests.add(new MasterTest(shared, "AssociationIF.addTheme") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           TopicIF theme = builder.makeTopic();
@@ -554,6 +602,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationIF.removeTheme
     tests.add(new MasterTest(shared, "AssociationIF.removeTheme") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           TopicIF theme = (TopicIF)this.data.remove("scope");
@@ -565,6 +614,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationIF.setType
     tests.add(new MasterTest(shared, "AssociationIF.setType") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           TopicIF type = builder.makeTopic(); // create type
@@ -575,6 +625,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "AssociationIF.setType:clear") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           TopicIF type = builder.makeTopic(); // create type
@@ -590,6 +641,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
 
     // AssociationIF.addRole
     tests.add(new MasterTest(shared, "AssociationIF.addRole") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           AssociationRoleIF r = builder.makeAssociationRole(a, builder.makeTopic(), builder.makeTopic());
@@ -600,6 +652,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationRoleIF.addItemIdentifier
     tests.add(new MasterTest(shared, "AssociationRoleIF.addItemIdentifier") {
+      @Override
         public void run() {
           AssociationRoleIF r = getAssociationRole();
           r.addItemIdentifier(URILocator.create("x:source-locator"));
@@ -609,6 +662,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationRoleIF.removeItemIdentifier
     tests.add(new MasterTest(shared, "AssociationRoleIF.removeItemIdentifier") {
+      @Override
         public void run() {
           AssociationRoleIF r = getAssociationRole();
           r.removeItemIdentifier(URILocator.create("x:source-locator"));
@@ -618,6 +672,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationRoleIF.setType
     tests.add(new MasterTest(shared, "AssociationRoleIF.setType") {
+      @Override
         public void run() {
           AssociationRoleIF r = getAssociationRole();
           TopicIF type = builder.makeTopic(); // create type
@@ -628,6 +683,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "AssociationRoleIF.setType:clear") {
+      @Override
         public void run() {
           AssociationRoleIF r = getAssociationRole();
           TopicIF type = builder.makeTopic(); // create type
@@ -641,6 +697,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationRoleIF.setPlayer
     tests.add(new MasterTest(shared, "AssociationRoleIF.setPlayer") {
+      @Override
         public void run() {
           AssociationRoleIF r = getAssociationRole();
           TopicIF player = getTopic();
@@ -650,6 +707,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
         }
       });
     tests.add(new MasterTest(shared, "AssociationRoleIF.setPlayer:clear") {
+      @Override
         public void run() {          
           AssociationRoleIF r = getAssociationRole();
 					TopicIF oldPlayer = r.getPlayer();
@@ -663,6 +721,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // AssociationIF.removeRole
     tests.add(new MasterTest(shared, "TopicMapIF.removeAssociation") {
+      @Override
         public void run() {
           AssociationIF a = getAssociation();
           AssociationRoleIF r = (AssociationRoleIF)this.data.remove("AssociationRoleIF");
@@ -673,6 +732,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicMapIF.removeAssociation
     tests.add(new MasterTest(shared, "TopicMapIF.removeAssociation") {
+      @Override
         public void run() {
           AssociationIF a = (AssociationIF)this.data.remove("AssociationIF");
           this.objectId = a.getObjectId();
@@ -682,6 +742,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
     // TopicMapIF.removeTopic
     tests.add(new MasterTest(shared, "TopicMapIF.removeTopic") {
+      @Override
         public void run() {
           TopicIF t = (TopicIF)this.data.remove("TopicIF");
           this.objectId = t.getObjectId();
@@ -690,6 +751,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
       });
 
     tests.add(new MasterTest(shared, "test:end") {
+      @Override
         public void run() {
           done = true;
         }
@@ -697,6 +759,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     
   }
 
+  @Override
   public void tearDown() {
     // leave cluster
     leaveCluster();
@@ -705,6 +768,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
       store.close();
   }
 
+  @Override
   public void run() throws InterruptedException {
     System.out.println("Master is ready. Waiting 5000 ms.");
     Thread.sleep(5000);
@@ -735,6 +799,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     }
   }
 
+  @Override
   public void receive(Message msg) {
     System.out.println("Received: " + msg);
   }

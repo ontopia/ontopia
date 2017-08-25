@@ -97,6 +97,7 @@ public class TopicMapSearchResult extends AbstractList<TMObjectIF> {
   /**
    * INTERNAL: This is the java.util.List.get(int) method.
    */
+  @Override
   public TMObjectIF get(int index) {
     try {
       // Get document and extract object id
@@ -113,6 +114,7 @@ public class TopicMapSearchResult extends AbstractList<TMObjectIF> {
   /**
    * INTERNAL: This is the java.util.List.size() method.
    */
+  @Override
   public int size() {
     try {
       return result.hits();

@@ -267,6 +267,7 @@ public class CSVImport {
     private boolean stripquotes = false;
     private String separator = ";";
     private int ignorelines = 0;
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 's')
         separator = value;

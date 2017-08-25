@@ -109,6 +109,7 @@ public abstract class TopicNameTest extends AbstractTypedScopedTest {
     
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     TopicIF topic = builder.makeTopic();
@@ -119,6 +120,7 @@ public abstract class TopicNameTest extends AbstractTypedScopedTest {
     object = basename;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     TopicIF topic = builder.makeTopic();
     return builder.makeTopicName(topic, "");

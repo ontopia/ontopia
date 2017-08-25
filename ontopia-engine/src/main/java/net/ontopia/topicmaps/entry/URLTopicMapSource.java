@@ -70,10 +70,12 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     this.url = url;
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -94,10 +96,12 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     this.refid = refid;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -223,11 +227,13 @@ public class URLTopicMapSource implements TopicMapSourceIF {
 
   // ----
   
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (reflist == null) refresh();
     return reflist;
   }
 
+  @Override
   public synchronized void refresh() {
     if (url == null)
       throw new OntopiaRuntimeException("'url' property has not been set.");
@@ -310,14 +316,17 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     // Do nothing
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }

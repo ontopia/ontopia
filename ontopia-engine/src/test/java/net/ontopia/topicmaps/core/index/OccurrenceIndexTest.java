@@ -34,6 +34,7 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
     super(name);
   }
 
+  @Override
   protected void setUp() throws Exception {
     ix = (OccurrenceIndexIF)super.setUp("OccurrenceIndexIF");
   }

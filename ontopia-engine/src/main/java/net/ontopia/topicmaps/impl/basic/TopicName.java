@@ -59,6 +59,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // NameIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getTopic() {
     return (TopicIF) parent;
   }
@@ -85,10 +86,12 @@ public class TopicName extends TMObject implements TopicNameIF {
     this.parent = parent;
   }
 
+  @Override
   public String getValue() {
     return value;
   }
 
+  @Override
   public void setValue(String value) {
     if (value == null)
       throw new NullPointerException("Topic name value must not be null.");
@@ -97,6 +100,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     this.value = value;
   }
 
+  @Override
   public Collection<VariantNameIF> getVariants() {
     if (variants == null)
       return Collections.emptyList();
@@ -152,6 +156,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     variants.remove(variant);
   }
 
+  @Override
   public void remove() {
     if (parent != null) {
       DeletionUtils.removeDependencies(this);
@@ -163,11 +168,13 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
     return (scope == null ? Collections.<TopicIF>emptyList() : scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -190,6 +197,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     }
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -216,10 +224,12 @@ public class TopicName extends TMObject implements TopicNameIF {
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return type;
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null) {
       type = getDefaultNameType();
@@ -246,10 +256,12 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
 
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
@@ -269,6 +281,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
     if (parent == null || parent.parent == null)
       return;
@@ -276,6 +289,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       topicmap.processEvent(this, event, new_value, old_value);
   }
 
+  @Override
   protected boolean isConnected() {
     if (parent != null && parent.parent != null)
       return true;
@@ -283,6 +297,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       return false;
   }
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.TopicName", (TopicNameIF) this);
   }

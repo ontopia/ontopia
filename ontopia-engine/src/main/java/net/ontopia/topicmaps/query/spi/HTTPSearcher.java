@@ -42,10 +42,12 @@ import net.ontopia.xml.DefaultXMLReaderFactory;
 
 public class HTTPSearcher extends AbstractSearcher {
   
+  @Override
   public int getValueType() {
     return SearcherIF.STRING_VALUE; // TODO: should support other identities as well
   }
 
+  @Override
   public SearchResultIF getResult(String query) {
     return new HTTPSearchResult(query);
   }
@@ -95,6 +97,7 @@ public class HTTPSearcher extends AbstractSearcher {
       this.hits = _hits.iterator();
     }
     
+    @Override
     public boolean next() {
       if (hits.hasNext()) {
         this.hit = (Hit)hits.next();
@@ -105,14 +108,17 @@ public class HTTPSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public Object getValue() {
       return hit.getValue();
     }
     
+    @Override
     public float getScore() {
       return hit.getScore();
     }
     
+    @Override
     public void close() {
       // no-op
     }
@@ -123,10 +129,12 @@ public class HTTPSearcher extends AbstractSearcher {
     public List getHits() {
       return hits;
     }
+    @Override
     public void startDocument() throws SAXException {
       super.startDocument();
       hits = new ArrayList();
     }
+    @Override
     public void startElement(String nsuri, String lname, String qname,
                              Attributes attrs) throws SAXException {
       super.startElement(nsuri, lname, qname, attrs);

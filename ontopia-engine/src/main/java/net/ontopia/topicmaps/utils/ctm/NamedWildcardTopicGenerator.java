@@ -32,12 +32,14 @@ public class NamedWildcardTopicGenerator extends AbstractTopicGenerator {
     this.name = name;
   }
   
+  @Override
   public TopicIF getTopic() {
     if (topic == null)
       topic = context.makeAnonymousTopic(name);
     return topic;
   }
 
+  @Override
   public ValueGeneratorIF copy() {
     return this; // no state, so...
   }

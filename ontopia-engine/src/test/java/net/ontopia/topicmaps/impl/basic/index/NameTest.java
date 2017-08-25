@@ -46,6 +46,7 @@ public class NameTest extends TestCase {
     super(name);
   }
 
+  @Override
   protected void setUp() {
     topicmap = makeTopicMap();
     index = (NameIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.NameIndexIF");

@@ -48,6 +48,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws MalformedURLException {
     String DECL = "using bk for i\"http://psi.bergen.kommune.no/portal/\" ";
     ttopicq = DECL + "select $T from  "+

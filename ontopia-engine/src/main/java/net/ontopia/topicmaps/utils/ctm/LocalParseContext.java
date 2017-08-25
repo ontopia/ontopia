@@ -33,10 +33,12 @@ public class LocalParseContext extends GlobalParseContext {
     this.parent = parent;
   }
   
+  @Override
   public TopicIF makeAnonymousTopic() {
     return parent.makeAnonymousTopic();
   }
 
+  @Override
   public TopicIF makeAnonymousTopic(String wildcard_name) {
     return parent.makeAnonymousTopic(wildcard_name);
   }

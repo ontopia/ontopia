@@ -35,14 +35,17 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "base-locator";
   }
 
+  @Override
   public String getSignature() {
     return "s";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -50,6 +53,7 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

@@ -99,12 +99,15 @@ public abstract class TMObject extends AbstractRWPersistent
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public abstract String getObjectId();
 
+  @Override
   public boolean isReadOnly() {
     return txn.isReadOnly();
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     try {
       return this.<TopicMapIF>loadField(LF_topicmap);
@@ -114,10 +117,12 @@ public abstract class TMObject extends AbstractRWPersistent
     }
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     return this.<LocatorIF>loadCollectionField(LF_sources);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF source_locator)
     throws ConstraintViolationException {
     if (source_locator == null)
@@ -148,6 +153,7 @@ public abstract class TMObject extends AbstractRWPersistent
     valueAdded(LF_sources, _source_locator, true);
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
     if (source_locator == null)
       throw new NullPointerException("null is not a valid argument.");

@@ -67,6 +67,7 @@ public class TopicComparators {
     public CaseInsensitiveStringifierComparator(StringifierIF<E> stringifier) {
       this.stringifier = stringifier;
     }
+    @Override
     public int compare(E obj1, E obj2) {
       String str1 = stringifier.toString(obj1);
       String str2 = stringifier.toString(obj2);      

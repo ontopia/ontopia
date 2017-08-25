@@ -42,40 +42,49 @@ public class QueryMatchesCollection implements Collection {
   
   // -- immutable collection
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean add(Object o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection c) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection c) {
     throw new UnsupportedOperationException();
   }
 
   // -- other
 
+  @Override
   public int size() {
     return matches.last+1;
   }
 
+  @Override
   public boolean isEmpty() {
     return matches.isEmpty();
   }
 
+  @Override
   public boolean contains(Object o) {    
     // linear scan
     if (o == null) {
@@ -91,6 +100,7 @@ public class QueryMatchesCollection implements Collection {
     }
   }
 
+  @Override
   public boolean containsAll(Collection c) {
     Iterator e = c.iterator();
     while (e.hasNext())
@@ -100,6 +110,7 @@ public class QueryMatchesCollection implements Collection {
     return true;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] result = new Object[matches.last];
     for (int row = 0; row <= matches.last; row++) {
@@ -108,6 +119,7 @@ public class QueryMatchesCollection implements Collection {
     return result;
   }
 
+  @Override
   public Object[] toArray(Object[] a) {
     if (a.length < matches.last+1)
       a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), matches.last+1);
@@ -125,6 +137,7 @@ public class QueryMatchesCollection implements Collection {
   
   // -- object
 
+  @Override
   public String toString() {
     StringBuilder buf = new StringBuilder();
     buf.append('[');
@@ -145,19 +158,23 @@ public class QueryMatchesCollection implements Collection {
 
   // -- iterator
 
+  @Override
   public Iterator iterator() {
     return new Iterator() {	
 
 	protected int row = 0;
 
+      @Override
 	public boolean hasNext() {
 	  return (row < (matches.last+1));
 	}
 	
+      @Override
 	public Object next() {
 	  return matches.data[row++][colidx];
 	}
 	
+      @Override
 	public void remove() {
 	  throw new UnsupportedOperationException();
 	}

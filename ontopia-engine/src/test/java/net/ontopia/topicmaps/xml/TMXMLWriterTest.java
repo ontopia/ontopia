@@ -205,6 +205,7 @@ public class TMXMLWriterTest {
       closed = false;
     }
 
+    @Override
     public void close() throws IOException {
       closed = true;
     }
@@ -213,9 +214,11 @@ public class TMXMLWriterTest {
       return closed;
     }
     
+    @Override
     public void write(char[] attr0, int attr1, int attr2) throws IOException {
       // no-op
     }
+    @Override
     public void flush() throws IOException {
       // no-op
     }

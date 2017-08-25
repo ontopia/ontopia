@@ -37,6 +37,7 @@ public class JDOEndsWith implements JDOExpressionIF {
     this.right = right;
   }
   
+  @Override
   public int getType() {
     return ENDS_WITH;
   }
@@ -49,10 +50,12 @@ public class JDOEndsWith implements JDOExpressionIF {
     return right;
   }
   
+  @Override
   public int hashCode() {
     return left.hashCode() + right.hashCode() + ENDS_WITH;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOEndsWith) {
@@ -63,10 +66,12 @@ public class JDOEndsWith implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return left + ".endsWith(" + right + ")";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(left);
     visitor.visitable(right);

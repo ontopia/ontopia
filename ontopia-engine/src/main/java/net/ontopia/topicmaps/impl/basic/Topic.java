@@ -95,6 +95,7 @@ public class Topic extends TMObject implements TopicIF {
     this.parent = parent;
   }
 
+  @Override
   public Collection<LocatorIF> getSubjectLocators() {
     if (subjects == null)
       return Collections.emptySet();
@@ -102,6 +103,7 @@ public class Topic extends TMObject implements TopicIF {
       return Collections.unmodifiableSet(subjects);
   }
 
+  @Override
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
     if (subject_locator == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -119,6 +121,7 @@ public class Topic extends TMObject implements TopicIF {
     subjects.add(subject_locator);
   }
 
+  @Override
   public void removeSubjectLocator(LocatorIF subject_locator) {
     if (subject_locator == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -134,6 +137,7 @@ public class Topic extends TMObject implements TopicIF {
     subjects.remove(subject_locator);
   }
 
+  @Override
   public Collection<LocatorIF> getSubjectIdentifiers() {
     if (indicators == null)
       return Collections.emptySet();
@@ -141,6 +145,7 @@ public class Topic extends TMObject implements TopicIF {
       return Collections.unmodifiableSet(indicators);
   }
 
+  @Override
   public void addSubjectIdentifier(LocatorIF subject_indicator) throws ConstraintViolationException {
     if (subject_indicator == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -158,6 +163,7 @@ public class Topic extends TMObject implements TopicIF {
     indicators.add(subject_indicator);
   }
 
+  @Override
   public void removeSubjectIdentifier(LocatorIF subject_indicator) {
     if (subject_indicator == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -173,6 +179,7 @@ public class Topic extends TMObject implements TopicIF {
     indicators.remove(subject_indicator);
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNames() {
     // Return names
     return Collections.unmodifiableSet(names);
@@ -211,6 +218,7 @@ public class Topic extends TMObject implements TopicIF {
     names.remove(name);
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
     Set<TopicNameIF> namesbytype = topicmap.cfactory.makeSmallSet();
     for (TopicNameIF name : names) {
@@ -221,10 +229,12 @@ public class Topic extends TMObject implements TopicIF {
     return Collections.unmodifiableSet(namesbytype);
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrences() {
     return Collections.unmodifiableSet(occurs);
   }
 
+  @Override
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
     Set<OccurrenceIF> occsbytype = topicmap.cfactory.makeSmallSet();
     for (OccurrenceIF occ : occurs) {
@@ -268,10 +278,12 @@ public class Topic extends TMObject implements TopicIF {
     occurs.remove(occurrence);
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     return Collections.unmodifiableSet(roles);
   }
   
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     // see below for rationale for next line
@@ -287,6 +299,7 @@ public class Topic extends TMObject implements TopicIF {
     return result;
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
@@ -319,6 +332,7 @@ public class Topic extends TMObject implements TopicIF {
     }    
   }
 
+  @Override
   public Collection<AssociationIF> getAssociations() {
     Set<AssociationIF> assocs = new HashSet<AssociationIF>();
     for (AssociationRoleIF role : roles) {
@@ -327,6 +341,7 @@ public class Topic extends TMObject implements TopicIF {
     return Collections.unmodifiableSet(assocs);
   }
 
+  @Override
   public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
     Set<AssociationIF> assocs = new HashSet<AssociationIF>();
     for (AssociationRoleIF role : roles) {
@@ -338,6 +353,7 @@ public class Topic extends TMObject implements TopicIF {
     return Collections.unmodifiableSet(assocs);
   }
 
+  @Override
   public void merge(TopicIF topic) {
     CrossTopicMapException.check(topic, this);
     net.ontopia.topicmaps.utils.MergeUtils.mergeInto(this, topic);
@@ -366,15 +382,18 @@ public class Topic extends TMObject implements TopicIF {
     roles.remove(assoc_role);
   }  
 
+  @Override
   public void remove() {
     if (topicmap != null)
       topicmap.removeTopic(this);
   }
   
+  @Override
   public Collection<TopicIF> getTypes() {
     return types;
   }
 
+  @Override
   public void addType(TopicIF type) {
     if (type == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -385,6 +404,7 @@ public class Topic extends TMObject implements TopicIF {
     types = topicmap.setpool.add(types, type, true);
   }
 
+  @Override
   public void removeType(TopicIF type) {
     if (type == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
@@ -395,6 +415,7 @@ public class Topic extends TMObject implements TopicIF {
     types = topicmap.setpool.remove(types, type, true);
   }
 
+  @Override
   public ReifiableIF getReified() {
     return reified;
   }
@@ -411,11 +432,13 @@ public class Topic extends TMObject implements TopicIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.Topic", (TopicIF)this);
   }
 
   static class RoleComparator implements Comparator<AssociationRoleIF> {
+    @Override
     public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
 
       int c = role1.getType().hashCode() - role2.getType().hashCode();

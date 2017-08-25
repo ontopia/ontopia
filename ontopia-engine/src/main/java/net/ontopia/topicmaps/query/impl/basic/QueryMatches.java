@@ -627,10 +627,12 @@ public class QueryMatches {
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
     }
 
+    @Override
     public int hashCode() {
       return hashCode;
     }
 
+    @Override
     public boolean equals(Object o) {
       // this class is only used here, so we are making some simplifying
       // assumptions:
@@ -653,6 +655,7 @@ public class QueryMatches {
       this.comparedColumns = comparedColumns;
     }
     
+    @Override
     public void setArray(Object[] row) {
       this.row = row;
 
@@ -664,6 +667,7 @@ public class QueryMatches {
       }
     }
 
+    @Override
     public boolean equals(Object o) {
       // this class is only used here, so we are making some simplifying
       // assumptions:

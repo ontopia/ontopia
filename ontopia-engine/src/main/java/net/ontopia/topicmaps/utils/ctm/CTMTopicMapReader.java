@@ -91,6 +91,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
 
   // ==== READER IMPLEMENTATION ====
 
+  @Override
   protected TopicMapIF read(TopicMapStoreFactoryIF store_factory)
       throws IOException {
     TopicMapStoreIF store = store_factory.createStore();

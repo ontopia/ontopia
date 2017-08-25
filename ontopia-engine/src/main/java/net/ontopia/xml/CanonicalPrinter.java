@@ -64,10 +64,12 @@ public class CanonicalPrinter implements ContentHandler {
 
   // Document events
     
+  @Override
   public void startDocument() {
     // no-op
   }
 
+  @Override
   public void startElement(String uri, String localName, String name, Attributes atts) {
     // first: sort attributes
     String[] attNames = new String[atts.getLength()]; 
@@ -84,10 +86,12 @@ public class CanonicalPrinter implements ContentHandler {
     writer.print(">");
   }
 
+  @Override
   public void endElement(String uri, String localName, String name) {
     writer.print("</" + name + ">");
   }
 
+  @Override
   public void characters (char ch[], int start, int length) {
     StringBuilder content = new StringBuilder();
     for (int i = start; i < start + length; i++) {
@@ -111,14 +115,17 @@ public class CanonicalPrinter implements ContentHandler {
     writer.print(content.toString());
   }
 
+  @Override
   public void ignorableWhitespace (char ch[], int start, int length) {
     writer.write(ch, start, length);
   }
 
+  @Override
   public void processingInstruction (String target, String data) {
     writer.print("<?" + target + " " + data + "?>\n");
   }
 
+  @Override
   public void endDocument() {
     writer.flush();
     if (closeWRiter){
@@ -126,6 +133,7 @@ public class CanonicalPrinter implements ContentHandler {
     }
   }
 
+  @Override
   public void setDocumentLocator (Locator locator) {
     // no-op
   }

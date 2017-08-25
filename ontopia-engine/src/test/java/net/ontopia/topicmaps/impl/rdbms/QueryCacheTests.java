@@ -42,6 +42,7 @@ public class QueryCacheTests extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
     super.setUp();

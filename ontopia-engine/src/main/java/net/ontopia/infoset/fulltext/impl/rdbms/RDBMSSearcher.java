@@ -100,6 +100,7 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
     }
   }
 
+  @Override
   public SearchResultIF search(String query) throws IOException {
     TransactionIF txn = tmtxn.getTransaction();
 
@@ -144,12 +145,14 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
       return new Object[] { topicmap, query, topicmap, query, topicmap, query };      
   }
 
+  @Override
   public void close() throws IOException {
     tmtxn = null;
   }
 
   // --- IndexIF implementation
 
+  @Override
   public IndexIF getIndex() {
     return this;
   }

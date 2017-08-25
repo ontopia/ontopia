@@ -136,10 +136,12 @@ public class LTMTemplateImporter {
       return get(key) != null;
     }
 
+    @Override
     public int size() {
       return 3; // a smallish number, that's all
     }
 
+    @Override
     public Set<Map.Entry<String, Object>> entrySet() {
       throw new net.ontopia.utils.OntopiaRuntimeException("INTERNAL ERROR");
     }

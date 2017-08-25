@@ -59,14 +59,17 @@ public class URIFragmentLocator extends AbstractLocator {
   // LocatorIF implementation
   // --------------------------------------------------------------------------
 
+  @Override
   public String getNotation() {
     return "URI";
   }
 
+  @Override
   public String getAddress() {
     return address + "#" + fragment;
   }
 
+  @Override
   public LocatorIF resolveAbsolute(String rel) {
     int length = rel.length();
     if (length == 0)
@@ -124,6 +127,7 @@ public class URIFragmentLocator extends AbstractLocator {
     }
   }
 
+  @Override
   public String getExternalForm() {
     return URILocator.toExternalForm(address + "#" + fragment);
   }
@@ -150,6 +154,7 @@ public class URIFragmentLocator extends AbstractLocator {
     return index;
   }
 
+  @Override
   public int hashCode() {
     // this hashCode() implementation returns the same value as
 
@@ -171,6 +176,7 @@ public class URIFragmentLocator extends AbstractLocator {
     return hash;
   }
 
+  @Override
   public boolean equals(Object object) {
     try {
       if (object instanceof URIFragmentLocator) {

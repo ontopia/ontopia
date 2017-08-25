@@ -65,6 +65,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
 
+  @Override
   protected TopicIF getWrapped() {
     return wrapped;
   }
@@ -75,6 +76,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getSubjectIdentifiers()
    */
 
+  @Override
   public Set<Locator> getSubjectIdentifiers() {
     return topicMap.wrapSet(wrapped.getSubjectIdentifiers());
   }
@@ -85,6 +87,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#addSubjectIdentifier(org.tmapi.core.Locator)
    */
 
+  @Override
   public void addSubjectIdentifier(Locator sid) {
     try {
       wrapped.addSubjectIdentifier(topicMap.unwrapLocator(sid));
@@ -105,6 +108,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#removeSubjectIdentifier(org.tmapi.core.Locator)
    */
 
+  @Override
   public void removeSubjectIdentifier(Locator sid) {
     if (sid == null) {
       throw new ModelConstraintException(this,
@@ -119,6 +123,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getSubjectLocators()
    */
 
+  @Override
   public Set<Locator> getSubjectLocators() {
     return topicMap.wrapSet(wrapped.getSubjectLocators());
   }
@@ -129,6 +134,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#addSubjectLocator(org.tmapi.core.Locator)
    */
 
+  @Override
   public void addSubjectLocator(Locator slo) {
     try {
       wrapped.addSubjectLocator(topicMap.unwrapLocator(slo));
@@ -148,6 +154,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#removeSubjectLocator(org.tmapi.core.Locator)
    */
 
+  @Override
   public void removeSubjectLocator(Locator slo) {
     if (slo == null) {
       throw new ModelConstraintException(this,
@@ -162,6 +169,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getTypes()
    */
 
+  @Override
   public Set<Topic> getTypes() {
     return topicMap.wrapSet(wrapped.getTypes());
   }
@@ -172,6 +180,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#addType(org.tmapi.core.Topic)
    */
 
+  @Override
   public void addType(Topic type) {
     Check.typeNotNull(this, type);
     Check.typeInTopicMap(getTopicMap(), type);
@@ -184,6 +193,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#removeType(org.tmapi.core.Topic)
    */
 
+  @Override
   public void removeType(Topic type) {
     Check.typeNotNull(this, type);
     wrapped.removeType(topicMap.unwrapTopic(type));
@@ -196,6 +206,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * org.tmapi.core.Topic[])
    */
 
+  @Override
   public Name createName(String value, Topic... scope) {
     return createName(topicMap.getDefaultNameType(), value, scope);
   }
@@ -207,6 +218,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.util.Collection)
    */
 
+  @Override
   public Name createName(String value, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
     return createName(value, scope.toArray(new Topic[scope.size()]));
@@ -219,6 +231,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.lang.String, org.tmapi.core.Topic[])
    */
 
+  @Override
   public Name createName(Topic type, String value, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
@@ -238,6 +251,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.lang.String, java.util.Collection)
    */
 
+  @Override
   public Name createName(Topic type, String value, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
     return createName(type, value, scope.toArray(new Topic[scope.size()]));
@@ -250,6 +264,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.lang.String, org.tmapi.core.Topic[])
    */
 
+  @Override
   public Occurrence createOccurrence(Topic type, String value, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
@@ -269,6 +284,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.lang.String, java.util.Collection)
    */
 
+  @Override
   public Occurrence createOccurrence(Topic type, String value,
       Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
@@ -282,6 +298,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * org.tmapi.core.Locator, org.tmapi.core.Topic[])
    */
 
+  @Override
   public Occurrence createOccurrence(Topic type, Locator value, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
@@ -301,6 +318,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * org.tmapi.core.Locator, java.util.Collection)
    */
 
+  @Override
   public Occurrence createOccurrence(Topic type, Locator value,
       Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
@@ -314,6 +332,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.lang.String, org.tmapi.core.Locator, org.tmapi.core.Topic[])
    */
 
+  @Override
   public Occurrence createOccurrence(Topic type, String value,
       Locator datatype, Topic... scope) {
     Check.typeNotNull(this, type);
@@ -334,6 +353,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * java.lang.String, org.tmapi.core.Locator, java.util.Collection)
    */
 
+  @Override
   public Occurrence createOccurrence(Topic type, String value,
       Locator datatype, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
@@ -347,6 +367,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getNames()
    */
 
+  @Override
   public Set<Name> getNames() {
     return topicMap.wrapSet(wrapped.getTopicNames());
   }
@@ -356,6 +377,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * 
    * @see org.tmapi.core.Topic#getNames(org.tmapi.core.Topic)
    */
+  @Override
   public Set<Name> getNames(Topic type) {
     Check.typeNotNull(type);
     TopicIF type_ = topicMap.unwrapTopic(type);
@@ -376,6 +398,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getOccurrences()
    */
 
+  @Override
   public Set<Occurrence> getOccurrences() {
     return topicMap.wrapSet(wrapped.getOccurrences());
   }
@@ -385,6 +408,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * 
    * @see org.tmapi.core.Topic#getOccurrences(org.tmapi.core.Topic)
    */
+  @Override
   public Set<Occurrence> getOccurrences(Topic type) {
     Check.typeNotNull(type);
     TopicIF type_ = topicMap.unwrapTopic(type);
@@ -405,6 +429,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getParent()
    */
 
+  @Override
   public TopicMapImpl getParent() {
     return topicMap;
   }
@@ -415,6 +440,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getReified()
    */
 
+  @Override
   public Reifiable getReified() {
     return (Reifiable) topicMap.wrapTMObject(wrapped.getReified());
   }
@@ -425,6 +451,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getRolesPlayed()
    */
 
+  @Override
   public Set<Role> getRolesPlayed() {
     return topicMap.wrapSet(wrapped.getRoles());
   }
@@ -435,6 +462,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#getRolesPlayed(org.tmapi.core.Topic)
    */
 
+  @Override
   public Set<Role> getRolesPlayed(Topic type) {
     Check.typeNotNull(type);
     return topicMap.wrapSet(wrapped.getRolesByType(topicMap.unwrapTopic(type)));
@@ -447,6 +475,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * org.tmapi.core.Topic)
    */
 
+  @Override
   public Set<Role> getRolesPlayed(Topic type, Topic assocType) {
     Check.typeNotNull(type);
     
@@ -464,6 +493,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    * @see org.tmapi.core.Topic#mergeIn(org.tmapi.core.Topic)
    */
 
+  @Override
   public void mergeIn(Topic topic) {
     if (topicMap.unwrapTopic(topic) == getWrapped())
       return;
@@ -478,6 +508,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
 
   }
 
+  @Override
   public void remove() {
     isDeletable();
 

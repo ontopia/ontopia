@@ -158,6 +158,7 @@ public class Merger {
     private boolean enc = false;
     private boolean suppress = false;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 'x') xtm = true;

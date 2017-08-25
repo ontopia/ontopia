@@ -100,6 +100,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   // Document events
   // --------------------------------------------------------------------------
     
+  @Override
   public void startDocument () {
 
     // Initialize variables
@@ -118,6 +119,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     this.processed_documents_accumulated = new HashSet();
   }
 
+  @Override
   public void endDocument () {
     // Copy list of accumulated processed documents to parent list
     this.processed_documents_from_parent.addAll(processed_documents_accumulated);
@@ -126,6 +128,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // log.debug("Info map: " + info);
   }
   
+  @Override
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     try {
     
@@ -223,11 +226,13 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
   }
 
+  @Override
   public void characters (char ch[], int start, int length) {
     if (keep_content) 
       content.append(ch, start, length);      
   }
 
+  @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
     // log.debug("E: " + qName);
 

@@ -28,6 +28,7 @@ public class CanonicalExporterXTMROTests extends CanonicalExporterXTMTests {
     super(inputFile, filename);
   }
 
+  @Override
   protected boolean getExportReadOnly() {
     return true;
   }

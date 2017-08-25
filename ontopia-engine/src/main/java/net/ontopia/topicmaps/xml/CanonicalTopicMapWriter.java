@@ -93,6 +93,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     this.out = new CanonicalXTMPrinter(stream, false);
   }
 
+  @Override
   public void write(TopicMapIF topicmap) throws IOException {
     try {
       export(topicmap, out);
@@ -365,6 +366,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
    * CanonicalTopicMapWriter has no additional properties.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }
@@ -425,6 +427,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new TopicComparator();
       return instance;      
     }    
+    @Override
     public int compare(TopicIF topic1, TopicIF topic2) {
       if (topic1 == topic2) return 0;
 
@@ -469,6 +472,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new LocatorComparator();
       return instance;      
     }
+    @Override
     public int compare(LocatorIF loc1, LocatorIF loc2) {
       if (loc1 == loc2) return 0;
 
@@ -487,6 +491,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new TopicNameComparator();
       return instance;      
     }
+    @Override
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
       if (Objects.equals(bn1, bn2)) return 0;
       
@@ -511,6 +516,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new VariantNameComparator();
       return instance;      
     }
+    @Override
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
       if (vn1 == vn2) return 0;
       
@@ -535,6 +541,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new OccurrenceComparator();
       return instance;      
     }
+    @Override
     public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
       if (occ1 == occ2) return 0;
       
@@ -564,6 +571,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new AssociationComparator();
       return instance;      
     }
+    @Override
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       if (Objects.equals(assoc1, assoc2)) return 0;
       
@@ -589,6 +597,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (instance == null) instance = new AssociationRoleComparator();
       return instance;      
     }
+    @Override
     public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
       if (Objects.equals(role1, role2)) return 0;
       
@@ -612,6 +621,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       this.topicIds = topicIds;
     }
                               
+    @Override
     public String toString(TopicIF topic) {
       return topicIds.get(topic);
     }
@@ -676,6 +686,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       this.topicIds = topicIds;
     }
 
+    @Override
     public int compare(TopicIF o1, TopicIF o2) {
       String s1 = topicIds.get(o1);
       String s2 = topicIds.get(o2);
@@ -690,24 +701,28 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       this.comparator = comparator;
     }
             
+    @Override
     public T grab(Collection<T> coll) {
       return orderedIterator(coll, comparator).next();
     }
   }
 
   class StringComparator implements Comparator<String> {
+    @Override
     public int compare(String s1, String s2) {
       return s1.compareTo(s2);
     }
   }
     
   class LocatorStringifier implements StringifierIF<LocatorIF> {
+    @Override
     public String toString(LocatorIF loc) {
       return loc.getExternalForm();
     }
   }
 
   class OccurrenceStringifier implements StringifierIF<OccurrenceIF> {
+    @Override
     public String toString(OccurrenceIF occ) {
       if (occ.getLocator() != null)
         return occ.getLocator().getExternalForm();
@@ -724,6 +739,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       super(stream, closeWriter);
     }
 
+    @Override
     public void startElement(String uri, String localName, String name, Attributes atts) {
       super.startElement("", "", name, atts);
       if (!"baseNameString".equals(name) && 
@@ -733,6 +749,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
         writer.print("\n");
     }
 
+    @Override
     public void endElement(String uri, String localName, String name) {
       super.endElement("", "", name);
       writer.print("\n");

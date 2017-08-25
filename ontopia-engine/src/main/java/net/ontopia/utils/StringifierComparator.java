@@ -61,6 +61,7 @@ public class StringifierComparator<T> implements Comparator<T> {
     this.comparator = comparator;
   }
   
+  @Override
   public int compare(T obj1, T obj2) {
     if (Objects.equals(obj1, obj2)) return 0;
 

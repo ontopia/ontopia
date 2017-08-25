@@ -55,10 +55,12 @@ public class JDOSetOperation implements JDOExpressionIF {
     return sets;
   }
 
+  @Override
   public int getType() {
     return SET_OPERATION;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     String op;
@@ -90,6 +92,7 @@ public class JDOSetOperation implements JDOExpressionIF {
     return sb.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     throw new UnsupportedOperationException();
   }

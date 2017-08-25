@@ -96,6 +96,7 @@ public interface TopicMapStoreIF extends AutoCloseable {
   /**
    * PUBLIC: Closes the store and aborts the transaction if active.
    */
+  @Override
   void close();
   
   /**

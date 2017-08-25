@@ -42,6 +42,7 @@ public class SourceLocatorPredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

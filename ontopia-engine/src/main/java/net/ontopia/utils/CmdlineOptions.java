@@ -177,6 +177,7 @@ public class CmdlineOptions {
       return value;
     }
 
+    @Override
     public String getMessage() {
       if (value == null)
         return "Invalid option '" + getArgument() + "'.";

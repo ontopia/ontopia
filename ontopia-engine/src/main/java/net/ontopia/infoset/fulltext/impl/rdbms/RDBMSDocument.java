@@ -45,22 +45,27 @@ public class RDBMSDocument implements DocumentIF {
     return score;
   }
   
+  @Override
   public FieldIF getField(String name) {
     return fields.get(name);
   }
   
+  @Override
   public Collection<FieldIF> getFields() {
     return fields.values();
   }
 
+  @Override
   public void addField(FieldIF field) {
     throw new UnsupportedOperationException("Cannot modify RDBMS document object.");
   }
 
+  @Override
   public void removeField(FieldIF field) {
     throw new UnsupportedOperationException("Cannot modify RDBMS document object.");
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("<rdbms.Document ");

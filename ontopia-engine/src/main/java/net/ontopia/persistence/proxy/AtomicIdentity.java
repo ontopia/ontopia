@@ -57,22 +57,27 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
     this.hashcode = computeHashCode();
   }
 
+  @Override
   public Class<?> getType() {
     return type;
   }
 
+  @Override
   public int getWidth() {
     return 1;
   }
 
+  @Override
   public Object getKey(int index) {
     return key;
   }
 
+  @Override
   public Object createInstance() throws Exception {
     return ((Class)type).newInstance();
   }
   
+  @Override
   public int hashCode() {
     return hashcode;
   }
@@ -83,6 +88,7 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
     return 31*hashcode + key.hashCode();
   }
 
+  @Override
   public boolean equals(Object object) {
     if (object instanceof LongIdentity) {
       if (!(key instanceof Long)) return false;
@@ -107,6 +113,7 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
     }
   }
   
+  @Override
   public String toString() {
     return "<AtomicIdentity [" + key + "] " + type + ">";
   }
@@ -115,17 +122,20 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
   // Externalization
   // -----------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(type);
     out.writeObject(key);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     type = (Class<?>)in.readObject();
     key = in.readObject();
     this.hashcode = computeHashCode();
   }
 
+  @Override
   public Object clone() {
     try {
       return super.clone();

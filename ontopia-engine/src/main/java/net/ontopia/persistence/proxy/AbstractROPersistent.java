@@ -46,22 +46,27 @@ public abstract class AbstractROPersistent implements PersistentIF {
   // PersistentIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public IdentityIF _p_getIdentity() {
     return id;
   }
 
+  @Override
   public Class<?> _p_getType() {
     return getClass();
   }
   
+  @Override
   public void _p_setIdentity(IdentityIF identity) {
     this.id = identity;
   }
   
+  @Override
   public TransactionIF _p_getTransaction() {
     return txn;
   }
 
+  @Override
   public void _p_setTransaction(TransactionIF txn) {
     if (this.txn != null)
       throw new OntopiaRuntimeException("Cannot change the transaction of a persistent object.");
@@ -118,6 +123,7 @@ public abstract class AbstractROPersistent implements PersistentIF {
     }
   }
 
+  @Override
   public void detach() {
     throw new UnsupportedOperationException();
   }
@@ -136,50 +142,61 @@ public abstract class AbstractROPersistent implements PersistentIF {
 
   // -- persistent state
 
+  @Override
   public boolean isTransient() {
     return false;
   }
 
+  @Override
   public boolean isNewObject() {
     return false;
   }
   
+  @Override
   public void setNewObject(boolean newObject) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isInDatabase() {
     return true;
   }
   
+  @Override
   public void setInDatabase(boolean inDatabase) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isPersistent() {
     return true;
   }
   
+  @Override
   public void setPersistent(boolean persistent) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isDeleted() {
     return false;
   }
   
+  @Override
   public void setDeleted(boolean deleted) {
     throw new UnsupportedOperationException();
   }
 
   // -- loaded
 
+  @Override
   public boolean isLoaded(int field) {
     return false;
   }
 
   // -- values
 
+  @Override
   public Object loadValue(FieldInfoIF finfo) {
     if (finfo.isCollectionField()) 
       return loadCollectionField(finfo.getIndex());
@@ -189,18 +206,22 @@ public abstract class AbstractROPersistent implements PersistentIF {
 
   // -- dirty (unflushed)
 
+  @Override
   public boolean isDirty() {
     return false;
   }
 
+  @Override
   public boolean isDirty(int field) {
     return false;
   }
 
+  @Override
   public int nextDirty(int start) {
     return -1;
   }
 
+  @Override
   public int nextDirty(int start, int end) {
     return -1;
   }
@@ -227,12 +248,14 @@ public abstract class AbstractROPersistent implements PersistentIF {
     return -1;
   }
   
+  @Override
   public void setDirtyFlushed(int field, boolean dirty) {
     throw new UnsupportedOperationException();
   }
 
   // -- misc
 
+  @Override
   public void clearAll() {
     //! throw new UnsupportedOperationException();
   }

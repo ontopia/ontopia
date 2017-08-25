@@ -37,6 +37,7 @@ public class SQLExists implements SQLExpressionIF {
     this.expression = expression;
   }
 
+  @Override
   public int getType() {
     return EXISTS;
   }
@@ -49,6 +50,7 @@ public class SQLExists implements SQLExpressionIF {
     this.expression = expression;
   }
 
+  @Override
   public String toString() {
     return "exists (" + getExpression() + ")";
   }

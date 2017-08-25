@@ -1363,6 +1363,7 @@ public class SQLBuilder {
       else
         return this;
     }
+    @Override
     public String toString() {
       return "[" + vcols + ", " + jcols + "]";
     }

@@ -192,6 +192,7 @@ public class RDBMSImport {
     private String topicMapComments;
     private boolean progress;
     
+    @Override
     public void processOption(char option, String value) {
       if (option == 'i') topicMapId = ImportExportUtils.getTopicMapId(value);
       if (option == 'v') validate = Boolean.valueOf(value).booleanValue();
@@ -217,24 +218,28 @@ public class RDBMSImport {
       this.fc = getChannel();
     }
     
+    @Override
     public int read() throws IOException {
       int res = super.read();
       status();
       return res;
     }
 
+    @Override
     public int read(byte[] b) throws IOException {
       int res = super.read(b);
       status();
       return res;
     }
 
+    @Override
     public int read(byte[] b, int off, int len) throws IOException {
       int res = super.read(b, off, len);
       status();
       return res;
     }
 
+    @Override
     public long skip(long n) throws IOException {
       long res = super.skip(n);
       status();

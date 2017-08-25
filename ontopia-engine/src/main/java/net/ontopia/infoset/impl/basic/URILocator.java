@@ -132,14 +132,17 @@ public class URILocator extends AbstractLocator implements Externalizable {
   // LocatorIF implementation
   // --------------------------------------------------------------------------
   
+  @Override
   public String getNotation() {
     return "URI";
   }
 
+  @Override
   public String getAddress() {
     return address;
   }
   
+  @Override
   public LocatorIF resolveAbsolute(String rel) {
     int length = rel.length();
     if (length == 0) {
@@ -214,6 +217,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
     }
   }
 
+  @Override
   public String getExternalForm() {
     return toExternalForm(address);
   }
@@ -692,10 +696,12 @@ public class URILocator extends AbstractLocator implements Externalizable {
   // Misc
   // --------------------------------------------------------------------------
 
+  @Override
   public int hashCode() {
     return address.hashCode();
   }
 
+  @Override
   public boolean equals(Object object) {
     try {
       LocatorIF locator = (LocatorIF)object;
@@ -712,10 +718,12 @@ public class URILocator extends AbstractLocator implements Externalizable {
   // Externalization
   // --------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeUTF(address);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     address = in.readUTF();
   }

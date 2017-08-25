@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public class InMemoryStoreFactory implements TopicMapStoreFactoryIF {
   
+  @Override
   public TopicMapStoreIF createStore() {
     return new InMemoryTopicMapStore();
   }

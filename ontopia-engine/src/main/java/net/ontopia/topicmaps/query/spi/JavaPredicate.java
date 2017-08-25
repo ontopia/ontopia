@@ -41,14 +41,17 @@ public abstract class JavaPredicate implements BasicPredicateIF {
   private TopicMapIF topicmap;
   private Map parameters;
   
+  @Override
   public String getName() {
     return predicateName;
   }
 
+  @Override
   public String getSignature() {
     return ".?!+";
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     for (int i=0; i < boundparams.length; i++)
       if (!boundparams[i])
@@ -94,6 +97,7 @@ public abstract class JavaPredicate implements BasicPredicateIF {
   /**
    * INTERNAL: Internal machinery.
    */
+  @Override
   public abstract QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException;
   

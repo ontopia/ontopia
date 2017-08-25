@@ -35,6 +35,7 @@ public class SubstringGrabber implements GrabberIF<Object, String> {
     this.end_index = end_index;
   }
   
+  @Override
   public String grab(Object object) {
     if (object.toString().length() == 0) return "";                                      
     return object.toString().substring(begin_index, end_index);

@@ -56,6 +56,7 @@ public class OrClause extends AbstractClause {
     return alternatives;
   }
 
+  @Override
   public Collection getAllVariables() {
     Collection vars = new HashSet();
 
@@ -71,6 +72,7 @@ public class OrClause extends AbstractClause {
     return vars;
   }
 
+  @Override
   public Collection getAllLiterals() {
     Collection literals = new HashSet();
 
@@ -86,6 +88,7 @@ public class OrClause extends AbstractClause {
     return literals;
   }
   
+  @Override
   public List getArguments() {
     List args = new ArrayList();
 
@@ -101,6 +104,7 @@ public class OrClause extends AbstractClause {
     return args;
   }
   
+  @Override
   public String toString() {
     return "{" + StringUtils.join(alternatives, (shortcircuit ? " || " : " | ")) + "}";
   }

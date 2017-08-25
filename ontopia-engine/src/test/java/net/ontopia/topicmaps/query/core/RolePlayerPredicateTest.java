@@ -37,6 +37,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

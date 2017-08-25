@@ -37,6 +37,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }  
@@ -157,10 +158,12 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     
   public static class ExactSearcher extends AbstractSearcher {
 
+    @Override
     public int getValueType() {
       return SearcherIF.STRING_VALUE;
     }
     
+    @Override
     public SearchResultIF getResult(String query) {
       return new ExactSearchResult(query);
     }
@@ -176,6 +179,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
         this.query = query;
       }
       
+      @Override
       public boolean next() {
         for (int i = c+1; i < o.length; i++) {
           if (query.equals(o[i])) {
@@ -186,14 +190,17 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
         return false;
       }
       
+      @Override
       public Object getValue() {
         return o[c];
       }
       
+      @Override
       public float getScore() {
         return f[c];
       }
       
+      @Override
       public void close() {
         // no-op
       }
@@ -204,10 +211,12 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
 
   public static class UnknownSearcher extends AbstractSearcher {
 
+    @Override
     public int getValueType() {
       return SearcherIF.SUBJECT_LOCATOR;
     }
     
+    @Override
     public SearchResultIF getResult(String query) {
       return new UnknownSearchResult();
     }
@@ -215,20 +224,24 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     private class UnknownSearchResult extends AbstractSearchResult {
       private boolean has_more = true;
       
+      @Override
       public boolean next() {
         boolean value = has_more;
         has_more = false;
         return value;
       }
       
+      @Override
       public Object getValue() {
         return "http://this.subject.locator.is.not.found/";
       }
       
+      @Override
       public float getScore() {
         return 1.0f;
       }
       
+      @Override
       public void close() {
         // no-op
       }

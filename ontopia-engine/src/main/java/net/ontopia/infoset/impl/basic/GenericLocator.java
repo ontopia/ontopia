@@ -61,14 +61,17 @@ public class GenericLocator extends AbstractLocator implements Externalizable {
   // LocatorIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public String getNotation() {
     return notation;
   }
 
+  @Override
   public String getAddress() {
     return address;
   }
 
+  @Override
   public LocatorIF resolveAbsolute(String address) {
     // Since this locator is general we cannot make the address
     // absolute, so we'll just return a new locator with the same
@@ -76,6 +79,7 @@ public class GenericLocator extends AbstractLocator implements Externalizable {
     return new GenericLocator(notation, address);
   }
 
+  @Override
   public String getExternalForm() {
     // in a generic locator we don't know the syntax rules, so we
     // have to just return the string as we got it
@@ -86,10 +90,12 @@ public class GenericLocator extends AbstractLocator implements Externalizable {
   // Misc
   // -----------------------------------------------------------------------------
 
+  @Override
   public int hashCode() {
     return address.hashCode();
   }
 
+  @Override
   public boolean equals(Object object) {
     try {
       LocatorIF locator = (LocatorIF)object;
@@ -106,11 +112,13 @@ public class GenericLocator extends AbstractLocator implements Externalizable {
   // Externalization
   // -----------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeUTF(notation);
     out.writeUTF(address);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     notation = in.readUTF();
     address = in.readUTF();

@@ -41,6 +41,7 @@ public class ClassInstanceTest extends TestCase {
         super(name);
     }
 
+    @Override
     protected void setUp() {
         topicmap = makeTopicMap();
         index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");

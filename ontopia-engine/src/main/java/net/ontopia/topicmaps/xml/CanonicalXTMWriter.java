@@ -156,6 +156,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     startNewlineElem.add(EL_SUBJECTLOCATORS);
   }
   
+  @Override
   public void write(TopicMapIF topicmap) {
     DuplicateSuppressionUtils.removeDuplicates(topicmap);
     tmForFake = topicmap;
@@ -714,6 +715,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
    * CanonicalXTMWriter has no additional properties.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }
@@ -822,6 +824,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       this.indexMap = indexMap;
     }
     
+    @Override
     public int compare(Object o1, Object o2) {
       Integer index1 = (Integer)indexMap.get(o1);
       Integer index2 = (Integer)indexMap.get(o2);
@@ -840,6 +843,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   
   class LocatorComparator extends AbstractComparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       return compareLocator((LocatorIF)o1, (LocatorIF)o2);
     }
@@ -847,6 +851,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   class TopicComparator extends AbstractComparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       TopicIF t1 = (TopicIF) o1;
       TopicIF t2 = (TopicIF) o2;
@@ -866,6 +871,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   class NameComparator extends AbstractComparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       TopicNameIF bn1 = (TopicNameIF) o1;
       TopicNameIF bn2 = (TopicNameIF) o2;
@@ -887,6 +893,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       this.elementComparator = elementComparator;
     }  
   
+    @Override
     public int compare(Object o1, Object o2) {
       Collection c1 = (Collection) o1;
       Collection c2 = (Collection) o2;
@@ -906,6 +913,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   class VariantComparator extends AbstractComparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       VariantNameIF vn1 = (VariantNameIF) o1;
       VariantNameIF vn2 = (VariantNameIF) o2;
@@ -922,6 +930,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   class OccurrenceComparator extends AbstractComparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       OccurrenceIF occ1 = (OccurrenceIF) o1;
       OccurrenceIF occ2 = (OccurrenceIF) o2;
@@ -946,6 +955,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
           new RoleInAssociationComparator());
     }
     
+    @Override
     public int compare(Object o1, Object o2) {
       AssociationIF assoc1 = (AssociationIF) o1;
       AssociationIF assoc2 = (AssociationIF) o2;
@@ -962,6 +972,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   class RoleInAssociationComparator extends AbstractComparator {
     
+    @Override
     public int compare(Object o1, Object o2) {
       AssociationRoleIF role1 = (AssociationRoleIF) o1;
       AssociationRoleIF role2 = (AssociationRoleIF) o2;
@@ -977,6 +988,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   class AssociationRoleComparator extends AbstractComparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       AssociationRoleIF role1 = (AssociationRoleIF) o1;
       AssociationRoleIF role2 = (AssociationRoleIF) o2;
@@ -1007,6 +1019,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       super(betweenComparator, withinComparator);
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
       if (Objects.equals(o1, o2)) return 0;
 
@@ -1064,6 +1077,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       iteratorComparator = new IteratorComparator(betweenComp);
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
       if (o1 == o2) return 0;
 
@@ -1090,30 +1104,39 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   // --- Fake wrappers
 
   abstract class FakeScoped implements ScopedIF {
+    @Override
     public Collection getScope() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public void addTheme(TopicIF theme) { /* no-op */ }
+    @Override
     public void removeTheme(TopicIF theme) { /* no-op */ }
 
+    @Override
     public String getObjectId() {
       return null;
     }
 
+    @Override
     public boolean isReadOnly() {
       return true;
     }
 
+    @Override
     public TopicMapIF getTopicMap() {
       return null;
     }
 
+    @Override
     public Collection getItemIdentifiers() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public void addItemIdentifier(LocatorIF source_locator) { /* no-op */ }
+    @Override
     public void removeItemIdentifier(LocatorIF source_locator) { /* no-op */ }
 
     public Collection getTypes() {
@@ -1123,6 +1146,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     public void addType(TopicIF type) { /* no-op */ }
     public void removeType(TopicIF type) { /* no-op */ }
 
+    @Override
     public void remove() {}    
   }
 
@@ -1135,61 +1159,79 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       this.indicator = Collections.singleton(indicator);
     }
 
+    @Override
     public Collection getSubjectIdentifiers() {
       return indicator;
     }
 
+    @Override
     public Collection getSubjectLocators() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection getTopicNames() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection getOccurrences() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection getRoles() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection getRolesByType(TopicIF roletype) {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
       return Collections.EMPTY_SET;
     }
     
+    @Override
     public Collection<AssociationIF> getAssociations() {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
       return Collections.EMPTY_SET;
     }
 
+    @Override
     public TopicMapIF getTopicMap() {
       return tmForFake;
     }
 
+    @Override
     public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException { /* no-op */ }
+    @Override
     public void removeSubjectLocator(LocatorIF subject_locator) { /* no-op */ }
 
+    @Override
     public void addSubjectIdentifier(LocatorIF subject_indicator) { /* no-op */ }
+    @Override
     public void removeSubjectIdentifier(LocatorIF subject_indicator) { /* no-op */ }
+    @Override
     public void merge(TopicIF topic) { /* no-op */ }
     
+    @Override
     public ReifiableIF getReified() {
       return null;
     }
@@ -1204,14 +1246,17 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       roles.add(new FakeRole(this, instance, i));
     }
 
+    @Override
     public Collection getRoles() {
       return roles;
     }
 
+    @Override
     public Collection getRoleTypes() {
       return null;
     }
 
+    @Override
     public Collection getRolesByType(TopicIF roletype) {
       Collection rolesoftype = new ArrayList();
       Iterator it = roles.iterator();
@@ -1223,16 +1268,20 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return rolesoftype;
     }
 
+    @Override
     public TopicIF getType() {
       return typeInstance;
     }
 
+    @Override
     public void setType(TopicIF type) { /* no-op */ }
     
+    @Override
     public TopicIF getReifier() {
       return null;
     }
   
+    @Override
     public void setReifier(TopicIF reifier) { /* no-op */ }
 
   }
@@ -1248,25 +1297,32 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       this.player = player;
     }
 
+    @Override
     public TopicIF getType() {
       return type;
     }
 
+    @Override
     public AssociationIF getAssociation() {
       return association;
     }
 
+    @Override
     public TopicIF getPlayer() {
       return player;
     }
 
+    @Override
     public void setType(TopicIF type) { /* no-op */ }
+    @Override
     public void setPlayer(TopicIF player) { /* no-op */ }
 
+    @Override
     public TopicIF getReifier() {
       return null;
     }
   
+    @Override
     public void setReifier(TopicIF reifier) { /* no-op */ }
 
   }
@@ -1291,98 +1347,122 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
         this.value = occ.getValue();
     }
     
+    @Override
     public TopicIF getTopic() {
       return occ.getTopic();
     }
   
+    @Override
     public LocatorIF getDataType() {
       return occ.getDataType();
     }
 
+    @Override
     public String getValue() {
       return value;
     }
 
+    @Override
     public Reader getReader() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setValue(String value) {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public LocatorIF getLocator() {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public void setLocator(LocatorIF locator) {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public void setValue(String value, LocatorIF datatype) {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public void setReader(Reader value, long length, LocatorIF datatype) {
       throw new UnsupportedOperationException();
     }
   
+    @Override
     public long getLength() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public TopicIF getType() {
       return occ.getType();
     }
 
+    @Override
     public void setType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public TopicIF getReifier() {
       return occ.getReifier();
     }
   
+    @Override
     public void setReifier(TopicIF reifier) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public Collection getScope() {
       return occ.getScope();
     }
 
+    @Override
     public void addTheme(TopicIF theme) {
       throw new UnsupportedOperationException();
     }
     
+    @Override
     public void removeTheme(TopicIF theme) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getObjectId() {
       return occ.getObjectId();
     }
 
+    @Override
     public boolean isReadOnly() {
       return true;
     }
 
+    @Override
     public TopicMapIF getTopicMap() {
       return occ.getTopicMap();
     }
 
+    @Override
     public Collection getItemIdentifiers() {
       return occ.getItemIdentifiers();
     }
 
+    @Override
     public void addItemIdentifier(LocatorIF source_locator) {
       throw new UnsupportedOperationException();
     }
     
+    @Override
     public void removeItemIdentifier(LocatorIF source_locator) {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }

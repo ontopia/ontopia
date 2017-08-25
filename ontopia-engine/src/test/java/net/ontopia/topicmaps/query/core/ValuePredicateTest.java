@@ -37,6 +37,7 @@ public class ValuePredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }  

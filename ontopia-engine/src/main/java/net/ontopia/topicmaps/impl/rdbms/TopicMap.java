@@ -68,6 +68,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
 
   protected transient RDBMSTopicMapTransaction transaction;  
 
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_reifier);
@@ -126,6 +127,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -134,14 +136,17 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return this;
   }
@@ -154,6 +159,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // TopicMapIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicMapStoreIF getStore() {
     return transaction.getStore();
   }
@@ -162,10 +168,12 @@ public class TopicMap extends TMObject implements TopicMapIF {
     return transaction;
   }
 
+  @Override
   public TopicMapBuilderIF getBuilder() {
     return getTransaction().getBuilder();
   }
 
+  @Override
   public Object getIndex(String name) {
     return getTransaction().getIndexManager().getIndex(name);
   }
@@ -178,6 +186,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     this.transaction = transaction;
   }
   
+  @Override
   public Collection<TopicIF> getTopics() {
     Object[] params = new Object[] { getTopicMap() };
     return new QueryCollection<TopicIF>(txn, "TopicMap.getTopics_size", params,
@@ -221,6 +230,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     ((Topic)topic).setTopicMap(null);
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations() {
     Object[] params = new Object[] { getTopicMap() };
     return new QueryCollection<AssociationIF>
@@ -258,6 +268,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     ((Association)association).setTopicMap(null);
   }
 
+  @Override
   public TMObjectIF getObjectById(String object_id) {
     if (object_id == null)
       throw new NullPointerException("null is not a valid argument.");
@@ -323,10 +334,12 @@ public class TopicMap extends TMObject implements TopicMapIF {
     }
   }
 
+  @Override
   public void remove() {
     getStore().delete(true);
   }
 
+  @Override
   public void clear() {
     DeletionUtils.clear(this);
   }
@@ -335,14 +348,17 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // Subject identity cache
   // ---------------------------------------------------------------------------
 
+  @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     return transaction.getObjectByItemIdentifier(locator);
   }
 
+  @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
     return transaction.getTopicBySubjectLocator(locator);
   }
 
+  @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     return transaction.getTopicBySubjectIdentifier(locator);
   }
@@ -388,10 +404,12 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     if (DuplicateReificationException.check(this, _reifier)) { return; }
@@ -408,6 +426,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.TopicMap", (TopicMapIF)this);
   }

@@ -145,30 +145,37 @@ public class Template {
       this.gen = gen;
     }
     
+    @Override
     public boolean isTopic() {
       return gen.isTopic();
     }
   
+    @Override
     public String getLiteral() {
       return gen.getLiteral();
     }
   
+    @Override
     public LocatorIF getDatatype() {
       return gen.getDatatype();
     }
 
+    @Override
     public LocatorIF getLocator() {
       return gen.getLocator();
     }
   
+    @Override
     public ValueGeneratorIF copy() {
       return this;
     }
 
+    @Override
     public TopicIF getTopic() {
       return gen.getTopic();
     }
 
+    @Override
     public String toString() {
       return "[ParameterGenerator: " + gen + "]";
     }

@@ -41,6 +41,7 @@ public class NameIndex extends RDBMSIndex implements NameIndexIF {
   // NameIndexIF
   // ---------------------------------------------------------------------------
   
+  @Override
   public Collection<TopicNameIF> getTopicNames(String value) {
     return (Collection<TopicNameIF>)executeQuery("NameIndexIF.getTopicNames",
                                     new Object[] { getTopicMap(), value });
@@ -51,11 +52,13 @@ public class NameIndex extends RDBMSIndex implements NameIndexIF {
     return (Collection<TopicNameIF>)executeQuery("NameIndexIF.getTopicNamesByType", new Object[] { getTopicMap(), value, topicNameType });
   }
 
+  @Override
   public Collection<VariantNameIF> getVariants(String value) {
     return (Collection<VariantNameIF>)executeQuery("NameIndexIF.getVariants",
                                          new Object[] { getTopicMap(), value });
   }
 
+  @Override
   public Collection<VariantNameIF> getVariants(String value, LocatorIF datatype) {
     return (Collection<VariantNameIF>)executeQuery("NameIndexIF.getVariantsByDataType", new Object[] { getTopicMap(), value, datatype.getAddress() });
 	}

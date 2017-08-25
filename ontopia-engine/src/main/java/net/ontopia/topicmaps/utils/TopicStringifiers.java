@@ -222,6 +222,7 @@ public class TopicStringifiers {
       this.sort = tm.getTopicBySubjectIdentifier(PSI.getXTMSort());
     }
 
+    @Override
     public String toString(TopicIF topic) {
       // 0: verify that we have a topic at all
       if (topic == null)

@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
  */
 public class MergeStatement extends ModificationStatement {
 
+  @Override
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
     TopicIF topic1 = (TopicIF) getValue(litlist.get(0), arguments);
@@ -40,6 +41,7 @@ public class MergeStatement extends ModificationStatement {
     return 1;
   }
 
+  @Override
   public int doUpdates(QueryMatches matches)
     throws InvalidQueryException {
     int merges = 0;
@@ -70,6 +72,7 @@ public class MergeStatement extends ModificationStatement {
     return merges;
   }
 
+  @Override
   public String toString() {
     String str = "merge " + toStringLitlist();
     if (query != null)

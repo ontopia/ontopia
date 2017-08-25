@@ -42,6 +42,7 @@ public class MySqlSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
   
+  @Override
   protected List<String> createStatement(Table table, List<String> statements) throws IOException {
     StringBuilder sb = new StringBuilder();
     String[] pkeys = table.getPrimaryKeys();
@@ -80,6 +81,7 @@ public class MySqlSQLProducer extends GenericSQLProducer {
    * INTERNAL: Generate the DDL statement(s) to create indexes for the
    * specified table.
    */
+  @Override
   protected List<String> createIndexes(Table table, List<String> statements) throws IOException {
     List<Index> indexes = table.getIndexes();
     for (int i=0; i < indexes.size(); i++) {

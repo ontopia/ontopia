@@ -234,6 +234,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
         Assert.fail("Unknown allowed value: " + allowed);
     }
 
+    @Override
     public void startElement(String nsuri, String localname,
                              String qname, Attributes atts) {
       if (localname.equals(element)) {

@@ -93,6 +93,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
   // EventManagerIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
     if (listener == this) return;
@@ -105,6 +106,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     listeners.get(event).add(listener);
   }
 
+  @Override
   public void removeListener(EventListenerIF listener, String event) {
     if (listeners.containsKey(event)) {
       // Remove listener from event listeners collection
@@ -119,6 +121,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (handlers.containsKey(event)) {
       EventListenerIF handler = (EventListenerIF)handlers.get(event);
@@ -131,6 +134,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
   // -----------------------------------------------------------------------------
 
   protected abstract class EventHandler implements EventListenerIF, java.io.Serializable {
+    @Override
     public abstract void processEvent(Object object, String event, Object new_value, Object old_value);
 
     /**
@@ -168,6 +172,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicMapIF.addTopic
    */
   class EH01 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicIF added = (TopicIF)new_value;
       // Fire object added event
@@ -186,6 +191,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicMapIF.removeTopic
    */
   class EH02 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicIF removed = (TopicIF)old_value;
       // Fire tree event
@@ -204,6 +210,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicMapIF.addAssociation
    */
   class EH03 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF added = (AssociationIF)new_value;
       // Fire object added event
@@ -218,6 +225,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicMapIF.removeAssociation
    */
   class EH04 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF removed = (AssociationIF)old_value;
       // Fire tree event
@@ -232,6 +240,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicIF.addTopicName
    */
   class EH07 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicNameIF added = (TopicNameIF)new_value;
       // Fire object added event
@@ -246,6 +255,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicIF.removeTopicName
    */
   class EH08 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicNameIF removed = (TopicNameIF)old_value;
       // Fire tree event
@@ -260,6 +270,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicNameIF.addVariant
    */
   class EH09 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       VariantNameIF added = (VariantNameIF)new_value;
       // Fire object added event
@@ -270,6 +281,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicNameIF.removeVariant
    */
   class EH10 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       VariantNameIF removed = (VariantNameIF)old_value;
       // Fire tree event
@@ -280,6 +292,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicIF.addOccurrence
    */
   class EH13 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       OccurrenceIF added = (OccurrenceIF)new_value;
       // Fire object added event
@@ -290,6 +303,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: TopicIF.removeOccurrence
    */
   class EH14 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       OccurrenceIF removed = (OccurrenceIF)old_value;
       // Fire tree event
@@ -300,6 +314,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: AssociationIF.addRole
    */
   class EH15 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF added = (AssociationRoleIF)new_value;
       // Fire object added event
@@ -310,6 +325,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
    * EventHandler: AssociationIF.removeRole
    */
   class EH16 extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF removed = (AssociationRoleIF)old_value;
       // Fire tree event
