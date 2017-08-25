@@ -87,6 +87,7 @@ public class Language {
     return slc.count;
   }
 
+  @Override
   public String toString() {
     return "Language[" + id + "]";
   }
@@ -127,6 +128,7 @@ public class Language {
     private StopList stoplist;
     private int count;
 
+    @Override
     public void visit(Token token) {
       if (token.getType() == Token.TYPE_VARIANT &&
           stoplist.isStopWord(token.getValue()))

@@ -33,6 +33,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class TologRulePlugin implements ClassifyPluginIF {
 
+  @Override
   public boolean isClassifiable(TopicIF topic) {
     if (topic == null) return false;
     TopicMapIF tm = topic.getTopicMap();
@@ -50,6 +51,7 @@ public class TologRulePlugin implements ClassifyPluginIF {
     }
   }
   
+  @Override
   public ClassifiableContentIF getClassifiableContent(TopicIF topic) {
     if (topic == null) return null;
     TopicMapIF tm = topic.getTopicMap();

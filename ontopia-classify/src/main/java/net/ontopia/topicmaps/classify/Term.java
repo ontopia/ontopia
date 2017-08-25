@@ -174,18 +174,21 @@ public class Term {
     }
   }
   
+  @Override
   public String toString() {
     return '\'' + getStem() + "\'" + getScore() + ":" + (variants.isEmpty() ? "" : Arrays.asList(variants.keys()).toString());
   }
   
   protected static Comparator<Term> SCORE_COMPARATOR =
     new Comparator<Term>() {
+      @Override
       public int compare(Term t1, Term t2) {
         return Double.compare(t2.getScore(), t1.getScore()); // NOTE: reverse order
       }
     };
   
   private class VariantComparator implements Comparator<Variant> {    
+    @Override
     public int compare(Variant v1, Variant v2) {
       int c = Integer.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
       if (c != 0) return c;

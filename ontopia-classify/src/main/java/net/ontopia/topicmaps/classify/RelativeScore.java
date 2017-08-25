@@ -26,14 +26,17 @@ package net.ontopia.topicmaps.classify;
 public class RelativeScore implements TermAnalyzerIF {
   private double maxScore;
   
+  @Override
   public void analyzeTerm(Term term) {
     term.divideScore(maxScore, "relative adjustment");
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     this.maxScore = tdb.getMaxScore();
   }
 
+  @Override
   public void endAnalysis() {
     // no-op
   }  

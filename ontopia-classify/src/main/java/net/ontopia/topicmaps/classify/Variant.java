@@ -58,6 +58,7 @@ public class Variant extends Token {
     this.term = term;
   }
   
+  @Override
   public String toString() {
     return '\"' + getValue() + "\"";
   }

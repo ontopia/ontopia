@@ -33,6 +33,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class DefaultPlugin implements ClassifyPluginIF {
 
+  @Override
   public boolean isClassifiable(TopicIF topic) {
     if (topic == null) return false;
     TopicMapIF tm = topic.getTopicMap();
@@ -58,6 +59,7 @@ public class DefaultPlugin implements ClassifyPluginIF {
     }
   }
   
+  @Override
   public ClassifiableContentIF getClassifiableContent(TopicIF topic) {
     return null;
   }

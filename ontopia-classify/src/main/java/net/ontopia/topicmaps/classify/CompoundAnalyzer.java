@@ -95,6 +95,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   // document analyzer
   // --------------------------------------------------------------------------
 
+  @Override
   public void analyzeToken(TextBlock parent, Token token, int index) {
     // ignore non variant tokens
     if (token.getType() == Token.TYPE_VARIANT) {
@@ -112,14 +113,17 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   // term analyzer
   // --------------------------------------------------------------------------
 
+  @Override
   public void analyzeTerm(Term term) {
     addComposites(tdb, term, 2);
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     this.tdb = tdb;
   }
 
+  @Override
   public void endAnalysis() {
     this.tdb = null;
   }
@@ -245,6 +249,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
     CompositeScoreComparator(Followers f) {
       this.f = f;
     }    
+    @Override
     public int compare(Variant v1, Variant v2) {
       return Double.compare(f.getScore(v2), f.getScore(v1));
     }

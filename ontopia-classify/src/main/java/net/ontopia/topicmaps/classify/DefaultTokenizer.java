@@ -28,14 +28,17 @@ import java.util.StringTokenizer;
 public class DefaultTokenizer implements TokenizerIF {
   private StringTokenizer tokenizer;
 
+  @Override
   public void setText(String text) {
     this.tokenizer = new StringTokenizer(text, " \t\n\r\f");
   }
   
+  @Override
   public boolean next() {
     return tokenizer.hasMoreElements();
   }
   
+  @Override
   public String getToken() {
     return (String)tokenizer.nextElement();
   }

@@ -35,10 +35,12 @@ import net.ontopia.topicmaps.xml.XTMFragmentExporter;
  */
 public class TopicContentPlugin implements ClassifyPluginIF {
 
+  @Override
   public boolean isClassifiable(TopicIF topic) {
     return true; // sure, we can do this for any topic
   }
 
+  @Override
   public ClassifiableContentIF getClassifiableContent(TopicIF topic) {
     return new TopicAsContent(topic);
   }
@@ -52,10 +54,12 @@ public class TopicContentPlugin implements ClassifyPluginIF {
       this.topic = topic;
     }
     
+    @Override
     public String getIdentifier() {
       return topic.getObjectId();
     }
 
+    @Override
     public byte[] getContent() {
       try {
         ByteArrayOutputStream out = new ByteArrayOutputStream();

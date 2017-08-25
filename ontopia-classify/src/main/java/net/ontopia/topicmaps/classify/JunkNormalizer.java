@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class JunkNormalizer implements TermNormalizerIF {
   
+  @Override
   public String normalize(String term) {
     // strip out repeated whitespace characters
     term = StringUtils.normalizeSpace(term);

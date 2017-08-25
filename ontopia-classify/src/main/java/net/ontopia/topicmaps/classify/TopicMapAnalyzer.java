@@ -127,6 +127,7 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
     }
   }
 
+  @Override
   public void analyzeTerm(Term term) {
     try {
       int foundMatches = 0;
@@ -180,10 +181,12 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
     }
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     this.tdb = tdb;
   }
 
+  @Override
   public void endAnalysis() {
     // merge terms that are synonyms
     for (TopicIF topic : atopics) {

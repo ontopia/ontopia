@@ -63,14 +63,17 @@ public class FormatModule implements FormatModuleIF {
     modules.add(fallout_module);
   }
   
+  @Override
   public boolean matchesContent(ClassifiableContentIF cc) {
     return true;
   }
 
+  @Override
   public boolean matchesIdentifier(ClassifiableContentIF cc) {
     return true;
   }
   
+  @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     // detect document format
     FormatModuleIF fm = detectFormat(cc);

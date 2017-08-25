@@ -28,6 +28,7 @@ public class ClassifiableContent implements ClassifiableContentIF {
   protected String identifier;
   protected byte[] content;
 
+  @Override
   public String getIdentifier() {
     return identifier;
   }
@@ -36,6 +37,7 @@ public class ClassifiableContent implements ClassifiableContentIF {
     this.identifier = identifier;
   }
   
+  @Override
   public byte[] getContent() {
     return content;
   }

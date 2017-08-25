@@ -103,6 +103,7 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
     }
   }
 
+  @Override
   public void analyzeTerm(Term term) {
     double total = 0;
     Variant[] variants = term.getVariants();
@@ -119,10 +120,12 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
       term.multiplyScore(average, "frequency adjustment");
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     // no-op
   }
 
+  @Override
   public void endAnalysis() {
     // no-op
   }

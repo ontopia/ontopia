@@ -34,10 +34,12 @@ public class OOXMLPowerpointFormatModule implements FormatModuleIF {
   protected byte[] magicBytes = new byte[] {
     (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 };
   
+  @Override
   public boolean matchesContent(ClassifiableContentIF cc) {
     return false;
   }
 
+  @Override
   public boolean matchesIdentifier(ClassifiableContentIF cc) {
     boolean matches = FormatModule.matchesExtension(cc.getIdentifier(), extensions);
     if (!matches) return false;
@@ -45,6 +47,7 @@ public class OOXMLPowerpointFormatModule implements FormatModuleIF {
     return FormatModule.startsWith(cc.getContent(), magicBytes);
   }
 
+  @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
       OPCPackage opc = OPCPackage.open(new ByteArrayInputStream(cc.getContent()));

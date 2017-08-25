@@ -41,10 +41,12 @@ public class CharacterAnalyzer implements TermAnalyzerIF {
     return INSTANCE;
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     // no-op
   }
   
+  @Override
   public void analyzeTerm(Term term) {
 
     // score down if term contains non-letter characters
@@ -82,6 +84,7 @@ public class CharacterAnalyzer implements TermAnalyzerIF {
     }    
   }
 
+  @Override
   public void endAnalysis() {
     // no-op
   }
