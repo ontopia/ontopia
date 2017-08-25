@@ -52,6 +52,7 @@ public class AccessctlTest extends AbstractWebBasedTestCase {
   
   private WebResponse resp;
 
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     // different webapp default

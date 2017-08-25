@@ -79,6 +79,7 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     userGroups = 0;
   }
 
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     // different webapp default
