@@ -81,6 +81,7 @@ public class SynchronizationTask extends TimerTask {
     this.baseloc = baseloc;
   }
   
+  @Override
   public void run() {
     log.debug("Synchronization task '{}' begins...", name);
     

@@ -252,6 +252,7 @@ public class RelationMapping extends SAXTracker {
   // Document events
   // --------------------------------------------------------------------------
   
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) throws SAXException {
 
@@ -468,6 +469,7 @@ public class RelationMapping extends SAXTracker {
     super.startElement(nsuri, lname, qname, attrs);
   }
   
+  @Override
   public void endElement(String nsuri, String lname, String qname) 
     throws SAXException {
 
@@ -735,6 +737,7 @@ public class RelationMapping extends SAXTracker {
     else throw new OntopiaRuntimeException("Unknown field type: " + field.getType());
   }
 
+  @Override
   public String toString() {
     return "RelationMapping(" + getName() + ")";
   }

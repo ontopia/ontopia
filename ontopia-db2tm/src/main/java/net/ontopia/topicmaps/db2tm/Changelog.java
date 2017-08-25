@@ -105,6 +105,7 @@ public class Changelog {
     return virtualColumns.get(colname).getSQLExpression();
   }
 
+  @Override
   public String toString() {
     return "Changelog(" + getTable() + ")";
   }

@@ -193,6 +193,7 @@ public class Relation {
     syncs.remove(sync);
   }
 
+  @Override
   public String toString() {
     return "Relation(" + getName() + ")";
   }

@@ -88,6 +88,7 @@ public class SynchronizationServlet extends HttpServlet {
   
   protected SynchronizationTask task;
   
+  @Override
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     log.info("Initializing synchronization servlet.");
@@ -167,6 +168,7 @@ public class SynchronizationServlet extends HttpServlet {
     return defval;
   }
   
+  @Override
   public void destroy() {
     log.info("Destructing synchronization servlet.");
     if (task != null) {
