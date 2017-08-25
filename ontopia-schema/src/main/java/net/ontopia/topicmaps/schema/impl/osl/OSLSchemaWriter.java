@@ -78,6 +78,7 @@ public class OSLSchemaWriter implements SchemaWriterIF {
   /**
    * PUBLIC: Writes the schema.
    */
+  @Override
   public void write(SchemaIF schema) throws java.io.IOException {
     PrintWriter print = new PrintWriter(out);
     try {

@@ -31,16 +31,19 @@ public abstract class AbstractTypedCardinalityConstraint
                                         implements TypedConstraintIF {
   protected TypeSpecification typespec;
 
+  @Override
   public void setTypeSpecification(TypeSpecification typespec) {
     this.typespec = typespec;
   }
 
+  @Override
   public TypeSpecification getTypeSpecification() {
     return typespec;
   }
 
   // --- ConstraintIF methods
   
+  @Override
   public boolean matches(TMObjectIF object) {
     return typespec.matches(object);
   }

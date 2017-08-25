@@ -52,6 +52,7 @@ public class InternalTopicRefMatcher implements TMObjectMatcherIF {
 
   // --- TMObjectMatcherIF methods
   
+  @Override
   public boolean matches(TMObjectIF object) {
     if (object == null)
       return false;
@@ -64,10 +65,12 @@ public class InternalTopicRefMatcher implements TMObjectMatcherIF {
     return topic.getItemIdentifiers().contains(resolved);
   }
 
+  @Override
   public String toString() {
     return "<InternalTopicRefMatcher '" + relativeUri + "'>";
   }
 
+  @Override
   public boolean equals(TMObjectMatcherIF object) {
     if (object instanceof InternalTopicRefMatcher)
       return this.getRelativeURI().equals(((InternalTopicRefMatcher)object).getRelativeURI());

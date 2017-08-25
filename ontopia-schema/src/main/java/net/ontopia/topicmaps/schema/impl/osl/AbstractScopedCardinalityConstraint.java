@@ -31,16 +31,19 @@ public abstract class AbstractScopedCardinalityConstraint
                                      implements ScopedConstraintIF {
   protected ScopeSpecification scope;
 
+  @Override
   public void setScopeSpecification(ScopeSpecification scope) {
     this.scope = scope;
   }
 
+  @Override
   public ScopeSpecification getScopeSpecification() {
     return scope;
   }
 
   // --- ConstraintIF methods
   
+  @Override
   public boolean matches(TMObjectIF object) {
     return scope.matches(object);
   }

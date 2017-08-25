@@ -57,10 +57,12 @@ public class OSLSchema implements SchemaIF {
 
   // --- SchemaIF methods
   
+  @Override
   public SchemaValidatorIF getValidator() {
     return validator;
   }
 
+  @Override
   public LocatorIF getAddress() {
     return address;
   }

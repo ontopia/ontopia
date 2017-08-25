@@ -51,6 +51,7 @@ public class SchemaGeneratorTest extends TestCase {
   @Parameters
   public static List generateTests() {
     ResourcesFilterIF filter = new ResourcesFilterIF() {
+      @Override
       public boolean ok(String resourcePath) {
         if (resourcePath.endsWith("schema.xtm")) return true;
         if (resourcePath.endsWith("test_topicmap.ltm")) return true;

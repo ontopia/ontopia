@@ -73,6 +73,7 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
 
   // --- SchemaReaderIF methods
   
+  @Override
   public SchemaIF read()
     throws IOException, SchemaSyntaxException {
     
@@ -129,6 +130,7 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
       addPublicIdSource("+//IDN ontopia.net//DTD Ontopia Schema Language (1.0)//EN", factory);
     }
 
+    @Override
     public InputSource resolveEntity (String public_id, String system_id) {
       if (system_id != null && system_id.endsWith(".dtd"))
         return factory.createInputSource();

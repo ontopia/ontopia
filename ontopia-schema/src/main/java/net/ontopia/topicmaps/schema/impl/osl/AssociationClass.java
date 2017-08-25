@@ -48,6 +48,7 @@ public class AssociationClass implements TypedConstraintIF, ConstraintIF,
   /**
    * INTERNAL: Returns the scope constraint.
    */
+  @Override
   public ScopeSpecification getScopeSpecification() {
     return scopespec;
   }
@@ -55,6 +56,7 @@ public class AssociationClass implements TypedConstraintIF, ConstraintIF,
   /**
    * INTERNAL: Sets the scope constraint.
    */
+  @Override
   public void setScopeSpecification(ScopeSpecification scopespec) {
     this.scopespec = scopespec;
   }
@@ -62,6 +64,7 @@ public class AssociationClass implements TypedConstraintIF, ConstraintIF,
   /**
    * INTERNAL: Sets the type constraint.
    */
+  @Override
   public void setTypeSpecification(TypeSpecification typespec) {
     this.typespec = typespec;
   }
@@ -69,6 +72,7 @@ public class AssociationClass implements TypedConstraintIF, ConstraintIF,
   /**
    * INTERNAL: Returns the type constraint.
    */
+  @Override
   public TypeSpecification getTypeSpecification() {
     return typespec;
   }
@@ -99,6 +103,7 @@ public class AssociationClass implements TypedConstraintIF, ConstraintIF,
 
   // --- ConstraintIF
 
+  @Override
   public boolean matches(TMObjectIF object) {
     return typespec.matches(object);
   }

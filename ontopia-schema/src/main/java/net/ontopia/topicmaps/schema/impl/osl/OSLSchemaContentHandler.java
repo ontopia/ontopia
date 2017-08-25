@@ -288,6 +288,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
   
   // --- ContentHandler implementation
 
+  @Override
   public void startDocument() {
     schema = new OSLSchema(base_address);
     openElements = new Stack();
@@ -316,6 +317,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
     stopElement(name);
   }
 
+  @Override
   public void endDocument() throws SAXException {
     Iterator it = forwardrefs.iterator();
     while (it.hasNext()) {
@@ -334,10 +336,12 @@ public class OSLSchemaContentHandler extends DefaultHandler {
 
   // --- For namespace-insistent parsers
 
+  @Override
   public void startElement(String uri, String lname, String qname, Attributes attrs) throws SAXException {
     startElement(qname, attrs);
   }
   
+  @Override
   public void endElement(String uri, String lname, String qname)
     throws SAXException {
     endElement(qname);
@@ -418,6 +422,7 @@ public class OSLSchemaContentHandler extends DefaultHandler {
 
   // --- SAX helpers
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     saxlocator = locator;
   }

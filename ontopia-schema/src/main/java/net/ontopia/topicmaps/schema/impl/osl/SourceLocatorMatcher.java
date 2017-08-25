@@ -46,16 +46,19 @@ public class SourceLocatorMatcher implements TMObjectMatcherIF {
 
   // --- TMObjectMatcherIF methods
   
+  @Override
   public boolean matches(TMObjectIF object) {
     return object != null && object.getItemIdentifiers().contains(locator);
   }
 
   // --- Object methods
   
+  @Override
   public String toString() {
     return "<SourceLocatorMatcher '" + locator + "'>";
   }
 
+  @Override
   public boolean equals(TMObjectMatcherIF object) {
     return false;
   }

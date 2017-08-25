@@ -39,6 +39,7 @@ public class RuleSet extends TopicConstraintCollection {
 
   // --- Object methods
   
+  @Override
   public String toString() {
     return "<RuleSet " + id + ">";
   }

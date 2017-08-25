@@ -65,10 +65,12 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
     this.stringifier = TopicStringifiers.getDefaultStringifier();
   }
 
+  @Override
   public void startValidation() {
     // no-op
   }
 
+  @Override
   public void violation(String message, TMObjectIF container, Object offender,
                         ConstraintIF constraint)
     throws SchemaViolationException {
@@ -142,6 +144,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
     }
   }
     
+  @Override
   public void endValidation() {
     // no-op
   }
