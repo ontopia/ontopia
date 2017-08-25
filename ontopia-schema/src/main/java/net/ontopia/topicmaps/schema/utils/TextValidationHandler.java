@@ -143,6 +143,7 @@ public class TextValidationHandler implements ValidationHandlerIF {
   }
 
   public void startValidation() {
+    // no-op
   }
     
   public void endValidation() {

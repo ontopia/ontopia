@@ -44,6 +44,7 @@ public class RegexpTermAnalyzer implements TermAnalyzerIF {
   }
   
   public void startAnalysis(TermDatabase tdb) {
+    // no-op
   }
   
   public void analyzeTerm(Term term) {
@@ -56,6 +57,7 @@ public class RegexpTermAnalyzer implements TermAnalyzerIF {
   }
 
   public void endAnalysis() {
+    // no-op
   }
 
   // --- Internal

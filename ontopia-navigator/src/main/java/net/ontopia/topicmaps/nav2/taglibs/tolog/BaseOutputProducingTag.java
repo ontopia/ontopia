@@ -93,6 +93,7 @@ public abstract class BaseOutputProducingTag extends TagSupport {
    * reset the state of the Tag.
    */
   public void release() {
+    // no-op
   }
 
   public abstract void generateOutput(JspWriter out, Object outObject)

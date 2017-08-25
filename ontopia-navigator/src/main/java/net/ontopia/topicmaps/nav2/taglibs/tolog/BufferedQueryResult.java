@@ -54,6 +54,7 @@ public class BufferedQueryResult
   }
   
   public void close() {
+    // no-op
   }
   
   public String getColumnName(int ix) {

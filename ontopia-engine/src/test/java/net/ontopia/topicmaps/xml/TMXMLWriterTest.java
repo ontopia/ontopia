@@ -214,8 +214,10 @@ public class TMXMLWriterTest {
     }
     
     public void write(char[] attr0, int attr1, int attr2) throws IOException {
+      // no-op
     }
     public void flush() throws IOException {
+      // no-op
     }
   }
 }

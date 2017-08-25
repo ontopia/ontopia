@@ -34,7 +34,7 @@ public class TMObjectController extends AbstractController {
 
 	@Override
 	protected void init() {
-
+    // no-op
 	}
 
 	public void setItemIdentifiers(TMObjectIF object, TMObject pojo) {

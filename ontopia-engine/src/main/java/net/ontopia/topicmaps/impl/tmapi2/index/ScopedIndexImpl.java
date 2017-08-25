@@ -252,6 +252,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.Index#close()
    */
   public void close() {
+    // no-op
   }
 
   /*
@@ -278,6 +279,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.Index#open()
    */
   public void open() {
+    // no-op
   }
 
   /*
@@ -286,6 +288,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.Index#reindex()
    */
   public void reindex() {
+    // no-op
   }
 
   public ScopeIndexIF getWrapped() {

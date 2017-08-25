@@ -37,6 +37,7 @@ public class ObjectIdPredicate
   }
 
   public void prescan(QueryBuilder builder, List arguments) {
+    // no-op
   }
 
   // --- JDOPredicateIF implementation

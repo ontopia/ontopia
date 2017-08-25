@@ -49,6 +49,7 @@ public class AResourceWrapper implements AResource {
   }
 
   public void setUserData(Object d) {
+    // no-op
   }
 
   public int hashCode() {

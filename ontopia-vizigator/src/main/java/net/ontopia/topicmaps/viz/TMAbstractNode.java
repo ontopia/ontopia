@@ -53,6 +53,7 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
    * setVisible is not supported in Vizigator.
    */
   public final void setVisible(boolean visible) {
+    // no-op
   }
   
   /**

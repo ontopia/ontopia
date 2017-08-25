@@ -56,6 +56,7 @@ public class MenuTag extends TagSupport {
 //   }
 
   public void release() {
+    // no-op
   }
 
   private boolean isEmpty(String value) {

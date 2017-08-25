@@ -65,6 +65,7 @@ public class CanonicalPrinter implements ContentHandler {
   // Document events
     
   public void startDocument() {
+    // no-op
   }
 
   public void startElement(String uri, String localName, String name, Attributes atts) {
@@ -126,6 +127,7 @@ public class CanonicalPrinter implements ContentHandler {
   }
 
   public void setDocumentLocator (Locator locator) {
+    // no-op
   }
 
   // --- Internal methods
@@ -136,16 +138,16 @@ public class CanonicalPrinter implements ContentHandler {
 
   @Override
   public void startPrefixMapping(String prefix, String uri) throws SAXException {
-    
+    // no-op
   }
 
   @Override
   public void endPrefixMapping(String prefix) throws SAXException {
-    
+    // no-op
   }
 
   @Override
   public void skippedEntity(String name) throws SAXException {
-    
+    // no-op
   }
 }

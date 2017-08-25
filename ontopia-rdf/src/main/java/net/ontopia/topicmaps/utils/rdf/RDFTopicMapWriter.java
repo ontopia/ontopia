@@ -534,6 +534,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     }
 
     public void setUserData(Object d) {
+      // no-op
     }
 
     public int hashCode() {
@@ -580,6 +581,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     }
 
     public void setUserData(Object d) {
+      // no-op
     }
 
     public int hashCode() {

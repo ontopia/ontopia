@@ -48,6 +48,6 @@ public class AjaxOntopolyDropDownChoice<T> extends DropDownChoice<T> {
     super.onComponentTag(tag);
   }
 
-  protected void onUpdate(AjaxRequestTarget target) {}
+  protected void onUpdate(AjaxRequestTarget target) { /* no-op */ }
   
 }

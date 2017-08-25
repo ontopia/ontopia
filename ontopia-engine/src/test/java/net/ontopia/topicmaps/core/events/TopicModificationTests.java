@@ -73,6 +73,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     private Collection snapshots = new HashSet();
     
     public void objectAdded(TMObjectIF o) {
+      // no-op
     }
 
     public void objectModified(TMObjectIF snapshot) {      
@@ -80,6 +81,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     }
     
     public void objectRemoved(TMObjectIF o) {
+      // no-op
     }
 
     public void reset() {

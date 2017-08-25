@@ -1094,8 +1094,8 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return Collections.EMPTY_SET;
     }
 
-    public void addTheme(TopicIF theme) {}
-    public void removeTheme(TopicIF theme) {}
+    public void addTheme(TopicIF theme) { /* no-op */ }
+    public void removeTheme(TopicIF theme) { /* no-op */ }
 
     public String getObjectId() {
       return null;
@@ -1113,15 +1113,15 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return Collections.EMPTY_SET;
     }
 
-    public void addItemIdentifier(LocatorIF source_locator) {}
-    public void removeItemIdentifier(LocatorIF source_locator) {}
+    public void addItemIdentifier(LocatorIF source_locator) { /* no-op */ }
+    public void removeItemIdentifier(LocatorIF source_locator) { /* no-op */ }
 
     public Collection getTypes() {
       return Collections.EMPTY_SET;
     }
 
-    public void addType(TopicIF type) {}
-    public void removeType(TopicIF type) {}
+    public void addType(TopicIF type) { /* no-op */ }
+    public void removeType(TopicIF type) { /* no-op */ }
 
     public void remove() {}    
   }
@@ -1183,12 +1183,12 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return tmForFake;
     }
 
-    public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {}
-    public void removeSubjectLocator(LocatorIF subject_locator) {}
+    public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException { /* no-op */ }
+    public void removeSubjectLocator(LocatorIF subject_locator) { /* no-op */ }
 
-    public void addSubjectIdentifier(LocatorIF subject_indicator) {}
-    public void removeSubjectIdentifier(LocatorIF subject_indicator) {}
-    public void merge(TopicIF topic) {}
+    public void addSubjectIdentifier(LocatorIF subject_indicator) { /* no-op */ }
+    public void removeSubjectIdentifier(LocatorIF subject_indicator) { /* no-op */ }
+    public void merge(TopicIF topic) { /* no-op */ }
     
     public ReifiableIF getReified() {
       return null;
@@ -1227,13 +1227,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return typeInstance;
     }
 
-    public void setType(TopicIF type) {}
+    public void setType(TopicIF type) { /* no-op */ }
     
     public TopicIF getReifier() {
       return null;
     }
   
-    public void setReifier(TopicIF reifier) {}
+    public void setReifier(TopicIF reifier) { /* no-op */ }
 
   }
 
@@ -1260,14 +1260,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return player;
     }
 
-    public void setType(TopicIF type) {}
-    public void setPlayer(TopicIF player) {}
+    public void setType(TopicIF type) { /* no-op */ }
+    public void setPlayer(TopicIF player) { /* no-op */ }
 
     public TopicIF getReifier() {
       return null;
     }
   
-    public void setReifier(TopicIF reifier) {}
+    public void setReifier(TopicIF reifier) { /* no-op */ }
 
   }
 

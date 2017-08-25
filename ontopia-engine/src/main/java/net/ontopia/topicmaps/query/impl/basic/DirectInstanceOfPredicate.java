@@ -42,6 +42,7 @@ public class DirectInstanceOfPredicate extends AbstractInstanceOfPredicate {
   // --- Data interface implementation
 
   protected void start() {
+    // no-op
   }
   
   protected Collection getClasses(TopicIF instance) {

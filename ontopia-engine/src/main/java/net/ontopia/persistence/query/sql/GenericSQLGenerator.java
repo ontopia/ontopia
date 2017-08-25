@@ -1574,6 +1574,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void whereSQLLeftOuterJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
+    // no-op
   }
   
   protected void whereSQLLeftOuterJoin_ORACLE(SQLJoin join, StringBuilder sql, BuildInfo info) {
@@ -1609,6 +1610,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void whereSQLRightOuterJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
+    // no-op
   }
   
   protected void whereSQLRightOuterJoin_ORACLE(SQLJoin join, StringBuilder sql, BuildInfo info) {

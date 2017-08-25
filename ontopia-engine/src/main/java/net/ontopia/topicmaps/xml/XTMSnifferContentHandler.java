@@ -170,12 +170,15 @@ public class XTMSnifferContentHandler extends DefaultHandler
   
   public void attributeDecl(String eName, String aName, String type,
                             String mode, String value) {
+    // no-op
   }
   
   public void elementDecl(String name, String model) {
+    // no-op
   }
   
   public void internalEntityDecl(String name, String value) {
+    // no-op
   }
 
   // --- LexicalHandler
@@ -190,18 +193,23 @@ public class XTMSnifferContentHandler extends DefaultHandler
   }
   
   public void comment(char[] ch, int start, int length) {
+    // no-op
   }
   
   public void startCDATA() {
+    // no-op
   }
   
   public void endCDATA() {
+    // no-op
   }
   
   public void startDTD(String name, String publicId, String systemId) {
+    // no-op
   }
   
   public void endDTD() {
+    // no-op
   }
 
   // --- Internal methods

@@ -162,6 +162,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   }
   
   public void endName() {
+    // no-op
   }
 
   public void startOccurrence(ValueGeneratorIF type, ValueGeneratorIF value) {
@@ -175,6 +176,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   }
 
   public void endOccurrence() {
+    // no-op
   }
   
   public void endTopic() {

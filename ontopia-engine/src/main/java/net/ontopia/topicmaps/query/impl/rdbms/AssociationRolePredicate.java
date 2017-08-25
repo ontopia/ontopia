@@ -47,6 +47,7 @@ public class AssociationRolePredicate
   }
 
   public void prescan(QueryBuilder builder, List arguments) {
+    // no-op
   }
 
   public boolean buildQuery(QueryBuilder builder, List expressions, List arguments)

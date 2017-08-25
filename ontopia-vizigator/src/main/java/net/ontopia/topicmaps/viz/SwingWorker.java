@@ -78,7 +78,7 @@ public abstract class SwingWorker {
    * Called on the event dispatching thread (not on the worker thread) after
    * the <code>construct</code> method has returned.
    */
-  public void finished() {}
+  public void finished() { /* no-op */ }
 
   /**
    * A new method that interrupts the worker thread. Call this method to force

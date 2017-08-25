@@ -71,6 +71,7 @@ public class JDOObject implements JDOValueIF {
   }
 
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

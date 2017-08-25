@@ -66,6 +66,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   }
 
   public void startValidation() {
+    // no-op
   }
 
   public void violation(String message, TMObjectIF container, Object offender,
@@ -142,6 +143,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   }
     
   public void endValidation() {
+    // no-op
   }
   
   // --- Internal methods

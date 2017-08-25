@@ -119,6 +119,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * default.
    */
   protected void registerObject(TMObjectIF object) {
+    // no-op
   }
 
   /**
@@ -126,6 +127,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * default.
    */
   protected void unregisterObject(TMObjectIF object) {
+    // no-op
   }
 
   // -----------------------------------------------------------------------------

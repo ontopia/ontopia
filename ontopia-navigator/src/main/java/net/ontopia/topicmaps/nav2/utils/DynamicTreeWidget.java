@@ -845,12 +845,12 @@ public class DynamicTreeWidget {
   /**
    * PUBLIC: Called before rendering of the tree begins.
    */
-  protected void startRender(Writer out) throws IOException {}
+  protected void startRender(Writer out) throws IOException { /* no-op */ }
 
   /**
    * PUBLIC: Called after the tree has been rendered.
    */
-  protected void endRender(Writer out) throws IOException {}
+  protected void endRender(Writer out) throws IOException { /* no-op */ }
 
   /**
    * PUBLIC: Produces the URL to the given node.

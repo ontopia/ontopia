@@ -81,6 +81,7 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
   }
 
   public void endDocument() {
+    // no-op
   }
 
   public void startElement(String nsuri, String lname, String qname,

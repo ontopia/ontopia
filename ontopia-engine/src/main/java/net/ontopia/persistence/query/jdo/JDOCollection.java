@@ -76,6 +76,7 @@ public class JDOCollection implements JDOValueIF {
   }
 
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

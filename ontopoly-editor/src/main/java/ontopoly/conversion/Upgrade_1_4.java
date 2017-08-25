@@ -35,6 +35,7 @@ public class Upgrade_1_4 extends UpgradeBase {
   
   @Override
   protected void transform() throws InvalidQueryException {
+    // no-op
   }
   
 }

@@ -337,9 +337,9 @@ public class ScopeUtilsTest extends TestCase {
     public boolean isReadOnly() {return false;}
     public TopicMapIF getTopicMap() {return null;}
     public Collection getItemIdentifiers() {return Collections.EMPTY_SET;}
-    public void addItemIdentifier(LocatorIF source_locator) { }  
-    public void removeItemIdentifier(LocatorIF source_locator) { }
-    public void remove() { }
+    public void addItemIdentifier(LocatorIF source_locator) { /* no-op */ }  
+    public void removeItemIdentifier(LocatorIF source_locator) { /* no-op */ }
+    public void remove() { /* no-op */ }
       
   }
   

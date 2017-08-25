@@ -104,6 +104,7 @@ public class ROTransaction extends AbstractTransaction {
   }
 
   public void objectRead(IdentityIF identity) {
+    // no-op
   }
 
   public void objectCreated(PersistentIF object) {

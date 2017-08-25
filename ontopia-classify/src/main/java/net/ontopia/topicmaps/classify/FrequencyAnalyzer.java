@@ -120,9 +120,11 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
   }
   
   public void startAnalysis(TermDatabase tdb) {
+    // no-op
   }
 
   public void endAnalysis() {
+    // no-op
   }
   
 }

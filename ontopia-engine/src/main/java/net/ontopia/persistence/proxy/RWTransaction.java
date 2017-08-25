@@ -375,6 +375,7 @@ public class RWTransaction extends AbstractTransaction {
   // -----------------------------------------------------------------------------
   
   protected synchronized void transactionPreCommit() {
+    // no-op
   }
   
   protected synchronized void transactionPostCommit() {
@@ -429,6 +430,7 @@ public class RWTransaction extends AbstractTransaction {
   }
   
   protected synchronized void transactionPreAbort() {
+    // no-op
   }
   
   protected synchronized void transactionPostAbort() {

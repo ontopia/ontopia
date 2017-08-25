@@ -128,6 +128,7 @@ public abstract class AbstractTopicMapReference
   // -- store pooling
 
   public void storeClosed(TopicMapStoreIF store) {
+    // no-op
   }
 
   // ---------------------------------------------------------------------------

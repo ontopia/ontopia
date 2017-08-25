@@ -164,6 +164,7 @@ public class PrettyPrinter implements ContentHandler {
   }
 
   public void ignorableWhitespace(char ch[], int start, int length) {
+    // no-op
   }
 
   public void processingInstruction(String target, String data) {
@@ -181,6 +182,7 @@ public class PrettyPrinter implements ContentHandler {
   }
 
   public void setDocumentLocator(Locator locator) {
+    // no-op
   }
 
   /**
@@ -302,14 +304,14 @@ public class PrettyPrinter implements ContentHandler {
   }
   
   public void startPrefixMapping(String prefix, String uri) throws SAXException {
-    
+    // no-op
   }
 
   public void endPrefixMapping(String prefix) throws SAXException {
-    
+    // no-op
   }
 
   public void skippedEntity(String name) throws SAXException {
-    
+    // no-op
   }
 }

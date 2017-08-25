@@ -40,9 +40,11 @@ public class ExceptionValidationHandler implements ValidationHandlerIF {
   }
 
   public void startValidation() {
+    // no-op
   }
     
   public void endValidation() {
+    // no-op
   }
 }
 

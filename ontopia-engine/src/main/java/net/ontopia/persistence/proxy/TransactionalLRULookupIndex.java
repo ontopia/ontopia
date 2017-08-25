@@ -62,9 +62,11 @@ public class TransactionalLRULookupIndex implements TransactionalLookupIndexIF, 
   }
   
   public void commit() {
+    // no-op
   }
 
   public void abort() {
+    // no-op
   }
 
   // -----------------------------------------------------------------------------

@@ -42,6 +42,7 @@ public class CharacterAnalyzer implements TermAnalyzerIF {
   }
   
   public void startAnalysis(TermDatabase tdb) {
+    // no-op
   }
   
   public void analyzeTerm(Term term) {
@@ -82,6 +83,7 @@ public class CharacterAnalyzer implements TermAnalyzerIF {
   }
 
   public void endAnalysis() {
+    // no-op
   }
   
 }

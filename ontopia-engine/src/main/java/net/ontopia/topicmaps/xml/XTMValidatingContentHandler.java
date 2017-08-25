@@ -131,9 +131,11 @@ public class XTMValidatingContentHandler implements ContentHandler {
   }
 
   public void skippedEntity(String entityname) {
+    // no-op
   }
 
   public void processingInstruction(String target, String data) {
+    // no-op
   }
 
   public void ignorableWhitespace(char ch[], int start, int length) throws SAXException {

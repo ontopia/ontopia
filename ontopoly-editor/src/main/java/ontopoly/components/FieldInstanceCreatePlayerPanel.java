@@ -82,6 +82,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
+          // no-op
         }        
       };
       add(button);
@@ -120,6 +121,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
         }
         @Override
         public void onClick() {
+          // no-op
         }      
       };
       add(button);

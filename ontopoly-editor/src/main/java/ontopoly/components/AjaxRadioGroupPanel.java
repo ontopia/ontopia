@@ -65,6 +65,7 @@ public class AjaxRadioGroupPanel extends Panel {
           }
           @Override
           protected void onError(AjaxRequestTarget target) {
+			  // no-op
           }    
         });    
         // Add label for radio button    

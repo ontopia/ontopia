@@ -103,9 +103,11 @@ public class StopList implements TermAnalyzerIF {
   }
   
   public void startAnalysis(TermDatabase tdb) {
+    // no-op
   }
 
   public void endAnalysis() {
+    // no-op
   }
   
 }

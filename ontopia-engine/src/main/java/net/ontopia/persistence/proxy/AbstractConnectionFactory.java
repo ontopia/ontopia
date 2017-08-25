@@ -58,6 +58,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
   public abstract Connection requestConnection() throws SQLException;
 
   public void close() {
+    // no-op
   }
   
   protected String getConnectionString() {

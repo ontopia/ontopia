@@ -32,7 +32,7 @@ public class QueryController extends AbstractController {
 
 	@Override
 	protected void init() {
-		
+		// no-op
 	}
 
 	public QueryResultIF query(TopicMapIF topicmap, String language, String query) {

@@ -35,5 +35,6 @@ public class RelativeScore implements TermAnalyzerIF {
   }
 
   public void endAnalysis() {
+    // no-op
   }  
 }

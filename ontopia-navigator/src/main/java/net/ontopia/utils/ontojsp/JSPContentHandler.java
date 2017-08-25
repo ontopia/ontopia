@@ -89,6 +89,7 @@ public class JSPContentHandler extends DefaultHandler {
 
   @Override
   public void endDocument() {
+    // no-op
   }
 
   @Override

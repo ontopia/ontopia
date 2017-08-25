@@ -289,6 +289,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
           }
           @Override
           public void onClick(AjaxRequestTarget target) {
+            // no-op
           }
         };
         fieldValueButtons.add(lockButton);

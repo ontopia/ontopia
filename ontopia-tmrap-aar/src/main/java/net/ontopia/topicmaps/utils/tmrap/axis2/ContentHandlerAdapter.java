@@ -101,11 +101,14 @@ public class ContentHandlerAdapter implements ContentHandler {
   }
 
   public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    // no-op
   }
 
   public void endPrefixMapping(String prefix) throws SAXException {
+    // no-op
   }
 
   public void skippedEntity(String name) throws SAXException {
+    // no-op
   }
 }

@@ -150,6 +150,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.Index#close()
    */
   public void close() {
+    // no-op
   }
 
   /*
@@ -176,6 +177,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.Index#open()
    */
   public void open() {
+    // no-op
   }
 
   /*
@@ -184,6 +186,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.Index#reindex()
    */
   public void reindex() {
+    // no-op
   }
 
 }

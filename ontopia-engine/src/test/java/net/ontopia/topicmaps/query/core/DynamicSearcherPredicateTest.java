@@ -195,6 +195,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
       }
       
       public void close() {
+        // no-op
       }
     };
   }
@@ -229,6 +230,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
       }
       
       public void close() {
+        // no-op
       }
     };
   }

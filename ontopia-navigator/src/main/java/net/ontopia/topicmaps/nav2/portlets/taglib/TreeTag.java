@@ -56,6 +56,7 @@ public class TreeTag extends TagSupport {
   }
 
   public void release() {
+    // no-op
   }
 
   // --- Setters

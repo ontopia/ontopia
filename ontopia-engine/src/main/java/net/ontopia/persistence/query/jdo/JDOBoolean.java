@@ -63,6 +63,7 @@ public class JDOBoolean implements JDOExpressionIF {
   }
 
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

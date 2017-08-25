@@ -61,6 +61,7 @@ public class JDOParameter implements JDOValueIF {
   }
 
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

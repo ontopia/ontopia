@@ -442,9 +442,9 @@ public class Topic extends TMObject implements TopicIF {
     public boolean isReadOnly() { return true; }
     public TopicMapIF getTopicMap() { return null; }
     public Collection<LocatorIF> getItemIdentifiers() { return null; }
-    public void addItemIdentifier(LocatorIF item_identifier) { }
-    public void removeItemIdentifier(LocatorIF item_identifier) { }
-    public void remove() { }
+    public void addItemIdentifier(LocatorIF item_identifier) { /* no-op */ }
+    public void removeItemIdentifier(LocatorIF item_identifier) { /* no-op */ }
+    public void remove() { /* no-op */ }
   }
   
   static class FakeRole extends AbstractFake implements AssociationRoleIF {
@@ -468,10 +468,10 @@ public class Topic extends TMObject implements TopicIF {
       return roletype;
     }
     public TopicIF getPlayer() { return null; }
-    public void setPlayer(TopicIF player) {}
+    public void setPlayer(TopicIF player) { /* no-op */ }
     public TopicIF getReifier() { return null; }
-    public void setReifier(TopicIF reifier) { }
-    public void setType(TopicIF type) { }
+    public void setReifier(TopicIF reifier) { /* no-op */ }
+    public void setType(TopicIF type) { /* no-op */ }
   }
 
   static class FakeAssociation extends AbstractFake implements AssociationIF {
@@ -490,13 +490,13 @@ public class Topic extends TMObject implements TopicIF {
       return hashcode;
     }
     public TopicIF getReifier() { return null; }
-    public void setReifier(TopicIF reifier) { }
-    public void setType(TopicIF type) { }
+    public void setReifier(TopicIF reifier) { /* no-op */ }
+    public void setType(TopicIF type) { /* no-op */ }
     public Collection<TopicIF> getRoleTypes() { return null; }
     public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) { return null; }
     public Collection<AssociationRoleIF> getRoles() { return null; }
     public Collection<TopicIF> getScope() { return null; }
-    public void addTheme(TopicIF theme) { }
-    public void removeTheme(TopicIF theme) { }
+    public void addTheme(TopicIF theme) { /* no-op */ }
+    public void removeTheme(TopicIF theme) { /* no-op */ }
   }
 }

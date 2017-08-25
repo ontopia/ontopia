@@ -64,6 +64,7 @@ public class DefaultPlugin implements PluginIF {
   // ----------------------------------------------------------
   
   public void init() {
+    // no-op
   }
 
   public String generateHTML(ContextTag context) {

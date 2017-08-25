@@ -85,6 +85,7 @@ public class KeyInputManager implements KeyListener, ContainerListener {
   }
   
   public void keyTyped(KeyEvent keyEvent) {
+    // no-op
   }
 
   public void componentAdded(ContainerEvent e) {
@@ -92,5 +93,6 @@ public class KeyInputManager implements KeyListener, ContainerListener {
   }
 
   public void componentRemoved(ContainerEvent e) {
+    // no-op
   }
 }

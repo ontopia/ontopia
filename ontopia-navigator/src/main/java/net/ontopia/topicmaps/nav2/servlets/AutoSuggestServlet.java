@@ -45,9 +45,11 @@ public class AutoSuggestServlet extends HttpServlet {
   private String query = "select $T, $DESC from value-like($TN, %TERM%), topic-name($T, $TN), { i\"http://purl.org/dc/elements/1.1/description\"($T, $DESC) } order by $T, $DESC desc?";
 
   public void init() throws ServletException {
+   // no-op
   }
     
   public void destroy() {
+    // no-op
   }
 
   private String escape(String s) {

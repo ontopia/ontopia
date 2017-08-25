@@ -61,6 +61,7 @@ public class JDOVariable implements JDOValueIF {
   }
 
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

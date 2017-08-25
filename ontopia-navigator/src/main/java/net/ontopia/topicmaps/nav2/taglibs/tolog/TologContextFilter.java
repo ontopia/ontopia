@@ -104,6 +104,7 @@ public class TologContextFilter implements Filter {
   }
 
   public void destroy() {
+    // no-op
   }
 
 }

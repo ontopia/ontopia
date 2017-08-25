@@ -363,6 +363,7 @@ public class InstancePage extends OntopolyAbstractPage {
                 choice.add(new AjaxFormComponentUpdatingBehavior("onchange") {
                   @Override
                   protected void onUpdate(AjaxRequestTarget target) {
+                    // no-op
                   }
                 });
                 

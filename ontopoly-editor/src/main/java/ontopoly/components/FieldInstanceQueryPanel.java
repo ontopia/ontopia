@@ -175,6 +175,7 @@ public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
           }
           @Override
           public void onClick(AjaxRequestTarget target) {
+            // no-op
           }
         };
         fieldValueButtons.add(lockButton);

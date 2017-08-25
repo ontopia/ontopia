@@ -70,12 +70,15 @@ public class LuceneIndexer implements IndexerIF {
   }
 
   public synchronized void flush() throws IOException {
+    // no-op
   }
   
   public synchronized void delete() throws IOException {
+    // no-op
   }
 
   public synchronized void close() throws IOException {
+    // no-op
   }
   
   protected Document getDocument(DocumentIF document) throws IOException {

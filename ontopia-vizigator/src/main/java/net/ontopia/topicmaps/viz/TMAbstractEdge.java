@@ -75,6 +75,7 @@ public abstract class TMAbstractEdge extends Edge
    * setVisible is not supported in Vizigator.
    */
   public final void setVisible(boolean visible) {
+    // no-op
   }
   
   public TMAbstractEdge(Node f, Node t) {

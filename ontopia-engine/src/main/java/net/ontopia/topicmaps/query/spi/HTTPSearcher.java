@@ -120,6 +120,7 @@ public class HTTPSearcher extends AbstractSearcher {
     }
     
     public void close() {
+      // no-op
     }
   };
 
