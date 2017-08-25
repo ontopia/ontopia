@@ -42,12 +42,8 @@ import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 public abstract class ModificationFunctionStatement
   extends ModificationStatement {
   protected String funcname; // name of delete function to be called, if any
-  protected static Map<String, ModificationFunctionIF> functions;
+  protected static Map<String, ModificationFunctionIF> functions = new HashMap<String, ModificationFunctionIF>();
 
-  static {
-    functions = new HashMap<String, ModificationFunctionIF>();
-  }
-  
   public ModificationFunctionStatement() {
     super();
   }
