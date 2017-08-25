@@ -38,15 +38,15 @@ public class LTMTopicMapWriterGeneralTestCase {
 
   private final static String testdataDirectory = "ltmWriter";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
   }
 
   // --- Test case class
-
-    private String base;
-    private String filename;
 
     public LTMTopicMapWriterGeneralTestCase(String root, String filename) {
       this.filename = filename;

@@ -33,13 +33,13 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class SchemaErrorTestCase extends AbstractSchemaTestCase {
 
+  private final String base;
+  private final String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".xml");
   }
-
-    private final String base;
-    private final String filename;
 
     public SchemaErrorTestCase(String root, String filename) {
       this.filename = filename;

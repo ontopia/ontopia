@@ -33,15 +33,15 @@ public class XTMReadErrorTests {
 
   private final static String testdataDirectory = "canonical";
 
+  private final String filename;
+  private final URL inputFile;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "errors");
   }
   
   // --- Test case class
-
-    private final String filename;
-    private final URL inputFile;
 
     public XTMReadErrorTests(URL inputFile, String filename) {
       this.filename = filename;

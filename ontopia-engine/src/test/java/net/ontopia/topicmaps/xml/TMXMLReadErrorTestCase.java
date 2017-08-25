@@ -32,15 +32,15 @@ public class TMXMLReadErrorTestCase {
 
   private final static String testdataDirectory = "tmxml";
 
+  private final String filename;
+  private final URL inputFile;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getFilteredTestInputURLs(".xml", testdataDirectory, "invalid");
   }
 
   // --- Test case class
-
-  private final String filename;
-  private final URL inputFile;
 
     public TMXMLReadErrorTestCase(URL inputFile, String filename) {
       this.filename = filename;

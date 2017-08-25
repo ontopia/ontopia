@@ -39,6 +39,9 @@ public class TMXMLWriterSpecialTestCase {
 
   protected final static String testdataDirectory = "tmxmlWriter";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "x-in", ".ltm|.xtm");
@@ -53,8 +56,6 @@ public class TMXMLWriterSpecialTestCase {
    * 'x-baseline'. The baseline must be created manually, or by
    * inspecting the file in 'out'.
    */
-    private String base;
-    private String filename;
 
     public TMXMLWriterSpecialTestCase(String root, String filename) {
       this.filename = filename;

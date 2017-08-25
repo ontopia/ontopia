@@ -43,14 +43,14 @@ public class TopicMapPreferencesTest {
 	private final static String testdataDirectory = "tmprefs";
 	private final static String DEFAULTVALUE = "____DEFAULT_VALUE____";
 	
-	@Parameters
+	private String base;
+	private String filename;
+
+  @Parameters
 	public static List generateTests() {
 		return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm");
 	}
 
-	private String base;
-	private String filename;
-        
 	public TopicMapPreferencesTest(String root, String filename) {
 		this.filename = filename;
 		this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

@@ -38,6 +38,9 @@ public class MergeTMTestCase {
     
   private final static String testdataDirectory = "merge";
 
+  protected String base;
+  protected String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
@@ -45,9 +48,6 @@ public class MergeTMTestCase {
 
   // --- Test case class
 
-    protected String base;
-    protected String filename;
-        
     public MergeTMTestCase(String root, String filename) {
       this.filename = filename;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

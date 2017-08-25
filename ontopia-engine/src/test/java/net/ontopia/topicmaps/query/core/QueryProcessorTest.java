@@ -41,6 +41,14 @@ import net.ontopia.utils.URIUtils;
 
 public class QueryProcessorTest extends AbstractQueryTest {
   
+  /// constants for various options
+
+  private static final String HIERARCHY_WALKER_ON =
+    "/* #OPTION: optimizer.hierarchy-walker = true */ ";
+
+  private static final String HIERARCHY_WALKER_OFF =
+    "/* #OPTION: optimizer.hierarchy-walker = false */ ";
+
   public QueryProcessorTest(String name) {
     super(name);
   }
@@ -56,14 +64,6 @@ public class QueryProcessorTest extends AbstractQueryTest {
   public void tearDown() {
     closeStore();
   }
-
-  /// constants for various options
-
-  private static final String HIERARCHY_WALKER_ON =
-    "/* #OPTION: optimizer.hierarchy-walker = true */ ";
-
-  private static final String HIERARCHY_WALKER_OFF =
-    "/* #OPTION: optimizer.hierarchy-walker = false */ ";
 
   /// empty topic map
   

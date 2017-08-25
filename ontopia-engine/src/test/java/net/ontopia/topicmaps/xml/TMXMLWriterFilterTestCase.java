@@ -40,6 +40,9 @@ public class TMXMLWriterFilterTestCase {
 
   private final static String testdataDirectory = "tmxmlWriter";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
@@ -55,9 +58,6 @@ public class TMXMLWriterFilterTestCase {
    * the file in 'filter-out'.
    * @throws IOException
    */
-    private String base;
-    private String filename;
-
     public TMXMLWriterFilterTestCase(String root, String filename) {
       this.filename = filename;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

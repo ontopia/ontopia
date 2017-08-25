@@ -37,14 +37,14 @@ public class CanonicalXTMWriterTestCase {
 
   private final static String testdataDirectory = "cxtm";
 
+  protected String base;
+  protected String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
   }
 
-    protected String base;
-    protected String filename;
-      
     public CanonicalXTMWriterTestCase(String root, String filename) {
       this.filename = filename;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

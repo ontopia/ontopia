@@ -44,15 +44,15 @@ public class RDFWriterFilterTestCase {
 
   private final static String testdataDirectory = "tm2rdf";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
   }
 
   // --- Canonical test case class
-
-    private String base;
-    private String filename;
 
     public RDFWriterFilterTestCase(String root, String filename) {
       this.filename = filename;

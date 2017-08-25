@@ -36,6 +36,11 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class LTMTestCase {
 
+  private final static String testdataDirectory = "ltm";
+
+  private String base;
+  private String filename;
+
   /**
     * @return true iff the test-case in fileName was added to test features
     * after LTM1.3 was implemented.
@@ -45,16 +50,11 @@ public class LTMTestCase {
     return false;
   }
   
-  private final static String testdataDirectory = "ltm";
-
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm");
   }
 
-    private String base;
-    private String filename;
-        
     public LTMTestCase(String root, String filename) {
       this.filename = filename;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

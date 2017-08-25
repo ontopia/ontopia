@@ -38,6 +38,9 @@ public class CanonicalXTM2WriterTestCase {
 
   private final static String testdataDirectory = "xtm2";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
@@ -45,9 +48,6 @@ public class CanonicalXTM2WriterTestCase {
 
   // --- Test case class
 
-    private String base;
-    private String filename;
-      
     public CanonicalXTM2WriterTestCase(String root, String filename) {
       this.filename = filename;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

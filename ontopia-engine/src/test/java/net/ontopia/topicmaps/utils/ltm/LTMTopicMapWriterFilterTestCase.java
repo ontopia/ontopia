@@ -39,6 +39,9 @@ public class LTMTopicMapWriterFilterTestCase {
 
   private final static String testdataDirectory = "ltmWriter";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
@@ -53,8 +56,6 @@ public class LTMTopicMapWriterFilterTestCase {
    * 'filter-baseline'. The baseline must be created manually, or by inspecting
    * the file in 'filter-out'.
    */
-    private String base;
-    private String filename;
 
     public LTMTopicMapWriterFilterTestCase(String root, String filename) {
       this.filename = filename;

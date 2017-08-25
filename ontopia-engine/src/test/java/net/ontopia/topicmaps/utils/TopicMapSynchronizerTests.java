@@ -39,16 +39,14 @@ public class TopicMapSynchronizerTests {
 
   private final static String testdataDirectory = "tmsync";
 
+  private String base;
+  private String root;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", "-target.ltm");
   }
-
-  // --- Test case class
-
-    private String base;
-    private String root;
-    private String filename;
 
     public TopicMapSynchronizerTests(String root, String filename) {
       this.root = root;

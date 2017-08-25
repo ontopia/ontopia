@@ -38,6 +38,9 @@ public class LTMTopicMapWriterSpecialTestCase {
 
   private final static String testdataDirectory = "ltmWriter";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "x-in", ".ltm|.rdf|.xtm");
@@ -51,9 +54,6 @@ public class LTMTopicMapWriterSpecialTestCase {
    * 'x-out' with a baseline file in 'x-baseline'. The baseline must be created
    * manually, or by inspecting the file in 'out'.
    */
-    private String base;
-    private String filename;
-
     public LTMTopicMapWriterSpecialTestCase(String root, String filename) {
       this.filename = filename;
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;

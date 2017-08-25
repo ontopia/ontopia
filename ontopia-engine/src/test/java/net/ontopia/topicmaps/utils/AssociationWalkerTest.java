@@ -30,6 +30,9 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 public class AssociationWalkerTest extends AbstractUtilsTestCase {
+  protected TopicIF bart, homer, marge, gramps, lisa, maggie;
+  protected TopicIF at_descendant_of, rt_ancestor, rt_descendant;
+
   public AssociationWalkerTest(String name) {
     super(name);
   }
@@ -58,9 +61,6 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
         
   }
 
-  protected TopicIF bart, homer, marge, gramps, lisa, maggie;
-  protected TopicIF at_descendant_of, rt_ancestor, rt_descendant;
-    
   @Override
   public void setUp() {
     TopicMapStoreIF store = new InMemoryTopicMapStore();

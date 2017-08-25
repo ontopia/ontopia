@@ -36,13 +36,13 @@ public class CTMInvalidTestCase {
   
   private final static String testdataDirectory = "ctm";
 
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".ctm");
   }
 
-    private String filename;
-        
     public CTMInvalidTestCase(String root, String filename) {
       this.filename = filename;
     }

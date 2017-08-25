@@ -50,14 +50,14 @@ public class ChangelogTestCase {
   
   private final static String testdataDirectory = "db2tm";
       
+  private String base;
+  private String casename;
+
   @Parameters
   public static List<String[]> generateTests() throws IOException {
     TestFileUtils.transferTestInputDirectory(testdataDirectory + "/in/sync");
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in/sync", ".xml");
   }
-
-  private String base;
-  private String casename;
 
   public ChangelogTestCase(String root, String xmlfile) {
     this.casename = xmlfile.substring(0, xmlfile.length() - 4);

@@ -38,12 +38,12 @@ public class DeletionUtilsTopicMapTest {
 
   private final static String testdataDirectory = "canonical";
 
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
   }
-
-  private String filename;
 
   public DeletionUtilsTopicMapTest(String root, String filename) {
     this.filename = filename;

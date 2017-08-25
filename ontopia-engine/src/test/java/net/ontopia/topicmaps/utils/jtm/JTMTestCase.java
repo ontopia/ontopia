@@ -37,13 +37,13 @@ public class JTMTestCase {
 
   private final static String testdataDirectory = "jtm";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".jtm");
   }
-
-    private String base;
-    private String filename;
 
     public JTMTestCase(String root, String filename) {
       this.filename = filename;

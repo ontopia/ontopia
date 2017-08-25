@@ -64,6 +64,9 @@ public class TMRAPTestCase {
 
   private final static String testdataDirectory = "tmrap";
 
+  private String base;
+  private TMRAPTestDescriptor descriptor;
+
   @Parameters
   public static Collection generateTests() throws IOException {
 	
@@ -89,9 +92,6 @@ public class TMRAPTestCase {
   }
 
   // --- Test case class
-
-    private String base;
-    private TMRAPTestDescriptor descriptor;
 
     public TMRAPTestCase(TMRAPTestDescriptor descriptor) {
       this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;

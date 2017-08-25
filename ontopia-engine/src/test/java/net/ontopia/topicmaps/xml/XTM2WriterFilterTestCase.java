@@ -40,6 +40,9 @@ public class XTM2WriterFilterTestCase {
 	
   private final static String testdataDirectory = "canonical";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
@@ -55,8 +58,6 @@ public class XTM2WriterFilterTestCase {
    * the file in 'filter-out'.
    * @throws IOException
    */
-    private String base;
-    private String filename;
 
     public XTM2WriterFilterTestCase(String root, String filename) {
       this.filename = filename;

@@ -40,6 +40,11 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public abstract class AbstractCanonicalExporterTests {
 
+  protected String base;
+  protected URL inputFile;
+  protected String filename;
+  protected String _testdataDirectory;
+
   // --- Canonicalization type methods
 
   /**
@@ -87,11 +92,6 @@ public abstract class AbstractCanonicalExporterTests {
   }
 
   // --- Test case class
-
-    protected String base;
-    protected URL inputFile;
-    protected String filename;
-    protected String _testdataDirectory;
 
     @Test
     public void testExport() throws IOException {

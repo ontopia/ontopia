@@ -48,6 +48,9 @@ public class SchemaGeneratorTest extends TestCase {
   
   private final static String testdataDirectory = "schema";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     ResourcesFilterIF filter = new ResourcesFilterIF() {
@@ -61,9 +64,6 @@ public class SchemaGeneratorTest extends TestCase {
     };
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
   }
-
-  private String base;
-  private String filename;
 
   public SchemaGeneratorTest(String root, String filename) {
     this.filename = filename;

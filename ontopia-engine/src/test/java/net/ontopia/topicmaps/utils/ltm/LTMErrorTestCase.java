@@ -34,13 +34,13 @@ public class LTMErrorTestCase {
 
   private final static String testdataDirectory = "ltm";
 
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".ltm");
   }
 
-    private String filename;
-        
     public LTMErrorTestCase(String root, String filename) {
       this.filename = filename;
     }

@@ -38,6 +38,9 @@ public class XTMWriterFilterTestCase {
 
   private final static String testdataDirectory = "canonical";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
@@ -52,8 +55,6 @@ public class XTMWriterFilterTestCase {
    * 'filter-baseline'. The baseline must be created manually, or by inspecting
    * the file in 'filter-out'.
    */
-    private String base;
-    private String filename;
 
     public XTMWriterFilterTestCase(String root, String filename) {
       this.filename = filename;
