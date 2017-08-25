@@ -60,6 +60,7 @@ public class TMRoleEdge extends TMAbstractEdge {
     return role;
   }
 
+  @Override
   protected void paintToolTip(Graphics g) {
     if (!shouldDisplayRoleHoverHelp) return;
 
@@ -69,6 +70,7 @@ public class TMRoleEdge extends TMAbstractEdge {
         (int) p.getX(), (int) p.getY());
   }
 
+  @Override
   protected void paintBowTie(Graphics2D g) {
     double x1 = from.drawx;
     double x2 = to.drawx;
@@ -94,6 +96,7 @@ public class TMRoleEdge extends TMAbstractEdge {
     g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
   }
 
+  @Override
   public TopicIF getTopicMapType() {
     // For display purposes we show the associated association type
 
@@ -104,22 +107,27 @@ public class TMRoleEdge extends TMAbstractEdge {
     return role.getAssociation();
   }
 
+  @Override
   public void setIcon(Icon icon) {
     // Icons and not currently supported (read not wanted) on roles !
   }
   
+  @Override
   public boolean represents(Object object) {
     return this.role.equals(object);
   }
 
+  @Override
   public List getTargetsFrom(Node find) {
     return Collections.singletonList(getOtherEndpt(find));
   }
   
+  @Override
   protected String getMainHoverHelpText() {
     return this.getStringifier().toString(role.getType());
   }
   
+  @Override
   protected GeneralPath getCurvedBowTie(int index) {
     double x1 = from.drawx;
     double x2 = to.drawx;
@@ -144,10 +152,12 @@ public class TMRoleEdge extends TMAbstractEdge {
     return path;
   }
 
+  @Override
   public RecoveryObjectIF getDesctructor() {
     return new DeleteTMRoleEdge(getRole());
   }
 
+  @Override
   public RecoveryObjectIF getRecreator() {
     return new CreateTMRoleEdge(role);
   }

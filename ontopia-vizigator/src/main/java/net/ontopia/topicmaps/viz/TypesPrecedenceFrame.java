@@ -92,6 +92,7 @@ public class TypesPrecedenceFrame extends JFrame {
 
     BasicArrowButton rankUpButton = new BasicArrowButton(BasicArrowButton.NORTH);
     rankUpButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         rank((TopicListItem) topicTypesList.getSelectedValue(), true);
       }
@@ -100,6 +101,7 @@ public class TypesPrecedenceFrame extends JFrame {
 
     BasicArrowButton rankDownButton = new BasicArrowButton(BasicArrowButton.SOUTH);
     rankDownButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         rank((TopicListItem) topicTypesList.getSelectedValue(), false);
       }

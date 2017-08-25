@@ -42,6 +42,7 @@ public abstract class ApplicationContext implements ApplicationContextIF {
    *
    * @param view The view to set.
    */
+  @Override
   public void setView(TopicMapView view) {
     this.view = view;
   }
@@ -60,6 +61,7 @@ public abstract class ApplicationContext implements ApplicationContextIF {
    *
    * @param tmConfig The tmConfig to set.
    */
+  @Override
   public void setTmConfig(VizTopicMapConfigurationManager tmConfig) {
     this.tmConfig = tmConfig;
   }
@@ -78,6 +80,7 @@ public abstract class ApplicationContext implements ApplicationContextIF {
    *
    * @param vpanel The vpanel to set.
    */
+  @Override
   public void setVizPanel(VizPanel vpanel) {
     this.vpanel = vpanel;
   }

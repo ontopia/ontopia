@@ -28,6 +28,7 @@ public class DoFocusNode implements RecoveryObjectIF {
     this.recreator = recreator;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     TMAbstractNode node = recreator.recoverNode(view);
     controller.focusNode(node);

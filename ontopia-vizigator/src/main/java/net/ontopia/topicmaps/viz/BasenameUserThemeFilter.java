@@ -50,6 +50,7 @@ public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
   // implementing method from UserThemeFilterIF
   //
   
+  @Override
   public void setTopicMap(TopicMapIF topicMap) {
     this.topicMap = topicMap;
 
@@ -94,6 +95,7 @@ public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
    * @return boolean: true if this theme should not be displayed
    *                  for user context configuration
    */
+  @Override
   public boolean shouldNotBeUsed(TopicIF actTheme) {
 
     boolean usedAsTopicType           = false; // (pre) Rule 1A

@@ -27,6 +27,7 @@ public class SetFocusNode implements RecoveryObjectIF {
     this.nodeCreator = nodeCreator;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     view.getTGPanel().setSelect(nodeCreator.recoverNode(view));    
   }

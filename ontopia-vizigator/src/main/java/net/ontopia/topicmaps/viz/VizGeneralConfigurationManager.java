@@ -99,6 +99,7 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
 
     Collections.sort(topics, new Comparator() {
 
+      @Override
       public int compare(Object a, Object b) {
 
         TopicIF topicA = (TopicIF) a;
@@ -141,6 +142,7 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
     return topicmap.getTopicBySubjectLocator(VizUtils.makeLocator(aFile));
   }
 
+  @Override
   protected void init() {
 
     super.init();

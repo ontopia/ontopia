@@ -213,30 +213,36 @@ public class ExtendedTGPanel extends TGPanel {
     setGraphEltSet(new GraphEltSet());
   }
 
+  @Override
   public void setLensSet(TGLensSet lensSet) {
     tgLensSet = lensSet;
   }
 
+  @Override
   public void setTGLayout(TGLayout tgl) {
     tgLayout = tgl;
   }
 
+  @Override
   public void setGraphEltSet(GraphEltSet ges) {
     completeEltSet = ges;
     visibleLocality = new VisibleLocality(completeEltSet);
     localityUtils = new LocalityUtils(visibleLocality, this);
   }
 
+  @Override
   public TGPanel.AdjustOriginLens getAdjustOriginLens() {
     return adjustOriginLens;
   }
 
+  @Override
   public TGPanel.SwitchSelectUI getSwitchSelectUI() {
     return switchSelectUI;
   }
 
   // color and font setters ......................
 
+  @Override
   public void setBackColor(Color color) {
     BACK_COLOR = color;
   }
@@ -246,6 +252,7 @@ public class ExtendedTGPanel extends TGPanel {
   /**
    * Returns an Iterator over all nodes in the complete graph.
    */
+  @Override
   public Iterator getAllNodes() {
     return completeEltSet.getNodes();
   }
@@ -253,6 +260,7 @@ public class ExtendedTGPanel extends TGPanel {
   /**
    * Return the current visible locality.
    */
+  @Override
   public ImmutableGraphEltSet getGES() {
     return visibleLocality;
   }
@@ -260,6 +268,7 @@ public class ExtendedTGPanel extends TGPanel {
   /**
    * Returns the current node count.
    */
+  @Override
   public int getNodeCount() {
     return completeEltSet.nodeCount();
   }
@@ -269,6 +278,7 @@ public class ExtendedTGPanel extends TGPanel {
    * @deprecated this method has been replaced by the
    *             <tt>visibleNodeCount()</tt> method.
    */
+  @Override
   public int nodeNum() {
     return visibleLocality.nodeCount();
   }
@@ -276,6 +286,7 @@ public class ExtendedTGPanel extends TGPanel {
   /**
    * Returns the current node count within the VisibleLocality.
    */
+  @Override
   public int visibleNodeCount() {
     return visibleLocality.nodeCount();
   }
@@ -289,6 +300,7 @@ public class ExtendedTGPanel extends TGPanel {
    * @return The Node whose ID matches the provided 'id', null if no match is
    *         found.
    */
+  @Override
   public Node findNode(String id) {
     if (id == null)
       return null; // ignore
@@ -299,6 +311,7 @@ public class ExtendedTGPanel extends TGPanel {
    * Return a Collection of all Nodes whose label matches the String
    * <tt>label</tt>, null if no match is found.
    */
+  @Override
   public Collection findNodesByLabel(String label) {
     if (label == null)
       return null; // ignore
@@ -311,6 +324,7 @@ public class ExtendedTGPanel extends TGPanel {
    * @param substring
    *          The Substring used as a query.
    */
+  @Override
   public Node findNodeLabelContaining(String substring) {
     if (substring == null)
       return null; // ignore
@@ -321,6 +335,7 @@ public class ExtendedTGPanel extends TGPanel {
    * Adds a Node, with its ID and label being the current node count plus 1.
    * @see com.touchgraph.graphlayout.Node
    */
+  @Override
   public Node addNode() throws TGException {
     String id = String.valueOf(getNodeCount() + 1);
     return addNode(id, null);
@@ -330,6 +345,7 @@ public class ExtendedTGPanel extends TGPanel {
    * Adds a Node, provided its label. The node is assigned a unique ID.
    * @see com.touchgraph.graphlayout.graphelements.GraphEltSet
    */
+  @Override
   public Node addNode(String label) throws TGException {
     return addNode(null, label);
   }
@@ -338,6 +354,7 @@ public class ExtendedTGPanel extends TGPanel {
    * Adds a Node, provided its ID and label.
    * @see com.touchgraph.graphlayout.Node
    */
+  @Override
   public Node addNode(String id, String label) throws TGException {
     Node node;
     if (label == null)
@@ -357,6 +374,7 @@ public class ExtendedTGPanel extends TGPanel {
    * Add the Node <tt>node</tt> to the visibleLocality, checking for ID
    * uniqueness.
    */
+  @Override
   public void addNode(final Node node) throws TGException {
     synchronized (localityUtils) {
       visibleLocality.addNode(node);
@@ -371,6 +389,7 @@ public class ExtendedTGPanel extends TGPanel {
    * @param id The ID identifier used as a query.
    * @return true if the deletion occurred.
    */
+  @Override
   public boolean deleteNodeById(String id) {
     if (id == null)
       return false; // ignore
@@ -383,6 +402,7 @@ public class ExtendedTGPanel extends TGPanel {
       return deleteNode(node);
   }
 
+  @Override
   public boolean deleteNode(Node node) {
     synchronized (localityUtils) {
       if (visibleLocality.deleteNode(node)) {
@@ -396,20 +416,24 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public void clearAll() {
     synchronized (localityUtils) {
       visibleLocality.clearAll();
     }
   }
 
+  @Override
   public Node getSelect() {
     return select;
   }
 
+  @Override
   public Node getMouseOverN() {
     return mouseOverN;
   }
 
+  @Override
   public synchronized void setMouseOverN(Node node) {
     if (dragNode != null || maintainMouseOver)
       return; // So you don't accidentally switch nodes while dragging
@@ -422,10 +446,12 @@ public class ExtendedTGPanel extends TGPanel {
   // Edge manipulation ...........................
 
   /** Returns an Iterator over all edges in the complete graph. */
+  @Override
   public Iterator getAllEdges() {
     return completeEltSet.getEdges();
   }
 
+  @Override
   public void deleteEdge(Edge edge) {
     synchronized (localityUtils) {
       visibleLocality.deleteEdge(edge);
@@ -433,6 +459,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public void deleteEdge(Node from, Node to) {
     synchronized (localityUtils) {
       visibleLocality.deleteEdge(from, to);
@@ -442,6 +469,7 @@ public class ExtendedTGPanel extends TGPanel {
   /**
    * Returns the current edge count in the complete graph.
    */
+  @Override
   public int getEdgeCount() {
     return completeEltSet.edgeCount();
   }
@@ -452,6 +480,7 @@ public class ExtendedTGPanel extends TGPanel {
    * @deprecated this method has been replaced by the
    *             <tt>visibleEdgeCount()</tt> method.
    */
+  @Override
   public int edgeNum() {
     return visibleLocality.edgeCount();
   }
@@ -459,14 +488,17 @@ public class ExtendedTGPanel extends TGPanel {
   /**
    * Return the number of Edges in the Locality.
    */
+  @Override
   public int visibleEdgeCount() {
     return visibleLocality.edgeCount();
   }
 
+  @Override
   public Edge findEdge(Node f, Node t) {
     return visibleLocality.findEdge(f, t);
   }
 
+  @Override
   public void addEdge(Edge e) {
     synchronized (localityUtils) {
       visibleLocality.addEdge(e);
@@ -474,16 +506,19 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public Edge addEdge(Node f, Node t, int tens) {
     synchronized (localityUtils) {
       return visibleLocality.addEdge(f, t, tens);
     }
   }
 
+  @Override
   public Edge getMouseOverE() {
     return mouseOverE;
   }
 
+  @Override
   public synchronized void setMouseOverE(Edge edge) {
     if (dragNode != null || maintainMouseOver)
       return; // No funny business while dragging
@@ -495,11 +530,13 @@ public class ExtendedTGPanel extends TGPanel {
   // miscellany ..................................
 
   protected class AdjustOriginLens extends TGAbstractLens {
+    @Override
     protected void applyLens(TGPoint2D p) {
       p.x = p.x + ExtendedTGPanel.this.getSize().width / 2;
       p.y = p.y + ExtendedTGPanel.this.getSize().height / 2;
     }
 
+    @Override
     protected void undoLens(TGPoint2D p) {
       p.x = p.x - ExtendedTGPanel.this.getSize().width / 2;
       p.y = p.y - ExtendedTGPanel.this.getSize().height / 2;
@@ -507,6 +544,7 @@ public class ExtendedTGPanel extends TGPanel {
   }
 
   public class SwitchSelectUI extends TGAbstractClickUI {
+    @Override
     public void mouseClicked(MouseEvent e) {
       if (mouseOverN != null) {
         if (!mouseOverN.equals(select))
@@ -535,6 +573,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public void fireResetEvent() {
     Vector listeners;
 
@@ -548,26 +587,32 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public synchronized void addGraphListener(GraphListener gl) {
     graphListeners.addElement(gl);
   }
 
+  @Override
   public synchronized void removeGraphListener(GraphListener gl) {
     graphListeners.removeElement(gl);
   }
 
+  @Override
   public synchronized void addPaintListener(TGPaintListener pl) {
     paintListeners.addElement(pl);
   }
 
+  @Override
   public synchronized void removePaintListener(TGPaintListener pl) {
     paintListeners.removeElement(pl);
   }
 
+  @Override
   public void setMaintainMouseOver(boolean maintain) {
     maintainMouseOver = maintain;
   }
 
+  @Override
   public void clearSelect() {
     if (select != null) {
       select = null;
@@ -579,10 +624,12 @@ public class ExtendedTGPanel extends TGPanel {
    * A convenience method that selects the first node of a graph, so that hiding
    * works.
    */
+  @Override
   public void selectFirstNode() {
     setSelect(getGES().getFirstNode());
   }
 
+  @Override
   public void setSelect(Node node) {
     if (node != null) {
       select = node;
@@ -591,6 +638,7 @@ public class ExtendedTGPanel extends TGPanel {
       clearSelect();
   }
 
+  @Override
   public void multiSelect(TGPoint2D from, TGPoint2D to) {
     final double minX, minY, maxX, maxY;
 
@@ -612,6 +660,7 @@ public class ExtendedTGPanel extends TGPanel {
     final Vector selectedNodes = new Vector();
 
     TGForEachNode fen = new TGForEachNode() {
+      @Override
       public void forEachNode(Node node) {
         double x = node.drawx;
         double y = node.drawy;
@@ -631,37 +680,45 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public void updateLocalityFromVisibility() throws TGException {
     visibleLocality.updateLocalityFromVisibility();
   }
 
+  @Override
   public void setLocale(Node node, int radius, int maxAddEdgeCount,
       int maxExpandEdgeCount, boolean unidirectional) throws TGException {
     localityUtils.setLocale(node, radius, maxAddEdgeCount, maxExpandEdgeCount,
         unidirectional);
   }
 
+  @Override
   public void fastFinishAnimation() {
     // Quickly wraps up the add node animation
     localityUtils.fastFinishAnimation();
   }
 
+  @Override
   public void setLocale(Node node, int radius) throws TGException {
     localityUtils.setLocale(node, radius);
   }
 
+  @Override
   public void expandNode(Node node) {
     localityUtils.expandNode(node);
   }
 
+  @Override
   public void hideNode(Node hideNode) {
     localityUtils.hideNode(hideNode);
   }
 
+  @Override
   public void collapseNode(Node collapseNode) {
     localityUtils.collapseNode(collapseNode);
   }
 
+  @Override
   public void hideEdge(Edge hideEdge) {
     visibleLocality.removeEdge(hideEdge);
     if (mouseOverE.equals(hideEdge))
@@ -669,37 +726,44 @@ public class ExtendedTGPanel extends TGPanel {
     resetDamper();
   }
 
+  @Override
   public void setDragNode(Node node) {
     dragNode = node;
     super.setDragNode(node);
   }
 
+  @Override
   public Node getDragNode() {
     return dragNode;
   }
 
+  @Override
   public Point getMousePos() {
     return mousePos;
   }
 
   /** Start and stop the damper. Should be placed in the TGPanel too. */
+  @Override
   public void startDamper() {
     if (tgLayout != null)
       tgLayout.startDamper();
   }
 
+  @Override
   public void stopDamper() {
     if (tgLayout != null)
       tgLayout.stopDamper();
   }
 
   /** Makes the graph mobile, and slowly slows it down. */
+  @Override
   public void resetDamper() {
     if (tgLayout != null)
       tgLayout.resetDamper();
   }
 
   /** Gently stops the graph from moving */
+  @Override
   public void stopMotion() {
     if (tgLayout != null)
       tgLayout.stopMotion();
@@ -707,10 +771,12 @@ public class ExtendedTGPanel extends TGPanel {
 
   class BasicMouseListener extends MouseAdapter {
 
+    @Override
     public void mouseEntered(MouseEvent e) {
       addMouseMotionListener(basicMML);
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
       removeMouseMotionListener(basicMML);
       mousePos = null;
@@ -721,6 +787,7 @@ public class ExtendedTGPanel extends TGPanel {
   }
 
   class BasicMouseMotionListener implements MouseMotionListener {
+    @Override
     public void mouseDragged(MouseEvent e) {
       mousePos = e.getPoint();
       findMouseOver();
@@ -731,6 +798,7 @@ public class ExtendedTGPanel extends TGPanel {
       }
     }
 
+    @Override
     public void mouseMoved(MouseEvent e) {
       mousePos = e.getPoint();
       synchronized (this) {
@@ -745,6 +813,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   protected synchronized void findMouseOver() {
 
     if (mousePos == null) {
@@ -764,6 +833,7 @@ public class ExtendedTGPanel extends TGPanel {
       double minoverdist = 100; // Kind of a hack (see second if statement)
 
       // Nodes can be as wide as 200 (=2*100)
+      @Override
       public void forEachNode(Node node) {
         double x = node.drawx;
         double y = node.drawy;
@@ -784,6 +854,7 @@ public class ExtendedTGPanel extends TGPanel {
 
       double minFromDist = 1000; // Distance to the edge's "from" node
 
+      @Override
       public void forEachEdge(Edge edge) {
         double x = edge.from.drawx;
         double y = edge.from.drawy;
@@ -816,22 +887,27 @@ public class ExtendedTGPanel extends TGPanel {
       setMouseOverE(null);
   }
 
+  @Override
   public TGPoint2D getTopLeftDraw() {
     return new TGPoint2D(topLeftDraw);
   }
 
+  @Override
   public TGPoint2D getBottomRightDraw() {
     return new TGPoint2D(bottomRightDraw);
   }
 
+  @Override
   public TGPoint2D getCenter() {
     return tgLensSet.convDrawToReal(getSize().width / 2, getSize().height / 2);
   }
 
+  @Override
   public TGPoint2D getDrawCenter() {
     return new TGPoint2D(getSize().width / 2, getSize().height / 2);
   }
 
+  @Override
   public void updateGraphSize() {
     if (topLeftDraw == null)
       topLeftDraw = new TGPoint2D(0, 0);
@@ -841,6 +917,7 @@ public class ExtendedTGPanel extends TGPanel {
     TGForEachNode fen = new TGForEachNode() {
       boolean firstNode = true;
 
+      @Override
       public void forEachNode(Node node) {
         if (firstNode) { // initialize topRight + bottomLeft
           topLeftDraw.setLocation(node.drawx, node.drawy);
@@ -858,11 +935,13 @@ public class ExtendedTGPanel extends TGPanel {
     visibleLocality.forAllNodes(fen);
   }
 
+  @Override
   public synchronized void processGraphMove() {
     updateDrawPositions();
     updateGraphSize();
   }
 
+  @Override
   public synchronized void repaintAfterMove() {
     // Called by TGLayout + others to indicate that graph has moved
     processGraphMove();
@@ -871,6 +950,7 @@ public class ExtendedTGPanel extends TGPanel {
     repaint();
   }
 
+  @Override
   public void updateDrawPos(Node node) {
     // sets the visual position from the real position
     TGPoint2D p = tgLensSet.convRealToDraw(node.x, node.y);
@@ -878,6 +958,7 @@ public class ExtendedTGPanel extends TGPanel {
     node.drawy = p.y;
   }
 
+  @Override
   public void updatePosFromDraw(Node node) {
     // sets the real position from the visual position
     TGPoint2D p = tgLensSet.convDrawToReal(node.drawx, node.drawy);
@@ -885,8 +966,10 @@ public class ExtendedTGPanel extends TGPanel {
     node.y = p.y;
   }
 
+  @Override
   public void updateDrawPositions() {
     TGForEachNode fen = new TGForEachNode() {
+      @Override
       public void forEachNode(Node node) {
         updateDrawPos(node);
       }
@@ -894,6 +977,7 @@ public class ExtendedTGPanel extends TGPanel {
     visibleLocality.forAllNodes(fen);
   }
 
+  @Override
   public synchronized void paint(Graphics g) {
     update(g);
   }
@@ -930,6 +1014,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
   }
 
+  @Override
   public synchronized void update(Graphics g) {
     Dimension d = getSize();
     if ((offscreen == null) || (d.width != offscreensize.width)
@@ -957,6 +1042,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
 
     TGForEachEdge fee = new TGForEachEdge() {
+      @Override
       public void forEachEdge(Edge edge) {
         edge.paint(offgraphics, ExtendedTGPanel.this);
       }
@@ -970,6 +1056,7 @@ public class ExtendedTGPanel extends TGPanel {
     }
 
     TGForEachNode fen = new TGForEachNode() {
+      @Override
       public void forEachNode(Node node) {
         node.paint(offgraphics, ExtendedTGPanel.this);
       }
@@ -1009,6 +1096,7 @@ public class ExtendedTGPanel extends TGPanel {
     frame = new JFrame("TGPanel");
     TGPanel tgPanel = new TGPanel();
     frame.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent e) {
         System.exit(0);
       }

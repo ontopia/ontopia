@@ -109,6 +109,7 @@ public class NavigateUI extends TGUserInterface {
     JMenuItem menuItem = new JMenuItem(Messages.getString("Viz.PopupHideEdge"));
 
     ActionListener hideAction = new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         if (popupEdge != null) {
           controller.hideEdge(popupEdge);
@@ -121,16 +122,19 @@ public class NavigateUI extends TGUserInterface {
 
     edgePopup.addPopupMenuListener(
       new PopupMenuListener() {
+        @Override
         public void popupMenuCanceled(PopupMenuEvent e) {
           // Do nothing
         }
   
+        @Override
         public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
           tgPanel.setMaintainMouseOver(false);
           tgPanel.setMouseOverE(null);
           tgPanel.repaint();
         }
   
+        @Override
         public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
           // Do nothing
         }
@@ -143,16 +147,19 @@ public class NavigateUI extends TGUserInterface {
   private JPopupMenu setUpNodePopup() {
     JPopupMenu nodePopup = new JPopupMenu();
     nodePopup.addPopupMenuListener(new PopupMenuListener() {
+      @Override
       public void popupMenuCanceled(PopupMenuEvent e) {
         // Do nothing
       }
 
+      @Override
       public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
         tgPanel.setMaintainMouseOver(false);
         tgPanel.setMouseOverN(null);
         tgPanel.repaint();
       }
 
+      @Override
       public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
         // This is handled in GLNavigateMouseListener>>#processPopupRequest
       }
@@ -211,10 +218,12 @@ public class NavigateUI extends TGUserInterface {
     return nodePopup;
   }
   
+  @Override
   public void activate() {
     tgPanel.addMouseListener(ml);
   }
 
+  @Override
   public void deactivate() {
     tgPanel.removeMouseListener(ml);
   }
@@ -260,6 +269,7 @@ public class NavigateUI extends TGUserInterface {
         .getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
     private ClickThread clickThread;
 
+    @Override
     public void mousePressed(MouseEvent e) {
       // MacOS & Linux (Unix) popup handling
       if (e.isPopupTrigger()) {
@@ -277,6 +287,7 @@ public class NavigateUI extends TGUserInterface {
       }
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
       TMAbstractNode mouseOverN = (TMAbstractNode)tgPanel.getMouseOverN();
 
@@ -330,6 +341,7 @@ public class NavigateUI extends TGUserInterface {
       }
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
       // Windows Popup handling
       if (e.isPopupTrigger()) {
@@ -392,6 +404,7 @@ public class NavigateUI extends TGUserInterface {
       this.opcode = opcode;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
       if (popupNode == null)
         return;
@@ -445,6 +458,7 @@ public class NavigateUI extends TGUserInterface {
       clipboard.setContents( stringSelection, this );
     }
   
+    @Override
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
       // Do nothing
     }
@@ -469,6 +483,7 @@ public class NavigateUI extends TGUserInterface {
       parent = p;
     }
 
+    @Override
     public void run() {
       try {
         ClickThread.sleep(delta);

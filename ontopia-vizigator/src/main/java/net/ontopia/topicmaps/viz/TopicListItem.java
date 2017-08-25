@@ -63,6 +63,7 @@ class TopicListItem {
     return topic;
   }
 
+  @Override
   public String toString() {
 
     return name;
@@ -76,6 +77,7 @@ class TopicListItem {
 
     private static TopicListItemComparator instance = new TopicListItemComparator();
 
+    @Override
     public int compare(Object first, Object second) {
 
       if (first == null)

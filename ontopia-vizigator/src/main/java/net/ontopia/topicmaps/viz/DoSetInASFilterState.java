@@ -30,6 +30,7 @@ public class DoSetInASFilterState implements RecoveryObjectIF {
     this.useInFilter = useInFilter;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     view.controller.getConfigurationManager()
         .setInAssociationScopeFilter(scope, useInFilter);

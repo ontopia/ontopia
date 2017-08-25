@@ -35,6 +35,7 @@ public class CreateTMClassInstanceAssociation implements EdgeRecoveryObjectIF {
     this.type = type;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     lastEdge = view.getEdge(type, instance);
     if (lastEdge != null)
@@ -54,6 +55,7 @@ public class CreateTMClassInstanceAssociation implements EdgeRecoveryObjectIF {
     view.makeTypeInstanceEdge(instanceNode, typeNode);
   }
 
+  @Override
   public TMAbstractEdge recoverEdge(TopicMapView view) {
     execute(view);
     return lastEdge;

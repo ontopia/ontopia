@@ -28,6 +28,7 @@ public class DoHideEdge implements RecoveryObjectIF {
     this.recreator = recreator;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     TMAbstractEdge node = recreator.recoverEdge(view);
     controller.hideEdge(node);

@@ -94,6 +94,7 @@ public class GeneralConfigFrame extends JFrame {
     backgroundChooser.setPreviewPanel(new JPanel());
     backgroundChooser.getSelectionModel().addChangeListener(
       new ChangeListener() {
+        @Override
         public void stateChanged(ChangeEvent e) {
           Color c = backgroundChooser.getColor();
           setPanelBackgroundColour(c);
@@ -141,6 +142,7 @@ public class GeneralConfigFrame extends JFrame {
     included.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     included.addMouseListener(new MouseAdapter() {
 
+      @Override
       public void mouseClicked(MouseEvent anEvent) {
 
         if (anEvent.getClickCount() == 2)
@@ -151,6 +153,7 @@ public class GeneralConfigFrame extends JFrame {
     excluded = new JList();
     excluded.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     excluded.addMouseListener(new MouseAdapter() {
+      @Override
       public void mouseClicked(MouseEvent anEvent) {
         if (anEvent.getClickCount() == 2)
             include((TopicListItem) excluded.getSelectedValue());
@@ -170,6 +173,7 @@ public class GeneralConfigFrame extends JFrame {
 
     BasicArrowButton includeButton = new BasicArrowButton(BasicArrowButton.EAST);
     includeButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         exclude((TopicListItem) included.getSelectedValue());
       }
@@ -177,6 +181,7 @@ public class GeneralConfigFrame extends JFrame {
     buttonPanel.add(includeButton);
     BasicArrowButton excludeButton = new BasicArrowButton(BasicArrowButton.WEST);
     excludeButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         include((TopicListItem) excluded.getSelectedValue());
       }
@@ -345,6 +350,7 @@ public class GeneralConfigFrame extends JFrame {
       private boolean currentValue = controller.getConfigurationManager()
           .isMotionKillerEnabled();
 
+      @Override
       public void actionPerformed(ActionEvent e) {
         currentValue = !currentValue;
         controller.setMotionKillerEnabled(currentValue);
@@ -364,6 +370,7 @@ public class GeneralConfigFrame extends JFrame {
         .getGeneralMotionKillerDelay());
 
     motionSpinner.addPropertyChangeListener("value", new PropertyChangeListener() {
+      @Override
       public void propertyChange(PropertyChangeEvent evt) {
         setMotionKillerDelay(((Integer) evt.getNewValue()).intValue());
       }
@@ -396,6 +403,7 @@ public class GeneralConfigFrame extends JFrame {
 
     motionSpinner.addPropertyChangeListener("value",
         new PropertyChangeListener() {
+      @Override
       public void propertyChange(PropertyChangeEvent evt) {
         setMaxTopicNameLength(((Integer) evt.getNewValue()).intValue());
       }
@@ -416,6 +424,7 @@ public class GeneralConfigFrame extends JFrame {
       final int action) {
     JRadioButton node = new JRadioButton(title);
     node.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setSingleClick(action);
       }
@@ -428,6 +437,7 @@ public class GeneralConfigFrame extends JFrame {
       final int action) {
     JRadioButton node = new JRadioButton(title);
     node.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setDoubleClick(action);
       }
@@ -440,6 +450,7 @@ public class GeneralConfigFrame extends JFrame {
       final int action) {
     JRadioButton node = new JRadioButton(title);
     node.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setLocalityAlgorithm(action);
       }
@@ -482,6 +493,7 @@ public class GeneralConfigFrame extends JFrame {
       private boolean currentValue = controller.getConfigurationManager()
           .shouldDisplayRoleHoverHelp();
 
+      @Override
       public void actionPerformed(ActionEvent e) {
 
         currentValue = !currentValue;
@@ -501,6 +513,7 @@ public class GeneralConfigFrame extends JFrame {
       private boolean currentValue = controller.getConfigurationManager()
           .shouldDisplayScopedAssociationNames();
 
+      @Override
       public void actionPerformed(ActionEvent e) {
 
         currentValue = !currentValue;

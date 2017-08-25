@@ -76,6 +76,7 @@ public class TMTopicNode extends TMAbstractNode {
    * Repaints the name. Some topic names are shortened when initially displayed.
    * When the user moves the mouse over the node the full name is displayed.
    */
+  @Override
   public void paint(Graphics g, TGPanel tgPanel) {
     setUnderMouse(tgPanel);
     String oldLabel = this.getLabel();
@@ -134,6 +135,7 @@ public class TMTopicNode extends TMAbstractNode {
     paintSmallTag(g, tgPanel, tagX, tagY, Color.red, Color.white, character);
   }
 
+  @Override
   public void setLabel(String name) {
     int maxNameLength = topicMapView.getMaxTopicNameLength();
     if (name != null && name.length() > maxNameLength)
@@ -154,10 +156,12 @@ public class TMTopicNode extends TMAbstractNode {
     return this.shapePadding;
   }
 
+  @Override
   public int getWidth() {
     return super.getWidth() + this.getShapePadding();
   }
 
+  @Override
   public int getHeight() {
     return super.getHeight() + this.getShapePadding();
   }
@@ -167,6 +171,7 @@ public class TMTopicNode extends TMAbstractNode {
    * node, even if it is the focus node.
    * This was necessary because blinking didn't work on the focus node.
    */
+  @Override
   public Color getPaintBackColor(TGPanel tgPanel) {
     if (forceColor)
       return getBackColor();
@@ -191,6 +196,7 @@ public class TMTopicNode extends TMAbstractNode {
     this.associationCount = count;
   }
 
+  @Override
   public boolean containsPoint(double aPx, double aPy) {
     if (this.getType() == Node.TYPE_CIRCLE) {
       double deltaX = Math.abs((drawx - aPx) / 2);
@@ -217,10 +223,12 @@ public class TMTopicNode extends TMAbstractNode {
     this.setLabel(stringifier.toString(topic));
   }
 
+  @Override
   public RecoveryObjectIF getDesctructor() {
     return new DeleteTMTopicNode(getTopic());
   }
 
+  @Override
   public RecoveryObjectIF getRecreator() {
     return new CreateTMTopicNode(getTopic());
   }

@@ -47,6 +47,7 @@ public class TMAssociationEdge extends TMAbstractEdge
     return association;
   }
 
+  @Override
   protected String getMainHoverHelpText() {
     return TMAssociationNode.getAssociationText(association,
         shouldDisplayScopedAssociationNames, scopingTopic);
@@ -69,24 +70,29 @@ public class TMAssociationEdge extends TMAbstractEdge
 
   }
 
+  @Override
   protected void paintToolTip(Graphics g) {
     // Make the Type tool tip paint last.
     paintRolesToolTips(g);
     paintTypeToolTip(g);
   }
 
+  @Override
   public TopicIF getTopicMapType() {
     return association.getType();
   }
 
+  @Override
   public boolean represents(Object object) {
     return association.equals(object);
   }
 
+  @Override
   public boolean isAssociation() {
     return true;
   }
 
+  @Override
   public void setShouldDisplayScopedAssociationNames(boolean newValue) {
     shouldDisplayScopedAssociationNames = newValue;
   }
@@ -95,10 +101,12 @@ public class TMAssociationEdge extends TMAbstractEdge
     return new CreateTMAssociationEdge(association, scopingTopic);
   }
 
+  @Override
   public RecoveryObjectIF getDesctructor() {
     return new DeleteTMAssociationEdge(association);
   }
 
+  @Override
   public RecoveryObjectIF getRecreator() {
     return new CreateTMAssociationEdge(association, scopingTopic);
   }

@@ -28,6 +28,7 @@ public class DeleteTMRoleEdge implements RecoveryObjectIF {
     this.role = role;
   }
   
+  @Override
   public void execute(TopicMapView view) {
     TMRoleEdge edge = view.getEdge(role);
     if (edge != null) {

@@ -71,6 +71,7 @@ public class HighlightNode implements KeyListener, ContainerListener {
     }
   }
   
+  @Override
   public void keyPressed(KeyEvent keyEvent) {
     if (keyEvent.getKeyCode() == KeyEvent.VK_CONTROL) {
       fixed = true;
@@ -80,6 +81,7 @@ public class HighlightNode implements KeyListener, ContainerListener {
     }
   }
   
+  @Override
   public void keyReleased(KeyEvent keyEvent) {
     if (keyEvent.getKeyCode() == KeyEvent.VK_CONTROL) {
       fixed = false;
@@ -89,14 +91,17 @@ public class HighlightNode implements KeyListener, ContainerListener {
     }
   }
   
+  @Override
   public void keyTyped(KeyEvent keyEvent) {
     // Do nothing. Required by interface KeyListener.
   }
 
+  @Override
   public void componentAdded(ContainerEvent e) {
     listenTo(e.getComponent());
   }
 
+  @Override
   public void componentRemoved(ContainerEvent e) {
     // Do nothing. Required by interface ComponentListener.
   }

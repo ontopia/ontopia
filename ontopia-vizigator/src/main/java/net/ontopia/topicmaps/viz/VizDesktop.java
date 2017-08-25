@@ -135,6 +135,7 @@ public class VizDesktop implements VizFrontEndIF {
 
     // open main window
     SwingUtilities.invokeLater(new Runnable() {
+      @Override
       public void run() {
         new VizDesktop(args);
       }
@@ -158,6 +159,7 @@ public class VizDesktop implements VizFrontEndIF {
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
     private String lang = "en";
+    @Override
     public void processOption(char option, String value) {
       if (option == 'l') lang = value;
     }
@@ -195,6 +197,7 @@ public class VizDesktop implements VizFrontEndIF {
     frame = new JFrame(ONTOPIA_VIZDESKTOP_TITLE);
 
     frame.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent e) {
         try {
           controller.saveGeneralConfiguration();
@@ -282,6 +285,7 @@ public class VizDesktop implements VizFrontEndIF {
 
     mItem = new JMenuItem(Messages.getString("Viz.MenuLoadTopicMap"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuLoadTopicMap();
       }
@@ -298,6 +302,7 @@ public class VizDesktop implements VizFrontEndIF {
     mItem = new JMenuItem(Messages.getString("Viz.MenuSaveConfiguration"));
     mItem.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuSaveConfiguration();
       }
@@ -311,6 +316,7 @@ public class VizDesktop implements VizFrontEndIF {
     mItem = new JMenuItem(Messages.getString("Viz.SetRDFMappingFile"));
     mItem.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuSetRdfMappingFile();
       }
@@ -333,6 +339,7 @@ public class VizDesktop implements VizFrontEndIF {
         KeyInputManager.KEY_MASK));
     mItem.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent anE) {
 
         try {
@@ -352,6 +359,7 @@ public class VizDesktop implements VizFrontEndIF {
     mapViewMenu.setEnabled(false);
     mapViewMenu.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent anE) {
 
         controller.goToMapView();
@@ -365,6 +373,7 @@ public class VizDesktop implements VizFrontEndIF {
         .getString("Viz.MenuFocusStartNode"));
     focusStartTopicItem.setEnabled(false);
     focusStartTopicItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         controller.focusStartTopic();
       }
@@ -374,6 +383,7 @@ public class VizDesktop implements VizFrontEndIF {
     clearStartMenu = new JMenuItem(Messages
         .getString("Viz.MenuClearStartNode"));
     clearStartMenu.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         controller.clearStartTopic();
         resetClearStartMenu();
@@ -398,6 +408,7 @@ public class VizDesktop implements VizFrontEndIF {
 
     mItem = new JMenuItem(Messages.getString("Viz.TopicTypeConfiguration"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuOpenTopicConfig();
       }
@@ -407,6 +418,7 @@ public class VizDesktop implements VizFrontEndIF {
     // Options for association type visual appearance
     mItem = new JMenuItem(Messages.getString("Viz.AssociationTypeConfiguration"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuOpenAssociationConfig();
       }
@@ -419,6 +431,7 @@ public class VizDesktop implements VizFrontEndIF {
 
     mItem = new JMenuItem(Messages.getString("Viz.MenuGeneral"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuOpenGeneralConfig();
       }
@@ -427,6 +440,7 @@ public class VizDesktop implements VizFrontEndIF {
 
     mItem = new JMenuItem(Messages.getString("Viz.MenuPrecedence"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuOpenPrecedenceConfig();
       }
@@ -445,6 +459,7 @@ public class VizDesktop implements VizFrontEndIF {
 
     mItem = new JMenuItem(Messages.getString("Viz.About", "Ontopia Vizigator"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuOpenAboutWindow();
       }
@@ -458,6 +473,7 @@ public class VizDesktop implements VizFrontEndIF {
     JMenuItem mItem = new JMenuItem(Messages
         .getString("Viz.MenuOpenRDBMSTopicMap"));
     mItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent anE) {
         menuOpenRDBMSTopicMap();
       }
@@ -619,6 +635,7 @@ public class VizDesktop implements VizFrontEndIF {
     stringifier = VizUtils.stringifierFor(topic);
   }
 
+  @Override
   public void configureFilterMenus() {
     // clear any existing menu items
     visibleTopicTypesMenu.removeAll();
@@ -858,6 +875,7 @@ public class VizDesktop implements VizFrontEndIF {
    * Called from the color configuration menu when the color for a topic or
    * association type is changed.
    */
+  @Override
   public void setNewTypeColor(TopicIF type, Color c) {
     // Change in both topics and associations
 
@@ -882,6 +900,7 @@ public class VizDesktop implements VizFrontEndIF {
   // --- Internal classes
 
   class FileOpenMenuListener implements ActionListener {
+    @Override
     public void actionPerformed(ActionEvent ev) {
       JMenuItem source = (JMenuItem) ev.getSource();
       File f = new File(source.getText());
@@ -918,6 +937,7 @@ public class VizDesktop implements VizFrontEndIF {
       super(type);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ev) {
       ColouredSquareMenuItem source = (ColouredSquareMenuItem) ev.getSource();
       VisibleIndicator indicator = source.getVisibleIndicator();
@@ -938,6 +958,7 @@ public class VizDesktop implements VizFrontEndIF {
       super(type);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ev) {
       ColouredSquareMenuItem source = (ColouredSquareMenuItem) ev.getSource();
       VisibleIndicator indicator = source.getVisibleIndicator();
@@ -963,6 +984,7 @@ public class VizDesktop implements VizFrontEndIF {
       this.mItem = mItem;
     }
 
+    @Override
     public void actionPerformed(ActionEvent ev) {
       ColouredSquareMenuItem source = (ColouredSquareMenuItem) ev.getSource();
 
@@ -1195,12 +1217,14 @@ public class VizDesktop implements VizFrontEndIF {
       scope = topic;
     }
 
+    @Override
     public void actionPerformed(ActionEvent aE) {
       scopingTopicChanged(scope);
     }
   }
   
   protected class DynamicMenuListener implements ActionListener {
+    @Override
     public void actionPerformed(ActionEvent aE) {
       configureDynamicMenus();
     }
@@ -1208,14 +1232,17 @@ public class VizDesktop implements VizFrontEndIF {
 
   // --- VizFrontEndIF implementation
   
+  @Override
   public ApplicationContextIF getContext() {
     return new DesktopContext(this);
   }
 
+  @Override
   public boolean getDefaultControlsVisible() {
     return true;
   }
 
+  @Override
   public TypesConfigFrame getTypesConfigFrame(VizController controller, boolean isTopicConfig) {
     if(isTopicConfig) {
       return TypesConfigFrame.createTopicTypeConfigFrame(controller, this);
@@ -1224,22 +1251,27 @@ public class VizDesktop implements VizFrontEndIF {
     }
   }
   
+  @Override
   public boolean mapPreLoaded() {
     return false;
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return currentTopicMap;
   }
 
+  @Override
   public String getWallpaper() {
     return null;
   }
   
+  @Override
   public String getConfigURL() {
     return null;
   }
   
+  @Override
   public boolean useGeneralConfig() {
     return true;
   }

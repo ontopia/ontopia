@@ -296,6 +296,7 @@ public class VizPanel extends JPanel {
     JMenuItem menuItem = new JMenuItem(Messages
         .getString("Viz.PopupToggleControls"));
     menuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         controlsVisible = !controlsVisible;
         horizontalSB.setVisible(controlsVisible);
@@ -369,6 +370,7 @@ public class VizPanel extends JPanel {
         new JMenuItem(VizigatorUser.INITIALLY_ENABLED
             ? stopAnimation : startAnimation);
     enableAnimationMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         boolean enable = !controller.isAnimationEnabled();
         controller.enableAnimation(enable);
@@ -386,6 +388,7 @@ public class VizPanel extends JPanel {
     JMenuItem setAllFixedMenuItem = new JMenuItem(
         Messages.getString("Viz.SetAllNodesSticky"));
     setAllFixedMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         controller.setAllNodesFixed(true);
       }
@@ -395,6 +398,7 @@ public class VizPanel extends JPanel {
     JMenuItem setAllUnfixedMenuItem = new JMenuItem(
         Messages.getString("Viz.SetAllNodesUnsticky"));
     setAllUnfixedMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         controller.setAllNodesFixed(false);
       }
@@ -410,6 +414,7 @@ public class VizPanel extends JPanel {
         .getString("Viz.ShowSearchBar"),
         searchPanelVisible);
     searchMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         switchSearchPanel();
         searchMenuItem.setSelected(searchPanelVisible);
@@ -425,6 +430,7 @@ public class VizPanel extends JPanel {
     topicStylesMenuItem = new JMenuItem(Messages
         .getString("Viz.TopicTypeConfiguration"));
     topicStylesMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         menuOpenTopicConfig();
       }
@@ -439,6 +445,7 @@ public class VizPanel extends JPanel {
     associationStylesMenuItem = new JMenuItem(Messages
         .getString("Viz.AssociationTypeConfiguration"));
     associationStylesMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         menuOpenAssociationConfig();
       }
@@ -462,6 +469,7 @@ public class VizPanel extends JPanel {
     JMenuItem stopMovingNodesMenuItem = new JMenuItem(
         Messages.getString("Viz.StopMovingNodes"));
     stopMovingNodesMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         controller.stopMovingNodes();
       }
@@ -488,6 +496,7 @@ public class VizPanel extends JPanel {
     undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
         KeyInputManager.KEY_MASK));
     undoMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         controller.undo();
       }
@@ -499,6 +508,7 @@ public class VizPanel extends JPanel {
     redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
         KeyInputManager.KEY_MASK));
     redoMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         controller.redo();
       }
@@ -513,6 +523,7 @@ public class VizPanel extends JPanel {
     enableMotionKillerMenuItem = 
         new JMenuItem(startMotionKiller);
     enableMotionKillerMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         boolean enable = !controller.isMotionKillerEnabled();
         controller.enableMotionKiller(enable);
@@ -535,6 +546,7 @@ public class VizPanel extends JPanel {
         new JMenuItem(controller.showNeighbouringCircle ?
             disableNeighbCirc : enableNeighbCirc);
     disEnableNeighCircMenuItem.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         if (disEnableNeighCircMenuItem.getText().equals(enableNeighbCirc)) {
           disEnableNeighCircMenuItem.setText(disableNeighbCirc);
@@ -573,6 +585,7 @@ public class VizPanel extends JPanel {
     searchPanel.add(Box.createHorizontalStrut(10));
     searchTextField = new JTextField();
     searchTextField.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent event) {
         performSearch();
       }
@@ -582,6 +595,7 @@ public class VizPanel extends JPanel {
     JButton searchButton = new JButton(Messages
         .getString("Viz.SearchButtonText"));
     searchButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent event) {
         performSearch();
       }
@@ -592,6 +606,7 @@ public class VizPanel extends JPanel {
     clearButton = new JButton(Messages.getString("Viz.ClearButtonText"));
     clearButton.setEnabled(false);
     clearButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent event) {
         clearSearch();
       }
@@ -669,6 +684,7 @@ public class VizPanel extends JPanel {
     locSpinner.setPreferredSize(new Dimension(40, 20));
 
     locSpinner.addPropertyChangeListener("value", new PropertyChangeListener() {
+          @Override
           public void propertyChange(PropertyChangeEvent evt) {
             controller.setLocality(((Integer) evt.getNewValue()).intValue());
           }
@@ -801,6 +817,7 @@ public class VizPanel extends JPanel {
       paintResults();
     }
 
+    @Override
     public void run() {
       while (blinking) {
         try {

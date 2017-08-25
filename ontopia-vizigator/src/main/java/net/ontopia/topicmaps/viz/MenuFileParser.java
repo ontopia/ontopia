@@ -219,6 +219,7 @@ public class MenuFileParser {
         
       // Will listen for and act upon changes to the OK button.
       ActionListener okListener = new ActionListener() {
+          @Override
           public void actionPerformed(ActionEvent action) {
             setVisible(false);
           }
@@ -245,6 +246,7 @@ public class MenuFileParser {
       this.message = message;
     }
     
+    @Override
     public String getMessage() {
       return message;
     }

@@ -32,6 +32,7 @@ public class DeleteTMClassInstanceAssociation implements RecoveryObjectIF {
     this.type = type;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     TMClassInstanceAssociation edge = null;
     Key key = new Key(type, instance);

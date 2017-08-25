@@ -74,6 +74,7 @@ public abstract class TMAbstractEdge extends Edge
   /** 
    * setVisible is not supported in Vizigator.
    */
+  @Override
   public final void setVisible(boolean visible) {
     // no-op
   }
@@ -148,6 +149,7 @@ public abstract class TMAbstractEdge extends Edge
     return new Point((int) midX, (int) midY);
   }
 
+  @Override
   public void paintAfterEdges(Graphics g) {
     // Currently do nothing
   }
@@ -330,6 +332,7 @@ public abstract class TMAbstractEdge extends Edge
     return beta;
   }
 
+  @Override
   public void paintLast(Graphics g) {
     if (underMouse) this.paintToolTip(g);
   }
@@ -338,6 +341,7 @@ public abstract class TMAbstractEdge extends Edge
     // Default is to do nothing
   }
 
+  @Override
   public void setLineWeight(int lineWeight) {
     this.lineWeight = lineWeight;
   }
@@ -346,6 +350,7 @@ public abstract class TMAbstractEdge extends Edge
     return this.shape;
   }
 
+  @Override
   public void setShape(int shape) {
     this.shape = shape;
   }
@@ -354,6 +359,7 @@ public abstract class TMAbstractEdge extends Edge
     return this.icon;
   }
 
+  @Override
   public void setIcon(Icon icon) {
     this.icon = icon;
   }
@@ -362,10 +368,12 @@ public abstract class TMAbstractEdge extends Edge
     return this.font;
   }
 
+  @Override
   public void setFont(Font font) {
     this.font = font;
   }
 
+  @Override
   public void addTo(TGPanel tgpanel) {
     tgpanel.addEdge(this);
   }
@@ -374,6 +382,7 @@ public abstract class TMAbstractEdge extends Edge
     return this.lineWeight;
   }
 
+  @Override
   public void paintFirst(Graphics g) {
     // Currently do nothing
   }
@@ -421,6 +430,7 @@ public abstract class TMAbstractEdge extends Edge
     g.drawString(string, xPosition, yPosition + a);
   }
 
+  @Override
   public void paint(Graphics g, TGPanel tgPanel) {
     underMouse = (tgPanel.getMouseOverE() == this);
   
@@ -433,6 +443,7 @@ public abstract class TMAbstractEdge extends Edge
     } 
   }
 
+  @Override
   public void deleteFrom(TGPanel tgpanel) {
     tgpanel.deleteEdge(this);
   }
@@ -454,10 +465,12 @@ public abstract class TMAbstractEdge extends Edge
     shouldDisplayRoleHoverHelp = newValue;
   }
 
+  @Override
   public boolean isEdge() {
     return true;
   }
 
+  @Override
   public boolean isAssociation() {
     return false;
   }
@@ -470,6 +483,7 @@ public abstract class TMAbstractEdge extends Edge
     return this.stringifier;
   }
   
+  @Override
   public void setScopingTopic(TopicIF aTopic) {
     this.scopingTopic = aTopic;
     this.setStringifier(VizUtils.stringifierFor(aTopic));
@@ -479,6 +493,7 @@ public abstract class TMAbstractEdge extends Edge
     this.stringifier = aStringifier;   
   }
 
+  @Override
   public TopicIF getTopicMapType() {
     return null;
   }
@@ -497,6 +512,7 @@ public abstract class TMAbstractEdge extends Edge
     return null;
   }
   
+  @Override
   public double distFromPoint(double x, double y) {
     Shape shape = getDisplayShape();
     if (shape == null)

@@ -513,6 +513,7 @@ public class VizController {
     dialog.setContentPane(pane);
     dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     dialog.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent we) {
         JOptionPane
             .showMessageDialog(pane,
@@ -529,6 +530,7 @@ public class VizController {
     final TopicMapReaderIF r = reader;
 
     final SwingWorker worker = new SwingWorker() {
+      @Override
       public Object construct() {
         TopicMapIF result = null;
         try {
@@ -540,6 +542,7 @@ public class VizController {
         return result;
       }
 
+      @Override
       public void finished() {
         dialog.setVisible(false);
       }
@@ -1205,6 +1208,7 @@ public class VizController {
 
     }
 
+    @Override
     public void paintFirst(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
@@ -1216,6 +1220,7 @@ public class VizController {
       painters.add(aListener);
     }
 
+    @Override
     public void paintAfterEdges(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
@@ -1223,6 +1228,7 @@ public class VizController {
         ((TGPaintListener) painters.get(i)).paintAfterEdges(g);
     }
 
+    @Override
     public void paintLast(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps

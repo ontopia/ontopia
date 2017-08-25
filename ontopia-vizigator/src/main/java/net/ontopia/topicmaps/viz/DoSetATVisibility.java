@@ -31,6 +31,7 @@ public class DoSetATVisibility implements RecoveryObjectIF {
   }
 
 
+  @Override
   public void execute(TopicMapView view) {
     VizController controller = view.controller;
     controller.setAssociationTypeVisibility(type, visibility);

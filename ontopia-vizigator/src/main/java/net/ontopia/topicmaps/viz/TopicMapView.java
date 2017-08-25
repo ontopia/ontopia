@@ -1052,6 +1052,7 @@ public class TopicMapView {
     dialog.setContentPane(pane);
     dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     dialog.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent we) {
         running[0] = (JOptionPane
             .showConfirmDialog(
@@ -1061,6 +1062,7 @@ public class TopicMapView {
       }
     });
     pane.addPropertyChangeListener(new PropertyChangeListener() {
+      @Override
       public void propertyChange(PropertyChangeEvent e) {
         if (pane.getValue() == cancelOptions[0]) {
           running[0] = (JOptionPane
@@ -1078,6 +1080,7 @@ public class TopicMapView {
     dialog.setLocationRelativeTo(frame);
 
     final SwingWorker worker = new SwingWorker() {
+      @Override
       public Object construct() {
         Iterator it = topics.iterator();
         int max = topics.size();
@@ -1104,6 +1107,7 @@ public class TopicMapView {
               // load a tad, but means that the progress bar is allways
               // in sync.
               EventQueue.invokeAndWait(new Runnable() {
+                @Override
                 public void run() {
                   progressBar.setValue(progress[0]);
                 }
@@ -1116,6 +1120,7 @@ public class TopicMapView {
         return null;
       }
 
+      @Override
       public void finished() {
         dialog.hide();
       }

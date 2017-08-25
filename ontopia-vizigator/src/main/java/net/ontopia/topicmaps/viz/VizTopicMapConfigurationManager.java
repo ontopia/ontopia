@@ -213,6 +213,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
     setupPriorityManager();
   }
 
+  @Override
   protected void init() {
     super.init();
 

@@ -171,6 +171,7 @@ public class AssociationScopeFilterMenu extends JMenu {
       this.controller = controller;
     }
 
+    @Override
     public void actionPerformed(ActionEvent aE) {
       boolean setPreviously = controller.isInAssociationScopeFilter(scope);
       controller.setInAssociationScopeFilter(scope, !setPreviously);
@@ -233,6 +234,7 @@ public class AssociationScopeFilterMenu extends JMenu {
       this.parentListener = parentListener;
     }
     
+    @Override
     public void actionPerformed(ActionEvent aE) {
       controller.setAssociationScopeFilterStrictness(strictnessLevel);
       parentListener.actionPerformed(aE);

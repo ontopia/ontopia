@@ -67,6 +67,7 @@ public class AppletContext extends ApplicationContext {
     }
   }
 
+  @Override
   public void goToTopic(TopicIF topic) {
     Collection pages = getView().getPagesFor(topic);
     if (!pages.isEmpty()) {
@@ -81,6 +82,7 @@ public class AppletContext extends ApplicationContext {
    * 
    * @param url String representing the target url
    */
+  @Override
   public void openPropertiesURL(String url) {
     try {
       String target = vizlet.getParameter("proptarget");
@@ -92,31 +94,38 @@ public class AppletContext extends ApplicationContext {
     }
   }
 
+  @Override
   public boolean isApplet() {
     return true;
   }
 
+  @Override
   public void setStartTopic(TopicIF aTopic) {
     throw new UnsupportedOperationException("Cannot set start node in Vizlet");
   }
 
+  @Override
   public TopicIF getTopicForLocator(LocatorIF aLocator, TopicMapIF topicmap) {
     return getTopicFor(topicmap, Collections.singletonList(aLocator),
         Collections.EMPTY_LIST, null);
   }
 
+  @Override
   public void loadTopic(TopicIF aTopic) {
     ((RemoteTopic) aTopic).checkLoad();
   }
 
+  @Override
   public void focusNode(TMAbstractNode aNode) {
     getView().focusNode(aNode);
   }
 
+  @Override
   public void setScopingTopic(TopicIF aScope) {
     // Currently the applet does not use the configured scope
   }
 
+  @Override
   public TopicIF getDefaultScopingTopic(TopicMapIF aTopicmap) {
     String scopeType = vizlet.getParameter("scopetype");
     String scopeValue = vizlet.getParameter("scopevalue");
@@ -191,6 +200,7 @@ public class AppletContext extends ApplicationContext {
     return anOccurrence.getLocator();
   }
 
+  @Override
   public TopicIF getStartTopic(TopicMapIF aTopicmap) {
     System.out.println("Loading start topic...");
     
@@ -237,6 +247,7 @@ public class AppletContext extends ApplicationContext {
     return retVal;
   }
 
+  @Override
   public int getDefaultLocality() {
     int locality = vizlet.getDefaultLocality();
     VizDebugUtils.debug("DesktopContext.getDefaultLocality - locality:" +
@@ -244,6 +255,7 @@ public class AppletContext extends ApplicationContext {
     return locality;
   }
 
+  @Override
   public int getMaxLocality() {
     int maxLocality = vizlet.getMaxLocality();
     VizDebugUtils.debug("DesktopContext.getMaxLocality - maxLocality:" +
@@ -251,15 +263,18 @@ public class AppletContext extends ApplicationContext {
     return maxLocality;
   }
 
+  @Override
   public ParsedMenuFile getEnabledItemIds() {
     return vizlet.getEnabledItemIds();
   }
 
+  @Override
   public TypesConfigFrame getAssocFrame() {
     VizPanel vPanel = getVizPanel();
     return vPanel.getAssocFrame();
   }
 
+  @Override
   public TypesConfigFrame getTopicFrame() {
     VizPanel vPanel = getVizPanel();
     return vPanel.getTopicFrame();

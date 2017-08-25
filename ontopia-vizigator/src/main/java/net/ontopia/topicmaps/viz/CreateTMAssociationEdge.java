@@ -33,6 +33,7 @@ public class CreateTMAssociationEdge implements EdgeRecoveryObjectIF {
     this.association = association;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     // One can rely on view.makeAssociation creating a TMAssociationEdge, since
     // the associationargument must necessarily be binary. Otherwise, an error
@@ -43,6 +44,7 @@ public class CreateTMAssociationEdge implements EdgeRecoveryObjectIF {
           .makeAssociation(association, null, true);  
   }
 
+  @Override
   public TMAbstractEdge recoverEdge(TopicMapView view) {
     execute(view);
     return lastEdge;

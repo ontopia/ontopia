@@ -80,6 +80,7 @@ public class VizigatorUser extends TimerTask {
   /**
    * This method is called on schedule by the timer.
    */
+  @Override
   public void run() {
     if (!enabled)
       return;

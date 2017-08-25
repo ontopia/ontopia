@@ -29,6 +29,7 @@ public class DoCollapseNode implements RecoveryObjectIF {
     this.recreator = recreator;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     TMAbstractNode node = recreator.recoverNode(view);
     controller.collapseNode(node);

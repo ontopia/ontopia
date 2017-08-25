@@ -90,6 +90,7 @@ public class MotionKiller extends TimerTask {
   /**
    * This method is called on schedula by the timer.
    */
+  @Override
   public void run() {
     if (!enabled)
       return;
