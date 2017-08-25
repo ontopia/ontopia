@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -32,6 +31,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+/**
+ * Exports a file from the directory 'x-in' to an TMXML file in 'x-tmxml'. Canonicalizes the tmxml file into the
+ * directory 'x-out'. Compares the file in 'x-out' with a baseline file in 'x-baseline'. The baseline must be created
+ * manually, or by inspecting the file in 'out'.
+ */
 @RunWith(Parameterized.class)
 public class TMXMLWriterSpecialTestCase {
 
@@ -47,55 +51,44 @@ public class TMXMLWriterSpecialTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "x-in", ".ltm|.xtm");
   }
 
-  // --- Test case class
+  public TMXMLWriterSpecialTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-  /**
-   * Exports a file from the directory 'x-in' to an TMXML file in
-   * 'x-tmxml'.  Canonicalizes the tmxml file into the directory
-   * 'x-out'. Compares the file in 'x-out' with a baseline file in
-   * 'x-baseline'. The baseline must be created manually, or by
-   * inspecting the file in 'out'.
-   */
+  @Test
+  public void testFile() throws IOException {
+    TestFileUtils.verifyDirectory(base, "x-out");
+    TestFileUtils.verifyDirectory(base, "x-tmxml");
 
-    public TMXMLWriterSpecialTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+    // Path to the input topic map document.
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "x-in", filename);
+    // Path to the baseline (canonicalized output of the source topic map).
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "x-baseline",
+            filename + ".cxtm");
+    // Path to the exported TMXML topic map document.
+    File tmxml = new File(base + File.separator + "x-tmxml" + File.separator
+            + filename + ".xml");
+    // Path to the output (canonicalized output of exported tmxml topic map).
+    File out = new File(base + File.separator + "x-out" + File.separator + filename
+            + ".xml.cxtm");
 
-    @Test
-    public void testFile() throws IOException {
-      TestFileUtils.verifyDirectory(base, "x-out");
-      TestFileUtils.verifyDirectory(base, "x-tmxml");
+    // Import topic map from arbitrary source.
+    TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
-      // Path to the input topic map document.
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "x-in", filename);
-      // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "x-baseline", 
-          filename + ".cxtm");
-      // Path to the exported TMXML topic map document.
-      File tmxml = new File(base + File.separator + "x-tmxml" + File.separator +
-          filename + ".xml");
-      // Path to the output (canonicalized output of exported tmxml topic map).
-      File out = new File(base + File.separator + "x-out" + File.separator + filename
-          + ".xml.cxtm");
+    // Export the topic map to TMXML.
+    TMXMLWriter tmxmlWriter = new TMXMLWriter(tmxml);
+    tmxmlWriter.write(sourceMap);
 
-      // Import topic map from arbitrary source.
-      TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
+    // Reimport the exported TMXML.
+    TopicMapIF tmxmlMap = ImportExportUtils.getReader(tmxml).read();
 
-      // Export the topic map to TMXML.
-      TMXMLWriter tmxmlWriter = new TMXMLWriter(tmxml);
-      tmxmlWriter.write(sourceMap);
+    // Canonicalize the reimported TMXML.
+    new CanonicalXTMWriter(out).write(tmxmlMap);
 
-      // Reimport the exported TMXML.
-      TopicMapIF tmxmlMap = ImportExportUtils.getReader(tmxml).read();
-
-      // Canonicalize the reimported TMXML.
-      new CanonicalXTMWriter(out).write(tmxmlMap);
-
-      // compare results
-      Assert.assertTrue("canonicalizing the test file " + filename
-          + " gives a different result than canonicalizing the tmxml export of "
-          + out + " " + baseline, TestFileUtils.compareFileToResource(out, baseline));
-    }
-
+    // compare results
+    Assert.assertTrue("canonicalizing the test file " + filename
+            + " gives a different result than canonicalizing the tmxml export of "
+            + out + " " + baseline, TestFileUtils.compareFileToResource(out, baseline));
+  }
 }

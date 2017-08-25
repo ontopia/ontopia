@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class CTMInvalidTestCase {
-  
+
   private final static String testdataDirectory = "ctm";
 
   private String filename;
@@ -43,23 +42,23 @@ public class CTMInvalidTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".ctm");
   }
 
-    public CTMInvalidTestCase(String root, String filename) {
-      this.filename = filename;
-    }
+  public CTMInvalidTestCase(String root, String filename) {
+    this.filename = filename;
+  }
 
-    @Test
-    public void testFile() throws IOException {
-      // produce canonical output
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", 
-        filename);
+  @Test
+  public void testFile() throws IOException {
+    // produce canonical output
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid",
+            filename);
 
-      try {
-        new CTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
-        Assert.fail("no error in reading " + filename);
-      } catch (IOException e) {
-      } catch (InvalidTopicMapException e) {
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException("Error reading: " + in, e);
-      }
+    try {
+      new CTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+      Assert.fail("no error in reading " + filename);
+    } catch (IOException e) {
+    } catch (InvalidTopicMapException e) {
+    } catch (Exception e) {
+      throw new OntopiaRuntimeException("Error reading: " + in, e);
     }
+  }
 }

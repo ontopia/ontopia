@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -45,32 +44,32 @@ public class CanonicalXTMWriterTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
   }
 
-    public CanonicalXTMWriterTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
-  
-    @Test
-    public void testFile() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
-   
-      // Path to the input topic map document.
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      // Path to the baseline
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
-        filename + ".cxtm");
-      // Path to the canonicalized output.
-      File out = new File(base + File.separator + "out" + File.separator 
-        + filename + ".cxtm");
-  
-      // Import topic map from arbitrary source.
-      TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
-   
-      // Canonicalize the source topic map.
-      new CanonicalXTMWriter(out).write(sourceMap);
-   
-      // compare results
-      Assert.assertTrue("The test file " + out + " is different from the baseline.",
-                 TestFileUtils.compareFileToResource(out, baseline));
-    }
+  public CanonicalXTMWriterTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
+
+  @Test
+  public void testFile() throws IOException {
+    TestFileUtils.verifyDirectory(base, "out");
+
+    // Path to the input topic map document.
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
+    // Path to the baseline
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
+            filename + ".cxtm");
+    // Path to the canonicalized output.
+    File out = new File(base + File.separator + "out" + File.separator
+            + filename + ".cxtm");
+
+    // Import topic map from arbitrary source.
+    TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
+
+    // Canonicalize the source topic map.
+    new CanonicalXTMWriter(out).write(sourceMap);
+
+    // compare results
+    Assert.assertTrue("The test file " + out + " is different from the baseline.",
+            TestFileUtils.compareFileToResource(out, baseline));
+  }
 }

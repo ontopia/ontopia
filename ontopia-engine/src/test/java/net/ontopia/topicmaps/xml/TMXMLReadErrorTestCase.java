@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
@@ -40,25 +39,23 @@ public class TMXMLReadErrorTestCase {
     return TestFileUtils.getFilteredTestInputURLs(".xml", testdataDirectory, "invalid");
   }
 
-  // --- Test case class
+  public TMXMLReadErrorTestCase(URL inputFile, String filename) {
+    this.filename = filename;
+    this.inputFile = inputFile;
+  }
 
-    public TMXMLReadErrorTestCase(URL inputFile, String filename) {
-      this.filename = filename;
-      this.inputFile = inputFile;
-    }
+  public void testFile() throws IOException {
+    TMXMLReader reader = new TMXMLReader(inputFile);
 
-    public void testFile() throws IOException {
-      TMXMLReader reader = new TMXMLReader(inputFile);
-
-      try {
-        reader.read();
-        Assert.fail("succeeded in importing bad file " + filename);
-      } catch (IOException e) {
-        // ok
-      } catch (OntopiaRuntimeException e) {
-        if (!(e.getCause() instanceof org.xml.sax.SAXParseException))
-          throw e;
+    try {
+      reader.read();
+      Assert.fail("succeeded in importing bad file " + filename);
+    } catch (IOException e) {
+      // ok
+    } catch (OntopiaRuntimeException e) {
+      if (!(e.getCause() instanceof org.xml.sax.SAXParseException)) {
+        throw e;
       }
     }
-  
+  }
 }

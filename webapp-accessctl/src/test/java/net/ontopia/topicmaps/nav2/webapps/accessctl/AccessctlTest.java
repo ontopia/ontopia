@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.nav2.webapps.accessctl;
 
-import java.io.IOException;
 import com.meterware.httpunit.Button;
 import com.meterware.httpunit.HTMLElement;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebLink;
 import com.meterware.httpunit.WebResponse;
 import com.meterware.httpunit.WebTable;
+import java.io.IOException;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;

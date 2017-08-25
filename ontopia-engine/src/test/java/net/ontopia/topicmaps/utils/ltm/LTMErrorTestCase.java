@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.IOException;
@@ -41,22 +40,22 @@ public class LTMErrorTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".ltm");
   }
 
-    public LTMErrorTestCase(String root, String filename) {
-      this.filename = filename;
-    }
+  public LTMErrorTestCase(String root, String filename) {
+    this.filename = filename;
+  }
 
-    @Test
-    public void testFile() throws IOException {
-      // produce canonical output
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "error", 
-        filename);
+  @Test
+  public void testFile() throws IOException {
+    // produce canonical output
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "error",
+            filename);
 
-      try {
-        new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
-        Assert.fail("test file " + filename + " parsed without error");
-      } catch (java.io.IOException e) {
-      } catch (net.ontopia.topicmaps.core.UniquenessViolationException e) {
-      } catch (net.ontopia.utils.OntopiaRuntimeException e) {
-      }
+    try {
+      new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+      Assert.fail("test file " + filename + " parsed without error");
+    } catch (java.io.IOException e) {
+    } catch (net.ontopia.topicmaps.core.UniquenessViolationException e) {
+    } catch (net.ontopia.utils.OntopiaRuntimeException e) {
     }
+  }
 }

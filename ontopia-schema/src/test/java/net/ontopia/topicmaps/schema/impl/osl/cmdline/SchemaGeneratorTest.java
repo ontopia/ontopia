@@ -42,7 +42,6 @@ import org.junit.runners.Parameterized.Parameters;
  * INTERNAL: Test case that check whether schemas generated from topic
  * maps validate against the source topic maps.
  */
-
 @RunWith(Parameterized.class)
 public class SchemaGeneratorTest extends TestCase {
   
@@ -88,10 +87,4 @@ public class SchemaGeneratorTest extends TestCase {
       Assert.fail("Generated schema '" + schemafile + "' had validation errors: " + e.getMessage());
     }
   }
-
 }
-
-
-
-
-

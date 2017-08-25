@@ -83,7 +83,6 @@ public class TopicMapPreferencesTest {
 
 		TestTMPrefsFactory.setFixedReference(null);
 		store.close();
-
 	}
 	
 	private void runPreferencesMethods() throws BackingStoreException {
@@ -103,7 +102,4 @@ public class TopicMapPreferencesTest {
 		
 		Preferences.systemRoot().flush();
 	}
-	
-
-
 }

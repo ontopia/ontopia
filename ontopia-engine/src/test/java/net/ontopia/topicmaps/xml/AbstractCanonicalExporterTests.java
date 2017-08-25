@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -46,23 +45,23 @@ public abstract class AbstractCanonicalExporterTests {
   protected String _testdataDirectory;
 
   // --- Canonicalization type methods
-
   /**
    * INTERNAL: Performs the actual canonicalization.
    */
   protected void canonicalize(URL infile, File tmpfile, File outfile)
-    throws IOException {
+          throws IOException {
     // Get store factory
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
-    
+
     // Read document
     TopicMapIF source1 = sfactory.createStore().getTopicMap();
     if (infile.getFile().endsWith(".xtm")) {
       XTMTopicMapReader reader = new XTMTopicMapReader(infile);
-      reader.setValidation(false);    
+      reader.setValidation(false);
       reader.importInto(source1);
-    } else
+    } else {
       throw new OntopiaRuntimeException("Unknown syntax: " + infile);
+    }
 
     // Export topic map, then read it back in
     TopicMapIF source2 = exportAndReread(source1, tmpfile);
@@ -78,11 +77,10 @@ public abstract class AbstractCanonicalExporterTests {
   }
 
   /**
-   * INTERNAL: Exports the topic map using the exporter to be tested,
-   * then reads it back in.
+   * INTERNAL: Exports the topic map using the exporter to be tested, then reads it back in.
    */
   protected abstract TopicMapIF exportAndReread(TopicMapIF tm, File outfile)
-    throws IOException;
+          throws IOException;
 
   /**
    * INTERNAL: Returns the store factory to be used.
@@ -91,34 +89,32 @@ public abstract class AbstractCanonicalExporterTests {
     return new InMemoryStoreFactory();
   }
 
-  // --- Test case class
+  @Test
+  public void testExport() throws IOException {
+    TestFileUtils.verifyDirectory(base, "out");
 
-    @Test
-    public void testExport() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
-      
-      // setup canonicalization filenames
-      File tmp = new File(base + File.separator + "out" + File.separator + "tmp-" + filename);
-      File out = new File(base + File.separator + "out" + File.separator + "exp-" + filename);
-      // produce canonical output
-      try {
-        canonicalize(inputFile, tmp, out);
-      } catch (Throwable e) {
-        if (e instanceof OntopiaRuntimeException &&
-            ((OntopiaRuntimeException) e).getCause() != null)
-          e = ((OntopiaRuntimeException) e).getCause();
-        throw new OntopiaRuntimeException("Error processing file '" + filename +
-                                          "': " + e, e);
+    // setup canonicalization filenames
+    File tmp = new File(base + File.separator + "out" + File.separator + "tmp-" + filename);
+    File out = new File(base + File.separator + "out" + File.separator + "exp-" + filename);
+    // produce canonical output
+    try {
+      canonicalize(inputFile, tmp, out);
+    } catch (Throwable e) {
+      if (e instanceof OntopiaRuntimeException
+              && ((OntopiaRuntimeException) e).getCause() != null) {
+        e = ((OntopiaRuntimeException) e).getCause();
       }
+      throw new OntopiaRuntimeException("Error processing file '" + filename
+              + "': " + e, e);
+    }
 
-      // compare results
-      URL baseline = new URL(inputFile, "../baseline/" + filename);
-      try (InputStream baselineIn = baseline.openStream(); FileInputStream in = new FileInputStream(out)) {
-        Assert.assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
-                   + " != " + out + "), tmp=" + tmp,
-                IOUtils.contentEquals(in, baselineIn));
-      }
-      // NOTE: we compare out/exp-* and baseline/*
+    // compare results
+    URL baseline = new URL(inputFile, "../baseline/" + filename);
+    try (InputStream baselineIn = baseline.openStream(); FileInputStream in = new FileInputStream(out)) {
+      Assert.assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
+              + " != " + out + "), tmp=" + tmp,
+              IOUtils.contentEquals(in, baselineIn));
+    }
+    // NOTE: we compare out/exp-* and baseline/*
   }
-  
 }

@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
@@ -40,31 +39,27 @@ public class XTMReadErrorTests {
   public static List generateTests() {
     return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "errors");
   }
-  
-  // --- Test case class
 
-    public XTMReadErrorTests(URL inputFile, String filename) {
-      this.filename = filename;
-      this.inputFile = inputFile;
-//      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-//      this._testdataDirectory = testdataDirectory;
-    }
+  public XTMReadErrorTests(URL inputFile, String filename) {
+    this.filename = filename;
+    this.inputFile = inputFile;
+  }
 
-    public void testFile() throws IOException {
-      XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
+  public void testFile() throws IOException {
+    XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
 
-      try {
-        reader.read();
-        Assert.fail("succeeded in importing bad file " + filename);
-      } catch (IOException e) {
-        // ok
-        return;
-      } catch (ConstraintViolationException e) {
-        // ok
-      } catch (OntopiaRuntimeException e) {
-        if (!(e.getCause() instanceof org.xml.sax.SAXParseException))
-          throw e;
+    try {
+      reader.read();
+      Assert.fail("succeeded in importing bad file " + filename);
+    } catch (IOException e) {
+      // ok
+      return;
+    } catch (ConstraintViolationException e) {
+      // ok
+    } catch (OntopiaRuntimeException e) {
+      if (!(e.getCause() instanceof org.xml.sax.SAXParseException)) {
+        throw e;
       }
     }
-  
+  }
 }

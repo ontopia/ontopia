@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -33,6 +32,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+/**
+ * Exports a file from the directory 'filter-in' to an xtm file in
+ * 'filter-xtm'. Canonicalizes the xtm file into the directory 'filter-out'.
+ * Compares the file in 'filter-out' with a baseline file in
+ * 'filter-baseline'. The baseline must be created manually, or by inspecting
+ * the file in 'filter-out'.
+ */
 @RunWith(Parameterized.class)
 public class XTMWriterFilterTestCase {
 
@@ -46,63 +52,53 @@ public class XTMWriterFilterTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
   }
 
-  // --- Test case class
+  public XTMWriterFilterTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-  /**
-   * Exports a file from the directory 'filter-in' to an xtm file in
-   * 'filter-xtm'. Canonicalizes the xtm file into the directory 'filter-out'.
-   * Compares the file in 'filter-out' with a baseline file in
-   * 'filter-baseline'. The baseline must be created manually, or by inspecting
-   * the file in 'filter-out'.
-   */
+  @Test
+  public void testFile() throws IOException {
+    TestFileUtils.verifyDirectory(base, "filter-out");
+    TestFileUtils.verifyDirectory(base, "filter-xtm");
 
-    public XTMWriterFilterTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+    // Path to the input topic map document.
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in", filename);
+    // Path to the baseline (canonicalized output of the source topic map).
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline", filename + ".cxtm");
+    // Path to the exported xtm topic map document.
+    File xtm = new File(base + File.separator + "filter-xtm" + File.separator
+            + filename + ".xtm");
+    // Path to the output (canonicalized output of exported xtm topic map).
+    File out = new File(base + File.separator + "filter-out" + File.separator
+            + filename + ".xtm.cxtm");
 
-    @Test
-    public void testFile() throws IOException {
-      TestFileUtils.verifyDirectory(base, "filter-out");
-      TestFileUtils.verifyDirectory(base, "filter-xtm");
+    // Import topic map from arbitrary source.
+    TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
-      // Path to the input topic map document.
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in", filename);
-      // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline", filename + ".cxtm");
-      // Path to the exported xtm topic map document.
-      File xtm = new File(base + File.separator + "filter-xtm" + File.separator
-          + filename + ".xtm");
-      // Path to the output (canonicalized output of exported xtm topic map).
-      File out = new File(base + File.separator + "filter-out" + File.separator
-          + filename + ".xtm.cxtm");
+    // Export document
+    XTMTopicMapWriter xtmWriter = new XTMTopicMapWriter(xtm);
+    xtmWriter.setVersion(XTMVersion.XTM_1_0);
 
-      // Import topic map from arbitrary source.
-      TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
+    // Set this writer to filter out the following topics.
+    TMDecider tmFilter = new TMDecider();
+    xtmWriter.setFilter(tmFilter);
 
-      // Export document
-      XTMTopicMapWriter xtmWriter = new XTMTopicMapWriter(xtm);
-      xtmWriter.setVersion(XTMVersion.XTM_1_0);
+    // Export the topic map to xtm.
+    xtmWriter.write(sourceMap);
 
-      // Set this writer to filter out the following topics.
-      TMDecider tmFilter = new TMDecider();
-      xtmWriter.setFilter(tmFilter);
+    // Reimport the exported xtm.
+    TopicMapIF xtmMap = ImportExportUtils.getReader(xtm).read();
 
-      // Export the topic map to xtm.
-      xtmWriter.write(sourceMap);
+    // Fix item ids and so on
+    TestUtils.fixItemIds(xtmMap, sourceMap.getStore().getBaseAddress());
 
-      // Reimport the exported xtm.
-      TopicMapIF xtmMap = ImportExportUtils.getReader(xtm).read();
+    // Canonicalize the reimported xtm.
+    new CanonicalXTMWriter(out).write(xtmMap);
 
-      // Fix item ids and so on
-      TestUtils.fixItemIds(xtmMap, sourceMap.getStore().getBaseAddress());
-
-      // Canonicalize the reimported xtm.
-      new CanonicalXTMWriter(out).write(xtmMap);
-
-      // compare results
-      Assert.assertTrue("canonicalizing the test file " + filename
-          + " gives a different result than canonicalizing the xtm export of "
-          + filename + ".", TestFileUtils.compareFileToResource(out, baseline));
-    }
+    // compare results
+    Assert.assertTrue("canonicalizing the test file " + filename
+            + " gives a different result than canonicalizing the xtm export of "
+            + filename + ".", TestFileUtils.compareFileToResource(out, baseline));
+  }
 }

@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.File;
@@ -35,7 +34,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class MergeTMTestCase {
-    
+
   private final static String testdataDirectory = "merge";
 
   protected String base;
@@ -46,32 +45,30 @@ public class MergeTMTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
   }
 
-  // --- Test case class
+  public MergeTMTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-    public MergeTMTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+  @Test
+  public void testMergeTM() throws IOException {
+    TestFileUtils.verifyDirectory(base, "out");
 
-    @Test
-    public void testMergeTM() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
-      
-      // produce canonical output
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
-        filename.substring(0, filename.length() - 3) + "sub");
-      File out = new File(base + File.separator + "out" + File.separator + filename);
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
-            
-      TopicMapIF source1 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
-      TopicMapIF source2 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in2)).read();
+    // produce canonical output
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
+    String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in",
+            filename.substring(0, filename.length() - 3) + "sub");
+    File out = new File(base + File.separator + "out" + File.separator + filename);
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
 
-      MergeUtils.mergeInto(source1, source2);
-      new CanonicalTopicMapWriter(out).write(source1);
+    TopicMapIF source1 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+    TopicMapIF source2 = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in2)).read();
 
-      // compare results
-      Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-             TestFileUtils.compareFileToResource(out, baseline));
-    }
+    MergeUtils.mergeInto(source1, source2);
+    new CanonicalTopicMapWriter(out).write(source1);
+
+    // compare results
+    Assert.assertTrue("test file " + filename + " canonicalized wrongly",
+            TestFileUtils.compareFileToResource(out, baseline));
+  }
 }

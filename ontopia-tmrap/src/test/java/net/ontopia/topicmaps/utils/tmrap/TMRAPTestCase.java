@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.File;
@@ -69,9 +68,9 @@ public class TMRAPTestCase {
 
   @Parameters
   public static Collection generateTests() throws IOException {
-	
+
     TestFileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");
-	
+
     String source = TestFileUtils.getTestInputFile(testdataDirectory, "tests.xml");
     InputStream in = StreamUtils.getInputStream(source);
 
@@ -91,165 +90,166 @@ public class TMRAPTestCase {
     }
   }
 
-  // --- Test case class
+  public TMRAPTestCase(TMRAPTestDescriptor descriptor) {
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;
+    this.descriptor = descriptor;
+  }
 
-    public TMRAPTestCase(TMRAPTestDescriptor descriptor) {
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;
-      this.descriptor = descriptor;
-    }
-
-    /**
-     * Run an error test, i.e. a test that is meant to fail with some given
-     * exception class.
-     */
-    private void runErrorTest() {
-      try {
-        runRapServlet(base, new PrintWriter(new StringWriter()), 
-            descriptor.getUri(), false, false);
-        Assert.fail("Expected to fail with: " + descriptor.getExpectedException()
-            + " but executed without errors.");
-      } catch (Exception e) {
-        String eName = e.getClass().getName();
-        Assert.assertTrue("Expected to fail with: " 
-            + descriptor.getExpectedException() + " but failed with "
-            + eName + " instead.", eName.equals(descriptor
-                .getExpectedException()));
-      }
-    }
-    
-    @Test
-    public void testFile() throws IOException, ServletException {
-      if (descriptor.getId() == null) {
-        runErrorTest();
-        return;
-      }
-      
-      TestFileUtils.verifyDirectory(base, "out");
-      TestFileUtils.verifyDirectory(base, "cxtm");
-
-      String id = descriptor.getId();
-      
-      // Path to the output.
-      String out = base + "out" + File.separator + id
-          + ".xtm";
-
-      // Path to the canonicalized output.
-      File cxtm = new File(base + "cxtm" + File.separator 
-          + id + ".cxtm");
-
-      // Path to the baseline.
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
-          id + ".cxtm");
-
-      PrintWriter pw = new PrintWriter(new FileWriter(out));
-      runRapServlet(base, pw, 
-          descriptor.getUri(), descriptor.getEdit(), descriptor.getView());
-      pw.close();
-            
-      // FIXME: When other syntaxes are supported, the Reader must take the
-      // chosen syntax into account.
-      XTMTopicMapReader xtmReader = new XTMTopicMapReader(new File(out));
-      xtmReader.setExternalReferenceHandler(
-          new NullResolvingExternalReferenceHandler());
-      
-      // Import the tm.
-      TopicMapIF importedTM = xtmReader.read();
-      
-      filterUnifyingTopics(importedTM);
-
-      // Canonicalize the reimported tm.
-      new CanonicalXTMWriter(cxtm).write(importedTM);
-      
-      // NOTE: Only for observational purposes when making tests.
-      // (new LTMTopicMapWriter(new FileOutputStream(base + "ltm" + File.separator
-      //     + id + ".ltm"))).write(importedTM);
-
-      // Compare 'out' with 'baseline'.
-      Assert.assertTrue("The output of the test with id " + id
-          + " does not match the baseline: " + cxtm + " " + baseline, TestFileUtils.compareFileToResource(cxtm, baseline));
-    }
-  
   /**
-   * A unifying topic is generated when a topic occurrs in multiple topicmaps
-   * of a TMRAP query.
-   * It has source locator with a time stamp, which makes testing harder since
-   * it makes the output vary over time.
-   * This method removes those source locators.
+   * Run an error test, i.e. a test that is meant to fail with some given exception class.
+   */
+  private void runErrorTest() {
+    try {
+      runRapServlet(base, new PrintWriter(new StringWriter()),
+              descriptor.getUri(), false, false);
+      Assert.fail("Expected to fail with: " + descriptor.getExpectedException()
+              + " but executed without errors.");
+    } catch (Exception e) {
+      String eName = e.getClass().getName();
+      Assert.assertTrue("Expected to fail with: "
+              + descriptor.getExpectedException() + " but failed with "
+              + eName + " instead.", eName.equals(descriptor
+                      .getExpectedException()));
+    }
+  }
+
+  @Test
+  public void testFile() throws IOException, ServletException {
+    if (descriptor.getId() == null) {
+      runErrorTest();
+      return;
+    }
+
+    TestFileUtils.verifyDirectory(base, "out");
+    TestFileUtils.verifyDirectory(base, "cxtm");
+
+    String id = descriptor.getId();
+
+    // Path to the output.
+    String out = base + "out" + File.separator + id
+            + ".xtm";
+
+    // Path to the canonicalized output.
+    File cxtm = new File(base + "cxtm" + File.separator
+            + id + ".cxtm");
+
+    // Path to the baseline.
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
+            id + ".cxtm");
+
+    PrintWriter pw = new PrintWriter(new FileWriter(out));
+    runRapServlet(base, pw,
+            descriptor.getUri(), descriptor.getEdit(), descriptor.getView());
+    pw.close();
+
+    // FIXME: When other syntaxes are supported, the Reader must take the
+    // chosen syntax into account.
+    XTMTopicMapReader xtmReader = new XTMTopicMapReader(new File(out));
+    xtmReader.setExternalReferenceHandler(
+            new NullResolvingExternalReferenceHandler());
+
+    // Import the tm.
+    TopicMapIF importedTM = xtmReader.read();
+
+    filterUnifyingTopics(importedTM);
+
+    // Canonicalize the reimported tm.
+    new CanonicalXTMWriter(cxtm).write(importedTM);
+
+    // NOTE: Only for observational purposes when making tests.
+    // (new LTMTopicMapWriter(new FileOutputStream(base + "ltm" + File.separator
+    //     + id + ".ltm"))).write(importedTM);
+    // Compare 'out' with 'baseline'.
+    Assert.assertTrue("The output of the test with id " + id
+            + " does not match the baseline: " + cxtm + " " + baseline, TestFileUtils.compareFileToResource(cxtm, baseline));
+  }
+
+  /**
+   * A unifying topic is generated when a topic occurrs in multiple topicmaps of a TMRAP query. It has source locator
+   * with a time stamp, which makes testing harder since it makes the output vary over time. This method removes those
+   * source locators.
+   *
    * @param topicMap The topic map to remove the source locators from.
    */
   public static void filterUnifyingTopics(TopicMapIF topicMap) {
     Collection topics = topicMap.getTopics();
     Iterator topicsIt = topics.iterator();
     while (topicsIt.hasNext()) {
-      TopicIF currentTopic = (TopicIF)topicsIt.next();
-      
+      TopicIF currentTopic = (TopicIF) topicsIt.next();
+
       Collection removables = new ArrayList();
-      
+
       Collection sources = currentTopic.getItemIdentifiers();
       Iterator sourcesIt = sources.iterator();
       while (sourcesIt.hasNext()) {
-        LocatorIF currentLocator = (LocatorIF)sourcesIt.next();
-        if (currentLocator.getAddress().indexOf("unifying-topic") != -1)
+        LocatorIF currentLocator = (LocatorIF) sourcesIt.next();
+        if (currentLocator.getAddress().indexOf("unifying-topic") != -1) {
           removables.add(currentLocator);
+        }
       }
-      
+
       Iterator removablesIt = removables.iterator();
       while (removablesIt.hasNext()) {
-        LocatorIF currentLocator = (LocatorIF)removablesIt.next();
+        LocatorIF currentLocator = (LocatorIF) removablesIt.next();
         currentTopic.removeItemIdentifier(currentLocator);
       }
     }
   }
-  
+
   /**
    * Run RapServlet at a given base directory writing to a given PrintWriter.
+   *
    * @param base The base directory of the test.
-   * @param responseWriter  Handles the output.
+   * @param responseWriter Handles the output.
    * @param uriString The source URI which defines the TMRAP query.
    * @throws ServletException
    * @throws IOException
    */
   private static void runRapServlet(String base, PrintWriter responseWriter,
-      String uriString, boolean edit, boolean view) throws ServletException, 
-      IOException {
-    int queryIndex = uriString.indexOf('?');    
-    if (queryIndex == -1)
+          String uriString, boolean edit, boolean view) throws ServletException,
+          IOException {
+    int queryIndex = uriString.indexOf('?');
+    if (queryIndex == -1) {
       queryIndex = uriString.length();
-    String parameterPart = 
-        (queryIndex == 0 || queryIndex == uriString.length()) ? ""
-        : uriString.substring(queryIndex + 1);
+    }
+    String parameterPart
+            = (queryIndex == 0 || queryIndex == uriString.length()) ? ""
+            : uriString.substring(queryIndex + 1);
     uriString = uriString.substring(0, queryIndex);
 
     HashMap params = TMRAPTestUtils.tokenizeParameters(parameterPart);
     params.put("server_name", "TMRAP Test Suite");
-    if (edit)
+    if (edit) {
       params.put("edit_uri", "http://localhost:8080/ontopoly/topicTypeConfig.ted?tm=%tmid%&id=%topicid%");
-    if (view)
+    }
+    if (view) {
       params.put("view_uri", "http://localhost:8080/omnigator/models/topic_complete.jsp?tm=%tmid%&id=%topicid%");
+    }
 
     Hashtable paramsTable = TMRAPTestUtils.tabularizeParameters(params);
-    
-    FakeServletContext servletContext = new FakeServletContext(base, new Hashtable(), 
-            Collections.singletonMap("source_config", 
+
+    FakeServletContext servletContext = new FakeServletContext(base, new Hashtable(),
+            Collections.singletonMap("source_config",
                     TestFileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml")));
-    
+
     FakeServletConfig servletConfig = new FakeServletConfig(servletContext,
-        paramsTable);
+            paramsTable);
     FakeServletRequest servletRequest = new FakeServletRequest(FakeServletRequest.transform(paramsTable));
-    
-    FakeServletResponse servletResponse = 
-        new FakeServletResponse(responseWriter);
-    
+
+    FakeServletResponse servletResponse
+            = new FakeServletResponse(responseWriter);
+
     RAPServlet rapServlet = new RAPServlet();
-    
+
     rapServlet.init(servletConfig);
     rapServlet.doGet(servletRequest, servletResponse, uriString);
 
     TopicMaps.forget(NavigatorUtils.getTopicMapRepository(servletContext));
 
-    if (servletResponse.getStatus() != 200)
-      throw new ServletException("Error in running RAP servlet: " +
-                                 servletResponse.getStatus() + " " +
-                                 servletResponse.getMessage());
+    if (servletResponse.getStatus() != 200) {
+      throw new ServletException("Error in running RAP servlet: "
+              + servletResponse.getStatus() + " "
+              + servletResponse.getMessage());
+    }
   }
 }

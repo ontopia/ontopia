@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -46,51 +45,49 @@ public class CanonicalXTM21WriterTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
   }
 
-  // --- Test case class
+  public CanonicalXTM21WriterTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-    public CanonicalXTM21WriterTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
-  
-    @Test
-    public void testFile() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
-   
-      // Path to the input topic map
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      // Path to the baseline
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
-        filename + ".cxtm");
-      // Path to the canonicalized output.
-      File out = new File(base + File.separator + "out" + File.separator 
-        + "tmp-" + filename + ".cxtm");
-      // Path to the temporary file
-      File tmp = new File(base + File.separator + "out" + File.separator 
-        + "tmp-" + filename);
-  
-      // Import topic map from arbitrary source.
-      TopicMapIF tm = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
-      LocatorIF base = tm.getStore().getBaseAddress();
+  @Test
+  public void testFile() throws IOException {
+    TestFileUtils.verifyDirectory(base, "out");
 
-      // Export to XTM 2.1
-      XTMTopicMapWriter writer = new XTMTopicMapWriter(tmp);
-      writer.setVersion(XTMVersion.XTM_2_1);
-      // Do not omit the item identifiers
-      writer.setExportSourceLocators(true);
-      writer.write(tm);
+    // Path to the input topic map
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
+    // Path to the baseline
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
+            filename + ".cxtm");
+    // Path to the canonicalized output.
+    File out = new File(base + File.separator + "out" + File.separator
+            + "tmp-" + filename + ".cxtm");
+    // Path to the temporary file
+    File tmp = new File(base + File.separator + "out" + File.separator
+            + "tmp-" + filename);
 
-      // Import again from exported file
-      tm = ImportExportUtils.getReader(tmp).read();
+    // Import topic map from arbitrary source.
+    TopicMapIF tm = new XTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+    LocatorIF base = tm.getStore().getBaseAddress();
 
-      // Fix item identifiers for canonicalization
-      TestUtils.fixItemIds(tm, base);
+    // Export to XTM 2.1
+    XTMTopicMapWriter writer = new XTMTopicMapWriter(tmp);
+    writer.setVersion(XTMVersion.XTM_2_1);
+    // Do not omit the item identifiers
+    writer.setExportSourceLocators(true);
+    writer.write(tm);
 
-      // Output CXTM
-      new CanonicalXTMWriter(out).write(tm);
-      
-      // compare results
-      Assert.assertTrue("The test file " + filename + " is different from the baseline: " + out + " " + baseline,
-              TestFileUtils.compareFileToResource(out, baseline));
+    // Import again from exported file
+    tm = ImportExportUtils.getReader(tmp).read();
+
+    // Fix item identifiers for canonicalization
+    TestUtils.fixItemIds(tm, base);
+
+    // Output CXTM
+    new CanonicalXTMWriter(out).write(tm);
+
+    // compare results
+    Assert.assertTrue("The test file " + filename + " is different from the baseline: " + out + " " + baseline,
+            TestFileUtils.compareFileToResource(out, baseline));
   }
 }

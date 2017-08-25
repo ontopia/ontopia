@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.File;
@@ -48,46 +47,45 @@ public class TopicMapSynchronizerTests {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", "-target.ltm");
   }
 
-    public TopicMapSynchronizerTests(String root, String filename) {
-      this.root = root;
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+  public TopicMapSynchronizerTests(String root, String filename) {
+    this.root = root;
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-    @Test
-    public void testFile() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
+  @Test
+  public void testFile() throws IOException {
+    TestFileUtils.verifyDirectory(base, "out");
 
-      String suffix = "-target.ltm";
+    String suffix = "-target.ltm";
 
-      // setup canonicalization filenames
-      String in1 = TestFileUtils.getTestInputFile(testdataDirectory, "in" ,filename);
-      String testname =
-        filename.substring(0, filename.length() - suffix.length());
-      String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", testname + "-source.ltm");
-      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
+    // setup canonicalization filenames
+    String in1 = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
+    String testname
+            = filename.substring(0, filename.length() - suffix.length());
+    String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", testname + "-source.ltm");
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
 
-      String out = base + File.separator + "out" + File.separator + filename;
+    String out = base + File.separator + "out" + File.separator + filename;
 
-      // produce canonical output
-      canonicalize(in1, in2, out);
+    // produce canonical output
+    canonicalize(in1, in2, out);
 
-      // compare results
-      Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-                 TestFileUtils.compareFileToResource(out, baseline));
-    }
+    // compare results
+    Assert.assertTrue("test file " + filename + " canonicalized wrongly",
+            TestFileUtils.compareFileToResource(out, baseline));
+  }
 
-    private void canonicalize(String infile1, String infile2, String outfile)
-      throws IOException {
-      TopicMapIF target = ImportExportUtils.getReader(infile1).read();
-      TopicMapIF source = ImportExportUtils.getReader(infile2).read();
+  private void canonicalize(String infile1, String infile2, String outfile)
+          throws IOException {
+    TopicMapIF target = ImportExportUtils.getReader(infile1).read();
+    TopicMapIF source = ImportExportUtils.getReader(infile2).read();
 
-      LocatorIF base = source.getStore().getBaseAddress();
-      TopicIF sourcet = (TopicIF)
-        source.getObjectByItemIdentifier(base.resolveAbsolute("#source"));
+    LocatorIF base = source.getStore().getBaseAddress();
+    TopicIF sourcet = (TopicIF) source.getObjectByItemIdentifier(base.resolveAbsolute("#source"));
 
-      TopicMapSynchronizer.update(target, sourcet);
+    TopicMapSynchronizer.update(target, sourcet);
 
-      new CanonicalXTMWriter(new File(outfile)).write(target);
-    }
+    new CanonicalXTMWriter(new File(outfile)).write(target);
+  }
 }

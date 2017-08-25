@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Set;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -57,8 +56,7 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     assertTrue(topics.size() == 1);
 
     topics = twalker.walkTopics(three);
-    assertTrue(topics.size() == 0);
-        
+    assertTrue(topics.isEmpty());
   }
 
   @Override
@@ -75,15 +73,14 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     rt_descendant = builder.makeTopic();
 
     AssociationIF relation;
-    AssociationRoleIF ancestor, descendant;
         
     relation = builder.makeAssociation(at_descendant_of);
-    ancestor = builder.makeAssociationRole(relation, rt_ancestor, homer);
-    descendant = builder.makeAssociationRole(relation, rt_descendant, bart);
+    builder.makeAssociationRole(relation, rt_ancestor, homer);
+    builder.makeAssociationRole(relation, rt_descendant, bart);
         
     relation = builder.makeAssociation(at_descendant_of);
-    ancestor = builder.makeAssociationRole(relation, rt_ancestor, gramps);
-    descendant = builder.makeAssociationRole(relation, rt_descendant, homer);
+    builder.makeAssociationRole(relation, rt_ancestor, gramps);
+    builder.makeAssociationRole(relation, rt_descendant, homer);
   }
     
   public void testWalker() {
@@ -124,9 +121,4 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     assertTrue(ancestorsWalker.isAssociated(bart, gramps));
     assertTrue(ancestorsWalker.isAssociated(bart, great_grandaddy));
   }
-    
 }
-
-
-
-

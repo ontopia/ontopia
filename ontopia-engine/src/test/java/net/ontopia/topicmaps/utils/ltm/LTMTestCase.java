@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.File;
@@ -42,53 +41,51 @@ public class LTMTestCase {
   private String filename;
 
   /**
-    * @return true iff the test-case in fileName was added to test features
-    * after LTM1.3 was implemented.
-    */
+   * @return true iff the test-case in fileName was added to test features after LTM1.3 was implemented.
+   */
   public static boolean ltm13(String fileName) {
-    if (fileName.endsWith("-1.3.ltm")) return true;
-    return false;
+    return fileName.endsWith("-1.3.ltm");
   }
-  
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm");
   }
 
-    public LTMTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+  public LTMTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-    @Test
-    public void testFile() throws IOException {
-      TestFileUtils.verifyDirectory(base, "out");
-      
-      // produce canonical output
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
-        filename);
-      File out = new File(base + File.separator + "out" + File.separator +
-        filename);
-      
-      TopicMapIF source = new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
-      
-      if (ltm13(filename)) {
-        out = new File(out.toString() + ".cxtm");
-        new CanonicalXTMWriter(out).write(source);
-  
-        // compare results
-        String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
-          filename + ".cxtm");
-        Assert.assertTrue("test file " + filename + " canonicalized wrongly",
+  @Test
+  public void testFile() throws IOException {
+    TestFileUtils.verifyDirectory(base, "out");
+
+    // produce canonical output
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "in",
+            filename);
+    File out = new File(base + File.separator + "out" + File.separator
+            + filename);
+
+    TopicMapIF source = new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+
+    if (ltm13(filename)) {
+      out = new File(out.toString() + ".cxtm");
+      new CanonicalXTMWriter(out).write(source);
+
+      // compare results
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
+              filename + ".cxtm");
+      Assert.assertTrue("test file " + filename + " canonicalized wrongly",
               TestFileUtils.compareFileToResource(out, baseline));
-      } else {
-        new CanonicalTopicMapWriter(out).write(source);
-  
-        // compare results
-        String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
-          filename);
-        Assert.assertTrue("test file " + filename + " canonicalized wrongly",
+    } else {
+      new CanonicalTopicMapWriter(out).write(source);
+
+      // compare results
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
+              filename);
+      Assert.assertTrue("test file " + filename + " canonicalized wrongly",
               TestFileUtils.compareFileToResource(out, baseline));
-      }
     }
+  }
 }

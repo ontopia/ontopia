@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.IOException;
@@ -41,22 +40,22 @@ public class SchemaErrorTestCase extends AbstractSchemaTestCase {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".xml");
   }
 
-    public SchemaErrorTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+  public SchemaErrorTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-    @Test
-    public void testSchemaError() throws IOException, SchemaSyntaxException {
-      TestFileUtils.verifyDirectory(base, "out");
-      try {
-        readSchema("error", filename);
-        Assert.fail("Read bad schema " + filename + " and found no errors");
-      } catch (SchemaSyntaxException sse) {
-        // ok
-      } catch (IllegalArgumentException iae) {
-        // for negmin.xml
-        Assert.assertEquals("Cannot set minimum to negative value", iae.getMessage());
-      }
+  @Test
+  public void testSchemaError() throws IOException, SchemaSyntaxException {
+    TestFileUtils.verifyDirectory(base, "out");
+    try {
+      readSchema("error", filename);
+      Assert.fail("Read bad schema " + filename + " and found no errors");
+    } catch (SchemaSyntaxException sse) {
+      // ok
+    } catch (IllegalArgumentException iae) {
+      // for negmin.xml
+      Assert.assertEquals("Cannot set minimum to negative value", iae.getMessage());
     }
+  }
 }
