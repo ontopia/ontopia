@@ -41,6 +41,7 @@ public class UserPrincipal implements Principal, Serializable {
     this.name = name;
   }
   
+  @Override
   public String getName() {
     return name;
   }

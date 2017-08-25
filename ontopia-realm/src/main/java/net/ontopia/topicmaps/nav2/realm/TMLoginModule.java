@@ -98,6 +98,7 @@ public class TMLoginModule implements LoginModule {
 
   // LoginModule interface methods ...  
   
+  @Override
   public boolean abort() throws LoginException {
     if (!loginSucceeded) {
       return false;
@@ -119,6 +120,7 @@ public class TMLoginModule implements LoginModule {
   /**
    * Add relevant Principals to the subject.
    */
+  @Override
   public boolean commit() throws LoginException {
     if (!loginSucceeded)
       return false;
@@ -149,6 +151,7 @@ public class TMLoginModule implements LoginModule {
     return true;
   }
   
+  @Override
   public void initialize(Subject subject, CallbackHandler callbackHandler,
     Map<String, ?> sharedState, Map<String, ?> options) {
     log.debug("TMLoginModule: initialize");
@@ -174,6 +177,7 @@ public class TMLoginModule implements LoginModule {
   /** 
    * Prompt the user for username and password, and verify those.
    */
+  @Override
   public boolean login() throws LoginException {
     log.debug("TMLoginModule: login");
     
@@ -206,6 +210,7 @@ public class TMLoginModule implements LoginModule {
     return loginSucceeded;
   }
   
+  @Override
   public boolean logout() throws LoginException {    
     // clear out principals
     subject.getPrincipals().remove(userPrincipal);

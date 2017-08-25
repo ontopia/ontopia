@@ -168,6 +168,7 @@ public class TMLoginModuleTest extends TestCase {
       this.tokens = tokens;
     }
     
+    @Override
     public void handle(Callback[] callbacks)
       throws IOException, UnsupportedCallbackException {
     
