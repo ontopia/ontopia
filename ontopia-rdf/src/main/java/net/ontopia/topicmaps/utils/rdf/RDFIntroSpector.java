@@ -115,26 +115,32 @@ public class RDFIntroSpector {
   private static class AResourceImpl implements AResource {
     private Resource resource;
 
+    @Override
     public String getAnonymousID() {
       return resource.getId().toString();
     }
 
+    @Override
     public String getURI() {
       return resource.getURI();
     }
 
+    @Override
     public Object getUserData() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean hasNodeID() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isAnonymous() {
       return resource.isAnon();
     }
 
+    @Override
     public void setUserData(Object object) {
       throw new UnsupportedOperationException();
     }
@@ -151,22 +157,27 @@ public class RDFIntroSpector {
     private Literal literal;
     private boolean tainted;
 
+    @Override
     public String getDatatypeURI() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getLang() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getParseType() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isWellFormedXML() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String toString() {
       return literal.getString();
     }
@@ -175,10 +186,12 @@ public class RDFIntroSpector {
       this.literal = literal;
     }
 
+    @Override
     public void taint() {
       tainted = true;
     }
 
+    @Override
     public boolean isTainted() {
       return tainted;
     }
@@ -200,6 +213,7 @@ public class RDFIntroSpector {
       return mappings;
     }
     
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       String preduri = pred.getURI();      
       if (preduri.startsWith(RDFToTopicMapConverter.RTM_PREFIX))
@@ -216,6 +230,7 @@ public class RDFIntroSpector {
       }
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {      
       String preduri = pred.getURI();
       if (preduri.equals(RDFToTopicMapConverter.RTM_MAPSTO)) {

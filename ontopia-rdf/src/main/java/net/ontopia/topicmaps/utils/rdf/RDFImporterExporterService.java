@@ -34,6 +34,7 @@ import net.ontopia.topicmaps.utils.ImportExportServiceIF;
  */
 public class RDFImporterExporterService implements ImportExportServiceIF {
 
+  @Override
   public boolean canRead(URL resource) {
     String resourceString = resource.toString().toLowerCase();
     return resourceString.endsWith(".rdf")
@@ -41,14 +42,17 @@ public class RDFImporterExporterService implements ImportExportServiceIF {
             || resourceString.endsWith(".nt");
   }
 
+  @Override
   public boolean canWrite(URL resource) {
     return canRead(resource);
   }
 
+  @Override
   public TopicMapWriterIF getWriter(OutputStream stream) throws IOException {
     return new RDFTopicMapWriter(stream);
   }
 
+  @Override
   public TopicMapReaderIF getReader(URL resource) {
     return new RDFTopicMapReader(resource, getSyntax(resource));
   }
@@ -65,6 +69,7 @@ public class RDFImporterExporterService implements ImportExportServiceIF {
     return null;
   }
 
+  @Override
   public AbstractURLTopicMapReference createReference(URL url, String refid, String title, LocatorIF base_address) {
     return new RDFTopicMapReference(url, refid, title, base_address, getSyntax(url));
   }

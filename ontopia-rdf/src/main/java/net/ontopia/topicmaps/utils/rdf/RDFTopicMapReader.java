@@ -188,6 +188,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
   
   // --- TopicMapReaderIF implementation
   
+  @Override
   public TopicMapIF read() throws IOException {
     TopicMapIF topicmap = new InMemoryTopicMapStore().getTopicMap();
     
@@ -202,12 +203,14 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
     return topicmap;
   }
 
+  @Override
   public Collection readAll() throws IOException {
     return Collections.singleton(read());
   }
 
   // --- TopicMapImporterIF implementation
 
+  @Override
   public void importInto(TopicMapIF topicmap) throws IOException {
     try {
       if (inputStream != null) {
@@ -244,6 +247,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
    * </ul>
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_DUPLICATE_SUPPRESSION);
     if ((value != null) && (value instanceof Boolean)) {

@@ -501,6 +501,7 @@ public class RDFToTopicMapConverter {
         scoped.addTheme((TopicIF) it.next());
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       String msg = "Statements mapped to " + construct + " cannot have literal " +
                    "objects. Found (" + sub + ", " + pred + ", " + lit + ")";
@@ -509,6 +510,7 @@ public class RDFToTopicMapConverter {
         throw new RDFMappingException(msg);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       String msg = "Statements mapped to " + construct + " cannot have URI " +
         "reference objects. Found (" + sub + ", " + pred + ", " + obj + ")";
@@ -542,6 +544,7 @@ public class RDFToTopicMapConverter {
       super("rtm:instance-of");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       TopicIF topic = getSubject(sub);
       TopicIF type = getObject(obj);
@@ -562,6 +565,7 @@ public class RDFToTopicMapConverter {
       abuilder = new AssociationBuilder(assoc, role1, role2);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       TopicIF topic = getSubject(sub);
       TopicIF type = getObject(obj);
@@ -585,6 +589,7 @@ public class RDFToTopicMapConverter {
       super("rtm:subject-identifier");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank nodes cannot be subject identifiers; " +
@@ -615,6 +620,7 @@ public class RDFToTopicMapConverter {
       super("rtm:source-locator");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank nodes cannot be source locators; " +
@@ -649,6 +655,7 @@ public class RDFToTopicMapConverter {
       super("rtm:subject-locator");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank nodes cannot be subject locators; " +
@@ -680,6 +687,7 @@ public class RDFToTopicMapConverter {
       super("rtm:basename", scope);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       TopicIF topic = getSubject(sub); // FIXME: support xml:lang here?
       TopicNameIF bn = builder.makeTopicName(topic, lit.toString());
@@ -695,6 +703,7 @@ public class RDFToTopicMapConverter {
       this.type = type;
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank node cannot be occurrence value; " +
@@ -721,6 +730,7 @@ public class RDFToTopicMapConverter {
       }
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       TopicIF topic = getSubject(sub);
       TopicIF ourtype = type;
@@ -746,6 +756,7 @@ public class RDFToTopicMapConverter {
       this.oroleloc = oroleloc;
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       TopicIF topic = getSubject(sub);
       TopicIF object = getObject(obj);
@@ -769,12 +780,14 @@ public class RDFToTopicMapConverter {
 
   class ToTMStatementHandler implements StatementHandler {
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       StatementHandler handler = (StatementHandler) mappings.get(pred.getURI());
       if (handler != null)
         handler.statement(sub, pred, lit);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       StatementHandler handler = (StatementHandler) mappings.get(pred.getURI());
       if (handler != null)
