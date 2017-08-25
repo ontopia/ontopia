@@ -20,6 +20,7 @@
 package net.ontopia.topicmaps.entry;
 
 import java.net.URL;
+import java.util.Objects;
 import static junit.framework.Assert.assertTrue;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
@@ -43,7 +44,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     ref.setMappingFile("foo");
     assertTrue("Mappingfile not equals 'foo'", "foo".equals(ref.getMappingFile()));
     ref.setMappingFile(mf);
-    assertTrue("Mappingfile != " + mf, mf.equals(ref.getMappingFile()));
+    assertTrue("Mappingfile != " + mf, Objects.equals(mf, ref.getMappingFile()));
 
     // test syntax
     String sx = ref.getSyntax();
@@ -51,7 +52,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     ref.setSyntax("foo");
     assertTrue("Syntax not equals 'foo'", "foo".equals(ref.getSyntax()));
     ref.setSyntax(sx);
-    assertTrue("Syntax != " + sx, sx.equals(ref.getSyntax()));
+    assertTrue("Syntax != " + sx, Objects.equals(sx, ref.getSyntax()));
 
     // test generate names
     boolean gg = ref.getGenerateNames();
