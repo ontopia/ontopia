@@ -44,6 +44,8 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   
   protected TopicMapReferenceIF reference;
 
+  public TopicMapListenerIF[] topic_listeners;
+
   @Override
   public boolean isOpen() {
     return open;
@@ -146,8 +148,6 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   // TopicMapListenerIF implementation
   // -----------------------------------------------------------------------------
   
-  public TopicMapListenerIF[] topic_listeners;
-
   public void setTopicListeners(TopicMapListenerIF[] listeners) {
     this.topic_listeners = listeners;
   }
