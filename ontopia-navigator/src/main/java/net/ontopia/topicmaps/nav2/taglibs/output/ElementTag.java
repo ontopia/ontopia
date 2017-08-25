@@ -51,6 +51,7 @@ public class ElementTag extends BodyTagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     attrnames.clear();
     attrs.clear();
@@ -60,6 +61,7 @@ public class ElementTag extends BodyTagSupport {
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     BodyContent body = getBodyContent();
     StringBuilder complElem = new StringBuilder(100);
@@ -95,6 +97,7 @@ public class ElementTag extends BodyTagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

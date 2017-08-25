@@ -124,6 +124,7 @@ public class NameComparator implements Comparator<NameIF> {
   /**
    * Compares two TopicNameIFs / VariantNameIFs.
    */
+  @Override
   public int compare(NameIF o1, NameIF o2) {
     String value1 = getName(o1);
     String value2 = getName(o2);

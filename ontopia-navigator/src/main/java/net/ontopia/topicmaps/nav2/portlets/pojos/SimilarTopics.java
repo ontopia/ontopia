@@ -108,6 +108,7 @@ public class SimilarTopics {
       this.points = points;
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
       Float f1 = points.get((TopicIF) o1);
       Float f2 = points.get((TopicIF) o2);

@@ -40,6 +40,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
  */
 public class AssociationsTag extends BaseScopedTag {
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all associations (TopicIF objects) of all topics in collection
     // avoid duplicate entries therefore use a HashSet

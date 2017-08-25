@@ -648,6 +648,7 @@ public class TreeWidget {
   // this class is a hack, and therefore defined as an internal class.
 
   protected class UniversalSet extends CompactHashSet {
+    @Override
     public boolean contains(Object object) {
       return true;
     }

@@ -52,6 +52,7 @@ public class QueryTag extends BodyTagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
@@ -72,6 +73,7 @@ public class QueryTag extends BodyTagSupport {
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     query = getBodyContent().getString();
     return SKIP_BODY;
@@ -80,6 +82,7 @@ public class QueryTag extends BodyTagSupport {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
@@ -112,6 +115,7 @@ public class QueryTag extends BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // reset members
 

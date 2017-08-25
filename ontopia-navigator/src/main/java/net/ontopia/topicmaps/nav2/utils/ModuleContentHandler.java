@@ -58,6 +58,7 @@ public class ModuleContentHandler extends JSPContentHandler {
     characterCare = false;
   }
 
+  @Override
   public void startElement(String uri, String lname, String qname,
                            Attributes atts) throws SAXException {
     if ("module".equals(qname)) {
@@ -86,11 +87,13 @@ public class ModuleContentHandler extends JSPContentHandler {
     }
   }
   
+  @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
     if (characterCare) 
       super.characters(ch, start, length);
   }
   
+  @Override
   public void endElement(String uri, String lname, String qname)
     throws SAXException {
     

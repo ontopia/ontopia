@@ -84,6 +84,7 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
   private boolean invert = false;
   private boolean randomElement = false;
 
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     Collection result = null;
     // check first if unique attribute settings

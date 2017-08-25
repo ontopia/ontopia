@@ -48,6 +48,7 @@ public class CustomNameStringifier implements StringifierIF {
    *             internally; the given name
    * @return string containing name value or "[No name]"
    */
+  @Override
   public String toString(Object name) {
     String stringName = null;
     if (name == null)

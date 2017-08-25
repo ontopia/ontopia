@@ -111,6 +111,7 @@ public class JSPEngineWrapper {
 
   static class JSP20Wrapper extends JSP12Wrapper {
 
+    @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
       try {
@@ -131,24 +132,29 @@ public class JSPEngineWrapper {
 
   static class JSP12Wrapper implements WrapperIF {
 
+    @Override
     public String getServletContextName(ServletContext context) {
       return context.getServletContextName();
     }
 
+    @Override
     public JspException getJspException(String message, Exception exception) {
       return new JspException(message, exception);
     }
 
+    @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
       return new JspTagException(message + ": " + exception);
     }
     
+    @Override
     public void setRequestEncoding(ServletRequest request, String encoding)
       throws UnsupportedEncodingException {
       request.setCharacterEncoding(encoding);
     }
 
+    @Override
     public Map getParameterMap(ServletRequest request) {
       return request.getParameterMap();
     }
@@ -159,25 +165,30 @@ public class JSPEngineWrapper {
 
   static class JSP11Wrapper implements WrapperIF {
 
+    @Override
     public String getServletContextName(ServletContext context) {
       return context.toString();
     }
 
+    @Override
     public JspException getJspException(String message, Exception exception) {
       return new JspException(message);
     }
     
+    @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
       return new JspTagException(message + ": " + exception);
     }
 
+    @Override
     public void setRequestEncoding(ServletRequest request, String encoding)
       throws UnsupportedEncodingException {
       // no way to do this on JSP 1.1. may have to add a workaround if
       // customers get desperate
     }
     
+    @Override
     public Map getParameterMap(ServletRequest request) {
       Map map = new HashMap();
       Enumeration enumeration = request.getParameterNames();

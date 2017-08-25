@@ -53,6 +53,7 @@ public class ModifyUserHistoryTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // only do anything if valid user object exists
     UserIF user = FrameworkUtils.getUser(pageContext);

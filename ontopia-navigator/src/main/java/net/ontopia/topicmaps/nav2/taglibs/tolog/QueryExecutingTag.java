@@ -62,6 +62,7 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
    * It is up to the child class to make use of these.
    * Returns EVAL_BODY_BUFFERED by default.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
@@ -130,6 +131,7 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
    * Print the body content to the enclosing writer.
    * Return SKIP_BODY by default.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     // put out the evaluated body
     try {
@@ -146,6 +148,7 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
   /**
    * return EVAL_PAGE by default.
    */
+  @Override
   public int doEndTag() throws JspException {
     return EVAL_PAGE;
   }
@@ -153,6 +156,7 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // reset members
     columnNames = null;

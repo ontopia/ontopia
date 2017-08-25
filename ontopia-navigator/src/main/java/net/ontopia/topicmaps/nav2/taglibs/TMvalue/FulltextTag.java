@@ -46,6 +46,7 @@ public class FulltextTag extends BaseValueProducingTag {
   protected String query;
   protected String idfield;
   
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
 
     // Get topic map

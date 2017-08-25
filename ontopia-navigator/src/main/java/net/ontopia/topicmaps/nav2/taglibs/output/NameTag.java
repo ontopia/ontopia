@@ -40,6 +40,7 @@ public class NameTag extends BaseOutputProducingTag {
   protected String basenameScopeVarName = null;
   protected String variantScopeVarName = null;
   
+  @Override
   public void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
     

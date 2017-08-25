@@ -44,10 +44,12 @@ public class AutoSuggestServlet extends HttpServlet {
   private int limit = 25;
   private String query = "select $T, $DESC from value-like($TN, %TERM%), topic-name($T, $TN), { i\"http://purl.org/dc/elements/1.1/description\"($T, $DESC) } order by $T, $DESC desc?";
 
+  @Override
   public void init() throws ServletException {
    // no-op
   }
     
+  @Override
   public void destroy() {
     // no-op
   }
@@ -56,6 +58,7 @@ public class AutoSuggestServlet extends HttpServlet {
     return StringUtils.replace(StringUtils.replace(s, "\"", "\\\""), "\n", " ");
   }
 
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 

@@ -96,6 +96,7 @@ public class ContextTag extends TagSupport
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     this.contextManager = new ContextManager(pageContext);
     this.functions = new HashMap();
@@ -216,6 +217,7 @@ public class ContextTag extends TagSupport
   /**
    * Process the end tag for this instance.
    */
+  @Override
   public int doEndTag() throws JspTagException {
     // put out debug message
     //log.debug("\\\\\\ end of context-tag. - ");
@@ -365,18 +367,22 @@ public class ContextTag extends TagSupport
   // NavigatorPageIF implementation
   // -----------------------------------------------------------------
 
+  @Override
   public ContextManagerIF getContextManager() {
     return contextManager;
   }
  
+  @Override
   public void registerFunction(FunctionIF function) {    
     functions.put(function.getName(), function);
   }
 
+  @Override
   public void registerFunction(String name, FunctionIF function) {
     functions.put(name, function);
   }
 
+  @Override
   public FunctionIF getFunction(String name) {
     return (FunctionIF) functions.get(name);
   }
@@ -393,15 +399,18 @@ public class ContextTag extends TagSupport
     return getNavigatorApplication().getTopicMapRepository();
   }
 
+  @Override
   public NavigatorApplicationIF getNavigatorApplication() {
     // Look up the navigator application
     return NavigatorUtils.getNavigatorApplication(pageContext);
   }
 
+  @Override
   public NavigatorConfigurationIF getNavigatorConfiguration() {
     return getNavigatorApplication().getConfiguration();
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return topicmap;
   }
@@ -410,6 +419,7 @@ public class ContextTag extends TagSupport
     return topicmapID;
   }
   
+  @Override
   public QueryProcessorIF getQueryProcessor() {
     if (queryProcessor == null)
       // construct new query processor instance
@@ -418,10 +428,12 @@ public class ContextTag extends TagSupport
     return queryProcessor;
   }
   
+  @Override
   public PageContext getPageContext() {
     return pageContext;
   }
   
+  @Override
   public DeclarationContextIF getDeclarationContext() {
     return declarationContext;
   }
@@ -434,10 +446,12 @@ public class ContextTag extends TagSupport
   // TryCatchFinally implementation
   // -----------------------------------------------------------------
 
+  @Override
   public void doCatch(Throwable t) throws Throwable {
     throw t;
   }
 
+  @Override
   public void doFinally() {
     // NOTE: no need to rollback transaction because it is read-only
     if (navApp != null && topicmap != null) {

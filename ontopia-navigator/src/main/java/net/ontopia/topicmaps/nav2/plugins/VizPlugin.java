@@ -34,6 +34,7 @@ public class VizPlugin extends DefaultPlugin {
   private Set blocked;
   private String message;
   
+  @Override
   public void init() {
     message = getParameter("message");
     if (message == null)
@@ -50,6 +51,7 @@ public class VizPlugin extends DefaultPlugin {
       blocked.add(ids[ix].trim());
   }
   
+  @Override
   public String generateHTML(ContextTag context) {
     if (context == null)
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");

@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
  */
 public class ReloadPlugin extends DefaultPlugin {
   
+  @Override
   public String generateHTML(ContextTag context) {
     if (context == null)
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");

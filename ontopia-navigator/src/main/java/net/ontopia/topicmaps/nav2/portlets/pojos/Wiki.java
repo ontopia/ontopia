@@ -201,6 +201,7 @@ public class Wiki {
   }
 
   static class Linker implements StringifierIF {
+    @Override
     public String toString(Object o) {
       TopicIF topic = (TopicIF) o;
       return "<a href=\"topic.jsp?id=" + getId(topic) +

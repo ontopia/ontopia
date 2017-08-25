@@ -51,6 +51,7 @@ public class InsertTag extends TagSupport {
   private String template;
   private Stack stack;
 
+  @Override
   public int doStartTag() throws JspException {
     stack = getStack();
     stack.push(new HashMap());
@@ -58,6 +59,7 @@ public class InsertTag extends TagSupport {
     return EVAL_BODY_INCLUDE;
   }
   
+  @Override
   public int doEndTag() throws JspException {
     try {
       if (log.isDebugEnabled())

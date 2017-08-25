@@ -36,6 +36,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class IndicatorsTag extends BaseValueProducingAndAcceptingTag {
 
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all subject indicators of all topics in collection
     List subjectIndicators = new ArrayList();

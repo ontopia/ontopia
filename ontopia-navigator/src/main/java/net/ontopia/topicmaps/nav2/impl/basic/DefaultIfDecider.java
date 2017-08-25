@@ -84,6 +84,7 @@ public class DefaultIfDecider implements NavigatorDeciderIF {
   // Implementation of NavigatorDeciderIF
   // -----------------------------------------------------------
 
+  @Override
   public boolean ok(NavigatorPageIF contextTag, Object obj) {
     if (obj == null)
       return false;

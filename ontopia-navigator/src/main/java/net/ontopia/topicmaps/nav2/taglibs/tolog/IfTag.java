@@ -48,6 +48,7 @@ public class IfTag extends QueryExecutingTag {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     if (contextTag == null)
@@ -94,6 +95,7 @@ public class IfTag extends QueryExecutingTag {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     // establish old lexical scope, back to outside of the loop
     contextManager.popScope();
@@ -104,6 +106,7 @@ public class IfTag extends QueryExecutingTag {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     super.release();
     

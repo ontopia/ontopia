@@ -36,6 +36,7 @@ public class MenuTag extends TagSupport {
   private String var;
   private String topic;
 
+  @Override
   public int doStartTag() throws JspTagException {
     TopicIF topic = (TopicIF) getVariableValue(this.topic);
     if (topic == null)
@@ -55,6 +56,7 @@ public class MenuTag extends TagSupport {
 //     return EVAL_PAGE;
 //   }
 
+  @Override
   public void release() {
     // no-op
   }

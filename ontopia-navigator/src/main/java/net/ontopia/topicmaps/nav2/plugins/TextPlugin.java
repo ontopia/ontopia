@@ -27,6 +27,7 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
  */
 public class TextPlugin extends DefaultPlugin {
 
+  @Override
   public String generateHTML(ContextTag context) {
     return getParameter("text");
   }

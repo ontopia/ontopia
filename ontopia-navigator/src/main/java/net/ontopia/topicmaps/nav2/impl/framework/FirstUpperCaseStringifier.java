@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
  */
 public class FirstUpperCaseStringifier implements StringifierIF {
 
+  @Override
   public String toString(Object obj) {
     if (obj instanceof TopicNameIF) {
       TopicNameIF basename = (TopicNameIF) obj;

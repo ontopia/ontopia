@@ -36,6 +36,7 @@ public class ComparatorNameStringifier implements StringifierIF<NameIF> {
    * @param name the name object to use; TopicNameIF or VariantNameIF
    * @return string containing name value or "~~~~~" if name not set
    */
+  @Override
   public String toString(NameIF name) {
     if (name == null)
       return "~~~~~";

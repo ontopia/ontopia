@@ -37,6 +37,7 @@ public class TreeTag extends TagSupport {
   private String nodepage;
   private String imageurl;
 
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     TopicMapIF tm = contextTag.getTopicMap();
@@ -55,6 +56,7 @@ public class TreeTag extends TagSupport {
     return SKIP_BODY;
   }
 
+  @Override
   public void release() {
     // no-op
   }

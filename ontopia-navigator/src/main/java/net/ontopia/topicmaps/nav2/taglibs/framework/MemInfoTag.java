@@ -52,6 +52,7 @@ public final class MemInfoTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     log.debug( "/// " + name + ": " + generateStartMemInfo() );
     return EVAL_BODY_INCLUDE;
@@ -60,6 +61,7 @@ public final class MemInfoTag extends TagSupport {
   /**
    * Process the end tag for this instance.
    */
+  @Override
   public int doEndTag() throws JspTagException {
     log.debug( "\\\\\\ " + name + ": " + generateEndMemInfo() );
     return EVAL_PAGE;

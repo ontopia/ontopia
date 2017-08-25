@@ -44,6 +44,7 @@ public class DeciderIFWrapper implements NavigatorDeciderIF {
   // Implementation of NavigatorDeciderIF
   // -----------------------------------------------------------
 
+  @Override
   public boolean ok(NavigatorPageIF contextTag, Object obj) {
     return decider.ok(obj);
   }

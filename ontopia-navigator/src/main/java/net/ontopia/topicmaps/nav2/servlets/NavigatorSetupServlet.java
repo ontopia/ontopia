@@ -59,6 +59,7 @@ public class NavigatorSetupServlet extends HttpServlet {
    *
    * @exception ServletException if we cannot configure ourselves correctly
    */
+  @Override
   public void init() throws ServletException {
     // Process our servlet initialization parameters
     String value;
@@ -79,6 +80,7 @@ public class NavigatorSetupServlet extends HttpServlet {
    * Gracefully shut down this navigator setup servlet, releasing any resources
    * that were allocated at initialization.
    */
+  @Override
   public void destroy() {
     if (debug >= 1)
       log("Finalizing navigator setup servlet.");

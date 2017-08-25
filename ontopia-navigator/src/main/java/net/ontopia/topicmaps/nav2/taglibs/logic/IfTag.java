@@ -71,6 +71,7 @@ public class IfTag extends TagSupport
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
 
     this.contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -115,6 +116,7 @@ public class IfTag extends TagSupport
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     // establish old lexical scope, back to outside of the condition
     contextTag.getContextManager().popScope();
@@ -137,6 +139,7 @@ public class IfTag extends TagSupport
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!
@@ -156,6 +159,7 @@ public class IfTag extends TagSupport
   // this probably isn't needed any more. keeping it so that we can
   // continue to consider (the really rather meaningless)
   // ValueProducingTagIF as a marker interface.  
+  @Override
   public Collection process(Collection input) {
     return input;
   }
@@ -169,6 +173,7 @@ public class IfTag extends TagSupport
   // collection from our descendants, and we don't know how to combine
   // them, since we don't know our parent tag. the solution is to keep
   // them all, and then pass them upwards one by one.
+  @Override
   public void accept(Collection inputCollection) {
     inputs.add(inputCollection);
   }

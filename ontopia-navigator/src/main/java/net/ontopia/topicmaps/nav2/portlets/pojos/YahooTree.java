@@ -104,6 +104,7 @@ public class YahooTree {
       this.qw = qw;
     }
     
+    @Override
     public Object mapRow(QueryResultIF result, int row) {
       return new TreeNode((TopicIF) result.getValue(0), qw);
     }

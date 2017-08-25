@@ -214,6 +214,7 @@ public final class Stringificator {
         return value;
     }
     
+    @Override
     public String toString(Object object) {
       // 0: verify that we have a topic at all
       if (object == null)

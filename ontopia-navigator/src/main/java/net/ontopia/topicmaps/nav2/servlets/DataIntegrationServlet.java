@@ -62,6 +62,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class DataIntegrationServlet extends HttpServlet {
 
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
@@ -116,6 +117,7 @@ public class DataIntegrationServlet extends HttpServlet {
       if ("updated".equals(action) || "created".equals(action)) {
 
         DeciderIF tfilter = new DeciderIF() {
+          @Override
             public boolean ok(Object o) {
               return true;
             }

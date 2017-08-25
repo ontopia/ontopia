@@ -51,6 +51,7 @@ public class GetContextTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     
     // get Context Tag and app-wide config
@@ -98,6 +99,7 @@ public class GetContextTag extends TagSupport {
   /**
    * Overrides the parent method.
    */
+  @Override
   public void release() {
     // does nothing
   }

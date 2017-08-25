@@ -37,6 +37,7 @@ public class StringTag extends BodyTagSupport {
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
 
     // retrieve parent tag which accepts the result of this operation
@@ -60,6 +61,7 @@ public class StringTag extends BodyTagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

@@ -48,6 +48,7 @@ public class AssociatedTag extends BaseScopedTag {
   protected String totopic;
   protected boolean produceTopics = true;
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     if (topics == null || topics.isEmpty())
       return Collections.EMPTY_SET;

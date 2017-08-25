@@ -53,14 +53,17 @@ public class RequestAttributeStoreServletFilter implements Filter {
   
   protected FilterConfig filterConfig;
   
+  @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     this.filterConfig = filterConfig;
   }
   
+  @Override
   public void destroy() {
     this.filterConfig = null;
   }
   
+  @Override
   public void doFilter(ServletRequest request, ServletResponse response,
                        FilterChain chain) throws IOException,
                                                  ServletException {

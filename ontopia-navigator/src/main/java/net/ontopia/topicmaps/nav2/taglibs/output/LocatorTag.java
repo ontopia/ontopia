@@ -48,6 +48,7 @@ public class LocatorTag extends BaseOutputProducingTag
   private boolean relativeToTopicmap = false;
   private String strifyCN;
   
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 
@@ -116,6 +117,7 @@ public class LocatorTag extends BaseOutputProducingTag
 
   // --- StringifierIF interface
 
+  @Override
   public String toString(Object object) {
     if (object != null && !(object instanceof LocatorIF))
       throw new OntopiaRuntimeException("Stringifiying " + object + " which is"

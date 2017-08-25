@@ -91,6 +91,7 @@ public interface JSPTreeNodeIF {
   /**
    * A string representation of this JSPTreeNode.
    */
+  @Override
   String toString();
 
   /**

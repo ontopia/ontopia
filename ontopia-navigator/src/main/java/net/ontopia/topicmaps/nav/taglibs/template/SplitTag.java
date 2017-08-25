@@ -33,6 +33,7 @@ public class SplitTag extends TagSupport {
   public static final String TOKEN =
     "^|~---------net.ontopia.topicmaps.nav.taglibs.template.SplitTag--------~|^";
   
+  @Override
   public int doStartTag() throws JspException {
     PutTag parent = (PutTag) findAncestorWithClass(this, PutTag.class);
     if (parent == null)
@@ -47,6 +48,7 @@ public class SplitTag extends TagSupport {
     return SKIP_BODY;
   }
 
+  @Override
   public int doEndTag() {
     return EVAL_PAGE;
   }

@@ -55,6 +55,7 @@ public class LocatorComparator implements Comparator<LocatorIF> {
   /**
    * Compares two LocatorIFs
    */
+  @Override
   public int compare(LocatorIF l1, LocatorIF l2) {
     return tc.compare(l1.getAddress(), l2.getAddress());
   }

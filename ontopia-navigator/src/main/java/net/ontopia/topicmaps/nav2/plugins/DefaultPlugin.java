@@ -63,10 +63,12 @@ public class DefaultPlugin implements PluginIF {
   // methods for implementing the PluginIF interface
   // ----------------------------------------------------------
   
+  @Override
   public void init() {
     // no-op
   }
 
+  @Override
   public String generateHTML(ContextTag context) {
     if (context == null)
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");
@@ -115,82 +117,102 @@ public class DefaultPlugin implements PluginIF {
   // Accessor methods
   // ----------------------------------------------------------
   
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public void resetGroups() {
     groups = new ArrayList();
   }
   
+  @Override
   public List getGroups() {
     return groups;
   }
 
+  @Override
   public void addGroup(String groupId) {
     groups.add(groupId);
   }
   
+  @Override
   public void setGroups(List groups) {
     this.groups = groups;
   }
   
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
 
+  @Override
   public String getDescription() {
     return description;
   }
 
+  @Override
   public void setDescription(String description) {
     this.description = description;
   }
 
+  @Override
   public String getURI() {
     return uri;
   }
 
+  @Override
   public void setURI(String uri) {
     this.uri = uri;
   }
 
+  @Override
   public String getTarget() {
     return target;
   }
 
+  @Override
   public void setTarget(String target) {
     this.target = target;
   }
 
+  @Override
   public int getState() {
     return state;
   }
 
+  @Override
   public void setState(int state) {
     this.state = state;
   }
   
+  @Override
   public String getParameter(String name) {
     return (String)params.get(name);
   }
   
+  @Override
   public void setParameter(String name, String value) {
     params.put(name, value);
   }
 
+  @Override
   public String getPluginDirectory() {
     return directory;
   }
   
+  @Override
   public void setPluginDirectory(String path) {
     directory = path;
   }
@@ -200,12 +222,14 @@ public class DefaultPlugin implements PluginIF {
   // extraordinary useful methods
   // ----------------------------------------------------------
 
+  @Override
   public int hashCode() {
     StringBuilder sb = new StringBuilder(32);
     sb.append(id).append(title).append(uri);
     return sb.toString().hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof PluginIF))
       return false;
@@ -215,6 +239,7 @@ public class DefaultPlugin implements PluginIF {
             && compObj.getURI().equals(uri));
   }
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     // put out FQCN of plugin: this.getClass().getName()

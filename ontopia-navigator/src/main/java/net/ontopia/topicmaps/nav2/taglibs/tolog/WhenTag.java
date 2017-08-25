@@ -42,6 +42,7 @@ public class WhenTag extends IfTag {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     parentChooser = (ChooseTag) findAncestorWithClass(this, ChooseTag.class);
     if (parentChooser == null)
@@ -72,6 +73,7 @@ public class WhenTag extends IfTag {
   /** 
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     parentChooser.setFoundMatchingWhen();
     
@@ -81,6 +83,7 @@ public class WhenTag extends IfTag {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // reset members
     parentChooser = null;

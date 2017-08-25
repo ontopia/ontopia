@@ -61,6 +61,7 @@ public class OccurrenceComparator implements Comparator<OccurrenceIF> {
   /**
    * Compares two OccurrenceIFs.
    */
+  @Override
   public int compare(OccurrenceIF oc1, OccurrenceIF oc2) {
     int cmp;
     // first compare by type

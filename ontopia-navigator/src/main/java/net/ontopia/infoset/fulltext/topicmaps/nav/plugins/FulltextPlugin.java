@@ -33,6 +33,7 @@ import net.ontopia.utils.OntopiaUnsupportedException;
 
 public class FulltextPlugin extends DefaultPlugin {
 
+  @Override
   public String generateHTML(ContextTag context) {
     if (context == null)
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");

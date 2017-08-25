@@ -33,6 +33,7 @@ public class TopicMapReferenceComparator implements Comparator<TopicMapReference
   /**
    * INTERNAL: Compares two TopicMapReferenceIFs.
    */
+  @Override
   public int compare(TopicMapReferenceIF tmr1, TopicMapReferenceIF tmr2) {
     String title1 = tmr1.getTitle();
     String title2 = tmr2.getTitle();

@@ -49,6 +49,7 @@ public class PropertyTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // get logic context tag we are nested in
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -79,6 +80,7 @@ public class PropertyTag extends TagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

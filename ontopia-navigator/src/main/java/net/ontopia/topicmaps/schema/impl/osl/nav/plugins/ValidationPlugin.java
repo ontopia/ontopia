@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
 public class ValidationPlugin extends DefaultPlugin {
 
+  @Override
   public String generateHTML(ContextTag context) {
 
     ServletContext ctxt = context.getPageContext().getServletContext();

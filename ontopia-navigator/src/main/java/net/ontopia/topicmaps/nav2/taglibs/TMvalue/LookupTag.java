@@ -66,6 +66,7 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
   private String lookupAs;
   private boolean expect = false; // do not expect result by default
   
+  @Override
   public Collection process(Collection values) throws JspTagException {
     
     // check first if unique attribute settings

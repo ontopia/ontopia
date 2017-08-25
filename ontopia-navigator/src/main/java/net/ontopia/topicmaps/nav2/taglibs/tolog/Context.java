@@ -76,6 +76,7 @@ public class Context {
       return params;
     }
 
+    @Override
     public int compareTo(Object o) {
       Reference oref = (Reference)o;
       String key1 = (ref.getTitle() == null ? ref.getId() : ref.getTitle());
@@ -85,54 +86,67 @@ public class Context {
 
     // -- Map implementation
 
+    @Override
     public Object get(Object key) {
       return getParams().get(key);
     }
     
+    @Override
     public boolean containsKey(Object key) {
       return getParams().containsKey(key);
     }
 
+    @Override
     public Object put(Object key, Object value) {
       return getParams().put(key, value);
     }
   
+    @Override
     public void clear() { 
       getParams().clear();
     }
   
+    @Override
     public boolean containsValue(Object value) { 
       return getParams().containsValue(value);
     }
   
+    @Override
     public Set entrySet() { 
       return getParams().entrySet();    
     }
   
+    @Override
     public int hashCode() { 
       return ref.hashCode();
     }
   
+    @Override
     public boolean isEmpty() { 
       return getParams().isEmpty();
     }
   
+    @Override
     public Set keySet() { 
       return getParams().keySet();
     }
   
+    @Override
     public void putAll(Map t) {
       getParams().putAll(t);
     }
 
+    @Override
     public Object remove(Object key) {
       return getParams().remove(key);
     }
   
+    @Override
     public int size() { 
       return getParams().size();
     }
   
+    @Override
     public Collection values() { 
       return getParams().values();
     }

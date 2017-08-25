@@ -45,6 +45,7 @@ public class SplitterTag extends BaseValueProducingAndAcceptingTag {
   private static final Logger log = LoggerFactory
     .getLogger(SplitterTag.class.getName());
 
+  @Override
   public Collection process(Collection names) throws JspTagException {
     
     if (names == null || names.isEmpty())

@@ -55,6 +55,7 @@ public class ModuleReader implements ModuleReaderIF {
 
   // Implementation of ModuleReaderIF
   
+  @Override
   public Map read(InputStream source) throws IOException, SAXException {
     logger.debug("Start to read in module.");
     parser = getXMLParser();

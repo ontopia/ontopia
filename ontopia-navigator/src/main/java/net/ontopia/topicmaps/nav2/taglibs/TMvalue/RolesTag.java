@@ -48,6 +48,7 @@ public class RolesTag extends BaseScopedTag {
   private String cardinality = null;
   private String varRemoveColl = null;
   
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     // find all base names of all tmObjects in collection
     // avoid duplicate type entries therefore use a HashSet

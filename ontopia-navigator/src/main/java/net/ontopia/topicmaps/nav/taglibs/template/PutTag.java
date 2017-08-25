@@ -54,6 +54,7 @@ public class PutTag extends AbstractTemplateTag {
   private String content;
   private boolean direct;
 
+  @Override
   public int doStartTag() throws JspException {
     if (content != null) {
       if (log.isDebugEnabled())
@@ -69,6 +70,7 @@ public class PutTag extends AbstractTemplateTag {
     }
   }
 
+  @Override
   public int doAfterBody() throws JspException {
     BodyContent bodyContent = getBodyContent();
     String content = bodyContent.getString();
@@ -83,6 +85,7 @@ public class PutTag extends AbstractTemplateTag {
     return SKIP_BODY;
   }
 
+  @Override
   public int doEndTag() {
     resetMembers();
     return EVAL_PAGE;

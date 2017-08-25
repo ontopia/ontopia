@@ -75,6 +75,7 @@ public class PluginContentHandler extends SAXTracker {
   // override methods from SAXTracker
   // --------------------------------------------------------------
   
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) throws SAXException {
     super.startElement(nsuri, lname, qname, attrs);
@@ -108,6 +109,7 @@ public class PluginContentHandler extends SAXTracker {
     }
   }
   
+  @Override
   public void endElement(String nsuri, String lname, String qname) throws SAXException {
     super.endElement(nsuri, lname, qname);
 

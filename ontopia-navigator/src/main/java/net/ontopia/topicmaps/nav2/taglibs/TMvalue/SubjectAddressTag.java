@@ -38,6 +38,7 @@ import net.ontopia.utils.CollectionUtils;
  */
 public class SubjectAddressTag extends BaseValueProducingAndAcceptingTag {
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all subject addresses of all topics in collection
     List subjectAddresses = new ArrayList();

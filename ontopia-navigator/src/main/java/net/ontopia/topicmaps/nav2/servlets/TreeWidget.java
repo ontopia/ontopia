@@ -530,6 +530,7 @@ public class TreeWidget {
   
   class UniversalSet extends HashSet {
 
+    @Override
     public boolean contains(Object object) {
       return true;
     }

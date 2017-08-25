@@ -43,6 +43,7 @@ public class NamesTag extends BaseScopedTag {
   // tag attributes
   public boolean uniqueValues = false;
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     if (topics == null)
       return Collections.EMPTY_SET;

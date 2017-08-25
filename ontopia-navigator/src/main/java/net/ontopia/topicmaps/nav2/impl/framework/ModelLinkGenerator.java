@@ -51,6 +51,7 @@ public class ModelLinkGenerator implements LinkGeneratorIF {
   public static final String LINK_MODEL_KEY = "%model%";
 
   
+  @Override
   public String generate(ContextTag contextTag, TMObjectIF tmObj,
                          String topicmapId, String template)
     throws NavigatorRuntimeException {
@@ -75,6 +76,7 @@ public class ModelLinkGenerator implements LinkGeneratorIF {
     return link;
   }
 
+  @Override
   public String generate(ContextTag contextTag, TopicMapReferenceIF tmRefObj,
                          String template) 
     throws NavigatorRuntimeException {

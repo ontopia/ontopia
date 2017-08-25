@@ -43,6 +43,7 @@ public class AssociationIDComparator implements Comparator<AssociationIF> {
   /**
    * Compares two AssociationIFs.
    */
+  @Override
   public int compare(AssociationIF a1, AssociationIF a2) {
     return ac.compare(a1.getObjectId(), a2.getObjectId());
   }

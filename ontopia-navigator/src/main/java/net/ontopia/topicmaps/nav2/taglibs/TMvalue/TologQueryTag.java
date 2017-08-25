@@ -62,6 +62,7 @@ public class TologQueryTag extends BaseValueProducingTag {
   private String implementation;
   private String rulesfile;
   
+  @Override
   public Collection process(Collection tmObjects) throws JspException {
     if (query == null)
       throw new NavigatorCompileException("TologQueryTag: Ambiguous attribute " +
@@ -165,6 +166,7 @@ public class TologQueryTag extends BaseValueProducingTag {
       this.ctxtMgr = ctxtMgr;
     }
 
+    @Override
     public Object get(Object key) {
       Collection coll = ctxtMgr.getValue((String) key);
       if (coll.isEmpty())
@@ -173,6 +175,7 @@ public class TologQueryTag extends BaseValueProducingTag {
       return CollectionUtils.getFirstElement(coll);
     }
 
+    @Override
     public boolean containsKey(Object key) {
       return ctxtMgr.getValue((String)key) != null;
     }

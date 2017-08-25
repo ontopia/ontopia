@@ -47,6 +47,7 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
   private String basenameScopeVarName;
   private String variantScopeVarName;
 
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     if (topics == null || topics.isEmpty())
       return Collections.EMPTY_SET;

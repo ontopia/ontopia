@@ -51,6 +51,7 @@ public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
   // tag attributes
   private Integer levelNumber = null;
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all superclasses of all topics in collection
     if (topics == null || topics.isEmpty())

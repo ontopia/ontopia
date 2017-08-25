@@ -52,6 +52,7 @@ public class OccTypeComparator extends TopicComparator {
     }
   }
 
+  @Override
   public int compare(TopicIF o1, TopicIF o2) {
     if (o1 == null)
       return 1;

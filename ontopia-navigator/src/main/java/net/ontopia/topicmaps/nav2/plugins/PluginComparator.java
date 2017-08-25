@@ -33,6 +33,7 @@ public class PluginComparator implements Comparator {
   /**
    * INTERNAL: Compares two PluginIF objects.
    */
+  @Override
   public int compare(Object o1, Object o2) {
     String value1, value2;
 

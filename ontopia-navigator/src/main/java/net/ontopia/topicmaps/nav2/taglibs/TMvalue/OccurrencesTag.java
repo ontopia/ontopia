@@ -51,6 +51,7 @@ public class OccurrencesTag extends BaseScopedTag {
   // tag attributes
   private int type = TYPE_ALL;
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all occurrences of all topics in collection
     if (topics == null)

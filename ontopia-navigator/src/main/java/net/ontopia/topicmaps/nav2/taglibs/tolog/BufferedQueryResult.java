@@ -53,47 +53,57 @@ public class BufferedQueryResult
     inBuffer = true;
   }
   
+  @Override
   public void close() {
     // no-op
   }
   
+  @Override
   public String getColumnName(int ix) {
     return queryResult.getColumnName(ix);
   }
   
+  @Override
   public String[] getColumnNames() {
     return queryResult.getColumnNames();
   }
   
+  @Override
   public int getIndex(String colname) {
     return queryResult.getIndex(colname);
   }
   
+  @Override
   public Object getValue(int ix) {
     if (inBuffer)
       return bufferedRow[ix];
     return queryResult.getValue(ix);
   }
   
+  @Override
   public Object getValue(String colname) {
     return getValue(getIndex(colname));
   }
   
+  @Override
   public Object[] getValues() {
     if (inBuffer)
       return bufferedRow;
     return queryResult.getValues();
   }
   
+  @Override
   public Object[] getValues(Object values[]) {
     values = getValues();
     return values;
   }
   
+  @Override
   public int getWidth() {
     return queryResult.getWidth();
   }
   
+  @Override
   public boolean next() {
     // Get all results from buffer (until the end).
     // Then get results from queryResult, adding them to the buffer.
@@ -115,10 +125,12 @@ public class BufferedQueryResult
     return retVal;
   }
   
+  @Override
   public String getQuery() {
     return query;
   }
   
+  @Override
   public void restart() {
     bufferIt = buffer.iterator();
     bufferedRow = null;

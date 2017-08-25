@@ -85,10 +85,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     properties.put(name, value);
   }
 
+  @Override
   public String getProperty(String name) {
     return getProperty(name, "");
   }
   
+  @Override
   public String getProperty(String name, String defaultValue) {
     String value = (String)properties.get(name);
     if (value == null)
@@ -97,6 +99,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       return value;
   }
 
+  @Override
   public int getProperty(String name, int defaultValue) {
     try {
       String value = (String)properties.get(name);
@@ -109,6 +112,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     }
   }
 
+  @Override
   public Map getProperties() {
     return this.properties;
   }
@@ -126,6 +130,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     classmap.put(shortcut, fullClassName);
   }
 
+  @Override
   public String getClass(String shortcut) {
     if (classmap.get(shortcut) != null)
       return (String) classmap.get(shortcut);
@@ -133,6 +138,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       return "";
   }
   
+  @Override
   public Map getClassmap() {
     return this.classmap;
   }
@@ -153,14 +159,17 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       autoloads.add(topicmapId);
   }
 
+  @Override
   public boolean isAutoloadTopicMap(String topicmapId) {
     return autoloads.contains(topicmapId);
   }
 
+  @Override
   public boolean isAutoloadAllTopicMaps() {
     return isAutoloadAll;
   }
   
+  @Override
   public Collection getAutoloadTopicMaps() {
     return this.autoloads;
   }
@@ -174,6 +183,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   // MVS related methods
   // ------------------------------------------------
 
+  @Override
   public MVSConfig getMVSConfig() {
     return mvsConfig;
   }
@@ -191,10 +201,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       mvsConfig.setModel(name);
   }
 
+  @Override
   public Collection getModels() {
     return mvsConfig.getModels();
   }
   
+  @Override
   public String getDefaultModel() {
     return mvsConfig.getModel();
   }
@@ -207,10 +219,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       mvsConfig.setView(name);
   }
 
+  @Override
   public Collection getViews() {
     return mvsConfig.getViews();
   }
   
+  @Override
   public String getDefaultView() {
     return mvsConfig.getView();
   }
@@ -223,10 +237,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       mvsConfig.setSkin(name);
   }
 
+  @Override
   public Collection getSkins() {
     return mvsConfig.getSkins();
   }
   
+  @Override
   public String getDefaultSkin() {
     return mvsConfig.getSkin();
   }
@@ -236,14 +252,17 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   // plugins related methods
   // ------------------------------------------------
 
+  @Override
   public void addPlugin(PluginIF aPlugin) {
     plugins.put(aPlugin.getId(), aPlugin);
   }
 
+  @Override
   public PluginIF getPlugin(String id) {
     return (PluginIF) plugins.get(id);
   }
 
+  @Override
   public Collection getPlugins(String groupId) {
     if (groupId == null)
       groupId = "";
@@ -293,10 +312,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     return orderedPlugins;
   }
   
+  @Override
   public Collection getPlugins() {
     return getPlugins(null);
   }
 
+  @Override
   public Collection getOrderedPlugins() {
     List orderedPlugins = new ArrayList(plugins.values());
     // sort the titles alphabetically
@@ -305,6 +326,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     return orderedPlugins;
   }
   
+  @Override
   public List getPluginGroups() {
     // gather all different groups
     Set groups = new HashSet();
@@ -321,6 +343,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   }
   
   // ------------------------------------------------
+  @Override
   public String toString() {
     StringBuilder strBuf = new StringBuilder();
     strBuf.append("NavigatorConfiguration: [")

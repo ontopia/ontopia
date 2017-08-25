@@ -56,6 +56,7 @@ public class LinkTag extends BaseOutputProducingTag {
     super(false, true);
   }
 
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 

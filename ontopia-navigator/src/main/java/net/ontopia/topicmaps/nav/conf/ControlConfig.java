@@ -66,6 +66,7 @@ public class ControlConfig implements ControlConfigIF {
    * @param view    a string representing the view choice
    * @param skin    a string representing the skin choice   
    */
+  @Override
   public void update(String model, String view, String skin) {
     if (model != null && !model.isEmpty()) this.model = model;
     if (view  != null && !view.isEmpty())  this.view = view;
@@ -116,14 +117,22 @@ public class ControlConfig implements ControlConfigIF {
 
   
   // --- get methods
+  @Override
   public String getModelPath() { return modelPath; }
+  @Override
   public String getViewPath() { return viewPath; }
+  @Override
   public String getSkinPath() { return skinPath; }
+  @Override
   public String getBehaviour() { return behaviour; }
+  @Override
   public String getContentType() { return contentType; }  
 
+  @Override
   public String getModel() { return model; }
+  @Override
   public String getView() { return view; }
+  @Override
   public String getSkin() { return skin; }
 
 }

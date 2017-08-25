@@ -53,6 +53,7 @@ public class CallTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspException {
     // get Context Tag
     contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -67,6 +68,7 @@ public class CallTag extends TagSupport {
   /**
    * Process the end tag for this instance.
    */
+  @Override
   public int doEndTag() throws JspException {
     // retrieve function object from central managed pool
     FunctionIF function = contextTag.getFunction(functionName);
@@ -115,6 +117,7 @@ public class CallTag extends TagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

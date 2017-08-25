@@ -71,6 +71,7 @@ public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
    * @exception throws OntopiaRuntimeException if the given topic is
    * not a TopicIF object.
    */
+  @Override
   public NameIF grab(TopicIF mytopic) {
     // --- pick out best basename
     Collection<TopicNameIF> basenames = mytopic.getTopicNames();

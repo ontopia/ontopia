@@ -35,6 +35,7 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
  */
 public class TopicMapLinkPlugin extends DefaultPlugin {
   
+  @Override
   public String generateHTML(ContextTag contextTag) {
     if (contextTag == null)
       throw new OntopiaRuntimeException("Plugin must have a parent tolog:context tag.");

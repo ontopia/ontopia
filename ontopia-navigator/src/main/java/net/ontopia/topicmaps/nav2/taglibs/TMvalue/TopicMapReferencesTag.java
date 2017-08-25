@@ -42,6 +42,7 @@ public class TopicMapReferencesTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // retrieve parent tag which accepts the produced collection by this tag 
     ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)

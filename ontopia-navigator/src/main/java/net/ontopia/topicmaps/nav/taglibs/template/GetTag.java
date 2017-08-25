@@ -66,6 +66,7 @@ public class GetTag extends AbstractTemplateTag {
     this.fallback = fallback;
   }
 
+  @Override
   public int doStartTag() throws JspException {
     if (log.isDebugEnabled())
       log.debug("doStartTag, name: " + name);
@@ -93,6 +94,7 @@ public class GetTag extends AbstractTemplateTag {
       return SKIP_BODY;
   }
 
+  @Override
   public int doEndTag() throws JspException {
     if (log.isDebugEnabled())
       log.debug("doEndTag, name: " + name);

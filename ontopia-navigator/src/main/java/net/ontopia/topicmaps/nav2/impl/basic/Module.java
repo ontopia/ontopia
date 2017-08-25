@@ -70,27 +70,33 @@ public class Module implements ModuleIF {
   
   // Implementation of ModuleIF
   
+  @Override
   public URL getURL() {
     return location;
   }
   
+  @Override
   public Collection getFunctions() {
     return functions;
   }
 
+  @Override
   public synchronized void addFunction(FunctionIF func) {
     functions.add(func);
   }
 
+  @Override
   public synchronized void clearFunctions() {
       functions.clear();
   }
   
+  @Override
   public boolean hasResourceChanged() {
     // Compare the current modification time with the previous one.
     return (getModificationDate() > resourceLastModReadIn);
   }
 
+  @Override
   public void readIn() throws NavigatorRuntimeException {
     this.clearFunctions();
     Map funcs = null;
@@ -145,6 +151,7 @@ public class Module implements ModuleIF {
     }
   }
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[Module (type: ").append(readerType);

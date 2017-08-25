@@ -47,6 +47,7 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
  */
 public class LocatorTag extends BaseValueProducingAndAcceptingTag {
   
+  @Override
   public Collection process(Collection values) throws JspTagException {
     // find the locators of the occurrences and variant names [and uri-as-string]
     if (values == null || values.isEmpty()) {

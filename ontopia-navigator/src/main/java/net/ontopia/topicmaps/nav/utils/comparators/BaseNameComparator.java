@@ -33,6 +33,7 @@ public class BaseNameComparator implements Comparator<TopicNameIF> {
   /**
    * Compares two TopicNameIFs.
    */
+  @Override
   public int compare(TopicNameIF o1, TopicNameIF o2) {
     String value1 = o1.getValue();
     String value2 = o2.getValue();

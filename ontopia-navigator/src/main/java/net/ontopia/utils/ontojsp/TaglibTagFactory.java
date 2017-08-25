@@ -72,6 +72,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
     return (classes.get(tagname) != null);
   }
 
+  @Override
   public TagSupport getTagInstance(String tagname, Map<String, String> attrVals,
                                    TagSupport parentTag)
     throws NavigatorRuntimeException {

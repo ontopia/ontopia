@@ -266,6 +266,7 @@ public class TMRAP {
       this.topicmap = topicmap;
     }
     
+    @Override
     public Object mapRow(QueryResultIF result, int rowno) {
       if (server == null && topicmap == null)
         return new Server((TopicIF) result.getValue(0));

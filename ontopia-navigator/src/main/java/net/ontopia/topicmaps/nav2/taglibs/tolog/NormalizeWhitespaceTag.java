@@ -31,10 +31,12 @@ import javax.servlet.jsp.JspException;
  */
 public class NormalizeWhitespaceTag extends BodyTagSupport {
 
+  @Override
   public int doStartTag() {
     return EVAL_BODY_BUFFERED;
   }
 
+  @Override
   public int doEndTag() throws JspException {
     BodyContent bc = getBodyContent();
     if (bc != null) {
@@ -57,6 +59,7 @@ public class NormalizeWhitespaceTag extends BodyTagSupport {
     private NormalizeWhitespaceWriter(Writer w) {
       this.w = w;
     }
+    @Override
     public void write(char[] cbuf, int off, int len) throws IOException {
       for (int i=0; i < len; i++) {
         char c = cbuf[off+i];
@@ -80,9 +83,11 @@ public class NormalizeWhitespaceTag extends BodyTagSupport {
         }
       }
     }
+    @Override
     public void flush() throws IOException {
       w.flush();
     }
+    @Override
     public void close() throws IOException {
       done();
       w.close();

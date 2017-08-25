@@ -35,6 +35,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class DefaultUniversalLinkGenerator implements LinkGeneratorIF {
 
+  @Override
   public String generate(ContextTag contextTag, TMObjectIF tmObj,
                          String topicmapId, String template) {
     String link = template;
@@ -49,6 +50,7 @@ public class DefaultUniversalLinkGenerator implements LinkGeneratorIF {
     return link;
   }
   
+  @Override
   public String generate(ContextTag contextTag, TopicMapReferenceIF tmRefObj,
                          String template) {
     String link = template;

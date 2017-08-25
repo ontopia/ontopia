@@ -76,6 +76,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
 
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -134,6 +135,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     // put out the evaluated body
     BodyContent body = getBodyContent();
@@ -161,6 +163,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {    
     // establish old lexical scope, back to outside of the loop
     ctxtMgr.popScope();
@@ -176,6 +179,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

@@ -90,6 +90,7 @@ public class TypeDecider implements DeciderIF<TopicIF>, NavigatorDeciderIF<Topic
   // Implementation of NavigatorDeciderIF
   // -----------------------------------------------------------
 
+  @Override
   public boolean ok(NavigatorPageIF contextTag, TopicIF typingTopic) {
     if (typingTopic == null)
       return false;
@@ -108,6 +109,7 @@ public class TypeDecider implements DeciderIF<TopicIF>, NavigatorDeciderIF<Topic
   // Implementation of DeciderIF
   // -----------------------------------------------------------
 
+  @Override
   public boolean ok(TopicIF obj) {
     return ok(null, obj);
   }

@@ -98,12 +98,14 @@ public class User implements UserIF, Serializable {
   }
 
 
+  @Override
   public String getId() {
     return id;
   }
   
   // --- filterContext accessor methods
    
+  @Override
   public UserFilterContextStore getFilterContext() {
     if (filterContext == null)
       filterContext = new UserFilterContextStore();
@@ -112,22 +114,26 @@ public class User implements UserIF, Serializable {
 
   // -- history
   
+  @Override
   public HistoryMap getHistory() {
     if (history == null)
       history = new HistoryMap();
     return history;
   }
 
+  @Override
   public void setHistory(HistoryMap history) {
     this.history = history;
   }
 
   // -- logs
   
+  @Override
   public Logger getLogger() {
     throw new OntopiaRuntimeException("This method has been disabled. Please contact <support@ontopia.net> if you were using it.");
   }
   
+  @Override
   public List getLogMessages() {
     synchronized (this) {
       if (log == null)
@@ -136,6 +142,7 @@ public class User implements UserIF, Serializable {
     }
   }
 
+  @Override
   public void addLogMessage(String message) {
     synchronized (this) {
       if (log == null)
@@ -144,6 +151,7 @@ public class User implements UserIF, Serializable {
     }
   }
 
+  @Override
   public void clearLog() {
     synchronized (this) {
       if (log == null)
@@ -154,6 +162,7 @@ public class User implements UserIF, Serializable {
   
   // -- working bundles
   
+  @Override
   public synchronized void addWorkingBundle(String bundle_id, Object object) {
     removeOldWorkingBundles(bundle_id);
     if (timeStamps == null)
@@ -164,6 +173,7 @@ public class User implements UserIF, Serializable {
     workingBundles.put(bundle_id, object);
   }
   
+  @Override
   public synchronized Object getWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
     if (bundle_id == null) 
@@ -173,6 +183,7 @@ public class User implements UserIF, Serializable {
     return workingBundles.get(bundle_id);
   }
 
+  @Override
   public synchronized void removeWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
     if (workingBundles == null)
@@ -228,30 +239,36 @@ public class User implements UserIF, Serializable {
 
   // --- Model methods
   
+  @Override
   public void setModel(String model) {
     this.model = model;
   }
   
+  @Override
   public String getModel() {
     return model;
   }
 
   // --- View methods
   
+  @Override
   public void setView(String view) {
     this.view = view;
   }
   
+  @Override
   public String getView() {
     return view;
   }
  
   // --- Skin methods
   
+  @Override
   public void setSkin(String skin) {
     this.skin = skin;
   }
   
+  @Override
   public String getSkin() {
     return skin;
   }

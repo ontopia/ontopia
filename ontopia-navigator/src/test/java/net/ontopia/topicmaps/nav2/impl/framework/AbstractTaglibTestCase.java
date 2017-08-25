@@ -48,6 +48,7 @@ public abstract class AbstractTaglibTestCase {
     this.topicmapId = topicmapId;
   }
 
+  @Override
   public String toString() {
     return this.getClass().getName() + "  file: " + jspfile +
       " with topicmap: " + topicmapId;

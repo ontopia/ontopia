@@ -45,6 +45,7 @@ public class TopicMapIdTag extends BaseOutputProducingTag {
   private static final Logger log = LoggerFactory
     .getLogger(TopicMapIdTag.class.getName());
   
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 

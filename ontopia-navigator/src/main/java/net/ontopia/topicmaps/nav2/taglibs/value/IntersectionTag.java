@@ -38,6 +38,7 @@ public class IntersectionTag extends TagSupport implements ValueAcceptingTagIF {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() {
     // evaluate body
     return EVAL_BODY_INCLUDE;
@@ -46,6 +47,7 @@ public class IntersectionTag extends TagSupport implements ValueAcceptingTagIF {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() {
     // retrieve parent tag which accepts the produced collection by this tag 
     ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)
@@ -63,6 +65,7 @@ public class IntersectionTag extends TagSupport implements ValueAcceptingTagIF {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!
@@ -72,6 +75,7 @@ public class IntersectionTag extends TagSupport implements ValueAcceptingTagIF {
   // Implementation of ValueAcceptingTagIF
   // -----------------------------------------------------------------
 
+  @Override
   public void accept(Collection inputCollection) {
     if (resultCollection == null) {
       // setup first collection

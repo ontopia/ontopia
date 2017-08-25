@@ -36,6 +36,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class ReifiedTag extends BaseValueProducingAndAcceptingTag {
 
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // Find all topics which are reified by topic map objects in collection
     if (topics == null)

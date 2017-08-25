@@ -43,6 +43,7 @@ public class SymbolicIdTag extends BaseOutputProducingTag {
   private static final Logger log = LoggerFactory
     .getLogger(ObjectIdTag.class.getName());
   
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
     

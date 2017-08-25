@@ -29,6 +29,7 @@ import javax.servlet.jsp.JspTagException;
  */
 public class CopyTag extends BaseValueProducingTag {
 
+  @Override
   public Collection process(Collection inputCollection)
     throws JspTagException {
 

@@ -288,6 +288,7 @@ public class Menu {
      * Check whether this is a Heading.
      * @return true, since it is a Heading.
      */
+    @Override
     public boolean getIsHeading() {
       return true;
     }
@@ -296,6 +297,7 @@ public class Menu {
      * Check whether this is an Item.
      * @return false, since it is not an Item.
      */
+    @Override
     public boolean getIsItem() {
       return false;
     }
@@ -303,6 +305,7 @@ public class Menu {
     /**
      * The title of this Heading as a String.
      */
+    @Override
     public String getTitle() {
       return (topic != null ? TopicStringifiers.toString(topic) : null);
     }
@@ -310,6 +313,7 @@ public class Menu {
     /**
      * Get the topic of this Heading.
      */
+    @Override
     public TopicIF getTopic() {
       return topic;
     }
@@ -317,6 +321,7 @@ public class Menu {
     /**
      * Get the children of this Heading.
      */
+    @Override
     public List getChildren() {
       return buildChildren(topic);
     }
@@ -324,6 +329,7 @@ public class Menu {
     /**
      * Check if this Heading has children.
      */
+    @Override
     public boolean getHasChildren() {
       return !children.isEmpty();
     }
@@ -331,6 +337,7 @@ public class Menu {
     /**
      * Sets the title of this Heading.
      */
+    @Override
     public void setTitle(String title) {
       MenuUtils.setUniqueTopicName(topic, title);    
     }
@@ -339,6 +346,7 @@ public class Menu {
      * Moves this Heading one step up the list of children on its parent.
      * has no effect if it is already first
      */
+    @Override
      public void moveOneUp() {
       MenuUtils.moveOne(topic, MenuUtils.UP);
     }
@@ -347,6 +355,7 @@ public class Menu {
      * Moves this Heading one step down the list of children on its parent.
      * Has no effect if it is already last.
      */
+    @Override
     public void moveOneDown() {
       MenuUtils.moveOne(topic, MenuUtils.DOWN);
     }
@@ -355,6 +364,7 @@ public class Menu {
      * Create new Heading as child of this Heading
      * @return The heading that was created.
      */
+    @Override
     public Heading createHeading(String title) {
       return MenuUtils.createHeading(topic, title);
     }
@@ -363,6 +373,7 @@ public class Menu {
      * Create new Item as child of this Heading.
      * @return The item that was created.
      */
+    @Override
     public Item createItem(String title) {
       return MenuUtils.createItem(topic, title);
     }
@@ -370,6 +381,7 @@ public class Menu {
     /**
      * Delete this Heading with all its descendants.
      */
+    @Override
     public void delete() {
       // Delete all children.
       Collection children = getChildren();
@@ -405,6 +417,7 @@ public class Menu {
      * Check whether this Item is a Heading.
      * @return false, since it is not a Heading.
      */
+    @Override
     public boolean getIsHeading() {
       return false;
     }
@@ -413,6 +426,7 @@ public class Menu {
      * Check whether this is an Item.
      * @return true, since it is an Item.
      */
+    @Override
     public boolean getIsItem() {
       return true;
     }
@@ -420,6 +434,7 @@ public class Menu {
     /**
      * Get the title of this Item as a String.
      */
+    @Override
     public String getTitle() {
       return (topic != null ? TopicStringifiers.toString(topic) : null);
     }
@@ -434,6 +449,7 @@ public class Menu {
     /**
      * Get the topic of this Item.
      */
+    @Override
     public TopicIF getTopic() {
       return topic;
     }
@@ -456,6 +472,7 @@ public class Menu {
      * Check if this Item has children.
      * $return false, since an Item cannot have any children.
      */
+    @Override
     public boolean getHasChildren() {
       return false;
     }
@@ -470,6 +487,7 @@ public class Menu {
     /**
      * Sets the title of the Item topic.
      */
+    @Override
     public void setTitle(String title) {
       MenuUtils.setUniqueTopicName(topic, title);
     }
@@ -523,6 +541,7 @@ public class Menu {
      * Moves this item one step higher up the list of children on its parent.
      * has no effect if it is already first.
      */
+    @Override
     public void moveOneUp() {
       MenuUtils.moveOne(topic, MenuUtils.UP);
     }
@@ -531,6 +550,7 @@ public class Menu {
      * Moves this item one step further down the list of children on its parent.
      * Has no effect if it is already last.
      */
+    @Override
     public void moveOneDown() {
       MenuUtils.moveOne(topic, MenuUtils.DOWN);
     }
@@ -538,6 +558,7 @@ public class Menu {
     /**
      * Delete this Item.
      */
+    @Override
     public void delete() {
       // Delete the topic, all associations it's part of and all its occurrences
       topic.remove();

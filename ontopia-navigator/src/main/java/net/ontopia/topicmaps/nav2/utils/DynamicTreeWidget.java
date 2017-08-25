@@ -84,6 +84,7 @@ public class DynamicTreeWidget {
   private String dataquery;
   private java.util.Comparator childrenComparator = new java.util.Comparator() {
       private java.util.Comparator c = net.ontopia.topicmaps.utils.TopicComparators.getTopicNameComparator(java.util.Collections.EMPTY_SET);
+      @Override
       public int compare(Object o1, Object o2) {
         return c.compare(((net.ontopia.topicmaps.utils.TopicTreeNode)o1).getTopic(),
                          ((net.ontopia.topicmaps.utils.TopicTreeNode)o2).getTopic());

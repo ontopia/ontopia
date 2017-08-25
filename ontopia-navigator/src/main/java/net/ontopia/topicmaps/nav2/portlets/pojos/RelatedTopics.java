@@ -685,6 +685,7 @@ public class RelatedTopics {
       this.sortkey = sortkey;
     }
 
+    @Override
     public int compareTo(Object o) {
       if (!(o instanceof Heading)) return 0;
       Heading other = (Heading)o;
@@ -811,6 +812,7 @@ public class RelatedTopics {
       this.sortkey = sortkey;
     }
 
+    @Override
     public int compareTo(Object o) {
       if (!(o instanceof Association)) return 0;
       Association other = (Association)o;

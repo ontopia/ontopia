@@ -47,6 +47,7 @@ public abstract class BaseValueProducingTag extends TagSupport
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspException {
     // retrieve parent tag which accepts the produced collection by this tag 
     ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)
@@ -78,6 +79,7 @@ public abstract class BaseValueProducingTag extends TagSupport
   /**
    * Processes the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     return EVAL_PAGE;
   }
@@ -85,6 +87,7 @@ public abstract class BaseValueProducingTag extends TagSupport
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // override default behaviour
     // do not set parent to null!!!

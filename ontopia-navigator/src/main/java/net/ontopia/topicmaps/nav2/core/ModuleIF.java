@@ -71,6 +71,7 @@ public interface ModuleIF {
   /**
    * Returns a string representation of this object.
    */
+  @Override
   String toString();
   
 }

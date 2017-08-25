@@ -54,12 +54,14 @@ public class NavigatorConfigurationContentHandler extends SAXTracker {
   // override methods from SAXTracker
   // --------------------------------------------------------------
 
+  @Override
   public void startDocument() throws SAXException {
     super.startDocument();
     navConfig = new NavigatorConfiguration();
     log.debug("create new navConfig object.");    
   }
   
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) throws SAXException {
     super.startElement(nsuri, lname, qname, attrs);
@@ -111,6 +113,7 @@ public class NavigatorConfigurationContentHandler extends SAXTracker {
     }
   }
   
+  @Override
   public void endElement(String nsuri, String lname, String qname) throws SAXException {
     super.endElement(nsuri, lname, qname);
   }

@@ -46,6 +46,7 @@ public class ExternalFunctionTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspException {
     // get Context Tag
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -87,6 +88,7 @@ public class ExternalFunctionTag extends TagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

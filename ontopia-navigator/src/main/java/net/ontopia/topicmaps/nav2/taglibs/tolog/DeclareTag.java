@@ -48,6 +48,7 @@ public class DeclareTag extends BodyTagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     return EVAL_BODY_BUFFERED;
   }
@@ -55,6 +56,7 @@ public class DeclareTag extends BodyTagSupport {
   /** 
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     declarations = getBodyContent().getString();
     return SKIP_BODY;
@@ -63,6 +65,7 @@ public class DeclareTag extends BodyTagSupport {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     
@@ -94,6 +97,7 @@ public class DeclareTag extends BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     super.release();
   }

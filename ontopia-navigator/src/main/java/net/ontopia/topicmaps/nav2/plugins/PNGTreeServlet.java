@@ -32,10 +32,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PNGTreeServlet extends HttpServlet {
 
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) {
     processRequest(request, response);
   }
   
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
     processRequest(request, response);
   }

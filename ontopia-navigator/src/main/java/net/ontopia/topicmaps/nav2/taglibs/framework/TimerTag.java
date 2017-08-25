@@ -45,6 +45,7 @@ public final class TimerTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     startTime = System.currentTimeMillis();
     return EVAL_BODY_INCLUDE;
@@ -53,6 +54,7 @@ public final class TimerTag extends TagSupport {
   /**
    * Process the end tag for this instance.
    */
+  @Override
   public int doEndTag() throws JspTagException {
     log.debug(name + ": " + (System.currentTimeMillis() - startTime));
     return EVAL_PAGE;

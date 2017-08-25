@@ -78,6 +78,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     if (contextTag == null)
@@ -228,6 +229,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     outValue = new ArrayList();
     // FIXME: It would be nice if the following if-test could be true only for
@@ -242,6 +244,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     // Bind 'outValue' to var in appropriate scope.
     if (scope == null || scope.equals("ontopia") || scope.equals("oks")) {
@@ -257,6 +260,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // do *not* reset tag attributes
   }
