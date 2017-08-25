@@ -60,6 +60,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     this.tmid = tmid;
   }
 
+  @Override
   public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects) {
@@ -99,6 +100,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     return topics;
   }
 
+  @Override
   public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
@@ -106,6 +108,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     return getTopics(indicators, sources, subjects);
   }
 
+  @Override
   public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
                                   Collection<LocatorIF> sources,
                                   Collection<LocatorIF> subjects) {
@@ -146,6 +149,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     return pages;
   }
 
+  @Override
   public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
                                    Collection<LocatorIF> sources,
                                    Collection<LocatorIF> subjects) {
@@ -190,6 +194,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     return retVal;
   }
 
+  @Override
   public void close() {
     topicmap.getStore().close();
     topicmap = null;

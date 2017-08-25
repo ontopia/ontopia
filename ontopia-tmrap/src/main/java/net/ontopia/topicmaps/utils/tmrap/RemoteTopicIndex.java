@@ -79,6 +79,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     this.tmid = tmid;
   }
   
+  @Override
   public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects) {
@@ -272,6 +273,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     return idpredicates;
   }
   
+  @Override
   public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
@@ -351,6 +353,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
   }
 
+  @Override
   public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
                                   Collection<LocatorIF> sources,
                                   Collection<LocatorIF> subjects) {
@@ -388,6 +391,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     return pages;
   }
 
+  @Override
   public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
                                    Collection<LocatorIF> sources,
                                    Collection<LocatorIF> subjects) {
@@ -438,6 +442,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     transferLoadedTopics(loaded, topicmap);
   }
 
+  @Override
   public void close() {
     // nothing we need to let go of
   }

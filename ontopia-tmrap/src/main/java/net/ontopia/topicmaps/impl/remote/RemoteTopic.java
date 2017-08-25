@@ -93,6 +93,7 @@ public class RemoteTopic extends Topic {
   // TopicIF implementation
   // ----------------------------------------------------------------------------
   
+  @Override
   public Collection<LocatorIF> getSubjectLocators() {
     if (realTopic!=null)
       return realTopic.getSubjectLocators();
@@ -100,6 +101,7 @@ public class RemoteTopic extends Topic {
       return super.getSubjectLocators();
   }
 
+  @Override
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
     if (realTopic != null)
       realTopic.addSubjectLocator(subject_locator);
@@ -107,6 +109,7 @@ public class RemoteTopic extends Topic {
       super.addSubjectLocator(subject_locator);
   }
 
+  @Override
   public void removeSubjectLocator(LocatorIF subject_locator) {
     checkLoad();
     if (realTopic != null)
@@ -115,6 +118,7 @@ public class RemoteTopic extends Topic {
       super.removeSubjectLocator(subject_locator);      
   }
   
+  @Override
   public Collection<LocatorIF> getSubjectIdentifiers() {
     if (realTopic!=null)
       return realTopic.getSubjectIdentifiers();
@@ -122,6 +126,7 @@ public class RemoteTopic extends Topic {
       return super.getSubjectIdentifiers();
   }
 
+  @Override
   public void addSubjectIdentifier(LocatorIF subject_indicator) throws ConstraintViolationException {
     if (realTopic != null)
       realTopic.addSubjectIdentifier(subject_indicator);
@@ -129,6 +134,7 @@ public class RemoteTopic extends Topic {
       super.addSubjectIdentifier(subject_indicator);
   }
 
+  @Override
   public void removeSubjectIdentifier(LocatorIF subject_indicator) {
     checkLoad();
     if (realTopic != null)
@@ -137,6 +143,7 @@ public class RemoteTopic extends Topic {
       super.removeSubjectIdentifier(subject_indicator);      
   }
   
+  @Override
   public Collection<TopicNameIF> getTopicNames() {
     checkLoad();
     if (realTopic != null)
@@ -145,6 +152,7 @@ public class RemoteTopic extends Topic {
       return super.getTopicNames();
   }
 
+  @Override
   protected void addTopicName(TopicNameIF _basename) {
     checkLoad();
     if (realTopic!=null)
@@ -153,6 +161,7 @@ public class RemoteTopic extends Topic {
       super.addTopicName(_basename);
   }
 
+  @Override
   protected void removeTopicName(TopicNameIF _basename) {
     checkLoad();
     if (realTopic!=null)
@@ -161,6 +170,7 @@ public class RemoteTopic extends Topic {
       super.removeTopicName(_basename);
   }
   
+  @Override
   public Collection<OccurrenceIF> getOccurrences() {
     checkLoad();
     if (realTopic!=null)
@@ -169,6 +179,7 @@ public class RemoteTopic extends Topic {
       return super.getOccurrences();
   }
 
+  @Override
   protected void addOccurrence(OccurrenceIF _occurrence) {
     checkLoad();
     if (realTopic!=null)
@@ -177,6 +188,7 @@ public class RemoteTopic extends Topic {
       super.addOccurrence(_occurrence);
   }
 
+  @Override
   protected void removeOccurrence(OccurrenceIF _occurrence) {
     checkLoad();
     if (realTopic!=null)
@@ -185,6 +197,7 @@ public class RemoteTopic extends Topic {
       super.removeOccurrence(_occurrence);
   }
 
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
     checkLoad();
     if (realTopic!=null)
@@ -193,10 +206,12 @@ public class RemoteTopic extends Topic {
       return super.getRoles();
   }
 
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public Collection<TopicIF> getTypes() {
     checkLoad();
     if (realTopic != null)
@@ -205,6 +220,7 @@ public class RemoteTopic extends Topic {
       return super.getTypes();
   }
 
+  @Override
   public void addType(TopicIF type) {
     // this gets called before we know the identity of the topic
     if (realTopic != null)
@@ -213,6 +229,7 @@ public class RemoteTopic extends Topic {
       super.addType(type);
   }
 
+  @Override
   public void removeType(TopicIF type) {
     checkLoad();
     if (realTopic!=null)
@@ -225,6 +242,7 @@ public class RemoteTopic extends Topic {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     if (realTopic!=null) {
       return "{" + realTopic.toString() + "}";
@@ -235,6 +253,7 @@ public class RemoteTopic extends Topic {
 
   // tm object implementation
   
+  @Override
   public String getObjectId() {
     if (realTopic != null)
       return realTopic.getObjectId();
@@ -242,6 +261,7 @@ public class RemoteTopic extends Topic {
       return super.getObjectId();
   }
 
+  @Override
   public boolean isReadOnly() {
     if (realTopic!=null) {
       return realTopic.isReadOnly();
@@ -250,6 +270,7 @@ public class RemoteTopic extends Topic {
     }
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     if (realTopic!=null) {
       return realTopic.getTopicMap();
@@ -258,6 +279,7 @@ public class RemoteTopic extends Topic {
     }  
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     if (realTopic!=null) {
       return realTopic.getItemIdentifiers();
@@ -266,6 +288,7 @@ public class RemoteTopic extends Topic {
     }     
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
     if (realTopic != null)
       realTopic.addItemIdentifier(source_locator);
@@ -273,6 +296,7 @@ public class RemoteTopic extends Topic {
       super.addItemIdentifier(source_locator);
   }
   
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
     if (realTopic != null)
       realTopic.removeItemIdentifier(source_locator);
@@ -280,6 +304,7 @@ public class RemoteTopic extends Topic {
       super.removeItemIdentifier(source_locator);
   }
   
+  @Override
   public synchronized void merge(TopicIF topic) {
     if (realTopic != null)
       throw new OntopiaRuntimeException("THIS SHOULD NEVER HAPPEN.");
@@ -305,6 +330,7 @@ public class RemoteTopic extends Topic {
     System.out.println("base names: " + super.getTopicNames().size());
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof RemoteTopic) {
       if( realTopic == null )
@@ -323,6 +349,7 @@ public class RemoteTopic extends Topic {
     return realTopic.equals(obj);
   }
 
+  @Override
   public int hashCode() {
     if (realTopic == null)
       return super.hashCode();

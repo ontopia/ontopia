@@ -54,6 +54,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.AssociationIF#getRoleTypes()
    */
+  @Override
   public Collection<TopicIF> getRoleTypes() {
 
     if (target == null) return super.getRoleTypes();
@@ -65,6 +66,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.AssociationIF#getRolesByType(net.ontopia.topicmaps.core.TopicIF)
    */
+  @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
 
     if (target == null) return super.getRolesByType(roletype);
@@ -76,6 +78,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.AssociationIF#getRoles()
    */
+  @Override
   public Collection<AssociationRoleIF> getRoles() {
 
     if (target == null) return super.getRoles();
@@ -87,6 +90,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.ScopedIF#getScope()
    */
+  @Override
   public Collection<TopicIF> getScope() {
 
     if (target == null) return super.getScope();
@@ -98,6 +102,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.ScopedIF#addTheme(net.ontopia.topicmaps.core.TopicIF)
    */
+  @Override
   public void addTheme(TopicIF theme) {
 
     if (target == null) super.addTheme(theme);
@@ -109,6 +114,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.ScopedIF#removeTheme(net.ontopia.topicmaps.core.TopicIF)
    */
+  @Override
   public void removeTheme(TopicIF theme) {
 
     if (target == null) super.removeTheme(theme);
@@ -120,6 +126,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TypedIF#getType()
    */
+  @Override
   public TopicIF getType() {
 
     if (target == null) return super.getType();
@@ -131,12 +138,14 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TypedIF#setType(net.ontopia.topicmaps.core.TopicIF)
    */
+  @Override
   public void setType(TopicIF type) {
 
     if (target == null) super.setType(type);
     else target.setType(type);
   }
 
+  @Override
   public String toString() {
 
     if (target == null) return super.toString();
@@ -149,6 +158,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#getObjectId()
    */
+  @Override
   public String getObjectId() {
 
     if (target == null) return super.getObjectId();
@@ -160,6 +170,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#isReadOnly()
    */
+  @Override
   public boolean isReadOnly() {
 
     if (target == null) return super.isReadOnly();
@@ -171,6 +182,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#getTopicMap()
    */
+  @Override
   public TopicMapIF getTopicMap() {
 
     if (target == null) return super.getTopicMap();
@@ -182,6 +194,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#getItemIdentifiers()
    */
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
 
     if (target == null) return super.getItemIdentifiers();
@@ -193,6 +206,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#addItemIdentifier(net.ontopia.infoset.core.LocatorIF)
    */
+  @Override
   public void addItemIdentifier(LocatorIF source_locator)
       throws ConstraintViolationException {
 
@@ -205,17 +219,20 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#removeItemIdentifier(net.ontopia.infoset.core.LocatorIF)
    */
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
 
     if (target == null) super.removeItemIdentifier(source_locator);
     else target.removeItemIdentifier(source_locator);
   }
 
+  @Override
   public void remove() {
     if (target == null) super.remove();
     target.remove();
   }
   
+  @Override
   public boolean equals(Object obj) {
 
     if (obj instanceof DynamicAssociation) {
@@ -235,6 +252,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
 
   }
 
+  @Override
   public int hashCode() {
 
     if (target == null) return super.hashCode();
@@ -249,6 +267,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
     this.target = (Association) newTarget;
   }
 
+  @Override
   protected boolean isConnected() {
 
     if (target == null) return super.isConnected();

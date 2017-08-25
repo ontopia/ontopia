@@ -75,6 +75,7 @@ public class TestRemoteTopicIndex extends TestTMRAPOperation {
       super(edit, view);
     }
     
+    @Override
     protected InputSource getInputSource(String method, String params,
                                          boolean compress)
       throws IOException {

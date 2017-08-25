@@ -91,6 +91,7 @@ public class RAPServlet extends HttpServlet {
 
   // --- Servlet interface implementation
   
+  @Override
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     rapconfig = new TMRAPConfiguration(config);
@@ -103,6 +104,7 @@ public class RAPServlet extends HttpServlet {
    *  GET /topic-page?topicmap=[]&source=[]&indicator=[]
    * </pre>
    */         
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     doGet(request, response, request.getRequestURL().toString());
@@ -124,6 +126,7 @@ public class RAPServlet extends HttpServlet {
       reportError(response, "No such GET request: " + URLString);
   }
   
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     doPost(request, response, request.getRequestURL().toString());

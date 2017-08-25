@@ -76,14 +76,17 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
     ehandler = parser.getErrorHandler();
   }
 
+  @Override
   public void startDocument() {
     parents = new Stack();
   }
 
+  @Override
   public void endDocument() {
     // no-op
   }
 
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) {
     if ("tests".equals(qname))
@@ -102,6 +105,7 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
     parents.push(qname);
   }
 
+  @Override
   public void endElement(String nsuri, String name, String qname) {
     parents.pop();
   }
