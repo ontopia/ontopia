@@ -100,10 +100,6 @@ public abstract class AbstractCanonicalExporterTests {
     try {
       canonicalize(inputFile, tmp, out);
     } catch (Throwable e) {
-      if (e instanceof OntopiaRuntimeException
-              && ((OntopiaRuntimeException) e).getCause() != null) {
-        e = ((OntopiaRuntimeException) e).getCause();
-      }
       throw new OntopiaRuntimeException("Error processing file '" + filename
               + "': " + e, e);
     }

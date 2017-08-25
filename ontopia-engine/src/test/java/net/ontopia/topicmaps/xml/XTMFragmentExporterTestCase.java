@@ -156,10 +156,7 @@ public class XTMFragmentExporterTestCase {
         return true;
       } else if (object instanceof TopicNameIF) {
         TopicNameIF name = (TopicNameIF) object;
-        if (name.getValue().startsWith(("fName"))) {
-          return false;
-        }
-        return true;
+        return !name.getValue().startsWith("fName");
       } else {
         return true;
       }
