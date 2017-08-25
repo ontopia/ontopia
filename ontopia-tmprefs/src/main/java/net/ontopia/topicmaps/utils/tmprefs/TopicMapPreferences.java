@@ -111,22 +111,26 @@ public class TopicMapPreferences extends AbstractPreferences {
 		return isUserNode;
 	}
 
+  @Override
 	public String getSpi(String key) {
 		return properties.get(key);
 	}
 
+  @Override
 	public void putSpi(String key, String value) {
 		properties.put(key, value);
 		handlePropertyStatusChange(key, propertiesStored.contains(key) ? PropertyStatus.MODIFIED : PropertyStatus.ADDED);
 		propertiesStored.add(key);
 	}
 
+  @Override
 	public void removeSpi(String key) {
 		properties.remove(key);
 		handlePropertyStatusChange(key, propertiesStored.contains(key) ? PropertyStatus.REMOVED : PropertyStatus.NONE);
 		propertiesStored.remove(key);
 	}
 
+  @Override
 	public TopicMapPreferences childSpi(String name) {
 		if (children.get(name) == null) {
 			children.put(name, new TopicMapPreferences(this, name));
@@ -134,20 +138,24 @@ public class TopicMapPreferences extends AbstractPreferences {
 		return children.get(name);
 	}
 
+  @Override
 	public void removeNodeSpi() {
 		children.clear();
 		properties.clear();
 		((TopicMapPreferences) parent()).children.remove(this.name());
 	}
 
+  @Override
 	public String[] keysSpi() {
 		return properties.keySet().toArray(new String[properties.size()]);
 	}
 
+  @Override
 	public String[] childrenNamesSpi() {
 		return children.keySet().toArray(new String[children.size()]);
 	}
 
+  @Override
 	public synchronized void syncSpi() throws BackingStoreException {
 
 		flushSpi();
@@ -189,6 +197,7 @@ public class TopicMapPreferences extends AbstractPreferences {
 
 	}
 
+  @Override
 	public synchronized void flushSpi() throws BackingStoreException {
 		
 		logger.debug("Flushing " + this);
