@@ -228,6 +228,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   
   @Override
   public boolean usedAsTopicType(TopicIF topic) {
+    if (topic == null) { return false; }
     return topics.containsKey(topic);
   }
 
@@ -253,6 +254,7 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
   
   @Override
   public boolean usedAsType(TopicIF topic) {
+    if (topic == null) { return false; }
     return (topics.containsKey(topic) ||
             occurs.containsKey(topic) ||
             assocs.containsKey(topic) ||
