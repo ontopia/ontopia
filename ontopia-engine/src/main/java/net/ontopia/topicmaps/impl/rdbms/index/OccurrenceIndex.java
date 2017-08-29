@@ -20,14 +20,14 @@
 
 package net.ontopia.topicmaps.impl.rdbms.index;
 
-import java.util.Iterator;
 import java.util.Collection;
-
+import java.util.Collections;
+import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
+import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.GrabberIterator;
 
@@ -56,11 +56,13 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
 
   @Override
   public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype) {
+    if (datatype == null) { return Collections.emptySet(); }
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByDataType", new Object[] { getTopicMap(), value, datatype.getAddress() });
   }
 
   @Override
   public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype, TopicIF occurrenceType) {
+    if (datatype == null) { return Collections.emptySet(); }
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesByDataTypeAndType", new Object[] { getTopicMap(), value, datatype.getAddress(), occurrenceType });
   }
 
@@ -73,6 +75,7 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
   
   @Override
   public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, LocatorIF datatype) {
+    if (datatype == null) { return Collections.emptySet(); }
     //! String ltval = prefix + Character.MAX_VALUE;
     String ltval = (prefix == null ? null : prefix.substring(0, prefix.length()- 1) + (char)(prefix.charAt(prefix.length()-1)+1));
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesBetween_datatype", new Object[] { getTopicMap(), prefix, ltval, datatype.getAddress() });
