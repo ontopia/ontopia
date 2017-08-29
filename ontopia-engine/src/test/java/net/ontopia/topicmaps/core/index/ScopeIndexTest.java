@@ -44,6 +44,9 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
   }
 
   public void testAssociationIndex() {
+    assertFalse(ix.usedAsAssociationTheme(null));
+    assertFalse(ix.usedAsTheme(null));
+    
     AssociationIF scoped1 = builder.makeAssociation(builder.makeTopic());
     AssociationIF scoped2 = builder.makeAssociation(builder.makeTopic());
     AssociationIF scoped3 = builder.makeAssociation(builder.makeTopic());
@@ -87,9 +90,15 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
            ix.getAssociations(theme2).contains(scoped2));
     assertTrue("scoped3 not indexed against theme2",
            ix.getAssociations(theme2).contains(scoped3));
+    
+    assertTrue(ix.usedAsTheme(theme1));
+    assertTrue(ix.usedAsTheme(theme2));
   }
 
   public void testTopicNameIndex() {
+    assertFalse(ix.usedAsTopicNameTheme(null));
+    assertFalse(ix.usedAsTheme(null));
+    
     TopicIF topic = builder.makeTopic();
     TopicNameIF scoped1 = builder.makeTopicName(topic, "");
     TopicNameIF scoped2 = builder.makeTopicName(topic, "");
@@ -138,9 +147,15 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
            ix.getTopicNames(theme2).contains(scoped2));
     assertTrue("scoped3 not indexed against theme2",
            ix.getTopicNames(theme2).contains(scoped3));
+
+    assertTrue(ix.usedAsTheme(theme1));
+    assertTrue(ix.usedAsTheme(theme2));
   }
 
   public void testOccurrenceIndex() {
+    assertFalse(ix.usedAsOccurrenceTheme(null));
+    assertFalse(ix.usedAsTheme(null));
+    
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
     OccurrenceIF scoped1 = builder.makeOccurrence(topic, otype, "");
@@ -191,9 +206,15 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
            ix.getOccurrences(theme2).contains(scoped2));
     assertTrue("scoped3 not indexed against theme2",
            ix.getOccurrences(theme2).contains(scoped3));
+
+    assertTrue(ix.usedAsTheme(theme1));
+    assertTrue(ix.usedAsTheme(theme2));
   }
 
   public void testVariantNameIndex() {
+    assertFalse(ix.usedAsVariantTheme(null));
+    assertFalse(ix.usedAsTheme(null));
+    
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
     VariantNameIF scoped1 = builder.makeVariantName(bn, "", Collections.<TopicIF>emptySet());
@@ -243,6 +264,9 @@ public abstract class ScopeIndexTest extends AbstractIndexTest {
            ix.getVariants(theme2).contains(scoped2));
     assertTrue("scoped3 not indexed against theme2",
            ix.getVariants(theme2).contains(scoped3));
+
+    assertTrue(ix.usedAsTheme(theme1));
+    assertTrue(ix.usedAsTheme(theme2));
   }
 
   public void _testNullParameters() {
