@@ -33,8 +33,8 @@ public class TopicResourceDELETETest extends AbstractV1ResourceTest {
 
 	@Test
 	public void deleteTopic() {
-		delete("6721", Topic.class);
-		assertGetFails("6721", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
+		delete("5868", Topic.class);
+		assertGetFails("5868", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 
 	@Test
