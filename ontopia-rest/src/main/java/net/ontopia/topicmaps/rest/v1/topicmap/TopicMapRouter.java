@@ -40,6 +40,7 @@ public class TopicMapRouter extends Router {
 		// Topicmap
 		attach("", TopicMapResource.class);
 		attach("/", TopicMapResource.class);
+		attach("/reload", TopicMapReloadResource.class);
 		
 		// objects
 		attach("/topics", new TopicRouter(context));

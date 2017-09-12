@@ -72,8 +72,9 @@ public abstract class AbstractResourceTest {
 	
 	@After
 	public void reset() throws IOException {
-		// todo
-		// new OntopiaTestResource(Method.POST, getAPIRoot() + "reset", null).request();
+		if (tmid != null) {
+			new OntopiaTestResource(Method.POST, getAPIRoot() + "topicmaps/" + tmid + "/reload", defaultMediatype).request();
+		}
 	}
 	
 	protected String getUrl(String url) {
