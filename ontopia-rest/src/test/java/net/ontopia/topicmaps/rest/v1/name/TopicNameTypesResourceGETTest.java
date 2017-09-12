@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Collection;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
-import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class TopicNameTypesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public TopicNameTypesResourceGETTest() {
-		super(OPERA_TM, "names/types");
+		super(NAMES_LTM, "names/types");
 	}
 
 	@Test

@@ -34,17 +34,17 @@ public class TopicNamesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<TopicName>> REF = new TypeReference<Collection<TopicName>>(){};
 
 	public TopicNamesResourceGETTest() {
-		super(OPERA_TM, null);
+		super(NAMES_LTM, null);
 	}
 
 	@Test
 	public void testTopicTopicNames() throws IOException {
-		Collection<TopicName> names = get("topics/6721/names", REF);
+		Collection<TopicName> names = get("topics/10/names", REF);
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(3, names.size());
+		Assert.assertEquals(2, names.size());
 		Assert.assertEquals(TopicName.class, names.iterator().next().getClass());
-		assertContainsTopics(names, "6724", "6722", "6723");
+		assertContainsTopics(names, "11", "12");
 	}
 
 	@Test
@@ -52,25 +52,25 @@ public class TopicNamesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<TopicName> names = get("topics/unexisting/names", REF);
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(100, names.size()); // all default names
+		Assert.assertEquals(7, names.size()); // all default names
 	}
 
 	@Test
 	public void testTopicTopicNamesByType() throws IOException {
-		Collection<TopicName> names = get("topics/6721/names/3", REF); // note: no other name types in opera
+		Collection<TopicName> names = get("topics/10/names/3", REF); // note: no other name types in names.ltm
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(3, names.size());
-		assertContainsTopics(names, "6724", "6722", "6723");
+		Assert.assertEquals(2, names.size());
+		assertContainsTopics(names, "11", "12");
 	}
 
 	@Test
 	public void testUnexistingTopicTopicNamesByType() throws IOException {
-		Collection<TopicName> names = get("topics/301/names/unexisting", REF); // falls back to default name type
+		Collection<TopicName> names = get("topics/10/names/unexisting", REF); // falls back to default name type
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(3, names.size());
-		assertContainsTopics(names, "302", "303", "304");
+		Assert.assertEquals(2, names.size());
+		assertContainsTopics(names, "11", "12");
 	}
 
 	@Test
@@ -78,23 +78,23 @@ public class TopicNamesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<TopicName> names = get("names/typed/3", REF);
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(100, names.size()); // paged
+		Assert.assertEquals(7, names.size());
 	}
 
 	/* -- Failing requests -- */
 
 	@Test
 	public void testInvalidTopicTopicNames() {
-		assertGetFails("topics/13/names", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/2/names", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicTopicNamesByInvalidType() {
-		assertGetFails("topics/1/names/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/2/names/2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicmapTopicNamesByInvalidType() {
-		assertGetFails("names/typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("names/typed/2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

@@ -28,13 +28,13 @@ import org.junit.Test;
 public class TopicNameResourceDELETETest extends AbstractV1ResourceTest {
 	
 	public TopicNameResourceDELETETest() {
-		super(OPERA_TM, "names");
+		super(NAMES_LTM, "names");
 	}
 
 	@Test
 	public void deleteOccurrence() {
-		delete("5433", Occurrence.class);
-		assertGetFails("5433", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
+		delete("2", Occurrence.class);
+		assertGetFails("2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 
 	@Test

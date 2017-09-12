@@ -24,6 +24,7 @@ import net.ontopia.topicmaps.rest.AbstractResourceTest;
 
 public abstract class AbstractV1ResourceTest extends AbstractResourceTest {
 	
+	public static final String NAMES_LTM = "names.ltm";
 	public static final String OPERA_TM = "ItalianOpera.ltm";
 
 	public AbstractV1ResourceTest() {
