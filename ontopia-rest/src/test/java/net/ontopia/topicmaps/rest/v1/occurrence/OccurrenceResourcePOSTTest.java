@@ -33,54 +33,54 @@ import org.junit.Test;
 public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	public OccurrenceResourcePOSTTest() {
-		super(OPERA_TM, "occurrences");
+		super(OCCURRENCES_LTM, "occurrences");
 	}
 
 	@Test
 	public void testValue() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setValue("Another value");
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertEquals("Another value", changed.getValue());
 	}
 
 	@Test
 	public void testInvalidValue() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setValue(null);
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(changed.getValue());
 	}
 
 	@Test
 	public void testDatatype() throws MalformedURLException {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setDatatype(DataTypes.TYPE_BOOLEAN);
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertEquals(DataTypes.TYPE_BOOLEAN, changed.getDataType());
 	}
 
 	@Test
 	public void testInvalidDatatype() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setDatatype(null);
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getDataType());
 	}
 
 	@Test
 	public void testTopic() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.setTopic(new Topic("12"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setTopic(new Topic("3"));
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getTopic());
 		Assert.assertEquals("1", changed.getTopic().getObjectId());
@@ -88,10 +88,10 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testInvalidTopic() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.setTopic(new Topic("13"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setTopic(new Topic("2"));
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getTopic());
 		Assert.assertEquals("1", changed.getTopic().getObjectId());
@@ -99,10 +99,10 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testUnexistingTopic() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setTopic(new Topic("unexistig_topic_id"));
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getTopic());
 		Assert.assertEquals("1", changed.getTopic().getObjectId());
@@ -110,10 +110,10 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testNullTopic() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setTopic(null);
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getTopic());
 		Assert.assertEquals("1", changed.getTopic().getObjectId());
@@ -121,12 +121,12 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicByItemIdentifier() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		occurrence.setTopic(topic);
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getTopic());
 		Assert.assertEquals("1", changed.getTopic().getObjectId());
@@ -134,79 +134,79 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testType() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.setType(new Topic("1"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setType(new Topic("3"));
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
+		
+		Assert.assertNotNull(changed.getType());
+		Assert.assertEquals("3", changed.getType().getObjectId());
+	}
+	
+	@Test
+	public void testNullType() {
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setType(null);
+
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getType());
 		Assert.assertEquals("1", changed.getType().getObjectId());
 	}
 	
 	@Test
-	public void testNullType() {
-		Occurrence occurrence = get("9", Occurrence.class);
-		occurrence.setType(null);
-
-		Occurrence changed = post("9", occurrence, Occurrence.class);
-		
-		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("8", changed.getType().getObjectId());
-	}
-	
-	@Test
 	public void testTypeByItemIdentifier() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		occurrence.setType(topic);
 
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("261", changed.getType().getObjectId());
+		Assert.assertEquals("3", changed.getType().getObjectId());
 	}
 	
 	@Test
 	public void testReifier() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.setReifier(new Topic("152"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setReifier(new Topic("1"));
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getReifier());
-		Assert.assertEquals("152", changed.getReifier().getObjectId());
+		Assert.assertEquals("1", changed.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testClearReifier() {
-		Occurrence occurrence = get("145", Occurrence.class);
+		Occurrence occurrence = get("7", Occurrence.class);
 		occurrence.setReifier(null);
 		
-		Occurrence changed = post("145", occurrence, Occurrence.class);
+		Occurrence changed = post("7", occurrence, Occurrence.class);
 		
 		Assert.assertNull(changed.getReifier());
 	}
 
 	@Test
 	public void testReifierByItemIdentifier() {
-		Occurrence occurrence = get("145", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#style"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		occurrence.setReifier(topic);
 
-		Occurrence changed = post("145", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getReifier());
-		Assert.assertEquals("287", changed.getReifier().getObjectId());
+		Assert.assertEquals("3", changed.getReifier().getObjectId());
 	}
 	
 	@Test
 	public void testScope() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getScope().add(new Topic("1"));
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		assertContainsTopics(changed.getScope(), "1");
@@ -214,34 +214,34 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testScopes() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getScope().add(new Topic("1"));
-		occurrence.getScope().add(new Topic("12"));
+		occurrence.getScope().add(new Topic("3"));
 		
-		Occurrence changed = post("13", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
-		assertContainsTopics(changed.getScope(), "1", "12");
+		assertContainsTopics(changed.getScope(), "1", "3");
 	}
 	
 	@Test
 	public void testRemoveScope() {
-		Occurrence occurrence = get("5770", Occurrence.class);
-		removeById(occurrence.getScope(), "143");
+		Occurrence occurrence = get("4", Occurrence.class);
+		removeById(occurrence.getScope(), "5");
 		
-		Occurrence changed = post("5770", occurrence, Occurrence.class);
+		Occurrence changed = post("4", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(1, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "4781");
+		assertContainsTopics(changed.getScope(), "6");
 	}
 	
 	@Test
 	public void testClearScope() {
-		Occurrence occurrence = get("5770", Occurrence.class);
+		Occurrence occurrence = get("4", Occurrence.class);
 		occurrence.getScope().clear();
 		
-		Occurrence changed = post("5770", occurrence, Occurrence.class);
+		Occurrence changed = post("4", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(0, changed.getScope().size());
@@ -249,49 +249,49 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testChangeScope() {
-		Occurrence occurrence = get("5632", Occurrence.class);
-		removeById(occurrence.getScope(), "143");
+		Occurrence occurrence = get("4", Occurrence.class);
+		removeById(occurrence.getScope(), "5");
 		occurrence.getScope().add(new Topic("1"));
 		
-		Occurrence changed = post("5632", occurrence, Occurrence.class);
+		Occurrence changed = post("4", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(2, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "4781", "1");
+		assertContainsTopics(changed.getScope(), "6", "1");
 	}
 	
 	@Test
 	public void testChangeScopeVoid() {
-		Occurrence occurrence = get("5679", Occurrence.class);
+		Occurrence occurrence = get("4", Occurrence.class);
 		occurrence.setScope(null);
 		
-		Occurrence changed = post("5679", occurrence, Occurrence.class);
+		Occurrence changed = post("4", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(2, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "4781", "143");
+		assertContainsTopics(changed.getScope(), "5", "6");
 	}
 	
 	@Test
 	public void testChangeScopeByItemIdentifier() {
-		Occurrence occurrence = get("5796", Occurrence.class);
+		Occurrence occurrence = get("4", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#style"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		occurrence.getScope().add(topic);
 		
-		Occurrence changed = post("5796", occurrence, Occurrence.class);
+		Occurrence changed = post("4", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(3, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "4781", "141", "287");
+		assertContainsTopics(changed.getScope(), "1", "5", "6");
 	}
 	
 	@Test
 	public void testAddItemIdentifier() {
-		Occurrence occurrence = get("5796", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar2"));
 		
-		Occurrence changed = post("5796", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
@@ -300,11 +300,11 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testAddItemIdentifiers() {
-		Occurrence occurrence = get("5679", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar3"));
 		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar4"));
 		
-		Occurrence changed = post("5679", occurrence, Occurrence.class);
+		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(2, changed.getItemIdentifiers().size());
@@ -314,15 +314,15 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testRemoveItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Occurrence occurrence = get("4337", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
 		
-		occurrence = post("4337", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		
 		occurrence.getItemIdentifiers().remove(locator);
-		occurrence = post("4337", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertTrue(occurrence.getItemIdentifiers().isEmpty());
 	}
@@ -331,15 +331,15 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testClearItemIdentifiers() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Occurrence occurrence = get("4337", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
 		
-		occurrence = post("4337", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		
 		occurrence.getItemIdentifiers().clear();
-		occurrence = post("4337", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertTrue(occurrence.getItemIdentifiers().isEmpty());
 	}
@@ -348,16 +348,16 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Occurrence occurrence = get("11", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
 		
-		occurrence = post("11", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		
 		occurrence.getItemIdentifiers().remove(locator);
 		occurrence.getItemIdentifiers().add(URILocator.create("foo:to-keep-occ"));
-		occurrence = post("11", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		Assert.assertEquals("foo:to-keep-occ", occurrence.getItemIdentifiers().iterator().next().getAddress());
@@ -367,15 +367,15 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeItemIdentifierVoid() {
 		final URILocator locator = URILocator.create("foo:to-keep-occ-2");
 
-		Occurrence occurrence = get("4338", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
 		
-		occurrence = post("4338", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		
 		occurrence.setItemIdentifiers(null);
-		occurrence = post("4338", occurrence, Occurrence.class);
+		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 	}
@@ -384,49 +384,49 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testInvalidType() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.setType(new Topic("13"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setType(new Topic("2"));
 
-		assertPostFails("13", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPostFails("2", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testUnexistingType() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setType(new Topic("unexistig_topic_id"));
 
-		assertPostFails("13", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPostFails("2", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
 	public void testInvalidReifier() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.setReifier(new Topic("13"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.setReifier(new Topic("2"));
 
-		assertPostFails("13", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPostFails("2", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testUnexistingReifier() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setReifier(new Topic("unexistig_topic_id"));
 
-		assertPostFails("13", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPostFails("2", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
 	public void testInvalidScope() {
-		Occurrence occurrence = get("13", Occurrence.class);
-		occurrence.getScope().add(new Topic("13"));
+		Occurrence occurrence = get("2", Occurrence.class);
+		occurrence.getScope().add(new Topic("2"));
 
-		assertPostFails("13", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPostFails("2", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testUnexistingScope() {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getScope().add(new Topic("unexisting_topic_id"));
 
-		assertPostFails("13", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPostFails("2", occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 }

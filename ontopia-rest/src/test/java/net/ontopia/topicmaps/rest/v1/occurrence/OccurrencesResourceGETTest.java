@@ -34,17 +34,17 @@ public class OccurrencesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Occurrence>> REF = new TypeReference<Collection<Occurrence>>(){};
 
 	public OccurrencesResourceGETTest() {
-		super(OPERA_TM, null);
+		super(OCCURRENCES_LTM, null);
 	}
 
 	@Test
 	public void testTopicOccurrences() throws IOException {
-		Collection<Occurrence> occurrences = get("topics/3096/occurrences", REF);
+		Collection<Occurrence> occurrences = get("topics/11/occurrences", REF);
 
 		Assert.assertNotNull(occurrences);
 		Assert.assertEquals(2, occurrences.size());
 		Assert.assertEquals(Occurrence.class, occurrences.iterator().next().getClass());
-		assertContainsTopics(occurrences, "5750", "5749");
+		assertContainsTopics(occurrences, "12", "13");
 	}
 
 	@Test
@@ -57,44 +57,45 @@ public class OccurrencesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicOccurrencesByType() throws IOException {
-		Collection<Occurrence> occurrences = get("topics/3096/occurrences/527", REF);
+		Collection<Occurrence> occurrences = get("topics/11/occurrences/1", REF);
 
 		Assert.assertNotNull(occurrences);
 		Assert.assertEquals(1, occurrences.size());
 		Assert.assertEquals(Occurrence.class, occurrences.iterator().next().getClass());
-		assertContainsTopics(occurrences, "5750");
+		assertContainsTopics(occurrences, "13");
 	}
 
 	@Test
 	public void testUnexistingTopicOccurrencesByType() throws IOException {
-		Collection<Occurrence> occurrences = get("topics/301/occurrences/unexisting", REF);
+		Collection<Occurrence> occurrences = get("topics/11/occurrences/unexisting", REF);
 
 		Assert.assertNotNull(occurrences);
-		Assert.assertTrue(occurrences.isEmpty());
+		Assert.assertEquals(2, occurrences.size());
+		assertContainsTopics(occurrences, "12", "13");
 	}
 
 	@Test
 	public void testTopicmapOccurrencesByType() throws IOException {
-		Collection<Occurrence> occurrences = get("occurrences/typed/511", REF);
+		Collection<Occurrence> occurrences = get("occurrences/typed/1", REF);
 
 		Assert.assertNotNull(occurrences);
-		Assert.assertEquals(100, occurrences.size()); // paged
+		Assert.assertEquals(2, occurrences.size());
 	}
 
 	/* -- Failing requests -- */
 
 	@Test
 	public void testInvalidTopicOccurrences() {
-		assertGetFails("topics/13/occurrences", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/2/occurrences", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicOccurrencesByInvalidType() {
-		assertGetFails("topics/1/occurrences/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/1/occurrences/2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicmapOccurrencesByInvalidType() {
-		assertGetFails("occurrences/typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("occurrences/typed/2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

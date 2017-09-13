@@ -30,7 +30,7 @@ import org.junit.Test;
 public class OccurrencesResourcePUTTest extends AbstractV1ResourceTest {
 
 	public OccurrencesResourcePUTTest() {
-		super(OPERA_TM, "topics");
+		super(OCCURRENCES_LTM, "topics");
 	}
 
 	@Test
@@ -63,6 +63,6 @@ public class OccurrencesResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAddInvalid() {
-		assertPutFails("13/occurrences", new Occurrence(), OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertPutFails("2/occurrences", new Occurrence(), OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

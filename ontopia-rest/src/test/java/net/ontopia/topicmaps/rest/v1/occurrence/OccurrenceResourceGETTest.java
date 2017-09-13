@@ -34,26 +34,25 @@ import org.restlet.data.MediaType;
 public class OccurrenceResourceGETTest extends AbstractV1ResourceTest {
 
 	public OccurrenceResourceGETTest() {
-		super(OPERA_TM, "occurrences");
+		super(OCCURRENCES_LTM, "occurrences");
 	}
 	
 	@Test
 	public void testGetConverted() throws IOException {
-		Occurrence occurrence = get("13", Occurrence.class);
+		Occurrence occurrence = get("2", Occurrence.class);
 		
 		Assert.assertNotNull(occurrence);
 		
-		Assert.assertEquals("13", occurrence.getObjectId());
+		Assert.assertEquals("2", occurrence.getObjectId());
 		
 		Assert.assertNotNull(occurrence.getType());
-		Assert.assertEquals("12", occurrence.getType().getObjectId());
+		Assert.assertEquals("1", occurrence.getType().getObjectId());
 		
 		Assert.assertNotNull(occurrence.getTopic());
 		Assert.assertEquals("1", occurrence.getTopic().getObjectId());
 		
-		Assert.assertTrue(occurrence.getValue().startsWith("Copyright (c) 1999-2009, Steve Pepper"));
-		Assert.assertTrue(occurrence.getValue().endsWith("this copyright notice is left intact."));
-		Assert.assertEquals(226, occurrence.getLength());
+		Assert.assertEquals("foo", occurrence.getValue());
+		Assert.assertEquals(3, occurrence.getLength());
 		
 		Assert.assertNotNull(occurrence.getDataType());
 		Assert.assertEquals(DataTypes.TYPE_STRING, occurrence.getDataType());
@@ -69,41 +68,30 @@ public class OccurrenceResourceGETTest extends AbstractV1ResourceTest {
 	}
 	
 	@Test
-	public void testWithScope() {
-		Occurrence occurrence = get("4917", Occurrence.class);
-		
-		Assert.assertNotNull(occurrence.getScope());
-		Assert.assertFalse(occurrence.getScope().isEmpty());
-		Assert.assertEquals(1, occurrence.getScope().size());
-		Assert.assertEquals("143", occurrence.getScope().iterator().next().getObjectId());
-	}
-	
-	@Test
 	public void testWithScopes() {
-		Occurrence occurrence = get("5767", Occurrence.class);
+		Occurrence occurrence = get("4", Occurrence.class);
 		
 		Assert.assertNotNull(occurrence.getScope());
 		Assert.assertFalse(occurrence.getScope().isEmpty());
-		Assert.assertEquals(3, occurrence.getScope().size());
+		Assert.assertEquals(2, occurrence.getScope().size());
 		
-		assertContainsTopics(occurrence.getScope(), "182", "143", "4019");
+		assertContainsTopics(occurrence.getScope(), "5", "6");
 	}
 	
 	@Test
 	public void testWithReifier() {
-		Occurrence occurrence = get("145", Occurrence.class);
+		Occurrence occurrence = get("7", Occurrence.class);
 		
 		Assert.assertNotNull(occurrence.getReifier());
-		Assert.assertEquals("146", occurrence.getReifier().getObjectId());
+		Assert.assertEquals("8", occurrence.getReifier().getObjectId());
 	}
 	
 	@Test
 	public void testGetJSON() throws IOException {
-		Map<String, Object> parsed = getAsJson("13");
+		Map<String, Object> parsed = getAsJson("2");
 		Assert.assertNotNull(parsed);
-		Assert.assertEquals("13", parsed.get("objectId"));
-		Assert.assertTrue(((String)parsed.get("value")).startsWith("Copyright (c) 1999-2009, Steve Pepper"));
-		Assert.assertTrue(((String)parsed.get("value")).endsWith("this copyright notice is left intact."));
+		Assert.assertEquals("2", parsed.get("objectId"));
+		Assert.assertEquals("foo", (String) parsed.get("value"));
 	}
 	
 	// test recoverable client failures
@@ -111,24 +99,24 @@ public class OccurrenceResourceGETTest extends AbstractV1ResourceTest {
 		assertGetFails("foo", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 	@Test public void testGetWrongType() throws IOException {
-		assertGetFails("14", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("1", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	// Unsupported topicmap media types: CTM, LTM, XTM, TMXML all result in http 406
 	// test text/plain as a non-topicmap mime
 	@Test public void testGetText() throws IOException {
-		assertGetFails("13", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetCTM() throws IOException {
-		assertGetFails("13", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetLTM() throws IOException {
-		assertGetFails("13", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetXTM() throws IOException {
-		assertGetFails("13", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetTMXML() throws IOException {
-		assertGetFails("13", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 }

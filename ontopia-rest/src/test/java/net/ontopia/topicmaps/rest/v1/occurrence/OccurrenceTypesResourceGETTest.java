@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Collection;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
-import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,15 +33,15 @@ public class OccurrenceTypesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public OccurrenceTypesResourceGETTest() {
-		super(OPERA_TM, "occurrences/types");
+		super(OCCURRENCES_LTM, "occurrences/types");
 	}
 
 	@Test
-	public void testTopicNameTypes() throws IOException {
+	public void testOccurrenceTypes() throws IOException {
 		Collection<Topic> types = get(null, REF);
 
 		Assert.assertNotNull(types);
-		Assert.assertFalse(types.isEmpty());
-		assertContainsTopics(types, "147");
+		Assert.assertEquals(6, types.size());
+		assertContainsTopics(types, "1", "3", "5", "6", "8", "11");
 	}
 }

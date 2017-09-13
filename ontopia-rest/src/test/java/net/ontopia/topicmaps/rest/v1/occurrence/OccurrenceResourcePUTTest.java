@@ -33,7 +33,7 @@ import org.junit.Test;
 public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 
 	public OccurrenceResourcePUTTest() {
-		super(OPERA_TM, "occurrences");
+		super(OCCURRENCES_LTM, "occurrences");
 	}
 	
 	/* -- Successfull requests -- */
@@ -42,7 +42,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 		Occurrence occurrence = new Occurrence();
 		occurrence.setValue("foo");
 		occurrence.setTopic(new Topic("1"));
-		occurrence.setType(new Topic("12"));
+		occurrence.setType(new Topic("3"));
 		return occurrence;
 	}
 
@@ -55,7 +55,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added.getTopic());
 		Assert.assertEquals("1", added.getTopic().getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("12", added.getType().getObjectId());
+		Assert.assertEquals("3", added.getType().getObjectId());
 		Assert.assertNotNull(added.getDataType());
 		Assert.assertEquals(DataTypes.TYPE_STRING, added.getDataType());
 		Assert.assertEquals("foo", added.getValue());
@@ -65,28 +65,28 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTopicByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		occurrence.setTopic(topic);
 		Occurrence added = put(occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getTopic());
-		Assert.assertEquals("261", added.getTopic().getObjectId());
+		Assert.assertEquals("1", added.getTopic().getObjectId());
 	}
 
 	@Test
 	public void testWithTypeByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		occurrence.setType(topic);
 		Occurrence added = put(occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("261", added.getType().getObjectId());
+		Assert.assertEquals("1", added.getType().getObjectId());
 	}
 
 	@Test
@@ -169,21 +169,21 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopes() {
 		Occurrence occurrence = createOccurrence();
 		occurrence.getScope().add(new Topic("1"));
-		occurrence.getScope().add(new Topic("12"));
+		occurrence.getScope().add(new Topic("3"));
 		
 		Occurrence added = put(occurrence, Occurrence.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(2, added.getScope().size());
-		assertContainsTopics(added.getScope(), "1", "12");
+		assertContainsTopics(added.getScope(), "1", "3");
 	}	
 	
 	@Test
 	public void testWithScopeByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		occurrence.getScope().add(topic);
 		
 		Occurrence added = put(occurrence, Occurrence.class);
@@ -191,31 +191,31 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(1, added.getScope().size());
-		assertContainsTopics(added.getScope(), "261");
+		assertContainsTopics(added.getScope(), "1");
 	}	
 	
 	@Test
 	public void testWithReification() {
 		Occurrence occurrence = createOccurrence();
-		occurrence.setReifier(new Topic("12"));
+		occurrence.setReifier(new Topic("3"));
 		
 		Occurrence added = put(occurrence, Occurrence.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("12", added.getReifier().getObjectId());
+		Assert.assertEquals("3", added.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testWithReificationByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		occurrence.setReifier(topic);
 		
 		Occurrence added = put(occurrence, Occurrence.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("261", added.getReifier().getObjectId());
+		Assert.assertEquals("3", added.getReifier().getObjectId());
 	}
 
 	/* -- Failing requests -- */
@@ -240,7 +240,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidTopic() {
 		Occurrence occurrence = createOccurrence();
-		occurrence.setTopic(new Topic("13")); // object with id 13 is an occurrence
+		occurrence.setTopic(new Topic("2"));
 		assertPutFails(occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -261,7 +261,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidType() {
 		Occurrence occurrence = createOccurrence();
-		occurrence.setType(new Topic("13")); // object with id 13 is an occurrence
+		occurrence.setType(new Topic("2"));
 		assertPutFails(occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -282,7 +282,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidReification() {
 		Occurrence occurrence = createOccurrence();
-		occurrence.setReifier(new Topic("13")); // object with id 13 is an occurrence
+		occurrence.setReifier(new Topic("2"));
 		assertPutFails(occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -296,7 +296,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidScope() {
 		Occurrence occurrence = createOccurrence();
-		occurrence.getScope().add(new Topic("13")); // object with id 13 is an occurrence
+		occurrence.getScope().add(new Topic("2"));
 		assertPutFails(occurrence, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
