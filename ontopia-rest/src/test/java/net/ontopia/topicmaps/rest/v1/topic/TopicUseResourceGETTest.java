@@ -30,17 +30,17 @@ import org.junit.Test;
 public class TopicUseResourceGETTest extends AbstractV1ResourceTest {
 
 	public TopicUseResourceGETTest() {
-		super(OPERA_TM, null);
+		super(TOPICS_LTM, null);
 	}
 
 	@Test
 	public void testTopicUse() throws IOException {
-		assertUse("970", false, false, false, false, false);
+		assertUse("8", false, false, false, false, false);
 	}
 
 	@Test
 	public void testTopicTypeUse() throws IOException {
-		assertUse("292", true, false, false, false, false);
+		assertUse("14", true, false, false, false, false);
 	}
 
 	@Test
@@ -50,17 +50,17 @@ public class TopicUseResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testOccurrenceTypeUse() throws IOException {
-		assertUse("6", false, true, false, false, false);
+		assertUse("15", false, true, false, false, false);
 	}
 
 	@Test
 	public void testAssociationTypeUse() throws IOException {
-		assertUse("467", false, false, false, true, false);
+		assertUse("17", false, false, false, true, false);
 	}
 
 	@Test
 	public void testRoleTypeUse() throws IOException {
-		assertUse("314", false, false, false, false, true);
+		assertUse("21", false, false, false, false, true);
 	}
 
 	private void assertUse(String id, boolean tt, boolean ot, boolean nt, boolean at, boolean rt) throws IOException {
@@ -77,7 +77,7 @@ public class TopicUseResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testInvalidUse() {
-		assertGetFails("topics/13/use", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/2/use", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test

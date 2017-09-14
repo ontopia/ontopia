@@ -40,15 +40,15 @@ public class ScopedResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<VariantName>> VREF = new TypeReference<Collection<VariantName>>(){};
 
 	public ScopedResourceGETTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
 	public void testAssociations() throws IOException {
-		Collection<Association> associations = get("2956/scope/associations", AREF);
+		Collection<Association> associations = get("1/scope/associations", AREF);
 
 		Assert.assertNotNull(associations);
-		assertContainsTopics(associations, "12087", "11793"); // 13431 is removed by other test
+		assertContainsTopics(associations, "9");
 	}
 
 	@Test
@@ -61,16 +61,16 @@ public class ScopedResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testOccurrences() throws IOException {
-		Collection<Occurrence> occurrences = get("3846/scope/occurrences", OREF);
+		Collection<Occurrence> occurrences = get("5/scope/occurrences", OREF);
 
 		Assert.assertNotNull(occurrences);
-		Assert.assertEquals(11, occurrences.size());
-		assertContainsTopics(occurrences, "3950", "5542", "3906", "5784", "5804", "3876");
+		Assert.assertEquals(1, occurrences.size());
+		assertContainsTopics(occurrences, "11");
 	}
 
 	@Test
 	public void testEmptyOccurrences() throws IOException {
-		Collection<Occurrence> occurrences = get("3/scope/occurrences", OREF);
+		Collection<Occurrence> occurrences = get("1/scope/occurrences", OREF);
 
 		Assert.assertNotNull(occurrences);
 		Assert.assertTrue(occurrences.isEmpty());
@@ -78,16 +78,16 @@ public class ScopedResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicNames() throws IOException {
-		Collection<TopicName> names = get("3818/scope/names", NREF);
+		Collection<TopicName> names = get("7/scope/names", NREF);
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(20, names.size());
-		assertContainsTopics(names, "4213", "4218", "4145");
+		Assert.assertEquals(1, names.size());
+		assertContainsTopics(names, "12");
 	}
 
 	@Test
 	public void testEmptyTopicNames() throws IOException {
-		Collection<TopicName> names = get("3/scope/names", NREF);
+		Collection<TopicName> names = get("1/scope/names", NREF);
 
 		Assert.assertNotNull(names);
 		Assert.assertTrue(names.isEmpty());
@@ -95,16 +95,16 @@ public class ScopedResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testVariantNames() throws IOException {
-		Collection<VariantName> names = get("182/scope/variants", VREF);
+		Collection<VariantName> names = get("7/scope/variants", VREF);
 
 		Assert.assertNotNull(names);
-		Assert.assertEquals(2, names.size());
-		assertContainsTopics(names, "5113", "181");
+		Assert.assertEquals(1, names.size());
+		assertContainsTopics(names, "13");
 	}
 
 	@Test
 	public void testEmptyVariantNames() throws IOException {
-		Collection<VariantName> names = get("3/scope/variants", VREF);
+		Collection<VariantName> names = get("1/scope/variants", VREF);
 
 		Assert.assertNotNull(names);
 		Assert.assertTrue(names.isEmpty());

@@ -32,7 +32,7 @@ import org.junit.Test;
 public class TopicResourcePUTTest extends AbstractV1ResourceTest {
 
 	public TopicResourcePUTTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 	
 	@Test
@@ -137,25 +137,25 @@ public class TopicResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTypes() {
 		Topic topic = new Topic();
 		topic.getTypes().add(new Topic("1"));
-		topic.getTypes().add(new Topic("705"));
+		topic.getTypes().add(new Topic("5"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getTypes());
 		Assert.assertEquals(2, added.getTypes().size());
-		assertContainsTopics(added.getTypes(), "1", "705");
+		assertContainsTopics(added.getTypes(), "1", "5");
 	}
 	
 	@Test
 	public void testWithTypeByIdentifier() {
 		Topic topic = new Topic();
 		Topic type = new Topic();
-		type.getItemIdentifiers().add(URILocator.create("foo:#goldoni"));
+		type.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		topic.getTypes().add(type);
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getTypes());
 		Assert.assertEquals(1, added.getTypes().size());
-		assertContainsTopics(added.getTypes(), "6483");
+		assertContainsTopics(added.getTypes(), "1");
 	}
 	
 	@Test
@@ -201,7 +201,7 @@ public class TopicResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidType() {
 		Topic topic = new Topic();
-		topic.getTypes().add(new Topic("13"));
+		topic.getTypes().add(new Topic("2"));
 		assertPutFails(topic, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 

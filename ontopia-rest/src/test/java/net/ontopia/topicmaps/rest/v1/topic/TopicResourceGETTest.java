@@ -40,31 +40,32 @@ import org.xml.sax.InputSource;
 public class TopicResourceGETTest extends AbstractV1ResourceTest {
 
 	public TopicResourceGETTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
 	public void testGetConverted() throws IOException {
-		Topic topic = get("210", Topic.class);
+		Topic topic = get("1", Topic.class);
 
 		Assert.assertNotNull(topic);
 
-		Assert.assertEquals("210", topic.getObjectId());
+		Assert.assertEquals("1", topic.getObjectId());
 
 		Assert.assertNotNull(topic.getItemIdentifiers());
-		Assert.assertEquals("foo:#russian", topic.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:#topic1", topic.getItemIdentifiers().iterator().next().getAddress());
 
 		Assert.assertNotNull(topic.getSubjectIdentifiers());
-		Assert.assertEquals("http://www.topicmaps.org/xtm/1.0/language.xtm#ru", topic.getSubjectIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:bar", topic.getSubjectIdentifiers().iterator().next().getAddress());
 
 		Assert.assertNotNull(topic.getTypes());
 		Assert.assertEquals(1, topic.getTypes().size());
-		assertContainsTopics(topic.getTypes(), "235");
+		assertContainsTopics(topic.getTypes(), "1");
 
 		Assert.assertNotNull(topic.getTopicNames());
-		Assert.assertEquals(4, topic.getTopicNames().size());
+		Assert.assertEquals(1, topic.getTopicNames().size());
 
-		// has no occurrences
+		Assert.assertNotNull(topic.getOccurrences());
+		Assert.assertEquals(1, topic.getOccurrences().size());
 	}
 
 	@Test
@@ -78,45 +79,38 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testWithSubjectLocator() {
-		Topic topic = get("146", Topic.class);
+		Topic topic = get("5", Topic.class);
 
 		Assert.assertNotNull(topic.getSubjectLocators());
-		Assert.assertEquals("http://home.prcn.org/~pauld/opera/", topic.getSubjectLocators().iterator().next().getAddress());
-	}
-
-	@Test
-	public void testWithOccurrences() {
-		Topic topic = get("1175", Topic.class);
-
-		Assert.assertNotNull(topic.getOccurrences());
-		Assert.assertEquals(1, topic.getOccurrences().size());
+		Assert.assertEquals("http://bar.foo/", topic.getSubjectLocators().iterator().next().getAddress());
 	}
 
 	@Test
 	public void testWithMultipleTypes() {
-		Topic topic = get("4098", Topic.class);
+		Topic topic = get("7", Topic.class);
 
 		Assert.assertNotNull(topic.getTypes());
 		Assert.assertEquals(2, topic.getTypes().size());
-		assertContainsTopics(topic.getTypes(), "218", "282");
+		assertContainsTopics(topic.getTypes(), "1", "5");
 	}
 
 	@Test
 	public void testWithUnTyped() {
-		Topic topic = get("501", Topic.class);
+		Topic topic = get("8", Topic.class);
 
 		Assert.assertNotNull(topic.getTypes());
 		Assert.assertTrue(topic.getTypes().isEmpty());
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testGetJSON() throws IOException {
 		Map<String, Object> parsed = getAsJson("1");
 		Assert.assertNotNull(parsed);
 		Assert.assertEquals("1", parsed.get("objectId"));
 
 		// raw reified does work, but there is no class information
-		Assert.assertEquals("0", parsed.get("reified"));
+		Assert.assertEquals("4", ((Map<String, Object>) parsed.get("reified")).get("objectId"));
 	}
 
 	@Test
@@ -128,7 +122,7 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 			XTMTopicMapReader reader = new XTMTopicMapReader(xtm.getReader(), URILocator.create("foo:"));
 			reader.setValidation(false); // ignore foo: url failures
 			TopicMapIF tm = reader.read();
-			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:#operatm")));
+			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:#topic1")));
 		} finally {
 			xtm.release();
 		}
@@ -136,11 +130,11 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testGetTMXML() throws IOException {
-		Representation tmxml = getRaw("1", Constants.TMXML_MEDIA_TYPE);
+		Representation tmxml = getRaw("5", Constants.TMXML_MEDIA_TYPE);
 		try {
 			Assert.assertNotNull(tmxml);
 			TopicMapIF tm = new TMXMLReader(new InputSource(tmxml.getReader()), URILocator.create("foo:")).read();
-			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:#operatm")));
+			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:#topic2")));
 		} finally {
 			tmxml.release();
 		}
@@ -151,7 +145,7 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 		assertGetFails("foo", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 	@Test public void testGetWrongType() throws IOException {
-		assertGetFails("13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	// Unsupported topicmap media types: CTM and LTM all result in http 406

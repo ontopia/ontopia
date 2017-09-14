@@ -27,6 +27,7 @@ public abstract class AbstractV1ResourceTest extends AbstractResourceTest {
 	public static final String NAMES_LTM = "names.ltm";
 	public static final String OCCURRENCES_LTM = "occurrences.ltm";
 	public static final String VARIANTS_LTM = "variants.ltm";
+	public static final String TOPICS_LTM = "topics.ltm";
 	public static final String OPERA_TM = "ItalianOpera.ltm";
 
 	public AbstractV1ResourceTest() {

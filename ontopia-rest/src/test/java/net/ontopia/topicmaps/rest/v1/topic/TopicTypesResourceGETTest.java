@@ -34,7 +34,7 @@ public class TopicTypesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public TopicTypesResourceGETTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
@@ -42,17 +42,17 @@ public class TopicTypesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> topics = get("types", REF);
 
 		Assert.assertNotNull(topics);
-		Assert.assertTrue(topics.size() > 40); // modified by other tests
-		assertContainsTopics(topics, "43");
+		Assert.assertEquals(3, topics.size());
+		assertContainsTopics(topics, "1", "5");
 	}
 
 	@Test
 	public void testGetTopicTypes() throws IOException {
-		Collection<Topic> topics = get("4896/types", REF);
+		Collection<Topic> topics = get("1/types", REF);
 
 		Assert.assertNotNull(topics);
-		Assert.assertEquals(1, topics.size()); // modified by other tests
-		assertContainsTopics(topics, "43");
+		Assert.assertEquals(1, topics.size());
+		assertContainsTopics(topics, "1");
 	}
 
 	@Test
@@ -60,14 +60,14 @@ public class TopicTypesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> topics = get("unexisting/types", REF); // fallback to all types
 
 		Assert.assertNotNull(topics);
-		Assert.assertTrue(topics.size() > 40); // modified by other tests
-		assertContainsTopics(topics, "43");
+		Assert.assertEquals(3, topics.size());
+		assertContainsTopics(topics, "1", "5");
 	}
 
 	/* -- Failing requests -- */
 
 	@Test
 	public void testInvalidTopicAssociationRoles() {
-		assertGetFails("13/types", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("2/types", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

@@ -28,18 +28,18 @@ import org.junit.Test;
 public class TopicResourceDELETETest extends AbstractV1ResourceTest {
 
 	public TopicResourceDELETETest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
 	public void deleteTopic() {
-		delete("5868", Topic.class);
-		assertGetFails("5868", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
+		delete("1", Topic.class);
+		assertGetFails("1", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 
 	@Test
 	public void deleteInvalidTopic() {
-		assertDeleteFails("13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertDeleteFails("2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test

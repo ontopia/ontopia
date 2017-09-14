@@ -29,7 +29,7 @@ import org.junit.Test;
 public class TopicsResourcePUTTest extends AbstractV1ResourceTest {
 
 	public TopicsResourcePUTTest() {
-		super(OPERA_TM, "topics/typed");
+		super(TOPICS_LTM, "topics/typed");
 	}
 
 	@Test
@@ -60,6 +60,6 @@ public class TopicsResourcePUTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testAddInvalid() {
-		assertPutFails("13", new Topic(), OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertPutFails("2", new Topic(), OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }
