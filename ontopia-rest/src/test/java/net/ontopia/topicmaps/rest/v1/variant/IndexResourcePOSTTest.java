@@ -37,7 +37,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<VariantName>> REF = new TypeReference<Collection<VariantName>>(){};
 
 	public IndexResourcePOSTTest() {
-		super(OPERA_TM, "variants/index");
+		super(VARIANTS_LTM, "variants/index");
 	}
 
 	private Map<String, String> createMap(String... keyval) {
@@ -50,33 +50,33 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testValue() throws IOException {
-		Collection<VariantName> variants = post(null, REF, "Si");
+		Collection<VariantName> variants = post(null, REF, "v1");
 
 		Assert.assertNotNull(variants);
 		Assert.assertEquals(2, variants.size());
-		assertContainsTopics(variants, "3085", "5742");
+		assertContainsTopics(variants, "4", "12");
 	}
 	
 	@Test
 	public void testValueDatatypeJSON() throws IOException {
 		Collection<VariantName> variants = post(null, REF, 
-				createMap("value", "Si", "datatype", DataTypes.TYPE_STRING.getAddress()));
+				createMap("value", "v1", "datatype", DataTypes.TYPE_STRING.getAddress()));
 
 		Assert.assertNotNull(variants);
 		Assert.assertEquals(2, variants.size());
-		assertContainsTopics(variants, "3085", "5742");
+		assertContainsTopics(variants, "4", "12");
 	}
 
 	@Test
 	public void testValueDatatypeFORM() throws IOException {
 		Form form = new Form();
-		form.add("value", "Si");
+		form.add("value", "v1");
 		form.add("datatype", DataTypes.TYPE_STRING.getAddress());
 		Collection<VariantName> variants = post(null, REF, form);
 
 		Assert.assertNotNull(variants);
 		Assert.assertEquals(2, variants.size());
-		assertContainsTopics(variants, "3085", "5742");
+		assertContainsTopics(variants, "4", "12");
 	}
 
 	@Test

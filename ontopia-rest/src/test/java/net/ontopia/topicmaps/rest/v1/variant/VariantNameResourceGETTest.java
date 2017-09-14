@@ -33,46 +33,46 @@ import org.restlet.data.MediaType;
 public class VariantNameResourceGETTest extends AbstractV1ResourceTest {
 
 	public VariantNameResourceGETTest() {
-		super(OPERA_TM, "variants");
+		super(VARIANTS_LTM, "variants");
 	}
 
 	@Test
 	public void testGetConverted() throws IOException {
-		VariantName variant = get("5197", VariantName.class);
+		VariantName variant = get("4", VariantName.class);
 
 		Assert.assertNotNull(variant);
 
-		Assert.assertEquals("5197", variant.getObjectId());
+		Assert.assertEquals("4", variant.getObjectId());
 
 		Assert.assertNotNull(variant.getTopicName());
-		Assert.assertEquals("5196", variant.getTopicName().getObjectId());
+		Assert.assertEquals("2", variant.getTopicName().getObjectId());
 
-		Assert.assertEquals("Tabarro", variant.getValue());
+		Assert.assertEquals("v1", variant.getValue());
 
 		// has no reifier
 		Assert.assertNull(variant.getReifier());
 
-		// has no scope
+		// has scope
 		Assert.assertNotNull(variant.getScope());
 		Assert.assertEquals(1, variant.getScope().size());
 	}
 
 	@Test
 	public void testWithScopes() {
-		VariantName variant = get("5327", VariantName.class);
+		VariantName variant = get("13", VariantName.class);
 
 		Assert.assertNotNull(variant.getScope());
 		Assert.assertFalse(variant.getScope().isEmpty());
 		Assert.assertEquals(2, variant.getScope().size());
-		assertContainsTopics(variant.getScope(), "174", "29");
+		assertContainsTopics(variant.getScope(), "6", "10");
 	}
 
 	@Test
 	public void testGetJSON() throws IOException {
-		Map<String, Object> parsed = getAsJson("5197");
+		Map<String, Object> parsed = getAsJson("4");
 		Assert.assertNotNull(parsed);
-		Assert.assertEquals("5197", parsed.get("objectId"));
-		Assert.assertEquals("Tabarro", (String)parsed.get("value"));
+		Assert.assertEquals("4", parsed.get("objectId"));
+		Assert.assertEquals("v1", (String)parsed.get("value"));
 	}
 
 	// test recoverable client failures
@@ -80,24 +80,24 @@ public class VariantNameResourceGETTest extends AbstractV1ResourceTest {
 		assertGetFails("foo", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 	@Test public void testGetWrongType() throws IOException {
-		assertGetFails("13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("1", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	// Unsupported topicmap media types: CTM, LTM, XTM, TMXML all result in http 406
 	// test text/plain as a non-topicmap mime
 	@Test public void testGetText() throws IOException {
-		assertGetFails("5197", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("4", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetCTM() throws IOException {
-		assertGetFails("5197", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("4", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetLTM() throws IOException {
-		assertGetFails("5197", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("4", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetXTM() throws IOException {
-		assertGetFails("5197", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("4", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetTMXML() throws IOException {
-		assertGetFails("5197", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("4", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 }

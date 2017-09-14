@@ -29,7 +29,7 @@ import org.junit.Test;
 public class VariantsResourcePUTTest extends AbstractV1ResourceTest {
 
 	public VariantsResourcePUTTest() {
-		super(OPERA_TM, "names");
+		super(VARIANTS_LTM, "names");
 	}
 
 	@Test

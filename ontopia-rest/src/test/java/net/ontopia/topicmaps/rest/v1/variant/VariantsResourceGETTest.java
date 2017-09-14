@@ -34,21 +34,21 @@ public class VariantsResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<VariantName>> REF = new TypeReference<Collection<VariantName>>(){};
 
 	public VariantsResourceGETTest() {
-		super(OPERA_TM, null);
+		super(VARIANTS_LTM, null);
 	}
 
 	@Test
 	public void testVariants() throws IOException {
-		Collection<VariantName> variants = get("names/568/variants", REF);
+		Collection<VariantName> variants = get("names/2/variants", REF);
 
 		Assert.assertNotNull(variants);
-		Assert.assertEquals(1, variants.size());
-		assertContainsTopics(variants, "569");
+		Assert.assertEquals(2, variants.size());
+		assertContainsTopics(variants, "5", "4");
 	}
 
 	@Test
 	public void testEmptyVariants() throws IOException {
-		Collection<VariantName> variants = get("names/1176/variants", REF);
+		Collection<VariantName> variants = get("names/15/variants", REF);
 
 		Assert.assertNotNull(variants);
 		Assert.assertTrue(variants.isEmpty());

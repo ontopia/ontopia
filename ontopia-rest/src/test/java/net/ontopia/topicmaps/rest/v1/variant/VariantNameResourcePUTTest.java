@@ -40,7 +40,7 @@ import org.junit.Test;
 public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 
 	public VariantNameResourcePUTTest() {
-		super(OPERA_TM, "variants");
+		super(VARIANTS_LTM, "variants");
 	}
 
 	/* -- Successfull requests -- */
@@ -48,7 +48,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	private VariantName createVariantName() {
 		VariantName variant = new VariantName();
 		variant.setValue("foo");
-		variant.setTopicName(new TopicName("4"));
+		variant.setTopicName(new TopicName("2"));
 		return variant;
 	}
 
@@ -59,7 +59,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getTopicName());
-		Assert.assertEquals("4", added.getTopicName().getObjectId());
+		Assert.assertEquals("2", added.getTopicName().getObjectId());
 		Assert.assertEquals("foo", added.getValue());
 		Assert.assertEquals(DataTypes.TYPE_STRING, added.getDataType());
 	}
@@ -151,15 +151,13 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
-		Assert.assertEquals(2, added.getScope().size());
-		assertContainsTopics(added.getScope(), "1", "5");
+		Assert.assertEquals(1, added.getScope().size());
+		assertContainsTopics(added.getScope(), "1");
 	}
 
 	@Test
 	public void testWithoutScope() {
-		VariantName variant = new VariantName();
-		variant.setTopicName(new TopicName("2785")); // has no scope
-		variant.setValue("foo");
+		VariantName variant = createVariantName();
 		variant.getScope().clear();
 
 		VariantName added = put(variant, VariantName.class);
@@ -172,53 +170,53 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopes() {
 		VariantName variant = createVariantName();
 		variant.getScope().add(new Topic("1"));
-		variant.getScope().add(new Topic("12"));
-
-		VariantName added = put(variant, VariantName.class);
-		Assert.assertNotNull(added);
-		Assert.assertNotNull(added.getScope());
-		Assert.assertFalse(added.getScope().isEmpty());
-		Assert.assertEquals(3, added.getScope().size());
-		assertContainsTopics(added.getScope(), "1", "12", "5");
-	}
-
-	@Test
-	public void testWithScopeByItemIdentifier() {
-		VariantName variant = createVariantName();
-		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
-		variant.getScope().add(topic);
+		variant.getScope().add(new Topic("3"));
 
 		VariantName added = put(variant, VariantName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(2, added.getScope().size());
-		assertContainsTopics(added.getScope(), "261", "5");
+		assertContainsTopics(added.getScope(), "1", "3");
+	}
+
+	@Test
+	public void testWithScopeByItemIdentifier() {
+		VariantName variant = createVariantName();
+		Topic topic = new Topic();
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic3"));
+		variant.getScope().add(topic);
+
+		VariantName added = put(variant, VariantName.class);
+		Assert.assertNotNull(added);
+		Assert.assertNotNull(added.getScope());
+		Assert.assertFalse(added.getScope().isEmpty());
+		Assert.assertEquals(1, added.getScope().size());
+		assertContainsTopics(added.getScope(), "10");
 	}
 
 	@Test
 	public void testWithReification() {
 		VariantName variant = createVariantName();
-		variant.setReifier(new Topic("909"));
+		variant.setReifier(new Topic("1"));
 
 		VariantName added = put(variant, VariantName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("909", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testWithReificationByItemIdentifier() {
 		VariantName variant = createVariantName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#datri"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		variant.setReifier(topic);
 
 		VariantName added = put(variant, VariantName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("4320", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	/* -- Failing requests -- */
@@ -243,7 +241,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidTopicName() {
 		VariantName variant = createVariantName();
-		variant.setTopicName(new TopicName("13")); // object with id 13 is an occurrence
+		variant.setTopicName(new TopicName("1"));
 		assertPutFails(variant, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -264,7 +262,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidReification() {
 		VariantName variant = createVariantName();
-		variant.setReifier(new Topic("13")); // object with id 13 is an occurrence
+		variant.setReifier(new Topic("2"));
 		assertPutFails(variant, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -278,7 +276,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidScope() {
 		VariantName variant = createVariantName();
-		variant.getScope().add(new Topic("13")); // object with id 13 is an occurrence
+		variant.getScope().add(new Topic("2"));
 		assertPutFails(variant, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
