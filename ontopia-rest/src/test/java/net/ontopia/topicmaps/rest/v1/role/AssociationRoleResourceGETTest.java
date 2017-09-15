@@ -27,32 +27,31 @@ import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.AssociationRole;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
-import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Test;
 import org.restlet.data.MediaType;
 
 public class AssociationRoleResourceGETTest extends AbstractV1ResourceTest {
 
 	public AssociationRoleResourceGETTest() {
-		super(OPERA_TM, "roles");
+		super(ROLES_LTM, "roles");
 	}
 
 	@Test
 	public void testGetConverted() {
-		AssociationRole role = get("9940", AssociationRole.class);
+		AssociationRole role = get("3", AssociationRole.class);
 
 		Assert.assertNotNull(role);
 
-		Assert.assertEquals("9940", role.getObjectId());
+		Assert.assertEquals("3", role.getObjectId());
 
 		Assert.assertNotNull(role.getType());
-		Assert.assertEquals("427", role.getType().getObjectId());
+		Assert.assertEquals("1", role.getType().getObjectId());
 
 		Assert.assertNotNull(role.getPlayer());
-		Assert.assertEquals("4860", role.getPlayer().getObjectId());
+		Assert.assertEquals("1", role.getPlayer().getObjectId());
 		
 		Assert.assertNotNull(role.getAssociation());
-		Assert.assertEquals("9939", role.getAssociation().getObjectId());
+		Assert.assertEquals("2", role.getAssociation().getObjectId());
 
 		// has no reifier
 		Assert.assertNull(role.getReifier());
@@ -60,9 +59,9 @@ public class AssociationRoleResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testGetJSON() throws IOException {
-		Map<String, Object> parsed = getAsJson("9940");
+		Map<String, Object> parsed = getAsJson("3");
 		Assert.assertNotNull(parsed);
-		Assert.assertEquals("9940", parsed.get("objectId"));
+		Assert.assertEquals("3", parsed.get("objectId"));
 	}
 
 	// test recoverable client failures
@@ -70,24 +69,24 @@ public class AssociationRoleResourceGETTest extends AbstractV1ResourceTest {
 		assertGetFails("foo", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 	@Test public void testGetWrongType() throws IOException {
-		assertGetFails("13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("1", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	// Unsupported topicmap media types: CTM, LTM, XTM, TMXML all result in http 406
 	// test text/plain as a non-topicmap mime
 	@Test public void testGetText() throws IOException {
-		assertGetFails("9940", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("3", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetCTM() throws IOException {
-		assertGetFails("9940", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("3", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetLTM() throws IOException {
-		assertGetFails("9940", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("3", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetXTM() throws IOException {
-		assertGetFails("9940", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("3", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetTMXML() throws IOException {
-		assertGetFails("9940", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("3", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 }

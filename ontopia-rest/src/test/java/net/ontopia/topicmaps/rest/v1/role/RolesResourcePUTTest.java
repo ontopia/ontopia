@@ -30,7 +30,7 @@ import org.junit.Test;
 public class RolesResourcePUTTest extends AbstractV1ResourceTest {
 
 	public RolesResourcePUTTest() {
-		super(OPERA_TM, "associations");
+		super(ROLES_LTM, "associations");
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class RolesResourcePUTTest extends AbstractV1ResourceTest {
 		AssociationRole role = new AssociationRole();
 		role.setType(new Topic("1"));
 		role.setPlayer(new Topic("1"));
-		AssociationRole added = put("14698/roles", role, AssociationRole.class);
+		AssociationRole added = put("2/roles", role, AssociationRole.class);
 
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
@@ -54,7 +54,7 @@ public class RolesResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testEmpty() {
-		assertPutFails("14698/roles", null, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("2/roles", null, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test

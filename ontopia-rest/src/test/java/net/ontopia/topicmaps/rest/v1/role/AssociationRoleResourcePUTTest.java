@@ -32,16 +32,16 @@ import org.junit.Test;
 public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 
 	public AssociationRoleResourcePUTTest() {
-		super(OPERA_TM, "roles");
+		super(ROLES_LTM, "roles");
 	}
 
 	/* -- Successfull requests -- */
 
 	private AssociationRole createAssociationRole() {
 		AssociationRole role = new AssociationRole();
-		role.setAssociation(new Association("7224"));
+		role.setAssociation(new Association("2"));
 		role.setPlayer(new Topic("1"));
-		role.setType(new Topic("12"));
+		role.setType(new Topic("4"));
 		return role;
 	}
 
@@ -54,37 +54,37 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added.getPlayer());
 		Assert.assertEquals("1", added.getPlayer().getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("12", added.getType().getObjectId());
+		Assert.assertEquals("4", added.getType().getObjectId());
 		Assert.assertNotNull(added.getAssociation());
-		Assert.assertEquals("7224", added.getAssociation().getObjectId());
+		Assert.assertEquals("2", added.getAssociation().getObjectId());
 	}
 
 	@Test
 	public void testWithPlayerByItemIdentifier() {
 		AssociationRole role = createAssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		role.setPlayer(topic);
 		AssociationRole added = put(role, AssociationRole.class);
 
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getPlayer());
-		Assert.assertEquals("261", added.getPlayer().getObjectId());
+		Assert.assertEquals("1", added.getPlayer().getObjectId());
 	}
 
 	@Test
 	public void testWithTypeByItemIdentifier() {
 		AssociationRole role = createAssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		role.setType(topic);
 		AssociationRole added = put(role, AssociationRole.class);
 
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("261", added.getType().getObjectId());
+		Assert.assertEquals("4", added.getType().getObjectId());
 	}
 
 	@Test
@@ -128,25 +128,25 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testWithReification() {
 		AssociationRole role = createAssociationRole();
-		role.setReifier(new Topic("5947"));
+		role.setReifier(new Topic("1"));
 
 		AssociationRole added = put(role, AssociationRole.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("5947", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testWithReificationByItemIdentifier() {
 		AssociationRole role = createAssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#morselli"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		role.setReifier(topic);
 
 		AssociationRole added = put(role, AssociationRole.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("6603", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	/* -- Failing requests -- */
@@ -192,7 +192,7 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidPlayer() {
 		AssociationRole role = createAssociationRole();
-		role.setPlayer(new Topic("13")); // object with id 13 is an occurrence
+		role.setPlayer(new Topic("2"));
 		assertPutFails(role, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -213,7 +213,7 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidType() {
 		AssociationRole role = createAssociationRole();
-		role.setType(new Topic("13")); // object with id 13 is an role
+		role.setType(new Topic("2"));
 		assertPutFails(role, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -227,7 +227,7 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidReification() {
 		AssociationRole role = createAssociationRole();
-		role.setReifier(new Topic("13")); // object with id 13 is an occurrence
+		role.setReifier(new Topic("2"));
 		assertPutFails(role, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 

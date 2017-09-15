@@ -34,17 +34,17 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<AssociationRole>> REF = new TypeReference<Collection<AssociationRole>>(){};
 
 	public RolesResourceGETTest() {
-		super(OPERA_TM, null);
+		super(ROLES_LTM, null);
 	}
 
 	@Test
 	public void testTopicAssociationRoles() throws IOException {
-		Collection<AssociationRole> roles = get("topics/5772/roles", REF);
+		Collection<AssociationRole> roles = get("topics/10/roles", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(22, roles.size());
+		Assert.assertEquals(3, roles.size());
 		Assert.assertEquals(AssociationRole.class, roles.iterator().next().getClass());
-		assertContainsTopics(roles, "9694", "9706", "9709");
+		assertContainsTopics(roles, "12", "15", "18");
 	}
 
 	@Test
@@ -57,47 +57,47 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testTopicAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("topics/5772/roles/434", REF);
+		Collection<AssociationRole> roles = get("topics/10/roles/1", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(1, roles.size());
-		assertContainsTopics(roles, "15344");
+		Assert.assertEquals(2, roles.size());
+		assertContainsTopics(roles, "15", "18");
 	}
 
 	@Test
 	public void testUnexistingTopicAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("topics/5772/roles/unexisting", REF); // fallback to all roles
+		Collection<AssociationRole> roles = get("topics/10/roles/unexisting", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(22, roles.size());
-		assertContainsTopics(roles, "9694", "9706", "9709");
+		Assert.assertEquals(3, roles.size());
+		assertContainsTopics(roles, "12", "15", "18");
 	}
 
 	@Test
 	public void testTopicAssociationRolesByTypes() throws IOException {
-		Collection<AssociationRole> roles = get("topics/5772/roles/301/441", REF);
+		Collection<AssociationRole> roles = get("topics/10/roles/1/1", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(15, roles.size());
-		assertContainsTopics(roles, "9694");
+		Assert.assertEquals(1, roles.size());
+		assertContainsTopics(roles, "15");
 	}
 
 	@Test
 	public void testUnexistingTopicAssociationRolesByTypes() throws IOException {
-		Collection<AssociationRole> roles = get("topics/5772/roles/434/unexisting", REF); // fallback to all roles by type
+		Collection<AssociationRole> roles = get("topics/10/roles/1/unexisting", REF); // fallback to all roles by type
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(1, roles.size());
-		assertContainsTopics(roles, "15344");
+		Assert.assertEquals(2, roles.size());
+		assertContainsTopics(roles, "15", "18");
 	}
 
 	@Test
 	public void testAssociationRoles() throws IOException {
-		Collection<AssociationRole> roles = get("associations/15343/roles", REF);
+		Collection<AssociationRole> roles = get("associations/14/roles", REF);
 
 		Assert.assertNotNull(roles);
 		Assert.assertEquals(2, roles.size());
-		assertContainsTopics(roles, "15344", "15345");
+		assertContainsTopics(roles, "15", "16");
 	}
 
 	@Test
@@ -110,72 +110,67 @@ public class RolesResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("associations/15343/roles/434", REF);
+		Collection<AssociationRole> roles = get("associations/14/roles/1", REF);
 
 		Assert.assertNotNull(roles);
 		Assert.assertEquals(1, roles.size());
-		assertContainsTopics(roles, "15344");
+		assertContainsTopics(roles, "15");
 	}
 
 	@Test
 	public void testUnexistingAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("associations/unexisting/roles/263", REF); // fallback to tm.getRolesByType
+		Collection<AssociationRole> roles = get("associations/unexisting/roles/1", REF); // fallback to tm.getRolesByType
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(100, roles.size());
+		Assert.assertEquals(4, roles.size());
 	}
 
 	@Test
 	public void testAssociationRolesByUnexistingType() throws IOException {
-		Collection<AssociationRole> roles = get("associations/15343/roles/unexisting", REF); // fallback to assoc.getRoles
+		Collection<AssociationRole> roles = get("associations/14/roles/unexisting", REF); // fallback to assoc.getRoles
 
 		Assert.assertNotNull(roles);
 		Assert.assertEquals(2, roles.size());
-		assertContainsTopics(roles, "15344", "15345");
+		assertContainsTopics(roles, "15", "16");
 	}
 
 	@Test
 	public void testTopicmapAssociationRolesByType() throws IOException {
-		Collection<AssociationRole> roles = get("roles/typed/355", REF);
+		Collection<AssociationRole> roles = get("roles/typed/1", REF);
 
 		Assert.assertNotNull(roles);
-		Assert.assertEquals(100, roles.size()); // paged
+		Assert.assertEquals(4, roles.size());
 	}
 
 	/* -- Failing requests -- */
 
 	@Test
 	public void testInvalidTopicAssociationRoles() {
-		assertGetFails("topics/13/roles", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/20/roles", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicAssociationRolesByInvalidType() {
-		assertGetFails("topics/1/roles/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/1/roles/20", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicAssociationRolesByInvalidAssociationType() {
-		assertGetFails("topics/1/roles/355/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/1/roles/1/20", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testInvalidAssociationAssociationRoles() {
-		assertGetFails("associations/13/roles", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("associations/20/roles", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testAssociationAssociationRolesByInvalidType() {
-		assertGetFails("topics/10257/roles/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
-	}
-
-	@Test
-	public void testAssociationAssociationRolesByInvalidAssociationType() {
-		assertGetFails("topics/10257/roles/355/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("associations/14/roles/20", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicmapAssociationRolesByInvalidType() {
-		assertGetFails("roles/typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("roles/typed/20", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

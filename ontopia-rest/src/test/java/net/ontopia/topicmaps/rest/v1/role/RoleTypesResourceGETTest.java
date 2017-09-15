@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Collection;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
-import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class RoleTypesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public RoleTypesResourceGETTest() {
-		super(OPERA_TM, "roles/types");
+		super(ROLES_LTM, "roles/types");
 	}
 
 	@Test
@@ -42,7 +41,7 @@ public class RoleTypesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> types = get(null, REF);
 
 		Assert.assertNotNull(types);
-		Assert.assertFalse(types.isEmpty());
-		assertContainsTopics(types, "312");
+		Assert.assertEquals(4, types.size());
+		assertContainsTopics(types, "1", "4", "7", "10");
 	}
 }
