@@ -24,7 +24,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
-import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
 
