@@ -34,43 +34,43 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public ScopedResourcePUTTest() {
-		super(OPERA_TM, null);
+		super(SCOPED_LTM, null);
 	}
 
 	@Test
 	public void testAddScopeAssociation() throws IOException {
-		Collection<Topic> scope = put("associations/10116/scope", REF, new Topic("1"));
+		Collection<Topic> scope = put("associations/7/scope", REF, new Topic("11"));
 
 		Assert.assertNotNull(scope);
-		Assert.assertEquals(1, scope.size());
-		assertContainsTopics(scope, "1");
+		Assert.assertEquals(3, scope.size());
+		assertContainsTopics(scope, "11");
 	}
 
 	@Test
 	public void testAddScopeName() throws IOException {
-		Collection<Topic> scope = put("names/1878/scope", REF, new Topic("1"));
+		Collection<Topic> scope = put("names/4/scope", REF, new Topic("11"));
 
 		Assert.assertNotNull(scope);
-		Assert.assertEquals(1, scope.size());
-		assertContainsTopics(scope, "1");
+		Assert.assertEquals(3, scope.size());
+		assertContainsTopics(scope, "11");
 	}
 
 	@Test
 	public void testAddScopeOccurrence() throws IOException {
-		Collection<Topic> scope = put("occurrences/3270/scope", REF, new Topic("1"));
+		Collection<Topic> scope = put("occurrences/2/scope", REF, new Topic("11"));
 
 		Assert.assertNotNull(scope);
-		Assert.assertEquals(1, scope.size());
-		assertContainsTopics(scope, "1");
+		Assert.assertEquals(3, scope.size());
+		assertContainsTopics(scope, "11");
 	}
 
 	@Test
 	public void testAddScopeVariant() throws IOException {
-		Collection<Topic> scope = put("variants/2301/scope", REF, new Topic("1"));
+		Collection<Topic> scope = put("variants/6/scope", REF, new Topic("11"));
 
 		Assert.assertNotNull(scope);
-		Assert.assertEquals(2, scope.size());
-		assertContainsTopics(scope, "1", "174");
+		Assert.assertEquals(3, scope.size());
+		assertContainsTopics(scope, "11");
 	}
 
 	/* -- Failing requests -- */
@@ -82,7 +82,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testNameInvalidScope() {
-		assertPutFails("names/1878/scope", new Topic("13"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPutFails("names/4/scope", new Topic("2"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testNameUnexistingScope() {
-		assertPutFails("names/1878/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("names/4/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testOccurrenceInvalidScope() {
-		assertPutFails("occurrences/3270/scope", new Topic("13"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPutFails("occurrences/2/scope", new Topic("2"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testOccurrenceUnexistingScope() {
-		assertPutFails("occurrences/3270/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("occurrences/2/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testVariantInvalidScope() {
-		assertPutFails("variants/2301/scope", new Topic("13"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPutFails("variants/6/scope", new Topic("2"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testVariantUnexistingScope() {
-		assertPutFails("variants/2301/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("variants/6/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationInvalidScope() {
-		assertPutFails("associations/10116/scope", new Topic("13"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPutFails("associations/7/scope", new Topic("2"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
@@ -152,6 +152,6 @@ public class ScopedResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationUnexistingScope() {
-		assertPutFails("associations/10116/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("associations/7/scope", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 }
