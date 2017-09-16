@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Collection;
 import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
-import static net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest.OPERA_TM;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class AssociationTypesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public AssociationTypesResourceGETTest() {
-		super(OPERA_TM, "associations/types");
+		super(ASSOCIATIONS_LTM, "associations/types");
 	}
 
 	@Test
@@ -43,6 +42,7 @@ public class AssociationTypesResourceGETTest extends AbstractV1ResourceTest {
 
 		Assert.assertNotNull(types);
 		Assert.assertFalse(types.isEmpty());
-		assertContainsTopics(types, "484");
+		Assert.assertEquals(2, types.size());
+		assertContainsTopics(types, "1", "4");
 	}
 }

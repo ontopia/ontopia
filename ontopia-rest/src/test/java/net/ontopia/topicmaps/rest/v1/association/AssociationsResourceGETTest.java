@@ -34,17 +34,17 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Association>> REF = new TypeReference<Collection<Association>>(){};
 
 	public AssociationsResourceGETTest() {
-		super(OPERA_TM, null);
+		super(ASSOCIATIONS_LTM, null);
 	}
 
 	@Test
 	public void testTopicAssociations() throws IOException {
-		Collection<Association> associations = get("topics/301/associations", REF);
+		Collection<Association> associations = get("topics/1/associations", REF);
 
 		Assert.assertNotNull(associations);
-		Assert.assertEquals(3, associations.size());
+		Assert.assertEquals(2, associations.size());
 		Assert.assertEquals(Association.class, associations.iterator().next().getClass());
-		assertContainsTopics(associations, "406", "403", "400");
+		assertContainsTopics(associations, "2", "10");
 	}
 
 	@Test
@@ -52,24 +52,24 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Association> associations = get("topics/unexisting/associations", REF);
 
 		Assert.assertNotNull(associations);
-		Assert.assertEquals(100, associations.size()); // all associations in the topicmap, paged
+		Assert.assertEquals(3, associations.size()); // all associations in the topicmap, paged
 	}
 
 	@Test
 	public void testTopicAssociationsByType() throws IOException {
-		Collection<Association> associations = get("topics/1/associations/26", REF);
+		Collection<Association> associations = get("topics/1/associations/1", REF);
 
 		Assert.assertNotNull(associations);
 		Assert.assertEquals(1, associations.size());
-		assertContainsTopics(associations, "27");
+		assertContainsTopics(associations, "2");
 	}
 
 	@Test
 	public void testUnexistingTopicAssociationsByType() throws IOException {
-		Collection<Association> associations = get("topics/301/associations/unexisting", REF);
+		Collection<Association> associations = get("topics/1/associations/unexisting", REF);
 
 		Assert.assertNotNull(associations);
-		Assert.assertEquals(3, associations.size()); // all associations of the topic
+		Assert.assertEquals(2, associations.size()); // all associations of the topic
 	}
 
 	@Test
@@ -77,32 +77,32 @@ public class AssociationsResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Association> associations = get("associations", REF);
 
 		Assert.assertNotNull(associations);
-		Assert.assertEquals(100, associations.size()); // paged
+		Assert.assertEquals(3, associations.size());
 	}
 
 	@Test
 	public void testTopicmapAssociationsByType() throws IOException {
-		Collection<Association> associations = get("associations/typed/26", REF);
+		Collection<Association> associations = get("associations/typed/4", REF);
 
 		Assert.assertNotNull(associations);
-		Assert.assertEquals(1, associations.size());
-		assertContainsTopics(associations, "27");
+		Assert.assertEquals(2, associations.size());
+		assertContainsTopics(associations, "5", "10");
 	}
 
 	/* -- Failing requests -- */
 	
 	@Test
 	public void testInvalidTopicAssociations() {
-		assertGetFails("topics/13/associations", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/2/associations", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicAssociationsByInvalidType() {
-		assertGetFails("topics/1/associations/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("topics/1/associations/2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testTopicmapAssociationsByInvalidType() {
-		assertGetFails("associations/typed/13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("associations/typed/2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

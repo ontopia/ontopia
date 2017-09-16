@@ -33,22 +33,22 @@ import org.restlet.data.MediaType;
 public class AssociationResourceGETTest extends AbstractV1ResourceTest {
 
 	public AssociationResourceGETTest() {
-		super(OPERA_TM, "associations");
+		super(ASSOCIATIONS_LTM, "associations");
 	}
 
 	@Test
 	public void testGetConverted() {
-		Association association = get("16069", Association.class);
+		Association association = get("2", Association.class);
 
 		Assert.assertNotNull(association);
 
-		Assert.assertEquals("16069", association.getObjectId());
+		Assert.assertEquals("2", association.getObjectId());
 
 		Assert.assertNotNull(association.getType());
-		Assert.assertEquals("473", association.getType().getObjectId());
+		Assert.assertEquals("1", association.getType().getObjectId());
 
 		Assert.assertNotNull(association.getRoles());
-		Assert.assertEquals(2, association.getRoles().size());
+		Assert.assertEquals(1, association.getRoles().size());
 		
 		// has no reifier
 		Assert.assertNull(association.getReifier());
@@ -59,27 +59,27 @@ public class AssociationResourceGETTest extends AbstractV1ResourceTest {
 	}
 
 	public void testReified() {
-		Association association = get("16480", Association.class);
+		Association association = get("5", Association.class);
 
 		Assert.assertNotNull(association.getReifier());
-		Assert.assertEquals("6797", association.getReifier().getObjectId());
+		Assert.assertEquals("4", association.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testWithScope() {
-		Association association = get("14085", Association.class);
+		Association association = get("5", Association.class);
 
 		Assert.assertNotNull(association.getScope());
 		Assert.assertFalse(association.getScope().isEmpty());
 		Assert.assertEquals(1, association.getScope().size());
-		assertContainsTopics(association.getScope(), "2965");
+		assertContainsTopics(association.getScope(), "4");
 	}
 
 	@Test
 	public void testGetJSON() throws IOException {
-		Map<String, Object> parsed = getAsJson("14085");
+		Map<String, Object> parsed = getAsJson("2");
 		Assert.assertNotNull(parsed);
-		Assert.assertEquals("14085", parsed.get("objectId"));
+		Assert.assertEquals("2", parsed.get("objectId"));
 	}
 
 	// test recoverable client failures
@@ -87,24 +87,24 @@ public class AssociationResourceGETTest extends AbstractV1ResourceTest {
 		assertGetFails("foo", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 	@Test public void testGetWrongType() throws IOException {
-		assertGetFails("13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("1", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	// Unsupported topicmap media types: CTM, LTM, XTM, TMXML all result in http 406
 	// test text/plain as a non-topicmap mime
 	@Test public void testGetText() throws IOException {
-		assertGetFails("16069", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", MediaType.TEXT_PLAIN, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetCTM() throws IOException {
-		assertGetFails("16069", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.CTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetLTM() throws IOException {
-		assertGetFails("16069", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.LTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetXTM() throws IOException {
-		assertGetFails("16069", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.XTM_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 	@Test public void testGetTMXML() throws IOException {
-		assertGetFails("16069", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
+		assertGetFails("2", Constants.TMXML_MEDIA_TYPE, OntopiaRestErrors.UNSUPPORTED_MIME_TYPE);
 	}
 }
