@@ -32,7 +32,6 @@ public abstract class AbstractV1ResourceTest extends AbstractResourceTest {
 	public static final String ASSOCIATIONS_LTM = "associations.ltm";
 	public static final String SCOPED_LTM = "scoped.ltm";
 	public static final String PAGED_LTM = "paged.ltm";
-	public static final String OPERA_TM = "ItalianOpera.ltm";
 
 	public AbstractV1ResourceTest() {
 	}
