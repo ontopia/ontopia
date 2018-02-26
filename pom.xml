@@ -276,6 +276,7 @@
 							<group><title>RDBMS Backend Connector Packages</title><packages>net.ontopia.topicmaps.impl.rdbms</packages></group>
 						</groups>
 						<encoding>utf-8</encoding>
+						<failOnError>false</failOnError>
 					</configuration>
 				</plugin>
 				<plugin>
