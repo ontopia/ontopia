@@ -119,13 +119,6 @@
 								<goal>run</goal>
 							</goals>
 						</execution>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>run</goal>
-							</goals>
-							<id>copy-shared-docbook-resources</id>
-						</execution>
 					</executions>
 				</plugin>
 				<plugin>
@@ -167,19 +160,6 @@
 								<goal>generate</goal>
 							</goals>
 						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>docbook-maven-plugin</artifactId>
-					<version>1.0.0-alpha-1</version>
-					<configuration>
-						 <!-- file part of path is skipped, only directory part is used and 'xhtml/docbook.xsl' is appended -->
-						<stylesheetLocation>${project.parent.basedir}/src/docbook/stylesheets/docbook2html.xslt</stylesheetLocation>
-						<outputDirectory>target/site</outputDirectory>
-					</configuration>
-					<executions>
-						<execution><phase>prepare-package</phase><goals><goal>transform</goal></goals></execution>
 					</executions>
 				</plugin>
 				<plugin>
@@ -345,15 +325,6 @@
 				<version>3.2</version>
 				<configuration>
 					<generateReports>false</generateReports>
-				</configuration>
-			</plugin>
-			<!-- run docbook on parent to create the global index -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>docbook-maven-plugin</artifactId>
-				<inherited>false</inherited>
-				<configuration>
-					<stylesheetLocation>${basedir}/src/docbook/stylesheets/docbook2html.xslt</stylesheetLocation>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -66,10 +66,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>docbook-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
@@ -83,14 +79,6 @@
 								<!-- TLD file needs to be either in a Jar file or in webapp directory for Apache Jasper -->
 								<!-- This statement copies it to the designated Maven directory -->
 								<copy file="src/main/resources/META-INF/webed-form.tld" tofile="target/test-webapp/WEB-INF/jsp/webed-form.tld" />
-							</target>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-shared-docbook-resources</id>
-						<configuration>
-							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="main" />
 							</target>
 						</configuration>
 					</execution>

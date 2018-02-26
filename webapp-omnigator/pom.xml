@@ -87,50 +87,22 @@
 						</goals>
 						<configuration>
 							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="collect-omnigator-docs" />
+								<!--<ant antfile="../src/docbook/ant/build.xml" target="collect-omnigator-docs" />-->
 							</target>
 						</configuration>
 					</execution>
 										
-					<!-- default doc generation for site building -->
-					<execution>
-						<id>copy-shared-docbook-resources</id>
-						<configuration>
-							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="main" />
-							</target>
-						</configuration>
-					</execution>
-					
 					<execution>
 						<id>move-docs-in-place</id>
 						<phase>package</phase>
 						<goals><goal>run</goal></goals>
 						<configuration>
 							<target>
-								<copy todir="target/site/">
+<!--								<copy todir="target/site/">
 									<fileset dir="target/${project.build.finalName}/docs/" />
 								</copy>
-								<ant antfile="../src/docbook/ant/build.xml" target="main" />
+								<ant antfile="../src/docbook/ant/build.xml" target="main" />-->
 							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>docbook-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>collect-omnigator-docs</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>transform</goal>
-						</goals>
-						<configuration>
-							<resourceDirectory>target/docbook-collected/resources</resourceDirectory>
-							<sourceDirectory>target/docbook-collected</sourceDirectory>
-							<outputDirectory>target/${project.build.finalName}/docs</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
