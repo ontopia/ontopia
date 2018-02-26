@@ -29,11 +29,9 @@ public class CachedIndexTest extends TestCase {
     super(name);
   }
 
+  @Override
   protected void setUp() {
     index = new CachedIndex(new EmptyIndex());
-  }
-
-  protected void tearDown() {
   }
 
   // --- Test cases
@@ -142,14 +140,17 @@ public class CachedIndexTest extends TestCase {
   // --- SameIndex
 
   class SameIndex implements LookupIndexIF {
+    @Override
     public Object get(Object key) {
       return key;
     }
 
+    @Override
     public Object put(Object key, Object value) {
       return value;
     }
 
+    @Override
     public Object remove(Object key) {
       return key;
     }
@@ -158,14 +159,17 @@ public class CachedIndexTest extends TestCase {
   // --- EmptyIndex
 
   class EmptyIndex implements LookupIndexIF {
+    @Override
     public Object get(Object key) {
       return null;
     }
 
+    @Override
     public Object put(Object key, Object value) {
       return value;
     }
 
+    @Override
     public Object remove(Object key) {
       return null;
     }

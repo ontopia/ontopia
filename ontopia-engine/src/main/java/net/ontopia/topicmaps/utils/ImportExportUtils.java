@@ -23,10 +23,9 @@ package net.ontopia.topicmaps.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Set;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReader;
@@ -40,6 +39,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ServiceUtils;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.URIUtils;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.slf4j.LoggerFactory;
@@ -50,6 +50,11 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 public class ImportExportUtils {
+  private static final String ONTOPIA_RDBMS_URI_PREFIX = "x-ontopia:tm-rdbms:";
+  private static final String XTM_EXTENSION = ".xtm";
+  private static final String TMX_EXTENSION = ".tmx";
+  private static final String LTM_EXTENSION = ".ltm";
+  private static final String CTM_EXTENSION = ".ctm";
 
   private static Set<ImportExportServiceIF> services;
   
@@ -75,52 +80,14 @@ public class ImportExportUtils {
   }
 
   /**
-   * PUBLIC: Given the topic map store properties file and file name
-   * or URL of a topic map, returns a topic map reader of the right
-   * class. Uses the file extension to determine what reader to
-   * create. Supports the suffixes '.xtm' and '.ltm' and URI schemes
-   * 'x-ontopia:tm-rdbms:'.
-   * 
-   * @since 1.2.4
-   */
-  public static TopicMapReaderIF getReader (String propfile,
-      String filename_or_url) {
-
-    if (filename_or_url.startsWith ("x-ontopia:tm-rdbms:"))
-      return new RDBMSTopicMapReader (propfile, getTopicMapId (filename_or_url));
-    // Otherwise fall back to the property-less getReader method
-    return getReader (filename_or_url);
-  }
-
-  /**
-   * PUBLIC: Given the topic map store properties and file name or URL
-   * of a topic map, returns a topic map reader of the right
-   * class. Uses the file extension to determine what reader to
-   * create. Supports the suffixes '.xtm' and '.ltm' and URI schemes
-   * 'x-ontopia:tm-rdbms:'.
-   * 
-   * @since 1.2.4
-   */
-  public static TopicMapReaderIF getReader (Map<String, String> properties,
-      String filename_or_url) {
-
-    if (filename_or_url.startsWith ("x-ontopia:tm-rdbms:"))
-      return new RDBMSTopicMapReader (properties,
-          getTopicMapId (filename_or_url));
-    // Otherwise fall back to the property-less getReader method
-    return getReader (filename_or_url);
-  }
-
-  /**
    * PUBLIC: Given a file reference to a topic map, returns a topic
    * map reader of the right class. Uses the file extension to
    * determine what reader to create. Supports '.xtm', and '.ltm'.
    * 
    * @since 2.0
    */
-  public static TopicMapReaderIF getReader (java.io.File file)
-      throws java.io.IOException {
-    return getReader (file.toURL ().toExternalForm ());
+  public static TopicMapReaderIF getReader (File file) throws IOException {
+    return getReader(URIUtils.toURL(file));
   }
 
   /**
@@ -129,7 +96,11 @@ public class ImportExportUtils {
    * determine what reader to create. Supports '.xtm', and '.ltm'.
    */
   public static TopicMapReaderIF getReader (String filename_or_url) {
-    return getReader (URIUtils.getURI (filename_or_url));
+    try {
+      return getReader(StreamUtils.getResource(filename_or_url));
+    } catch (IOException ioe) {
+      throw new OntopiaRuntimeException(ioe);
+    }
   }
 
   /**
@@ -140,115 +111,68 @@ public class ImportExportUtils {
    * 
    * @since 2.0
    */
-  public static TopicMapReaderIF getReader (LocatorIF url) {
-    String address = url.getAddress ();
-
-    if (address.startsWith ("x-ontopia:tm-rdbms:"))
-      return new RDBMSTopicMapReader (getTopicMapId (address));
-    else if (address.endsWith (".xtm"))
-      return new XTMTopicMapReader (url);
-    else if (address.endsWith (".ltm"))
-      return new LTMTopicMapReader (url);
-    else if (address.endsWith (".tmx"))
-      return new TMXMLReader (url);
-    else if (address.endsWith (".xml"))
-      return new TMXMLReader(url); 
-    else if (address.endsWith (".ctm"))
-      return new CTMTopicMapReader(url);
-    else {
-      for (ImportExportServiceIF service : services) {
-        if (service.canRead(address)) {
-          return service.getReader(address);
+  private static TopicMapReaderIF getReader (URL url) {
+    String address = url.toString();
+    try {
+      if (address.startsWith (ONTOPIA_RDBMS_URI_PREFIX))
+        return new RDBMSTopicMapReader (getTopicMapId (address));
+      else if (address.endsWith (XTM_EXTENSION))
+        return new XTMTopicMapReader (url);
+      else if (address.endsWith (LTM_EXTENSION))
+        return new LTMTopicMapReader (url);
+      else if (address.endsWith (TMX_EXTENSION))
+        return new TMXMLReader (url);
+      else if (address.endsWith (".xml"))
+        return new TMXMLReader(url); 
+      else if (address.endsWith (CTM_EXTENSION))
+        return new CTMTopicMapReader(url);
+      else {
+        for (ImportExportServiceIF service : services) {
+          if (service.canRead(url)) {
+            return service.getReader(url);
+          }
         }
+        // fallback
+        return new XTMTopicMapReader (url);
       }
-      // fallback
-      return new XTMTopicMapReader (url);
+    } catch (MalformedURLException mufe) {
+      throw new OntopiaRuntimeException(mufe);
     }
   }
 
   /**
-   * PUBLIC: Given the file name or URL of a topic map, returns a
-   * topic map importer of the right class. Uses the file extension to
-   * determine what importer to create. Supports '.xtm', and '.ltm'.
-   */
-  public static TopicMapImporterIF getImporter (String filename_or_url) {
-    return getImporter (URIUtils.getURI (filename_or_url));
-  }
-
-  /**
-   * PUBLIC: Given a locator referring to a topic map, returns a topic
-   * map reader of the right class. Uses the file extension to
-   * determine what reader to create. Supports '.xtm', '.tmx', and
-   * '.ltm'.
-   * 
-   * @since 2.0
-   */
-  public static TopicMapImporterIF getImporter (LocatorIF url) {
-    String address = url.getAddress ();
-
-    if (address.endsWith (".xtm"))
-      return new XTMTopicMapReader (url);
-    else if (address.endsWith (".ltm"))
-      return new LTMTopicMapReader (url);
-    else if (address.endsWith (".tmx"))
-      return new TMXMLReader (url);
-    else if (address.endsWith (".xml"))
-      return new TMXMLReader(url); 
-    else if (address.endsWith (".ctm"))
-      return new CTMTopicMapReader(url);
-    else {
-      for (ImportExportServiceIF service : services) {
-        if (service.canRead(address)) {
-          return service.getImporter(address);
-        }
-      }
-      // fallback
-      return new XTMTopicMapReader (url);
-    }
-  }
-
-  /**
-   * PUBLIC: Given the file name of a topicmap, returns a topicmap
+   * PUBLIC: Given the file for a topicmap, returns a topicmap
    * writer of the right class. Uses the file extension to determine
    * what writer to create.  Supports '.xtm' and '.tmx'. If the suffix
    * is unknown, the default writer is a XTM writer.
    */
-  public static TopicMapWriterIF getWriter (String tmfile)
-      throws java.io.IOException {
-    if (tmfile.endsWith (".ltm"))
-      return new LTMTopicMapWriter (new FileOutputStream (tmfile));
-    else if (tmfile.endsWith (".tmx"))
-      return new TMXMLWriter (tmfile);
-    else if (tmfile.endsWith (".xtm1"))
-      return new XTMTopicMapWriter (new File (tmfile));
-    else {
+  public static TopicMapWriterIF getWriter (File tmfile) throws IOException {
+    return getWriter(tmfile, null);
+  }
+
+  /**
+   * PUBLIC: Given the file for a topicmap, returns a topicmap
+   * writer of the right class. Uses the file extension to determine
+   * what writer to create.  Supports '.xtm' and '.tmx'. If the suffix
+   * is unknown, the default writer is a XTM writer.
+   */
+  public static TopicMapWriterIF getWriter (File tmfile, String encoding) throws IOException {
+    String name = tmfile.getName();
+    if (name.endsWith(LTM_EXTENSION)) {
+      return new LTMTopicMapWriter(tmfile, encoding);
+    } else if (name.endsWith(TMX_EXTENSION)) {
+      return new TMXMLWriter(tmfile, encoding);
+    } else if (name.endsWith(".xtm1")) {
+      return new XTMTopicMapWriter(tmfile, encoding);
+    } else {
       for (ImportExportServiceIF service : services) {
-        if (service.canWrite(tmfile)) {
+        if (service.canWrite(tmfile.toURI().toURL())) {
           return service.getWriter(new FileOutputStream(tmfile));
         }
       }
       // fallback
-      return new XTM2TopicMapWriter (new File (tmfile));
+      return new XTM2TopicMapWriter(tmfile);
     }
-  }
-
-  /**
-   * PUBLIC: Given the file name of a topicmap, returns a topicmap writer of the
-   * right class. Uses the file extension to determine what writer to create.
-   * Supports '.xtm' and '.tmx'. If the suffix is unknown, the default
-   * writer is a XTM writer.
-   */
-  public static TopicMapWriterIF getWriter (String tmfile, String encoding)
-      throws java.io.IOException {
-    if (encoding == null)
-      return getWriter(tmfile);
-
-    if (tmfile.endsWith(".tmx"))
-      return new TMXMLWriter (tmfile, encoding);
-    else if (tmfile.endsWith(".xtm1"))
-      return new XTMTopicMapWriter(new File(tmfile), encoding);
-    else
-      return new XTM2TopicMapWriter(new File(tmfile), encoding);
   }
 
   /**
@@ -260,9 +184,9 @@ public class ImportExportUtils {
     int offset = 0;
     if (address.startsWith("M"))
       offset = 1;
-    else if (address.startsWith("x-ontopia:tm-rdbms:")) {
+    else if (address.startsWith(ONTOPIA_RDBMS_URI_PREFIX)) {
       // Syntax: x-ontopia:tm-rdbms:12345
-      offset = "x-ontopia:tm-rdbms:".length ();
+      offset = ONTOPIA_RDBMS_URI_PREFIX.length ();
       
       // Ignore M suffix on topic map id
       if (address.charAt (offset) == 'M')

@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.core.index;
 
+import java.util.Collections;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.PSI;
 
 public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
@@ -36,9 +38,17 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     super(name);
   }
 
+  @Override
   protected void setUp() throws Exception {
     clsix = (ClassInstanceIndexIF) super.setUp("ClassInstanceIndexIF");
     type = builder.makeTopic();
+  }
+  
+  public void testEmptyTypesIndexes() {
+    assertTrue("AssociationRoleTypes not empty.", clsix.getAssociationRoleTypes().isEmpty());
+    assertTrue("AssociationTypes not empty.", clsix.getAssociationTypes().isEmpty());
+    assertTrue("OccurrenceTypes not empty", clsix.getOccurrenceTypes().isEmpty());
+    assertTrue("TopicTypes not empty", clsix.getTopicTypes().isEmpty());
   }
 
   public void testTopicTypes() {
@@ -143,6 +153,10 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
            clsix.getAssociationRoles(type).size() == 1);
     assertTrue("Expected <role> as instance of <type>", 
            clsix.getAssociationRoles(type).contains(role));
+    assertTrue("Expected one association role of type <type> with at of <type>", 
+           clsix.getAssociationRoles(type, type).size() == 1);
+    assertTrue("Expected <role> as instance of <type> with at of <type>", 
+           clsix.getAssociationRoles(type, type).contains(role));
 
     // STATE 4: Topic map has duplicates
     AssociationIF dup = builder.makeAssociation(type);
@@ -161,6 +175,11 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
            clsix.getAssociationRoles(type).contains(dupRole));
     assertTrue("duplicate role types not suppressed",
            clsix.getAssociationRoleTypes().size() == 1);
+
+    assertTrue("role type not found", 
+           clsix.getAssociationRoles(type, type).size() == 2);
+    assertTrue("roles not found via type",
+           clsix.getAssociationRoles(type, type).contains(dupRole));
   }
 
   public void testOccurrenceTypes() {
@@ -260,6 +279,68 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     
   }
 
+  public void testAllTopicNames() {
+    assertEquals(0, clsix.getAllTopicNames().size());
+    
+    TopicIF topic = builder.makeTopic();
+    TopicNameIF tn = builder.makeTopicName(topic, "foo");
+    TopicNameIF tn2 = builder.makeTopicName(topic, topic, "bar");
+    assertEquals(2, clsix.getAllTopicNames().size());
+    assertTrue(clsix.getAllTopicNames().contains(tn));
+    assertTrue(clsix.getAllTopicNames().contains(tn2));
+    
+    tn.setType(topic);
+    assertEquals(2, clsix.getAllTopicNames().size());
+    
+    tn.remove();
+    assertEquals(1, clsix.getAllTopicNames().size());
+    assertFalse(clsix.getAllTopicNames().contains(tn));
+    
+    topic.remove();
+    assertEquals(0, clsix.getAllTopicNames().size());
+    assertFalse(clsix.getAllTopicNames().contains(tn2));
+  }
+
+  public void testAllVariantNames() {
+    assertEquals(0, clsix.getAllVariantNames().size());
+    
+    TopicIF topic = builder.makeTopic();
+    TopicNameIF tn = builder.makeTopicName(topic, "foo");
+    VariantNameIF vn = builder.makeVariantName(tn, "bar", Collections.singleton(topic));
+    VariantNameIF vn2 = builder.makeVariantName(tn, "bar2", Collections.singleton(topic));
+    assertEquals(2, clsix.getAllVariantNames().size());
+    assertTrue(clsix.getAllVariantNames().contains(vn));
+    assertTrue(clsix.getAllVariantNames().contains(vn2));
+    
+    vn2.remove();
+    assertEquals(1, clsix.getAllVariantNames().size());
+    assertFalse(clsix.getAllVariantNames().contains(vn2));
+    
+    tn.remove();
+    assertEquals(0, clsix.getAllVariantNames().size());
+    assertFalse(clsix.getAllVariantNames().contains(vn));
+  }
+
+  public void testAllOccurrences() {
+    assertEquals(0, clsix.getAllOccurrences().size());
+    
+    TopicIF topic = builder.makeTopic();
+    
+    OccurrenceIF o = builder.makeOccurrence(topic, topic, "foo");
+    OccurrenceIF o2 = builder.makeOccurrence(topic, topic, "bar");
+    assertEquals(2, clsix.getAllOccurrences().size());
+    assertTrue(clsix.getAllOccurrences().contains(o));
+    assertTrue(clsix.getAllOccurrences().contains(o2));
+    
+    o.remove();
+    assertEquals(1, clsix.getAllOccurrences().size());
+    assertFalse(clsix.getAllOccurrences().contains(o));
+    
+    topic.remove();
+    assertEquals(0, clsix.getAllOccurrences().size());
+    assertFalse(clsix.getAllOccurrences().contains(o2));
+  }
+
   public void testBug1438_basenames() {
 
     assertTrue("index finds spurious occurrence types",
@@ -340,5 +421,14 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
     builder.makeAssociationRole(builder.makeAssociation(type), type, type);
     assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
+  }
+
+  public void testBug536() {
+    assertFalse(clsix.usedAsAssociationRoleType(null));
+    assertFalse(clsix.usedAsAssociationType(null));
+    assertFalse(clsix.usedAsOccurrenceType(null));
+    assertFalse(clsix.usedAsTopicNameType(null));
+    assertFalse(clsix.usedAsTopicType(null));
+    assertFalse(clsix.usedAsType(null));
   }
 }

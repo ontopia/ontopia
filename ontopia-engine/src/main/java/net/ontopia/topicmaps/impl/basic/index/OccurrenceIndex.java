@@ -22,23 +22,23 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.SortedMap;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CollectionSortedMap;
-import net.ontopia.utils.ObjectUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.AndPredicate;
 
 /**
  * INTERNAL: The basic dynamic locator index implementation.
@@ -46,12 +46,12 @@ import net.ontopia.utils.ObjectUtils;
 
 public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
 
-  protected CollectionSortedMap occurs;
+  protected CollectionSortedMap<String, OccurrenceIF> occurs;
   
   OccurrenceIndex(IndexManagerIF imanager, EventManagerIF emanager, ObjectTreeManager otree) {
     
     // Initialize index maps
-    occurs = new CollectionSortedMap(STRING_PREFIX_COMPARATOR);
+    occurs = new CollectionSortedMap<String, OccurrenceIF>(STRING_PREFIX_COMPARATOR);
 
     // Initialize object tree event handlers [objects added or removed]    
     otree.addListener(new OccurrenceIF_added(occurs), OccurrenceIF.EVENT_ADDED);
@@ -61,21 +61,19 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     handlers.put(OccurrenceIF.EVENT_SET_VALUE, new OccurrenceIF_setValue(occurs));
 
     // Register dynamic index as event listener
-    Iterator iter = handlers.keySet().iterator();
-    while (iter.hasNext())
-      emanager.addListener(this, (String)iter.next());
+    for (String handlerKey : handlers.keySet())
+      emanager.addListener(this, handlerKey);
   }
 
   // -----------------------------------------------------------------------------
   // Utility class
   // -----------------------------------------------------------------------------
   
-  protected static final Comparator STRING_PREFIX_COMPARATOR = new Comparator() {
+  protected static final Comparator<String> STRING_PREFIX_COMPARATOR = new Comparator<String>() {
       // NOTE: need this comparator because otherwise we will get
       // null pointer exceptions when comparing with null values.
-      public int compare(Object o1, Object o2) {
-        String s1 = (String)o1;
-        String s2 = (String)o2;
+      @Override
+      public int compare(String s1, String s2) {
         if (s1 == null) {
           return s2 == null ? 0 : -1;
         } 
@@ -89,37 +87,45 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   // OccurrenceIndexIF
   // ----------------------------------------------------------------------------
   
-  public Collection getOccurrences(String value) {
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value) {
     return extractExactValues(occurs, value);
   }
   
-  public Collection getOccurrences(String value, final LocatorIF datatype) {
-    return CollectionUtils.filterSet(extractExactValues(occurs, value), new DeciderIF() {
-        public boolean ok(Object o) {
-          OccurrenceIF occ = (OccurrenceIF)o;
-          return ObjectUtils.equals(occ.getDataType(), datatype);
-        }
-      });
+
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, final TopicIF occurrenceType) {
+    return CollectionUtils.select(extractExactValues(occurs, value), new TypedPredicate(occurrenceType));
   }
 
-  public Collection getOccurrencesByPrefix(String prefix) {
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype) {
+    return CollectionUtils.select(extractExactValues(occurs, value), new DataTypePredicate(datatype));
+  }
+
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(String value, final LocatorIF datatype, final TopicIF occurrenceType) {
+    return CollectionUtils.select(extractExactValues(occurs, value), 
+            new AndPredicate<>(new DataTypePredicate(datatype), new TypedPredicate(occurrenceType)));
+  }
+
+  @Override
+  public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix) {
     return extractPrefixValues(occurs, prefix);
   }
 
-  public Collection getOccurrencesByPrefix(String prefix, final LocatorIF datatype) {
-    return CollectionUtils.filterSet(extractPrefixValues(occurs, prefix), new DeciderIF() {
-        public boolean ok(Object o) {
-          OccurrenceIF occ = (OccurrenceIF)o;
-          return ObjectUtils.equals(occ.getDataType(), datatype);
-        }
-      });
+  @Override
+  public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, final LocatorIF datatype) {
+    return CollectionUtils.select(extractPrefixValues(occurs, prefix), new DataTypePredicate(datatype));
   }
 
-  public Iterator getValuesGreaterThanOrEqual(String value) {
+  @Override
+  public Iterator<String> getValuesGreaterThanOrEqual(String value) {
     return occurs.tailMap(value).keySet().iterator();
   }
 
-  public Iterator getValuesSmallerThanOrEqual(String value) {
+  @Override
+  public Iterator<String> getValuesSmallerThanOrEqual(String value) {
     return occurs.headMap(value, true).navigableKeySet().descendingIterator();
   }
   
@@ -127,11 +133,11 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   // Helper methods
   // ----------------------------------------------------------------------------
 
-  private Collection extractExactValues(CollectionSortedMap map, String value) {
-    Collection result = (Collection)map.get(value);
-    if (result == null) return Collections.EMPTY_SET;
+  private <E> Collection<E> extractExactValues(CollectionSortedMap<String, E> map, String value) {
+    Collection<E> result = map.get(value);
+    if (result == null) return new ArrayList<E>();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<E>(result);
   }
 
   /**
@@ -139,22 +145,36 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
    * map that matches the prefix and aggregate all values stores as
    * entry values.
    */
-  private Collection extractPrefixValues(CollectionSortedMap map, String prefix) {
-    Collection result = null;
-    SortedMap tail = map.tailMap(prefix);
-    Iterator iter = tail.keySet().iterator();
+  private <E> Collection<E> extractPrefixValues(CollectionSortedMap<String, E> map, String prefix) {
+    Collection<E> result = null;
+    SortedMap<String, Collection<E>> tail = map.tailMap(prefix);
+    Iterator<String> iter = tail.keySet().iterator();
     while (iter.hasNext()) {
-      String key = (String)iter.next();
+      String key = iter.next();
       if (key == null || !key.startsWith(prefix)) {
         break;
       }
       // add values to result
-      if (result == null) result = new HashSet();
-      Collection c = (Collection)map.get(key);
+      if (result == null) result = new HashSet<E>();
+      Collection<E> c = map.get(key);
       result.addAll(c);
       
     }
-    return (result == null ? Collections.EMPTY_SET : result);
+    return (result == null ? new HashSet<E>() : result);
+  }
+
+  private class DataTypePredicate implements Predicate<OccurrenceIF> {
+
+    private final LocatorIF datatype;
+
+    public DataTypePredicate(LocatorIF datatype) {
+      this.datatype = datatype;
+    }
+    
+    @Override
+    public boolean evaluate(OccurrenceIF occurrence) {
+      return Objects.equals(occurrence.getDataType(), datatype);
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -164,12 +184,13 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   /**
    * EventHandler: OccurrenceIF.setValue
    */
-  class OccurrenceIF_setValue extends EventHandler {
-    protected CollectionSortedMap objects;
-    OccurrenceIF_setValue(CollectionSortedMap objects) {
+  class OccurrenceIF_setValue extends EventHandler<OccurrenceIF, String> {
+    protected CollectionSortedMap<String, OccurrenceIF> objects;
+    OccurrenceIF_setValue(CollectionSortedMap<String, OccurrenceIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
+    @Override
+    public void processEvent(OccurrenceIF object, String event, String new_value, String old_value) {
       objects.move(object, old_value, new_value);
     }
   }
@@ -177,25 +198,27 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   /**
    * EventHandler: OccurrenceIF.added
    */
-  class OccurrenceIF_added extends EventHandler {
-    protected CollectionSortedMap objects;
-    OccurrenceIF_added(CollectionSortedMap objects) {
+  class OccurrenceIF_added extends EventHandler<Object, OccurrenceIF> {
+    protected CollectionSortedMap<String, OccurrenceIF> objects;
+    OccurrenceIF_added(CollectionSortedMap<String, OccurrenceIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      objects.add(((OccurrenceIF)new_value).getValue(), new_value);
+    @Override
+    public void processEvent(Object object, String event, OccurrenceIF new_value, OccurrenceIF old_value) {
+      objects.add(new_value.getValue(), new_value);
     }
   }
   /**
    * EventHandler: OccurrenceIF.removed
    */
-  class OccurrenceIF_removed extends EventHandler {
-    protected CollectionSortedMap objects;
-    OccurrenceIF_removed(CollectionSortedMap objects) {
+  class OccurrenceIF_removed extends EventHandler<Object, OccurrenceIF> {
+    protected CollectionSortedMap<String, OccurrenceIF> objects;
+    OccurrenceIF_removed(CollectionSortedMap<String, OccurrenceIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      objects.remove(((OccurrenceIF)old_value).getValue(), old_value);
+    @Override
+    public void processEvent(Object object, String event, OccurrenceIF new_value, OccurrenceIF old_value) {
+      objects.remove(old_value.getValue(), old_value);
     }
   }
  

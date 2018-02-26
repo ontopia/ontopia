@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.AbstractList;
 import java.util.List;
+import java.util.Map;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.ArrayMap;
@@ -34,13 +35,13 @@ public class QueryResultWrappers  {
 
   // --- external interface
 
-  public static List getWrapper(QueryResultIF result) {
+  public static List<Map<String, Object>> getWrapper(QueryResultIF result) {
     return new ThreadSafeMapList((QueryResult) result);
   }
   
-  private static class ThreadSafeMapList extends AbstractList  {
+  private static class ThreadSafeMapList extends AbstractList<Map<String, Object>>  {
 
-    protected Object[] coldefs;
+    protected String[] coldefs;
     protected Object[][] data;
     protected int size;
     protected int offset;
@@ -49,7 +50,7 @@ public class QueryResultWrappers  {
       this(result.getColumnNames(), result.matches.data, result.last, result.current);
     }
       
-    protected ThreadSafeMapList(Object[] coldefs, Object[][] data, int size,
+    protected ThreadSafeMapList(String[] coldefs, Object[][] data, int size,
                                 int offset) {
       this.coldefs = coldefs;
       this.data = data;
@@ -62,11 +63,13 @@ public class QueryResultWrappers  {
     
     // --- unmodifiable list implementation
     
-    public Object get(int index) {
+    @Override
+    public Map<String, Object> get(int index) {
       // create new rowmap
-      return new ArrayMap(coldefs, data[index + (offset + 1)]);
+      return new ArrayMap<String, Object>(coldefs, data[index + (offset + 1)]);
     }
     
+    @Override
     public int size() {
       return size;
     }

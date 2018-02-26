@@ -48,32 +48,38 @@ public class DynamicAssociationRole extends AssociationRole {
     super(tm);
   }
 
+  @Override
   public AssociationIF getAssociation() {
 
     if (target == null) return super.getAssociation();
     return target.getAssociation();
   }
+  @Override
   public TopicIF getPlayer() {
 
     if (target == null) return super.getPlayer();
     return target.getPlayer();
   }
+  @Override
   public TopicIF getType() {
 
     if (target == null) return super.getType();
     return target.getType();
   }
+  @Override
   public boolean isConnected() {
 
     if (target == null) return super.isConnected();
     return target.isConnected();
   }
 
+  @Override
   public void setPlayer(TopicIF player) {
 
     if (target == null) super.setPlayer(player);
     else target.setPlayer(player);
   }
+  @Override
   public void setType(TopicIF type) {
 
     if (target == null) super.setType(type);
@@ -84,42 +90,50 @@ public class DynamicAssociationRole extends AssociationRole {
   
     target = aRole;
   }
+  @Override
   public String toString() {
 
     if (target == null) return super.toString();
     return "{" + super.toString() + "}";
   }
+  @Override
   public void addItemIdentifier(LocatorIF source_locator)
       throws ConstraintViolationException {
 
     if (target == null) super.addItemIdentifier(source_locator);
     else target.addItemIdentifier(source_locator);
   }
+  @Override
   public String getObjectId() {
 
     if (target == null) return super.getObjectId();
     return target.getObjectId();
   }
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
 
     if (target == null) return super.getItemIdentifiers();
     return target.getItemIdentifiers();
   }
+  @Override
   public TopicMapIF getTopicMap() {
 
     if (target == null) return super.getTopicMap();
     return target.getTopicMap();
   }
+  @Override
   public boolean isReadOnly() {
 
     if (target == null) return super.isReadOnly();
     return target.isReadOnly();
   }
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
 
     if (target == null) super.removeItemIdentifier(source_locator);
     else target.removeItemIdentifier(source_locator);
   }
+  @Override
   public boolean equals(Object obj) {
 
     if (obj instanceof DynamicAssociationRole) {
@@ -138,6 +152,7 @@ public class DynamicAssociationRole extends AssociationRole {
     return target.equals(obj);
   
   }
+  @Override
   public int hashCode() {
 
     if (target == null) return super.hashCode();

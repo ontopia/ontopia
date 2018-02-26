@@ -38,10 +38,12 @@ public class ConferencePlugin implements ClassifyPluginIF, HttpServletRequestAwa
 
   private HttpServletRequest request;
   
+  @Override
   public void setRequest(HttpServletRequest request) {
     this.request = request;
   }
   
+  @Override
   public boolean isClassifiable(TopicIF topic) {
     if (topic == null) return false;
     TopicMapIF tm = topic.getTopicMap();
@@ -59,6 +61,7 @@ public class ConferencePlugin implements ClassifyPluginIF, HttpServletRequestAwa
     }
   }
 
+  @Override
   public ClassifiableContentIF getClassifiableContent(TopicIF topic) {
     if (topic == null) return null;
     TopicMapIF tm = topic.getTopicMap();

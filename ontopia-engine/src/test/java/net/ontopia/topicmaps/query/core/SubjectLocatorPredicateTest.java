@@ -35,6 +35,7 @@ public class SubjectLocatorPredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();    
   }

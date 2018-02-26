@@ -135,6 +135,7 @@ public abstract class AbstractURLTopicMapReference
     this.reuse_store = reuse_store;
   }
 
+  @Override
   public synchronized void open() {
     // ignore if already open
     if (isOpen()) return;
@@ -161,6 +162,7 @@ public abstract class AbstractURLTopicMapReference
     this.isopen = true;
   }
 
+  @Override
   public synchronized void close() {    
     // close and dereference store
     if (store != null) {
@@ -177,6 +179,7 @@ public abstract class AbstractURLTopicMapReference
    *
    * @since 1.3.2
    */
+  @Override
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -197,6 +200,7 @@ public abstract class AbstractURLTopicMapReference
     this.deleted = true;
   }
   
+  @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly) throws IOException {
     if (!isOpen()) open();
 
@@ -215,6 +219,7 @@ public abstract class AbstractURLTopicMapReference
 
   protected abstract TopicMapIF loadTopicMap(boolean readonly) throws IOException;
   
+  @Override
   public String toString() {
     return super.toString() + " [" + url.toString() + "]";
   }
@@ -247,6 +252,7 @@ public abstract class AbstractURLTopicMapReference
     this.indexDirectory = indexDirectory;
   }
 
+  @Override
   protected void setTopicListeners(TopicMapListenerIF[] topic_listeners) {
     super.setTopicListeners(topic_listeners);
     if (reuse_store && store != null) {

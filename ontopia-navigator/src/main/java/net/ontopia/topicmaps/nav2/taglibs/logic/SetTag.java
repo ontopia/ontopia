@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 public class SetTag extends TagSupport implements ValueAcceptingTagIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(SetTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // constants
   private static final StringifierIF DEF_TOPIC_STRINGIFIER = TopicStringifiers
@@ -74,6 +74,7 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() {
     this.contextTag = FrameworkUtils.getContextTag(pageContext);
     this.currentScope = contextTag.getContextManager().getCurrentScope();
@@ -84,6 +85,7 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() {
     
     // Called when we hit the end tag, so that even if the tag has no
@@ -123,6 +125,7 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!
@@ -158,6 +161,7 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
   // ValueAcceptingTagIF implementation
   // -----------------------------------------------------------------
   
+  @Override
   public void accept(Collection value) {
     this.value = value;
   }

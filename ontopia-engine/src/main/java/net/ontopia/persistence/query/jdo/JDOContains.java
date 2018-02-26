@@ -52,6 +52,7 @@ public class JDOContains implements JDOExpressionIF {
     this.right = right;
   }
   
+  @Override
   public int getType() {
     return CONTAINS;
   }
@@ -64,10 +65,12 @@ public class JDOContains implements JDOExpressionIF {
     return right;
   }
   
+  @Override
   public int hashCode() {
     return left.hashCode() + right.hashCode() + CONTAINS;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOContains) {
@@ -78,10 +81,12 @@ public class JDOContains implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return left + ".contains(" + right + ")";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(left);
     visitor.visitable(right);

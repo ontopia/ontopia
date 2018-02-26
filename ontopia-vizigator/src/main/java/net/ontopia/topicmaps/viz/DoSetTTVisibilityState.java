@@ -30,6 +30,7 @@ public class DoSetTTVisibilityState implements RecoveryObjectIF {
     this.visibility = visibility;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     VizController controller = view.controller;
     controller.getConfigurationManager().setTypeVisible(type, visibility);    

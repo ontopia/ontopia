@@ -32,6 +32,6 @@ public interface HttpServletRequestAwareIF {
    * INTERNAL: Callback method handing over the current servlet
    * request. This method will be called once per HTTP request.
    */ 
-  public void setRequest(HttpServletRequest request);
+  void setRequest(HttpServletRequest request);
   
 }

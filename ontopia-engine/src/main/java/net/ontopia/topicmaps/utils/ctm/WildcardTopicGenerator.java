@@ -29,10 +29,12 @@ public class WildcardTopicGenerator extends AbstractTopicGenerator {
     this.context = context;
   }
   
+  @Override
   public TopicIF getTopic() {
     return context.makeAnonymousTopic();
   }
 
+  @Override
   public ValueGeneratorIF copy() {
     return this; // no state, so...
   }

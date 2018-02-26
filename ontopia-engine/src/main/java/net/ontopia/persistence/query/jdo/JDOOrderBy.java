@@ -62,6 +62,7 @@ public class JDOOrderBy {
     return value;
   }
 
+  @Override
   public int hashCode() {
     if (isAggregate())      
       return aggregate.hashCode() + order;
@@ -69,6 +70,7 @@ public class JDOOrderBy {
       return value.hashCode() + order;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOOrderBy) {
@@ -88,6 +90,7 @@ public class JDOOrderBy {
     return false;
   }
 
+  @Override
   public String toString() {
     if (aggregate == null)
       return value + (order == ASCENDING ? " ascending" : " descending");

@@ -55,9 +55,9 @@ import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.xml.sax.DocumentHandler;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * PRIVATE: A generic implementation of the TMRAP protocol,
@@ -91,18 +91,18 @@ public class TMRAPImplementation {
                               String[] tmids, 
                               String syntax,
                               String view,
-                              DocumentHandler handler) throws Exception {
+                              ContentHandler handler) throws Exception {
 
     // verify parameters
     if (syntax == null)
       syntax = RAPServlet.SYNTAX_XTM; // default
-    if (!(syntax.equals(RAPServlet.SYNTAX_XTM) || 
-          syntax.equals(RAPServlet.SYNTAX_TM_XML)))
+    if (!(RAPServlet.SYNTAX_XTM.equals(syntax) || 
+          RAPServlet.SYNTAX_TM_XML.equals(syntax)))
       throw new TMRAPException("Invalid value for 'syntax' parameter: '" +
                                syntax + "'");
     if (view == null)
       view = "stub";
-    if (!view.equals("stub") && !view.equals("names"))
+    if (!"stub".equals(view) && !"names".equals(view))
       throw new TMRAPException("Invalid value for 'view' parameter: '" +
                                view + "'");
 
@@ -110,11 +110,11 @@ public class TMRAPImplementation {
     TopicIndexIF index = getTopicIndex(navapp, true, tmids);
     try {
       Collection<TopicIF> topics = index.getTopics(indicators, items, subjects);
-      if (syntax.equals(RAPServlet.SYNTAX_XTM))
+      if (RAPServlet.SYNTAX_XTM.equals(syntax))
         generateXTM(handler, topics, subjects, items, indicators, true);
       else {     
         generateTMXML(handler, topics, subjects, items, indicators,
-                      view.equals("names"),
+                "names".equals(view),
                       tmids != null && tmids.length == 1);
       }
     } finally {
@@ -137,7 +137,7 @@ public class TMRAPImplementation {
                               String tmid,
                               String syntax,
                               String view,
-                              DocumentHandler handler) throws Exception {
+                              ContentHandler handler) throws Exception {
 
     if (tmid == null)
       throw new TMRAPException("No value given for required parameter " +
@@ -511,20 +511,20 @@ public class TMRAPImplementation {
     return new FederatedTopicIndex(topicIndexes);
   }
 
-  private static void generateXTM(DocumentHandler ser, Collection<TopicIF> topics,
+  private static void generateXTM(ContentHandler ser, Collection<TopicIF> topics,
                                   Collection<LocatorIF> subjectLocators,
                                   Collection<LocatorIF> srclocs,
                                   Collection<LocatorIF> indicators, boolean merge)
     throws SAXException {
         
-    AttributeListImpl atts = new AttributeListImpl();
-    atts.addAttribute("xmlns", "CDATA", "http://www.topicmaps.org/xtm/1.0/");
-    atts.addAttribute("xmlns:xlink", "CDATA", "http://www.w3.org/1999/xlink");
+    AttributesImpl atts = new AttributesImpl();
+    atts.addAttribute("", "", "xmlns", "CDATA", "http://www.topicmaps.org/xtm/1.0/");
+    atts.addAttribute("", "", "xmlns:xlink", "CDATA", "http://www.w3.org/1999/xlink");
     
     ser.startDocument();
         
     // Output element
-    ser.startElement("topicMap", atts);
+    ser.startElement("", "", "topicMap", atts);
 
     // serialize as XTM Fragment 
     XTMFragmentExporter fragExporter = new XTMFragmentExporter();
@@ -538,48 +538,48 @@ public class TMRAPImplementation {
       String suffix =
         new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) +
         (counter++);
-      atts.addAttribute("id", "CDATA", "unifying-topic-" + suffix);
-      ser.startElement("topic", atts);
+      atts.addAttribute("", "", "id", "CDATA", "unifying-topic-" + suffix);
+      ser.startElement("", "", "topic", atts);
 
       atts.clear();
-      ser.startElement("subjectIdentity", atts);
+      ser.startElement("", "", "subjectIdentity", atts);
 
       Iterator<LocatorIF> sublociter = subjectLocators.iterator();
       while (sublociter.hasNext()) {
         LocatorIF uriloc = sublociter.next();            
         atts.clear();
-        atts.addAttribute("xlink:href", "CDATA", uriloc.getExternalForm());
-        ser.startElement("resourceRef", atts);  
-        ser.endElement("resourceRef");
+        atts.addAttribute("", "", "xlink:href", "CDATA", uriloc.getExternalForm());
+        ser.startElement("", "", "resourceRef", atts);  
+        ser.endElement("", "", "resourceRef");
       }
                               
       Iterator<LocatorIF> srclociter = srclocs.iterator();
       while (srclociter.hasNext()) {
         LocatorIF uriloc = srclociter.next();            
         atts.clear();
-        atts.addAttribute("xlink:href", "CDATA", uriloc.getExternalForm());         
-        ser.startElement("topicRef", atts);   
-        ser.endElement("topicRef");
+        atts.addAttribute("", "", "xlink:href", "CDATA", uriloc.getExternalForm());         
+        ser.startElement("", "", "topicRef", atts);   
+        ser.endElement("", "", "topicRef");
       }
       
       Iterator<LocatorIF> indicatoriter = indicators.iterator();
       while (indicatoriter.hasNext()) {
         LocatorIF uriloc = indicatoriter.next();            
         atts.clear();
-        atts.addAttribute("xlink:href", "CDATA", uriloc.getExternalForm());
-        ser.startElement("subjectIndicatorRef", atts); 
-        ser.endElement("subjectIndicatorRef");                  
+        atts.addAttribute("", "", "xlink:href", "CDATA", uriloc.getExternalForm());
+        ser.startElement("", "", "subjectIndicatorRef", atts); 
+        ser.endElement("", "", "subjectIndicatorRef");                  
       }
-      ser.endElement("subjectIdentity");
-      ser.endElement("topic");    
+      ser.endElement("", "", "subjectIdentity");
+      ser.endElement("", "", "topic");    
     }
         
     // output XTM close
-    ser.endElement("topicMap");    
+    ser.endElement("", "", "topicMap");    
     ser.endDocument();
   }
 
-  private static void generateTMXML(DocumentHandler ser, Collection<TopicIF> topics,
+  private static void generateTMXML(ContentHandler ser, Collection<TopicIF> topics,
                                     Collection<LocatorIF> subjectLocators,
                                     Collection<LocatorIF> srclocs,
                                     Collection<LocatorIF> indicators,
@@ -635,7 +635,7 @@ public class TMRAPImplementation {
       while (it2.hasNext()) {
         AssociationRoleIF other = it2.next();
         TopicIF refd = other.getPlayer();
-        if (refd != source)
+        if (!refd.equals(source))
           copyTopic(tm, refd);
       }
     }
@@ -676,32 +676,32 @@ public class TMRAPImplementation {
     return topics;
   }
   
-  private static void generateTolog(DocumentHandler handler,
+  private static void generateTolog(ContentHandler handler,
                                     QueryResultIF result,
                                     String view)
     throws SAXException, TMRAPException {
-    AttributeListImpl atts = new AttributeListImpl();
+    AttributesImpl atts = new AttributesImpl();
     handler.startDocument();
 
-    atts.addAttribute("xmlns:x", "CDATA", "http://www.topicmaps.org/xtm/1.0/");
-    atts.addAttribute("xmlns:l", "CDATA", "http://www.w3.org/1999/xlink");
-    handler.startElement("result", atts);
+    atts.addAttribute("", "", "xmlns:x", "CDATA", "http://www.topicmaps.org/xtm/1.0/");
+    atts.addAttribute("", "", "xmlns:l", "CDATA", "http://www.w3.org/1999/xlink");
+    handler.startElement("", "", "result", atts);
 
     atts.clear();
-    handler.startElement("head", atts);
+    handler.startElement("", "", "head", atts);
     for (int ix = 0; ix < result.getWidth(); ix++) {
-      handler.startElement("column", atts);
+      handler.startElement("", "", "column", atts);
       String name = result.getColumnName(ix);
       char[] chars = name.toCharArray();
       handler.characters(chars, 0, chars.length);      
-      handler.endElement("column");
+      handler.endElement("", "", "column");
     }
-    handler.endElement("head");
+    handler.endElement("", "", "head");
 
     while (result.next()) {
-      handler.startElement("row", atts);
+      handler.startElement("", "", "row", atts);
       for (int ix = 0; ix < result.getWidth(); ix++) {
-        handler.startElement("value", atts);
+        handler.startElement("", "", "value", atts);
         Object value = result.getValue(ix);
         if (value == null) {
           // use empty element
@@ -709,9 +709,9 @@ public class TMRAPImplementation {
           TopicIF topic = (TopicIF) value;
           if (view == null)
             view = "stub";
-          if (view.equals("stub"))
+          if ("stub".equals(view))
             makeStub(topic, handler);
-          else if (view.equals("full-name"))
+          else if ("full-name".equals(view))
             makeFullName(topic, handler);
         } else if (value instanceof String || value instanceof Number) {
           String svalue = value.toString();
@@ -720,18 +720,18 @@ public class TMRAPImplementation {
         } else
           throw new TMRAPException("Unsupported value: " + value);
         
-        handler.endElement("value");
+        handler.endElement("", "", "value");
       }
-      handler.endElement("row");
+      handler.endElement("", "", "row");
     }
     
-    handler.endElement("result");
+    handler.endElement("", "", "result");
     handler.endDocument();
   }
 
-  public static void makeStub(TopicIF topic, DocumentHandler handler)
+  public static void makeStub(TopicIF topic, ContentHandler handler)
     throws TMRAPException, SAXException {
-    AttributeListImpl atts = new AttributeListImpl(); // this is slow!!
+    AttributesImpl atts = new AttributesImpl(); // this is slow!!
     LocatorIF loc;
     String elemname;
     if (!topic.getSubjectLocators().isEmpty()) {
@@ -746,12 +746,12 @@ public class TMRAPImplementation {
     } else
       throw new TMRAPException("Not implemented yet"); // FIXME!!
 
-    atts.addAttribute("l:href", "CDATA", loc.getExternalForm());
-    handler.startElement(elemname, atts);
-    handler.endElement(elemname);
+    atts.addAttribute("", "", "l:href", "CDATA", loc.getExternalForm());
+    handler.startElement("", "", elemname, atts);
+    handler.endElement("", "", elemname);
   }
 
-  public static void makeFullName(TopicIF topic, DocumentHandler handler)
+  public static void makeFullName(TopicIF topic, ContentHandler handler)
     throws SAXException {
     generateTMXML(handler, Collections.singleton(topic),
                   null, Collections.<LocatorIF>emptyList(),

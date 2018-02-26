@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class DB2TM {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(DB2TM.class);
+  private static Logger log = LoggerFactory.getLogger(DB2TM.class);
 
   private DB2TM() {
     // not possible to instantiate

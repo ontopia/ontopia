@@ -36,7 +36,7 @@ public interface OutputProducingTagIF {
    * provided access by specified iterator. This is expected to be
    * written to the <code>JspWriter</code> object.
    */
-  public void generateOutput(JspWriter out,
+  void generateOutput(JspWriter out,
                              Iterator iterator)
     throws JspTagException, IOException;
   

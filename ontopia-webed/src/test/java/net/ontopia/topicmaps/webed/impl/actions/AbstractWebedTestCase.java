@@ -41,7 +41,6 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.WebEdRequestIF;
 import net.ontopia.topicmaps.webed.impl.basic.ActionParameters;
 import net.ontopia.topicmaps.webed.impl.basic.ActionResponse;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.FakeServletResponse;
@@ -61,6 +60,7 @@ public abstract class AbstractWebedTestCase extends TestCase {
   
   // helper methods
   
+  @Override
   public void setUp() {
     try {
       tm = ImportExportUtils.getReader(TestFileUtils.getTestInputFile(testdataDirectory, "football.ltm")).read();

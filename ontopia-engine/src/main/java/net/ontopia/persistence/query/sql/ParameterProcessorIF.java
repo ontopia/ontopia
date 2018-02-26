@@ -32,10 +32,10 @@ import java.util.Map;
 
 public interface ParameterProcessorIF {
 
-  public ResultSet executeQuery(Connection conn, String sql, Object[] params)
+  ResultSet executeQuery(Connection conn, String sql, Object[] params)
     throws SQLException;
 
-  public ResultSet executeQuery(Connection conn, String sql, Map params)
+  ResultSet executeQuery(Connection conn, String sql, Map params)
     throws SQLException;
   
 }

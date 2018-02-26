@@ -30,12 +30,13 @@ import java.util.Iterator;
  */
 
 public class IteratorComparator<T> implements Comparator<Iterator<T>> {
-  Comparator<? super T> elementComparator;
+  private Comparator<? super T> elementComparator;
   
   public IteratorComparator (Comparator<? super T> elementComparator) {
     this.elementComparator = elementComparator;
   }
   
+  @Override
   public int compare(Iterator<T> it1, Iterator<T> it2) {
     int retVal = 0;
     

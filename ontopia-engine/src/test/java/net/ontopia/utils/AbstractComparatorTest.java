@@ -30,12 +30,6 @@ public abstract class AbstractComparatorTest extends TestCase {
     super(name);
   }
 
-  protected void setUp() {
-  }
-
-  protected void tearDown() {
-  }
-
   protected void testComparator(int comp, int identical, int different) {
     assertTrue("comparator is not equal", comp == identical);
     assertTrue("comparator is equal", comp != different);

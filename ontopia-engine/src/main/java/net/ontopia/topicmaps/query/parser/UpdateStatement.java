@@ -42,21 +42,20 @@ public class UpdateStatement extends ModificationFunctionStatement {
     functions.put("resource", new ResourceFunction());
   }
 
-  public UpdateStatement() {
-    super();
-  }
-
   // doStaticUpdates is inherited from ModificationFunctionStatement
 
+  @Override
   public int doUpdates(QueryMatches matches) throws InvalidQueryException {
     return doFunctionUpdates(matches);
   }
 
+  @Override
   protected int doLitListDeletes(boolean strict, Map arguments)
     throws InvalidQueryException {
     throw new UnsupportedOperationException(); // updates always have a function
   }
 
+  @Override
   public String toString() {
     String str = "update " + toStringFunction();
     if (query != null)
@@ -67,9 +66,11 @@ public class UpdateStatement extends ModificationFunctionStatement {
   // ----- UPDATE FUNCTIONS
 
   static class ValueFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "vbo s";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       String value = (String) v;
 
@@ -85,9 +86,11 @@ public class UpdateStatement extends ModificationFunctionStatement {
   }
 
   static class ResourceFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "vo s";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       try {
         LocatorIF loc = new URILocator((String) v);

@@ -38,6 +38,7 @@ public abstract class RDBMSIndex extends AbstractIndex implements IndexIF {
     transaction = (RDBMSTopicMapTransaction)imanager.getTransaction();
   }
 
+  @Override
   public IndexIF getIndex() {
     return this;
   }
@@ -46,7 +47,7 @@ public abstract class RDBMSIndex extends AbstractIndex implements IndexIF {
   // Query
   // ---------------------------------------------------------------------------
 
-  TopicMapIF getTopicMap() {
+  protected TopicMapIF getTopicMap() {
     return transaction.getTopicMap();
   }
 

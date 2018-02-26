@@ -48,6 +48,7 @@ public class PluginTableTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
 
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);

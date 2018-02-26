@@ -27,6 +27,7 @@ public class CollectionPropertiesTest extends net.ontopia.topicmaps.core.Collect
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

@@ -48,6 +48,7 @@ public class SQLVerbatimExpression implements SQLExpressionIF {
     this.tables = tables;
   }
 
+  @Override
   public int getType() {
     return VERBATIM;
   }
@@ -69,6 +70,7 @@ public class SQLVerbatimExpression implements SQLExpressionIF {
     this.tables = tables;
   }
   
+  @Override
   public String toString() {
     return "verbatim: " + getValue();
   }

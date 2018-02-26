@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -53,30 +53,21 @@ import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 import ontopoly.OntopolyApplication;
 import ontopoly.OntopolyContext;
 import ontopoly.model.PSI;
 import ontopoly.model.TopicMap;
 import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.sysmodel.TopicMapSource;
+import org.apache.commons.lang3.StringUtils;
 
 public class ConversionUtils {
   
-  private static final LocatorIF psibase;
-  private static final LocatorIF xsdbase;
-  private static final LocatorIF xtmbase;
-  private static final LocatorIF teqbase;
-  
-  static {
-    psibase = URILocator.create("http://psi.ontopia.net/ontology/");
-    xsdbase = URILocator.create("http://www.w3.org/2001/XMLSchema");
-    xtmbase = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
-    teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
-  }
+  private static final LocatorIF psibase = URILocator.create("http://psi.ontopia.net/ontology/");
+  private static final LocatorIF xsdbase = URILocator.create("http://www.w3.org/2001/XMLSchema");
+  private static final LocatorIF xtmbase = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
+  private static final LocatorIF teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
   
   public static String upgradeExisting(TopicMap topicMap) {
     UpgradeUtils.upgradeTopicMap(topicMap);
@@ -132,7 +123,7 @@ public class ConversionUtils {
       TopicMapIF tm = store.getTopicMap();
       Collection<LocatorIF> reifier_subinds = new HashSet<LocatorIF>();
       
-      LocatorIF versionTopicPSI = URIUtils.getURILocator("http://psi.ontopia.net/ontology/ted-ontology-version");
+      LocatorIF versionTopicPSI = URILocator.create("http://psi.ontopia.net/ontology/ted-ontology-version");
       if (newtopicmap) {
         // get hold of old reifier
         TopicIF oreifier = oldstore.getTopicMap().getReifier();
@@ -190,7 +181,7 @@ public class ConversionUtils {
         }
           
       } else {
-        if (oreifier != null && ObjectUtils.different(oreifier, nreifier))
+        if (oreifier != null && !Objects.equals(oreifier, nreifier))
           MergeUtils.mergeInto(nreifier, oreifier);
       }
       // make topic map reifier and instance of on:topic-map
@@ -319,7 +310,7 @@ public class ConversionUtils {
     Iterator<TopicIF> nsiter = tracker.getSuspectNameScopes().iterator();
     while (nsiter.hasNext()) {
       TopicIF ntheme = nsiter.next();
-      if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme == reifier) continue;
+      if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme.equals(reifier)) continue;
       nstypes.add(ntheme);
       
       // translate name scope into name type
@@ -554,19 +545,19 @@ public class ConversionUtils {
       }
       
       // create new field order
-      OccurrenceIF occ = tmbuilder.makeOccurrence(curTopic, ted_field_order, StringUtils.pad(fOrder, '0', 9));
+      OccurrenceIF occ = tmbuilder.makeOccurrence(curTopic, ted_field_order, StringUtils.leftPad(Integer.toString(fOrder), 9, '0'));
       occ.addTheme((TopicIF)f[2]);
       fOrder = fOrder + 1000;
     }
   }
 
   private static class FieldsComparator implements Comparator<Object> {
-    TopicIF ted_nt;
-    TopicIF ted_si;
-    TopicIF ted_sl;
-    TopicIF ted_ot;
-    TopicIF ted_at;
-    TopicIF ted_untyped_name;
+    private TopicIF ted_nt;
+    private TopicIF ted_si;
+    private TopicIF ted_sl;
+    private TopicIF ted_ot;
+    private TopicIF ted_at;
+    private TopicIF ted_untyped_name;
 
     private FieldsComparator(TopicMapIF tm, LocatorIF psibase) throws MalformedURLException {
       ted_nt = topicByPSI(psibase.resolveAbsolute("name-type"), tm);
@@ -577,6 +568,7 @@ public class ConversionUtils {
       ted_untyped_name = topicByPSI(PSI.TMDM_TOPIC_NAME, tm);
     }
   
+    @Override
     public int compare(Object o1, Object o2) {
         Object[] f1 = (Object[])o1;
         Object[] f2 = (Object[])o2;

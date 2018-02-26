@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.webed.impl.basic.Constants;
  */
 public class SetObject implements ActionIF {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 
     TMObjectIF object = (TMObjectIF) params.get(0);

@@ -52,6 +52,7 @@ public class StoreFactoryReference extends AbstractTopicMapReference {
     this.sfactory_ro = sfactory_ro;    
   }
 
+  @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly)
     throws IOException {
     if (!isOpen()) open();
@@ -88,6 +89,7 @@ public class StoreFactoryReference extends AbstractTopicMapReference {
     this.deref_on_close = deref_on_close;
   }
 
+  @Override
   public void storeClosed(TopicMapStoreIF store) {
     // when store is closed, we need to deregister with source
     if (deref_on_close && source instanceof DefaultTopicMapSource) {

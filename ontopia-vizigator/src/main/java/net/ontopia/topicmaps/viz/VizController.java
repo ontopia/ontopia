@@ -31,40 +31,33 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.impl.remote.RemoteTopic;
 import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
-import net.ontopia.topicmaps.utils.tmrap.TopicPage;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.URIUtils;
 
 import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
 import com.touchgraph.graphlayout.TGPanel;
 import com.touchgraph.graphlayout.graphelements.Locality;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,7 +119,7 @@ public class VizController {
     try {
       configurl = vizFrontEnd.getConfigURL();
       if (configurl != null) {
-        tmConfig = new VizTopicMapConfigurationManager(configurl);
+        tmConfig = new VizTopicMapConfigurationManager(new URL(configurl));
       }
     } catch (MalformedURLException mue) {
       ErrorDialog.showError(vpanel, Messages.getString("Viz.ErrorLoadingConfig"), mue);
@@ -520,6 +513,7 @@ public class VizController {
     dialog.setContentPane(pane);
     dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     dialog.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent we) {
         JOptionPane
             .showMessageDialog(pane,
@@ -536,6 +530,7 @@ public class VizController {
     final TopicMapReaderIF r = reader;
 
     final SwingWorker worker = new SwingWorker() {
+      @Override
       public Object construct() {
         TopicMapIF result = null;
         try {
@@ -547,6 +542,7 @@ public class VizController {
         return result;
       }
 
+      @Override
       public void finished() {
         dialog.setVisible(false);
       }
@@ -892,7 +888,7 @@ public class VizController {
 
     TMAbstractNode target = (TMAbstractNode) panel.getSelect();
     
-    if (node == target)
+    if (node.equals(target))
       view.hideNode(node);
     else if (target == null)
       // If we are in Map view, use default behaviour
@@ -1198,8 +1194,7 @@ public class VizController {
   /**
    * INTERNAL: Hover Help Manager
    */
-  protected class VizHoverHelpManager extends Object
-    implements TGPaintListener {
+  protected class VizHoverHelpManager implements TGPaintListener {
 
     protected ArrayList painters;
 
@@ -1213,6 +1208,7 @@ public class VizController {
 
     }
 
+    @Override
     public void paintFirst(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
@@ -1224,6 +1220,7 @@ public class VizController {
       painters.add(aListener);
     }
 
+    @Override
     public void paintAfterEdges(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
@@ -1231,6 +1228,7 @@ public class VizController {
         ((TGPaintListener) painters.get(i)).paintAfterEdges(g);
     }
 
+    @Override
     public void paintLast(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps

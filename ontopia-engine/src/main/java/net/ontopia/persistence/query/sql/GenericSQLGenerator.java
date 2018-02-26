@@ -37,13 +37,14 @@ import net.ontopia.persistence.proxy.FieldHandlerIF;
 import net.ontopia.persistence.proxy.SQLTypes;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Generic SQL statement generator.
  */
 
 public class GenericSQLGenerator implements SQLGeneratorIF {
+  protected static final String AND = " and ";
 
   // FIXME: May have to tweak these based on empirical values
   protected static final int INIT_WIDTH_SELECT = 64;
@@ -61,7 +62,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   protected int MAX_ELEMENTS_IN = 0;
 
-  GenericSQLGenerator(Map properties) {
+  protected GenericSQLGenerator(Map properties) {
     if (properties != null) {
       this.MAX_ELEMENTS_IN = PropertyUtils.getInt((String)properties.get("net.ontopia.persistence.query.sql.InMaxElements"), MAX_ELEMENTS_IN);
     }
@@ -99,6 +100,22 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // Note that these iterators are intended to be reused
     protected ColumnValueIterator viter1 = new ColumnValueIterator();
     protected ColumnValueIterator viter2 = new ColumnValueIterator();
+
+    // Flag used to indicate whether SQLColumns tables should be registered.
+    protected boolean register_tables = false;
+    
+    // Tables referenced
+    protected Set rtables = new HashSet();
+    // Tables joined
+    protected Set jtables = new HashSet();
+    // Tables selected
+    protected Set stables = new HashSet();
+
+    // Table joins
+    protected Set joins = new HashSet();    
+
+    // FROM fragments (strings that later get joined)
+    protected List fg_from = new ArrayList();
 
     BuildInfo() {
     }
@@ -204,23 +221,6 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       }
       return indexes;
     }
-    
-    // Flag used to indicate whether SQLColumns tables should be registered.
-    protected boolean register_tables = false;
-    
-    // Tables referenced
-    protected Set rtables = new HashSet();
-    // Tables joined
-    protected Set jtables = new HashSet();
-    // Tables selected
-    protected Set stables = new HashSet();
-
-    // Table joins
-    protected Set joins = new HashSet();    
-
-    // FROM fragments (strings that later get joined)
-    protected List fg_from = new ArrayList();
-    
   }
 
   class ColumnValueIterator {
@@ -231,7 +231,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     protected int pindex;
     protected int cindex;
     
-    void resetValue(SQLValueIF value) {      
+    private void resetValue(SQLValueIF value) {      
       pindex = 0;
       cindex = 0;
       
@@ -252,7 +252,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
     }
     
-    void nextReference(StringBuilder sql, BuildInfo info) {
+    private void nextReference(StringBuilder sql, BuildInfo info) {
       // FIXME: why don't we just delegate to atomicSQLValueIF?
 
       switch (current.getType()) {
@@ -317,6 +317,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
   }
   
+  @Override
   public SQLStatementIF createSQLStatement(SQLQuery query) {
 
     // Create SQL query from query components
@@ -458,12 +459,10 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     StringBuilder sql = new StringBuilder(INIT_WIDTH_SQL);
 
     // SELECT clause
-    sql.append("select ");
-    sql.append(sql_select);
+    sql.append("select ").append(sql_select)
 
     // FROM clause
-    sql.append(" from ");
-    sql.append(sql_from);
+    .append(" from ").append(sql_from);
     
     // WHERE clause
     if (sql_where != null && sql_where.length() != 0) {
@@ -474,14 +473,12 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
     // GROUP BY clause
     if (sql_group_by != null && sql_group_by.length() != 0) {
-      sql.append(" group by ");
-      sql.append(sql_group_by);
+      sql.append(" group by ").append(sql_group_by);
     }
     
     // ORDER BY clause
     if (sql_order_by != null && sql_order_by.length() != 0) {
-      sql.append(" order by ");
-      sql.append(sql_order_by);
+      sql.append(" order by ").append(sql_order_by);
     }
 
     // LIMIT x OFFSET y clause
@@ -786,7 +783,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     }
     
     // Join tables using a comma separator
-    StringUtils.join(info.fg_from, ", ", sql);
+    sql.append(StringUtils.join(info.fg_from, ", "));
   }
   
   //! protected void produceFrom(StringBuilder sql, BuildInfo info) {
@@ -1244,7 +1241,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   protected void whereSQLAnd(SQLAnd and, StringBuilder sql, BuildInfo info) {
     sql.append('(');
-    whereSQLExpressionIF(and.getExpressions(), " and ", sql, info);
+    whereSQLExpressionIF(and.getExpressions(), AND, sql, info);
     sql.append(')');
   }
   
@@ -1351,7 +1348,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
         }
       }
     } else {
-      if (fname.equals(">") || fname.equals(">=") || fname.equals("<=") || fname.equals("<")) {
+      if (">".equals(fname) || ">=".equals(fname) || "<=".equals(fname) || "<".equals(fname)) {
         referenceSQLValueIFOpBinary(args[0], fname, args[1], sql, info);
       } else {
         sql.append(func.getName()).append('(');
@@ -1568,7 +1565,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append('.');
       sql.append(rcols[i]);
       if (i != length - 1)
-        sql.append(" and ");
+        sql.append(AND);
     }
     if (length > 1) sql.append(')');
   }
@@ -1578,6 +1575,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void whereSQLLeftOuterJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
+    // no-op
   }
   
   protected void whereSQLLeftOuterJoin_ORACLE(SQLJoin join, StringBuilder sql, BuildInfo info) {
@@ -1603,7 +1601,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append(rcols[i]);
       sql.append("(+)");
       if (i != length - 1)
-        sql.append(" and ");
+        sql.append(AND);
     }
     if (length > 1) sql.append(')');
   }
@@ -1613,6 +1611,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void whereSQLRightOuterJoin_GENERIC(SQLJoin join, StringBuilder sql, BuildInfo info) {
+    // no-op
   }
   
   protected void whereSQLRightOuterJoin_ORACLE(SQLJoin join, StringBuilder sql, BuildInfo info) {
@@ -1638,7 +1637,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append('.');
       sql.append(rcols[i]);
       if (i != length - 1)
-        sql.append(" and ");
+        sql.append(AND);
     }
     if (length > 1) sql.append(')');
   }
@@ -1714,7 +1713,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       viter.nextReference(sql, info);      
       sql.append(' ').append(operator);
       for (int i=1; i < arity; i++) {
-        sql.append(" and ");
+        sql.append(AND);
         viter.nextReference(sql, info);
         sql.append(operator);
       }
@@ -1759,7 +1758,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       viter2.nextReference(sql, info);
       
       for (int i=1; i < arity1; i++) {
-        sql.append(" and ");
+        sql.append(AND);
         viter1.nextReference(sql, info);      
         sql.append(' ').append(operator).append(' ');
         viter2.nextReference(sql, info);      
@@ -1983,6 +1982,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // Features supported
   // -----------------------------------------------------------------------------
 
+  @Override
   public boolean supportsLimitOffset() {
     return true;
   }
@@ -2003,15 +2003,15 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   public static SQLGeneratorIF getSQLGenerator(String platform, Map properties) {
     // ADD: sapdb, firebird
-    if (platform.equals("generic"))
+    if ("generic".equals(platform))
       return new GenericSQLGenerator(properties);
     else if (platform.startsWith("oracle"))
       return new OracleSQLGenerator(properties);
-    else if (platform.equals("postgresql"))
+    else if ("postgresql".equals(platform))
       return new PostgreSQLGenerator(properties);
-    else if (platform.equals("sqlserver"))
+    else if ("sqlserver".equals(platform))
       return new SQLServerSQLGenerator(properties);
-    else if (platform.equals("mysql"))
+    else if ("mysql".equals(platform))
       return new MySQLGenerator(properties);
     else
       return null;

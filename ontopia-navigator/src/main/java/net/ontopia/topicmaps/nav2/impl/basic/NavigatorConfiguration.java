@@ -31,12 +31,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.impl.framework.MVSConfig;
+import net.ontopia.topicmaps.nav2.plugins.PluginComparator;
 import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.plugins.PluginUtils;
-import net.ontopia.topicmaps.nav2.plugins.PluginComparator;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class NavigatorConfiguration implements NavigatorConfigurationIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(NavigatorConfiguration.class.getName());
 
   // constants
@@ -85,10 +85,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     properties.put(name, value);
   }
 
+  @Override
   public String getProperty(String name) {
     return getProperty(name, "");
   }
   
+  @Override
   public String getProperty(String name, String defaultValue) {
     String value = (String)properties.get(name);
     if (value == null)
@@ -97,6 +99,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       return value;
   }
 
+  @Override
   public int getProperty(String name, int defaultValue) {
     try {
       String value = (String)properties.get(name);
@@ -109,6 +112,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     }
   }
 
+  @Override
   public Map getProperties() {
     return this.properties;
   }
@@ -126,6 +130,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     classmap.put(shortcut, fullClassName);
   }
 
+  @Override
   public String getClass(String shortcut) {
     if (classmap.get(shortcut) != null)
       return (String) classmap.get(shortcut);
@@ -133,6 +138,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       return "";
   }
   
+  @Override
   public Map getClassmap() {
     return this.classmap;
   }
@@ -153,14 +159,17 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       autoloads.add(topicmapId);
   }
 
+  @Override
   public boolean isAutoloadTopicMap(String topicmapId) {
     return autoloads.contains(topicmapId);
   }
 
+  @Override
   public boolean isAutoloadAllTopicMaps() {
     return isAutoloadAll;
   }
   
+  @Override
   public Collection getAutoloadTopicMaps() {
     return this.autoloads;
   }
@@ -174,6 +183,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   // MVS related methods
   // ------------------------------------------------
 
+  @Override
   public MVSConfig getMVSConfig() {
     return mvsConfig;
   }
@@ -191,10 +201,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       mvsConfig.setModel(name);
   }
 
+  @Override
   public Collection getModels() {
     return mvsConfig.getModels();
   }
   
+  @Override
   public String getDefaultModel() {
     return mvsConfig.getModel();
   }
@@ -207,10 +219,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       mvsConfig.setView(name);
   }
 
+  @Override
   public Collection getViews() {
     return mvsConfig.getViews();
   }
   
+  @Override
   public String getDefaultView() {
     return mvsConfig.getView();
   }
@@ -223,10 +237,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
       mvsConfig.setSkin(name);
   }
 
+  @Override
   public Collection getSkins() {
     return mvsConfig.getSkins();
   }
   
+  @Override
   public String getDefaultSkin() {
     return mvsConfig.getSkin();
   }
@@ -236,32 +252,35 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   // plugins related methods
   // ------------------------------------------------
 
+  @Override
   public void addPlugin(PluginIF aPlugin) {
     plugins.put(aPlugin.getId(), aPlugin);
   }
 
+  @Override
   public PluginIF getPlugin(String id) {
     return (PluginIF) plugins.get(id);
   }
 
+  @Override
   public Collection getPlugins(String groupId) {
     if (groupId == null)
       groupId = "";
 
     // generate Property name to look up
     StringBuilder propName = new StringBuilder(PLUGINS_ORDER);
-    if (!groupId.equals(""))
+    if (!groupId.isEmpty())
       propName.append("_" + groupId);
     
     // get string which specifies sort order of plugins
     String orderProp = getProperty(propName.toString());
-    if ((orderProp == null || orderProp.equals("")) && groupId.equals(""))
+    if ((orderProp == null || orderProp.isEmpty()) && groupId.isEmpty())
       return plugins.values();
 
     List orderedPlugins = new ArrayList();
 
     // -- first put in plugins which are specified by sort order
-    if (!orderProp.equals("")) {
+    if (!orderProp.isEmpty()) {
       String[] order = StringUtils.split(orderProp);
       for (int ix = 0; ix < order.length; ix++) {
         PluginIF plugin = (PluginIF) plugins.get(order[ix]);
@@ -293,10 +312,12 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     return orderedPlugins;
   }
   
+  @Override
   public Collection getPlugins() {
     return getPlugins(null);
   }
 
+  @Override
   public Collection getOrderedPlugins() {
     List orderedPlugins = new ArrayList(plugins.values());
     // sort the titles alphabetically
@@ -305,6 +326,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     return orderedPlugins;
   }
   
+  @Override
   public List getPluginGroups() {
     // gather all different groups
     Set groups = new HashSet();
@@ -321,6 +343,7 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   }
   
   // ------------------------------------------------
+  @Override
   public String toString() {
     StringBuilder strBuf = new StringBuilder();
     strBuf.append("NavigatorConfiguration: [")

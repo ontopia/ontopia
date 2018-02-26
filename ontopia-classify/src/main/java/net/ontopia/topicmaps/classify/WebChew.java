@@ -45,18 +45,18 @@ import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: 
  */
 public class WebChew {
 
-  HttpServletRequest request;
-  HttpServletResponse response;
-  int visibleRows = Integer.MAX_VALUE;
+  private HttpServletRequest request;
+  private HttpServletResponse response;
+  private int visibleRows = Integer.MAX_VALUE;
 
-  String redirectURI; // link back to topic page
+  private String redirectURI; // link back to topic page
   
   public WebChew(HttpServletRequest request, HttpServletResponse response) {
     this.request = request;
@@ -136,10 +136,10 @@ public class WebChew {
               
                 String termid = selected[i];
                 String at = request.getParameter("at-" + termid);
-                if (at == null || at.equals("-")) continue;
+                if (at == null || "-".equals(at)) continue;
                 String cn = request.getParameter("cn-" + termid);
                 String ct = request.getParameter("ct-" + termid);
-                if (ct == null || ct.equals("-")) continue;
+                if (ct == null || "-".equals(ct)) continue;
 
                 // create new candidate topic
                 TopicIF ctopic;
@@ -150,7 +150,7 @@ public class WebChew {
                     throw new OntopiaRuntimeException("Cannot find topic type: " + ct + " " + ctoid);
                   ctopic = builder.makeTopic(ctype);
                   builder.makeTopicName(ctopic, cn);
-                } else if (ct.equals("-")) {
+                } else if ("-".equals(ct)) {
                   continue; // ignore
                 } else {
                   ctopic = (TopicIF)topicmap.getObjectById(ct);
@@ -281,8 +281,8 @@ public class WebChew {
   
   public class WebClassification {
 
-    TopicMapClassification tmc;
-    List<WebTerm> topterms;
+    private TopicMapClassification tmc;
+    private List<WebTerm> topterms;
     
     WebClassification(TopicMapClassification tmc) {
       this.tmc = tmc;
@@ -372,10 +372,10 @@ public class WebChew {
   
   public class WebTerm {
 
-    WebClassification wc;
-    Term term;
-    int sequenceId;
-    List<TopicIF> candidates;
+    private WebClassification wc;
+    private Term term;
+    private int sequenceId;
+    private List<TopicIF> candidates;
     
     WebTerm(WebClassification wc, Term term, int sequenceId) {
       this.wc = wc;

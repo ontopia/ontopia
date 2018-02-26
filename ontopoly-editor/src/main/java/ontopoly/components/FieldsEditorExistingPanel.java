@@ -24,10 +24,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.jquery.DraggableBehavior;
 import ontopoly.jquery.DroppableBehavior;
@@ -46,7 +45,6 @@ import ontopoly.models.MutableLoadableDetachableModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
 import ontopoly.utils.TopicChoiceRenderer;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.PageParameters;
@@ -123,7 +121,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
     TopicType topicType = topicTypeModel.getTopicType();
     TopicType declaredTopicType = fieldAssignmentModel.getFieldAssignment().getDeclaredTopicType();
 
-    if (ObjectUtils.equals(topicType, declaredTopicType)) {
+    if (Objects.equals(topicType, declaredTopicType)) {
       OntopolyImageLink button = new OntopolyImageLink("button", "remove-value.gif", new ResourceModel("icon.remove.field")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
@@ -156,7 +154,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
 
   protected abstract void onRemove(FieldAssignmentModel fam, AjaxRequestTarget target);    
   
-  static Component getFieldType(String id, FieldDefinition fieldDefinition) {
+  protected static Component getFieldType(String id, FieldDefinition fieldDefinition) {
 
     switch (fieldDefinition.getFieldType()) {
     case FieldDefinition.FIELD_TYPE_ROLE: {

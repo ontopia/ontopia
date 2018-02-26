@@ -28,12 +28,12 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.Collections;
-import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.io.IOUtils;
 
 public abstract class VariantNameTest extends AbstractScopedTest {
   protected VariantNameIF variant;
@@ -42,6 +42,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     TopicIF topic = builder.makeTopic();
@@ -84,7 +85,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
       variant.setLocator(loc);
       assertTrue("locator identity not maintained after set",
              variant.getLocator().equals(loc));            
-			assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_URI));
+			assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(variant.getDataType(), DataTypes.TYPE_URI));
             
 			try {
 				variant.setLocator(null);
@@ -142,14 +143,14 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     variant.setValue("testfaen");
     assertTrue("name not set correctly",
 							 variant.getValue().equals("testfaen"));
-		assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING));
+		assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING));
 
 		try {
 			variant.setValue(null);
 			fail("value could be set to null");
 		} catch (NullPointerException e) {
 		}
-		assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING));
+		assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING));
   }
 
   public void testReader() throws Exception {
@@ -161,14 +162,14 @@ public abstract class VariantNameTest extends AbstractScopedTest {
 		long inlen = filein.length();
     variant.setReader(ri, inlen, DataTypes.TYPE_BINARY);
 
-    assertTrue("Variant datatype is incorrect", ObjectUtils.equals(DataTypes.TYPE_BINARY, variant.getDataType()));
+    assertTrue("Variant datatype is incorrect", Objects.equals(DataTypes.TYPE_BINARY, variant.getDataType()));
                  
     // read and decode content
     Reader ro = variant.getReader();
     try {
       Writer wo = new FileWriter(fileout);
       try {
-        StreamUtils.transfer(ro, wo);
+        IOUtils.copy(ro, wo);
       } finally {
         wo.close();
       }
@@ -181,7 +182,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
       ro = new FileReader(fileout); 
 			long outlen = variant.getLength();
       try {
-        assertTrue("Variant value put in is not the same as the one we get out.", StreamUtils.compare(ro, ri));
+        assertTrue("Variant value put in is not the same as the one we get out.", IOUtils.contentEquals(ro, ri));
         assertTrue("Variant value length is different", inlen == outlen);
       } finally {
         ri.close();
@@ -259,6 +260,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     
   // --- Internal methods
 
+  @Override
   protected TMObjectIF makeObject() {
     TopicIF    topic = builder.makeTopic();
     TopicNameIF basename = builder.makeTopicName(topic, "");

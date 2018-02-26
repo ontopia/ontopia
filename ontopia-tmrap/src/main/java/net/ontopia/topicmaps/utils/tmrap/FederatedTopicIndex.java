@@ -39,6 +39,7 @@ public class FederatedTopicIndex implements TopicIndexIF {
     this.indexes = indexes;
   }
   
+  @Override
   public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects) {
@@ -51,6 +52,7 @@ public class FederatedTopicIndex implements TopicIndexIF {
     return topics;
   }
 
+  @Override
   public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
@@ -58,6 +60,7 @@ public class FederatedTopicIndex implements TopicIndexIF {
     return getTopics(indicators, sources, subjects);
   }
 
+  @Override
   public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
                                   Collection<LocatorIF> sources,
                                   Collection<LocatorIF> subjects) {
@@ -70,6 +73,7 @@ public class FederatedTopicIndex implements TopicIndexIF {
     return pages;
   }
 
+  @Override
   public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
                                    Collection<LocatorIF> sources,
                                    Collection<LocatorIF> subjects) {
@@ -83,6 +87,7 @@ public class FederatedTopicIndex implements TopicIndexIF {
     return pages;
   }
 
+  @Override
   public void close() {
     Iterator<TopicIndexIF> it = indexes.iterator();
     while (it.hasNext()) {

@@ -31,14 +31,17 @@ public class SynchronizedLookupIndex implements LookupIndexIF {
     this.index = index;
   }
 
+  @Override
   public synchronized Object get(Object key) {
     return index.get(key);
   }
 
+  @Override
   public synchronized Object put(Object key, Object value) {
     return index.put(key, value);
   }
 
+  @Override
   public synchronized Object remove(Object key) {
     return index.remove(key);
   }

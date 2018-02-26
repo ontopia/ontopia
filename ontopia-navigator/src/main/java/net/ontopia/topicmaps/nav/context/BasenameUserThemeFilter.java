@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.nav.context;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -31,17 +30,11 @@ import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Abstract class which provides access to filtering themes
  * out which are not relevant to the user context.
  */
 public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
-
-  // initialize logging category
-  static Logger log = LoggerFactory.getLogger(BasenameUserThemeFilter.class.getName());
 
   // members
   protected ScopeIndexIF scopeIndex;
@@ -57,6 +50,7 @@ public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
   // implementing method from UserThemeFilterIF
   //
   
+  @Override
   public void setTopicMap(TopicMapIF topicMap) {
     this.topicMap = topicMap;
 
@@ -101,6 +95,7 @@ public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
    * @return boolean: true if this theme should not be displayed
    *                  for user context configuration
    */
+  @Override
   public boolean shouldNotBeUsed(TopicIF actTheme) {
 
     boolean usedAsTopicType           = false; // (pre) Rule 1A

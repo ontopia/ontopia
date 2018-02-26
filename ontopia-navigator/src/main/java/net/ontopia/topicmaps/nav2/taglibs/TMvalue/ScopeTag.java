@@ -38,6 +38,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class ScopeTag extends BaseValueProducingAndAcceptingTag {
   
+  @Override
   public Collection process(Collection characteristics) throws JspTagException {
     // find all themes of all characteristics in collection
     if (characteristics == null)

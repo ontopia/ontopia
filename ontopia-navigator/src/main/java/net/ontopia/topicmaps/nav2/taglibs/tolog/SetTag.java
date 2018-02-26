@@ -23,10 +23,9 @@ package net.ontopia.topicmaps.nav2.taglibs.tolog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-
+import javax.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
@@ -34,6 +33,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
+import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   private static final long serialVersionUID = -3009179502068590303L;
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(SetTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // FIXME: replace this ugliness with a Map (but wait for tests)
   private static final String scopeNames[] = {
@@ -65,8 +65,8 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   };
 
   // members
-  Collection outValue;
-  String clonedVar;
+  private Collection outValue;
+  private String clonedVar;
 
   // tag attributes
   private String reqparam;
@@ -76,15 +76,9 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
 
 
   /**
-   * Default constructor.
-   */
-  public SetTag() {
-    super();
-  }
-
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     if (contextTag == null)
@@ -113,9 +107,10 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
         else {
           if (topicmap == null)
             throw new JspTagException("<tolog:set> found no topic map");
+          DeclarationContextIF declarationContext = contextTag.getDeclarationContext();
           for (int i= 0; i < ids.length; i++) {
             TMObjectIF tempOutValue =
-                    NavigatorUtils.stringID2Object(topicmap, ids[i]);
+                    NavigatorUtils.stringID2Object(topicmap, ids[i], declarationContext);
             if (tempOutValue != null)
               outValue.add(tempOutValue);
           }
@@ -234,6 +229,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     outValue = new ArrayList();
     // FIXME: It would be nice if the following if-test could be true only for
@@ -248,6 +244,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     // Bind 'outValue' to var in appropriate scope.
     if (scope == null || scope.equals("ontopia") || scope.equals("oks")) {
@@ -263,6 +260,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // do *not* reset tag attributes
   }

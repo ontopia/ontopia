@@ -33,6 +33,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

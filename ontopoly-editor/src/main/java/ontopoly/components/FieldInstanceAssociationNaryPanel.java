@@ -21,8 +21,7 @@ package ontopoly.components;
 
 import java.util.Comparator;
 import java.util.List;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.RoleField;
@@ -36,7 +35,6 @@ import ontopoly.models.RoleFieldModel;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.utils.RoleFieldsValueComparator;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -83,8 +81,9 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
         validateCardinality();        
         super.onBeforeRender();
       }
+      @Override
 		  public void populateItem(final ListItem<FieldValueModel> item) {
-		    FieldValueModel fieldValueModel = item.getModelObject();
+		    final FieldValueModel fieldValueModel = item.getModelObject();
 
         // TODO: make sure non-existing value field gets focus if last edit happened there
         
@@ -131,7 +130,7 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               for (int i=0;  i < fields.length; i++) {
                 RoleField selectedField = fields[i];
-                if (ObjectUtils.different(currentField, selectedField)) {
+                if (!Objects.equals(currentField, selectedField)) {
                   Topic selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());                
                   if (!page.isRemoveAllowed(currentTopic, currentField, selectedTopic, selectedField)) {
                     removeAllowed = false;

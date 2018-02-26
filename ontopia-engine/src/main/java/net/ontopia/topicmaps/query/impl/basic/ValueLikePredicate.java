@@ -45,14 +45,17 @@ public class ValueLikePredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "value-like";
   }
 
+  @Override
   public String getSignature() {
     return "bov s! f?";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (!boundparams[1])
       // cannot run predicate before we have the query
@@ -63,6 +66,7 @@ public class ValueLikePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

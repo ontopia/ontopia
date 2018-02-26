@@ -64,6 +64,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
     this.strify = TopicStringifiers.getDefaultStringifier();
   }
 
+  @Override
   public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects) {
@@ -118,6 +119,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
     return topics;
   }
 
+  @Override
   public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
@@ -125,6 +127,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
     return getTopics(indicators, sources, subjects);
   }
 
+  @Override
   public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
                                   Collection<LocatorIF> sources,
                                   Collection<LocatorIF> subjects) {
@@ -180,6 +183,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
     return pages;
   }
 
+  @Override
   public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
                                    Collection<LocatorIF> sources,
                                    Collection<LocatorIF> subjects) {
@@ -246,6 +250,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
     return retVal;
   }
 
+  @Override
   public void close() {
     repository = null;
   }

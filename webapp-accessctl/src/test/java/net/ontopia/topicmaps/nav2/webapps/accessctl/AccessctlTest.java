@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.nav2.webapps.accessctl;
 
-import java.io.IOException;
 import com.meterware.httpunit.Button;
 import com.meterware.httpunit.HTMLElement;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebLink;
 import com.meterware.httpunit.WebResponse;
 import com.meterware.httpunit.WebTable;
+import java.io.IOException;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
@@ -42,6 +42,8 @@ import org.xml.sax.SAXException;
  */
 public class AccessctlTest extends AbstractWebBasedTestCase {
 
+  private WebResponse resp;
+
   /**
    * Create a new accessctl test.
    * @param aName
@@ -50,8 +52,7 @@ public class AccessctlTest extends AbstractWebBasedTestCase {
     super(aName);
   }
   
-  private WebResponse resp;
-
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     // different webapp default

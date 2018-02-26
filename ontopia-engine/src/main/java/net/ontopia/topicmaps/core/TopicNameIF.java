@@ -32,14 +32,14 @@ import java.util.Collection;
 
 public interface TopicNameIF extends NameIF, ScopedIF, TypedIF, ReifiableIF {
 
-  public static final String EVENT_ADDED = "TopicNameIF.added";
-  public static final String EVENT_REMOVED = "TopicNameIF.removed";
-  public static final String EVENT_SET_TYPE = "TopicNameIF.setType";
-  public static final String EVENT_SET_VALUE = "TopicNameIF.setValue";
-  public static final String EVENT_ADD_VARIANT = "TopicNameIF.addVariant";
-  public static final String EVENT_REMOVE_VARIANT = "TopicNameIF.removeVariant";
-  public static final String EVENT_ADD_THEME = "TopicNameIF.addTheme";
-  public static final String EVENT_REMOVE_THEME = "TopicNameIF.removeTheme";
+  String EVENT_ADDED = "TopicNameIF.added";
+  String EVENT_REMOVED = "TopicNameIF.removed";
+  String EVENT_SET_TYPE = "TopicNameIF.setType";
+  String EVENT_SET_VALUE = "TopicNameIF.setValue";
+  String EVENT_ADD_VARIANT = "TopicNameIF.addVariant";
+  String EVENT_REMOVE_VARIANT = "TopicNameIF.removeVariant";
+  String EVENT_ADD_THEME = "TopicNameIF.addTheme";
+  String EVENT_REMOVE_THEME = "TopicNameIF.removeTheme";
 
   /**
    * PUBLIC: Gets the variant names of the topic named by this
@@ -49,6 +49,6 @@ public interface TopicNameIF extends NameIF, ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A collection of VariantNameIF objects.
    */
-  public Collection<VariantNameIF> getVariants();
+  Collection<VariantNameIF> getVariants();
 
 }

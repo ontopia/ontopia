@@ -33,7 +33,7 @@ public interface PredicateIF {
    * 'starts-with'), but some virtual predicates cannot be reached
    * from the syntax and may return names that will not parse.
    */
-  public String getName();
+  String getName();
 
   /**
    * INTERNAL: Returns a string representing the signature of the
@@ -46,11 +46,11 @@ public interface PredicateIF {
    * have ". .+". For full details, see
    * topicmaps.impl.utils.ArgumentValidator.
    */
-  public String getSignature() throws InvalidQueryException;
+  String getSignature() throws InvalidQueryException;
 
   /**
    * INTERNAL.
    */
-  public int getCost(boolean[] boundparams);
+  int getCost(boolean[] boundparams);
   
 }

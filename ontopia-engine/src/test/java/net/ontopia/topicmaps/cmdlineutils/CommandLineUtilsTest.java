@@ -41,8 +41,10 @@ public abstract class CommandLineUtilsTest extends TestCase {
     super(name);
   }
 
+  @Override
   protected abstract void setUp();
 
+  @Override
   protected abstract void tearDown();
 
   /**

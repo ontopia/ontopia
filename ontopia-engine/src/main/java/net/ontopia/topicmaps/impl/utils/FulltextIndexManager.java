@@ -24,23 +24,16 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-
 import net.ontopia.infoset.fulltext.core.IndexerIF;
-import net.ontopia.infoset.fulltext.core.SearchResultIF;
-import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
 import net.ontopia.infoset.fulltext.topicmaps.DefaultTopicMapDocumentGenerator;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapDocumentGeneratorIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapTransaction;
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import org.apache.lucene.store.Directory;
 
 /**
  * INTERNAL: The indexer manager will keep track of base names,
@@ -48,23 +41,21 @@ import org.apache.lucene.store.Directory;
  * fulltext index can later be synchronized through the
  * synchronizeIndex method.
  */
-public class FulltextIndexManager extends BasicIndex implements SearcherIF {
+public class FulltextIndexManager extends BasicIndex {
 
-  protected Directory luceneDirectory;
-  protected LuceneSearcher luceneSearcher;
-  
   protected Collection<TMObjectIF> added;
-
   protected Collection<String> removed;
-
   protected Collection<TMObjectIF> changed;
 
-  protected TopicMapDocumentGeneratorIF docgen = DefaultTopicMapDocumentGenerator.INSTANCE;
+  /**
+   * INTERNAL: Registers the fulltext index manager with the event system of the
+   * specified topic map store.
+   * 
+   * @param store
+   */
+  public FulltextIndexManager(InMemoryTopicMapStore store) {
 
-  protected FulltextIndexManager(TopicMapIF topicmap) {
-
-    EventManagerIF emanager = (EventManagerIF) topicmap;
-		InMemoryTopicMapStore store = (InMemoryTopicMapStore)topicmap.getStore();
+    EventManagerIF emanager = store.getEventManager();
     ObjectTreeManager otree = ((InMemoryTopicMapTransaction) store
         .getTransaction()).getObjectTreeManager();
 
@@ -72,7 +63,7 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     added = new HashSet<TMObjectIF>();
     removed = new HashSet<String>();
     changed = new HashSet<TMObjectIF>();
-
+    
     // Initialize object tree event handlers [objects added or removed]
     EventListenerIF listener_add = new TMObjectIF_added();
     EventListenerIF listener_rem = new TMObjectIF_removed();
@@ -97,29 +88,6 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     Iterator<String> iter = handlers.keySet().iterator();
     while (iter.hasNext())
       emanager.addListener(this, iter.next());
-
-    // register ourselves as index
-    AbstractIndexManager ixm = (AbstractIndexManager) store.getTransaction().getIndexManager();
-    ixm.registerIndex("net.ontopia.infoset.fulltext.core.SearcherIF", this);
-  }
-
-  /**
-   * INTERNAL: Registers the fulltext index manager with the event system of the
-   * specified topic map.
-   * 
-   * @param topicmap
-   * @return The index manager for specified topicmap
-   */
-  public static FulltextIndexManager manageTopicMap(TopicMapIF topicmap) {
-    return new FulltextIndexManager(topicmap);
-  }
-
-  public void setLuceneDirectory(Directory luceneDirectory) {
-      this.luceneDirectory = luceneDirectory;
-  }
-
-  public Directory getLuceneDirectory() {
-    return luceneDirectory;
   }
 
   /**
@@ -143,7 +111,13 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
    */
   public synchronized boolean synchronizeIndex(IndexerIF indexer)
       throws IOException {
+    
+    if (!needSynchronization()) {
+      return false;
+    }
+    
     boolean changes = false;
+    TopicMapDocumentGeneratorIF docgen = DefaultTopicMapDocumentGenerator.INSTANCE;
 
     // delete removed objects
     if (!removed.isEmpty()) {
@@ -200,42 +174,8 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
       changed.clear();
       changes = true;
     }
-    // if changes then invalide lucene searcher
-    if (changes && luceneSearcher != null) {
-      try {
-        luceneSearcher.close();
-      } catch (IOException e) {
-        throw new OntopiaRuntimeException(e);
-      } finally {
-        luceneSearcher = null;
-      }
-    }
     return changes;
   }
-  
-  public LuceneSearcher getSearcher() throws IOException {
-    if (luceneSearcher == null)
-      luceneSearcher = new LuceneSearcher(luceneDirectory);
-    return luceneSearcher;
-  }
-
-  // -----------------------------------------------------------------------------
-  // IndexIF implementation
-  // -----------------------------------------------------------------------------
-  
-  public synchronized SearchResultIF search(String query) throws IOException {
-    return getSearcher().search(query);
-  }
-  
-   public synchronized void close() throws IOException {
-    if (luceneSearcher != null) { 
-      luceneSearcher.close();
-      luceneSearcher = null;
-    }
-    if (luceneDirectory != null) {
-      luceneDirectory.close();
-    }
-   }
   
   // -----------------------------------------------------------------------------
   // Callbacks
@@ -269,6 +209,7 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
    * EventHandler: TMObjectIF changed
    */
   class TMObjectIF_changed extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       objectChanged(object);
@@ -279,6 +220,7 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
    * EventHandler: TMObjectIF added to topic map
    */
   class TMObjectIF_added extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       objectAdded(new_value);
@@ -289,11 +231,11 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
    * EventHandler: TMObjectIF removed from topic map
    */
   class TMObjectIF_removed extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       objectRemoved(old_value);
       
     }
   }
-
 }

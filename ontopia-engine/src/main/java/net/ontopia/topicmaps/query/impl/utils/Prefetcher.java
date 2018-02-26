@@ -291,7 +291,7 @@ public class Prefetcher {
       return true; // on by default    
 
     value = value.trim().toLowerCase();
-    return value.equals("true");
+    return "true".equals(value);
   }
 
 }

@@ -61,6 +61,7 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
     choice.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
+        // no-op
       }
     });
     add(choice);

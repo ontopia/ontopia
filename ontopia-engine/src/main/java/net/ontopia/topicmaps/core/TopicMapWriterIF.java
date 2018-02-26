@@ -44,7 +44,7 @@ public interface TopicMapWriterIF {
    * @param source_topicmap The topic map to be exported/written;
    *                         an object implementing TopicMapIF
    */
-  public void write(TopicMapIF source_topicmap) throws IOException;
+  void write(TopicMapIF source_topicmap) throws IOException;
   
   /**
    * PUBLIC: set additional properties to the topic map writer. The
@@ -52,5 +52,5 @@ public interface TopicMapWriterIF {
    * the specific writer documentation for details on accepted properties.
    * @param properties Additional properties for the writer
    */
-  public void setAdditionalProperties(Map<String, Object> properties);
+  void setAdditionalProperties(Map<String, Object> properties);
 }

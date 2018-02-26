@@ -50,14 +50,17 @@ public class TypePredicate implements BasicPredicateIF {
     index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
   }
   
+  @Override
   public String getName() {
     return "type";
   }
 
+  @Override
   public String getSignature() {
     return "arob t";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -69,6 +72,7 @@ public class TypePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

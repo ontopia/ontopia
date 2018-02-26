@@ -31,6 +31,7 @@ public class CreateTMAssociationNode implements NodeRecoveryObjectIF {
     this.association = association;
   }
   
+  @Override
   public void execute(TopicMapView view) {
     TMAssociationNode assocNode = (TMAssociationNode)view
         .findObject(association, 
@@ -47,6 +48,7 @@ public class CreateTMAssociationNode implements NodeRecoveryObjectIF {
     lastNode = assocNode;
   }
 
+  @Override
   public TMAbstractNode recoverNode(TopicMapView view) {
     execute(view);
     return lastNode;

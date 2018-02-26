@@ -153,8 +153,8 @@ public class AssociationScopeFilterMenu extends JMenu {
    */
   protected class ScopeFilterActionListener implements ActionListener {
     private TopicIF scope;
-    ActionListener parentListener;
-    VizController controller;
+    private ActionListener parentListener;
+    private VizController controller;
 
     /**
      * Create new.
@@ -171,6 +171,7 @@ public class AssociationScopeFilterMenu extends JMenu {
       this.controller = controller;
     }
 
+    @Override
     public void actionPerformed(ActionEvent aE) {
       boolean setPreviously = controller.isInAssociationScopeFilter(scope);
       controller.setInAssociationScopeFilter(scope, !setPreviously);
@@ -215,9 +216,9 @@ public class AssociationScopeFilterMenu extends JMenu {
    * Listens for changes to the scrictness of the scope filter.
    */
   protected class StrictnessActionListener implements ActionListener {
-    VizController controller;
-    int strictnessLevel;
-    ActionListener parentListener;
+    private VizController controller;
+    private int strictnessLevel;
+    private ActionListener parentListener;
     
     /**
      * 
@@ -233,6 +234,7 @@ public class AssociationScopeFilterMenu extends JMenu {
       this.parentListener = parentListener;
     }
     
+    @Override
     public void actionPerformed(ActionEvent aE) {
       controller.setAssociationScopeFilterStrictness(strictnessLevel);
       parentListener.actionPerformed(aE);

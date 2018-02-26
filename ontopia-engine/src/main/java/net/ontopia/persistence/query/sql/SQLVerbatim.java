@@ -48,30 +48,37 @@ public class SQLVerbatim implements SQLValueIF {
     this.tables = tables;
   }
 
+  @Override
   public int getType() {
     return VERBATIM;
   }
 
+  @Override
   public int getArity() {
     return 1;
   }
 
+  @Override
   public int getValueArity() {
     return 1;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
@@ -80,10 +87,12 @@ public class SQLVerbatim implements SQLValueIF {
     return value;
   }
 
+  @Override
   public Class getValueType() {    
     return (vtype == null ? DEFAULT_VALUE_TYPE : vtype);
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
@@ -93,10 +102,12 @@ public class SQLVerbatim implements SQLValueIF {
    * field handler is DefaultFieldHandler with type
    * java.sql.Types.VARCHAR when not specified.
    */
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return (fhandler == null ? DEFAULT_FIELD_HANDLER : fhandler);
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
@@ -114,6 +125,7 @@ public class SQLVerbatim implements SQLValueIF {
     this.tables = tables;
   }
   
+  @Override
   public String toString() {
     return "verbatim: " + getValue();
   }

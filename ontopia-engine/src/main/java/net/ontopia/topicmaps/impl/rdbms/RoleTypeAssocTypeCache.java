@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
 public class RoleTypeAssocTypeCache {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RoleTypeAssocTypeCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RoleTypeAssocTypeCache.class.getName());
   
   protected RDBMSAccess access;
   protected AccessRegistrarIF registrar;
@@ -84,11 +84,18 @@ public class RoleTypeAssocTypeCache {
   protected TopicMapTransactionIF txn;  
   protected TransactionIF ptxn;
   
-  protected TransactionalLookupIndexIF rolesByType;
+  protected TransactionalLookupIndexIF<ParameterArray, Collection<IdentityIF>> rolesByType;
   protected boolean qlshared;
   
-  protected Map radd = new HashMap();
-  protected Map rrem = new HashMap();
+  protected Map<ParameterArray, Collection<AssociationRoleIF>> radd = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
+  protected Map<ParameterArray, Collection<AssociationRoleIF>> rrem = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
+  
+  private final static int[] Prefetcher_RBT_fields = 
+    new int[] { Prefetcher.AssociationIF_roles,
+    Prefetcher.AssociationRoleIF_player };
+  
+  private final static boolean[] Prefetcher_RBT_traverse =
+    new boolean[] { false, false };
   
   public RoleTypeAssocTypeCache(TopicMapTransactionIF txn, EventManagerIF emanager,
       EventManagerIF otree) {
@@ -105,12 +112,12 @@ public class RoleTypeAssocTypeCache {
     this.tm = txn.getTopicMap();
     IdentityIF tmid = ((PersistentIF)txn.getTopicMap())._p_getIdentity();
     if (storage.isSharedCache()) {
-      this.rolesByType = (TransactionalLookupIndexIF)storage.getHelperObject(CachesIF.QUERY_CACHE_RT2, tmid);
+      this.rolesByType = (TransactionalLookupIndexIF<ParameterArray, Collection<IdentityIF>>)storage.getHelperObject(CachesIF.QUERY_CACHE_RT2, tmid);
       this.qlshared = true;
       
     } else {
       // ISSUE: need lru?
-      this.rolesByType = new TransactionalSoftHashMapIndex();
+      this.rolesByType = new TransactionalSoftHashMapIndex<ParameterArray, Collection<IdentityIF>>();
       this.qlshared = false;
     }
       
@@ -140,7 +147,7 @@ public class RoleTypeAssocTypeCache {
       else
         sb.append('?');
     }
-    sb.append(")");
+    sb.append(')');
     this.sql = sb.toString();
     
     this.sql_individual = "select r.id, a.id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.type_id = ? and r.assoc_id = a.id and a.topicmap_id = ? and a.type_id = ? and r.player_id = ?";
@@ -155,16 +162,16 @@ public class RoleTypeAssocTypeCache {
       // invalidate shared query cache entries
       if (!radd.isEmpty()) {
         try {
-          rolesByType.removeAll(new ArrayList(radd.keySet()));
+          rolesByType.removeAll(new ArrayList<ParameterArray>(radd.keySet()));
         } finally {
-          radd = new HashMap();
+          radd = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
         }
       }
       if (!rrem.isEmpty()) {
         try {
-          rolesByType.removeAll(new ArrayList(rrem.keySet()));
+          rolesByType.removeAll(new ArrayList<ParameterArray>(rrem.keySet()));
         } finally {
-          rrem = new HashMap();
+          rrem = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
         }
       }
     }
@@ -211,21 +218,21 @@ public class RoleTypeAssocTypeCache {
       IdentityIF tmid = i(tm);
       
       // check cache and prepare result collection
-      Object[] key = new Object[] { null, rtypeid, atypeid };
+      IdentityIF[] key = new IdentityIF[] { null, rtypeid, atypeid };
       ParameterArray params = new ParameterArray(key);
       
-      Map rbt = new HashMap(players.size());
+      Map<IdentityIF, Collection<IdentityIF>> rbt = new HashMap<IdentityIF, Collection<IdentityIF>>(players.size());
       Iterator iter = players.iterator();
       while (iter.hasNext()) {
         key[0] = i(iter.next());
         // filter out parameters that are already in the cache
         if (key[0] != null && rolesByType.get(params) == null)
-          rbt.put(key[0], new HashSet());
+          rbt.put(key[0], new HashSet<IdentityIF>());
       }
       if (rbt.size() < 1) return;
       
       // collection associations for prefetching
-      Collection assocs = new HashSet();
+      Collection<IdentityIF> assocs = new HashSet<IdentityIF>();
 
       // Get ticket
       TicketIF ticket = registrar.getTicket();
@@ -235,12 +242,12 @@ public class RoleTypeAssocTypeCache {
       PreparedStatement stm = conn.prepareStatement(sql);
       stm.setFetchSize(1000);
       
-      Collection filteredPlayerIds = rbt.keySet();
-      iter = filteredPlayerIds.iterator();
+      Collection<IdentityIF> filteredPlayerIds = rbt.keySet();
+      Iterator<IdentityIF> filteredPlayerIter = filteredPlayerIds.iterator();
       
       try {
         
-        while (iter.hasNext()) {
+        while (filteredPlayerIter.hasNext()) {
           
           int offset = 1;
           // bind: r.topicmap_id
@@ -252,7 +259,7 @@ public class RoleTypeAssocTypeCache {
           // bind: a.type_id
           offset = bind(TopicIF_idfield, atypeid, stm, offset);
           // bind: r.player_id*
-          SQLGenerator.bindMultipleParameters(iter, 
+          SQLGenerator.bindMultipleParameters(filteredPlayerIter, 
               TopicIF_idfield, stm, offset, batchSize);
           
           // execute statement
@@ -274,7 +281,7 @@ public class RoleTypeAssocTypeCache {
             offset += AssociationIF_idfield.getColumnCount();
             
             // update roles list
-            Collection roles = (Collection)rbt.get(pid);
+            Collection<IdentityIF> roles = rbt.get(pid);
             roles.add(rid);
             
             // collect association
@@ -298,10 +305,10 @@ public class RoleTypeAssocTypeCache {
       }
       
       // update query cache
-      iter = filteredPlayerIds.iterator();
-      while (iter.hasNext()) {
-        Object playerid = iter.next();
-        Collection r = (Collection)rbt.get(playerid);
+      filteredPlayerIter = filteredPlayerIds.iterator();
+      while (filteredPlayerIter.hasNext()) {
+        IdentityIF playerid = filteredPlayerIter.next();
+        Collection<IdentityIF> r = rbt.get(playerid);
         ParameterArray k = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
         rolesByType.put(k, r);
       }
@@ -317,14 +324,7 @@ public class RoleTypeAssocTypeCache {
     }
   }
   
-  private final static int[] Prefetcher_RBT_fields = 
-    new int[] { Prefetcher.AssociationIF_roles,
-    Prefetcher.AssociationRoleIF_player };
-  
-  private final static boolean[] Prefetcher_RBT_traverse =
-    new boolean[] { false, false };
-  
-  public Collection getRolesByType(TopicIF player, 
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, 
       TopicIF rtype, TopicIF atype) {   
     // TODO: 
     //
@@ -354,9 +354,9 @@ public class RoleTypeAssocTypeCache {
       
       // check query cache
       ParameterArray params = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
-      Object result = rolesByType.get(params);
+      Collection<IdentityIF> result = rolesByType.get(params);
       if (result != null)
-        return syncWithTransaction((Collection)result, params, playerid, rtypeid, atypeid, tmid);
+        return syncWithTransaction(result, params, playerid, rtypeid, atypeid, tmid);
       //! System.out.println("CM: " + params);
 
       // Get ticket
@@ -379,7 +379,7 @@ public class RoleTypeAssocTypeCache {
       // bind: r.player_id*
       offset = bind(TopicIF_idfield, playerid, stm, offset);
       
-      Collection roles = new HashSet();
+      Collection<IdentityIF> roles = new HashSet<IdentityIF>();
       
       try {
         
@@ -428,16 +428,16 @@ public class RoleTypeAssocTypeCache {
     }
   }
   
-  protected Collection syncWithTransaction(Collection roles, ParameterArray params,
+  protected Collection<AssociationRoleIF> syncWithTransaction(Collection<IdentityIF> roles, ParameterArray params,
       IdentityIF playerid, IdentityIF rtypeid, 
       IdentityIF atypeid, IdentityIF tmid) {
     // filter out roles where appropriate
-    Collection result = new HashSet(roles.size());
+    Collection<AssociationRoleIF> result = new HashSet<AssociationRoleIF>(roles.size());
     
     // look up roles objects in transaction
-    Iterator iter = roles.iterator();
+    Iterator<IdentityIF> iter = roles.iterator();
     while (iter.hasNext()) {
-      IdentityIF rid = (IdentityIF)iter.next();
+      IdentityIF rid = iter.next();
       AssociationRoleIF r;
       try {
         r = (AssociationRoleIF)ptxn.getObject(rid);
@@ -448,17 +448,17 @@ public class RoleTypeAssocTypeCache {
       if (r != null) result.add(r);
     }
     // add roles that have been introduced in this transaction
-    Collection ra = (Collection)radd.get(params);
+    Collection<AssociationRoleIF> ra = radd.get(params);
     if (ra != null) {
-      Iterator i = ra.iterator();
+      Iterator<AssociationRoleIF> i = ra.iterator();
       while (i.hasNext()) {
         result.add(i.next());
       }
     }
     // remove roles that are no longer applicable
-    Collection rr = (Collection)rrem.get(params);
+    Collection<AssociationRoleIF> rr = rrem.get(params);
     if (rr != null) {
-      Iterator i = rr.iterator();
+      Iterator<AssociationRoleIF> i = rr.iterator();
       while (i.hasNext()) {
         result.remove(i.next());
       }
@@ -486,27 +486,27 @@ public class RoleTypeAssocTypeCache {
   
   protected void addEntry(ParameterArray key, AssociationRoleIF added) {
     // + added
-    Collection avals = (Collection)radd.get(key);
+    Collection<AssociationRoleIF> avals = radd.get(key);
     if (avals == null) {
-      avals = new HashSet();
+      avals = new HashSet<AssociationRoleIF>();
       radd.put(key, avals);
     }
     avals.add(added);
     // - removed
-    Collection rvals = (Collection)rrem.get(key);
+    Collection<AssociationRoleIF> rvals = rrem.get(key);
     if (rvals != null) rvals.remove(added);    
   }
   
   protected void removeEntry(ParameterArray key, AssociationRoleIF removed) {
     // + removed
-    Collection rvals = (Collection)rrem.get(key);
+    Collection<AssociationRoleIF> rvals = rrem.get(key);
     if (rvals == null) {
-      rvals = new HashSet();
+      rvals = new HashSet<AssociationRoleIF>();
       rrem.put(key, rvals);
     }
     rvals.add(removed);
     // - added
-    Collection avals = (Collection)radd.get(key);
+    Collection<AssociationRoleIF> avals = radd.get(key);
     if (avals != null) avals.remove(removed);
   }
   
@@ -514,6 +514,7 @@ public class RoleTypeAssocTypeCache {
    * EventHandler: AssociationRoleIF.added
    */
   class AssociationRoleAddedHandler implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF added = (AssociationRoleIF)new_value;
       
@@ -534,6 +535,7 @@ public class RoleTypeAssocTypeCache {
    * EventHandler: AssociationRoleIF.removed
    */
   class AssociationRoleRemovedHandler implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF removed = (AssociationRoleIF)old_value;
       
@@ -554,6 +556,7 @@ public class RoleTypeAssocTypeCache {
    * EventHandler: AssociationRoleIF.setType
    */
   class EH01 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF arole = (AssociationRoleIF)object;
       // ignore event if player is null
@@ -575,6 +578,7 @@ public class RoleTypeAssocTypeCache {
    * EventHandler: AssociationRoleIF.setPlayer
    */
   class EH02 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF arole = (AssociationRoleIF)object;
       
@@ -596,12 +600,13 @@ public class RoleTypeAssocTypeCache {
    * EventHandler: AssociationIF.setType
    */
   class EH03 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF assoc = (Association)object;
       // loop over roles
-      Iterator iter = assoc.getRoles().iterator();
+      Iterator<AssociationRoleIF> iter = assoc.getRoles().iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF arole = (AssociationRoleIF)iter.next();
+        AssociationRoleIF arole = iter.next();
         
         // ignore event if player is null
         TopicIF player = arole.getPlayer(); 

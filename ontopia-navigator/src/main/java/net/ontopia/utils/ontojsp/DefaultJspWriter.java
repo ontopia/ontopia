@@ -42,10 +42,12 @@ public class DefaultJspWriter extends JspWriter {
     
   @Override
   public final void clear() throws IOException {
+    // no-op
   }
 
   @Override
   public void clearBuffer() throws IOException {
+    // no-op
   }
 
   @Override

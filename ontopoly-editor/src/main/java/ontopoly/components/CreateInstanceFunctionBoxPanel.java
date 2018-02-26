@@ -49,6 +49,7 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
     nameField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
+        // no-op
       }
     });
     add(nameField);

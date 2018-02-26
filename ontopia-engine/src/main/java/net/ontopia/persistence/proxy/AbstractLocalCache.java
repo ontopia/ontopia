@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegistrarIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractLocalCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractLocalCache.class.getName());
 
   protected AbstractTransaction txn;
   protected StorageCacheIF pcache;
@@ -47,6 +47,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
       this.pregistrar = this.pcache.getRegistrar();
     else {
       this.ticket = new TicketIF() {
+          @Override
           public boolean isValid() {
             return true;
           }
@@ -58,17 +59,22 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
   // StorageCacheIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public AccessRegistrarIF getRegistrar() {
     return this;
   }
   
+  @Override
   public void close() {
   }
 
+  @Override
   public abstract boolean exists(StorageAccessIF access, IdentityIF identity);
   
+  @Override
   public abstract Object getValue(StorageAccessIF access, IdentityIF identity, int field);
 
+  @Override
   public boolean isObjectLoaded(IdentityIF identity) {
     if (pcache != null) 
       return pcache.isObjectLoaded(identity);
@@ -76,6 +82,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
     return false;
   }
 
+  @Override
   public boolean isFieldLoaded(IdentityIF identity, int field) {
     if (pcache != null) 
       return pcache.isFieldLoaded(identity, field);
@@ -87,26 +94,32 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
   // eviction
   // -----------------------------------------------------------------------------
 
+  @Override
   public void registerEviction() {
     if (pcache != null) pcache.registerEviction();
   }
   
+  @Override
   public void releaseEviction() {
     if (pcache != null) pcache.releaseEviction();
   }
 
+  @Override
   public void evictIdentity(IdentityIF identity, boolean notifyCluster) {
     if (pcache != null) pcache.evictIdentity(identity, notifyCluster);
   }
 
+  @Override
   public void evictFields(IdentityIF identity, boolean notifyCluster) {
     if (pcache != null) pcache.evictFields(identity, notifyCluster);
   }
 
+  @Override
   public void evictField(IdentityIF identity, int field, boolean notifyCluster) {
     if (pcache != null) pcache.evictField(identity, field, notifyCluster);
   }  
 
+  @Override
   public void clear(boolean notifyCluster) {
     if (pcache != null) pcache.clear(notifyCluster);
   }
@@ -117,6 +130,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   // ISSUE: prefetch locally if no parent cache?
 
+  @Override
   public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     // WARNING: dirty objects should never be handed over to shared cache
     if (pcache != null) return pcache.prefetch(access, type, field, nextField, traverse, identities);
@@ -127,18 +141,22 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
   // AccessRegistrarIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public IdentityIF createIdentity(Class<?> type, long key) {
     return new LongIdentity(type, key);
   }
 
+  @Override
   public IdentityIF createIdentity(Class<?> type, Object key) {
     return new AtomicIdentity(type, key);
   }
   
+  @Override
   public IdentityIF createIdentity(Class<?> type, Object[] keys) {
     return new Identity(type, keys);
   }
 
+  @Override
   public TicketIF getTicket() {
     if (pregistrar == null)
       return ticket;
@@ -146,6 +164,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
       return pregistrar.getTicket();
   }
   
+  @Override
   public void registerIdentity(TicketIF ticket, IdentityIF identity) {
     if (log.isDebugEnabled())
       log.debug("Registering identity " + identity);
@@ -158,6 +177,7 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
     txn.checkIdentityMapAndCreateInstance(identity);
   }
 
+  @Override
   public void registerField(TicketIF ticket, IdentityIF identity, int field, Object value) {
     if (log.isDebugEnabled())
       log.debug("Registering " + identity + " field " + field + "=" + value);      

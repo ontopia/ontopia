@@ -70,6 +70,7 @@ public class TopicRoleConstraint
 
   // --- ConstraintIF methods
 
+  @Override
   public boolean matches(TMObjectIF object) {
     if (object instanceof AssociationRoleIF) {
       AssociationRoleIF role = (AssociationRoleIF) object;

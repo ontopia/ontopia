@@ -21,8 +21,6 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A transactional storage cache implementation. The cache
@@ -31,9 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class StatisticsCache implements StorageCacheIF {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(StatisticsCache.class.getName());
 
   protected int total_o;
   protected int total_f;
@@ -56,14 +51,17 @@ public class StatisticsCache implements StorageCacheIF {
   // StorageCacheIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public AccessRegistrarIF getRegistrar() {
     return pcache.getRegistrar();
   }
   
+  @Override
   public void close() {
     pcache.close();
   }
 
+  @Override
   public boolean exists(StorageAccessIF access, IdentityIF identity) {
     total_o++;
     if (pcache.isObjectLoaded(identity)) {
@@ -76,6 +74,7 @@ public class StatisticsCache implements StorageCacheIF {
     return pcache.exists(access, identity);
   }
   
+  @Override
   public Object getValue(StorageAccessIF access, IdentityIF identity, int field) {
     total_f++;
     if (pcache.isFieldLoaded(identity, field)) {
@@ -88,34 +87,42 @@ public class StatisticsCache implements StorageCacheIF {
     return pcache.getValue(access, identity, field);
   }
 
+  @Override
   public boolean isObjectLoaded(IdentityIF identity) {
     return pcache.isObjectLoaded(identity);
   }
 
+  @Override
   public boolean isFieldLoaded(IdentityIF identity, int field) {
     return pcache.isFieldLoaded(identity, field);
   }
 
+  @Override
   public void registerEviction() {
     pcache.registerEviction();
   }
   
+  @Override
   public void releaseEviction() {
     pcache.releaseEviction();
   }
 
+  @Override
   public void evictIdentity(IdentityIF identity, boolean notifyCluster) {
     pcache.evictIdentity(identity, notifyCluster);
   }
 
+  @Override
   public void evictFields(IdentityIF identity, boolean notifyCluster) {
     pcache.evictFields(identity, notifyCluster);
   }
 
+  @Override
   public void evictField(IdentityIF identity, int field, boolean notifyCluster) {
     pcache.evictField(identity, field, notifyCluster);
   }  
 
+  @Override
   public void clear(boolean notifyCluster) {
     pcache.clear(notifyCluster);
   }
@@ -124,6 +131,7 @@ public class StatisticsCache implements StorageCacheIF {
   // prefetch
   // -----------------------------------------------------------------------------
 
+  @Override
   public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     return pcache.prefetch(access, type, field, nextField, traverse, identities);
   }
@@ -145,9 +153,9 @@ public class StatisticsCache implements StorageCacheIF {
     System.out.println("  field misses: " + misses_f + " (" + percent(misses_f, total_f) + "%)");
   }
 
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.StatisticsCache@");
+    StringBuilder sb = new StringBuilder("proxy.StatisticsCache@");
     sb.append(System.identityHashCode(this));
     if (pcache != null)
       sb.append(" [parent = ").append(pcache).append(']');

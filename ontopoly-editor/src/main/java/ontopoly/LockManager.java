@@ -23,8 +23,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 
 public class LockManager implements Serializable {
 
@@ -153,7 +152,7 @@ public class LockManager implements Serializable {
     }
     
     public boolean ownedBy(String ownerId) {
-      return ObjectUtils.equals(lockedBy, ownerId);
+      return Objects.equals(lockedBy, ownerId);
     }
   }  
 }

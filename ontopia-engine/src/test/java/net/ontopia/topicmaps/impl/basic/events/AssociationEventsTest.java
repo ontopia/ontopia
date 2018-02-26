@@ -28,6 +28,7 @@ public class AssociationEventsTest extends net.ontopia.topicmaps.core.events.Ass
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

@@ -21,8 +21,7 @@
 package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: JDOQL value: native value expression. Represents the
@@ -55,6 +54,7 @@ public class JDONativeValue implements JDOValueIF {
     this.value_type = value_type;
   }
 
+  @Override
   public int getType() {
     return NATIVE_VALUE;
   }
@@ -71,6 +71,7 @@ public class JDONativeValue implements JDOValueIF {
     return value_type;
   }
 
+  @Override
   public int hashCode() {
     int hashCode = root.hashCode();
     for (int ix = 0; ix < args.length; ix++) {
@@ -80,6 +81,7 @@ public class JDONativeValue implements JDOValueIF {
     return hashCode;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDONativeValue) {
@@ -91,15 +93,16 @@ public class JDONativeValue implements JDOValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(root.toString());
+    StringBuilder sb = new StringBuilder(root.toString());
     sb.append(".{");
-    StringUtils.join(args, ", ", sb);
+    sb.append(StringUtils.join(args, ", "));
     sb.append('}');
     return sb.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(root);
   }

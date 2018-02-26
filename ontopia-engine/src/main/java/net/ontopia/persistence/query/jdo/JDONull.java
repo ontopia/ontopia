@@ -28,17 +28,17 @@ package net.ontopia.persistence.query.jdo;
 
 public class JDONull implements JDOValueIF {
 
-  public JDONull() {
-  }
-
+  @Override
   public int getType() {
     return NULL;
   }
 
+  @Override
   public int hashCode() {
     return 321; // Just some random number
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDONull)
@@ -47,11 +47,14 @@ public class JDONull implements JDOValueIF {
       return false;
   }
 
+  @Override
   public String toString() {
     return "null";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

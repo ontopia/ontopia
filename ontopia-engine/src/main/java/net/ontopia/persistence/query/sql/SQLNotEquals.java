@@ -39,6 +39,7 @@ public class SQLNotEquals implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public int getType() {
     return NOT_EQUALS;
   }
@@ -59,6 +60,7 @@ public class SQLNotEquals implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public String toString() {
     return getLeft() + " != " + getRight();
   }

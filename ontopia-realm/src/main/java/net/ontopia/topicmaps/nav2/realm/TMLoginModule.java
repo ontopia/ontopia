@@ -39,7 +39,6 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import net.ontopia.net.Base64Encoder;
 import net.ontopia.topicmaps.entry.SharedStoreRegistry;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
@@ -55,6 +54,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.codec.binary.Base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +98,7 @@ public class TMLoginModule implements LoginModule {
 
   // LoginModule interface methods ...  
   
+  @Override
   public boolean abort() throws LoginException {
     if (!loginSucceeded) {
       return false;
@@ -119,6 +120,7 @@ public class TMLoginModule implements LoginModule {
   /**
    * Add relevant Principals to the subject.
    */
+  @Override
   public boolean commit() throws LoginException {
     if (!loginSucceeded)
       return false;
@@ -149,6 +151,7 @@ public class TMLoginModule implements LoginModule {
     return true;
   }
   
+  @Override
   public void initialize(Subject subject, CallbackHandler callbackHandler,
     Map<String, ?> sharedState, Map<String, ?> options) {
     log.debug("TMLoginModule: initialize");
@@ -174,6 +177,7 @@ public class TMLoginModule implements LoginModule {
   /** 
    * Prompt the user for username and password, and verify those.
    */
+  @Override
   public boolean login() throws LoginException {
     log.debug("TMLoginModule: login");
     
@@ -206,6 +210,7 @@ public class TMLoginModule implements LoginModule {
     return loginSucceeded;
   }
   
+  @Override
   public boolean logout() throws LoginException {    
     // clear out principals
     subject.getPrincipals().remove(userPrincipal);
@@ -234,15 +239,6 @@ public class TMLoginModule implements LoginModule {
     return net.ontopia.topicmaps.utils.TopicStringifiers.getDefaultStringifier().toString(topic);
   }
     
-  private static String getId(Object that) {
-    if (that instanceof TMObjectIF)
-      return NavigatorUtils.getStableId((TMObjectIF) that);
-    else if (that instanceof TopicMapReferenceIF) 
-      return ((TopicMapReferenceIF)that).getId();
-    else
-      return null;
-  }
-
   protected TopicMapIF getTopicMap() {
 
     TopicMapStoreIF store;
@@ -271,23 +267,23 @@ public class TMLoginModule implements LoginModule {
   public static String hashPassword(String username, String password,
                                     String hashMethod) {
     String encodedPassword;
-    if (hashMethod.equals("base64")) {
+    if ("base64".equals(hashMethod)) {
       try {
-        encodedPassword = Base64Encoder.encode(username+password);
+        encodedPassword = Base64.encodeBase64String((username+password).getBytes("ISO-8859-1"));
       } catch (Exception e) {
         throw new OntopiaRuntimeException(
                 "Problem occurred when attempting to hash password", e);
       }
-    } else if (hashMethod.equals("md5")) {
+    } else if ("md5".equals(hashMethod)) {
       try {
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] digest = messageDigest.digest((username+password).getBytes("ISO-8859-1"));
-        encodedPassword = Base64Encoder.encode(new String(digest, "ISO-8859-1"));
+        encodedPassword = Base64.encodeBase64String(digest);
       } catch (Exception e) {
         throw new OntopiaRuntimeException(
                 "Problems occurrend when attempting to hash password", e);
       }
-    } else if (hashMethod.equals("plaintext")) {
+    } else if ("plaintext".equals(hashMethod)) {
       encodedPassword = password;
     } else {
       throw new OntopiaRuntimeException("Invalid password encoding: "

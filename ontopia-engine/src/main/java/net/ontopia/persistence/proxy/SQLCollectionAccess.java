@@ -40,9 +40,10 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SQLCollectionAccess implements ClassAccessIF {
+  private static final String EXECUTING = "Executing: ";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLCollectionAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLCollectionAccess.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  
@@ -126,6 +127,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Load
   
+  @Override
   public boolean load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception {
     // Get ticket
     TicketIF ticket = registrar.getTicket();
@@ -141,7 +143,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
       
       // Execute statement
       if (debug)
-        log.debug("Executing: " + sql_load);
+        log.debug(EXECUTING + sql_load);
       ResultSet rs = stm.executeQuery();
 
       // Initialize collection value
@@ -173,10 +175,12 @@ public class SQLCollectionAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Load field
   
+  @Override
   public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) {
     throw new UnsupportedOperationException("Persistent collections have no fields.");
   }
 
+  @Override
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection identities, 
           IdentityIF current, int field) {
     throw new UnsupportedOperationException("Persistent collections have no fields.");
@@ -185,6 +189,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Create
 
+  @Override
   public void create(ObjectAccessIF oaccess, Object object) throws Exception {
     // Make sure trackable is in initialized state
     TrackableCollectionIF trackcoll = (TrackableCollectionIF)object;
@@ -197,6 +202,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Delete
   
+  @Override
   public void delete(ObjectAccessIF oaccess, Object object) throws Exception {
     // NOTE: Deletes all collection elements.
     
@@ -208,7 +214,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
       bindParametersDelete(stm, oaccess.getIdentity(object));
       
       // Execute statement
-      if (debug) log.debug("Executing: " + sql_delete);
+      if (debug) log.debug(EXECUTING + sql_delete);
       stm.executeUpdate();
     } finally {
       if (stm != null) stm.close();
@@ -224,6 +230,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Store dirty
 
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception {    
     // Store changes
     TrackableCollectionIF trackcoll = (TrackableCollectionIF)object;
@@ -260,7 +267,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
         bindParametersAddRemove(stm, oaccess, identity, iter.next());
         
         // Execute statement
-        if (debug) log.debug("Executing: " + sql_add);
+        if (debug) log.debug(EXECUTING + sql_add);
         stm.executeUpdate();
       }   
     } finally {
@@ -309,7 +316,7 @@ public class SQLCollectionAccess implements ClassAccessIF {
         bindParametersAddRemove(stm, oaccess, identity, iter.next());
         
         // Execute statement
-        if (debug) log.debug("Executing: " + sql_remove);
+        if (debug) log.debug(EXECUTING + sql_remove);
         stm.executeUpdate();
       }   
     } finally {

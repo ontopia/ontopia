@@ -72,9 +72,6 @@ public class OntopolyApplication extends WebApplication implements Serializable 
 
   public static final float CURRENT_VERSION_NUMBER = 2.0f;
   
-  public OntopolyApplication() {
-  }
-  
   @Override
   public Class<? extends Page> getHomePage() {
     return StartPage.class;

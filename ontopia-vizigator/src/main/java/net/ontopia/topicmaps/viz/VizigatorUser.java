@@ -27,7 +27,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.touchgraph.graphlayout.graphelements.ImmutableGraphEltSet;
-import com.touchgraph.graphlayout.graphelements.Locality;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
@@ -52,12 +51,12 @@ public class VizigatorUser extends TimerTask {
   protected int undoCount;
   protected int redoCount;
 
-  VizController controller;
+  private VizController controller;
   protected boolean enabled;
-  Random random;
+  private Random random;
   
-  long millis;
-  Timer timer;  
+  private long millis;
+  private Timer timer;  
 
   public VizigatorUser(VizController controller, long millis) {
     this.controller = controller;
@@ -81,6 +80,7 @@ public class VizigatorUser extends TimerTask {
   /**
    * This method is called on schedule by the timer.
    */
+  @Override
   public void run() {
     if (!enabled)
       return;

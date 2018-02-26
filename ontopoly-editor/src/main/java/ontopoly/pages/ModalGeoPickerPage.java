@@ -53,14 +53,14 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
   
 public class ModalGeoPickerPage extends Panel {
-  ModalWindow dialog;
-  TopicModel<Topic> thetopic;
-  AbstractDefaultAjaxBehavior behave;
-  Label ajaxurllabel;
-  Model<String> ajaxurlmodel;
+  private ModalWindow dialog;
+  private TopicModel<Topic> thetopic;
+  private AbstractDefaultAjaxBehavior behave;
+  private Label ajaxurllabel;
+  private Model<String> ajaxurlmodel;
 
-  FieldInstanceOccurrencePanel latpan;
-  FieldInstanceOccurrencePanel lngpan;
+  private FieldInstanceOccurrencePanel latpan;
+  private FieldInstanceOccurrencePanel lngpan;
   
   public ModalGeoPickerPage(ModalWindow dialog, Topic thetopic) {
     super(dialog.getContentId());
@@ -89,6 +89,7 @@ public class ModalGeoPickerPage extends Panel {
     popupContent.add(ajaxurllabel);
   }
 
+  @Override
   protected void onBeforeRender() {
     super.onBeforeRender();
 
@@ -209,6 +210,7 @@ public class ModalGeoPickerPage extends Panel {
       this.parent = parent;
     }
     
+    @Override
     protected void respond(final AjaxRequestTarget target) {
       parent.onSetPosition(target);
     }

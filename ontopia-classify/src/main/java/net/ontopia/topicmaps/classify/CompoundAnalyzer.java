@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.ontopia.utils.ObjectUtils;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,20 +35,20 @@ import org.slf4j.LoggerFactory;
 public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAnalyzerIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CompoundAnalyzer.class.getName());
+  private static Logger log = LoggerFactory.getLogger(CompoundAnalyzer.class.getName());
   
-  TermDatabase tdb;
-  TermStemmerIF termStemmer;
+  private TermDatabase tdb;
+  private TermStemmerIF termStemmer;
   
-  Map<Variant, Followers> followers = new HashMap<Variant, Followers>();
+  private Map<Variant, Followers> followers = new HashMap<Variant, Followers>();
 
-  int maxLength = 3;
+  private int maxLength = 3;
 
-  double term1ScoreThreshold = 0.02d;
-  double term2ScoreThreshold = 0.02d;
-  int compositeOccsThreshold = 2;
+  private double term1ScoreThreshold = 0.02d;
+  private double term2ScoreThreshold = 0.02d;
+  private int compositeOccsThreshold = 2;
 
-  double compoundFactor = 2.0d; // 0.6d;
+  private double compoundFactor = 2.0d; // 0.6d;
   
   public CompoundAnalyzer() {
     super(1);
@@ -96,6 +95,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   // document analyzer
   // --------------------------------------------------------------------------
 
+  @Override
   public void analyzeToken(TextBlock parent, Token token, int index) {
     // ignore non variant tokens
     if (token.getType() == Token.TYPE_VARIANT) {
@@ -113,14 +113,17 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   // term analyzer
   // --------------------------------------------------------------------------
 
+  @Override
   public void analyzeTerm(Term term) {
     addComposites(tdb, term, 2);
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     this.tdb = tdb;
   }
 
+  @Override
   public void endAnalysis() {
     this.tdb = null;
   }
@@ -242,19 +245,20 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   // --------------------------------------------------------------------------
   
   private class CompositeScoreComparator implements Comparator<Variant> {
-    Followers f;
+    private Followers f;
     CompositeScoreComparator(Followers f) {
       this.f = f;
     }    
+    @Override
     public int compare(Variant v1, Variant v2) {
-      return ObjectUtils.compare(f.getScore(v2), f.getScore(v1));
+      return Double.compare(f.getScore(v2), f.getScore(v1));
     }
   };
   
   private class Followers {
-    TObjectIntHashMap<Variant> followers = new TObjectIntHashMap<Variant>();
-    int followedByDelimiter;
-    int totalFollowerOccurrences;
+    private TObjectIntHashMap<Variant> followers = new TObjectIntHashMap<Variant>();
+    private int followedByDelimiter;
+    private int totalFollowerOccurrences;
 
     public void addFollower(Token token, int counts) {
       if (token.getType() == Token.TYPE_VARIANT) {

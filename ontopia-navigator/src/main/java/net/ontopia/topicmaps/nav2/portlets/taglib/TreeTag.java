@@ -21,8 +21,6 @@
 package net.ontopia.topicmaps.nav2.portlets.taglib;
 
 import java.io.IOException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -31,7 +29,6 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.TreeWidget;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 public class TreeTag extends TagSupport {
   private String topquery;
@@ -40,6 +37,7 @@ public class TreeTag extends TagSupport {
   private String nodepage;
   private String imageurl;
 
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     TopicMapIF tm = contextTag.getTopicMap();
@@ -58,7 +56,9 @@ public class TreeTag extends TagSupport {
     return SKIP_BODY;
   }
 
+  @Override
   public void release() {
+    // no-op
   }
 
   // --- Setters

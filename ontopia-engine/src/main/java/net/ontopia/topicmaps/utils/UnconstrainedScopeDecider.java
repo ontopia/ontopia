@@ -38,6 +38,7 @@ public class UnconstrainedScopeDecider implements DeciderIF<ScopedIF> {
     this.subdecider = subdecider;
   }
   
+  @Override
   public boolean ok(ScopedIF scoped) {
     return scoped.getScope().isEmpty() ||
            subdecider.ok(scoped);

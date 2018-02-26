@@ -27,9 +27,9 @@ package net.ontopia.topicmaps.impl.tmapi2;
 
 class Feature {
 
-  String name;
-  boolean fixed;
-  boolean defval;
+  protected String name;
+  protected boolean fixed;
+  protected boolean defval;
 
   Feature(String name, boolean fixed, boolean defval) {
     this.name = name;

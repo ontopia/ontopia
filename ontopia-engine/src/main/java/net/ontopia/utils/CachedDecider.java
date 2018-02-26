@@ -55,6 +55,7 @@ public class CachedDecider<T> implements DeciderIF<T>, CachedIF {
     this.decider = decider;
   }
   
+  @Override
   public boolean ok(T object) {
     if (object == null) return false;
     if (cache.containsKey(object)) return cache.get(object).booleanValue();
@@ -66,6 +67,7 @@ public class CachedDecider<T> implements DeciderIF<T>, CachedIF {
     return decision;
   }
   
+  @Override
   public void refresh() {
     cache.clear();
   }

@@ -53,7 +53,7 @@ public class Slf4jSaxErrorHandler implements ErrorHandler {
       log.warn(e.toString());      
     }
     if (propval != null)
-      this.ignoreNamespaceErrors = PropertyUtils.isTrue(propval);
+      this.ignoreNamespaceErrors = Boolean.parseBoolean(propval);
   }
 
   /**
@@ -69,11 +69,13 @@ public class Slf4jSaxErrorHandler implements ErrorHandler {
       " col " + e.getColumnNumber() + ")";
   }
   
+  @Override
   public void warning(SAXParseException e) {
     log.warn(e.getMessage() + " " + getExceptionLocationInfo(e));
     // throw e;
   }
   
+  @Override
   public void error(SAXParseException e) {
     // this is a little bit fragile, but ...
     if (!((   e.getMessage().startsWith("Undeclared prefix")
@@ -85,6 +87,7 @@ public class Slf4jSaxErrorHandler implements ErrorHandler {
     // throw e;
   }
 
+  @Override
   public void fatalError(SAXParseException e) throws SAXParseException {
     // for Xerces-2
     if (!(   e.getMessage().startsWith("The prefix ")

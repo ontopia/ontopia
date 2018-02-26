@@ -60,6 +60,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.LiteralIndex#getNames(java.lang.String)
    */
+  @Override
   public Collection<Name> getNames(String value) {
     if (value == null)
       throw new IllegalArgumentException("value is null");
@@ -72,6 +73,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.LiteralIndex#getOccurrences(java.lang.String)
    */
+  @Override
   public Collection<Occurrence> getOccurrences(String value) {
     Check.valueNotNull(value);
 
@@ -84,6 +86,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.LiteralIndex#getOccurrences(org.tmapi.core.Locator)
    */
+  @Override
   public Collection<Occurrence> getOccurrences(Locator value) {
     Check.valueNotNull(value);
 
@@ -100,6 +103,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.LiteralIndex#getOccurrences(java.lang.String,
    * org.tmapi.core.Locator)
    */
+  @Override
   public Collection<Occurrence> getOccurrences(String value, Locator locator) {
     Check.valueNotNull(value);
     Check.locatorNotNull(locator);
@@ -113,6 +117,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.LiteralIndex#getVariants(java.lang.String)
    */
+  @Override
   public Collection<Variant> getVariants(String value) {
     Check.valueNotNull(value);
 
@@ -124,6 +129,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.LiteralIndex#getVariants(org.tmapi.core.Locator)
    */
+  @Override
   public Collection<Variant> getVariants(Locator value) {
     Check.valueNotNull(value);
 
@@ -136,6 +142,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.LiteralIndex#getVariants(java.lang.String,
    * org.tmapi.core.Locator)
    */
+  @Override
   public Collection<Variant> getVariants(String value, Locator datatype) {
     Check.valueNotNull(value);
     Check.datatypeNotNull(datatype);
@@ -149,7 +156,9 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.Index#close()
    */
+  @Override
   public void close() {
+    // no-op
   }
 
   /*
@@ -157,6 +166,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.Index#isAutoUpdated()
    */
+  @Override
   public boolean isAutoUpdated() {
     return true;
   }
@@ -166,6 +176,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.Index#isOpen()
    */
+  @Override
   public boolean isOpen() {
     return true;
   }
@@ -175,7 +186,9 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.Index#open()
    */
+  @Override
   public void open() {
+    // no-op
   }
 
   /*
@@ -183,7 +196,9 @@ public class LiteralIndexImpl implements LiteralIndex {
    * 
    * @see org.tmapi.index.Index#reindex()
    */
+  @Override
   public void reindex() {
+    // no-op
   }
 
 }

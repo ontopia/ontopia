@@ -26,6 +26,7 @@ public class DoSetASStrictness implements RecoveryObjectIF {
     this.strictness = strictness;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     view.controller.setAssociationScopeFilterStrictness(strictness);
     view.controller.getVizPanel().getAssociationScopeFilterMenu()

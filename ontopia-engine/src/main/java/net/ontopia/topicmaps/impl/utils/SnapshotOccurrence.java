@@ -85,10 +85,12 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
   // OccurrenceIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getTopic() {
     return topic;
   }
 
+  @Override
   public LocatorIF getDataType() {
     return datatype;
   }
@@ -97,68 +99,84 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
   //!   throw new ReadOnlyException();
   //! }
   
+  @Override
   public String getValue() {
     return value;
   }
 
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
   
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public Reader getReader() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public long getLength() {
     return (value == null ? 0 : value.length());
   }
   
+  @Override
   public Collection<TopicIF> getScope() {
     return (scope == null ? Collections.<TopicIF>emptyList() : scope);
   }
   
+  @Override
   public void addTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
   
+  @Override
   public void removeTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
   
+  @Override
   public TopicIF getType() {
     return type;
   }
   
+  @Override
   public void setType(TopicIF type) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
 	}
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
 	}
 
+  @Override
   public String toString() {
     return "[SnapshotOccurrence, " + getObjectId() + "]";
   }

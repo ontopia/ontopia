@@ -43,27 +43,23 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class TopicMapAnalyzer implements TermAnalyzerIF {
 
-  TermDatabase tdb;
+  private TermDatabase tdb;
   
-  TopicMapIF topicmap;
+  private ParsedQueryIF pq_byName;
+  
+  private Collection<TopicIF> ctypes;
+  private List<TopicIF> ctypes_sorted;
+  private Map<TopicIF, AssociationType> atypes;
+  
+  private Collection<TopicIF> atopics = new HashSet<TopicIF>();
+  private Map<String, Variant> smap = new HashMap<String, Variant>();
+  private Map<String, Collection<TopicIF>> vtopics = new HashMap<String, Collection<TopicIF>>();
 
-  QueryProcessorIF qp;
-  ParsedQueryIF pq_byName;
-  
-  Collection<TopicIF> ctypes;
-  List<TopicIF> ctypes_sorted;
-  Map<TopicIF, AssociationType> atypes;
-  
-  Collection<TopicIF> atopics = new HashSet<TopicIF>();
-  Map<String, Variant> smap = new HashMap<String, Variant>();
-  Map<String, Collection<TopicIF>> vtopics = new HashMap<String, Collection<TopicIF>>();
-
-  double matchFactor = 4.0d;
+  private double matchFactor = 4.0d;
   
   public TopicMapAnalyzer(TopicMapIF topicmap) {
-    this.topicmap = topicmap;
     try {
-      this.qp = QueryUtils.getQueryProcessor(topicmap);
+      QueryProcessorIF qp = QueryUtils.getQueryProcessor(topicmap);
       this.pq_byName = qp.parse("select $T from topic-name($T, $N), value($N, %VALUE%)?");
 
       this.ctypes = new HashSet<TopicIF>();
@@ -131,6 +127,7 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
     }
   }
 
+  @Override
   public void analyzeTerm(Term term) {
     try {
       int foundMatches = 0;
@@ -184,10 +181,12 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
     }
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
     this.tdb = tdb;
   }
 
+  @Override
   public void endAnalysis() {
     // merge terms that are synonyms
     for (TopicIF topic : atopics) {

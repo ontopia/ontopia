@@ -4,7 +4,7 @@
     java.net.URLEncoder,
     net.ontopia.topicmaps.nav2.core.*,
     net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
-    net.ontopia.utils.StringUtils" %>
+    org.apache.commons.lang3.StringUtils" %>
 
 <%
   // handling submitted 'customise' form (user.jsp)

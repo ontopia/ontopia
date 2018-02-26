@@ -39,14 +39,17 @@ public class RDBMSQuery implements QueryIF {
     this.query = query;
   }
 
+  @Override
   public Object executeQuery() throws Exception {
     return query.executeQuery(access.getConnection());
   }
 
+  @Override
   public Object executeQuery(Object[] params) throws Exception {
     return query.executeQuery(access.getConnection(), params);
   }
 
+  @Override
   public Object executeQuery(Map params) throws Exception {
     return query.executeQuery(access.getConnection(), params);
   }

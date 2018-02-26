@@ -32,8 +32,6 @@ import java.util.Map;
  */
 public class CmdlineOptions {
 
-  boolean parsed = false;
-
   protected String application;
   protected String[] argv;
   
@@ -123,8 +121,6 @@ public class CmdlineOptions {
     for (int i = g.getOptind(); i < argv.length ; i++) {
       arguments.add(argv[i]);
     }
-    
-    parsed = true;
   }
 
   
@@ -142,13 +138,13 @@ public class CmdlineOptions {
    * instance.</p>
    */
 
-  public static interface ListenerIF {
+  public interface ListenerIF {
 
     /**
      * Method that is called by the command line option parser when an
      * option registered for the listener is found.
      */    
-    public void processOption(char option, String value) throws OptionsException;
+    void processOption(char option, String value) throws OptionsException;
 
   }
 
@@ -181,6 +177,7 @@ public class CmdlineOptions {
       return value;
     }
 
+    @Override
     public String getMessage() {
       if (value == null)
         return "Invalid option '" + getArgument() + "'.";

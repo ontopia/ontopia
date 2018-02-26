@@ -33,12 +33,6 @@ public abstract class AbstractCollectionTest extends TestCase {
     super(name);
   }
 
-  protected void setUp() {
-  }
-
-  protected void tearDown() {
-  }
-
   protected Collection getCollection(int size) {
     Collection list = new ArrayList();
     int c = 65;

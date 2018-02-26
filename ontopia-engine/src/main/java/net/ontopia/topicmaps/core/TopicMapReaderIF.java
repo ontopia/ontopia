@@ -50,7 +50,7 @@ public interface TopicMapReaderIF {
    * implementing TopicMapIF. null is returned when there are no more
    * topic maps available from the source.
    */
-  public TopicMapIF read() throws IOException;
+  TopicMapIF read() throws IOException;
 
   /**
    * PUBLIC: Reads all the topic map available from some implicit,
@@ -65,13 +65,21 @@ public interface TopicMapReaderIF {
    * @return A collection containing all the topic maps read from the
    * source; objects implementing TopicMapIF.
    */
-  public Collection<TopicMapIF> readAll() throws IOException;
+  Collection<TopicMapIF> readAll() throws IOException;
   
+  /**
+   * PUBLIC: Imports an implicitly designated topic map into the given topic map.
+   *
+   * @param topicmap The topic map into which the import will be done;
+   *                 an object implementing TopicMapIF.
+   */
+  public void importInto(TopicMapIF topicmap) throws IOException;  
+
   /**
    * PUBLIC: set additional properties to the topic map reader. The
    * set of accepted properties differs per reader implementation, see
    * the specific reader documentation for details on accepted properties.
    * @param properties Additional properties for the reader
    */
-  public void setAdditionalProperties(Map<String, Object> properties);
+  void setAdditionalProperties(Map<String, Object> properties);
 }

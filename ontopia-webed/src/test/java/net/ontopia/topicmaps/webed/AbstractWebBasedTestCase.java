@@ -43,6 +43,7 @@ public abstract class AbstractWebBasedTestCase extends TestCase {
     super(aName);
   }
 
+  @Override
   protected void setUp() throws Exception {
   
     super.setUp();

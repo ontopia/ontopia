@@ -192,16 +192,19 @@ public class QueryOptimizer {
   
   public static abstract class AbstractQueryOptimizer implements QueryOptimizerIF {
 
+    @Override
     public void optimize(TologQuery query, QueryContext context)
       throws InvalidQueryException {
       // do nothing
     }
     
+    @Override
     public PredicateClause optimize(PredicateClause clause, QueryContext context)
       throws InvalidQueryException {
       return clause;
     }
     
+    @Override
     public List optimize(List clauses, QueryContext context)
       throws InvalidQueryException {
       return clauses;
@@ -217,6 +220,7 @@ public class QueryOptimizer {
    */
   public static class RuleInliner extends AbstractQueryOptimizer {
   
+    @Override
     public PredicateClause optimize(PredicateClause clause, QueryContext context) {
       return clause.getReplacement();
     }
@@ -247,6 +251,7 @@ public class QueryOptimizer {
       this.predicate_based = predicate_based;
     }
     
+    @Override
     public List optimize(List qclauses, QueryContext qcontext) {
       if (qcontext.getNestingLevel() > 1)
         return qclauses;
@@ -362,6 +367,7 @@ public class QueryOptimizer {
    */
   public static class RecursivePruner extends AbstractQueryOptimizer {
 
+    @Override
     public List optimize(List clauses, QueryContext context) {
       if (context.getRuleName() == null)
         return clauses; // queries are never recursive, only rules
@@ -400,6 +406,7 @@ public class QueryOptimizer {
     // it is empty there is a conflict and we can short out the
     // predicate. 
     
+    @Override
     public List optimize(List clauses, QueryContext context)
       throws InvalidQueryException {
       
@@ -525,6 +532,7 @@ public class QueryOptimizer {
    */
   public static class HierarchyWalker extends AbstractQueryOptimizer {
 
+    @Override
     public List optimize(List clauses, QueryContext context) {
 
       // scan clause list looking for suitable candidates
@@ -747,6 +755,7 @@ public class QueryOptimizer {
    */
   public static class StringPrefixOptimizer extends AbstractQueryOptimizer {
   
+    @Override
     public void optimize(TologQuery query, QueryContext context) {
       // find str:starts-with predicate
       PredicatePosition startsp = findPredicate(query.getClauses(),
@@ -836,6 +845,7 @@ public class QueryOptimizer {
    */
   public static class AddTypeToRolePlayer extends AbstractQueryOptimizer {
   
+    @Override
     public void optimize(TologQuery query, QueryContext context) {
       Iterator it = findPredicates(query.getClauses(),
                                    RolePlayerPredicate.class).iterator();
@@ -987,7 +997,7 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        if (pclause == theclause)
+        if (pclause.equals(theclause))
           return bound.contains(var);
         bound.addAll(pclause.getAllVariables());
         
@@ -1075,6 +1085,7 @@ public class QueryOptimizer {
    */
   public static class NextPreviousOptimizer extends AbstractQueryOptimizer {
   
+    @Override
     public void optimize(TologQuery query, QueryContext context) {
 
       // ===== CHECK IF OPTIMIZATION APPLIES
@@ -1211,14 +1222,17 @@ public class QueryOptimizer {
       this.bigger = bigger;
     }
     
+    @Override
     public String getName() {
       return "::pump-previous-next";
     }
 
+    @Override
     public String getSignature() throws InvalidQueryException {
       return "s s";
     }
 
+    @Override
     public int getCost(boolean[] boundparams) {
       // after the optimization, this is the only top-level predicate,
       // so what we return doesn't much matter. in any case, we'll
@@ -1226,6 +1240,7 @@ public class QueryOptimizer {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
     }
 
+    @Override
     public QueryMatches satisfy(QueryMatches input, Object[] arguments)
       throws InvalidQueryException {
 
@@ -1285,6 +1300,7 @@ public class QueryOptimizer {
       super(predicate, arguments);
     }
     
+    @Override
     public List getArguments() {
       Collection items = new CompactHashSet(arguments);
 

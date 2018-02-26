@@ -25,13 +25,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.webed.impl.utils.ActionData;
 import net.ontopia.topicmaps.webed.impl.utils.Parameters;
-import net.ontopia.utils.DebugUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,14 +57,17 @@ public class ActionContext implements ActionContextIF {
   // implement ActionContextIF methods
   // -------------------------------------------------------------
 
+  @Override
   public UserIF getUser() {
     return user;
   }
   
+  @Override
   public Map getParameters() {
     return params.getMap();
   }
 
+  @Override
   public String[] getParameterValues(String paramName) {
     if (log.isDebugEnabled()) {
       log.debug("getParameterValues("+paramName+"): "+params.getValues(paramName));
@@ -75,6 +75,7 @@ public class ActionContext implements ActionContextIF {
     return params.getValues(paramName);
   }
 
+  @Override
   public String getParameterSingleValue(String paramName) {
     if (params.getValues(paramName) == null)
       return null;
@@ -82,14 +83,16 @@ public class ActionContext implements ActionContextIF {
     if (values.length != 1)
       throw new IllegalArgumentException("Required exactly one value for parameter: "+
                                          paramName + ", but got "  + values.length +
-                                         " : " + DebugUtils.toString(values));
+                                         " : " + Arrays.toString(values));
     return values[0];
   }
   
+  @Override
   public Collection getParameterNames() {
     return params.getNames();
   }
 
+  @Override
   public Collection getAllActions() {
     String request_id = params.get(Constants.RP_REQUEST_ID);
     if (request_id == null)
@@ -111,14 +114,17 @@ public class ActionContext implements ActionContextIF {
   // overwrite Object methods
   // -------------------------------------------------------------
   
+  @Override
   public int hashCode() {
     return params.hashCode();
   }
 
+  @Override
   public String toString() {
     return "[Params: " + params + "]";
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof ActionContext))
       return false;

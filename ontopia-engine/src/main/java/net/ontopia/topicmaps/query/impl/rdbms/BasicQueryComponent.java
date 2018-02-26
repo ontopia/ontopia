@@ -52,6 +52,7 @@ public class BasicQueryComponent implements QueryComponentIF {
     this.clauses = QueryOptimizer.getOptimizer(query).optimize(clauses, new QueryContext(query));
   }
   
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Map arguments)
     throws InvalidQueryException {
 
@@ -67,6 +68,7 @@ public class BasicQueryComponent implements QueryComponentIF {
     return matches;
   }
 
+  @Override
   public String toString() {    
     return "BQC: " + clauses;
   }

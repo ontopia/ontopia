@@ -26,9 +26,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: JDOQL complete query. Represents a complete JDO query.
@@ -47,9 +46,6 @@ public class JDOQuery {
   protected Map variables;  
   protected List select = new ArrayList();  // never empty
   protected List orderby;
-
-  public JDOQuery() {
-  }
 
   public boolean isSetQuery() {
     return (getFilter() instanceof JDOSetOperation);
@@ -211,13 +207,14 @@ public class JDOQuery {
     addOrderBy(new JDOOrderBy(aggregate, JDOOrderBy.DESCENDING));
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("select ");
     if (getDistinct())
       sb.append("distinct ");
     if (select == null || select.isEmpty())
-      sb.append("*");
+      sb.append('*');
     else
       StringUtils.join(select, ", ", sb);
     if (getFilter() != null) {
@@ -227,7 +224,7 @@ public class JDOQuery {
     List _orderby = getOrderBy();
     if (!_orderby.isEmpty()) {
       sb.append(" order by ");
-      StringUtils.join(_orderby, ", ", sb);
+      sb.append(StringUtils.join(_orderby, ", "));
     }
     return sb.toString();
   }

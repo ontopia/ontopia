@@ -21,16 +21,15 @@
 package net.ontopia.infoset.content;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
-
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: A content store implementation based on the file system.
@@ -43,6 +42,8 @@ import net.ontopia.utils.StreamUtils;
 public class FileContentStore implements ContentStoreIF {
   public static final int FILES_PER_DIRECTORY = 1000;
   public static final int KEY_BLOCK_SIZE = 10;
+  public static final int MAX_SPINS = 1000;
+  public static final int SPIN_TIMEOUT = 10;
 
   private int files_per_directory;
   private boolean open;
@@ -77,11 +78,13 @@ public class FileContentStore implements ContentStoreIF {
 
   // --- ContentStoreIF implementation
   
+  @Override
   public synchronized boolean containsKey(int key) throws ContentStoreException {
     checkOpen();
     return getFileForKey(key).exists();
   }
 
+  @Override
   public synchronized ContentInputStream get(int key) throws ContentStoreException {
     checkOpen();
     File file = getFileForKey(key);
@@ -95,10 +98,12 @@ public class FileContentStore implements ContentStoreIF {
     }
   }
   
+  @Override
   public int add(ContentInputStream data) throws ContentStoreException {
     return add(data, data.getLength());
   }
   
+  @Override
   public synchronized int add(InputStream data, int length)
     throws ContentStoreException {
     checkOpen();
@@ -115,7 +120,7 @@ public class FileContentStore implements ContentStoreIF {
 
       // store data
       OutputStream out = new FileOutputStream(file);
-      StreamUtils.transfer(data, out);
+      IOUtils.copy(data, out);
       out.close();
     } catch (IOException e) {
       throw new ContentStoreException("Error writing data to content store.", e);
@@ -130,12 +135,14 @@ public class FileContentStore implements ContentStoreIF {
     return key;
   }
 
+  @Override
   public synchronized boolean remove(int key) throws ContentStoreException {
     checkOpen();
     File file = getFileForKey(key);
     return file.delete();
   }
 
+  @Override
   public synchronized void close() throws ContentStoreException {
     checkOpen();
     open = false;
@@ -161,9 +168,6 @@ public class FileContentStore implements ContentStoreIF {
     last_key++;
     return last_key;
   }
-
-  static final int MAX_SPINS = 1000;
-  static final int SPIN_TIMEOUT = 10;
 
   private void allocateNewBlock() throws ContentStoreException {
     RandomAccessFile out = null;

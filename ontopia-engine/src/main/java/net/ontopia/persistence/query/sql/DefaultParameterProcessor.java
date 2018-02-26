@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultParameterProcessor implements ParameterProcessorIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DefaultParameterProcessor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DefaultParameterProcessor.class.getName());
 
   protected FieldHandlerIF[] param_fields;
   protected String[] param_names;
@@ -59,6 +59,7 @@ public class DefaultParameterProcessor implements ParameterProcessorIF {
     this.fetchSize = fetchSize;
   }
 
+  @Override
   public ResultSet executeQuery(Connection conn, String sql, Map params) throws SQLException {
     if (param_names == null)
       throw new OntopiaRuntimeException("Cannot use named parameters when query not defined with parameter names.");
@@ -71,6 +72,7 @@ public class DefaultParameterProcessor implements ParameterProcessorIF {
     return executeQuery(conn, sql, _params);
   }
   
+  @Override
   public ResultSet executeQuery(Connection conn, String sql, Object[] params) throws SQLException {
     
     if (log.isDebugEnabled()) log.debug("Executing: " + sql);    

@@ -53,7 +53,7 @@ import net.ontopia.utils.SimpleFileFilter;
  * INTERNAL: A General Configuration frame for the VizDesktop.
  */
 public class OpenRDBMSDialogBox extends JFrame {
-  VizDesktop desktop;
+  private VizDesktop desktop;
   private TopicMapReferenceIF tmReference;
   private Vector topicMaps;
   private Map idToTMReference;
@@ -103,6 +103,7 @@ public class OpenRDBMSDialogBox extends JFrame {
     // Create a listener that will listen for and act upon changes to the
     // file chooser button.
     CaretListener propertiesFileTextFieldListener = new CaretListener() {
+        @Override
         public void caretUpdate(CaretEvent e) {
           String text = propertiesFileField.getText();
           
@@ -123,6 +124,7 @@ public class OpenRDBMSDialogBox extends JFrame {
     // Create a listener that will listen for and act upon changes to the
     // file chooser button.
     ActionListener propertiesFileListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent action) {
           File newPropertiesFile;
           SimpleFileFilter filter = new SimpleFileFilter(Messages
@@ -153,6 +155,7 @@ public class OpenRDBMSDialogBox extends JFrame {
     // Create a listener that will listen for and act upon changes to the
     // topic map choice.
     ActionListener topicMapChooserListener = new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         tmReference = (TopicMapReferenceIF)idToTMReference.get(topicMapChooser
             .getSelectedItem());
@@ -193,6 +196,7 @@ public class OpenRDBMSDialogBox extends JFrame {
     // Create a listener that will listen for and act upon changes to the
     // configuration file chooser button.
     ActionListener configurationFileListener = new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         File newConfigurationFile;
         SimpleFileFilter filter = new SimpleFileFilter(Messages
@@ -229,6 +233,7 @@ public class OpenRDBMSDialogBox extends JFrame {
     // Create a listener that will listen for and act upon changes to the
     // Cancel button.
     ActionListener cancelListener = new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent action) {
         hide();
       }
@@ -367,6 +372,7 @@ public class OpenRDBMSDialogBox extends JFrame {
         
       // Will listen for and act upon changes to the OK button.
       ActionListener okListener = new ActionListener() {
+          @Override
           public void actionPerformed(ActionEvent action) {
             setVisible(false);
           }
@@ -387,6 +393,7 @@ public class OpenRDBMSDialogBox extends JFrame {
    * clicked.
    */
   class OpenRDBMSTopicMapListener implements ActionListener {
+    @Override
     public void actionPerformed(ActionEvent action) {
       try {
         _actionPerformed(action);

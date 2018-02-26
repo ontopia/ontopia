@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
  */
 public class CTMEncodingSniffer implements EncodingSnifferIF {
   
+  @Override
   public String guessEncoding(PushbackInputStream stream) throws IOException {
     String encoding;
 

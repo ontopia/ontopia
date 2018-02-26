@@ -45,6 +45,7 @@ public class SQLEquals implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public int getType() {
     return EQUALS;
   }
@@ -65,6 +66,7 @@ public class SQLEquals implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public String toString() {
     return getLeft() + " = " + getRight();
   }

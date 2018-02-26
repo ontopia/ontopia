@@ -20,28 +20,28 @@
 
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.io.IOException;
-import java.net.URL;
-import org.xml.sax.InputSource;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.TMXMLReader;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.topicmaps.xml.TMXMLReader;
+import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
+import org.xml.sax.InputSource;
 
 /**
  * PUBLIC: A component for including links to relevant pages from
@@ -266,6 +266,7 @@ public class TMRAP {
       this.topicmap = topicmap;
     }
     
+    @Override
     public Object mapRow(QueryResultIF result, int rowno) {
       if (server == null && topicmap == null)
         return new Server((TopicIF) result.getValue(0));

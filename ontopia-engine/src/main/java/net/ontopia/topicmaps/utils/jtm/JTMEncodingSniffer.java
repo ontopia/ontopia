@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.impl.utils.EncodingSnifferIF;
  */
 public class JTMEncodingSniffer implements EncodingSnifferIF {
   
+  @Override
   public String guessEncoding(PushbackInputStream stream) throws IOException {
     // http://www.ietf.org/rfc/rfc4627.txt requires that a JSON data stream
     // has to be in UTF notation. This code checks which specific UTF format

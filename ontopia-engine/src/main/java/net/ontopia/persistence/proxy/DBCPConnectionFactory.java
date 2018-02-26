@@ -24,18 +24,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.KeyedObjectPoolFactory;
+import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
@@ -53,7 +51,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     public static final String EXHAUSED_FAIL = "fail";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
   protected GenericObjectPool pool;
   protected DataSource datasource;  
@@ -95,8 +93,14 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     int utimeout = (_utimeout == null ? -1 : Integer.parseInt(_utimeout));
     pool.setMaxWait(utimeout); // -1 = never
     
+    // EXPERIMENTAL!
+    String _etime = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.IdleTimeout", false);
+    int etime = (_etime == null ? -1 : Integer.parseInt(_etime));
+    pool.setTimeBetweenEvictionRunsMillis(etime);
+    pool.setSoftMinEvictableIdleTimeMillis(etime);
+    
    // Set soft maximum - emergency objects (default: true)
-    boolean softmax = PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
+    boolean softmax = MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
     log.debug("Setting ConnectionPool.SoftMaximum '" + softmax + "'");
     if (softmax)
       pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
@@ -124,7 +128,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
    // Statement pool
     GenericKeyedObjectPoolFactory stmpool = null;
-    if (PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
+    if (MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
       log.debug("Using prepared statement pool: Yes");
       stmpool = new GenericKeyedObjectPoolFactory(null, 
                                                   -1, // unlimited maxActive (per key)
@@ -171,11 +175,13 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     }
   }
 
+    @Override
   public Connection requestConnection() throws SQLException {
     log.debug("Requesting connection from dbcp pool.");
     return datasource.getConnection();
   }
 
+    @Override
   public void close() {
     // Release generic pool
     try {
@@ -186,13 +192,14 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   }
 
   public void writeReport(java.io.Writer out) throws java.io.IOException {
+    final String BR = "<br>\n";
     out.write("Active connections: " + pool.getNumActive() + " (max: " + pool.getMaxActive() + ")<br>\n");
     out.write("Idle connections: " + pool.getNumIdle() + " (min: " + pool.getMinIdle() + " max: " + pool.getMaxIdle() + ")<br>\n");
-    out.write("Connections created: " + pcfactory.objectsCreated + "<br>\n");
-    out.write("Connections destroyed: " + pcfactory.objectsDestroyed + "<br>\n");
-    out.write("Connections validated: " + pcfactory.objectsValidated + "<br>\n");
-    out.write("Connections activated: " + pcfactory.objectsActivated + "<br>\n");
-    out.write("Connections passivated: " + pcfactory.objectsPassivated + "<br>\n");
+    out.write("Connections created: " + pcfactory.objectsCreated + BR);
+    out.write("Connections destroyed: " + pcfactory.objectsDestroyed + BR);
+    out.write("Connections validated: " + pcfactory.objectsValidated + BR);
+    out.write("Connections activated: " + pcfactory.objectsActivated + BR);
+    out.write("Connections passivated: " + pcfactory.objectsPassivated + BR);
   }
 
   static private class TraceablePoolableConnectionFactory extends PoolableConnectionFactory {
@@ -209,28 +216,33 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     // PoolableObjectFactory implementation
 
+    @Override
     public Object makeObject() throws Exception {
       Object o = super.makeObject();
       objectsCreated++;
       return o;
     }
 
+    @Override
     public void destroyObject(Object obj) throws Exception {
       super.destroyObject(obj);
       objectsDestroyed++;
     }
 
+    @Override
     public boolean validateObject(Object obj) {
       boolean result = super.validateObject(obj);
       objectsValidated++;
       return result;
     }
 
+    @Override
     public void activateObject(Object obj) throws Exception {
       super.activateObject(obj);
       objectsActivated++;
     }
 
+    @Override
     public void passivateObject(Object obj) throws Exception {
       super.passivateObject(obj);
       objectsPassivated++;

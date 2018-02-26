@@ -39,6 +39,7 @@ public class Cardinality extends Topic {
     super(topic, tm);
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof Cardinality))
       return false;

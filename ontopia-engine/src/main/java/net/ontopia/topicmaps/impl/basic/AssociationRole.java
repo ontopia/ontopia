@@ -36,7 +36,7 @@ import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 
 public class AssociationRole extends TMObject implements AssociationRoleIF {
 
-  static final long serialVersionUID = 8387889553134058046L;
+  private static final long serialVersionUID = 8387889553134058046L;
 
   protected TopicIF reifier;
   protected TopicIF type;
@@ -50,6 +50,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // AssociationRoleIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public AssociationIF getAssociation() {
     return (AssociationIF) parent;
   }
@@ -57,7 +58,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   /**
    * INTERNAL: Sets the association that the association role belongs to. [parent]
    */
-  void setAssociation(Association parent) {
+  protected void setAssociation(Association parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
         throw new ConstraintViolationException(
@@ -67,10 +68,12 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     this.parent = parent;
   }
 
+  @Override
   public TopicIF getPlayer() {
     return player;
   }
 
+  @Override
   public void setPlayer(TopicIF player) {
     if (player == null) throw new NullPointerException("Association role player must not be null.");
     CrossTopicMapException.check(player, this);
@@ -86,6 +89,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
         ((Topic) this.player).addRole(this);
   }
 
+  @Override
   public void remove() {
     if (parent != null) {
       DeletionUtils.removeDependencies(this);
@@ -97,10 +101,12 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // TypedIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return type;
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null) throw new NullPointerException("Association role type must not be null.");
     CrossTopicMapException.check(type, this);
@@ -113,10 +119,12 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // ReifiableIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     if (DuplicateReificationException.check(this, _reifier)) { return; }
@@ -133,6 +141,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
     if (parent == null || parent.parent == null)
       return;
@@ -140,10 +149,12 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
       topicmap.processEvent(this, event, new_value, old_value);
   }
 
+  @Override
   public boolean isConnected() {
     return (parent != null && parent.isConnected());
   }
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.AssociationRole",
         (AssociationRoleIF) this);

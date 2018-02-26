@@ -34,6 +34,7 @@ public class CreateTMRoleEdge implements EdgeRecoveryObjectIF {
     this.role = role;
   }
   
+  @Override
   public void execute(TopicMapView view) {
     lastEdge = view.getEdge(role);
     if (lastEdge != null)
@@ -65,6 +66,7 @@ public class CreateTMRoleEdge implements EdgeRecoveryObjectIF {
     }
   }
 
+  @Override
   public TMAbstractEdge recoverEdge(TopicMapView view) {
     execute(view);
     return lastEdge;

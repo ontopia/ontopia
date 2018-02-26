@@ -37,6 +37,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  */
 public class AddSourceLocator implements ActionIF {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     
     //test params

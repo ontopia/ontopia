@@ -26,9 +26,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -45,7 +45,9 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ObjectRelationalMapping {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ObjectRelationalMapping.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ObjectRelationalMapping.class.getName());
+  
+  protected Map<Class<?>, ClassDescriptor> cdescs = new HashMap<Class<?>, ClassDescriptor>();
   
   class MappingHandler extends DefaultHandler {
 
@@ -71,7 +73,7 @@ public class ObjectRelationalMapping {
     
     @Override
     public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
-      if (name.equals("class")) {
+      if ("class".equals(name)) {
         // Get descriptor class
         Class<?> klass = getClassByName(atts.getValue("name"));
         Class<?> klass_immutable = getClassByName(atts.getValue("immutable"));
@@ -81,7 +83,7 @@ public class ObjectRelationalMapping {
 
         // Set abstract flag (default: concrete)
         String isabstract = atts.getValue("abstract");
-        if (isabstract != null && isabstract.equals("yes")) {
+        if (isabstract != null && "yes".equals(isabstract)) {
           cdesc.setAbstract(true);
         }
         else {
@@ -90,10 +92,10 @@ public class ObjectRelationalMapping {
 
         // Set class descriptor type (default: identifiable)
         String type = atts.getValue("type");
-        if (type == null || type.equals("identifiable")) {
+        if (type == null || "identifiable".equals(type)) {
           cdesc.setType(ClassInfoIF.TYPE_IDENTIFIABLE);
         }
-        else if (type.equals("aggregate")) {
+        else if ("aggregate".equals(type)) {
           cdesc.setType(ClassInfoIF.TYPE_AGGREGATE);
         //! }
         //! else if (type.equals("primitive")) {
@@ -117,10 +119,10 @@ public class ObjectRelationalMapping {
 
           // Set class structure (default: object)
           String structure = atts.getValue("structure");
-          if (structure == null || structure.equals("object")) {
+          if (structure == null || "object".equals(structure)) {
             cdesc.setStructure(ClassInfoIF.STRUCTURE_OBJECT);
           }
-          else if (structure.equals("collection")) {
+          else if ("collection".equals(structure)) {
             cdesc.setStructure(ClassInfoIF.STRUCTURE_COLLECTION);
             //! }
             //! else if (structure.equals("map")) {
@@ -134,7 +136,7 @@ public class ObjectRelationalMapping {
         // Extends
         String _extends = atts.getValue("extends");
         if (_extends != null) {
-          String[] _class_names = StringUtils.split(_extends, " ");
+          String[] _class_names = StringUtils.split(_extends);
           Class<?>[] _classes = new Class<?>[_class_names.length];
           for (int i=0; i < _class_names.length; i++) {
             _classes[i] = getClassByName(_class_names[i]);
@@ -145,7 +147,7 @@ public class ObjectRelationalMapping {
         // Interfaces
         String _interfaces = atts.getValue("interfaces");
         if (_interfaces != null) {
-          String[] _class_names = StringUtils.split(_interfaces, " ");
+          String[] _class_names = StringUtils.split(_interfaces);
           Class<?>[] _classes = new Class<?>[_class_names.length];
           for (int i=0; i < _class_names.length; i++) {
             _classes[i] = getClassByName(_class_names[i]);
@@ -156,7 +158,7 @@ public class ObjectRelationalMapping {
         // Register class descriptor with mapping
         mapping.addClass(cdesc);
       }
-      else if (name.equals("field")) {
+      else if ("field".equals(name)) {
         if (cdesc == null)
           throw new OntopiaRuntimeException("No parent class descriptor for field: " + atts.getValue("name"));
 
@@ -172,19 +174,19 @@ public class ObjectRelationalMapping {
           throw new OntopiaRuntimeException("field.class must be specified: " + fdesc.getName());
 
         // FIXME: should add more primitive types
-        if (klass.equals("string")) {
+        if ("string".equals(klass)) {
           fdesc.setValueClass(java.lang.String.class);
         }
-        else if (klass.equals("integer")) {
+        else if ("integer".equals(klass)) {
           fdesc.setValueClass(java.lang.Integer.class);
         }
-        else if (klass.equals("long")) {
+        else if ("long".equals(klass)) {
           fdesc.setValueClass(java.lang.Long.class);
         }
-        else if (klass.equals("float")) {
+        else if ("float".equals(klass)) {
           fdesc.setValueClass(java.lang.Float.class);
         }
-        else if (klass.equals("clob")) {
+        else if ("clob".equals(klass)) {
           fdesc.setValueClass(java.io.Reader.class);
         }
         else {
@@ -193,14 +195,14 @@ public class ObjectRelationalMapping {
 
         // Required
         String required = atts.getValue("required");
-        if (required != null && (required.equals("yes") || required.equals("true")))
+        if (required != null && ("yes".equals(required) || "true".equals(required)))
           fdesc.setRequired(true);
         else
           fdesc.setRequired(false);
 
         // Readonly
         String readonly = atts.getValue("readonly");
-        if (readonly != null && (readonly.equals("yes") || readonly.equals("true")))
+        if (readonly != null && ("yes".equals(readonly) || "true".equals(readonly)))
           fdesc.setReadOnly(true);
         else
           fdesc.setReadOnly(false);
@@ -210,26 +212,26 @@ public class ObjectRelationalMapping {
         if (type == null) {
           throw new OntopiaRuntimeException("field.type must be specified: " + fdesc.getName());          
         }
-        else if (type.equals("1:1")) {
+        else if ("1:1".equals(type)) {
           fdesc.setCardinality(FieldDescriptor.ONE_TO_ONE);
 
           // Columns
           String columns = atts.getValue("columns");
           if (columns != null)
             //throw new OntopiaRuntimeException("field.columns must be specified: " + fdesc.getName());
-            fdesc.setColumns(StringUtils.split(columns, " "));    
+            fdesc.setColumns(StringUtils.split(columns));
         }
-        else if (type.equals("1:M")) {
+        else if ("1:M".equals(type)) {
           fdesc.setCardinality(FieldDescriptor.ONE_TO_MANY);
         }
-        else if (type.equals("M:M")) {
+        else if ("M:M".equals(type)) {
           fdesc.setCardinality(FieldDescriptor.MANY_TO_MANY);
           
           // Many key
           String manykey = atts.getValue("many-keys");
           if (manykey == null)
             throw new OntopiaRuntimeException("field.many-keys must be specified: " + fdesc.getName());         
-          fdesc.setManyKeys(StringUtils.split(manykey, " "));     
+          fdesc.setManyKeys(StringUtils.split(manykey));
         }
         else {
           throw new OntopiaRuntimeException("field.type contains invalid value: " + type);
@@ -252,16 +254,16 @@ public class ObjectRelationalMapping {
             throw new OntopiaRuntimeException("field.join-keys must be specified: " + fdesc.getName());
           }
         } else {
-          fdesc.setJoinKeys(StringUtils.split(joinkeys, " "));
+          fdesc.setJoinKeys(StringUtils.split(joinkeys));
         }
 
         // Collection
         if (fdesc.isCollectionField()) {
           String collection = atts.getValue("collection");
           // FIXME: should possibly also support 'map'.
-          if (collection == null || collection.equals("list"))
+          if (collection == null || "list".equals(collection))
             fdesc.setCollectionClass(java.util.ArrayList.class);
-          else if (collection.equals("set")) {
+          else if ("set".equals(collection)) {
             fdesc.setCollectionClass(java.util.HashSet.class);
           } else {
             fdesc.setCollectionClass(getClassByName(collection));
@@ -285,7 +287,7 @@ public class ObjectRelationalMapping {
 
     @Override
     public void endElement (String uri, String name, String qName) throws SAXException {
-      if (name.equals("class")) {
+      if ("class".equals(name)) {
         // Reset class descriptor field
         cdesc = null;
       } 
@@ -293,8 +295,6 @@ public class ObjectRelationalMapping {
 
   }
 
-  protected Map<Class<?>, ClassDescriptor> cdescs = new HashMap<Class<?>, ClassDescriptor>();
-  
   /**
    * INTERNAL: Creates an object relational mapping instance that is
    * to read its definition from the specified mapping file. The
@@ -313,7 +313,7 @@ public class ObjectRelationalMapping {
     ContentHandler handler = new MappingHandler(this);
     
     try {
-      XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(isource);

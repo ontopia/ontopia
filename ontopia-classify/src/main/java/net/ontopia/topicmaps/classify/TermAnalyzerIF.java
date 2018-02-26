@@ -25,10 +25,10 @@ package net.ontopia.topicmaps.classify;
  */
 public interface TermAnalyzerIF {
   
-  public void startAnalysis(TermDatabase tdb);
+  void startAnalysis(TermDatabase tdb);
   
-  public void analyzeTerm(Term term);
+  void analyzeTerm(Term term);
 
-  public void endAnalysis();
+  void endAnalysis();
   
 }

@@ -37,7 +37,6 @@ import net.ontopia.topicmaps.utils.AssociationBuilder;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.AbstractTopicMapContentHandler;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.XMLReaderFactoryIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -50,24 +49,21 @@ import org.xml.sax.SAXException;
  */
 public class XFMLContentHandler extends AbstractTopicMapContentHandler {
 
-  static final String NO_URI = "URI";
-
-  static final String EL_XFML        = "xfml";
-  static final String EL_FACET       = "facet";
-  static final String EL_TOPIC       = "topic";
-  static final String EL_NAME        = "name";
-  static final String EL_PSI         = "psi";
-  static final String EL_DESCRIPTION = "description";
-  static final String EL_PAGE        = "page";
-  static final String EL_TITLE       = "title";
-  static final String EL_CONNECT     = "connect";
-  static final String EL_OCCURRENCE  = "occurrence";
+  private static final String EL_XFML        = "xfml";
+  private static final String EL_FACET       = "facet";
+  private static final String EL_TOPIC       = "topic";
+  private static final String EL_NAME        = "name";
+  private static final String EL_PSI         = "psi";
+  private static final String EL_DESCRIPTION = "description";
+  private static final String EL_PAGE        = "page";
+  private static final String EL_TITLE       = "title";
+  private static final String EL_CONNECT     = "connect";
+  private static final String EL_OCCURRENCE  = "occurrence";
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XFMLContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XFMLContentHandler.class.getName());
 
   protected TopicMapStoreFactoryIF stores;
-  protected XMLReaderFactoryIF xrfactory;
 
   protected LocatorIF map_uri;
   private TopicMapIF topicmap;
@@ -83,16 +79,14 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   private AssociationBuilder occursBuilder;
   private TopicIF PSI_DESCRIPTION;
   
-  public XFMLContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address) {
+  public XFMLContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address) {
     super(base_address);
     this.stores = stores;
-    this.xrfactory = xrfactory;
   }
 
-  public XFMLContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address, Collection processed_documents) {
+  public XFMLContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address, Collection processed_documents) {
     super(base_address, processed_documents);
     this.stores = stores;
-    this.xrfactory = xrfactory;
   }
 
   /**
@@ -106,6 +100,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   // Document events
   // --------------------------------------------------------------------------
     
+  @Override
   public void startDocument () {
 
     // Initialize variables
@@ -124,6 +119,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     this.processed_documents_accumulated = new HashSet();
   }
 
+  @Override
   public void endDocument () {
     // Copy list of accumulated processed documents to parent list
     this.processed_documents_from_parent.addAll(processed_documents_accumulated);
@@ -132,17 +128,18 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // log.debug("Info map: " + info);
   }
   
+  @Override
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     try {
     
     //log.debug("S: '" + uri + "' " + qName);
 
     // ----- <xfml> -----------------------------------------------------------
-    if (qName == EL_XFML) {
+    if (EL_XFML.equals(qName)) {
       String version = atts.getValue("version");
       if (version == null)
         log.warn("No version attribute on 'xfml' element");
-      if (!version.equals("1.0"))
+      if (!"1.0".equals(version))
         log.warn("Unsupported XFML version: " + version);
 
       String mapurl = atts.getValue("url");
@@ -169,7 +166,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <facet> ----------------------------------------------------------
-    else if (qName == EL_FACET) {
+    else if (EL_FACET.equals(qName)) {
       String id = atts.getValue("id");
       // FIXME: complain if no id
 
@@ -180,7 +177,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <topic> ----------------------------------------------------------
-    else if (qName == EL_TOPIC) {
+    else if (EL_TOPIC.equals(qName)) {
       String id = atts.getValue("id");
       // FIXME: complain if no id
 
@@ -197,7 +194,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <page> -----------------------------------------------------------
-    else if (qName == EL_PAGE) {
+    else if (EL_PAGE.equals(qName)) {
       String url = atts.getValue("url");
       // FIXME: complain if no url
 
@@ -206,7 +203,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
 
     // ----- <occurrence>------------------------------------------------------
-    else if (qName == EL_OCCURRENCE) {
+    else if (EL_OCCURRENCE.equals(qName)) {
       String topicid = atts.getValue("topicid");
       // FIXME: complain if none
 
@@ -219,8 +216,8 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // ----- <description> ----------------------------------------------------
     // ----- <title> ----------------------------------------------------------
     // ----- <connect> --------------------------------------------------------
-    else if (qName == EL_NAME || qName == EL_PSI || qName == EL_DESCRIPTION ||
-             qName == EL_TITLE || qName == EL_CONNECT) 
+    else if (EL_NAME.equals(qName) || EL_PSI.equals(qName) || EL_DESCRIPTION.equals(qName) ||
+            EL_TITLE.equals(qName) || EL_CONNECT.equals(qName)) 
       keep_content = true;   
     
     } catch (RuntimeException e) {
@@ -229,35 +226,37 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     }
   }
 
+  @Override
   public void characters (char ch[], int start, int length) {
     if (keep_content) 
       content.append(ch, start, length);      
   }
 
+  @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
     // log.debug("E: " + qName);
 
     // ----- </facet> ---------------------------------------------------------
-    if (qName == EL_FACET)
+    if (EL_FACET.equals(qName))
       builder.makeTopicName(current_topic, content.toString());
     
     // ----- </name> ----------------------------------------------------------
     // ----- </title> ---------------------------------------------------------
-    else if ((qName == EL_NAME || qName == EL_TITLE) &&
+    else if ((EL_NAME.equals(qName) || EL_TITLE.equals(qName)) &&
              current_topic != null)
       builder.makeTopicName(current_topic, content.toString());
     
     // ----- </psi> -----------------------------------------------------------
-    else if (qName == EL_PSI)
+    else if (EL_PSI.equals(qName))
       addSubjectIdentifier(current_topic, createLocator(content.toString()));
     
     // ----- </description> ---------------------------------------------------
-    else if (qName == EL_DESCRIPTION) {
+    else if (EL_DESCRIPTION.equals(qName)) {
       OccurrenceIF occ = builder.makeOccurrence(current_topic, PSI_DESCRIPTION, content.toString());
     }
 
     // ----- </connect> -------------------------------------------------------
-    else if (qName == EL_CONNECT) 
+    else if (EL_CONNECT.equals(qName)) 
       current_topic.addItemIdentifier(createLocator(content.toString()));
     
     keep_content = false;

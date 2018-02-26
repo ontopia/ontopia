@@ -185,7 +185,7 @@ final class JTMStreamingParser {
             LocatorIF sid = resolveIRI(parser.getText());
             TopicIF existingTopic = tm.getTopicBySubjectIdentifier(sid);
             if (existingTopic != null) {
-              if (existingTopic != topic) {
+              if (!existingTopic.equals(topic)) {
                 MergeUtils.mergeInto(topic, existingTopic);
               }
             } else {
@@ -201,7 +201,7 @@ final class JTMStreamingParser {
             LocatorIF slo = resolveIRI(parser.getText());
             TopicIF existingTopic = tm.getTopicBySubjectLocator(slo);
             if (existingTopic != null) {
-              if (topic != existingTopic) {
+              if (!topic.equals(existingTopic)) {
                 MergeUtils.mergeInto(topic, existingTopic);
               }
             } else {

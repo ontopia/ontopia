@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 import java.io.IOException;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.StorageIF;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -43,6 +42,7 @@ public class QueryCacheTests extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
     super.setUp();

@@ -38,6 +38,7 @@ public class InterfaceControl extends Topic {
   /**
    * Indicates whether some other object is "equal to" this one.
    */
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof InterfaceControl))
       return false;

@@ -42,29 +42,25 @@ import net.ontopia.xml.DefaultXMLReaderFactory;
 
 public class HTTPSearcher extends AbstractSearcher {
   
-  /**
-   * PUBLIC: The mandatory default constructor.
-   */
-  public HTTPSearcher() {
-  }
-  
+  @Override
   public int getValueType() {
     return SearcherIF.STRING_VALUE; // TODO: should support other identities as well
   }
 
+  @Override
   public SearchResultIF getResult(String query) {
     return new HTTPSearchResult(query);
   }
 
   private class HTTPSearchResult extends AbstractSearchResult {
     
-    Iterator hits;
-    Hit hit;
+    private Iterator hits;
+    private Hit hit;
     
     HTTPSearchResult(String query) {
       // construct url
       String url = (String)parameters.get("url");
-      if (url.lastIndexOf("?") >= 0)
+      if (url.lastIndexOf('?') >= 0)
         url += "&query=" + URLEncoder.encode(query);
       else
         url += "?query=" + URLEncoder.encode(query);
@@ -72,7 +68,7 @@ public class HTTPSearcher extends AbstractSearcher {
       // Create new parser object
       XMLReader parser;
       try {
-        parser = new DefaultXMLReaderFactory().createXMLReader();
+        parser = DefaultXMLReaderFactory.createXMLReader();
         
       } catch (SAXException e) {
         throw new OntopiaRuntimeException("Problems occurred when creating SAX2 XMLReader", e);
@@ -101,6 +97,7 @@ public class HTTPSearcher extends AbstractSearcher {
       this.hits = _hits.iterator();
     }
     
+    @Override
     public boolean next() {
       if (hits.hasNext()) {
         this.hit = (Hit)hits.next();
@@ -111,27 +108,33 @@ public class HTTPSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public Object getValue() {
       return hit.getValue();
     }
     
+    @Override
     public float getScore() {
       return hit.getScore();
     }
     
+    @Override
     public void close() {
+      // no-op
     }
   };
 
   private class SearchHandler extends SAXTracker {
-    List hits;
+    private List hits;
     public List getHits() {
       return hits;
     }
+    @Override
     public void startDocument() throws SAXException {
       super.startDocument();
       hits = new ArrayList();
     }
+    @Override
     public void startElement(String nsuri, String lname, String qname,
                              Attributes attrs) throws SAXException {
       super.startElement(nsuri, lname, qname, attrs);

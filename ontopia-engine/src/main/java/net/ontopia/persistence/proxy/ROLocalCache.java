@@ -35,6 +35,7 @@ public class ROLocalCache extends AbstractLocalCache {
   // StorageCacheIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public boolean exists(StorageAccessIF access, IdentityIF identity) {
     // check parent cache
     if (pcache != null)
@@ -44,6 +45,7 @@ public class ROLocalCache extends AbstractLocalCache {
     return access.loadObject(this, identity);
   }
   
+  @Override
   public Object getValue(StorageAccessIF access, IdentityIF identity, int field) {
     // check parent cache
     if (pcache != null) 
@@ -57,9 +59,9 @@ public class ROLocalCache extends AbstractLocalCache {
   // Misc
   // -----------------------------------------------------------------------------
 
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.ROLocalCache@");
+    StringBuilder sb = new StringBuilder("proxy.ROLocalCache@");
     sb.append(System.identityHashCode(this));
     if (pcache != null)
       sb.append(" [parent = ").append(pcache).append(']');

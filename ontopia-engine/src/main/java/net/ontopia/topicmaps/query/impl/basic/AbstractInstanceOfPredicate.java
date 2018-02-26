@@ -42,10 +42,12 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
     index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
   }
 
+  @Override
   public String getSignature() {
     return "t t";
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -57,6 +59,7 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
   
+  @Override
   public QueryMatches satisfy(QueryMatches result, Object[] arguments)
     throws InvalidQueryException {
     

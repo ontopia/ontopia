@@ -23,8 +23,7 @@ package net.ontopia.persistence.query.sql;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Represents an abstract SQL query. Holds SQL query
@@ -46,9 +45,6 @@ public class SQLQuery {
   // List of tuples/values to be ordered by
   protected List orderby;
 
-  public SQLQuery() {
-  }
-  
   public boolean isSetQuery() {
     return (getFilter() instanceof SQLSetOperation);
   }
@@ -140,15 +136,15 @@ public class SQLQuery {
     this.filter = filter;
   }
 
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("select ");
+    StringBuilder sb = new StringBuilder("select ");
     if (getDistinct())
       sb.append("distinct ");
     if (select == null || select.isEmpty())
-      sb.append("*");
+      sb.append('*');
     else
-      StringUtils.join(select, ", ", sb);
+      sb.append(StringUtils.join(select, ", "));
     if (getFilter() != null) {
       sb.append(" from ");
       sb.append(getFilter());
@@ -156,7 +152,7 @@ public class SQLQuery {
     List _orderby = getOrderBy();
     if (!_orderby.isEmpty()) {
       sb.append(" order by ");
-      StringUtils.join(_orderby, ", ", sb);
+      sb.append(StringUtils.join(_orderby, ", "));
     }
     return sb.toString();
   }

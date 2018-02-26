@@ -36,14 +36,17 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
 public abstract class AbstractTopicMapListener implements TopicMapListenerIF {
   
+  @Override
   public void objectAdded(TMObjectIF snapshot) {
     // no-op
   }
 
+  @Override
   public void objectModified(TMObjectIF snapshot) {
     // no-op
   }
 
+  @Override
   public void objectRemoved(TMObjectIF snapshot) {
     // no-op 
   }

@@ -53,6 +53,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * 
    * @see org.tmapi.core.TopicMapSystem#close()
    */  
+  @Override
   public void close() {
     loc2tm.clear();
     loc2tm = null;
@@ -72,10 +73,12 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#createLocator(java.lang.String)
    */
   
+  @Override
   public Locator createLocator(String reference) {
     return wrapLocator(createLocatorIF(reference));
   }
 
+  @Override
   public Locator wrapLocator(LocatorIF loc) {
     return new LocatorImpl(loc);
   }
@@ -86,6 +89,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#createTopicMap(org.tmapi.core.Locator)
    */
   
+  @Override
   public TopicMapImpl createTopicMap(Locator loc) throws TopicMapExistsException {
     if (loc2tm.containsKey(loc)) {
       throw new TopicMapExistsException("Topic map with base locator " + loc +
@@ -120,6 +124,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#createTopicMap(java.lang.String)
    */
   
+  @Override
   public TopicMapImpl createTopicMap(String reference) throws TopicMapExistsException {
     return createTopicMap(createLocator(reference));
   }
@@ -130,6 +135,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#getFeature(java.lang.String)
    */
   
+  @Override
   public boolean getFeature(String feature) throws FeatureNotRecognizedException {
     return sf.getFeature(feature);
   }
@@ -140,6 +146,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#getLocators()
    */
   
+  @Override
   public Set<Locator> getLocators() {
     return new HashSet<Locator>(loc2tm.keySet());
   }
@@ -150,6 +157,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#getProperty(java.lang.String)
    */
   
+  @Override
   public Object getProperty(String property) {
     return sf.getProperty(property);
   }
@@ -160,6 +168,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#getTopicMap(java.lang.String)
    */
   
+  @Override
   public TopicMapImpl getTopicMap(String reference) {
     return getTopicMap(createLocator(reference));
   }
@@ -170,12 +179,14 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#getTopicMap(org.tmapi.core.Locator)
    */
   
+  @Override
   public TopicMapImpl getTopicMap(Locator loc) {
     return loc2tm.get(loc);
   }
 
   /* --- callbacks */
 
+  @Override
   public void remove(LocatorIF loc) {
     loc2tm.remove(wrapLocator(loc));
   }

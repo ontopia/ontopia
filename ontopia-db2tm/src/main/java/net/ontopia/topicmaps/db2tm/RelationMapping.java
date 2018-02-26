@@ -26,25 +26,25 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
 import net.ontopia.xml.ValidatingContentHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
-import org.xml.sax.DocumentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * INTERNAL: DB2TM relation mapping definition. Container for a set of
@@ -55,7 +55,7 @@ import org.xml.sax.helpers.AttributeListImpl;
 public class RelationMapping extends SAXTracker {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(RelationMapping.class);
+  private static final Logger log = LoggerFactory.getLogger(RelationMapping.class);
 
   protected XMLReader reader;
 
@@ -65,23 +65,27 @@ public class RelationMapping extends SAXTracker {
   protected final Map<String, DataSourceIF> datasources;
   protected final Map<String, Relation> relations;
   protected final Map<String, Prefix> iprefixes;
+  
+  protected Relation currel;
+  protected Entity curent;
+  protected Field curfield;
+  protected ValueIF curvcol;
+  protected Changelog cursync;
+  protected ExpressionVirtualColumn curecol;
+  
 
   RelationMapping() {
-    this.datasources = new HashMap<String, DataSourceIF>();
-    this.relations = new HashMap<String, Relation>();
-    this.iprefixes = new HashMap<String, Prefix>();
+    this.datasources = new HashMap<>();
+    this.relations = new HashMap<>();
+    this.iprefixes = new HashMap<>();
 
     // default commit mode, never commit
     this.commitMode = null;
 
-    keepContentsOf("subject-locator");
-    keepContentsOf("subject-identifier");
-    keepContentsOf("item-identifier");
-    keepContentsOf("topic-name");
-    keepContentsOf("occurrence");
-    keepContentsOf("param");
-    keepContentsOf("condition");
-    keepContentsOf("expression-column");
+    keepContentsOf.addAll(Arrays.asList(
+      "subject-locator", "subject-identifier", "item-identifier", "topic-name",
+      "occurrence", "param", "condition", "expression-column"
+    ));
   }
 
   public void compile() {
@@ -164,15 +168,17 @@ public class RelationMapping extends SAXTracker {
       sb.append(prefix.getId());
       sb.append(" for ");
       switch (prefix.getType()) {
-      case Prefix.TYPE_SUBJECT_IDENTIFIER:
-        sb.append("i\"");
-        break;
-      case Prefix.TYPE_ITEM_IDENTIFIER:
-        sb.append("s\"");
-        break;
-      case Prefix.TYPE_SUBJECT_LOCATOR:
-        sb.append("a\"");
-        break;
+        case Prefix.TYPE_SUBJECT_IDENTIFIER:
+          sb.append("i\"");
+          break;
+        case Prefix.TYPE_ITEM_IDENTIFIER:
+          sb.append("s\"");
+          break;
+        case Prefix.TYPE_SUBJECT_LOCATOR:
+          sb.append("a\"");
+          break;
+        default:
+           break;
       }
       sb.append(prefix.getLocator());
       sb.append("\"");
@@ -242,22 +248,16 @@ public class RelationMapping extends SAXTracker {
   // Content handler
   // --------------------------------------------------------------------------
 
-  protected Relation currel;
-  protected Entity curent;
-  protected Field curfield;
-  protected ValueIF curvcol;
-  protected Changelog cursync;
-  protected ExpressionVirtualColumn curecol;
-
   // --------------------------------------------------------------------------
   // Document events
   // --------------------------------------------------------------------------
   
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) throws SAXException {
 
     // Relations    
-    if (lname == "relation") {
+    if ("relation".equals(lname)) {
       currel = new Relation(this);
       currel.setName(getValue(attrs, "name"));
       currel.setColumns(getValues(attrs, "columns", "column"));
@@ -266,17 +266,17 @@ public class RelationMapping extends SAXTracker {
       String synctype = getValue(attrs, "synctype");
       if (synctype == null)
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_UNKNOWN);
-      else if (synctype.equals("none"))
+      else if ("none".equals(synctype))
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_NONE);
-      else if (synctype.equals("rescan"))
+      else if ("rescan".equals(synctype))
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_RESCAN);
-      else if (synctype.equals("changelog"))
+      else if ("changelog".equals(synctype))
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
       addRelation(currel);
     }
 
     // Entities
-    else if (lname == "topic") {
+    else if ("topic".equals(lname)) {
       curent = new Entity(Entity.TYPE_TOPIC, currel);
       String primary = getValue(attrs, "primary");
       if (primary != null)
@@ -288,7 +288,7 @@ public class RelationMapping extends SAXTracker {
       curent.setTypes(getValues(attrs, "types", "type"));
       currel.addEntity(curent);
     }
-    else if (lname == "association") {
+    else if ("association".equals(lname)) {
       curent = new Entity(Entity.TYPE_ASSOCIATION, currel);
       String primary = getValue(attrs, "primary");
       if (primary != null)
@@ -303,24 +303,24 @@ public class RelationMapping extends SAXTracker {
     }
 
     // Identity Fields
-    else if (lname == "subject-locator") { 
+    else if ("subject-locator".equals(lname)) { 
       curfield = new Field(Field.TYPE_SUBJECT_LOCATOR, curent);
       curfield.setColumn(getValue(attrs, "column"));
       curent.addField(curfield);
     }
-    else if (lname == "subject-identifier") { 
+    else if ("subject-identifier".equals(lname)) { 
       curfield = new Field(Field.TYPE_SUBJECT_IDENTIFIER, curent);
       curfield.setColumn(getValue(attrs, "column"));
       curent.addField(curfield);
     }
-    else if (lname == "item-identifier") { 
+    else if ("item-identifier".equals(lname)) { 
       curfield = new Field(Field.TYPE_ITEM_IDENTIFIER, curent);
       curfield.setColumn(getValue(attrs, "column"));
       curent.addField(curfield);
     }
 
     // Characteristics
-    else if (lname == "occurrence") {
+    else if ("occurrence".equals(lname)) {
       curfield = new Field(Field.TYPE_OCCURRENCE, curent);
       curfield.setColumn(getValue(attrs, "column"));
       curfield.setType(getValue(attrs, "type"));
@@ -328,30 +328,30 @@ public class RelationMapping extends SAXTracker {
       curfield.setDatatype(getValue(attrs, "datatype"));
       curent.addField(curfield);
     }
-    else if (lname == "topic-name") {
+    else if ("topic-name".equals(lname)) {
       curfield = new Field(Field.TYPE_TOPIC_NAME, curent);
       curfield.setColumn(getValue(attrs, "column"));
       curfield.setType(getValue(attrs, "type"));
       curfield.setScope(getValues(attrs, "scope"));      
       curent.addField(curfield);
     }
-    else if (lname == "player") {
+    else if ("player".equals(lname)) {
       curfield = new Field(Field.TYPE_PLAYER, curent);
       curfield.setRoleType(getValue(attrs, "rtype"));
       curfield.setAssociationType(getValue(attrs, "atype"));
       curfield.setScope(getValues(attrs, "scope"));      
       curent.addField(curfield);
     }
-    else if (lname == "other") {
+    else if ("other".equals(lname)) {
       Field orole = new Field(Field.TYPE_ASSOCIATION_ROLE, curent);
       orole.setRoleType(getValue(attrs, "rtype"));
       orole.setPlayer(getValue(attrs, "player"));
       String optional = getValue(attrs, "optional");
       if (optional != null)
-        orole.setOptional(Boolean.valueOf(optional).booleanValue());
+        orole.setOptional(Boolean.parseBoolean(optional));
       curfield.addOtherRoleField(orole);
     }
-    else if (lname == "role") {
+    else if ("role".equals(lname)) {
       curfield = new Field(Field.TYPE_ASSOCIATION_ROLE, curent);
       curfield.setColumn(getValue(attrs, "column"));
       curfield.setRoleType(getValue(attrs, "type"));
@@ -363,21 +363,21 @@ public class RelationMapping extends SAXTracker {
     }
 
     // Virtual columns
-    else if (lname == "mapping-column") {
+    else if ("mapping-column".equals(lname)) {
       String colname = getValue(attrs, "name");
       String inputName = getValue(attrs, "column");
       curvcol = new MappingVirtualColumn(currel, colname, inputName);
       currel.addVirtualColumn(colname, curvcol);
     }
-    else if (lname == "map") {
+    else if ("map".equals(lname)) {
       ((MappingVirtualColumn)curvcol).addMapping(getValue(attrs, "from"), getValue(attrs, "to"));
     }
-    else if (lname == "default") {
+    else if ("default".equals(lname)) {
       ((MappingVirtualColumn)curvcol).setDefault(getValue(attrs, "to"));
     }
 
     // Function columns
-    else if (lname == "function-column") {
+    else if ("function-column".equals(lname)) {
       String colname = getValue(attrs, "name");
       String method = getValue(attrs, "method");
       curvcol = new FunctionVirtualColumn(currel, colname, method);
@@ -385,7 +385,7 @@ public class RelationMapping extends SAXTracker {
     }
       
     // Sync
-    else if (lname == "changelog") {
+    else if ("changelog".equals(lname)) {
       cursync = new Changelog(currel);
       cursync.setTable(getValue(attrs, "table"));
       cursync.setPrimaryKey(getValues(attrs, "primary-key"));
@@ -396,16 +396,16 @@ public class RelationMapping extends SAXTracker {
       if (currel.getSynchronizationType() == Relation.SYNCHRONIZATION_UNKNOWN)
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
     }
-    else if (lname == "extent") {
+    else if ("extent".equals(lname)) {
       curent.addExtentQuery(getValue(attrs, "query"));
     }
-    else if (lname == "expression-column") {
+    else if ("expression-column".equals(lname)) {
       curecol = new ExpressionVirtualColumn(getValue(attrs, "name"));
       cursync.addVirtualColumn(curecol);
     }
       
     // Prefixes
-    else if (lname == "using") {
+    else if ("using".equals(lname)) {
       String prefix = getValue(attrs, "prefix");
       int type = Prefix.TYPE_SUBJECT_IDENTIFIER;
       String locator = getValue(attrs, "subject-identifier");
@@ -425,15 +425,15 @@ public class RelationMapping extends SAXTracker {
     }
 
     // Other
-    else if (lname == "db2tm") {
+    else if ("db2tm".equals(lname)) {
       name = getValue(attrs, "name");
       commitMode = getValue(attrs, "commit-mode");
     }
 
     // Sources
-    else if (lname == "sources") {
+    else if ("sources".equals(lname)) {
     }
-    else if (lname == "csv") {
+    else if ("csv".equals(lname)) {
       String id = getValue(attrs, "id");
       CSVDataSource datasource = new CSVDataSource(this);        
       // - path
@@ -458,7 +458,7 @@ public class RelationMapping extends SAXTracker {
 
       datasources.put(id, datasource);
     }
-    else if (lname == "jdbc") {
+    else if ("jdbc".equals(lname)) {
       String id = getValue(attrs, "id");
       JDBCDataSource datasource = new JDBCDataSource(this);        
       datasource.setPropertyFile(getValue(attrs, "propfile"));
@@ -469,52 +469,52 @@ public class RelationMapping extends SAXTracker {
     super.startElement(nsuri, lname, qname, attrs);
   }
   
+  @Override
   public void endElement(String nsuri, String lname, String qname) 
     throws SAXException {
 
     // call super
     super.endElement(nsuri, lname, qname);
 
-    if (lname == "subject-locator") {
-      curfield.setPattern(content.toString());
-    }
-    else if (lname == "subject-identifier") {
-      curfield.setPattern(content.toString());
-    }
-    else if (lname == "item-identifier") {
-      curfield.setPattern(content.toString());
-    }
-    else if (lname == "topic-name") {
-      curfield.setPattern(content.toString());
-    }
-    else if (lname == "occurrence") {
-      curfield.setPattern(content.toString());
-    }
-    else if (lname == "relation") {
-      currel = null;
-    }
-    else if (lname == "topic" || lname == "association") {
-      curent = null;
-    }
-    else if (lname == "param") {
-      ((FunctionVirtualColumn)curvcol).addParameter(content.toString());
-    }
-    else if (lname == "condition") {
-      currel.setCondition(content.toString());
-    }
-    else if (lname == "mapping-column") {
-      curvcol = null;
-    }
-    else if (lname == "function-column") {
-      ((FunctionVirtualColumn)curvcol).compile();
-      curvcol = null;
-    }
-    else if (lname == "changelog") {
-      cursync = null;
-    }
-    else if (lname == "expression-column") {
-      curecol.setSQLExpression(content.toString());
-      curecol = null;
+    if (null != lname) {
+      switch (lname) {
+        case "subject-locator":
+        case "subject-identifier":
+        case "item-identifier":
+        case "topic-name":
+        case "occurrence":
+          curfield.setPattern(content.toString());
+          break;
+        case "relation":
+          currel = null;
+          break;
+        case "topic":
+        case "association":
+          curent = null;
+          break;
+        case "param":
+          ((FunctionVirtualColumn)curvcol).addParameter(content.toString());
+          break;
+        case "condition":
+          currel.setCondition(content.toString());
+          break;
+        case "mapping-column":
+          curvcol = null;
+          break;
+        case "function-column":
+          ((FunctionVirtualColumn)curvcol).compile();
+          curvcol = null;
+          break;
+        case "changelog":
+          cursync = null;
+          break;
+        case "expression-column":
+          curecol.setSQLExpression(content.toString());
+          curecol = null;
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -535,7 +535,7 @@ public class RelationMapping extends SAXTracker {
     String value = getValue(attrs, name);
     return (value == null)
       ? new String[] { }
-      : StringUtils.tokenize(value, " \t\n\r,");
+      : StringUtils.split(value, " \t\n\r,");
   }
 
   protected String[] getValues(Attributes attrs, String plural, String singular) {
@@ -545,12 +545,12 @@ public class RelationMapping extends SAXTracker {
       : getValues(attrs, plural);
   }
 
-  protected void addAttribute(AttributeListImpl atts, String name, String type, String value) {
-    if (value != null) atts.addAttribute(name, type, value);
+  protected void addAttribute(AttributesImpl atts, String name, String type, String value) {
+    if (value != null) atts.addAttribute("", "", name, type, value);
   }
 
-  protected void addAttribute(AttributeListImpl atts, String name, String type, String[] values) {
-    if (values != null) atts.addAttribute(name, type, StringUtils.join(values, ","));
+  protected void addAttribute(AttributesImpl atts, String name, String type, String[] values) {
+    if (values != null) atts.addAttribute("", "", name, type, StringUtils.join(values, ","));
   }
 
   // --------------------------------------------------------------------------
@@ -565,16 +565,16 @@ public class RelationMapping extends SAXTracker {
     write(new PrettyPrinter(writer, encoding));
   }
 
-  protected void write(DocumentHandler dh) throws SAXException {
+  protected void write(ContentHandler dh) throws SAXException {
 
     // initialize attributes
-    AttributeListImpl atts = new AttributeListImpl();
+    AttributesImpl atts = new AttributesImpl();
 
     // <db2tm name="...">
     if (name != null) addAttribute(atts, "name", "CDATA", name);
 
     dh.startDocument();
-    dh.startElement("db2tm", atts);
+    dh.startElement("", "", "db2tm", atts);
     atts.clear();
 
     // prefixes
@@ -593,9 +593,9 @@ public class RelationMapping extends SAXTracker {
         break;
       }
              
-      dh.startElement("using", atts);
+      dh.startElement("", "", "using", atts);
       atts.clear();
-      dh.endElement("using");
+      dh.endElement("", "", "using");
     }
 
     // relations
@@ -603,35 +603,36 @@ public class RelationMapping extends SAXTracker {
       // <relation>
       addAttribute(atts, "name", "CDATA", rel.getName());
       addAttribute(atts, "columns", "CDATA", rel.getColumns());
-      dh.startElement("relation", atts);
+      dh.startElement("", "", "relation", atts);
       atts.clear();
 
       outputEntities(rel, dh);
 
       // </relation>
-      dh.endElement("relation");
+      dh.endElement("", "", "relation");
     }
 
     // </db2tm>
-    dh.endElement("db2tm");
+    dh.endElement("", "", "db2tm");
     dh.endDocument();
   }
 
-  protected void outputEntities(Relation rel, DocumentHandler dh) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
+  protected void outputEntities(Relation rel, ContentHandler dh) throws SAXException {
+    AttributesImpl atts = new AttributesImpl();
+
     for (Entity entity : rel.getEntities()) {
       if (entity.getEntityType() == Entity.TYPE_TOPIC) {
         // <topic>
         if (entity.getId() != null)
           addAttribute(atts, "id", "CDATA", entity.getId());
         addAttribute(atts, "type", "CDATA", entity.getAssociationType());
-        dh.startElement("topic", atts);
+        dh.startElement("", "", "topic", atts);
         atts.clear();
         
         outputFields(entity, dh);
         
         // </topic>
-        dh.endElement("topic");
+        dh.endElement("", "", "topic");
         
       } else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
         
@@ -641,18 +642,18 @@ public class RelationMapping extends SAXTracker {
         addAttribute(atts, "type", "CDATA", entity.getAssociationType());
         addAttribute(atts, "scope", "CDATA", entity.getScope());
         
-        dh.startElement("association", atts);
+        dh.startElement("", "", "association", atts);
         atts.clear();
         
         outputFields(entity, dh);
         
         // </association>
-        dh.endElement("association");
+        dh.endElement("", "", "association");
       }
     }
   }
 
-  protected void outputFields(Entity entity, DocumentHandler dh) throws SAXException {
+  protected void outputFields(Entity entity, ContentHandler dh) throws SAXException {
     for (Field field : entity.getIdentityFields()) {
       outputField(field, dh);
     }
@@ -664,30 +665,30 @@ public class RelationMapping extends SAXTracker {
     }
   }
 
-  protected void outputField(Field field, DocumentHandler dh) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
+  protected void outputField(Field field, ContentHandler dh) throws SAXException {
+    AttributesImpl atts = new AttributesImpl();
     if (field.getFieldType() == Field.TYPE_SUBJECT_LOCATOR) {
         addAttribute(atts, "column", "CDATA", field.getColumn());
-        dh.startElement("subject-locator", atts);
+        dh.startElement("", "", "subject-locator", atts);
         char[] c = field.getPattern().toCharArray(); 
         dh.characters(c, 0, c.length);
-        dh.endElement("subject-locator");
+        dh.endElement("", "", "subject-locator");
         atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_SUBJECT_IDENTIFIER) {
       addAttribute(atts, "column", "CDATA", field.getColumn());
-      dh.startElement("subject-identifier", atts);
+      dh.startElement("", "", "subject-identifier", atts);
       char[] c = field.getPattern().toCharArray(); 
       dh.characters(c, 0, c.length);
-      dh.endElement("subject-identifier");
+      dh.endElement("", "", "subject-identifier");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
       addAttribute(atts, "column", "CDATA", field.getColumn());
-      dh.startElement("item-identifier", atts);
+      dh.startElement("", "", "item-identifier", atts);
       char[] c = field.getPattern().toCharArray(); 
       dh.characters(c, 0, c.length);
-      dh.endElement("item-identifier");
+      dh.endElement("", "", "item-identifier");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_OCCURRENCE) {
@@ -695,16 +696,16 @@ public class RelationMapping extends SAXTracker {
       addAttribute(atts, "type", "CDATA", field.getType());
       addAttribute(atts, "scope", "CDATA", field.getScope());
       addAttribute(atts, "datatype", "CDATA", field.getDatatype());
-      dh.startElement("occurrence", atts);
-      dh.endElement("occurrence");
+      dh.startElement("", "", "occurrence", atts);
+      dh.endElement("", "", "occurrence");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_TOPIC_NAME) {
       addAttribute(atts, "column", "CDATA", field.getColumn());
       addAttribute(atts, "type", "CDATA", field.getType());
       addAttribute(atts, "scope", "CDATA", field.getScope());
-      dh.startElement("topic-name", atts);
-      dh.endElement("topic-name");
+      dh.startElement("", "", "topic-name", atts);
+      dh.endElement("", "", "topic-name");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_PLAYER) {
@@ -712,30 +713,31 @@ public class RelationMapping extends SAXTracker {
       addAttribute(atts, "atype", "CDATA", field.getAssociationType());
       addAttribute(atts, "scope", "CDATA", field.getScope());
       
-      dh.startElement("player", atts);
+      dh.startElement("", "", "player", atts);
       atts.clear();
 
       for (Field orole : field.getOtherRoleFields()) {
         addAttribute(atts, "rtype", "CDATA", orole.getRoleType());
         addAttribute(atts, "player", "CDATA", orole.getPlayer());
-        dh.startElement("other", atts);
-        dh.endElement("other");
+        dh.startElement("", "", "other", atts);
+        dh.endElement("", "", "other");
         atts.clear();
       }
 
-      dh.endElement("player");
+      dh.endElement("", "", "player");
       atts.clear();
     }
     else if (field.getFieldType() == Field.TYPE_ASSOCIATION_ROLE) {
       addAttribute(atts, "type", "CDATA", field.getRoleType());
       addAttribute(atts, "player", "CDATA", field.getPlayer());
-      dh.startElement("role", atts);
-      dh.endElement("role");
+      dh.startElement("", "", "role", atts);
+      dh.endElement("", "", "role");
       atts.clear();
     }
     else throw new OntopiaRuntimeException("Unknown field type: " + field.getType());
   }
 
+  @Override
   public String toString() {
     return "RelationMapping(" + getName() + ")";
   }

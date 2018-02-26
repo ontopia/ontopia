@@ -45,6 +45,7 @@ public class ContentReader extends FilterReader {
     return length;
   }
 
+  @Override
   public int read() throws IOException {
     int result = super.read();
     if (result != -1)
@@ -54,6 +55,7 @@ public class ContentReader extends FilterReader {
     return result;
   }
 
+  @Override
   public int read(char[] cbuf) throws IOException {
     int result = super.read(cbuf);
     if (result != -1)
@@ -64,6 +66,7 @@ public class ContentReader extends FilterReader {
     return result;
   }
 
+  @Override
   public int read(char[] cbuf, int off, int len) throws IOException {
     int result = super.read(cbuf, off, len);
     if (result != -1)
@@ -72,6 +75,7 @@ public class ContentReader extends FilterReader {
     return result;
   }
 
+  @Override
   public void close() throws IOException {
     if (closed) return;
     closed = true;

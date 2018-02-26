@@ -28,7 +28,6 @@ import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
 
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 
@@ -38,6 +37,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class ReifierTag extends BaseValueProducingAndAcceptingTag {
 
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     // Find all reifying topics of all topic map objects in collection
     if (tmObjects == null || tmObjects.isEmpty())

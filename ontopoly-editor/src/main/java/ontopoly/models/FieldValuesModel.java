@@ -141,6 +141,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
     }
   }
 
+  @Override
   public int compare(FieldValueModel fvm1, FieldValueModel fvm2) {
     return comparator.compare(fvm1.getFieldValue(), fvm2.getFieldValue());
   }

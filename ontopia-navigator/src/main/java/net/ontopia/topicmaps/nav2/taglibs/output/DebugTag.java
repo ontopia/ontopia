@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
@@ -49,7 +48,7 @@ public class DebugTag extends TagSupport
   implements OutputProducingTagIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(DebugTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DebugTag.class.getName());
 
   // members
   protected ContextTag contextTag;  
@@ -57,12 +56,10 @@ public class DebugTag extends TagSupport
   // tag attributes
   protected String variableName;
 
-  public DebugTag() {
-  }
-
   /**
    * INTERNAL: Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // retrieve collection from ContextManager by Name
     this.contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -87,6 +84,7 @@ public class DebugTag extends TagSupport
     return SKIP_BODY;
   }
 
+  @Override
   public final int doEndTag() {
     // reset members
     this.contextTag = null;
@@ -97,14 +95,17 @@ public class DebugTag extends TagSupport
   /**
    * INTERNAL: Reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!
   }
 
   // have to define this to keep the compiler happy... :(
+  @Override
   public void generateOutput(JspWriter out, Iterator iterator)
     throws JspTagException, IOException {
+    // no-op
   }
   
   // -----------------------------------------------------------------

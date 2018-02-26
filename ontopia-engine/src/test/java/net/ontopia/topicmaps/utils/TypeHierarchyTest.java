@@ -32,6 +32,7 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     TopicMapBuilderIF builder = store.getTopicMap().getBuilder();

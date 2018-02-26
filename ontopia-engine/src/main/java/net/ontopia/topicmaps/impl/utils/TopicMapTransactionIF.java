@@ -45,8 +45,8 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public interface TopicMapTransactionIF {
 
-  public static final String EVENT_COMMIT = "TopicMapTransactionIF.commit";
-  public static final String EVENT_ABORT = "TopicMapTransactionIF.abort";
+  String EVENT_COMMIT = "TopicMapTransactionIF.commit";
+  String EVENT_ABORT = "TopicMapTransactionIF.abort";
 
   /**
    * PUBLIC: Gets a topic map builder for use with this transaction.
@@ -54,12 +54,12 @@ public interface TopicMapTransactionIF {
    * @return An object implementing TopicMapBuilderIF
    * @since 1.2.2
    */
-  public TopicMapBuilderIF getBuilder();
+  TopicMapBuilderIF getBuilder();
 
   /**
    * PUBLIC: Gets the store to which the transaction is connected.</p>
    */
-  public TopicMapStoreIF getStore();
+  TopicMapStoreIF getStore();
 
   /**
    * PUBLIC: Gets the topic map that is accessible through the
@@ -68,7 +68,7 @@ public interface TopicMapTransactionIF {
    * @return The topic map in the transaction; an object implementing
    * TopicMapIF.
    */
-  public TopicMapIF getTopicMap();
+  TopicMapIF getTopicMap();
 
   /**
    * PUBLIC: Gets the index manager that manages the topic map indexes
@@ -77,7 +77,7 @@ public interface TopicMapTransactionIF {
    * @return The index manager used by the transaction: an object
    * implementing IndexManagerIF.
    */
-  public IndexManagerIF getIndexManager();
+  IndexManagerIF getIndexManager();
 
   /**
    * PUBLIC: Returns true if the transaction is active (in process). A
@@ -88,7 +88,7 @@ public interface TopicMapTransactionIF {
    * @return Boolean: true if active, false if not active (either not
    * yet aborted, or commited).
    */
-  public boolean isActive();
+  boolean isActive();
 
   /**
    * PUBLIC: Commits the transaction. The changes made are written to
@@ -97,7 +97,7 @@ public interface TopicMapTransactionIF {
    * The transaction will resume after the commit meaning that the
    * objects retrieved through is still usable after the commit.
    */
-  public void commit();
+  void commit();
 
   /**
    * PUBLIC: Aborts the transaction; all changes made inside the
@@ -108,6 +108,6 @@ public interface TopicMapTransactionIF {
    * their state has been reverted to the state in the persistent
    * store.
    */
-  public void abort();
+  void abort();
   
 }

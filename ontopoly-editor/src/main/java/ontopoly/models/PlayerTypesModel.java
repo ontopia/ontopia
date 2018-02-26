@@ -21,13 +21,11 @@ package ontopoly.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import ontopoly.model.RoleField;
 import ontopoly.model.TopicType;
-import ontopoly.utils.TopicComparator;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 

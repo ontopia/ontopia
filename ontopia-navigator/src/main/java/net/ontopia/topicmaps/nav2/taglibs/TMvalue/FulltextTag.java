@@ -17,22 +17,18 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.io.File;
 import java.util.Collection;
 import javax.servlet.jsp.JspTagException;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
-import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
-import net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapSearchResult;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +46,7 @@ public class FulltextTag extends BaseValueProducingTag {
   protected String query;
   protected String idfield;
   
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
 
     // Get topic map
@@ -63,35 +60,17 @@ public class FulltextTag extends BaseValueProducingTag {
       throw new NavigatorRuntimeException("FulltextTag found no topic map.");
 
     try {
-      // Calculate index path
-      String path;
-      if (index_path != null) {
-	if (index_path.equals("rdbms"))
-	  path = index_path;
-	else
-	  path = pageContext.getServletContext().getRealPath("") + File.separator + index_path;
-      } else {
-        path = pageContext.getServletContext().getRealPath("") + File.separator +
-          "WEB-INF" + File.separator + "indexes" + File.separator + tmid;
-      }
-
-      // Note: this one actually makes an absolute filename relative to the current page.
-      // path = FrameworkUtils.getAbsoluteFileName("WEB-INF" + File.separator + "indexes" + File.separator + tmid, pageContext);
-
       // Output debugging information
       if (log.isDebugEnabled()) {
-        log.debug("Index path: '" + path + "'");
         log.debug("Query: '" + query + "'");
       }
       
       // Create search engine
-      SearcherIF sengine;
-      if (topicmap instanceof net.ontopia.topicmaps.impl.basic.TopicMap || 
-					!path.equals("rdbms"))
-				sengine = new LuceneSearcher(path);
-      else
-        sengine = new RDBMSSearcher(topicmap);
-      
+      SearcherIF sengine = (SearcherIF) topicmap.getIndex(SearcherIF.class.getName());
+      if (sengine == null) {
+        throw new NavigatorRuntimeException("Topicmap " + tmid + " has no SearcherIF index");
+      }
+
       // Perform search
       TopicMapSearchResult result = new TopicMapSearchResult(topicmap, sengine.search(query));
 
@@ -109,13 +88,6 @@ public class FulltextTag extends BaseValueProducingTag {
   // Set methods for tag attributes
   // -----------------------------------------------------------------
 
-  /**
-   * INTERNAL: Sets the fulltext index location.
-   */
-  public void setIndex(String index_path) {
-    this.index_path = index_path;
-  }
-  
   /**
    * INTERNAL: Set fulltext query.
    */

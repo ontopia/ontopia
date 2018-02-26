@@ -35,14 +35,17 @@ public class AssociationPredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "association";
   }
 
+  @Override
   public String getSignature() {
     return "a";
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -50,6 +53,7 @@ public class AssociationPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

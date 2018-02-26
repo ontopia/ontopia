@@ -36,6 +36,6 @@ public interface TopicMapStoreFactoryIF {
    *
    * @return An object implementing TopicMapStoreIF
    */
-  public TopicMapStoreIF createStore();
+  TopicMapStoreIF createStore();
   
 }

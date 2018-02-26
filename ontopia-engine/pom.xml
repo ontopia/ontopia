@@ -36,6 +36,18 @@
 			<artifactId>commons-collections4</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>urbanophile</groupId>
 			<artifactId>java-getopt</artifactId>
 		</dependency>
@@ -52,10 +64,6 @@
 			<artifactId>antlr</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>concurrent</groupId>
-			<artifactId>concurrent</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
@@ -66,18 +74,6 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>jtidy</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>crimson</groupId>
-			<artifactId>crimson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

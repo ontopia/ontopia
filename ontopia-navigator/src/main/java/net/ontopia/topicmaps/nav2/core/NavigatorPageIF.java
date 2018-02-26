@@ -35,7 +35,7 @@ public interface NavigatorPageIF {
    *
    * @return object which implements the ContextManagerIF interface
    */
-  public ContextManagerIF getContextManager();
+  ContextManagerIF getContextManager();
   
   /**
    * INTERNAL: Add a function to the registry.
@@ -46,7 +46,7 @@ public interface NavigatorPageIF {
    * @deprecated 1.3.4. Replaced by registerFunction(String, Function).
    */
   @Deprecated
-  public void registerFunction(FunctionIF function);
+  void registerFunction(FunctionIF function);
   
   /**
    * INTERNAL: Add a named function to the registry.
@@ -57,7 +57,7 @@ public interface NavigatorPageIF {
    *
    * @since 1.3.4
    */
-  public void registerFunction(String name, FunctionIF function);
+  void registerFunction(String name, FunctionIF function);
 
   /**
    * INTERNAL: Get a function out of the register.
@@ -66,7 +66,7 @@ public interface NavigatorPageIF {
    *
    * @return The function
    */
-  public FunctionIF getFunction(String name);
+  FunctionIF getFunction(String name);
 
   /**
    * INTERNAL: Get the navigator application which allows
@@ -74,27 +74,27 @@ public interface NavigatorPageIF {
    *
    * @return Object implementing NavigatorApplicationIF
    */
-  public NavigatorApplicationIF getNavigatorApplication();
+  NavigatorApplicationIF getNavigatorApplication();
 
   /**
    * INTERNAL: Get the navigator configuration for getting access
    * to the application.xml settings.
    */
-  public NavigatorConfigurationIF getNavigatorConfiguration();
+  NavigatorConfigurationIF getNavigatorConfiguration();
   
   /**
    * INTERNAL: Get the topicmap object the context tag is working with.
    *
    * @return Object implementing TopicMapIF
    */
-  public net.ontopia.topicmaps.core.TopicMapIF getTopicMap();
+  net.ontopia.topicmaps.core.TopicMapIF getTopicMap();
   
   /**
    * INTERNAL: Get the tolog query processor the context tag is working with.
    *
    * @return Object implementing QueryProcessorIF
    */
-  public QueryProcessorIF getQueryProcessor();
+  QueryProcessorIF getQueryProcessor();
 
   /**
    * INTERNAL: Gets the JSP page context which allows to have access
@@ -102,10 +102,10 @@ public interface NavigatorPageIF {
    *
    * @since 1.3.2
    */
-  public javax.servlet.jsp.PageContext getPageContext();
+  javax.servlet.jsp.PageContext getPageContext();
 
   /**
    * INTERNAL: Gets the tolog declaration context.
    */
-  public DeclarationContextIF getDeclarationContext();
+  DeclarationContextIF getDeclarationContext();
 }

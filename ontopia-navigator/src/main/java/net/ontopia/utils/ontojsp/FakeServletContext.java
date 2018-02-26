@@ -44,8 +44,8 @@ import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -155,8 +155,8 @@ public class FakeServletContext implements ServletContext {
     for (String component : components) {
       logger.debug(" - comp: " + component);
       logger.debug(" - current " + current);
-      if (component.equals("") || component.equals(".")) {
-      } else if (component.equals("..")) {
+      if ("".equals(component) || ".".equals(component)) {
+      } else if ("..".equals(component)) {
         current = current.getParentFile();
       } else {
         current = new File(current, component);

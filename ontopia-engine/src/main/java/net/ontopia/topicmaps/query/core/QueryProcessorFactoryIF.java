@@ -39,7 +39,7 @@ public interface QueryProcessorFactoryIF {
    * 
    * @return the name of this {@link QueryProcessorFactoryIF} implementation.
    */
-  public String getQueryLanguage();
+  String getQueryLanguage();
 
   /**
    * PUBLIC: Creates a new {@link QueryProcessorIF} instance to query a given
@@ -52,6 +52,6 @@ public interface QueryProcessorFactoryIF {
    * @return a {@link QueryProcessorIF} instance that can be used to query the
    *         topic map.
    */
-  public QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
+  QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
       LocatorIF base, Map<String, String> properties);
 }

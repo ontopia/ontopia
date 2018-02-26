@@ -20,19 +20,19 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.Locator;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import com.thaiopensource.validate.Schema;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import com.thaiopensource.relaxng.SchemaFactory;
 import com.thaiopensource.util.SinglePropertyMap;
+import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
-import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: SAX2 content handler used for validating XML documents
@@ -55,58 +55,73 @@ public class ValidatingContentHandler implements ContentHandler {
       factory.setErrorHandler(new DraconianErrorHandler());
       factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       Schema schema = factory.createSchema(src);
-	  this.validator = schema.createValidator(SinglePropertyMap.newInstance(ValidateProperty.ERROR_HANDLER, new DraconianErrorHandler())).getContentHandler();
+      this.validator = schema.createValidator(
+              SinglePropertyMap.newInstance(ValidateProperty.ERROR_HANDLER, 
+                      factory.getErrorHandler())).getContentHandler();
     } catch (Exception e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);
     }
   }
   
+  @Override
   public void startDocument () throws SAXException {
     validator.startDocument();
     child.startDocument();
   }
   
+  @Override
   public void endDocument () throws SAXException {
     validator.endDocument();
     child.endDocument();    
   }
   
+  @Override
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     validator.startElement(uri, name, qName, atts);
     child.startElement(uri, name, qName, atts);
   }
   
+  @Override
   public void characters (char ch[], int start, int length) throws SAXException {
     validator.characters(ch, start, length);
     child.characters(ch, start, length);
   }
   
+  @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
     validator.endElement(uri, name, qName);
     child.endElement(uri, name, qName);
   }
   
+  @Override
   public void startPrefixMapping(java.lang.String prefix, java.lang.String uri)  throws SAXException {
     validator.startPrefixMapping(prefix, uri);
     child.startPrefixMapping(prefix, uri);
   }
   
+  @Override
   public void endPrefixMapping(java.lang.String prefix) throws SAXException {
     validator.endPrefixMapping(prefix);
     child.endPrefixMapping(prefix);
   }
 
+  @Override
   public void skippedEntity(String entityname) {
+    // no-op
   }
 
+  @Override
   public void processingInstruction(String target, String data) {
+    // no-op
   }
 
+  @Override
   public void ignorableWhitespace(char ch[], int start, int length) throws SAXException {
     validator.characters(ch, start, length);
     child.characters(ch, start, length);
   }
 
+  @Override
   public void setDocumentLocator(Locator docloc) {
     validator.setDocumentLocator(docloc);
     child.setDocumentLocator(docloc);

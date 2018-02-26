@@ -63,6 +63,7 @@ public class FieldInstanceAssociationUnaryPanel extends AbstractFieldInstancePan
 //        validateCardinality(FieldInstanceAssociationUnaryPanel.this);        
 //        super.onBeforeRender();
 //      }
+      @Override
 		  public void populateItem(final ListItem<FieldValueModel> item) {
 		    FieldValueModel fieldValueModel = item.getModelObject();
 

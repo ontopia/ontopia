@@ -26,12 +26,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents an association field.
@@ -98,6 +97,7 @@ public class AssociationField extends Topic {
     
     List<RoleField> roleFields = qm.queryForList(query,
         new RowMapperIF<RoleField>() {
+          @Override
           public RoleField mapRow(QueryResultIF result, int rowno) {
 						TopicIF roleFieldTopic = (TopicIF)result.getValue(0);
 						return new RoleField(roleFieldTopic, getTopicMap());
@@ -147,8 +147,9 @@ public class AssociationField extends Topic {
       return INSTANCE;
     }
 
+    @Override
     public int compare(RoleField rf1, RoleField rf2) {
-      return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
+      return StringUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }
 

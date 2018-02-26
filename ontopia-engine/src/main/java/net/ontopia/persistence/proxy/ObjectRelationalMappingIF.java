@@ -31,12 +31,12 @@ public interface ObjectRelationalMappingIF {
   /**
    * INTERNAL: Get the class info by object type.
    */  
-  public ClassInfoIF getClassInfo(Class<?> type);
+  ClassInfoIF getClassInfo(Class<?> type);
 
   /**
    * INTERNAL: Returns true if the object type has a class descriptor.
    */  
-  public boolean isDeclared(Class<?> type);
+  boolean isDeclared(Class<?> type);
   
 }
 

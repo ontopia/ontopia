@@ -29,10 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
-
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -44,9 +42,9 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicTreeNode;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * PUBLIC: This class can output a nice collapsing/expanding tree view
@@ -392,7 +390,7 @@ public class TreeWidget {
             + (level * 30) + " height=5>" + "<img border=0 src=" + imageurl
             + "boxed.gif>");
       else
-        renderNodeButton(topline, level, action.equals("open") ? OPEN : CLOSE,
+        renderNodeButton(topline, level, "open".equals(action) ? OPEN : CLOSE,
             id, writer);
 
       writer.write("<a name=" + id + "></a>");
@@ -419,13 +417,13 @@ public class TreeWidget {
     if (action == null)
       action = "close";
 
-    if (action.equals("open"))
+    if ("open".equals(action))
       return OPEN;
-    else if (action.equals("close"))
+    else if ("close".equals(action))
       return CLOSE;
-    else if (action.equals("expandall"))
+    else if ("expandall".equals(action))
       return EXPAND_ALL;
-    else if (action.equals("closeall"))
+    else if ("closeall".equals(action))
       return CLOSE_ALL;
     else
       return -1;
@@ -605,6 +603,7 @@ public class TreeWidget {
    */
   protected void renderAdditionalOnTopExpandCloseLine(Writer out, int topline)
       throws IOException {
+    // no-op
   }
 
   /**
@@ -615,17 +614,18 @@ public class TreeWidget {
   protected void renderAdditionalOnBottomExpandCloseLine(Writer out,
                                                          int topline)
       throws IOException {
+    // no-op
   }
 
   /**
    * PUBLIC: Called before rendering of the tree begins.
    */
-  protected void startRender(Writer out) throws IOException {}
+  protected void startRender(Writer out) throws IOException { /* no-op */ }
 
   /**
    * PUBLIC: Called after the tree has been rendered.
    */
-  protected void endRender(Writer out) throws IOException {}
+  protected void endRender(Writer out) throws IOException { /* no-op */ }
 
   /**
    * PUBLIC: Produces the URL to the given node.
@@ -648,6 +648,7 @@ public class TreeWidget {
   // this class is a hack, and therefore defined as an internal class.
 
   protected class UniversalSet extends CompactHashSet {
+    @Override
     public boolean contains(Object object) {
       return true;
     }

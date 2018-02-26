@@ -20,18 +20,11 @@
 
 package net.ontopia.topicmaps.nav2.servlets;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 
 /**
@@ -66,6 +59,7 @@ public class NavigatorSetupServlet extends HttpServlet {
    *
    * @exception ServletException if we cannot configure ourselves correctly
    */
+  @Override
   public void init() throws ServletException {
     // Process our servlet initialization parameters
     String value;
@@ -86,6 +80,7 @@ public class NavigatorSetupServlet extends HttpServlet {
    * Gracefully shut down this navigator setup servlet, releasing any resources
    * that were allocated at initialization.
    */
+  @Override
   public void destroy() {
     if (debug >= 1)
       log("Finalizing navigator setup servlet.");

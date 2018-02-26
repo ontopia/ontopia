@@ -20,17 +20,11 @@
 
 package net.ontopia.topicmaps.query.parser;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import net.ontopia.topicmaps.utils.ctm.Template;
 import net.ontopia.topicmaps.utils.ctm.CTMLexer;
 import net.ontopia.topicmaps.utils.ctm.CTMParser;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -45,6 +39,8 @@ import antlr.TokenStreamRecognitionException;
  * INTERNAL: The tolog query parser.
  */
 public class TologParser {
+  private static final String MSG_LEXICAL_ERROR = "Lexical error: ";
+  private static final String MSG_LEXICAL_ERROR_AT = "Lexical error at ";
   protected ParseContextIF context;
   protected TologOptions options;
   private static final Pattern insertP =
@@ -89,17 +85,17 @@ public class TologParser {
         throw new InvalidQueryException(e);
     }
     catch (RecognitionException ex) {
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamRecognitionException e) {
       RecognitionException ex = e.recog;
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/  + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamIOException ex) {
       throw new InvalidQueryException(ex.io.toString());
     }
     catch (TokenStreamException ex) {
-      throw new InvalidQueryException("Lexical error: " + ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR + ex.getMessage());
     }
   }
 
@@ -147,17 +143,17 @@ public class TologParser {
         throw new InvalidQueryException(e);
     }
     catch (RecognitionException ex) {
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamRecognitionException e) {
       RecognitionException ex = e.recog;
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamIOException ex) {
       throw new InvalidQueryException(ex.io.toString());
     }
     catch (TokenStreamException ex) {
-      throw new InvalidQueryException("Lexical error: " + ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR + ex.getMessage());
     }
   }
   
@@ -177,17 +173,17 @@ public class TologParser {
         throw new InvalidQueryException(e);
     }
     catch (RecognitionException ex) {
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamRecognitionException e) {
       RecognitionException ex = e.recog;
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamIOException ex) {
       throw new InvalidQueryException(ex.io.toString());
     }
     catch (TokenStreamException ex) {
-      throw new InvalidQueryException("Lexical error: " + ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR + ex.getMessage());
     }
   }  
 
@@ -209,17 +205,17 @@ public class TologParser {
         throw new InvalidQueryException(e);
     }
     catch (RecognitionException ex) {
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamRecognitionException e) {
       RecognitionException ex = e.recog;
-      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }
     catch (TokenStreamIOException ex) {
       throw new InvalidQueryException(ex.io.toString());
     }
     catch (TokenStreamException ex) {
-      throw new InvalidQueryException("Lexical error: " + ex.getMessage());
+      throw new InvalidQueryException(MSG_LEXICAL_ERROR + ex.getMessage());
     }
   }
 

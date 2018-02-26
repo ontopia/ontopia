@@ -44,6 +44,7 @@ public class AssignUnaryAssociation extends AbstractTopicMapAction {
   private static Logger log = LoggerFactory.getLogger(AssignUnaryAssociation.class
       .getName());
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     log.debug("perform() started");
     

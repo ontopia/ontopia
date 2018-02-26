@@ -23,8 +23,6 @@ package net.ontopia.topicmaps.core.index;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
-import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 
 public abstract class AbstractIndexTest extends AbstractTopicMapTest {
   

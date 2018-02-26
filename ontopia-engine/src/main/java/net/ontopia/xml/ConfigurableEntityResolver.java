@@ -72,6 +72,7 @@ public class ConfigurableEntityResolver implements EntityResolver {
     system_ids.remove(system_id);
   }
   
+  @Override
   public InputSource resolveEntity (String public_id, String system_id) {
 
     // Check to see if a public id input source factory exist

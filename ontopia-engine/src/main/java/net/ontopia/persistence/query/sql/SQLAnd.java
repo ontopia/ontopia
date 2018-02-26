@@ -20,7 +20,7 @@
 
 package net.ontopia.persistence.query.sql;
 
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: SQL logical expression: and
@@ -43,6 +43,7 @@ public class SQLAnd implements SQLExpressionIF {
     this.expressions = expressions;
   }
 
+  @Override
   public int getType() {
     return AND;
   }
@@ -55,6 +56,7 @@ public class SQLAnd implements SQLExpressionIF {
     this.expressions = expressions;
   }
 
+  @Override
   public String toString() {
     return "(" + StringUtils.join(expressions, " and ") + ")";
   }

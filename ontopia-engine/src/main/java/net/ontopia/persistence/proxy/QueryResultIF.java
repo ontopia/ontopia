@@ -36,13 +36,13 @@ public interface QueryResultIF {
    * method returns false if the skip was not valid, i.e. we're at the
    * end of the result set.
    */
-  public boolean next();
+  boolean next();
 
   /**
    * INTERNAL: Returns the number of fields that each row in the query
    * result set have.
    */
-  public int getWidth();
+  int getWidth();
 
   //! /**
   //!  * PUBLIC: Returns the index of the named column. Returns -1 if the
@@ -53,7 +53,7 @@ public interface QueryResultIF {
   /**
    * PUBLIC: Returns the names of the columns.
    */
-  public String[] getColumnNames();
+  String[] getColumnNames();
 
   /**
    * PUBLIC: Returns the name of the given column.  The column index
@@ -61,13 +61,13 @@ public interface QueryResultIF {
    *
    * @throws IndexOutOfBoundsException if there is no such column.
    */
-  public String getColumnName(int ix);
+  String getColumnName(int ix);
   
   /**
    * INTERNAL: Get the value of the field with the specified index
    * from the current result row. The index is zero-based.
    */
-  public Object getValue(int index);
+  Object getValue(int index);
   
   //! /**
   //!  * PUBLIC: Returns the value in the given column in the current
@@ -80,18 +80,18 @@ public interface QueryResultIF {
    * INTERNAL: Get the values of all fields from the current result
    * row.
    */
-  public Object[] getValues();
+  Object[] getValues();
   
   /**
    * INTERNAL: Reads the values of all fields from the current result
    * row into the specified array.
    */
-  public Object[] getValues(Object[] values);
+  Object[] getValues(Object[] values);
   
   /**
    * INTERNAL: Closes the query result, which allows it to free its
    * resources.
    */
-  public void close();
+  void close();
   
 }

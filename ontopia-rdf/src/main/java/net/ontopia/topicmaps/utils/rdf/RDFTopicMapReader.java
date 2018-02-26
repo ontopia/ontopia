@@ -23,19 +23,20 @@ package net.ontopia.topicmaps.utils.rdf;
 import com.hp.hpl.jena.shared.JenaException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
-import java.net.MalformedURLException;
 import java.util.Map;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 /**
  * PUBLIC: Converts an RDF model to a topic map using a
@@ -45,46 +46,28 @@ import net.ontopia.topicmaps.core.TopicMapReaderIF;
  *
  * @since 2.0
  */
-public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
+public class RDFTopicMapReader implements TopicMapReaderIF {
   public static final String PROPERTY_DUPLICATE_SUPPRESSION = "duplicateSuppression";
   public static final String PROPERTY_GENERATE_NAMES = "generateNames";
   public static final String PROPERTY_LENIENT = "lenient";
   public static final String PROPERTY_MAPPING_FILE = "mappingFile";
   public static final String PROPERTY_MAPPING_URL = "mappingURL";
   public static final String PROPERTY_MAPPING_SYNTAX = "mappingSyntax";
-  protected String infileurl;
+  protected URL infileurl;
+  protected InputStream inputStream;
   protected String syntax;
-  protected String mappingurl;
+  protected URL mappingurl;
   protected String mappingsyntax;
   protected boolean duplicate_suppression;
   protected boolean generate_names;
   protected boolean lenient;
+  protected LocatorIF baseAddress;
 
   /**
    * PUBLIC: Creates a reader that will read RDF/XML from the given file.
    */
-  public RDFTopicMapReader(File infile) {
+  public RDFTopicMapReader(File infile) throws MalformedURLException {
     this(infile, null);
-  }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.   
-   * @param url The URL of the topic map document.
-   */  
-  public RDFTopicMapReader(LocatorIF url) {
-    this(url.getExternalForm());
-  }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.   
-   * @param url The URL of the topic map document.
-   * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
-   *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
-   */  
-  public RDFTopicMapReader(LocatorIF url, String syntax) {
-    this(url.getExternalForm(), syntax);
   }
 
   /**
@@ -94,13 +77,13 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
   public RDFTopicMapReader(File infile, String syntax) {
-    this(file2Locator(infile), syntax);
+    this(URIUtils.toURL(infile), syntax);
   }
   
   /**
    * PUBLIC: Creates a reader that will read RDF/XML from the given URL.
    */
-  public RDFTopicMapReader(String infileurl) {
+  public RDFTopicMapReader(URL infileurl) {
     this(infileurl, null);
   }
 
@@ -110,8 +93,19 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
-  public RDFTopicMapReader(String infileurl, String syntax) {
+  public RDFTopicMapReader(URL infileurl, String syntax) {
     this.infileurl = infileurl;
+    this.syntax = syntax;
+  }
+
+  /**
+   * PUBLIC: Creates a reader that will read RDF from the given InputStream in
+   * the indicated syntax.
+   * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
+   *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
+   */
+  public RDFTopicMapReader(InputStream inputStream, String syntax) {
+    this.inputStream = inputStream;
     this.syntax = syntax;
   }
 
@@ -121,7 +115,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * to be "RDF/XML".
    */
   public void setMappingFile(File mappingfile) {
-    this.mappingurl = file2Locator(mappingfile);
+    this.mappingurl = URIUtils.toURL(mappingfile);
   }
 
   /**
@@ -131,7 +125,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
   public void setMappingFile(File mappingfile, String syntax) {
-    this.mappingurl = file2Locator(mappingfile);
+    this.mappingurl = URIUtils.toURL(mappingfile);
     this.mappingsyntax = syntax;
   }
 
@@ -140,7 +134,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * RDF-to-topic map mapping definition. The syntax will be assumed
    * to be "RDF/XML".
    */
-  public void setMappingURL(String url) {
+  public void setMappingURL(URL url) {
     this.mappingurl = url;
   }
 
@@ -150,7 +144,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * @param syntax The RDF syntax to use. Possible values are "RDF/XML", "N3",
    *               "N-TRIPLE". If the value is null it defaults to "RDF/XML".
    */
-  public void setMappingURL(String url, String syntax) {
+  public void setMappingURL(URL url, String syntax) {
     this.mappingurl = url;
     this.mappingsyntax = syntax;
   }
@@ -183,27 +177,49 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
   public void setLenient(boolean lenient) {
     this.lenient = lenient;
   }
+
+  /**
+   * PUBLIC: Sets the base address of the topic maps retrieved from
+   * the source.
+   */
+  public void setBaseAddress(LocatorIF baseAddress) {
+    this.baseAddress = baseAddress;
+  }
   
   // --- TopicMapReaderIF implementation
   
+  @Override
   public TopicMapIF read() throws IOException {
     TopicMapIF topicmap = new InMemoryTopicMapStore().getTopicMap();
+    
+    LocatorIF base = baseAddress;
+    if ((baseAddress == null) && (infileurl != null)){
+      base = new URILocator(infileurl);
+    }
+    
     ((InMemoryTopicMapStore) topicmap.getStore()).
-      setBaseAddress(new URILocator(infileurl));
+      setBaseAddress(base);
     importInto(topicmap);
     return topicmap;
   }
 
+  @Override
   public Collection readAll() throws IOException {
     return Collections.singleton(read());
   }
 
   // --- TopicMapImporterIF implementation
 
+  @Override
   public void importInto(TopicMapIF topicmap) throws IOException {
     try {
-      RDFToTopicMapConverter.convert(infileurl, syntax, mappingurl, mappingsyntax,
-                                     topicmap, lenient);
+      if (inputStream != null) {
+        RDFToTopicMapConverter.convert(inputStream, syntax, mappingurl == null ? null : mappingurl.toString(), 
+                                       mappingsyntax, topicmap, lenient);
+      } else {
+        RDFToTopicMapConverter.convert(infileurl, syntax, mappingurl == null ? null : mappingurl.toString(), 
+                                       mappingsyntax, topicmap, lenient);
+      }
       if (generate_names)
         RDFToTopicMapConverter.generateNames(topicmap);
     } catch (JenaException e) {
@@ -212,16 +228,6 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
 
     if (duplicate_suppression)
       DuplicateSuppressionUtils.removeDuplicates(topicmap);
-  }
-
-  // --- Internal methods
-
-  private static String file2Locator(File file) {
-    try {
-      return URIUtils.toURL(file).toExternalForm(); // FIXME: isn't right!
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
   }
 
   /**
@@ -241,6 +247,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * </ul>
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_DUPLICATE_SUPPRESSION);
     if ((value != null) && (value instanceof Boolean)) {
@@ -260,7 +267,11 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
     }
     value = properties.get(PROPERTY_MAPPING_URL);
     if ((value != null) && (value instanceof String)) {
-      setMappingURL((String) value);
+      try {
+        setMappingURL(new URL((String) value));
+      } catch (MalformedURLException mufe) {
+        throw new OntopiaRuntimeException(mufe);
+      }
     }
     value = properties.get(PROPERTY_MAPPING_SYNTAX);
     if ((value != null) && (value instanceof String)) {

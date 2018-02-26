@@ -40,21 +40,25 @@ public class RDBMSMatrixQuery implements DetachedQueryIF {
     this.lookup_identities = lookup_identities;
   }
 
+  @Override
   public Object executeQuery(Connection conn) throws Exception {
     TicketIF ticket = stm.getTicket();
     return new RDBMSQueryResult(stm, ticket, stm.executeQuery(conn), lookup_identities);
   }
 
+  @Override
   public Object executeQuery(Connection conn, Object[] params) throws Exception {    
     TicketIF ticket = stm.getTicket();
     return new RDBMSQueryResult(stm, ticket, stm.executeQuery(conn, params), lookup_identities);
   } 
 
+  @Override
   public Object executeQuery(Connection conn, Map params) throws Exception {    
     TicketIF ticket = stm.getTicket();
     return new RDBMSQueryResult(stm, ticket, stm.executeQuery(conn, params), lookup_identities);
   } 
 
+  @Override
   public String toString() {    
     return "RMQ: " + stm;
   }

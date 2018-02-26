@@ -40,6 +40,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

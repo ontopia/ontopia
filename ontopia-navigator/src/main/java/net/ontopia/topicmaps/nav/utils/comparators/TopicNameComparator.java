@@ -30,15 +30,9 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 public class TopicNameComparator implements Comparator<TopicNameIF> {
 
   /**
-   * Empty constructor, which will compare TopicNameIFs using no
-   * context.
-   */
-  public TopicNameComparator() {
-  }
-  
-  /**
    * Compares two TopicNameIFs.
    */
+  @Override
   public int compare(TopicNameIF o1, TopicNameIF o2) {
     String value1 = o1.getValue();
     String value2 = o2.getValue();

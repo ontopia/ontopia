@@ -59,14 +59,17 @@ public class URIFragmentLocator extends AbstractLocator {
   // LocatorIF implementation
   // --------------------------------------------------------------------------
 
+  @Override
   public String getNotation() {
     return "URI";
   }
 
+  @Override
   public String getAddress() {
     return address + "#" + fragment;
   }
 
+  @Override
   public LocatorIF resolveAbsolute(String rel) {
     int length = rel.length();
     if (length == 0)
@@ -105,7 +108,7 @@ public class URIFragmentLocator extends AbstractLocator {
       // there were slashes, use constructor for unnormalized URIs,
       // so that the normalizer resolves the directory for us
       // (also do this if rel is "." or "..")
-      if (ix < length || rel.equals(".") || rel.equals("..")) {
+      if (ix < length || ".".equals(rel) || "..".equals(rel)) {
         if (lastSlash == -1) // no directory part
           return new URILocator(address.substring(0, authorityEnd + 1) + rel);
         else
@@ -124,6 +127,7 @@ public class URIFragmentLocator extends AbstractLocator {
     }
   }
 
+  @Override
   public String getExternalForm() {
     return URILocator.toExternalForm(address + "#" + fragment);
   }
@@ -150,6 +154,7 @@ public class URIFragmentLocator extends AbstractLocator {
     return index;
   }
 
+  @Override
   public int hashCode() {
     // this hashCode() implementation returns the same value as
 
@@ -171,6 +176,7 @@ public class URIFragmentLocator extends AbstractLocator {
     return hash;
   }
 
+  @Override
   public boolean equals(Object object) {
     try {
       if (object instanceof URIFragmentLocator) {

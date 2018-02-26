@@ -43,6 +43,7 @@ public abstract class AbstractDynamicPredicate implements BasicPredicateIF {
     this.base = base;
   }
 
+  @Override
   public String getName() {
     if (name != null)
       return name;

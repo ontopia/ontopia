@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(FunctionTag.class.getName());
   
   // tag attributes
@@ -59,6 +59,7 @@ public class FunctionTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     
     // get Context Tag
@@ -89,6 +90,7 @@ public class FunctionTag extends TagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

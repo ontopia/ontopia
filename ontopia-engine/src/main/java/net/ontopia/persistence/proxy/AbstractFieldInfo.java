@@ -65,55 +65,68 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
     this.readonly = readonly;
   }
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public int getIndex() {
     return index;
   }
 
+  @Override
   public boolean isReadOnly() {
     return readonly;
   }
   
+  @Override
   public int getCardinality() {
     return cardinality;
   }
 
+  @Override
   public boolean isCollectionField() {
     return is_collection;
   }
 
+  @Override
   public boolean isPrimitiveField() {
     return field.isPrimitiveField();
   }
   
+  @Override
   public boolean isReferenceField() {
     return field.isReferenceField();
   }
 
+  @Override
   public boolean isAggregateField() {
     return field.isAggregateField();
   }
   
+  @Override
   public ClassInfoIF getParentClassInfo() {
     return parent_cinfo;
   }
 
+  @Override
   public Class<?> getValueClass() {
     return value_class;
   }
 
+  @Override
   public String getTable() {
     return field.getTable();
   }
 
+  @Override
   public Object getValue(Object object) throws Exception {
     //! System.out.println("=> " + getName() + " " + field.getGetter() + " " + object.getClass() + " " + field.getValueClass());
     return getGetterMethod().invoke(object, EMPTY_OBJECT_ARRAY);
   }
 
+  @Override
   public void setValue(Object object, Object value) throws Exception {
     //! System.out.println("=> " + getName() + " " + field.getSetter() + " " + object.getClass() + " " + field.getValueClass());
     getSetterMethod().invoke(object, new Object[] {value});
@@ -137,14 +150,17 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
     return setter;
   }
 
+  @Override
   public String getJoinTable() {
     return field.getJoinTable();
   }
 
+  @Override
   public String[] getJoinKeys() {
     return field.getJoinKeys();
   }
 
+  @Override
   public String[] getManyKeys() {
     return field.getManyKeys();
   }

@@ -20,9 +20,7 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.File;
 import net.ontopia.topicmaps.entry.AbstractTopicMapSourceTest;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Test;
 

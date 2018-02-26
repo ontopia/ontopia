@@ -67,16 +67,20 @@ public class UploadPanel extends Panel {
           // the iframe should be attached to a page to be able to get its pagemap,
           // that's why i'm adding it in onBeforeRender
           IPageLink iFrameLink = new IPageLink() {
+            @Override
             public Page getPage() {
               return new UploadIFrame(parentField.getFieldValueModel()) {
+                @Override
                 protected String getOnUploadedCallback() {
                   return "onUpload_" + UploadPanel.this.getMarkupId();
                 }
+                @Override
                 protected LifeCycleListener getLifeCycleListener() {
                   return (AbstractOntopolyPage)UploadPanel.this.getPage();
                 }
               };
             }
+            @Override
             public Class<? extends Page> getPageIdentity() {
               return UploadIFrame.class;
             }            
@@ -101,6 +105,7 @@ public class UploadPanel extends Panel {
             "&clientFileName=' + encodeURIComponent(clientFileName)").toString();
       }
       
+      @Override
       protected void respond(AjaxRequestTarget target) {
         parentField.callOnUpdate(target);
       }

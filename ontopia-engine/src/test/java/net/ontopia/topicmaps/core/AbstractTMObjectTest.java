@@ -20,10 +20,7 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.ontopia.infoset.impl.basic.URILocator;
 
 public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {

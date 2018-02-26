@@ -46,10 +46,12 @@ public class WebEdRequest implements WebEdRequestIF {
     this.actionsExecuted = false;
   }
   
+  @Override
   public ActionParametersIF getActionParameters(String name) {
     return (ActionParametersIF) actionmap.get(name);
   }
 
+  @Override
   public UserIF getUser() {
     return user;
   }
@@ -62,6 +64,7 @@ public class WebEdRequest implements WebEdRequestIF {
     return request;
   }
 
+  @Override
   public boolean getActionsExecuted() {
     return actionsExecuted;
   }

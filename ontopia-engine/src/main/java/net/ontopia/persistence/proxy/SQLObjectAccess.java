@@ -39,7 +39,10 @@ import org.slf4j.LoggerFactory;
 public class SQLObjectAccess implements ClassAccessIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLObjectAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLObjectAccess.class.getName());
+
+  public static int batchSize = 50;
+
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  
@@ -147,6 +150,7 @@ public class SQLObjectAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Load
   
+  @Override
   public boolean load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception {
     // Get ticket
     TicketIF ticket = registrar.getTicket();
@@ -204,6 +208,7 @@ public class SQLObjectAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Load field
   
+  @Override
   public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) {
     try {
       //! System.out.println("LFF:" + field + " " + identity);
@@ -217,8 +222,7 @@ public class SQLObjectAccess implements ClassAccessIF {
     }
   }
 
-  public static int batchSize = 50;
-
+  @Override
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                                   IdentityIF current, int field) {
     try {
@@ -247,6 +251,7 @@ public class SQLObjectAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Create
 
+  @Override
   public void create(ObjectAccessIF oaccess, Object object) throws Exception {
     // Prepare statement
     PreparedStatement stm = access.prepareStatement(sql_create);
@@ -295,6 +300,7 @@ public class SQLObjectAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Delete
   
+  @Override
   public void delete(ObjectAccessIF oaccess, Object object) throws Exception {
     IdentityIF identity = oaccess.getIdentity(object);
 
@@ -341,6 +347,7 @@ public class SQLObjectAccess implements ClassAccessIF {
   // -----------------------------------------------------------------------------
   // Store dirty
 
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception {
 
     // Loop over dirty fields

@@ -61,14 +61,17 @@ public class XMLFormatModule implements FormatModuleIF {
     return new XMLHandler(handler);
   }
   
+  @Override
   public boolean matchesContent(ClassifiableContentIF cc) {
     return FormatModule.startsWith(cc.getContent(), magicBytes);
   }
 
+  @Override
   public boolean matchesIdentifier(ClassifiableContentIF cc) {
     return FormatModule.matchesExtension(cc.getIdentifier(), extensions);
   }
   
+  @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     // create new parser object
     XMLReader parser;
@@ -102,6 +105,7 @@ public class XMLFormatModule implements FormatModuleIF {
       this.thandler = thandler;
     }
     
+    @Override
     public void startElement(String nsuri, String lname, String qname,
                              Attributes attrs) throws SAXException {
       if (skipElements != null && skipElements.contains(lname)) {
@@ -111,11 +115,13 @@ public class XMLFormatModule implements FormatModuleIF {
       }
     }
     
+    @Override
     public void characters (char[] ch, int start, int length) {
       if (skipLevel == 0)
         thandler.text(ch, start, length);
     }
     
+    @Override
     public void endElement(String nsuri, String lname, String qname) throws SAXException {
       if (skipElements != null && skipElements.contains(lname)) {
         skipLevel--;        

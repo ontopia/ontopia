@@ -34,17 +34,17 @@ public interface TextHandlerIF {
   /**
    * INTERNAL: Starts a new document region. Regions can be nested.
    */
-  public void startRegion(String regionName);
+  void startRegion(String regionName);
 
   /**
    * INTERNAL: Text found in the classifiable content. Subsequent
    * calls to this method is allowed.
    */  
-  public void text(char[] ch, int start, int length);
+  void text(char[] ch, int start, int length);
 
   /**
    * INTERNAL: Ends the current document region.
    */  
-  public void endRegion();
+  void endRegion();
     
 }

@@ -42,15 +42,7 @@ import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 public abstract class ModificationFunctionStatement
   extends ModificationStatement {
   protected String funcname; // name of delete function to be called, if any
-  protected static Map<String, ModificationFunctionIF> functions;
-
-  static {
-    functions = new HashMap<String, ModificationFunctionIF>();
-  }
-  
-  public ModificationFunctionStatement() {
-    super();
-  }
+  protected static Map<String, ModificationFunctionIF> functions = new HashMap<String, ModificationFunctionIF>();
 
   public void setFunction(String name) {
     this.funcname = name;
@@ -66,6 +58,7 @@ public abstract class ModificationFunctionStatement
     return funcname + "(" + toStringLitlist() + ")";
   }
 
+  @Override
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
     if (funcname == null)
@@ -128,8 +121,8 @@ public abstract class ModificationFunctionStatement
   }
 
   interface ModificationFunctionIF {
-    public String getSignature();
-    public void modify(TMObjectIF object, Object value);
+    String getSignature();
+    void modify(TMObjectIF object, Object value);
   }
   
   static class FunctionSignature extends ArgumentValidator {

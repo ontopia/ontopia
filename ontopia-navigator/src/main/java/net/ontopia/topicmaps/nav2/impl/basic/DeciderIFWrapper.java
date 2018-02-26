@@ -24,8 +24,6 @@ import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A NavigatorDeciderIF implementation which wraps DeciderIF,
@@ -46,6 +44,7 @@ public class DeciderIFWrapper implements NavigatorDeciderIF {
   // Implementation of NavigatorDeciderIF
   // -----------------------------------------------------------
 
+  @Override
   public boolean ok(NavigatorPageIF contextTag, Object obj) {
     return decider.ok(obj);
   }

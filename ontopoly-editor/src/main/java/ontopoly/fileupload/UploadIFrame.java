@@ -24,13 +24,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-
-import net.ontopia.net.Base64;
-import net.ontopia.utils.StreamUtils;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.LifeCycleListener;
 import ontopoly.models.FieldValueModel;
-
+import org.apache.commons.codec.binary.Base64InputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.CSSPackageResource;
@@ -90,10 +88,10 @@ public abstract class UploadIFrame extends WebPage {
       FileUpload upload = uploadField.getFileUpload();         
       if (upload != null) {
         try {
-          Reader input = new InputStreamReader(new Base64.InputStream(upload.getInputStream(), Base64.ENCODE), "utf-8");
+          Reader input = new InputStreamReader(new Base64InputStream(upload.getInputStream(), true), "utf-8");
           FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
           StringWriter swriter = new StringWriter();
-          StreamUtils.transfer(input, swriter);
+          IOUtils.copy(input, swriter);
           String value = swriter.toString();
           fieldInstance.addValue(value, getLifeCycleListener());
           fieldValueModel.setExistingValue(value);

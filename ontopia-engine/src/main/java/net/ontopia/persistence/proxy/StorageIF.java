@@ -35,33 +35,33 @@ public interface StorageIF {
    * INTERNAL: Returns the optimized object relational mapping
    * declaration.
    */
-  public RDBMSMapping getMapping();
+  RDBMSMapping getMapping();
 
   /**
    * INTERNAL: Returns true if shared cache is enabled.
    */
-  public boolean isSharedCache();
+  boolean isSharedCache();
 
   /**
    * INTERNAL: Returns the shared storage cache, if any.
    */
-  public StorageCacheIF getStorageCache();
+  StorageCacheIF getStorageCache();
 
   /**
    * INTERNAL: Returns the shared caches.
    */
-  public EvictableIF getHelperObject(int identifier, IdentityIF namespace);
+  EvictableIF getHelperObject(int identifier, IdentityIF namespace);
 
   /**
    * INTERNAL: Notify cluster that transaction has been committed, so
    * that batched cluster events can be broadcasted.
    */
-  public void notifyCluster();
+  void notifyCluster();
   
   /**
    * INTERNAL: Creates a new storage access instance.
    */
-  public TransactionIF createTransaction(boolean readonly);
+  TransactionIF createTransaction(boolean readonly);
   
   /**
    * INTERNAL: Returns the storage cache shared by all storage access
@@ -73,17 +73,17 @@ public interface StorageIF {
   /**
    * INTERNAL: Gets the properties held by the storage.
    */
-  public Map<String, String> getProperties();
+  Map<String, String> getProperties();
 
   /**
    * INTERNAL: Gets the value of the specified storage property.
    */
-  public String getProperty(String property);
+  String getProperty(String property);
 
   /**
    * INTERNAL: Closes the storage definition, which allows it to free
    * its resources.
    */
-  public void close();
+  void close();
   
 }

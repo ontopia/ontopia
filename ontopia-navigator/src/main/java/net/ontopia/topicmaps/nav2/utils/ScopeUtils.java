@@ -23,11 +23,8 @@ package net.ontopia.topicmaps.nav2.utils;
 import java.util.Collection;
 
 import javax.servlet.jsp.PageContext;
-import javax.servlet.http.HttpServletRequest;
 
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.FilterIF;
-import net.ontopia.utils.DeciderFilter;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ApplicableInContextDecider;
@@ -37,7 +34,6 @@ import net.ontopia.topicmaps.utils.SubsetOfContextDecider;
 import net.ontopia.topicmaps.utils.deciders.WithinScopeDecider;
 
 import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.ScopeSupportIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -53,7 +49,7 @@ import org.slf4j.LoggerFactory;
 public final class ScopeUtils implements ScopeSupportIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(FrameworkUtils.class.getName());
   
   /**

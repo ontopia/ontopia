@@ -63,6 +63,7 @@ public class SQLJoin implements SQLExpressionIF {
     this.jointype = jointype;
   }
 
+  @Override
   public int getType() {
     return JOIN;
   }
@@ -93,10 +94,12 @@ public class SQLJoin implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public int hashCode() {
     return left.hashCode() + right.hashCode();
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLJoin) {
       SQLJoin other = (SQLJoin)obj;
@@ -107,9 +110,9 @@ public class SQLJoin implements SQLExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("join:");
+    StringBuilder sb = new StringBuilder("join:");
     switch (getJoinType()) {
     case CROSS:
       sb.append("cross");
@@ -123,12 +126,12 @@ public class SQLJoin implements SQLExpressionIF {
     default:
       sb.append("unknown");
     }
-    sb.append("(");
-    sb.append(left);
-    sb.append(", ");
-    sb.append(right);
-    sb.append(")");
-    return sb.toString();    
+    return sb.append('(')
+        .append(left)
+        .append(", ")
+        .append(right)
+        .append(')')
+        .toString();    
   }
   
 }

@@ -44,6 +44,7 @@ public class RoleType extends AbstractTypingTopic {
     return PSI.ON_ROLE_TYPE;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof RoleType))
       return false;

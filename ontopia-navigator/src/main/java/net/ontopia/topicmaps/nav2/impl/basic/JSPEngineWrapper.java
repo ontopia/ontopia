@@ -83,37 +83,35 @@ public class JSPEngineWrapper {
 
     JspEngineInfo engine = JspFactory.getDefaultFactory().getEngineInfo();
     String version = engine.getSpecificationVersion();
-    if (version.equals("2.0"))
-      wrapper = new JSP20Wrapper();
-    else if (version.equals("1.2"))
-      wrapper = new JSP12Wrapper();
-    else
-      wrapper = new JSP11Wrapper();
-
-    return wrapper;
+    switch (version) {
+      case "2.0": return new JSP20Wrapper();
+      case "1.2": return new JSP12Wrapper();
+      default: return new JSP11Wrapper();
+    }
   }
 
   // --- WrapperIF
 
   interface WrapperIF {
 
-    public String getServletContextName(ServletContext context);
+    String getServletContextName(ServletContext context);
 
-    public JspException getJspException(String message, Exception exception);
+    JspException getJspException(String message, Exception exception);
 
-    public JspTagException getJspTagException(String message,
+    JspTagException getJspTagException(String message,
                                               Exception exception);
     
-    public void setRequestEncoding(ServletRequest request, String encoding)
+    void setRequestEncoding(ServletRequest request, String encoding)
       throws UnsupportedEncodingException;
 
-    public Map getParameterMap(ServletRequest request);
+    Map getParameterMap(ServletRequest request);
   }
 
   // --- JSP20Wrapper
 
   static class JSP20Wrapper extends JSP12Wrapper {
 
+    @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
       try {
@@ -134,24 +132,29 @@ public class JSPEngineWrapper {
 
   static class JSP12Wrapper implements WrapperIF {
 
+    @Override
     public String getServletContextName(ServletContext context) {
       return context.getServletContextName();
     }
 
+    @Override
     public JspException getJspException(String message, Exception exception) {
       return new JspException(message, exception);
     }
 
+    @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
       return new JspTagException(message + ": " + exception);
     }
     
+    @Override
     public void setRequestEncoding(ServletRequest request, String encoding)
       throws UnsupportedEncodingException {
       request.setCharacterEncoding(encoding);
     }
 
+    @Override
     public Map getParameterMap(ServletRequest request) {
       return request.getParameterMap();
     }
@@ -162,25 +165,30 @@ public class JSPEngineWrapper {
 
   static class JSP11Wrapper implements WrapperIF {
 
+    @Override
     public String getServletContextName(ServletContext context) {
       return context.toString();
     }
 
+    @Override
     public JspException getJspException(String message, Exception exception) {
       return new JspException(message);
     }
     
+    @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
       return new JspTagException(message + ": " + exception);
     }
 
+    @Override
     public void setRequestEncoding(ServletRequest request, String encoding)
       throws UnsupportedEncodingException {
       // no way to do this on JSP 1.1. may have to add a workaround if
       // customers get desperate
     }
     
+    @Override
     public Map getParameterMap(ServletRequest request) {
       Map map = new HashMap();
       Enumeration enumeration = request.getParameterNames();

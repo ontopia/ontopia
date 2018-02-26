@@ -45,7 +45,7 @@ public interface ScopedIF extends TMObjectIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection<TopicIF> getScope();
+  Collection<TopicIF> getScope();
 
   /**
    * PUBLIC: Add a topic to this scope. (A topic used in a scope is
@@ -55,7 +55,7 @@ public interface ScopedIF extends TMObjectIF {
    * @param theme A topic to be added to this scope; an object
    * implementing TopicIF.
    */
-  public void addTheme(TopicIF theme);
+  void addTheme(TopicIF theme);
 
   /**
    * PUBLIC: Remove a topic from this scope. If the topic is not already
@@ -64,6 +64,6 @@ public interface ScopedIF extends TMObjectIF {
    *
    * @param theme A topic to be removed from this scope; an object implementing TopicIF.
    */
-  public void removeTheme(TopicIF theme);
+  void removeTheme(TopicIF theme);
   
 }

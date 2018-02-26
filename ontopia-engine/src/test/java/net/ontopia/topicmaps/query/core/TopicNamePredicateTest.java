@@ -36,6 +36,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

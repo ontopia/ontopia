@@ -50,7 +50,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
   implements DeclHandler, LexicalHandler {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTMSnifferContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMSnifferContentHandler.class.getName());
 
   private XTMTopicMapReader reader;
   private XMLReader parser;
@@ -62,6 +62,8 @@ public class XTMSnifferContentHandler extends DefaultHandler
   private int stack_depth; // used to avoid unbalanced stacks in XTM 1.0
   private Locator locator; // stored to be passed on to real ContentHandlers
   private static final Attributes EMPTY_ATTS = new AttributesImpl();
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
 
   public XTMSnifferContentHandler(XTMTopicMapReader reader,
                                   TopicMapStoreFactoryIF store_factory,
@@ -74,6 +76,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
     this.entities = new HashMap();
   }
 
+  @Override
   public void startElement(String uri, String name, String qname,
                            Attributes atts) throws SAXException {
     try {
@@ -93,11 +96,10 @@ public class XTMSnifferContentHandler extends DefaultHandler
     
     ContentHandler outer_handler = null;
 
-    if (uri == XTMContentHandler.NS_XTM ||
-        (uri == "" && qname == "topicMap")) {
+    if (XTMContentHandler.NS_XTM.equals(uri) ||
+        (uri.isEmpty() && "topicMap".equals(qname))) {
       // We are reading XTM 1.0. Update accordingly.
       handler1 = new XTMContentHandler(store_factory,
-                                       reader.getXMLReaderFactory(),
                                        base_address);
       handler1.setExternalReferenceHandler(reader.getExternalReferenceHandler());
       handler1.register(parser);
@@ -118,13 +120,12 @@ public class XTMSnifferContentHandler extends DefaultHandler
       
       outer_handler.startDocument();
       for (int ix = 0; ix < stack_depth; ix++) // avoid EmptyStackException
-        outer_handler.startElement("", "", "fake-element", EMPTY_ATTS);
+        outer_handler.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "fake-element", EMPTY_ATTS);
       outer_handler.startElement(uri, name, qname, atts);
       
-    } else if (uri == XTM2ContentHandler.NS_XTM2) {
+    } else if (XTM2ContentHandler.NS_XTM2.equals(uri)) {
       // We are reading XTM 2.x. Update accordingly.
       handler2 = new XTM2ContentHandler(store_factory,
-                                        reader.getXMLReaderFactory(),
                                         base_address);
       parser.setContentHandler(handler2);
       outer_handler = handler2;
@@ -144,16 +145,19 @@ public class XTMSnifferContentHandler extends DefaultHandler
     stack_depth++;
   }
 
+  @Override
   public void endElement(String uri, String name, String qname) {
     stack_depth--;
   }
 
+  @Override
   public void endDocument() {
     // if we get here it means we never found any 1.0 or 2.0 TMs
     if (reader.getValidation())
       throw new InvalidTopicMapException("XTM input is neither 1.0 nor 2.0");
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator; // store it so we can pass it on
   }
@@ -162,46 +166,65 @@ public class XTMSnifferContentHandler extends DefaultHandler
   // This is here so we can pass on entity information to the XTM 1.0
   // handler which makes use of this information.
   
+  @Override
   public void externalEntityDecl(String name,  String publicId, 
                                  String systemId) {
     if (systemId != null)
       entities.put(name, systemId);
   }
   
+  @Override
   public void attributeDecl(String eName, String aName, String type,
                             String mode, String value) {
+    // no-op
   }
   
+  @Override
   public void elementDecl(String name, String model) {
+    // no-op
   }
   
+  @Override
   public void internalEntityDecl(String name, String value) {
+    // no-op
   }
 
   // --- LexicalHandler
+  @Override
   public void startEntity(String name) {
     if (handler1 != null)
       handler1.startEntity(name);
   }
   
+  @Override
   public void endEntity(String name) {
     if (handler1 != null)
       handler1.endEntity(name);
   }
   
+  @Override
   public void comment(char[] ch, int start, int length) {
+    // no-op
   }
   
+  @Override
   public void startCDATA() {
+    // no-op
   }
   
+  @Override
   public void endCDATA() {
+    // no-op
   }
   
+  @Override
   public void startDTD(String name, String publicId, String systemId) {
+    // no-op
   }
   
+  @Override
   public void endDTD() {
+    // no-op
   }
 
   // --- Internal methods

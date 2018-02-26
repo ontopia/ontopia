@@ -191,13 +191,11 @@ public final class Ontopia {
   private static void checkClass(String class_name, String jar_file) {
     try {
       Class.forName(class_name);
-      return;
-    } catch (NoClassDefFoundError e) {
-    } catch (ClassNotFoundException e) {
+    } catch (NoClassDefFoundError | ClassNotFoundException e) {
+      String message = "Class '" + class_name + "' not found. Please add " + jar_file + " to your CLASSPATH.";
+      // System.out.println(message);
+      throw new OntopiaRuntimeException(message);
     }
-    String message = "Class '" + class_name + "' not found. Please add " + jar_file + " to your CLASSPATH.";
-    // System.out.println(message);
-    throw new OntopiaRuntimeException(message);
   }
 
   private static void checkProduct() {
@@ -216,14 +214,15 @@ public final class Ontopia {
    */
   public static void checkClasses() {
     checkClass("net.ontopia.topicmaps.core.TopicMapIF",        "ontopia.jar");
-    checkClass("org.apache.crimson.jaxp.SAXParserFactoryImpl", "crimson.jar");
     checkClass("org.slf4j.Logger",                             "slf4j-api.jar");
     checkClass("org.apache.commons.collections4.map.LRUMap",   "commons-collections4.jar");
     checkClass("gnu.getopt.Getopt",                            "getopt.jar");
     checkClass("antlr.Parser",                                 "antlr.jar");
-    checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
-    checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
-    checkClass("com.hp.hpl.jena.iri.IRIFactory",               "iri.jar");
+
+    // moved to RDF module
+    // checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
+    // checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
+    // checkClass("com.hp.hpl.jena.iri.IRIFactory",               "iri.jar");
   }
 
   /**
@@ -234,8 +233,8 @@ public final class Ontopia {
     // Check to see if required classes get imported
     checkClasses();
 
-    if (System.getProperty("java.version").compareTo("1.5.0") < 0)
-      throw new OntopiaRuntimeException("Java 1.5 or newer needed; running " +
+    if (System.getProperty("java.version").compareTo("1.7.0") < 0)
+      throw new OntopiaRuntimeException("Java 1.7 or newer needed; running " +
 					System.getProperty("java.version"));
   }
 

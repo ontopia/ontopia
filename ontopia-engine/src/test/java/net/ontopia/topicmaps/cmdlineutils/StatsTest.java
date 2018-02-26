@@ -22,9 +22,7 @@ package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.IOException;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public class StatsTest extends CommandLineUtilsTest {
   
@@ -32,14 +30,13 @@ public class StatsTest extends CommandLineUtilsTest {
     super(name);
   }
 
+  @Override
   protected void setUp() {
 
     XTMTopicMapReader reader  = null;
 
-    String filename = TestFileUtils.getTestInputFile("various", "stats.xtm");
-
     try {
-      reader = new XTMTopicMapReader(URIUtils.getURI(filename));
+      reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL("various", "stats.xtm"));
       tm = reader.read();
     } catch (IOException e) {
       fail("Error reading file\n" + e);
@@ -47,6 +44,7 @@ public class StatsTest extends CommandLineUtilsTest {
 
   }
 
+  @Override
   protected void tearDown() {
     tm = null;
   }

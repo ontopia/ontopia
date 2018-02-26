@@ -38,6 +38,7 @@ public class OccurrenceImageRequestTargetUrlCodingStrategy extends
     super(mountPath);
   }
   
+  @Override
   public IRequestTarget decode(RequestParameters requestParameters) {   
     //String name = requestParameters.getPath().substring(getMountPath().length()); 
 
@@ -52,11 +53,13 @@ public class OccurrenceImageRequestTargetUrlCodingStrategy extends
     return new OccurrenceResourceStreamRequestTarget(OccurrenceWebResource.getResourceStream(occ), topicMapId, occurrenceId); 
   }
 
+  @Override
   public CharSequence encode(IRequestTarget requestTarget) { 
     OccurrenceResourceStreamRequestTarget target = (OccurrenceResourceStreamRequestTarget)requestTarget;    
     return getMountPath() + "?topicMapID=" + target.getTopicMapId() + "&occurrenceId=" + target.getOccurrenceId();
   }
 
+  @Override
   public boolean matches(IRequestTarget requestTarget) {
     return (requestTarget instanceof OccurrenceResourceStreamRequestTarget); 
   }

@@ -31,13 +31,13 @@ import net.ontopia.topicmaps.query.parser.TologQuery;
  */
 public interface QueryOptimizerIF {
 
-  public void optimize(TologQuery query, QueryContext context)
+  void optimize(TologQuery query, QueryContext context)
     throws InvalidQueryException;
   
-  public PredicateClause optimize(PredicateClause clause, QueryContext context)
+  PredicateClause optimize(PredicateClause clause, QueryContext context)
     throws InvalidQueryException;
 
-  public List optimize(List clauses, QueryContext context)
+  List optimize(List clauses, QueryContext context)
     throws InvalidQueryException;
   
 }

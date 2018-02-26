@@ -38,9 +38,10 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SQLOneToManyAggregate implements FieldAccessIF {
+  private static final String BINDING_OBJECT_MESSAGE = "Binding object identity: ";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLOneToManyAggregate.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLOneToManyAggregate.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;
@@ -111,6 +112,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
       log.debug("Compiled SQL (clear 1:M aggregate) " + field.getName() + ": " + sql_clear);
   }
   
+  @Override
   public Object load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception {    
     // Prepare result collection
     Collection<Object> result = new HashSet<Object>();
@@ -124,7 +126,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
             
       // Bind identity columns
       if (debug)
-        log.debug("Binding object identity: " + identity);
+        log.debug(BINDING_OBJECT_MESSAGE + identity);
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
@@ -166,6 +168,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     return result;
   }
   
+  @Override
   public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
                              IdentityIF current) throws Exception {    
     // Prepare result collection
@@ -262,7 +265,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   protected void add_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
         
     // Bind value columns
@@ -298,7 +301,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   protected void remove_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {     
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
@@ -307,6 +310,7 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
+  @Override
   public void clear(IdentityIF identity) throws Exception {
     // Prepare statement
     PreparedStatement stm = clear_getStatement();
@@ -329,13 +333,14 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   protected void clear_bindParameters(PreparedStatement stm, IdentityIF identity) throws Exception {    
     // Bind identity columns
     if (debug)
-      log.debug("Binding object identity: " + identity);
+      log.debug(BINDING_OBJECT_MESSAGE + identity);
     identity_field.bind(identity, stm, 1);
   }
 
   // -----------------------------------------------------------------------------
   // Store dirty
 
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception {
     // Get field value
     TrackableCollectionIF value = (TrackableCollectionIF)oaccess.getValue(object, field);

@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;
+import java.util.Objects;
 import net.ontopia.persistence.query.jdo.JDOBoolean;
 import net.ontopia.persistence.query.jdo.JDOEquals;
 import net.ontopia.persistence.query.jdo.JDOField;
@@ -31,7 +32,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Implements the 'reifies(reifier, reified)' predicate.
@@ -46,13 +46,17 @@ public class ReifiesPredicate
 
   // --- JDOPredicateIF implementation
 
+  @Override
   public boolean isRecursive() {
     return false;
   }
 
+  @Override
   public void prescan(QueryBuilder builder, List arguments) {
+    // no-op
   }
 
+  @Override
   public boolean buildQuery(QueryBuilder builder, List expressions, List arguments)
     throws InvalidQueryException {
     
@@ -66,7 +70,7 @@ public class ReifiesPredicate
             
       // Do direct predicate evaluation
 			ReifiableIF reified = ((TopicIF)args[0]).getReified();
-      if (ObjectUtils.equals(reified, args[1]))
+      if (Objects.equals(reified, args[1]))
         expressions.add(JDOBoolean.TRUE);
       else
         expressions.add(JDOBoolean.FALSE);

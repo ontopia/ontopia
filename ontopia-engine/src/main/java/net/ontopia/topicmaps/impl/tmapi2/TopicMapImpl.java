@@ -80,7 +80,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     topicMap = this;
   }
 
-  TopicImpl getDefaultNameType() {
+  protected TopicImpl getDefaultNameType() {
     if (defaultNameType == null) {
       String psi = net.ontopia.topicmaps.utils.PSI.SAM_NAMETYPE;
       defaultNameType = createTopicBySubjectIdentifier(createLocator(psi));
@@ -88,6 +88,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     return defaultNameType;
   }
 
+  @Override
   public Locator getLocator() {
     return wrapLocator(wrapped.getStore().getBaseAddress());
   }
@@ -98,6 +99,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
 
+  @Override
   public TopicMapIF getWrapped() {
     return wrapped;
   }
@@ -124,6 +126,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * 
    * @see org.tmapi.core.TopicMap#close()
    */
+  @Override
   public void close() {
     wrapped.getStore().commit();
     wrapped.getStore().close();
@@ -135,6 +138,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#createAssociation(org.tmapi.core.Topic,
    * org.tmapi.core.Topic[])
    */
+  @Override
   public Association createAssociation(Topic type, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.scopeNotNull(this, scope);
@@ -155,6 +159,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * java.util.Collection)
    */
 
+  @Override
   public Association createAssociation(Topic type, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
     return createAssociation(type, scope.toArray(new Topic[0]));
@@ -166,6 +171,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#createLocator(java.lang.String)
    */
 
+  @Override
   public Locator createLocator(String reference) {
     return tmsystem.createLocator(reference);
   }
@@ -176,6 +182,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#createTopic()
    */
 
+  @Override
   public TopicImpl createTopic() {
     TopicImpl topic = wrapTopic(wrapped.getBuilder().makeTopic());
     Locator itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
@@ -195,6 +202,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * org.tmapi.core.TopicMap#createTopicByItemIdentifier(org.tmapi.core.Locator)
    */
 
+  @Override
   public TopicImpl createTopicByItemIdentifier(Locator iid) {
     Check.itemIdentifierNotNull(this, iid);
     ConstructImpl tmc = getConstructByItemIdentifier(iid);
@@ -221,6 +229,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * )
    */
 
+  @Override
   public TopicImpl createTopicBySubjectIdentifier(Locator sid) {
     Check.itemIdentifierNotNull(this, sid);
     TopicImpl topic = getTopicBySubjectIdentifier(sid);
@@ -245,6 +254,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * org.tmapi.core.TopicMap#createTopicBySubjectLocator(org.tmapi.core.Locator)
    */
 
+  @Override
   public TopicImpl createTopicBySubjectLocator(Locator slo) {
     Check.itemIdentifierNotNull(this, slo);
     TopicImpl topic = getTopicBySubjectLocator(slo);
@@ -261,6 +271,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#getAssociations()
    */
 
+  @Override
   public Set<Association> getAssociations() {
     return wrapSet(wrapped.getAssociations());
   }
@@ -271,6 +282,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#getConstructById(java.lang.String)
    */
 
+  @Override
   public ConstructImpl getConstructById(String id) {
     if (id == null) {
       throw new IllegalArgumentException("The id must not be null");
@@ -286,6 +298,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * )
    */
 
+  @Override
   public ConstructImpl getConstructByItemIdentifier(Locator iid) {
     if (iid == null) {
       throw new IllegalArgumentException("The item identifier must not be null");
@@ -300,6 +313,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    */
 
   @SuppressWarnings("unchecked")
+  @Override
   public <I extends Index> I getIndex(Class<I> idx) {
     if (idx == org.tmapi.index.ScopedIndex.class) {
       if (scopedIndex == null)
@@ -330,6 +344,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#getParent()
    */
 
+  @Override
   public ConstructImpl getParent() {
     return null;
   }
@@ -341,6 +356,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * org.tmapi.core.TopicMap#getTopicBySubjectIdentifier(org.tmapi.core.Locator)
    */
 
+  @Override
   public TopicImpl getTopicBySubjectIdentifier(Locator sid) {
     Check.subjectIdentifierNotNull(sid);
     return wrapTopic(wrapped.getTopicBySubjectIdentifier(unwrapLocator(sid)));
@@ -353,6 +369,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * org.tmapi.core.TopicMap#getTopicBySubjectLocator(org.tmapi.core.Locator)
    */
 
+  @Override
   public TopicImpl getTopicBySubjectLocator(Locator slo) {
     Check.subjectLocatorNotNull(slo);
     return wrapTopic(wrapped.getTopicBySubjectLocator(unwrapLocator(slo)));
@@ -364,6 +381,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#getTopics()
    */
 
+  @Override
   public Set<Topic> getTopics() {
     return wrapSet(wrapped.getTopics());
   }
@@ -374,6 +392,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#mergeIn(org.tmapi.core.TopicMap)
    */
 
+  @Override
   public void mergeIn(TopicMap tm) {
     if (tm == null) {
       throw new IllegalArgumentException("The topic map must not be null");
@@ -390,6 +409,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.Construct#remove()
    */
 
+  @Override
   public void remove() {
     wrapped.getStore().delete(true);
     tmsystem.remove(wrapped.getStore().getBaseAddress());

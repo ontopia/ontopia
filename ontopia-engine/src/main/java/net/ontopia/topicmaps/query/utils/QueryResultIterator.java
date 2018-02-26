@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.query.utils;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;
@@ -31,10 +32,10 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
  *
  * @since 2.0
  */
-public class QueryResultIterator implements Iterator  {
+public class QueryResultIterator implements Iterator<Map<String, Object>>  {
 
   protected QueryResultIF result;
-  protected Object[] keys;
+  protected String[] keys;
   protected boolean has_next;
   
   public QueryResultIterator(QueryResultIF result) {
@@ -43,18 +44,21 @@ public class QueryResultIterator implements Iterator  {
     has_next = result.next();
   }
   
+  @Override
   public boolean hasNext() {
     return has_next;
   }
   
-  public Object next() {
+  @Override
+  public Map<String, Object> next() {
     if (!has_next)
       throw new NoSuchElementException();
-    ArrayMap rowmap = new ArrayMap(keys, result.getValues());
+    ArrayMap<String, Object> rowmap = new ArrayMap<String, Object>(keys, result.getValues());
     has_next = result.next();
     return rowmap;
   }
   
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
   }

@@ -22,22 +22,20 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
-import java.util.Iterator;
-
+import java.util.Objects;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CollectionMap;
-import net.ontopia.utils.ObjectUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 
 /**
  * INTERNAL: The basic dynamic name index implementation.
@@ -45,14 +43,14 @@ import net.ontopia.utils.ObjectUtils;
 
 public class NameIndex extends BasicIndex implements NameIndexIF {
   
-  protected CollectionMap basenames;
-  protected CollectionMap variants;
+  protected CollectionMap<String, TopicNameIF> basenames;
+  protected CollectionMap<String, VariantNameIF> variants;
 
   NameIndex(IndexManagerIF imanager, EventManagerIF emanager, ObjectTreeManager otree) {
     
     // Initialize index maps
-    basenames = new CollectionMap();
-    variants = new CollectionMap();
+    basenames = new CollectionMap<String, TopicNameIF>();
+    variants = new CollectionMap<String, VariantNameIF>();
 
     // Initialize object tree event handlers [objects added or removed]    
     otree.addListener(new TopicNameIF_added(basenames), TopicNameIF.EVENT_ADDED);
@@ -66,9 +64,8 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     handlers.put(VariantNameIF.EVENT_SET_VALUE, new VariantNameIF_setValue(variants));
 
     // Register dynamic index as event listener
-    Iterator iter = handlers.keySet().iterator();
-    while (iter.hasNext()) {
-      emanager.addListener(this, (String)iter.next());
+    for (String handlerKey : handlers.keySet()) {
+      emanager.addListener(this, handlerKey);
     }
   }
   
@@ -76,24 +73,32 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   // NameIndexIF
   // -----------------------------------------------------------------------------
   
-  public Collection getTopicNames(String value) {
-    Collection result = (Collection)basenames.get(value);
-    if (result == null) return Collections.EMPTY_SET;
+  @Override
+  public Collection<TopicNameIF> getTopicNames(String value) {
+    Collection<TopicNameIF> result = basenames.get(value);
+    if (result == null) return new ArrayList<TopicNameIF>();
     // Create new collection
-    return new ArrayList(result);
+    return new ArrayList<TopicNameIF>(result);
   }
   
-  public Collection getVariants(String value) {
+  @Override
+  public Collection<TopicNameIF> getTopicNames(String value, final TopicIF topicNameType) {
+    return CollectionUtils.select(extractExactValues(basenames, value), new TypedPredicate(topicNameType));
+  }
+
+  @Override
+  public Collection<VariantNameIF> getVariants(String value) {
 		return extractExactValues(variants, value);
   }
   
-  public Collection getVariants(String value, final LocatorIF datatype) {
-    return CollectionUtils.filterSet(extractExactValues(variants, value), new DeciderIF() {
-        public boolean ok(Object o) {
-          VariantNameIF vn = (VariantNameIF)o;
-          return ObjectUtils.equals(vn.getDataType(), datatype);
-        }
-      });
+  @Override
+  public Collection<VariantNameIF> getVariants(String value, final LocatorIF datatype) {
+    return CollectionUtils.select(extractExactValues(variants, value), new Predicate<VariantNameIF>() {
+      @Override
+      public boolean evaluate(VariantNameIF vn) {
+        return Objects.equals(vn.getDataType(), datatype);
+      }
+    });
   }
 
   // -----------------------------------------------------------------------------
@@ -103,12 +108,13 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   /**
    * EventHandler: TopicNameIF.setValue
    */
-  class TopicNameIF_setValue extends EventHandler {
-    protected CollectionMap objects;
-    TopicNameIF_setValue(CollectionMap objects) {
+  class TopicNameIF_setValue extends EventHandler<TopicNameIF, String> {
+    protected CollectionMap<String, TopicNameIF> objects;
+    TopicNameIF_setValue(CollectionMap<String, TopicNameIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
+    @Override
+    public void processEvent(TopicNameIF object, String event, String new_value, String old_value) {
       objects.move(object, old_value, new_value);
     }
   }
@@ -116,37 +122,40 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   /**
    * EventHandler: TopicNameIF.added
    */
-  class TopicNameIF_added extends EventHandler {
-    protected CollectionMap objects;
-    TopicNameIF_added(CollectionMap objects) {
+  class TopicNameIF_added extends EventHandler<Object, TopicNameIF> {
+    protected CollectionMap<String, TopicNameIF> objects;
+    TopicNameIF_added(CollectionMap<String, TopicNameIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      objects.add(((TopicNameIF)new_value).getValue(), new_value);
+    @Override
+    public void processEvent(Object object, String event, TopicNameIF new_value, TopicNameIF old_value) {
+      objects.add(new_value.getValue(), new_value);
     }
   }
   /**
    * EventHandler: TopicNameIF.removed
    */
-  class TopicNameIF_removed extends EventHandler {
-    protected CollectionMap objects;
-    TopicNameIF_removed(CollectionMap objects) {
+  class TopicNameIF_removed extends EventHandler<Object, TopicNameIF> {
+    protected CollectionMap<String, TopicNameIF> objects;
+    TopicNameIF_removed(CollectionMap<String, TopicNameIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      objects.remove(((TopicNameIF)old_value).getValue(), old_value);
+    @Override
+    public void processEvent(Object object, String event, TopicNameIF new_value, TopicNameIF old_value) {
+      objects.remove(old_value.getValue(), old_value);
     }
   }
 
   /**
    * EventHandler: VariantNameIF.setValue
    */
-  class VariantNameIF_setValue extends EventHandler {
-    protected CollectionMap objects;
-    VariantNameIF_setValue(CollectionMap objects) {
+  class VariantNameIF_setValue extends EventHandler<VariantNameIF, String> {
+    protected CollectionMap<String, VariantNameIF> objects;
+    VariantNameIF_setValue(CollectionMap<String, VariantNameIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
+    @Override
+    public void processEvent(VariantNameIF object, String event, String new_value, String old_value) {
       objects.move(object, old_value, new_value);
     }
   }
@@ -154,25 +163,27 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   /**
    * EventHandler: VariantNameIF.added
    */
-  class VariantNameIF_added extends EventHandler {
-    protected CollectionMap objects;
-    VariantNameIF_added(CollectionMap objects) {
+  class VariantNameIF_added extends EventHandler<Object, VariantNameIF> {
+    protected CollectionMap<String, VariantNameIF> objects;
+    VariantNameIF_added(CollectionMap<String, VariantNameIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      objects.add(((VariantNameIF)new_value).getValue(), new_value);
+    @Override
+    public void processEvent(Object object, String event, VariantNameIF new_value, VariantNameIF old_value) {
+      objects.add(new_value.getValue(), new_value);
     }
   }
   /**
    * EventHandler: VariantNameIF.removed
    */
-  class VariantNameIF_removed extends EventHandler {
-    protected CollectionMap objects;
-    VariantNameIF_removed(CollectionMap objects) {
+  class VariantNameIF_removed extends EventHandler<Object, VariantNameIF> {
+    protected CollectionMap<String, VariantNameIF> objects;
+    VariantNameIF_removed(CollectionMap<String, VariantNameIF> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      objects.remove(((VariantNameIF)old_value).getValue(), old_value);
+    @Override
+    public void processEvent(Object object, String event, VariantNameIF new_value, VariantNameIF old_value) {
+      objects.remove(old_value.getValue(), old_value);
     }
   }
 
@@ -186,9 +197,9 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
    * @return An immutable collection if the {@code value} does not exist or a modifiable
    *          collection iff {@code value} exists in the {@code map}.
    */
-  private Collection extractExactValues(Map map, String value) {
-    Collection result = (Collection)map.get(value);
-    return result == null ? Collections.EMPTY_SET : new ArrayList(result);
+  private <E> Collection<E> extractExactValues(Map<String, Collection<E>> map, String value) {
+    Collection<E> result = map.get(value);
+    return result == null ? new ArrayList<E>() : new ArrayList<E>(result);
   }
   
 }

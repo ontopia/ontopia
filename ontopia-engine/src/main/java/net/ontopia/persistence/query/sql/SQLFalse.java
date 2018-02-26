@@ -33,10 +33,12 @@ public class SQLFalse implements SQLExpressionIF {
     return singleton; 
   }
 
+  @Override
   public int getType() {
     return FALSE;
   }
 
+  @Override
   public String toString() {
     return "false";
   }

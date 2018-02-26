@@ -46,7 +46,7 @@
     else if (format.equals("cxtm")) {
       writer = new CanonicalXTMWriter(out);
     } else if (format.equals("ltm")) 
-      writer = new LTMTopicMapWriter(out);
+      writer = new LTMTopicMapWriter(out, "utf-8");
     else if (format.equals("tmxml")) 
       writer = new TMXMLWriter(out, charset);
     else

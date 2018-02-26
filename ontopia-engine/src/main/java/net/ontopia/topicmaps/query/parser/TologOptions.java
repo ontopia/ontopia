@@ -39,7 +39,8 @@ import net.ontopia.utils.PropertyUtils;
 public class TologOptions {
   public static TologOptions defaults;
   private static Properties properties; // tolog.properties, if loaded
-  static Logger log = LoggerFactory.getLogger(TologOptions.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TologOptions.class.getName());
+  private static final String TRUE = Boolean.TRUE.toString();
 
   private TologOptions parent;
   private Map<String, String> options;
@@ -60,7 +61,7 @@ public class TologOptions {
         return false; // FIXME: throw exception?
       return parent.getBooleanValue(name);
     } else
-      return value.equalsIgnoreCase("true");
+      return Boolean.parseBoolean(value);
   }
 
   public void setOption(String name, String value) {
@@ -93,14 +94,14 @@ public class TologOptions {
     
   static {
     defaults = new TologOptions();
-    defaults.setOption("optimizer.inliner", "true");
-    defaults.setOption("optimizer.reorder", "true");
-    defaults.setOption("optimizer.reorder.predicate-based", "true");
-    defaults.setOption("optimizer.typeconflict", "true");
-    defaults.setOption("optimizer.hierarchy-walker", "true");             
-    defaults.setOption("optimizer.prefix-search", "true");
-    defaults.setOption("optimizer.recursive-pruner", "true"); // rules only
-    defaults.setOption("compiler.typecheck", "true"); // queryanalyzer
+    defaults.setOption("optimizer.inliner", TRUE);
+    defaults.setOption("optimizer.reorder", TRUE);
+    defaults.setOption("optimizer.reorder.predicate-based", TRUE);
+    defaults.setOption("optimizer.typeconflict", TRUE);
+    defaults.setOption("optimizer.hierarchy-walker", TRUE);             
+    defaults.setOption("optimizer.prefix-search", TRUE);
+    defaults.setOption("optimizer.recursive-pruner", TRUE); // rules only
+    defaults.setOption("compiler.typecheck", TRUE); // queryanalyzer
     // optimizer.role-player-type: default depends on implementation
     // optimizer.next-previous: ditto.
     // both set in QueryProcessor constructor

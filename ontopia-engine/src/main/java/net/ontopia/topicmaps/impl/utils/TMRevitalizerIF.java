@@ -30,6 +30,6 @@ public interface TMRevitalizerIF {
   /**
    * INTERNAL: Returns a revitalized version of the given object.
    */
-  public Object revitalize(Object o);
+  Object revitalize(Object o);
   
 }

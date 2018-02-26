@@ -21,7 +21,6 @@
 package ontopoly.sysmodel;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +29,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -47,12 +45,12 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
 import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
   
 /**
  * INTERNAL: Represents the system topic map describing all the topic
@@ -63,8 +61,9 @@ public class OntopolyRepository {
   public static final String ONTOLOGY_TOPIC_MAP_ID = "ontopoly-ontology.xtm";
 
   private static final Comparator<TopicMapReference> REFERENCE_COMPARATOR = new Comparator<TopicMapReference>() {
+    @Override
     public int compare(TopicMapReference r1, TopicMapReference r2) {
-        return ObjectUtils.compareIgnoreCase(r1.getName(), r2.getName());
+        return StringUtils.compareIgnoreCase(r1.getName(), r2.getName());
     }
   };
 
@@ -144,6 +143,7 @@ public class OntopolyRepository {
 
   public List<TopicMapSource> getEditableSources() {
     return getSources(new DeciderIF() {
+      @Override
       public boolean ok(Object o) {
         TopicMapSourceIF source = (TopicMapSourceIF)o;
         return source.supportsCreate() && source.getId() != null;
@@ -282,9 +282,7 @@ public class OntopolyRepository {
     try {
       LocatorIF base = systemtm.getStore().getBaseAddress();
       File file = URIUtils.getURIFile(base);
-      FileOutputStream stream = new FileOutputStream(file);
-      new LTMTopicMapWriter(stream).write(systemtm);
-      stream.close();
+      new LTMTopicMapWriter(file).write(systemtm);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }

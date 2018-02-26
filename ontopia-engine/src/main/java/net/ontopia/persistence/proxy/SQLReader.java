@@ -44,24 +44,28 @@ public class SQLReader extends FilterReader {
     this.stm = stm;
   }
 
+  @Override
   public int read() throws IOException {
     int result = super.read();
     if (result == -1) close();
     return result;
   }
 
+  @Override
   public int read(char[] cbuf) throws IOException {
     int result = super.read(cbuf);
     //! if (result == -1 || result < cbuf.length) close();
     return result;
   }
 
+  @Override
   public int read(char[] cbuf, int off, int len) throws IOException {
     int result = super.read(cbuf, off, len);
     //! if (result == -1 || result < len) close();
     return result;
   }
 
+  @Override
   public void close() throws IOException {
     try {
       if (rs != null) {

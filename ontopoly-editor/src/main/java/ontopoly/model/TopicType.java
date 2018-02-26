@@ -29,10 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import ontopoly.utils.FieldAssignmentOrderComparator;
-import ontopoly.utils.OntopolyModelUtils;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -41,7 +37,9 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
-import net.ontopia.utils.StringUtils;
+import ontopoly.utils.FieldAssignmentOrderComparator;
+import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Represents a topic type.
@@ -350,7 +348,7 @@ public class TopicType extends AbstractTypingTopic {
         String fieldOrderAsString;
         int fieldOrder = fa.getOrder(tt);
         if (fieldOrder != Integer.MAX_VALUE)
-          fieldOrderAsString = StringUtils.pad(fieldOrder + 1, '0', 9);
+          fieldOrderAsString = StringUtils.leftPad(Integer.toString(fieldOrder + 1), 9, '0');
         else
           fieldOrderAsString = tt.getNextUnusedFieldOrder();
 
@@ -474,6 +472,7 @@ public class TopicType extends AbstractTypingTopic {
 
     List<FieldAssignment> fieldAssignments = qm.queryForList(query,
         new RowMapperIF<FieldAssignment>() {
+      @Override
       public FieldAssignment mapRow(QueryResultIF result, int rowno) {
         TopicIF topicType = (TopicIF)result.getValue(0);
         TopicIF fieldDefinitionTopic = (TopicIF)result.getValue(1);
@@ -494,7 +493,7 @@ public class TopicType extends AbstractTypingTopic {
     return fieldAssignments;
   }
 
-  static FieldDefinition findFieldDefinitionImpl(TopicMap tm, TopicIF fieldDefinitionTopic, TopicIF fieldDefinitionType) {
+  protected static FieldDefinition findFieldDefinitionImpl(TopicMap tm, TopicIF fieldDefinitionTopic, TopicIF fieldDefinitionType) {
     Collection<LocatorIF> identities = fieldDefinitionType.getSubjectIdentifiers();
     if (identities.contains(PSI.ON_OCCURRENCE_FIELD))
       return new OccurrenceField(fieldDefinitionTopic, tm);
@@ -528,7 +527,7 @@ public class TopicType extends AbstractTypingTopic {
         fieldOrder = temp;
     }
 
-    return StringUtils.pad(fieldOrder + 1, '0', 9);
+    return StringUtils.leftPad(Integer.toString(fieldOrder + 1), 9, '0');
   }
 
   /**
@@ -638,6 +637,7 @@ public class TopicType extends AbstractTypingTopic {
     QueryMapper<FieldsView> qm = getTopicMap().newQueryMapperNoWrap();
     return qm.queryForList(query,
         new RowMapperIF<FieldsView>() {
+          @Override
           public FieldsView mapRow(QueryResultIF result, int rowno) {
             TopicIF viewTopic = (TopicIF)result.getValue(0);
             if (viewTopic == null)

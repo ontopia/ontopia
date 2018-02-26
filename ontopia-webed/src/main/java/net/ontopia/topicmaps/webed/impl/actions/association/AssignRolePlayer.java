@@ -58,6 +58,7 @@ public class AssignRolePlayer extends AbstractTopicMapAction {
   // initialization of logging facility
   private static Logger log = LoggerFactory.getLogger(AssignRolePlayer.class.getName());
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 
     // verify parameters

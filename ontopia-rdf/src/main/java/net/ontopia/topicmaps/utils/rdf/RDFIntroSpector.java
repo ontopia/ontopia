@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.arp.ALiteral;
-import com.hp.hpl.jena.rdf.arp.AResource;
-import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
+import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
+import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -33,6 +33,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * INTERNAL: Used by the RDF2TM plugin.
@@ -81,7 +82,7 @@ public class RDFIntroSpector {
 
   private static void parseRDFXML(GrabMappingsHandler handler, String infileurl)
     throws IOException {
-    RDFUtils.parseRDFXML(infileurl, handler);
+    RDFUtils.parseRDFXML(new URL(infileurl), handler);
   }
 
   private static void parseN3(GrabMappingsHandler handler, String infileurl) {
@@ -114,26 +115,32 @@ public class RDFIntroSpector {
   private static class AResourceImpl implements AResource {
     private Resource resource;
 
+    @Override
     public String getAnonymousID() {
       return resource.getId().toString();
     }
 
+    @Override
     public String getURI() {
       return resource.getURI();
     }
 
+    @Override
     public Object getUserData() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean hasNodeID() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isAnonymous() {
       return resource.isAnon();
     }
 
+    @Override
     public void setUserData(Object object) {
       throw new UnsupportedOperationException();
     }
@@ -148,23 +155,29 @@ public class RDFIntroSpector {
 
   private static class ALiteralImpl implements ALiteral {
     private Literal literal;
+    private boolean tainted;
 
+    @Override
     public String getDatatypeURI() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getLang() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getParseType() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isWellFormedXML() {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public String toString() {
       return literal.getString();
     }
@@ -173,12 +186,12 @@ public class RDFIntroSpector {
       this.literal = literal;
     }
 
-    private boolean tainted;
-
+    @Override
     public void taint() {
       tainted = true;
     }
 
+    @Override
     public boolean isTainted() {
       return tainted;
     }
@@ -200,6 +213,7 @@ public class RDFIntroSpector {
       return mappings;
     }
     
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       String preduri = pred.getURI();      
       if (preduri.startsWith(RDFToTopicMapConverter.RTM_PREFIX))
@@ -216,6 +230,7 @@ public class RDFIntroSpector {
       }
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {      
       String preduri = pred.getURI();
       if (preduri.equals(RDFToTopicMapConverter.RTM_MAPSTO)) {

@@ -38,10 +38,12 @@ public class SimpleQueryTracer extends QueryTracer.TracePrinter {
     this.out = out;
   }
   
+  @Override
   public boolean isEnabled() {
     return true;
   }
 
+  @Override
   public void output(String message) {
     try {
       out.write(message + "\n");

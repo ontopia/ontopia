@@ -80,6 +80,7 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
     return topicMapModel.getTopicMap();
   }
   
+  @Override
   public void onDetach() {
     topicMapModel.detach();
     super.onDetach();

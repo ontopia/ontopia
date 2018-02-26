@@ -37,6 +37,7 @@ public class SubjectIdentityDeciderTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap = makeTopicMap();
     TopicIF a = makeTopic("A");

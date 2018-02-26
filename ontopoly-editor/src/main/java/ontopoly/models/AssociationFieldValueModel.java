@@ -19,8 +19,8 @@
  */
 package ontopoly.models;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
@@ -71,7 +71,7 @@ public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFiel
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof AssociationFieldValueModel)
-      return ObjectUtils.equals(getAssociationFieldValue(),
+      return Objects.equals(getAssociationFieldValue(),
           ((AssociationFieldValueModel) obj).getAssociationFieldValue());
     else
       return false;

@@ -54,13 +54,13 @@ import ontopoly.utils.OntopolyModelUtils;
  * INTERNAL: Represents an Ontopoly topic map.
  */
 public class TopicMap {
-  static final String ON = "http://psi.ontopia.net/ontology/";
-  static final String XTM = "http://www.topicmaps.org/xtm/1.0/core.xtm#";
-  static final String TEST = "http://psi.example.org/test/";
-  static final String TECH = "http://www.techquila.com/psi/hierarchy/#";
-  static final String DC = "http://purl.org/dc/elements/1.1/";
-  static final String XSD = "http://www.w3.org/2001/XMLSchema#";
-  static final String TMDM = "http://psi.topicmaps.org/iso13250/model/";
+  protected static final String ON = "http://psi.ontopia.net/ontology/";
+  protected static final String XTM = "http://www.topicmaps.org/xtm/1.0/core.xtm#";
+  protected static final String TEST = "http://psi.example.org/test/";
+  protected static final String TECH = "http://www.techquila.com/psi/hierarchy/#";
+  protected static final String DC = "http://purl.org/dc/elements/1.1/";
+  protected static final String XSD = "http://www.w3.org/2001/XMLSchema#";
+  protected static final String TMDM = "http://psi.topicmaps.org/iso13250/model/";
 
   private static final String declarations = 
     "using xtm for i\"" + XTM + "\" "
@@ -383,7 +383,7 @@ public class TopicMap {
     }
   }
 
-  TopicIF createNamedTopic(String name, TopicIF type) {
+  protected TopicIF createNamedTopic(String name, TopicIF type) {
     TopicMapBuilderIF builder = getTopicMapIF().getBuilder();
     TopicIF topic = builder.makeTopic(type);
 
@@ -617,7 +617,7 @@ public class TopicMap {
    * things appear to work properly elsewhere. Should probably use this
    * in Topic.getName(), though.
    */
-  String getTopicName(TopicIF topic, AbstractTypingTopic fallback) {
+  protected String getTopicName(TopicIF topic, AbstractTypingTopic fallback) {
     if (defnametype == null)
       defnametype = OntopolyModelUtils.getTopicIF(this, PSI.TMDM_TOPIC_NAME);
 

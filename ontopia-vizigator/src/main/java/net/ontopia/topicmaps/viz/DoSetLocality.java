@@ -28,6 +28,7 @@ public class DoSetLocality implements RecoveryObjectIF {
     this.locality = locality;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     controller.setLocality(locality);
   }

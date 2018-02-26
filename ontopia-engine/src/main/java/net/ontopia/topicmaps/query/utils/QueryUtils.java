@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("unchecked")
 public class QueryUtils {
-  static Logger log = LoggerFactory.getLogger(QueryUtils.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(QueryUtils.class.getName());
 
   // QueryProcessorIF cache structure {TopicMapIF : {LocatorIF : {String : SoftReference(QueryProcessorIF)}}}
   private static Map<TopicMapIF, Map<LocatorIF, Map<String, Reference<QueryProcessorIF>>>> qpcache = 

@@ -62,6 +62,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
 
+  @Override
   public TopicNameIF getWrapped() {
     return wrapped;
   }
@@ -73,6 +74,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * org.tmapi.core.Topic[])
    */
 
+  @Override
   public Variant createVariant(String value, Topic... scope) {
     Check.scopeNotNull(this, scope);
     Check.scopeNotEmpty(this, scope);
@@ -86,6 +88,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * java.util.Collection)
    */
 
+  @Override
   public Variant createVariant(String value, Collection<Topic> scope) {
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
@@ -110,14 +113,14 @@ public class NameImpl extends ScopedImpl implements Name {
 
   }
 
-  void addVariant(Variant variant) {
+  protected void addVariant(Variant variant) {
     if (wrappedVariants == null) {
       wrappedVariants = new HashSet<Variant>();
     }
     wrappedVariants.add(variant);
   }
   
-  void clearVariants() {
+  protected void clearVariants() {
     if (wrappedVariants != null) {
         wrappedVariants.clear();
     }
@@ -130,6 +133,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * org.tmapi.core.Topic[])
    */
 
+  @Override
   public Variant createVariant(Locator value, Topic... scope) {
     Check.scopeNotNull(this, scope);
     return createVariant(value, Arrays.asList(scope));
@@ -142,6 +146,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * java.util.Collection)
    */
 
+  @Override
   public Variant createVariant(Locator value, Collection<Topic> scope) {
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
@@ -164,6 +169,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * org.tmapi.core.Topic[])
    */
 
+  @Override
   public Variant createVariant(String value, Locator datatype, Topic... scope) {
     Check.scopeNotNull(this, scope);
     Check.scopeNotEmpty(this, scope);
@@ -177,6 +183,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * org.tmapi.core.Locator, java.util.Collection)
    */
 
+  @Override
   public Variant createVariant(String value, Locator datatype,
       Collection<Topic> scope) {
     Check.valueNotNull(this, value, datatype);
@@ -202,6 +209,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see org.tmapi.core.Name#getParent()
    */
 
+  @Override
   public Topic getParent() {
     return topicMap.wrapTopic(wrapped.getTopic());
   }
@@ -212,6 +220,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see org.tmapi.core.Name#getValue()
    */
 
+  @Override
   public String getValue() {
     return wrapped.getValue();
   }
@@ -222,6 +231,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see org.tmapi.core.Name#getVariants()
    */
 
+  @Override
   public Set<Variant> getVariants() {
     return wrappedVariants != null ? wrappedVariants : Collections.<Variant>emptySet();
   }
@@ -232,6 +242,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see org.tmapi.core.Name#setValue(java.lang.String)
    */
 
+  @Override
   public void setValue(String value) {
     Check.valueNotNull(this, value);
     wrapped.setValue(value);
@@ -243,6 +254,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see org.tmapi.core.Typed#getType()
    */
 
+  @Override
   public Topic getType() {
     return topicMap.wrapTopic(wrapped.getType());
   }
@@ -253,6 +265,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * @see org.tmapi.core.Typed#setType(org.tmapi.core.Topic)
    */
 
+  @Override
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
     Check.typeInTopicMap(getTopicMap(), type);
@@ -276,7 +289,7 @@ public class NameImpl extends ScopedImpl implements Name {
 
   }
 
-  void removeVariant(VariantImpl variantImpl) {
+  protected void removeVariant(VariantImpl variantImpl) {
     wrappedVariants.remove(variantImpl);
   }
 }

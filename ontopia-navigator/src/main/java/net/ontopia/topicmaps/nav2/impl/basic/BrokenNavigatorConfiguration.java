@@ -49,18 +49,22 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public String getProperty(String name) {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public String getProperty(String name, String defaultValue) {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public int getProperty(String name, int defaultValue) {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public Map getProperties() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -78,10 +82,12 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public String getClass(String shortcut) {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public Map getClassmap() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -99,14 +105,17 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public boolean isAutoloadTopicMap(String topicmapId) {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public boolean isAutoloadAllTopicMaps() {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public Collection getAutoloadTopicMaps() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -120,6 +129,7 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
   // MVS related methods
   // ------------------------------------------------
 
+  @Override
   public MVSConfig getMVSConfig() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -135,10 +145,12 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public Collection getModels() {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public String getDefaultModel() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -149,10 +161,12 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public Collection getViews() {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public String getDefaultView() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -163,10 +177,12 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public Collection getSkins() {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public String getDefaultSkin() {
     throw new OntopiaRuntimeException(errormsg);
   }
@@ -176,31 +192,38 @@ public class BrokenNavigatorConfiguration implements NavigatorConfigurationIF {
   // plugins related methods
   // ------------------------------------------------
 
+  @Override
   public void addPlugin(PluginIF aPlugin) {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public PluginIF getPlugin(String id) {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public Collection getPlugins(String groupId) {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public Collection getPlugins() {
     throw new OntopiaRuntimeException(errormsg);
   }
 
+  @Override
   public Collection getOrderedPlugins() {
     throw new OntopiaRuntimeException(errormsg);
   }
   
+  @Override
   public List getPluginGroups() {
     throw new OntopiaRuntimeException(errormsg);
   }
   
   // ------------------------------------------------
+  @Override
   public String toString() {
     return "[[[BrokenNavigatorConfiguration]]]";
   }

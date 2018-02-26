@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public class CmdlineUtils {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CmdlineUtils.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(CmdlineUtils.class.getName());
 
   private static boolean isLog4JAvailable() {
     return log.getClass().getName().equals("org.slf4j.impl.Log4jLoggerAdapter");
@@ -122,6 +122,7 @@ public class CmdlineUtils {
 
   static class LoggingOptionsListener implements CmdlineOptions.ListenerIF {
     
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
 
       switch (option)

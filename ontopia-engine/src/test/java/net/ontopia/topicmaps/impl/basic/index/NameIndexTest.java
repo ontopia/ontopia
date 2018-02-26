@@ -28,6 +28,7 @@ public class NameIndexTest extends net.ontopia.topicmaps.core.index.NameIndexTes
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

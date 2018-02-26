@@ -64,10 +64,12 @@ public class RDBMSSearchResult implements SearchResultIF {
     result.close();
   }
   
+  @Override
   public DocumentIF getDocument(int hit) throws IOException {
     return docs.get(hit);
   }
 
+  @Override
   public float getScore(int hit) throws IOException {
     RDBMSDocument doc = docs.get(hit);
     if (doc == null)
@@ -76,6 +78,7 @@ public class RDBMSSearchResult implements SearchResultIF {
       return doc.getScore();
   }
 
+  @Override
   public int hits() {
     return docs.size();
   }

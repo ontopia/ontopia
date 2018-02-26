@@ -20,8 +20,9 @@
 
 package net.ontopia.topicmaps.query.core;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,24 +30,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.net.MalformedURLException;
 import junit.framework.TestCase;
-
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.fulltext.impl.basic.DummyFulltextSearcherIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.query.impl.basic.QueryProcessor;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public abstract class AbstractQueryTest extends TestCase {
 
@@ -94,24 +93,21 @@ public abstract class AbstractQueryTest extends TestCase {
   protected void load(String filename, boolean fulltext) throws IOException {
     // IMPORTANT: This method is being overloaded by the RDBMS
     // implementation to provide the right object implementations.
-    filename = TestFileUtils.getTestInputFile(testdataDirectory, filename);
+    URL file = TestFileUtils.getTestInputURL(testdataDirectory, filename);
 
-    File indexDirectory = null; 
-    if (fulltext) {
-      indexDirectory = TestFileUtils.getTestOutputFile("indexes", filename.substring(filename.lastIndexOf("/")));
-      indexDirectory.mkdirs();
-    }
-    InMemoryTopicMapStore store = new InMemoryTopicMapStore(fulltext, indexDirectory);
+    InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     topicmap = store.getTopicMap();
     builder = store.getTopicMap().getBuilder();
-    base = URIUtils.getURI(filename);
+    base = new URILocator(file);
 
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+    TopicMapReaderIF importer = ImportExportUtils.getReader(file.toString());
     if (importer instanceof XTMTopicMapReader)
       ((XTMTopicMapReader) importer).setValidation(false);
     importer.importInto(topicmap);
 
-    store.synchronizeFulltextIndex();
+    if (fulltext) {
+      new DummyFulltextSearcherIF(store);
+    }
     
     processor = new QueryProcessor(topicmap, base);
   }

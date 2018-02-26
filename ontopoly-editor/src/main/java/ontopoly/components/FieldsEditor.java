@@ -25,9 +25,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.AssociationType;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
@@ -45,7 +44,7 @@ import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.MutableLoadableDetachableModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.AbstractOntopolyPage;
-
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -60,11 +59,12 @@ public class FieldsEditor extends Panel {
 
   protected static final boolean ISSUE_329_ENABLED = true;
   
-  TopicTypeModel topicTypeModel;
-  boolean readonly;
+  private TopicTypeModel topicTypeModel;
+  private boolean readonly;
+  private String selectedTypeLinkId;
   
-  ListView<FieldAssignmentModel> listView;
-  MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
+  private ListView<FieldAssignmentModel> listView;
+  private MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
   
   public FieldsEditor(String id, TopicTypeModel _topicTypeModel, final boolean readonly) {
     super(id);
@@ -82,6 +82,7 @@ public class FieldsEditor extends Panel {
     };
     
     this.listView = new ListView<FieldAssignmentModel>("existingFields", fieldAssignmentModels) {
+      @Override
       public void populateItem(final ListItem<FieldAssignmentModel> item) {
         
         FieldAssignmentModel fieldAssignmentModel = item.getModelObject();
@@ -215,6 +216,7 @@ public class FieldsEditor extends Panel {
 
   private ListView<FieldDefinitionModel> createListView(final List<FieldDefinitionModel> fieldDefinitionModels) {
     ListView<FieldDefinitionModel> listView = new ListView<FieldDefinitionModel>("addFields", fieldDefinitionModels) {
+      @Override
       public void populateItem(final ListItem<FieldDefinitionModel> item) {
         
         FieldDefinitionModel fieldDefinitionModel = item.getModelObject();
@@ -243,12 +245,10 @@ public class FieldsEditor extends Panel {
     return listView;
   }
 
-  private String selectedTypeLinkId;
-  
   private void replaceListView(FieldDefinitionTypeLink typeLink) {
     String typeLinkId = typeLink.getMarkupId();
     ListView<FieldDefinitionModel> afListView;
-    if (ObjectUtils.different(typeLinkId, selectedTypeLinkId)) {      
+    if (!Objects.equals(typeLinkId, selectedTypeLinkId)) {      
       // replaces the existing listview with a new one
       selectedTypeLinkId = typeLinkId;
       afListView = createListView(filterAndWrapInFieldDefinitions(typeLink.getFieldDefinitions()));
@@ -278,10 +278,11 @@ public class FieldsEditor extends Panel {
         result.add(new FieldDefinitionModel(fieldDefinition));
     }
     Collections.sort(result, new Comparator<FieldDefinitionModel>() {
+      @Override
       public int compare(FieldDefinitionModel o1, FieldDefinitionModel o2) {
         FieldDefinition fd1 = o1.getFieldDefinition();
         FieldDefinition fd2 = o2.getFieldDefinition();
-        return ObjectUtils.compare(fd1.getFieldName(), fd2.getFieldName());
+        return StringUtils.compare(fd1.getFieldName(), fd2.getFieldName());
       }      
     });
     return result;
@@ -298,6 +299,7 @@ public class FieldsEditor extends Panel {
       replaceListView(this);
       target.addComponent(FieldsEditor.this);
     }
+    @Override
     public String getAjaxIndicatorMarkupId() {         
       return "ajaxIndicator";   
     }  

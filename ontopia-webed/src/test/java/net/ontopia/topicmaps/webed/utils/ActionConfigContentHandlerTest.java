@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.webed.utils;
 
-import java.io.File;
 import java.io.IOException;
-
+import junit.framework.TestCase;
 import net.ontopia.topicmaps.webed.impl.basic.ActionForwardPage;
 import net.ontopia.topicmaps.webed.impl.basic.ActionForwardPageIF;
 import net.ontopia.topicmaps.webed.impl.basic.ActionGroupIF;
@@ -32,10 +31,7 @@ import net.ontopia.topicmaps.webed.impl.basic.FieldInformationIF;
 import net.ontopia.topicmaps.webed.impl.basic.ImageInformation;
 import net.ontopia.topicmaps.webed.impl.basic.ImageInformationIF;
 import net.ontopia.topicmaps.webed.impl.utils.ActionConfigurator;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import junit.framework.TestCase;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -54,6 +50,7 @@ public class ActionConfigContentHandlerTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     if (registry == null) {

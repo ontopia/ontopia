@@ -32,6 +32,21 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 
 public interface TopicMapBuilderIF {
+  String MSG_TOPIC_TYPE_NOT_NULL = "Topic type must not be null.";
+  String MSG_TOPIC_NAME_VALUE_NOT_NULL = "Topic name value must not be null.";
+  String MSG_TOPIC_NOT_NULL = "Topic must not be null.";
+  String MSG_TOPIC_NAME_NOT_NULL = "Topic name must not be null.";
+  String MSG_VARIANT_VALUE_NOT_NULL = "Variant value must not be null.";
+  String MSG_VARIANT_LOCATOR_NOT_NULL = "Variant locator must not be null.";
+  String MSG_OCCURRENCE_TYPE_NOT_NULL = "Occurrence type must not be null.";
+  String MSG_OCCURRENCE_VALUE_NOT_NULL = "Occurrence value must not be null.";
+  String MSG_OCCURRENCE_LOCATOR_NOT_NULL = "Occurrence locator must not be null.";
+  String MSG_ASSOCIATION_TYPE_NOT_NULL = "Association type must not be null.";
+  String MSG_ASSOCATION_NOT_NULL = "Association must not be null.";
+  String MSG_ASSOCIATION_ROLE_PLAYER_NOT_NULL = "Association role player must not be null.";
+  String MSG_ASSOCIATION_ROLE_TYPE_NOT_NULL = "Association role type must not be null.";
+  String MSG_VARIANT_DATATYPE_NOT_NULL = "Variant value datatype must not be null.";
+  String MSG_OCCURRENCE_DATATYPE_NOT_NULL = "Occurrence value datatype must not be null.";
   
   /**
    * PUBLIC: Returns the topic map to which this builder belongs.
@@ -39,7 +54,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing TopicMapIF.
    * @since 4.0
    */
-  public TopicMapIF getTopicMap();
+  TopicMapIF getTopicMap();
 
   /**
    * PUBLIC: Makes a new topic for the current topic map.
@@ -47,7 +62,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing TopicIF, and belonging to the
    * given topic map.
    */
-  public TopicIF makeTopic();  
+  TopicIF makeTopic();  
 
   /**
    * PUBLIC: Makes a new topic of the given type for the current topic map.
@@ -59,7 +74,7 @@ public interface TopicMapBuilderIF {
    * current topic map.
    * @since 1.3.2
    */ 
-  public TopicIF makeTopic(TopicIF topic_type);
+  TopicIF makeTopic(TopicIF topic_type);
 
 
   /**
@@ -72,7 +87,7 @@ public interface TopicMapBuilderIF {
    * current topic map.
    * @since 1.3.2
    */ 
-  public TopicIF makeTopic(Collection<TopicIF> topic_types);
+  TopicIF makeTopic(Collection<TopicIF> topic_types);
 
   /**
    * PUBLIC: Makes a new untyped topic name with the given value for
@@ -85,7 +100,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing TopicNameIF, having the given value, 
    *         and belonging to the given topic.  
    */
-  public TopicNameIF makeTopicName(TopicIF topic, String value);
+  TopicNameIF makeTopicName(TopicIF topic, String value);
 
   /**
    * PUBLIC: Makes a new topic name with the given type and value for
@@ -102,7 +117,7 @@ public interface TopicMapBuilderIF {
    *
    * @since 3.0
    */
-  public TopicNameIF makeTopicName(TopicIF topic, TopicIF bntype, String value);
+  TopicNameIF makeTopicName(TopicIF topic, TopicIF bntype, String value);
 
   /**
    * DEPRECATED: Makes a new variant name with the specified name value
@@ -116,7 +131,7 @@ public interface TopicMapBuilderIF {
    * @deprecated Use makeVariantName(TopicNameIF, String, Collection)
    */
   @Deprecated
-  public VariantNameIF makeVariantName(TopicNameIF name, String value);
+  VariantNameIF makeVariantName(TopicNameIF name, String value);
 
   /**
    * PUBLIC: Makes a new variant name with the specified name value
@@ -129,7 +144,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
    * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection<TopicIF> scope); // NEW
+  VariantNameIF makeVariantName(TopicNameIF name, String value, Collection<TopicIF> scope); // NEW
 
   /**
    * DEPRECATED: Makes a new variant name with the given locator for
@@ -143,7 +158,7 @@ public interface TopicMapBuilderIF {
    * @deprecated Use makeVariantName(TopicNameIF, LocatorIF, Collection)
    */
   @Deprecated
-  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator);
+  VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator);
 
   /**
    * PUBLIC: Makes a new variant name with the given locator for
@@ -156,7 +171,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
 	 * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection<TopicIF> scope); // NEW
+  VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection<TopicIF> scope); // NEW
 
   /**
    * DEPRECATED: Makes a new variant name with the specified name value and datatype
@@ -171,7 +186,7 @@ public interface TopicMapBuilderIF {
 	 * @deprecated Use makeVariantName(TopicNameIF, String, LocatorIF, Collection)
    */
   @Deprecated
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype); // NEW
+  VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype); // NEW
 
   /**
    * PUBLIC: Makes a new variant name with the specified name value and datatype
@@ -185,7 +200,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
 	 * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection<TopicIF> scope); // NEW
+  VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection<TopicIF> scope); // NEW
 
   /**
    * DEPRECATED: Makes a new variant name with the specified name value reader and datatype
@@ -201,7 +216,7 @@ public interface TopicMapBuilderIF {
 	 * @deprecated Use makeVariantName(TopicNameIF, Reader, long, LocatorIF, Collection)
    */
   @Deprecated
-  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype); // NEW
+  VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype); // NEW
 
   /**
    * PUBLIC: Makes a new variant name with the specified name value reader and datatype
@@ -216,7 +231,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
 	 * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection<TopicIF> scope); // NEW
+  VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection<TopicIF> scope); // NEW
   
   /**
    * PUBLIC: Makes a new internal occurrence with the given type and value
@@ -230,7 +245,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing OccurrenceIF, having the given
    *         type and value, and belonging to the given topic.
    */
-  public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value);
+  OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value);
   
   /**
    * PUBLIC: Makes a new internal occurrence with the given type and value
@@ -246,7 +261,7 @@ public interface TopicMapBuilderIF {
    *         type and value, and belonging to the given topic.
    * @since 4.0
    */
-  public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value, LocatorIF datatype); // NEW
+  OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value, LocatorIF datatype); // NEW
   
   /**
    * PUBLIC: Makes a new internal occurrence with the given type and value
@@ -263,7 +278,7 @@ public interface TopicMapBuilderIF {
    *         type and value, and belonging to the given topic.
 	 * @since 4.0
    */
-  public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, Reader value, long length, LocatorIF datatype); // NEW
+  OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, Reader value, long length, LocatorIF datatype); // NEW
   
   /**
    * PUBLIC: Makes a new external occurrence with the given type and locator
@@ -278,7 +293,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing OccurrenceIF, having the given
    *         type and locator, and belonging to the given topic.
    */
-  public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, LocatorIF locator);
+  OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, LocatorIF locator);
 
   /**
    * PUBLIC: Makes a new association with the given type in the
@@ -289,7 +304,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing AssociationIF, having the given type,
    *         and belonging to the current topic map.
    */
-  public AssociationIF makeAssociation(TopicIF assoc_type); // DEPRECATE?
+  AssociationIF makeAssociation(TopicIF assoc_type); // DEPRECATE?
 
   /**
    * PUBLIC: Makes a new unary association with the given type in the
@@ -303,7 +318,7 @@ public interface TopicMapBuilderIF {
    *         a single role and belonging to the current topic map.
 	 * @since 4.0
    */
-  public AssociationIF makeAssociation(TopicIF assoc_type, TopicIF role_type, TopicIF player); // NEW
+  AssociationIF makeAssociation(TopicIF assoc_type, TopicIF role_type, TopicIF player); // NEW
 
   /**
    * PUBLIC: Makes a new association role with the given type and
@@ -318,6 +333,6 @@ public interface TopicMapBuilderIF {
    *
    * @since 1.3
    */
-  public AssociationRoleIF makeAssociationRole(AssociationIF assoc,
+  AssociationRoleIF makeAssociationRole(AssociationIF assoc,
                                                TopicIF role_type, TopicIF player);  
 }

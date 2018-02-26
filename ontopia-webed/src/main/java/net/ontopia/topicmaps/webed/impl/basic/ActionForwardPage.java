@@ -78,32 +78,39 @@ public class ActionForwardPage implements ActionForwardPageIF {
   // implementation of ActionForwardPageIF
   // ------------------------------------------------------------
   
+  @Override
   public String getURL() {
     return url;
   }
 
+  @Override
   public String getFramename() {
     return framename;
   }
 
+  @Override
   public void addParameter(String paramName, String paramValue) {
     reqParams.put(paramName, paramValue);
   }
 
+  @Override
   public Map getParameters() {
     return reqParams;
   }
   
+  @Override
   public String getNextActionTemplate() {
     return nextActionTemplate;
   }
   
+  @Override
   public ParamRuleIF getNextActionParamRule() {
     return paramRule;
   }
 
   // --- overwrite method(s) from Object implementation
   
+  @Override
   public String toString() {
     return "[ActionForwardPage: URL=" + url +
       ", framename=" + framename +
@@ -112,6 +119,7 @@ public class ActionForwardPage implements ActionForwardPageIF {
       ", reqParams=" + reqParams + "]";
   }
 
+  @Override
   public boolean equals(Object comp) {
     if (!(comp instanceof ActionForwardPageIF))
       return false;

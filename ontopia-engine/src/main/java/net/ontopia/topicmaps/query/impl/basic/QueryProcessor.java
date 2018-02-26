@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.query.impl.basic;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,13 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.text.Collator;
-
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -46,25 +40,28 @@ import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
-import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
 import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
-import net.ontopia.topicmaps.query.utils.TologSpy;
+import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
 import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
-import net.ontopia.topicmaps.query.parser.ParseContextIF;
-import net.ontopia.topicmaps.query.parser.TologParser;
-import net.ontopia.topicmaps.query.parser.TologOptions;
-import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.ModificationStatement;
+import net.ontopia.topicmaps.query.parser.ParseContextIF;
+import net.ontopia.topicmaps.query.parser.TologOptions;
+import net.ontopia.topicmaps.query.parser.TologParser;
+import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.Variable;
+import net.ontopia.topicmaps.query.utils.TologSpy;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +78,15 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   protected TologParser parser; // the default parser (may have state)
 
   // --- initialize logging facility.
-  static Logger logger = LoggerFactory.getLogger(QueryProcessor.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(QueryProcessor.class.getName());
+
+  // -- Prefetcher constants
+
+  private final static int[] Prefetcher_OB_fields = new int[] {
+      Prefetcher.TopicIF_names, Prefetcher.TopicNameIF_variants };
+
+  private final static boolean[] Prefetcher_OB_traverse = new boolean[] {
+      false, false };
 
   public QueryProcessor(TopicMapIF topicmap) {
     this(topicmap, topicmap.getStore().getBaseAddress());
@@ -110,29 +115,35 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   
   // / query processor implementation
 
+  @Override
   public QueryResultIF execute(String query) throws InvalidQueryException {
     return execute(parseQuery(query, null));
   }
 
+  @Override
   public QueryResultIF execute(String query, DeclarationContextIF context)
       throws InvalidQueryException {
     return execute(parseQuery(query, context));
   }
 
+  @Override
   public QueryResultIF execute(String query, Map arguments)
       throws InvalidQueryException {
     return execute(parseQuery(query, null), arguments);
   }
 
+  @Override
   public QueryResultIF execute(String query, Map arguments,
       DeclarationContextIF context) throws InvalidQueryException {
     return execute(parseQuery(query, context), arguments);
   }
 
+  @Override
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return new ParsedQuery(this, parseQuery(query, null));
   }
 
+  @Override
   public ParsedQueryIF parse(String query, DeclarationContextIF context)
       throws InvalidQueryException {
     return new ParsedQuery(this, parseQuery(query, context));
@@ -150,10 +161,12 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     return optimize(localparser.parseQuery(query));
   }
 
+  @Override
   public void load(String ruleset) throws InvalidQueryException {
     parser.load(ruleset);
   }
 
+  @Override
   public void load(Reader ruleset) throws InvalidQueryException, IOException {
     parser.load(ruleset);
   }
@@ -195,31 +208,37 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     return new QueryResult(matches, query.getLimit(), query.getOffset());
   }
 
+  @Override
   public int update(String query) throws InvalidQueryException {
     return update(query, null, null);
   }
 
+  @Override
   public int update(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     return update(query, null, context);
   }
   
+  @Override
   public int update(String query, Map<String, ?> params)
     throws InvalidQueryException {
     return update(query, params, null);
   }
 
+  @Override
   public int update(String query, Map<String, ?> params,
                     DeclarationContextIF context)
     throws InvalidQueryException {
     return runUpdate(parseUpdateStatement(query, context), params);
   }
 
+  @Override
   public ParsedModificationStatementIF parseUpdate(String statement)
     throws InvalidQueryException {
     return parseUpdate(statement, null);
   }
 
+  @Override
   public ParsedModificationStatementIF parseUpdate(String statement,
                                                    DeclarationContextIF context)
     throws InvalidQueryException {
@@ -492,6 +511,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       sort = TopicStringifiers.getFastSortNameStringifier(tm);
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
       Object[] row1 = (Object[]) o1;
       Object[] row2 = (Object[]) o2;
@@ -566,8 +586,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           } else {
             Object x1 = row1[orderColumns[ix]];
             Object x2 = row2[orderColumns[ix]];
-            String id1 = (x1 instanceof TMObjectIF ? ((TMObjectIF) x1).getObjectId() : ObjectUtils.toString(x1));
-            String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : ObjectUtils.toString(x2));
+            String id1 = (x1 instanceof TMObjectIF ? ((TMObjectIF) x1).getObjectId() : String.valueOf(x1));
+            String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : String.valueOf(x2));
             comp = id1.compareTo(id2);
           }
           break;
@@ -614,10 +634,12 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
     }
 
+    @Override
     public int hashCode() {
       return hashCode;
     }
 
+    @Override
     public boolean equals(Object o) {
       // this class is only used here, so we are making some simplifying
       // assumptions:
@@ -631,14 +653,6 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       return true;
     }
   }
-
-  // -- Prefetcher constants
-
-  private final static int[] Prefetcher_OB_fields = new int[] {
-      Prefetcher.TopicIF_names, Prefetcher.TopicNameIF_variants };
-
-  private final static boolean[] Prefetcher_OB_traverse = new boolean[] {
-      false, false };
 
   // -- Collation handling
 
@@ -694,14 +708,17 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       this.stmt = stmt;
     }
 
+    @Override
     public int update() throws InvalidQueryException {
       return runUpdate(stmt, null);
     }
 
+    @Override
     public int update(Map<String, ?> params) throws InvalidQueryException {
       return runUpdate(stmt, params);
     }
 
+    @Override
     public String toString() {
       return stmt.toString();
     }

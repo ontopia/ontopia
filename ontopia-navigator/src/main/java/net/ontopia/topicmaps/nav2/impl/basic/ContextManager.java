@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Stack;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class ContextManager implements ContextManagerIF {
   
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(ContextManager.class.getName());
   
   /**
@@ -71,6 +70,7 @@ public class ContextManager implements ContextManagerIF {
   // implementation of ContextManagerIF interface
   // ------------------------------------------------------------------
   
+  @Override
   public Collection getValue(String name) throws VariableNotSetException {
     // remove prefix (if there)
     name = cutoffPre(name);
@@ -81,6 +81,7 @@ public class ContextManager implements ContextManagerIF {
       return (Collection)result;
   }
 
+  @Override
   public Collection getValue(String name, Collection defaultValue) {
     // remove prefix (if there)
     name = cutoffPre(name);
@@ -118,10 +119,12 @@ public class ContextManager implements ContextManagerIF {
     }
   }
   
+  @Override
   public void setValue(String name, Collection coll) {
     values.put(cutoffPre(name), coll);
   }
 
+  @Override
   public void setValueInScope(Object scope, String name, Collection coll) {
     int index = ((Integer) scope).intValue();
     if (index >= 0) {
@@ -133,6 +136,7 @@ public class ContextManager implements ContextManagerIF {
                "couldn't find scope.");
   }
   
+  @Override
   public void setValue(String name, Object obj) {
     if (obj == null) return;
     if (obj instanceof Collection)
@@ -141,33 +145,40 @@ public class ContextManager implements ContextManagerIF {
       values.put(cutoffPre(name), Collections.singleton(obj));
   }  
   
+  @Override
   public Collection getDefaultValue() {
     return (Collection)_getValue(DEFAULT_VALUE_KEY);
   }
 
+  @Override
   public void setDefaultValue(Collection coll) {
     setValue(DEFAULT_VALUE_KEY, coll);
   }
 
+  @Override
   public void setDefaultValue(Object obj) {
     setValue(DEFAULT_VALUE_KEY, obj);
   }  
 
+  @Override
   public Object getCurrentScope() {
     return new Integer(scopes.size()-1);
   }
   
+  @Override
   public void pushScope() {
     values = new HashMap();
     scopes.push(values);
   }
 
+  @Override
   public void popScope() {
     scopes.pop();
     // get old values back from top of stack
     values = (Map) scopes.peek();
   }
   
+  @Override
   public void clear() {
     values.clear();
     scopes.clear();

@@ -34,7 +34,7 @@ public interface SchemaWriterIF {
    * @exception java.io.IOException Thrown if there are problems writing
    *                                to the specified location.
    */
-  public void write(SchemaIF schema) throws java.io.IOException;
+  void write(SchemaIF schema) throws java.io.IOException;
   
 }
 

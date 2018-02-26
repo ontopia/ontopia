@@ -62,6 +62,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * net.ontopia.infoset.core.LocatorIF)
    */
 
+  @Override
   protected void setValue(String value, LocatorIF datatype) {
     wrapped.setValue(value, datatype);
   }
@@ -72,6 +73,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
 
+  @Override
   public VariantNameIF getWrapped() {
     return wrapped;
   }
@@ -82,6 +84,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see org.tmapi.core.Variant#getParent()
    */
 
+  @Override
   public Name getParent() {
     return parent;
   }
@@ -92,6 +95,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see org.tmapi.core.DatatypeAware#getDatatype()
    */
 
+  @Override
   public Locator getDatatype() {
     return topicMap.wrapLocator(wrapped.getDataType());
   }
@@ -102,6 +106,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see org.tmapi.core.DatatypeAware#getValue()
    */
 
+  @Override
   public String getValue() {
     return wrapped.getValue();
   }
@@ -112,6 +117,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see org.tmapi.core.DatatypeAware#locatorValue()
    */
 
+  @Override
   public Locator locatorValue() {
     Locator loc = topicMap.wrapLocator(wrapped.getLocator());
     if (loc != null) {
@@ -132,6 +138,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see org.tmapi.core.DatatypeAware#setValue(java.lang.String)
    */
 
+  @Override
   public void setValue(String value) {
     Check.valueNotNull(this, value);
     wrapped.setValue(value);
@@ -143,6 +150,7 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
    * @see org.tmapi.core.DatatypeAware#setValue(org.tmapi.core.Locator)
    */
 
+  @Override
   public void setValue(Locator value) {
     Check.valueNotNull(this, value);
     wrapped.setLocator(topicMap.unwrapLocator(value));

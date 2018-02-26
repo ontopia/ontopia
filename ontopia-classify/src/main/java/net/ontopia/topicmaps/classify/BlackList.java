@@ -109,15 +109,20 @@ public class BlackList implements TermAnalyzerIF {
     return stopList.contains(word);
   }
   
+  @Override
   public void analyzeTerm(Term term) {
     if (isStopWord(term.getStem()))
       term.multiplyScore(stopFactor, "blacklisted");
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
+    // no-op
   }
 
+  @Override
   public void endAnalysis() {
+    // no-op
   }
   
 }

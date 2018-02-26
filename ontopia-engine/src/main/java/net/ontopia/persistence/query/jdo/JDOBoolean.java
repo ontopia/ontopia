@@ -35,6 +35,7 @@ public class JDOBoolean implements JDOExpressionIF {
     this.value = value;
   }
   
+  @Override
   public int getType() {
     return BOOLEAN;
   }
@@ -43,10 +44,12 @@ public class JDOBoolean implements JDOExpressionIF {
     return value;
   }
 
+  @Override
   public int hashCode() {
     return value ? 1231 : 1237;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof JDOBoolean) {
       JDOBoolean other = (JDOBoolean)obj;
@@ -55,6 +58,7 @@ public class JDOBoolean implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     if (value)
       return "true";
@@ -62,7 +66,9 @@ public class JDOBoolean implements JDOExpressionIF {
       return "false";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

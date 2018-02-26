@@ -27,17 +27,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -48,15 +46,14 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.xml.XMLReaderFactoryIF;
-
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -140,45 +137,48 @@ import org.xml.sax.ext.LexicalHandler;
 public class XTMContentHandler extends AbstractTopicMapContentHandler
                                implements LexicalHandler, DeclHandler {
   
-  static final String NO_URI = "URI";
+  private static final String EL_ASSOCIATION = "association";
+  private static final String EL_BASENAME = "baseName";
+  private static final String EL_BASENAMESTRING = "baseNameString";
+  private static final String EL_INSTANCEOF = "instanceOf";
+  private static final String EL_MEMBER = "member";
+  private static final String EL_MERGEMAP = "mergeMap";
+  private static final String EL_OCCURRENCE = "occurrence";
+  private static final String EL_PARAMETERS = "parameters";
+  private static final String EL_RESOURCEDATA = "resourceData";
+  private static final String EL_RESOURCEREF = "resourceRef";
+  private static final String EL_ROLESPEC = "roleSpec";
+  private static final String EL_SCOPE = "scope";
+  private static final String EL_SUBJECTIDENTITY = "subjectIdentity";
+  private static final String EL_SUBJECTINDICATORREF = "subjectIndicatorRef";
+  private static final String EL_TOPIC = "topic";
+  private static final String EL_TOPICMAP = "topicMap";
+  private static final String EL_TOPICREF = "topicRef";
+  private static final String EL_VARIANT = "variant";
+  private static final String EL_VARIANTNAME = "variantName";
+  private static final String EL_HREF = "href";
+  private static final String EL_XLINK_HREF = "xlink:href";
+  private static final String MSG_MERGED_WITH = " merged with ";
+  private static final String MSG_TOPIC = "Topic ";
   
-  static final String EL_ASSOCIATION = "association";
-  static final String EL_BASENAME = "baseName";
-  static final String EL_BASENAMESTRING = "baseNameString";
-  static final String EL_INSTANCEOF = "instanceOf";
-  static final String EL_MEMBER = "member";
-  static final String EL_MERGEMAP = "mergeMap";
-  static final String EL_OCCURRENCE = "occurrence";
-  static final String EL_PARAMETERS = "parameters";
-  static final String EL_RESOURCEDATA = "resourceData";
-  static final String EL_RESOURCEREF = "resourceRef";
-  static final String EL_ROLESPEC = "roleSpec";
-  static final String EL_SCOPE = "scope";
-  static final String EL_SUBJECTIDENTITY = "subjectIdentity";
-  static final String EL_SUBJECTINDICATORREF = "subjectIndicatorRef";
-  static final String EL_TOPIC = "topic";
-  static final String EL_TOPICMAP = "topicMap";
-  static final String EL_TOPICREF = "topicRef";
-  static final String EL_VARIANT = "variant";
-  static final String EL_VARIANTNAME = "variantName";
+  public static final String NS_XTM = "http://www.topicmaps.org/xtm/1.0/";
+  public static final String NS_XLINK = "http://www.w3.org/1999/xlink";
+  public static final String NS_NS = "http://www.w3.org/XML/1998/namespace";
+  public static final LocatorIF nullPSI = URILocator.create("http://psi.ontopia.net/xtm/1.0/null-topic");
   
-  static final String NS_XTM = "http://www.topicmaps.org/xtm/1.0/";
-  static final String NS_XLINK = "http://www.w3.org/1999/xlink";
-  static final String NS_NS = "http://www.w3.org/XML/1998/namespace";
-  
-  static final String SAX_LEXICAL_HANDLER = "http://xml.org/sax/properties/lexical-handler";
-  static final String SAX_DECL_HANDLER = "http://xml.org/sax/properties/declaration-handler";
+  public static final String SAX_LEXICAL_HANDLER = "http://xml.org/sax/properties/lexical-handler";
+  public static final String SAX_DECL_HANDLER = "http://xml.org/sax/properties/declaration-handler";
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTMContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMContentHandler.class.getName());
   
   protected TopicMapStoreFactoryIF stores;
-  protected XMLReaderFactoryIF xrfactory;
   
+  private LazyTopic lazyTopic;
   private TopicMapIF topicmap;
   private TopicMapBuilderIF builder;
-  private Collection topicmaps;
-  private Stack bases;
+  private Collection<TopicMapIF> topicmaps;
+  private Stack<LocatorIF> bases;
   private StringBuilder content;
   private boolean keep_content;
   
@@ -186,7 +186,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
    * Keeps track of the declared entities, in order that the base URI
    * can be set correctly in external entities.
    */
-  protected Map entities;
+  protected Map<String, String> entities;
   
   /**
    * Used to tell if we are reading the top-level XTM document (false)
@@ -196,26 +196,24 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   
   protected ExternalReferenceHandlerIF ref_handler;
   
-  public XTMContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address) {
+  public XTMContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address) {
     super(base_address);
     this.stores = stores;
-    this.xrfactory = xrfactory;
-    this.entities = new HashMap();
-    this.bases = new Stack();
+    this.entities = new HashMap<>();
+    this.bases = new Stack<>();
   }
   
-  public XTMContentHandler(TopicMapStoreFactoryIF stores, XMLReaderFactoryIF xrfactory, LocatorIF base_address, Collection processed_documents) {
+  public XTMContentHandler(TopicMapStoreFactoryIF stores, LocatorIF base_address, Collection<LocatorIF> processed_documents) {
     super(base_address, processed_documents);
     this.stores = stores;
-    this.xrfactory = xrfactory;
-    this.entities = new HashMap();
-    this.bases = new Stack();
+    this.entities = new HashMap<>();
+    this.bases = new Stack<>();
   }
   
   /**
    * INTERNAL: Gets the topic maps found after having parsed the input source.
    */  
-  public Collection getTopicMaps() {
+  public Collection<TopicMapIF> getTopicMaps() {
     return topicmaps;
   }
   
@@ -247,6 +245,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
    * INTERNAL: Registers the handler with the parser and configures the
    * parser.
    */
+  @Override
   public void register(XMLReader parser) {
     super.register(parser);
     try {
@@ -266,6 +265,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // Document events
   // --------------------------------------------------------------------------
   
+  @Override
   public void startDocument () {
     
     // Initialize variables
@@ -275,7 +275,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     keep_content = false;
     content = new StringBuilder();
     
-    topicmaps = new ArrayList();
+    topicmaps = new ArrayList<>();
     
     // Initialize base address stack. Top level base added to
     // stack. The user specified base address overrides the system id
@@ -292,7 +292,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     log.debug("Processing document '" + doc_address + "'.");
     
     // Initialize list of accumulated processed documents
-    this.processed_documents_accumulated = new HashSet();
+    this.processed_documents_accumulated = new HashSet<>();
     
     // Add this document to the list of processed documents. Note: we
     // are adding it here, since all the topic maps in the document
@@ -300,6 +300,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     this.processed_documents_from_parent.add(getBaseAddress());
   }
   
+  @Override
   public void endDocument () {
     // Copy list of accumulated processed documents to parent list
     this.processed_documents_from_parent.addAll(processed_documents_accumulated);
@@ -308,6 +309,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // log.debug("Info map: " + info);
   }
   
+  @Override
   public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
     try {
     
@@ -324,24 +326,24 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       bases.push(bases.peek());
     }
     
-    if (uri == NS_XTM || uri.equals("")) {
-      if (uri == NS_XTM) 
+    if (NS_XTM.equals(uri) || "".equals(uri)) {
+      if (NS_XTM.equals(uri)) 
         qName = name; // use the local name, since qName may have prefix
       
       // -----------------------------------------------------------------------------
       // S: topicRef
       // -----------------------------------------------------------------------------
-      if (qName == EL_TOPICREF) {
+      if (EL_TOPICREF.equals(qName)) {
         
         // Resolve reference
-        String href = atts.getValue(NS_XLINK, "href");
+        String href = atts.getValue(NS_XLINK, EL_HREF);
         if (href == null)
-          href = atts.getValue("xlink:href");
+          href = atts.getValue(EL_XLINK_HREF);
 
         // Process in context of parent
-        String parent_type = (String)parents.peek();        
+        String parent_type = parents.peek();        
         // FIXME: subjectIdentity.topicRef vs. instanceOf.topicRef
-        if (parent_type == EL_SUBJECTIDENTITY &&
+        if (EL_SUBJECTIDENTITY.equals(parent_type) &&
             info.get(EL_TOPIC) == this.lazyTopic && this.lazyTopic != null) {
           LocatorIF loc = createLocator(href);
           addItemIdentifier(this.lazyTopic, loc);
@@ -360,7 +362,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: instanceof
       // -----------------------------------------------------------------------------
-      else if (qName == EL_INSTANCEOF) {
+      else if (EL_INSTANCEOF.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_INSTANCEOF);
@@ -369,7 +371,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: member
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MEMBER) {
+      else if (EL_MEMBER.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_MEMBER);
@@ -378,7 +380,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: roleSpec
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ROLESPEC) {
+      else if (EL_ROLESPEC.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_ROLESPEC);      
@@ -387,7 +389,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: association
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ASSOCIATION) {
+      else if (EL_ASSOCIATION.equals(qName)) {
         
         if (builder == null) 
           throw new InvalidTopicMapException("Association outside topic map. Did you forget or misspell the 'topicMap' element?");
@@ -412,7 +414,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: baseName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAME) {
+      else if (EL_BASENAME.equals(qName)) {
         // Create basename
         TopicIF topic = getParentTopic();
         TopicNameIF basename = builder.makeTopicName(topic, "");
@@ -435,7 +437,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: baseNameString
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAMESTRING) {
+      else if (EL_BASENAMESTRING.equals(qName)) {
         keep_content = true;
         content.setLength(0);
       }
@@ -443,7 +445,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: topic
       // -----------------------------------------------------------------------------
-      else if (qName == EL_TOPIC) {
+      else if (EL_TOPIC.equals(qName)) {
         
         // Check to see if topic already exist
         String id = atts.getValue("", "id");
@@ -479,7 +481,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: occurrence
       // -----------------------------------------------------------------------------
-      else if (qName == EL_OCCURRENCE) {
+      else if (EL_OCCURRENCE.equals(qName)) {
         // Create occurrence
         TopicIF topic = getParentTopic();
         TopicIF otype = getDefaultOccurrenceTopic(builder.getTopicMap());
@@ -503,31 +505,31 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: resourceRef
       // -----------------------------------------------------------------------------
-      else if (qName == EL_RESOURCEREF) {
+      else if (EL_RESOURCEREF.equals(qName)) {
         
         // Create locator
-        String href = atts.getValue(NS_XLINK, "href");
+        String href = atts.getValue(NS_XLINK, EL_HREF);
         if (href == null)
-          href = atts.getValue("xlink:href");
+          href = atts.getValue(EL_XLINK_HREF);
         
         // Process in context of parent
-        String parent_type = (String)parents.peek();
+        String parent_type = parents.peek();
         
         // References a topic:
         
-        if (parent_type == EL_MEMBER) {
+        if (EL_MEMBER.equals(parent_type)) {
           // Resolve referenced topic
           TopicIF referenced_topic = resolveResourceRef(createLocator(href));
           // Create new association role
           processMember(referenced_topic);
         }
-        else if(parent_type == EL_MERGEMAP) {
+        else if (EL_MERGEMAP.equals(parent_type)) {
           // Resolve referenced topic
           TopicIF referenced_topic = resolveResourceRef(createLocator(href));
           ExternalDocument merge_map = (ExternalDocument)info.get(EL_MERGEMAP);
           merge_map.addTheme(referenced_topic);
         }
-        else if (parent_type == EL_SCOPE) {
+        else if (EL_SCOPE.equals(parent_type)) {
           // Resolve referenced topic
           TopicIF referenced_topic = resolveResourceRef(createLocator(href));
           processTheme(referenced_topic);
@@ -535,25 +537,25 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         
         // References an information resource:
         
-        else if (parent_type == EL_OCCURRENCE) {
+        else if (EL_OCCURRENCE.equals(parent_type)) {
           // Create locator
           LocatorIF locator = createLocator(href);
           // Set occurrence locator
           OccurrenceIF occurs = (OccurrenceIF)info.get(EL_OCCURRENCE);
           occurs.setLocator(locator);
         }
-        else if (parent_type == EL_VARIANTNAME) {
+        else if (EL_VARIANTNAME.equals(parent_type)) {
           // Create locator
           LocatorIF locator = createLocator(href);
           // Set variant name locator
-          Stack variants = (Stack)info.get(EL_VARIANT);
-          VariantNameIF vname = (VariantNameIF)variants.peek();
+          Stack<VariantNameIF> variants = (Stack<VariantNameIF>)info.get(EL_VARIANT);
+          VariantNameIF vname = variants.peek();
           vname.setLocator(locator);
         }
         
         // Can reference both:
         
-        else if (parent_type == EL_SUBJECTIDENTITY) {
+        else if (EL_SUBJECTIDENTITY.equals(parent_type)) {
           
           // FIXME: Need to check if the topic is a local topic.
           // Local topics are easily recognizable as long as the
@@ -580,9 +582,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
               // Set subject resource
               current_topic.addSubjectLocator(subject);
               
-            } else if (other_topic != current_topic) {
+            } else if (!other_topic.equals(current_topic)) {
               if (log.isInfoEnabled())
-                log.debug("Topic " + current_topic + " merged with " + other_topic +
+                log.debug(MSG_TOPIC + current_topic + MSG_MERGED_WITH + other_topic +
                     " because they both have the same addressable subject: " + subject);
               
               // Merge existing topic with current topic. 
@@ -600,7 +602,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: resourceData
       // -----------------------------------------------------------------------------
-      else if (qName == EL_RESOURCEDATA) {
+      else if (EL_RESOURCEDATA.equals(qName)) {
         keep_content = true;
         content.setLength(0);
       }
@@ -608,7 +610,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: variantName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANTNAME) {
+      else if (EL_VARIANTNAME.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_VARIANTNAME);   
@@ -617,22 +619,21 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: variant
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANT) {
+      else if (EL_VARIANT.equals(qName)) {
         
         // Create variant name
         TopicNameIF bname = (TopicNameIF)info.get(EL_BASENAME);
-        VariantNameIF vname = builder.makeVariantName(bname, "", Collections.EMPTY_SET);
+        VariantNameIF vname = builder.makeVariantName(bname, "", Collections.<TopicIF>emptySet());
         
         // Add variant to parent name
         if (info.containsKey(EL_VARIANT)) {
-          Stack variants = (Stack)info.get(EL_VARIANT);
+          Stack<VariantNameIF> variants = (Stack<VariantNameIF>)info.get(EL_VARIANT);
           
           // Loop over parent variant names and inherit their themes
-          Iterator iter = variants.iterator();
-          while (iter.hasNext()) {
-            Iterator themes = ((VariantNameIF)iter.next()).getScope().iterator();
-            while (themes.hasNext()) 
-              vname.addTheme((TopicIF)themes.next());
+          for (VariantNameIF variant : variants) {
+            for (TopicIF scope : variant.getScope()) {
+              vname.addTheme(scope);
+            }
           }
           
           // This is a nested variant so put it on the stack.
@@ -640,7 +641,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
           
         } else {
           // This is a top level variant, so create a new stack.
-          Stack variants = new Stack();
+          Stack<VariantNameIF> variants = new Stack<>();
           variants.push(vname);
           info.put(EL_VARIANT, variants);         
         }
@@ -655,7 +656,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: parameters
       // -----------------------------------------------------------------------------
-      else if (qName == EL_PARAMETERS) {
+      else if (EL_PARAMETERS.equals(qName)) {
         // Push element on parent stack
         parents.push(EL_PARAMETERS);    
       }
@@ -663,7 +664,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: scope
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SCOPE) {
+      else if (EL_SCOPE.equals(qName)) {
         // Push element on parent stack
         parents.push(EL_SCOPE); 
       }
@@ -671,20 +672,20 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: subjectIndicatorRef
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SUBJECTINDICATORREF) {
+      else if (EL_SUBJECTINDICATORREF.equals(qName)) {
         
         // Get reference
-        String href = atts.getValue(NS_XLINK, "href");
+        String href = atts.getValue(NS_XLINK, EL_HREF);
         if (href == null)
-          href = atts.getValue("xlink:href");
+          href = atts.getValue(EL_XLINK_HREF);
         LocatorIF indicator = createLocator(href);
         
         // Process in context of parent
-        String parent_type = (String)parents.peek();
+        String parent_type = parents.peek();
         
         // If the parent is subjectIdentity this reference should
         // become a subject indicator of the parent topic.
-        if (parent_type == EL_SUBJECTIDENTITY) {
+        if (EL_SUBJECTIDENTITY.equals(parent_type)) {
           // FIXME: Should merge with parent topic if it references
           // another topic.
           
@@ -697,7 +698,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
             TopicIF current_topic = (TopicIF)info.get(EL_TOPIC);
             TopicIF rtopic = registerSubjectIndicator(current_topic, indicator);
             // update info map
-            if (rtopic != current_topic) info.put(EL_TOPIC, rtopic);
+            if (!rtopic.equals(current_topic)) info.put(EL_TOPIC, rtopic);
           }
           
         } else {
@@ -712,7 +713,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: subjectIdentity
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SUBJECTIDENTITY) {
+      else if (EL_SUBJECTIDENTITY.equals(qName)) {
         
         // Push element on parent stack
         parents.push(EL_SUBJECTIDENTITY);
@@ -721,12 +722,12 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: mergeMap
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MERGEMAP) {
+      else if (EL_MERGEMAP.equals(qName)) {
         
         // Get merge map address
-        String href = atts.getValue(NS_XLINK, "href");
+        String href = atts.getValue(NS_XLINK, EL_HREF);
         if (href == null)
-          href = atts.getValue("xlink:href");
+          href = atts.getValue(EL_XLINK_HREF);
         
         // Put merge map on info map
         ExternalDocument merge_map = new ExternalDocument(createLocator(href));
@@ -739,10 +740,10 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // S: topicMap
       // -----------------------------------------------------------------------------      
-      else if (qName == EL_TOPICMAP) {
+      else if (EL_TOPICMAP.equals(qName)) {
         
         // Initialize the list of processed documents for the current topic map
-        processed_documents_current = new HashSet(processed_documents_from_parent);
+        processed_documents_current = new HashSet<>(processed_documents_from_parent);
         
         // Get topic map object
         topicmap = stores.createStore().getTopicMap();
@@ -779,40 +780,42 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     } else { // if there is a namespace URI that is not the XTM ns URI
       // log.error("Unknown element: {" + uri + "}" + name + "[" + qName + "]");
       
-      if (qName == EL_TOPICMAP) {
+      if (EL_TOPICMAP.equals(qName)) {
         log.error("Unrecognized <topicMap> element " + getLocationInfo());
       } 
     }
-  } catch (Throwable e) {
+  } catch (SAXException | OntopiaRuntimeException e) {
     if (logError()) log.error("Exception was thrown from within startElement", e);
-    ObjectUtils.throwRuntimeException(e);
+    throw new OntopiaRuntimeException(e);
   }
   }
 
+  @Override
   public void characters (char ch[], int start, int length) {
     if (keep_content) 
       content.append(ch, start, length);      
   }
   
+  @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
     //System.out.println("E: " + qName + " (" + getLocationInfo() + ")");
     try {
       
-    if (uri == NS_XTM || uri.equals("")) {
-      if (uri == NS_XTM)
+    if (NS_XTM.equals(uri) || "".equals(uri)) {
+      if (NS_XTM.equals(uri))
         qName = name;
       
       // -----------------------------------------------------------------------------
       // E: instanceOf
       // -----------------------------------------------------------------------------
-      if (qName == EL_INSTANCEOF) {
+      if (EL_INSTANCEOF.equals(qName)) {
         // Pop element off parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: member
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MEMBER) {
+      else if (EL_MEMBER.equals(qName)) {
         // Pop element off parent stack
         parents.pop();
         
@@ -828,7 +831,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
           TopicIF roletype = (TopicIF)info.get(EL_ROLESPEC);
           if (roletype == null) roletype = nullTopic;
           TopicIF player = nullTopic;
-          AssociationRoleIF role = builder.makeAssociationRole(assoc, roletype, player);
+          builder.makeAssociationRole(assoc, roletype, player);
         }
         
         // Remove role type from info map
@@ -837,14 +840,14 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: roleSpec
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ROLESPEC) {
+      else if (EL_ROLESPEC.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: association
       // -----------------------------------------------------------------------------
-      else if (qName == EL_ASSOCIATION) {
+      else if (EL_ASSOCIATION.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
@@ -854,7 +857,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: baseName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAME) {
+      else if (EL_BASENAME.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
@@ -864,7 +867,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: baseNameString
       // -----------------------------------------------------------------------------
-      else if (qName == EL_BASENAMESTRING) {
+      else if (EL_BASENAMESTRING.equals(qName)) {
         // Set the name value of the base name
         TopicNameIF basename = (TopicNameIF)info.get(EL_BASENAME);
         basename.setValue(content.toString());
@@ -873,7 +876,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: topic
       // -----------------------------------------------------------------------------
-      else if (qName == EL_TOPIC) {
+      else if (EL_TOPIC.equals(qName)) {
         // resolve lazy topic if it still exists
         if (info.get(EL_TOPIC)  == this.lazyTopic && this.lazyTopic != null) {
           createTopicFromLazyTopic();
@@ -888,7 +891,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: occurrence
       // -----------------------------------------------------------------------------
-      else if (qName == EL_OCCURRENCE) {
+      else if (EL_OCCURRENCE.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
@@ -898,11 +901,11 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: resourceData
       // -----------------------------------------------------------------------------
-      else if (qName == EL_RESOURCEDATA) {
+      else if (EL_RESOURCEDATA.equals(qName)) {
         
         if (info.containsKey(EL_VARIANT)) {
-          Stack variants = (Stack)info.get(EL_VARIANT);
-          VariantNameIF vname = (VariantNameIF)variants.peek();
+          Stack<VariantNameIF> variants = (Stack<VariantNameIF>)info.get(EL_VARIANT);
+          VariantNameIF vname = variants.peek();
           vname.setValue(content.toString());
           keep_content = false;
         }
@@ -918,55 +921,55 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: variant
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANT) {
+      else if (EL_VARIANT.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
         
         // Process in context of parent
-        String parent_type = (String)parents.peek();
+        String parent_type = parents.peek();
         
-        if (parent_type == EL_BASENAME) {
+        if (EL_BASENAME.equals(parent_type)) {
           // Remove variant stack from info map      
           info.remove(EL_VARIANT);
         }
-        else if (parent_type == EL_VARIANT) {
+        else if (EL_VARIANT.equals(parent_type)) {
           // Pop variant name of info map variant name stack.
-          Stack variants = (Stack)info.get(EL_VARIANT);
+          Stack<VariantNameIF> variants = (Stack<VariantNameIF>)info.get(EL_VARIANT);
           variants.pop();
         }      
       }
       // -----------------------------------------------------------------------------
       // E: variantName
       // -----------------------------------------------------------------------------
-      else if (qName == EL_VARIANTNAME) {
+      else if (EL_VARIANTNAME.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: parameters
       // -----------------------------------------------------------------------------
-      else if (qName == EL_PARAMETERS) {
+      else if (EL_PARAMETERS.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: scope
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SCOPE) {
+      else if (EL_SCOPE.equals(qName)) {
         // Pop element of parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: subjectIdentity
       // -----------------------------------------------------------------------------
-      else if (qName == EL_SUBJECTIDENTITY) {
+      else if (EL_SUBJECTIDENTITY.equals(qName)) {
         // Pop element off parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
       // E: mergeMap
       // -----------------------------------------------------------------------------
-      else if (qName == EL_MERGEMAP) {
+      else if (EL_MERGEMAP.equals(qName)) {
         
         // Get merge map from info map
         ExternalDocument merge_map = (ExternalDocument)info.get(EL_MERGEMAP);
@@ -994,7 +997,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // -----------------------------------------------------------------------------
       // E: topicMap
       // -----------------------------------------------------------------------------
-      else if (qName == EL_TOPICMAP) {
+      else if (EL_TOPICMAP.equals(qName)) {
         
         // Add processed documents to accumulated list.
         processed_documents_accumulated.addAll(processed_documents_current);
@@ -1018,17 +1021,19 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // Pop current base address off bases stack
     bases.pop();
     
-  } catch (Throwable e) {
+  } catch (OntopiaRuntimeException | SAXException e) {
     if (logError()) log.error("Exception was thrown from within endElement", e);
-    ObjectUtils.throwRuntimeException(e);
+    throw new OntopiaRuntimeException(e);
   }
     
   }
   
+  @Override
   public void startPrefixMapping(String prefix, String uri) {
     // log.debug("Start prefix:   {" + uri + "} '" + prefix + "'");
   }
   
+  @Override
   public void endPrefixMapping(String prefix) {
     // log.debug("End prefix: '" + prefix + "'");
   }
@@ -1045,7 +1050,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
 
   private boolean logError() {
     try {
-      return Boolean.valueOf(System.getProperty("net.ontopia.topicmaps.xml.XTMContentHandler.logError")).booleanValue();
+      return Boolean.parseBoolean(System.getProperty("net.ontopia.topicmaps.xml.XTMContentHandler.logError"));
     } catch (SecurityException e) {
       return false;
     }
@@ -1053,7 +1058,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   
   protected LocatorIF getBaseAddress() {
     if (bases.size() > 0) {
-      LocatorIF base = (LocatorIF)bases.peek();
+      LocatorIF base = bases.peek();
       if (base != null) return base;
     }
     throw new OntopiaRuntimeException("Base address is not specified.");
@@ -1102,7 +1107,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   protected TopicIF registerSubjectLocator(TopicIF topic, LocatorIF locator) {
     // merge with existing, if any
     TopicIF existing = topicmap.getTopicBySubjectLocator(locator);
-    if (existing != null && ObjectUtils.different(existing, topic)) {
+    if (existing != null && !Objects.equals(existing, topic)) {
       existing.merge(topic);
       topic = existing;
     }
@@ -1121,9 +1126,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     TopicIF tsrcloc = resolveSourceLocatorOrSubjectIndicator(locator);
     
     if (tsrcloc != null) {
-      if (topic != null && tsrcloc != topic) {
+      if (topic != null && !topic.equals(tsrcloc)) {
         if (log.isInfoEnabled())
-          log.debug("Topic " + topic + " merged with " + tsrcloc +
+          log.debug(MSG_TOPIC + topic + MSG_MERGED_WITH + tsrcloc +
               " because the subject indicator is the same as the source locator of the other: " + locator);
         tsrcloc.merge(topic);
       }
@@ -1146,7 +1151,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     if (tsrcloc != null) {
       if (topic != null && tsrcloc != topic) {
         if (log.isInfoEnabled())
-          log.debug("Topic " + topic + " merged with " + tsrcloc +
+          log.debug(MSG_TOPIC + topic + MSG_MERGED_WITH + tsrcloc +
               " because the subject indicator is the same as the source locator of the other: " + locator);
         tsrcloc.merge(topic);
       }
@@ -1171,7 +1176,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       TopicIF tsrcloc = (TopicIF)osrcloc;
       if (topic != null && tsrcloc != topic) {
         if (log.isInfoEnabled())
-          log.debug("Topic " + topic + " merged with " + tsrcloc +
+          log.debug(MSG_TOPIC + topic + MSG_MERGED_WITH + tsrcloc +
               " because the subject indicator is the same as the source locator of the other: " + locator);
         // ISSUE: should we keep the oldest topic in this case? or
         // perhaps the one with the indicator
@@ -1244,8 +1249,8 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // Locate scoped object
     ScopedIF scoped;
     if (info.containsKey(EL_VARIANT)) {
-      Stack variants = (Stack)info.get(EL_VARIANT);
-      scoped = (ScopedIF)variants.peek();
+      Stack<VariantNameIF> variants = (Stack<VariantNameIF>)info.get(EL_VARIANT);
+      scoped = variants.peek();
     }
     else if (info.containsKey(EL_BASENAME))
       scoped = (ScopedIF)info.get(EL_BASENAME);
@@ -1268,9 +1273,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // This method is used by topicRef and subjectIndicatorRef.
     
     // Process in context of parent
-    String parent_type = (String)parents.peek();
+    String parent_type = parents.peek();
     
-    if (parent_type == EL_INSTANCEOF) {
+    if (EL_INSTANCEOF.equals(parent_type)) {
       
       if (info.containsKey(EL_ASSOCIATION)) {
         // Set association type
@@ -1293,26 +1298,26 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       }
       
     }
-    else if (parent_type == EL_SCOPE) {
+    else if (EL_SCOPE.equals(parent_type)) {
       processTheme(referenced_topic);
     }
-    else if (parent_type == EL_MEMBER) {
+    else if (EL_MEMBER.equals(parent_type)) {
       // Create new association role
       processMember(referenced_topic);
     }                      
-    else if (parent_type == EL_ROLESPEC) {
+    else if (EL_ROLESPEC.equals(parent_type)) {
       // Put role type on info map
       info.put(EL_ROLESPEC, referenced_topic);
     }                      
-    else if (parent_type == EL_PARAMETERS) {
+    else if (EL_PARAMETERS.equals(parent_type)) {
       processTheme(referenced_topic);
     }                      
-    else if (parent_type == EL_SUBJECTIDENTITY) {
+    else if (EL_SUBJECTIDENTITY.equals(parent_type)) {
       TopicIF current_topic = (TopicIF)info.get(EL_TOPIC);
       
-      if (current_topic != referenced_topic) {
+      if (!current_topic.equals(referenced_topic)) {
         if (log.isInfoEnabled())
-          log.debug("Topic " + current_topic + " merged with " + referenced_topic +
+          log.debug(MSG_TOPIC + current_topic + MSG_MERGED_WITH + referenced_topic +
           " because it is an addressable subject (subjectIndentity>:<topicRef>)");
         
         // merge referenced topic with current topic.
@@ -1322,7 +1327,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         info.put(EL_TOPIC, referenced_topic);
       }
     }
-    else if (parent_type == EL_MERGEMAP) {
+    else if (EL_MERGEMAP.equals(parent_type)) {
       // FIXME: do something else?
       processTheme(referenced_topic);
     }
@@ -1377,68 +1382,86 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // creating topics can be postponed until first characteristic found
   
   class LazyTopic implements TopicIF {
-    protected List types = new ArrayList();
-    protected List subjectLocators = new ArrayList();
-    protected List subjectIndicators = new ArrayList();
-    protected List sourceLocators = new ArrayList();
+    protected List<TopicIF> types = new ArrayList<>();
+    protected List<LocatorIF> subjectLocators = new ArrayList<>();
+    protected List<LocatorIF> subjectIndicators = new ArrayList<>();
+    protected List<LocatorIF> sourceLocators = new ArrayList<>();
 
     // implementations of methods collecting lazy data
+    @Override
     public void addSubjectLocator(LocatorIF subject) throws ConstraintViolationException {
       this.subjectLocators.add(subject);
     }
+    @Override
     public void addSubjectIdentifier(LocatorIF subject_identifier) throws ConstraintViolationException {
       this.subjectIndicators.add(subject_identifier);
     }
+    @Override
     public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
       this.sourceLocators.add(source_locator);
     }
     // methods below should never be invoked  
-    public Collection getSubjectLocators() {
+    @Override
+    public Collection<LocatorIF> getSubjectLocators() {
       throw new UnsupportedOperationException();
     }
-    public Collection getSubjectIdentifiers() {
+    @Override
+    public Collection<LocatorIF> getSubjectIdentifiers() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void removeSubjectLocator(LocatorIF subject_identifier) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void removeSubjectIdentifier(LocatorIF subject_identifier) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void removeItemIdentifier(LocatorIF source_locator) {
       throw new UnsupportedOperationException();
     }
-    public Collection getTopicNames() {
+    @Override
+    public Collection<TopicNameIF> getTopicNames() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
-    public Collection getOccurrences() {
+    @Override
+    public Collection<OccurrenceIF> getOccurrences() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
-    public Collection getRoles() {
+    @Override
+    public Collection<AssociationRoleIF> getRoles() {
       throw new UnsupportedOperationException();
     }
-    public Collection getRolesByType(TopicIF roletype) {
+    @Override
+    public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
       throw new UnsupportedOperationException();
     }
-    public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
+    @Override
+    public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationIF> getAssociations() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void merge(TopicIF topic) {
       throw new UnsupportedOperationException();
     }
-    public Collection getScope() {
+    public Collection<TopicIF> getScope() {
       throw new UnsupportedOperationException();
     }
     public void addTheme(TopicIF theme) {
@@ -1447,36 +1470,43 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     public void removeTheme(TopicIF theme) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public String getObjectId() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public boolean isReadOnly() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public TopicMapIF getTopicMap() {
       throw new UnsupportedOperationException();
     }
-    public Collection getItemIdentifiers() {
+    @Override
+    public Collection<LocatorIF> getItemIdentifiers() {
       throw new UnsupportedOperationException();
     }
-    public Collection getTypes() {
+    @Override
+    public Collection<TopicIF> getTypes() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void addType(TopicIF type) {
       this.types.add(type);
     }
+    @Override
     public void removeType(TopicIF type) {
       throw new UnsupportedOperationException();
     }
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
+    @Override
     public ReifiableIF getReified() {
       throw new UnsupportedOperationException();
     }
   }
-  
-  protected LazyTopic lazyTopic;
   
   protected TopicIF getParentTopic() {
     TopicIF topic = (TopicIF)info.get(EL_TOPIC);
@@ -1496,19 +1526,19 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     
     TopicIF topic = null;
     for (int i=0; i < lazyTopic.subjectLocators.size(); i++) {
-      topic = topicmap.getTopicBySubjectLocator((LocatorIF)lazyTopic.subjectLocators.get(i));
+      topic = topicmap.getTopicBySubjectLocator(lazyTopic.subjectLocators.get(i));
       if (topic != null) break;
     }            
     
     if (topic == null) {
       for (int i=0; i < lazyTopic.subjectIndicators.size(); i++) {
-        topic = topicmap.getTopicBySubjectIdentifier((LocatorIF)lazyTopic.subjectIndicators.get(i));
+        topic = topicmap.getTopicBySubjectIdentifier(lazyTopic.subjectIndicators.get(i));
         if (topic != null) break;
       }            
     }
     if (topic == null) {
       for (int i=0; i < lazyTopic.sourceLocators.size(); i++) {
-        TMObjectIF object = topicmap.getObjectByItemIdentifier((LocatorIF)lazyTopic.sourceLocators.get(i));
+        TMObjectIF object = topicmap.getObjectByItemIdentifier(lazyTopic.sourceLocators.get(i));
         if (object instanceof TopicIF)
           topic = (TopicIF)object;
         if (topic != null)  break;
@@ -1522,20 +1552,20 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
 
     // then add remaining identities
     for (int i=0; i < lazyTopic.subjectLocators.size(); i++) {
-      topic = registerSubjectLocator(topic, (LocatorIF)lazyTopic.subjectLocators.get(i));
+      topic = registerSubjectLocator(topic, lazyTopic.subjectLocators.get(i));
     }            
 
     for (int i=0; i < lazyTopic.subjectIndicators.size(); i++) {
-      topic = registerSubjectIndicator(topic, (LocatorIF)lazyTopic.subjectIndicators.get(i));
+      topic = registerSubjectIndicator(topic, lazyTopic.subjectIndicators.get(i));
     }            
 
     for (int i=0; i < lazyTopic.sourceLocators.size(); i++) {
-      topic = registerSourceLocator(topic, (LocatorIF)lazyTopic.sourceLocators.get(i));
+      topic = registerSourceLocator(topic, lazyTopic.sourceLocators.get(i));
     }
 
     // copy types
     for (int i=0; i < lazyTopic.types.size(); i++) {
-      topic.addType((TopicIF)lazyTopic.types.get(i));
+      topic.addType(lazyTopic.types.get(i));
     }
     
     // reset lazy topic
@@ -1557,7 +1587,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     
     protected LocatorIF href;
     
-    protected Set scope = new HashSet();
+    protected Set<TopicIF> scope = new HashSet<>();
     
     ExternalDocument(LocatorIF href) {
       this.href = href;
@@ -1571,7 +1601,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       this.href = href;
     }
     
-    public Collection getScope() {
+    public Collection<TopicIF> getScope() {
       return scope;
     }
     
@@ -1588,11 +1618,11 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       if (!processed_documents_current.contains(getLocator())) {
         
         // Create new parser object
-        XMLReader parser = xrfactory.createXMLReader();
+        XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
         
         // Initialize nested content handler
         TopicMapStoreFactoryIF sfactory = new SameStoreFactory(topicmap.getStore());
-        XTMContentHandler handler = new XTMContentHandler(sfactory, xrfactory, getLocator(),
+        XTMContentHandler handler = new XTMContentHandler(sfactory, getLocator(),
             processed_documents_current);
         // Copy handler configuration
         handler.setExternalReferenceHandler(getExternalReferenceHandler());
@@ -1600,7 +1630,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         handler.setSubDocument(true);
         
         // Set propagated themes
-        Collection themes = new HashSet();
+        Collection<TopicIF> themes = new HashSet<>();
         if (propagated_themes != null) themes.addAll(propagated_themes);
         themes.addAll(getScope());
         handler.setPropagatedThemes(themes);
@@ -1635,30 +1665,42 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // the purpose of this machinery is to ensure that URIs are resolved
   // correctly inside external entities.
   
+  @Override
   public void startEntity(String name) {
-    String sysid = (String) entities.get(name);
+    String sysid = entities.get(name);
     if (sysid != null)
       bases.push(createLocator(sysid));
   }
   
+  @Override
   public void endEntity(String name) {
     if (entities.get(name) != null)
       bases.pop();
   }
   
+  @Override
   public void comment(char[] ch, int start, int length) {
+    // no-op
   }
   
+  @Override
   public void startCDATA() {
+    // no-op
   }
   
+  @Override
   public void endCDATA() {
+    // no-op
   }
   
+  @Override
   public void startDTD(String name, String publicId, String systemId) {
+    // no-op
   }
   
+  @Override
   public void endDTD() {
+    // no-op
   }
   
   // --------------------------------------------------------------------------
@@ -1667,27 +1709,32 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   
   // we must intercept these events in order to know the URIs of entities
   
+  @Override
   public void externalEntityDecl(String name,  String publicId, 
                                  String systemId) {
     if (systemId != null)
       entities.put(name, systemId);
   }
   
+  @Override
   public void attributeDecl(String eName, String aName, String type,
                             String mode, String value) {
+    // no-op
   }
   
+  @Override
   public void elementDecl(String name, String model) {
+    // no-op
   }
   
+  @Override
   public void internalEntityDecl(String name, String value) {
+    // no-op
   }
   
   // --------------------------------------------------------------------------
   // Null topic
   // --------------------------------------------------------------------------
-
-  public static LocatorIF nullPSI = URILocator.create("http://psi.ontopia.net/xtm/1.0/null-topic");
 
   public static TopicIF getNullTopic(TopicMapIF topicmap) {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);

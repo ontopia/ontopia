@@ -35,17 +35,17 @@ import java.util.Set;
  * modify it by modifying the underlying arrays.
  */
   
-public class ArrayMap extends AbstractMap {
+public class ArrayMap<K, V> extends AbstractMap<K, V> {
 
-  protected Object[] keys;
-  protected Object[] values;
+  protected K[] keys;
+  protected V[] values;
   protected int size;
     
-  public ArrayMap(Object[] keys) {
+  public ArrayMap(K[] keys) {
     setKeys(keys);
   }
 
-  public ArrayMap(Object[] keys, Object[] values) {
+  public ArrayMap(K[] keys, V[] values) {
     setKeys(keys);
     setValues(values);
   }
@@ -56,77 +56,88 @@ public class ArrayMap extends AbstractMap {
     return keys;
   }
   
-  public void setKeys(Object[] keys) {
+  public void setKeys(K[] keys) {
     this.keys = keys;
     this.size = keys.length;
   }
 
-  public Object[] getValues() {
+  public V[] getValues() {
     return values;
   }
   
-  public void setValues(Object[] values) {
+  public void setValues(V[] values) {
     this.values = values;
   }
 
   // --- required methods
 
-  public Object get(Object key) {
+  @Override
+  public V get(Object key) {
     for (int i=0; i < size; i++)
       if (keys[i].equals(key))
         return values[i];
     return null;
   }
 
+  @Override
   public int size() {
     return size;
   }
 
   // --- other methods
 
+  @Override
   public boolean containsKey(Object key) {
     for (int i=0; i < size; i++)
       if (keys[i].equals(key)) return true;
     return false;
   }
     
+  @Override
   public boolean containsValue(Object value) {
     for (int i=0; i < size; i++)
       if (values[i].equals(value)) return true;
     return false;
   }
         
+  @Override
   public boolean equals(Object o) {
     if (!(o instanceof Map)) return false;
     // compare entry sets
     return entrySet().equals(((Map)o).entrySet());
   }
     
+  @Override
   public boolean isEmpty() {
     return size == 0;
   }
     
-  public Set keySet() {
-    return new HashSet(Arrays.asList(keys));
+  @Override
+  public Set<K> keySet() {
+    return new HashSet<K>(Arrays.asList(keys));
   }
     
-  public Set entrySet() {
+  @Override
+  public Set<Map.Entry<K, V>> entrySet() {
     // produce a entry set copy
-    Map map = new HashMap(size);
+    Map<K, V> map = new HashMap<K, V>(size);
     for (int i=0; i < size; i++)
       map.put(keys[i], values[i]);
     return map.entrySet();
   }
     
-  public Collection values() {
+  @Override
+  public Collection<V> values() {
     return Arrays.asList(values);
   }
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
-  public Object remove(Object key) {
+  @Override
+  public V remove(Object key) {
     throw new UnsupportedOperationException();
   }
   

@@ -38,26 +38,26 @@ public interface IdentityIF extends Cloneable {
    * indicates the classification of the identified object. See also
    * {@link PersistentIF#_p_getType()}.
    */
-  public Class<?> getType();
+  Class<?> getType();
 
   /**
    * INTERNAL: Returns the number of primary key components that the
    * identity has.
    */
-  public int getWidth();
+  int getWidth();
 
   /**
    * INTERNAL: Returns the primary key component with the specified index.
    */
-  public Object getKey(int index);
+  Object getKey(int index);
 
   /**
    * INTERNAL: Creates an object instance of the type defined by this
    * identity.
    */
-  public Object createInstance() throws Exception;
+  Object createInstance() throws Exception;
   // FIXME: Consider moving this method elsewhere.
 
-  public Object clone();
+  Object clone();
 
 }

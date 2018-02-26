@@ -20,15 +20,12 @@
 
 package net.ontopia.topicmaps.nav2.portlets.taglib;
 
-import java.util.List;
 import java.util.Collection;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -39,6 +36,7 @@ public class MenuTag extends TagSupport {
   private String var;
   private String topic;
 
+  @Override
   public int doStartTag() throws JspTagException {
     TopicIF topic = (TopicIF) getVariableValue(this.topic);
     if (topic == null)
@@ -58,7 +56,9 @@ public class MenuTag extends TagSupport {
 //     return EVAL_PAGE;
 //   }
 
+  @Override
   public void release() {
+    // no-op
   }
 
   private boolean isEmpty(String value) {

@@ -20,11 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
-import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
@@ -37,22 +35,16 @@ import org.slf4j.LoggerFactory;
 public class ChooseTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(ChooseTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ChooseTag.class.getName());
   
   // members
   private boolean foundMatchingWhen;
   private boolean foundWhen;
     
   /**
-   * Default constructor.
-   */
-  public ChooseTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     
@@ -71,6 +63,7 @@ public class ChooseTag extends BodyTagSupport {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     // establish old lexical scope, back to outside of the loop
     FrameworkUtils.getContextTag(pageContext).getContextManager().popScope();
@@ -85,6 +78,7 @@ public class ChooseTag extends BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     foundMatchingWhen = false;
   }

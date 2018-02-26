@@ -28,22 +28,22 @@ public interface ViewIF {
   /**
    * PUBLIC: Returns the display title of the view.
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * PUBLIC: Sets the display title of the view.
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
   /**
    * PUBLIC: Returns the ID of the view.
    */
-  public String getId();
+  String getId();
 
   /**
    * PUBLIC: Sets the ID of the view.
    */
-  public void setId(String id);
+  void setId(String id);
   
 }
 

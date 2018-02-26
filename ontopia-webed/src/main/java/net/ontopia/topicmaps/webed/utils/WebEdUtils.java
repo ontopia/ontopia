@@ -24,9 +24,7 @@ import java.util.Set;
 import java.util.List;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.JspTagException;
-import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
-import net.ontopia.topicmaps.webed.impl.basic.ActionParameters;
 
 /**
  * PUBLIC: Utility methods useful for writing web editor framework

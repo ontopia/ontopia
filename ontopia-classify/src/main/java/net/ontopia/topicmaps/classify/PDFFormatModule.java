@@ -33,14 +33,17 @@ public class PDFFormatModule implements FormatModuleIF {
   protected String[] extensions = new String[] {".pdf"};
   protected byte[] magicBytes = FormatModule.getBytes("%PDF-");
   
+  @Override
   public boolean matchesContent(ClassifiableContentIF cc) {
     return FormatModule.startsWith(cc.getContent(), magicBytes);
   }
 
+  @Override
   public boolean matchesIdentifier(ClassifiableContentIF cc) {
     return FormatModule.matchesExtension(cc.getIdentifier(), extensions);
   }
 
+  @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
       PDDocument pdoc = PDDocument.load(new BufferedInputStream(new ByteArrayInputStream(cc.getContent())));

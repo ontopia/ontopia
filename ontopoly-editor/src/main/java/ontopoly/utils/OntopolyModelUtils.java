@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -55,6 +55,7 @@ public class OntopolyModelUtils {
   private static class RowMapperOneColumn<T> implements RowMapperIF<T> {
     public static final RowMapperIF<Object> INSTANCE = new RowMapperOneColumn<Object>();
     @SuppressWarnings("unchecked")
+    @Override
     public T mapRow(QueryResultIF queryResult, int rowno) {
       // return the value in the first column
       return (T)queryResult.getValue(0);
@@ -88,8 +89,8 @@ public class OntopolyModelUtils {
     while (iter.hasNext()) {
       AssociationRoleIF role = iter.next();
       AssociationIF assoc = role.getAssociation();
-      if (ObjectUtils.equals(role.getType(), rType) &&
-          ObjectUtils.equals(assoc.getType(), aType))
+      if (Objects.equals(role.getType(), rType) &&
+          Objects.equals(assoc.getType(), aType))
         return assoc;
     }
     return null;
@@ -100,7 +101,7 @@ public class OntopolyModelUtils {
     for (AssociationRoleIF role : player1.getRolesByType(rType1, aType)) {
       AssociationIF assoc = role.getAssociation();
       for (AssociationRoleIF role2 : assoc.getRoles())
-        if (ObjectUtils.different(role2, role) && role2.getType().equals(rType2))
+        if (!Objects.equals(role2, role) && role2.getType().equals(rType2))
           return true;
     }
     return false;
@@ -118,12 +119,12 @@ public class OntopolyModelUtils {
       AssociationIF assoc = role1.getAssociation();
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != 2) continue;
-      if (ObjectUtils.equals(role1.getType(), rType1) &&
-          ObjectUtils.equals(assoc.getType(), aType)) {
+      if (Objects.equals(role1.getType(), rType1) &&
+          Objects.equals(assoc.getType(), aType)) {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
+          if (!Objects.equals(role1, role2) && role2.getType().equals(rType2)) {
             return role2.getPlayer();
           }
         }
@@ -141,12 +142,12 @@ public class OntopolyModelUtils {
       AssociationIF assoc = role1.getAssociation();
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != 2) continue;
-      if (ObjectUtils.equals(role1.getType(), rType1) &&
-          ObjectUtils.equals(assoc.getType(), aType)) {
+      if (Objects.equals(role1.getType(), rType1) &&
+          Objects.equals(assoc.getType(), aType)) {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
+          if (!Objects.equals(role1, role2) && role2.getType().equals(rType2)) {
             result.add(role2.getPlayer());
           }
         }
@@ -166,12 +167,12 @@ public class OntopolyModelUtils {
       if (!(scope.size() == 1 && scope.contains(theme))) continue;
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != 2) continue;
-      if (ObjectUtils.equals(role1.getType(), rType1) &&
-          ObjectUtils.equals(assoc.getType(), aType)) {
+      if (Objects.equals(role1.getType(), rType1) &&
+          Objects.equals(assoc.getType(), aType)) {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
+          if (!Objects.equals(role1, role2) && role2.getType().equals(rType2)) {
             result.add(role2.getPlayer());
           }
         }
@@ -190,12 +191,12 @@ public class OntopolyModelUtils {
       AssociationIF assoc = role1.getAssociation();
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != 2) continue;
-      if (ObjectUtils.equals(role1.getType(), rType1) &&
-          ObjectUtils.equals(assoc.getType(), aType)) {
+      if (Objects.equals(role1.getType(), rType1) &&
+          Objects.equals(assoc.getType(), aType)) {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2) && role2.getPlayer().equals(player2)) {
+          if (!Objects.equals(role1, role2) && role2.getType().equals(rType2) && role2.getPlayer().equals(player2)) {
             return assoc;
           }
         }
@@ -233,15 +234,15 @@ public class OntopolyModelUtils {
       thirdRole = null;
       AssociationRoleIF role1 = iter.next();
       AssociationIF assoc = role1.getAssociation();
-      if (ObjectUtils.equals(role1.getType(), rType1) &&
-          ObjectUtils.equals(assoc.getType(), aType)) {
+      if (Objects.equals(role1.getType(), rType1) &&
+          Objects.equals(assoc.getType(), aType)) {
         Iterator<AssociationRoleIF> riter = assoc.getRoles().iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2)) {
-            if (ObjectUtils.equals(rType2, role2.getType()) && ObjectUtils.equals(player2, role2.getPlayer()))
+          if (!Objects.equals(role1, role2)) {
+            if (Objects.equals(rType2, role2.getType()) && Objects.equals(player2, role2.getPlayer()))
               secondRole = role2;
-            else if (ObjectUtils.equals(rType3, role2.getType()))
+            else if (Objects.equals(rType3, role2.getType()))
               thirdRole = role2;
             else
               break;
@@ -292,11 +293,11 @@ public class OntopolyModelUtils {
       AssociationRoleIF role = iter.next();
 
       // compare current player
-      if (!ObjectUtils.equals(role.getType(), rTypes[0])) continue;
+      if (!Objects.equals(role.getType(), rTypes[0])) continue;
 
       // compare association type
       AssociationIF assoc = role.getAssociation();
-      if (!ObjectUtils.equals(assoc.getType(), aType)) continue;
+      if (!Objects.equals(assoc.getType(), aType)) continue;
 
       // compare arity
       Collection<AssociationRoleIF> roles = assoc.getRoles();
@@ -313,13 +314,13 @@ public class OntopolyModelUtils {
       Iterator<AssociationRoleIF> riter = roles.iterator();
       while (riter.hasNext()) {
         AssociationRoleIF orole = riter.next();
-        if (ObjectUtils.equals(orole, role)) continue;
+        if (Objects.equals(orole, role)) continue;
         TopicIF ortype = orole.getType();
         TopicIF oplayer = orole.getPlayer();
         int match = -1;
         for (int i=1; i < players.length; i++) { 
-          if (ObjectUtils.equals(ortype, rTypes[i]) &&
-              ObjectUtils.equals(oplayer, players[i]) && !matches[i]) {
+          if (Objects.equals(ortype, rTypes[i]) &&
+              Objects.equals(oplayer, players[i]) && !matches[i]) {
             match = i;
             matches[i] = true;
             matchCount++;
@@ -394,7 +395,7 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getType(), oType))
+      if (Objects.equals(occurIF.getType(), oType))
         return occurIF;
     }
     return null;
@@ -404,8 +405,8 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getType(), oType) && 
-          ObjectUtils.equals(occurIF.getDataType(), datatype) && 
+      if (Objects.equals(occurIF.getType(), oType) && 
+          Objects.equals(occurIF.getDataType(), datatype) && 
           CollectionUtils.equalsUnorderedSet(occurIF.getScope(), scope))
         return occurIF;
     }
@@ -417,7 +418,7 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getType(), oType))
+      if (Objects.equals(occurIF.getType(), oType))
         result.add(occurIF);
     }
     return result;
@@ -428,8 +429,8 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getType(), oType) && 
-          ObjectUtils.equals(occurIF.getDataType(), datatype) )
+      if (Objects.equals(occurIF.getType(), oType) && 
+          Objects.equals(occurIF.getDataType(), datatype) )
         result.add(occurIF);
     }
     return result;
@@ -440,7 +441,7 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getType(), oType) &&
+      if (Objects.equals(occurIF.getType(), oType) &&
           CollectionUtils.equalsUnorderedSet(occurIF.getScope(), scope))
         result.add(occurIF);
     }
@@ -452,8 +453,8 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getType(), oType) && 
-          ObjectUtils.equals(occurIF.getDataType(), datatype) && 
+      if (Objects.equals(occurIF.getType(), oType) && 
+          Objects.equals(occurIF.getDataType(), datatype) && 
           CollectionUtils.equalsUnorderedSet(occurIF.getScope(), scope))
         result.add(occurIF);
     }
@@ -465,8 +466,8 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getValue(), value) && 
-          ObjectUtils.equals(occurIF.getType(), oType) && 
+      if (Objects.equals(occurIF.getValue(), value) && 
+          Objects.equals(occurIF.getType(), oType) && 
           CollectionUtils.equalsUnorderedSet(occurIF.getScope(), scope))
         result.add(occurIF);
     }
@@ -478,9 +479,9 @@ public class OntopolyModelUtils {
     Iterator<OccurrenceIF> it = topicIF.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occurIF = it.next();
-      if (ObjectUtils.equals(occurIF.getValue(), value) && 
-          ObjectUtils.equals(occurIF.getType(), oType) && 
-          ObjectUtils.equals(occurIF.getDataType(), datatype) && 
+      if (Objects.equals(occurIF.getValue(), value) && 
+          Objects.equals(occurIF.getType(), oType) && 
+          Objects.equals(occurIF.getDataType(), datatype) && 
           CollectionUtils.equalsUnorderedSet(occurIF.getScope(), scope))
         result.add(occurIF);
     }
@@ -503,7 +504,7 @@ public class OntopolyModelUtils {
     Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
-      if (ObjectUtils.equals(nameIF.getType(), nType))
+      if (Objects.equals(nameIF.getType(), nType))
         result.add(nameIF);
     }
     return result;
@@ -514,7 +515,7 @@ public class OntopolyModelUtils {
     Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
-      if (ObjectUtils.equals(nameIF.getType(), nType) && 
+      if (Objects.equals(nameIF.getType(), nType) && 
           CollectionUtils.equalsUnorderedSet(nameIF.getScope(), scope))
         result.add(nameIF);
     }
@@ -526,8 +527,8 @@ public class OntopolyModelUtils {
     Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
-      if (ObjectUtils.equals(nameIF.getValue(), value) && 
-          ObjectUtils.equals(nameIF.getType(), nType))
+      if (Objects.equals(nameIF.getValue(), value) && 
+          Objects.equals(nameIF.getType(), nType))
         result.add(nameIF);
     }
     return result;
@@ -538,8 +539,8 @@ public class OntopolyModelUtils {
     Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
-      if (ObjectUtils.equals(nameIF.getValue(), value) && 
-          ObjectUtils.equals(nameIF.getType(), nType) && 
+      if (Objects.equals(nameIF.getValue(), value) && 
+          Objects.equals(nameIF.getType(), nType) && 
           CollectionUtils.equalsUnorderedSet(nameIF.getScope(), scope))
         result.add(nameIF);
     }
@@ -563,8 +564,8 @@ public class OntopolyModelUtils {
     while (it.hasNext()) {
       AssociationRoleIF role = it.next();
       AssociationIF association = role.getAssociation();
-      if (ObjectUtils.equals(role.getType(), rType) && 
-          ObjectUtils.equals(association.getType(), aType))
+      if (Objects.equals(role.getType(), rType) && 
+          Objects.equals(association.getType(), aType))
         result.add(role);
     }
     return result;
@@ -576,8 +577,8 @@ public class OntopolyModelUtils {
     while (it.hasNext()) {
       AssociationRoleIF role = it.next();
       AssociationIF association = role.getAssociation();
-      if (ObjectUtils.equals(role.getType(), rType) && 
-          ObjectUtils.equals(association.getType(), aType) && 
+      if (Objects.equals(role.getType(), rType) && 
+          Objects.equals(association.getType(), aType) && 
           CollectionUtils.equalsUnorderedSet(association.getScope(), scope))
         result.add(role);
     }

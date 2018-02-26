@@ -59,6 +59,7 @@ public class RDBMSTestFactory implements TestFactoryIF {
     return source;
   }
 
+  @Override
   public TopicMapStoreIF makeStandaloneTopicMapStore() {
     try {
       return new RDBMSTopicMapStore();
@@ -67,6 +68,7 @@ public class RDBMSTestFactory implements TestFactoryIF {
     }
   }
 
+  @Override
   public TopicMapReferenceIF makeTopicMapReference() {
     //! // Open the topic map store
     //! return new RDBMSTopicMapStore(storage).getTopicMap();
@@ -81,6 +83,7 @@ public class RDBMSTestFactory implements TestFactoryIF {
     return source.createTopicMap(null, null);
   }
 
+  @Override
   public void releaseTopicMapReference(TopicMapReferenceIF topicmapRef) {
     topicmapRef.delete();
     //! topicmapRef.close();

@@ -29,14 +29,14 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.impl.basic.index.TNCIndex;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Consistifies a topic map by merging topics based on the
@@ -79,7 +79,7 @@ public class Consistify {
     }
 
     try {
-      TopicMapIF loaded = load(args[0]);
+      TopicMapIF loaded = ImportExportUtils.getReader(args[0]).read();
       if (ohandler.normalize)
         normalizeTopicNames(loaded);
       doTNCMerge(loaded);
@@ -111,10 +111,6 @@ public class Consistify {
     System.out.println("    <output>: output topic map");
   }
 
-  protected static TopicMapIF load(String stm) throws java.io.IOException {
-    return ImportExportUtils.getReader(stm).read();
-  }
-
   protected static void doTNCMerge(TopicMapIF tm) {
     TNCIndex index = new TNCIndex(tm);
     
@@ -128,9 +124,9 @@ public class Consistify {
       while (it2.hasNext()) {
         TopicNameIF bn = (TopicNameIF) it2.next();
 
-        Iterator it3 =index.getTopics(bn.getValue(), bn.getScope()).iterator();
+        Iterator<TopicIF> it3 =index.getTopics(bn.getValue(), bn.getScope()).iterator();
         while (it3.hasNext()) {
-          TopicIF source = (TopicIF) it3.next();
+          TopicIF source = it3.next();
           if (source.equals(topic))
             continue;
           MergeUtils.mergeInto(topic, source);
@@ -149,7 +145,7 @@ public class Consistify {
     if (format == 'e')
       new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
     else
-      ImportExportUtils.getWriter(outfile, encoding).write(tm);
+      ImportExportUtils.getWriter(new File(outfile), encoding).write(tm);
   }
 
   protected static void normalizeTopicNames(TopicMapIF tm) {
@@ -160,7 +156,7 @@ public class Consistify {
       Iterator it2 = topic.getTopicNames().iterator();
       while (it2.hasNext()) {
         TopicNameIF bn = (TopicNameIF) it2.next();
-        bn.setValue(StringUtils.normalizeWhitespace(bn.getValue()));
+        bn.setValue(StringUtils.normalizeSpace(bn.getValue()));
       }
     }
   }
@@ -185,10 +181,11 @@ public class Consistify {
   // --- Listener class
   
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean normalize = false;
-    boolean xtm = false;
-    String encoding = null;
+    private boolean normalize = false;
+    private boolean xtm = false;
+    private String encoding = null;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 'n') normalize = true;

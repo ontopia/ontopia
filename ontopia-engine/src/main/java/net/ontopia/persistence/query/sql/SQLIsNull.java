@@ -34,6 +34,7 @@ public class SQLIsNull implements SQLExpressionIF {
     this.value = value;
   }
 
+  @Override
   public int getType() {
     return IS_NULL;
   }
@@ -46,6 +47,7 @@ public class SQLIsNull implements SQLExpressionIF {
     this.value = value;
   }
 
+  @Override
   public String toString() {
     return getValue() + " is null";
   }

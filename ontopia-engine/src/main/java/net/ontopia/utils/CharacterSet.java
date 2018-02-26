@@ -99,6 +99,7 @@ public class CharacterSet {
    */
   static class IntervalComparator implements java.util.Comparator<CharacterInterval> {
 
+    @Override
     public int compare(CharacterInterval c1, CharacterInterval c2) {
       // INV: we assume o1 and o2 are both CharacterIntervals
       return c1.low - c2.low;

@@ -27,11 +27,11 @@ package net.ontopia.persistence.query.jdo;
 
 public interface JDOVisitorIF {
 
-  public void visitable(JDOExpressionIF expr);
-  public void visitable(JDOExpressionIF[] exprs);
+  void visitable(JDOExpressionIF expr);
+  void visitable(JDOExpressionIF[] exprs);
 
-  public void visitable(JDOValueIF value);
-  public void visitable(JDOValueIF[] values);
+  void visitable(JDOValueIF value);
+  void visitable(JDOValueIF[] values);
 
 }
 

@@ -53,10 +53,12 @@ public class ValueGenerator implements ValueGeneratorIF {
     this.locator = locator;
   }
 
+  @Override
   public boolean isTopic() {
     return (topic != null);
   }
   
+  @Override
   public String getLiteral() {
     if (literal == null && locator != null)
       return locator.getAddress();
@@ -64,6 +66,7 @@ public class ValueGenerator implements ValueGeneratorIF {
       return literal;
   }
   
+  @Override
   public LocatorIF getDatatype() {
     if (literal == null)
       return PSI.getXSDURI(); // assuming we are a locator
@@ -73,6 +76,7 @@ public class ValueGenerator implements ValueGeneratorIF {
       return datatype;
   }
 
+  @Override
   public LocatorIF getLocator() {
     if (locator == null && literal != null &&
         datatype.equals(DataTypes.TYPE_STRING)) {
@@ -89,10 +93,12 @@ public class ValueGenerator implements ValueGeneratorIF {
     return locator;
   }  
   
+  @Override
   public ValueGeneratorIF copy() {
     return new ValueGenerator(topic, literal, datatype, locator);
   }
 
+  @Override
   public TopicIF getTopic() {
     if (topic == null) {
       if (literal == null && locator == null)
@@ -119,6 +125,7 @@ public class ValueGenerator implements ValueGeneratorIF {
     this.datatype = datatype;
   }
 
+  @Override
   public String toString() {
     return "[ValueGenerator, topic: " + topic + ", literal: '" + literal + "', "+
       "locator: " + locator + ", datatype: " + datatype + "]";

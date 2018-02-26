@@ -37,6 +37,7 @@ public class CountTag extends BaseOutputProducingTag {
     super(false, false);
   }
 
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 

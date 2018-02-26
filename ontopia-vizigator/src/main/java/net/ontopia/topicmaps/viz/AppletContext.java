@@ -25,8 +25,8 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -35,7 +35,7 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.topicmaps.utils.tmrap.TopicPage;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * EXPERIMENTAL: Application context for the Vizlet.
@@ -67,6 +67,7 @@ public class AppletContext extends ApplicationContext {
     }
   }
 
+  @Override
   public void goToTopic(TopicIF topic) {
     Collection pages = getView().getPagesFor(topic);
     if (!pages.isEmpty()) {
@@ -81,6 +82,7 @@ public class AppletContext extends ApplicationContext {
    * 
    * @param url String representing the target url
    */
+  @Override
   public void openPropertiesURL(String url) {
     try {
       String target = vizlet.getParameter("proptarget");
@@ -92,31 +94,38 @@ public class AppletContext extends ApplicationContext {
     }
   }
 
+  @Override
   public boolean isApplet() {
     return true;
   }
 
+  @Override
   public void setStartTopic(TopicIF aTopic) {
     throw new UnsupportedOperationException("Cannot set start node in Vizlet");
   }
 
+  @Override
   public TopicIF getTopicForLocator(LocatorIF aLocator, TopicMapIF topicmap) {
     return getTopicFor(topicmap, Collections.singletonList(aLocator),
         Collections.EMPTY_LIST, null);
   }
 
+  @Override
   public void loadTopic(TopicIF aTopic) {
     ((RemoteTopic) aTopic).checkLoad();
   }
 
+  @Override
   public void focusNode(TMAbstractNode aNode) {
     getView().focusNode(aNode);
   }
 
+  @Override
   public void setScopingTopic(TopicIF aScope) {
     // Currently the applet does not use the configured scope
   }
 
+  @Override
   public TopicIF getDefaultScopingTopic(TopicMapIF aTopicmap) {
     String scopeType = vizlet.getParameter("scopetype");
     String scopeValue = vizlet.getParameter("scopevalue");
@@ -132,17 +141,21 @@ public class AppletContext extends ApplicationContext {
 
   private TopicIF getTopicFrom(TopicMapIF aTopicmap, String type, 
                                String value) {
-    LocatorIF locator = URIUtils.getURILocator(value);
-    Set srclocs = Collections.EMPTY_SET;
-    Set subjids = Collections.EMPTY_SET;
-    Set sublocs = Collections.EMPTY_SET;
-    if (type.equals("source"))
-      srclocs = Collections.singleton(locator);
-    else if (type.equals("indicator"))
-      subjids = Collections.singleton(locator);
-    else
-      sublocs = Collections.singleton(locator);
-    return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
+    try {
+      LocatorIF locator = new URILocator(value);
+      Set srclocs = Collections.EMPTY_SET;
+      Set subjids = Collections.EMPTY_SET;
+      Set sublocs = Collections.EMPTY_SET;
+      if ("source".equals(type))
+        srclocs = Collections.singleton(locator);
+      else if ("indicator".equals(type))
+        subjids = Collections.singleton(locator);
+      else
+        sublocs = Collections.singleton(locator);
+      return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
+    } catch (MalformedURLException m) {
+      throw new OntopiaRuntimeException(m);
+    }
   }
 
   private TopicIF getConfiguredScopingTopic(TopicMapIF aTopicmap) {
@@ -187,6 +200,7 @@ public class AppletContext extends ApplicationContext {
     return anOccurrence.getLocator();
   }
 
+  @Override
   public TopicIF getStartTopic(TopicMapIF aTopicmap) {
     System.out.println("Loading start topic...");
     
@@ -194,16 +208,21 @@ public class AppletContext extends ApplicationContext {
     if (idValue == null)
       throw new VizigatorReportException("The required \"idvalue\" parameter" +
           " has not been set.");
-    LocatorIF locator = URIUtils.getURILocator(idValue);
+    LocatorIF locator;
+    try {
+      locator = new URILocator(idValue);
+    } catch (MalformedURLException m) {
+      throw new OntopiaRuntimeException(m);
+    }
     
     String idtype = vizlet.getParameter("idtype");
     if (idtype == null)
       throw new VizigatorReportException("The required \"idtype\" parameter" +
           " has not been set. It should be set to \"indicator\", \"source\" " +
           "or \"subject\".");
-    Collection indicators = (idtype.equals("indicator") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-    Collection sources = (idtype.equals("source") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-    Collection subject = (idtype.equals("subject") ? Collections.singleton(locator) : Collections.EMPTY_SET);
+    Collection indicators = ("indicator".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
+    Collection sources = ("source".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
+    Collection subject = ("subject".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
     RemoteTopicMapStore store = (RemoteTopicMapStore)aTopicmap.getStore();
     RemoteTopicIndex tindex = store.getTopicIndex();
 
@@ -228,6 +247,7 @@ public class AppletContext extends ApplicationContext {
     return retVal;
   }
 
+  @Override
   public int getDefaultLocality() {
     int locality = vizlet.getDefaultLocality();
     VizDebugUtils.debug("DesktopContext.getDefaultLocality - locality:" +
@@ -235,6 +255,7 @@ public class AppletContext extends ApplicationContext {
     return locality;
   }
 
+  @Override
   public int getMaxLocality() {
     int maxLocality = vizlet.getMaxLocality();
     VizDebugUtils.debug("DesktopContext.getMaxLocality - maxLocality:" +
@@ -242,15 +263,18 @@ public class AppletContext extends ApplicationContext {
     return maxLocality;
   }
 
+  @Override
   public ParsedMenuFile getEnabledItemIds() {
     return vizlet.getEnabledItemIds();
   }
 
+  @Override
   public TypesConfigFrame getAssocFrame() {
     VizPanel vPanel = getVizPanel();
     return vPanel.getAssocFrame();
   }
 
+  @Override
   public TypesConfigFrame getTopicFrame() {
     VizPanel vPanel = getVizPanel();
     return vPanel.getTopicFrame();

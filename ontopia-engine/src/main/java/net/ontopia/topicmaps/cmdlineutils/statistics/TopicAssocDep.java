@@ -35,6 +35,7 @@ import net.ontopia.utils.StringifierIF;
  * Class used for locating associations and their types.
  */ 
 public class TopicAssocDep {
+  private static final String NULL = "null";
 
   private TopicMapIF tm;
   private HashMap assocTypes, assocRoleTypes, assocDetails, associations;
@@ -59,7 +60,7 @@ public class TopicAssocDep {
    */
   public String getAssociationTypeId(String key) {
     if (key == null || !associations.containsKey(key))
-      return "null";
+      return NULL;
     return ((InternalAssociation)associations.get(key)).getAssociationTypeId();
   }
 
@@ -68,7 +69,7 @@ public class TopicAssocDep {
    */
   public String getAssociationType(String key) {
     if (key == null || !associations.containsKey(key))
-      return "null";
+      return NULL;
     return ((InternalAssociation)associations.get(key)).getAssociationType();
   }
 
@@ -161,7 +162,7 @@ public class TopicAssocDep {
     try {
       assocname  = ts.toString(aif.getType());
     } catch (NullPointerException e) {
-      assocname = "null";
+      assocname = NULL;
     }
     //Role names as an array of strings.
     Collection roles = aif.getRoles();
@@ -175,7 +176,7 @@ public class TopicAssocDep {
       if (arif.getType() != null)
         rolenames[i] = getName(arif.getType());
       else
-        rolenames[i] = "null";
+        rolenames[i] = NULL;
       i++;
     }
     //Sorts the rolenames in lexiographical order.
@@ -248,10 +249,10 @@ public class TopicAssocDep {
   //Gets the name of the topic
   private String getName(TopicIF topic) {
     if (topic == null)
-      return "null";
+      return NULL;
     else {
       String name = ts.toString(topic);
-      if (name.equalsIgnoreCase("[No name]"))
+      if ("[No name]".equalsIgnoreCase(name))
         name = "{topicid: " + topic.getObjectId() + "}";
       return name;
     }
@@ -264,13 +265,13 @@ public class TopicAssocDep {
    */
   private class InternalAssociation {
 
-    AssociationIF association;
-    TopicIF associationtype;
-    HashMap roleTypes;
-    HashMap assocRoles;
-    int number_of_assocs;
-    Collection associations;
-    String[] roles;
+    private AssociationIF association;
+    private TopicIF associationtype;
+    private HashMap roleTypes;
+    private HashMap assocRoles;
+    private int number_of_assocs;
+    private Collection associations;
+    private String[] roles;
     
     InternalAssociation(AssociationIF association) {
       this.associationtype = association.getType();
@@ -286,7 +287,7 @@ public class TopicAssocDep {
      * Returns the object id for the association type
      */
     protected String getAssociationTypeId() {
-      return (associationtype == null ? "null" : associationtype.getObjectId());
+      return (associationtype == null ? NULL : associationtype.getObjectId());
     }
 
 
@@ -391,7 +392,7 @@ public class TopicAssocDep {
         if (type != null)
           temp.put(type.getObjectId(), getName(type));
         else 
-          temp.put("null", getName(null));
+          temp.put(NULL, getName(null));
       }
       return temp;
     }
@@ -405,7 +406,7 @@ public class TopicAssocDep {
       while (it.hasNext()) {
         AssociationRoleIF assocrl = (AssociationRoleIF)it.next();
         if (assocrl.getPlayer() == null) {
-          if (!assocRoles.containsValue(getName(null))) assocRoles.put("null", getName(null));
+          if (!assocRoles.containsValue(getName(null))) assocRoles.put(NULL, getName(null));
         } else {
           Iterator iter = assocrl.getPlayer().getTypes().iterator();
           while (iter.hasNext()) {

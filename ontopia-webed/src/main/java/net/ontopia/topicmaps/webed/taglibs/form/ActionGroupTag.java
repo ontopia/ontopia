@@ -44,6 +44,7 @@ public class ActionGroupTag extends TagSupport {
    *
    * @return TagSupport#EVAL_BODY_INCLUDE
    */
+  @Override
   public int doStartTag() throws JspException {
     if (actiongroup_name != null)
       TagUtils.setActionGroup(pageContext, actiongroup_name);
@@ -57,6 +58,7 @@ public class ActionGroupTag extends TagSupport {
   /**
    * Releases any acquired resources.
    */
+  @Override
   public void release() {
     actiongroup_name = null;
     super.release();

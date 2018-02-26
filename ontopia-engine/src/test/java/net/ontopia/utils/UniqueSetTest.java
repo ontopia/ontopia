@@ -32,12 +32,6 @@ public class UniqueSetTest extends TestCase {
     super(name);
   }
 
-  public void setUp() {
-  }
-
-  protected void tearDown() {
-  }
-
   // --- Test cases
 
   public void testUniqueSetGarbageCollect() {
@@ -119,7 +113,7 @@ public class UniqueSetTest extends TestCase {
       
       // adding existing element should return same set: [a]
       UniqueSet setA2 = setpool.add(setA1, "a", dereference);
-      assertTrue("setA1 != setA2", setA1 == setA2);
+      assertEquals("setA1 != setA2", setA1, setA2);
       
       // adding second element should return new set: [a,b]
       UniqueSet setAB1 = setpool.add(setA2, "b", dereference);
@@ -136,15 +130,15 @@ public class UniqueSetTest extends TestCase {
       
       // removing third element should return setAB1: [a,b]
       UniqueSet setAB2 = setpool.remove(setABC1, "c", dereference);
-      assertTrue("setAB2 != setAB1 " + setAB2 + ":" + setAB1, setAB2 == setAB1);
+      assertEquals("setAB2 != setAB1 " + setAB2 + ":" + setAB1, setAB2, setAB1);
       
       // removing second element should return setA1: [a]
       UniqueSet setA3 = setpool.remove(setAB1, "b", dereference);
-      assertTrue("setA3 != setA1", setA3 == setA1);
+      assertEquals("setA3 != setA1", setA3, setA1);
       
       // removing first element should return emptyset1: []
       UniqueSet emptyset2 = setpool.remove(setA3, "a", dereference);
-      assertTrue("emptyset2 != emptyset1", emptyset2 == emptyset1);
+      assertEquals("emptyset2 != emptyset1", emptyset2, emptyset1);
     }
     
   }

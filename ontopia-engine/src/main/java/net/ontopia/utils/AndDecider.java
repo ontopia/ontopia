@@ -60,6 +60,7 @@ public class AndDecider<T> implements DeciderIF<T> {
     deciders.remove(decider);
   }
   
+  @Override
   public boolean ok(T object) {
     Iterator<DeciderIF<T>> iter = deciders.iterator();
     while (iter.hasNext()) {

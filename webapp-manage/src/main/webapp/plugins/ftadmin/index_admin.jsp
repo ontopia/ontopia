@@ -9,6 +9,7 @@
             net.ontopia.infoset.fulltext.core.*,
             net.ontopia.infoset.fulltext.impl.lucene.*,
             net.ontopia.infoset.fulltext.topicmaps.*,
+			org.apache.commons.io.FileUtils,
             net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator" %>
 
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'     %>
@@ -43,61 +44,55 @@
         if (aref.getIndexDirectory() != null) {
           fullpath = aref.getIndexDirectory() + File.separator + id;
         }
-      }
-      // === delete index
-      if (action.equals("delete index") || action.equals("reindex")) {
-        try {
-          // Delete all the files in the directory.
-          File file = new File(fullpath);
-          File[] files = file.listFiles();
-          if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-              files[i].delete();
+        // === delete index
+        if (action.equals("delete index")) {
+          try {
+            aref.deleteFullTextIndex();
+            
+            File alternative = new File(fullpath);
+            if (alternative.exists()) {
+              FileUtils.deleteDirectory(alternative);
             }
-          }
-          // Delete the index directory
-          if (!file.delete()) report = "Could not delete index";
-          else report = "Deleted the index for: " + id + "<br>";
-        } catch (Exception e){
+            
+            report = "Deleted index of " + id + ". ";
+          } catch (Exception e){
+            e.printStackTrace();
             report = "Failed to delete index: " + id + "<br>" +
-               "<span class=error>" + e.getMessage() + "</span>";
+            "<span class=error>" + e.getMessage() + "</span>";
+          }
         }
-      }
-  
-      // === create new index
-      if (action.equals("create index") || action.equals("reindex")) {
-        // some installers don't create the apache-tomcat/temp directory,
-        // so we have a go at it ourselves, if it isn't there.
-        String tmpdir = System.getProperty("java.io.tmpdir");
-        File tmpf = new File(tmpdir);
-        if (!tmpf.exists())
-          tmpf.mkdir(); // creating the directory if it wasn't there
 
-        // actually do the indexing
-        try {
-            // Create a Lucene indexer
-            IndexerIF lucene_indexer = new LuceneIndexer(fullpath, true);
-            
-            // Creates an instance of the default topic map indexer.
-            DefaultTopicMapIndexer imanager = new DefaultTopicMapIndexer(lucene_indexer, false, "");
-            
-            // Indexes the topic map
-            TopicMapIF topicmap = navApp.getTopicMapById(id);
-            try {
-              imanager.index(topicmap);
-              imanager.close();
-            } finally {
-              navApp.returnTopicMap(topicmap);
-              lucene_indexer.close();
-            }
+        if (action.equals("reindex")) {
+          try {
+            aref.reindexFulltextIndex();
+            report = "Reindexed " + id + ".";
+          } catch (Exception e){
+            report = "Failed to reindex: " + id + "<br>" +
+            "<span class=error>" + e.getMessage() + "</span>";
+          }
+        }
+
+        // === create new index
+        if (action.equals("create index")) {
+          if (!aref.getMaintainFulltextIndexes()) {
+            aref.setMaintainFulltextIndexes(true);
+          }
+          if (aref.getIndexDirectory() == null) {
+            aref.setIndexDirectory(fullpath);
+          }
+          try {
+            aref.reindexFulltextIndex();
             report = "Indexed " + id + ".";
+          } catch (Exception e) {
+            e.printStackTrace();
+            report = "Failed to index: " + id + "<br>" +
+            "<span class=error>" + e.getMessage() + "</span>";
+          }
         }
-        catch (Exception e) {
-          e.printStackTrace();
-          report = "Failed to index: " + id + "<br>" +
-           "<span class=error>" + e.getMessage() + "</span>";
-        }
-      } 
+      } else {
+        report = "Failed to index: " + id + "<br>" +
+                "<span class=error>" + _reference.getClass().getName() + "</span>";
+      }
 
       // === check that action is valid
       if (!action.equals("delete index") &&

@@ -34,10 +34,6 @@ import java.io.Writer;
  */
 public final class XTM2TopicMapWriter extends AbstractXTM2TopicMapWriter {
 
-  public XTM2TopicMapWriter(String filename) throws IOException {
-    super(filename);
-  }
-  
   public XTM2TopicMapWriter(File file) throws IOException {
     super(file);
   }
@@ -55,6 +51,7 @@ public final class XTM2TopicMapWriter extends AbstractXTM2TopicMapWriter {
     super(writer, encoding);
   }
 
+  @Override
   protected final XTMVersion getVersion() {
     return XTMVersion.XTM_2_0;
   }

@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,16 +43,10 @@ import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.utils.PropertyUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL:
  */
 public class RoleTypeCache {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RoleTypeCache.class.getName());
 
   protected TopicMapIF tm;
 
@@ -59,12 +54,12 @@ public class RoleTypeCache {
 
   protected TransactionIF ptxn;
 
-  protected TransactionalLookupIndexIF rolesByType;
+  protected TransactionalLookupIndexIF<ParameterArray, Collection<AssociationRoleIF>> rolesByType;
 
   protected boolean qlshared;
 
-  protected Map radd = new HashMap();
-  protected Map rrem = new HashMap();
+  protected Map<ParameterArray, Collection<AssociationRoleIF>> radd = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
+  protected Map<ParameterArray, Collection<AssociationRoleIF>> rrem = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
 
   public RoleTypeCache(TopicMapTransactionIF txn, EventManagerIF emanager,
       EventManagerIF otree) {
@@ -77,8 +72,8 @@ public class RoleTypeCache {
     RDBMSStorage storage = (RDBMSStorage) ptxn.getStorageAccess().getStorage();
 
     if (storage.isSharedCache()) {
-      this.rolesByType = new SharedQueryLookup(ptxn.getStorageAccess(),
-          (QueryCache) storage.getHelperObject(CachesIF.QUERY_CACHE_RT1, tmid));
+      this.rolesByType = new SharedQueryLookup<Collection<AssociationRoleIF>>(ptxn.getStorageAccess(),
+          (QueryCache<ParameterArray, Collection<AssociationRoleIF>>) storage.getHelperObject(CachesIF.QUERY_CACHE_RT1, tmid));
       this.qlshared = true;
 
       // register event handlers (only needed with shared query cache)
@@ -95,8 +90,8 @@ public class RoleTypeCache {
           .getInt(
               getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype.lru"),
               1000);
-      this.rolesByType = new QueryLookup("TopicIF.getRolesByType", ptxn,
-          lrusize);
+      this.rolesByType = new QueryLookup<Collection<AssociationRoleIF>>("TopicIF.getRolesByType", ptxn,
+          lrusize, Collections.<AssociationRoleIF>emptySet());
       this.qlshared = false;
     }
   }
@@ -117,16 +112,16 @@ public class RoleTypeCache {
     if (qlshared) {
       if (!radd.isEmpty()) {
         try {
-          rolesByType.removeAll(new ArrayList(radd.keySet()));
+          rolesByType.removeAll(new ArrayList<ParameterArray>(radd.keySet()));
         } finally {
-          radd = new HashMap();
+          radd = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
         }
       }
       if (!rrem.isEmpty()) {
         try {
-          rolesByType.removeAll(new ArrayList(rrem.keySet()));
+          rolesByType.removeAll(new ArrayList<ParameterArray>(rrem.keySet()));
         } finally {
-          rrem = new HashMap();
+          rrem = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
         }
       }
     }
@@ -147,15 +142,15 @@ public class RoleTypeCache {
 
   // Delegated to by TopicIF.getRolesByType(TopicIF roletype)
 
-  public Collection getRolesByType(TopicIF player, TopicIF roletype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF roletype) {
     // IMPORTANT: this method will *never* be called if the topic's
     // roles property is dirty. Thus there is no need to sync the
     // query result with the txn changes, i.e. the radd and rrem maps.
 
     // construct query key
     ParameterArray key = new ParameterArray(new Object[] { i(tm), i(player), i(roletype) });
-    Collection result = (Collection) rolesByType.get(key);
-    return new IdentityCollectionWrapper(ptxn, result);
+    Collection<AssociationRoleIF> result = rolesByType.get(key);
+    return new IdentityCollectionWrapper<AssociationRoleIF>(ptxn, result);
   }
 
   // -----------------------------------------------------------------------------
@@ -171,28 +166,28 @@ public class RoleTypeCache {
 
   protected void addEntry(ParameterArray key, AssociationRoleIF added) {
     // + added
-    Collection avals = (Collection) radd.get(key);
+    Collection<AssociationRoleIF> avals = radd.get(key);
     if (avals == null) {
-      avals = new HashSet();
+      avals = new HashSet<AssociationRoleIF>();
       radd.put(key, avals);
     }
     avals.add(added);
     // - removed
-    Collection rvals = (Collection) rrem.get(key);
+    Collection<AssociationRoleIF> rvals = rrem.get(key);
     if (rvals != null)
       rvals.remove(added);
   }
 
   protected void removeEntry(ParameterArray key, AssociationRoleIF removed) {
     // + removed
-    Collection rvals = (Collection) rrem.get(key);
+    Collection<AssociationRoleIF> rvals = rrem.get(key);
     if (rvals == null) {
-      rvals = new HashSet();
+      rvals = new HashSet<AssociationRoleIF>();
       rrem.put(key, rvals);
     }
     rvals.add(removed);
     // - added
-    Collection avals = (Collection) radd.get(key);
+    Collection<AssociationRoleIF> avals = radd.get(key);
     if (avals != null)
       avals.remove(removed);
   }
@@ -201,6 +196,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.added
    */
   class AssociationRoleAddedHandler implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF added = (AssociationRoleIF) new_value;
@@ -219,6 +215,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.removed
    */
   class AssociationRoleRemovedHandler implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF removed = (AssociationRoleIF) old_value;
@@ -237,6 +234,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.setType
    */
   class EH01 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF arole = (AssociationRoleIF) object;
@@ -256,6 +254,7 @@ public class RoleTypeCache {
    * EventHandler: AssociationRoleIF.setPlayer
    */
   class EH02 implements EventListenerIF {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       AssociationRoleIF arole = (AssociationRoleIF) object;

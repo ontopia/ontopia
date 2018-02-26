@@ -5,6 +5,7 @@ header { package net.ontopia.topicmaps.utils.ctm; }
   import java.io.Reader;
   import java.io.IOException;
   import java.net.MalformedURLException;
+  import java.net.URL;
   import java.util.Set;
   import java.util.Map;
   import java.util.List;
@@ -23,7 +24,6 @@ header { package net.ontopia.topicmaps.utils.ctm; }
   import net.ontopia.topicmaps.utils.PSI;
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.utils.ltm.AntlrWrapException;
-  import org.xml.sax.InputSource;
   import antlr.TokenStreamException;
 }
 
@@ -166,11 +166,10 @@ prefix_decl :
 include :
   INCLUDE iri_ref {
     LocatorIF docuri = literal.getLocator();
-    InputSource source = new InputSource(docuri.getExternalForm());
     ParseContextIF othercontext;
     Reader reader = null;
     try {
-      reader = CTMTopicMapReader.makeReader(source, new CTMEncodingSniffer());
+      reader = CTMTopicMapReader.makeReader(docuri, new CTMEncodingSniffer());
       CTMLexer lexer = new CTMLexer(reader);
       lexer.setDocuri(docuri.getExternalForm());
       CTMParser parser = new CTMParser(lexer);
@@ -210,9 +209,9 @@ mergemap :
     try {
       TopicMapReaderIF reader = null;
       if (syntaxpsi.equals(PSI.getCTMSyntax()))
-        reader = new CTMTopicMapReader(docuri);
+        reader = new CTMTopicMapReader(new URL(docuri.getAddress()));
       else if (syntaxpsi.equals(PSI.getCTMXTMSyntax()))
-        reader = new XTMTopicMapReader(docuri);
+        reader = new XTMTopicMapReader(new URL(docuri.getAddress()));
       else
         throw new InvalidTopicMapException("Unknown mergemap syntax: " + 
                                            syntaxpsi.getAddress());

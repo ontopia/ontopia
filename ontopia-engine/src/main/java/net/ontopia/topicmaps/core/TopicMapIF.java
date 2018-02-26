@@ -29,10 +29,10 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
 
-  public static final String EVENT_ADD_TOPIC = "TopicMapIF.addTopic";
-  public static final String EVENT_REMOVE_TOPIC = "TopicMapIF.removeTopic";
-  public static final String EVENT_ADD_ASSOCIATION = "TopicMapIF.addAssociation";
-  public static final String EVENT_REMOVE_ASSOCIATION = "TopicMapIF.removeAssociation";
+  String EVENT_ADD_TOPIC = "TopicMapIF.addTopic";
+  String EVENT_REMOVE_TOPIC = "TopicMapIF.removeTopic";
+  String EVENT_ADD_ASSOCIATION = "TopicMapIF.addAssociation";
+  String EVENT_REMOVE_ASSOCIATION = "TopicMapIF.removeAssociation";
 
   /**
    * PUBLIC: Gets the store to which the topic map's transaction is
@@ -40,7 +40,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @since 2.0
    */
-  public TopicMapStoreIF getStore();
+  TopicMapStoreIF getStore();
 
   /**
    * PUBLIC: Gets a topic map builder for use with this transaction.
@@ -48,7 +48,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    * @return An object implementing TopicMapBuilderIF
    * @since 4.0
    */
-  public TopicMapBuilderIF getBuilder();
+  TopicMapBuilderIF getBuilder();
 
   /**
    * PUBLIC: Gets an index by name. An index is usually named by the
@@ -65,7 +65,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @since 4.0
    */
-  public Object getIndex(String name);
+  Object getIndex(String name);
   
   /**
    * PUBLIC: Gets all topics in this topic map. No specific order is
@@ -73,7 +73,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection<TopicIF> getTopics();
+  Collection<TopicIF> getTopics();
 
   /**
    * PUBLIC: Gets all associations in this topic map. No specific order is
@@ -81,7 +81,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A collection of AssociationIF objects.
    */
-  public Collection<AssociationIF> getAssociations();
+  Collection<AssociationIF> getAssociations();
   
   /**
    * PUBLIC: Gets the topic map object that has the given object
@@ -93,7 +93,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A topic map object; an object implementing TMObjectIF.
    */
-  public TMObjectIF getObjectById(String object_id);
+  TMObjectIF getObjectById(String object_id);
 
   /**
    * PUBLIC: Gets the topic map object that has the given item
@@ -105,7 +105,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A topic map object; an object implementing TMObjectIF.
    */
-  public TMObjectIF getObjectByItemIdentifier(LocatorIF locator);
+  TMObjectIF getObjectByItemIdentifier(LocatorIF locator);
 
   /**
    * PUBLIC: Gets the topic in this topic map that represents the
@@ -117,7 +117,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A topic; an object implementing TopicIF.
    */
-  public TopicIF getTopicBySubjectLocator(LocatorIF locator);
+  TopicIF getTopicBySubjectLocator(LocatorIF locator);
 
   /**
    * PUBLIC: Gets the topic that has the specified subject identifier,
@@ -128,13 +128,13 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A topic; an object implementing TopicIF.
    */
-  public TopicIF getTopicBySubjectIdentifier(LocatorIF locator);
+  TopicIF getTopicBySubjectIdentifier(LocatorIF locator);
 
   /**
    * PUBLIC: Clears the topic map by removing all topics and associations.
    *
    * @since 4.0
    */
-  public void clear();
+  void clear();
   
 }

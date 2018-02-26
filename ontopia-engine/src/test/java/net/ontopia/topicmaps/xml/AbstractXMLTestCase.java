@@ -38,7 +38,7 @@ public abstract class AbstractXMLTestCase {
   protected LocatorIF sourceLoc;
   protected LocatorIF tmbase;
   protected File tmfile;
-  protected int version; // which XTM version to output
+  protected XTMVersion version; // which XTM version to output
 
   @Before
   public void setUp() throws Exception {

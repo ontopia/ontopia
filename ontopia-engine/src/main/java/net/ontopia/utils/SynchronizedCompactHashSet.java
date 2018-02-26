@@ -41,55 +41,71 @@ public class SynchronizedCompactHashSet<E> extends CompactHashSet<E> {
     super(size);
   }
 
+  @Override
   public int size() {
     synchronized(this) { return super.size(); }
   }
+  @Override
   public boolean isEmpty() {
     synchronized(this) {return super.isEmpty();}
   }
+  @Override
   public boolean contains(Object o) {
     synchronized(this) {return super.contains((E)o);}
   }
+  @Override
   public Object[] toArray() {
     synchronized(this) {return super.toArray();}
   }
+  @Override
   public <E> E[] toArray(E[] a) {
     synchronized(this) {return super.toArray(a);}
   }
 
+  @Override
   public Iterator<E> iterator() {
     return super.iterator(); // Must be manually synched by user!
   }
 
+  @Override
   public boolean add(Object o) {
     synchronized(this) {return super.add(o);}
   }
+  @Override
   public boolean remove(Object o) {
     synchronized(this) {return super.remove((E)o);}
   }
 
+  @Override
   public boolean containsAll(Collection coll) {
     synchronized(this) {return super.containsAll(coll);}
   }
+  @Override
   public boolean addAll(Collection coll) {
     synchronized(this) {return super.addAll(coll);}
   }
+  @Override
   public boolean removeAll(Collection coll) {
     synchronized(this) {return super.removeAll(coll);}
   }
+  @Override
   public boolean retainAll(Collection coll) {
     synchronized(this) {return super.retainAll(coll);}
   }
+  @Override
   public void clear() {
     synchronized(this) {super.clear();}
   }
+  @Override
   public String toString() {
     synchronized(this) {return super.toString();}
   }
 
+  @Override
   public boolean equals(Object o) {
     synchronized(this) {return super.equals(o);}
   }
+  @Override
   public int hashCode() {
     synchronized(this) {return super.hashCode();}
   }

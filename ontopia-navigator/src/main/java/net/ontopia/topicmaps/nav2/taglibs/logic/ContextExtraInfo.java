@@ -35,6 +35,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
  */
 public class ContextExtraInfo extends TagExtraInfo {
 
+  @Override
   public VariableInfo[] getVariableInfo(TagData data) {
     return new VariableInfo[] {
       new VariableInfo(NavigatorApplicationIF.NAV_APP_KEY,

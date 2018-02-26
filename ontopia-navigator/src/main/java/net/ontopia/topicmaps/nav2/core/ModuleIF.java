@@ -37,23 +37,23 @@ public interface ModuleIF {
   /**
    * Gets the URL from where this module was read in.
    */
-  public URL getURL();
+  URL getURL();
 
   /**
    * Checks if the resource has changed in the meantime by comparing
    * the lastModified fields.
    */
-  public boolean hasResourceChanged();
+  boolean hasResourceChanged();
   
   /**
    * Reads in functions contained in module from resource.
    */
-  public void readIn() throws NavigatorRuntimeException;
+  void readIn() throws NavigatorRuntimeException;
 
   /**
    * Removes all existing functions.
    */
-  public void clearFunctions();
+  void clearFunctions();
   
   /**
    * Gets a collection of FunctionIF objects that are contained in
@@ -61,16 +61,17 @@ public interface ModuleIF {
    *
    * @see net.ontopia.topicmaps.nav2.core.FunctionIF
    */
-  public Collection getFunctions();
+  Collection getFunctions();
 
   /**
    * Adds a function to this module.
    */
-  public void addFunction(FunctionIF func);
+  void addFunction(FunctionIF func);
 
   /**
    * Returns a string representation of this object.
    */
-  public String toString();
+  @Override
+  String toString();
   
 }

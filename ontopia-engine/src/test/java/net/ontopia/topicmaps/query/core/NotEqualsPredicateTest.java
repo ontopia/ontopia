@@ -33,6 +33,7 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

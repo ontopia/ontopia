@@ -21,7 +21,6 @@
 package net.ontopia.infoset.content;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +30,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: A servlet implementation that returns content stored in a
@@ -60,6 +59,7 @@ import net.ontopia.utils.StreamUtils;
  */
 public class ContentStoreServlet extends HttpServlet {
   
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException {
     // default values
@@ -82,9 +82,9 @@ public class ContentStoreServlet extends HttpServlet {
 
     if (request.getParameter("view") != null) {
       String value = request.getParameter("ctype").trim().toLowerCase();
-      if (value.equals("true"))
+      if ("true".equals(value))
         view = true;
-      else if (!value.equals("false"))
+      else if (!"false".equals(value))
         throw new ServletException("Request parameter 'view' must hold 'true' or 'false'");
     }
     
@@ -129,8 +129,7 @@ public class ContentStoreServlet extends HttpServlet {
     
       // write content to output stream
       try {
-        OutputStream ostream = response.getOutputStream();
-        StreamUtils.transfer(istream, ostream);
+        IOUtils.copy(istream, response.getOutputStream());
         istream.close();
       } catch (IOException e) {
         throw new ServletException(e);

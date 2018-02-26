@@ -59,6 +59,7 @@ public class SchemaValidator implements SchemaValidatorIF {
 
   // --- SchemaValidatorIF methods
   
+  @Override
   public void validate(TopicIF topic) throws SchemaViolationException {
     // find appropriate class
     TopicClass klass = (TopicClass) findClass(topic, schema.getTopicClasses());
@@ -112,6 +113,7 @@ public class SchemaValidator implements SchemaValidatorIF {
     validate(topic, rolecs, topic.getRoles(), klass.isStrict());
   }
 
+  @Override
   public void validate(TopicMapIF topicmap) throws SchemaViolationException {
     TypeHierarchyUtils utils = new TypeHierarchyUtils();
       
@@ -145,6 +147,7 @@ public class SchemaValidator implements SchemaValidatorIF {
     handler.endValidation();
   }
 
+  @Override
   public void validate(AssociationIF association)
     throws SchemaViolationException {
     TopicMapIF tm = association.getTopicMap();
@@ -165,10 +168,12 @@ public class SchemaValidator implements SchemaValidatorIF {
              true);
   }
 
+  @Override
   public void setValidationHandler(ValidationHandlerIF handler) {
     this.handler = handler;
   }
 
+  @Override
   public ValidationHandlerIF getValidationHandler() {
     return handler;
   }

@@ -37,6 +37,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  */
 public class AddSubjectIndicator implements ActionIF {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     
     ActionSignature paramsType = ActionSignature.getSignature("t");

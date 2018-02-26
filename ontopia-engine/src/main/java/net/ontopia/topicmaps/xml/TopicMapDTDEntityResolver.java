@@ -46,6 +46,7 @@ import org.xml.sax.EntityResolver;
  */
 public class TopicMapDTDEntityResolver implements EntityResolver {
 
+  @Override
   public InputSource resolveEntity (String public_id, String system_id) {
     if (referencesDTD(public_id, system_id))
       return attemptResolution(public_id, system_id);

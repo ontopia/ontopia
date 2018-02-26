@@ -27,6 +27,7 @@ public class TopicMapStoreTest extends net.ontopia.topicmaps.core.TopicMapStoreT
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

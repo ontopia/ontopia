@@ -39,9 +39,9 @@ public class DeciderIteratorTest extends AbstractIteratorTest {
     int size = 5;
     
     DeciderIF decider = new DeciderIF() {
+      @Override
       public boolean ok(Object object) {
-        if (object.equals("B")) return false;
-        return true;
+        return !"B".equals(object);
       }
     };
     

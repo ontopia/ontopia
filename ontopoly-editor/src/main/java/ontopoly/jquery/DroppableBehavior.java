@@ -43,6 +43,7 @@ public abstract class DroppableBehavior extends JQueryBehavior {
     c.add(new AttributeAppender("class", new Model<String>("do_" + id), " "));    
   }
   
+  @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     
@@ -94,6 +95,7 @@ public abstract class DroppableBehavior extends JQueryBehavior {
       this.id = id;
     }
 
+    @Override
     public Object component(Component component) {
       if (component.getMarkupId().equals(id)) {
         this.found = component;

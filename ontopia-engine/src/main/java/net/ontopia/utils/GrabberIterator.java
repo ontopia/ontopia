@@ -37,14 +37,17 @@ public class GrabberIterator<O, G> implements Iterator<G> {
     this.grabber = grabber;
   }
   
+  @Override
   public boolean hasNext() {
     return iter.hasNext();
   }
 
+  @Override
   public G next() {
     return grabber.grab(iter.next());
   }
 
+  @Override
   public void remove() {
     iter.remove();
   }

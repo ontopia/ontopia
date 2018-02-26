@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.impl.basic.index;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
@@ -57,11 +57,11 @@ public class TNCIndex implements IndexIF {
    * space. Note that whether a single topic is returned depends on
    * whether the topic map have been completely processed or not.
    */
-  public Collection getTopics(String basename_string, Collection scope) {
-    HashSet topics = new HashSet();
-    Iterator it = nameix.getTopicNames(basename_string).iterator();
+  public Collection<TopicIF> getTopics(String basename_string, Collection<TopicIF> scope) {
+    HashSet<TopicIF> topics = new HashSet<TopicIF>();
+    Iterator<TopicNameIF> it = nameix.getTopicNames(basename_string).iterator();
     while (it.hasNext()) {
-      TopicNameIF bn = (TopicNameIF) it.next();
+      TopicNameIF bn = it.next();
       if (bn.getScope().equals(scope))
         topics.add(bn.getTopic());
     }

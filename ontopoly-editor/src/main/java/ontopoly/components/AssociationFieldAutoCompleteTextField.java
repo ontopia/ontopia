@@ -40,10 +40,12 @@ import org.apache.wicket.util.convert.IConverter;
 
 public abstract class AssociationFieldAutoCompleteTextField extends Panel {
   
-  static final TopicConverter TOPIC_CONVERTER = new TopicConverter();
+  private static final TopicConverter TOPIC_CONVERTER = new TopicConverter();
+  protected AutoCompleteTextField<Topic> textField;
   
   static final class TopicConverter implements IConverter {
     
+    @Override
     public Object convertToObject(String value, Locale locale) {
       if (value != null) {
         String[] split = value.split("::");
@@ -55,6 +57,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
       }
     }
 
+    @Override
     public String convertToString(Object value, Locale locale) {
       return convertToString(value);
     }
@@ -64,8 +67,6 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
       return topic.getTopicMap().getId() + "::" + topic.getId();
     }
   }
-  
-  protected AutoCompleteTextField<Topic> textField;
   
   public AssociationFieldAutoCompleteTextField(String id, IModel<Topic> model, final RoleFieldModel valueFieldModel) {
     super(id);

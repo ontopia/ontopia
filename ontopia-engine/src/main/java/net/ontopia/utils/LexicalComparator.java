@@ -46,6 +46,7 @@ public class LexicalComparator implements Comparator<Object> {
     this.collator = collator;
   }
 
+  @Override
   public int compare(Object obj1, Object obj2) {
     return collator.compare(obj1.toString(), obj2.toString());
   }

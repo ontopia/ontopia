@@ -22,11 +22,14 @@ package net.ontopia.utils.ontojsp;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
@@ -39,31 +42,31 @@ public class JSPPageReader {
   private static Logger logger =
     LoggerFactory.getLogger(JSPPageReader.class.getName());
 
-  protected String filename;
+  protected URL file;
 
   /**
    * Constructor that accepts a filename as argument.
    */
   public JSPPageReader(File source) throws java.net.MalformedURLException {
-    this.filename = source.toURL().toString();
+    this.file = URIUtils.toURL(source);
   }
 
-  public JSPPageReader(String filename) {
-    this.filename = URIUtils.getURI(filename).getAddress();
+  public JSPPageReader(URL file) {
+    this.file = file;
   }
 
   /**
    * Creates an XMLReader object.
    */
   public XMLReader createXMLReader() {
-    ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
     try {
       // Set parser features
-      cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
+      XMLReader reader = DefaultXMLReaderFactory.createXMLReader();
+      reader.setFeature("http://xml.org/sax/features/namespaces", false);
       // cxrfactory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
-      cxrfactory.setFeature("http://xml.org/sax/features/validation", false);
+      reader.setFeature("http://xml.org/sax/features/validation", false);
       // Create new parser object
-      return cxrfactory.createXMLReader();
+      return reader;
     } catch (SAXException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -84,8 +87,10 @@ public class JSPPageReader {
     JSPContentHandler handler = new JSPContentHandler(useTagPooling);
     XMLReader parser = createXMLReader();
     handler.register(parser);
-    logger.debug("Read in JSP from " + filename);
-    parser.parse(filename);
+    logger.debug("Read in JSP from " + file);
+    try (InputStream stream = file.openStream()) {
+      parser.parse(new InputSource(stream));
+    }
     return handler.getRootNode();
   }
   

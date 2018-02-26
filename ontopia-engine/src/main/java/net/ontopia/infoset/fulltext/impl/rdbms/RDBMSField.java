@@ -38,30 +38,37 @@ public class RDBMSField implements FieldIF {
     this.value = value;
   }
   
+  @Override
   public String getName() {
     return fname;
   }
   
+  @Override
   public String getValue() {
     return value;
   }
 
+  @Override
   public Reader getReader() {
     return new java.io.StringReader(value);
   }
   
+  @Override
   public boolean isStored() {
     return true;
   }
 
+  @Override
   public boolean isIndexed() {
     return true;
   }
 
+  @Override
   public boolean isTokenized() {
     return false;
   }
 
+  @Override
   public String toString() {
     return getName() + "=" + getValue() + " ";
   }

@@ -20,12 +20,10 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
@@ -34,7 +32,6 @@ import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.URIUtils;
 
 /**
  * PUBLIC: Reads a topic map and writes it out in ISO CXTM.
@@ -73,11 +70,8 @@ public class Canonicalizer {
 
     try {
 
-      // Validate or transform <url> into a URL
-      LocatorIF url = URIUtils.getURI(args[0]);
-      
       // Canonicalize document
-      canonicalize(url, args[1], ohandler.readall);
+      canonicalize(args[0], args[1], ohandler.readall);
     }
     catch (MalformedURLException e) {
       System.err.println(e);
@@ -103,13 +97,13 @@ public class Canonicalizer {
     System.out.println("  <out>: file to write canonical version to");
   }
 
-  protected static void canonicalize(LocatorIF stm, String ctm, boolean readall) 
+  protected static void canonicalize(String stm, String ctm, boolean readall) 
     throws IOException, MalformedURLException {
     TopicMapIF source;
     
     try {
       if (readall) {
-        TopicMapImporterIF importer = ImportExportUtils.getImporter(stm);          
+        TopicMapReaderIF importer = ImportExportUtils.getReader(stm);          
         source = new InMemoryTopicMapStore().getTopicMap();
         importer.importInto(source);
       } else {
@@ -124,14 +118,12 @@ public class Canonicalizer {
       return;
     }
 
-    FileOutputStream out = new FileOutputStream(ctm);
-    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(out);
-    cwriter.write(source);
-    out.close();
+    new CanonicalXTMWriter(new File(ctm)).write(source);
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean readall = false;
+    private boolean readall = false;
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 'a')
         readall = true;

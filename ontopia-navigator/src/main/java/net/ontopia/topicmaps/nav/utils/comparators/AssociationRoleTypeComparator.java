@@ -72,6 +72,7 @@ public class AssociationRoleTypeComparator implements Comparator<AssociationRole
   /**
    * Compares two AssociationRoleIFs.
    */
+  @Override
   public int compare (AssociationRoleIF ar1, AssociationRoleIF ar2){
     // Compare role types
     int result = tc.compare(ar1.getType(), ar2.getType());

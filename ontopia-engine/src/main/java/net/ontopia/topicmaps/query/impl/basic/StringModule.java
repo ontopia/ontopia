@@ -56,12 +56,14 @@ public class StringModule implements ModuleIF {
     predicates.put(predicate.getName(), predicate);
   }
   
+  @Override
   public PredicateIF getPredicate(String name) {
     return (PredicateIF) predicates.get(name);
   }
 
   // --- abstract ---------------------------------------------------------
   abstract class AbstractPredicate implements BasicPredicateIF {
+    @Override
     public int getCost(boolean[] boundparams) {
       try {
         PredicateSignature sign = PredicateSignature.getSignature(this);
@@ -85,14 +87,17 @@ public class StringModule implements ModuleIF {
 
   class ConcatPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "concat";
     }
 
+    @Override
     public String getSignature() {
       return "s s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -161,14 +166,17 @@ public class StringModule implements ModuleIF {
 
   // needs to be public so QueryOptimizer can access it
   public class StartsWithPredicate extends AbstractPredicate {
+    @Override
     public String getName() {
       return "starts-with";
     }
 
+    @Override
     public String getSignature() {
       return "s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -187,14 +195,17 @@ public class StringModule implements ModuleIF {
   // --- ends-with(string, string) --------------------------------------
 
   public class EndsWithPredicate extends AbstractPredicate {
+    @Override
     public String getName() {
       return "ends-with";
     }
 
+    @Override
     public String getSignature() {
       return "s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -214,14 +225,17 @@ public class StringModule implements ModuleIF {
 
   class ContainsPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "contains";
     }
 
+    @Override
     public String getSignature() {
       return "s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -241,14 +255,17 @@ public class StringModule implements ModuleIF {
 
   class LengthPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "length";
     }
 
+    @Override
     public String getSignature() {
       return "s! i";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -272,14 +289,17 @@ public class StringModule implements ModuleIF {
 
   class TranslatePredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "translate";
     }
 
+    @Override
     public String getSignature() {
       return "s s! s! s! s!?";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -422,14 +442,17 @@ public class StringModule implements ModuleIF {
 
   class SubstringPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "substring";
     }
 
+    @Override
     public String getSignature() {
       return "s s! i! i!?";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -536,14 +559,17 @@ public class StringModule implements ModuleIF {
 
   class SubstringAfterPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "substring-after";
     }
 
+    @Override
     public String getSignature() {
       return "s s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -629,14 +655,17 @@ public class StringModule implements ModuleIF {
 
   class SubstringBeforePredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "substring-before";
     }
 
+    @Override
     public String getSignature() {
       return "s s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -721,14 +750,17 @@ public class StringModule implements ModuleIF {
 
   class LastIndexOfPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "last-index-of";
     }
 
+    @Override
     public String getSignature() {
       return "i s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 
@@ -813,14 +845,17 @@ public class StringModule implements ModuleIF {
 
   class IndexOfPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "index-of";
     }
 
+    @Override
     public String getSignature() {
       return "i s! s!";
     }
     
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
 

@@ -29,10 +29,10 @@ import net.ontopia.utils.LookupIndexIF;
  */
 public interface TransactionalLookupIndexIF<K, E> extends LookupIndexIF<K, E> {
 
-  public void removeAll(Collection<K> keys);
+  void removeAll(Collection<K> keys);
   
-  public void commit();
+  void commit();
 
-  public void abort();
+  void abort();
 
 }

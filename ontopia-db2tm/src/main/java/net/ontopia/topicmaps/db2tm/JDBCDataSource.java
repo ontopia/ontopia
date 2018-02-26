@@ -24,21 +24,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.ResultSetMetaData;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import net.ontopia.persistence.proxy.ConnectionFactoryIF;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
-import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class JDBCDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
+  private static Logger log = LoggerFactory.getLogger(JDBCDataSource.class);
 
   protected final RelationMapping mapping;
   protected String propfile;
@@ -68,7 +68,7 @@ public class JDBCDataSource implements DataSourceIF {
     this.conn = conn;
   }
 
-  void setPropertyFile(String propfile) {
+  protected void setPropertyFile(String propfile) {
     this.propfile = propfile;
   }
 
@@ -238,6 +238,7 @@ public class JDBCDataSource implements DataSourceIF {
     return datatypes;
   }
   
+  @Override
   public String toString() {
     return "JDBCDataSource[propfile=" + propfile + "]";
   }
@@ -257,16 +258,16 @@ public class JDBCDataSource implements DataSourceIF {
 
   private class TupleReader implements TupleReaderIF {
 
-    PreparedStatement stm;
-    ResultSet rs;
-    int[] coltypes;
+    private PreparedStatement stm;
+    private ResultSet rs;
+    private int[] coltypes;
     
     private TupleReader(Relation relation) {
       // build sql statement from relation definition
       StringBuilder sb = new StringBuilder();
       sb.append("select r.");
       String[] rcols = relation.getColumns();
-      StringUtils.join(rcols, ", r.", sb);
+      sb.append(StringUtils.join(rcols, ", r."));
       sb.append(" from ");
       sb.append(relation.getName());
       sb.append(" r");
@@ -330,13 +331,13 @@ public class JDBCDataSource implements DataSourceIF {
   }
 
   private class ChangelogReader implements ChangelogReaderIF {
-    PreparedStatement stm;
-    ResultSet rs;
-    int[] coltypes;
-    int ocoltype;
+    private PreparedStatement stm;
+    private ResultSet rs;
+    private int[] coltypes;
+    private int ocoltype;
     
-    int tcix; // tuple start index
-    int ocix;
+    private int tcix; // tuple start index
+    private int ocix;
     
     private ChangelogReader(Changelog changelog, String orderValue)
       throws SQLException {

@@ -27,7 +27,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -42,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class SetContextTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(SetContextTag.class.getName());
   
   // tag attributes
@@ -54,6 +53,7 @@ public class SetContextTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     
     // get Context Tag and app-wide config
@@ -89,6 +89,7 @@ public class SetContextTag extends TagSupport {
   /**
    * Overrides the parent method.
    */
+  @Override
   public void release() {
     // does nothing
   }

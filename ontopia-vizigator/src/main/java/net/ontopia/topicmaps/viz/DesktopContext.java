@@ -35,34 +35,41 @@ public class DesktopContext extends ApplicationContext {
     desktop = aDesktop;
   }
 
+  @Override
   public void goToTopic(TopicIF topic) {
     ErrorDialog.showError(getVizPanel(), Messages
         .getString("Viz.GotoTopicNotAvailable"));
   }
 
+  @Override
   public boolean isApplet() {
     return false;
   }
 
+  @Override
   public void openPropertiesURL(String aUrl) {
     // Not supported on Desktop mode.
   }
 
+  @Override
   public void setStartTopic(TopicIF aTopic) {
     getTmConfig().setStartTopic(aTopic);
     desktop.resetStartTopicMenu();
     desktop.resetClearStartMenu();
   }
 
+  @Override
   public TopicIF getTopicForLocator(LocatorIF aLocator, TopicMapIF topicmap) {
     return topicmap.getTopicBySubjectIdentifier(aLocator);
   }
 
+  @Override
   public void loadTopic(TopicIF aTopic) {
     // In the desktop, all information is loaded up front.
     // No real need to do anything here.
   }
 
+  @Override
   public void focusNode(TMAbstractNode aNode) {
     if (aNode != null)
       getView().focusNode(aNode);
@@ -72,18 +79,22 @@ public class DesktopContext extends ApplicationContext {
     desktop.resetStartTopicMenu();
   }
 
+  @Override
   public void setScopingTopic(TopicIF aScope) {
     desktop.setScopingTopic(aScope);
   }
 
+  @Override
   public TopicIF getDefaultScopingTopic(TopicMapIF aTopicmap) {
     return getTmConfig().getScopingTopic(aTopicmap);
   }
 
+  @Override
   public TopicIF getStartTopic(TopicMapIF aTopicmap) {
     return getTmConfig().getStartTopic(aTopicmap);
   }
 
+  @Override
   public int getDefaultLocality() {
     int locality = 1;
     VizDebugUtils.debug("DesktopContext.getDefaultLocality - locality:" + 
@@ -91,6 +102,7 @@ public class DesktopContext extends ApplicationContext {
     return locality;
   }
 
+  @Override
   public int getMaxLocality() {
     int maxLocality = 5;
     VizDebugUtils.debug("DesktopContext.getMaxLocality - maxLocality:" +
@@ -98,16 +110,19 @@ public class DesktopContext extends ApplicationContext {
     return maxLocality;
   }
 
+  @Override
   public ParsedMenuFile getEnabledItemIds() {
     VizDebugUtils.debug("VizController$ApplicationContext.getEnabledItemIds" +
         "() - null: " + null);
     return new ParsedMenuFile(null);
   }
 
+  @Override
   public TypesConfigFrame getAssocFrame() {
     return desktop.getAssocFrame();
   }
 
+  @Override
   public TypesConfigFrame getTopicFrame() {
     return desktop.getTopicFrame();
   }

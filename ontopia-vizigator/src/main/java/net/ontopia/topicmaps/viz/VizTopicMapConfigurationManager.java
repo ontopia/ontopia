@@ -20,39 +20,35 @@
 
 package net.ontopia.topicmaps.viz;
 
+import com.touchgraph.graphlayout.Node;
 import java.awt.Color;
 import java.awt.Font;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.net.Base64Decoder;
-import net.ontopia.net.Base64Encoder;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
-
-import com.touchgraph.graphlayout.Node;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: Stores and manages configuration. The configuration information is
@@ -204,7 +200,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
    * Constructor initializes the configuration by loading a topic map from the
    * URL given in the parameter.
    */
-  public VizTopicMapConfigurationManager(String tmurl) throws IOException {
+  public VizTopicMapConfigurationManager(URL tmurl) throws IOException {
     super(tmurl);
     setupPriorityManager();
   }
@@ -217,6 +213,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
     setupPriorityManager();
   }
 
+  @Override
   protected void init() {
     super.init();
 
@@ -1255,9 +1252,9 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
                  VizTopicMapConfigurationManager.FILTER_DEFAULT;
       
     }
-    if (visibility.equals("true"))
+    if ("true".equals(visibility))
       return VizTopicMapConfigurationManager.FILTER_IN;
-    if (visibility.equals("false"))
+    if ("false".equals(visibility))
       return VizTopicMapConfigurationManager.FILTER_OUT;
 
     // The following should never happen, and is an error in the configuration.
@@ -1366,14 +1363,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
       if (base64 == null)
         return null;
 
-      ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-      try {
-        Base64Decoder.decode(base64, output);
-      } catch (IOException e) {
-        throw new OntopiaRuntimeException(e);
-      }
-      icon = new ImageIcon(output.toByteArray());
+      icon = new ImageIcon(Base64.decodeBase64(base64));
       iconCache.put(filename, icon);
     }
     return icon;
@@ -1396,14 +1386,13 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
 
     try {
       FileInputStream file = new FileInputStream(string);
-      StreamUtils.transfer(file, output);
+      IOUtils.copy(file, output);
       file.close();
       byte[] bytes = output.toByteArray();
       ImageIcon icon = new ImageIcon(bytes);
       iconCache.put(string, icon);
-      ByteArrayInputStream input = new ByteArrayInputStream(bytes);
       output.reset();
-      Base64Encoder.encode(input, output);
+      output.write(Base64.encodeBase64(bytes));
     } catch (IOException e) {
       // should never occur
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);

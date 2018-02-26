@@ -179,18 +179,20 @@ public abstract class AbstractAttachManager {
    * INTERNAL: Interface that manages attaching new objects to the object model.
    */
   public interface AttachHandlerIF extends EventListenerIF, CachedIF {
-    public boolean isAttached(Object object);
-    public Collection<Object> getAttached();
-    public void refresh();
+    boolean isAttached(Object object);
+    Collection<Object> getAttached();
+    @Override
+    void refresh();
   }
   
   /**
    * INTERNAL: Interface that manages detaching new objects to the object model.
    */
   public interface DetachHandlerIF extends EventListenerIF, CachedIF {
-    public boolean isDetached(Object object);
-    public Collection<Object> getDetached();
-    public void refresh();
+    boolean isDetached(Object object);
+    Collection<Object> getDetached();
+    @Override
+    void refresh();
   }
 }
 

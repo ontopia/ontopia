@@ -22,8 +22,6 @@ package net.ontopia.topicmaps.nav2.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletContext;
@@ -34,7 +32,6 @@ import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**

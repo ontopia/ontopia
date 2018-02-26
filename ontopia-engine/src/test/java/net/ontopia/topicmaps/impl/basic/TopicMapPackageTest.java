@@ -49,8 +49,10 @@ public abstract class TopicMapPackageTest extends TestCase {
     super(name);
   }
 
+  @Override
   protected abstract void setUp();
 
+  @Override
   protected abstract void tearDown();
 
   public void testTopicMap() {

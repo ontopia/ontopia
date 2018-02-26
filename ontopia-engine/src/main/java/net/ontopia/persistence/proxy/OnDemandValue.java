@@ -38,13 +38,12 @@ import org.slf4j.LoggerFactory;
 public class OnDemandValue {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(OnDemandValue.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(OnDemandValue.class.getName());
 
   protected IdentityIF identity;
   protected FieldInfoIF finfo;
 
   protected Object value;
-  protected boolean released;
   
   public OnDemandValue() {
   }
@@ -63,25 +62,9 @@ public class OnDemandValue {
   }
 
   public Object getValue() {
-    if (released)
-      throw new OntopiaRuntimeException("Cannot get value from released value.");
-    else
       return value;
   }
 
-  public void releaseValue() {
-    if (value != null) {
-      //! if (value instanceof Reader) {
-      //!   try {
-      //!     ((Reader)value).close();
-      //!   } catch (IOException e) {
-      //!     throw new OntopiaRuntimeException(e);
-      //!   }
-      //! }
-    }
-    released = true;
-  }
-  
   public Object getValue(TransactionIF txn) {
     try {
       RDBMSAccess access = (RDBMSAccess)txn.getStorageAccess();

@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   private ChangeType prevchange;
   private String[] prevtuple;
 
-  static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class);
+  private static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class);
   
   public ChangelogReaderWrapper(ChangelogReaderIF source,
                                 Relation relation) {
@@ -130,7 +130,7 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
       return true;
 
     for (int ix = 0; ix < keycols.length; ix++)
-      if (ObjectUtils.different(tuple1[keycols[ix]], tuple2[keycols[ix]]))
+      if (!Objects.equals(tuple1[keycols[ix]], tuple2[keycols[ix]]))
         return false;
     return true;
   }  

@@ -41,7 +41,7 @@ abstract class ConstructImpl implements Construct {
     this.topicMap = topicMap;
   }
 
-  abstract TMObjectIF getWrapped();
+  protected abstract TMObjectIF getWrapped();
 
   /*
    * (non-Javadoc)
@@ -49,6 +49,7 @@ abstract class ConstructImpl implements Construct {
    * @see org.tmapi.core.Construct#getId()
    */
   
+  @Override
   public String getId() {
     return getWrapped().getObjectId();
   }
@@ -59,6 +60,7 @@ abstract class ConstructImpl implements Construct {
    * @see org.tmapi.core.Construct#getItemIdentifiers()
    */
   
+  @Override
   public Set<Locator> getItemIdentifiers() {
     return topicMap.wrapSet(getWrapped().getItemIdentifiers());
   }
@@ -69,6 +71,7 @@ abstract class ConstructImpl implements Construct {
    * @see org.tmapi.core.Construct#addItemIdentifier(org.tmapi.core.Locator)
    */
   
+  @Override
   public void addItemIdentifier(Locator iid) {
     Check.itemIdentifierNotNull(this, iid);
     try {
@@ -85,6 +88,7 @@ abstract class ConstructImpl implements Construct {
    * @see org.tmapi.core.Construct#removeItemIdentifier(org.tmapi.core.Locator)
    */
   
+  @Override
   public void removeItemIdentifier(Locator iid) {
     getWrapped().removeItemIdentifier(topicMap.unwrapLocator(iid));
   }
@@ -95,6 +99,7 @@ abstract class ConstructImpl implements Construct {
    * @see org.tmapi.core.Construct#getTopicMap()
    */
   
+  @Override
   public TopicMapImpl getTopicMap() {
     return topicMap;
   }
@@ -105,11 +110,13 @@ abstract class ConstructImpl implements Construct {
    * @see org.tmapi.core.Construct#remove()
    */
   
+  @Override
   public void remove() {
     getWrapped().remove();
   }
 
   
+  @Override
   public boolean equals(Object obj) {
     if ((obj!=null) && (obj instanceof ConstructImpl)) {
     	return getWrapped() == ((ConstructImpl) obj).getWrapped();
@@ -117,6 +124,7 @@ abstract class ConstructImpl implements Construct {
     return false;
   }
   
+  @Override
   public int hashCode() {
     return getWrapped().hashCode();
   }

@@ -1,7 +1,6 @@
-<%@ page language="java"
-    import="java.io.*,
-            net.ontopia.utils.StreamUtils"
-%><%
+<%@page import="org.apache.commons.io.IOUtils"%>
+<%@ page import="java.io.*" %>
+<%
   response.setContentType("text/xml; charset=utf-8");
 
   String tmid = request.getParameter("tm");
@@ -9,7 +8,7 @@
 
   InputStream in = pageContext.getServletContext().getResourceAsStream("/WEB-INF/topicmaps/" + tmid + ".viz");
   if (in != null)
-    StreamUtils.transfer(new InputStreamReader(in, "utf-8"), out);
+    IOUtils.copy(new InputStreamReader(in, "utf-8"), out);
   else
     out.write("<topicMap/>");
 %>

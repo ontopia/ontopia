@@ -21,18 +21,18 @@ package ontopoly.utils;
 
 import java.io.Serializable;
 import java.util.Comparator;
-
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class NameComparator implements Comparator<Object>, Serializable {
 
   public static final NameComparator INSTANCE = new NameComparator();
   
+  @Override
   public int compare(Object o1, Object o2) {
     TopicNameIF n1 = (TopicNameIF)o1;
     TopicNameIF n2 = (TopicNameIF)o2;    
-    return StringUtils.compareToIgnoreCase(n1.getValue(), n2.getValue());
+    return StringUtils.compareIgnoreCase(n1.getValue(), n2.getValue());
   }
 
 }

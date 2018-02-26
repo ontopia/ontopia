@@ -29,18 +29,22 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
  */
 public class GreaterThanPredicate implements BasicPredicateIF {
 
+  @Override
   public String getName() {
     return ">";
   }
 
+  @Override
   public String getSignature() {
     return ".! .!";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     return PredicateDrivenCostEstimator.getComparisonPredicateCost(boundparams);
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

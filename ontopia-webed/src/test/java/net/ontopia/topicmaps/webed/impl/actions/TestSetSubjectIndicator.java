@@ -38,6 +38,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetSubjectIndicator();

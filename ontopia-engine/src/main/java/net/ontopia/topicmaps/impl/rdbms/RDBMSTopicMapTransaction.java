@@ -31,6 +31,7 @@ import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.QueryCollection;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -67,7 +68,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
 
   protected ObjectTreeManager otree;
   protected TopicModificationManager topicmods;
-  TopicEvents te;
+  protected TopicEvents te;
   
   RDBMSTopicMapTransaction(RDBMSTopicMapStore store, long topicmap_id, boolean readonly) {
     this.store = store;
@@ -143,6 +144,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     return otree;
   }
   
+  @Override
   public void commit() {
     if (!readonly) {
       synchronized (this) {
@@ -167,6 +169,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     }
   }
 
+  @Override
   public void abort() {
     if (!readonly) {
       synchronized (this) {
@@ -178,6 +181,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     }
   }
 
+  @Override
   public void abort(boolean invalidate) {
     if (!readonly || invalidate) {
       synchronized (this) {
@@ -209,6 +213,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     }
   }
 
+  @Override
   public boolean validate() {
     // if transaction has been aborted the store is invalid
     if (invalid) return false;
@@ -216,6 +221,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     return txn.validate();    
   }
 
+  @Override
   public TopicMapTransactionIF createNested() {
     // Nested transactions are not supported
     throw new OntopiaUnsupportedException("Nested transactions not supported.");
@@ -226,7 +232,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
    * transaction.
    */
   public TransactionIF getTransaction() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return txn;
   }
   
@@ -234,6 +240,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // EventManagerIF implementation
   // ---------------------------------------------------------------------------
   
+  @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
     if (listener == this) return;
@@ -249,6 +256,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     }
   }
 
+  @Override
   public void removeListener(EventListenerIF listener, String event) {
     synchronized (listeners) {
       if (listeners.containsKey(event)) {
@@ -264,6 +272,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     }
   }
 
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     // Look up event listeners
     Object[] event_listeners = (Object[])listeners.get(event);
@@ -314,7 +323,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // Role type cache
   // ---------------------------------------------------------------------------
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype) {
     return rtcache.getRolesByType(player, rtype);
   }
 
@@ -322,7 +331,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // Role type and association type cache
   // ---------------------------------------------------------------------------
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return rtatcache.getRolesByType(player, rtype, atype);
   }
 
@@ -354,6 +363,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
             "TopicIF.getAssociationsByType", new Object[] {getTopicMap(), type, getTopicMap(), topic});
   }
 
+  @Override
   public String toString() {
     return "[rdbms.Transaction, " + actual_id + ", " + readonly + "]";
   }

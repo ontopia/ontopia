@@ -37,6 +37,7 @@ public class TopicNameComparator extends ScopedIFComparator<TopicNameIF> {
     super(scope);
   }
   
+  @Override
   public int compare(TopicNameIF o1, TopicNameIF o2) {
     TopicMapIF tm = o1.getTopicMap();
 

@@ -38,7 +38,7 @@ public class InMemoryTopicMapTransaction extends AbstractTopicMapTransaction {
   
   protected ObjectTreeManager otree;
   protected TopicModificationManager topicmods;
-  TopicEvents te;
+  protected TopicEvents te;
 
   protected InMemoryTopicMapTransaction(InMemoryTopicMapStore store) {
     this(store, null);
@@ -75,13 +75,15 @@ public class InMemoryTopicMapTransaction extends AbstractTopicMapTransaction {
     ((TopicMap)topicmap).setSubjectIdentityCache(sicache);
 
     // Create new index manager
-    this.imanager = new IndexManager(this, cfactory, emanager, otree);
+    this.imanager = new IndexManager(this, cfactory, emanager, otree, sicache);
   }
 
+  @Override
   public boolean validate() {
     return !invalid;
   }
 
+  @Override
   public TopicMapTransactionIF createNested() {
     // Nested transactions are not supported
     throw new OntopiaUnsupportedException("Nested transactions not supported.");

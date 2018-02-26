@@ -58,6 +58,7 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
     this.field = field;
   }
 
+  @Override
   public void resetTracking() {
     // Clears the lists of added and removed objects.
     // FIXME: Figure out if clearing collection or resetting to null is faster
@@ -67,6 +68,7 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
     // if (removed != null) removed.clear();
   }
   
+  @Override
   public void selfAdded() {
     if (!isEmpty()) {
       if (added == null)
@@ -76,14 +78,17 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
     }
   }
 
+  @Override
   public Collection<E> getAdded() {
     return added;
   }
 
+  @Override
   public Collection<E> getRemoved() {
     return removed;
   }
   
+  @Override
   public boolean addWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
     E o;
@@ -106,6 +111,7 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
     return result;
   }
 
+  @Override
   public boolean removeWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
     E o;
@@ -128,6 +134,7 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
     return result;
   }
 
+  @Override
   public void clearWithTracking() {
     Iterator<E> iter = new ArrayList<E>(this).iterator();
     while (iter.hasNext()) {
@@ -137,32 +144,39 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
   
   // -- immutable collection
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
   // -- iterator
 
+  @Override
   public Iterator<E> iterator() {
     loadField(); // materialize
     return new PersistentIterator<E>(txn, true, super.iterator());
@@ -170,11 +184,13 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
 
   // -- other
 
+  @Override
   public boolean contains(Object o) {    
     loadField(); // materialize
     return super.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
+  @Override
   public boolean containsAll(Collection<?> c) {
     Iterator e = c.iterator();
     while (e.hasNext())
@@ -184,26 +200,31 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
     return true;
   }
 
+  @Override
   public boolean equals(Object o) {
     loadField(); // materialize
     return super.equals(o);
   }
 
+  @Override
   public int hashCode() {
     loadField(); // materialize
     return super.hashCode();
   }
 
+  @Override
   public boolean isEmpty() {
     loadField(); // materialize
     return super.isEmpty();
   }
 
+  @Override
   public int size() {
     loadField(); // materialize
     return super.size();
   }
 
+  @Override
   public Object[] toArray() {
     // materialized in size()
     Object[] result = new Object[size()];
@@ -223,6 +244,7 @@ public class TrackableLazySet<E> extends HashSet<E> implements TrackableCollecti
   }
 
   @SuppressWarnings("unchecked")
+  @Override
   public <T> T[] toArray(T[] a) {
     // materialized in size()
     int size = size();

@@ -67,6 +67,7 @@ public class TMDeciderUtils {
       this.oktypes = oktypes;
     }
     
+    @Override
     public boolean ok(Object object) {
       if (object instanceof TypedIF) {
         TypedIF typed = (TypedIF) object;
@@ -93,6 +94,7 @@ public class TMDeciderUtils {
       }
     }
     
+    @Override
     public boolean ok(Object object) {
       if (object instanceof TypedIF) {
         TopicIF type = ((TypedIF) object).getType();

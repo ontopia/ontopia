@@ -33,12 +33,12 @@ public interface ConnectionFactoryIF {
   /**
    * INTERNAL: Requests a new connection object.
    */
-  public Connection requestConnection() throws SQLException;
+  Connection requestConnection() throws SQLException;
 
   /**
    * INTERNAL: Closes the connection factory.
    */
-  public void close();
+  void close();
   
 }
 

@@ -40,21 +40,15 @@ import org.slf4j.LoggerFactory;
 public class IfTag extends QueryExecutingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(IfTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(IfTag.class.getName());
 
   // tag attributes
   protected String var;
 
   /**
-   * Default constructor.
-   */
-  public IfTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     if (contextTag == null)
@@ -101,6 +95,7 @@ public class IfTag extends QueryExecutingTag {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     // establish old lexical scope, back to outside of the loop
     contextManager.popScope();
@@ -111,6 +106,7 @@ public class IfTag extends QueryExecutingTag {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     super.release();
     

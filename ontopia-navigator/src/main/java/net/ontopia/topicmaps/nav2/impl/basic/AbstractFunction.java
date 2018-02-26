@@ -48,10 +48,12 @@ public abstract class AbstractFunction implements FunctionIF {
   // -------------------------------------------------------
 
   /** @return Empty list */
+  @Override
   public Collection getParameters() {
     return Collections.EMPTY_LIST;
   }
 
+  @Override
   public Collection execute(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException {
     // Delegate to deprecated call method.
@@ -67,27 +69,32 @@ public abstract class AbstractFunction implements FunctionIF {
 
   // --- deprecated methods
   
+  @Override
   public void call(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException {
     // No implementation
   }
 
   /** @return null */
+  @Override
   public String getName() {
     return null;
   }
   
   /** @return null */
+  @Override
   public String getReturnVariableName() {
     return null;
   }
 
   /** @return null */
+  @Override
   public ModuleIF getModule() {
     return null;
   }
 
   /** @return null */
+  @Override
   public JSPTreeNodeIF getRootNode() {
     return null;
   }
@@ -96,6 +103,7 @@ public abstract class AbstractFunction implements FunctionIF {
   // overwrite Object implementation 
   // -------------------------------------------------------
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(64);
     sb.append("[Function: ")

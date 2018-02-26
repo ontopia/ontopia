@@ -36,7 +36,7 @@ public interface ParsedQueryIF extends ParsedStatementIF {
    * returned, in no particular order.
    * @return An immutable List of String objects.
    */
-  public List<String> getSelectedVariables();
+  List<String> getSelectedVariables();
 
   /**
    * PUBLIC: Returns the variables that are counted in the
@@ -45,14 +45,14 @@ public interface ParsedQueryIF extends ParsedStatementIF {
    * is no <tt>select</tt> clause an empty collection is returned.
    * @return An immutable Collection of String objects.
    */
-  public Collection<String> getCountedVariables();
+  Collection<String> getCountedVariables();
 
   /**
    * PUBLIC: Returns all the variables used in the query, in no
    * particular order.
    * @return An immutable Collection of String objects.
    */
-  public Collection<String> getAllVariables();
+  Collection<String> getAllVariables();
 
   /**
    * PUBLIC: Returns the variables listed in the <tt>order by</tt>
@@ -61,19 +61,19 @@ public interface ParsedQueryIF extends ParsedStatementIF {
    * <tt>isOrderedAscending</tt> method.
    * @return An immutable List of String objects.
    */
-  public List<String> getOrderBy();
+  List<String> getOrderBy();
 
   /**
    * PUBLIC: Returns true if the named variable is to be sorted in
    * ascending order.
    */
-  public boolean isOrderedAscending(String name);
+  boolean isOrderedAscending(String name);
 
   /**
    * PUBLIC: Executes the query, returning the query result. Query
    * results are <em>not</em> cached, so results are up to date.
    */
-  public QueryResultIF execute() throws InvalidQueryException;
+  QueryResultIF execute() throws InvalidQueryException;
 
   /**
    * PUBLIC: Executes the query binding the parameters in the query to
@@ -82,6 +82,6 @@ public interface ParsedQueryIF extends ParsedStatementIF {
    * to date.
    * @since 2.0
    */
-  public QueryResultIF execute(Map<String, ?> arguments) throws InvalidQueryException;
+  QueryResultIF execute(Map<String, ?> arguments) throws InvalidQueryException;
   
 }

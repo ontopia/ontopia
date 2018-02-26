@@ -21,26 +21,24 @@
 package net.ontopia.persistence.rdbms;
 
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
-
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
-import org.xml.sax.DocumentHandler;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.AttributeListImpl;
+import org.xml.sax.helpers.AttributesImpl;
 
 /** 
  * INTERNAL: Class that can read a database schema definition from an
@@ -48,8 +46,17 @@ import org.xml.sax.helpers.AttributeListImpl;
  */
 
 public class DatabaseProjectReader {
+  private static final String PROPERTY = "property";
+  private static final String VALUE = "value";
+  private static final String SIZE = "size";
+  private static final String TYPE = "type";
+  private static final String NAME = "name";
+  private static final String PLATFORM = "platform";
+  private static final String CDATA = "CDATA";
     
-  protected static final AttributeListImpl EMPTY_ATTR_LIST = new AttributeListImpl();
+  protected static final AttributesImpl EMPTY_ATTR_LIST = new AttributesImpl();
+  protected static final String EMPTY_NAMESPACE = "";
+  protected static final String EMPTY_LOCALNAME = "";
 
   private DatabaseProjectReader() { }
 
@@ -65,7 +72,7 @@ public class DatabaseProjectReader {
   public static Project loadProject(InputSource isource) throws IOException, SAXException {
     
     ProjectHandler handler = new ProjectHandler();
-    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();    
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();    
     parser.setContentHandler(handler);
     parser.parse(isource);
     
@@ -82,12 +89,12 @@ public class DatabaseProjectReader {
     print.close();
   }
 
-  public static void saveProject(Project project, DocumentHandler dh) throws SAXException {
-    AttributeListImpl atts = new AttributeListImpl();
+  public static void saveProject(Project project, ContentHandler dh) throws SAXException {
+    AttributesImpl atts = new AttributesImpl();
     
     dh.startDocument();
 
-    dh.startElement("dbschema", EMPTY_ATTR_LIST);
+    dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "dbschema", EMPTY_ATTR_LIST);
 
     Iterator<String> platforms = project.getDataTypePlatforms().iterator();
     if (platforms.hasNext()) {
@@ -95,20 +102,20 @@ public class DatabaseProjectReader {
         String platform = platforms.next();
         
         atts.clear();
-        atts.addAttribute("platform", "CDATA", platform);
-        dh.startElement("datatypes", atts);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PLATFORM, CDATA, platform);
+        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatypes", atts);
         
         Iterator<DataType> datatypes = project.getDataTypes(platform).iterator();
         while (datatypes.hasNext()) {
           // Platform datatypes
           DataType datatype = datatypes.next();
           atts.clear();
-          atts.addAttribute("name", "CDATA", (datatype.getName()));
-          atts.addAttribute("type", "CDATA", (datatype.getType()));
-          atts.addAttribute("size", "CDATA", (datatype.getSize() == null ? "" : datatype.getSize()));
-          atts.addAttribute("class", "CDATA", (datatype.isVariable() ? "variable" : "constant"));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, (datatype.getName()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, TYPE, CDATA, (datatype.getType()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SIZE, CDATA, (datatype.getSize() == null ? "" : datatype.getSize()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "class", CDATA, (datatype.isVariable() ? "variable" : "constant"));
           
-          dh.startElement("datatype", atts);
+          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", atts);
 
           // Datatype properties
           Iterator<String> properties = datatype.getProperties().iterator();
@@ -117,18 +124,18 @@ public class DatabaseProjectReader {
             String value = datatype.getProperty(name);
             if (value != null) {
               atts.clear();
-              atts.addAttribute("name", "CDATA", name);
-              atts.addAttribute("value", "CDATA", value);
-              dh.startElement("property", atts);
-              dh.endElement("property");
+              atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, name);
+              atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, VALUE, CDATA, value);
+              dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PROPERTY, atts);
+              dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PROPERTY);
             }
           }
           
-          dh.endElement("datatype");
+          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype");
           
         }
       }
-      dh.endElement("datatypes");
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatypes");
     }
     
     Iterator<Table> tables = project.getTables().iterator();
@@ -137,12 +144,12 @@ public class DatabaseProjectReader {
 
       // Table attributes
       atts.clear();
-      atts.addAttribute("name", "CDATA", table.getName());
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, table.getName());
       if (table.getShortName() != null)
-        atts.addAttribute("short", "CDATA", table.getShortName());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "short", CDATA, table.getShortName());
       if (table.getPrimaryKeys() != null)
-        atts.addAttribute("pks", "CDATA", StringUtils.join(table.getPrimaryKeys(), " "));
-      dh.startElement("table", atts);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "pks", CDATA, StringUtils.join(table.getPrimaryKeys(), " "));
+      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "table", atts);
 
       // Table properties
       Iterator<String> properties = table.getProperties().iterator();
@@ -151,10 +158,10 @@ public class DatabaseProjectReader {
         String value = table.getProperty(name);
         if (value != null) {
           atts.clear();
-          atts.addAttribute("name", "CDATA", name);
-          atts.addAttribute("value", "CDATA", value);
-          dh.startElement("property", atts);
-          dh.endElement("property");
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, name);
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, VALUE, CDATA, value);
+          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PROPERTY, atts);
+          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PROPERTY);
         }
       }
 
@@ -164,21 +171,21 @@ public class DatabaseProjectReader {
 
         // Column attributes
         atts.clear();
-        atts.addAttribute("name", "CDATA", column.getName());
-        atts.addAttribute("type", "CDATA", column.getType());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, column.getName());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, TYPE, CDATA, column.getType());
         
         if (column.isReference()) {
-          atts.addAttribute("reftab", "CDATA", column.getReferencedTable());
-          atts.addAttribute("refcol", "CDATA", column.getReferencedColumn());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reftab", CDATA, column.getReferencedTable());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "refcol", CDATA, column.getReferencedColumn());
         }
         
         if (column.getSize() != null)
-          atts.addAttribute("size", "CDATA", column.getName());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SIZE, CDATA, column.getName());
         if (column.isNullable())
-          atts.addAttribute("null", "CDATA", "yes");
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "null", CDATA, "yes");
         if (column.getDefault() != null)
-          atts.addAttribute("default", "CDATA", column.getDefault());
-        dh.startElement("column", atts);
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "default", CDATA, column.getDefault());
+        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "column", atts);
       
         // Column properties
         Iterator<String> properties2 = column.getProperties().iterator();
@@ -187,33 +194,33 @@ public class DatabaseProjectReader {
           String value = column.getProperty(name);
           if (value != null) {
             atts.clear();
-            atts.addAttribute("name", "CDATA", name);
-            atts.addAttribute("value", "CDATA", value);
-            dh.startElement("property", atts);
-            dh.endElement("property");
+            atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, name);
+            atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, VALUE, CDATA, value);
+            dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PROPERTY, atts);
+            dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, PROPERTY);
           }
         }        
-        dh.endElement("column");        
+        dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "column");        
       }
       
-      dh.endElement("table");      
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "table");      
     }
     
-    dh.endElement("dbschema");
+    dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "dbschema");
     dh.endDocument();
   }
   
   static class ProjectHandler extends SAXTracker {
 
-    static final String EL_DBSCHEMA = "dbschema";
-    static final String EL_DATATYPES = "datatypes";
-    static final String EL_DATATYPE = "datatype";
-    static final String EL_TABLE = "table";
-    static final String EL_COLUMN = "column";
-    static final String EL_INDEX = "index";
-    static final String EL_PROPERTY = "property";
-    static final String EL_CREATE_ACTION = "create-action";
-    static final String EL_DROP_ACTION = "drop-action";
+    private static final String EL_DBSCHEMA = "dbschema";
+    private static final String EL_DATATYPES = "datatypes";
+    private static final String EL_DATATYPE = "datatype";
+    private static final String EL_TABLE = "table";
+    private static final String EL_COLUMN = "column";
+    private static final String EL_INDEX = "index";
+    private static final String EL_PROPERTY = PROPERTY;
+    private static final String EL_CREATE_ACTION = "create-action";
+    private static final String EL_DROP_ACTION = "drop-action";
 
     protected Project project;
     protected Map<String, Object> info;
@@ -223,30 +230,33 @@ public class DatabaseProjectReader {
       keepContentsOf("drop-action");
     }
 
+    @Override
     public void startDocument() {
       project = new Project();
       info = new HashMap<String, Object>();
     }
 
+    @Override
     public void endDocument() {
       info = null;
     }
     
+    @Override
     public void startElement(String uri, String name, String qname, Attributes atts) throws SAXException {
       super.startElement(uri, name, qname, atts);
 
       // System.out.println("S: " + name + ":" + openElements);
       
-      if (qname == EL_COLUMN) {
+      if (EL_COLUMN.equals(qname)) {
         // Instantiate new column instance
         Column column = new Column();
 
-        String cname = atts.getValue("name");
+        String cname = atts.getValue(NAME);
         if (cname == null) 
           throw new OntopiaRuntimeException("column.name must be specified: " + cname); 
         column.setName(cname);
 
-        String type = atts.getValue("type");
+        String type = atts.getValue(TYPE);
         if (type == null) 
           throw new OntopiaRuntimeException("column.type must be specified: " + cname);
 
@@ -255,7 +265,7 @@ public class DatabaseProjectReader {
           
         column.setType(type);
         
-        String size = atts.getValue("size");
+        String size = atts.getValue(SIZE);
         if (size != null) column.setSize(size);
 
         String default_value = atts.getValue("default");
@@ -282,11 +292,11 @@ public class DatabaseProjectReader {
 
         info.put(EL_COLUMN, column);
       
-      } else if (qname == EL_INDEX) {
+      } else if (EL_INDEX.equals(qname)) {
         // Instantiate new index instance
         Index index = new Index();
 
-        String iname = atts.getValue("name");
+        String iname = atts.getValue(NAME);
         if (iname == null) 
           throw new OntopiaRuntimeException("index.name must be specified: " + iname); 
         index.setName(iname);
@@ -305,11 +315,11 @@ public class DatabaseProjectReader {
 
         info.put(EL_INDEX, index);
         
-      } else if (qname == EL_TABLE) {
+      } else if (EL_TABLE.equals(qname)) {
         // Instantiate new table instance
         Table table = new Table();
 
-        String tname = atts.getValue("name");
+        String tname = atts.getValue(NAME);
         if (tname == null) 
           throw new OntopiaRuntimeException("table.name must be specified: " + tname);  
         table.setName(tname);
@@ -319,30 +329,30 @@ public class DatabaseProjectReader {
         
         String pkeys = atts.getValue("pks");
         if (pkeys != null)
-          table.setPrimaryKeys(StringUtils.split(pkeys, " "));
+          table.setPrimaryKeys(StringUtils.split(pkeys));
 
         // Add table to project
         project.addTable(table);
         info.put(EL_TABLE, table);
 
-      } else if (qname == EL_DATATYPES) {
-        String platform = atts.getValue("platform");
+      } else if (EL_DATATYPES.equals(qname)) {
+        String platform = atts.getValue(PLATFORM);
         if (platform == null) 
           throw new OntopiaRuntimeException("datatypes.platform must be specified: " + platform);
         
         info.put(EL_DATATYPES, platform);
 
-      } else if (qname == EL_DATATYPE) {
+      } else if (EL_DATATYPE.equals(qname)) {
         // Instantiate new datatype instance
         DataType datatype = new DataType();
         String platform = (String)info.get(EL_DATATYPES);
         
-        String dname = atts.getValue("name");
+        String dname = atts.getValue(NAME);
         if (dname == null) 
           throw new OntopiaRuntimeException("datatype.name must be specified: " + dname);
         datatype.setName(dname);
 
-        String type = atts.getValue("type");
+        String type = atts.getValue(TYPE);
         if (type == null) 
           throw new OntopiaRuntimeException("datatype.type must be specified: " + dname);       
         datatype.setType(type);
@@ -353,7 +363,7 @@ public class DatabaseProjectReader {
         else
           datatype.setVariable(false);
         
-        String size = atts.getValue("size");
+        String size = atts.getValue(SIZE);
         if (datatype.isVariable()) {
           if (size == null)
             throw new OntopiaRuntimeException("datatype.size must be specified: " + dname);     
@@ -364,32 +374,32 @@ public class DatabaseProjectReader {
         project.addDataType(datatype, platform);        
         info.put(EL_DATATYPE, datatype);
 
-      } else if (qname == EL_PROPERTY) {
+      } else if (EL_PROPERTY.equals(qname)) {
         if (info.containsKey(EL_DATATYPE)) {
-          String propname = atts.getValue("name");
+          String propname = atts.getValue(NAME);
           if (propname == null)
               throw new OntopiaRuntimeException("property.name must be specified.");     
-          String value = atts.getValue("value");
+          String value = atts.getValue(VALUE);
           if (value == null)
               throw new OntopiaRuntimeException("property.value must be specified.");
           DataType datatype = (DataType)info.get(EL_DATATYPE);
           datatype.addProperty(propname, value);
         }
         else if (info.containsKey(EL_COLUMN)) {
-          String propname = atts.getValue("name");
+          String propname = atts.getValue(NAME);
           if (propname == null)
               throw new OntopiaRuntimeException("property.name must be specified.");     
-          String value = atts.getValue("value");
+          String value = atts.getValue(VALUE);
           if (value == null)
               throw new OntopiaRuntimeException("property.value must be specified.");
           Column column = (Column)info.get(EL_COLUMN);
           column.addProperty(propname, value);
         }
         else if (info.containsKey(EL_TABLE)) {
-          String propname = atts.getValue("name");
+          String propname = atts.getValue(NAME);
           if (propname == null)
               throw new OntopiaRuntimeException("property.name must be specified.");     
-          String value = atts.getValue("value");
+          String value = atts.getValue(VALUE);
           if (value == null)
               throw new OntopiaRuntimeException("property.value must be specified.");
           Table table = (Table)info.get(EL_TABLE);
@@ -398,51 +408,51 @@ public class DatabaseProjectReader {
         else
           throw new OntopiaRuntimeException("property element in unknown parent." + info); 
           
-      } else if (qname == EL_CREATE_ACTION) {
-        String platform = atts.getValue("platform");
+      } else if (EL_CREATE_ACTION.equals(qname)) {
+        String platform = atts.getValue(PLATFORM);
         if (platform == null) 
           throw new OntopiaRuntimeException("create-action.platform must be specified: " + platform); 
 
         info.put(EL_CREATE_ACTION, platform); 
-      } else if (qname == EL_DROP_ACTION) {
-        String platform = atts.getValue("platform");
+      } else if (EL_DROP_ACTION.equals(qname)) {
+        String platform = atts.getValue(PLATFORM);
         if (platform == null) 
           throw new OntopiaRuntimeException("drop-action.platform must be specified: " + platform); 
 
         info.put(EL_DROP_ACTION, platform); 
-      } else if (qname == EL_DBSCHEMA) {
+      } else if (EL_DBSCHEMA.equals(qname)) {
       }
     }
     
+    @Override
     public void endElement(String uri, String name, String qname) throws SAXException {
       super.endElement(uri, name, qname);
 
-      if (qname == EL_DATATYPES) {
+      if (EL_DATATYPES.equals(qname)) {
         // Remove types entry
         info.remove(EL_DATATYPES);
-      } else if (qname == EL_DATATYPE) {
+      } else if (EL_DATATYPE.equals(qname)) {
         // Remove type entry
         info.remove(EL_DATATYPE);
-      } else if (qname == EL_TABLE) {
+      } else if (EL_TABLE.equals(qname)) {
         // Remove table entry
         info.remove(EL_TABLE);
-      } else if (qname == EL_COLUMN) {
+      } else if (EL_COLUMN.equals(qname)) {
         // Remove column entry
         info.remove(EL_COLUMN);
-      } else if (qname == EL_INDEX) {
+      } else if (EL_INDEX.equals(qname)) {
         // Remove index entry
         info.remove(EL_INDEX);
-      } else if (qname == EL_CREATE_ACTION) {
+      } else if (EL_CREATE_ACTION.equals(qname)) {
         project.addCreateAction((String)info.get(EL_CREATE_ACTION), content.toString());
         // Remove table entry
         info.remove(EL_CREATE_ACTION);
-      } else if (qname == EL_DROP_ACTION) {
+      } else if (EL_DROP_ACTION.equals(qname)) {
         project.addDropAction((String)info.get(EL_DROP_ACTION), content.toString());
         // Remove table entry
         info.remove(EL_DROP_ACTION);
-      } else if (qname == EL_PROPERTY) {
-      } else if (qname == EL_DBSCHEMA) {
-      } else if (qname == EL_INDEX) {
+      } else if (EL_PROPERTY.equals(qname)) {
+      } else if (EL_DBSCHEMA.equals(qname)) {
       } else {
         System.out.println("Ignoring: " + name);        
       }
@@ -453,7 +463,7 @@ public class DatabaseProjectReader {
     protected Map<String, String> parseAttribs(String content) {
       Map<String, String> result = new HashMap<String, String>();
       
-      String[] fields = StringUtils.split(content.toString(), "\n");
+      String[] fields = StringUtils.split(content.toString());
       for (int i=0; i < fields.length; i++) {
         String field = fields[i];
         String[] entry = StringUtils.split(field, "=");

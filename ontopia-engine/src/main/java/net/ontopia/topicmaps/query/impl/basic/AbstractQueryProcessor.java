@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractQueryProcessor {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(AbstractQueryProcessor.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(AbstractQueryProcessor.class.getName());
   private static BasicPredicateIF NOT_PREDICATE = new NotPredicate();
 
   /**
@@ -209,22 +209,27 @@ public abstract class AbstractQueryProcessor {
   // only used to produce debugging traces
   
   static class NotPredicate implements BasicPredicateIF {
+    private static final String MSG_INTERNAL_ERROR = "INTERNAL ERROR";
     
+    @Override
     public String getName() {
-      throw new OntopiaRuntimeException("INTERNAL ERROR");
+      throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
 
+    @Override
     public String getSignature() {
-      throw new OntopiaRuntimeException("INTERNAL ERROR");
+      throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
 
+    @Override
     public int getCost(boolean[] boundparam) {
-      throw new OntopiaRuntimeException("INTERNAL ERROR");
+      throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
   
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
       throws InvalidQueryException {
-      throw new OntopiaRuntimeException("INTERNAL ERROR");
+      throw new OntopiaRuntimeException(MSG_INTERNAL_ERROR);
     }
 
   }

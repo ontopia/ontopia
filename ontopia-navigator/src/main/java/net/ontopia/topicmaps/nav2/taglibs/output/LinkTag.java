@@ -21,9 +21,7 @@
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.Iterator;
-import java.util.Collection;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 
@@ -34,8 +32,6 @@ import net.ontopia.topicmaps.nav2.core.LinkGeneratorIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.impl.basic.DefaultUniversalLinkGenerator;
-import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
 /**
@@ -60,6 +56,7 @@ public class LinkTag extends BaseOutputProducingTag {
     super(false, true);
   }
 
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 

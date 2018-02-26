@@ -36,10 +36,12 @@ public class JGroupsEvent implements Externalizable {
   public IdentityIF namespace;
   public int field;
   
+  @Override
   public String toString() {
     return eventType + " " + namespace + " " + value + " " + field;
   }
 
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeInt(eventType);
     out.writeObject(namespace);
@@ -47,6 +49,7 @@ public class JGroupsEvent implements Externalizable {
     out.writeInt(field);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     eventType = in.readInt();
     namespace = (IdentityIF)in.readObject();

@@ -28,11 +28,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.WeakHashMap;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.TraceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class RDBMSAccess implements StorageAccessIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSAccess.class.getName());
   
   protected boolean debug = log.isDebugEnabled();
   
@@ -54,7 +51,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSMapping mapping;
   
   protected Connection conn_;
-  protected final Map<Thread, Connection> conn_map = new WeakHashMap<Thread, Connection>();
+  protected ThreadLocal<Connection> conn_map = new InheritableThreadLocal<>();
 
   protected boolean closed;
   
@@ -70,7 +67,7 @@ public class RDBMSAccess implements StorageAccessIF {
     this.mapping = storage.getMapping();
     
     // Enable or disable batch updates
-    if (PropertyUtils.isTrue(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates")))
+    if (Boolean.parseBoolean(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates")))
       batch_updates = true;
     
     handlers = new HashMap<Class<?>, ClassAccessIF>();
@@ -79,18 +76,22 @@ public class RDBMSAccess implements StorageAccessIF {
     log.debug(getId() + ": Storage access created");    
   }
   
+  @Override
   public String getId() {
     return id;
   }
   
+  @Override
   public StorageIF getStorage() {
     return storage;
   }
 
+  @Override
   public boolean isReadOnly() {
     return readonly;
   }
   
+  @Override
   public String getProperty(String property) {
     return storage.getProperty(property);
   }
@@ -101,20 +102,16 @@ public class RDBMSAccess implements StorageAccessIF {
 
   protected Connection getConn() {
     if (readonly)
-      synchronized (conn_map) {
-        return conn_map.get(Thread.currentThread());
-      }
+      return conn_map.get();
     else
       return conn_;
   }
   protected void setConn(Connection conn) {
     if (readonly)
-      synchronized (conn_map) {
-        if (conn == null) {
-          this.conn_map.remove(Thread.currentThread());
-        } else {
-          this.conn_map.put(Thread.currentThread(), conn);
-        }
+      if (conn == null) {
+        this.conn_map.remove();
+      } else {
+        this.conn_map.set(conn);
       }
     else
       this.conn_ = conn;
@@ -167,6 +164,14 @@ public class RDBMSAccess implements StorageAccessIF {
     else
       return false;    
   }
+
+  /**
+   * INTERNAL: exposes the ThreadLocal of connections cached in this access.
+   * @since %NEXT%
+   */
+  public ThreadLocal<Connection> getConnections() {
+    return conn_map;
+  }
   
   // -----------------------------------------------------------------------------
   // Handlers
@@ -207,6 +212,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Connection validation
   // -----------------------------------------------------------------------------
   
+  @Override
   public boolean validate() {
     Connection conn = getConn();
     return !(closed || (conn == null ? false : !validateConnection(conn)));
@@ -251,6 +257,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Transactions
   // -----------------------------------------------------------------------------
   
+  @Override
   public void commit() {
     Connection conn = getConn();
     if (conn != null) {
@@ -265,6 +272,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void abort() {
     Connection conn = getConn();
     if (conn != null) {
@@ -286,6 +294,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void close() {
     try {
       // Close/release connections
@@ -302,31 +311,18 @@ public class RDBMSAccess implements StorageAccessIF {
       } else {
         log.debug(getId() + ": Storage access closed (no connection).");          
       }
-      
-      synchronized (conn_map) {
-        // close all the connections
-        for (Connection con : conn_map.values()) {
-          if (con != null) {
-            try {
-              con.close();
-            } catch (SQLException sqle) {
-              // ignore
-            }
-          }
-        }
-        conn_map.clear();
-      }
     } finally {
       closed = true;
     }
   }
   
+  @Override
   public void flush() {
     // Return if nothing to flush
     if (flushable.isEmpty()) return;
     
     try {
-      TraceUtils.enter("RDBMSAccess.flush");
+      log.trace(Thread.currentThread() + " RDBMSAccess.flush enter");
       // Flush flushable handlers
       for (FlushableIF object : flushable) {
         object.flush();
@@ -335,10 +331,11 @@ public class RDBMSAccess implements StorageAccessIF {
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      TraceUtils.leave("RDBMSAccess.flush");
+      log.trace(Thread.currentThread() + " RDBMSAccess.flush leave");
     }
   }
   
+  @Override
   public boolean loadObject(AccessRegistrarIF registrar, IdentityIF identity) {
     try {
       if (debug)
@@ -362,6 +359,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) {
     try {
       if (debug)
@@ -385,6 +383,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
       IdentityIF current, Class<?> type, int field) {
     try {
@@ -414,6 +413,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void createObject(ObjectAccessIF oaccess, Object object) {
     try {
       if (debug)
@@ -424,6 +424,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void deleteObject(ObjectAccessIF oaccess, Object object) {
     try {
       if (debug)
@@ -434,6 +435,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
+  @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) {
     try {
       if (debug)
@@ -444,7 +446,7 @@ public class RDBMSAccess implements StorageAccessIF {
     }
   }
   
-  void needsFlushing(FlushableIF handler) {
+  protected void needsFlushing(FlushableIF handler) {
     flushable.add(handler);
   }
   
@@ -452,10 +454,12 @@ public class RDBMSAccess implements StorageAccessIF {
   // Queries
   // -----------------------------------------------------------------------------
   
+  @Override
   public QueryIF createQuery(String name, ObjectAccessIF oaccess, AccessRegistrarIF registrar) {
     return storage.createQuery(name, this, oaccess, registrar);
   }
   
+  @Override
   public QueryIF createQuery(JDOQuery jdoquery, ObjectAccessIF oaccess, AccessRegistrarIF registrar, boolean lookup_identities) {
     return storage.createQuery(jdoquery, this, oaccess, registrar, lookup_identities);
   }
@@ -464,6 +468,7 @@ public class RDBMSAccess implements StorageAccessIF {
   // Identity generator
   // -----------------------------------------------------------------------------
   
+  @Override
   public IdentityIF generateIdentity(Class<?> type) {
     return storage.generateIdentity(type);
   }

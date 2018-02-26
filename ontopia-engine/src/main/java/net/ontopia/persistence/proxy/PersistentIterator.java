@@ -44,6 +44,7 @@ public class PersistentIterator<E> implements Iterator<E> {
     this.iter = iter;
   }
 
+  @Override
   public boolean hasNext() {
     if (has_next == 0)
       return false;
@@ -55,6 +56,7 @@ public class PersistentIterator<E> implements Iterator<E> {
     }
   }
 
+  @Override
   public E next() {
     if (has_next == 0) {
       throw new NoSuchElementException();
@@ -99,6 +101,7 @@ public class PersistentIterator<E> implements Iterator<E> {
     }
   }
 
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
   }

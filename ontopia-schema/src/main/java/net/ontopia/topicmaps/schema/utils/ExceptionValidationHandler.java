@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.schema.core.ConstraintIF;
  */
 public class ExceptionValidationHandler implements ValidationHandlerIF {
 
+  @Override
   public void violation(String message, TMObjectIF container, Object offender,
                         ConstraintIF constraint)
     throws SchemaViolationException {
@@ -39,10 +40,14 @@ public class ExceptionValidationHandler implements ValidationHandlerIF {
                                        constraint);
   }
 
+  @Override
   public void startValidation() {
+    // no-op
   }
     
+  @Override
   public void endValidation() {
+    // no-op
   }
 }
 

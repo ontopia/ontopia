@@ -2,6 +2,7 @@
     import="
     java.io.*,
     java.util.*,
+	org.apache.commons.lang3.StringUtils,
     net.ontopia.utils.*,
     net.ontopia.topicmaps.core.*,
     net.ontopia.topicmaps.utils.*,
@@ -10,8 +11,7 @@
     net.ontopia.topicmaps.nav2.utils.ContextUtils,
     net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
     net.ontopia.infoset.fulltext.core.*,
-    net.ontopia.topicmaps.nav2.plugins.PluginIF,
-    net.ontopia.infoset.fulltext.impl.lucene.*"
+    net.ontopia.topicmaps.nav2.plugins.PluginIF"
 %>
 
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
@@ -39,20 +39,8 @@
      String query = "";
      if (request.getParameter("query") != null) {
        query = request.getParameter("query");
-       query = net.ontopia.utils.StringUtils.transcodeUTF8(query);
      }
      String tmid = request.getParameter("tm");
-     String fullpath = application.getRealPath("/") + "WEB-INF/indexes/" + tmid;
-
-     TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(pageContext);
-     TopicMapReferenceIF ref = rep.getReferenceByKey(tmid);
-     if (ref instanceof AbstractOntopolyURLReference) {
-       AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
-       if (oref.getIndexDirectory() != null) {
-         fullpath = oref.getIndexDirectory() + File.separator + tmid;
-	   }
-     }
-
      TopicMapIF topicmap = (TopicMapIF)ContextUtils.getSingleValue("topicmap", pageContext);
      StringifierIF topic_stringifier = TopicStringifiers.getTopicNameStringifier(Collections.EMPTY_SET);
     %>
@@ -115,27 +103,17 @@ ranked by relevance.</p>
 
   <template:put name="content" body="true">
   <%
-    if (fullpath == null) {
-  %>
-      The fulltext index file '<%= fullpath %>' is not accessible.
-  <%
-    } else if (!query.equals("")) {
-      SearcherIF sengine;
-      if (topicmap.getStore().getProperty("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type") != null)
-        sengine = new net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher(topicmap);
-      else
-        sengine = new LuceneSearcher(fullpath);
+    if (!query.equals("")) {
+      SearcherIF sengine = (SearcherIF) topicmap.getIndex(SearcherIF.class.getName());
       try {
         SearchResultIF result = null;
         String errmsg = null;
         try {
           result = sengine.search(query);
-        } catch (org.apache.lucene.queryParser.TokenMgrError e1) {
+        } catch (Exception e1) {
           // Note: this error shouldn't really be thrown. It might be
           // fixed in upcoming Lucene releases.
           errmsg = e1.getMessage();
-        } catch (IOException e2) {
-          errmsg = e2.getMessage();
         }
 
         if (errmsg != null) {

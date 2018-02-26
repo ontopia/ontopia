@@ -40,6 +40,7 @@ public class AjaxParentRadioChild<T> extends Radio<T> implements IHeaderContribu
     setOutputMarkupId(true);
     this.apfc = apfc;
   }
+  @Override
   public void renderHead(IHeaderResponse response) {    
     response.renderOnLoadJavascript("attachChoiceHandler('" + getMarkupId() +
         "', function() {" + apfc.getCallbackFunction() + "});");    

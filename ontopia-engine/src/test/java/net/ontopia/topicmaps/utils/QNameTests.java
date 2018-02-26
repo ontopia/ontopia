@@ -41,6 +41,7 @@ public class QNameTests extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     builder = store.getTopicMap().getBuilder();

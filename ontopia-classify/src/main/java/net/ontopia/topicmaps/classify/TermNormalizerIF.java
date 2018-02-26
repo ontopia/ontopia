@@ -25,6 +25,6 @@ package net.ontopia.topicmaps.classify;
  */
 public interface TermNormalizerIF {
 
-  public String normalize(String term);
+  String normalize(String term);
   
 }

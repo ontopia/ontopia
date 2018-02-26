@@ -20,6 +20,8 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -33,13 +35,12 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -48,18 +49,17 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
+import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.IteratorComparator;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,11 +68,12 @@ import org.slf4j.LoggerFactory;
  * @since 2.2
  */
 public class LTMTopicMapWriter implements TopicMapWriterIF {
+  private static final String COLON = " : ";
   public static final String PROPERTY_PREFIXES = "prefixes";
   public static final String PROPERTY_FILTER = "filter";
   public static final String PROPERTY_PRESERVE_IDS = "preserveIds";
   
-  static Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
 
   protected String encoding; // the encoding reported on the first line
     
@@ -81,6 +82,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   protected Map<String, Integer> roleCounter;
   protected Map<String, Boolean> rolesCounted;
   protected Writer out;
+  protected boolean closeWriter = false;
   protected Calendar calendar;
   protected String base;
 
@@ -119,9 +121,30 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
+   * File in UTF-8.
+   * @param file Where the output should be written to.
+   */
+  public LTMTopicMapWriter(File file) throws IOException {
+    this(new FileOutputStream(file), "utf-8");
+  }
+
+  /**
+   * PUBLIC: Create an LTMTopicMapWriter that writes to a given
+   * File in specified encoding.
+   * @param file Where the output should be written to.
+   * @param encoding The desired character encoding.
+   */
+  public LTMTopicMapWriter(File file, String encoding) throws IOException {
+    this(new FileOutputStream(file), encoding);
+    closeWriter = true;
+  }
+
+  /**
+   * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in UTF-8. <b>Warning:</b> Use of this method is
    * discouraged, as it is very easy to get character encoding errors
    * with this method.
+   * Note: Caller is responsible for closing the stream!
    * @param stream Where the output should be written.
    */
   public LTMTopicMapWriter(OutputStream stream) throws IOException {
@@ -131,6 +154,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in the given encoding.
+   * Note: Caller is responsible for closing the stream!
    * @param stream Where the output should be written.
    * @param encoding The desired character encoding.
    */
@@ -141,15 +165,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
-   * @param out Where the output should be written.
-   * @deprecated
-   */
-  public LTMTopicMapWriter(Writer out) {
-    this(out, null);
-  }
-  
-  /**
-   * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
+   * Note: Caller is responsible for closing the writer!
    * @param out Where the output should be written.
    * @param encoding The encoding used by the writer. This is the encoding
    *   that will be declared on the first line of the LTM file. It must be
@@ -236,6 +252,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   /**
    * PUBLIC: Writes out the given topic map.
    */
+  @Override
   public void write(TopicMapIF tm) throws IOException {
     LocatorIF baseLocator = tm.getStore().getBaseAddress();
     base = (baseLocator == null) ? null : baseLocator.getExternalForm();
@@ -403,6 +420,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       writeAssociation(associationsIt.next(), out);
 
     out.flush();
+    
+    if (closeWriter) {
+      out.close();
+    }
   }
 
   /**
@@ -571,7 +592,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       if (typesIt.hasNext()) {
         headerType = getElementId(typesIt.next());
-        typeString += " : " + headerType;
+        typeString += COLON + headerType;
       }
       while (typesIt.hasNext())
         typeString += " " + getElementId(typesIt.next());
@@ -580,7 +601,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       // then write a header comment for this topic type.
       if (writeHeaders && !headerType.equals(groupString1)) {
         out.write("\n/* -- TT: ");
-        if (headerType.equals(""))
+        if (headerType.isEmpty())
           out.write("(untyped)");
         else
           out.write(headerType);
@@ -631,7 +652,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
         boolean skip = false;
         if (prefixes.size() > 0) {
-          int colonIndex = id.indexOf(":");
+          int colonIndex = id.indexOf(':');
           if (colonIndex > -1) {
             String key = id.substring(0, colonIndex);
             String prefix = prefixes.get(key);
@@ -768,7 +789,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       throws IOException
   {
     out.write(lazyPlayerElementId(role));
-    out.write(" : " + lazyTypeElementId(role));
+    out.write(COLON + lazyTypeElementId(role));
 
     // Write the names of the reifying topics of this association role.
     writeReifiers(role, out);
@@ -886,7 +907,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private void writeVariant(VariantNameIF variant, Writer out)
       throws IOException {
-    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
       String value = variant.getValue();
       if (value != null) {
         out.write("(\"");
@@ -987,11 +1008,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Counts one association + role combination(increment counter by 1).
    */
   private void count(AssociationIF association, AssociationRoleIF role) {
-    String longkey = lazyTypeElementId(association) + " : "
-        + lazyPlayerElementId(role) + " : " + lazyTypeElementId(role);
+    String longkey = lazyTypeElementId(association) + COLON
+        + lazyPlayerElementId(role) + COLON + lazyTypeElementId(role);
     if (rolesCounted.get(longkey) == null) {
       Integer value = getCount(association, role);
-      String key = lazyTypeElementId(association) + " : "
+      String key = lazyTypeElementId(association) + COLON
           + lazyTypeElementId(role);
 
       roleCounter.put(key, new Integer(value.intValue() + 1));
@@ -1057,7 +1078,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     String name = TopicStringifiers.toString(topic);
 
     String retVal;
-    if (name.equals("[No name]"))
+    if ("[No name]".equals(name))
       retVal = idManager.makeId(topic, "id", true);
     else {
       String generatedId = StringUtils.normalizeId(name);
@@ -1075,7 +1096,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Get the count for a given association + role combination.
    */
   private Integer getCount(AssociationIF association, AssociationRoleIF role) {
-    String key = lazyTypeElementId(association) + " : "
+    String key = lazyTypeElementId(association) + COLON
         + lazyTypeElementId(role);
     Integer retVal = roleCounter.get(key);
     if (retVal == null)
@@ -1260,19 +1281,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   }
   
   /**
-   * Checks if the give character is illegal in LTM identifiers.
-   * Currently matching non-ascii characters.
-   * @param id The string to check.
-   * @return true iff id matches any of the illegal characters.
-   */
-  private static boolean containsIllegalCharacter(String id) {
-    for (int index = 0; index < id.length(); index++)
-      if (id.charAt(index) > 127)
-        return true;
-    return false;
-  }
-
-  /**
    * @return true iff at least one of the subject indicators of the given topic
    *         matches the given uri
    */
@@ -1369,7 +1377,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       }
 
       String retVal = baseId;
-      Integer suffix = (Integer)counters.get(baseId);
+      Integer suffix = counters.get(baseId);
       if (suffix == null) {
         if (forceSuffix) {
           retVal = baseId + "1";
@@ -1379,7 +1387,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
           suffix = new Integer(2);
         }
       } else {
-        retVal = baseId + String.valueOf(suffix);
+        retVal = baseId + suffix;
         suffix = new Integer(suffix.intValue() + 1);
       }
 
@@ -1393,9 +1401,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Comparator for Objects of type TopicIF.
    */
   private class TopicComparator implements Comparator<TopicIF> {
-    public TopicComparator() {
-    }
 
+    @Override
     public int compare(TopicIF t1, TopicIF t2) {
       int retVal = 0;
 
@@ -1431,9 +1438,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class ElementIdComparator implements Comparator<TopicIF> {
 
-    public ElementIdComparator() {
-    }
-
+    @Override
     public int compare(TopicIF o1, TopicIF o2) {
       return lazyStringCompare(getElementId(o1),
           getElementId(o2));
@@ -1463,6 +1468,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
           new AssociationRoleFrequencyComparator());
     }
 
+    @Override
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       int retVal = lazyStringCompare(lazyTypeElementId(assoc1),
           lazyTypeElementId(assoc2));
@@ -1509,9 +1515,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares roles by comparing their types.
    */
   private class RoleTypeComparator implements Comparator<AssociationRoleIF> {
-    public RoleTypeComparator() {
-    }
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
           lazyTypeElementId(ar2));
@@ -1524,9 +1529,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Compares roles by comparing their players.
    */
   private class RolePlayerComparator implements Comparator<AssociationRoleIF> {
-    public RolePlayerComparator() {
-    }
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = lazyStringCompare(lazyPlayerElementId(ar1),
           lazyPlayerElementId(ar2));
@@ -1542,12 +1546,13 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * equality(.equals) and, if not equal, orders arbitrarily.
    */
   private class AssociationRoleFrequencyComparator implements Comparator<AssociationRoleIF> {
-    AssociationRoleComparator associationRoleComparator;
+    private AssociationRoleComparator associationRoleComparator;
 
     public AssociationRoleFrequencyComparator() {
       associationRoleComparator = new AssociationRoleComparator();
     }
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Lookup how many times the current combination of association,
       // role-type and role-player occurrs in this topic map.
@@ -1575,9 +1580,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class AssociationRoleComparator implements Comparator<AssociationRoleIF> {
 
-    public AssociationRoleComparator() {
-    }
-
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       // Compare the IDs of the role types.
       int retVal = lazyStringCompare(lazyTypeElementId(ar1),
@@ -1608,11 +1611,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class TopicNameComparator implements Comparator<TopicNameIF> {
 
-    public TopicNameComparator() {
-    }
-
+    @Override
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
-      if (bn1 == bn2)
+      if (Objects.equals(bn1, bn2))
         return 0;
 
       int retVal = scopeComparator.compare(filterCollection(bn1.getScope()),
@@ -1629,9 +1630,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class OccurrenceComparator implements Comparator<OccurrenceIF> {
 
-    public OccurrenceComparator() {
-    }
-
+    @Override
     public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
       if (occ1 == occ2)
         return 0;
@@ -1671,11 +1670,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private class VariantComparator implements Comparator<VariantNameIF> {
 
-    public VariantComparator() {
-    }
-
+    @Override
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
-      if (vn1 == vn2)
+      if (Objects.equals(vn1, vn2))
         return 0;
 
       int retVal = scopeComparator.compare(filterCollection(vn1.getScope()),
@@ -1724,6 +1721,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       iteratorComparator = new IteratorComparator<E>(betweenComp);
     }
 
+    @Override
     public int compare(Collection<E> c1, Collection<E> c2) {
       if (c1 == c2)
         return 0;
@@ -1768,6 +1766,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       this.withinComp = withinComparator;
     }
 
+    @Override
     public int compare(Collection<E> o1, Collection<E> o2) {
       if (o1 == o2)
         return 0;
@@ -1791,8 +1790,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Comparator for superclass-subclass associations.
    */
   private class SupersubComparator implements Comparator<AssociationIF> {
-    Comparator<Iterator<AssociationRoleIF>> iteratorComparator;
-    Comparator<AssociationRoleIF> supersubRoleComparator;
+    private Comparator<Iterator<AssociationRoleIF>> iteratorComparator;
+    private Comparator<AssociationRoleIF> supersubRoleComparator;
 
     public SupersubComparator() {
       supersubRoleComparator = new SupersubRoleComparator();
@@ -1800,6 +1799,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     }
 
+    @Override
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
       // Compare the sortes sets of roles element-wise.
       return iteratorComparator.compare(sort(assoc1.getRoles(),
@@ -1813,9 +1813,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * order.
    */
   private class SupersubRoleComparator implements Comparator<AssociationRoleIF> {
-    public SupersubRoleComparator() {
-    }
 
+    @Override
     public int compare(AssociationRoleIF ar1, AssociationRoleIF ar2) {
       int retVal = 0;
 
@@ -1859,6 +1858,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * @param properties 
    */
   @SuppressWarnings("unchecked")
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_PRESERVE_IDS);
     if ((value != null) && (value instanceof Boolean)) {

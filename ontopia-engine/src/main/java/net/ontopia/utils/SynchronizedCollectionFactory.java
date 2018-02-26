@@ -33,7 +33,7 @@ import java.util.Set;
  */
 public class SynchronizedCollectionFactory implements CollectionFactoryIF, java.io.Serializable {
 
-  static final long serialVersionUID = -4670702015296061304L;
+  private static final long serialVersionUID = -4670702015296061304L;
   protected int initsize;
 
   public SynchronizedCollectionFactory() {
@@ -44,26 +44,32 @@ public class SynchronizedCollectionFactory implements CollectionFactoryIF, java.
     this.initsize = initsize;
   }
 
+  @Override
   public <T> Set<T> makeSmallSet() {
     return new SynchronizedCompactHashSet<T>();
   }
 
+  @Override
   public <T> Set<T> makeLargeSet() {
     return new SynchronizedCompactHashSet<T>();
   }
 
+  @Override
   public <K, V> Map<K, V> makeSmallMap() {
     return Collections.synchronizedMap(new HashMap<K, V>(initsize));
   }
 
+  @Override
   public <K, V> Map<K, V> makeLargeMap() {
     return Collections.synchronizedMap(new HashMap<K, V>());
   }
   
+  @Override
   public <T> List<T> makeSmallList() {
     return Collections.synchronizedList(new ArrayList<T>(initsize));
   }
 
+  @Override
   public <T> List<T> makeLargeList() {
     return Collections.synchronizedList(new ArrayList<T>());
   }

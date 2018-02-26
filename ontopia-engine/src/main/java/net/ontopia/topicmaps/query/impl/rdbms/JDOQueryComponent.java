@@ -46,6 +46,7 @@ public class JDOQueryComponent implements QueryComponentIF {
     this.colnames = colnames;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Map arguments)
     throws InvalidQueryException {
    
@@ -70,6 +71,7 @@ public class JDOQueryComponent implements QueryComponentIF {
     
   }
 
+  @Override
   public String toString() {
     return "JQC: " + jdoquery + " " + Arrays.asList(colnames);
   }

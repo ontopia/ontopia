@@ -37,6 +37,7 @@ public class RolePlayerGrabber implements GrabberIF<AssociationRoleIF, TopicIF> 
    * @param object the given object; AssociationRoleIF
    * @return object which is the role player; an object implementing TopicIF
    */ 
+  @Override
   public TopicIF grab(AssociationRoleIF object) {
     return object.getPlayer();
   }
