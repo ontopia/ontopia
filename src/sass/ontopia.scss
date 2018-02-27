@@ -1,0 +1,199 @@
+// ontopia logo red, 10% darker to avoid bright red
+$brand-primary: darken(#E42213, 10%);
+$ontopia-gray: #B0B4B7;
+
+// google fonts NotoSans
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i');
+
+// codemirror
+@import "codemirror/ltm";
+@import "codemirror/tolog";
+@import "codemirror/rest";
+
+html {
+	background-color: #fff;
+}
+
+body {
+	background-color: #fff;
+	font-family: 'Noto Sans';
+	line-height: 1.8em;
+}
+
+.col-menu {
+	bottom:0;
+	
+	background-color: #fff;
+	//height: 100%;
+	//position: fixed;
+	//box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+	//padding: 3em;
+	
+	@media (min-width: 992px) {
+		//display: block;
+	}
+	
+	img {
+		display: block;
+		margin: 1em auto 2em auto;
+		width: 200px;
+	}
+	
+	li i.fa {
+		margin-right: .5em;
+	}
+	
+	ul li {
+		
+		ul {
+			display: none;
+		}
+		
+		&:hover .dropdown-menu {
+			display: block;
+			position: absolute;
+			left: 90%;
+			width: 17em;
+			top: -2px;
+			
+			> li > a {
+				padding: .5em 1em;
+			}
+		}
+	}
+	
+	h3 + h4 {
+		margin-top: -1.5em;
+		font-style: italic;
+		color: $ontopia-gray;
+	}
+}
+
+.col-page {
+	background-color: #f1f1f1;
+	box-shadow: inset 3px 0px 5px -2px rgba(0,0,0,0.15);
+	
+	.document-container {
+		/*@extend .col-md-12;*/
+	}
+	.api-container {
+		display: none; // hidden in normal modes
+	}
+}
+
+@media (min-width: 992px) {
+
+	.col-page {
+		//margin-left: 25%;
+	}
+
+	.col-menu h3 {
+		margin: 1.5em 0;
+	}
+
+	.col-menu ul.nav > li {
+		border-left: 5px solid #fff;
+	}
+
+	.col-menu ul.nav > li:hover {
+		border-left-color: $brand-primary;
+	}
+}
+
+section {
+	position: relative;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+	background-color: #fff;
+	padding: 3em 10%;
+	//margin: 3em 0;
+	/*font-size: 110%;*/
+	
+	h1 {
+		margin: 1em 0 2em 0;
+	}
+	
+	p {
+		text-align: justify;
+		margin: 0 0 1em;
+	}
+}
+
+
+section h3, 
+section h4 {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+	margin-top: 2em;
+	padding-bottom: .5em;
+	color: $brand-primary;
+}
+
+section h5,
+section h6 {
+	margin: 1em 0 .25em 0;
+	color: $brand-primary;
+}
+
+section h1 a[id], 
+section h2 a[id], 
+section h3 a[id], 
+section h4 a[id], 
+section h5 a[id], 
+section h6 a[id] {
+	color: inherit;
+	text-decoration: none;
+}
+
+section h1 a[id]:before, 
+section h2 a[id]:before, 
+section h3 a[id]:before, 
+section h4 a[id]:before, 
+section h5 a[id]:before, 
+section h6 a[id]:before {
+	margin-left: -1.5em;
+	width: 1.5em;
+	display: inline-block;
+	opacity: .5;
+	font-family: 'Glyphicons Halflings';
+	font-size: 60%;
+	color: black;
+}
+section h1:hover a[id]:before, 
+section h2:hover a[id]:before, 
+section h3:hover a[id]:before, 
+section h4:hover a[id]:before, 
+section h5:hover a[id]:before, 
+section h6:hover a[id]:before {
+	content: "\e144";
+}
+
+.version {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	font-size: 90%;
+	color: #999;
+}
+
+p.introduction {
+	margin: 2em 0;
+	font-style: italic;
+	font-size: 95%;
+}
+
+section img {
+	max-width: 100%;
+	padding: .5em;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	display: block;
+	margin: 1em auto;
+}
+
+div#toc {
+	
+	&.affix,
+	&.affix-top {
+		width: 16.666667%;
+	}
+	
+}

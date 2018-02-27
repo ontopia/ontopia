@@ -1,0 +1,48 @@
+<ul class="nav">
+	<li><a href="${root}index.html"><i class="fa fa-book"></i> General</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li><a href="${root}whatsnew.html">What's new / Changelog</a></li>
+			<li><a href="${root}install.html">Installation</a></li>
+			<li><a href="${root}license.html">License</a></li>
+			<li><a href="${root}copyrights.html">Third party licenses</a></li>
+		</ul>
+	</li>
+	<li><a href="${root}modules.html"><i class="fa fa-plug"></i> Modules</a></li>
+	<li><a href="${root}applications.html"><i class="fa fa-rocket"></i> Applications</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li><a href="${root}omnigator/userguide.html">Omnigator</a></li>
+			<li><a href="${root}ontopoly/user-guide.html">Ontoloply</a></li>
+			<li><a href="${root}vizigator/userguide.html">Vizigator</a></li>
+		</ul>
+	</li>
+	<li><a href="${root}engine/devguide.html"><i class="fa fa-cog"></i><span class="visible-md-inline visible-lg-inline">Engine</span></a></li>
+	<li><a href="${root}engine/navigator.html"><i class="fa fa-code"></i> Navigator</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li><a href="${root}navigator/config.html">Configuration</a></li>
+			<li><a href="${root}navigator/navguide.html">Developer guide</a></li>
+			<li><a href="${root}navigator/tolog-taglib.html">Tag library reference</a></li>
+			<li><a href="${root}navigator/userman.html">User management</a></li>
+		</ul>
+	</li>
+	<li><a href="${root}rdbms/index.html"><i class="fa fa-database"></i> Database</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li><a href="${root}rdbms/install.html">Installation</a></li>
+			<li><a href="${root}rdbms/devguide.html">Developer guide</a></li>
+		</ul>
+	</li>
+	<li><a href="${root}query/index.html"><i class="fa fa-search"></i> Query</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li><a href="${root}query/tutorial.html">Tutorial</a></li>
+			<li><a href="${root}query/predicate-reference.html">Predicate reference</a></li>
+		</ul>
+	</li>
+	<li><a href="#"><i class="fa fa-wrench"></i> Tools</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li class="dropdown-header"><i class="fa fa-wrench"></i> Tools</li>
+			<li><a href="${root}db2tm/user-guide.html">DB2TM</a></li>
+			<li><a href="${root}tmrap/dev-guide.html">TMRAP</a></li>
+			<li><a href="${root}classify/dev-guide.html">Classification</a></li>
+		</ul>
+	</li>
+	<li><a href="${root}api/"><i class="fa fa-terminal"></i> API</a></li>
+<ul>

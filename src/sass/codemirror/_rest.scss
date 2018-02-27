@@ -1,0 +1,63 @@
+// adjust page when in rest-api mode
+
+body.rest-api.rest-api-visible {
+	
+	.col-page {
+		
+		.container {
+			/*@extend .container-fluid; // full space*/
+			width: 100%;
+		}
+		
+		.document-container {
+			/*@extend .col-md-6;*/
+		}
+
+		.api-container {
+			display: block;
+			position: fixed;
+			right: 0;
+			width: 41.666666666%;
+			
+			section {
+				font-size: 1em;
+
+				h2 {
+					margin-top: 5.25em;
+				}
+				
+				.alert-api-info {
+					margin: 5em 0 50em 0;
+				}
+			}
+			
+			.close {
+				position: absolute;
+				top: 0;
+				right: .25em;
+				font-size: 300%;
+			}
+			
+		}
+	}
+}
+
+
+// Code mirror
+.cm-s-default {
+
+	span.cm-rest-method {
+		font-weight: bold;
+		color: #00c;
+		margin-right: 1em;
+	}
+
+	span.cm-rest-parameter {
+		color: #708;
+	}
+
+	span.cm-rest-option {
+		float: right;
+		font-style : italic;
+	}
+}
