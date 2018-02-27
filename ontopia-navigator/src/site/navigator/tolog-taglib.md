@@ -118,7 +118,7 @@ variables.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | topicmap | false | topic map ID | The ID of the topic map to work on | 
 
 ##### Example #####
@@ -215,7 +215,7 @@ sequence-number
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | No | tolog query | The query to run (or the name of a query declared with [tolog:query](#tolog-query)). | 
 | separator | No | string | A string to be inserted between each iteration. | 
 | groupBy | No | variable name(s) | The name(s) of the variable(s) to group on. If not present the tag will not do grouping. The variable names are separated by whitespace only. | 
@@ -305,7 +305,7 @@ contains null it is an error.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | No | tolog query | The query to run (or the name of a query declared with [tolog:query](#tolog-query)). Either this or `var` must be set. | 
 | var | No | variable name or JSP attribute | The name of the variable whose value is to be output. Note that if the variable contains more than one value a random value is picked. If no variable is found, a JSP attribute will be looked up, and bean properties accessed. (Either this attribute or `query` must be set.) | 
 | fallback | No | string | A fallback value to be displayed if the `query` result is empty or the `var` variable is not set. | 
@@ -340,7 +340,7 @@ The `tolog:if` tag introduces a new lexical scope.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | No | tolog query | The query to run (or the name of a query declared with [tolog:query](#tolog-query)). Either this or `var` must be set. | 
 | var | No | variable name | The name of the variable whose value is to be tested. (Either this attribute or `query` must be set.) | 
 
@@ -407,7 +407,7 @@ contains null it is an error.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | No | tolog query | The query to run (or the name of a query declared with [tolog:query](#tolog-query)). Either this or `var` must be set. | 
 | var | No | variable name or JSP attribute | The name of the variable whose value is to be output. Note that if the variable contains more than one value a random value is picked. If no variable is found, a JSP attribute will be looked up, and bean properties accessed. (Either this attribute or `query` must be set.) | 
 | fallback | No | string | A fallback value to be displayed if the `query` result is empty or the `var` variable is not set. | 
@@ -482,7 +482,7 @@ The table below shows what is output for different kinds of values. The tag must
 empty.
 
 | Type | Output | 
-|--|--|
+|---|---|
 | string | output as is | 
 | locator | external form is output | 
 | topic | most suitable named picked and output | 
@@ -500,7 +500,7 @@ contains null it is an error.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | No | tolog query | The query to run (or the name of a query declared with [tolog:query](#tolog-query)). Either this or `var` must be set. | 
 | var | No | variable name or JSP attribute | The name of the variable whose value is to be output. Note that if the variable contains more than one value a random value is picked. If no variable is found, a JSP attribute will be looked up, and bean properties accessed. (Either this attribute or `query` must be set.) | 
 | scope | No | variable name | Specifies the scope to be used when selecting names for topics; has no effect on other objects. | 
@@ -565,7 +565,7 @@ The `tolog:query` tag does not introduce a new lexical scope.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | name | yes | tolog query name | The name under which the query is to be stored. | 
 
 ##### Examples #####
@@ -634,7 +634,7 @@ The `tolog:set` tag does not introduce a new lexical scope.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | no | tolog query | The query which produces the value put into the variable (or the name of a query declared with [tolog:query](#tolog-query)). | 
 | var | no | variable name | The name of the variable to set. If not given the name will be that of the variable in the tolog query. | 
 | reqparam | no | HTTP request parameter name | If given, the variable set will be set to the topic map object whose ID is the value of the named HTTP request parameter to the page. If the request parameter is not given the variable will be bound to an empty value. | 
@@ -684,7 +684,7 @@ The `tolog:when` tag introduces a new lexical scope.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | query | No | tolog query | The query to run (or the name of a query declared with [tolog:query](#tolog-query)). Either this or `var` must be set. | 
 | var | No | variable name | The name of the variable whose value is to be tested. (Either this attribute or `query` must be set.) | 
 
@@ -742,7 +742,7 @@ must be empty.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | name | Yes | String | The name of the slot whose contents are to be inserted to replace this tag when the template is used. | 
 | fallback | No | Boolean | Indicates whether the tag body should be used as fallback value if no corresponding `put` tag is found (see example below).  | 
 
@@ -799,7 +799,7 @@ template page.
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | template | Yes | Path | The path is relative to the referencing page. | 
 
 ##### Execution #####
@@ -879,7 +879,7 @@ fill it into the template. It may contain one `split` tag as well any number of 
 ##### Attributes #####
 
 | Name | Required | Values | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | name | Yes | String | The name of the slot in the template to write the content produced by the children of this tag into. | 
 | content | No | String &#124; Path | Gives the content of the named slot either as a string (if `direct` is true) or as a reference to a file which holds the contents (if `direct` is false).  | 
 | direct | No | true &#124; false | If set to "true", will insert the contents of the `content` attribute as the slot content. | 

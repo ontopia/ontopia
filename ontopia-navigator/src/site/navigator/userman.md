@@ -122,7 +122,7 @@ higher security. This protects the passwords against accidental exposure of topi
 as other attacks. This is configured with the `hashmethod` parameter to the JAAS module (set in
 `jaas.config`). The supported values for this parameter are listed below.
 
-|--|--|
+|---|---|
 | plaintext | No encryption. (This is the default.) | 
 | base64 | Base64-encodes the passwords. This offers only very mild security. | 
 | md5 | Produces an MD5 digest of the password, then base64-encodes it. Offers strong security, but means that it is impossible to reproduce the password from what's stored in the topic map. | 

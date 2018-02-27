@@ -555,7 +555,7 @@ Below is a table containing the escape sequences for some useful characters that
 LTM files.
 
 | Escape sequence | Character | 
-|--|--|
+|---|---|
 | \u0022 | " | 
 | \u0027 | ' | 
 | \u005B | &#91; | 

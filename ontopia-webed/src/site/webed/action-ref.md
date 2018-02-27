@@ -41,7 +41,7 @@ Used to dynamically set the page the user is to be forwarded to when form proces
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | uri | no | string | The URI the user will be forwarded to. Defaults to the value of the HTTP request if not given. If neither is given nothing happens. | 
 | parameter | no, repeatable | string | The name of a parameter whose value in the form is to be passed on to the forward page. This parameter can be repeated any number of times. | 
 
@@ -73,7 +73,7 @@ Used to create an association, and, optionally, set its type.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topicmap | yes | topic map | The topic map in which the association will be created. | 
 | assoctype | no | topic | The association type of the new association. | 
 | player | no | topic | A topic participating in the association. | 
@@ -92,7 +92,7 @@ Used to create a topic, and, optionally, set its type.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topicmap | yes | topic map | The topic map within which the topic will be created. | 
 | type | no | topic | The topic type of the new topic. | 
 
@@ -130,7 +130,7 @@ Adds a item identifier to a topic map object.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | topic map object | The topic map object to which the item identifier will be added. | 
 
 **HTTP request parameter**
@@ -151,7 +151,7 @@ Adds a topic to the object's scope.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | a topic name, variant name, occurrence, or association | The object whose scope will be increased. | 
 
 **HTTP request parameter**
@@ -171,7 +171,7 @@ Deletes the topic map object from the topic map.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | objects | yes | topic map object collection | The object(s) to be deleted. | 
 | next | no | topic map object | The object that is to be considered the current object on the forward page. Effectively sets the id request parameter. | 
 
@@ -193,7 +193,7 @@ Evaluates an LTM fragment to add content to the topic map.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topicmap | yes | a topic map object | The topic map to read the LTM fragment into. | 
 | fragment | yes | string | The LTM fragment. | 
 
@@ -224,7 +224,7 @@ modified.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | a set of topic maps, associations, and topics | The objects to validate. | 
 
 **HTTP request parameter**
@@ -245,7 +245,7 @@ Removes an item identifier from the topic map object.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | topic map object | The topic map object which is to lose an item identifier. | 
 | locator &#124; URI string | yes | locator | The locator that is to be removed. | 
 
@@ -261,7 +261,7 @@ Removes a topic from the topic map object's scope.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | a topic name, variant name, occurrence, or association | The object whose scope should be shrunk. | 
 
 **HTTP request parameter**
@@ -281,7 +281,7 @@ Removes the type of the topic map object (occurrence, association, or associatio
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | topic map object | The topic map object which will lose its type. | 
 
 ##### Execution #####
@@ -297,7 +297,7 @@ Replaces the object's scope.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | a topic name, variant name, occurrence, or association | The object whose scope will be set. | 
 | scope | yes | a collection of topics | The scoping topics. | 
 
@@ -314,7 +314,7 @@ Sets one of the item identifier of a topic map object to a new value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | topic map object | The topic map object whose item identifier is to be changed. | 
 | locator &#124; URI string | yes | locator | The item identifier to modify. | 
 
@@ -337,7 +337,7 @@ topic.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | object | yes | topic map object | The object whose type is to be set. | 
 
 **HTTP request parameter**
@@ -357,7 +357,7 @@ Runs a tolog query to select the objects that are going to be deleted from the t
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | query | yes | string(s) | The tolog query or queries. | 
 
 **HTTP request parameter**
@@ -396,7 +396,7 @@ Used to create, delete, or change an association from one topic to another.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | association | yes | association | The association itself. This parameter may be empty. | 
 | assoctype | yes | topic | The type of the association. Used when a new association is created. | 
 | fixedplayer | yes | topic | Topic on near side of the association. Used when a new association is created. | 
@@ -443,7 +443,7 @@ Sets the player of an association role.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | role | yes | association role | The association role whose player is to be set. | 
 | player | yes | topic | The topic to set as the player. | 
 
@@ -484,7 +484,7 @@ Adds a new subject identifier to a topic.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic that is to get a new subject identifier. | 
 
 ##### Execution #####
@@ -501,7 +501,7 @@ Add a new type to a topic, in addition to any types it may already have.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic to add the new type to. | 
 
 ##### Execution #####
@@ -517,7 +517,7 @@ Removes a subject identifier from a topic.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic to remove the subject identifier from. | 
 | locator | yes | locator &#124; URI string | The locator that is to be removed. | 
 
@@ -535,7 +535,7 @@ Removes a type from a topic.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic to remove the type from. | 
 | type | yes | topic | The type to be removed. | 
 
@@ -552,7 +552,7 @@ Sets a subject identifier of a topic to a specific value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic whose subject identifier is to be modified. | 
 | locator | yes | locator &#124; URI string | The subject identifier to modify. | 
 
@@ -586,7 +586,7 @@ Sets the subject locator of a topic to a specific value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic whose subject locator is to be modified. | 
 | locator | yes | locator &#124; URI string | The new subject locator for the given topic. | 
 
@@ -605,7 +605,7 @@ Sets the type of a topic to a given topic.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic whose type will be set. | 
 
 ##### Execution #####
@@ -631,7 +631,7 @@ Creates a new topic name and sets its string value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic to which the new topic name will be attached. | 
 | scope | no | topic(s) | The scope of the new topic name. | 
 | type | no | topic | The type of the new topic name. | 
@@ -651,7 +651,7 @@ Sets the string value of a topic name from a text field.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topicname | yes | topic name | The topic name whose string value will be set. May be empty.  | 
 | topic | no | topic | The topic containing the topic name; used if a new topic name must be created. | 
 | scope | no | topic(s) | Scoping topics added to the topic name if one has to be created. | 
@@ -694,7 +694,7 @@ Adds an external occurrence to the topic with the string value provided by the u
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic the occurrence is to be attached to. | 
 | type | yes | topic | The type of the new occurrence. | 
 | scope | no | topic(s) | The scope of the new occurrence. | 
@@ -715,7 +715,7 @@ Adds an internal occurrence to the topic with the string value provided by the u
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic the occurrence is to be attached to. | 
 | type | yes | topic | The type of the new occurrence. | 
 | scope | no | topic(s) | The scope of the new occurrence. | 
@@ -736,7 +736,7 @@ last modification.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | topic | yes | topic | The topic to be timestamped. | 
 
 ##### Execution #####
@@ -755,7 +755,7 @@ Sets the locator of an external occurrence to the given string value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | occurrence | yes | occurrence | The occurrence being modified; may be empty. | 
 | topic | no | topic | The topic the occurrence is to be attached to. | 
 | type | no | topic | The type given to the new occurrence, if one has to be created.  | 
@@ -792,7 +792,7 @@ Sets the string value of an internal occurrence to the given string value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | occurrence | yes | occurrence | The occurrence being modified; may be empty. | 
 | topic | no | topic | The topic the occurrence is to be attached to. | 
 | type | no | topic | The type given to the new occurrence, if one has to be created.  | 
@@ -840,7 +840,7 @@ Adds an external variant to the topic name with the string value provided by the
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | basename | yes | topic name | The topic name the variant is to be attached to. | 
 | scope | no | topic(s) | The scope of the new variant. | 
 
@@ -859,7 +859,7 @@ Adds an internal variant to the topic name with the string value provided by the
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | basename | yes | topic name | The topic name the variant is to be attached to. | 
 | scope | no | topic(s) | The scope of the new variant. | 
 
@@ -877,7 +877,7 @@ Sets the locator of an external variant to the given string value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | variant | yes | variant | The variant being modified; may be empty. | 
 | topicname | no | topic name | The topic name the variant is to be attached to. | 
 
@@ -900,7 +900,7 @@ Sets the string value of an internal variant to the given string value.
 ##### Parameters #####
 
 | Name | Required | Value | Description | 
-|--|--|--|
+|---|---|---|
 | variant | yes | variant | The variant being modified; may be empty. | 
 | basename | no | topic name | The topic name the variant is to be attached to if one has to be created. | 
 

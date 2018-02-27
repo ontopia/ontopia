@@ -39,7 +39,7 @@ Compares two values to ensure they are different.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|----|----|----|
 | v1 | object | yes | yes | The first value to compare. | 
 | v2 | object | yes | yes | The second value to compare. | 
 
@@ -76,7 +76,7 @@ Compares two values to ensure the first is less than the second.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | v1 | string | yes | yes | The first value to compare. | 
 | v2 | string | yes | yes | The second value to compare. | 
 
@@ -101,7 +101,7 @@ Compares two values to ensure the first is less than or equal to the second.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | v1 | string | yes | yes | The first value to compare. | 
 | v2 | string | yes | yes | The second value to compare. | 
 
@@ -126,7 +126,7 @@ Compares two values to ensure they are equal.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | v1 | object | no | yes | The first value to compare. | 
 | v2 | object | no | yes | The second value to compare. | 
 
@@ -157,7 +157,7 @@ Compares two values to ensure the first is greater than the second.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | v1 | string | yes | yes | The first value to compare. | 
 | v2 | string | yes | yes | The second value to compare. | 
 
@@ -182,7 +182,7 @@ Compares two values to ensure the first is greater than or equal to the second.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | v1 | string | yes | yes | The first value to compare. | 
 | v2 | string | yes | yes | The second value to compare. | 
 
@@ -210,7 +210,7 @@ it.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | result | object | no | yes | The result value. | 
 | v1..vN | object+ | yes | yes | The value to check to see if it is not null. If not null then it will be bound or compared to the result argument. In that case any following arguments will be ignored. | 
 
@@ -262,7 +262,7 @@ Used to verify that a value is actually an association.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | assoc | association | no | yes | The value being tested. | 
 
 ##### Description #####
@@ -298,7 +298,7 @@ Used to query the relationship between associations and the roles they contain.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | assoc | association | no | yes | The association containing the roles. | 
 | role | association role | no | yes | The association role contained in the association. | 
 
@@ -345,7 +345,7 @@ Used to find the base locator of the topic map.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | locator | locator | no | yes | The base locator of the topic map. | 
 
 ##### Description #####
@@ -370,7 +370,7 @@ Finds the datatype of an occurrence or variant name.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | variant, occurrence | no | yes | The object having the datatype. | 
 | datatype | string | no | yes | The URI of the object's datatype, as a string. | 
 
@@ -400,7 +400,7 @@ topics.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | instance | topic | no | yes | The instance topic. | 
 | type | topic | no | yes | The type topic. | 
 
@@ -433,7 +433,7 @@ and so on), and then find the types actually given to the topics in the topic ma
 be something like the table shown below.
 
 | PERSON | TYPE | 
-|--|--|
+|---|---|
 | Ulrica | Character | 
 | La Rocca | Character | 
 | Maddalena | Character | 
@@ -452,7 +452,7 @@ account.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | instance | topic | no | yes | The instance topic. | 
 | type | topic | no | yes | The type topic. | 
 
@@ -487,7 +487,7 @@ Used to query the item identifiers of a topic map construct.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | topic map, topic, topic name, variant, occurrence, association, association role | no | yes | The object having the item identifier. | 
 | locator | string | no | yes | The item identifier of the object. | 
 
@@ -518,7 +518,7 @@ Used to query object IDs of topic map objects.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | topic map, topic, topic name, variant, occurrence, association, association role | no | yes | The topic map object that has the ID. | 
 | id | string | no | yes | The object ID of the topic map object. | 
 
@@ -557,7 +557,7 @@ Used to query the topic-occurrence relationship.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topic | topic | no | yes | The topic that has the occurrence. | 
 | occurrence | occurrence | no | yes | The occurrence of the topic. | 
 
@@ -610,7 +610,7 @@ Used to query the relationship between a reifying topic and the thing it reifies
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | reifier | topic | no | yes | The reifying topic. | 
 | reified | topic map, association, association role, topic name, variant, or occurrence | no | yes | The reified topic map construct. | 
 
@@ -638,7 +638,7 @@ that have a particular URI.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | occurrence, variant | no | yes | The occurrence or variant which has the URI. | 
 | locator | string | no | yes | The URI of the occurrence or variant. | 
 
@@ -668,7 +668,7 @@ Used to find the topic playing a specific role, or all the roles played by a top
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | role | association role | no | yes | The role played by the topic. | 
 | topic | topic | no | yes | The topic playing the role. | 
 
@@ -700,7 +700,7 @@ Used to query the scopes of topic characteristics.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | scoped | topic name, variant, occurrence, association | no | yes | The thing having the scope. | 
 | theme | topic | no | yes | The scoping topic. | 
 
@@ -733,7 +733,7 @@ identifier.)
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topic | topic | no | yes | The topic having the subject identifier. | 
 | locator | string | no | yes | The subject identifier of the topic. | 
 
@@ -766,7 +766,7 @@ resource that the topic represents.)
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topic | topic | no | yes | The topic having the subject locator. | 
 | locator | string | no | yes | The subject locator of the topic. | 
 
@@ -798,7 +798,7 @@ Used to verify that an object is a topic or to find all topics in the topic map.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topic | topic | no | yes | The object that is a topic. | 
 
 ##### Description #####
@@ -833,7 +833,7 @@ Queries the topic-name relationship.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topic | topic | no | yes | The topic that has the name. | 
 | name | topic name | no | yes | The name of the topic. | 
 
@@ -875,7 +875,7 @@ Finds the topic map.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topicmap | topic map | no | yes | The topic map. | 
 
 ##### Description #####
@@ -904,7 +904,7 @@ Queries the type of topic map objects (but not topics).
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | association, topic name, occurrence, association role | no | yes | The object having the type. | 
 | type | topic | no | yes | The type of the object. | 
 
@@ -935,7 +935,7 @@ Finds the string value of an object.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | topic name, variant, occurrence | no | yes | The object having the string value. | 
 | value | string | no | yes | The string value of the object. | 
 
@@ -965,7 +965,7 @@ Performs a full-text search.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | object | topic name, variant, occurrence | no | yes | The object having the string value matched by the full-text search. | 
 | query | string | yes | yes | The full-text query string. tolog does not define the syntax to be used here; the interpretation depends on the full-text search engine used by the backend, and different backends may well use different search engines. | 
 | score | float | no | no | The score/relevancy of the matched object. The value is a float greater than 0.0 and less than 1.0. | 
@@ -1010,7 +1010,7 @@ Queries the topic name-variant relationship.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | topicname | topic name | no | yes | The topic name of which the variant is a variant. | 
 | variant | variant | no | yes | The variant of the topic name. | 
 
@@ -1061,7 +1061,7 @@ search.)
 The parameters to external fulltext predicates are:
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | result | unspecified | no | yes | This is the value found by the search. The type depends on the searcher implementation. More information about this below. | 
 | query | string | yes | yes | This is the query passed to the external full-text implementation. | 
 | relevance | float | no | no | This is a floating-point number between 0 and 1 indicating the relevance of this item in the search result to the search criteria. 1 indicates the highest relevance, 0 the lowest. | 
@@ -1070,7 +1070,7 @@ The `SearcherIF` implementation can produce values of different types, as indica
 `getValueType` method. The table below explains the different possible values.
 
 | Value type | Result type | Meaning | 
-|--|--|--|
+|---|---|---|
 | `SUBJECT_LOCATOR` | topic | The searcher must return a string, and the predicate will return the topic with that subject locator. | 
 | `SUBJECT_IDENTIFIER` | topic | The searcher must return a string, and the predicate will return the topic with that subject identifier. | 
 | `ITEM_IDENTIFIER` | topic map object | The searcher must return a string, and the predicate will return the topic map object with that item identifier (a.k.a. source locator). | 
@@ -1103,7 +1103,7 @@ Concatenates two strings.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | string | no | yes | The concatenated string. | 
 | IN1 | string | yes | yes | The first of the two strings to concatenate. | 
 | IN2 | string | yes | yes | The second of the two strings to concatenate. | 
@@ -1129,7 +1129,7 @@ Tests whether a substring appears in another string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | STR | string | yes | yes | The string to test. | 
 | SUBSTRING | string | yes | yes | The substring that must appear inside `STR`. | 
 
@@ -1170,7 +1170,7 @@ Tests whether a substring appears at the end of another string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | STR | string | yes | yes | The string to test. | 
 | SUFFIX | string | yes | yes | The substring that must appear at the end of `STR`. | 
 
@@ -1214,7 +1214,7 @@ Finds the first occurrence of a substring within another string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | number | no | yes | The position of the substring. | 
 | IN | string | yes | yes | The string to search in. | 
 | SEARCHFOR | string | yes | yes | The substring to search for. | 
@@ -1244,7 +1244,7 @@ Finds the last occurrence of a substring within another string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | number | no | yes | The position of the substring. | 
 | IN | string | yes | yes | The string to search in. | 
 | SEARCHFOR | string | yes | yes | The substring to search for. | 
@@ -1291,7 +1291,7 @@ Finds the length of a string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | STR | string | yes | yes | The string to test. | 
 | LENGTH | number | no | yes | The number of characters in `STR`. | 
 
@@ -1326,7 +1326,7 @@ Tests whether a substring appears at the beginning of another string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | STR | string | yes | yes | The string to test. | 
 | PREFIX | string | yes | yes | The substring that must appear at the beginning of `STR`. | 
 
@@ -1367,7 +1367,7 @@ Extract part of a string.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | string | no | yes | The resulting string. | 
 | STR | string | yes | yes | The string to operate on. | 
 | FROM | number | yes | yes | The position of the start of the substring. | 
@@ -1400,7 +1400,7 @@ Extract part of a string after the first occurrence of a substring.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | string | no | yes | The resulting string. | 
 | STR | string | yes | yes | The string to operate on. | 
 | SUB | string | yes | yes | The substring to search for. | 
@@ -1429,7 +1429,7 @@ Extract part of a string before the first occurrence of a substring.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | string | no | yes | The resulting string. | 
 | STR | string | yes | yes | The string to operate on. | 
 | SUB | string | yes | yes | The substring to search for. | 
@@ -1459,7 +1459,7 @@ normalization.
 ##### Parameters #####
 
 | Name | Type | Must be bound | Required | Description | 
-|--|--|--|
+|---|---|---|
 | OUT | string | no | yes | The resulting string. | 
 | STR | string | yes | yes | The string to operate on. | 
 | FROM | string | yes | yes | The list of characters to translate from. | 

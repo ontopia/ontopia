@@ -47,7 +47,7 @@ map. If we ran this query against `opera.ltm` we might get a result like the
 following.
 
 | TOPIC | TYPE | 
-|--|--|
+|---|---|
 | RAI | organization | 
 | RAI | TV company | 
 | Teatro Nuovo | organization | 
@@ -79,7 +79,7 @@ Now we are asking for all values of `TOPIC` that would make the above true; that
 for all instances of `theatre`.
 
 | TOPIC | 
-|--|
+|---|
 | Teatro Massimo | 
 | Teatro Bellini | 
 | Teatro San Carlo | 
@@ -99,7 +99,7 @@ instance-of(teatro-massimo, $TYPE)?
 When run, this query gives the following results.
 
 | TYPE | 
-|--|
+|---|
 | Theatre | 
 | Organization | 
 
@@ -138,7 +138,7 @@ the `OPERA` plays the role `opera`. This syntax is *only* used for association p
 any other type of predicate. The result is as shown below.
 
 | OPERA | 
-|--|
+|---|
 | Le Villi | 
 | Madame Butterfly | 
 | Tosca | 
@@ -282,7 +282,7 @@ date-of-birth($COMPOSER, $DATE)?
 This query gives the following result.
 
 | COMPOSER | DATE | 
-|--|
+|---|
 | Verdi, Giuseppe | 1813 (10 Oct) | 
 | Ponchielli, Amilcar | 1834 (31 Aug) | 
 | Cilea, Francisco | 1866 (23 Jul) | 
@@ -314,7 +314,7 @@ This finds all topics with a `homepage` occurrence whose locator is the URI `htt
 This turns out to produce the results shown below.
 
 | TOPIC | 
-|--|
+|---|
 | Centro studi Giacomo Puccini | 
 
 #### OR ####
@@ -341,7 +341,7 @@ after the curly braces, and the braces can be nested arbitrarily deep. The resul
 below.
 
 | OPERA | 
-|--|
+|---|
 | Il sindaco babbeo | 
 | Melenis | 
 | La Falce | 
@@ -385,7 +385,7 @@ instance-of($OPERA, opera),
 This query gives the desired result, which is shown below.
 
 | THEATRE | OPERA | 
-|--|
+|---|
 | Teatro Argentina | I due foscari | 
 | Teatro Sociale di Lecco | Il parlatore eterno | 
 | Teatro La Fenice | Attila | 
@@ -422,7 +422,7 @@ not(born-in($PLACE : place, $PERSON : person),
 This gives the results shown below.
 
 | PERSON | 
-|--|
+|---|
 | Guglielmo Ratcliff | 
 | Manzoni, Alessandro | 
 | Comtessa di Coigny | 
@@ -522,7 +522,7 @@ We skip verifying that the composer was born in Italy, since all composers in th
 born in Italy. This gives the result shown below.
 
 | COMPOSER | INFLUENCE | 
-|--|
+|---|
 | Verdi, Giuseppe | Méry, Joseph | 
 | Ponchielli, Amilcar | Scribe, Eugène | 
 | Cilea, Francesco | Daudet, Alphonse | 
@@ -706,7 +706,7 @@ date-of-birth($PERSON2, $DATE)?
 This runs, but does not produce the result we want, as can be seen from the table below.
 
 | PERSON1 | DATE | PERSON2 | 
-|--|
+|---|
 | Benelli, Sem | 1877 (10 Aug) | Benelli, Sem | 
 | Ghislanzoni, Antonio | 1824 (25 Nov) | Ghislanzoni, Antonio | 
 | Coppée, François | 1842 (26 Jan) | Coppée, François | 
@@ -727,7 +727,7 @@ $PERSON1 /= $PERSON2?
 This gives the result we wanted, which is shown below.
 
 | PERSON1 | DATE | PERSON2 | 
-|--|
+|---|
 | Bognasco, G. di | (unknown) | Lombardo, Carlo | 
 | Bognasco, G. di | (unknown) | Franci, Arturo | 
 | Bognasco, G. di | (unknown) | Vaucaire, Maurice | 
@@ -1084,7 +1084,7 @@ import "http://psi.ontopia.net/tolog/string/" as str
 The deletion functions available in tolog are:
 
 | Function | Parameters | Meaning | 
-|--|--|--|
+|---|---|---|
 | subject-identifier | topic, locator | Removes the locator as a subject identifier for the topic. | 
 | subject-locator | topic, locator | Removes the locator as a subject locator for the topic. | 
 | item-identifier | object, locator | Removes the locator as an item identifier for the object. | 
@@ -1151,7 +1151,7 @@ update value($TN, "Ontopia") from
 The available update functions are:
 
 | Function | Parameters | Meaning | 
-|--|--|--|
+|---|---|---|
 | value | object, string | Sets the string value of the object, which must be a topic name, variant name, or occurrence. | 
 | resource | object, locator | Sets the value of the object to the given locator (and also changes the datatype to URI), where the object must be a variant name or an occurrence. | 
 

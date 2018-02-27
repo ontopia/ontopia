@@ -1080,7 +1080,7 @@ In the upper right hand corner of all Ontopoly pages and on the Ontopia Home Pag
 application navigation bar.
 
 | Item | Description | 
-|--|--|
+|---|---|
 | **Home** | Returns you to the Ontopia Home Page. | 
 | **Manage** | Accesses the Omnigator Manage page. _This item will eventually take the user to an common Manage Page, that can be used for Ontopoly or Omnigator._ | 
 | **Feedback** | As you use Ontopoly, we hope that you will use this feedback form to send us comments as they occur to you. However, please do not use the **feedback** mechanism to report bugs. Ontopia provides a direct link to Ontobugs. | 
@@ -1092,7 +1092,7 @@ application navigation bar.
 Once inside a topic map, there are four major tabs.
 
 | Item | Description | 
-|--|--|
+|---|---|
 | **Description** | Page where descriptive information about the current topic map as a whole can be captured, see [Topic Map Description Page](#topic-map-description-page). | 
 | **Admin** | Use this page to export the topic map into a preferred serialization syntax, see [Exporting a topic map](#exporting-a-topic-map). | 
 | **Ontology** | Set of pages for configuring the ontology, i.e., defining the topic, occurrence, association, role, and name type topics. When in Ontology area, a secondary set of buttons occur that provide discrete access to the preferred page, e.g., topic type, association type, etc., see [Using the Type Configuration Pages](#using-the-type-configuration-pages). | 
@@ -1105,7 +1105,7 @@ The items in the tabs are also repeated at the bottom of each page upon which th
 There are three items in the Editing Box:
 
 | Item | Description | 
-|--|--|
+|---|---|
 | **Open...** | Takes you back to the Topic Map Index Page. If you do not save before you use this button, all edits since your previous save will **not** be written to disk. | 
 | **Save** | Saves the current topic map to disk. _Only available for in-memory topic maps._ | 
 | Search box and **Find** button | Use to find the uses of a term within the open topic map.  | 
@@ -1121,7 +1121,7 @@ type of page you are viewing. The following table includes all possible items as
 reference.
 
 | Item | Description | 
-|--|--|
+|---|---|
 | `Topic types` | Shows the topic types of this topic. If there are multiple types you can switch between them by clicking the link for each topic type. | 
 | `Views` | Shows the field views declared for fields assigned to this topic type. If there are multiple views you can switch between them by clicking the link for each view. | 
 | `View instances of this type` | Moves you from a Type Configuration Page to an Instance Index Page. Provides the index of instances of the current type. | 
@@ -1148,7 +1148,7 @@ secondary navigation bar to facilitate navigation from one Type Index Page to an
 Occurrence Type Index Page](#occurrence-type-index-page) for an example).
 
 | Item | Description | 
-|--|--|
+|---|---|
 | `Topic Types` | Access to the Topic Type Index. | 
 | `Occurrence Types` | Access to the Occurrence Type Index | 
 | `Association Types` | Access to the Association Type Index | 
@@ -1160,7 +1160,7 @@ Occurrence Type Index Page](#occurrence-type-index-page) for an example).
 The icons described in the table below occur throughout all Ontopoly pages.
 
 | Icon | Name | Description | 
-|--|--|--|
+|---|---|---|
 | ![images/expand.gif](images/expand.gif)  | Expand | The boxed plus sign expands the under the current topic. | 
 | ![images/collapse.gif](images/collapse.gif)  | Collapse | The boxed minus sign collapses the hierarchy under the current topic. | 
 | ![images/boxed.gif](images/boxed.gif)  | Blank box | The empty box precedes a topic that does not have any children in the hierarchy, and so, cannot be expanded or collapsed. | 

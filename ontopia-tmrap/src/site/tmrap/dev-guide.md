@@ -88,7 +88,7 @@ This method returns a topic map fragment representing the topic identified by th
 method. The parameters to the method are shown in the table below.
 
 | Parameter | Req.? | Repeat? | Type | Description | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | item | no | yes | URI | An item identifier of the requested topic. | 
 | subject | no | yes | URI | A subject locator of the requested topic. | 
 | identifier | no | yes | URI | A subject identifier of the requested topic. | 
@@ -114,7 +114,7 @@ presentation](http://www.ontopia.net/topicmaps/materials/Towards%20Seamless%20Kn
 parameters to the method are listed below.
 
 | Parameter | Req.? | Repeat? | Type | Description | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | item | no | yes | URI | An item identifier of the requested topic. | 
 | subject | no | yes | URI | A subject locator of the requested topic. | 
 | identifier | no | yes | URI | A subject identifier of the requested topic. | 
@@ -158,7 +158,7 @@ Topic Maps fragment. Later versions of TMRAP will also support getting the query
 structure. The supported parameters are shown below.
 
 | Parameter | Req.? | Repeat? | Type | Description | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | tolog | yes | no | string | The tolog query. | 
 | topicmap | yes | no | string | The ID of the topic map being queried. | 
 | syntax | no | no | string | The syntax in which to return the topc map fragment. The default (and only supported value) is XTM. Note that the values supplied must be the syntax identifiers defined above. | 
@@ -176,7 +176,7 @@ map, modifying it in place. The return value is simply the number of rows modifi
 parameters are shown below.
 
 | Parameter | Req.? | Repeat? | Type | Description | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | tolog | yes | no | string | The tolog statement. | 
 | topicmap | yes | no | string | The ID of the topic map being modified. | 
 
@@ -188,7 +188,7 @@ The add-fragment method allows a Topic Maps fragment to be added to a topic map 
 parameters are listed below.
 
 | Parameter | Req.? | Repeat? | Type | Description | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | topicmap | yes | no | string | The ID of the topic map being added to. | 
 | syntax | yes | no | string | The syntax of the fragment to be added. The only supported values are CTM, LTM, and XTM. Note that the values supplied must be the syntax identifiers defined above. | 
 | fragment | yes | no | string | The actual fragment. | 
@@ -201,7 +201,7 @@ The delete-topic method allows a topic to be deleted from a topic map on the ser
 are listed below.
 
 | Parameter | Req.? | Repeat? | Type | Description | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | item | no | yes | URI | An item identifier of the requested topic. | 
 | subject | no | yes | URI | A subject locator of the requested topic. | 
 | identifier | no | yes | URI | A subject identifier of the requested topic. | 

@@ -48,7 +48,7 @@ parameters. Useful in cases where more complex action handling is wanted.
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | action |  Yes  | Action name |  The name of the action which should be executed when the form is submitted.  | 
 | params | No | Variable name(s) or qname(s) or JSP attributes |  Additional parameters to the action.  | 
 | value | No | Variable name(s) or JSP attribute |  The value of the form control; will be received by the triggered action. If the attribute is not specified the action will be always be invoked when the form is submitted.  | 
@@ -65,7 +65,7 @@ trigger an action on the server side.
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | action | Yes | Action name |  Sets the name of the action which should be executed when the form is submitted.  | 
 | params | No | Variable name(s) or qname(s) or JSP attributes |  Value which should be made available to the action triggered by the button. The names must be separated by whitespace. Note that the order of the parameters matters and is specific to the action.  | 
 | image | No | Image type name |  If set the button will be shown as an image. The image name is mapped to the action configuration file. If `text` is set, that will become the button title (shown as tooltip by most browsers). One of `text` and `image` must be specified.  | 
@@ -83,7 +83,7 @@ box causes the attached action to be triggered.
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | action |  Yes  | Action name |  The name of the action which should be executed when the form is submitted.  | 
 | params | No | Variable name(s) or qname(s) or JSP attributes |  Additional parameters to the action.  | 
 | state | No | Variable name or JSP attribute |  The state of the check box. If the variable name is bound to a value that evaluates as true the box is checked, otherwise not. (If the attribute is not given the box is not checked.)  | 
@@ -99,7 +99,7 @@ strings. This may be one-line or multiline.
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | action | Yes | Action name |  Sets the name of the action which should be executed to reflect the changed value of the field when the form is submitted.  | 
 | type | Yes | Field type name |  Retrieves information about the field type (whether it should be a single or multiline input field and the concrete dimension) by the given name from the action configuration file (see element `fieldMap`).  | 
 | params | No | Variable name(s) or qname(s) or JSP attributes |  Values which should be made available to the action handling the field. The names are separated by whitespace. Note that the order of the parameters matters and is specific to the related action. See the action library reference for the parameters used by the different actions.  | 
@@ -118,7 +118,7 @@ form data when the form is submitted.
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | actiongroup | Yes | Group name |  Sets the name of the action group as specified in the action configuration file. | 
 | actionURI | No | URI |  If a (relative or absolute) action URI is specified this overwrites the default action of the form (which is the process servlet <span class="footnote">The fully qualified class name is net.ontopia.topicmaps.webed.servlets.ProcessServlet</span>). In most cases it is not necessary to specify something for this value. | 
 | target | No | Frame target name |  If target is given it overwrites the default frame target setting deduced from the action configuration file. | 
@@ -136,7 +136,7 @@ submitted. The action will always be triggered, except when the `invoke` tag is 
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | action |  Yes  | Action name |  The name of the action which should be executed when the form is submitted.  | 
 | params | No | Variable name(s) or qname(s) or JSP attributes |  Additional parameters to the action.  | 
 | value | No | Variable name(s) |  The value of the form control; will be received by the triggered action.  | 
@@ -153,7 +153,7 @@ radio-button list, or checkbox list.
 ##### Attributes #####
 
 | Name | Required | Value | Description | 
-|--|--|--|--|
+|---|---|---|---|
 | action | Yes | Action name |  The name of the action which should be executed when the form is submitted.  | 
 | collection | Yes | Variable name or JSP attribute |  The candidates for the object's values.  | 
 | selected | No | Variable name or JSP attribute |  The currently set value.  | 

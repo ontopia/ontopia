@@ -41,7 +41,7 @@ element by element.
 
 #### The tm-schema element ####
 
-|--|--|
+|---|---|
 | Summary: | The container element for the schema. | 
 | Content model: | (ruleset &#124; topic &#124; association)*  | 
 | Parents: | None | 
@@ -58,12 +58,12 @@ The allowed children of `tm-schema` elements are `ruleset`, `topic`, and `associ
 any order.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | match | loose, strict | #DEFAULT | loose | Controls whether the schema uses loose or strict matching. | 
 
 #### The ruleset element ####
 
-|--|--|
+|---|---|
 | Summary: | Contains a set of reusable named constraints. | 
 | Content model: | (ruleref* , (baseName &#124; occurrence &#124; playing)* )  | 
 | Parents: | tm-schema | 
@@ -79,12 +79,12 @@ The `ruleset` element may contain any number of `ruleref` elements, followed by 
 `baseName`, `occurrence`, and `playing` elements.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | id | ID | #REQUIRED |   | The ID of the ruleset, by which it may be referred to. | 
 
 #### The topic element ####
 
-|--|--|
+|---|---|
 | Summary: | Defines a topic class. | 
 | Content model: | (instanceOf , otherClass* , (ruleref &#124; superclass)* , (baseName &#124; occurrence &#124; playing)* )  | 
 | Parents: | tm-schema | 
@@ -111,13 +111,13 @@ The `baseName`, `occurrence`, and `playing` elements specify what characteristic
 class may have.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | id | ID | #IMPLIED |   | The ID of the class by which it may be referred to. | 
 | match | loose, strict | #DEFAULT | strict | Whether matching of constraints is loose or strict. | 
 
 #### The baseName element ####
 
-|--|--|
+|---|---|
 | Summary: | A constraint on the topic names of a topic. | 
 | Content model: | (scope , variant*)  | 
 | Parents: | topic, ruleset | 
@@ -135,13 +135,13 @@ variant names is always strict, so variant names that do not match a rule in the
 rejected.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | max | CDATA | #DEFAULT | Inf | The maximum number of matches allowed on this constraint for each instance of the class. | 
 | min | CDATA | #DEFAULT | 0 | The minimum number of matches allowed on this constraint for each instance of the class. | 
 
 #### The variant element ####
 
-|--|--|
+|---|---|
 | Summary: | A constraint on the variant names of a base name. | 
 | Content model: | (scope)  | 
 | Parents: | baseName | 
@@ -155,13 +155,13 @@ matching variant names each topic name may have. The default is that any number 
 allowed.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | max | CDATA | #DEFAULT | Inf | The maximum number of matches allowed on this constraint for each instance of the class. | 
 | min | CDATA | #DEFAULT | 0 | The minimum number of matches allowed on this constraint for each instance of the class. | 
 
 #### The occurrence element ####
 
-|--|--|
+|---|---|
 | Summary: | A constraint on the occurrences of a topic. | 
 | Content model: | (instanceOf , scope?)  | 
 | Parents: | topic, ruleset | 
@@ -178,14 +178,14 @@ If the `occurrence` element has a `scope` child element the scope of each occurr
 against that specified in the `scope` child.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | internal | yes, no, either | #DEFAULT | either | Whether the occurrence must be internal or external, or whether it can be both. | 
 | max | CDATA | #DEFAULT | Inf | The maximum number of matches allowed on this constraint for each instance of the class. | 
 | min | CDATA | #DEFAULT | 0 | The minimum number of matches allowed on this constraint for each instance of the class. | 
 
 #### The playing element ####
 
-|--|--|
+|---|---|
 | Summary: | Defines a constraint on the roles a topic may play in associations. | 
 | Content model: | (instanceOf , in?)  | 
 | Parents: | topic, ruleset | 
@@ -203,13 +203,13 @@ As long as the containing association matches one of those elements the associat
 accepted.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | max | CDATA | #DEFAULT | Inf | The maximum number of matches allowed on this constraint for each instance of the class. | 
 | min | CDATA | #DEFAULT | 0 | The minimum number of matches allowed on this constraint for each instance of the class. | 
 
 #### The association element ####
 
-|--|--|
+|---|---|
 | Summary: | Defines an association class. | 
 | Content model: | (instanceOf , scope? , role+)  | 
 | Parents: | tm-schema | 
@@ -230,7 +230,7 @@ The `association` element has no attributes.
 
 #### The role element ####
 
-|--|--|
+|---|---|
 | Summary: | Contains a constraint on the association roles in an association. | 
 | Content model: | (instanceOf , player*)  | 
 | Parents: | association | 
@@ -250,7 +250,7 @@ instances of more than one class may play a role, use more than one `player`
 element.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | max | CDATA | #DEFAULT | Inf | The maximum number of matches allowed on this constraint for each instance of the class. | 
 | min | CDATA | #DEFAULT | 0 | The minimum number of matches allowed on this constraint for each instance of the class. | 
 
@@ -260,7 +260,7 @@ This section defines the semantics of the low-level elements of the Ontopia Sche
 
 #### The ruleref element ####
 
-|--|--|
+|---|---|
 | Summary: | A reference to a ruleset that is to be included in a topic class. | 
 | Content model: | EMPTY | 
 | Parents: | topic, ruleset | 
@@ -273,12 +273,12 @@ by the `ruleset` or `topic` element that contains the `ruleref` element.
 It is an error for the `ruleref` element to refer to an ID that does not exist in the schema.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | rule | IDREF | #REQUIRED |   | The ID of the ruleset being referred to. | 
 
 #### The superclass element ####
 
-|--|--|
+|---|---|
 | Summary: | Refers to the superclass of the topic class being defined. | 
 | Content model: | EMPTY | 
 | Parents: | topic | 
@@ -289,12 +289,12 @@ subclass of the referred-to superclass. The superclass is identified by referrin
 definition that corresponds to the superclass topic.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | ref | IDREF | #REQUIRED |   | The ID of the superclass topic class definition. | 
 
 #### The player element ####
 
-|--|--|
+|---|---|
 | Summary: | Controls the allowed types of the topic that may play a particular role in an association. | 
 | Content model: | (topicRef &#124; subjectIndicatorRef &#124; internalTopicRef &#124; any)?  | 
 | Parents: | role | 
@@ -303,12 +303,12 @@ Used inside `role` elements to specify the allowed classes of topics that may pl
 an association. Its semantics are otherwise the same as those for `instanceOf`.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | subclasses | yes, no | #DEFAULT | yes | Whether subclasses of the specified types are accepted or not. | 
 
 #### The instanceOf element ####
 
-|--|--|
+|---|---|
 | Summary: | Specifies the type of a topic map object. | 
 | Content model: | (topicRef &#124; subjectIndicatorRef &#124; internalTopicRef &#124; any)?  | 
 | Parents: | topic, role, occurrence, in, scope, playing, association | 
@@ -325,12 +325,12 @@ The `topicRef`, `subjectIndicatorRef`, `internalTopicRef`, and `any` child eleme
 specify the type of the topic map object.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | subclasses | yes, no | #DEFAULT | yes | Whether instances of subclasses are accepted. | 
 
 #### The scope element ####
 
-|--|--|
+|---|---|
 | Summary: | Controls the allowed scope of a topic characteristic.  | 
 | Content model: | (topicRef &#124; subjectIndicatorRef &#124; internalTopicRef &#124; any &#124; instanceOf)*  | 
 | Parents: | baseName, variant, occurrence, association | 
@@ -351,12 +351,12 @@ of the `scope` element, and if present it states that all topics that match the 
 are allowed as themes in the scope.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | match | subset, superset, exact | #DEFAULT | exact | Controls how the specified scope is matched against the scope of actual topic characteristics. | 
 
 #### The topicRef element ####
 
-|--|--|
+|---|---|
 | Summary: | Identifies a topic by its source locator. | 
 | Content model: | EMPTY | 
 | Parents: | instanceOf, player, otherClass, scope | 
@@ -366,12 +366,12 @@ contains a URI (resolved relative to that of the current entity), and topics whi
 their source locator will match, while no other topics will.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | href | CDATA | #REQUIRED |   | The URI that is the source locator of the topic. | 
 
 #### The subjectIndicatorRef element ####
 
-|--|--|
+|---|---|
 | Summary: | Identifies a topic by its subject identifier. | 
 | Content model: | EMPTY | 
 | Parents: | instanceOf, player, otherClass, scope | 
@@ -381,12 +381,12 @@ attribute contains a URI (resolved relative to that of the current entity), and 
 that URI as their subject identifier will match, while no other topics will.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | href | CDATA | #REQUIRED |   | The URI that is the subject identifier. | 
 
 #### The internalTopicRef element ####
 
-|--|--|
+|---|---|
 | Summary: | Identifies a topic by its source locator. | 
 | Content model: | EMPTY | 
 | Parents: | instanceOf, player, otherClass, scope | 
@@ -396,12 +396,12 @@ attribute contains a URI (resolved relative to the base address of the topic map
 have that URI as their source locator will match, while no other topics will.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | href | CDATA | #REQUIRED |   | The URI that is the source locator of the topic. | 
 
 #### The any element ####
 
-|--|--|
+|---|---|
 | Summary: | Any topic. | 
 | Content model: | EMPTY | 
 | Parents: | instanceOf, player, otherClass, scope | 
@@ -412,7 +412,7 @@ The `any` element has no attributes.
 
 #### The player element ####
 
-|--|--|
+|---|---|
 | Summary: | Controls the allowed types of the topic that may play a particular role in an association. | 
 | Content model: | (topicRef &#124; subjectIndicatorRef &#124; internalTopicRef &#124; any)?  | 
 | Parents: | role | 
@@ -421,7 +421,7 @@ Used inside `role` elements to specify the allowed classes of topics that may pl
 an association. Its semantics are otherwise the same as those for `instanceOf`.
 
 | Name | Type | Required | Default | Definition | 
-|--|--|--|--|--|
+|---|---|---|---|---|
 | subclasses | yes, no | #DEFAULT | yes | Whether subclasses of the specified types are accepted or not. | 
 
 

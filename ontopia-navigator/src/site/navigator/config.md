@@ -75,7 +75,7 @@ Below is a complete list of the parameters, together with an overview over which
 which parameters.
 
 | Parameter | Values | Purpose | Sources | 
-|--|--|--|--|
+|---|---|---|---|
 | path | Path | Path to the directory where the source will look for topic map files. The token ${CWD} can be used to refer to the directory of the source file to specify relative paths. | xtm ltm rdf tmxml | 
 | suffix | String | The file name extension of files in the path directory which the source will make topic maps from. | xtm ltm rdf tmxml | 
 | maintainFulltextIndexes | true/false | If true a full-text index for the topic map will be created and automatically kept up to date with changes in the topic map. Setting this to true for sources containing Ontopoly topic maps is highly recommended. | xtm ltm rdf tmxml | 

@@ -103,7 +103,7 @@ application](#using-vizlet-in-a-web-application)). Additional languages will be 
 time.
 
 | Language | Code | Translation Acknowledgements | 
-|--|--|--|
+|---|---|---|
 | English | en | &dash; | 
 | Japanese | ja | Thank you to Motomu Naito, CEO of partner [Knowledge Synergy](http://www.knowledge-synergy.com/), Inc., Japan  | 
 | German | de | Thank you to Ingo Schönfeld, Knowledge Engineer at ATLAS Elektronik GmbH, Germany | 
@@ -819,7 +819,7 @@ search.bar=off
 Menu items that are not mentioned in the file will be displayed (and if the parameter is not given
 all items are displayed). The list of menu choice names is:
 
-|--|--|
+|---|---|
 | expand.node | Expand node | 
 | collapse.node | Collapse node | 
 | hide.node | Hide node | 

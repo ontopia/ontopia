@@ -66,7 +66,7 @@ against their constraints, and by what they may be constrained beyond what the r
 show.
 
 | Container | Containee | Element | Match by | Constrainable | 
-|--|--|--|
+|---|---|---|
 | Topic map | Topics | topic | Type | Other classes, superclasses | 
 | Topic | Topic names | baseName | Scope | Cardinality | 
 | Topic name | Variant names | variantName | Scope | Cardinality | 

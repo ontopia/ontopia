@@ -399,7 +399,7 @@ set of CSV files. The attributes accepted by this element are listed in the tabl
 below.
 
 | Attribute | Meaning | Required? | 
-|--|--|
+|---|---|
 | path | The path to the directory containing the CSV files. The path is relative to the location of the XML file. | Yes | 
 | encoding | The character encoding of the CSV files. If not specified it defaults to the platform default. | No | 
 | separator | The character separating entries in a line in a CSV file. Default is semicolon (;). | No | 
@@ -421,7 +421,7 @@ set of tables. The attributes accepted by this element are listed in the table
 below.
 
 | Attribute | Meaning | Required? | 
-|--|--|
+|---|---|
 | propfile | The path to the RDBMS properties file that tells DB2TM how to connect to the database. This property file uses the same set of properties as the Ontopia RDBMS backend does (except that it doesn't make use of all the properties that tune the backend cache etc). The path is relative to the location of the XML file. (If no file is found, DB2TM tries to load it from the classpath.) | Yes | 
 
 Note that the JDBC source requires a number of things in order to work. The JDBC drivers you wish to
@@ -735,7 +735,7 @@ an attempt at explaining what each of the messages mean.
 #### Relation operations ####
 
 | Log message | Description | 
-|--|--|--|
+|---|---|---|
 | Adding tuples from data source &lt;datasource&gt; | Relations and their tuples are being read from the given data source. | 
 | ignoring relation: &lt;relation&gt; | Ignored relation as there was no &lt;relation&gt; definition for it. | 
 | adding relation: &lt;relation&gt; | Reading tuples from the given relation and adding them according to its &lt;relation&gt; definition. | 
@@ -747,7 +747,7 @@ an attempt at explaining what each of the messages mean.
 #### Tuple operations ####
 
 | Log message | Description | 
-|--|--|--|
+|---|---|---|
 | a(1&#124;2&#124;3) | Adds a table row containing three values into the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition. | 
 | r(1&#124;2&#124;3) | Removes a table row containing three values into the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition. | 
 | u(1&#124;2&#124;3) | Updating a table row containing three values against the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition. | 
@@ -755,7 +755,7 @@ an attempt at explaining what each of the messages mean.
 #### Entity and characteristics operations ####
 
 | Log message | Description | 
-|--|--|--|
+|---|---|---|
 | -T &lt;topic&gt; | Removing a topic. | 
 | &gt;T &lt;topic&gt; | Removing characteristics defined in this &lt;relation&gt; definition from a non-primary topic entity. This will leave any other characteristics alone. | 
 | +A &lt;association&gt; &lt;association-type&gt; | Added the association of the given type. | 
