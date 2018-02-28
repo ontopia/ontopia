@@ -8,41 +8,37 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.css" />
 
 		<link rel="stylesheet" href="${root}ontopia.css">
 		#if (!$title) #set($title="Ontopia Documentation") #end
-		<title>$title</title>
+		<title>$title &mdash; Ontopia Documentation</title>
 	</head>
-	<body class="$!pageclass">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-2 col-menu">
-					<div class="clearfix">
-						<div id="toc">
-							<img src="${root}logo.png"/>
-							<h3>Documentation</h3>
-							#if ($menuSubTitle)
-								<h4>$menuSubTitle</h4>
-							#end
-							#parse ("menu.vm")
-						</div>
-					</div>
-				</div>
-				<div class="col-md-10 col-page">
-					<div class="container">
-						<div class="row">
-							<div class="document-container">
-								<section>
-									$!body
-								</section>
-							</div>
-						</div>
-					</div>
+	<body>
+		<div id="wrapper">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<div class="sidebar col-menu" role="navigation">
+				<img src="${root}logo.png"/>
+				<div class="sidebar-nav navbar-collapse collapse">
+				<h3 class="text-center hidden-xs">Documentation</h3>
+					#parse ("menu.vm")
 				</div>
 			</div>
+			<div id="page-wrapper">
+				<section class="container">
+					$!body
+				</section>
+			</div>
 		</div>
+
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/runmode/runmode.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/mode/simple.js"></script>

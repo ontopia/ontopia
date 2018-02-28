@@ -3,13 +3,31 @@
 (function(win) {
 	"use strict";
 	
+	function menu() {
+		$('#sidebar').metisMenu();
+
+		var url = window.location.href.replace(window.location.hash,"");
+		var element = $('ul.nav a').filter(function() {
+			return this.href === url;
+		}).addClass('active').parent();
+
+		while (true) {
+			if (element.is('li')) {
+				element = element.parent().addClass('in').parent();
+			} else {
+				break;
+			}
+		}
+	}
+	
 	function highlight() {
 		$('pre code[class]').each(function(i, block) {
 			var modes = $(block).attr("class").trim().split(';');
 			if (modes.length > 1) {
 				$(block).addClass(modes[1]);
 			}
-			modes[0] = modes[0].split('-')[1]; // remove language- prefix
+			modes[0] = modes[0].indexOf('language-') === 0 ? modes[0].substring(9) : modes[0];
+			$(block).attr('data-foo', modes[0]);
 			CodeMirror.runMode($(block).text(), modes[0], block);
 			$(block).addClass('cm-s-default');
 		});
@@ -54,12 +72,14 @@
 	win.Ontopia = {
 		"highlight": highlight,
 		"footnotes": footnotes,
-		"missingLinks": missingLinks
+		"missingLinks": missingLinks,
+		"menu": menu
 	};
 })(this);
 
 $(document).ready(function() {
+	Ontopia.menu();
 	Ontopia.highlight();
 	Ontopia.footnotes();
-	Ontopia.missingLinks();
+//	Ontopia.missingLinks();
 });
