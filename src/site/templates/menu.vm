@@ -1,23 +1,39 @@
+#set ($id = $project.artifactId)
+
 <ul class="nav metismenu" id="sidebar">
-	<li><a href="${root}index.html"><i class="fa fa-fw fa-book"></i> General <i class="fa arrow"></i></a>
+	
+	## -- shared menu items
+	<li><a href="${root}index.html"><i class="fa fa-fw fa-list"></i> Overview</a>
+
+	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat")
+	<li><a href="#"><i class="fa fa-fw fa-book"></i> General <i class="fa arrow"></i></a>
 		<ul class="nav">
-			<li><a href="${root}index.html">Index</a></li>
 			<li><a href="${root}whatsnew.html">What's new / Changelog</a></li>
 			<li><a href="${root}install.html">Installation</a></li>
 			<li><a href="${root}license.html">License</a></li>
 			<li><a href="${root}copyrights.html">Third party licenses</a></li>
 		</ul>
 	</li>
+	#end
+
+	#if ($id == "ontopia-distribution-tomcat")
 	<li><a href="${root}modules.html"><i class="fa fa-fw fa-plug"></i> Modules</a></li>
-	<li><a href="${root}applications.html"><i class="fa fa-fw fa-rocket"></i> Applications <i class="fa arrow"></i></a>
+	<li><a href="#"><i class="fa fa-fw fa-rocket"></i> Applications <i class="fa arrow"></i></a>
 		<ul class="nav">
+			<li><a href="${root}applications.html">Overview</a></li>
 			<li><a href="${root}omnigator/userguide.html">Omnigator</a></li>
 			<li><a href="${root}ontopoly/user-guide.html">Ontoloply</a></li>
 			<li><a href="${root}vizigator/userguide.html">Vizigator</a></li>
 		</ul>
 	</li>
+	#end
+
+	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat")
 	<li><a href="${root}engine/devguide.html"><i class="fa fa-fw fa-cog"></i>Engine</a></li>
-	<li><a href="${root}engine/navigator.html"><i class="fa fa-fw fa-code"></i> Navigator <i class="fa arrow"></i></a>
+	#end
+
+	#if ($id == "ontopia-navigator" || $id == "ontopia-distribution-tomcat")
+	<li><a href="#"><i class="fa fa-fw fa-code"></i> Navigator <i class="fa arrow"></i></a>
 		<ul class="nav">
 			<li><a href="${root}navigator/config.html">Configuration</a></li>
 			<li><a href="${root}navigator/navguide.html">Developer guide</a></li>
@@ -25,18 +41,47 @@
 			<li><a href="${root}navigator/userman.html">User management</a></li>
 		</ul>
 	</li>
-	<li><a href="${root}rdbms/index.html"><i class="fa fa-fw fa-database"></i> Database <i class="fa arrow"></i></a>
+	#end
+
+	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat")
+	<li><a href="#"><i class="fa fa-fw fa-database"></i> Database <i class="fa arrow"></i></a>
 		<ul class="nav">
 			<li><a href="${root}rdbms/install.html">Installation</a></li>
 			<li><a href="${root}rdbms/devguide.html">Developer guide</a></li>
 		</ul>
 	</li>
-	<li><a href="${root}query/index.html"><i class="fa fa-fw fa-search"></i> Query <i class="fa arrow"></i></a>
+	<li><a href="#"><i class="fa fa-fw fa-search"></i> Query <i class="fa arrow"></i></a>
 		<ul class="nav collapse">
 			<li><a href="${root}query/tutorial.html">Tutorial</a></li>
 			<li><a href="${root}query/predicate-reference.html">Predicate reference</a></li>
 		</ul>
 	</li>
+	<li><a href="#"><i class="fa fa-fw fa-star"></i> Schema Language<i class="fa arrow"></i></a>
+		<ul class="nav collapse">
+			<li><a href="${root}schema/tutorial.html">Tutorial</a></li>
+			<li><a href="${root}schema/spec.html">Reference specification</a></li>
+		</ul>
+	</li>
+	<li><a href="#"><i class="fa fa-fw fa-file"></i> Technology notes <i class="fa arrow"></i></a>
+		<ul class="nav collapse">
+			<li><a href="${root}misc/ltm.html">Linear Topic Map Notation</a></li>
+			<li><a href="${root}misc/rdf2tm.html">RTM RDF to topic maps mapping</a></li>
+		</ul>
+	</li>
+	#end
+
+	#if ($id == "ontopia-webed" || $id == "ontopia-distribution-tomcat")
+	<li><a href="#"><i class="fa fa-fw fa-code"></i> Webed framework <i class="fa arrow"></i></a>
+		<ul class="nav">
+			<li><a href="${root}webed/config.html">Configuration</a></li>
+			<li><a href="${root}webed/devguide.html">Developer guide</a></li>
+			<li><a href="${root}webed/taglib.html">Tab library reference</a></li>
+			<li><a href="${root}webed/action-ref.html">Action library reference</a></li>
+		</ul>
+	</li>
+	#end
+
+	#if ($id == "ontopia-distribution-tomcat")
 	<li><a href="#"><i class="fa fa-fw fa-wrench"></i> Tools <i class="fa arrow"></i></a>
 		<ul class="nav collapse">
 			<li><a href="${root}db2tm/user-guide.html">DB2TM</a></li>
@@ -44,5 +89,27 @@
 			<li><a href="${root}classify/dev-guide.html">Classification</a></li>
 		</ul>
 	</li>
+	#end
+
+	## -- module specific menus
+	#if ($id == "ontopia-classify")
+		<li><a href="${root}classify/dev-guide.html"><i class="fa fa-fw fa-search"></i>Ontopia Classify</a></li>
+	#end
+	#if ($id == "ontopia-db2tm")
+		<li><a href="${root}db2tm/user-guide.html"><i class="fa fa-fw fa-database"></i>DB2TM user guide</a></li>
+	#end
+	#if ($id == "ontopia-tmrap")
+		<li><a href="${root}tmrap/dev-guide.html"><i class="fa fa-fw fa-cog"></i>TMRAP developer guide</a></li>
+	#end
+	#if ($id == "ontopia-vizigator")
+		<li><a href="${root}vizigator/userguide.html"><i class="fa fa-fw fa-image"></i>Vizigator user guide</a></li>
+	#end
+	#if ($id == "webapp-omnigator")
+		<li><a href="${root}omnigator/userguide.html"><i class="fa fa-fw fa-rocket"></i> Omnigator user guide</a></li>
+	#end
+	#if ($id == "webapp-ontopoly")
+		<li><a href="${root}ontopoly/user-guide.html"><i class="fa fa-fw fa-rocket"></i> Ontopoloy user guide</a></li>
+	#end
+
 	<li><a href="${root}api/"><i class="fa fa-fw fa-terminal"></i> API</a></li>
 <ul>
