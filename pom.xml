@@ -316,6 +316,43 @@
 					<artifactId>maven-install-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
+				<plugin>
+					<groupId>net.ontopia</groupId>
+					<artifactId>documentation-maven-plugin</artifactId>
+					<version>1.0-SNAPSHOT</version>
+					<executions>
+						<execution>
+							<id>site-default</id>
+							<goals><goal>generate</goal></goals>
+							<phase>prepare-package</phase>
+							<configuration>
+								<rootDirectory>${basedir}/src/site</rootDirectory>
+								<template>${basedir}/../src/site/templates/distribution.vm</template>
+								<resources>
+									<resource>${project.basedir}/src/site/resources</resource>
+									<resource>${project.basedir}/../src/site/resources</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.github.warmuuh</groupId>
+					<artifactId>libsass-maven-plugin</artifactId>
+					<version>0.2.9-libsass_3.4.7</version>
+					<executions>
+						<execution>
+							<id>site-default</id>
+							<phase>prepare-package</phase>
+							<goals><goal>compile</goal></goals>
+							<configuration>
+								<outputStyle>nested</outputStyle>
+								<inputPath>${basedir}/../src/sass/</inputPath>
+								<outputPath>${basedir}/target/site/</outputPath>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -331,32 +368,31 @@
 			<plugin>
 				<groupId>net.ontopia</groupId>
 				<artifactId>documentation-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
 				<executions>
 					<execution>
-						<goals><goal>generate</goal></goals>
-						<phase>site</phase>
+						<inherited>false</inherited>
+						<id>site-default</id>
+						<configuration>
+							<template>${basedir}/src/site/templates/distribution.vm</template>
+							<resources>
+								<resource>${project.basedir}/src/site/resources</resource>
+							</resources>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.github.warmuuh</groupId>
 				<artifactId>libsass-maven-plugin</artifactId>
-				<version>0.2.9-libsass_3.4.7</version>
 				<executions>
 					<execution>
+						<id>site-default</id>
 						<inherited>false</inherited>
-						<phase>site</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
+						<configuration>
+							<inputPath>${basedir}/src/sass/</inputPath>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<outputStyle>nested</outputStyle>
-					<inputPath>${basedir}/src/sass/</inputPath>
-					<outputPath>${basedir}/target/site/</outputPath>
-				</configuration>
 			</plugin>			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
