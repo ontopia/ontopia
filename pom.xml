@@ -373,10 +373,7 @@
 						<inherited>false</inherited>
 						<id>site-default</id>
 						<configuration>
-							<template>${basedir}/src/site/templates/distribution.vm</template>
-							<resources>
-								<resource>${project.basedir}/src/site/resources</resource>
-							</resources>
+							<skip>true</skip>
 						</configuration>
 					</execution>
 				</executions>
@@ -388,9 +385,7 @@
 					<execution>
 						<id>site-default</id>
 						<inherited>false</inherited>
-						<configuration>
-							<inputPath>${basedir}/src/sass/</inputPath>
-						</configuration>
+						<phase>skip</phase>
 					</execution>
 				</executions>
 			</plugin>			
