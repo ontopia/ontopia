@@ -88,6 +88,9 @@
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
 		<jena.version>2.13.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
+		
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<prerequisites>
@@ -200,8 +203,6 @@
 					<configuration>
 						<fork>true</fork>
 						<maxmem>512m</maxmem>
-						<source>1.7</source>
-						<target>1.7</target>
 					</configuration>
 				</plugin>
 				<plugin>
