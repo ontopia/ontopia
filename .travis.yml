@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 language: java
 install: true
-script: mvn clean deploy -Dontopia.jetty.port=9090 --settings .travis.settings.xml
+script: mvn clean package -Dontopia.jetty.port=9090 --settings .travis.settings.xml
 cache:
   directories:
   - $HOME/.m2
