@@ -82,8 +82,8 @@ public abstract class ModalFindPage<T> extends Panel {
   protected static Logger log = LoggerFactory.getLogger(ModalFindPage.class);
   protected FieldInstanceModel fieldInstanceModel;
 
-  AjaxLink<Object> searchTabLink;
-  AjaxLink<Object> browseTabLink;
+  private AjaxLink<Object> searchTabLink;
+  private AjaxLink<Object> browseTabLink;
   
   private boolean errorInSearch = false;
 
@@ -218,6 +218,7 @@ public abstract class ModalFindPage<T> extends Panel {
     resultsContainer.add(checkGroup);
 
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
+      @Override
       public boolean isVisible() {
         IModel<String> model = searchTermField.getModel();
         if (model == null)
@@ -234,6 +235,7 @@ public abstract class ModalFindPage<T> extends Panel {
     unsuccessfulSearchContainer.add(message);
     
     ListView<Topic> listView = new ListView<Topic>("results", results) {
+      @Override
       public void populateItem(ListItem<Topic> item) {
         Topic hit = item.getModelObject();
         if (maxOneCardinality) {
@@ -412,6 +414,7 @@ public abstract class ModalFindPage<T> extends Panel {
     final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", this.selectedTypeModel, playerTypesChoicesModel);
     
     playerTypesDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+      @Override
       protected void onUpdate(AjaxRequestTarget target) {
         // replace tree model
         TopicType topicType = (TopicType)playerTypesDropDown.getDefaultModelObject();

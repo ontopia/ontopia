@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -57,6 +57,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     super(name);
   }
   
+  @Override
   public void setUp() throws Exception {
     // get a new topic map object from the factory.
     factory = getFactory();
@@ -116,6 +117,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     }
   }
 
+  @Override
   public void tearDown() {
     // Inform the factory that the topic map is not needed anymore.
     topicmap.getStore().close();
@@ -127,21 +129,23 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   
   // --- Test cases
 
-  class Event {
-    Object object;
-    String event;
-    Object new_value;
-    Object old_value;
+  protected class Event {
+    private Object object;
+    private String event;
+    private Object new_value;
+    private Object old_value;
     Event(Object object, String event, Object new_value, Object old_value) {
       this.object = object;
       this.event = event;
       this.new_value = new_value;
       this.old_value = old_value;
     }
+    @Override
     public String toString() {
         return event + " " + object;
     }
 
+    @Override
     public boolean equals(Object o) {
       if (o instanceof Event) {
         Event oevent = (Event)o;
@@ -152,9 +156,10 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     }
   }
 
-  class TesterListener implements EventListenerIF {
-    List<Event> seenEvents = new ArrayList<Event>();
+  protected class TesterListener implements EventListenerIF {
+    private List<Event> seenEvents = new ArrayList<Event>();
 
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       seenEvents.add(new Event(object, event, new_value, old_value));
     }
@@ -203,21 +208,21 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     TopicIF topic = builder.makeTopic();
 
     // TopicIF.addSubjectLocator
-    LocatorIF topic_subject_locator = Locators.getURILocator("topic:subject-locator");
+    LocatorIF topic_subject_locator = URILocator.create("topic:subject-locator");
     topic.addSubjectLocator(topic_subject_locator);
 
     // TopicIF.removeSubjectLocator
     topic.removeSubjectLocator(topic_subject_locator);
 
     // TopicIF.addSubjectIdentifier
-    LocatorIF topic_subject_identifier = Locators.getURILocator("topic:subject-identifier");
+    LocatorIF topic_subject_identifier = URILocator.create("topic:subject-identifier");
     topic.addSubjectIdentifier(topic_subject_identifier);
 
     // TopicIF.removeSubjectIdentifier
     topic.removeSubjectIdentifier(topic_subject_identifier);
 
     // TopicIF.addItemIdentifier
-    LocatorIF topic_item_identifier = Locators.getURILocator("topic:item-identifier");
+    LocatorIF topic_item_identifier = URILocator.create("topic:item-identifier");
     topic.addItemIdentifier(topic_item_identifier);
     
     // TopicIF.removeItemIdentifier
@@ -260,7 +265,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     tn.setType(tn_type2);
 
     // TopicNameIF.addItemIdentifier
-    LocatorIF tn_item_identifier = Locators.getURILocator("tn:item-identifier");
+    LocatorIF tn_item_identifier = URILocator.create("tn:item-identifier");
     tn.addItemIdentifier(tn_item_identifier);
     
     // TopicNameIF.removeItemIdentifier
@@ -296,7 +301,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     vn.setValue(vn_vn2, DataTypes.TYPE_INTEGER);
 
     // VariantNameIF.addItemIdentifier
-    LocatorIF vn_item_identifier = Locators.getURILocator("vn:item-identifier");
+    LocatorIF vn_item_identifier = URILocator.create("vn:item-identifier");
     vn.addItemIdentifier(vn_item_identifier);
     
     // VariantNameIF.removeItemIdentifier
@@ -351,7 +356,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     oc.setType(oc_type2);
  
     // OccurrenceIF.addItemIdentifier
-    LocatorIF oc_item_identifier = Locators.getURILocator("oc:item-identifier");
+    LocatorIF oc_item_identifier = URILocator.create("oc:item-identifier");
     oc.addItemIdentifier(oc_item_identifier);
     
     // OccurrenceIF.removeItemIdentifier
@@ -411,7 +416,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     as.setType(as_type2);
  
     // AssociationIF.addItemIdentifier
-    LocatorIF as_item_identifier = Locators.getURILocator("as:item-identifier");
+    LocatorIF as_item_identifier = URILocator.create("as:item-identifier");
     as.addItemIdentifier(as_item_identifier);
     
     // AssociaitonIF.removeItemIdentifier
@@ -455,7 +460,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     ar2.setPlayer(ar2_player2);
  
     // AssociationRoleIF.addItemIdentifier
-    LocatorIF ar2_item_identifier = Locators.getURILocator("ar:item-identifier");
+    LocatorIF ar2_item_identifier = URILocator.create("ar:item-identifier");
     ar2.addItemIdentifier(ar2_item_identifier);
     
     // AssociationRoleIF.removeItemIdentifier

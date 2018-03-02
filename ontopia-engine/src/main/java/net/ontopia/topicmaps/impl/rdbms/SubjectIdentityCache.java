@@ -36,9 +36,6 @@ import net.ontopia.topicmaps.impl.utils.AbstractSubjectIdentityCache;
 import net.ontopia.utils.CollectionFactoryIF;
 import net.ontopia.utils.PropertyUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL:
  */
@@ -47,16 +44,26 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
 
   private static final long serialVersionUID = 4342065742305830481L;
 
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SubjectIdentityCache.class.getName());
-
   protected TopicMapTransactionIF txn;  
   protected TransactionIF ptxn;
   
-  protected TransactionalLookupIndexIF source_locators;
-  protected TransactionalLookupIndexIF subject_indicators;
-  protected TransactionalLookupIndexIF subjects;
+  protected TransactionalLookupIndexIF<LocatorIF, IdentityIF> source_locators;
+  protected TransactionalLookupIndexIF<LocatorIF, IdentityIF> subject_indicators;
+  protected TransactionalLookupIndexIF<LocatorIF, IdentityIF> subjects;
         
+  private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
+    @Override
+    public Class<?> getType() { throw new UnsupportedOperationException(); }
+    @Override
+    public int getWidth() { throw new UnsupportedOperationException(); }
+    @Override
+    public Object getKey(int index) { throw new UnsupportedOperationException(); }
+    @Override
+    public Object createInstance() throws Exception { throw new UnsupportedOperationException(); }
+    @Override
+    public Object clone() { throw new UnsupportedOperationException(); }
+  };
+
   public SubjectIdentityCache(TopicMapTransactionIF txn, CollectionFactoryIF cfactory) {
     super(null);
     this.handlers = cfactory.makeLargeMap();
@@ -80,12 +87,12 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
     RDBMSStorage storage = (RDBMSStorage)ptxn.getStorageAccess().getStorage();
     
     if (storage.isSharedCache()) {
-      source_locators = new SharedLocatorLookup(ptxn.getStorageAccess(),
-          (QueryCache)storage.getHelperObject(CachesIF.QUERY_CACHE_SRCLOC, tmid), tmid);
-      subject_indicators = new SharedLocatorLookup(ptxn.getStorageAccess(),
-          (QueryCache)storage.getHelperObject(CachesIF.QUERY_CACHE_SUBIND, tmid), tmid);
-      subjects = new SharedLocatorLookup(ptxn.getStorageAccess(),
-          (QueryCache)storage.getHelperObject(CachesIF.QUERY_CACHE_SUBLOC, tmid), tmid);
+      source_locators = new SharedLocatorLookup<IdentityIF>(ptxn.getStorageAccess(),
+          (QueryCache<LocatorIF, IdentityIF>)storage.getHelperObject(CachesIF.QUERY_CACHE_SRCLOC, tmid), tmid);
+      subject_indicators = new SharedLocatorLookup<IdentityIF>(ptxn.getStorageAccess(),
+          (QueryCache<LocatorIF, IdentityIF>)storage.getHelperObject(CachesIF.QUERY_CACHE_SUBIND, tmid), tmid);
+      subjects = new SharedLocatorLookup<IdentityIF>(ptxn.getStorageAccess(),
+          (QueryCache<LocatorIF, IdentityIF>)storage.getHelperObject(CachesIF.QUERY_CACHE_SUBLOC, tmid), tmid);
 
     } else {
 
@@ -93,9 +100,9 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
       int lrusize_subind = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru"), 1000);
       int lrusize_subloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru"), 100);    
       
-      source_locators = new LocatorLookup("TopicMapIF.getObjectByItemIdentifier", ptxn, tm, lrusize_srcloc);
-      subject_indicators  = new LocatorLookup("TopicMapIF.getTopicBySubjectIdentifier", ptxn, tm, lrusize_subind);
-      subjects = new LocatorLookup("TopicMapIF.getTopicBySubject", ptxn, tm, lrusize_subloc);
+      source_locators = new LocatorLookup<IdentityIF>("TopicMapIF.getObjectByItemIdentifier", ptxn, tm, lrusize_srcloc, NULL_OBJECT_IDENTITY);
+      subject_indicators  = new LocatorLookup<IdentityIF>("TopicMapIF.getTopicBySubjectIdentifier", ptxn, tm, lrusize_subind, NULL_OBJECT_IDENTITY);
+      subjects = new LocatorLookup<IdentityIF>("TopicMapIF.getTopicBySubject", ptxn, tm, lrusize_subloc, NULL_OBJECT_IDENTITY);
     }
   }
 
@@ -121,23 +128,27 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
 
   // These methods are called by the topic map object.
   
+  @Override
   public TMObjectIF getObjectById(String object_id) {
     throw new UnsupportedOperationException("This method should not be called.");
   }
   
+  @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
-    Object o = source_locators.get(locator);
-    return (TMObjectIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
+    IdentityIF o = source_locators.get(locator);
+    return (TMObjectIF)(o == null ? null : ptxn.getObject(o));
   }
   
+  @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
-    Object o = subjects.get(locator);
-    return (TopicIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
+    IdentityIF o = subjects.get(locator);
+    return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
   
+  @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
-    Object o = subject_indicators.get(locator);
-    return (TopicIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
+    IdentityIF o = subject_indicators.get(locator);
+    return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
 
   // -----------------------------------------------------------------------------
@@ -147,41 +158,50 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   // The following methods populate the various caches when object
   // model events are triggered.
   
+  @Override
   protected TMObjectIF _getObjectByItemIdentifier(LocatorIF source_locator) {
-    Object o = source_locators.get(source_locator);
-    return (TMObjectIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
+    IdentityIF o = source_locators.get(source_locator);
+    return (TMObjectIF)(o == null ? null : ptxn.getObject(o));
   }
 
+  @Override
   protected void registerSourceLocator(LocatorIF source_locator, TMObjectIF object) {
     source_locators.put(source_locator, ((PersistentIF)object)._p_getIdentity());
   }
   
+  @Override
   protected void unregisterSourceLocator(LocatorIF source_locator) {
     source_locators.remove(source_locator);
   }
 
+  @Override
   protected TopicIF _getTopicBySubjectIdentifier(LocatorIF subject_indicator) {
-    Object o = subject_indicators.get(subject_indicator);
-    return (TopicIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
+    IdentityIF o = subject_indicators.get(subject_indicator);
+    return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
 
+  @Override
   protected void registerSubjectIndicator(LocatorIF subject_indicator, TopicIF object) {
     subject_indicators.put(subject_indicator, ((PersistentIF)object)._p_getIdentity());
   }
   
+  @Override
   protected void unregisterSubjectIndicator(LocatorIF subject_indicator) {
     subject_indicators.remove(subject_indicator);
   }
 
+  @Override
   protected TopicIF _getTopicBySubjectLocator(LocatorIF subject) {
-    Object o = subjects.get(subject);
-    return (TopicIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
+    IdentityIF o = subjects.get(subject);
+    return (TopicIF)(o == null ? null : ptxn.getObject(o));
   }
 
+  @Override
   protected void registerSubject(LocatorIF subject, TopicIF object) {
     subjects.put(subject, ((PersistentIF)object)._p_getIdentity());
   }
   
+  @Override
   protected void unregisterSubject(LocatorIF subject) {
     subjects.remove(subject);
   }

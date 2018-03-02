@@ -68,6 +68,7 @@ public abstract class ModificationStatement extends TologStatement {
     return query;
   }
 
+  @Override
   public void close() throws InvalidQueryException {
     if (query != null)
       query.close();

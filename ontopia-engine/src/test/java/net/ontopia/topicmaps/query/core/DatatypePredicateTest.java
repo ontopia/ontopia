@@ -29,13 +29,14 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
 public class DatatypePredicateTest extends AbstractPredicateTest {
-  static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
-  static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
+  private static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
+  private static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
   
   public DatatypePredicateTest(String name) {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

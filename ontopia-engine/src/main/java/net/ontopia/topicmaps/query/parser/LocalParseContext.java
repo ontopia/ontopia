@@ -51,7 +51,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   private ParseContextIF subcontext;
   private Map<String, PrefixBinding> bindings;
   private Map predicates;
-  Set loading_modules = new CompactHashSet();
+  private Set loading_modules = new CompactHashSet();
 
   public LocalParseContext(ParseContextIF subcontext) {
     this.subcontext = subcontext;
@@ -59,10 +59,12 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     this.predicates = new HashMap();
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return subcontext.getTopicMap();
   }
 
+  @Override
   public LocatorIF resolveQName(QName qname) {
     PrefixBinding binding = bindings.get(qname.getPrefix());
     if (binding == null)
@@ -77,6 +79,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     }
   }
   
+  @Override
   public void addPrefixBinding(String prefix, String uri, int qualification)
     throws AntlrWrapException {
 
@@ -127,14 +130,17 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     }
   }
  
+  @Override
   public boolean isLoading(String uri) {
     return (subcontext.isLoading(uri) || loading_modules.contains(uri));
   }
 
+  @Override
   public boolean isBuiltInPredicate(String name) {
     return subcontext.isBuiltInPredicate(name);
   }
   
+  @Override
   public void addPredicate(PredicateIF predicate) throws AntlrWrapException {
     if (predicates.containsKey(predicate.getName()))
       throw new AntlrWrapException(new InvalidQueryException("Predicate " +
@@ -148,6 +154,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     predicates.put(predicate.getName(), predicate);
   }
 
+  @Override
   public TopicIF getTopic(QName qname) throws AntlrWrapException {
     TMObjectIF object = getObject(qname);
     if (!(object instanceof TopicIF))
@@ -158,6 +165,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     return (TopicIF) object;
   }
 
+  @Override
   public TMObjectIF getObject(QName qname) throws AntlrWrapException {
     return checkReference(getObject_(qname), qname.toString());
   }
@@ -186,6 +194,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     }    
   }
 
+  @Override
   public PredicateIF getPredicate(QName qname, boolean assoc)
     throws AntlrWrapException {
     if (qname.getPrefix() == null) {
@@ -205,34 +214,42 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
       return getPredicate(getTopic(qname), assoc);
   }
 
+  @Override
   public PredicateIF getPredicate(TopicIF topic, boolean assoc) {
     return subcontext.getPredicate(topic, assoc);
   }
 
+  @Override
   public PredicateIF getPredicate(ParsedRule rule) {
     return subcontext.getPredicate(rule);
   }
 
+  @Override
   public ModuleIF getModule(String uri) {
     return subcontext.getModule(uri);
   }
   
+  @Override
   public LocatorIF absolutify(String uriref) throws AntlrWrapException {
     return subcontext.absolutify(uriref);
   }
   
+  @Override
   public TMObjectIF getObjectByObjectId(String id) throws AntlrWrapException {
     return checkReference(subcontext.getObjectByObjectId(id), "@" + id);
   }
 
+  @Override
   public TopicIF getTopicBySubjectIdentifier(String uri) throws AntlrWrapException {
     return subcontext.getTopicBySubjectIdentifier(uri);
   }
 
+  @Override
   public TopicIF getTopicBySubjectLocator(String uri) throws AntlrWrapException {
     return subcontext.getTopicBySubjectLocator(uri);
   }
 
+  @Override
   public TMObjectIF getObjectByItemId(String uri) throws AntlrWrapException {
     return checkReference(subcontext.getObjectByItemId(uri), uri);
   }
@@ -257,6 +274,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     return value;
   }
 
+  @Override
   public void dump() {
     System.out.println("===== LocalParseContext " + this);
     for (String prefix : bindings.keySet()) {
@@ -306,6 +324,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
       this.predicates = predicates;
     }
     
+    @Override
     public PredicateIF getPredicate(String name) {
       return (PredicateIF) predicates.get(name);
     }

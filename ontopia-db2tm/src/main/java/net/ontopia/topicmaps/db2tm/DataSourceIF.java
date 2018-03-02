@@ -33,28 +33,28 @@ public interface DataSourceIF {
    * INTERNAL: Returns the relations that the data source knows
    * of. The collection return contains Relation instances.
    */
-  public Collection<Relation> getRelations();
+  Collection<Relation> getRelations();
 
   /**
    * INTERNAL: Returns a tuple reader for the given relation.
    */
-  public TupleReaderIF getReader(String relation);
+  TupleReaderIF getReader(String relation);
 
   /**
    * INTERNAL: Returns a changelog reader.
    */
-  public ChangelogReaderIF getChangelogReader(Changelog changelog, String startOrder);
+  ChangelogReaderIF getChangelogReader(Changelog changelog, String startOrder);
 
   /**
    * INTERNAL: Returns the maximum value of the order column for the
    * specified changelog.
    */
-  public String getMaxOrderValue(Changelog changelog);
+  String getMaxOrderValue(Changelog changelog);
 
   /**
    * INTERNAL: Closes the data source so that it can release any open
    * resources.
    */
-  public void close();
+  void close();
     
 }

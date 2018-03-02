@@ -31,6 +31,7 @@ public class RDBMSPatternSingleTopicMapSourceTest
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
     super.setUp();

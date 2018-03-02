@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class SharedStoreRegistry {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SharedStoreRegistry.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SharedStoreRegistry.class.getName());
 
   // Create default registry, which has registryName == null
   protected static final SharedStoreRegistry defaultRegistry = new SharedStoreRegistry();

@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * PUBLIC: A collection of terms representing the result of
@@ -98,7 +99,7 @@ public class TermDatabase {
   }
   
   protected void mergeTerms(Term t1, Term t2) {
-    if (t1 == t2) return;
+    if (Objects.equals(t1, t2)) return;
     t1.merge(t2);
     terms.remove(t2.getStem());
   }

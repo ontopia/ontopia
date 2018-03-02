@@ -32,6 +32,7 @@ import org.tmapi.core.TopicMap;
  * INTERNAL: Provides various argument constraint checks.
  */
 public final class Check {
+  private static final String NOT_PART_OF_TOPICMAP = " is not part of Topic Map";
 
   private Check() {
     // noop.
@@ -323,7 +324,7 @@ public final class Check {
     for (Topic theme : scope) {
       if (!theme.getTopicMap().equals(topicMap ))
         reportError(topicMap, "Theme " + theme.getId()
-            + " is not part of Topic Map");
+            + NOT_PART_OF_TOPICMAP);
     }
   }
 
@@ -341,7 +342,7 @@ public final class Check {
   public static void typeInTopicMap(TopicMap topicMap, Topic type) {
     if (!type.getTopicMap().equals(topicMap ))
       reportError(topicMap, "Type " + type.getId()
-          + " is not part of Topic Map");
+          + NOT_PART_OF_TOPICMAP);
 
   }
 
@@ -359,7 +360,7 @@ public final class Check {
   public static void reifierInTopicMap(TopicMap topicMap, Topic reifier) {
     if (!reifier.getTopicMap().equals(topicMap ))
       reportError(topicMap, "Reifier " + reifier.getId()
-          + " is not part of Topic Map");
+          + NOT_PART_OF_TOPICMAP);
 
   }
 
@@ -377,7 +378,7 @@ public final class Check {
   public static void playerInTopicMap(TopicMap topicMap, Topic player) {
     if (!player.getTopicMap().equals(topicMap ))
       reportError(topicMap, "Player " + player.getId()
-          + " is not part of Topic Map");
+          + NOT_PART_OF_TOPICMAP);
 
   }
 }

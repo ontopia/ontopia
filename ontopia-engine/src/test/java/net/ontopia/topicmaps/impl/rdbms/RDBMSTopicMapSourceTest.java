@@ -28,6 +28,7 @@ public class RDBMSTopicMapSourceTest extends AbstractTopicMapSourceTest {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
     super.setUp();

@@ -20,12 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
-import java.io.IOException;
 import java.util.Collection;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
@@ -52,6 +49,7 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // ignore body if variable name is set
     if (variableName != null)
@@ -64,6 +62,7 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
    * Process the end tag. Subclasses implementing this method must
    * clear member variables.
    */
+  @Override
   public int doEndTag() throws JspException {
     // retrieve parent tag which accepts the produced collection by this tag 
     ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)
@@ -94,6 +93,7 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
    * INTERNAL: Return <code>inputCollection </code> if it was already
    * set, then call implementation from superclass.
    */  
+  @Override
   protected Collection getInputCollection(ContextManagerIF ctxtMgr)
     throws NavigatorRuntimeException {
     // FIXME: This should perhaps instead depend in variableName != null.
@@ -107,6 +107,7 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
   // Implementation of ValueAcceptingTagIF
   // -----------------------------------------------------------------
 
+  @Override
   public void accept(Collection inputCollection) {
     this.inputCollection = inputCollection;
   }

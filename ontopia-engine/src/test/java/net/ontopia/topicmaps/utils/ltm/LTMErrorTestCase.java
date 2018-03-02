@@ -17,13 +17,11 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,29 +33,29 @@ public class LTMErrorTestCase {
 
   private final static String testdataDirectory = "ltm";
 
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".ltm");
   }
 
-    private String filename;
-        
-    public LTMErrorTestCase(String root, String filename) {
-      this.filename = filename;
-    }
+  public LTMErrorTestCase(String root, String filename) {
+    this.filename = filename;
+  }
 
-    @Test
-    public void testFile() throws IOException {
-      // produce canonical output
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "error", 
-        filename);
+  @Test
+  public void testFile() throws IOException {
+    // produce canonical output
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "error",
+            filename);
 
-      try {
-        new LTMTopicMapReader(URIUtils.getURI(in)).read();
-        Assert.fail("test file " + filename + " parsed without error");
-      } catch (java.io.IOException e) {
-      } catch (net.ontopia.topicmaps.core.UniquenessViolationException e) {
-      } catch (net.ontopia.utils.OntopiaRuntimeException e) {
-      }
+    try {
+      new LTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
+      Assert.fail("test file " + filename + " parsed without error");
+    } catch (java.io.IOException e) {
+    } catch (net.ontopia.topicmaps.core.UniquenessViolationException e) {
+    } catch (net.ontopia.utils.OntopiaRuntimeException e) {
     }
+  }
 }

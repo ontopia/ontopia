@@ -29,7 +29,7 @@ import java.nio.channels.FileChannel;
 import java.util.Properties;
 import org.xml.sax.InputSource;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.TopicMap;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
@@ -105,7 +105,7 @@ public class RDBMSImport {
     for (int i=1; i < args.length; i++) {
       
       String filename = args[i];
-      TopicMapImporterIF importer = ImportExportUtils.getImporter(filename);
+      TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
       
       // disable XTM validation
       if (importer instanceof XTMTopicMapReader && !ohandler.validate)
@@ -183,15 +183,16 @@ public class RDBMSImport {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    long topicMapId = -1;
-    boolean validate = true;
-    boolean suppress = false;
-    boolean loadExternal = true;
-    String jdbcspyFile;
-    String topicMapTitle;
-    String topicMapComments;
-    boolean progress;
+    private long topicMapId = -1;
+    private boolean validate = true;
+    private boolean suppress = false;
+    private boolean loadExternal = true;
+    private String jdbcspyFile;
+    private String topicMapTitle;
+    private String topicMapComments;
+    private boolean progress;
     
+    @Override
     public void processOption(char option, String value) {
       if (option == 'i') topicMapId = ImportExportUtils.getTopicMapId(value);
       if (option == 'v') validate = Boolean.valueOf(value).booleanValue();
@@ -217,24 +218,28 @@ public class RDBMSImport {
       this.fc = getChannel();
     }
     
+    @Override
     public int read() throws IOException {
       int res = super.read();
       status();
       return res;
     }
 
+    @Override
     public int read(byte[] b) throws IOException {
       int res = super.read(b);
       status();
       return res;
     }
 
+    @Override
     public int read(byte[] b, int off, int len) throws IOException {
       int res = super.read(b, off, len);
       status();
       return res;
     }
 
+    @Override
     public long skip(long n) throws IOException {
       long res = super.skip(n);
       status();

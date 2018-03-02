@@ -34,7 +34,7 @@ public interface IndexerIF {
    * INTERNAL: Indexes the specified document. This includes tokenizing,
    * indexing and storing the document fields.
    */
-  public void index(DocumentIF document) throws IOException;
+  void index(DocumentIF document) throws IOException;
   
   /**
    * INTERNAL: Removes all documents with the specified field value from
@@ -44,14 +44,14 @@ public interface IndexerIF {
    * @return The number of documents that was deleted from the
    * index. -1 is return if this number is unknown.
    */
-  public void delete(String field, String value) throws IOException;
+  void delete(String field, String value) throws IOException;
     
   /**
    * INTERNAL: Flushes all changes done to the index. A flushing
    * operation can include actions like persisting changes and
    * optimizing the index.
    */
-  public void flush() throws IOException;
+  void flush() throws IOException;
   
   /**
    * INTERNAL: Deletes the index. The indexer is closed after this
@@ -60,12 +60,12 @@ public interface IndexerIF {
    *
    * @since 1.3
    */
-  public void delete() throws IOException;
+  void delete() throws IOException;
 
   /**
    * INTERNAL: Closes the indexer. After the indexer has been closed it
    * cannot (generally) be reopened.
    */
-  public void close() throws IOException;
+  void close() throws IOException;
   
 }

@@ -37,17 +37,19 @@ public class PostgreSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
 
+  @Override
   protected List<String> dropStatement(Table table, List<String> statements) throws IOException {
-    StringBuilder sb = new StringBuilder();
-    sb.append("drop table ");
-    sb.append(table.getName());
-    sb.append(" cascade");
-    statements.add(sb.toString());
+    statements.add(new StringBuilder()
+        .append("drop table ")
+        .append(table.getName())
+        .append(" cascade")
+        .toString());
     return statements;
   }
   
   // -- flags
   
+  @Override
   protected boolean supportsForeignKeys() {
     return true;
   }

@@ -28,7 +28,6 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -62,14 +61,16 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
   protected RDBMSStorage storage;
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSPatternSingleTopicMapSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSPatternSingleTopicMapSource.class.getName());
 
   // --- TopicMapSourceIF implementation
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized Collection getReferences() {
     if (reference == null) refresh();
     if (reference == null)
@@ -78,6 +79,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       return Collections.singleton(reference);
   }
   
+  @Override
   public synchronized void refresh() {
     if (match == null)
       throw new OntopiaRuntimeException("match property must be specified on source with id '" + getId() + "'.");
@@ -99,9 +101,9 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       try {
 
         String sqlquery;
-        if (match.equals("title"))
+        if ("title".equals(match))
           sqlquery = "select max(M.id), M.title, M.base_address from TM_TOPIC_MAP M where M.title = ? group by M.title, M.base_address order by max(M.id) desc";
-        else if (match.equals("comments"))
+        else if ("comments".equals(match))
           sqlquery = "select max(M.id), M.title, M.base_address from TM_TOPIC_MAP M where M.comments = ? group by M.title, M.base_address order by max(M.id) desc";
         else
           throw new OntopiaRuntimeException("match property contains illegal value '" + match + "' on source with id '" + getId() + "'.");
@@ -118,7 +120,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
             if (_base_address == null) {
               String loc = rs.getString(3);
               if (loc != null)
-                _base_address = Locators.getURILocator(loc);
+                _base_address = new URILocator(loc);
             }
           } else {
             log.warn("Source with id '" + getId() + "' could not find any matching topic maps with pattern '" + pattern + "'.");
@@ -170,18 +172,22 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
     }
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
   
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -218,10 +224,12 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
     this.pattern = pattern;
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }

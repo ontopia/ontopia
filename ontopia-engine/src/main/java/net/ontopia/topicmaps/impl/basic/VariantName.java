@@ -20,30 +20,27 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.IOException;
-
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.DuplicateReificationException;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
-import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.topicmaps.impl.utils.LocatorInterningTable;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.UniqueSet;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
   
 /**
  * INTERNAL: The basic variant name implementation.
@@ -51,7 +48,7 @@ import net.ontopia.utils.StreamUtils;
 
 public class VariantName extends TMObject implements VariantNameIF {
 
-  static final long serialVersionUID = -7350019735868904034L;
+  private static final long serialVersionUID = -7350019735868904034L;
 
   protected TopicIF reifier;
   protected String value;
@@ -70,6 +67,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // TopicNameIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public TopicIF getTopic() {
     if (parent == null)
       return null;
@@ -77,6 +75,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       return (TopicIF)((TopicName)parent).parent;
   }
 
+  @Override
   public TopicNameIF getTopicName() {
     return (TopicNameIF)parent;
   }
@@ -84,7 +83,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   /**
    * INTERNAL: Set the topic name that the variant name belongs to. [parent]
    */
-  void setTopicName(TopicName parent) {
+  protected void setTopicName(TopicName parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
       throw new ConstraintViolationException("Cannot move objects across topic maps: "
@@ -101,6 +100,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     this.parent = parent;
   }
 
+  @Override
   public LocatorIF getDataType() {
     return datatype;    
   }
@@ -111,14 +111,17 @@ public class VariantName extends TMObject implements VariantNameIF {
     this.datatype = LocatorInterningTable.intern(datatype);
   }
   
+  @Override
   public String getValue() {
     return value;
   }
   
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     if (value == null) throw new NullPointerException("Variant value must not be null.");
     if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
@@ -130,28 +133,32 @@ public class VariantName extends TMObject implements VariantNameIF {
     this.value = value;
   }
 
+  @Override
   public Reader getReader() {
     return (value == null ? null : new StringReader(value));
   }
   
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     if (value == null) throw new NullPointerException("Variant value must not be null.");
     if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     try {
-      setValue(StreamUtils.readString(value, length), datatype);
+      setValue(IOUtils.toString(value), datatype);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
   
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     if (locator == null) throw new NullPointerException("Variant locator must not be null.");
     if (!"URI".equals(locator.getNotation()))
@@ -159,6 +166,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
+  @Override
   public long getLength() {
     return (value == null ? 0 : value.length());
   }
@@ -167,14 +175,16 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
     return scope;
   }
+  @Override
   public void addTheme(TopicIF theme) {
     _addTheme(theme, true);
   }
-  void _addTheme(TopicIF theme, boolean validate) {
+  protected void _addTheme(TopicIF theme, boolean validate) {
     if (theme == null) throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
@@ -182,10 +192,11 @@ public class VariantName extends TMObject implements VariantNameIF {
     // Add theme to scope
     scope = topicmap.setpool.add(scope, theme, true);
   }
+  @Override
   public void removeTheme(TopicIF theme) {
     _removeTheme(theme, true);
   }
-  void _removeTheme(TopicIF theme, boolean validate) {
+  protected void _removeTheme(TopicIF theme, boolean validate) {
     if (theme == null) throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
@@ -199,6 +210,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
 
+  @Override
   public void remove() {
     if (parent != null) {
       DeletionUtils.removeDependencies(this);
@@ -210,10 +222,12 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ReifiableIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     if (DuplicateReificationException.check(this, _reifier)) { return; }
@@ -230,11 +244,13 @@ public class VariantName extends TMObject implements VariantNameIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
     if (parent == null || parent.parent == null) return;
     else topicmap.processEvent(this, event, new_value, old_value);
   }
 
+  @Override
   protected boolean isConnected() {
     if (parent != null && parent.parent != null)
       return true;
@@ -242,6 +258,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       return false;
   }
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.VariantName", (VariantNameIF)this);
   }

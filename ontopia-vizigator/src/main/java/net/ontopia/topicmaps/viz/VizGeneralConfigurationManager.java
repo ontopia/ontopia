@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.viz;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -74,7 +75,7 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
    * Constructor initializes the configuration by loading a topic map from the
    * URL given in the parameter.
    */
-  public VizGeneralConfigurationManager(String tmurl) throws IOException {
+  public VizGeneralConfigurationManager(URL tmurl) throws IOException {
     super(tmurl);
   }
 
@@ -98,6 +99,7 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
 
     Collections.sort(topics, new Comparator() {
 
+      @Override
       public int compare(Object a, Object b) {
 
         TopicIF topicA = (TopicIF) a;
@@ -140,6 +142,7 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
     return topicmap.getTopicBySubjectLocator(VizUtils.makeLocator(aFile));
   }
 
+  @Override
   protected void init() {
 
     super.init();

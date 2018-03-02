@@ -22,20 +22,16 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
 import java.util.Iterator;
-
-import net.ontopia.utils.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Utility class that can generate SQL statements.
  */
 
 public class SQLGenerator {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLGenerator.class.getName());
+  private static final String WHERE_SPACED = " where ";
+  private static final String EQUALS_PARAMETER = " = ?";
+  private static final String EQUALS_PARAMETER_SPACED = EQUALS_PARAMETER + " ";
   
   // -----------------------------------------------------------------------------
   // Statement generators
@@ -57,14 +53,11 @@ public class SQLGenerator {
    */
   public static String getDeleteStatement(String table, String[] where_columns) {
     // Master table insert
-    StringBuilder sb = new StringBuilder();
-    sb.append("delete from ");
-    sb.append(table);
-    sb.append(" where ");
+    StringBuilder sb = new StringBuilder("delete from ");
+    sb.append(table).append(WHERE_SPACED);
     for (int i=0; i < where_columns.length; i++) {
       if (i > 0) sb.append(" and ");
-      sb.append(where_columns[i]);
-      sb.append(" = ?");
+      sb.append(where_columns[i]).append(EQUALS_PARAMETER);
     }
     return sb.toString();
   }
@@ -85,10 +78,8 @@ public class SQLGenerator {
    */
   public static String getInsertStatement(String table, String[] value_columns) {
     // Master table insert
-    StringBuilder sb = new StringBuilder();
-    sb.append("insert into ");
-    sb.append(table);
-    sb.append(" (");
+    StringBuilder sb = new StringBuilder("insert into ");
+    sb.append(table).append(" (");
     for (int i=0; i < value_columns.length; i++) {
       if (i > 0) sb.append(", ");
       sb.append(value_columns[i]);
@@ -96,9 +87,9 @@ public class SQLGenerator {
     sb.append(") values (");
     for (int i=0; i < value_columns.length; i++) {
       if (i > 0) sb.append(", ");
-      sb.append("?");
+      sb.append('?');
     }
-    sb.append(")");
+    sb.append(')');
     return sb.toString();
   }
   
@@ -121,24 +112,20 @@ public class SQLGenerator {
    */
   public static String getUpdateStatement(String table, String[] set_columns, String[] where_columns) {
     // Master table select
-    StringBuilder sb = new StringBuilder();
-    sb.append("update ");
-    sb.append(table);
-    sb.append(" set ");
+    StringBuilder sb = new StringBuilder("update ");
+    sb.append(table).append(" set ");
     
     for (int i=0; i < set_columns.length; i++) {
       if (i > 0) sb.append(", ");
-      sb.append(set_columns[i]);
-      sb.append(" = ?");
+      sb.append(set_columns[i]).append(EQUALS_PARAMETER);
     }
 
     if (where_columns.length > 0)
-      sb.append(" where ");
+      sb.append(WHERE_SPACED);
     
     for (int i=0; i < where_columns.length; i++) {
       if (i > 0) sb.append(", ");
-      sb.append(where_columns[i]);
-      sb.append(" = ?");
+      sb.append(where_columns[i]).append(EQUALS_PARAMETER);
     }
     return sb.toString();
   }
@@ -164,18 +151,14 @@ public class SQLGenerator {
   public static String getSelectStatement(String table, String[] select_columns, 
 					  String[] where_columns, int multiple) {
     // Master table select
-    StringBuilder sb = new StringBuilder();
-    sb.append("select ");
-    
-    sb.append(StringUtils.join(select_columns, ", "));
-    
-    sb.append(" from ");
-    sb.append(table);
-    sb.append(" where ");
+    StringBuilder sb = new StringBuilder("select ")
+        .append(StringUtils.join(select_columns, ", "))
+        .append(" from ")
+        .append(table)
+        .append(WHERE_SPACED);
     if (multiple > 0) {
       if (where_columns.length > 1) throw new RuntimeException("Multiple conditions not allowed.");
-      sb.append(where_columns[0]);
-      sb.append(" in (");
+      sb.append(where_columns[0]).append(" in (");
       for (int i=0; i < multiple; i++) {
 	if (i > 0 )
 	  sb.append(", ?");
@@ -187,8 +170,8 @@ public class SQLGenerator {
       // because a null element can never match the where column. this
       // is because null is not equal to itself.
     } else {
-      sb.append(StringUtils.join(where_columns, " = ? "));
-      sb.append(" = ?");
+      sb.append(StringUtils.join(where_columns, EQUALS_PARAMETER_SPACED))
+          .append(EQUALS_PARAMETER);
     }
     return sb.toString();
   }
@@ -234,20 +217,14 @@ public class SQLGenerator {
     }
 
     // select tables
-    sb.append(" from ");
-    sb.append(jointable);
-    sb.append(" a, ");
-    sb.append(datatable);
-    sb.append(" b");
+    sb.append(" from ").append(jointable).append(" a, ")
+        .append(datatable).append(" b").append(WHERE_SPACED);
 
     // join conditions
-    sb.append(" where ");
     for (int i=0; i < jointable_keys.length; i++) {
       if (i > 0) sb.append(" AND ");
-      sb.append("a.");
-      sb.append(jointable_keys[i]);
-      sb.append(" = b.");
-      sb.append(datatable_keys[i]);
+      sb.append("a.").append(jointable_keys[i])
+          .append(" = b.").append(datatable_keys[i]);
     }
 
     // where condition
@@ -264,7 +241,7 @@ public class SQLGenerator {
 	}
 	sb.append(')');
       } else
-	sb.append(" = ?");
+	sb.append(EQUALS_PARAMETER);
     }
     return sb.toString();    
   }

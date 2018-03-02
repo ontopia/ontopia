@@ -20,7 +20,14 @@
 
 package net.ontopia.xml;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.utils.URIUtils;
 import org.xml.sax.InputSource;
 
 /**
@@ -31,8 +38,35 @@ import org.xml.sax.InputSource;
 public abstract class AbstractXMLFormatReader {
   protected InputSource source;
   protected LocatorIF base_address;
-  protected XMLReaderFactoryIF xrfactory;
 
+  public AbstractXMLFormatReader() {
+  }
+
+  public AbstractXMLFormatReader(InputSource source, LocatorIF base_address) {
+    this.source = source;
+    this.base_address = base_address;
+  }
+
+  public AbstractXMLFormatReader(URL url) throws MalformedURLException {
+    this(new InputSource(url.toString()), new URILocator(url));
+  }
+  
+  public AbstractXMLFormatReader(URL url, LocatorIF base_address) {
+    this(new InputSource(url.toString()), base_address);
+  }
+  
+  public AbstractXMLFormatReader(Reader reader, LocatorIF base_address) {
+    this(new InputSource(reader), base_address);
+  }
+  
+  public AbstractXMLFormatReader(InputStream stream, LocatorIF base_address) {
+    this(new InputSource(stream), base_address);
+  }
+  
+  public AbstractXMLFormatReader(File file) throws MalformedURLException {
+    this(URIUtils.toURL(file));
+  }
+  
   /**
    * INTERNAL: Gets the SAX input source used by the reader.
    */
@@ -66,39 +100,4 @@ public abstract class AbstractXMLFormatReader {
   public void setBaseAddress(LocatorIF base_address) {
     this.base_address = base_address;
   }
-
-  /**
-   * INTERNAL: Gets the XMLReaderFactoryIF that will be used to create
-   * XML parser objects inside the reader.
-   */
-  public XMLReaderFactoryIF getXMLReaderFactory() {
-    // Initialize default factory
-    if (xrfactory == null) {
-      ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-      configureXMLReaderFactory(cxrfactory);
-      xrfactory = cxrfactory;
-    }
-    return xrfactory;
-  }
-  
-  /**
-   * INTERNAL: Sets the XMLReaderFactoryIF that will be used to create
-   * XML parser objects inside the reader.</p>
-   *
-   * <p>Default: {@link net.ontopia.xml.ConfiguredXMLReaderFactory} using an
-   * {@link net.ontopia.topicmaps.xml.IgnoreTopicMapDTDEntityResolver}
-   * entity resolver.</p>
-   *
-   * <p>The factory is free to configure the XML reader object as it
-   * sees fit, but the reader will use its own internal content
-   * handler.
-   */
-  public void setXMLReaderFactory(XMLReaderFactoryIF xrfactory) {
-    this.xrfactory = xrfactory;
-  }
-
-  // --- Internal methods
-
-  protected abstract void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory);
-  
 }

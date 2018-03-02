@@ -80,6 +80,7 @@ public class ConfirmDeletePanel extends Panel {
     add(noButton);
   }
   
+  @Override
   public boolean isVisible() {
     return topicModel.getTopic() != null; 
   }

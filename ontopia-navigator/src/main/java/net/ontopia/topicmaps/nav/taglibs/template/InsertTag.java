@@ -20,20 +20,17 @@
 
 package net.ontopia.topicmaps.nav.taglibs.template;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Stack;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.UserIF;
+import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
 /**
  * INTERNAL: Defines the template JSP to forward the request to, once
@@ -45,7 +42,7 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 public class InsertTag extends TagSupport {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(InsertTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(InsertTag.class.getName());
 
   
   public final static String TEMPL_STACK_KEY = "template-stack";
@@ -54,6 +51,7 @@ public class InsertTag extends TagSupport {
   private String template;
   private Stack stack;
 
+  @Override
   public int doStartTag() throws JspException {
     stack = getStack();
     stack.push(new HashMap());
@@ -61,6 +59,7 @@ public class InsertTag extends TagSupport {
     return EVAL_BODY_INCLUDE;
   }
   
+  @Override
   public int doEndTag() throws JspException {
     try {
       if (log.isDebugEnabled())

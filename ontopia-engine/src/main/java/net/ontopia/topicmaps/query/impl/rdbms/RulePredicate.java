@@ -43,13 +43,17 @@ public class RulePredicate
   
   // --- JDOPredicateIF implementation
 
+  @Override
   public boolean isRecursive() {
     return true;
   }
 
+  @Override
   public void prescan(QueryBuilder builder, List arguments) {
+    // no-op
   }
   
+  @Override
   public boolean buildQuery(QueryBuilder builder, List expressions, List arguments)
     throws InvalidQueryException {
     // TODO: Rule predicates does not yet support JDO expressions.

@@ -21,15 +21,10 @@
 package net.ontopia.topicmaps.nav2.plugins;
 
 import java.util.Set;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.http.HttpServletRequest;
-
-import net.ontopia.utils.StringUtils;
+import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
+import org.apache.commons.lang3.StringUtils;
 
 /** 
  * INTERNAL: Simple extension of the DefaultPlugin used to block
@@ -39,6 +34,7 @@ public class VizPlugin extends DefaultPlugin {
   private Set blocked;
   private String message;
   
+  @Override
   public void init() {
     message = getParameter("message");
     if (message == null)
@@ -55,6 +51,7 @@ public class VizPlugin extends DefaultPlugin {
       blocked.add(ids[ix].trim());
   }
   
+  @Override
   public String generateHTML(ContextTag context) {
     if (context == null)
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");

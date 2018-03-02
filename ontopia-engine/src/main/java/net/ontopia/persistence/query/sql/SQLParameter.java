@@ -45,30 +45,37 @@ public class SQLParameter implements SQLValueIF {
     this.arity = arity;
   }
 
+  @Override
   public int getType() {
     return PARAMETER;
   }
 
+  @Override
   public int getArity() {
     return arity;
   }
 
+  @Override
   public int getValueArity() {
     return 1;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
@@ -77,26 +84,32 @@ public class SQLParameter implements SQLValueIF {
     return name;
   }
 
+  @Override
   public Class getValueType() {
     return vtype;
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
 
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return fhandler;
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
 
+  @Override
   public int hashCode() {
     return name.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLParameter) {
       SQLParameter other = (SQLParameter)obj;    
@@ -105,12 +118,12 @@ public class SQLParameter implements SQLValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i=0; i < arity; i++) {
       if (i > 1) sb.append(", ");
-      sb.append("?");
-      sb.append(getName());
+      sb.append('?').append(getName());
     }
     return sb.toString();
   }

@@ -23,10 +23,10 @@ package net.ontopia.infoset.content;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.HashMap;
-import net.ontopia.utils.StreamUtils;
+import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: Content store implementation that saves everything in memory.
@@ -51,10 +51,12 @@ public class InMemoryContentStore implements ContentStoreIF {
     content = new HashMap<Integer, byte[]>();
   }
 
+  @Override
   public boolean containsKey(int key) throws ContentStoreException {
     return content.containsKey(new Integer(key));
   }
 
+  @Override
   public ContentInputStream get(int key) throws ContentStoreException {
     byte[] data = content.get(new Integer(key));
     if (data == null)
@@ -62,19 +64,22 @@ public class InMemoryContentStore implements ContentStoreIF {
     return new ContentInputStream(new ByteArrayInputStream(data), data.length);
   }
 
+  @Override
   public int add(ContentInputStream data) throws ContentStoreException {
     return add(data, data.getLength());
   }
 
+  @Override
   public int add(InputStream data, int length) throws ContentStoreException {
     try {
-      content.put(new Integer(nextKey), StreamUtils.read(data, length));
+      content.put(nextKey, IOUtils.toByteArray(data));
       return nextKey++;
     } catch (IOException e) {
       throw new ContentStoreException(e);
     }
   }
 
+  @Override
   public boolean remove(int key) throws ContentStoreException {
     Integer okey = new Integer(key);
     boolean result = content.containsKey(okey);
@@ -82,6 +87,7 @@ public class InMemoryContentStore implements ContentStoreIF {
     return result;
   }
 
+  @Override
   public void close() throws ContentStoreException {
     content = null;
   }

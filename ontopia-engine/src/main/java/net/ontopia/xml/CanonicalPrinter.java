@@ -20,49 +20,61 @@
 
 package net.ontopia.xml;
 
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.io.OutputStreamWriter;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import net.ontopia.utils.StringUtils;
-import org.xml.sax.AttributeList;
-import org.xml.sax.DocumentHandler;
+import java.io.Writer;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.lang3.StringUtils;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 
 /**
  * INTERNAL: SAX document handler that prints canonical XML. Note that
  * this does not support all of http://www.w3.org/TR/xml-c14n, only
  * what is needed for Canonical XTM.
  */
-public class CanonicalPrinter implements DocumentHandler {
+public class CanonicalPrinter implements ContentHandler {
   protected PrintWriter writer;
+  private final boolean closeWRiter;
   
   /**
    * Creates a CanonicalPrinter that writes to the given OutputStream.
    * The encoding used is always utf-8.
    */
-  public CanonicalPrinter(OutputStream stream) throws UnsupportedEncodingException {
-    this.writer = new PrintWriter(new OutputStreamWriter(stream, "utf-8"));
+  public CanonicalPrinter(OutputStream stream, boolean closeWRiter) {
+    try {
+      this.writer = new PrintWriter(new OutputStreamWriter(stream, "utf-8"));
+    } catch (UnsupportedEncodingException use) {
+      throw new OntopiaRuntimeException(use);
+    }
+    this.closeWRiter = closeWRiter;
   }
 
   /**
    * Creates a CanonicalPrinter that writes to the given Writer.
    */
-  public CanonicalPrinter(Writer writer) {
+  public CanonicalPrinter(Writer writer, boolean closeWRiter) {
     this.writer = new PrintWriter(writer);
+    this.closeWRiter = closeWRiter;
   }  
 
   // Document events
     
+  @Override
   public void startDocument() {
+    // no-op
   }
 
-  public void startElement(String name, AttributeList atts) {
+  @Override
+  public void startElement(String uri, String localName, String name, Attributes atts) {
     // first: sort attributes
     String[] attNames = new String[atts.getLength()]; 
     for (int i = 0; i < atts.getLength(); i++) {
-      attNames[i] = atts.getName(i);
+      attNames[i] = atts.getQName(i);
     }
     java.util.Arrays.sort(attNames);
 
@@ -74,10 +86,12 @@ public class CanonicalPrinter implements DocumentHandler {
     writer.print(">");
   }
 
-  public void endElement(String name) {
+  @Override
+  public void endElement(String uri, String localName, String name) {
     writer.print("</" + name + ">");
   }
 
+  @Override
   public void characters (char ch[], int start, int length) {
     StringBuilder content = new StringBuilder();
     for (int i = start; i < start + length; i++) {
@@ -101,24 +115,47 @@ public class CanonicalPrinter implements DocumentHandler {
     writer.print(content.toString());
   }
 
+  @Override
   public void ignorableWhitespace (char ch[], int start, int length) {
     writer.write(ch, start, length);
   }
 
+  @Override
   public void processingInstruction (String target, String data) {
     writer.print("<?" + target + " " + data + "?>\n");
   }
 
+  @Override
   public void endDocument() {
     writer.flush();
+    if (closeWRiter){
+      writer.close();
+    }
   }
 
+  @Override
   public void setDocumentLocator (Locator locator) {
+    // no-op
   }
 
   // --- Internal methods
 
   public String escape(String attrval) {
     return StringUtils.replace(StringUtils.replace(StringUtils.replace(attrval, "&", "&amp;"), "<", "&lt;"), "\"", "&quot;");
+  }
+
+  @Override
+  public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    // no-op
+  }
+
+  @Override
+  public void endPrefixMapping(String prefix) throws SAXException {
+    // no-op
+  }
+
+  @Override
+  public void skippedEntity(String name) throws SAXException {
+    // no-op
   }
 }

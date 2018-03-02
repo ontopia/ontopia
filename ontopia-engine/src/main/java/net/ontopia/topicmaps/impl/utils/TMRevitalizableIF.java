@@ -30,6 +30,6 @@ public interface TMRevitalizableIF {
   /**
    * INTERNAL: 
    */
-  public void revitalize(TMRevitalizerIF revitalizer);
+  void revitalize(TMRevitalizerIF revitalizer);
   
 }

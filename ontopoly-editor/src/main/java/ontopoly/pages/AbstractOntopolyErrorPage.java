@@ -35,6 +35,7 @@ public abstract class AbstractOntopolyErrorPage extends AbstractOntopolyPage {
     add(new FooterPanel("footer"));    	  
   }
   
+  @Override
   public boolean isErrorPage() {
     return true;
   }

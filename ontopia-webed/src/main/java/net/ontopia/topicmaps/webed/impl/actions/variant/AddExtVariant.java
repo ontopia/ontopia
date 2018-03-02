@@ -41,6 +41,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  */
 public class AddExtVariant extends AbstractTopicMapAction {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     //test params
     ActionSignature paramsType = ActionSignature.getSignature("b t?");

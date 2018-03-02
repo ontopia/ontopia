@@ -33,14 +33,14 @@ import java.text.DecimalFormat;
  * or SQL.
  */
 public class QueryProfiler {
-  static DecimalFormat df = new DecimalFormat("0.#");
-  Map<String, Event> eStats;
+  private static DecimalFormat df = new DecimalFormat("0.#");
+  private Map<String, Event> eStats;
   /**
    * Tracks whether traversal events have been seen. The tolog profiler does
    * not provide these, and tracking this lets us leave out two unnecessary
    * columns in the report.
    */
-  boolean traverse;
+  private boolean traverse;
 
   public QueryProfiler() {
     eStats = new HashMap<String, Event>();
@@ -85,6 +85,7 @@ public class QueryProfiler {
 
   public synchronized void generateReport(String title, Writer out)
     throws IOException {
+    final String TD = "<td>";
     out.write("<h1>" + title + "</h1>\n");
 
     out.write("<table>\n");
@@ -113,26 +114,26 @@ public class QueryProfiler {
     for (int i=0; i < events.length; i++) {
       Event event = (Event)events[i];
 
-      out.write("<tr><td>");
+      out.write("<tr>" + TD);
       out.write(Integer.toString(i+1));
       out.write(". <td class=\"event\">");
       out.write(event.toString());
-      out.write("<td>");
+      out.write(TD);
       out.write(Long.toString(event.executeTime));
-      out.write("<td>");
+      out.write(TD);
       out.write(df.format((1.0f*event.executeTime / executeTime) * 100));
-      out.write("% <td>");
+      out.write("% " + TD);
       out.write(df.format((1.0f*event.executeTime)/event.executeNum));
-      out.write("<td>");
+      out.write(TD);
       out.write(df.format(event.executeTimeMin));
-      out.write("<td>");
+      out.write(TD);
       out.write(df.format(event.executeTimeMax));
-      out.write("<td>");
+      out.write(TD);
       out.write(Long.toString(event.executeNum));
       if (traverse) {
-        out.write("<td>");
+        out.write(TD);
         out.write(Long.toString(event.traverseTime));
-        out.write("<td>");
+        out.write(TD);
         out.write(Long.toString(event.traverseNum));
       }
       out.write("</tr>\n");
@@ -158,26 +159,26 @@ public class QueryProfiler {
   // --- Event 
 
   static class Event {
-    String name;
+    private String name;
 
-    long executeNum;
-    long executeTime;
-    float executeTimeMin = -1.0f;
-    float executeTimeMax = -1.0f;
+    private long executeNum;
+    private long executeTime;
+    private float executeTimeMin = -1.0f;
+    private float executeTimeMax = -1.0f;
 
-    long traverseTime;
-    long traverseNum;
+    private long traverseTime;
+    private long traverseNum;
 
     Event(String name) {
       this.name = name;
     }
 
-    void addExecuteUpdate(long startTime, long endTime, int affectedSize) {
+    private void addExecuteUpdate(long startTime, long endTime, int affectedSize) {
       addExecute(startTime, endTime);
       traverseNum += affectedSize;
     }
 
-    void addExecute(long startTime, long endTime) {
+    private void addExecute(long startTime, long endTime) {
       int time = (int)(endTime - startTime);
       if (executeTimeMax == -1.0f || time > executeTimeMax)
         executeTimeMax = (float)time;
@@ -188,7 +189,7 @@ public class QueryProfiler {
       executeNum++;
     }
 
-    void addExecute(long startTime, long endTime, int executeCount) {
+    private void addExecute(long startTime, long endTime, int executeCount) {
       int time = (int)(endTime - startTime);
       float timeAvg = (time/(executeCount*1.0f));
       if (executeTimeMax == -1.0f || timeAvg > executeTimeMax)
@@ -200,13 +201,14 @@ public class QueryProfiler {
       executeNum += executeCount;
     }
 
-    void addTraverse(boolean hasNext, long startTime, long endTime) {
+    private void addTraverse(boolean hasNext, long startTime, long endTime) {
       int time = (int)(endTime - startTime);
       executeTime = executeTime + time;
       traverseTime = traverseTime + time;
       if (hasNext) traverseNum++;
     }
 
+    @Override
     public String toString() {
       if (name == null)
         return null;
@@ -217,6 +219,7 @@ public class QueryProfiler {
 
   static class EventComparator implements Comparator {
 
+    @Override
     public int compare(Object o1, Object o2) {
       Event e1 = (Event)o1;
       Event e2 = (Event)o2;

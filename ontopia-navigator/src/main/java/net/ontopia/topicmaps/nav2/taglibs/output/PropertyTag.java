@@ -21,14 +21,10 @@
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;
-import java.util.Collection;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -44,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class PropertyTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(PropertyTag.class.getName());
 
   // tag attributes
@@ -53,6 +49,7 @@ public class PropertyTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // get logic context tag we are nested in
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -83,6 +80,7 @@ public class PropertyTag extends TagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

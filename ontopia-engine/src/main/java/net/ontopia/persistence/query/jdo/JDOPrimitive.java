@@ -74,6 +74,7 @@ public class JDOPrimitive implements JDOValueIF {
     this.value = value;
   }
 
+  @Override
   public int getType() {
     return PRIMITIVE;
   }
@@ -111,10 +112,12 @@ public class JDOPrimitive implements JDOValueIF {
     }
   }
   
+  @Override
   public int hashCode() {
     return value.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOPrimitive) {
@@ -124,11 +127,14 @@ public class JDOPrimitive implements JDOValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
     return value.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
+    // no-op
   }
   
 }

@@ -35,16 +35,19 @@ public class TransactionalSoftHashMapIndex<K, V>
     super(ReferenceStrength.SOFT, ReferenceStrength.HARD);
   }
 
+  @Override
   public void removeAll(Collection<K> keys) {
     for (K key : keys) {
       remove(key);
     }
   }
 
+  @Override
   public void commit() {    
     // no-op
   }
 
+  @Override
   public void abort() {
     // no-op
   }

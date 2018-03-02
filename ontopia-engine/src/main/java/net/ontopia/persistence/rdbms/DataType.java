@@ -38,9 +38,6 @@ public class DataType {
 
   protected Map<String, String> properties;
   
-  public DataType() {
-  }
-
   /**
    * INTERNAL: Gets the name of the datatype.
    */

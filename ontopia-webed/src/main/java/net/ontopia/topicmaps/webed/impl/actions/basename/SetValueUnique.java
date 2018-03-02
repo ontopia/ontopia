@@ -42,6 +42,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 public class SetValueUnique extends SetValue {
 
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     // test params
     ActionSignature paramsType = ActionSignature.getSignature("b t? t?& s? t?");
@@ -52,6 +53,7 @@ public class SetValueUnique extends SetValue {
   }
   
   
+  @Override
   protected boolean isUnique(ActionParametersIF params, ActionResponseIF response, int typeParamIx) {
     TopicIF topic = (TopicIF) params.get(1);
     Collection scope = params.getCollection(2);

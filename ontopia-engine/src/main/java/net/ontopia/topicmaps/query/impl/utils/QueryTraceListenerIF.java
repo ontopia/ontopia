@@ -32,29 +32,29 @@ import net.ontopia.topicmaps.query.parser.OrClause;
  */
 public interface QueryTraceListenerIF {
 
-  public void startQuery();
+  void startQuery();
 
-  public void endQuery();
+  void endQuery();
   
-  public void enter(BasicPredicateIF predicate, AbstractClause clause, 
+  void enter(BasicPredicateIF predicate, AbstractClause clause, 
                     QueryMatches input);
 
-  public void enter(OrClause clause, QueryMatches input);
+  void enter(OrClause clause, QueryMatches input);
 
-  public void enter(List branch);
+  void enter(List branch);
   
-  public void leave(QueryMatches result);
+  void leave(QueryMatches result);
 
-  public void leave(List branch);
+  void leave(List branch);
 
-  public void enterOrderBy();
+  void enterOrderBy();
 
-  public void leaveOrderBy();
+  void leaveOrderBy();
   
-  public void enterSelect(QueryMatches result);
+  void enterSelect(QueryMatches result);
 
-  public void leaveSelect(QueryMatches result);
+  void leaveSelect(QueryMatches result);
 
-  public void trace(String message);
+  void trace(String message);
   
 }

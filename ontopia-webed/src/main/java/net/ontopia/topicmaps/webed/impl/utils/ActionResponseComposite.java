@@ -60,10 +60,12 @@ public class ActionResponseComposite implements Serializable {
 
   // --- overwrite methods from Object implementation
 
+  @Override
   public int hashCode() {
     return action.hashCode() + responseType.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof ActionResponseComposite) {
       ActionResponseComposite comp = (ActionResponseComposite) obj;

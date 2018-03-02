@@ -130,6 +130,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   // EventManagerIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
     if (listener == this) return;
@@ -142,6 +143,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     listeners.get(event).add(listener);
   }
 
+  @Override
   public void removeListener(EventListenerIF listener, String event) {
     if (listeners.containsKey(event)) {
       // Remove listener from event listeners collection
@@ -156,6 +158,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (handlers.containsKey(event)) {
       EventListenerIF handler = handlers.get(event);
@@ -168,6 +171,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   // -----------------------------------------------------------------------------
 
   protected abstract class EventHandler implements EventListenerIF, java.io.Serializable {
+    @Override
     public abstract void processEvent(Object object, String event, Object new_value, Object old_value);
 
     /**
@@ -191,6 +195,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: Topic.*
    */
   class TopicHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicIF topic = (TopicIF)object;
       topicModified(topic);
@@ -201,6 +206,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: TopicName.*
    */
   class TopicNameHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicNameIF bn = (TopicNameIF)object;
       TopicIF topic = bn.getTopic();
@@ -213,6 +219,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: VariantName.*
    */
   class VariantNameHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       VariantNameIF vn = (VariantNameIF)object;
       TopicNameIF bn = vn.getTopicName();
@@ -228,6 +235,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: Occurrence.*
    */
   class OccurrenceHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       OccurrenceIF occ = (OccurrenceIF)object;
       TopicIF topic = occ.getTopic();
@@ -240,6 +248,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: AssociationRole.*
    */
   class AssociationRoleHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF role = (AssociationRoleIF)object;
       AssociationIF assoc = role.getAssociation();
@@ -273,6 +282,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: Association.*
    */
   class AssociationHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF assoc = (AssociationIF)object;
       Iterator<AssociationRoleIF> iter = assoc.getRoles().iterator();
@@ -289,6 +299,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    * EventHandler: TopicMap.*
    */
   class TopicMapHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       if (event.equals(TopicMapIF.EVENT_REMOVE_ASSOCIATION)) {
         AssociationIF assoc = (AssociationIF)old_value;
@@ -308,6 +319,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    */
   class TMObjectHandler extends EventHandler {
 
+    @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       if (object instanceof TopicNameIF)
         manager.bh.processEvent(object, event, new_value, old_value);

@@ -20,35 +20,31 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Arrays;
-import net.ontopia.utils.ObjectUtils;
+import java.util.Iterator;
+import java.util.Objects;
+import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.StorageIF;
-import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionNotActiveException;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
-import junit.framework.TestCase;
 
 /**
  * INTERNAL: Tests that tests various aspects about the RDBMS Backend
@@ -61,6 +57,7 @@ public class RDBMSBackendTests extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
     super.setUp();
@@ -88,7 +85,7 @@ public class RDBMSBackendTests extends TestCase {
 
     // import sample topic map
     TopicMapStoreIF store = new RDBMSTopicMapStore(); // don't use storage
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(URIUtils.getURI(filename));
+    TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
     importer.importInto(store.getTopicMap());
 
     long topicmap_id = Long.parseLong(store.getTopicMap().getObjectId().substring(1)); 
@@ -492,9 +489,9 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF topic1 = getTopic(tm1, "http://psi.kulturnett.no/person/eva_kernst");
       assertTrue("topic1 not found by indicator", topic1 != null);
 
-      LocatorIF subind = URIUtils.getURILocator("test:subind:eva_kernst");
-      LocatorIF subloc = URIUtils.getURILocator("test:subloc:eva_kernst");
-      LocatorIF srcloc = URIUtils.getURILocator("test:srcloc:eva_kernst");
+      LocatorIF subind = URILocator.create("test:subind:eva_kernst");
+      LocatorIF subloc = URILocator.create("test:subloc:eva_kernst");
+      LocatorIF srcloc = URILocator.create("test:srcloc:eva_kernst");
       
       topic1.addSubjectIdentifier(subind);
       topic1.addSubjectLocator(subloc);
@@ -639,8 +636,8 @@ public class RDBMSBackendTests extends TestCase {
       reifierid = oreifier.getObjectId();
       occurrence.setReifier(oreifier);
 
-      assertTrue("Wrong reifier (rw)", ObjectUtils.equals(occurrence.getReifier(), oreifier));
-      assertTrue("Wrong reified (rw)", ObjectUtils.equals(occurrence, oreifier.getReified()));
+      assertTrue("Wrong reifier (rw)", Objects.equals(occurrence.getReifier(), oreifier));
+      assertTrue("Wrong reified (rw)", Objects.equals(occurrence, oreifier.getReified()));
 
       tmid = store1.getLongId();
       store1.commit();
@@ -657,8 +654,8 @@ public class RDBMSBackendTests extends TestCase {
       OccurrenceIF occurrence = (OccurrenceIF)tm2.getObjectById(occid);
       TopicIF oreifier = (TopicIF)tm2.getObjectById(reifierid);
 
-      assertTrue("Wrong reifier (ro)", ObjectUtils.equals(occurrence.getReifier(), oreifier));
-      assertTrue("Wrong reified (ro)", ObjectUtils.equals(occurrence, oreifier.getReified()));
+      assertTrue("Wrong reifier (ro)", Objects.equals(occurrence.getReifier(), oreifier));
+      assertTrue("Wrong reified (ro)", Objects.equals(occurrence, oreifier.getReified()));
 
     } finally {
       if (store2 != null) store2.close();
@@ -692,20 +689,20 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, largeValue);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       otypeid = otype2.getObjectId();
@@ -724,8 +721,8 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
       OccurrenceIF occurrence = (OccurrenceIF)tm2.getObjectById(occid);
       occurrence.getType();
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
       if (store2 != null) store2.close();
@@ -753,20 +750,20 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, largeValue);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
@@ -786,8 +783,8 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
       TopicIF topic = (TopicIF)tm2.getObjectById(topicid);
       OccurrenceIF occurrence = (OccurrenceIF)topic.getOccurrences().iterator().next();
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
       if (store2 != null) store2.close();
@@ -816,27 +813,27 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, smallValue);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
       occurrence.setValue(largeValue);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:2"));
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
@@ -856,8 +853,8 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
       TopicIF topic = (TopicIF)tm2.getObjectById(topicid);
       OccurrenceIF occurrence = (OccurrenceIF)topic.getOccurrences().iterator().next();
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
       if (store2 != null) store2.close();
@@ -887,27 +884,27 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype1 = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype1, smallValue);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype1));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype1));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
       occurrence.setValue(largeValue);
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:2"));
 
-      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
@@ -938,8 +935,8 @@ public class RDBMSBackendTests extends TestCase {
         // look up arbitrary object to force flushing
         tm2.getObjectByItemIdentifier(new URILocator("test:1"));
 
-        assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
-        assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype1));
+        assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+        assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
       }
 
     } finally {

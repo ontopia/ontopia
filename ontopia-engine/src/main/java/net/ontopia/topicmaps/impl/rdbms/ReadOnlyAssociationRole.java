@@ -36,16 +36,10 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   implements AssociationRoleIF {
   
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-
-  public ReadOnlyAssociationRole() {
-  }
-
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return AssociationRole.fields.length;
   }
@@ -54,10 +48,12 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return AssociationRole.CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : AssociationRole.CLASS_INDICATOR + id.getKey(0));
   }
@@ -66,6 +62,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   // AssociationRoleIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public AssociationIF getAssociation() {
     try {
       return this.<AssociationIF>loadFieldNoCheck(AssociationRole.LF_association);
@@ -76,6 +73,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
     }
   }
 
+  @Override
   public TopicIF getPlayer() {
     try {
       return this.<TopicIF>loadField(AssociationRole.LF_player);
@@ -85,6 +83,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
     }
   }
   
+  @Override
   public void setPlayer(TopicIF player) {
     throw new ReadOnlyException();
   }
@@ -93,6 +92,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     try {
       return this.<TopicIF>loadField(AssociationRole.LF_type);
@@ -102,6 +102,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
     }
   }
 
+  @Override
   public void setType(TopicIF type) {
     throw new ReadOnlyException();
   }
@@ -110,6 +111,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     try {
       return this.<TopicIF>loadField(AssociationRole.LF_reifier);
@@ -119,6 +121,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
     }
 	}
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
 	}
@@ -127,6 +130,7 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnly.AssociationRole", (AssociationRoleIF)this);
   }

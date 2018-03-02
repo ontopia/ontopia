@@ -70,10 +70,12 @@ public class NavigatorTagException extends JspTagException {
   /**
    * @since 1.3.4
    */
+  @Override
   public Throwable getCause() {
     return cause;
   }
   
+  @Override
   public String getMessage() {
     if (cause == null)
       return super.getMessage();
@@ -81,6 +83,7 @@ public class NavigatorTagException extends JspTagException {
       return cause.toString();
   }
   
+  @Override
   public void printStackTrace() {
     super.printStackTrace();
     if (cause != null) {
@@ -88,6 +91,7 @@ public class NavigatorTagException extends JspTagException {
       cause.printStackTrace();
     }
   }
+  @Override
   public void printStackTrace(PrintStream ps) {
     super.printStackTrace(ps);
     if (cause != null) {
@@ -95,6 +99,7 @@ public class NavigatorTagException extends JspTagException {
       cause.printStackTrace(ps);
     }
   }
+  @Override
   public void printStackTrace(PrintWriter pw) {
     super.printStackTrace(pw);
     if (cause != null) {

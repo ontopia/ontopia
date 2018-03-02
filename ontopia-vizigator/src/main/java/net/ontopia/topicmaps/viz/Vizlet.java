@@ -23,11 +23,6 @@ package net.ontopia.topicmaps.viz;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JApplet;
@@ -38,7 +33,6 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StreamUtils;
 
 /**
  * PUBLIC: Visualization applet. To learn how to use this applet, consult the
@@ -49,10 +43,12 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
   private boolean parsedMenuItems;
   private AppletContext appletContext = null;
 
+  @Override
   public String getAppletInfo() {
     return "Ontopia Vizlet";
   }
 
+  @Override
   public void init() {
     appletContext = new AppletContext(this);
     // FIXME: This logging should only go into the instrumented version of
@@ -91,6 +87,7 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
     }
   }
 
+  @Override
   public boolean getDefaultControlsVisible() {
     return PropertyUtils.isTrue(getParameter("controlsVisible"), true);
   }
@@ -108,6 +105,7 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
       this.vpanel = vpanel;
     }
     
+    @Override
     public void actionPerformed(ActionEvent actionEvent) {
       vpanel.configureDynamicMenus(this);
     }
@@ -167,6 +165,7 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
     return enabledMenuItems;
   }
   
+  @Override
   public TopicMapIF getTopicMap() {
     String tmrap = getResolvedParameter("tmrap");
     String tmid = getParameter("tmid");
@@ -180,22 +179,27 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
 
   // --- VizFrontEndIF implementation
   
+  @Override
   public boolean mapPreLoaded() {
     return true;
   }
 
+  @Override
   public void setNewTypeColor(TopicIF type, Color c) {
     throw new UnsupportedOperationException("Cannot change colours in Vizlet");
   }
 
+  @Override
   public void configureFilterMenus() {
     throw new UnsupportedOperationException("No filter menus in Vizlet");
   }
 
+  @Override
   public boolean useGeneralConfig() {
     return false;
   }
   
+  @Override
   public String getWallpaper() {
     String wallpaperSrc = null;
     String wallpaperUnresolvedSrc = getParameter("wallpaper_image");
@@ -209,10 +213,12 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
     return wallpaperSrc;
   }
   
+  @Override
   public String getConfigURL() {
     return getResolvedParameter("config");
   }
 
+  @Override
   public TypesConfigFrame getTypesConfigFrame(VizController controller, boolean isTopicConfig) {
     if(isTopicConfig) {
       return TypesConfigFrame.createTopicTypeConfigFrame(controller, null);
@@ -221,6 +227,7 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
     }
   }
 
+  @Override
   public ApplicationContextIF getContext() {
     return appletContext;
   }

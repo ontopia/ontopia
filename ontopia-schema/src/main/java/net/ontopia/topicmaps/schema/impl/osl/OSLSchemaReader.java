@@ -23,23 +23,23 @@ package net.ontopia.topicmaps.schema.impl.osl;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import org.xml.sax.helpers.LocatorImpl;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
-import net.ontopia.xml.AbstractXMLFormatReader;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.ConfigurableEntityResolver;
-import net.ontopia.xml.EmptyInputSourceFactory;
-import net.ontopia.xml.InputSourceFactoryIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.schema.core.SchemaIF;
 import net.ontopia.topicmaps.schema.core.SchemaReaderIF;
 import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.URIUtils;
+import net.ontopia.xml.AbstractXMLFormatReader;
+import net.ontopia.xml.ConfigurableEntityResolver;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.EmptyInputSourceFactory;
+import net.ontopia.xml.InputSourceFactoryIF;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.LocatorImpl;
 
 /**
  * PUBLIC: Reader that reads OSL schemas from their XML representation
@@ -73,20 +73,23 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
 
   // --- SchemaReaderIF methods
   
+  @Override
   public SchemaIF read()
     throws IOException, SchemaSyntaxException {
     
     // Create new parser object
     XMLReader parser;
     try {
-      parser = getXMLReaderFactory().createXMLReader();
+      parser = DefaultXMLReaderFactory.createXMLReader();
+      parser.setFeature("http://xml.org/sax/features/namespaces", false);
+      parser.setEntityResolver(new IgnoreSchemaDTDEntityResolver());
       
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
     }
     
     // Create content handler
-    OSLSchemaContentHandler handler = new OSLSchemaContentHandler(getXMLReaderFactory(), base_address);
+    OSLSchemaContentHandler handler = new OSLSchemaContentHandler(base_address);
     parser.setContentHandler(handler);
     
     // Parse the document
@@ -112,13 +115,6 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
     return handler.getSchema();
   }
 
-  // --- Internal methods
-
-  protected void configureXMLReaderFactory(ConfiguredXMLReaderFactory cxrfactory) {
-    cxrfactory.setFeature("http://xml.org/sax/features/namespaces", false);
-    cxrfactory.setEntityResolver(new IgnoreSchemaDTDEntityResolver());
-  }
-
   // --- Entity resolver
 
   static class IgnoreSchemaDTDEntityResolver extends ConfigurableEntityResolver {
@@ -134,6 +130,7 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
       addPublicIdSource("+//IDN ontopia.net//DTD Ontopia Schema Language (1.0)//EN", factory);
     }
 
+    @Override
     public InputSource resolveEntity (String public_id, String system_id) {
       if (system_id != null && system_id.endsWith(".dtd"))
         return factory.createInputSource();

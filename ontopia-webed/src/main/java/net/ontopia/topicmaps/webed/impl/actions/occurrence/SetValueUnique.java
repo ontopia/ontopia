@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -49,6 +48,7 @@ public class SetValueUnique extends SetValue {
   // initialization of logging facility
   private static Logger log = LoggerFactory.getLogger(SetValueUnique.class.getName());
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     log.debug("occurrence.SetValueUnique.perform() executing");
 
@@ -61,6 +61,7 @@ public class SetValueUnique extends SetValue {
   }
   
   
+  @Override
   protected boolean isUnique(ActionParametersIF params,
                              ActionResponseIF response, int typeParamIx) {
     log.debug("occurrence.SetValueUnique.isUnique() executing");

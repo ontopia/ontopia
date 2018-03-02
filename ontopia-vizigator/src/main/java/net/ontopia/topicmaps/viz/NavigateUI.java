@@ -77,6 +77,17 @@ public class NavigateUI extends TGUserInterface {
 
   private ParsedMenuFile enabledItemIds;
   
+  private static final int OP_EXPAND_NODE = 0;
+  private static final int OP_COLLAPSE_NODE = 1;
+  private static final int OP_HIDE_NODE = 2;
+  private static final int OP_SET_AS_START_NODE = 3;
+  private static final int OP_GO_TO_TOPIC = 4;
+  private static final int OP_DEBUG = 5;
+  private static final int OP_OPEN_PROPERTIES = 6;
+  private static final int OP_STICKY = 7;
+  private static final int OP_COPY_NAME = 8;
+  protected JCheckBoxMenuItem stickyMenu;
+
   public NavigateUI(VizPanel glp, VizController controller) {
     this.glPanel = glp;
     this.controller = controller;
@@ -98,6 +109,7 @@ public class NavigateUI extends TGUserInterface {
     JMenuItem menuItem = new JMenuItem(Messages.getString("Viz.PopupHideEdge"));
 
     ActionListener hideAction = new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         if (popupEdge != null) {
           controller.hideEdge(popupEdge);
@@ -110,16 +122,19 @@ public class NavigateUI extends TGUserInterface {
 
     edgePopup.addPopupMenuListener(
       new PopupMenuListener() {
+        @Override
         public void popupMenuCanceled(PopupMenuEvent e) {
           // Do nothing
         }
   
+        @Override
         public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
           tgPanel.setMaintainMouseOver(false);
           tgPanel.setMouseOverE(null);
           tgPanel.repaint();
         }
   
+        @Override
         public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
           // Do nothing
         }
@@ -132,16 +147,19 @@ public class NavigateUI extends TGUserInterface {
   private JPopupMenu setUpNodePopup() {
     JPopupMenu nodePopup = new JPopupMenu();
     nodePopup.addPopupMenuListener(new PopupMenuListener() {
+      @Override
       public void popupMenuCanceled(PopupMenuEvent e) {
         // Do nothing
       }
 
+      @Override
       public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
         tgPanel.setMaintainMouseOver(false);
         tgPanel.setMouseOverN(null);
         tgPanel.repaint();
       }
 
+      @Override
       public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
         // This is handled in GLNavigateMouseListener>>#processPopupRequest
       }
@@ -200,10 +218,12 @@ public class NavigateUI extends TGUserInterface {
     return nodePopup;
   }
   
+  @Override
   public void activate() {
     tgPanel.addMouseListener(ml);
   }
 
+  @Override
   public void deactivate() {
     tgPanel.removeMouseListener(ml);
   }
@@ -249,6 +269,7 @@ public class NavigateUI extends TGUserInterface {
         .getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
     private ClickThread clickThread;
 
+    @Override
     public void mousePressed(MouseEvent e) {
       // MacOS & Linux (Unix) popup handling
       if (e.isPopupTrigger()) {
@@ -266,6 +287,7 @@ public class NavigateUI extends TGUserInterface {
       }
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
       TMAbstractNode mouseOverN = (TMAbstractNode)tgPanel.getMouseOverN();
 
@@ -319,6 +341,7 @@ public class NavigateUI extends TGUserInterface {
       }
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
       // Windows Popup handling
       if (e.isPopupTrigger()) {
@@ -374,17 +397,6 @@ public class NavigateUI extends TGUserInterface {
 
   // --- Node menu class
 
-  private static final int OP_EXPAND_NODE = 0;
-  private static final int OP_COLLAPSE_NODE = 1;
-  private static final int OP_HIDE_NODE = 2;
-  private static final int OP_SET_AS_START_NODE = 3;
-  private static final int OP_GO_TO_TOPIC = 4;
-  private static final int OP_DEBUG = 5;
-  private static final int OP_OPEN_PROPERTIES = 6;
-  private static final int OP_STICKY = 7;
-  private static final int OP_COPY_NAME = 8;
-  protected JCheckBoxMenuItem stickyMenu;
-
   class NodeMenuListener implements ActionListener {
     private int opcode;
 
@@ -392,6 +404,7 @@ public class NavigateUI extends TGUserInterface {
       this.opcode = opcode;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
       if (popupNode == null)
         return;
@@ -445,6 +458,7 @@ public class NavigateUI extends TGUserInterface {
       clipboard.setContents( stringSelection, this );
     }
   
+    @Override
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
       // Do nothing
     }
@@ -469,6 +483,7 @@ public class NavigateUI extends TGUserInterface {
       parent = p;
     }
 
+    @Override
     public void run() {
       try {
         ClickThread.sleep(delta);

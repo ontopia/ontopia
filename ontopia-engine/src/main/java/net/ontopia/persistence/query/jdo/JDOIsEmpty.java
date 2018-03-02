@@ -38,6 +38,7 @@ public class JDOIsEmpty implements JDOExpressionIF {
     this.value = value;
   }
   
+  @Override
   public int getType() {
     return IS_EMPTY;
   }
@@ -46,10 +47,12 @@ public class JDOIsEmpty implements JDOExpressionIF {
     return value;
   }
   
+  @Override
   public int hashCode() {
     return value.hashCode() + IS_EMPTY;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOIsEmpty) {
@@ -59,10 +62,12 @@ public class JDOIsEmpty implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return value + ".isEmpty()";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(value);
   }

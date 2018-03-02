@@ -23,7 +23,6 @@
 package net.ontopia.topicmaps.webed;
 
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.meterware.httpunit.Button;
 import com.meterware.httpunit.WebForm;

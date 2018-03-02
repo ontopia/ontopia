@@ -39,7 +39,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * @since 5.1
  */
 public class TologQueryProcessorFactory implements QueryProcessorFactoryIF {
-  static Logger log = 
+  private static final Logger log = 
     LoggerFactory.getLogger(TologQueryProcessorFactory.class.getName());
   
   public static final String NAME = "TOLOG";
@@ -47,10 +47,12 @@ public class TologQueryProcessorFactory implements QueryProcessorFactoryIF {
   private static String PROP_IMPLEMENTATION =
     "net.ontopia.topicmaps.query.core.QueryProcessorIF";
   
+  @Override
   public String getQueryLanguage() {
     return NAME;
   }
 
+  @Override
   public QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
       LocatorIF base, Map<String, String> properties) {
     String propval = null;

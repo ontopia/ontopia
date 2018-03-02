@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
  */
 public class AddRole implements ActionIF {
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 
     AssociationIF assoc = (AssociationIF) params.get(0);    

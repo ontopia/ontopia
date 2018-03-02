@@ -35,25 +35,25 @@ public interface ObjectAccessIF {
    * object. NOTE: an exception is thrown when the identity is
    * unknown.
    */
-  public Object getObject(IdentityIF identity);
+  Object getObject(IdentityIF identity);
 
   /**
    * INTERNAL: Returns the identity of the specified object handle.
    */
-  public IdentityIF getIdentity(Object object);
+  IdentityIF getIdentity(Object object);
   
   /**
    * INTERNAL: Returns the type of the specified object handle. Note
    * that this method returns the same value as
    * getIdentity(object).getType().
    */
-  public Class<?> getType(Object object);
+  Class<?> getType(Object object);
   
   /**
    * INTERNAL: Returns the object field value.
    */
   //! public Object getValue(Object object, int field);
-  public Object getValue(Object object, FieldInfoIF finfo);
+  Object getValue(Object object, FieldInfoIF finfo);
   
   //! /**
   //!  * INTERNAL: Sets the object field to the given value.
@@ -73,31 +73,31 @@ public interface ObjectAccessIF {
   /**
    * INTERNAL: Returns true if the specified object is dirty.
    */
-  public boolean isDirty(Object object);
+  boolean isDirty(Object object);
 
   /**
    * INTERNAL: Returns true if the specified object field is dirty.
    */
-  public boolean isDirty(Object object, int field);
+  boolean isDirty(Object object, int field);
 
   /**
    * INTERNAL: Returns the index of the next dirty field from and
    * including the start index. Method returns -1 if there are no
    * dirty fields.
    */
-  public int nextDirty(Object object, int start);
+  int nextDirty(Object object, int start);
 
   /**
    * INTERNAL: Returns the index of the next dirty field from and
    * including start, up until end, but not including end. Method
    * returns -1 if there are no more dirty fields.
    */
-  public int nextDirty(Object object, int start, int end);
+  int nextDirty(Object object, int start, int end);
 
   /**
    * INTERNAL: Marks the dirty fields as being flushed (stored in the
    * database).
    */
-  public void setDirtyFlushed(Object object, int field);
+  void setDirtyFlushed(Object object, int field);
   
 }

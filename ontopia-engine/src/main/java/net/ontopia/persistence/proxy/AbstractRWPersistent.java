@@ -36,6 +36,30 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   protected IdentityIF id;
   protected TransactionIF txn;
 
+  protected static final int[] MASKS;
+
+  private static final byte STATE_NEW = 1; // object exists in database
+  private static final byte STATE_IN_DATABASE = 2; // object exists in database
+  private static final byte STATE_PERSISTENT = 4; // object persistent/created in transaction
+  private static final byte STATE_DELETED = 8; // object deleted in transaction
+  private static final byte STATE_HOLLOW = 16; // object retrieved in previous transaction(s)
+
+  // bit-masks
+  private int lflags; // is field specified (loaded)
+  private int dflags; // is field dirty (not flushed)
+  private int fflags; // is field dirty (flushed)
+  private byte pstate; // new OR persistent/deleted OR in-database
+
+  public Object[] values = new Object[_p_getFieldCount()]; // field values
+  
+  static {
+    int[] masks = new int[32];
+    for (int i=0; i < 32; i++) {
+      masks[i] = (int)Math.pow(2, i);
+    }
+    MASKS = masks;
+  }  
+
   public AbstractRWPersistent() {
   }
 
@@ -47,22 +71,27 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   // PersistentIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public IdentityIF _p_getIdentity() {
     return id;
   }
 
+  @Override
   public Class<?> _p_getType() {
     return getClass();
   }
   
+  @Override
   public void _p_setIdentity(IdentityIF identity) {
     this.id = identity;
   }
   
+  @Override
   public TransactionIF _p_getTransaction() {
     return txn;
   }
 
+  @Override
   public void _p_setTransaction(TransactionIF txn) {
     if (this.txn != null)
       throw new OntopiaRuntimeException("Cannot change the transaction of a persistent object.");
@@ -203,6 +232,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     }
   }
 
+  @Override
   public abstract void detach();
 
   protected void detachField(int field) {
@@ -311,40 +341,19 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   // Object data and metadata
   // -----------------------------------------------------------------------------
 
-  protected static final int[] MASKS;
-
-  static {
-    int[] masks = new int[32];
-    for (int i=0; i < 32; i++) {
-      masks[i] = (int)Math.pow(2, i);
-    }
-    MASKS = masks;
-  }
-
-  private static final byte STATE_NEW = 1; // object exists in database
-  private static final byte STATE_IN_DATABASE = 2; // object exists in database
-  private static final byte STATE_PERSISTENT = 4; // object persistent/created in transaction
-  private static final byte STATE_DELETED = 8; // object deleted in transaction
-  private static final byte STATE_HOLLOW = 16; // object retrieved in previous transaction(s)
-
-  // bit-masks
-  private int lflags; // is field specified (loaded)
-  private int dflags; // is field dirty (not flushed)
-  private int fflags; // is field dirty (flushed)
-  private byte pstate; // new OR persistent/deleted OR in-database
-
-  public Object[] values = new Object[_p_getFieldCount()]; // field values
-
   // -- persistent state
 
+  @Override
   public boolean isTransient() {
     return !(isPersistent() || isDeleted());
   }
 
+  @Override
   public boolean isNewObject() {
     return ((pstate & STATE_NEW) == STATE_NEW);
   }
   
+  @Override
   public void setNewObject(boolean newObject) {
     if (newObject) {
       pstate = STATE_NEW; // new (note == NEW)
@@ -353,10 +362,12 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     }
   }
 
+  @Override
   public boolean isInDatabase() {
     return ((pstate & STATE_IN_DATABASE) == STATE_IN_DATABASE);
   }
   
+  @Override
   public void setInDatabase(boolean inDatabase) {
     if (inDatabase) {
       pstate |= STATE_IN_DATABASE; // +new
@@ -365,10 +376,12 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     }
   }
 
+  @Override
   public boolean isPersistent() {
     return ((pstate & STATE_PERSISTENT) == STATE_PERSISTENT);
   }
   
+  @Override
   public void setPersistent(boolean persistent) {
     if (persistent) {
       pstate |= STATE_PERSISTENT; // +persistent
@@ -378,10 +391,12 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     }
   }
 
+  @Override
   public boolean isDeleted() {
     return ((pstate & STATE_DELETED) == STATE_DELETED);
   }
   
+  @Override
   public void setDeleted(boolean deleted) {
     if (deleted) {
       pstate |= STATE_DELETED; // +deleted
@@ -393,6 +408,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   // -- loaded
 
+  @Override
   public boolean isLoaded(int field) {
     // initialize state
     if (pstate == STATE_HOLLOW) { 
@@ -405,6 +421,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   // -- values
 
+  @Override
   public Object loadValue(FieldInfoIF finfo) {
     if (finfo.isCollectionField()) 
       return loadCollectionField(finfo.getIndex());
@@ -430,14 +447,17 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   // -- dirty (unflushed)
 
+  @Override
   public boolean isDirty() {
     return (dflags != 0);
   }
 
+  @Override
   public boolean isDirty(int field) {
     return ((dflags & MASKS[field]) == MASKS[field]);
   }
 
+  @Override
   public int nextDirty(int start) {
     for (int i=start; i < values.length; i++) {
       if ((dflags & MASKS[i]) == MASKS[i]) return i;
@@ -445,6 +465,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     return -1;
   }
 
+  @Override
   public int nextDirty(int start, int end) {
     for (int i=start; i < end; i++) {
       if ((dflags & MASKS[i]) == MASKS[i]) return i;
@@ -483,6 +504,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     return -1;
   }
   
+  @Override
   public void setDirtyFlushed(int field, boolean dirty) {
             
     if (values[field] instanceof OnDemandValue) {
@@ -504,6 +526,7 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   // -- misc
 
+  @Override
   public void clearAll() {
     // reset flags
     lflags = 0;

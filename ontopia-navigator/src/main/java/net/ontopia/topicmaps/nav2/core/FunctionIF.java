@@ -45,7 +45,7 @@ public interface FunctionIF {
    * INTERNAL: Return the names of the parameters as an ordered
    * <code>Collection</code>.
    */
-  public Collection getParameters();
+  Collection getParameters();
 
   /**
    * INTERNAL: Executes this function in the specified context.
@@ -54,7 +54,7 @@ public interface FunctionIF {
    * is returned, no value will be given to the parent value accepting
    * tag.
    */
-  public Collection execute(PageContext pageContext, TagSupport callingTag)
+  Collection execute(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException;
 
   // --- deprecated methods
@@ -66,7 +66,7 @@ public interface FunctionIF {
    * instead.
    */
   @Deprecated
-  public void call(PageContext pageContext, TagSupport callingTag)
+  void call(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException;
 
   /**
@@ -76,7 +76,7 @@ public interface FunctionIF {
    * function object itself.
    */
   @Deprecated
-  public String getName();
+  String getName();
 
   /**
    * INTERNAL: Gets the name of the variable to which the return value
@@ -89,7 +89,7 @@ public interface FunctionIF {
    * call(PageContext)</code> method instead.
    */
   @Deprecated
-  public String getReturnVariableName();
+  String getReturnVariableName();
   
   /**
    * INTERNAL: Gets the rode node of this Function.
@@ -97,7 +97,7 @@ public interface FunctionIF {
    * @deprecated This method is not used, and need not be implemented.
    */
   @Deprecated
-  public JSPTreeNodeIF getRootNode();
+  JSPTreeNodeIF getRootNode();
 
   /**
    * INTERNAL: Gets the reference to the Module this function belongs
@@ -106,6 +106,6 @@ public interface FunctionIF {
    * @deprecated This method is not used, and need not be implemented.
    */
   @Deprecated
-  public ModuleIF getModule();
+  ModuleIF getModule();
   
 }

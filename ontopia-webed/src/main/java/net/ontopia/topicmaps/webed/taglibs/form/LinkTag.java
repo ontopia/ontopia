@@ -63,6 +63,7 @@ public class LinkTag extends BodyTagSupport {
    * Process the start tag, do nothing.
    * @return <code>EVAL_BODY_INCLUDE</code>
    */
+  @Override
   public int doStartTag() {
     return EVAL_BODY_BUFFERED;
   }
@@ -71,6 +72,7 @@ public class LinkTag extends BodyTagSupport {
    * Generate the required input tag.
    * @exception JspException if a JSP exception has occurred
    */
+  @Override
   public int doEndTag() throws JspException {
     // Get the velocity context.
     VelocityContext vc = TagUtils.getVelocityContext(pageContext);
@@ -106,7 +108,7 @@ public class LinkTag extends BodyTagSupport {
     }
 
     // read-only state
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
         
     if (href != null)
       vc.put("href", href);
@@ -149,6 +151,7 @@ public class LinkTag extends BodyTagSupport {
   /**
    * Release any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     id = null;
@@ -169,6 +172,7 @@ public class LinkTag extends BodyTagSupport {
    * Sets the id of the tag. This value will be used as the value of
    * an ID attribute in the generated output.
    */
+  @Override
   public void setId(String id) {
     this.id = id;
   }

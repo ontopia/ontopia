@@ -44,6 +44,62 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class ArgumentValidator {
   protected List<Argument> arguments;
+  
+  // --- TYPE MAP
+
+  // used to get nice type names in error messages
+  protected static Map<Class<?>, String> typenames;
+  static {
+    typenames = new HashMap<Class<?>, String>();
+    typenames.put(net.ontopia.topicmaps.core.AssociationIF.class,
+                  "an association");
+    typenames.put(net.ontopia.topicmaps.core.TopicIF.class,
+                  "a topic");
+    typenames.put(net.ontopia.topicmaps.core.TopicMapIF.class,
+                  "a topic map");
+    typenames.put(net.ontopia.topicmaps.core.TopicNameIF.class,
+                  "a base name");
+    typenames.put(net.ontopia.topicmaps.core.VariantNameIF.class,
+                  "a variant name");
+    typenames.put(net.ontopia.topicmaps.core.OccurrenceIF.class,
+                  "an occurrence");
+    typenames.put(net.ontopia.topicmaps.core.AssociationRoleIF.class,
+                  "an association role");
+    typenames.put(net.ontopia.topicmaps.impl.basic.Association.class,
+                  "an association");
+    typenames.put(net.ontopia.topicmaps.impl.basic.Topic.class,
+                  "a topic");
+    typenames.put(net.ontopia.topicmaps.impl.basic.TopicMap.class,
+                  "a topic map");
+    typenames.put(net.ontopia.topicmaps.impl.basic.TopicName.class,
+                  "a base name");
+    typenames.put(net.ontopia.topicmaps.impl.basic.VariantName.class,
+                  "a variant name");
+    typenames.put(net.ontopia.topicmaps.impl.basic.Occurrence.class,
+                  "an occurrence");
+    typenames.put(net.ontopia.topicmaps.impl.basic.AssociationRole.class,
+                  "an association role");
+    typenames.put(String.class, "a string");
+
+    // add RDBMS classes if we have them
+    try {
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.Association.class,
+                    "an association");
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.Topic.class,
+                    "a topic");
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.TopicMap.class,
+                    "a topic map");
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.TopicName.class,
+                    "a base name");
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.VariantName.class,
+                    "a variant name");
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.Occurrence.class,
+                    "an occurrence");
+      typenames.put(net.ontopia.topicmaps.impl.rdbms.AssociationRole.class,
+                    "an association role");
+    } catch (NoClassDefFoundError e) {
+    }
+  }
 
   /**
    * INTERNAL: Creates a validator for the signature represented by
@@ -250,60 +306,4 @@ public class ArgumentValidator {
 
     return buf.toString();
   }
-
-  // --- TYPE MAP
-
-  // used to get nice type names in error messages
-  protected static Map<Class<?>, String> typenames;
-  static {
-    typenames = new HashMap<Class<?>, String>();
-    typenames.put(net.ontopia.topicmaps.core.AssociationIF.class,
-                  "an association");
-    typenames.put(net.ontopia.topicmaps.core.TopicIF.class,
-                  "a topic");
-    typenames.put(net.ontopia.topicmaps.core.TopicMapIF.class,
-                  "a topic map");
-    typenames.put(net.ontopia.topicmaps.core.TopicNameIF.class,
-                  "a base name");
-    typenames.put(net.ontopia.topicmaps.core.VariantNameIF.class,
-                  "a variant name");
-    typenames.put(net.ontopia.topicmaps.core.OccurrenceIF.class,
-                  "an occurrence");
-    typenames.put(net.ontopia.topicmaps.core.AssociationRoleIF.class,
-                  "an association role");
-    typenames.put(net.ontopia.topicmaps.impl.basic.Association.class,
-                  "an association");
-    typenames.put(net.ontopia.topicmaps.impl.basic.Topic.class,
-                  "a topic");
-    typenames.put(net.ontopia.topicmaps.impl.basic.TopicMap.class,
-                  "a topic map");
-    typenames.put(net.ontopia.topicmaps.impl.basic.TopicName.class,
-                  "a base name");
-    typenames.put(net.ontopia.topicmaps.impl.basic.VariantName.class,
-                  "a variant name");
-    typenames.put(net.ontopia.topicmaps.impl.basic.Occurrence.class,
-                  "an occurrence");
-    typenames.put(net.ontopia.topicmaps.impl.basic.AssociationRole.class,
-                  "an association role");
-    typenames.put(String.class, "a string");
-
-    // add RDBMS classes if we have them
-    try {
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.Association.class,
-                    "an association");
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.Topic.class,
-                    "a topic");
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.TopicMap.class,
-                    "a topic map");
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.TopicName.class,
-                    "a base name");
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.VariantName.class,
-                    "a variant name");
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.Occurrence.class,
-                    "an occurrence");
-      typenames.put(net.ontopia.topicmaps.impl.rdbms.AssociationRole.class,
-                    "an association role");
-    } catch (NoClassDefFoundError e) {
-    }    
-  }  
 }

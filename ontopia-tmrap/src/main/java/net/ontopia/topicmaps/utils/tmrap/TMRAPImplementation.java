@@ -96,13 +96,13 @@ public class TMRAPImplementation {
     // verify parameters
     if (syntax == null)
       syntax = RAPServlet.SYNTAX_XTM; // default
-    if (!(syntax.equals(RAPServlet.SYNTAX_XTM) || 
-          syntax.equals(RAPServlet.SYNTAX_TM_XML)))
+    if (!(RAPServlet.SYNTAX_XTM.equals(syntax) || 
+          RAPServlet.SYNTAX_TM_XML.equals(syntax)))
       throw new TMRAPException("Invalid value for 'syntax' parameter: '" +
                                syntax + "'");
     if (view == null)
       view = "stub";
-    if (!view.equals("stub") && !view.equals("names"))
+    if (!"stub".equals(view) && !"names".equals(view))
       throw new TMRAPException("Invalid value for 'view' parameter: '" +
                                view + "'");
 
@@ -110,11 +110,11 @@ public class TMRAPImplementation {
     TopicIndexIF index = getTopicIndex(navapp, true, tmids);
     try {
       Collection<TopicIF> topics = index.getTopics(indicators, items, subjects);
-      if (syntax.equals(RAPServlet.SYNTAX_XTM))
+      if (RAPServlet.SYNTAX_XTM.equals(syntax))
         generateXTM(handler, topics, subjects, items, indicators, true);
       else {     
         generateTMXML(handler, topics, subjects, items, indicators,
-                      view.equals("names"),
+                "names".equals(view),
                       tmids != null && tmids.length == 1);
       }
     } finally {
@@ -635,7 +635,7 @@ public class TMRAPImplementation {
       while (it2.hasNext()) {
         AssociationRoleIF other = it2.next();
         TopicIF refd = other.getPlayer();
-        if (refd != source)
+        if (!refd.equals(source))
           copyTopic(tm, refd);
       }
     }
@@ -709,9 +709,9 @@ public class TMRAPImplementation {
           TopicIF topic = (TopicIF) value;
           if (view == null)
             view = "stub";
-          if (view.equals("stub"))
+          if ("stub".equals(view))
             makeStub(topic, handler);
-          else if (view.equals("full-name"))
+          else if ("full-name".equals(view))
             makeFullName(topic, handler);
         } else if (value instanceof String || value instanceof Number) {
           String svalue = value.toString();

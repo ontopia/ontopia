@@ -33,7 +33,7 @@ public class JunkNormalizerTestCase extends TestCase {
 
     assertEquals(n.normalize("abc"), "abc");
     assertEquals(n.normalize("john's"), "john");
-    assertEquals(n.normalize(" abc "), " abc ");
+    assertEquals(n.normalize(" abc "), "abc");
   }
   
 }

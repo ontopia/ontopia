@@ -68,6 +68,7 @@ public class TopicClass extends TopicConstraintCollection
    * INTERNAL: Returns the specification of the topic typing the class
    * defined by this object.
    */
+  @Override
   public TypeSpecification getTypeSpecification() {
     return typespec;
   }
@@ -76,6 +77,7 @@ public class TopicClass extends TopicConstraintCollection
    * INTERNAL: Sets the specification of the topic typing the class
    * defined by this object.
    */
+  @Override
   public void setTypeSpecification(TypeSpecification typespec) {
     this.typespec = typespec;
   }
@@ -137,6 +139,7 @@ public class TopicClass extends TopicConstraintCollection
 
   // --- Overrides
   
+  @Override
   public Collection getAllTopicNameConstraints() {
     Collection constraints = super.getAllTopicNameConstraints();
     if (superclass != null)
@@ -144,6 +147,7 @@ public class TopicClass extends TopicConstraintCollection
     return constraints;
   }
 
+  @Override
   public Collection getAllOccurrenceConstraints() {
     Collection constraints = super.getAllOccurrenceConstraints();
     if (superclass != null)
@@ -151,6 +155,7 @@ public class TopicClass extends TopicConstraintCollection
     return constraints;
   }
 
+  @Override
   public Collection getAllRoleConstraints() {
     Collection constraints = super.getAllRoleConstraints();
     if (superclass != null)
@@ -160,23 +165,25 @@ public class TopicClass extends TopicConstraintCollection
   
   // --- ConstraintIF
 
+  @Override
   public boolean matches(TMObjectIF object) {
     return typespec.matches(object);
   }
     
   // --- Object methods
   
+  @Override
   public String toString() {
     return "<TopicClass>"; // FIXME!
   }
 
   // --- Package-internal methods
 
-  void addSubclass(TopicClass subclass) {
+  protected void addSubclass(TopicClass subclass) {
     subclasses.add(subclass);
   }
 
-  void removeSubclass(TopicClass subclass) {
+  protected void removeSubclass(TopicClass subclass) {
     subclasses.remove(subclass);
   }
 }

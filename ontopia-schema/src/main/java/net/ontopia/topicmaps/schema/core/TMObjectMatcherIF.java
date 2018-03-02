@@ -33,12 +33,12 @@ public interface TMObjectMatcherIF {
   /**
    * INTERNAL: Returns true if this object is matched by the matcher.
    */
-  public boolean matches(TMObjectIF object);
+  boolean matches(TMObjectIF object);
 
   /**
    * INTERNAL: Returns true if this object equals the given parameter.
    */
-  public boolean equals(TMObjectMatcherIF object);
+  boolean equals(TMObjectMatcherIF object);
 }
 
 

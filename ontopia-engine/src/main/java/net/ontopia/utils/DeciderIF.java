@@ -31,7 +31,7 @@ public interface DeciderIF<T> {
   /**
    * PUBLIC: Returns true if the object is accepted.
    */
-  public boolean ok(T object);
+  boolean ok(T object);
 
 }
 

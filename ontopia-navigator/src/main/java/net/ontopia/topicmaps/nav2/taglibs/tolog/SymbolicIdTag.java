@@ -39,9 +39,10 @@ import org.slf4j.LoggerFactory;
 public class SymbolicIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(ObjectIdTag.class.getName());
   
+  @Override
   public final void generateOutput(JspWriter out, Object outObject)
     throws JspTagException, IOException {
     
@@ -76,6 +77,7 @@ public class SymbolicIdTag extends BaseOutputProducingTag {
       print2Writer( out, objectId );
   }
 
+  @Override
   public String getName() {
     return getClass().getName();
   }

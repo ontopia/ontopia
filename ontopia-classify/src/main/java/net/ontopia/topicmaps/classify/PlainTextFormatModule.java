@@ -30,14 +30,17 @@ public class PlainTextFormatModule implements FormatModuleIF {
 
   protected String[] extensions = new String[] {".txt"};
   
+  @Override
   public boolean matchesContent(ClassifiableContentIF cc) {
     return false;
   }
 
+  @Override
   public boolean matchesIdentifier(ClassifiableContentIF cc) {
     return FormatModule.matchesExtension(cc.getIdentifier(), extensions);
   }
 
+  @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
       // try to detect character set

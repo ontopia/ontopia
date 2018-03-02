@@ -27,15 +27,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringTemplateUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
 * PUBLIC: Imports an LTM fragment with references to parameter values
@@ -121,7 +119,7 @@ public class LTMTemplateImporter {
 
         if (value instanceof String) {
           // we need to escape the string so it'll fit nicely into the LTM
-          return StringUtils.replace((String) value, '"', "\"\"");
+          return StringUtils.replace((String) value, "\"", "\"\"");
 
         } else if (value instanceof TopicIF) {
           // we need to turn this into a topic reference
@@ -138,10 +136,12 @@ public class LTMTemplateImporter {
       return get(key) != null;
     }
 
+    @Override
     public int size() {
       return 3; // a smallish number, that's all
     }
 
+    @Override
     public Set<Map.Entry<String, Object>> entrySet() {
       throw new net.ontopia.utils.OntopiaRuntimeException("INTERNAL ERROR");
     }
@@ -153,7 +153,7 @@ public class LTMTemplateImporter {
         // FIXME: this doesn't check the base address!
         LocatorIF loc = it.next();
         String address = loc.getAddress();
-        int pos = address.indexOf("#");
+        int pos = address.indexOf('#');
         if (pos != -1)
           return address.substring(pos + 1);
       }
@@ -173,7 +173,7 @@ public class LTMTemplateImporter {
       LocatorIF base = topicmap.getStore().getBaseAddress();
 
       do {
-        id = StringUtils.makeRandomId(10);
+        id = net.ontopia.utils.StringUtils.makeRandomId(10);
         tmobj = topicmap.getObjectByItemIdentifier(base.resolveAbsolute("#" + id));
       } while (tmobj != null);
 

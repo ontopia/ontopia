@@ -38,18 +38,22 @@ public abstract class AbstractSearcher implements SearcherIF {
 
   // -- default setter implementations
   
+  @Override
   public void setModuleURI(String moduleURI) {
     this.moduleURI = moduleURI;
   }
   
+  @Override
   public void setPredicateName(String predicateName) {
     this.predicateName = predicateName;
   }
   
+  @Override
   public void setTopicMap(TopicMapIF topicmap) {
     this.topicmap = topicmap;
   }
 
+  @Override
   public void setParameters(Map parameters) {
     this.parameters = parameters;
   }

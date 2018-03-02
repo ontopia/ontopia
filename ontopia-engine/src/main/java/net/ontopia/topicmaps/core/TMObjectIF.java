@@ -35,9 +35,10 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 
 public interface TMObjectIF {
+  String MSG_NULL_ARGUMENT = "null is not a valid argument.";
 
-  public static final String EVENT_ADD_ITEMIDENTIFIER = "TMObjectIF.addItemIdentifier";
-  public static final String EVENT_REMOVE_ITEMIDENTIFIER = "TMObjectIF.removeItemIdentifier";
+  String EVENT_ADD_ITEMIDENTIFIER = "TMObjectIF.addItemIdentifier";
+  String EVENT_REMOVE_ITEMIDENTIFIER = "TMObjectIF.removeItemIdentifier";
 
   /**
    * PUBLIC: Gets the id of this object. The object id is part of the topic
@@ -48,14 +49,14 @@ public interface TMObjectIF {
    *
    * @return string which is this object's id.
    */
-  public String getObjectId();
+  String getObjectId();
 
   /**
    * PUBLIC: Returns true if this object is read-only, otherwise false.
    *
    * @return read-only (true) or not read-only (false).
    */
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   /**
    * PUBLIC: Gets the topic map that this object belongs to. If the
@@ -64,7 +65,7 @@ public interface TMObjectIF {
    *
    * @return A topic map; an object implementing TopicMapIF.
    */
-  public TopicMapIF getTopicMap();
+  TopicMapIF getTopicMap();
 
   /**
    * PUBLIC: Gets the item identifiers of this object. These
@@ -77,7 +78,7 @@ public interface TMObjectIF {
    * @return A collection of LocatorIF objects addressing the item.
    * @since 4.0
    */
-  public Collection<LocatorIF> getItemIdentifiers();
+  Collection<LocatorIF> getItemIdentifiers();
 
   /**
    * PUBLIC: Adds the given item identifier to the set of item
@@ -89,7 +90,7 @@ public interface TMObjectIF {
    * @param item_identifier The item identifier to be added; an object implementing LocatorIF.
    * @since 4.0
    */
-  public void addItemIdentifier(LocatorIF item_identifier)
+  void addItemIdentifier(LocatorIF item_identifier)
       throws ConstraintViolationException;
   
   /**
@@ -100,13 +101,13 @@ public interface TMObjectIF {
    * @param item_identifier The item identifier to be removed; an object implementing LocatorIF.
    * @since 4.0
    */
-  public void removeItemIdentifier(LocatorIF item_identifier);
+  void removeItemIdentifier(LocatorIF item_identifier);
 
   /**
    * PUBLIC: Removes the object from its parent.
    *
    * @since 4.0
    */
-  public void remove();
+  void remove();
   
 }

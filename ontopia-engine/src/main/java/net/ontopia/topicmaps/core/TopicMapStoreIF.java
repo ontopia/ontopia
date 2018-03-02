@@ -54,13 +54,13 @@ public interface TopicMapStoreIF extends AutoCloseable {
    * PUBLIC: Constant that identifies the in-memory topic map
    * implementation. For use with the getImplementation() method.
    */  
-  public static final int IN_MEMORY_IMPLEMENTATION = 1;
+  int IN_MEMORY_IMPLEMENTATION = 1;
 
   /**
    * PUBLIC: Constant that identifies the rdbms topic map implementation. For
    * use with the getImplementation() method.
    */  
-  public static final int RDBMS_IMPLEMENTATION = 2;
+  int RDBMS_IMPLEMENTATION = 2;
 
   /**
    * PUBLIC: Returns the topic map implementation identifier.
@@ -69,14 +69,14 @@ public interface TopicMapStoreIF extends AutoCloseable {
    *         flags.
    * @since 3.1
    */
-  public int getImplementation();
+  int getImplementation();
 
   /**
    * PUBLIC: Returns true if the store supports transactions. 
    *
    * @return Boolean: true if transactional, false if not.
    */
-  public boolean isTransactional();
+  boolean isTransactional();
 
   /**
    * PUBLIC: Returns true if the store is open (because opening a
@@ -86,17 +86,18 @@ public interface TopicMapStoreIF extends AutoCloseable {
    * @return Boolean: true if open, false if not open (either not yet
    * opened, or closed).
    */
-  public boolean isOpen();
+  boolean isOpen();
 
   /**
    * PUBLIC: Opens the store, and starts a new transaction on a transactional store.
    */
-  public void open();
+  void open();
   
   /**
    * PUBLIC: Closes the store and aborts the transaction if active.
    */
-  public void close();
+  @Override
+  void close();
   
   /**
    * PUBLIC: Gets a locator of the topic map in the store. This can be
@@ -106,14 +107,14 @@ public interface TopicMapStoreIF extends AutoCloseable {
    * @return A locator to the topic map in the store; an object
    * implementing LocatorIF.
    */
-  public LocatorIF getBaseAddress();
+  LocatorIF getBaseAddress();
 
   /**
    * EXPERIMENTAL: Sets the persistent base address of the store.
    *
    * @since 3.2.4
    */
-  public abstract void setBaseAddress(LocatorIF base_address);
+  void setBaseAddress(LocatorIF base_address);
 
   /**
    * PUBLIC: Gets the topic map that is accessible through the
@@ -126,20 +127,20 @@ public interface TopicMapStoreIF extends AutoCloseable {
    * If the store is not open when this method is called it will be
    * opened automatically.<p>
    */
-  public TopicMapIF getTopicMap();
+  TopicMapIF getTopicMap();
 
   /**
    * PUBLIC: Commits and deactivates the top-level transaction. This
    * method is a shorthand for getTransaction().commit().
    */
-  public void commit();
+  void commit();
 
   /**
    * PUBLIC: Aborts and deactivates the top-level transaction; all
    * changes made inside the root transaction are lost. This method is
    * a shorthand for getTransaction().abort().
    */
-  public void abort();
+  void abort();
 
   //! /**
   //!  * INTERNAL: Clears the TopicMapIF by removing all data. This is
@@ -171,7 +172,7 @@ public interface TopicMapStoreIF extends AutoCloseable {
    *
    * @since 1.3.4
    */
-  public void delete(boolean force) throws NotRemovableException;
+  void delete(boolean force) throws NotRemovableException;
   
   /**
    * PUBLIC: Returns true if the store is usable for read-only
@@ -179,7 +180,7 @@ public interface TopicMapStoreIF extends AutoCloseable {
    *
    * @return True if the store is a read-only store, otherwise false.
    */
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   /**
    * PUBLIC: Returns the value of the specified topic map store
@@ -187,17 +188,17 @@ public interface TopicMapStoreIF extends AutoCloseable {
    *
    * @since 3.2.3
    */
-  public String getProperty(String propertyName); 
+  String getProperty(String propertyName); 
 
   /**
    * INTERNAL: Returns a topic map reference for this store.
    */
-  public TopicMapReferenceIF getReference(); 
+  TopicMapReferenceIF getReference(); 
 
   /**
    * INTERNAL: Sets the topic map reference for this store.
    * <b>Warning:</b> Intended for internal use only.
    */
-  public void setReference(TopicMapReferenceIF reference);
+  void setReference(TopicMapReferenceIF reference);
   
 }

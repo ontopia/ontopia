@@ -32,7 +32,7 @@ import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: The read-only rdbms occurrence implementation.
@@ -40,16 +40,10 @@ import net.ontopia.utils.StreamUtils;
 public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF {
   
   // ---------------------------------------------------------------------------
-  // Data members
-  // ---------------------------------------------------------------------------
-
-  public ReadOnlyOccurrence() {  
-  }
-
-  // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return Occurrence.fields.length;
   }
@@ -58,10 +52,12 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return Occurrence.CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : Occurrence.CLASS_INDICATOR + id.getKey(0));
   }
@@ -70,10 +66,12 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // OccurrenceIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getTopic() {
     return this.<TopicIF>loadField(Occurrence.LF_topic);
   }
 
+  @Override
   public LocatorIF getDataType() {
     return this.<LocatorIF>loadField(Occurrence.LF_datatype);    
   }
@@ -82,6 +80,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
     throw new ReadOnlyException();
   }
 
+  @Override
   public String getValue() {
     Object value = loadField(Occurrence.LF_value);
     if (value instanceof String) {
@@ -91,7 +90,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
       try {
         Reader r = (Reader)odv.getValue(_p_getTransaction());
         try {
-          return StreamUtils.readString(r, getLength());
+          return IOUtils.toString(r);
         } finally {
           r.close();
         }
@@ -105,32 +104,39 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
     }
   }
 
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public Reader getReader() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public long getLength() {
     Number length = this.<Number>loadField(Occurrence.LF_length);
     long len = (length == null ? 0 : length.longValue());
@@ -144,14 +150,17 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(Occurrence.LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     throw new ReadOnlyException();
   }
@@ -160,10 +169,12 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return this.<TopicIF>loadField(Occurrence.LF_type);
   }
 
+  @Override
   public void setType(TopicIF type) {
     throw new ReadOnlyException();
   }
@@ -172,10 +183,12 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(Occurrence.LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
   }
@@ -184,6 +197,7 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyOccurrence", (OccurrenceIF)this);
   }

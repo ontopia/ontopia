@@ -22,7 +22,11 @@ package net.ontopia.topicmaps.impl.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
+import org.apache.commons.collections4.Predicate;
 
 /**
  * INTERNAL: An abstract dynamic index superclass.
@@ -31,6 +35,7 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   
   protected Map<String, EventListenerIF> handlers = new HashMap<String, EventListenerIF>();
 
+  @Override
   public IndexIF getIndex() {
     return this;
   }
@@ -39,6 +44,7 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (handlers.containsKey(event)) {
       handlers.get(event).processEvent(object, event, new_value, old_value);
@@ -49,8 +55,9 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   // Event handlers
   // -----------------------------------------------------------------------------
 
-  public abstract class EventHandler implements EventListenerIF {
-    public abstract void processEvent(Object object, String event, Object new_value, Object old_value);
+  public abstract class EventHandler<K, V> implements EventListenerIF<K, V> {
+    @Override
+    public abstract void processEvent(K object, String event, V new_value, V old_value);
     protected void addEvent(Object object, String event, Object value) {
       handlers.get(event).processEvent(object, event, value, null);
     }
@@ -59,4 +66,17 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
     }
   }
   
+  protected class TypedPredicate implements Predicate<TypedIF> {
+
+    private final TopicIF type;
+
+    public TypedPredicate(TopicIF type) {
+      this.type = type;
+    }
+    
+    @Override
+    public boolean evaluate(TypedIF typed) {
+      return Objects.equals(typed.getType(), type);
+    }
+  }
 }

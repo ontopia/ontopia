@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SynchronizationTask extends TimerTask {
 
-  static Logger log = LoggerFactory.getLogger(SynchronizationTask.class);
+  private static Logger log = LoggerFactory.getLogger(SynchronizationTask.class);
 
   protected static Map<String, Date> lastExecutions = Collections.synchronizedMap(new HashMap<String, Date>());
     
@@ -81,6 +81,7 @@ public class SynchronizationTask extends TimerTask {
     this.baseloc = baseloc;
   }
   
+  @Override
   public void run() {
     log.debug("Synchronization task '{}' begins...", name);
     

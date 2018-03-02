@@ -20,9 +20,6 @@
 
 package net.ontopia.topicmaps.nav.conf;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /** 
  * PUBLIC: Provides model, view and skin information for the application
  * 
@@ -32,25 +29,22 @@ import org.slf4j.LoggerFactory;
  */
 public class ControlConfig implements ControlConfigIF {
 
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ControlConfig.class.getName());
-
   // defaults designed to be overriden by implementors
-  String model = "simple";
-  String view = "no_frames";
-  String skin = "blue";
+  private String model = "simple";
+  private String view = "no_frames";
+  private String skin = "blue";
   
   // the get and set variables used by the jsp
-  String modelPath;
-  String viewPath;
-  String skinPath;
+  private String modelPath;
+  private String viewPath;
+  private String skinPath;
   
   // derived from the M,V,S
-  String behaviour;
-  String contentType;
+  private String behaviour;
+  private String contentType;
   
   // others
-  String resource;
+  private String resource;
 
   /**
    * Constructor which takes a path to the configuration file.
@@ -72,10 +66,11 @@ public class ControlConfig implements ControlConfigIF {
    * @param view    a string representing the view choice
    * @param skin    a string representing the skin choice   
    */
+  @Override
   public void update(String model, String view, String skin) {
-    if (model != null && !model.equals("")) this.model = model;
-    if (view  != null && !view.equals(""))  this.view = view;
-    if (skin  != null && !skin.equals(""))  this.skin = skin; 
+    if (model != null && !model.isEmpty()) this.model = model;
+    if (view  != null && !view.isEmpty())  this.view = view;
+    if (skin  != null && !skin.isEmpty())  this.skin = skin; 
     makePaths();
   }
 
@@ -87,21 +82,21 @@ public class ControlConfig implements ControlConfigIF {
   private void makePaths() {
 
     // fix dodgy path
-    if (resource == null || resource.equals("/index.html")) 
+    if (resource == null || "/index.html".equals(resource)) 
       resource = "/index.jsp"; 
                 
     // ModelPath
-    if (resource.equals("/topic.jsp"))
+    if ("/topic.jsp".equals(resource))
       modelPath = "/models/topic_" + model + ".jsp";
-    else if (resource.equals("/topicmap.jsp"))
+    else if ("/topicmap.jsp".equals(resource))
       modelPath = "/models/topicmap_" + model + ".jsp";
     else
       modelPath = "/models" + resource;
    
     // ViewPath
-    if (resource.equals("/def_topic_occ.jsp") || 
-        resource.equals("/def_topicmap_occ.jsp") || 
-        resource.equals("/blank.jsp"))
+    if ("/def_topic_occ.jsp".equals(resource) || 
+        "/def_topicmap_occ.jsp".equals(resource) || 
+        "/blank.jsp".equals(resource))
       viewPath = "/views/template_plain.jsp";
     else 
       viewPath = "/views/template_" + view + ".jsp";
@@ -111,25 +106,33 @@ public class ControlConfig implements ControlConfigIF {
 
     // Behaviour
     behaviour = "no_frames";
-    if (view.equals("frames"))
+    if ("frames".equals(view))
       behaviour = "frames"; 
     
     // ContentType
     contentType = "text/html";
-    if (view.equals("xml"))
+    if ("xml".equals(view))
       contentType = "text/xml";
   }
 
   
   // --- get methods
+  @Override
   public String getModelPath() { return modelPath; }
+  @Override
   public String getViewPath() { return viewPath; }
+  @Override
   public String getSkinPath() { return skinPath; }
+  @Override
   public String getBehaviour() { return behaviour; }
+  @Override
   public String getContentType() { return contentType; }  
 
+  @Override
   public String getModel() { return model; }
+  @Override
   public String getView() { return view; }
+  @Override
   public String getSkin() { return skin; }
 
 }

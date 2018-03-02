@@ -43,28 +43,34 @@ public class FieldInformation implements FieldInformationIF {
     this.rows = rows;
   }
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getType() {
     return type;
   }
 
+  @Override
   public String getMaxLength() {
     return maxlength;
   }
 
+  @Override
   public String getColumns() {
     return columns;
   }
 
+  @Override
   public String getRows() {
     return rows;
   }
 
   // --- overwrite methods from java.lang.Object
 
+  @Override
   public int hashCode() {
     StringBuilder sb = new StringBuilder(32);
     sb.append(name).append(type).append(maxlength).append(columns)
@@ -72,6 +78,7 @@ public class FieldInformation implements FieldInformationIF {
     return sb.toString().hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof FieldInformation))
       return false;
@@ -83,6 +90,7 @@ public class FieldInformation implements FieldInformationIF {
             && compObj.getRows().equals(rows));
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(48);
     sb.append("[FieldInformation: ").append(name).append(", ")

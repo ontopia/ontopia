@@ -36,6 +36,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

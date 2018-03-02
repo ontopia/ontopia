@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.core.index;
 
+import java.util.Collection;
 import java.util.Collections;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -36,6 +37,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     super(name);
   }
 
+  @Override
   protected void setUp() throws Exception {
     ix = (NameIndexIF)super.setUp("NameIndexIF");
   }
@@ -83,6 +85,50 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     assertTrue("wrong base name found via hw-kana string",
            ix.getTopicNames("Kana: \uFF76\uFF85").iterator().next().equals(bn5));
         
+  }
+
+  public void testTopicNameIndexByType() {
+    // STATE 1: no topic name values defined
+    TopicIF topic = builder.makeTopic();
+    TopicIF nameType1 = builder.makeTopic();
+    TopicIF nameType2 = builder.makeTopic();
+    String value0 = "dummy0";
+    String value1 = "dummy";
+    TopicNameIF topicName = builder.makeTopicName(topic, nameType1, value0);
+    assertTrue("Index of topic names by value and type is not empty.",
+      ix.getTopicNames(value1, nameType1).isEmpty());
+
+    // STATE 2: Topic name value added
+    topicName.setValue(value1);
+    assertTrue("Index of topic names by value and type does not contain test value.",
+      ix.getTopicNames(value1, nameType1).contains(topicName));
+
+    // STATE 3: Duplicate topic name value added
+    TopicNameIF topicName2 = builder.makeTopicName(topic, nameType1, value1);
+    assertTrue("second topic name not found by value",
+      ix.getTopicNames(value1, nameType1).size() == 2);
+
+    // STATE 4: Change first topic name value
+    String value2 = "dummy2";
+    topicName.setValue(value2);
+    assertTrue("list of topic names not updated",
+      ix.getTopicNames(value1, nameType1).size() == 1);
+    assertTrue("first topic name not found by new value",
+      ix.getTopicNames(value2, nameType1).size() == 1);
+
+    // STATE 5: Change topic name types
+    assertTrue("Index of topic names by value and type is not empty for original type",
+      ix.getTopicNames(value2, nameType2).isEmpty());
+    topicName.setType(nameType2);
+    assertFalse("Index of topic names by value and type does not detect changed type",
+      ix.getTopicNames(value2, nameType2).isEmpty());
+    assertTrue("Index of topic names by value and type does not detect aborted type",
+      ix.getTopicNames(value2, nameType1).isEmpty());
+
+    // STATE 6: Change second topic name type
+    topicName2.setType(nameType2);
+    assertFalse("Index of topic names by value and type contains topic name with wrong value",
+      ix.getTopicNames(value2, nameType2).contains(topicName2));
   }
 
   public void testVariantIndexInternal()  {
@@ -232,6 +278,23 @@ public abstract class NameIndexTest extends AbstractIndexTest {
                ix.getVariants(loc1.getAddress(), DataTypes.TYPE_URI).size() == 2);
     }
   
+  public void testNulls() {
+    Collection<VariantNameIF> variants = ix.getVariants(null);
+    assertNotNull(variants);
+    assertTrue(variants.isEmpty());
+
+    variants = ix.getVariants(null, null);
+    assertNotNull(variants);
+    assertTrue(variants.isEmpty());
+
+    Collection<TopicNameIF> names = ix.getTopicNames(null);
+    assertNotNull(names);
+    assertTrue(names.isEmpty());
+
+    names = ix.getTopicNames(null, null);
+    assertNotNull(names);
+    assertTrue(names.isEmpty());
+  }
 }
 
 

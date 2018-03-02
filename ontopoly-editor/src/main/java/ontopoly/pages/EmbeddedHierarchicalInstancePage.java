@@ -23,14 +23,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
+import java.util.Objects;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
-
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.TreePanel;
 import ontopoly.model.PSI;
@@ -41,7 +39,6 @@ import ontopoly.pojos.TopicNode;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.OntopolyUtils;
 import ontopoly.utils.TreeModels;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
@@ -156,7 +153,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
         while (e.hasMoreElements()) {
           DefaultMutableTreeNode child = (DefaultMutableTreeNode)e.nextElement();
           Topic nodeTopic = ((TopicNode)child.getUserObject()).getTopic();
-          if (ObjectUtils.equals(nodeTopic, topic))
+          if (Objects.equals(nodeTopic, topic))
             return child;
           DefaultMutableTreeNode found = findTopicNode(child, topic);
           if (found != null)
@@ -170,7 +167,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
         final TopicNode node = (TopicNode)mTreeNode.getUserObject();
         Topic topic = node.getTopic();
-        final boolean isCurrentTopic = ObjectUtils.equals(topic, getTopic());
+        final boolean isCurrentTopic = Objects.equals(topic, getTopic());
         // create link with label
         return new LinkPanel(id) {
           @Override

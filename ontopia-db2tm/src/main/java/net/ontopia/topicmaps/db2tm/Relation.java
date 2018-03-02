@@ -193,6 +193,7 @@ public class Relation {
     syncs.remove(sync);
   }
 
+  @Override
   public String toString() {
     return "Relation(" + getName() + ")";
   }
@@ -201,7 +202,7 @@ public class Relation {
   // Compiling
   // ---------------------------------------------------------------------------
   
-  void compile() {
+  protected void compile() {
     for (Entity entity : entities) {
       entity.compile();
     }

@@ -25,7 +25,6 @@ import java.util.Collections;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 
 import org.apache.velocity.VelocityContext;
@@ -58,6 +57,7 @@ public class FileTag extends BodyTagSupport {
    * Stores the body content, which becomes the value of the file
    * control.
    */
+  @Override
   public int doAfterBody() throws JspException {    
     if (bodyContent.getString() != null)
       value = bodyContent.getString().trim();
@@ -70,6 +70,7 @@ public class FileTag extends BodyTagSupport {
   /**
    * Renders the input field element with its content.
    */
+  @Override
   public int doEndTag() throws JspException {
     // retrieve the action group
     String group_name = TagUtils.getActionGroup(pageContext);
@@ -87,7 +88,7 @@ public class FileTag extends BodyTagSupport {
       vc.put("name", name);
     }
     
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     vc.put("value", value);
 
     if (id != null) vc.put("id", id);
@@ -104,6 +105,7 @@ public class FileTag extends BodyTagSupport {
   /**
    * Release any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     id = null;
@@ -121,6 +123,7 @@ public class FileTag extends BodyTagSupport {
    * Sets the id of the tag. This value will be used as the value of
    * an ID attribute in the generated output.
    */
+  @Override
   public void setId(String id) {
     this.id = id;
   }

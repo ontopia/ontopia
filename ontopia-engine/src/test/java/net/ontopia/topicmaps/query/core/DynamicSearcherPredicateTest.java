@@ -37,6 +37,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }  
@@ -157,25 +158,28 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     
   public static class ExactSearcher extends AbstractSearcher {
 
+    @Override
     public int getValueType() {
       return SearcherIF.STRING_VALUE;
     }
     
+    @Override
     public SearchResultIF getResult(String query) {
       return new ExactSearchResult(query);
     }
     
     private class ExactSearchResult extends AbstractSearchResult {
-      String query;
-      int c = 0;
+      private String query;
+      private int c = 0;
 
-      String[] o = new String[] { "a",  "b",  "c",  "d",  "e",  "d",  "f",  "g" };
-      float[] f = new float[] {  1.0f, 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f };
+      private String[] o = new String[] { "a",  "b",  "c",  "d",  "e",  "d",  "f",  "g" };
+      private float[] f = new float[] {  1.0f, 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f };
       
       ExactSearchResult(String query) {
         this.query = query;
       }
       
+      @Override
       public boolean next() {
         for (int i = c+1; i < o.length; i++) {
           if (query.equals(o[i])) {
@@ -186,15 +190,19 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
         return false;
       }
       
+      @Override
       public Object getValue() {
         return o[c];
       }
       
+      @Override
       public float getScore() {
         return f[c];
       }
       
+      @Override
       public void close() {
+        // no-op
       }
     };
   }
@@ -203,10 +211,12 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
 
   public static class UnknownSearcher extends AbstractSearcher {
 
+    @Override
     public int getValueType() {
       return SearcherIF.SUBJECT_LOCATOR;
     }
     
+    @Override
     public SearchResultIF getResult(String query) {
       return new UnknownSearchResult();
     }
@@ -214,21 +224,26 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     private class UnknownSearchResult extends AbstractSearchResult {
       private boolean has_more = true;
       
+      @Override
       public boolean next() {
         boolean value = has_more;
         has_more = false;
         return value;
       }
       
+      @Override
       public Object getValue() {
         return "http://this.subject.locator.is.not.found/";
       }
       
+      @Override
       public float getScore() {
         return 1.0f;
       }
       
+      @Override
       public void close() {
+        // no-op
       }
     };
   }

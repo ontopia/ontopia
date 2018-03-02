@@ -43,9 +43,12 @@ public class RegexpTermAnalyzer implements TermAnalyzerIF {
                        0.002d));
   }
   
+  @Override
   public void startAnalysis(TermDatabase tdb) {
+    // no-op
   }
   
+  @Override
   public void analyzeTerm(Term term) {
     for (int ix = 0; ix < rules.size(); ix++) {
       Rule rule = rules.get(ix);
@@ -55,7 +58,9 @@ public class RegexpTermAnalyzer implements TermAnalyzerIF {
     }
   }
 
+  @Override
   public void endAnalysis() {
+    // no-op
   }
 
   // --- Internal

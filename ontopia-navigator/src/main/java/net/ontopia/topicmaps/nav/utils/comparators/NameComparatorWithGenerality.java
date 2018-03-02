@@ -59,6 +59,7 @@ public class NameComparatorWithGenerality extends NameComparator {
    * retrieve the sort variant name for it. The resulting string
    * contains first the number of themes and after that the name.
    */
+  @Override
   protected String getName(NameIF obj) {
     String value = null;
     

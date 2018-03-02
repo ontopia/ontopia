@@ -73,6 +73,7 @@ public abstract class AssociationRoleTest extends AbstractTypedTest {
 
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
@@ -82,6 +83,7 @@ public abstract class AssociationRoleTest extends AbstractTypedTest {
     typed = role;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
     return builder.makeAssociationRole(assoc, builder.makeTopic(), builder.makeTopic());

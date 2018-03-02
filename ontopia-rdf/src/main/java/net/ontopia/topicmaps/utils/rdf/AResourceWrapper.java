@@ -32,37 +32,47 @@ import org.apache.jena.rdfxml.xmlinput.AResource;
 public class AResourceWrapper implements AResource {
   public Resource resource;
 
+  @Override
   public boolean isAnonymous() {
     return resource.isAnon();
   }
 
+  @Override
   public String getAnonymousID() {
     return null;
   }
 
+  @Override
   public String getURI() {
     return resource.toString();
   }
 
+  @Override
   public Object getUserData() {
     return null;
   }
 
+  @Override
   public void setUserData(Object d) {
+    // no-op
   }
 
+  @Override
   public int hashCode() {
     return resource.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     return resource.equals(obj);
   }
 
+  @Override
   public String toString() {
     return "<" + resource.toString() + ">";
   }
 
+  @Override
   public boolean hasNodeID() {
     return false;
   }

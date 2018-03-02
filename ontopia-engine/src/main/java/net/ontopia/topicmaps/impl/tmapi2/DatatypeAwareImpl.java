@@ -55,6 +55,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#decimalValue()
    */
   
+  @Override
   public BigDecimal decimalValue() {
     return new BigDecimal(getValue());
   }
@@ -63,6 +64,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#floatValue()
    */
   
+  @Override
   public float floatValue() {
     return decimalValue().floatValue();
   }
@@ -71,6 +73,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#intValue()
    */
   
+  @Override
   public int intValue() {
     return decimalValue().intValue();
   }
@@ -79,6 +82,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#integerValue()
    */
   
+  @Override
   public BigInteger integerValue() {
     return decimalValue().toBigInteger();
   }
@@ -87,6 +91,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#longValue()
    */
   
+  @Override
   public long longValue() {
     return decimalValue().longValue();
   }
@@ -95,6 +100,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#setValue(java.math.BigDecimal)
    */
   
+  @Override
   public void setValue(BigDecimal value) {
     Check.valueNotNull(this, value);
     setValue(value.toString(), DataTypes.TYPE_DECIMAL);
@@ -104,6 +110,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#setValue(java.math.BigInteger)
    */
   
+  @Override
   public void setValue(BigInteger value) {
     Check.valueNotNull(this, value);
     setValue(value.toString(), DataTypes.TYPE_INTEGER);
@@ -113,6 +120,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#setValue(long)
    */
   
+  @Override
   public void setValue(long value) {
     setValue(Long.toString(value), DataTypes.TYPE_LONG);
   }
@@ -121,6 +129,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#setValue(float)
    */
   
+  @Override
   public void setValue(float value) {
     setValue(Float.toString(value), DataTypes.TYPE_FLOAT);
   }
@@ -129,6 +138,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#setValue(int)
    */
   
+  @Override
   public void setValue(int value) {
 	  // the TMAPI  demands a xsd:int for int
     setValue(Integer.toString(value), XSD_INT);
@@ -138,6 +148,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    * @see org.tmapi.core.DatatypeAware#setValue(java.lang.String, org.tmapi.core.Locator)
    */
   
+  @Override
   public void setValue(String value, Locator datatype) {
     Check.valueNotNull(this, value, datatype);
     setValue(value, topicMap.unwrapLocator(datatype));

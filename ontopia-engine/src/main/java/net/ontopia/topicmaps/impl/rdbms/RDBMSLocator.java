@@ -55,14 +55,17 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
   // LocatorIF implementation
   // ---------------------------------------------------------------------------
   
+  @Override
   public String getNotation() {
     return "URI";
   }
 
+  @Override
   public String getAddress() {
     return address;
   }
   
+  @Override
   public LocatorIF resolveAbsolute(String address) {
     // FIXME: should use static method instead of creating URILocator instance
     try {
@@ -76,6 +79,7 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
     return new RDBMSLocator(address);
   }
 
+  @Override
   public String getExternalForm() {
     // FIXME: should use static method instead of creating URILocator instance
     try {
@@ -91,10 +95,12 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
   // Object implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int hashCode() {
     return address.hashCode();
   }
 
+  @Override
   public boolean equals(Object object) {
     try {
       LocatorIF locator = (LocatorIF)object;
@@ -122,10 +128,12 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
   // Externalization
   // ---------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeUTF(address);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     address = in.readUTF();
   }  

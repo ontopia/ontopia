@@ -34,13 +34,13 @@ public interface SchemaIF {
    * PUBLIC: Returns a validator object that can be used to validate
    * topic map objects against the schema.
    */
-  public SchemaValidatorIF getValidator();
+  SchemaValidatorIF getValidator();
 
   /**
    * PUBLIC: Returns the address of the schema. The address may be
    * null.
    */
-  public LocatorIF getAddress();
+  LocatorIF getAddress();
   
 }
 

@@ -39,6 +39,7 @@ public class MenuPanel extends Panel {
     ListView<MenuItem> menuItems = new ListView<MenuItem>("menuItems", menuItemList) {
       int counter = 0;
 
+      @Override
       protected void populateItem(ListItem<MenuItem> item) {
         MenuItem menuItem = item.getModelObject();
         BookmarkablePageLink<Page> link = new BookmarkablePageLink<Page>("menuItemLink",

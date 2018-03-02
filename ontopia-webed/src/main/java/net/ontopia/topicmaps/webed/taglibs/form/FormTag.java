@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -34,7 +33,6 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
@@ -50,11 +48,10 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionData;
 import net.ontopia.topicmaps.webed.impl.utils.LockResult;
 import net.ontopia.topicmaps.webed.impl.utils.NamedLockManager;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
-import net.ontopia.utils.StringUtils;
-
+import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.VelocityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.VelocityContext;
 
 /**
  * INTERNAL: Custom tag that represents an (HTML) input form holding different
@@ -126,6 +123,7 @@ public class FormTag extends BodyTagSupport {
   public static final String REQUEST_ID_ATTRIBUTE_NAME = "FormTag."
       + Constants.RP_REQUEST_ID;
 
+  @Override
   public int doStartTag() throws JspException {
     NavigatorPageIF contextTag = FrameworkUtils.getContextTag(pageContext);
     if (contextTag == null)
@@ -140,7 +138,7 @@ public class FormTag extends BodyTagSupport {
 
     boolean readonly =
       InteractionELSupport.getBooleanValue(this.readonly, false, pageContext);
-    request.setAttribute(Constants.OKS_FORM_READONLY, new Boolean(readonly));
+    request.setAttribute(Constants.OKS_FORM_READONLY, readonly);
 
     // put the name of the action group to page scope
     // to allow child tags to access this information
@@ -210,6 +208,7 @@ public class FormTag extends BodyTagSupport {
   /**
    * Renders the input form element with it's content.
    */
+  @Override
   public int doAfterBody() throws JspException {
     HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
@@ -280,7 +279,7 @@ public class FormTag extends BodyTagSupport {
     // FIXME: Do we really need this line? Probably not, since each control
     // should now itself be responisible for determining whether it should be
     // readonly. Hence the individual control can overrule the form setting.
-    // vc.put("readonly", new Boolean(TagUtils.isFormReadOnly(request)));
+    // vc.put("readonly", TagUtils.isFormReadOnly(request));
 
     // content inside the form element
     BodyContent body = getBodyContent();
@@ -348,6 +347,7 @@ public class FormTag extends BodyTagSupport {
   /**
    * Releases any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     idattr = null;
@@ -364,6 +364,7 @@ public class FormTag extends BodyTagSupport {
   // tag attribute accessors
   // ------------------------------------------------------------
 
+  @Override
   public void setId(String idattr) {
     this.idattr = idattr;
   }
@@ -446,7 +447,7 @@ public class FormTag extends BodyTagSupport {
     }
 
     public String getEscapedPattern() {
-      return StringUtils.replace(StringUtils.replace(pattern, '\\', "\\\\"), '"',
+      return StringUtils.replace(StringUtils.replace(pattern, "\\", "\\\\"), "\"",
           "\\\"");
     }
 

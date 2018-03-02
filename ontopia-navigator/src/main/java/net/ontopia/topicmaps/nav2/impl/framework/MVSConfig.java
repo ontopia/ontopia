@@ -30,12 +30,12 @@ import java.util.HashSet;
  */
 public class MVSConfig {
 
-  Set models;
-  Set views;
-  Set skins;
-  String defaultModel;
-  String defaultView;
-  String defaultSkin;
+  private Set models;
+  private Set views;
+  private Set skins;
+  private String defaultModel;
+  private String defaultView;
+  private String defaultSkin;
 
   public MVSConfig() {
     this("", "", "");

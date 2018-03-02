@@ -64,6 +64,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     this.txn = txn;
   }
 
+  @Override
   public void resetTracking() {
     // Clears the lists of added and removed objects.
     // FIXME: Figure out if clearing collection or resetting to null is faster
@@ -73,6 +74,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     // if (removed != null) removed.clear();
   }
   
+  @Override
   public void selfAdded() {
     if (!isEmpty()) {
       if (added == null)
@@ -82,14 +84,17 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     }
   }
 
+  @Override
   public Collection<E> getAdded() {
     return added;
   }
 
+  @Override
   public Collection<E> getRemoved() {
     return removed;
   }
   
+  @Override
   public boolean addWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
     E o;
@@ -112,6 +117,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     return result;
   }
 
+  @Override
   public boolean removeWithTracking(E _o) {
     // Make sure persistent values are represented by their identity
     E o;
@@ -134,6 +140,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     return result;
   }
 
+  @Override
   public void clearWithTracking() {
     Iterator<E> iter = new ArrayList<E>(this).iterator();
     while (iter.hasNext()) {
@@ -143,42 +150,51 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
   
   // -- immutable collection
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
   // -- iterator
 
+  @Override
   public Iterator<E> iterator() {
     return new PersistentIterator<E>(txn, true, super.iterator());
   }
 
   // -- other
 
+  @Override
   public boolean contains(Object o) {    
     return super.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
+  @Override
   public boolean containsAll(Collection<?> c) {
     Iterator e = c.iterator();
     while (e.hasNext())
@@ -188,6 +204,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     return true;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] result = new Object[size()];
     Iterator it = iterator();
@@ -206,6 +223,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
   }
 
   @SuppressWarnings("unchecked")
+  @Override
   public <T> T[] toArray(T[] a) {
     int size = size();
     if (a.length < size)

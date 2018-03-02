@@ -23,15 +23,10 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.xml.sax.InputSource;
-
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: An XTM document topic map reference.
@@ -110,8 +105,8 @@ public class XTMTopicMapReference extends AbstractOntopolyURLReference {
       XTMPathTopicMapSource src = (XTMPathTopicMapSource) source;
       String path = src.getPath();
       if (path != null) {
-        String filename = path + File.separator + this.getId();
-        TopicMapWriterIF writer = new XTMTopicMapWriter(filename);
+        File file = new File(path + File.separator + this.getId());
+        TopicMapWriterIF writer = new XTMTopicMapWriter(file);
         writer.write(store.getTopicMap());
       }
     }
@@ -121,18 +116,15 @@ public class XTMTopicMapReference extends AbstractOntopolyURLReference {
   // Abstract methods
   // ---------------------------------------------------------------------------
 
-  protected TopicMapImporterIF getImporter() {
+  @Override
+  protected TopicMapReaderIF getImporter() throws IOException {
     // create topic map importer
     XTMTopicMapReader reader;
     if (base_address == null) {
-      try {
-        reader = new XTMTopicMapReader(url.toString());
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e); // impossible error
-      }
-    } else
-      reader = new XTMTopicMapReader(new InputSource(url.toString()),
-                                     base_address);
+      reader = new XTMTopicMapReader(url);
+    } else {
+      reader = new XTMTopicMapReader(url, base_address);
+    }
     if (ref_handler != null)
       reader.setExternalReferenceHandler(ref_handler);
     else

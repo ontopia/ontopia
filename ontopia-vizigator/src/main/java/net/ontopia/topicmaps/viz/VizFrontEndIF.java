@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;
-import java.net.MalformedURLException;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -38,7 +37,7 @@ public interface VizFrontEndIF {
    *
    * @return true if the controls should be visible by default, false otherwise.
    */
-  public boolean getDefaultControlsVisible();
+  boolean getDefaultControlsVisible();
   
   /**
    * Return true if this front end loads the topic map before 
@@ -51,7 +50,7 @@ public interface VizFrontEndIF {
    * @return true if the map is loaded before the display is
    * initialized, false otherwise
    */
-  public boolean mapPreLoaded();
+  boolean mapPreLoaded();
 
   /**
    * Does this front end use the general configuration.  Some front
@@ -61,7 +60,7 @@ public interface VizFrontEndIF {
    * @return true if VizGeneralConfigurationManager is supported,
    * false otherwise
    */
-  public boolean useGeneralConfig();
+  boolean useGeneralConfig();
 
   /**
    * Returns the configuration frame that can be used to set colors for either Topics or Associations
@@ -70,27 +69,27 @@ public interface VizFrontEndIF {
    * @param isTopicConfig - is this a Topic or Association configuration frame
    * @return configuration frame - if True return TopicConfigurationFrame, else return AssociationConfigFrame
    */
-   public TypesConfigFrame getTypesConfigFrame(VizController controller, boolean isTopicConfig);
+   TypesConfigFrame getTypesConfigFrame(VizController controller, boolean isTopicConfig);
   
   /**
    * Get the appropriate ApplicationContextIF for this front end.
    *
    * @return ApplicationContextIF for this front end
    */
-  public ApplicationContextIF getContext();
+  ApplicationContextIF getContext();
   
   /**
    * Return the topic map that this front end is displaying
    *
    * @return current topic map
    */
-  public TopicMapIF getTopicMap();
+  TopicMapIF getTopicMap();
   
   /**
    * Set up the menus to control the filters
    *
    */
-  public void configureFilterMenus();
+  void configureFilterMenus();
   
   /**
    * set the color on a specific topic type
@@ -98,19 +97,19 @@ public interface VizFrontEndIF {
    * @param type
    * @param c
    */
-  public void setNewTypeColor(TopicIF type, Color c);
+  void setNewTypeColor(TopicIF type, Color c);
    
   /**
    * Get the url of the wallpaper for the background. 
    *
    * @return URL of the wallpaper file, null if no wallpaper
    */
-  public String getWallpaper();
+  String getWallpaper();
 
   /**
    * Get the URL of the config file
    *
    * @return URL of the config file, null if the default is to be used
    */
-  public String getConfigURL();
+  String getConfigURL();
 }

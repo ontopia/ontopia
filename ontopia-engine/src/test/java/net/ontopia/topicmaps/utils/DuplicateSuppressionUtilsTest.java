@@ -41,6 +41,7 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap = makeTopicMap();
   }

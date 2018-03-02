@@ -65,20 +65,24 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
   
   // --- PredicateIF implementation
 
+  @Override
   public String getName() {
     return rule.getName();
   }
 
+  @Override
   public String getSignature() throws InvalidQueryException {
     return rule.getSignature();
   }
 
+  @Override
   public int getCost(boolean[] boundparam) {
     return rule.getCost(boundparam);
   }
   
   // --- BasicPredicateIF implementation
   
+  @Override
   public QueryMatches satisfy(QueryMatches extmatches, Object[] extarguments)
     throws InvalidQueryException {
 

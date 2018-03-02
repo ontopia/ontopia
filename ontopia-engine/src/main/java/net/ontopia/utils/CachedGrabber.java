@@ -60,6 +60,7 @@ public class CachedGrabber<O, G> implements GrabberIF<O, G>, CachedIF {
     this.grabber = grabber;
   }
   
+  @Override
   public G grab(O object) {
     if (object == null) return null;
     if (cache.containsKey(object)) return cache.get(object);
@@ -68,6 +69,7 @@ public class CachedGrabber<O, G> implements GrabberIF<O, G>, CachedIF {
     return grabbed;
   }
   
+  @Override
   public void refresh() {
     cache.clear();
   }

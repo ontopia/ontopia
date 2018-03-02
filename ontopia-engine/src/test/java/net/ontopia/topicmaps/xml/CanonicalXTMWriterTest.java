@@ -25,11 +25,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,6 +41,7 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
 
   private final static String testdataDirectory = "cxtm";
 
+  @Override
   public void setUp() throws IOException {
     topicmap = makeEmptyTopicMap();
     String root = TestFileUtils.getTestdataOutputDirectory();
@@ -60,7 +60,7 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
     outs.close();
 
     Assert.assertTrue("OutputStream export gives incorrect output",
-               FileUtils.compareFileToResource(out, baseline));
+               TestFileUtils.compareFileToResource(out, baseline));
   }
 
   @Test
@@ -73,7 +73,7 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
     outw.close();
 
     Assert.assertTrue("OutputStream export gives incorrect output",
-               FileUtils.compareFileToResource(out, baseline));
+               TestFileUtils.compareFileToResource(out, baseline));
   }
 
   // --- Utilities

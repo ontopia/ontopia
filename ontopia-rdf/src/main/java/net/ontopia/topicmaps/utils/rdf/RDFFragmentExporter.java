@@ -58,6 +58,7 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
    * PUBLIC: Exports all the topics returned by the iterator, and
    * wraps them with startTopicMap() and endTopicMap() calls.
    */
+  @Override
   public void exportAll(Iterator<TopicIF> it) throws IOException {
     startTopicMap();
     exportTopics(it);
@@ -67,6 +68,7 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Starts the fragment.
    */
+  @Override
   public void startTopicMap() {
     // nothing to do here
   }
@@ -74,6 +76,7 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Exports all the topics returned by the iterator.
    */
+  @Override
   public void exportTopics(Iterator<TopicIF> it) throws IOException {
     while (it.hasNext()) {
       TopicIF topic = it.next();
@@ -91,6 +94,7 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Exports the given topic.
    */
+  @Override
   public void exportTopic(TopicIF topic) throws IOException {
     exportTopics(Collections.singleton(topic).iterator());
   }
@@ -98,6 +102,7 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Ends the fragment.
    */
+  @Override
   public void endTopicMap() throws IOException {
     OutputStreamWriter writer = new OutputStreamWriter(out, encoding);
     model.write(writer);

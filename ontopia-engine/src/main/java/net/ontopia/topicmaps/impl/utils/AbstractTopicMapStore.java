@@ -44,13 +44,14 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   
   protected TopicMapReferenceIF reference;
 
-  public AbstractTopicMapStore() {
-  }
-  
+  public TopicMapListenerIF[] topic_listeners;
+
+  @Override
   public boolean isOpen() {
     return open;
   }
   
+  @Override
   public void open() {
     if (deleted)
       throw new OntopiaRuntimeException("A deleted store cannot be reopened.");
@@ -61,18 +62,22 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   
   public abstract TopicMapTransactionIF getTransaction();
 
+  @Override
   public TopicMapIF getTopicMap() {
     return getTransaction().getTopicMap();
   }
 
+  @Override
   public LocatorIF getBaseAddress() {
     return base_address;
   }
   
+  @Override
   public void commit() {
     getTransaction().commit();
   }
 
+  @Override
   public void abort() {
     getTransaction().abort();
   }
@@ -84,6 +89,7 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   //!   //! close();
   //! }
 
+  @Override
   public void delete(boolean force) throws NotRemovableException {
     // Do nothing except closing the store, since we do not know how
     // to delete the topic map here. Implementations have to implement
@@ -106,6 +112,7 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
     deleted = true;
   }
   
+  @Override
   public boolean isReadOnly() {
     return readonly;
   }
@@ -118,10 +125,12 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
 
   /* -- topic map reference -- */
 
+  @Override
   public TopicMapReferenceIF getReference() {
     return reference;
   }
 
+  @Override
   public void setReference(TopicMapReferenceIF reference) {
     this.reference = reference;
   }
@@ -139,8 +148,6 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   // TopicMapListenerIF implementation
   // -----------------------------------------------------------------------------
   
-  public TopicMapListenerIF[] topic_listeners;
-
   public void setTopicListeners(TopicMapListenerIF[] listeners) {
     this.topic_listeners = listeners;
   }

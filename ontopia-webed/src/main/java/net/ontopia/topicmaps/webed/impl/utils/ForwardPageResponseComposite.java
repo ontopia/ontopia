@@ -61,10 +61,12 @@ public class ForwardPageResponseComposite implements Serializable {
 
   // --- overwrite methods from Object implementation
 
+  @Override
   public int hashCode() {
     return forwardPage.hashCode() + responseType.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof ForwardPageResponseComposite) {
       ForwardPageResponseComposite comp = (ForwardPageResponseComposite) obj;

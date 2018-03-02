@@ -35,6 +35,7 @@ public class ObjectIdStringifier implements StringifierIF<TMObjectIF> {
    * @param tmobject TMObjectIF; the given topicmap object
    * @return string the topic map object id
    */
+  @Override
   public String toString(TMObjectIF tmobject) {
     if (tmobject == null) return "null";
     return tmobject.getObjectId();

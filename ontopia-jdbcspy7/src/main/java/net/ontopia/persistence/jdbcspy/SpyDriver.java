@@ -39,32 +39,46 @@ import org.slf4j.LoggerFactory;
 public class SpyDriver implements Driver {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SpyDriver.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SpyDriver.class.getName());
 
-  static SpyStats stats = new SpyStats();
+  protected static SpyStats stats = new SpyStats();
   
-  Driver driver;
+  protected Driver driver;
   
-  public SpyDriver() {
+  // -- init
+  
+  private static boolean initialized;
+
+  static {
+    try {
+      initialize();
+    } catch (Exception e) {
+      e.printStackTrace();      
+    }
   }
 
+  @Override
   public int getMajorVersion() {
     return driver.getMajorVersion();
   }
 
+  @Override
   public int getMinorVersion() {
     return driver.getMinorVersion();
   }
 
+  @Override
   public boolean jdbcCompliant() {
     return driver.jdbcCompliant();
   }
 
+  @Override
   public boolean acceptsURL(String url) 
     throws SQLException {
     return url.startsWith("jdbcspy:");
   }
 
+  @Override
   public Connection connect(String url, Properties info) 
     throws SQLException {
     String realURL = getRealURL(url);
@@ -85,6 +99,7 @@ public class SpyDriver implements Driver {
     return new SpyConnection(driver.connect(realURL, info), stats);
   }
 
+  @Override
   public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) 
     throws SQLException {
     return driver.getPropertyInfo(url, info);
@@ -96,19 +111,7 @@ public class SpyDriver implements Driver {
     return (url.startsWith("jdbcspy:") ? url.substring("jdbcspy:".length()) : null);
   }
 
-  // -- init
-  
-  static {
-    try {
-      initialize();
-    } catch (Exception e) {
-      e.printStackTrace();      
-    }
-  }
-
-  static boolean initialized;
-
-  static void initialize() throws SQLException {
+  private static void initialize() throws SQLException {
     if (initialized) return;
 
     // register driver
@@ -119,7 +122,7 @@ public class SpyDriver implements Driver {
     SpyDriver.initialized = true;
   }
 
-  static void initDriver(String driverClass) {
+  private static void initDriver(String driverClass) {
     try {
       ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
       Class.forName(driverClass, true, classLoader);
@@ -165,6 +168,7 @@ public class SpyDriver implements Driver {
 
   // J2EE 1.7 specifics - comment out remainder of methods if you have to use java 1.6 or lower
 
+  @Override
   public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
     throw new SQLFeatureNotSupportedException("JDBC Spy does not use JUL logging");
   }

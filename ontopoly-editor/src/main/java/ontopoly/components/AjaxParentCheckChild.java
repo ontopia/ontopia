@@ -40,6 +40,7 @@ public class AjaxParentCheckChild extends Check<String> implements IHeaderContri
     setOutputMarkupId(true);
     this.apfc = apfc;
   }
+  @Override
   public void renderHead(IHeaderResponse response) {    
     response.renderOnLoadJavascript("attachChoiceHandler('" + getMarkupId() +
         "', function() {" + apfc.getCallbackFunction() + "});");    

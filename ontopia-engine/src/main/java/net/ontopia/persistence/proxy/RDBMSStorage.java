@@ -23,6 +23,7 @@ package net.ontopia.persistence.proxy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.persistence.query.sql.EqualsSQLOptimizer;
@@ -41,12 +43,14 @@ import net.ontopia.persistence.query.sql.SQLBuilder;
 import net.ontopia.persistence.query.sql.SQLGeneratorIF;
 import net.ontopia.persistence.query.sql.SQLQuery;
 import net.ontopia.persistence.query.sql.SQLStatementIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.impl.rdbms.ParameterArray;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,9 +62,9 @@ import org.slf4j.LoggerFactory;
 public class RDBMSStorage implements StorageIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
 
-  static final Set<String> known_properties;
+  public static final Set<String> known_properties;
   static {
     known_properties = new HashSet<String>();
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.BatchUpdates");
@@ -131,7 +135,22 @@ public class RDBMSStorage implements StorageIF {
   private ClusterIF cluster;
 
   private final Set<AbstractTransaction> transactions = Collections.newSetFromMap(new WeakHashMap<AbstractTransaction, Boolean>());
+
+  private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
+    @Override
+    public Class<?> getType() { throw new UnsupportedOperationException(); }
+    @Override
+    public int getWidth() { throw new UnsupportedOperationException(); }
+    @Override
+    public Object getKey(int index) { throw new UnsupportedOperationException(); }
+    @Override
+    public Object createInstance() throws Exception { throw new UnsupportedOperationException(); }
+    @Override
+    public Object clone() { throw new UnsupportedOperationException(); }
+  };
   
+  protected Map<IdentityIF, Map<String, EvictableIF>> qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
+
   /**
    * INTERNAL: Creates a storage definition which gets its settings
    * from system variables.
@@ -232,32 +251,50 @@ public class RDBMSStorage implements StorageIF {
     // Get platforms
     String _platforms = getProperty("net.ontopia.topicmaps.impl.rdbms.Platforms");
     if (_platforms == null) {
-      if (database.equals("oracle") || database.equals("oracle8") || database.equals("oracle8i"))
-        _platforms = "oracle8,oracle,generic";
-      else if (database.equals("oracle9") || database.equals("oracle9i"))
-        _platforms = "oracle9i,oracle,generic";
-      else if (database.equals("oracle10") || database.equals("oracle10g"))
-        _platforms = "oracle10g,oracle,generic";
-      else if (database.equals("postgresql"))
-        _platforms = "postgresql,generic";
-      else if (database.equals("mysql"))
-        _platforms = "mysql,generic";
-      else if (database.equals("db2"))
-        _platforms = "db2,generic";
-      else if (database.equals("sapdb"))
-        _platforms = "sabdb,generic";
-      else if (database.equals("firebird"))
-        _platforms = "firebird,generic";
-      else if (database.equals("derby"))
-        _platforms = "derby,generic";
-      else if (database.equals("sqlserver"))
-        _platforms = "sqlserver,generic";
-      else if (database.equals("h2"))
-        _platforms = "h2,generic";
-      else if (database.equals("generic"))
-        _platforms = "generic";
-      else
-        throw new OntopiaRuntimeException("The datatype type is unknown and the property 'net.ontopia.topicmaps.impl.rdbms.Platforms' is not set.");
+      switch (database) {
+        case "oracle":
+        case "oracle8":
+        case "oracle8i":
+          _platforms = "oracle8,oracle,generic";
+          break;
+        case "oracle9":
+        case "oracle9i":
+          _platforms = "oracle9i,oracle,generic";
+          break;
+        case "oracle10":
+        case "oracle10g":
+          _platforms = "oracle10g,oracle,generic";
+          break;
+        case "postgresql":
+          _platforms = "postgresql,generic";
+          break;
+        case "mysql":
+          _platforms = "mysql,generic";
+          break;
+        case "db2":
+          _platforms = "db2,generic";
+          break;
+        case "sapdb":
+          _platforms = "sabdb,generic";
+          break;
+        case "firebird":
+          _platforms = "firebird,generic";
+          break;
+        case "derby":
+          _platforms = "derby,generic";
+          break;
+        case "sqlserver":
+          _platforms = "sqlserver,generic";
+          break;
+        case "h2":
+          _platforms = "h2,generic";
+          break;
+        case "generic":
+          _platforms = "generic";
+          break;
+        default:
+          throw new OntopiaRuntimeException("The datatype type is unknown and the property 'net.ontopia.topicmaps.impl.rdbms.Platforms' is not set.");
+      }
     }    
     this.platforms = StringUtils.split(_platforms, ",");
     
@@ -273,7 +310,7 @@ public class RDBMSStorage implements StorageIF {
         global_entry, Integer.parseInt(kbprop), database, properties);
     
     // Create query builders
-    this.sqlbuilder = new SQLBuilder(getMapping(), PropertyUtils.isTrue(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
+    this.sqlbuilder = new SQLBuilder(getMapping(), Boolean.parseBoolean(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
     this.sqlgen = GenericSQLGenerator.getSQLGenerator(getPlatforms(), properties);
     
     // Register jdbcspy driver
@@ -331,6 +368,7 @@ public class RDBMSStorage implements StorageIF {
       this.cluster.join();
   }
   
+  @Override
   public RDBMSMapping getMapping() {
     return mapping;
   }
@@ -343,10 +381,12 @@ public class RDBMSStorage implements StorageIF {
     return keygen.generateKey(type);
   }
   
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }
   
+  @Override
   public String getProperty(String property) {
     return properties.get(property);
   }
@@ -365,6 +405,7 @@ public class RDBMSStorage implements StorageIF {
     return new RDBMSAccess(id, this, readonly);
   }
 
+  @Override
   public TransactionIF createTransaction(boolean readonly) {
     AbstractTransaction transaction;
     if (readonly)
@@ -379,10 +420,12 @@ public class RDBMSStorage implements StorageIF {
     return transaction;
   }
   
+  @Override
   public boolean isSharedCache() {
     return (scache != null);
   }
   
+  @Override
   public StorageCacheIF getStorageCache() {
     return scache;
   }
@@ -401,6 +444,7 @@ public class RDBMSStorage implements StorageIF {
     return platforms;
   }
   
+  @Override
   public void close() {
     if (cluster != null) {
       try {
@@ -419,6 +463,7 @@ public class RDBMSStorage implements StorageIF {
   // Cluster
   // -----------------------------------------------------------------------------
 
+  @Override
   public void notifyCluster() {
     if (cluster != null) cluster.flush();
   }
@@ -433,8 +478,8 @@ public class RDBMSStorage implements StorageIF {
   
   // NOTE: query caches are indexed by name spaces. There is typically
   // one query cache instance per topicmap id + query name.
-  protected Map<IdentityIF, Map<String, EvictableIF>> qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
   
+  @Override
   public synchronized EvictableIF getHelperObject(int identifier, IdentityIF namespace) {
     if (isSharedCache()) {
       // get query cache map for namespace 
@@ -450,8 +495,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_srcloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.srcloc.lru"), 2000);
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SRCLOC, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize_srcloc);
+          CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SRCLOC, namespace);
+          qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_srcloc, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
         }
         return qc;
@@ -461,8 +506,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_subind = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru"), 1000);
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SUBIND, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize_subind);
+          CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SUBIND, namespace);
+          qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_subind, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
         }
         return qc;
@@ -472,8 +517,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize_subloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru"), 100);    
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_SUBLOC, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize_subloc);
+          CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SUBLOC, namespace);
+          qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_subloc, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
         }
         return qc;
@@ -483,8 +528,8 @@ public class RDBMSStorage implements StorageIF {
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
           int lrusize = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype.lru"), 1000);
-          CacheIF cache = caches.createCache(CachesIF.QUERY_CACHE_RT1, namespace);
-          qc = new QueryCache(createDetachedQuery(name), cache, lrusize);
+          CacheIF<ParameterArray, Collection<AssociationRoleIF>> cache = caches.<ParameterArray, Collection<AssociationRoleIF>>createCache(CachesIF.QUERY_CACHE_RT1, namespace);
+          qc = new QueryCache<ParameterArray, Collection<AssociationRoleIF>>(createDetachedQuery(name), cache, lrusize, Collections.<AssociationRoleIF>emptySet());
           qcm.put(name, qc);
         }
         return qc;
@@ -718,7 +763,15 @@ public class RDBMSStorage implements StorageIF {
     return transactions.size();
   }
 
-  void transactionClosed(AbstractTransaction transaction) {
+  protected void transactionClosed(AbstractTransaction transaction) {
     transactions.remove(transaction);
+  }
+
+  /**
+   * INTERNAL: exposes the set of active transactions.
+   * @since %NEXT%
+   */
+  public Set<AbstractTransaction> getTransactions() {
+    return transactions;
   }
 }

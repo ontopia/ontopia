@@ -25,9 +25,7 @@ import java.io.IOException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,15 +63,15 @@ public class RDFCanonicalTestCase {
       
       // produce canonical output
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      String out = base + File.separator + "out" + File.separator + filename;
+      File out = new File(base + File.separator + "out" + File.separator + filename);
 
-      TopicMapIF source = new RDFTopicMapReader(URIUtils.getURI(in), syntax).read();
+      TopicMapIF source = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in), syntax).read();
       new CanonicalTopicMapWriter(out).write(source);
 
       // compare results
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-             FileUtils.compareFileToResource(out, baseline));
+             TestFileUtils.compareFileToResource(out, baseline));
     }
 
 }

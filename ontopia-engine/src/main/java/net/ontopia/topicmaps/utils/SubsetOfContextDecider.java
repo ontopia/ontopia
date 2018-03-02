@@ -41,6 +41,7 @@ public class SubsetOfContextDecider implements DeciderIF<ScopedIF> {
     this.context = context;
   }
   
+  @Override
   public boolean ok(ScopedIF scoped) {
     return ScopeUtils.isSubsetOfContext(scoped, context);
   }

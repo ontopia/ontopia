@@ -24,8 +24,8 @@ package net.ontopia.topicmaps.nav.conf;
  * PUBLIC: Holds configuration information for topicmap configuration
  */
 public class TopicmapConfig {
-  String charset;
-  String title;
+  private String charset;
+  private String title;
   
   // get
   public String getCharset() {

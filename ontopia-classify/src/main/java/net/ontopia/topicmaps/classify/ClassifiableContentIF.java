@@ -31,12 +31,12 @@ public interface ClassifiableContentIF {
    * content. This could e.g. be the absolute filename or an URI of
    * the resource.
    */
-  public String getIdentifier();
+  String getIdentifier();
 
   /**
    * INTERNAL: Returns the actual bytes in the content of the
    * classiable content.
    */
-  public byte[] getContent();
+  byte[] getContent();
   
 }

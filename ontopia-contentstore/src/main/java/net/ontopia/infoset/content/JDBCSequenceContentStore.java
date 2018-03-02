@@ -58,6 +58,7 @@ public class JDBCSequenceContentStore implements ContentStoreIF {
     this.sql_remove = "delete from " + tblname + " where " + keyname + " = ?";
   }
 
+  @Override
   public boolean containsKey(int key) throws ContentStoreException {
     try {
       PreparedStatement ps = null;
@@ -80,6 +81,7 @@ public class JDBCSequenceContentStore implements ContentStoreIF {
     }
   }
 
+  @Override
   public ContentInputStream get(int key) throws ContentStoreException {
     try {
       PreparedStatement ps = null;
@@ -127,10 +129,12 @@ public class JDBCSequenceContentStore implements ContentStoreIF {
       ((b[0] & 0xFF) << 24);
   }
 
+  @Override
   public int add(ContentInputStream data) throws ContentStoreException {
     return add(data, data.getLength());
   }  
   
+  @Override
   public int add(InputStream data, int length) throws ContentStoreException {
     try {
       // Push length onto stream
@@ -163,6 +167,7 @@ public class JDBCSequenceContentStore implements ContentStoreIF {
     }
   }
 
+  @Override
   public boolean remove(int key) throws ContentStoreException {
     try {
       PreparedStatement ps = null;
@@ -179,6 +184,7 @@ public class JDBCSequenceContentStore implements ContentStoreIF {
     }
   }
 
+  @Override
   public void close() throws ContentStoreException {
     //! conn.close();
   }

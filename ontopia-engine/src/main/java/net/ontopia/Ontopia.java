@@ -191,13 +191,11 @@ public final class Ontopia {
   private static void checkClass(String class_name, String jar_file) {
     try {
       Class.forName(class_name);
-      return;
-    } catch (NoClassDefFoundError e) {
-    } catch (ClassNotFoundException e) {
+    } catch (NoClassDefFoundError | ClassNotFoundException e) {
+      String message = "Class '" + class_name + "' not found. Please add " + jar_file + " to your CLASSPATH.";
+      // System.out.println(message);
+      throw new OntopiaRuntimeException(message);
     }
-    String message = "Class '" + class_name + "' not found. Please add " + jar_file + " to your CLASSPATH.";
-    // System.out.println(message);
-    throw new OntopiaRuntimeException(message);
   }
 
   private static void checkProduct() {

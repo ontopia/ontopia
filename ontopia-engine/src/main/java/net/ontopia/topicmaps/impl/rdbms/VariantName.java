@@ -41,13 +41,15 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
   
 /**
  * INTERNAL: The rdbms variant name implementation.
  */
 public class VariantName extends TMObject implements VariantNameIF {
   
+  public static final String CLASS_INDICATOR = "N";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -61,6 +63,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   protected static final int LF_reifier = 8;
   protected static final String[] fields = {"sources", "topicmap", "name", "scope", "datatype", "length", "hashcode", "value", "reifier"};
 
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_topicmap);
@@ -77,8 +80,6 @@ public class VariantName extends TMObject implements VariantNameIF {
   // Data members
   // ---------------------------------------------------------------------------
 
-  public static final String CLASS_INDICATOR = "N";
-
   public VariantName() {  
   }
   
@@ -90,6 +91,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -98,10 +100,12 @@ public class VariantName extends TMObject implements VariantNameIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
@@ -110,6 +114,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // TopicNameIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public void remove() {
     TopicName parent = (TopicName)getTopicName();
     if (parent != null) {
@@ -118,12 +123,14 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
   
+  @Override
   public TopicIF getTopic() {
     TopicNameIF name = getTopicName();
     if (name == null) return null;
     return name.getTopic();
   }
 
+  @Override
   public TopicNameIF getTopicName() {
     return this.<TopicNameIF>loadField(LF_name);
   }
@@ -131,19 +138,20 @@ public class VariantName extends TMObject implements VariantNameIF {
   /**
    * INTERNAL: Set the name that the variant name belongs to. [parent]
    */
-  void setTopicName(TopicNameIF name) {
+  protected void setTopicName(TopicNameIF name) {
     // Set parent topic map
     setTopicMap((name == null ? null : (TopicMap)name.getTopicMap()));
     // Notify transaction
     valueChanged(LF_name, name, true);    
   }
 
-  void setTopicMap(TopicMap topicmap) {
+  protected void setTopicMap(TopicMap topicmap) {
     // Notify transaction 
     transactionChanged(topicmap);
     valueChanged(LF_topicmap, topicmap, true);
   }
 
+  @Override
   public LocatorIF getDataType() {
     return this.<LocatorIF>loadField(LF_datatype);    
   }
@@ -156,6 +164,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     valueChanged(LF_datatype, _datatype, true);
   }
 
+  @Override
   public String getValue() {
     Object value = loadField(LF_value);
     if (value instanceof String) {
@@ -165,7 +174,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       try {
         Reader r = (Reader)odv.getValue(_p_getTransaction());
         try {
-          return StreamUtils.readString(r, getLength());
+          return IOUtils.toString(r);
         } finally {
           r.close();
         }
@@ -179,10 +188,12 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
 
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     if (value == null)
       throw new NullPointerException("Variant value must not be null.");
@@ -203,6 +214,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     valueChanged(LF_value, value, true);
   }
 
+  @Override
   public Reader getReader() {
     Object value = loadField(LF_value);
     if (value instanceof String) {
@@ -217,6 +229,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
 
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     if (value == null)
       throw new NullPointerException("Variant value must not be null.");
@@ -229,6 +242,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
   }
 
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType()))
       return null;
@@ -236,6 +250,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     if (locator == null)
       throw new NullPointerException("Variant locator must not be null.");
@@ -244,6 +259,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
+  @Override
   public long getLength() {
     Number length = this.<Number>loadField(LF_length);
     long len = (length == null ? 0 : length.longValue());
@@ -257,15 +273,17 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ScopedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     return this.<TopicIF>loadCollectionField(LF_scope);
   }
 
+  @Override
   public void addTheme(TopicIF theme) {
     _addTheme(theme, true);
   }
   
-  void _addTheme(TopicIF theme, boolean validate) {
+  protected void _addTheme(TopicIF theme, boolean validate) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
@@ -275,11 +293,12 @@ public class VariantName extends TMObject implements VariantNameIF {
     valueAdded(LF_scope, theme, true);
   }
 
+  @Override
   public void removeTheme(TopicIF theme) {
     _removeTheme(theme, true);
   }
   
-  void _removeTheme(TopicIF theme, boolean validate) {
+  protected void _removeTheme(TopicIF theme, boolean validate) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
@@ -300,10 +319,12 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return this.<TopicIF>loadField(LF_reifier);
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
@@ -323,6 +344,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.VariantName", (VariantNameIF)this);
   }

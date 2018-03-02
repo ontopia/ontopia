@@ -100,6 +100,7 @@ public class TypeSpecification implements TMObjectMatcherIF {
    * INTERNAL: Matches the type of the given object, which must implement
    * the TypedIF interface.
    */
+  @Override
   public boolean matches(TMObjectIF object) {
     if (object instanceof TypedIF)
       return matchType( ((TypedIF) object).getType() );
@@ -118,6 +119,7 @@ public class TypeSpecification implements TMObjectMatcherIF {
     return false;
   }
 
+  @Override
   public boolean equals(TMObjectMatcherIF object) {
     return false;
   }

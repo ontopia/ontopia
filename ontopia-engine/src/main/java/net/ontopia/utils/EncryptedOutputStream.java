@@ -29,14 +29,15 @@ import java.io.OutputStream;
  */
 public class EncryptedOutputStream extends OutputStream {
 
-  final static int KEY = 0xFF;
-  OutputStream myOutput;
+  private final static int KEY = 0xFF;
+  private OutputStream myOutput;
   
   public EncryptedOutputStream(OutputStream myOutputStream) {
     super();
     this.myOutput = myOutputStream;
   }
 
+  @Override
   public void write(int b) throws IOException {
     int cipher = b ^ KEY;
     myOutput.write(cipher);

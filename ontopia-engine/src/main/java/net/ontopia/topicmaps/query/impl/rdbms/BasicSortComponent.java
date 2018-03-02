@@ -45,6 +45,7 @@ public class BasicSortComponent implements QueryComponentIF {
     this.qproc = qproc;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Map arguments)
     throws InvalidQueryException {
     qproc.sort(query, matches);

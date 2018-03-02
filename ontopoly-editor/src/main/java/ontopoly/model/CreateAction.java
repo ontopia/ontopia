@@ -34,6 +34,7 @@ public class CreateAction extends Topic {
     super(topic, tm);
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof CreateAction))
       return false;

@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.viz;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -81,14 +82,14 @@ public abstract class VizConfigurationManager {
    * URL given in the parameter.
    */
   public VizConfigurationManager(File tmfile) throws IOException {
-      this(URIUtils.toURL(tmfile).toExternalForm());
+      this(URIUtils.toURL(tmfile));
   }
 
   /**
    * Constructor initializes the configuration by loading a topic map from the
    * URL given in the parameter.
    */
-  public VizConfigurationManager(String tmurl) throws IOException {
+  public VizConfigurationManager(URL tmurl) throws IOException {
     if (tmurl != null) {
       XTMTopicMapReader reader = new XTMTopicMapReader(tmurl);
       reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
@@ -196,7 +197,7 @@ public abstract class VizConfigurationManager {
    * map.
    */
   protected void setOccurenceValue(TopicIF type, TopicIF occtype, boolean value) {
-    setOccurenceValue(type, occtype, (new Boolean(value)).toString());
+    setOccurenceValue(type, occtype, Boolean.toString(value));
   }
 
   public String getOccurrenceValue(TopicIF type, TopicIF occtype) {

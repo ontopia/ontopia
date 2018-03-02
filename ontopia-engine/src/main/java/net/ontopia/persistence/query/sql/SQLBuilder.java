@@ -105,7 +105,7 @@ public class SQLBuilder {
     // Values of non-identifiable types and their corresponding tables
     protected Map<JDOValueIF, String> ntvals = new HashMap<JDOValueIF, String>(); // { JDOVariable|JDOParameter : String tblname }
 
-    SQLTable createNamedValueTable(JDOValueIF value, List expressions) {
+    private SQLTable createNamedValueTable(JDOValueIF value, List expressions) {
 
       String valname;
       String prefix;
@@ -196,7 +196,7 @@ public class SQLBuilder {
       }
     }
     
-    String createTableAlias(String prefix) {
+    private String createTableAlias(String prefix) {
       if (!debug) return prefix + (tblcount++);
       
       // Create new alias
@@ -214,7 +214,7 @@ public class SQLBuilder {
     // Pre-build JDO query analysis
     // -----------------------------------------------------------------------------
 
-    void analyze() {
+    private void analyze() {
       if (jdoquery == null)
         throw new OntopiaRuntimeException("JDO query not registered with SQLbuilder build info.");
       
@@ -285,9 +285,9 @@ public class SQLBuilder {
         if (value.getType() == JDOValueIF.FUNCTION) {
           JDOFunction func = (JDOFunction)value;
           String fname = func.getName();
-          if (fname.equals(">") || fname.equals(">=") ||
-              fname.equals("<") || fname.equals("<=") ||
-              fname.equals("substring")) {
+          if (">".equals(fname) || ">=".equals(fname) ||
+              "<".equals(fname) || "<=".equals(fname) ||
+              "substring".equals(fname)) {
             JDOValueIF[] args = func.getArguments();
             analyzeCompatible(args[0], args[1]);
           }
@@ -383,7 +383,7 @@ public class SQLBuilder {
       
       // Return if a value does not reference a root value or they're
       // referencing the same value.
-      if (rvalue1 == null || rvalue2 == null || rvalue1 == rvalue2) return;
+      if (rvalue1 == null || rvalue2 == null || rvalue1.equals(rvalue2)) return;
 
       // Figure out if value types are identifiable
       boolean identifiable1 = isIdentifiableValueType(rvalue1, this);
@@ -1352,17 +1352,18 @@ public class SQLBuilder {
   
   static class Values {
     // [vcols, jcols]
-    Values prev;
-    SQLValueIF vcols; // value columns
-    SQLValueIF jcols; // join columns
-    Class vtype;
-    FieldInfoIF finfo;
-    Values getFirst() {
+    private Values prev;
+    private SQLValueIF vcols; // value columns
+    private SQLValueIF jcols; // join columns
+    private Class vtype;
+    private FieldInfoIF finfo;
+    public Values getFirst() {
       if (prev != null)
         return prev.getFirst();
       else
         return this;
     }
+    @Override
     public String toString() {
       return "[" + vcols + ", " + jcols + "]";
     }
@@ -1850,7 +1851,7 @@ public class SQLBuilder {
     
     // Check that types are compatible
     //! if (!(type1.isAssignableFrom(type2) || type2.isAssignableFrom(type1)))
-    if (type1 != type2) {
+    if (!type1.equals(type2)) {
 			// HACK: string/reader compatibility hack
 			if (type1 == String.class && type2 == java.io.Reader.class)
 				return String.class;

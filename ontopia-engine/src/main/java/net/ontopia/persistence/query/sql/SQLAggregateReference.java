@@ -37,38 +37,47 @@ public class SQLAggregateReference implements SQLAggregateIF {
     this.refagg = refagg;
   }
   
+  @Override
   public int getType() {
     return refagg.getType();
   }
 
+  @Override
   public SQLValueIF getValue() {
     return refagg.getValue();
   }
 
+  @Override
   public void setValue(SQLValueIF value) {
     refagg.setValue(value);
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return true;
   }
   
+  @Override
   public SQLAggregateIF getReference() {
     return refagg;
   }
 
+  @Override
   public int hashCode() {
     return refagg.hashCode();
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLAggregateReference) {
       SQLAggregateReference other = (SQLAggregateReference)obj;
@@ -78,13 +87,13 @@ public class SQLAggregateReference implements SQLAggregateIF {
     return false;
   }
   
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("ref:");
-    sb.append("(");
-    sb.append(refagg);
-    sb.append(")");
-    return sb.toString();
+    return new StringBuilder("ref:")
+        .append('(')
+        .append(refagg)
+        .append(')')
+        .toString();
   }
     
 }

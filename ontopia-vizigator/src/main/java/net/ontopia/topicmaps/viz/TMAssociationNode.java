@@ -54,6 +54,13 @@ public class TMAssociationNode extends TMAbstractNode
   private static final String SHORT_NAME = "http://psi.ontopia.net/basename/" +
       "#short-name";
 
+  private AssociationIF association;
+
+  private int lineWeight = TMAbstractEdge.DEFAULT_LINE_WEIGHT;
+
+  private TopicIF scopingTopic;
+  private boolean shouldDisplayScopedAssociationNames;
+
   protected static String getAssociationText(AssociationIF association,
                                              boolean displScopedAssocNames,
                                              TopicIF scopingTopic) {
@@ -100,13 +107,6 @@ public class TMAssociationNode extends TMAbstractNode
     return main;
   }
 
-  private AssociationIF association;
-
-  private int lineWeight = TMAbstractEdge.DEFAULT_LINE_WEIGHT;
-
-  private TopicIF scopingTopic;
-  private boolean shouldDisplayScopedAssociationNames;
-
   public void setEdgeCount(int visibleEdgeCount) {
     visibleEdgeCnt = visibleEdgeCount;
   }
@@ -146,6 +146,7 @@ public class TMAssociationNode extends TMAbstractNode
 
   }
 
+  @Override
   public void addTo(TGPanel tgpanel) {
     try {
       tgpanel.addNode(this);
@@ -154,6 +155,7 @@ public class TMAssociationNode extends TMAbstractNode
     }
   }
 
+  @Override
   public void deleteFrom(TGPanel tgpanel) {
     tgpanel.deleteNode(this);
   }
@@ -184,24 +186,29 @@ public class TMAssociationNode extends TMAbstractNode
     return targets;
   }
 
+  @Override
   public TopicIF getTopicMapType() {
     return association.getType();
   }
 
+  @Override
   public int getWidth() {
     if (icon == null)
       return this.lineWeight * 2;
     return icon.getIconWidth();
   }
 
+  @Override
   public boolean isAssociation() {
     return true;
   }
 
+  @Override
   public boolean isEdge() {
     return false;
   }
 
+  @Override
   public void paint(Graphics g, TGPanel tgPanel) {
     setUnderMouse(tgPanel);
     if (underMouse) {
@@ -222,10 +229,12 @@ public class TMAssociationNode extends TMAbstractNode
           (int) drawy - icon.getIconHeight() / 2);
   }
 
+  @Override
   public void paintAfterEdges(Graphics g) {
     // Currently do nothing
   }
 
+  @Override
   public void paintFirst(Graphics g) {
     // Currently do nothing
   }
@@ -235,6 +244,7 @@ public class TMAssociationNode extends TMAbstractNode
    * other painting has been completed, hence ensuring that ToolTips
    * (HoverHelp) is always drawn ontop.
    */
+  @Override
   public void paintLast(Graphics g) {
     if (underMouse)
       this.paintToolTip(g);
@@ -287,34 +297,42 @@ public class TMAssociationNode extends TMAbstractNode
     g.drawString(string, xPosition, yPosition + a);
   }
 
+  @Override
   public boolean represents(Object object) {
     return association.equals(object);
   }
 
+  @Override
   public void setColor(Color color) {
     this.setBackColor(color);
   }
 
+  @Override
   public void setLineWeight(int lineWeight) {
     this.lineWeight = lineWeight;
   }
 
+  @Override
   public void setScopingTopic(TopicIF aTopic) {
     scopingTopic = aTopic;
   }
 
+  @Override
   public void setShape(int shape) {
     // Shape is not applicable for Association Nodes
   }
 
+  @Override
   public void setShouldDisplayScopedAssociationNames(boolean newValue) {
     shouldDisplayScopedAssociationNames = newValue;
   }
 
+  @Override
   public RecoveryObjectIF getDesctructor() {
     return new DeleteTMAssociationNode(association);
   }
 
+  @Override
   public RecoveryObjectIF getRecreator() {
     return new CreateTMAssociationNode(association);
   }

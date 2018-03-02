@@ -51,6 +51,7 @@ public class FakeServletResponse implements HttpServletResponse {
   
   @Override
   public void flushBuffer() {
+    // no-op
   }
   
   @Override
@@ -85,44 +86,54 @@ public class FakeServletResponse implements HttpServletResponse {
   
   @Override
   public void reset() {
+    // no-op
   }
 
   @Override
   public void resetBuffer() {
+    // no-op
   }
   
   @Override
   public void setBufferSize(int size) {
+    // no-op
   }
   
   @Override
   public void setContentLength(int len) {
+    // no-op
   }
 
   @Override
   public void setContentType(java.lang.String type) {
+    // no-op
   }
 
   @Override
   public void setLocale(java.util.Locale loc) {
+    // no-op
   }
 
   // http methods
 
   @Override
   public void addCookie(Cookie cookie) {
+    // no-op
   }
 
   @Override
   public void addDateHeader(String name, long date) {
+    // no-op
   }
 
   @Override
   public void addHeader(String name, String value) {
+    // no-op
   }
 
   @Override
   public void addIntHeader(String name, int value) {
+    // no-op
   }
   
   @Override
@@ -163,18 +174,22 @@ public class FakeServletResponse implements HttpServletResponse {
   
   @Override
   public void sendRedirect(String location) {
+    // no-op
   }
   
   @Override
   public void setDateHeader(String name, long date) {
+    // no-op
   }
   
   @Override
   public void setHeader(String name, String value) {
+    // no-op
   }
   
   @Override
   public void setIntHeader(String name, int value) {
+    // no-op
   }
             
   @Override

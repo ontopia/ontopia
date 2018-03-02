@@ -38,6 +38,6 @@ public interface RowMapperIF<T> {
    * (in zero-based counting)
    * @return an object to put into the query result list
    */
-  public T mapRow(QueryResultIF result, int rowno);
+  T mapRow(QueryResultIF result, int rowno);
   
 }

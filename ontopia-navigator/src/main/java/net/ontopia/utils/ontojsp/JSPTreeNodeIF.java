@@ -36,62 +36,63 @@ public interface JSPTreeNodeIF {
   /**
    * Returns the attributes for this JSPTreeNode.
    */
-  public Map<String, String> getAttributes();
+  Map<String, String> getAttributes();
 
   /**
    * Add a attribute to this JSPTreeNode.
    */
-  public void addAttribute(String key, String value);
+  void addAttribute(String key, String value);
 
   /**
    * Sets the name of the tag which this JSPTreeNode represents.
    */
-  public void setTagName(String tagName);
+  void setTagName(String tagName);
 
   /**
    * Gets the tag name that this JSPTreeNode represents.
    */
-  public String getTagName();
+  String getTagName();
   
   /**
    * Sets the tag which this JSPTreeNode represents.
    */
-  public void setTag(TagSupport tag);
+  void setTag(TagSupport tag);
 
   /**
    * Gets the tag that this JSPTreeNode represents.
    */
-  public TagSupport getTag();
+  TagSupport getTag();
   
   /**
    * Gets the parent node of this JSPTreeNode.
    */
-  public JSPTreeNodeIF getParent();
+  JSPTreeNodeIF getParent();
 
   /**
    * Sets the parent node of this JSPTreeNode.
    */
-  public void setParent(JSPTreeNodeIF parentNode);
+  void setParent(JSPTreeNodeIF parentNode);
 
   /**
    * Adds a child node to this JSPTreeNode.
    */
-  public void addChild(JSPTreeNodeIF node);
+  void addChild(JSPTreeNodeIF node);
 
   /**
    * Gets the children (ordered) of this JSPTreeNode.
    */
-  public List<JSPTreeNodeIF> getChildren();
+  List<JSPTreeNodeIF> getChildren();
 
   /**
    * The string content attached to this JSPTreeNode.
    */
-  public String getContent();
+  String getContent();
 
   /**
    * A string representation of this JSPTreeNode.
    */
-  public String toString();
+  @Override
+  String toString();
 
   /**
    * Returns a node of the same class with the same internal state,
@@ -99,7 +100,7 @@ public interface JSPTreeNodeIF {
    * 'makeClone' instead of 'clone' so we can override the return type
    * (we want Eiffel, NOW!).
    */
-  public JSPTreeNodeIF makeClone();
+  JSPTreeNodeIF makeClone();
 }
 
 

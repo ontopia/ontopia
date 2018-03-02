@@ -38,16 +38,14 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.CharacteristicUtils;
+import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.xml.XMLReaderFactoryIF;
-
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.InputSource;
 
 /**
@@ -55,12 +53,13 @@ import org.xml.sax.InputSource;
  * servers using the TM RAP protocol.
  */
 public class RemoteTopicIndex implements TopicIndexIF {
+
+  public static final String VIRTUAL_URN = "urn:x-oks-virtual:";
   
   protected String editBaseuri;
   protected String viewBaseuri;
   protected TopicMapStoreFactoryIF storefactory;
   protected String tmid;
-  private XMLReaderFactoryIF xmlReaderFactory = new RemoteXMLReaderFactory();
 
   public RemoteTopicIndex(String editBaseuri, String viewBaseuri) {
     this(editBaseuri, viewBaseuri,
@@ -80,6 +79,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     this.tmid = tmid;
   }
   
+  @Override
   public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects) {
@@ -273,6 +273,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     return idpredicates;
   }
   
+  @Override
   public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
@@ -352,6 +353,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
   }
 
+  @Override
   public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
                                   Collection<LocatorIF> sources,
                                   Collection<LocatorIF> subjects) {
@@ -389,6 +391,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     return pages;
   }
 
+  @Override
   public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
                                    Collection<LocatorIF> sources,
                                    Collection<LocatorIF> subjects) {
@@ -439,6 +442,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     transferLoadedTopics(loaded, topicmap);
   }
 
+  @Override
   public void close() {
     // nothing we need to let go of
   }
@@ -534,7 +538,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
     LocatorIF base = new URILocator(baseuri + request);
     XTMTopicMapReader reader = new XTMTopicMapReader(src, base);
     reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
-    reader.setXMLReaderFactory(xmlReaderFactory);
     reader.setValidation(false); // means we don't need Jing
     reader.importInto(topicmap);
   }
@@ -558,8 +561,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
   //-------------------------------------------------------------------
   // Virtual locators
   //--------------------------------------------------------------------
-
-  public static final String VIRTUAL_URN = "urn:x-oks-virtual:";
   
   public static boolean isVirtualReference(String address) {
     return address.startsWith(VIRTUAL_URN);

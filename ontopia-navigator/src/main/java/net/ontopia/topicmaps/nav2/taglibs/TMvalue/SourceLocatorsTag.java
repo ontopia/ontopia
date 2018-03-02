@@ -37,6 +37,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class SourceLocatorsTag extends BaseValueProducingAndAcceptingTag {
 
+  @Override
   public Collection process(Collection tmObjs) throws JspTagException {
     // find all source locators of all topic map objects in collection
     if (tmObjs == null || tmObjs.isEmpty())

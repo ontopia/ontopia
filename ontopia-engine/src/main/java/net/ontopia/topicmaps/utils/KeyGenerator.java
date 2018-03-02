@@ -35,8 +35,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * PUBLIC: Utilities for generating keys from complex topic map
@@ -45,6 +45,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * equality rules of the TMDM.
  */
 public class KeyGenerator {
+  private static final char SPACER = '$';
 
   /**
    * PUBLIC: Makes a key for an occurrence. The key is made up of 
@@ -53,7 +54,7 @@ public class KeyGenerator {
    * @return string containing key
    */ 
   public static String makeOccurrenceKey(OccurrenceIF occ) {
-    return makeScopeKey(occ) + "$" + makeTypedKey(occ) + makeDataKey(occ);
+    return makeScopeKey(occ) + SPACER + makeTypedKey(occ) + makeDataKey(occ);
   }
 
   /**
@@ -64,7 +65,7 @@ public class KeyGenerator {
    * @return string containing key
    */ 
   public static String makeOccurrenceKey(OccurrenceIF occ, TopicMapIF othertm) {
-    return makeScopeKey(occ, othertm) + "$" + makeTypedKey(occ, othertm) +
+    return makeScopeKey(occ, othertm) + SPACER + makeTypedKey(occ, othertm) +
            makeDataKey(occ);
   }
 
@@ -75,7 +76,7 @@ public class KeyGenerator {
    * @return string containing key
    */ 
   public static String makeTopicNameKey(TopicNameIF bn) {
-    return makeScopeKey(bn) + "$" + makeTypedKey(bn) + "$$" + bn.getValue();
+    return makeScopeKey(bn) + SPACER + makeTypedKey(bn) + "$$" + bn.getValue();
   }
 
   /**
@@ -86,7 +87,7 @@ public class KeyGenerator {
    * @return string containing key
    */ 
   public static String makeTopicNameKey(TopicNameIF bn, TopicMapIF othertm) {
-    return makeScopeKey(bn, othertm) + "$" + makeTypedKey(bn, othertm) + "$$" +
+    return makeScopeKey(bn, othertm) + SPACER + makeTypedKey(bn, othertm) + "$$" +
            bn.getValue();
   }
   
@@ -111,10 +112,8 @@ public class KeyGenerator {
     StringBuilder sb = new StringBuilder();
 
     // asssociation type key fragment
-    sb.append(makeTypedKey(assoc));
-    sb.append("$");
-    sb.append(makeScopeKey(assoc));
-    sb.append("$");
+    sb.append(makeTypedKey(assoc)).append(SPACER)
+      .append(makeScopeKey(assoc)).append(SPACER);
     
     List<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     String[] rolekeys = new String[roles.size()];
@@ -122,7 +121,7 @@ public class KeyGenerator {
       rolekeys[i] = makeAssociationRoleKey(roles.get(i));
 
     Arrays.sort(rolekeys);
-    sb.append(StringUtils.join(rolekeys, "$"));
+    sb.append(StringUtils.join(rolekeys, SPACER));
     return sb.toString();
   }
 
@@ -144,10 +143,8 @@ public class KeyGenerator {
     StringBuilder sb = new StringBuilder();
 
     // asssociation type key fragment
-    sb.append(makeTypedKey(assoc));
-    sb.append("$");
-    sb.append(makeScopeKey(assoc));
-    sb.append("$");
+    sb.append(makeTypedKey(assoc)).append(SPACER)
+      .append(makeScopeKey(assoc)).append(SPACER);
     
     List<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     roles.remove(role);
@@ -155,10 +152,9 @@ public class KeyGenerator {
     for (int i = 0; i < rolekeys.length; i++) 
       rolekeys[i] = makeAssociationRoleKey(roles.get(i));
     
-    sb.append(makeTypedKey(role));
-    sb.append("$");
+    sb.append(makeTypedKey(role)).append(SPACER);
     Arrays.sort(rolekeys);
-    sb.append(StringUtils.join(rolekeys, "$"));
+    sb.append(StringUtils.join(rolekeys, SPACER));
     return sb.toString();
   }
 
@@ -172,10 +168,8 @@ public class KeyGenerator {
     StringBuilder sb = new StringBuilder();
 
     // asssociation type key fragment
-    sb.append(makeTypedKey(assoc, othertm));
-    sb.append("$");
-    sb.append(makeScopeKey(assoc, othertm));
-    sb.append("$");
+    sb.append(makeTypedKey(assoc, othertm)).append(SPACER)
+      .append(makeScopeKey(assoc, othertm)).append(SPACER);
     
     Collection<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     String[] rolekeys = new String[roles.size()];
@@ -184,7 +178,7 @@ public class KeyGenerator {
       rolekeys[i++] = makeAssociationRoleKey(role, othertm);
     
     Arrays.sort(rolekeys);
-    sb.append(StringUtils.join(rolekeys, "$"));
+    sb.append(StringUtils.join(rolekeys, SPACER));
     return sb.toString();
   }
     
@@ -312,10 +306,10 @@ public class KeyGenerator {
   }
   
   protected static String makeDataKey(OccurrenceIF occ) {
-    return "$$" + occ.getValue() + "$" + occ.getDataType();
+    return "$$" + occ.getValue() + SPACER + occ.getDataType();
   }
 
   protected static String makeDataKey(VariantNameIF variant) {
-    return "$$" + variant.getValue() + "$" + variant.getDataType();
+    return "$$" + variant.getValue() + SPACER + variant.getDataType();
   }
 }

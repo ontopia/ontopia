@@ -44,12 +44,9 @@ public class DeleteStatement extends ModificationFunctionStatement {
     functions.put("reifies", new ReifiesFunction());
   }
   
-  public DeleteStatement() {
-    super();
-  }
-
   // doStaticUpdates is inherited from ModificationFunctionStatement
 
+  @Override
   public int doUpdates(QueryMatches matches) throws InvalidQueryException {
     if (funcname == null)
       return doNormalDeletes(matches);
@@ -59,6 +56,7 @@ public class DeleteStatement extends ModificationFunctionStatement {
 
   // --- Internal methods
   
+  @Override
   public String toString() {
     String str = "delete ";
     if (funcname != null)
@@ -70,6 +68,7 @@ public class DeleteStatement extends ModificationFunctionStatement {
     return str;
   }
 
+  @Override
   protected int doLitListDeletes(boolean strict, Map arguments)
     throws InvalidQueryException {
     int deletes = 0;
@@ -114,9 +113,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
   // ----- DELETE FUNCTIONS
 
   static class ItemIdentifierFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "x s";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       String value = (String) v;
       try {
@@ -128,9 +129,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   static class SubjectIdentifierFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "t s";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
@@ -146,9 +149,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   static class SubjectLocatorFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "t s";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
@@ -164,9 +169,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   static class DirectInstanceOfFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "t t";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
@@ -178,9 +185,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   static class ScopeFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "bvoa t";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       ScopedIF scoped = (ScopedIF) object;
       TopicIF theme = (TopicIF) v;
@@ -189,9 +198,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   static class ReifiesFunction implements ModificationFunctionIF {
+    @Override
     public String getSignature() {
       return "t bvoar";
     }
+    @Override
     public void modify(TMObjectIF object, Object v) {
       TopicIF reifier = (TopicIF) object;
       ReifiableIF reified = (ReifiableIF) v;

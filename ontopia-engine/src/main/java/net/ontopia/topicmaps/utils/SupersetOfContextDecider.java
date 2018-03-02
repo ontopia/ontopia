@@ -42,6 +42,7 @@ public class SupersetOfContextDecider implements DeciderIF<ScopedIF> {
     context.toArray(this.context);
   }
   
+  @Override
   public boolean ok(ScopedIF scoped) {
     return ScopeUtils.isSupersetOfContext(scoped, context);
   }

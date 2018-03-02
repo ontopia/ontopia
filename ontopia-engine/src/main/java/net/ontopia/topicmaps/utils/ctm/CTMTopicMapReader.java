@@ -25,23 +25,19 @@ import antlr.TokenStreamException;
 import antlr.TokenStreamIOException;
 import antlr.TokenStreamRecognitionException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
+import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapReader;
 import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.utils.ltm.AntlrWrapException;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
-import org.xml.sax.InputSource;
 
 /**
  * PUBLIC: This TopicMapReader can read topic maps from the ISO-standard
@@ -55,9 +51,12 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
    * arguments.
    * @param url The URL of the LTM file.
    */
-  public CTMTopicMapReader(String url) throws MalformedURLException {
-    this(new InputSource(new URILocator(url).getExternalForm()),
-         new URILocator(url));
+  public CTMTopicMapReader(URL url) throws MalformedURLException {
+    super(url);
+  }
+
+  public CTMTopicMapReader(URL url, LocatorIF base_address) {
+    super(url, base_address);
   }
 
   /**
@@ -68,7 +67,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
    * relative references.
    */
   public CTMTopicMapReader(Reader reader, LocatorIF base_address) {
-    this(new InputSource(reader), base_address);
+    super(reader, base_address);
   }
 
   /**
@@ -78,7 +77,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
    * @param base_address The base address to be used for resolving
    * relative references.  */
   public CTMTopicMapReader(InputStream stream, LocatorIF base_address) {
-    this(new InputSource(stream), base_address);
+    super(stream, base_address);
   }
 
   /**
@@ -87,42 +86,12 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
    * @param file The file object from which to read the topic map.
    */
   public CTMTopicMapReader(File file) throws IOException {
-    try {
-      if (!file.exists())
-        throw new FileNotFoundException(file.toString());
-
-      this.base_address = new URILocator(URIUtils.toURL(file));
-      this.source = new InputSource(base_address.getExternalForm());
-    }
-    catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException("Internal error. File " + file + " had "
-                                        + "invalid URL representation.");
-    }
-  }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the input source
-   * given in the arguments.
-   * @param source The SAX input source from which the topic map is to be read.
-   * @param base_address The base address to be used for resolving
-   * relative references.
-   */
-  public CTMTopicMapReader(InputSource source, LocatorIF base_address) {
-    this.source = source;
-    this.base_address = base_address;
-  }
-
-  /**
-   * PUBLIC: Creates a topic map reader bound to the URL given in the
-   * arguments.
-   * @param url The URL of the topic map document.
-   */
-  public CTMTopicMapReader(LocatorIF url) {
-    this(new InputSource(url.getExternalForm()), url);
+    super(file);
   }
 
   // ==== READER IMPLEMENTATION ====
 
+  @Override
   protected TopicMapIF read(TopicMapStoreFactoryIF store_factory)
       throws IOException {
     TopicMapStoreIF store = store_factory.createStore();
@@ -135,9 +104,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
           .setBaseAddress(getBaseAddress());
 
     // Parse!
-    Reader reader = null;
-    try {
-      reader = makeReader(source, new CTMEncodingSniffer());
+    try (Reader reader = makeReader((String) null, new CTMEncodingSniffer())) {
       CTMLexer lexer = new CTMLexer(reader);
       lexer.setDocuri(getBaseAddress().getAddress());
       CTMParser parser = new CTMParser(lexer);
@@ -162,9 +129,6 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
     } catch (java.io.CharConversionException e) {
       throw new IOException("Problem decoding character encoding."
                             + "Did you declare the right encoding?");
-    } finally {
-      if (reader != null)
-        reader.close();
     }
 
     ClassInstanceUtils.resolveAssociations2(topicmap);

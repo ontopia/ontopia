@@ -37,28 +37,34 @@ public final class DefaultCache<K, V> implements CacheIF<K, V> {
     this.cache = cache;
   }
 
+  @Override
   public synchronized V get(K key) {
     return cache.get(key);
   }
 
+  @Override
   public synchronized V put(K key, V value) {
     return cache.put(key, value);
   }
   
+  @Override
   public synchronized V remove(K key, boolean notifyCluster) {
     return cache.remove(key);
   }
   
+  @Override
   public synchronized void removeAll(Collection<K> keys, boolean notifyCluster) {
     for (K key : keys) {
       cache.remove(key);
     }
   }
 
+  @Override
   public synchronized void clear(boolean notifyCluster) {
     cache.clear();
   }
   
+  @Override
   public void writeReport(java.io.Writer out, boolean dumpCache) throws java.io.IOException {
     synchronized (cache) {
       out.write("<p>Cache size: " + cache.size() + "</p>\n");

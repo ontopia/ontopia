@@ -30,7 +30,14 @@ import net.ontopia.topicmaps.core.TopicIF;
  */
 public class TMClassInstanceAssociation extends TMAbstractEdge
     implements VizTMAssociationIF {
-  public static class Key extends Object {
+
+  private TopicIF type;
+  private Key key;
+  
+  private TopicIF classTopic;
+  private TopicIF instanceTopic;
+
+  public static class Key {
 
     private TopicIF instance;
     private TopicIF type;
@@ -40,6 +47,7 @@ public class TMClassInstanceAssociation extends TMAbstractEdge
       instance = anInstance;
     }
 
+    @Override
     public boolean equals(Object obj) {
       return type.equals(((Key) obj).getType())
           && instance.equals(((Key) obj).getInstance());
@@ -54,13 +62,6 @@ public class TMClassInstanceAssociation extends TMAbstractEdge
     }
   }
 
-
-  private TopicIF type;
-  private Key key;
-  
-  private TopicIF classTopic;
-  private TopicIF instanceTopic;
-
   public TMClassInstanceAssociation(TMTopicNode classType, TMTopicNode instance,
       TopicIF topicType) {
     super(classType, instance);
@@ -71,6 +72,7 @@ public class TMClassInstanceAssociation extends TMAbstractEdge
         instance.getTopic());
   }
 
+  @Override
   protected void paintToolTip(Graphics g) {
     if (shouldDisplayRoleHoverHelp) {
       this.paintToolTipText(g, Messages.getString("Viz.Class"), getFromRolePosition());
@@ -80,30 +82,37 @@ public class TMClassInstanceAssociation extends TMAbstractEdge
     this.paintTypeToolTip(g);
   }
 
+  @Override
   public TopicIF getTopicMapType() {
     return type;
   }
 
+  @Override
   protected String getMainHoverHelpText() {
     return Messages.getString("Viz.InstanceOf");
   }
 
+  @Override
   public boolean represents(Object object) {
     return object.equals(key);
   }
   
+  @Override
   public boolean isAssociation() {
       return true;
     }
   
+  @Override
   public void setShouldDisplayScopedAssociationNames(boolean newValue) {
     // This type does not have scoped Association names
   }
 
+  @Override
   public RecoveryObjectIF getDesctructor() {
     return new DeleteTMClassInstanceAssociation(instanceTopic, classTopic);
   }
 
+  @Override
   public RecoveryObjectIF getRecreator() {
     return new CreateTMClassInstanceAssociation(instanceTopic, classTopic);
   }

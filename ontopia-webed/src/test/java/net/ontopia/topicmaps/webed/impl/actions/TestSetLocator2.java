@@ -37,6 +37,7 @@ public class TestSetLocator2 extends TestSetLocator {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetLocator2();
@@ -44,6 +45,7 @@ public class TestSetLocator2 extends TestSetLocator {
 
   // --- Actions with different behaviour
   
+  @Override
   public void testEmptyURL() throws IOException {
     TopicIF topic = getTopicById(tm, "tromso");
     OccurrenceIF occ = getOccurrenceWithLocator(topic);

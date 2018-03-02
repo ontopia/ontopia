@@ -32,12 +32,13 @@ import net.ontopia.infoset.fulltext.core.GenericDocument;
 public class TopicMapDocument extends GenericDocument {
 
   protected String _toString() {
-    if (fields.containsKey("object_id") && !fields.containsKey("address") && fields.containsKey("content"))
-      return "Document ["  + (fields.get("object_id")).getValue() + "] \"" + (fields.get("content")).getValue()  + "\"";
-    else if (fields.containsKey("object_id") && fields.containsKey("address"))
-      return "Document ["  + (fields.get("object_id")).getValue() + "] <" + (fields.get("address")).getValue()  + ">";
-    else if (fields.containsKey("object_id"))
-      return "Document ["  + (fields.get("object_id")).getValue() + "]";
+    final String OBJECT_ID = "object_id";
+    if (fields.containsKey(OBJECT_ID) && !fields.containsKey("address") && fields.containsKey("content"))
+      return "Document ["  + (fields.get(OBJECT_ID)).getValue() + "] \"" + (fields.get("content")).getValue()  + "\"";
+    else if (fields.containsKey(OBJECT_ID) && fields.containsKey("address"))
+      return "Document ["  + (fields.get(OBJECT_ID)).getValue() + "] <" + (fields.get("address")).getValue()  + ">";
+    else if (fields.containsKey(OBJECT_ID))
+      return "Document ["  + (fields.get(OBJECT_ID)).getValue() + "]";
     else
       return super.toString();    
   }

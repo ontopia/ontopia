@@ -32,16 +32,17 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
-import net.ontopia.net.Base64;
-import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.ReaderInputStream;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.utils.ReaderInputStream;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.codec.binary.Base64InputStream;
+import org.apache.commons.io.IOUtils;
 
 public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   protected OccurrenceIF occurrence;
@@ -81,7 +82,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 		occurrence.setValue(value);
 		assertTrue("value not maintained after set",
 							 occurrence.getValue().equals(value));
-		assertTrue("data type is incorrect. should be xsd:string", ObjectUtils.equals(occurrence.getDataType(), DataTypes.TYPE_STRING));
+		assertTrue("data type is incorrect. should be xsd:string", Objects.equals(occurrence.getDataType(), DataTypes.TYPE_STRING));
 		
 		try {
 			occurrence.setValue(null);
@@ -90,7 +91,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 		}
 		assertTrue("value not maintained after set",
 							 occurrence.getValue().equals(value));
-		assertTrue("data type is incorrect. should be xsd:string", ObjectUtils.equals(occurrence.getDataType(), DataTypes.TYPE_STRING));
+		assertTrue("data type is incorrect. should be xsd:string", Objects.equals(occurrence.getDataType(), DataTypes.TYPE_STRING));
 	}
 
   public void testLocator() {
@@ -101,7 +102,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
       occurrence.setLocator(loc);
       assertTrue("locator identity not maintained after set",
              occurrence.getLocator().equals(loc));
-			assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(occurrence.getDataType(), DataTypes.TYPE_URI));
+			assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(occurrence.getDataType(), DataTypes.TYPE_URI));
             
 			try {
 				occurrence.setLocator(null);
@@ -110,7 +111,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 			}
       assertTrue("locator identity not maintained after set",
              occurrence.getLocator().equals(loc));
-			assertTrue("data type is incorrect. should be xsd:anyURI", ObjectUtils.equals(occurrence.getDataType(), DataTypes.TYPE_URI));
+			assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(occurrence.getDataType(), DataTypes.TYPE_URI));
     }
     catch (MalformedURLException e) {
       fail("(INTERNAL) given URI was malformed");
@@ -162,14 +163,14 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 		} finally {
 			try { ri.close(); } catch (Exception e) { e.printStackTrace(); };
 		}
-    assertTrue("Occurrence datatype is incorrect", ObjectUtils.equals(DataTypes.TYPE_BINARY, occurrence.getDataType()));
+    assertTrue("Occurrence datatype is incorrect", Objects.equals(DataTypes.TYPE_BINARY, occurrence.getDataType()));
                  
     // read and decode content
     Reader ro = occurrence.getReader();
     try {
       Writer wo = new FileWriter(fileout);
       try {
-        StreamUtils.transfer(ro, wo);
+        IOUtils.copy(ro, wo);
       } finally {
         wo.close();
       }
@@ -182,7 +183,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
       ro = new FileReader(fileout); 
 			long outlen = occurrence.getLength();
       try {
-        assertTrue("Occurrence value put in is not the same as the one we get out.", StreamUtils.compare(ro, ri));
+        assertTrue("Occurrence value put in is not the same as the one we get out.", IOUtils.contentEquals(ro, ri));
         assertTrue("Occurrence value length is different", inlen == outlen);
       } finally {
         ri.close();
@@ -195,19 +196,19 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   public void _testBinaryReader() throws Exception {
     // read file and store in occurrence
     String file = TestFileUtils.getTestInputFile("various", "blob.gif");
-    Reader ri = new InputStreamReader(new Base64.InputStream(new FileInputStream(file), Base64.ENCODE), "utf-8");
+    Reader ri = new InputStreamReader(new Base64InputStream(new FileInputStream(file), true), "utf-8");
     occurrence.setReader(ri, file.length(), DataTypes.TYPE_BINARY);
 
-    assertTrue("Occurrence datatype is incorrect", ObjectUtils.equals(DataTypes.TYPE_BINARY, occurrence.getDataType()));
+    assertTrue("Occurrence datatype is incorrect", Objects.equals(DataTypes.TYPE_BINARY, occurrence.getDataType()));
                  
     // read and decode occurrence content
     Reader ro = occurrence.getReader();
     assertTrue("Reader value is null", ro != null);
-    InputStream in = new Base64.InputStream(new ReaderInputStream(ro, "utf-8"), Base64.DECODE);
+    InputStream in = new Base64InputStream(new ReaderInputStream(ro, "utf-8"), false);
     try {
       OutputStream out = new FileOutputStream("/tmp/blob.gif");
       try {
-        StreamUtils.transfer(in, out);
+        IOUtils.copy(in, out);
       } finally {
         out.close();
       }
@@ -224,6 +225,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     TopicIF topic = builder.makeTopic();
@@ -235,6 +237,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     typed = occurrence;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     TopicIF topic = builder.makeTopic();
 		TopicIF otype = builder.makeTopic();

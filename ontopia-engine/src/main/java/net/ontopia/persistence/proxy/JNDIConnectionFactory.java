@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class JNDIConnectionFactory implements ConnectionFactoryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(JNDIConnectionFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(JNDIConnectionFactory.class.getName());
 
   protected static final String propname = "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource";
   protected String jndiname;
@@ -58,6 +58,7 @@ public class JNDIConnectionFactory implements ConnectionFactoryIF {
       throw new OntopiaRuntimeException("Property '" + propname+ "' is not set. Please update the RDBMS properties file.");
   }
 
+  @Override
   public Connection requestConnection() throws SQLException {
     log.debug("Requesting connection from jndi pool.");
 
@@ -82,6 +83,7 @@ public class JNDIConnectionFactory implements ConnectionFactoryIF {
     }
   }
 
+  @Override
   public void close() {
     // Nothing to do there since we do not keep anything hanging around.
   }

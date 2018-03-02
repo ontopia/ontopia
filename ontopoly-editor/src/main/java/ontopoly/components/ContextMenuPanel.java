@@ -47,6 +47,7 @@ public abstract class ContextMenuPanel<T> extends Panel implements IHeaderContri
 
   protected abstract ListView<T> createListView(String menuId, String menuItemId);
   
+  @Override
   public void renderHead(IHeaderResponse response) {
     // import script    
     response.renderJavascriptReference(jsReference);

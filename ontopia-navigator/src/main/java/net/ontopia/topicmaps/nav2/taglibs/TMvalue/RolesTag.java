@@ -31,7 +31,6 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.utils.DeciderIF;
 
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
 
@@ -49,6 +48,7 @@ public class RolesTag extends BaseScopedTag {
   private String cardinality = null;
   private String varRemoveColl = null;
   
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     // find all base names of all tmObjects in collection
     // avoid duplicate type entries therefore use a HashSet

@@ -78,17 +78,20 @@ public class TopicSelectionPrompter extends JDialog {
     jList = new JList();
     jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     jList.addListSelectionListener(new ListSelectionListener() {
+      @Override
       public void valueChanged(ListSelectionEvent e) {
         jList.ensureIndexIsVisible(jList.getSelectedIndex());
       }
     });
     jList.addMouseListener(new MouseAdapter() {
+      @Override
       public void mouseClicked(MouseEvent anEvent) {
         if (anEvent.getClickCount() == 2)
             validateAndAccept();
       }
     });
     jList.addKeyListener(new KeyAdapter() {
+      @Override
       public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
           validateAndAccept();
@@ -104,6 +107,7 @@ public class TopicSelectionPrompter extends JDialog {
     buttons.setLayout(new GridLayout(1, 2));
     JButton ok = new JButton(Messages.getString("Viz.OK"));
     ok.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         validateAndAccept();
       }
@@ -113,6 +117,7 @@ public class TopicSelectionPrompter extends JDialog {
 
     JButton cancel = new JButton(Messages.getString("Viz.Cancel"));
     cancel.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         cancelSelection();
       }

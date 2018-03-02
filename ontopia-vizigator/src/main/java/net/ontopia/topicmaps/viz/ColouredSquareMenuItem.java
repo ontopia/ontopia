@@ -47,6 +47,7 @@ public class ColouredSquareMenuItem extends JMenuItem {
   }
 
   /** Draw a coloured square at the end of the display. */
+  @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 

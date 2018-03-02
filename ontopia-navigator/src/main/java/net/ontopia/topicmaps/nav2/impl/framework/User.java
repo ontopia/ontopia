@@ -20,19 +20,16 @@
 
 package net.ontopia.topicmaps.nav2.impl.framework;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.io.Serializable;
-
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.utils.HistoryMap;
+import net.ontopia.topicmaps.nav2.utils.HistoryMap;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.RingBuffer;
-
 import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +56,7 @@ public class User implements UserIF, Serializable {
   // https://github.com/ontopia/ontopia/issues/135
   protected transient UserFilterContextStore filterContext;
   protected transient HistoryMap history;
-  protected transient RingBuffer log;
+  protected transient HistoryMap log;
   protected transient Map workingBundles;
 
   // Time stamps for the workingBundles.
@@ -101,12 +98,14 @@ public class User implements UserIF, Serializable {
   }
 
 
+  @Override
   public String getId() {
     return id;
   }
   
   // --- filterContext accessor methods
    
+  @Override
   public UserFilterContextStore getFilterContext() {
     if (filterContext == null)
       filterContext = new UserFilterContextStore();
@@ -115,48 +114,55 @@ public class User implements UserIF, Serializable {
 
   // -- history
   
+  @Override
   public HistoryMap getHistory() {
     if (history == null)
       history = new HistoryMap();
     return history;
   }
 
+  @Override
   public void setHistory(HistoryMap history) {
     this.history = history;
   }
 
   // -- logs
   
+  @Override
   public Logger getLogger() {
     throw new OntopiaRuntimeException("This method has been disabled. Please contact <support@ontopia.net> if you were using it.");
   }
   
+  @Override
   public List getLogMessages() {
     synchronized (this) {
       if (log == null)
-        log = new RingBuffer();
-      return log.getElements();
+        log = new HistoryMap(50, false);
+      return (List) log.getEntries();
     }
   }
 
+  @Override
   public void addLogMessage(String message) {
     synchronized (this) {
       if (log == null)
-        log = new RingBuffer();
-      log.addElement(message);
+        log = new HistoryMap(50, false);
+      log.add(message);
     }
   }
 
+  @Override
   public void clearLog() {
     synchronized (this) {
       if (log == null)
-        log = new RingBuffer();
+        log = new HistoryMap(50, false);
       log.clear();
     }
   }
   
   // -- working bundles
   
+  @Override
   public synchronized void addWorkingBundle(String bundle_id, Object object) {
     removeOldWorkingBundles(bundle_id);
     if (timeStamps == null)
@@ -167,6 +173,7 @@ public class User implements UserIF, Serializable {
     workingBundles.put(bundle_id, object);
   }
   
+  @Override
   public synchronized Object getWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
     if (bundle_id == null) 
@@ -176,6 +183,7 @@ public class User implements UserIF, Serializable {
     return workingBundles.get(bundle_id);
   }
 
+  @Override
   public synchronized void removeWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
     if (workingBundles == null)
@@ -231,30 +239,36 @@ public class User implements UserIF, Serializable {
 
   // --- Model methods
   
+  @Override
   public void setModel(String model) {
     this.model = model;
   }
   
+  @Override
   public String getModel() {
     return model;
   }
 
   // --- View methods
   
+  @Override
   public void setView(String view) {
     this.view = view;
   }
   
+  @Override
   public String getView() {
     return view;
   }
  
   // --- Skin methods
   
+  @Override
   public void setSkin(String skin) {
     this.skin = skin;
   }
   
+  @Override
   public String getSkin() {
     return skin;
   }

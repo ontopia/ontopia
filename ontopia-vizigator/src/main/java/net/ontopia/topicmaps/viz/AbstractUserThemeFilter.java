@@ -33,7 +33,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  */
 public abstract class AbstractUserThemeFilter {
 
-  TopicMapIF topicMap;
+  protected TopicMapIF topicMap;
 
   public AbstractUserThemeFilter() {
     this.topicMap = null;

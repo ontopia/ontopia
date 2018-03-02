@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils.ctm;
 import java.util.List;
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -74,18 +75,22 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     this.generator = new PreviousEmbeddedTopicGenerator();
   }
   
+  @Override
   public void startTopicItemIdentifier(ValueGeneratorIF locator) {
     topic = context.makeTopicByItemIdentifier(locator.getLocator());
   }
   
+  @Override
   public void startTopicSubjectIdentifier(ValueGeneratorIF locator) {
     topic = context.makeTopicBySubjectIdentifier(locator.getLocator());
   }
   
+  @Override
   public void startTopicSubjectLocator(ValueGeneratorIF locator) {
     topic = context.makeTopicBySubjectLocator(locator.getLocator());
   }
 
+  @Override
   public void startTopic(ValueGeneratorIF topicgen) {
     // this is a special situation, because while we might be passed a
     // topic, we might also be passed just an IRI to be interpreted as
@@ -98,10 +103,12 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
       throw new InvalidTopicMapException("Wrong type passed as topic identifier: " + topicgen.getLiteral());
   }
   
+  @Override
   public void addItemIdentifier(ValueGeneratorIF locator) {
     topic.addItemIdentifier(locator.getLocator());
   }
   
+  @Override
   public void addSubjectIdentifier(ValueGeneratorIF locator) {
     TopicMapIF tm = builder.getTopicMap();
     TopicIF other = tm.getTopicBySubjectIdentifier(locator.getLocator());
@@ -111,14 +118,17 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
       topic.addSubjectIdentifier(locator.getLocator());
   }
   
+  @Override
   public void addSubjectLocator(ValueGeneratorIF locator) {
     topic.addSubjectLocator(locator.getLocator());
   }
 
+  @Override
   public void addTopicType(ValueGeneratorIF type) {
     topic.addType(type.getTopic());
   }
 
+  @Override
   public void addSubtype(ValueGeneratorIF thesubtype) {
     // get typing topics
     if (assoctype == null)
@@ -134,16 +144,19 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     builder.makeAssociationRole(assoc, supertype, thesubtype.getTopic());
   }
   
+  @Override
   public void startName(ValueGeneratorIF type, ValueGeneratorIF value) {
     name = builder.makeTopicName(topic, type.getTopic(), value.getLiteral());
     scoped = name;
     reifiable = name;    
   }
   
+  @Override
   public void addScopingTopic(ValueGeneratorIF topic) {
     scoped.addTheme(topic.getTopic());
   }
   
+  @Override
   public void addReifier(ValueGeneratorIF topic) {
     TopicIF reifier = topic.getTopic();
     if (reifier.getReified() != null)
@@ -153,6 +166,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     reifiable.setReifier(reifier);
   }
 
+  @Override
   public void startVariant(ValueGeneratorIF value) {
     // FIXME: no support for datatypes here yet...
     VariantNameIF variant = builder.makeVariantName(name, value.getLiteral());
@@ -160,9 +174,12 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     reifiable = variant;
   }
   
+  @Override
   public void endName() {
+    // no-op
   }
 
+  @Override
   public void startOccurrence(ValueGeneratorIF type, ValueGeneratorIF value) {
     OccurrenceIF occurrence = 
       builder.makeOccurrence(topic,
@@ -173,37 +190,46 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     reifiable = occurrence;
   }
 
+  @Override
   public void endOccurrence() {
+    // no-op
   }
   
+  @Override
   public void endTopic() {
     topic = null; // so we can tell if we are in a block or not
   }
 
+  @Override
   public void startAssociation(ValueGeneratorIF type) {
     association = builder.makeAssociation(type.getTopic()); 
     scoped = association;    
   }
   
+  @Override
   public void addRole(ValueGeneratorIF type, ValueGeneratorIF player) {
     reifiable = builder.makeAssociationRole(association,
                                             type.getTopic(),
                                             player.getTopic());
   }
 
+  @Override
   public void endRoles() {
     reifiable = association;
   }
   
+  @Override
   public void endAssociation() {
   }
 
+  @Override
   public void startEmbeddedTopic() {
     framestack.push(new ParseFrame(topic, name, scoped, reifiable,
                                    association)); 
     topic = context.makeAnonymousTopic();
   }
 
+  @Override
   public ValueGeneratorIF endEmbeddedTopic() {
     previous_embedded = topic;
     ParseFrame frame = (ParseFrame) framestack.pop(); 
@@ -215,6 +241,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     return generator;
   }
 
+  @Override
   public void templateInvocation(String name, List arguments) {    
     if (topic != null) {
       // invocations inside topic blocks need to have the current topic prepended
@@ -243,15 +270,15 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   }
 
   private void merge(TopicIF topic, TopicIF other) {
-    if (topic == other)
+    if (Objects.equals(topic, other))
       return;
 
     // make sure hard-wired references to "ako" topics are not lost
-    if (assoctype == other)
+    if (Objects.equals(assoctype, other))
       assoctype = topic;
-    else if (subtype == other)
+    else if (Objects.equals(subtype, other))
       subtype = topic;
-    else if (supertype == other)
+    else if (Objects.equals(supertype, other))
       supertype = topic;
     
     MergeUtils.mergeInto(topic, other);
@@ -261,10 +288,12 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
 
   class PreviousEmbeddedTopicGenerator extends AbstractTopicGenerator {
     
+    @Override
     public TopicIF getTopic() {
       return previous_embedded;
     }
 
+    @Override
     public ValueGeneratorIF copy() {
       return new ValueGenerator(previous_embedded, null, null, null);
     }

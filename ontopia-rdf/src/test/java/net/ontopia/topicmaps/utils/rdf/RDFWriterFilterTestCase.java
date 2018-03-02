@@ -17,7 +17,6 @@
  * limitations under the License.
  * !#
  */
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.File;
@@ -44,53 +43,51 @@ public class RDFWriterFilterTestCase {
 
   private final static String testdataDirectory = "tm2rdf";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
   }
 
-  // --- Canonical test case class
+  public RDFWriterFilterTestCase(String root, String filename) {
+    this.filename = filename;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
 
-    private String base;
-    private String filename;
+  @Test
+  public void testFile() throws IOException {
+    // setup
+    TestFileUtils.verifyDirectory(base, "out");
+    TestFileUtils.verifyDirectory(base, "filter-tmp");
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in",
+            filename);
+    String tmp = base + File.separator + "filter-tmp" + File.separator
+            + filename + ".rdf";
+    String bline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline",
+            filename + ".rdf");
 
-    public RDFWriterFilterTestCase(String root, String filename) {
-      this.filename = filename;
-      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    // Import
+    TopicMapIF tm = ImportExportUtils.getReader(in).read();
+
+    // Export the topic map to rdf
+    RDFTopicMapWriter rdfWriter = new RDFTopicMapWriter(new FileOutputStream(
+            tmp));
+    rdfWriter.setFilter(new TMDecider());
+    try {
+      rdfWriter.write(tm);
+    } catch (Exception e) {
+      throw new OntopiaRuntimeException("Exception in RDF file '" + tmp, e);
     }
+    // read in base line and export
+    Model baseline = ModelFactory.createDefaultModel().read(StreamUtils.getInputStream(bline),
+            bline, "RDF/XML");
+    Model result = ModelFactory.createDefaultModel().read(new FileInputStream(tmp), "file:"
+            + tmp, "RDF/XML");
 
-    @Test
-    public void testFile() throws IOException {
-      // setup
-      TestFileUtils.verifyDirectory(base, "out");
-      TestFileUtils.verifyDirectory(base, "filter-tmp");
-      String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in",
-          filename);
-      String tmp = base + File.separator + "filter-tmp" + File.separator
-          + filename + ".rdf";
-      String bline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline",
-          filename + ".rdf");
-
-      // Import
-      TopicMapIF tm = ImportExportUtils.getReader(in).read();
-
-      // Export the topic map to rdf
-      RDFTopicMapWriter rdfWriter = new RDFTopicMapWriter(new FileOutputStream(
-          tmp));
-      rdfWriter.setFilter(new TMDecider());
-      try {
-        rdfWriter.write(tm);
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException("Exception in RDF file '" + tmp, e);
-      }
-      // read in base line and export
-      Model baseline = ModelFactory.createDefaultModel().read(StreamUtils.getInputStream(bline), 
-          bline, "RDF/XML");
-      Model result = ModelFactory.createDefaultModel().read(new FileInputStream(tmp), "file:"
-          + tmp, "RDF/XML");
-
-      // compare results
-      Assert.assertTrue("test file " + filename + " produced non-isomorphic model",
-          result.isIsomorphicWith(baseline));
-    }
+    // compare results
+    Assert.assertTrue("test file " + filename + " produced non-isomorphic model",
+            result.isIsomorphicWith(baseline));
+  }
 }

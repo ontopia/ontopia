@@ -28,6 +28,7 @@ import java.util.List;
 
 public class FieldTagBeanInfo extends SimpleBeanInfo {
   
+  @Override
   public PropertyDescriptor[] getPropertyDescriptors() {
     List proplist = new ArrayList();
     

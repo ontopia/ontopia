@@ -32,6 +32,7 @@ public class QueryParserTest extends AbstractQueryTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

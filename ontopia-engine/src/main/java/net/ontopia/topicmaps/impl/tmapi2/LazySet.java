@@ -42,30 +42,35 @@ public class LazySet<T> extends AbstractSet<T> {
   }
 
   @SuppressWarnings("unchecked")
+  @Override
   public Iterator<T> iterator() {
     return new LazySetIterator(other.iterator());
   }
 
+  @Override
   public int size() {
     return other.size();
   }
 
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
 
   class LazySetIterator implements Iterator {
 
-    Iterator iter;
+    protected Iterator iter;
 
     LazySetIterator(Iterator iter) {
       this.iter = iter;
     }
 
+    @Override
     public boolean hasNext() {
       return iter.hasNext();
     }
 
+    @Override
     public Object next() {
       Object n = iter.next();
       if (n instanceof LocatorIF) {
@@ -75,6 +80,7 @@ public class LazySet<T> extends AbstractSet<T> {
       }
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }

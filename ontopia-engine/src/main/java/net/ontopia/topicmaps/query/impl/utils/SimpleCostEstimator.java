@@ -46,6 +46,7 @@ public class SimpleCostEstimator extends CostEstimator {
    * @param rulename The name of the current rule (so we can delay
    *                 recursive evaluation).
    */
+  @Override
   public int computeCost(Set context, AbstractClause clause,
                          Set literalvars, String rulename) {
     int cost = 0;
@@ -72,13 +73,13 @@ public class SimpleCostEstimator extends CostEstimator {
 
         // check for specific predicates (FIXME: generalize!)
         String name = predicate.getName();
-        if (name.equals("instance-of"))
+        if ("instance-of".equals(name))
           cost += 1;
-        else if (name.equals("/="))
+        else if ("/=".equals(name))
           cost -= 5;
-        else if (name.equals("value-like"))
+        else if ("value-like".equals(name))
           cost -= 11; // value-like must go first
-        else if (name.equals(rulename))
+        else if (rulename.equals(name))
           cost += 100; // recursive evaluation should happen late
 
         // check for arguments which must be bound

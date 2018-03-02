@@ -21,10 +21,8 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.webed.core.ActionIF;
 import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
-import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topic.SetSubjectIndicator2;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.infoset.core.LocatorIF;
@@ -36,6 +34,7 @@ public class TestSetSubjectIndicator2 extends TestSetSubjectIndicator {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetSubjectIndicator2();
@@ -43,6 +42,7 @@ public class TestSetSubjectIndicator2 extends TestSetSubjectIndicator {
 
   // --- Tests
 
+  @Override
   public void testEmptyURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
     LocatorIF newSL = new URILocator("http://www.slashdot.org");

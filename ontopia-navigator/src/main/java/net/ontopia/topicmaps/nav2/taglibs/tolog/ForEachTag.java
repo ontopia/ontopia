@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
 public class ForEachTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
 
   // members
   protected ForEachTag groupingAncestor; 
@@ -103,18 +103,12 @@ public class ForEachTag extends BodyTagSupport {
   protected String separator;
   
   /**
-   * Default constructor.
-   */
-  public ForEachTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    * Depending on the input, chooses between evaluating an input query or
    * continuing iteration over a queryResult obtained in an ancestor ForEachTag.
    * Binds any varibles needed in the body.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     neverEvaluatedBody = false;
   
@@ -293,6 +287,7 @@ public class ForEachTag extends BodyTagSupport {
   /** 
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     JspWriter jspWriter;
 
@@ -345,6 +340,7 @@ public class ForEachTag extends BodyTagSupport {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     if (!(queryWrapper.fullyGrouped() || neverEvaluatedBody))
       throw new JspTagException("<tolog:foreach> - tag insufficiently grouped"
@@ -380,6 +376,7 @@ public class ForEachTag extends BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // do *not* reset tag attributes here, as that will cause problems
     // with tag pooling

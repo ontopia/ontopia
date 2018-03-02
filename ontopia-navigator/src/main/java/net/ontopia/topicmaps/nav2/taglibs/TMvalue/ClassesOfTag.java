@@ -37,6 +37,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class ClassesOfTag extends BaseValueProducingAndAcceptingTag {
 
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     // find all the classes of all tmObjects in collection
     // avoid duplicate type entries therefore use a 'Set'

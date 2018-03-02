@@ -25,9 +25,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import net.ontopia.utils.PropertyUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
   
 /** 
  * INTERNAL: Abstract connection factory implementation that holds
@@ -36,9 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(AbstractConnectionFactory.class.getName());
 
   protected Map<String, String> properties;
   
@@ -57,13 +51,16 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
       loadSpyDriver();
     }
 
-    username = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.UserName", false);
-    password = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.Password", false);
+    username = properties.get("net.ontopia.topicmaps.impl.rdbms.UserName");
+    password = properties.get("net.ontopia.topicmaps.impl.rdbms.Password");
   }
   
+  @Override
   public abstract Connection requestConnection() throws SQLException;
 
+  @Override
   public void close() {
+    // no-op
   }
   
   protected String getConnectionString() {

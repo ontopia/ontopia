@@ -24,10 +24,10 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
   public interface TestFactoryIF {
 
-    public TopicMapStoreIF makeStandaloneTopicMapStore();
+    TopicMapStoreIF makeStandaloneTopicMapStore();
     
-    public TopicMapReferenceIF makeTopicMapReference();
+    TopicMapReferenceIF makeTopicMapReference();
 
-    public void releaseTopicMapReference(TopicMapReferenceIF topicmapRef);
+    void releaseTopicMapReference(TopicMapReferenceIF topicmapRef);
 
   }

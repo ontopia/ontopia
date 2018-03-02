@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 @Deprecated
 public class DefaultAction implements ActionIF {
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
   }
   

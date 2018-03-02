@@ -37,6 +37,7 @@ public abstract class FunctionBoxesPanel extends Panel {
     
     List<Component> list = getFunctionBoxesList("functionBox"); 
     ListView<Component> functionBoxes = new ListView<Component>("functionBoxesList", list) {
+      @Override
       protected void populateItem(ListItem<Component> item) {
         item.add(item.getModelObject());
       }

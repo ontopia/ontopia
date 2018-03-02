@@ -66,10 +66,12 @@ public class StatisticsIndex extends BasicIndex implements StatisticsIndexIF {
   // StatisticsIndexIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public int getTopicCount() {
     return transaction.getTopicMap().getTopics().size();
   }
 
+  @Override
   public int getTypedTopicCount() {
     int typed = 0;
     for (TopicIF tt : index.getTopicTypes()) {
@@ -78,62 +80,77 @@ public class StatisticsIndex extends BasicIndex implements StatisticsIndexIF {
     return typed;
   }
 
+  @Override
   public int getUntypedTopicCount() {
     return index.getTopics(null).size();
   }
 
+  @Override
   public int getTopicTypeCount() {
     return index.getTopicTypes().size();
   }
 
+  @Override
   public int getAssociationCount() {
     return transaction.getTopicMap().getAssociations().size();
   }
 
+  @Override
   public int getAssociationTypeCount() {
     return index.getAssociationTypes().size();
   }
 
+  @Override
   public int getRoleCount() {
     return queryCount("select count($role) from association-role($a, $role)?");
   }
 
+  @Override
   public int getRoleTypeCount() {
     return index.getAssociationRoleTypes().size();
   }
 
+  @Override
   public int getOccurrenceCount() {
     return queryCount("select count($occurrence) from occurrence($t, $occurrence)?");
   }
 
+  @Override
   public int getOccurrenceTypeCount() {
     return index.getOccurrenceTypes().size();
   }
 
+  @Override
   public int getTopicNameCount() {
     return queryCount("select count($name) from topic-name($t, $name)?");
   }
 
+  @Override
   public int getNoNameTopicCount() {
     return queryCount("select count($topic) from topic($topic), not(topic-name($topic, $n))?");
   }
 
+  @Override
   public int getTopicNameTypeCount() {
     return index.getTopicNameTypes().size();
   }
 
+  @Override
   public int getVariantCount() {
     return queryCount("select count($variant) from variant($t, $variant)?");
   }
 
+  @Override
   public int getSubjectIdentifierCount() {
     return queryCount("select count($loc) from subject-identifier($t, $loc)?");
   }
 
+  @Override
   public int getSubjectLocatorCount() {
     return queryCount("select count($loc) from subject-locator($t, $loc)?");
   }
 
+  @Override
   public int getItemIdentifierCount() {
     return queryCount("select count($loc) from item-identifier($t, $loc)?");
   }

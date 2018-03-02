@@ -43,6 +43,7 @@ import net.ontopia.topicmaps.webed.impl.utils.SchemaUtils;
  */
 public class CreateTopic extends AbstractTopicMapAction {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     // create new topic
     

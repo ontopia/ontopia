@@ -40,6 +40,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
  */
 public class VariantsTag extends BaseScopedTag {
 
+  @Override
   public Collection process(Collection characteristics) throws JspTagException {
     // find all variant names of all characteristics in collection
     if (characteristics == null) {

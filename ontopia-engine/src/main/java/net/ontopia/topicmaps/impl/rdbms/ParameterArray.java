@@ -47,10 +47,12 @@ public class ParameterArray implements Externalizable {
     return params;
   }
 
+  @Override
   public String toString() {
     return "PA:" + java.util.Arrays.asList(params);
   }
 
+  @Override
   public int hashCode() {
     int result = 1;
     for (int i=0; i < params.length; i++) {
@@ -59,6 +61,7 @@ public class ParameterArray implements Externalizable {
     return result;
   }
 
+  @Override
   public boolean equals(Object other) {
     ParameterArray o = (ParameterArray)other;
     for (int i=0; i < params.length; i++) {
@@ -82,14 +85,17 @@ public class ParameterArray implements Externalizable {
   // Externalization
   // ---------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(params);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     params = (Object[])in.readObject();
   }
 
+  @Override
   public Object clone() {
     try {
       return super.clone();

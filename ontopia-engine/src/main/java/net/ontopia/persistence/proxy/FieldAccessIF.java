@@ -42,7 +42,7 @@ public interface FieldAccessIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception;
+  Object load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception;
 
   /**
    * INTERNAL: Loads the field value for all the given object
@@ -57,7 +57,7 @@ public interface FieldAccessIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */
-  public Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
+  Object loadMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
 			     IdentityIF current) throws Exception;
 
   /**
@@ -67,7 +67,7 @@ public interface FieldAccessIF {
    * so. After the field value(s) has been updated the dirty flag(s)
    * should be set to false.
    */
-  public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception;
+  void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception;
 
   //! /**
   //!  * INTERNAL: Sets the field value for the given object
@@ -97,6 +97,6 @@ public interface FieldAccessIF {
    * INTERNAL: Clears the field value for the given object
    * identity. This method is only applicable for 1:M and M:M fields.
    */
-  public void clear(IdentityIF identity) throws Exception;
+  void clear(IdentityIF identity) throws Exception;
   
 }

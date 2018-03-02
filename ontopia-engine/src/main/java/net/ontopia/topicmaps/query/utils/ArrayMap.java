@@ -71,6 +71,7 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> {
 
   // --- required methods
 
+  @Override
   public V get(Object key) {
     for (int i=0; i < size; i++)
       if (keys[i].equals(key))
@@ -78,38 +79,45 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> {
     return null;
   }
 
+  @Override
   public int size() {
     return size;
   }
 
   // --- other methods
 
+  @Override
   public boolean containsKey(Object key) {
     for (int i=0; i < size; i++)
       if (keys[i].equals(key)) return true;
     return false;
   }
     
+  @Override
   public boolean containsValue(Object value) {
     for (int i=0; i < size; i++)
       if (values[i].equals(value)) return true;
     return false;
   }
         
+  @Override
   public boolean equals(Object o) {
     if (!(o instanceof Map)) return false;
     // compare entry sets
     return entrySet().equals(((Map)o).entrySet());
   }
     
+  @Override
   public boolean isEmpty() {
     return size == 0;
   }
     
+  @Override
   public Set<K> keySet() {
     return new HashSet<K>(Arrays.asList(keys));
   }
     
+  @Override
   public Set<Map.Entry<K, V>> entrySet() {
     // produce a entry set copy
     Map<K, V> map = new HashMap<K, V>(size);
@@ -118,14 +126,17 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> {
     return map.entrySet();
   }
     
+  @Override
   public Collection<V> values() {
     return Arrays.asList(values);
   }
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public V remove(Object key) {
     throw new UnsupportedOperationException();
   }

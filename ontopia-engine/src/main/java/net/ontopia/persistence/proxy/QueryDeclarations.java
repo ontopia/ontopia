@@ -25,13 +25,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -48,7 +46,10 @@ import org.xml.sax.helpers.DefaultHandler;
 public class QueryDeclarations {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(QueryDeclarations.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(QueryDeclarations.class.getName());
+
+  protected Map<String, QueryDescriptor> queries = new HashMap<String, QueryDescriptor>();
+  protected Map<String, Map<String, Class<?>>> indicators = new HashMap<String, Map<String, Class<?>>>();
   
   class QueriesHandler extends DefaultHandler {
 
@@ -68,8 +69,9 @@ public class QueryDeclarations {
       }
     }
 
+    @Override
     public void startElement (String uri, String name, String qName, Attributes atts) throws SAXException {
-      if (name.equals("query")) {
+      if ("query".equals(name)) {
         // Get query name
         String query_name = atts.getValue("name");
         if (query_name == null) 
@@ -99,7 +101,7 @@ public class QueryDeclarations {
 	}
 
       }
-      else if (name.equals("select")) {
+      else if ("select".equals(name)) {
 
         // Get class type
         String klass = atts.getValue("class");
@@ -117,11 +119,11 @@ public class QueryDeclarations {
           }
         }
       }
-      else if (name.equals("param")) {
+      else if ("param".equals(name)) {
         // Add parameter class
         params.add(getClassByName(atts.getValue("class")));
       }
-      else if (name.equals("statement")) {
+      else if ("statement".equals(name)) {
         // Get statement platform       
         String platform = atts.getValue("platform");
         if (platform == null) 
@@ -136,7 +138,7 @@ public class QueryDeclarations {
         // Add query statement
         qdesc.addStatement(platforms, query);
       }
-      else if (name.equals("class-indicator")) {
+      else if ("class-indicator".equals(name)) {
         // Get indicator name
         indname = atts.getValue("name");
         if (indname == null) 
@@ -144,7 +146,7 @@ public class QueryDeclarations {
 
         indics = new HashMap<String, Class<?>>();
       }
-      else if (name.equals("indicator")) {
+      else if ("indicator".equals(name)) {
         // Get indicator token
         String token = atts.getValue("token");
         if (token == null) 
@@ -156,7 +158,7 @@ public class QueryDeclarations {
         // Put indicator on map
         indics.put(token, klass);
       }
-      else if (name.equals("queries")) {
+      else if ("queries".equals(name)) {
         // Ignore
       }
       else {
@@ -164,8 +166,9 @@ public class QueryDeclarations {
       }
     }
 
+    @Override
     public void endElement (String uri, String name, String qName) throws SAXException {
-      if (name.equals("query")) {
+      if ("query".equals(name)) {
         // Set query selects
         qdesc.setSelects(selects);
         
@@ -180,7 +183,7 @@ public class QueryDeclarations {
         selects = null;
         params = null;
       } 
-      else if (name.equals("class-indicator")) {
+      else if ("class-indicator".equals(name)) {
         // Register class indicator with query declaration manager
         addIndicator(indname, indics);
         // Reset handler fields
@@ -191,9 +194,6 @@ public class QueryDeclarations {
 
   }
 
-  protected Map<String, QueryDescriptor> queries = new HashMap<String, QueryDescriptor>();
-  protected Map<String, Map<String, Class<?>>> indicators = new HashMap<String, Map<String, Class<?>>>();
-  
   public QueryDeclarations(InputStream istream) {
     loadQueries(istream);
   }
@@ -240,7 +240,7 @@ public class QueryDeclarations {
     ContentHandler handler = new QueriesHandler();
     
     try {
-      XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(isource);

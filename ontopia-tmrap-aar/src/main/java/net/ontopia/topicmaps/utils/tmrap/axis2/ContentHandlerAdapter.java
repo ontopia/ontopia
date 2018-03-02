@@ -37,25 +37,29 @@ public class ContentHandlerAdapter implements ContentHandler {
     this.sup = new NamespaceSupport();
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.ch.setDocumentLocator(locator);
   }
 
+  @Override
   public void startDocument() throws SAXException {
     this.ch.startDocument();
   }
 
+  @Override
   public void endDocument() throws SAXException {
     this.ch.endDocument();
   }
 
+  @Override
   public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
     this.sup.pushContext();
     for (int i = 0; i < atts.getLength(); ++i) {
       String aName = atts.getQName(i);
       if (aName.startsWith("xmlns:")){
         this.sup.declarePrefix(aName.substring("xmlns:".length()), atts.getValue(i));
-      } else if (aName.equals("xmlns")) {
+      } else if ("xmlns".equals(aName)) {
         this.sup.declarePrefix("", atts.getValue(i));
       }
     }
@@ -63,7 +67,7 @@ public class ContentHandlerAdapter implements ContentHandler {
     AttributesImpl ai = new AttributesImpl();
     for (int i = 0; i < atts.getLength(); ++i) {
       String aName = atts.getQName(i);
-      if ((aName.startsWith("xmlns:")) || (aName.equals("xmlns"))) {
+      if ((aName.startsWith("xmlns:")) || ("xmlns".equals(aName))) {
         continue;
       }
       parts = this.sup.processName(aName, parts, true);
@@ -77,6 +81,7 @@ public class ContentHandlerAdapter implements ContentHandler {
     this.ch.startElement(parts[0], parts[1], parts[2], ai);
   }
 
+  @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     String[] parts = new String[3];
     parts = this.sup.processName(qName, parts, false);
@@ -88,24 +93,33 @@ public class ContentHandlerAdapter implements ContentHandler {
     this.sup.popContext();
   }
 
+  @Override
   public void characters(char[] c, int start, int length) throws SAXException {
     this.ch.characters(c, start, length);
   }
 
+  @Override
   public void ignorableWhitespace(char[] c, int start, int length) throws SAXException {
     this.ch.ignorableWhitespace(c, start, length);
   }
 
+  @Override
   public void processingInstruction(String target, String data) throws SAXException {
     this.ch.processingInstruction(target, data);
   }
 
+  @Override
   public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    // no-op
   }
 
+  @Override
   public void endPrefixMapping(String prefix) throws SAXException {
+    // no-op
   }
 
+  @Override
   public void skippedEntity(String name) throws SAXException {
+    // no-op
   }
 }

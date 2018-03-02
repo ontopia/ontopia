@@ -38,6 +38,7 @@ public class ScopePredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

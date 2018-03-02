@@ -52,14 +52,17 @@ public final class LongIdentity implements IdentityIF, Externalizable {
     this.key = key;
   }
 
+  @Override
   public Class<?> getType() {
     return type;
   }
 
+  @Override
   public int getWidth() {
     return 1;
   }
 
+  @Override
   public Object getKey(int index) {
     return new Long(key);
   }
@@ -68,15 +71,18 @@ public final class LongIdentity implements IdentityIF, Externalizable {
     return key;
   }
   
+  @Override
   public Object createInstance() throws Exception {
     return ((Class)type).newInstance();
   }
   
+  @Override
   public int hashCode() {
     int hashcode = 1 + type.hashCode();
     return 31*hashcode + (int)(key ^ (key >> 32));
   }
 
+  @Override
   public boolean equals(Object object) {
     if (object instanceof LongIdentity) {
       LongIdentity other = (LongIdentity)object;
@@ -105,6 +111,7 @@ public final class LongIdentity implements IdentityIF, Externalizable {
     }
   }
   
+  @Override
   public String toString() {
     return "<LongIdentity [" + key + "] " + type + ">";
   }
@@ -113,16 +120,19 @@ public final class LongIdentity implements IdentityIF, Externalizable {
   // Externalization
   // -----------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(type);
     out.writeLong(key);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     type = (Class<?>) in.readObject();
     key = in.readLong();
   }
 
+  @Override
   public Object clone() {
     try {
       return super.clone();

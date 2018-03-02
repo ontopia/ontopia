@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.jsp.tagext.TagSupport;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,10 +43,10 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
   public static final boolean TAGPOOLING_DEFAULT = false;
 
   // initialize logging facility
-  static Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
 
   // Map between tag names (with namespace prefix) and Java Classes
-  static Map<String, String> classes;
+  private static Map<String, String> classes;
 
   public TaglibTagFactory() {
     this(TAGPOOLING_DEFAULT);
@@ -72,6 +72,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
     return (classes.get(tagname) != null);
   }
 
+  @Override
   public TagSupport getTagInstance(String tagname, Map<String, String> attrVals,
                                    TagSupport parentTag)
     throws NavigatorRuntimeException {

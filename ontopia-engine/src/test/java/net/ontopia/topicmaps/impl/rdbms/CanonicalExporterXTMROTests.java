@@ -20,12 +20,15 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
+import java.net.URL;
+
 public class CanonicalExporterXTMROTests extends CanonicalExporterXTMTests {
 
-  public CanonicalExporterXTMROTests(String root, String filename) {
-    super(root, filename);
+  public CanonicalExporterXTMROTests(URL inputFile, String filename) {
+    super(inputFile, filename);
   }
 
+  @Override
   protected boolean getExportReadOnly() {
     return true;
   }

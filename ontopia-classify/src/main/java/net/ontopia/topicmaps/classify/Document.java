@@ -41,16 +41,19 @@ public class Document implements TextHandlerIF {
     return root;
   }
   
+  @Override
   public void startRegion(String regionName) {
     Region region = new Region(regionName);
     region.setParent(current);
     current = region;
   }
   
+  @Override
   public void text(char[] ch, int start, int length) {
     current.addText(ch, start, length);
   }
 
+  @Override
   public void endRegion() {
     Region parent = current.getParent();
     parent.addRegion(current);

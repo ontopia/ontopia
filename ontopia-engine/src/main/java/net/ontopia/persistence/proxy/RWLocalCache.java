@@ -40,6 +40,7 @@ public class RWLocalCache extends AbstractLocalCache {
   // StorageCacheIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public boolean exists(StorageAccessIF access, IdentityIF identity) {
     // ISSUE: could improve performance if we could keep track of
     // which fields actually were dirty. currently all fields of dirty
@@ -63,6 +64,7 @@ public class RWLocalCache extends AbstractLocalCache {
     return access.loadObject(this, identity);
   }
   
+  @Override
   public Object getValue(StorageAccessIF access, IdentityIF identity, int field) {
     // check object state
     int s = ostates.getState(identity);
@@ -86,9 +88,9 @@ public class RWLocalCache extends AbstractLocalCache {
   // Misc
   // -----------------------------------------------------------------------------
 
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.RWLocalCache@");
+    StringBuilder sb = new StringBuilder("proxy.RWLocalCache@");
     sb.append(System.identityHashCode(this));
     if (pcache != null)
       sb.append(" [parent = ").append(pcache).append(']');

@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -30,14 +31,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -45,13 +45,12 @@ import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.PrettyPrinter;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -64,6 +63,8 @@ import org.xml.sax.helpers.AttributesImpl;
  */
 public class TMXMLWriter extends AbstractTopicMapExporter
   implements TopicMapWriterIF {
+  private static final String CDATA = "CDATA";
+  private static final String SCOPE = "scope";
   public static final String PROPERTY_PREFIXES = "prefixes";
   public static final String PROPERTY_DOCUMENT_ELEMENT = "documentElement";
   protected static final AttributesImpl EMPTY_ATTR_LIST = new AttributesImpl();
@@ -91,24 +92,6 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   // --- Constructors
 
   /**
-   * PUBLIC: Creates a writer writing to the given file in the utf-8
-   * character encoding.
-   */
-  public TMXMLWriter(String filename) throws IOException {
-    this(filename, "utf-8");
-  }
-
-  /**
-   * PUBLIC: Creates a writer writing to the given file in the given
-   * character encoding.
-   */
-  public TMXMLWriter(String filename, String encoding) throws IOException {
-    writer = new OutputStreamWriter(new FileOutputStream(filename), encoding);
-    this.out = makePrinter(writer, encoding);
-    init();
-  }
-
-  /**
    * PUBLIC: Creates a writer writing to the given writer in the utf-8
    * character encoding.
    */
@@ -121,7 +104,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * character encoding.
    * @since 3.2
    */
-  public TMXMLWriter(Writer out, String encoding) throws IOException {
+  public TMXMLWriter(Writer out, String encoding) throws IOException, IOException, IOException {
     this.out = makePrinter(out, encoding);
     init();
   }
@@ -137,6 +120,21 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     init();
   }
   
+  /**
+   * PUBLIC: Creates a writer writing to the given file in given encoding.
+   */
+  public TMXMLWriter(File out, String encoding) throws IOException {
+    writer = new OutputStreamWriter(new FileOutputStream(out), encoding);
+    this.out = makePrinter(writer, encoding);
+    init();
+  }
+
+  public TMXMLWriter(OutputStream out, String encoding) throws IOException {
+    writer = new OutputStreamWriter(out, encoding);
+    this.out = makePrinter(writer, encoding);
+    init();
+  }
+
   /**
    * INTERNAL: Creates a writer writing to the given ContentHandler.
    */
@@ -191,6 +189,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * @exception IOException Thrown if writing the topic map fails.
    * @param topicmap The topic map to be exported.
    */
+  @Override
   public void write(TopicMapIF topicmap) throws IOException {
     try {
       gatherPrefixes(topicmap.getTopics());
@@ -216,7 +215,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String nsuri = (String) it.next();
       String prefix = (String) nsuris.get(nsuri);
 
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xmlns:" + prefix, "CDATA", nsuri);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xmlns:" + prefix, CDATA, nsuri);
     }
 
     if (topicmap != null) // topic map can be null in some situations (particularly when using tmrap)
@@ -262,7 +261,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     if (typeit.hasNext())
       elem = getElementTypeName((TopicIF) typeit.next(), TOPIC);
     
-    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "id", "CDATA", getTopicId(topic));
+    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "id", CDATA, getTopicId(topic));
     out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, elem, atts);
     atts.clear();
     
@@ -292,7 +291,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
       String scope = getScope(bn);
       if (scope != null)
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
 
       addReifierAttribute(bn, atts);
       
@@ -309,9 +308,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         atts.clear();
         scope = getScope(vn);
         if (scope != null)
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
-        if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_STRING))
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", "CDATA", vn.getDataType().getAddress());
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
+        if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_STRING))
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", CDATA, vn.getDataType().getAddress());
 
         addReifierAttribute(vn, atts);
         
@@ -333,9 +332,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
       String scope = getScope(occ);
       if (scope != null && filterOk(scope))
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
-      if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_STRING))
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", "CDATA", occ.getDataType().getAddress());
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
+      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_STRING))
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", CDATA, occ.getDataType().getAddress());
 
       addReifierAttribute(occ, atts);
 
@@ -350,9 +349,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     // if so, we can output them as associations here)
     while (typeit.hasNext()) {
       TopicIF type = (TopicIF) typeit.next();
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", "CDATA", "xtm:instance");
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "otherrole", "CDATA", "xtm:class");
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", "CDATA", getTopicId(type));
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", CDATA, "xtm:instance");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "otherrole", CDATA, "xtm:class");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", CDATA, getTopicId(type));
       out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xtm:class-instance", atts);
       out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xtm:class-instance");
       atts.clear();
@@ -372,8 +371,8 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String assocelem = getElementTypeName(assoc.getType(), ASSOCIATION);
       String scope = getScope(assoc);
       if (scope != null)
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", "CDATA", scope);
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", "CDATA",
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", CDATA,
                         getElementTypeName(role.getType(), ROLE));
 
       addReifierAttribute(assoc, atts);
@@ -385,7 +384,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         Iterator it2 = assoc.getRoles().iterator();
         while (it2.hasNext()) {
           AssociationRoleIF r = (AssociationRoleIF) it2.next();
-          if (r != role) {
+          if (!r.equals(role)) {
             otherrole = r;
             break;
           }
@@ -394,9 +393,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         if (otherrole != null && otherrole.getPlayer() != null) {
           // if unary we skip spec of the other role
           // also skip if player is null
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", "CDATA",
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", CDATA,
                             getTopicId(otherrole.getPlayer()));
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "otherrole", "CDATA",
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "otherrole", CDATA,
                             getElementTypeName(otherrole.getType(), ROLE));
         }
         out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, assocelem, atts);
@@ -408,11 +407,11 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         Iterator it2 = assoc.getRoles().iterator();
         while (it2.hasNext()) {
           AssociationRoleIF r = (AssociationRoleIF) it2.next();
-          if (r == role)
+          if (r.equals(role))
             continue; // this is our role, which is already covered
 
           atts.clear();
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", "CDATA", getTopicId(r.getPlayer()));
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", CDATA, getTopicId(r.getPlayer()));
           String roleelem = getElementTypeName(r.getType(), ROLE);
           out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, roleelem, atts);
           out.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, roleelem);
@@ -639,7 +638,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     if (reifier != null) {
       if (filter == null || filter.ok(reifier)) {
         String reifierAttribute = getTopicId(reifier);
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reifier", "CDATA", reifierAttribute);
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reifier", CDATA, reifierAttribute);
       }
     }
   }
@@ -653,6 +652,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * </ul>
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_DOCUMENT_ELEMENT);
     if ((value != null) && (value instanceof String)) {

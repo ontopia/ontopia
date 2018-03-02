@@ -20,16 +20,10 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.BodyContent;
 
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class AttributeTag extends BodyTagSupport {
   
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(AttributeTag.class.getName());
 
   // tag attributes
@@ -53,6 +47,7 @@ public class AttributeTag extends BodyTagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     return EVAL_BODY_BUFFERED;
   }
@@ -60,6 +55,7 @@ public class AttributeTag extends BodyTagSupport {
   /**
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     ElementTag elementTag = (ElementTag)
       findAncestorWithClass(this, ElementTag.class);
@@ -86,6 +82,7 @@ public class AttributeTag extends BodyTagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

@@ -88,50 +88,60 @@ public class QueryProcessor implements QueryProcessorIF {
     return access.getStorage().getProperty(name);
   }
 
+  @Override
   public QueryResultIF execute(String query) throws InvalidQueryException {
     return parseQuery(query, null).execute();
   }
 
+  @Override
   public QueryResultIF execute(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     return parseQuery(query, context).execute();
   }  
 
+  @Override
   public QueryResultIF execute(String query, Map arguments)
     throws InvalidQueryException {
     return parseQuery(query, null).execute(arguments);
   }
 
+  @Override
   public QueryResultIF execute(String query, Map arguments,
                                DeclarationContextIF context)
     throws InvalidQueryException {
     return parseQuery(query, context).execute(arguments);
   }
 
+  @Override
   public int update(String query) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int update(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public int update(String query, Map<String, ?> arguments)
     throws InvalidQueryException {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int update(String query, Map<String, ?> arguments,
                     DeclarationContextIF context)
     throws InvalidQueryException {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return parseQuery(query, null);
   }
 
+  @Override
   public ParsedQueryIF parse(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     return parseQuery(query, context);
@@ -156,21 +166,25 @@ public class QueryProcessor implements QueryProcessorIF {
                            QueryOptimizer.getOptimizer(tquery).optimize(tquery));
   }
 
+  @Override
   public ParsedModificationStatementIF parseUpdate(String statement)
     throws InvalidQueryException {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public ParsedModificationStatementIF parseUpdate(String statement,
                                                    DeclarationContextIF context)
     throws InvalidQueryException {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public void load(String ruleset) throws InvalidQueryException {
     parser.load(ruleset);
   }
 
+  @Override
   public void load(Reader ruleset) throws InvalidQueryException, IOException {
     parser.load(ruleset);
   }

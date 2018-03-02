@@ -19,9 +19,9 @@
  */
 package ontopoly.components;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.OntopolyModelRuntimeException;
 import ontopoly.models.FieldValueModel;
@@ -81,7 +81,7 @@ public class FieldInstanceTextArea extends TextArea<String> {
     super.onModelChanged();
     try {
       String newValue = (String)getModelObject();
-      if (ObjectUtils.equals(newValue, oldValue)) return;
+      if (Objects.equals(newValue, oldValue)) return;
       AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
       FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
       if (fieldValueModel.isExistingValue() && oldValue != null)

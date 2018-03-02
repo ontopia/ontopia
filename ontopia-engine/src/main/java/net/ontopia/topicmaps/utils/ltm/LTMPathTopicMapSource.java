@@ -20,11 +20,10 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
-import java.net.URL;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.FileOutputStream;
+import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyTopicMapSource;
@@ -56,6 +55,7 @@ public class LTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     super(path, filter);
   }
 
+  @Override
   public TopicMapReferenceIF createReference(URL url, String id, String title,
                                              LocatorIF base) {
     LTMTopicMapReference ref = new LTMTopicMapReference(url, id, title, base);
@@ -67,7 +67,8 @@ public class LTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     return ref;
   }
 
+  @Override
   public TopicMapWriterIF getWriter(File file) throws IOException {
-    return new LTMTopicMapWriter(new FileOutputStream(file));
+    return new LTMTopicMapWriter(file);
   }
 }

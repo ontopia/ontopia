@@ -36,15 +36,18 @@ public class Variable {
 
   /// Object
 
+  @Override
   public String toString() {
     return "$" + name;
   }
 
+  @Override
   public boolean equals(Object obj) {
     return obj instanceof Variable &&
       name.equals(((Variable) obj).name);
   }
 
+  @Override
   public int hashCode() {
     return name.hashCode();
   }

@@ -30,6 +30,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

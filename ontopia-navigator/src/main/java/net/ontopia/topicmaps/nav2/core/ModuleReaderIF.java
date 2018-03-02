@@ -39,6 +39,6 @@ public interface ModuleReaderIF {
    * @return A Map containing a String with the function name and as
    *         the associated value the FunctionIF object.
    */
-  public Map read(InputStream stream) throws IOException, SAXException;
+  Map read(InputStream stream) throws IOException, SAXException;
 
 }

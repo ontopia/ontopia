@@ -40,10 +40,8 @@ import org.slf4j.LoggerFactory;
 public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
 
-  final static Integer DATA = new Integer(1); 
-  
   protected JChannel dchannel;
   
   protected String clusterId;
@@ -54,13 +52,14 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
 
   // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
   
-  JGroupsCluster(String clusterId, String clusterProps, StorageIF storage) {
+  protected JGroupsCluster(String clusterId, String clusterProps, StorageIF storage) {
     this.clusterId = clusterId;
     this.clusterProps = clusterProps;
     this.storage = storage;
     this.queue = new ConcurrentLinkedQueue<JGroupsEvent>();
   }
   
+  @Override
   public synchronized void join() {   
     try {
       String joinMessage = "Joining JGroups cluster: '" + clusterId + "'";
@@ -94,6 +93,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     }
   }
   
+  @Override
   public synchronized void leave() {
     log.info("Leaving cluster: '" + clusterId + "'");
     flush();
@@ -103,6 +103,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     }
   }
   
+  @Override
   public void evictIdentity(IdentityIF identity) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_IDENTITY_EVICT;
@@ -110,6 +111,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
   
+  @Override
   public void evictFields(IdentityIF identity) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_FIELDS_EVICT;
@@ -117,6 +119,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
   
+  @Override
   public void evictField(IdentityIF identity, int field) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_FIELD_EVICT;
@@ -125,12 +128,14 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
 
+  @Override
   public void clearDatacache() {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = ClusterIF.DATA_CACHE_CLEAR;
     queue(e);
   }
   
+  @Override
   public void evictCache(IdentityIF namespace, int cacheType, Object key) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = cacheType; // event type is same as cache type
@@ -139,6 +144,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
   
+  @Override
   public void evictCache(IdentityIF namespace, int cacheType, Collection keys) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = cacheType; // event type is same as cache type
@@ -147,6 +153,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     queue(e);
   }
 
+  @Override
   public void clearCache(IdentityIF namespace, int cacheType) {
     JGroupsEvent e = new JGroupsEvent();
     e.eventType = cacheType + 1; // event type is same as cache type + 1
@@ -162,6 +169,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
   // Event I/O
   // -----------------------------------------------------------------------------
 
+  @Override
   public synchronized void flush() {
     // retrieve all pending events from event queue
     JGroupsEvent o = queue.poll();

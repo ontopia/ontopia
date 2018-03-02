@@ -45,6 +45,7 @@ public class ActionUtilsTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     // only read in registry once (we are not modifying it)

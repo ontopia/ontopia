@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.viz;
 
+import com.touchgraph.graphlayout.Node;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -37,10 +38,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Vector;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -65,12 +65,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.utils.SimpleFileFilter;
-
-import com.touchgraph.graphlayout.Node;
 
 /**
  * This class provides a display to allow the user to define which colours are
@@ -82,35 +79,16 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
   public static final int UNDEFINED_NODE_SHAPE_PADDING = -1;
   public static final int UNDEFINED_NODE_SHAPE = -1;
  
-  private static String[] AVAILABLE_SIZES = { "9", "10", "11", "12", "14", 
+  private static final String[] AVAILABLE_SIZES = { "9", "10", "11", "12", "14", 
       "16", "18", "20", "22", "24", "28", "36" };
-
-  public static TypesConfigFrame createAssociationTypeConfigFrame(
-      VizController controller, VizDesktop desktop) {
-    controller.loadAssociationTypes();
-    TypesConfigFrame frame = new TypesConfigFrame(controller, desktop);
-    frame.setAssociationTypeModel();
-    frame.build();
-    return frame;
-  }
-
-  public static TypesConfigFrame createTopicTypeConfigFrame(
-      VizController controller, VizDesktop desktop) {
-    controller.loadTopicTypes();
-    TypesConfigFrame frame = new TypesConfigFrame(controller, desktop);
-    frame.setTopicTypeModel();
-    frame.build();
-    return frame;
-  }
 
   private JColorChooser chooser;
 
   private VizController controller;
   private ConfigurationModelIF model;
   private TopicIF selectedType;
-  private JList typeList;
-  private JPanel colorChooserPanel;
-  boolean ignoreSelection = false;
+  private JList<TopicListItem> typeList;
+  private boolean ignoreSelection = false;
   private ButtonGroup buttonGroup; // Shape buttons
   private ButtonGroup filterGroup; // Filter buttons
   private JTextField filenameField;
@@ -145,6 +123,24 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
   private JRadioButton filterDefault;
   
   private JButton defaultButton;
+  
+  public static TypesConfigFrame createAssociationTypeConfigFrame(
+      VizController controller, VizDesktop desktop) {
+    controller.loadAssociationTypes();
+    TypesConfigFrame frame = new TypesConfigFrame(controller, desktop);
+    frame.setAssociationTypeModel();
+    frame.build();
+    return frame;
+  }
+
+  public static TypesConfigFrame createTopicTypeConfigFrame(
+      VizController controller, VizDesktop desktop) {
+    controller.loadTopicTypes();
+    TypesConfigFrame frame = new TypesConfigFrame(controller, desktop);
+    frame.setTopicTypeModel();
+    frame.build();
+    return frame;
+  }
 
   private TypesConfigFrame(VizController controller, VizDesktop desktop) {
     super();
@@ -159,12 +155,12 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     setTitle(model.getTitle());
 
     // populate JList
-    typeList = new JList();
+    typeList = new JList<>();
     initializeTypeList();
     
     // Set the first
     typeList.setSelectedIndex(0);
-    selectedType = ((TopicListItem)typeList.getSelectedValue()).getTopic();
+    selectedType = typeList.getSelectedValue().getTopic();
 
     // setup UI
     getContentPane().setLayout(new GridBagLayout());
@@ -179,8 +175,6 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
 
     JTabbedPane tabbedPane = new JTabbedPane();
     
-    colorChooserPanel = createColorChooserPanel();
-
     tabbedPane
         .addTab(
             Messages.getString("Viz.StylingConfigTitle"), null,
@@ -189,7 +183,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     tabbedPane
         .addTab(
             Messages.getString("Viz.ColourConfigTitle"), null,
-                colorChooserPanel,
+                createColorChooserPanel(),
             Messages.getString("Viz.ColourConfigHoverHelp"));
     tabbedPane
         .addTab(
@@ -221,6 +215,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     defaultButton = new JButton(Messages
         .getString("Viz.UseDefaultSettings"));
     defaultButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         VizTopicMapConfigurationManager confMan = controller
             .getConfigurationManager();
@@ -292,6 +287,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     
     public void setupCheckBox() {
       addActionListener(new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
           VizTopicMapConfigurationManager confMan = controller
               .getConfigurationManager();
@@ -389,6 +385,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
    * old default color is selected.
    */
   public class VizColorSelectionModel extends DefaultColorSelectionModel {
+    @Override
     public void setSelectedColor(Color color) {
       super.setSelectedColor(color);
       if (color != null && getSelectedColor().equals(color))
@@ -404,6 +401,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     // remove the preview panel from use.
     chooser.setPreviewPanel(new JPanel());
     chooser.getSelectionModel().addChangeListener(new ChangeListener() {
+      @Override
       public void stateChanged(ChangeEvent e) {
         if (typeList.getSelectedIndex() == -1) return;
 
@@ -429,7 +427,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
    * Initialize the list of topic types.
    */
   protected void initializeTypeList() {
-    Vector ttypes = new Vector();
+    List<TopicListItem> ttypes = new ArrayList<>();
     Collection graphtypes = model.getListItems(controller);
     // sort the topics
     graphtypes = new ArrayList(graphtypes);
@@ -447,7 +445,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
         ttypes.add(new TopicListItem(t, controller.getStringifier()));
     }
     model.addAdditionalItems(ttypes);
-    typeList.setListData(ttypes);
+    typeList.setListData(ttypes.toArray(new TopicListItem[ttypes.size()]));
   }
   
   /**
@@ -491,11 +489,12 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
 
     JScrollPane fontpane = new JScrollPane(fontList);
     fontList.addListSelectionListener(new ListSelectionListener() {
+      @Override
       public void valueChanged(ListSelectionEvent e) {
         // Only handle the change in selection when the user has finally made 
         // his selection !
 
-        if (e.getValueIsAdjusting() == true) return;
+        if (e.getValueIsAdjusting()) return;
         buildAndSetFont();
       }
     });
@@ -511,6 +510,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     sizeList = new JList(AVAILABLE_SIZES);
     sizeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     sizeList.addListSelectionListener(new ListSelectionListener() {
+      @Override
       public void valueChanged(ListSelectionEvent e) {
         // Only handle the change in selection when the user has finally made
         // his selection !
@@ -529,6 +529,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
         .getString("Viz.FontAttributesBorderTitle")));
     bold = new JCheckBox(Messages.getString("Viz.FontBold"));
     bold.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         buildAndSetFont();
       }
@@ -536,6 +537,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
 
     italic = new JCheckBox(Messages.getString("Viz.FontItalic"));
     italic.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         buildAndSetFont();
       }
@@ -615,6 +617,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     bowtie = new JRadioButton(Messages
         .getString("Viz.ObjectShapeBowtie"));
     bowtie.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setShape(TMRoleEdge.SHAPE_BOWTIE);
       }
@@ -625,6 +628,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     line = new JRadioButton(Messages
         .getString("Viz.ObjectShapeLine"));
     line.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setShape(TMRoleEdge.SHAPE_LINE);
       }
@@ -655,6 +659,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
 
     filterIn = new JRadioButton(Messages.getString("Viz.FilterIn"));
     filterIn.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setFilter(VizTopicMapConfigurationManager.FILTER_IN);
       }
@@ -664,6 +669,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     
     filterOut = new JRadioButton(Messages.getString("Viz.FilterOut"));
     filterOut.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setFilter(VizTopicMapConfigurationManager.FILTER_OUT);
       }
@@ -674,6 +680,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     filterDefault = new JRadioButton(Messages
         .getString("Viz.UseDefaultFilterSetting"));
     filterDefault.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setFilter(VizTopicMapConfigurationManager.FILTER_DEFAULT);
       }
@@ -701,6 +708,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     weight = new JSlider(JSlider.HORIZONTAL, min, max, 1);
     weight.addChangeListener(new ChangeListener() {
 
+      @Override
       public void stateChanged(ChangeEvent e) {
         setWeight(((JSlider) e.getSource()).getValue());
       }
@@ -749,6 +757,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     JButton fileButton = new JButton(Messages.getString("Viz.IconBrowseButton"));
     fileButton.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent e) {
         try {
           String filename = promptForFile();
@@ -770,6 +779,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     clearButton.setEnabled(false);
     clearButton.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent anE) {
         setSelectedIconFilename(null);
         setIconFilename(null);
@@ -793,6 +803,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     circle = new JRadioButton(Messages
         .getString("Viz.ObjectShapeCircle"));
     circle.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setShape(Node.TYPE_CIRCLE);
       }
@@ -805,6 +816,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
         .getString("Viz.ObjectShapeEllipse"));
     ellipse.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent e) {
 
         setShape(Node.TYPE_ELLIPSE);
@@ -816,6 +828,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     rectangle = new JRadioButton(Messages
         .getString("Viz.ObjectShapeRectangle"));
     rectangle.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setShape(Node.TYPE_RECTANGLE);
       }
@@ -826,6 +839,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     round = new JRadioButton(Messages
         .getString("Viz.ObjectShapeRoundRectangle"));
     round.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         setShape(Node.TYPE_ROUNDRECT);
       }
@@ -957,6 +971,7 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
     model = new TopicTypeConfigurationModel();
   }
   
+  @Override
   public void valueChanged(ListSelectionEvent e) {
     // Only handle the change in selection when the user has finally made his
     // selection !
@@ -1085,26 +1100,26 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
    */
   private interface ConfigurationModelIF {
 
-    public void addAdditionalItems(Vector ttypes);
+    void addAdditionalItems(List ttypes);
 
-    public void buildGeneralConfigPanel(TypesConfigFrame frame, JPanel config);
+    void buildGeneralConfigPanel(TypesConfigFrame frame, JPanel config);
 
-    public int getWeight(VizController controller, TopicIF selectedType);
+    int getWeight(VizController controller, TopicIF selectedType);
 
-    public Collection getListItems(VizController controller);
+    Collection getListItems(VizController controller);
 
-    public int getShape(VizController controller, TopicIF selectedType);
+    int getShape(VizController controller, TopicIF selectedType);
 
-    public String getTitle();
+    String getTitle();
 
-    public void setWeight(VizController controller, TopicIF selectedType,
-                          int i);
+    void setWeight(VizController controller, TopicIF selectedType,
+                   int i);
 
-    public void setFilter(VizController controller, TopicIF selectedType, int i);
+    void setFilter(VizController controller, TopicIF selectedType, int i);
 
-    public void setShape(VizController controller, TopicIF selectedType, int i);
+    void setShape(VizController controller, TopicIF selectedType, int i);
 
-    public Color getColor(VizController controller, TopicIF selectedType);
+    Color getColor(VizController controller, TopicIF selectedType);
 
   }
   
@@ -1115,44 +1130,54 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
   private class AssociationTypeConfigurationModel implements
       ConfigurationModelIF {
 
-    public void addAdditionalItems(Vector ttypes) {
+    @Override
+    public void addAdditionalItems(List ttypes) {
       // For association types do nothing
     }
 
+    @Override
     public void buildGeneralConfigPanel(TypesConfigFrame frame, JPanel config) {
       frame.buildAssociationTypeGeneralConfigPanel(config);
     }
 
+    @Override
     public Color getColor(VizController controller, TopicIF selectedType) {
       return controller.getAssociationTypeColor(selectedType);
     }
 
+    @Override
     public int getWeight(VizController controller, TopicIF selectedType) {
       return controller.getAssoicationTypeLineWeight(selectedType);
     }
 
+    @Override
     public Collection getListItems(VizController controller) {
       return controller.getAssociationTypes();
     }
 
+    @Override
     public int getShape(VizController controller, TopicIF selectedType) {
       return controller.getAssoicationTypeShape(selectedType);
     }
 
+    @Override
     public String getTitle() {
       return Messages.getString("Viz.AssociationTypeConfiguration");
     }
 
+    @Override
     public void setWeight(VizController controller, TopicIF selectedType,
         int i) {
       controller.setAssociationTypeLineWeight(selectedType, i);
     }
 
+    @Override
     public void setFilter(VizController controller, TopicIF selectedType,
         int i) {
       controller.setAssociationTypeVisibility(selectedType, i);
     }
 
+    @Override
     public void setShape(VizController controller, TopicIF selectedType,
         int i) {
       controller.setAssociationTypeShape(selectedType, i);
@@ -1165,44 +1190,54 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
    */
   private class TopicTypeConfigurationModel implements ConfigurationModelIF {
 
-    public void addAdditionalItems(Vector ttypes) {
+    @Override
+    public void addAdditionalItems(List ttypes) {
       ttypes.add(new TopicListItem(Messages.getString("Viz.Untyped"))); 
      }
 
+    @Override
     public void buildGeneralConfigPanel(TypesConfigFrame frame, JPanel config) {
       frame.buildTopicTypeGeneralConfigPanel(config);
     }
 
+    @Override
     public Color getColor(VizController controller, TopicIF selectedType) {
       return controller.getTopicTypeColor(selectedType);
     }
 
+    @Override
     public int getWeight(VizController controller, TopicIF selectedType) {
       return controller.getTopicTypeShapePadding(selectedType);
     }
 
+    @Override
     public Collection getListItems(VizController controller) {
       return controller.getAllTopicTypesWithNull();
     }
 
+    @Override
     public int getShape(VizController controller, TopicIF selectedType) {
       return controller.getTopicTypeShape(selectedType);
     }
 
+    @Override
     public String getTitle() {
       return Messages.getString("Viz.TopicTypeConfiguration");
     }
 
+    @Override
     public void setWeight(VizController controller, TopicIF selectedType,
                           int i) {
       controller.setTopicTypeShapePadding(selectedType, i);
     }
 
+    @Override
     public void setFilter(VizController controller, TopicIF selectedType,
                          int i) {
       controller.setTopicTypeVisibility(selectedType, i);
     }
 
+    @Override
     public void setShape(VizController controller, TopicIF selectedType,
                          int i) {
       controller.setTopicTypeShape(selectedType, i);

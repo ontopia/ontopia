@@ -41,7 +41,7 @@ public interface QueryComponentIF {
    * produces a new QueryMatches instance based on information in the
    * input instance.
    */
-  public QueryMatches satisfy(QueryMatches matches, Map arguments)
+  QueryMatches satisfy(QueryMatches matches, Map arguments)
     throws InvalidQueryException;
   
 }

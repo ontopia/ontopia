@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 import junit.framework.TestCase;
 
@@ -38,6 +37,7 @@ public abstract class AbstractTopicMapTest extends TestCase {
 
   protected abstract TestFactoryIF getFactory() throws Exception;
   
+  @Override
   protected void setUp() throws Exception {
     factory = getFactory();
     // Get a new topic map object from the factory.
@@ -49,6 +49,7 @@ public abstract class AbstractTopicMapTest extends TestCase {
     assertTrue("Null builder!", builder != null);
   }
 
+  @Override
   protected void tearDown() {
     if (topicmapRef != null) {
       // Inform the factory that the topic map is not needed anymore.

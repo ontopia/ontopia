@@ -45,6 +45,7 @@ public class GrabberComparator<T, G> implements Comparator<T> {
     this.comparator = comparator;
   }
  
+  @Override
   public int compare(T object1, T object2) {
     // Grab objects
     G grabbed1 = grabber1.grab(object1);

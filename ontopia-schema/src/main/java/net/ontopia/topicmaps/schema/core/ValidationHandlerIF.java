@@ -34,7 +34,7 @@ public interface ValidationHandlerIF {
    * begins.  When single topics or associations are validated this
    * method is not called.
    */   
-  public void startValidation();
+  void startValidation();
 
   /**
    * PUBLIC: Called when violations of the schema are discovered.
@@ -45,7 +45,7 @@ public interface ValidationHandlerIF {
    * @exception SchemaViolationException Implementations may throw this
    *            exception if they wish to halt validation.
    */
-  public void violation(String message, TMObjectIF container, Object offender,
+  void violation(String message, TMObjectIF container, Object offender,
                         ConstraintIF constraint)
     throws SchemaViolationException;
 
@@ -54,6 +54,6 @@ public interface ValidationHandlerIF {
    * single topics or associations are validated this method is not
    * called.
    */
-  public void endValidation();
+  void endValidation();
   
 }

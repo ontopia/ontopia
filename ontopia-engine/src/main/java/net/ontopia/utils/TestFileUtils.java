@@ -21,17 +21,26 @@
 package net.ontopia.utils;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
+import org.apache.commons.collections4.Transformer;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class TestFileUtils {
 	
+  public static final String testdataInputRoot = "net/ontopia/testdata/";
+  private static String testdataOutputRoot = null;
+
   public static void verifyDirectory(String dir) {
     File thedir = new File(dir);
     if (!thedir.exists())
@@ -50,10 +59,40 @@ public class TestFileUtils {
     if (!thedir.exists())
       thedir.mkdirs();
   }
+  
+  public static File getOutputDirectory(String... path) {
+    File out = new File(getTestdataOutputDirectory());
+    for (String part : path) {
+      out = new File(out, part);
+    }
+    out.mkdirs();
+    return out;
+  }
 
-  public static final String testdataInputRoot = "net/ontopia/testdata/";
-  private static String testdataOutputRoot = null;
-
+  public static List<Object[]> getTestInputURLs(String... pathParts) {
+    return getTestInputURLs(null, pathParts);
+  }
+  public static List<Object[]> getFilteredTestInputURLs(String extension, String... pathParts) {
+    return getTestInputURLs(new ResourcesDirectoryReader.FilenameExtensionFilter(extension), pathParts);
+  }
+  public static List<Object[]> getTestInputURLs(ResourcesFilterIF filter, String... pathParts) {
+    String path = testdataInputRoot;
+    for (String part : pathParts) {
+      path += part + File.separator;
+    }
+    ResourcesDirectoryReader directoryReader = (filter == null ? new ResourcesDirectoryReader(path) : new ResourcesDirectoryReader(path, filter));
+    Collection<Object[]> collected = org.apache.commons.collections4.CollectionUtils.collect(directoryReader.getResources(), new Transformer<URL, Object[]>() {
+      @Override
+      public Object[] transform(URL input) {
+        Object[] o = new Object[2];
+        o[0] = input;
+        o[1] = input.getFile().substring(input.getFile().lastIndexOf("/") + 1);
+        return o;
+      }
+    });
+    return new ArrayList<>(collected);
+  }
+  
   public static List<String[]> getTestInputFiles(String baseDirectory,
                                        String subDirectory, String filter) {
     return getTestInputFiles(baseDirectory + "/" + subDirectory, filter);
@@ -80,13 +119,13 @@ public class TestFileUtils {
 
   public static List<String[]> getTestInputFiles(ResourcesDirectoryReader directoryReader,
                                        String resourcesDirectory) {
-    Set<String> resources = directoryReader.getResources();
-    if (resources.size() == 0)
+    Collection<String> resources = directoryReader.getResourcesAsStrings();
+    if (resources.isEmpty())
       throw new RuntimeException("No resources found in directory " +
                                  resourcesDirectory);
     List<String[]> tests = new ArrayList<String[]>();
     for (String resource : resources) {
-      int slashPos = resource.lastIndexOf("/") + 1;
+      int slashPos = resource.lastIndexOf('/') + 1;
       String root = resource.substring(0, slashPos);
       String filename = resource.substring(slashPos);
       tests.add(new String[] {root, filename});
@@ -96,6 +135,16 @@ public class TestFileUtils {
 
   public static String getTestInputFile(String directory, String filename) {
     return "classpath:" + testdataInputRoot + directory + "/" + filename;
+  }
+
+  public static URL getTestInputURL(String... path) throws FileNotFoundException {
+    return getTestInputURL(testdataInputRoot + StringUtils.join(path, "/"));
+  }
+
+  public static URL getTestInputURL(String resource) throws FileNotFoundException {
+    URL url = Thread.currentThread().getContextClassLoader().getResource(resource.startsWith("classpath:") ? resource.substring("classpath:".length()) : resource);
+    if (url == null) throw new FileNotFoundException("Test resource " + resource + " not found");
+    return url;
   }
 
   public static String getTestInputFile(String directory, String subDirectory,
@@ -118,7 +167,7 @@ public class TestFileUtils {
     // transfer test data from resource to file
     InputStream streamin = StreamUtils.getInputStream(filein);
     FileOutputStream streamout = new FileOutputStream(fileout);
-    StreamUtils.transfer(streamin, streamout);
+    IOUtils.copy(streamin, streamout);
     streamout.close();
     streamin.close();
     return fileout;
@@ -153,47 +202,49 @@ public class TestFileUtils {
 
   public static void transferTestInputDirectory(String directory)
     throws IOException {
-    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory));
+    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory), directory);
   }
 
   public static void transferTestInputDirectory(String directory,
                                                 boolean searchSubdirectories)
     throws IOException {
-    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories));
+    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories), directory);
   }
 
   public static void transferTestInputDirectory(String directory, String filter)
     throws IOException {
-    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, filter));
+    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, filter), directory);
   }
 
   public static void transferTestInputDirectory(String directory,
                                                 boolean searchSubdirectories,
                                                 String filter)
     throws IOException {
-    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories, filter));
+    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories, filter), directory);
   }
 
   public static void transferTestInputDirectory(String directory,
                                                 ResourcesFilterIF filter)
     throws IOException {
-    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, filter));
+    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, filter), directory);
   }
 
   public static void transferTestInputDirectory(String directory,
                                                 boolean searchSubdirectories,
                                                 ResourcesFilterIF filter)
     throws IOException {
-    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories, filter));
+    transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories, filter), directory);
   }
 
-  public static void transferTestInputDirectory(ResourcesDirectoryReader directoryReader) throws IOException {
-    Set<String> resources = directoryReader.getResources();
-    for (String resource : resources) {
-      int slashPos = resource.lastIndexOf("/") + 1;
-      String root = resource.substring(testdataInputRoot.length(), slashPos);
-      String filename = resource.substring(slashPos);
-      getTransferredTestInputFile(root, filename);
+  public static void transferTestInputDirectory(ResourcesDirectoryReader directoryReader, String path) throws IOException {
+    for (URL resource : directoryReader.getResources()) {
+      String relative = resource.getFile();
+      relative = relative.substring(relative.lastIndexOf(path));
+      File file = new File(new File(getTestdataOutputDirectory()), relative);
+      file.getParentFile().mkdirs();
+      try (InputStream in = resource.openStream(); OutputStream out = new FileOutputStream(file)) {
+        IOUtils.copy(in, out);
+      }
     }
   }
 
@@ -237,5 +288,22 @@ public class TestFileUtils {
     }
     return testdataOutputRoot;
   }
+  
+  /**
+    * INTERNAL: Compares the contents of a file and a resource that will be loaded from classpath
+    */
+  public static boolean compareFileToResource(String fileName, String resourceName) throws IOException {
+    try (FileInputStream in1 = new FileInputStream(fileName); InputStream in2 = StreamUtils.getInputStream(resourceName)) {
+      return IOUtils.contentEquals(in1, in2);
+    }
+  }
 
+  /**
+    * INTERNAL: Compares the contents of a file and a resource that will be loaded from classpath
+    */
+  public static boolean compareFileToResource(File file, String resourceName) throws IOException {
+    try (FileInputStream in1 = new FileInputStream(file); InputStream in2 = StreamUtils.getInputStream(resourceName)) {
+      return IOUtils.contentEquals(in1, in2);
+    }
+  }
 }

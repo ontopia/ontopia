@@ -46,6 +46,7 @@ public class NameType extends AbstractTypingTopic {
     return PSI.ON_NAME_TYPE;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof NameType))
       return false;
@@ -69,6 +70,7 @@ public class NameType extends AbstractTypingTopic {
     QueryMapper<NameField> qm = getTopicMap().newQueryMapper(NameField.class);    
     return qm.queryForList(query,
         new RowMapperIF<NameField>() {
+          @Override
           public NameField mapRow(QueryResultIF result, int rowno) {
             TopicIF fieldTopic = (TopicIF)result.getValue(0);
             return new NameField(fieldTopic, getTopicMap(), new NameType(getTopicIF(), getTopicMap()));

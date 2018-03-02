@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: Utilities for encrypting files. Replaces the old
@@ -48,7 +49,7 @@ public class EncryptionUtils {
 
     FileOutputStream out = new FileOutputStream(file);
     ByteArrayInputStream src = new ByteArrayInputStream(tmpout.toByteArray());
-    StreamUtils.transfer(src, out);
+    IOUtils.copy(src, out);
     out.close();
   }
 
@@ -71,7 +72,7 @@ public class EncryptionUtils {
   public static void encrypt(InputStream in, OutputStream out)
     throws IOException {
 
-    StreamUtils.transfer(new EncryptedInputStream(in), out);
+    IOUtils.copy(new EncryptedInputStream(in), out);
     
   }
 

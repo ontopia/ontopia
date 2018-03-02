@@ -34,21 +34,15 @@ import org.slf4j.LoggerFactory;
 public class WhenTag extends IfTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
 
   // members
   protected ChooseTag parentChooser;
   
   /**
-   * Default constructor.
-   */
-  public WhenTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     parentChooser = (ChooseTag) findAncestorWithClass(this, ChooseTag.class);
     if (parentChooser == null)
@@ -79,6 +73,7 @@ public class WhenTag extends IfTag {
   /** 
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     parentChooser.setFoundMatchingWhen();
     
@@ -88,6 +83,7 @@ public class WhenTag extends IfTag {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // reset members
     parentChooser = null;

@@ -114,6 +114,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
         listView.removeAll();
       updateDependentComponents(target);
     }   
+    @Override
     protected void onError(AjaxRequestTarget target, RuntimeException e) {
       target.addComponent(feedbackPanel);
     }
@@ -130,6 +131,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   
   protected class AbstractFieldInstancePanelFeedbackMessageFilter implements IFeedbackMessageFilter {
 
+    @Override
     public boolean accept(FeedbackMessage message) {
       Serializable value = message.getMessage();
       if (value instanceof AbstractFieldInstanceMessage<?>) {
@@ -153,6 +155,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     public T getMessage() {
       return message;
     }
+    @Override
     public String toString() {
       return getMessage().toString();
     }    

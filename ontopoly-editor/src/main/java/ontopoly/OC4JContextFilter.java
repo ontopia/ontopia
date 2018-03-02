@@ -38,11 +38,13 @@ public class OC4JContextFilter implements Filter {
     //Used to store the servlet mapping URL that is defined in the web.xml  
     private String servletMappingContext;  
   
+    @Override
     public void destroy() {  
         config = null;  
         servletMappingContext = null;  
     }  
   
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {  
         HttpServletRequest httpRequest = (HttpServletRequest)request;  
         HttpServletResponse httpResponse = (HttpServletResponse)response;  
@@ -72,6 +74,7 @@ public class OC4JContextFilter implements Filter {
         servletMappingContext = requestURI+="/";  
     }  
   
+    @Override
     public void init(FilterConfig config) throws ServletException {  
         this.config = config;  
     }  
@@ -81,6 +84,7 @@ public class OC4JContextFilter implements Filter {
         public myServletResponse(HttpServletResponse arg0) {  
             super(arg0);  
         }  
+        @Override
         public void sendRedirect(String arg0) throws IOException {  
             // Add the context to the query string  
             super.sendRedirect(servletMappingContext+arg0);  

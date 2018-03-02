@@ -31,7 +31,7 @@ public interface InputSourceFactoryIF {
   /**
    * INTERNAL: Creates a SAX InputSource object.
    */
-  public InputSource createInputSource();
+  InputSource createInputSource();
     
 }
 

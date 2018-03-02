@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -49,7 +50,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.jena.rdf.model.AnonId;
 import org.apache.jena.rdf.model.Literal;
@@ -216,6 +216,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
   
   /// the actual writer
   
+  @Override
   public void write(TopicMapIF topicmap) {
     // http://www.ilrt.bris.ac.uk/discovery/chatlogs/rdfig/2003-12-17#T12-14-33
     setup(topicmap);
@@ -292,7 +293,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     while (it2.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it2.next();
       
-      if (ObjectUtils.equals(occ.getDataType(), DataTypes.TYPE_URI))
+      if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
         statement(subject, getResource(occ.getType()),
                   getResource(occ.getLocator()), occ);
       else
@@ -517,29 +518,37 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       this.uri = uri;
     }
     
+    @Override
     public boolean isAnonymous() {
       return false;
     }
 
+    @Override
     public String getAnonymousID() {
       return null;
     }
 
+    @Override
     public String getURI() {
       return uri;
     }
 
+    @Override
     public Object getUserData() {
       return null;
     }
 
+    @Override
     public void setUserData(Object d) {
+      // no-op
     }
 
+    @Override
     public int hashCode() {
       return uri.hashCode();
     }
 
+    @Override
     public boolean equals(Object obj) {
       if (obj instanceof AResource)
         return uri.equals(((AResource) obj).getURI());
@@ -547,10 +556,12 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
         return false;
     }
 
+    @Override
     public String toString() {
       return "<" + uri + ">";
     }
 
+    @Override
     public boolean hasNodeID() {
       return false;
     }    
@@ -563,29 +574,37 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       this.anonid = anonid;
     }
     
+    @Override
     public boolean isAnonymous() {
       return true;
     }
 
+    @Override
     public String getAnonymousID() {
       return anonid;
     }
 
+    @Override
     public String getURI() {
       return null;
     }
 
+    @Override
     public Object getUserData() {
       return null;
     }
 
+    @Override
     public void setUserData(Object d) {
+      // no-op
     }
 
+    @Override
     public int hashCode() {
       return anonid.hashCode();
     }
 
+    @Override
     public boolean equals(Object obj) {
       if (obj instanceof AResource)
         return anonid.equals(((AResource) obj).getAnonymousID());
@@ -593,10 +612,12 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
         return false;
     }
 
+    @Override
     public String toString() {
       return "<<<" + anonid + ">>>";
     }
 
+    @Override
     public boolean hasNodeID() {
       return true;
     }    
@@ -606,37 +627,43 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
   class ALiteralWrapper implements ALiteral {
     private String value;
+    private boolean tainted;
 
     public ALiteralWrapper(String value) {
       this.value = value;
     }
     
+    @Override
     public boolean isWellFormedXML() {
       return false;
     }
 
+    @Override
     public String getParseType() {
       return null;
     }
 
+    @Override
     public String toString() {
       return value;
     }
 
+    @Override
     public String getLang() {
       return null;
     }
 
+    @Override
     public String getDatatypeURI() {
       return null;
     }
 
-    private boolean tainted;
-  
+    @Override
     public void taint() {
       tainted = true;
     }
   
+    @Override
     public boolean isTainted() {
       return tainted;
     }
@@ -651,10 +678,12 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       this.model = model;
     }
     
+    @Override
     public void statement(AResource subj, AResource pred, AResource obj) {
       model.add(convert(subj), convertPred(pred), convert(obj));
     }
     
+    @Override
     public void statement(AResource subj, AResource pred, ALiteral lit) {
       model.add(convert(subj), convertPred(pred), convert(lit));
     }
@@ -693,15 +722,18 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       this.id = id;
     }
 
+    @Override
     public int hashCode() {
       return id.hashCode();
     }
     
+    @Override
     public boolean equals(Object object) {
       return (object instanceof StringAnonId &&
               object.toString().equals(id));
     }
 
+    @Override
     public String toString() {
       return id;
     }
@@ -722,6 +754,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
    * </ul>
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     Object value = properties.get(PROPERTY_PRESERVE_REIFICATION);
     if ((value != null) && (value instanceof Boolean)) {

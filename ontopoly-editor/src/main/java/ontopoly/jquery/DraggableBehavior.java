@@ -41,6 +41,7 @@ public class DraggableBehavior extends JQueryBehavior {
     c.add(new AttributeAppender("class", new Model<String>("dg_" + id), " "));    
   }
   
+  @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     

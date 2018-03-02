@@ -20,6 +20,8 @@
 
 package net.ontopia.xml;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -38,36 +40,23 @@ import org.xml.sax.XMLReader;
  * default.<p>
  */
 
-public class DefaultXMLReaderFactory implements XMLReaderFactoryIF {
+public class DefaultXMLReaderFactory {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
-    
-  public XMLReader createXMLReader() throws SAXException {
-    try {
-      // If SAX driver property is set use the SAX factory      
-      String factoryname = System.getProperty("org.xml.sax.driver");
-      String factoryname_override = System.getProperty("net.ontopia.xml.sax.driver");
+  private static final Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
 
-      // If override property is specified use that.
-      if (factoryname_override != null)
-        factoryname = factoryname_override;
-      
-      if (factoryname != null) {
-        if (factoryname.startsWith("weblogic."))
-          // In case of WebLogic we want to enforce using the Crimson
-          // parser (see bug #590). WebLogic overrides the sax driver
-          // property, so there is no way to override it.
-          return new SaxXMLReaderFactory("org.apache.crimson.parser.XMLReaderImpl").createXMLReader();
-        else
-          return new SaxXMLReaderFactory(factoryname).createXMLReader();
-      }
-    } catch (SecurityException e) {
-      log.warn(e.toString());      
-    }
+  private static final SAXParserFactory FACTORY = SAXParserFactory.newInstance();
 
-    // Otherwise use the JAXP factory
-    return new JaxpXMLReaderFactory().createXMLReader();
+  static {
+    FACTORY.setNamespaceAware(true);
+    FACTORY.setValidating(false);
   }
-    
+
+  public static XMLReader createXMLReader() throws SAXException {
+    try {
+      return FACTORY.newSAXParser().getXMLReader();
+    } catch (ParserConfigurationException e) {
+      throw new SAXException(e);
+    }
+  }
 }

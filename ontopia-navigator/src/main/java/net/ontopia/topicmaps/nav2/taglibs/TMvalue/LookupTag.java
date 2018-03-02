@@ -20,14 +20,11 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -37,8 +34,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorCompileException;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -71,6 +66,7 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
   private String lookupAs;
   private boolean expect = false; // do not expect result by default
   
+  @Override
   public Collection process(Collection values) throws JspTagException {
     
     // check first if unique attribute settings

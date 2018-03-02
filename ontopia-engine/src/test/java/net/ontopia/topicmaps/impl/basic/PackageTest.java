@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.impl.basic;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public class PackageTest extends TopicMapPackageTest {
   
@@ -33,21 +32,22 @@ public class PackageTest extends TopicMapPackageTest {
     super(name);
   }
 
+  @Override
   protected void setUp() {
     if (tm == null) {
       try {
         TopicMapReaderIF reader =
-          new XTMTopicMapReader(URIUtils.getURI(TestFileUtils.getTestInputFile(testdataDirectory, "package-test.xtm")));
+          new XTMTopicMapReader(TestFileUtils.getTestInputURL(testdataDirectory, "package-test.xtm"));
         tm = reader.read();
         base = tm.getStore().getBaseAddress();
       }
       catch (java.io.IOException e) {
-        e.printStackTrace();
         throw new RuntimeException("IMPOSSIBLE ERROR! " + e.getMessage());
       }
     }
   }
 
+  @Override
   protected void tearDown() {
     //tm = null;
   }

@@ -47,6 +47,7 @@ public class QName {
 
   /// Object
 
+  @Override
   public String toString() {
     if (prefix == null)
       return localname;

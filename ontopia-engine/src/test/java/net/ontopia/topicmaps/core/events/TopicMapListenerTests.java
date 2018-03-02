@@ -45,6 +45,7 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setUp() throws Exception {
     // Get a new topic map object from the factory.
     factory = getFactory();
@@ -56,6 +57,7 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
     builder = topicmap.getBuilder();
   }
 
+  @Override
   public void tearDown() {
     TopicMapEvents.removeTopicListener(topicmapRef, listener);
     super.tearDown();
@@ -63,21 +65,24 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
 
   // --- Test cases
 
-  class TesterListener implements TopicMapListenerIF {
-    boolean topicAdded;
-    TopicIF snapshot;
+  protected class TesterListener implements TopicMapListenerIF {
+    private boolean topicAdded;
+    private TopicIF snapshot;
     
     // NOTE: to be called on commit
+    @Override
     public void objectAdded(TMObjectIF o) {
       topicAdded = true;
       snapshot = (TopicIF)o;
     }
 
+    @Override
     public void objectModified(TMObjectIF snapshot) {
       // no-op
     }
     
     // NOTE: to be called on commit
+    @Override
     public void objectRemoved(TMObjectIF o) {
       topicAdded = false;
       snapshot = (TopicIF)o;

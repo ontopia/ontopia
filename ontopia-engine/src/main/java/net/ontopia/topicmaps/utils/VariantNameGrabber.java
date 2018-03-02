@@ -74,6 +74,7 @@ public class VariantNameGrabber implements GrabberIF<TopicNameIF, VariantNameIF>
    * @exception throws OntopiaRuntimeException if the given base name 
    *                   is not a TopicNameIF object.
    */
+  @Override
   public VariantNameIF grab(TopicNameIF basename) {
     List<VariantNameIF> variants = new ArrayList<VariantNameIF>(basename.getVariants());
 

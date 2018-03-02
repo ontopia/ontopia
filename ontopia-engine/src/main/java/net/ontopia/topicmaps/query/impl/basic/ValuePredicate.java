@@ -23,21 +23,20 @@ package net.ontopia.topicmaps.query.impl.basic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.parser.Variable;
-import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Implements the 'value' predicate.
@@ -47,6 +46,12 @@ public class ValuePredicate implements BasicPredicateIF {
   protected NameIndexIF nameindex;
   protected OccurrenceIndexIF occindex;
 
+  // used to see what types the object parameter may have
+  private static final int NO_TYPES  = 0;
+  private static final int NAME_TYPE = 1;
+  private static final int OCC_TYPE  = 2;
+  private static final int ALL_TYPES = 3;
+  
   public ValuePredicate(TopicMapIF topicmap) {
     this.topicmap = topicmap;
     this.nameindex = (NameIndexIF) topicmap
@@ -55,14 +60,17 @@ public class ValuePredicate implements BasicPredicateIF {
       .getIndex("net.ontopia.topicmaps.core.index.OccurrenceIndexIF");
   }
   
+  @Override
   public String getName() {
     return "value";
   }
   
+  @Override
   public String getSignature() {
     return "bov s";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -74,6 +82,7 @@ public class ValuePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 
@@ -164,12 +173,6 @@ public class ValuePredicate implements BasicPredicateIF {
 
   // --- Helpers
 
-  // used to see what types the object parameter may have
-  private static final int NO_TYPES  = 0;
-  private static final int NAME_TYPE = 1;
-  private static final int OCC_TYPE  = 2;
-  private static final int ALL_TYPES = 3;
-  
   private int getObjectTypes(QueryMatches matches, int objix) {
     QueryContext context = matches.getQueryContext();
     String varname = ((Variable) matches.getColumnDefinition(objix)).getName();
@@ -213,7 +216,7 @@ public class ValuePredicate implements BasicPredicateIF {
     Iterator iter = occs.iterator();
     while (iter.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) iter.next();
-      if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_URI))
+      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
         result.add(occ);
     }
     return result;
@@ -224,7 +227,7 @@ public class ValuePredicate implements BasicPredicateIF {
     Iterator iter = vns.iterator();
     while (iter.hasNext()) {
       VariantNameIF vn = (VariantNameIF) iter.next();
-      if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI))
+      if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI))
         result.add(vn);
     }
     return result;

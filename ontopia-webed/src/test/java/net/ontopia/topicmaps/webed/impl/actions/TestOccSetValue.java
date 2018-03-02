@@ -39,6 +39,7 @@ public class TestOccSetValue extends AbstractWebedTestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetValue();

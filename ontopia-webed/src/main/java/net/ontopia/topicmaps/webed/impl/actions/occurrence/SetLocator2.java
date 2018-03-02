@@ -40,6 +40,7 @@ public class SetLocator2 implements ActionIF {
   private ActionIF setLocator = new SetLocator();
   private ActionIF delete = new Delete();
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     // test params
     ActionSignature paramsType = ActionSignature.getSignature("o t? t?");

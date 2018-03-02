@@ -59,6 +59,7 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * TopicIFs and VariantNameIFs, base on the filter and their relations to
    * other objects. @param object The object to accept or reject.
    */
+  @Override
   public boolean ok(Object object) {
     // Check that none of the scoping topics are disallowed.
     if (object instanceof ScopedIF) {

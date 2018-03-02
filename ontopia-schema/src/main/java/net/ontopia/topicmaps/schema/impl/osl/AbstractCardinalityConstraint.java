@@ -36,20 +36,24 @@ public abstract class AbstractCardinalityConstraint
     this.maximum = CardinalityConstraintIF.INFINITY;
   }
 
+  @Override
   public int getMinimum() {
     return minimum;
   }
 
+  @Override
   public int getMaximum() {
     return maximum;
   }
 
+  @Override
   public void setMinimum(int minimum) {
     if (minimum < 0)
       throw new IllegalArgumentException("Cannot set minimum to negative value");
     this.minimum = minimum;
   }
 
+  @Override
   public void setMaximum(int maximum) {
     if (maximum != CardinalityConstraintIF.INFINITY && maximum < 0)
       throw new IllegalArgumentException("Cannot set maximum to negative value");

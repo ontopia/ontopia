@@ -35,6 +35,7 @@ public class RemoteTopicMapBuilder extends TopicMapBuilder {
     super(tm);
   }
   
+  @Override
   protected TopicIF createTopic() { // overrides method in parent
     TopicIF topic = new RemoteTopic(tm);
     tm.addTopic(topic);

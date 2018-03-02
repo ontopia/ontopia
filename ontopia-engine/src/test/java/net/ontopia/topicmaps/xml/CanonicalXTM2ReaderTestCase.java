@@ -20,49 +20,50 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import java.util.List;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.runners.Parameterized.Parameters;
 
 public class CanonicalXTM2ReaderTestCase extends AbstractCanonicalTests {
   
   private final static String testdataDirectory = "xtm2";
 
-  public CanonicalXTM2ReaderTestCase(String root, String filename) {
+  public CanonicalXTM2ReaderTestCase(URL inputFile, String filename) {
     this.filename = filename;
+    this.inputFile = inputFile;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
 
   @Parameters
   public static List generateTests() {
-    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
+    return TestFileUtils.getFilteredTestInputURLs(".xtm", testdataDirectory, "in");
   }
 
   // --- Canonicalization type methods
 
-  protected void canonicalize(String infile, String outfile)
+  @Override
+  protected void canonicalize(URL infile, File outfile)
     throws IOException {
     TopicMapStoreFactoryIF sfactory = getStoreFactory();
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(infile);
     reader.setValidation(false);
     // FIXME: should we do a setXTM2Required(true) or something?
     reader.setStoreFactory(sfactory);
     TopicMapIF source = reader.read();
 
-    FileOutputStream out = new FileOutputStream(outfile);
-    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(out);
+    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(outfile);
     cwriter.write(source);
-    out.close();
 
     source.getStore().close();
   }
 
+  @Override
   protected String getOutFilename(String infile) {
     return infile + ".cxtm";
   }

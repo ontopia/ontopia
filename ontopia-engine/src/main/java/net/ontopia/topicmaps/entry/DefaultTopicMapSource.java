@@ -52,26 +52,32 @@ public class DefaultTopicMapSource implements TopicMapSourceIF {
     addReference(reference);
   }
   
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
   
+  @Override
   public Collection<TopicMapReferenceIF> getReferences() {
     return refs;
   }
 
+  @Override
   public void refresh() {
     // Do nothing
   }
@@ -103,14 +109,17 @@ public class DefaultTopicMapSource implements TopicMapSourceIF {
     reference.setSource(null);
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }

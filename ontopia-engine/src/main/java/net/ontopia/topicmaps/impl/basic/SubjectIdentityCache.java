@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import java.util.Collection;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.utils.AbstractSubjectIdentityCache;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.utils.CollectionFactoryIF;
 
 /**
@@ -78,6 +78,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   // TopicMapIF locator lookup methods
   // --------------------------------------------------------------------------
   
+  @Override
   public TMObjectIF getObjectById(String object_id) {
     TMObject o = id_objects.get(object_id);
     if (o == null || o.parent == null)
@@ -86,54 +87,78 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
       return o;
   }
   
+  @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     return source_locators.get(locator);
   }
   
+  @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
     return subjects.get(locator);
   }
   
+  @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     return subject_indicators.get(locator);    
+  }
+
+  // --------------------------------------------------------------------------
+  // IdentifierIndexIF lookup methods
+  // --------------------------------------------------------------------------
+
+  public Collection<LocatorIF> getItemIdentifiers() {
+    return source_locators.keySet();
+  }
+
+  public Collection<LocatorIF> getSubjectIdentifiers() {
+    return subject_indicators.keySet();
   }
 
   // --------------------------------------------------------------------------
   // Event handler methods
   // --------------------------------------------------------------------------
 
+  @Override
   protected TMObjectIF _getObjectByItemIdentifier(LocatorIF source_locator) {
     return source_locators.get(source_locator);
   }
 
+  @Override
   protected void registerSourceLocator(LocatorIF source_locator, TMObjectIF object) {
     source_locators.put(source_locator, object);
   }
   
+  @Override
   protected void unregisterSourceLocator(LocatorIF source_locator) {
     source_locators.remove(source_locator);
   }
 
+  @Override
   protected TopicIF _getTopicBySubjectIdentifier(LocatorIF subject_indicator) {
     return subject_indicators.get(subject_indicator);
   }
 
+  @Override
   protected void registerSubjectIndicator(LocatorIF subject_indicator, TopicIF object) {
     subject_indicators.put(subject_indicator, object);
   }
   
+  @Override
   protected void unregisterSubjectIndicator(LocatorIF subject_indicator) {
     subject_indicators.remove(subject_indicator);
   }
 
+  @Override
   protected TopicIF _getTopicBySubjectLocator(LocatorIF subject) {
     return subjects.get(subject);
   }
 
+  @Override
   protected void registerSubject(LocatorIF subject, TopicIF object) {
     subjects.put(subject, object);
   }
 
+  @Override
   protected void unregisterSubject(LocatorIF subject) {
     subjects.remove(subject);
   }
@@ -145,6 +170,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   /**
    * INTERNAL: Register the object with the identity map.
    */
+  @Override
   protected void registerObject(TMObjectIF o) {
     // Add object and its id from the identity maps.
     if (o == null) throw new NullPointerException("Cannot register a null object with the identity map.");
@@ -160,6 +186,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   /**
    * INTERNAL: Unregister the object with the identity map.
    */
+  @Override
   protected void unregisterObject(TMObjectIF o) {
     // Clear object and its id from the identity maps.
     if (o == null) throw new NullPointerException("Cannot unregister a null object with the identity map.");

@@ -30,14 +30,14 @@ import java.util.Iterator;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.LexicalComparator;
-import net.ontopia.utils.GrabberStringifier;
-import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.topicmaps.nav.utils.comparators.ContextNameGrabber;
+import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.topicmaps.utils.NameStringifier;
 import net.ontopia.topicmaps.utils.PSI;
+import net.ontopia.utils.GrabberStringifier;
+import net.ontopia.utils.LexicalComparator;
+import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Class for categorizing a collection of themes according to
@@ -195,7 +195,6 @@ public class ThemeCategorizer {
       if (actSet.size() > 0) {
         // append string representation for theme class
         strBuf.append( stringifierThemeClass.toString( actThemeClass) );
-        // themeList = new ArrayList(stringifyTopics((Collection) actSet, stringifier));
         themeList = new ArrayList( actSet );
         Collections.sort( themeList, topicComparator );
         itRelThemes = themeList.iterator();
@@ -289,34 +288,4 @@ public class ThemeCategorizer {
     
     return strBuf.toString();
   }
-
-
-  //
-  // internal helper methods
-  //
-  
-  /**
-   * INTERNAL: generate new Collection of String objects out of
-   * stringified TopicIF Collection.
-   */
-  private static Collection stringifyTopics(Collection topics,
-                                            StringifierIF stringifier) {
-    Collection res = new ArrayList();
-    Iterator it = topics.iterator();
-    TopicIF actTopic;
-    String actTopicString;
-    while (it.hasNext()) {
-      actTopic = (TopicIF) it.next();
-      actTopicString = stringifier.toString( actTopic );
-      res.add(actTopicString);
-    }
-    return res;
-  }
-
 }
-
-
-
-
-
-

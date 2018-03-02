@@ -58,10 +58,12 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
         .getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
   }
 
+  @Override
   public Collection<Topic> getAssociationThemes() {
     return new LazySet<Topic>(topicMap, getWrapped().getAssociationThemes());
   }
 
+  @Override
   public Collection<Association> getAssociations(Topic theme) {
     TopicIF oTopic = null;
     if (theme != null)
@@ -76,6 +78,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.ScopedIndex#getAssociations(org.tmapi.core.Topic[],
    * boolean)
    */
+  @Override
   public Collection<Association> getAssociations(Topic[] themes,
       boolean matchAll) {
     Check.themeNotNull(themes);
@@ -104,6 +107,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getNameThemes()
    */
+  @Override
   public Collection<Topic> getNameThemes() {
     return new LazySet<Topic>(topicMap, getWrapped().getTopicNameThemes());
   }
@@ -113,6 +117,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getNames(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Name> getNames(Topic theme) {
     TopicIF oTopic = null;
     if (theme != null)
@@ -126,6 +131,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getNames(org.tmapi.core.Topic[], boolean)
    */
+  @Override
   public Collection<Name> getNames(Topic[] themes, boolean matchAll) {
     Check.themeNotNull(themes);
     Set<TopicNameIF> resultSet = new HashSet<TopicNameIF>();
@@ -152,6 +158,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getOccurrenceThemes()
    */
+  @Override
   public Collection<Topic> getOccurrenceThemes() {
     return new LazySet<Topic>(topicMap, getWrapped().getOccurrenceThemes());
   }
@@ -161,6 +168,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getOccurrences(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Occurrence> getOccurrences(Topic theme) {
     TopicIF oTopic = null;
     if (theme != null)
@@ -175,6 +183,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.ScopedIndex#getOccurrences(org.tmapi.core.Topic[],
    * boolean)
    */
+  @Override
   public Collection<Occurrence> getOccurrences(Topic[] themes, boolean matchAll) {
     Check.themeNotNull(themes);
     Set<OccurrenceIF> resultSet = new HashSet<OccurrenceIF>();
@@ -201,6 +210,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getVariantThemes()
    */
+  @Override
   public Collection<Topic> getVariantThemes() {
     return new LazySet<Topic>(topicMap, getWrapped().getVariantThemes());
   }
@@ -210,6 +220,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.ScopedIndex#getVariants(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Variant> getVariants(Topic theme) {
     if (theme == null)
       throw new IllegalArgumentException("Theme for variants may not be null!!");
@@ -224,6 +235,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.ScopedIndex#getVariants(org.tmapi.core.Topic[],
    * boolean)
    */
+  @Override
   public Collection<Variant> getVariants(Topic[] themes, boolean matchAll) {
     Check.themeNotNull(themes);
 
@@ -251,7 +263,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.Index#close()
    */
+  @Override
   public void close() {
+    // no-op
   }
 
   /*
@@ -259,6 +273,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.Index#isAutoUpdated()
    */
+  @Override
   public boolean isAutoUpdated() {
     return true;
   }
@@ -268,6 +283,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.Index#isOpen()
    */
+  @Override
   public boolean isOpen() {
     return true;
   }
@@ -277,7 +293,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.Index#open()
    */
+  @Override
   public void open() {
+    // no-op
   }
 
   /*
@@ -285,7 +303,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * 
    * @see org.tmapi.index.Index#reindex()
    */
+  @Override
   public void reindex() {
+    // no-op
   }
 
   public ScopeIndexIF getWrapped() {

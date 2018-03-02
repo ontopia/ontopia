@@ -67,6 +67,7 @@ public class SnowballStemmer implements TermStemmerIF {
     }
   }
 
+  @Override
   public String stem(String term) {
     stemmer.setCurrent(term);
     stemmer.stem();

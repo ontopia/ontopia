@@ -36,7 +36,7 @@ public class LocatorImpl implements Locator {
     this.wrapped = delegate;
   }
 
-  LocatorIF getWrapped() {
+  protected LocatorIF getWrapped() {
     return wrapped;
   }
 
@@ -46,6 +46,7 @@ public class LocatorImpl implements Locator {
    * @see org.tmapi.core.Locator#getReference()
    */
   
+  @Override
   public String getReference() {
     return wrapped.getAddress();
   }
@@ -56,6 +57,7 @@ public class LocatorImpl implements Locator {
    * @see org.tmapi.core.Locator#resolve(java.lang.String)
    */
   
+  @Override
   public Locator resolve(String ref) {
     return new LocatorImpl(wrapped.resolveAbsolute(ref));
   }
@@ -66,6 +68,7 @@ public class LocatorImpl implements Locator {
    * @see org.tmapi.core.Locator#toExternalForm()
    */
   
+  @Override
   public String toExternalForm() {
     return wrapped.getExternalForm();
   }
@@ -76,6 +79,7 @@ public class LocatorImpl implements Locator {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   
+  @Override
   public boolean equals(Object obj) {
     return obj instanceof Locator
         && getReference().equals(((Locator) obj).getReference());
@@ -87,6 +91,7 @@ public class LocatorImpl implements Locator {
    * @see java.lang.Object#hashCode()
    */
   
+  @Override
   public int hashCode() {
     return wrapped.hashCode();
   }

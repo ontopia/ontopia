@@ -28,8 +28,8 @@ import java.util.Map;
  */
 public class RegionBooster extends AbstractDocumentAnalyzer {
 
-  Map<String, Double> regions;
-  double boost = 1.0d;
+  private Map<String, Double> regions;
+  private double boost = 1.0d;
 
   public RegionBooster() {
     super(1);
@@ -40,6 +40,7 @@ public class RegionBooster extends AbstractDocumentAnalyzer {
     regions.put(rname, new Double(boost));
   }
   
+  @Override
   public void startRegion(Region region) {
     super.startRegion(region);
     String rname = region.getName();
@@ -51,6 +52,7 @@ public class RegionBooster extends AbstractDocumentAnalyzer {
     }      
   }
   
+  @Override
   public void analyzeToken(TextBlock parent, Token token, int index) {
     // ignore non variant tokens
     if (token.getType() != Token.TYPE_VARIANT) return;
@@ -61,6 +63,7 @@ public class RegionBooster extends AbstractDocumentAnalyzer {
       term.multiplyScore(boost, "region boost");
   }
 
+  @Override
   public void endRegion(Region region) {
     super.endRegion(region);
   }

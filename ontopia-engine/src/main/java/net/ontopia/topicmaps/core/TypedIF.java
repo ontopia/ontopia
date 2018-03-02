@@ -35,13 +35,13 @@ public interface TypedIF extends TMObjectIF {
    *
    * @return The type of this object; an object implementing TopicIF.
    */
-  public TopicIF getType();
+  TopicIF getType();
 
   /**
    * PUBLIC: Sets the type that this object is an instance of.
    *
    * @param type The type for this object; an object implementing TopicIF.
    */
-  public void setType(TopicIF type);
+  void setType(TopicIF type);
   
 }

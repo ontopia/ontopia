@@ -30,6 +30,7 @@ public class NextPreviousOptimizerTest extends AbstractQueryTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

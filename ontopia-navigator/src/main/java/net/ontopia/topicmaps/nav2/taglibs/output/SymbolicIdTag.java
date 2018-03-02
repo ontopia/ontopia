@@ -25,7 +25,6 @@ import java.util.Iterator;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
@@ -41,9 +40,10 @@ import org.slf4j.LoggerFactory;
 public class SymbolicIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(ObjectIdTag.class.getName());
   
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
     

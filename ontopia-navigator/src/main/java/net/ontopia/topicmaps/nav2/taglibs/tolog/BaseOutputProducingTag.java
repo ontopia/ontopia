@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseOutputProducingTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(BaseOutputProducingTag.class.getName());
 
   // members
@@ -70,6 +70,7 @@ public abstract class BaseOutputProducingTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     try {
       Object outObject = generateOutputObject();
@@ -85,6 +86,7 @@ public abstract class BaseOutputProducingTag extends TagSupport {
     return SKIP_BODY;
   }
 
+  @Override
   public final int doEndTag() {
     return EVAL_PAGE;
   }
@@ -92,7 +94,9 @@ public abstract class BaseOutputProducingTag extends TagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
+    // no-op
   }
 
   public abstract void generateOutput(JspWriter out, Object outObject)

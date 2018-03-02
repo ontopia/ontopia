@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.impl.utils.EncodingSnifferIF;
  */
 public class LTMEncodingSniffer implements EncodingSnifferIF {
   
+  @Override
   public String guessEncoding(PushbackInputStream stream) throws IOException {
     String encoding;
 
@@ -62,7 +63,7 @@ public class LTMEncodingSniffer implements EncodingSnifferIF {
       
       // Get the encoding (if any) declared in the document.
       if (start.startsWith("@\"")) {
-        int end = start.indexOf("\"", 2);
+        int end = start.indexOf('"', 2);
         if (end != -1)
           encoding = start.substring(2, end);
       }

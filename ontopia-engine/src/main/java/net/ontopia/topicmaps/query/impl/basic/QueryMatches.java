@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -34,7 +33,7 @@ import net.ontopia.topicmaps.query.parser.Parameter;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Object used to hold query results during computation.
@@ -628,10 +627,12 @@ public class QueryMatches {
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
     }
 
+    @Override
     public int hashCode() {
       return hashCode;
     }
 
+    @Override
     public boolean equals(Object o) {
       // this class is only used here, so we are making some simplifying
       // assumptions:
@@ -654,6 +655,7 @@ public class QueryMatches {
       this.comparedColumns = comparedColumns;
     }
     
+    @Override
     public void setArray(Object[] row) {
       this.row = row;
 
@@ -665,6 +667,7 @@ public class QueryMatches {
       }
     }
 
+    @Override
     public boolean equals(Object o) {
       // this class is only used here, so we are making some simplifying
       // assumptions:
@@ -684,21 +687,18 @@ public class QueryMatches {
   // ===== DEBUG METHODS =====================================================
   
   public String dump() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("------------------------------------------------------------------------------\n");
-    StringUtils.join(columnDefinitions, " | ", sb);
-    sb.append("\n");
-    sb.append("------------------------------------------------------------------------------\n");
+    StringBuilder sb = new StringBuilder(500)
+        .append("------------------------------------------------------------------------------\n")
+        .append(StringUtils.join(columnDefinitions, " | "))
+        .append("\n------------------------------------------------------------------------------\n");
     for (int r=0; r <= last; r++) {
-      sb.append("[");
+      sb.append('[');
       for (int c = 0; c < columnDefinitions.length-1; c++) {
-        sb.append(toString(data[r][c]));
-        sb.append(", ");
+        sb.append(toString(data[r][c])).append(", ");
       }
-      sb.append(toString(data[r][columnDefinitions.length-1]));
-      sb.append("]\n");
+      sb.append(toString(data[r][columnDefinitions.length-1])).append("]\n");
     }
-    sb.append((last+1) + " rows");
+    sb.append((last+1)).append(" rows");
     return sb.toString();
   }
 

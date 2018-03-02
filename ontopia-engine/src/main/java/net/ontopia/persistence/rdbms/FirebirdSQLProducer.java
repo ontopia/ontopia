@@ -35,6 +35,7 @@ public class FirebirdSQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
 
+  @Override
   protected boolean supportsNullInColumnDefinition() {
     return false;
   }

@@ -33,6 +33,7 @@ public class JDOValueExpression implements JDOExpressionIF {
     this.value = value;
   }
   
+  @Override
   public int getType() {
     return VALUE_EXPRESSION;
   }
@@ -45,10 +46,12 @@ public class JDOValueExpression implements JDOExpressionIF {
     this.value = value;
   }
 
+  @Override
   public int hashCode() {
     return value.hashCode();
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof JDOValueExpression) {
       JDOValueExpression other = (JDOValueExpression)obj;
@@ -57,10 +60,12 @@ public class JDOValueExpression implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return "expr(" + value + ')';
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(value);
   }

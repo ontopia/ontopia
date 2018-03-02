@@ -72,6 +72,7 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
     storeFactory = new RDBMSStoreFactory(systemFactory.properties);
   }
 
+  @Override
   public void close() {
     for (Object obj: source.getReferences()) {
       TopicMapReferenceIF ref = (TopicMapReferenceIF) obj;
@@ -101,14 +102,17 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
     }
   }
   
+  @Override
   public Locator createLocator(String reference) {
     return wrapLocator(createLocatorIF(reference));
   }
 
+  @Override
   public Locator wrapLocator(LocatorIF loc) {
     return new LocatorImpl(loc);
   }
 
+  @Override
   public TopicMapImpl createTopicMap(Locator loc) throws TopicMapExistsException {
     TopicMapImpl tm = getTopicMap(loc);
     if (tm != null) {
@@ -133,6 +137,7 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#createTopicMap(java.lang.String)
    */
   
+  @Override
   public TopicMapImpl createTopicMap(String reference) throws TopicMapExistsException {
     return createTopicMap(createLocator(reference));
   }
@@ -143,10 +148,12 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
    * @see org.tmapi.core.TopicMapSystem#getFeature(java.lang.String)
    */
   
+  @Override
   public boolean getFeature(String feature) throws FeatureNotRecognizedException {
     return systemFactory.getFeature(feature);
   }
 
+  @Override
   public Set<Locator> getLocators() {
     Collection refs = source.getReferences();
     Set<Locator> locators = new HashSet<Locator>();
@@ -165,14 +172,17 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
     return locators;
   }
 
+  @Override
   public Object getProperty(String property) {
     return systemFactory.getProperty(property);
   }
 
+  @Override
   public TopicMapImpl getTopicMap(String reference) {
     return getTopicMap(createLocator(reference));
   }
 
+  @Override
   public TopicMapImpl getTopicMap(Locator loc) {
     Collection refs = source.getReferences();
     for (Object obj : refs) {
@@ -193,6 +203,7 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
 
   /* --- callbacks */
 
+  @Override
   public void remove(LocatorIF loc) {
     source.refresh();
   }

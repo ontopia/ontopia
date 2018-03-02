@@ -55,6 +55,7 @@
 		<module>ontopia-schema</module>
 		<module>ontopia-jdbcspy7</module>
 		<module>ontopia-lucene</module>
+		<module>ontopia-rest</module>
 		
 		<!-- Web Apps -->
 		<module>webapp-root</module>
@@ -87,6 +88,9 @@
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
 		<jena.version>3.2.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
+		
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<prerequisites>
@@ -199,8 +203,6 @@
 					<configuration>
 						<fork>true</fork>
 						<maxmem>512m</maxmem>
-						<source>1.7</source>
-						<target>1.7</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -275,6 +277,7 @@
 							<group><title>RDBMS Backend Connector Packages</title><packages>net.ontopia.topicmaps.impl.rdbms</packages></group>
 						</groups>
 						<encoding>utf-8</encoding>
+						<failOnError>false</failOnError>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -431,7 +434,23 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-collections4</artifactId>
-				<version>4.0</version>
+				<version>4.1</version>
+			</dependency>
+			<dependency>
+				<!-- might be removable for java 8 -->
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.6</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.5</version>
 			</dependency>
 			<dependency>
 				<groupId>urbanophile</groupId>
@@ -441,17 +460,12 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.7.5</version>
+				<version>1.7.25</version>
 			</dependency>
 			<dependency>
 				<groupId>antlr</groupId>
 				<artifactId>antlr</artifactId>
 				<version>2.7.7</version>
-			</dependency>
-			<dependency>
-				<groupId>concurrent</groupId>
-				<artifactId>concurrent</artifactId>
-				<version>1.3.4</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.jena</groupId>
@@ -605,7 +619,7 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.7.5</version>
+				<version>1.7.25</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -630,6 +644,34 @@
 	</dependencyManagement>
 	
 	<profiles>
+		<profile>
+			<!-- Profile used for generating a test coverage report -->
+			<id>jacoco</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.13</version>
+						<configuration>
+							<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} ${argLine}</argLine>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.9</version>
+						<executions>
+							<execution>
+								<id>default-prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<!-- Profile used for making the tomcat distribution -->
 			<id>ontopia-distribution-tomcat</id>

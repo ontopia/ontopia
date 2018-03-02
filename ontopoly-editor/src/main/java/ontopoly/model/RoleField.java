@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -37,10 +37,10 @@ import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.Ordering;
 import ontopoly.utils.TopicComparator;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents a role field.
@@ -81,6 +81,7 @@ public class RoleField extends FieldDefinition {
     return PSI.ON_ROLE_FIELD;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof RoleField))
       return false;
@@ -337,8 +338,6 @@ public class RoleField extends FieldDefinition {
   }
 
   private static class MapValueComparator implements Comparator<ValueIF> {
-    //! private static final String DEFAULT_ORDER_VALUE = "999999999";    
-    private static final String DEFAULT_ORDER_VALUE = null; // sorts before "000000000"    
     private Map<Topic, OccurrenceIF> entries;
     private RoleField ofield;
     private Topic oplayer;
@@ -347,15 +346,14 @@ public class RoleField extends FieldDefinition {
       this.ofield = ofield;
       this.oplayer = oplayer;
     }
+    @Override
     public int compare(ValueIF v1, ValueIF v2) {
       try {
         Topic p1 = v1.getPlayer(ofield, oplayer);
         Topic p2 = v2.getPlayer(ofield, oplayer);
         OccurrenceIF oc1 = entries.get(p1);
         OccurrenceIF oc2 = entries.get(p2);
-        Comparable<String> c1 = (oc1 == null ? DEFAULT_ORDER_VALUE : oc1.getValue());
-        Comparable<String> c2 = (oc2 == null ? DEFAULT_ORDER_VALUE : oc2.getValue());
-        return ObjectUtils.compare(c1, c2);
+        return StringUtils.compare(oc1 == null ? null : oc1.getValue(), oc2 == null ? null : oc2.getValue());
       } catch (Exception e) {
         // should not fail when comparing. bergen kommune has had an issue where this happens. we thus ignore for now.
         //        e.printStackTrace();
@@ -537,7 +535,7 @@ public class RoleField extends FieldDefinition {
         AssociationRoleIF orole = (AssociationRoleIF) roles[i];
         if (matched.contains(orole))
           continue;
-        if (ObjectUtils.equals(orole.getType(), ortype.getTopicIF())) {
+        if (Objects.equals(orole.getType(), ortype.getTopicIF())) {
           matched.add(orole);
           value.addPlayer(ofield, new Topic(orole.getPlayer(), topicMap));
           match = true;
@@ -562,17 +560,17 @@ public class RoleField extends FieldDefinition {
   /**
    * Interface. This interface is implemented by the Value class.
    */
-  public static interface ValueIF {
+  public interface ValueIF {
 
-    public int getArity();
+    int getArity();
 
-    public RoleField[] getRoleFields();
+    RoleField[] getRoleFields();
 
-    public Topic[] getPlayers();
+    Topic[] getPlayers();
 
-    public void addPlayer(RoleField roleField, Topic player);
+    void addPlayer(RoleField roleField, Topic player);
 
-    public Topic getPlayer(RoleField roleField, Topic oplayer);
+    Topic getPlayer(RoleField roleField, Topic oplayer);
 
   }
 
@@ -582,33 +580,38 @@ public class RoleField extends FieldDefinition {
    */
   private static class Value implements RoleField.ValueIF {
 
-    int offset;
-    RoleField[] roleFields;
-    Topic[] players;
+    private int offset;
+    private RoleField[] roleFields;
+    private Topic[] players;
 
     Value(int arity) {
       this.roleFields = new RoleField[arity];
       this.players = new Topic[arity];
     }
 
+    @Override
     public int getArity() {
       return roleFields.length;
     }
 
+    @Override
     public RoleField[] getRoleFields() {
       return roleFields;
     }
 
+    @Override
     public Topic[] getPlayers() {
       return players;
     }
 
+    @Override
     public void addPlayer(RoleField roleField, Topic player) {
       roleFields[offset] = roleField;
       players[offset] = player;
       offset++;
     }
 
+    @Override
     public Topic getPlayer(RoleField ofield, Topic oPlayer) {
       // NOTE: all this logic is here to cater for symmetric associations
       Topic xPlayer = null;
@@ -616,7 +619,7 @@ public class RoleField extends FieldDefinition {
         RoleField rf = roleFields[i];
         if (rf.equals(ofield)) {
           Topic player = players[i];
-          if (ObjectUtils.different(player, oPlayer))
+          if (!Objects.equals(player, oPlayer))
             return player;
           else
             xPlayer = oPlayer;
@@ -706,8 +709,9 @@ public class RoleField extends FieldDefinition {
 
     List<OccurrenceIF> occs = new ArrayList<OccurrenceIF>(topics_occs.values());
     Collections.sort(occs, new Comparator<OccurrenceIF>() {
+      @Override
       public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
-        return ObjectUtils.compare(occ1.getValue(), occ2.getValue());
+        return StringUtils.compare(occ1.getValue(), occ2.getValue());
       }
     });
 

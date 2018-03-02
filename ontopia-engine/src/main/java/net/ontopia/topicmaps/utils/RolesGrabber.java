@@ -37,6 +37,7 @@ public class RolesGrabber implements GrabberIF<AssociationIF, Collection<Associa
    * @param object the given object; AssociationIF
    * @return object which is a collection of AssociationRoleIF objects
    */ 
+  @Override
   public Collection<AssociationRoleIF> grab(AssociationIF object) {
     return object.getRoles();
   }

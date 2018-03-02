@@ -53,30 +53,37 @@ public class SQLPrimitive implements SQLValueIF {
     this.value = value;
   }
 
+  @Override
   public int getType() {
     return PRIMITIVE;
   }
   
+  @Override
   public int getArity() {
     return 1;
   }
 
+  @Override
   public int getValueArity() {
     return 1;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
@@ -89,22 +96,27 @@ public class SQLPrimitive implements SQLValueIF {
     return value;
   }
 
+  @Override
   public Class getValueType() {    
     return (vtype == null ? SQLTypes.getType(sql_type) : vtype);
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
 
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return (fhandler == null ? new DefaultFieldHandler(sql_type) : fhandler);
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
 
+  @Override
   public String toString() {
     switch (getSQLType()) {
     case Types.VARCHAR:

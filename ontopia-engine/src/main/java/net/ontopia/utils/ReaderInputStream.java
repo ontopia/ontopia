@@ -54,6 +54,7 @@ public class ReaderInputStream extends InputStream {
     chars = new char[1024];
   }
 
+  @Override
   public int read() throws IOException {
     if (index >= length)
       fillBuffer();
@@ -78,6 +79,7 @@ public class ReaderInputStream extends InputStream {
     }
   }
 
+  @Override
   public int read(byte[] data, int off, int len) throws IOException {
     if (index >= length)
       fillBuffer();
@@ -89,11 +91,13 @@ public class ReaderInputStream extends InputStream {
     return amount;
   }
 
+  @Override
   public int available() throws IOException {
     return (index < length) ? length - index :
       ((length >= 0) && reader.ready()) ? 1 : 0;
   }
 
+  @Override
   public void close() throws IOException {
     reader.close();
   }

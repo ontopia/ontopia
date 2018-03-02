@@ -25,6 +25,7 @@ package net.ontopia.topicmaps.classify;
  */
 public class DowncaseNormalizer implements TermNormalizerIF {
   
+  @Override
   public String normalize(String term) {
     return term.toLowerCase();
   }

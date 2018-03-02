@@ -25,6 +25,6 @@ package net.ontopia.topicmaps.utils.ctm;
  */
 public interface ParseEventIF {
 
-  public void replay(ParseEventHandlerIF handler);
+  void replay(ParseEventHandlerIF handler);
   
 }

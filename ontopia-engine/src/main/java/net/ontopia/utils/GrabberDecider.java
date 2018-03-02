@@ -35,6 +35,7 @@ public class GrabberDecider<T, G> implements DeciderIF<T> {
     this.decider = decider;
   }
 
+  @Override
   public boolean ok(T object) {
     return decider.ok(grabber.grab(object));
   }

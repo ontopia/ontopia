@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.webed.taglibs.form;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -63,6 +62,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   /**
    * Process the start tag, do nothing.
    */
+  @Override
   public int doStartTag() {
     return EVAL_BODY_INCLUDE;
   }
@@ -70,6 +70,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   /**
    * Generate the required input tag.
    */
+  @Override
   public int doEndTag() throws JspException {
     VelocityContext vc = TagUtils.getVelocityContext(pageContext);
 
@@ -108,7 +109,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
       vc.put("checked", "");      
 
     if (id != null) vc.put("id", id);
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     if (klass != null) vc.put("class", klass);
     
     sub_actions = new ArrayList(); // we've used these now, can't retain them
@@ -123,6 +124,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   /**
    * Release any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     id = null;
@@ -137,6 +139,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
   // ActionInvokingTagIF
   // ------------------------------------------------------------
 
+  @Override
   public void addAction(ActionData action) {
     sub_actions.add(action);
   }
@@ -149,6 +152,7 @@ public class CheckboxTag extends TagSupport implements ActionInvokingTagIF {
    * Sets the id of the tag. This value will be used as the value of
    * an ID attribute in the generated output.
    */
+  @Override
   public void setId(String id) {
     this.id = id;
   }

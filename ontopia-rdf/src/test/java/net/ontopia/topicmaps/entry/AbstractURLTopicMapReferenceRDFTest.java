@@ -20,10 +20,10 @@
 package net.ontopia.topicmaps.entry;
 
 import java.net.URL;
+import java.util.Objects;
 import static junit.framework.Assert.assertTrue;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 
 public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapReferenceTest {
 
@@ -35,8 +35,8 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
   public void testRDFRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "instance-of.rdf";
     String title = "RDFTM";
-    String file = TestFileUtils.getTestInputFile("rdf", "in", id);
-    RDFTopicMapReference ref = new RDFTopicMapReference(new URL(URIUtils.getURI(file).getAddress()), id, title);
+    URL file = TestFileUtils.getTestInputURL("rdf", "in", id);
+    RDFTopicMapReference ref = new RDFTopicMapReference(file, id, title);
 
     // test mapping file
     String mf = ref.getMappingFile();
@@ -44,7 +44,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     ref.setMappingFile("foo");
     assertTrue("Mappingfile not equals 'foo'", "foo".equals(ref.getMappingFile()));
     ref.setMappingFile(mf);
-    assertTrue("Mappingfile != " + mf, mf == ref.getMappingFile());
+    assertTrue("Mappingfile != " + mf, Objects.equals(mf, ref.getMappingFile()));
 
     // test syntax
     String sx = ref.getSyntax();
@@ -52,7 +52,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     ref.setSyntax("foo");
     assertTrue("Syntax not equals 'foo'", "foo".equals(ref.getSyntax()));
     ref.setSyntax(sx);
-    assertTrue("Syntax != " + sx, sx == ref.getSyntax());
+    assertTrue("Syntax != " + sx, Objects.equals(sx, ref.getSyntax()));
 
     // test generate names
     boolean gg = ref.getGenerateNames();

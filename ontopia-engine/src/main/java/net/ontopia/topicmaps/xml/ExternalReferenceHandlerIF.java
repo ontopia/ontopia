@@ -36,7 +36,7 @@ public interface ExternalReferenceHandlerIF {
    * reference; if null is returned it will be interpreted as that the
    * reference should not be traversed.
    */
-  public LocatorIF externalTopicMap(LocatorIF address);
+  LocatorIF externalTopicMap(LocatorIF address);
 
   /**
    * PUBLIC: Receive notification of a reference to an external
@@ -46,7 +46,7 @@ public interface ExternalReferenceHandlerIF {
    * reference; if null is returned it will be interpreted as that the
    * reference should not be traversed.
    */
-  public LocatorIF externalTopic(LocatorIF address);
+  LocatorIF externalTopic(LocatorIF address);
 
 }
 

@@ -29,6 +29,7 @@ public class DoExpandNode implements RecoveryObjectIF {
     this.recreator = recreator;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     TMAbstractNode node = recreator.recoverNode(view);
     controller.expandNode(node);

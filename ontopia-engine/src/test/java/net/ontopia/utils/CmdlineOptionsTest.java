@@ -106,6 +106,7 @@ public class CmdlineOptionsTest extends TestCase {
       return (String) options.get(new Character(option));
     }
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
 

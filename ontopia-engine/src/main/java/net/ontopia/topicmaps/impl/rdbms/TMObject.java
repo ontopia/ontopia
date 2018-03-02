@@ -29,8 +29,6 @@ import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -38,16 +36,13 @@ import org.slf4j.LoggerFactory;
 public abstract class TMObject extends AbstractRWPersistent
   implements TMObjectIF {
 
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(TMObject.class.getName());
-  
   // ---------------------------------------------------------------------------
   // Field declarations
   // ---------------------------------------------------------------------------
 
   // Implementation specific field indexes
-  static final int LF_sources = 0;
-  static final int LF_topicmap = 1; // Note TopicMapIF.
+  protected static final int LF_sources = 0;
+  protected static final int LF_topicmap = 1; // Note TopicMapIF.
   
   // static String[] fields; // Defined in concrete class
   
@@ -55,7 +50,7 @@ public abstract class TMObject extends AbstractRWPersistent
   // Data members
   // ---------------------------------------------------------------------------
 
-  static String CLASS_INDICATOR;
+  public static String CLASS_INDICATOR;
 
   public TMObject() {
   }
@@ -96,7 +91,7 @@ public abstract class TMObject extends AbstractRWPersistent
     }
   }
   
-  long getLongId() {
+  protected long getLongId() {
     return ((Long)id.getKey(0)).longValue();
   }
   
@@ -104,12 +99,15 @@ public abstract class TMObject extends AbstractRWPersistent
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public abstract String getObjectId();
 
+  @Override
   public boolean isReadOnly() {
     return txn.isReadOnly();
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     try {
       return this.<TopicMapIF>loadField(LF_topicmap);
@@ -119,24 +117,26 @@ public abstract class TMObject extends AbstractRWPersistent
     }
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     return this.<LocatorIF>loadCollectionField(LF_sources);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF source_locator)
     throws ConstraintViolationException {
     if (source_locator == null)
       throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
-      throw new ConstraintViolationException("Cannot modify source locators when object isn't attached to a topic map.");
+      throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
 
-    // Check to see if the source locator is already a source locator
+    // Check to see if the item identifier is already a item identifier
     // of this topic.    
     Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
     if (sources.contains(source_locator)) return;    
 
-    // Note: Need to morph it into source locator to ensure that it is
+    // Note: Need to morph it into item identifier to ensure that it is
     // correctly handled by the mapping.
 
     // FIXME: Since this is an aggregate field, the O/R mapper should
@@ -153,19 +153,20 @@ public abstract class TMObject extends AbstractRWPersistent
     valueAdded(LF_sources, _source_locator, true);
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
     if (source_locator == null)
       throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
-      throw new ConstraintViolationException("Cannot modify source locators " +
+      throw new ConstraintViolationException("Cannot modify item identifiers " +
                                  "when object isn't attached to a topic map.");
     
-    // Check to see if source locator is a source locator of this topic.
+    // Check to see if item identifier is a item identifier of this topic.
     Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
     if (!sources.contains(source_locator)) return;
 
-    // Note: Need to morph it into source locator to ensure that it is
+    // Note: Need to morph it into item identifier to ensure that it is
     // correctly handled by the mapping.
     SourceLocator _source_locator = new SourceLocator(source_locator);
     _source_locator._setTMObject(this.getLongId());

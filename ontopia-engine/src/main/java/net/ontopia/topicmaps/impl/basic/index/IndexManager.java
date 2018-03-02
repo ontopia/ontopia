@@ -22,14 +22,15 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.Collection;
 import java.util.Map;
-
-import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.core.TransactionNotActiveException;
+import net.ontopia.topicmaps.core.index.IdentifierIndexIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
+import net.ontopia.topicmaps.impl.basic.SubjectIdentityCache;
 import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 import net.ontopia.topicmaps.impl.utils.AbstractIndexManager;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.utils.CollectionFactoryIF;
 import net.ontopia.utils.OntopiaUnsupportedException;
 
@@ -42,7 +43,7 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
   protected Map<String, IndexIF> indexes;
   
   public IndexManager(TopicMapTransactionIF transaction, CollectionFactoryIF cfactory, 
-		      EventManagerIF emanager, ObjectTreeManager otree) {
+		      EventManagerIF emanager, ObjectTreeManager otree, SubjectIdentityCache sicache) {
     this.transaction = transaction;
     
     // initialize index map
@@ -54,12 +55,15 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
     indexes.put("net.ontopia.topicmaps.core.index.ScopeIndexIF", new ScopeIndex(this, emanager, otree)); 
     indexes.put("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF", new ClassInstanceIndex(this, emanager, otree));
     indexes.put("net.ontopia.topicmaps.core.index.StatisticsIndexIF", new StatisticsIndex(this, transaction));
+    indexes.put(IdentifierIndexIF.class.getName(), new IdentifierIndex(sicache));
   }
   
+  @Override
   public TopicMapTransactionIF getTransaction() {
     return transaction;
   }
     
+  @Override
   public IndexIF getIndex(String name) {
     // Check to see if transaction is active.
     if (!transaction.isActive())
@@ -77,18 +81,22 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
     }
   }
 
+  @Override
   public Collection<String> getSupportedIndexes() {
     return indexes.keySet();
   }
 
+  @Override
   public Collection<IndexIF> getActiveIndexes() {
     return indexes.values();
   }
 
+  @Override
   public boolean isActive(String name) {
     return indexes.containsKey(name);
   }
 
+  @Override
   public void registerIndex(String name, IndexIF index) {
     indexes.put(name, index);
   }

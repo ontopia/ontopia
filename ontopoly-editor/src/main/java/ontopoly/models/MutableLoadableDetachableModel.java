@@ -37,23 +37,24 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
     attached = true;
   }
 
+  @Override
   public void detach() {
     if (attached) {
       attached = false;
       transientModelObject = null;
-      onDetach();
     }
   }
   
+  @Override
   public T getObject() {
     if (!attached) {
       attached = true;
       transientModelObject = load();
-      onAttach();
     }
     return transientModelObject;
   }
 
+  @Override
   public void setObject(T object) {
     this.transientModelObject = object;
     attached = true;
@@ -63,6 +64,7 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
     return attached;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("Model:classname=[");
     sb.append(getClass().getName()).append("]");
@@ -72,11 +74,5 @@ public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
   }
 
   protected abstract T load();
-
-  protected void onAttach() {
-  }
-
-  protected void onDetach() {
-  }
   
 }

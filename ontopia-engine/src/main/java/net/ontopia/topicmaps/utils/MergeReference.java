@@ -69,6 +69,7 @@ public class MergeReference extends AbstractTopicMapReference {
     this.refkeys = refkeys;
   }
 
+  @Override
   public synchronized void open() {
     // ignore if already open
     if (isOpen()) return;
@@ -81,6 +82,7 @@ public class MergeReference extends AbstractTopicMapReference {
     this.isopen = true;
   }
 
+  @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly) throws IOException {
     if (!isOpen()) open();
 
@@ -117,6 +119,7 @@ public class MergeReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void close() {    
     // close and dereference store
     if (store != null) {

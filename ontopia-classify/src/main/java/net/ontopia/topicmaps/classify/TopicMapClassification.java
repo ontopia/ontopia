@@ -28,9 +28,9 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * INTERNAL: 
  */
 public class TopicMapClassification {
-  TermDatabase tdb;
-  TopicMapAnalyzer ta;
-  TermAnalyzerIF customTermAnalyzer;
+  private TermDatabase tdb;
+  private TopicMapAnalyzer ta;
+  private TermAnalyzerIF customTermAnalyzer;
   
   public TopicMapClassification() {
     this.tdb = new TermDatabase();    

@@ -43,6 +43,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
   
+  @Override
   public AssociationRoleIF getWrapped() {
     return wrapped;
   }
@@ -51,6 +52,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
    * @see org.tmapi.core.Role#getParent()
    */
   
+  @Override
   public Association getParent() {
     return topicMap.wrapAssociation(wrapped.getAssociation());
   }
@@ -59,6 +61,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
    * @see org.tmapi.core.Role#getPlayer()
    */
   
+  @Override
   public Topic getPlayer() {
     return topicMap.wrapTopic(wrapped.getPlayer());
   }
@@ -67,6 +70,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
    * @see org.tmapi.core.Role#setPlayer(org.tmapi.core.Topic)
    */
   
+  @Override
   public void setPlayer(Topic player) {
     Check.playerNotNull(this, player);
     Check.playerInTopicMap(getTopicMap(), player);
@@ -77,6 +81,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
    * @see org.tmapi.core.Typed#getType()
    */
   
+  @Override
   public Topic getType() {
     return topicMap.wrapTopic(wrapped.getType());
   }
@@ -85,6 +90,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
    * @see org.tmapi.core.Typed#setType(org.tmapi.core.Topic)
    */
   
+  @Override
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
     Check.typeInTopicMap(getTopicMap(), type);

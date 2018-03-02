@@ -43,6 +43,7 @@ import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTa
  */
 public class TopicsTag extends BaseValueProducingAndAcceptingTag {
 
+  @Override
   public Collection process(Collection tmObjs) throws JspTagException {
     // find all topics of all topic map objects in collection
     Set topics = new HashSet();

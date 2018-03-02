@@ -39,7 +39,7 @@ public interface TopicMapReferenceIF extends AutoCloseable {
   /**
    * PUBLIC: Gets the id of the reference.
    */
-  public String getId();
+  String getId();
   // source.getId() + "." + ownId
   
   /**
@@ -48,24 +48,24 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    * java.lang.UnsupportedOperationException} if it does not support
    * setting the id.<p>
    */
-  public void setId(String id);
+  void setId(String id);
 
   /**
    * PUBLIC: Gets the title of the reference.
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * PUBLIC: Sets the title of the reference.
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
   /**
    * PUBLIC: Gets the source to which the reference belongs.
    *
    * @since 1.3.2
    */
-  public TopicMapSourceIF getSource();
+  TopicMapSourceIF getSource();
 
   /**
    * PUBLIC: Sets the source to which the reference belongs. The
@@ -75,7 +75,7 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public void setSource(TopicMapSourceIF source);
+  void setSource(TopicMapSourceIF source);
 
   /**
    * PUBLIC: Creates a topic map store that lets you access the
@@ -83,21 +83,21 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public TopicMapStoreIF createStore(boolean readonly) throws IOException;
+  TopicMapStoreIF createStore(boolean readonly) throws IOException;
 
   /**
    * PUBLIC: Returns true if the reference is open.
    *
    * @since 1.3.2
    */
-  public boolean isOpen();
+  boolean isOpen();
 
   /**
    * PUBLIC: Opens the reference.
    *
    * @since 2.1
    */
-  public void open();
+  void open();
 
   /**
    * PUBLIC: Closes all open stores and the reference itself. Note
@@ -107,7 +107,8 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public void close();
+  @Override
+  void close();
   // includes closing store, removing reference 
 
   /**
@@ -115,7 +116,7 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 2.1
    */
-  public boolean isDeleted();
+  boolean isDeleted();
   
   /**
    * PUBLIC: Closes all open stores and deletes the topic map. The
@@ -125,7 +126,7 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public void delete();
+  void delete();
   
   /**
    * EXPERIMENTAL: Closes all open stores and clears the topic map by
@@ -135,7 +136,7 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 2.1.1
    */
-  public void clear() throws IOException;
+  void clear() throws IOException;
 
   /**
    * INTERNAL: Callback from the specified TopicMapStoreIF after it
@@ -143,6 +144,6 @@ public interface TopicMapReferenceIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public void storeClosed(TopicMapStoreIF store);
+  void storeClosed(TopicMapStoreIF store);
   
 }

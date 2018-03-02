@@ -38,7 +38,7 @@ import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 public class CSVImport {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVImport.class);
+  private static Logger log = LoggerFactory.getLogger(CSVImport.class);
   
   protected final Connection conn;
 
@@ -162,8 +162,6 @@ public class CSVImport {
     } catch (Exception e) {
       //conn.rollback();
       throw e;
-    } finally {
-      //if (conn != null) conn.close();
     }
   }
   
@@ -185,9 +183,9 @@ public class CSVImport {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean stripquotes = false;
-    char separator = ',';
-    int ignorelines = 0;
+    private boolean stripquotes = false;
+    private char separator = ',';
+    private int ignorelines = 0;
     @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 's')

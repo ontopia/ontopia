@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Used to represent or clauses in tolog queries.
@@ -57,6 +56,7 @@ public class OrClause extends AbstractClause {
     return alternatives;
   }
 
+  @Override
   public Collection getAllVariables() {
     Collection vars = new HashSet();
 
@@ -72,6 +72,7 @@ public class OrClause extends AbstractClause {
     return vars;
   }
 
+  @Override
   public Collection getAllLiterals() {
     Collection literals = new HashSet();
 
@@ -87,6 +88,7 @@ public class OrClause extends AbstractClause {
     return literals;
   }
   
+  @Override
   public List getArguments() {
     List args = new ArrayList();
 
@@ -102,6 +104,7 @@ public class OrClause extends AbstractClause {
     return args;
   }
   
+  @Override
   public String toString() {
     return "{" + StringUtils.join(alternatives, (shortcircuit ? " || " : " | ")) + "}";
   }

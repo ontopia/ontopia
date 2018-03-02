@@ -29,8 +29,6 @@ import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.impl.basic.Function;
 import net.ontopia.utils.ontojsp.JSPContentHandler;
 import net.ontopia.utils.ontojsp.JSPTreeNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -41,10 +39,6 @@ import org.xml.sax.SAXException;
  * containing the element structure of navigator tags.
  */
 public class ModuleContentHandler extends JSPContentHandler {
-
-  // initialize logging facility
-  static Logger log = LoggerFactory
-    .getLogger(ModuleContentHandler.class.getName());
 
   /** Map with function names as keys and FunctionIF objects as values */
   protected Map functions;
@@ -64,12 +58,13 @@ public class ModuleContentHandler extends JSPContentHandler {
     characterCare = false;
   }
 
+  @Override
   public void startElement(String uri, String lname, String qname,
                            Attributes atts) throws SAXException {
-    if (qname.equals("module")) {
+    if ("module".equals(qname)) {
       // root level element found
       // only allowed element herein is: <function>
-    } else if (qname.equals("function")) {
+    } else if ("function".equals(qname)) {
       // a new function definition starts
       root = new JSPTreeNode("ROOT", null);
       current = root;
@@ -92,11 +87,13 @@ public class ModuleContentHandler extends JSPContentHandler {
     }
   }
   
+  @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
     if (characterCare) 
       super.characters(ch, start, length);
   }
   
+  @Override
   public void endElement(String uri, String lname, String qname)
     throws SAXException {
     

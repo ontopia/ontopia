@@ -37,8 +37,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class JDBCUtils {
 
-  static DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd");
-  static DateFormat df_datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  protected static DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd");
+  protected static DateFormat df_datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   public static String getString(ResultSet rs, int ix, int sql_type)
     throws SQLException {

@@ -51,6 +51,7 @@ public class SQLFunction implements SQLValueIF {
     this.args = args;
   }
 
+  @Override
   public int getType() {
     return FUNCTION;
   }
@@ -67,46 +68,57 @@ public class SQLFunction implements SQLValueIF {
     this.args = args;
   }
   
+  @Override
   public int getArity() {
     return 1;
   }
 
+  @Override
   public int getValueArity() {
     return 1;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
 
+  @Override
   public Class getValueType() {    
     return (vtype == null ? DEFAULT_VALUE_TYPE : vtype);
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
 
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return (fhandler == null ? DEFAULT_FIELD_HANDLER : fhandler);
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(name).append('(');

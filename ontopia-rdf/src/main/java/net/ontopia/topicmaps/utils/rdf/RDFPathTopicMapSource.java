@@ -85,6 +85,7 @@ public class RDFPathTopicMapSource extends AbstractPathTopicMapSource {
                     yesno.equalsIgnoreCase("true"));
   }
   
+  @Override
   protected TopicMapReferenceIF createReference(URL url, String id, String title, LocatorIF base_address) {
     RDFTopicMapReference ref = new RDFTopicMapReference(url, id, title, base_address, syntax);
     ref.setSource(this);

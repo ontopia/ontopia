@@ -32,6 +32,6 @@ public interface TicketIF {
   /**
    * INTERNAL: Method checks to see if ticket is valid or not.
    */  
-  public boolean isValid();
+  boolean isValid();
   
 }

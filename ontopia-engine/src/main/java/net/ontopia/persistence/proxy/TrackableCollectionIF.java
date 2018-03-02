@@ -34,30 +34,30 @@ public interface TrackableCollectionIF<E> extends Collection<E> {
    * INTERNAL: Clears the list of added and removed objects without
    * touching the original collection.
    */
-  public void resetTracking();
+  void resetTracking();
 
   /**
    * INTERNAL: Consider existing collection elements as having just
    * been added.
    */
-  public void selfAdded();
+  void selfAdded();
 
   /**
    * INTERNAL: Adds the item to the collection tracking the change.
    */
-  public boolean addWithTracking(E item);
+  boolean addWithTracking(E item);
 
   /**
    * INTERNAL: Removes the item from the collection tracking the
    * change.
    */
-  public boolean removeWithTracking(E item);
+  boolean removeWithTracking(E item);
 
   /**
    * INTERNAL: Removes all items from the collection tracking the
    * changes.
    */
-  public void clearWithTracking();
+  void clearWithTracking();
 
   //! /**
   //!  * INTERNAL: Adds the item to the collection tracking the change.
@@ -84,13 +84,13 @@ public interface TrackableCollectionIF<E> extends Collection<E> {
    * collection is immutable. Null is returned if the added collection
    * has not been initialized, ie. it is empty.
    */
-  public Collection<E> getAdded();
+  Collection<E> getAdded();
 
   /**
    * INTERNAL: Gets the objects that have been removed from the
    * set. This collection is immutable. Null is returned if the
    * removed collection has not been initialized, ie. it is empty.
    */
-  public Collection<E> getRemoved();
+  Collection<E> getRemoved();
   
 }

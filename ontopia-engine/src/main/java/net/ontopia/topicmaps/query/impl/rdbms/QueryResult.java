@@ -58,6 +58,7 @@ public class QueryResult implements QueryResultIF {
 
   // --- QueryResultIF implementation
     
+  @Override
   public boolean next() {
     current++;
     if (current < last)
@@ -66,10 +67,12 @@ public class QueryResult implements QueryResultIF {
       return false;
   }
 
+  @Override
   public Object getValue(int ix) {
     return result.getValue(ix);
   }
   
+  @Override
   public Object getValue(String colname) {
     int index = getIndex(colname);
     if (index < 0)
@@ -77,10 +80,12 @@ public class QueryResult implements QueryResultIF {
     return result.getValue(index);
   }
 
+  @Override
   public int getWidth() {
     return result.getWidth();
   }
 
+  @Override
   public int getIndex(String colname) {
     if (colname != null) {
       for (int i=0; i < colnames.length; i++) {
@@ -91,22 +96,27 @@ public class QueryResult implements QueryResultIF {
     return -1;
   }
 
+  @Override
   public String[] getColumnNames() {
     return colnames;
   }
 
+  @Override
   public String getColumnName(int ix) {
     return colnames[ix];
   }
 
+  @Override
   public Object[] getValues() {
     return result.getValues();
   }
 
+  @Override
   public Object[] getValues(Object[] values) {
     return result.getValues(values);
   }
 
+  @Override
   public void close() {
     // Close underlying query result
     result.close();

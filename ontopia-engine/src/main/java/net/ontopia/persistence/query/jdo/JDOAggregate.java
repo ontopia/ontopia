@@ -38,18 +38,22 @@ public class JDOAggregate implements JDOAggregateIF {
     this.type = type;
   }
   
+  @Override
   public int getType() {
     return type;
   }
   
+  @Override
   public JDOValueIF getValue() {
     return value;
   }
 
+  @Override
   public int hashCode() {
     return value.hashCode() + type;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof JDOAggregateIF) {
       JDOAggregateIF other = (JDOAggregateIF)obj;    
@@ -59,6 +63,7 @@ public class JDOAggregate implements JDOAggregateIF {
     return false;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     switch (type) {
@@ -68,10 +73,10 @@ public class JDOAggregate implements JDOAggregateIF {
     default:
       throw new OntopiaRuntimeException("Unknown aggregate function type: " + type);
     }
-    sb.append("(");
-    sb.append(value);
-    sb.append(")");
-    return sb.toString();
+    return sb.append('(')
+        .append(value)
+        .append(')')
+        .toString();
   }
   
 }

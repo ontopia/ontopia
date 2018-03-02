@@ -30,6 +30,6 @@ public interface TermStemmerIF {
   /**
    * INTERNAL: Return the stem of the term.
    */
-  public String stem(String term);
+  String stem(String term);
   
 }

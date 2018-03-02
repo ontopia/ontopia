@@ -29,7 +29,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 
 /**
  * PUBLIC: A Uniform Resource Identifier locator. Only URI locators
@@ -45,18 +44,6 @@ public class URILocator extends AbstractLocator implements Externalizable {
   protected short  lastSlash;     // last slash in directory path
   protected short  fragmentStart; // index of fragment '#'
   
-  static {
-    try {
-      net.ontopia.net.data.Handler.install();
-    } catch (SecurityException e) {
-      // Fail silently if there are security issues.
-    } catch (NoClassDefFoundError e) {
-      // This happens on Google AppEngine, but is not really a problem
-      // since the data-URL handler is rarely used. See
-      // https://github.com/ontopia/ontopia/issues/118
-    }
-  }
-
   /**
    * INTERNAL: No-argument constructor used by serialization. Do not
    * use this constructor in application code.
@@ -131,11 +118,11 @@ public class URILocator extends AbstractLocator implements Externalizable {
     if (schemeEnd == -1)
       throw new MalformedURLException("No valid scheme in URI: " + address);
 
-    if (StringUtils.regionEquals("file", uri, 0, 4) ||
-	        StringUtils.regionEquals("jar:file", uri, 0, 8) ||
-	        StringUtils.regionEquals("classpath", uri, 0, 9))
+    if (address.startsWith("file") ||
+	        address.startsWith("jar:file") ||
+	        address.startsWith("classpath"))
       length = parseFileUrl(uri, schemeEnd, length);
-    else if (StringUtils.regionEquals("//", uri, schemeEnd+1, 2))
+    else if (regionEquals("//", uri, schemeEnd+1, 2))
       length = parseHierarchicalUrl(uri, schemeEnd, length);
 
     return new String(uri, 0, length);
@@ -145,14 +132,17 @@ public class URILocator extends AbstractLocator implements Externalizable {
   // LocatorIF implementation
   // --------------------------------------------------------------------------
   
+  @Override
   public String getNotation() {
     return "URI";
   }
 
+  @Override
   public String getAddress() {
     return address;
   }
   
+  @Override
   public LocatorIF resolveAbsolute(String rel) {
     int length = rel.length();
     if (length == 0) {
@@ -202,7 +192,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
       // there were slashes, use constructor for unnormalized URIs,
       // so that the normalizer resolves the directory for us
       // (also do this if rel is "." or "..")
-      if (ix < length || rel.equals(".") || rel.equals("..")) {
+      if (ix < length || ".".equals(rel) || "..".equals(rel)) {
         if (lastSlash == -1) // no directory part
           // the "/" here is important, as it was normalized away and needs
           // to be added back
@@ -227,11 +217,12 @@ public class URILocator extends AbstractLocator implements Externalizable {
     }
   }
 
+  @Override
   public String getExternalForm() {
     return toExternalForm(address);
   }
   
-  static String toExternalForm(String address) {
+  protected static String toExternalForm(String address) {
     // need to escape characters that are not unreserved or reserved
     char[] tmp = new char[address.length() * 6]; // worst case scenario
     int pos = 0;
@@ -377,7 +368,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
       length -= offset;
     }
 
-    StringUtils.downCaseAscii(uri, hostStart, ix - hostStart);
+    for (int i = hostStart; i < ix; i++)
+      if (uri[i] >= 'A' && uri[i] <= 'Z')
+        uri[i] = (char) (uri[i] | 0x20); // efficient downcase of char :-)
 
     // make sure authority part ends with a slash no matter what
     if (uri[ix] != '/') {
@@ -594,17 +587,17 @@ public class URILocator extends AbstractLocator implements Externalizable {
   }
 
   private String findPortDefault(char[] uri, int schemeEnd) {
-    if (StringUtils.regionEquals("http", uri, 0, schemeEnd))
+    if (regionEquals("http", uri, 0, schemeEnd))
       return "80";
-    else if (StringUtils.regionEquals("https", uri, 0, schemeEnd))
+    else if (regionEquals("https", uri, 0, schemeEnd))
       return "443";
-    else if (StringUtils.regionEquals("shttp", uri, 0, schemeEnd))
+    else if (regionEquals("shttp", uri, 0, schemeEnd))
       return "80";
-    else if (StringUtils.regionEquals("ftp", uri, 0, schemeEnd))
+    else if (regionEquals("ftp", uri, 0, schemeEnd))
       return "21";
-    else if (StringUtils.regionEquals("ldap", uri, 0, schemeEnd))
+    else if (regionEquals("ldap", uri, 0, schemeEnd))
       return "389";
-    else if (StringUtils.regionEquals("gopher", uri, 0, schemeEnd))
+    else if (regionEquals("gopher", uri, 0, schemeEnd))
       return "70";
     else
       return "dummy value";
@@ -703,10 +696,12 @@ public class URILocator extends AbstractLocator implements Externalizable {
   // Misc
   // --------------------------------------------------------------------------
 
+  @Override
   public int hashCode() {
     return address.hashCode();
   }
 
+  @Override
   public boolean equals(Object object) {
     try {
       LocatorIF locator = (LocatorIF)object;
@@ -723,10 +718,12 @@ public class URILocator extends AbstractLocator implements Externalizable {
   // Externalization
   // --------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeUTF(address);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     address = in.readUTF();
   }
@@ -749,4 +746,19 @@ public class URILocator extends AbstractLocator implements Externalizable {
     }
   }
 
+  /**
+   * INTERNAL: Test whether the string is equal to the given region of
+   * the character array.
+   */
+  private static boolean regionEquals(String str, char[] ch, int start,
+                                     int length) {
+    if (str.length() != length || start+length > ch.length)
+      return false;
+
+    char[] strarr = str.toCharArray();
+    for (int i=0; i<length; i++)
+      if (ch[start+i] != strarr[i])
+        return false;
+    return true;
+  }
 }

@@ -20,21 +20,13 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.util.Set;
-import java.util.List;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.XMLReaderFactoryIF;
+import java.util.List;
+import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -51,29 +43,37 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: Reads both XTM 2.0 and XTM 2.1.
  */
 public class XTM2ContentHandler extends DefaultHandler {
-  static final String NS_XTM2 = "http://www.topicmaps.org/xtm/";
-  static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
-  static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
+  public static final String NS_XTM2 = "http://www.topicmaps.org/xtm/";
+  public static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
+  public static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
+  private static final String HREF = "href";
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTM2ContentHandler.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTM2ContentHandler.class.getName());
   
   private TopicMapIF topicmap;
   private LocatorIF doc_address;
   private TopicMapStoreFactoryIF store_factory;
   private TopicMapBuilderIF builder;
-  private XMLReaderFactoryIF xrfactory;
   private Set read_documents; // set of LocatorIFs for XTMs already read
 
   private boolean keep_content;
@@ -121,18 +121,15 @@ public class XTM2ContentHandler extends DefaultHandler {
   private static final int CONTEXT_REIFIER     = 12;
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
-                            XMLReaderFactoryIF xrfactory,
                             LocatorIF doc_address) {
-    this(store_factory, xrfactory, doc_address,
+    this(store_factory, doc_address,
          new CompactHashSet());
   }
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
-                            XMLReaderFactoryIF xrfactory,
                             LocatorIF doc_address,
                             Set read_documents) {
     this.store_factory = store_factory;
-    this.xrfactory = xrfactory;
     this.doc_address = doc_address;
     this.read_documents = read_documents;
     this.content = new StringBuilder();
@@ -145,6 +142,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   
   // --- ContentHandler interface
 
+  @Override
   public void startElement(String uri, String name, String qname,
                            Attributes atts) {
     try {
@@ -156,6 +154,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     }
   }
 
+  @Override
   public void endElement(String uri, String name, String qname) {
     try {
       endElement_(uri, name, qname);
@@ -200,7 +199,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <ITEMIDENTITY
     } else if ("itemIdentity".equals(name)) {
-      LocatorIF loc = makeLocator(atts.getValue("", "href"));
+      LocatorIF loc = makeLocator(atts.getValue("", HREF));
       if (context == CONTEXT_TOPIC_MAP)
         topicmap.addItemIdentifier(loc);
       else if (context == CONTEXT_TOPIC)
@@ -217,7 +216,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       // <SUBJECTLOCATOR
     } else if ("subjectLocator".equals(name)) {
       seenIdentity = true;
-      LocatorIF sl = makeLocator(atts.getValue("", "href"));
+      LocatorIF sl = makeLocator(atts.getValue("", HREF));
       TopicIF other = topicmap.getTopicBySubjectLocator(sl);
       if (other == null)
         topic.addSubjectLocator(sl);
@@ -227,7 +226,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       // <SUBJECTIDENTIFIER
     } else if ("subjectIdentifier".equals(name)) {
       seenIdentity = true;
-      LocatorIF si = makeLocator(atts.getValue("", "href"));
+      LocatorIF si = makeLocator(atts.getValue("", HREF));
       TopicIF other = topicmap.getTopicBySubjectIdentifier(si);
       if (other == null)
         topic.addSubjectIdentifier(si);
@@ -250,21 +249,21 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <TOPICREF
     } else if ("topicRef".equals(name)) {
-      handleTopicReference(getTopicByIid(makeLocator(atts.getValue("", "href"))));
+      handleTopicReference(getTopicByIid(makeLocator(atts.getValue("", HREF))));
 
       // <SUBJECTIDENTIFIERREF
     } else if ("subjectIdentifierRef".equals(name)) {
       if (!xtm21) {
         throw new InvalidTopicMapException("The <subjectIdentifierRef/> is illegal in XTM 2.0");
       }
-      handleTopicReference(getTopicBySid(makeLocator(atts.getValue("", "href"))));
+      handleTopicReference(getTopicBySid(makeLocator(atts.getValue("", HREF))));
       
       // <SUBJECTLOCATORREF
     } else if ("subjectLocatorRef".equals(name)) {
       if (!xtm21) {
         throw new InvalidTopicMapException("The <subjectLocatorRef/> is illegal in XTM 2.0");
       }
-      handleTopicReference(getTopicBySlo(makeLocator(atts.getValue("", "href"))));
+      handleTopicReference(getTopicBySlo(makeLocator(atts.getValue("", HREF))));
       
       // <SCOPE
     } else if ("scope".equals(name))
@@ -276,7 +275,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <RESOURCEREF
     else if ("resourceRef".equals(name))
-      locator = makeLocator(atts.getValue("", "href"));
+      locator = makeLocator(atts.getValue("", HREF));
 
       // <ROLE
     else if ("role".equals(name)) {
@@ -292,7 +291,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <MERGEMAP
     } else if ("mergeMap".equals(name))
-      loadMap(makeLocator(atts.getValue("", "href")));
+      loadMap(makeLocator(atts.getValue("", HREF)));
 
       // <VARIANT
     else if ("variant".equals(name)) {
@@ -328,6 +327,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     }
   }
 
+  @Override
   public void characters(char ch[], int start, int length) {
     if (keep_content) 
       content.append(ch, start, length);      
@@ -636,12 +636,12 @@ public class XTM2ContentHandler extends DefaultHandler {
       return;
     
     // Create new parser object
-    XMLReader parser = xrfactory.createXMLReader();
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
         
     // Initialize nested content handler
     TopicMapStoreFactoryIF sfactory = new SameStoreFactory(topicmap.getStore());
     XTM2ContentHandler handler =
-      new XTM2ContentHandler(sfactory, xrfactory, mapuri, read_documents);
+      new XTM2ContentHandler(sfactory, mapuri, read_documents);
     parser.setContentHandler(handler);
     
     // Parse input source

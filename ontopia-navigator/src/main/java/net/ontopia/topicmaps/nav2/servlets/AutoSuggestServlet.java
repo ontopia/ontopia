@@ -23,41 +23,42 @@ package net.ontopia.topicmaps.nav2.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
-import java.util.Iterator;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Experimental auto suggest servlet.
  */
 public class AutoSuggestServlet extends HttpServlet {
 
-  int limit = 25;
-  String query = "select $T, $DESC from value-like($TN, %TERM%), topic-name($T, $TN), { i\"http://purl.org/dc/elements/1.1/description\"($T, $DESC) } order by $T, $DESC desc?";
+  private int limit = 25;
+  private String query = "select $T, $DESC from value-like($TN, %TERM%), topic-name($T, $TN), { i\"http://purl.org/dc/elements/1.1/description\"($T, $DESC) } order by $T, $DESC desc?";
 
+  @Override
   public void init() throws ServletException {
+   // no-op
   }
     
+  @Override
   public void destroy() {
+    // no-op
   }
 
   private String escape(String s) {
     return StringUtils.replace(StringUtils.replace(s, "\"", "\\\""), "\n", " ");
   }
 
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 

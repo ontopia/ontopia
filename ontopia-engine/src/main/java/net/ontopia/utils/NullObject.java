@@ -32,10 +32,12 @@ public final class NullObject {
   private NullObject() {
   }
 
+  @Override
   public boolean equals(Object other) {
     return (other instanceof NullObject);                                  
   }
 
+  @Override
   public int hashCode() {
     return 12345678;
   }

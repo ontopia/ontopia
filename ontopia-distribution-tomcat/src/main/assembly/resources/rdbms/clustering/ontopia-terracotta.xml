@@ -59,18 +59,6 @@
           <method-expression>* java.util.concurrent.ConcurrentHashMap.*(..)</method-expression>
           <lock-level>write</lock-level>
         </autolock>
-        <autolock>
-          <method-expression>* EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap.*(..)</method-expression>
-          <lock-level>write</lock-level>
-        </autolock>
-        <autolock>
-          <method-expression>* EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArraySet.*(..)</method-expression>
-          <lock-level>write</lock-level>
-        </autolock>
-        <autolock>
-          <method-expression>* EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArrayList.*(..)</method-expression>
-          <lock-level>write</lock-level>
-        </autolock>
       </locks>
       <instrumented-classes>
         <include>
@@ -90,15 +78,6 @@
         </include>
         <include>
           <class-expression>java.util.HashSet</class-expression>
-        </include>
-        <include>
-          <class-expression>EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap</class-expression>
-        </include>
-        <include>
-          <class-expression>EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArraySet</class-expression>
-        </include>
-        <include>
-          <class-expression>EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArrayList</class-expression>
         </include>
          <include>
            <class-expression>net.ontopia.topicmaps.nav2.impl.framework.User</class-expression>

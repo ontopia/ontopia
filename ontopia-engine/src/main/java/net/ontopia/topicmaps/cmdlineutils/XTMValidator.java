@@ -20,11 +20,10 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import net.ontopia.infoset.core.LocatorIF;
+import java.net.URL;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class XTMValidator {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XTMValidator.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMValidator.class.getName());
 
   public static void main(String [] argv) {
 
@@ -69,10 +68,7 @@ public class XTMValidator {
       for (int i=0; i < args.length; i++) {
         log.debug("Setting up validator.");
 
-        // Validate or transform <url> into a URL
-        LocatorIF url = URIUtils.getURI(args[i]);
-        
-        XTMTopicMapReader validator = new XTMTopicMapReader(url);
+        XTMTopicMapReader validator = new XTMTopicMapReader(new URL(args[i]));
         log.info("Validation begins.");
         validator.read();
         log.info("Validation ends.");

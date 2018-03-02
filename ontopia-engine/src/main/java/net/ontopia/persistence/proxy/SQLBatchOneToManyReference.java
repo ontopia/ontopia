@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class SQLBatchOneToManyReference extends SQLOneToManyReference implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLBatchOneToManyReference.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLBatchOneToManyReference.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_add;
@@ -62,6 +62,7 @@ public class SQLBatchOneToManyReference extends SQLOneToManyReference implements
   //!   }
   //! }
   
+  @Override
   protected PreparedStatement add_getStatement() throws SQLException {
     if (stm_add == null) {
       // Create statement and set statement field
@@ -88,6 +89,7 @@ public class SQLBatchOneToManyReference extends SQLOneToManyReference implements
   //!   }
   //! }
   
+  @Override
   protected PreparedStatement remove_getStatement() throws SQLException {
     if (stm_remove == null) {
       // Create statement and set statement field
@@ -110,6 +112,7 @@ public class SQLBatchOneToManyReference extends SQLOneToManyReference implements
   //!   stm.addBatch();    
   //! }
   
+  @Override
   protected PreparedStatement clear_getStatement() throws SQLException {
     if (stm_clear == null) {
       // Create statement and set statement field
@@ -120,12 +123,14 @@ public class SQLBatchOneToManyReference extends SQLOneToManyReference implements
     return stm_clear;
   }
   
+  @Override
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
     // Add batch update
     if (debug) log.debug("Adding batch: " + sql);
     stm.addBatch();
   }
   
+  @Override
   public void flush() throws Exception {
     // Handle add batch
     if (stm_add != null) {

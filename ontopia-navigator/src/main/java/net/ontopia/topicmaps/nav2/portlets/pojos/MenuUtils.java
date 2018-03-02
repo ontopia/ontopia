@@ -28,13 +28,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.nav2.portlets.pojos.Menu.Heading;
 import net.ontopia.topicmaps.nav2.portlets.pojos.Menu.Item;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
@@ -44,7 +43,7 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Helper methods for Menu.
@@ -445,7 +444,7 @@ public class MenuUtils {
     String lastSortKey = getLastValue(topic, sortKeysQuery);
     int lastSortKeyInt = Integer.parseInt(lastSortKey);
     lastSortKeyInt++;
-    String newSortKey = StringUtils.pad(lastSortKeyInt, '0', 3);
+    String newSortKey = StringUtils.leftPad(Integer.toString(lastSortKeyInt), 3, '0');
     builder.makeOccurrence(itemIFTopic, sortOccurrenceType, newSortKey);
     
     Menu.ChildIF itemIF;

@@ -105,6 +105,6 @@ public class TopicNameComparatorTest {
     TopicIF topic = tm.getBuilder().makeTopic();
     TopicNameIF name1 = tm.getBuilder().makeTopicName(topic, topic, "value1");
     TopicNameIF name2 = tm.getBuilder().makeTopicName(topic, topic, "value2");
-    new TopicNameComparator(Collections.EMPTY_LIST).compare(name1, name2);
+    Assert.assertEquals(-1, new TopicNameComparator(Collections.EMPTY_LIST).compare(name1, name2));
   }
 }

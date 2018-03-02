@@ -23,12 +23,9 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
-import org.xml.sax.InputSource;
-
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
 
 /**
@@ -75,8 +72,8 @@ public class TMXMLTopicMapReference extends AbstractOntopolyURLReference {
       TMXMLPathTopicMapSource src = (TMXMLPathTopicMapSource) source;
       String path = src.getPath();
       if (path != null) {
-        String filename = path + File.separator + this.getId();
-        TopicMapWriterIF writer = new TMXMLWriter(filename);
+        File file = new File(path + File.separator + this.getId());
+        TopicMapWriterIF writer = new TMXMLWriter(file);
         writer.write(store.getTopicMap());
       }
     }
@@ -86,13 +83,14 @@ public class TMXMLTopicMapReference extends AbstractOntopolyURLReference {
   // Abstract methods
   // --------------------------------------------------------------------------
 
-  protected TopicMapImporterIF getImporter() {
+  @Override
+  protected TopicMapReaderIF getImporter() throws IOException {
     // create topic map importer
     TMXMLReader reader;
     if (base_address == null)
-      reader = new TMXMLReader(url.toString());
+      reader = new TMXMLReader(url);
     else
-      reader = new TMXMLReader(new InputSource(url.toString()), base_address);
+      reader = new TMXMLReader(url, base_address);
     reader.setValidate(validate);
     return reader;
   }

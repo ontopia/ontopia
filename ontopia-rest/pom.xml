@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia</groupId>
+		<version>5.3.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ontopia-rest</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>Ontopia Rest</name>
+	<description>Ontopia Rest services</description>
+	
+	<properties>
+		<restlet.version>2.2.2</restlet.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>Restlet</id>
+			<url>http://maven.restlet.org</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.ontopia</groupId>
+			<artifactId>ontopia-engine</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.ontopia</groupId>
+			<artifactId>ontopia-lucene</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		
+		<!-- rest -->
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.servlet</artifactId>
+			<version>${restlet.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.slf4j</artifactId>
+			<version>${restlet.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.jackson</artifactId>
+			<version>${restlet.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.velocity</artifactId>
+			<version>${restlet.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.19.v20160908</version>
+				<configuration>
+					<stopPort>9999</stopPort>
+					<stopKey>ontopia</stopKey>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<httpConnector>
+								<port>${ontopia.jetty.port}</port>
+							</httpConnector>
+							<webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
+							<useTestClasspath>true</useTestClasspath>
+							<webApp>
+								<contextPath>/</contextPath>
+							</webApp>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

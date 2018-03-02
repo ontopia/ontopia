@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Used to represent not clauses in tolog queries.
@@ -49,6 +48,7 @@ public class NotClause extends AbstractClause {
     return clauses;
   }
 
+  @Override
   public Collection getAllVariables() {
     Collection vars = new HashSet();
 
@@ -60,6 +60,7 @@ public class NotClause extends AbstractClause {
     return vars;
   }
 
+  @Override
   public Collection getAllLiterals() {
     Collection literals = new HashSet();
 
@@ -71,6 +72,7 @@ public class NotClause extends AbstractClause {
     return literals;
   }
   
+  @Override
   public List getArguments() {
     Collection items = new HashSet();
 
@@ -84,6 +86,7 @@ public class NotClause extends AbstractClause {
     return list;
   }
   
+  @Override
   public String toString() {
     return "not(" + StringUtils.join(clauses, ", ") + ")";
   }

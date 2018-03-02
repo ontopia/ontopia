@@ -21,22 +21,21 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class Execute {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Execute.class);
+  private static Logger log = LoggerFactory.getLogger(Execute.class);
 
   Execute() {
   }
@@ -103,9 +102,9 @@ public class Execute {
       String tmurl = ohandler.tm;    
       log.debug("Opening topic map {}", tmurl);
       TopicMapIF topicmap;
-      if (tmurl == null || tmurl.equals("tm:in-memory:new"))
+      if (tmurl == null || "tm:in-memory:new".equals(tmurl))
         topicmap = new InMemoryTopicMapStore().getTopicMap();
-      else if (tmurl.equals("tm:rdbms:new"))
+      else if ("tm:rdbms:new".equals(tmurl))
         topicmap = new RDBMSTopicMapStore().getTopicMap();      
       else {
         TopicMapReaderIF reader = ImportExportUtils.getReader(tmurl);
@@ -115,9 +114,9 @@ public class Execute {
 
       // base locator
       String outfile = ohandler.out;
-      LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : URIUtils.getFileURI(new File(outfile)));
+      LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : new URILocator(new File(outfile)));
       if (baseloc == null && tmurl != null)
-        baseloc = (ohandler.baseuri == null ? URIUtils.getURI(tmurl) : URIUtils.getURI(ohandler.baseuri));
+        baseloc = (ohandler.baseuri == null ? new URILocator(tmurl) : new URILocator(ohandler.baseuri));
 
       // figure out which relations to actually process
       Collection<String> relations = null;
@@ -125,7 +124,7 @@ public class Execute {
         String[] relnames = StringUtils.split(ohandler.relations, ",");
         if (relnames.length > 0) {
           relations = new HashSet<String>(relnames.length);
-          CollectionUtils.addAll(relations, relnames);
+          relations.addAll(Arrays.asList(relnames));
         }
       }
       
@@ -144,7 +143,7 @@ public class Execute {
         // export topicmap
         if (outfile != null) {
           log.debug("Exporting topic map to {}", outfile);
-          TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
+          TopicMapWriterIF writer = ImportExportUtils.getWriter(new File(outfile));
           writer.write(topicmap);
         }
         
@@ -162,7 +161,7 @@ public class Execute {
       }
       
     } catch (Exception e) {
-      Throwable cause = ObjectUtils.getRealCause(e);
+      Throwable cause = e.getCause();
       if (cause instanceof DB2TMException)
         System.err.println("Error: " + e.getMessage());
       else
@@ -191,11 +190,11 @@ public class Execute {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    String tm;
-    String baseuri;
-    String out;
-    String relations;
-    String forceRescan;
+    private String tm;
+    private String baseuri;
+    private String out;
+    private String relations;
+    private String forceRescan;
     @Override
     public void processOption(char option, String value) {
       if (option == 't') tm = value;

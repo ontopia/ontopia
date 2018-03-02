@@ -10,6 +10,7 @@ TODO
 <%@ page import="
   java.io.StringWriter,
   java.util.*,
+  org.apache.commons.lang3.StringUtils,
   net.ontopia.utils.*,
   net.ontopia.infoset.core.LocatorIF,
   net.ontopia.topicmaps.core.*,
@@ -126,7 +127,7 @@ Technical Report</a>.</p>
     return;
   }
 
-  String fileuri = URIUtils.getURI(file).getAddress();
+  String fileuri = StreamUtils.getResource(file).toString();
   Map old_mappings = RDFIntroSpector.getPropertyMappings(fileuri, false);
 
   // read RDF file to find all properties (and existing mappings)
@@ -273,7 +274,7 @@ Technical Report</a>.</p>
 <input type=hidden name=tm value=<%= tmid %>>
 <input type=hidden 
        name=mapfile <%-- URI-escaping value to avoid bug #1845 --%>
-       value=<%= net.ontopia.utils.StringUtils.replace(file, " ", "+") %>>
+       value=<%= StringUtils.replace(file, " ", "+") %>>
 <h2 title="Confirm proposed mappings and/or changes to existing
 mappings"><input type=submit value="Confirm"></h2>
 </form>

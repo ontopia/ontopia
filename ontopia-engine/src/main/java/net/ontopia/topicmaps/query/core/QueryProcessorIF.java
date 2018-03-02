@@ -34,7 +34,7 @@ public interface QueryProcessorIF {
   /**
    * PUBLIC: Parses and executes the query, returning the results.
    */
-  public QueryResultIF execute(String query)
+  QueryResultIF execute(String query)
     throws InvalidQueryException;
 
   /**
@@ -43,7 +43,7 @@ public interface QueryProcessorIF {
    *
    * @since 2.1
    */
-  public QueryResultIF execute(String query, DeclarationContextIF context)
+  QueryResultIF execute(String query, DeclarationContextIF context)
     throws InvalidQueryException;
 
   /**
@@ -53,7 +53,7 @@ public interface QueryProcessorIF {
    *
    * @since 2.0
    */
-  public QueryResultIF execute(String query, Map<String, ?> arguments)
+  QueryResultIF execute(String query, Map<String, ?> arguments)
     throws InvalidQueryException;
 
   /**
@@ -63,7 +63,7 @@ public interface QueryProcessorIF {
    *
    * @since 2.1
    */
-  public QueryResultIF execute(String query, Map<String, ?> arguments,
+  QueryResultIF execute(String query, Map<String, ?> arguments,
                                DeclarationContextIF context)
     throws InvalidQueryException;
 
@@ -72,14 +72,14 @@ public interface QueryProcessorIF {
    * modified objects.
    * @since 5.1.0
    */
-  public int update(String query) throws InvalidQueryException;
+  int update(String query) throws InvalidQueryException;
 
   /**
    * PUBLIC: Runs the update statement in the given declaration
    * context, returning the number of modified objects.
    * @since 5.1.0
    */
-  public int update(String query, DeclarationContextIF context)
+  int update(String query, DeclarationContextIF context)
     throws InvalidQueryException;
   
   /**
@@ -87,7 +87,7 @@ public interface QueryProcessorIF {
    * returning the number of modified objects.
    * @since 5.1.0
    */
-  public int update(String query, Map<String, ?> arguments)
+  int update(String query, Map<String, ?> arguments)
     throws InvalidQueryException;
 
   /**
@@ -96,7 +96,7 @@ public interface QueryProcessorIF {
    * modified objects.
    * @since 5.1.0
    */
-  public int update(String query, Map<String, ?> arguments,
+  int update(String query, Map<String, ?> arguments,
                     DeclarationContextIF context)
     throws InvalidQueryException;
   
@@ -104,7 +104,7 @@ public interface QueryProcessorIF {
    * PUBLIC: Parses the query, returning an object representing the
    * result.
    */
-  public ParsedQueryIF parse(String query)
+  ParsedQueryIF parse(String query)
     throws InvalidQueryException;
 
   /**     
@@ -113,7 +113,7 @@ public interface QueryProcessorIF {
    *
    * @since 2.1
    */
-  public ParsedQueryIF parse(String query, DeclarationContextIF context)
+  ParsedQueryIF parse(String query, DeclarationContextIF context)
     throws InvalidQueryException;
 
   /**     
@@ -121,7 +121,7 @@ public interface QueryProcessorIF {
    * representing the result.
    * @since 5.1.0
    */
-  public ParsedModificationStatementIF parseUpdate(String statement)
+  ParsedModificationStatementIF parseUpdate(String statement)
     throws InvalidQueryException;
 
   /**     
@@ -129,7 +129,7 @@ public interface QueryProcessorIF {
    * returning an object representing the result.
    * @since 5.1.0
    */
-  public ParsedModificationStatementIF parseUpdate(String statement,
+  ParsedModificationStatementIF parseUpdate(String statement,
                                                    DeclarationContextIF context)
     throws InvalidQueryException;
  
@@ -140,7 +140,7 @@ public interface QueryProcessorIF {
    *
    * @deprecated use rule import declaration instead, or contexts
    */
-  public void load(String ruleset)
+  void load(String ruleset)
     throws InvalidQueryException;
 
   /**     
@@ -151,6 +151,6 @@ public interface QueryProcessorIF {
    * @since 1.4
    * @deprecated use rule import declaration instead, or contexts
    */
-  public void load(Reader ruleset)
+  void load(Reader ruleset)
     throws InvalidQueryException, IOException;
 }

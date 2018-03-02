@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class IncludeTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(IncludeTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(IncludeTag.class.getName());
 
   // file separator character
   private final static String FILE_SEPARATOR =
@@ -58,6 +58,7 @@ public class IncludeTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     ServletContext ctxt = pageContext.getServletContext();
     
@@ -122,6 +123,7 @@ public class IncludeTag extends TagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

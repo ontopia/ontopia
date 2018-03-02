@@ -63,11 +63,13 @@ public class QueryResultWrappers  {
     
     // --- unmodifiable list implementation
     
+    @Override
     public Map<String, Object> get(int index) {
       // create new rowmap
       return new ArrayMap<String, Object>(coldefs, data[index + (offset + 1)]);
     }
     
+    @Override
     public int size() {
       return size;
     }

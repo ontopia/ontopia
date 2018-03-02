@@ -80,14 +80,17 @@ public class DummyFulltextSearcherIF implements SearcherIF {
       }
     }
     return new SearchResultIF() {
+      @Override
       public DocumentIF getDocument(int hit) throws IOException {
         return hits.get(hit);
       }
 
+      @Override
       public float getScore(int hit) throws IOException {
         return 1;
       }
 
+      @Override
       public int hits() throws IOException {
         return hits.size();
       }

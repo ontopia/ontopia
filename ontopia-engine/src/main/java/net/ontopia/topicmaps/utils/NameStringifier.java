@@ -36,6 +36,7 @@ public class NameStringifier implements StringifierIF<NameIF> {
    * internally; the given name
    * @return string containing name value or "[No name]"
    */
+  @Override
   public String toString(NameIF name) {
     if (name == null)
       return "[No name]";

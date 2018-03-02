@@ -19,7 +19,7 @@
  */
 package ontopoly.pages;
 
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import ontopoly.components.InstancePanel;
 import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
@@ -29,7 +29,6 @@ import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.utils.NoSuchTopicException;
 import ontopoly.utils.OntopolyUtils;
-
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -76,7 +75,7 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     
     // page is read-only if topic type is read-only
     
-    setReadOnlyPage(tt.isReadOnly() || ObjectUtils.equals(getRequest().getParameter("ro"), "true") || !((AbstractOntopolyPage)this).filterTopic(topic));
+    setReadOnlyPage(tt.isReadOnly() || Objects.equals(getRequest().getParameter("ro"), "true") || !((AbstractOntopolyPage)this).filterTopic(topic));
 
     Form<Object> form = new Form<Object>("form");
     add(form);

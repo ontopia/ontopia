@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class PrimitiveFieldInfo extends AbstractFieldInfo {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(PrimitiveFieldInfo.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(PrimitiveFieldInfo.class.getName());
 
   protected String colname;
   protected int sqltype;
@@ -54,18 +54,22 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
     return sqltype;
   }
   
+  @Override
   public ClassInfoIF getValueClassInfo() {
     return null;
   }
 
+  @Override
   public int getColumnCount() {
     return 1;
   }
   
+  @Override
   public boolean isIdentityField() {
     return false;
   }
   
+  @Override
   public String[] getValueColumns() {
     return new String[] {colname};
   }

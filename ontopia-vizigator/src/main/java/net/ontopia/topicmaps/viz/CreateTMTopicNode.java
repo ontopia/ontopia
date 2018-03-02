@@ -31,10 +31,12 @@ public class CreateTMTopicNode implements NodeRecoveryObjectIF {
     this.topic = topic;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     lastNode = view.assertNode(topic, true);
   }
   
+  @Override
   public TMAbstractNode recoverNode(TopicMapView view) {
     execute(view);
     return lastNode;

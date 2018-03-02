@@ -121,11 +121,11 @@ public class TreeModels {
   
   private static class HierarchyDefinition {
 
-    TopicIF atype;
-    TopicIF prtype;
-    TopicIF crtype;
-    Collection<TopicIF> ptypes = new HashSet<TopicIF>();
-    Collection<TopicIF> ctypes = new HashSet<TopicIF>();
+    private TopicIF atype;
+    private TopicIF prtype;
+    private TopicIF crtype;
+    private Collection<TopicIF> ptypes = new HashSet<TopicIF>();
+    private Collection<TopicIF> ctypes = new HashSet<TopicIF>();
     
     HierarchyDefinition(TopicIF atype, TopicIF prtype, TopicIF crtype) {
       this.atype = atype;
@@ -133,11 +133,13 @@ public class TreeModels {
       this.crtype = crtype;
     }
       
+    @Override
     public boolean equals(Object other) {
       HierarchyDefinition o = (HierarchyDefinition)other;
       return atype.equals(o.atype) && prtype.equals(o.prtype) && crtype.equals(o.crtype);
     }
     
+    @Override
     public int hashCode() {
       return atype.hashCode() + prtype.hashCode() + crtype.hashCode();
     }

@@ -33,13 +33,13 @@ import net.ontopia.utils.StringifierIF;
  */
 public class TopicComparators {
 
+  // Compare the stringified sortnames of the occurrence types
+  protected static Comparator<TypedIF> tyc = getTypedIFComparator(Collections.<TopicIF>emptySet());
+
   private TopicComparators() {
     // don't call me
   }
   
-  // Compare the stringified sortnames of the occurrence types
-  protected static Comparator<TypedIF> tyc = getTypedIFComparator(Collections.<TopicIF>emptySet());
-
   public static Comparator<TopicIF> getTopicNameComparator(Collection<TopicIF> scope) {
     return new StringifierComparator<TopicIF>(TopicStringifiers.getTopicNameStringifier(scope));
   }
@@ -67,6 +67,7 @@ public class TopicComparators {
     public CaseInsensitiveStringifierComparator(StringifierIF<E> stringifier) {
       this.stringifier = stringifier;
     }
+    @Override
     public int compare(E obj1, E obj2) {
       String str1 = stringifier.toString(obj1);
       String str2 = stringifier.toString(obj2);      

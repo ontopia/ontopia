@@ -47,10 +47,12 @@ public class FlatQueryResultIterator implements Iterator  {
     this.next = findNext();
   }
   
+  @Override
   public boolean hasNext() {
     return next != null;
   }
   
+  @Override
   public Object next() {
     if (next == null)
       throw new NoSuchElementException();
@@ -80,6 +82,7 @@ public class FlatQueryResultIterator implements Iterator  {
     return next;
   }
   
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
   }

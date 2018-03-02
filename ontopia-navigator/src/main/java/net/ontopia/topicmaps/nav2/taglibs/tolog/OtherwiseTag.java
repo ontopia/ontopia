@@ -43,21 +43,15 @@ import org.slf4j.LoggerFactory;
 public class OtherwiseTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
 
   // members
   protected ChooseTag parentChooser;
   
   /**
-   * Default constructor.
-   */
-  public OtherwiseTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     parentChooser = (ChooseTag) findAncestorWithClass(this, ChooseTag.class);
     if (parentChooser == null)
@@ -83,6 +77,7 @@ public class OtherwiseTag extends BodyTagSupport {
   /** 
    * Actions after some body has been evaluated.
    */
+  @Override
   public int doAfterBody() throws JspTagException {
     // put out the evaluated body
     BodyContent body = getBodyContent();
@@ -101,6 +96,7 @@ public class OtherwiseTag extends BodyTagSupport {
   /**
     * Process the end tag.
     */
+  @Override
   public int doEndTag() throws JspException {
     // establish old lexical scope, back to outside of the loop
     FrameworkUtils.getContextTag(pageContext).getContextManager().popScope();
@@ -111,6 +107,7 @@ public class OtherwiseTag extends BodyTagSupport {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     // reset members
     parentChooser = null;

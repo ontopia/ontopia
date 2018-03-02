@@ -30,7 +30,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * EXPERIMENTAL: RDBMS searcher implementation that executes a SQL
@@ -50,24 +50,20 @@ import net.ontopia.utils.StringUtils;
 
 public class RDBMSSearcher extends AbstractSearcher {
 
-  /**
-   * PUBLIC: The mandatory default constructor.
-   */
-  public RDBMSSearcher() {
-  }
-  
+  @Override
   public int getValueType() {
     return SearcherIF.OBJECT_ID;
   }
 
+  @Override
   public SearchResultIF getResult(String query) {
     return new SearchResult(query);
   }
 
   private class SearchResult extends AbstractSearchResult {
 
-    PreparedStatement pstm;
-    ResultSet rs;
+    private PreparedStatement pstm;
+    private ResultSet rs;
     
     SearchResult(String query) {
       TopicMapStoreIF store = topicmap.getStore();
@@ -108,6 +104,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       return sql;
     }
     
+    @Override
     public boolean next() {
       if (rs == null) return false;
       try {
@@ -117,6 +114,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public Object getValue() {
       try {
         return rs.getString(1);
@@ -125,6 +123,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public float getScore() {
       try {
         return rs.getFloat(2);
@@ -133,6 +132,7 @@ public class RDBMSSearcher extends AbstractSearcher {
       }
     }
     
+    @Override
     public void close() {
       try {
         if (rs != null) rs.close();

@@ -28,14 +28,17 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
  */
 public class EqualsPredicate implements BasicPredicateIF {
 
+  @Override
   public String getName() {
     return "=";
   }
 
+  @Override
   public String getSignature() {
     return ". ."; // FIXME: not *quite* accurate; one of them does need to be bound
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -47,6 +50,7 @@ public class EqualsPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
   
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

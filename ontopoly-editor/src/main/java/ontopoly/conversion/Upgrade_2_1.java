@@ -50,6 +50,7 @@ public class Upgrade_2_1 extends UpgradeBase {
   
   @Override
   protected void transform() throws InvalidQueryException {
+    // no-op
   }
 
 }

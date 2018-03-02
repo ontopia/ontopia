@@ -26,6 +26,7 @@ public class InMemoryContentStoreTest extends AbstractContentStoreTest {
     super(name);
   }
 
+  @Override
   public void setUp() {
     store = new InMemoryContentStore();
   }

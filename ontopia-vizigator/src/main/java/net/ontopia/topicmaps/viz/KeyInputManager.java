@@ -62,11 +62,13 @@ public class KeyInputManager implements KeyListener, ContainerListener {
     }
   }
   
+  @Override
   public void keyPressed(KeyEvent keyEvent) {
     if (keyEvent.getKeyCode() == KEY_MODIFIER)
       keyModifierDown = true;
   }
   
+  @Override
   public void keyReleased(KeyEvent keyEvent) {
     if (keyEvent == lastProcessed)
       return;
@@ -84,13 +86,18 @@ public class KeyInputManager implements KeyListener, ContainerListener {
     }
   }
   
+  @Override
   public void keyTyped(KeyEvent keyEvent) {
+    // no-op
   }
 
+  @Override
   public void componentAdded(ContainerEvent e) {
     listenTo(e.getComponent());
   }
 
+  @Override
   public void componentRemoved(ContainerEvent e) {
+    // no-op
   }
 }

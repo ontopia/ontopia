@@ -40,22 +40,27 @@ public class GenericDocument implements DocumentIF, java.io.Serializable {
     this.fields = new HashMap<String, FieldIF>();
   }
   
+  @Override
   public FieldIF getField(String name) {
     return (FieldIF)fields.get(name);
   }
   
+  @Override
   public Collection<FieldIF> getFields() {
     return fields.values();
   }
 
+  @Override
   public void addField(FieldIF field) {
     fields.put(field.getName(), field);
   }
 
+  @Override
   public void removeField(FieldIF field) {
     fields.remove(field.getName());
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("<Document");

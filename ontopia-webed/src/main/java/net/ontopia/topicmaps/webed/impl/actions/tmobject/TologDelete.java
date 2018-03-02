@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
@@ -54,6 +53,7 @@ public class TologDelete implements ActionIF {
   // initialization of logging facility
   private static Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     //test params
     ActionSignature paramsType = ActionSignature.getSignature("s&");

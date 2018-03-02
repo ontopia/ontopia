@@ -36,6 +36,7 @@ public class JDOBasicModule implements ModuleIF {
     this.module = module;
   }
   
+  @Override
   public PredicateIF getPredicate(String name) {
     PredicateIF pred = (PredicateIF) predicates.get(name);
     if (pred == null) {

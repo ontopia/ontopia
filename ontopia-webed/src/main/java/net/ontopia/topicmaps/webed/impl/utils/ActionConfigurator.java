@@ -23,20 +23,18 @@ package net.ontopia.topicmaps.webed.impl.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
 import net.ontopia.topicmaps.webed.impl.basic.ActionRegistryIF;
 import net.ontopia.topicmaps.webed.impl.basic.ConfigurationObservableIF;
 import net.ontopia.topicmaps.webed.impl.basic.ConfigurationObserverIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.ValidatingContentHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -114,6 +112,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
     return registry;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(89);
     sb.append("contextPath: ").append(contextPath)
@@ -127,10 +126,12 @@ public class ActionConfigurator implements ConfigurationObservableIF {
   // implementation of ConfigurationObservableIF interface
   // -----------------------------------------------------------------
 
+  @Override
   public void addObserver(ConfigurationObserverIF o) {
     observers.add(o);
   }
   
+  @Override
   public void removeObserver(ConfigurationObserverIF o) {
     observers.remove(o);
   }
@@ -182,8 +183,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
   public void readRegistryConfiguration() {
     ActionRegistryIF freshRegistry = null;
     try {
-      ConfiguredXMLReaderFactory cxrfactory = new ConfiguredXMLReaderFactory();
-      XMLReader parser = cxrfactory.createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       ActionConfigContentHandler handler = new ActionConfigContentHandler(contextPath);
       InputSource src = new InputSource(new StringReader(schema));
       src.setSystemId("http://www.ontopia.net/xtm-1.0/");

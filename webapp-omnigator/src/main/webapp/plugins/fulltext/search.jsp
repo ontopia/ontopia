@@ -2,6 +2,7 @@
     import="
     java.io.*,
     java.util.*,
+	org.apache.commons.lang3.StringUtils,
     net.ontopia.utils.*,
     net.ontopia.topicmaps.core.*,
     net.ontopia.topicmaps.utils.*,
@@ -38,7 +39,6 @@
      String query = "";
      if (request.getParameter("query") != null) {
        query = request.getParameter("query");
-       query = net.ontopia.utils.StringUtils.transcodeUTF8(query);
      }
      String tmid = request.getParameter("tm");
      TopicMapIF topicmap = (TopicMapIF)ContextUtils.getSingleValue("topicmap", pageContext);
