@@ -23,7 +23,7 @@
     <param name="suffix" value=".ltm"/>
     <param name="duplicateSuppression" value="true"/>
     <param name="maintainFulltextIndexes" value="true"/>
-    <param name="indexDirectory" value="${CWD}/../../webapps/omnigator/WEB-INF/">
+    <param name="indexDirectory" value="${CWD}/../../webapps/omnigator/WEB-INF/"/>
   </source>
   <source class="net.ontopia.topicmaps.utils.rdf.RDFPathTopicMapSource">
     <param name="path" value="${CWD}/../../webapps/omnigator/WEB-INF/topicmaps"/>
@@ -82,7 +82,7 @@
     <param name="title" value="CTM topic maps"/>
     <param name="id" value="ctm"/>
     <param name="maintainFulltextIndexes" value="true"/>
-    <param name="indexDirectory" value="${CWD}/../../webapps/omnigator/WEB-INF/">
+    <param name="indexDirectory" value="${CWD}/../../webapps/omnigator/WEB-INF/"/>
   </source>    
   <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
     <param name="propertyFile" value="db.postgresql.props"/>
