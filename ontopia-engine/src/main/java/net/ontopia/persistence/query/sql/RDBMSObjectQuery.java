@@ -42,16 +42,19 @@ public class RDBMSObjectQuery implements DetachedQueryIF {
     this.lookup_identities = lookup_identities;
   }
 
+  @Override
   public Object executeQuery(Connection conn) throws Exception {
     TicketIF ticket = stm.getTicket();
     return processResult(ticket, stm.executeQuery(conn));
   }
 
+  @Override
   public Object executeQuery(Connection conn, Object[] params) throws Exception {
     TicketIF ticket = stm.getTicket();
     return processResult(ticket, stm.executeQuery(conn, params));
   }
 
+  @Override
   public Object executeQuery(Connection conn, Map params) throws Exception {
     TicketIF ticket = stm.getTicket();
     return processResult(ticket, stm.executeQuery(conn, params));

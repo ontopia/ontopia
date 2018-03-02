@@ -34,9 +34,6 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 public class DeletionUtilsTest extends TestCase {
 
-  public void setUp() {
-  }
-    
   protected TopicMapIF makeTopicMap() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     return store.getTopicMap();

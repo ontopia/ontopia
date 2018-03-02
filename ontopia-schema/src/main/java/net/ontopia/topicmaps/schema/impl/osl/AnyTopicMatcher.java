@@ -29,14 +29,17 @@ import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
  */
 public class AnyTopicMatcher implements TMObjectMatcherIF {
 
+  @Override
   public boolean matches(TMObjectIF topic) {
     return true;
   }
 
+  @Override
   public String toString() {
     return "<AnyTopicMatcher>";
   }
 
+  @Override
   public boolean equals(TMObjectMatcherIF object) {
     return false;
   }

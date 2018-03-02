@@ -46,34 +46,36 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
   protected CollectionFactoryIF cfactory;
   protected IndexManagerIF imanager;
   
-  public AbstractTopicMapTransaction() {
-  }
-
+  @Override
   public boolean isActive() {
     // Return flag
     return active;
   }
 
+  @Override
   public TopicMapBuilderIF getBuilder() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return builder;
   }
 
   public CollectionFactoryIF getCollectionFactory() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return cfactory;
   }
 
+  @Override
   public IndexManagerIF getIndexManager() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return imanager;
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     return topicmap;
   }
 
+  @Override
   public TopicMapStoreIF getStore() {
     return store;
   }
@@ -82,8 +84,9 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
     return parent;
   }
   
+  @Override
   public void commit() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     
     // notify topic map reference
     TopicMapReferenceIF ref = store.getReference();
@@ -91,8 +94,9 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
       ((TransactionEventListenerIF)ref).transactionCommit(this);
   }
   
+  @Override
   public void abort() {
-    if (!isActive()) throw new TransactionNotActiveException("Transaction is not active.");
+    if (!isActive()) throw new TransactionNotActiveException();
     abort(true);
   }
 

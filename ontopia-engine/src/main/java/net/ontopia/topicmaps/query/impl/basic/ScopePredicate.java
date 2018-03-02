@@ -49,14 +49,17 @@ public class ScopePredicate implements BasicPredicateIF {
     index = (ScopeIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
   }
   
+  @Override
   public String getName() {
     return "scope";
   }
 
+  @Override
   public String getSignature() {
     return "bvoa t";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -68,6 +71,7 @@ public class ScopePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

@@ -20,13 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
-import java.io.IOException;
-import java.util.Iterator;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
@@ -42,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class ResponseTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(ResponseTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ResponseTag.class.getName());
 
   // tag attributes
   protected String content_type;
@@ -51,6 +47,7 @@ public class ResponseTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
 
     // Get navigator application

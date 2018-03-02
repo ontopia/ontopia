@@ -31,7 +31,7 @@ public interface KeyGeneratorIF {
    * INTERNAL: Generates a new object identity of the specified object
    * type.
    */
-  public IdentityIF generateKey(Class<?> type);
+  IdentityIF generateKey(Class<?> type);
   
 }
 

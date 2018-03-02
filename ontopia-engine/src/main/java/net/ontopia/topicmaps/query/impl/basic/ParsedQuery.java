@@ -54,36 +54,44 @@ public class ParsedQuery implements ParsedQueryIF {
   
   /// ParsedQueryIF implementation [the class does not implement the interface]
   
+  @Override
   public List<String> getSelectedVariables() {
     return getVariables(query.getSelectedVariables());
   }
 
+  @Override
   public Collection<String> getAllVariables() {
     return getVariables(query.getAllVariables());
   }
   
+  @Override
   public Collection<String> getCountedVariables() {
     return getVariables(query.getCountedVariables());
   }
 
+  @Override
   public List<String> getOrderBy() {
     return getVariables(query.getOrderBy());
   }
 
+  @Override
   public boolean isOrderedAscending(String name) {
     return query.isOrderedAscending(name);
   }
 
+  @Override
   public QueryResultIF execute() throws InvalidQueryException {
     return processor.execute(query);
   }
 
+  @Override
   public QueryResultIF execute(Map<String, ?> arguments) throws InvalidQueryException {
     return processor.execute(query, arguments);
   }
   
   /// Object implementation
 
+  @Override
   public String toString() {
     return query.toString();
   }

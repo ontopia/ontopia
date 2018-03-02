@@ -56,7 +56,9 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
-  long topicmap_id;
+  protected static final Class[] types = new Class[] { Association.class, AssociationRole.class, TopicName.class, Occurrence.class, Topic.class, TopicMap.class, VariantName.class };
+
+  protected long topicmap_id;
   protected RDBMSStorage storage;
   protected String propfile;
   protected Map<String, String> properties;
@@ -169,10 +171,12 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return storage;
   }
 
+  @Override
   public int getImplementation() {
     return TopicMapStoreIF.RDBMS_IMPLEMENTATION;
   }
   
+  @Override
   public boolean isTransactional() {
     return true;
   }
@@ -187,6 +191,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       return ((TopicMap)getTopicMap()).getBaseAddress();
   }
 
+  @Override
   public void setBaseAddress(LocatorIF base_address) {
     this.base_address = null;
     // update persistent field
@@ -210,6 +215,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return txn.getTransaction();
   }
 
+  @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
     if (!isOpen()) open();
@@ -252,7 +258,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     }
   }
   
-  boolean delete(RDBMSTopicMapReference ref) {
+  protected boolean delete(RDBMSTopicMapReference ref) {
     delete(true);
     return deleted;
   }
@@ -300,6 +306,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   /**
    * INTERNAL: Gets the value of the specified store property.
    */
+  @Override
   public String getProperty(String name) {
     return getStorage().getProperty(name);
   }
@@ -312,21 +319,15 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   /* -- store pool -- */
   
+  @Override
   public void close() {
     // return to reference or close
     close((reference != null));
   }
 
+  @Override
   public void close(boolean returnStore) {
     if (returnStore) {
-
-      // allow access to release connection, preventing loads of idle connections
-      if ((transaction != null) && transaction.isActive()) {
-        TransactionIF tnx = transaction.getTransaction();
-        if (tnx.isActive()) {
-          ((RDBMSAccess)tnx.getStorageAccess()).releaseConnection();
-        }
-      }
 
       // return store
       if (reference != null) {
@@ -539,8 +540,6 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   // ---------------------------------------------------------------------------
   // Prefetching
   // ---------------------------------------------------------------------------
-
-  protected static final Class[] types = new Class[] { Association.class, AssociationRole.class, TopicName.class, Occurrence.class, Topic.class, TopicMap.class, VariantName.class };
 
   public boolean prefetch(int type, int field, boolean traverse, Collection objects) {
     TransactionIF txn = transaction.getTransaction();

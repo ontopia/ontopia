@@ -68,16 +68,13 @@ public class SanityChecker {
       // Get command line arguments
       String[] args = options.getArguments();    
       
-      LocatorIF url = null;
-      
       if (args.length == 1) {
-        url = URIUtils.getURI(args[0]);
+        SanityChecker sp = new SanityChecker(args[0]);
       } else {
         System.err.println("Error: Illegal number of arguments.");
         usage();
         System.exit(1);      
       }
-      SanityChecker sp = new SanityChecker(url);
       
     } catch (CmdlineOptions.OptionsException e) {
       System.err.println("Error: " + e.getMessage());
@@ -98,20 +95,13 @@ public class SanityChecker {
    * Constructor that accepts a File object as argument (XTM file).
    */
   public SanityChecker(File file) throws MalformedURLException, IOException {
-    this(new URILocator(file));
+    this(ImportExportUtils.getReader(file).read());
   }
   
   /**
    * Constructor that accepts a url as argument (XTM file).
    */
   public SanityChecker(String url) throws MalformedURLException, IOException {
-    this(new URILocator(url));
-  }
-  
-  /**
-   * Constructor that accepts a url as argument (XTM file).
-   */
-  public SanityChecker(LocatorIF url) throws IOException {
     this(ImportExportUtils.getReader(url).read());
   }
 

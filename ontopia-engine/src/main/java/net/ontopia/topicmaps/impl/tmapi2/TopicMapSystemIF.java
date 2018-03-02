@@ -25,6 +25,6 @@ import org.tmapi.core.Locator;
 import org.tmapi.core.TopicMapSystem;
 
 public interface TopicMapSystemIF extends TopicMapSystem {
-  public Locator wrapLocator(LocatorIF loc);
-  public void remove(LocatorIF loc);
+  Locator wrapLocator(LocatorIF loc);
+  void remove(LocatorIF loc);
 }

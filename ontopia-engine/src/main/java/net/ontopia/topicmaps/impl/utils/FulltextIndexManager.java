@@ -209,6 +209,7 @@ public class FulltextIndexManager extends BasicIndex {
    * EventHandler: TMObjectIF changed
    */
   class TMObjectIF_changed extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       objectChanged(object);
@@ -219,6 +220,7 @@ public class FulltextIndexManager extends BasicIndex {
    * EventHandler: TMObjectIF added to topic map
    */
   class TMObjectIF_added extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       objectAdded(new_value);
@@ -229,6 +231,7 @@ public class FulltextIndexManager extends BasicIndex {
    * EventHandler: TMObjectIF removed from topic map
    */
   class TMObjectIF_removed extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       objectRemoved(old_value);

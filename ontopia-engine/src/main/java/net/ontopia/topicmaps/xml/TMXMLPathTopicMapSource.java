@@ -45,6 +45,7 @@ public class TMXMLPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     this.validate = true;
   }
 
+  @Override
   public TopicMapReferenceIF createReference(URL url, String id,
                                              String title,
                                              LocatorIF base_address) {
@@ -79,6 +80,7 @@ public class TMXMLPathTopicMapSource extends AbstractOntopolyTopicMapSource {
   /**
    * INTERNAL: Used by createTopicMap to serialize the new topic map.
    */
+  @Override
   protected TopicMapWriterIF getWriter(File file) throws IOException {
     return new TMXMLWriter(file);
   }

@@ -25,8 +25,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import net.ontopia.persistence.query.sql.SQLValueIF;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A field that references objects. A reference field is a
@@ -40,9 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class ReferenceFieldInfo extends AbstractFieldInfo {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ReferenceFieldInfo.class.getName());
 
   protected ClassInfoIF value_cinfo;
   //protected Class<?> value_class;
@@ -65,18 +60,22 @@ public class ReferenceFieldInfo extends AbstractFieldInfo {
     this.column_count = (value_columns == null ? 0 : value_columns.length);
   }
 
+  @Override
   public ClassInfoIF getValueClassInfo() {
     return value_cinfo;
   }
 
+  @Override
   public int getColumnCount() {
     return column_count;
   }
   
+  @Override
   public boolean isIdentityField() {
     return true;
   }
   
+  @Override
   public String[] getValueColumns() {
     return value_columns;
   }

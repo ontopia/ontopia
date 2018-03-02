@@ -72,6 +72,7 @@ public class UserFilterContextStore {
   /**
    * default destructor
    */
+  @Override
   protected void finalize() {
     scope_baseNames = null;
     scope_variantNames = null;
@@ -82,6 +83,7 @@ public class UserFilterContextStore {
   /**
    * serialize this for debugging purposes.
    */
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(200);
     sb.append("UserFilterContextStore [")

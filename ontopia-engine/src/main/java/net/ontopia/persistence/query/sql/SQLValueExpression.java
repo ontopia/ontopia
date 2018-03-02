@@ -32,6 +32,7 @@ public class SQLValueExpression implements SQLExpressionIF {
     this.value = value;
   }
 
+  @Override
   public int getType() {
     return VALUE_EXPRESSION;
   }
@@ -44,6 +45,7 @@ public class SQLValueExpression implements SQLExpressionIF {
     this.value = value;
   }
 
+  @Override
   public String toString() {
     return "expr(" + getValue() + ')';
   }

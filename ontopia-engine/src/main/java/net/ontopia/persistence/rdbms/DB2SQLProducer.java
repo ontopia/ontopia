@@ -35,17 +35,20 @@ public class DB2SQLProducer extends GenericSQLProducer {
     super(project, platforms);
   }
 
+  @Override
   protected boolean supportsNullInColumnDefinition() {
     return false;
   }
 
   /* Limits: constraint and index names limited to 18 bytes */
 
+  @Override
   protected String getPrimaryKeyName(Table table) {
     String sname = table.getShortName();
     return (sname != null ? sname : table.getName()) + "_pkey";
   }
 
+  @Override
   protected String getIndexName(Index index) {
     String sname = index.getShortName();
     return (sname != null ? sname : index.getName());

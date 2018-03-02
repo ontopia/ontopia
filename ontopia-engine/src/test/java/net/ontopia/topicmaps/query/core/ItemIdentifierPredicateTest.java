@@ -42,6 +42,7 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

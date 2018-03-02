@@ -26,23 +26,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
-
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
+import net.ontopia.topicmaps.impl.utils.TMRevitalizer;
+import net.ontopia.topicmaps.impl.utils.TMRevitalizerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
@@ -62,15 +61,12 @@ import net.ontopia.topicmaps.webed.impl.basic.ActionRegistryIF;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.webed.taglibs.form.FormTag;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.topicmaps.impl.utils.TMRevitalizer;
-import net.ontopia.topicmaps.impl.utils.TMRevitalizerIF;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Locator;
 
 /**
@@ -264,12 +260,8 @@ public final class TagUtils {
                                PageContext.REQUEST_SCOPE);
     ParseContextIF pctxt = (ParseContextIF) ctxt.getDeclarationContext();
 
-    // Replace sequences of special characters like \n and \t with single space.
-    // Needed since StringUtils.split() treats special characters as tokens.
-    String paramsNormalized = StringUtils.normalizeWhitespace(params.trim());
-    
     // get the values
-    String[] names = StringUtils.split(paramsNormalized);
+    String[] names = StringUtils.split(params);
     List varlist = new ArrayList(names.length);
     for (int i = 0; i < names.length; i++) {
       Collection values;

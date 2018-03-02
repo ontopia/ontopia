@@ -33,6 +33,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

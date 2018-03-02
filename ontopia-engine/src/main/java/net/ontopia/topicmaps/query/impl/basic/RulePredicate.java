@@ -55,10 +55,12 @@ public class RulePredicate extends AbstractQueryProcessor
   
   // --- PredicateIF implementation
 
+  @Override
   public String getName() {
     return rule.getName();
   }
 
+  @Override
   public String getSignature() throws InvalidQueryException {
     if (signature != null)
       return signature;
@@ -90,6 +92,7 @@ public class RulePredicate extends AbstractQueryProcessor
     return sign.toString();
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     int open = 0;
     for (int ix = 0; ix < boundparams.length; ix++)
@@ -107,6 +110,7 @@ public class RulePredicate extends AbstractQueryProcessor
   
   // --- BasicPredicateIF implementation
   
+  @Override
   public QueryMatches satisfy(QueryMatches extmatches, Object[] extarguments)
     throws InvalidQueryException {
 
@@ -207,6 +211,7 @@ public class RulePredicate extends AbstractQueryProcessor
     return rule.getParameters();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof RulePredicate) {

@@ -30,23 +30,23 @@ public interface SearchResultIF {
    * PUBLIC: Moves ahead to the next result. Returns true if
    * there were more results.
    */
-  public boolean next();
+  boolean next();
   
   /**
    * PUBLIC: Gets the current result value.
    */
-  public Object getValue();
+  Object getValue();
 
   /**
    * PUBLIC: Gets the score for the current result value;
    */
-  public float getScore();
+  float getScore();
 
   /**
    * PUBLIC: Closes the search result. This method will be called when
    * done with the search results, so that resources can be released.
    */
-  public void close();
+  void close();
   
 }
 

@@ -2188,8 +2188,7 @@ of:</para>
 the RDBMS backend. This enables Ontopoly to scale to much larger topic
 maps, avoids having to explicitly save the topic map, and ensures that
 multiple users can work against the same topic map without causing data
-to become corrupt. To make use of this support the OKS Enterprise
-Edition is required.</para>
+to become corrupt.</para>
 </listitem>
 
 <listitem>

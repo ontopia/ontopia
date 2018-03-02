@@ -20,17 +20,15 @@
 package ontopoly.validators;
 
 import java.io.Serializable;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.AbstractFieldInstancePanel;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.models.FieldInstanceModel;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.Model;
@@ -65,11 +63,11 @@ public class IdentityValidator extends AbstractValidator<String> {
     TopicIF topicIf = topic.getTopicIF();
   
     TopicIF otopic = topicMapIf.getTopicBySubjectIdentifier(locator);
-    if (otopic != null && ObjectUtils.different(topicIf, otopic))
+    if (otopic != null && !Objects.equals(topicIf, otopic))
       reportError("validators.IdentityValidator.subjectIdentifierClash", value);
 
     otopic = topicMapIf.getTopicBySubjectLocator(locator);
-    if (otopic != null && ObjectUtils.different(topicIf, otopic))
+    if (otopic != null && !Objects.equals(topicIf, otopic))
       reportError("validators.IdentityValidator.subjectLocatorClash", value);
   }
 

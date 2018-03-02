@@ -48,12 +48,13 @@ import org.slf4j.LoggerFactory;
 public class PutTag extends AbstractTemplateTag {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(PutTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(PutTag.class.getName());
 
   // tag attributes
   private String content;
   private boolean direct;
 
+  @Override
   public int doStartTag() throws JspException {
     if (content != null) {
       if (log.isDebugEnabled())
@@ -69,6 +70,7 @@ public class PutTag extends AbstractTemplateTag {
     }
   }
 
+  @Override
   public int doAfterBody() throws JspException {
     BodyContent bodyContent = getBodyContent();
     String content = bodyContent.getString();
@@ -83,6 +85,7 @@ public class PutTag extends AbstractTemplateTag {
     return SKIP_BODY;
   }
 
+  @Override
   public int doEndTag() {
     resetMembers();
     return EVAL_PAGE;

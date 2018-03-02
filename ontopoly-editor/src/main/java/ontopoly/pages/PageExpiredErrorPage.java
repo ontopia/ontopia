@@ -52,6 +52,7 @@ public class PageExpiredErrorPage extends AbstractOntopolyErrorPage {
     }
     
     WebMarkupContainer previousPageLinkContainer = new WebMarkupContainer("previousPageLinkContainer") {
+      @Override
       public boolean isVisible() {
         return previousPage != null ? true : false;
       }  

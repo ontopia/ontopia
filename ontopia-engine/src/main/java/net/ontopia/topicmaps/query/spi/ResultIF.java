@@ -31,6 +31,6 @@ public interface ResultIF {
   /**
    * EXPERIMENTAL: Add the given row to the result.
    */
-  public void add(Object[] row);
+  void add(Object[] row);
   
 }

@@ -35,7 +35,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class VizTopicTypePriorityConfigManager {
 
-  VizTopicMapConfigurationManager tmConfig;
+  private VizTopicMapConfigurationManager tmConfig;
 
   private TopicIF rankTopic;
   private TopicIF rankAssociationType;
@@ -304,7 +304,7 @@ public class VizTopicTypePriorityConfigManager {
       return (TopicIF)realTypes.iterator().next();
     
     TopicIF firstRanked = (TopicIF)rankedTypes.get(0);
-    if (firstRanked != defaultTypePrecedenceTopic)
+    if (!firstRanked.equals(defaultTypePrecedenceTopic))
       return firstRanked;
       
     // For default type, search 'realTypes' for the first unranked type.

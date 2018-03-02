@@ -46,6 +46,7 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 
 public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     java.io.Serializable {
+  private static final String ANOTHER_TOPIC = "Another topic ";
 
   protected Map<String, EventHandler> handlers;
 
@@ -118,6 +119,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * default.
    */
   protected void registerObject(TMObjectIF object) {
+    // no-op
   }
 
   /**
@@ -125,6 +127,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * default.
    */
   protected void unregisterObject(TMObjectIF object) {
+    // no-op
   }
 
   // -----------------------------------------------------------------------------
@@ -155,6 +158,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public void processEvent(Object object, String event, Object new_value,
       Object old_value) {
     if (handlers.containsKey(event)) {
@@ -168,6 +172,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
 
   protected abstract class EventHandler implements EventListenerIF,
       java.io.Serializable {
+    @Override
     public abstract void processEvent(Object object, String event,
         Object new_value, Object old_value);
 
@@ -189,6 +194,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TopicIF.added
    */
   class TopicAddedHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       TopicIF added = (TopicIF) new_value;
@@ -213,6 +219,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TopicIF.removed
    */
   class TopicRemovedHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       TopicIF removed = (TopicIF) old_value;
@@ -237,6 +244,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TMObjectIF.added
    */
   class TMObjectAddedHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       TMObjectIF added = (TMObjectIF) new_value;
@@ -253,6 +261,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TMObjectIF.removed
    */
   class TMObjectRemovedHandler extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       TMObjectIF removed = (TMObjectIF) old_value;
@@ -269,13 +278,14 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TopicIF.addSubjectLocator
    */
   class TopicIF_addSubjectLocator extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
 
       // Check subject locator uniqueness
       TopicIF existing = _getTopicBySubjectLocator((LocatorIF)new_value);
-      if (existing != null && existing != object)
-        throw new UniquenessViolationException("Another topic " + existing
+      if (existing != null && !existing.equals(object))
+        throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this subject locator: " + new_value + " ("
             + object + ")");
 
@@ -288,6 +298,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TopicIF.removeSubjectLocator
    */
   class TopicIF_removeSubjectLocator extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       // Unregister subject locator
@@ -299,20 +310,21 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TopicIF.addSubjectIdentifier
    */
   class TopicIF_addSubjectIdentifier extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
 
       // Check indicator uniqueness
       TopicIF existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
       if (existing != null && existing != object)
-        throw new UniquenessViolationException("Another topic " + existing
+        throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this subject identifier: " + new_value + " ("
             + object + ")");
       // Check for source locator clash
       TMObjectIF existing_tmo = _getObjectByItemIdentifier((LocatorIF)new_value);
-      if (existing_tmo != null && existing_tmo != object
+      if (existing_tmo != null && !existing_tmo.equals(object)
           && (existing_tmo instanceof TopicIF))
-        throw new UniquenessViolationException("Another topic " + existing_tmo
+        throw new UniquenessViolationException(ANOTHER_TOPIC + existing_tmo
             + " already has this subject identifier as its item identifier: "
             + new_value + " (" + object + ")");
 
@@ -325,6 +337,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TopicIF.removeSubjectIdentifier
    */
   class TopicIF_removeSubjectIdentifier extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       // Unregister subject indicator
@@ -336,6 +349,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TMObjectIF.addItemIdentifier
    */
   class TMObjectIF_addItemIdentifier extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) throws ConstraintViolationException {
 
@@ -349,12 +363,12 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       if (existing != null && existing != object)
         throw new UniquenessViolationException("Another object " + existing
             + " already has this item identifier: " + new_value + " (" + object
-            + ") " + (existing == object));
+            + ") " + existing.equals(object));
       
       // Check for subject identifier clash
       existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
-      if (existing != null && existing != object && (object instanceof TopicIF))
-        throw new UniquenessViolationException("Another topic " + existing
+      if (existing != null && !existing.equals(object) && (object instanceof TopicIF))
+        throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this item identifier as its subject identifier: "
             + new_value + " (" + object + ")");
 
@@ -367,6 +381,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
    * EventHandler: TMObjectIF.removeItemIdentifier
    */
   class TMObjectIF_removeItemIdentifier extends EventHandler {
+    @Override
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       // Unregister source locator

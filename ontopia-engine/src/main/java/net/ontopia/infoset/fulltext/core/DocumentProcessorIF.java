@@ -37,12 +37,12 @@ public interface DocumentProcessorIF {
    *
    * @return Returns true if the document should be processed.
    */
-  public boolean needsProcessing(DocumentIF document);
+  boolean needsProcessing(DocumentIF document);
 
   /**
    * INTERNAL: Processes the specified document.
    */
-  public void process(DocumentIF document) throws Exception;
+  void process(DocumentIF document) throws Exception;
   
 }
 

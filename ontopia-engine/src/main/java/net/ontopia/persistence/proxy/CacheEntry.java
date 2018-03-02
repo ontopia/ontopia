@@ -33,7 +33,7 @@ import java.util.Arrays;
 
 public class CacheEntry implements Externalizable {
 
-  static final long serialVersionUID = 9010124046386798540L;
+  private static final long serialVersionUID = 9010124046386798540L;
 
   protected static final int[] MASKS;
 
@@ -90,18 +90,21 @@ public class CacheEntry implements Externalizable {
     }
   }
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(identity);
     out.writeInt(lflags);
     out.writeObject(values);
   }
   
+  @Override
   public synchronized void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     identity = (IdentityIF)in.readObject();
     lflags = in.readInt();
     values = (Object[])in.readObject();
   }
 
+  @Override
   public synchronized String toString() {
     return "<CacheEntry " + identity + " | " + lflags + "|" + (values == null ? null : Arrays.asList(values).toString() + ">");
   }

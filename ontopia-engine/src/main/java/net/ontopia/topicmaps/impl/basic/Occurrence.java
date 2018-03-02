@@ -20,14 +20,11 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.IOException;
-
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -38,11 +35,11 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
-import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.topicmaps.impl.utils.LocatorInterningTable;
-import net.ontopia.utils.UniqueSet;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.UniqueSet;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: The basic occurrence implementation.
@@ -50,7 +47,7 @@ import net.ontopia.utils.StreamUtils;
 
 public class Occurrence extends TMObject implements OccurrenceIF {
 
-  static final long serialVersionUID = -7364980697913079915L;
+  private static final long serialVersionUID = -7364980697913079915L;
 
   protected TopicIF reifier;
   protected TopicIF type;
@@ -66,6 +63,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // OccurrenceIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public void remove() {
     if (parent != null) {
       DeletionUtils.removeDependencies(this);
@@ -73,6 +71,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     }
   }
 
+  @Override
   public TopicIF getTopic() {
     return (TopicIF)parent;
   }
@@ -80,7 +79,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   /**
    * INTERNAL: Set the topic that the occurrence belongs to. [parent]
    */
-  void setTopic(Topic parent) {
+  protected void setTopic(Topic parent) {
     // Validate topic map
     if (parent != null && parent.topicmap != this.topicmap)
       throw new ConstraintViolationException("Cannot move objects across topic maps: "
@@ -97,6 +96,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     this.parent = parent;
   }
 
+  @Override
   public LocatorIF getDataType() {
     return datatype;    
   }
@@ -107,14 +107,17 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     this.datatype = LocatorInterningTable.intern(datatype);
   }
 
+  @Override
   public String getValue() {
     return value;
   }
 
+  @Override
   public void setValue(String value) {
     setValue(value, DataTypes.TYPE_STRING);
   }
 
+  @Override
   public void setValue(String value, LocatorIF datatype) {
     if (value == null) 
       throw new NullPointerException("Occurrence value must not be null.");
@@ -128,6 +131,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     this.value = value;
   }
 
+  @Override
   public Reader getReader() {
     return (value == null ? null : new StringReader(value));
   }
@@ -140,6 +144,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   //!   }
   //! }
 
+  @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     if (value == null) 
       throw new NullPointerException("Occurrence value must not be null.");
@@ -148,7 +153,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     try {
-      setValue(StreamUtils.readString(value, length), datatype);
+      setValue(IOUtils.toString(value), datatype);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -159,15 +164,17 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   //! }
   //! 
   //! public boolean isBinary() {
-  //!   return ObjectUtils.equals(getDataType(), DataTypes.TYPE_BINARY);
+  //!   return Objects.equals(getDataType(), DataTypes.TYPE_BINARY);
   //! }
   
+  @Override
   public LocatorIF getLocator() {
     if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
+  @Override
   public void setLocator(LocatorIF locator) {
     if (locator == null) 
       throw new NullPointerException("Occurrence locator must not be null.");
@@ -176,6 +183,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
+  @Override
   public long getLength() {
     return (value == null ? 0 : value.length());
   }
@@ -184,10 +192,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public Collection<TopicIF> getScope() {
     // Return scope defined on this object
     return (scope == null ? Collections.<TopicIF>emptySet() : scope);
   }
+  @Override
   public void addTheme(TopicIF theme) {
     if (theme == null) 
       throw new NullPointerException("null is not a valid argument.");
@@ -200,6 +210,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     }
     scope = topicmap.setpool.add(scope, theme, true);
   }
+  @Override
   public void removeTheme(TopicIF theme) {
     if (theme == null) 
       throw new NullPointerException("null is not a valid argument.");
@@ -216,10 +227,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // TypedIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     return type;
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null) 
       throw new NullPointerException("Occurrence type must not be null.");
@@ -233,10 +246,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ReifiableIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) 
       CrossTopicMapException.check(_reifier, this);
@@ -254,11 +269,13 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
     if (parent == null || parent.parent == null) return;
     else topicmap.processEvent(this, event, new_value, old_value);
   }
 
+  @Override
   protected boolean isConnected() {
     if (parent != null && parent.parent != null)
       return true;
@@ -266,6 +283,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       return false;
   }
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.Occurrence", (OccurrenceIF)this);
   }

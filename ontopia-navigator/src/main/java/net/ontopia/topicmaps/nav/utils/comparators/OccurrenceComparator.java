@@ -61,6 +61,7 @@ public class OccurrenceComparator implements Comparator<OccurrenceIF> {
   /**
    * Compares two OccurrenceIFs.
    */
+  @Override
   public int compare(OccurrenceIF oc1, OccurrenceIF oc2) {
     int cmp;
     // first compare by type
@@ -87,7 +88,7 @@ public class OccurrenceComparator implements Comparator<OccurrenceIF> {
 
     // if that didn't work, try by value
     if (cmp == 0) {
-      if (oc1.getValue() == oc2.getValue())
+      if (oc1.getValue().equals(oc2.getValue()))
         cmp = 0;
       else if (oc1.getValue() == null)
         cmp = 1;

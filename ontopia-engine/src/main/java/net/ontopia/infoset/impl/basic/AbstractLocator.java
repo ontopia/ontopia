@@ -38,6 +38,7 @@ public abstract class AbstractLocator implements LocatorIF, Serializable  {
    * PUBLIC: Two LocatorIFs are considered equal if they have the same
    * address and notation properties.
    */
+  @Override
   public boolean equals(Object object) {
     try {
       LocatorIF locator = (LocatorIF)object;
@@ -56,10 +57,12 @@ public abstract class AbstractLocator implements LocatorIF, Serializable  {
    * implementation in order to guarantee interoperability. E.g. when
    * looking up LocatorIFs in Maps.
    */
+  @Override
   public int hashCode() {
     return getAddress().hashCode();
   }
   
+  @Override
   public String toString() {
     return getNotation() + "|" + getAddress();
   }

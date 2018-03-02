@@ -300,6 +300,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     }
   }
 
+  @Override
   public void testTopicSubjectIndicatorSourceLocator() {
     // this is overridden from AbstractTMObject, because in this case
     // the collision is not allowed, but for all other TMObjectIFs it
@@ -320,6 +321,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     }
   }
 
+  @Override
   public void testSourceLocatorTopicSubjectIndicator() {
     // this is forbidden, according to the TMDM
     try {
@@ -504,6 +506,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
   
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     topic = builder.makeTopic();
@@ -511,6 +514,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     object = topic;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     return builder.makeTopic();
   }

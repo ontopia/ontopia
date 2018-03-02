@@ -30,7 +30,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
-import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
@@ -57,6 +56,7 @@ public class RelatedTag extends TagSupport {
   private String aggregateAssociations;
   private int maxChildren = -1;
   
+  @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     if (related == null)
@@ -75,6 +75,7 @@ public class RelatedTag extends TagSupport {
     return EVAL_BODY_INCLUDE;
   }
 
+  @Override
   public int doEndTag() throws JspException {
     related = null; // without this line config changes are never picked up
                     // need to think about how/whether to make this more
@@ -82,6 +83,7 @@ public class RelatedTag extends TagSupport {
     return EVAL_PAGE;
   }
   
+  @Override
   public void release() {
     this.related = null;
     this.var = null;

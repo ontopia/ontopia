@@ -24,18 +24,15 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
-
-import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
@@ -47,8 +44,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicTreeNode;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * EXPERIMENTAL: This class can output a nice collapsing/expanding
@@ -88,6 +84,7 @@ public class DynamicTreeWidget {
   private String dataquery;
   private java.util.Comparator childrenComparator = new java.util.Comparator() {
       private java.util.Comparator c = net.ontopia.topicmaps.utils.TopicComparators.getTopicNameComparator(java.util.Collections.EMPTY_SET);
+      @Override
       public int compare(Object o1, Object o2) {
         return c.compare(((net.ontopia.topicmaps.utils.TopicTreeNode)o1).getTopic(),
                          ((net.ontopia.topicmaps.utils.TopicTreeNode)o2).getTopic());
@@ -451,7 +448,7 @@ public class DynamicTreeWidget {
         for (int i=0; i < cl.size(); i=i+2) {
           TopicTreeNode c = (TopicTreeNode)cl.get(i);
           TopicTreeNode p = (TopicTreeNode)cl.get(i+1);
-          if (ObjectUtils.equals(p.getTopic(), parent)) {
+          if (Objects.equals(p.getTopic(), parent)) {
             cn = c;
             pmap.put(parent, p);
             break;
@@ -693,16 +690,13 @@ public class DynamicTreeWidget {
     if (action == null)
       action = "close";
 
-    if (action.equals("open"))
-      return OPEN;
-    else if (action.equals("close"))
-      return CLOSE;
-    else if (action.equals("expandall"))
-      return EXPAND_ALL;
-    else if (action.equals("closeall"))
-      return CLOSE_ALL;
-    else
-      return -1;
+    switch (action) {
+      case "open": return OPEN;
+      case "close": return CLOSE;
+      case "expandall": return EXPAND_ALL;
+      case "closeall": return CLOSE_ALL;
+      default: return -1;
+    }
   }
 
   // --- Utilities
@@ -852,12 +846,12 @@ public class DynamicTreeWidget {
   /**
    * PUBLIC: Called before rendering of the tree begins.
    */
-  protected void startRender(Writer out) throws IOException {}
+  protected void startRender(Writer out) throws IOException { /* no-op */ }
 
   /**
    * PUBLIC: Called after the tree has been rendered.
    */
-  protected void endRender(Writer out) throws IOException {}
+  protected void endRender(Writer out) throws IOException { /* no-op */ }
 
   /**
    * PUBLIC: Produces the URL to the given node.

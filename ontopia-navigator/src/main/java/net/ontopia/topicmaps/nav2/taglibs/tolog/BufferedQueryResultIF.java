@@ -27,10 +27,10 @@ public interface BufferedQueryResultIF extends QueryResultIF {
     * Bring this BufferedQueryResultIF back to the initial state after
     * it was created (instantiated to an implementing class).
     */
-  public void restart();
+  void restart();
   
   /**
     * Get the query of the query result.
     */
-  public String getQuery();
+  String getQuery();
 }

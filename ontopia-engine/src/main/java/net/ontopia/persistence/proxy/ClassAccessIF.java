@@ -35,19 +35,19 @@ public interface ClassAccessIF {
    * @return true if object was found in the data store, false
    * otherwise.
    */
-  public boolean load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception;
+  boolean load(AccessRegistrarIF registrar, IdentityIF identity) throws Exception;
 
   /**
    * INTERNAL: Loads the specified object field for the given identity
    * from the database.
    */
-  public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) throws Exception;
+  Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) throws Exception;
 
   /**
    * INTERNAL: Loads the specified object field for the given
    * identitys from the database.
    */
-  public Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
+  Object loadFieldMultiple(AccessRegistrarIF registrar, Collection<IdentityIF> identities, 
 				  IdentityIF current, int field) throws Exception;
   
   /**
@@ -55,19 +55,19 @@ public interface ClassAccessIF {
    * object identity can be extracted from the object using the
    * supplied object access instance.
    */
-  public void create(ObjectAccessIF oaccess, Object object) throws Exception;
+  void create(ObjectAccessIF oaccess, Object object) throws Exception;
 
   /**
    * INTERNAL: Deletes the object identity from the database.
    */
-  public void delete(ObjectAccessIF oaccess, Object object) throws Exception;
+  void delete(ObjectAccessIF oaccess, Object object) throws Exception;
 
   /**
    * INTERNAL: Stores object fields that are dirty in the
    * database. Note that the object identity can be extracted from the
    * object using the supplied object access instance.
    */
-  public void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception;
+  void storeDirty(ObjectAccessIF oaccess, Object object) throws Exception;
 
 }
 

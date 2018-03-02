@@ -29,14 +29,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /** 
  * INTERNAL: Command line tool for exporting comma- or semicolon
@@ -44,9 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class CSVExport {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(CSVExport.class.getName());
 
   protected Connection conn;
   protected String separator = ";";
@@ -154,7 +147,8 @@ public class CSVExport {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    String separator = ";";
+    private String separator = ";";
+    @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
       if (option == 's')
         separator = value;

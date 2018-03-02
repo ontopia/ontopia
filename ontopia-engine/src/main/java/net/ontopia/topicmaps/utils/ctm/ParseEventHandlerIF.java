@@ -35,38 +35,38 @@ public interface ParseEventHandlerIF {
 
   // FIXME: add global start/end events, but do it later
 
-  public void startTopicItemIdentifier(ValueGeneratorIF locator);
-  public void startTopicSubjectIdentifier(ValueGeneratorIF locator);
-  public void startTopicSubjectLocator(ValueGeneratorIF locator);
+  void startTopicItemIdentifier(ValueGeneratorIF locator);
+  void startTopicSubjectIdentifier(ValueGeneratorIF locator);
+  void startTopicSubjectLocator(ValueGeneratorIF locator);
   /**
    * The generator makes (or just returns) the topic when asked to.
    */
-  public void startTopic(ValueGeneratorIF topic);
-  public void addItemIdentifier(ValueGeneratorIF locator);
-  public void addSubjectIdentifier(ValueGeneratorIF locator);
-  public void addSubjectLocator(ValueGeneratorIF locator);
-  public void addTopicType(ValueGeneratorIF topic);
-  public void addSubtype(ValueGeneratorIF subtype);
-  public void startName(ValueGeneratorIF type, ValueGeneratorIF value);
-  public void addScopingTopic(ValueGeneratorIF topic);
-  public void addReifier(ValueGeneratorIF topic);
-  public void startVariant(ValueGeneratorIF value);
-  public void endName();
-  public void startOccurrence(ValueGeneratorIF type, ValueGeneratorIF value);
-  public void endOccurrence();
-  public void endTopic();
+  void startTopic(ValueGeneratorIF topic);
+  void addItemIdentifier(ValueGeneratorIF locator);
+  void addSubjectIdentifier(ValueGeneratorIF locator);
+  void addSubjectLocator(ValueGeneratorIF locator);
+  void addTopicType(ValueGeneratorIF topic);
+  void addSubtype(ValueGeneratorIF subtype);
+  void startName(ValueGeneratorIF type, ValueGeneratorIF value);
+  void addScopingTopic(ValueGeneratorIF topic);
+  void addReifier(ValueGeneratorIF topic);
+  void startVariant(ValueGeneratorIF value);
+  void endName();
+  void startOccurrence(ValueGeneratorIF type, ValueGeneratorIF value);
+  void endOccurrence();
+  void endTopic();
 
-  public void startAssociation(ValueGeneratorIF type);
-  public void addRole(ValueGeneratorIF type, ValueGeneratorIF player);
-  public void endRoles();
-  public void endAssociation();
+  void startAssociation(ValueGeneratorIF type);
+  void addRole(ValueGeneratorIF type, ValueGeneratorIF player);
+  void endRoles();
+  void endAssociation();
 
-  public void startEmbeddedTopic();
+  void startEmbeddedTopic();
   /**
    * Returns a generator which returns the embedded topic produced by
    * the event.
    */
-  public ValueGeneratorIF endEmbeddedTopic();
+  ValueGeneratorIF endEmbeddedTopic();
 
-  public void templateInvocation(String name, List arguments);
+  void templateInvocation(String name, List arguments);
 }

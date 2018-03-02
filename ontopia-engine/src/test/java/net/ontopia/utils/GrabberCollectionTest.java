@@ -36,6 +36,7 @@ public class GrabberCollectionTest extends AbstractCollectionTest {
     return new TestSuite(GrabberCollectionTest.class);
   }
   
+  @Override
   protected void testCollection(Collection coll, Collection identical, Collection smaller) {
     super.testCollection(coll, identical, smaller);
 

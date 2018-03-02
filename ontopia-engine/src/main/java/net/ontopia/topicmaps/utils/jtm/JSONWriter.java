@@ -24,9 +24,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * PUBLIC: A JSON serializer. Take a look at the <a
  * href="http://www.json.org/">JSON Homepage</a> for a complete specification of
@@ -57,7 +54,6 @@ import org.slf4j.LoggerFactory;
  * @since 5.1
  */
 public class JSONWriter {
-  static Logger log = LoggerFactory.getLogger(JSONWriter.class.getName());
 
   private final static int INDENT = 2;
 
@@ -66,6 +62,7 @@ public class JSONWriter {
   private int depth;
   private boolean comma;
   private boolean startOfDocument;
+  private boolean closeWriter = false;
 
   /**
    * PUBLIC: Create an JSONWriter that writes to a given OutputStream in UTF-8.
@@ -122,6 +119,13 @@ public class JSONWriter {
   }
 
   /**
+   * PUBLIC: Sets whether the writer should close the underlying IO when finished.
+   */
+  public void setCloseWriter(boolean closeWriter) {
+    this.closeWriter = closeWriter;
+  }
+
+  /**
    * PUBLIC: Finish the serialization process, flushes the underlying stream.
    */
   public void finish() throws IOException {
@@ -129,6 +133,10 @@ public class JSONWriter {
       out.write('\n');
     }
     out.flush();
+    
+    if (closeWriter) {
+      out.close();
+    }
   }
   
   /**

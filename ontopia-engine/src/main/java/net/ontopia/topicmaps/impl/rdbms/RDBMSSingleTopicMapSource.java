@@ -28,7 +28,6 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -62,20 +61,23 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
   protected RDBMSStorage storage;
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSSingleTopicMapSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSSingleTopicMapSource.class.getName());
 
   // --- TopicMapSourceIF implementation
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized Collection getReferences() {
     if (reference == null) refresh();
     if (reference == null) return Collections.EMPTY_SET;
     return Collections.singleton(reference);
   }
   
+  @Override
   public synchronized void refresh() {
     // FIXME: for now don't recreate reference if already exists
     if (reference != null) return;
@@ -103,7 +105,7 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
               if (_base_address == null) {
                 String loc = rs.getString(2);
                 if (loc != null)
-                  _base_address = Locators.getURILocator(loc);
+                  _base_address = new URILocator(loc);
               }
             }
             rs.close();
@@ -153,26 +155,32 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
     }
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
   
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }

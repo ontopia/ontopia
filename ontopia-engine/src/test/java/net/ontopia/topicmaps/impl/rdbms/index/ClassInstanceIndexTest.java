@@ -28,6 +28,7 @@ public class ClassInstanceIndexTest extends net.ontopia.topicmaps.core.index.Cla
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();
   }

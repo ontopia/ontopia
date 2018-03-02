@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class OnDemandValue {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(OnDemandValue.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(OnDemandValue.class.getName());
 
   protected IdentityIF identity;
   protected FieldInfoIF finfo;

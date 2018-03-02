@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -32,7 +31,6 @@ import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.topicmaps.utils.TopicCharacteristicGrabbers;
 import net.ontopia.utils.GrabberIF;
 
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
@@ -49,6 +47,7 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
   private String basenameScopeVarName;
   private String variantScopeVarName;
 
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     if (topics == null || topics.isEmpty())
       return Collections.EMPTY_SET;

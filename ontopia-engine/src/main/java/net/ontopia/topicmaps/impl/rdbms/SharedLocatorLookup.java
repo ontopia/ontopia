@@ -38,16 +38,16 @@ import net.ontopia.persistence.proxy.TransactionalLookupIndexIF;
  * INTERNAL: Non-shared locator lookup index.
  */
 
-public class SharedLocatorLookup implements TransactionalLookupIndexIF {
+public class SharedLocatorLookup<E> implements TransactionalLookupIndexIF<LocatorIF, E> {
 
   protected StorageAccessIF access;
-  protected QueryCache qcache;
+  protected QueryCache<LocatorIF, E> qcache;
   protected IdentityIF tmid;
 
-  protected Map txnadd;
-  protected Set txnrem;
+  protected Map<LocatorIF, E> txnadd;
+  protected Set<LocatorIF> txnrem;
 
-  public SharedLocatorLookup(StorageAccessIF access, QueryCache qcache, IdentityIF tmid) {
+  public SharedLocatorLookup(StorageAccessIF access, QueryCache<LocatorIF, E> qcache, IdentityIF tmid) {
     this.access = access;
     this.qcache = qcache;
     this.tmid = tmid;
@@ -55,40 +55,44 @@ public class SharedLocatorLookup implements TransactionalLookupIndexIF {
     this.txnrem = new HashSet();
   }
   
-  public Object get(Object key) {
+  @Override
+  public E get(LocatorIF key) {
     // if added return added
-    Object retval = txnadd.get(key);
+    E retval = txnadd.get(key);
     if (retval != null) return retval;
 
     // if removed returned null
     if (txnrem.contains(key)) return null;
 
     // check cache
-    LocatorIF locator = (LocatorIF)key;
-    return qcache.executeQuery(access, key, new Object[] { tmid, locator.getAddress() });
+    return qcache.executeQuery(access, key, new Object[] { tmid, key.getAddress() });
   }
 
-  public Object put(Object key, Object value) {
+  @Override
+  public E put(LocatorIF key, E value) {
     txnrem.remove(key);
     txnadd.put(key, value);
     return null;
   }
 
-  public Object remove(Object key) {
+  @Override
+  public E remove(LocatorIF key) {
     txnrem.add(key);    
     txnadd.remove(key);
     return null;
   }
 
-  public void removeAll(Collection keys) {
-    Iterator iter = keys.iterator();
+  @Override
+  public void removeAll(Collection<LocatorIF> keys) {
+    Iterator<LocatorIF> iter = keys.iterator();
     while (iter.hasNext()) {
-      Object key = iter.next();
+      LocatorIF key = iter.next();
       txnrem.add(key);    
       txnadd.remove(key);
     }
   }
   
+  @Override
   public void commit() {    
     // invalidate shared query cache
     if (!txnrem.isEmpty()) {
@@ -107,6 +111,7 @@ public class SharedLocatorLookup implements TransactionalLookupIndexIF {
     }
   }
 
+  @Override
   public void abort() {
     // reset tracking
     if (!txnadd.isEmpty()) txnadd = new HashMap();

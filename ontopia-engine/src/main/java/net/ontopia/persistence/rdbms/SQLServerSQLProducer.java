@@ -37,10 +37,12 @@ public class SQLServerSQLProducer extends GenericSQLProducer {
 
   // -- flags
 
+  @Override
   protected boolean supportsForeignKeys() {
     return false;
   }
 
+  @Override
   protected boolean supportsNullInColumnDefinition() {
     return true;
   }

@@ -37,6 +37,7 @@ public class EditMode extends Topic {
     super(topic, tm);
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof EditMode))
       return false;

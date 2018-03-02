@@ -50,6 +50,7 @@ public class SQLIn implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public int getType() {
     return IN;
   }
@@ -70,6 +71,7 @@ public class SQLIn implements SQLExpressionIF {
     this.right = right;
   }
 
+  @Override
   public String toString() {
     return getLeft() + " in (" + getRight() + ")";
   }

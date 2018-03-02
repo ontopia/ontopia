@@ -74,6 +74,7 @@ public class InstanceSearchPanel extends Panel {
     };
     
     final WebMarkupContainer searchResultContainer = new WebMarkupContainer("searchResultContainer") {
+      @Override
       public boolean isVisible() {
         return searchResultModel.getObject().isEmpty() ? false : true;      
       }
@@ -82,6 +83,7 @@ public class InstanceSearchPanel extends Panel {
     add(searchResultContainer);
     
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
+      @Override
       public boolean isVisible() {
         return !searchField.getModel().getObject().equals("") && searchResultModel.getObject().isEmpty() ? true : false;      
       }

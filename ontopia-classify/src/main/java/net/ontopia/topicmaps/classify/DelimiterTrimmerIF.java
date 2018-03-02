@@ -25,8 +25,8 @@ package net.ontopia.topicmaps.classify;
  */
 public interface DelimiterTrimmerIF {
   
-  public int trimStart(String token);
+  int trimStart(String token);
   
-  public int trimEnd(String token);
+  int trimEnd(String token);
   
 }

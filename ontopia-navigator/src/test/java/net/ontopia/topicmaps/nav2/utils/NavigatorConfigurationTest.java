@@ -21,26 +21,20 @@
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.IOException;
-import java.io.File;
-import java.util.Hashtable;
 import java.util.Collection;
-import org.xml.sax.SAXException;
-
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
-import net.ontopia.topicmaps.nav2.utils.NavigatorConfigFactory;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
-
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 public class NavigatorConfigurationTest {
   
   private final static String testdataDirectory = "nav2";
 
-  NavigatorConfigurationIF navConf;
+  private NavigatorConfigurationIF navConf;
 
   @Before  
   public void setUp() throws IOException, SAXException {

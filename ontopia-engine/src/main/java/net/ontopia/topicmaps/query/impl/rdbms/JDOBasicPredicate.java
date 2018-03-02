@@ -40,20 +40,24 @@ public class JDOBasicPredicate implements JDOPredicateIF {
 
   // --- PredicateIF implementation
 
+  @Override
   public String getName() {
     return pred.getName();
   }
 
+  @Override
   public String getSignature() throws InvalidQueryException {
     return pred.getSignature();
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     return pred.getCost(boundparams);
   }
 
   // --- BasicPredicateIF implementation
 
+  @Override
   public QueryMatches satisfy(QueryMatches result, Object[] arguments)
     throws InvalidQueryException {
     return pred.satisfy(result, arguments);
@@ -61,13 +65,17 @@ public class JDOBasicPredicate implements JDOPredicateIF {
 
   // --- JDOPredicateIF implementation
 
+  @Override
   public boolean isRecursive() {
     return false;
   }
 
+  @Override
   public void prescan(QueryBuilder builder, List arguments) {
+    // no-op
   }
 
+  @Override
   public boolean buildQuery(QueryBuilder builder, List expressions, List arguments)
     throws InvalidQueryException {
     // this predicate should be executed through basic predicate

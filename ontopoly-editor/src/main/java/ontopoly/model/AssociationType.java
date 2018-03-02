@@ -29,9 +29,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import ontopoly.utils.OntopolyModelUtils;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -40,7 +37,8 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.ObjectIdComparator;
-import net.ontopia.utils.ObjectUtils;
+import ontopoly.utils.OntopolyModelUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents an association type.
@@ -59,6 +57,7 @@ public class AssociationType extends AbstractTypingTopic {
     return PSI.ON_ASSOCIATION_TYPE;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof AssociationType))
       return false;
@@ -100,6 +99,7 @@ public class AssociationType extends AbstractTypingTopic {
     QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
     return qm.queryForList(query,
         new RowMapperIF<RoleField>() {
+          @Override
           public RoleField mapRow(QueryResultIF result, int rowno) {
 						TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
 						TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
@@ -153,6 +153,7 @@ public class AssociationType extends AbstractTypingTopic {
 	      tuple.add(new RoleType(role.getType(), getTopicMap()));
 	    }
 	    Collections.sort(tuple, new Comparator<RoleType>() {
+        @Override
         public int compare(RoleType o1, RoleType o2) {
           return ObjectIdComparator.INSTANCE.compare(o1.getTopicIF(), o2.getTopicIF());
         }
@@ -234,8 +235,9 @@ public class AssociationType extends AbstractTypingTopic {
       return INSTANCE;
     }
 
+    @Override
     public int compare(RoleField rf1, RoleField rf2) {
-      return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
+      return StringUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }
 

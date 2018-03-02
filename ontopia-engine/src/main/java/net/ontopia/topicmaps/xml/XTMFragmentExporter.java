@@ -53,6 +53,12 @@ import org.xml.sax.SAXException;
  * @see XTMTopicMapFragmentWriter
  */
 public class XTMFragmentExporter extends XTMTopicMapExporter {
+  private static final String CDATA = "CDATA";
+  private static final String XLINK_HREF = "xlink:href";
+  private static final String RESOURCEREF = "resourceRef";
+  private static final String SUBJECTINDICATORREF = "subjectIndicatorRef";
+  private static final String TOPICREF = "topicRef";
+  private static final String URI = "URI";
   
   public static final String VIRTUAL_URN = "urn:x-oks-virtual:";
   protected static final String EMPTY_NAMESPACE = "";
@@ -63,7 +69,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   protected Set alreadyExported;   // objids topics & assocs already exported
   protected boolean use_local_ids; // see setUseLocalIds
   private String tmid;
-  private static Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
   
   /**
    * PUBLIC: Initializes the exporter.
@@ -150,8 +156,8 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
 
     // Calculate attributes
     atts.clear();
-    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xmlns", "CDATA", "http://www.topicmaps.org/xtm/1.0/");
-    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xmlns:xlink", "CDATA", "http://www.w3.org/1999/xlink");
+    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xmlns", CDATA, "http://www.topicmaps.org/xtm/1.0/");
+    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xmlns:xlink", CDATA, "http://www.w3.org/1999/xlink");
     
     // Output element
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicMap", atts);
@@ -179,6 +185,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   //--------------------------------------------------------------------
 
 
+  @Override
   protected void writeTopic(TopicIF topic, ContentHandler dh)
     throws SAXException {
 
@@ -222,6 +229,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     
   }
   
+  @Override
   protected void writeTopicNames(Collection names, ContentHandler dh)
     throws SAXException {
     //Get names, and sort the out.
@@ -248,6 +256,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     }
   }
 
+  @Override
   protected void writeTopicRef(TopicIF topic, ContentHandler dh)
     throws SAXException {
 
@@ -255,18 +264,18 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     if (!topic.getSubjectLocators().isEmpty()) {
       LocatorIF sub = (LocatorIF) topic.getSubjectLocators().iterator().next();
       atts.clear();
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", sub.getAddress());
-      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "resourceRef", atts);
-      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "resourceRef");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA, sub.getAddress());
+      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF, atts);
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF);
       return;
     }
 
     if (!topic.getSubjectIdentifiers().isEmpty()) {
       LocatorIF ind = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
       atts.clear();
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", ind.getAddress());
-      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIndicatorRef", atts);
-      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIndicatorRef");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA, ind.getAddress());
+      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF, atts);
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF);
       return;
     }
 
@@ -298,11 +307,12 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
 
     // now we can output
     atts.clear();
-    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", reference);
-    dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicRef", atts);
-    dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicRef");
+    atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA, reference);
+    dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF, atts);
+    dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF);
   }
   
+  @Override
   protected void writeSubjectIdentity(TopicIF topic, ContentHandler dh)
     throws SAXException {
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIdentity", EMPTY_ATTR_LIST);
@@ -314,12 +324,12 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     while (it.hasNext()) {
       LocatorIF subject = (LocatorIF) it.next();
       String notation = subject.getNotation();
-      if (notation != null && notation.equals("URI")) {
+      if (notation != null && notation.equals(URI)) {
         atts.clear();
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA",
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA,
                           subject.getAddress());
-        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "resourceRef", atts);
-        dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "resourceRef");
+        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF, atts);
+        dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF);
         identityFound = true;
       } else
         reportInvalidLocator(subject);
@@ -330,18 +340,18 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     while (it.hasNext()) {
       LocatorIF indicator = (LocatorIF) it.next();
       String notation = indicator.getNotation();
-      if (notation != null && notation.equals("URI")) {
+      if (notation != null && notation.equals(URI)) {
         atts.clear();
         String ref = getSubjectIndicatorRef(topic, indicator);
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", ref);
-        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIndicatorRef", atts);
-        dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIndicatorRef");
+        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA, ref);
+        dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF, atts);
+        dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF);
 
         if (ref.startsWith("#")) {
           atts.clear();
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", indicator.getAddress());
-          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIndicatorRef", atts);
-          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIndicatorRef");
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA, indicator.getAddress());
+          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF, atts);
+          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF);
         }
         identityFound = true;
       } else
@@ -355,12 +365,12 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
         while (it.hasNext()) {
           LocatorIF srcloc = (LocatorIF) it.next();
           String notation = srcloc.getNotation();
-          if (notation != null && notation.equals("URI")) {
+          if (notation != null && notation.equals(URI)) {
             atts.clear();
-            atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA",
+            atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA,
                               srcloc.getAddress());
-            dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicRef", atts);
-            dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicRef");
+            dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF, atts);
+            dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF);
             identityFound = true;
           } else
             reportInvalidLocator(srcloc);
@@ -373,9 +383,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       String reference = makeVirtualReference(topic);
       
       atts.clear();
-      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", reference);
-      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicRef", atts);
-      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topicRef");
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  XLINK_HREF, CDATA, reference);
+      dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF, atts);
+      dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF);
     }
     
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "subjectIdentity");
@@ -383,6 +393,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
 
 
 
+  @Override
   protected void writeVariants(Collection variants, ContentHandler dh)
     throws SAXException {
     
@@ -407,6 +418,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   }
 
 
+  @Override
   protected void writeOccurrences(Collection occurrences, ContentHandler dh)
     throws SAXException {
     Iterator iter = occurrences.iterator();
@@ -433,11 +445,11 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
         if (locator_handler != null)
           occloc = locator_handler.process(occloc);
         String notation = occloc.getNotation();
-        if (notation != null && notation.equals("URI")) {
+        if (notation != null && notation.equals(URI)) {
           atts.clear();
-          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "xlink:href", "CDATA", occloc.getAddress());
-          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "resourceRef", atts);
-          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "resourceRef");
+          atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, XLINK_HREF, CDATA, occloc.getAddress());
+          dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF, atts);
+          dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF);
         } else
           reportInvalidLocator(occloc);
       }
@@ -460,6 +472,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   // Methods used on associations
   //--------------------------------------------------------------------
 
+  @Override
   protected void writeAssociation(AssociationIF assoc, ContentHandler dh) throws SAXException {
 
     String objid = assoc.getObjectId();
@@ -548,7 +561,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
    * EXPERIMENTAL: Handler class used for processing locators.
    */
   public interface LocatorHandlerIF {
-    public LocatorIF process(LocatorIF locator);
+    LocatorIF process(LocatorIF locator);
   }  
 
 }

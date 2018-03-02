@@ -34,12 +34,14 @@ public class QueryResultTest extends AbstractQueryTest {
 
   /// setup
 
+  @Override
   public void setUp() {
     QueryMatches.initialSize = 1;
   }
 
   /// setup
 
+  @Override
   public void tearDown() {    
     closeStore();
   }

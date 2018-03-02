@@ -24,15 +24,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import junit.framework.TestCase;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.utils.StringUtils;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.DeciderIF;
+import org.apache.commons.lang3.StringUtils;
 
 public class ScopeUtilsTest extends TestCase {
   protected TopicMapIF    topicmap; 
@@ -42,6 +42,7 @@ public class ScopeUtilsTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap = makeTopicMap();
     makeTopic("A");
@@ -98,7 +99,7 @@ public class ScopeUtilsTest extends TestCase {
     String[] tokens = StringUtils.split(spec, ",");
     for (int ix = 0; ix < tokens.length; ix++) {
       String token = tokens[ix].trim();
-      if (!token.equals("")) 
+      if (!token.isEmpty()) 
         scope.add(getTopic(token));
     }
     return scope;
@@ -320,26 +321,36 @@ public class ScopeUtilsTest extends TestCase {
   // --- Helper classes
 
   public static class Scoped implements ScopedIF {
-    Collection scope;
+    private Collection scope;
     Scoped(Collection scope) {
       this.scope = scope;
     }
+    @Override
     public Collection getScope() {
       return scope;
     }
+    @Override
     public void addTheme(TopicIF theme) {
       scope.add(theme);
     }
+    @Override
     public void removeTheme(TopicIF theme) {
       scope.remove(theme);
     }   
+    @Override
     public String getObjectId() {return "";}
+    @Override
     public boolean isReadOnly() {return false;}
+    @Override
     public TopicMapIF getTopicMap() {return null;}
+    @Override
     public Collection getItemIdentifiers() {return Collections.EMPTY_SET;}
-    public void addItemIdentifier(LocatorIF source_locator) { }  
-    public void removeItemIdentifier(LocatorIF source_locator) { }
-    public void remove() { }
+    @Override
+    public void addItemIdentifier(LocatorIF source_locator) { /* no-op */ }  
+    @Override
+    public void removeItemIdentifier(LocatorIF source_locator) { /* no-op */ }
+    @Override
+    public void remove() { /* no-op */ }
       
   }
   

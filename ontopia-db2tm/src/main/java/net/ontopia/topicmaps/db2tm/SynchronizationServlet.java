@@ -29,11 +29,11 @@ import java.util.Date;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,12 +82,13 @@ import org.slf4j.LoggerFactory;
  */
 public class SynchronizationServlet extends HttpServlet {
 
-  static Logger log = LoggerFactory.getLogger(SynchronizationServlet.class);
+  private static Logger log = LoggerFactory.getLogger(SynchronizationServlet.class);
 
-  static DateFormat df = new SimpleDateFormat("HH:mm");
+  private static DateFormat df = new SimpleDateFormat("HH:mm");
   
   protected SynchronizationTask task;
   
+  @Override
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     log.info("Initializing synchronization servlet.");
@@ -167,6 +168,7 @@ public class SynchronizationServlet extends HttpServlet {
     return defval;
   }
   
+  @Override
   public void destroy() {
     log.info("Destructing synchronization servlet.");
     if (task != null) {

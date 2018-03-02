@@ -79,6 +79,7 @@ public class TestCaseContentHandler extends SAXTracker {
 
   @Override
   public void endDocument() {
+    // no-op
   }
 
   @Override

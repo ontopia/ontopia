@@ -161,7 +161,7 @@ public class DuplicateSuppressionUtils {
       String key = KeyGenerator.makeTopicNameKey(basename);
       TopicNameIF duplicate = map.get(key);
       if (duplicate != null) {
-        if (duplicate != basename) {
+        if (!basename.equals(duplicate)) {
           MergeUtils.mergeInto(duplicate, basename);
           basename = duplicate; // do this so that we can remove duplicate variants later
         }
@@ -184,7 +184,7 @@ public class DuplicateSuppressionUtils {
 
       OccurrenceIF duplicate = map.get(key);
       if (duplicate != null) {
-        if (duplicate != occ)
+        if (!duplicate.equals(occ))
           MergeUtils.mergeInto(duplicate, occ);
       } else
         map.put(key, occ);
@@ -221,7 +221,7 @@ public class DuplicateSuppressionUtils {
         
         AssociationIF duplicate = map.get(key);
         if (duplicate != null) {
-          if (duplicate != assoc)
+          if (!duplicate.equals(assoc))
             MergeUtils.mergeInto(duplicate, assoc);
         } else
           map.put(key, assoc);

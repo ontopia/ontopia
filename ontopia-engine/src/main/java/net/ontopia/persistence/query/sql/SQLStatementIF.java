@@ -34,35 +34,35 @@ import net.ontopia.persistence.proxy.TicketIF;
 
 public interface SQLStatementIF {
   
-  public void setObjectAccess(ObjectAccessIF oaccess);
+  void setObjectAccess(ObjectAccessIF oaccess);
   
-  public void setAccessRegistrar(AccessRegistrarIF registrar);
+  void setAccessRegistrar(AccessRegistrarIF registrar);
 
-  public TicketIF getTicket();
+  TicketIF getTicket();
   
   /**
    * INTERNAL: Returns the number of fields that will be selected by
    * the statement.
    */  
-  public int getWidth();
+  int getWidth();
 
   /**
    * INTERNAL: Execute the statement without any parameters and return
    * a JDBC result set.
    */  
-  public ResultSet executeQuery(Connection conn) throws Exception;
+  ResultSet executeQuery(Connection conn) throws Exception;
 
   /**
    * INTERNAL: Execute the statement with parameters and return a JDBC
    * result set.
    */  
-  public ResultSet executeQuery(Connection conn, Object[] params) throws Exception;
+  ResultSet executeQuery(Connection conn, Object[] params) throws Exception;
 
   /**
    * INTERNAL: Execute the statement with parameters and return a JDBC
    * result set.
    */  
-  public ResultSet executeQuery(Connection conn, Map params) throws Exception;
+  ResultSet executeQuery(Connection conn, Map params) throws Exception;
   
   /**
    * INTERNAL: Read the field value of the specified index from the
@@ -72,20 +72,20 @@ public interface SQLStatementIF {
    * object identity will be extracted and the identity will be used
    * to look up the object in the transaction.<p>
    */
-  public Object readValue(TicketIF ticket, ResultSet rs, int index, boolean lookup_identities) throws Exception;
+  Object readValue(TicketIF ticket, ResultSet rs, int index, boolean lookup_identities) throws Exception;
 
   /**
    * INTERNAL: Reads all the field values from the current row into
    * the specified value array. Note that this array must have a width
    * that is equal or greater than the width of the result.<p>
    */  
-  public Object[] readValues(TicketIF ticket, ResultSet rs, Object[] values, boolean lookup_identities) throws Exception;
+  Object[] readValues(TicketIF ticket, ResultSet rs, Object[] values, boolean lookup_identities) throws Exception;
   
   /**
    * INTERNAL: Reads all the field values from the current row in the
    * result set.<p>
    */  
-  public Object[] readValues(TicketIF ticket, ResultSet rs, boolean lookup_identities) throws Exception;
+  Object[] readValues(TicketIF ticket, ResultSet rs, boolean lookup_identities) throws Exception;
   
 }
 

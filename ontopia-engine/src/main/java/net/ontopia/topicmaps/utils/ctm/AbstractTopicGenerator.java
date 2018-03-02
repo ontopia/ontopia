@@ -28,18 +28,22 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 public abstract class AbstractTopicGenerator implements ValueGeneratorIF {
 
+  @Override
   public boolean isTopic() {
     return true;
   }
   
+  @Override
   public String getLiteral() {
     throw new OntopiaRuntimeException("FIXME");
   }
   
+  @Override
   public LocatorIF getDatatype() {
     throw new OntopiaRuntimeException("FIXME");
   }
 
+  @Override
   public LocatorIF getLocator() {
     throw new OntopiaRuntimeException("FIXME: " + this);
   }  

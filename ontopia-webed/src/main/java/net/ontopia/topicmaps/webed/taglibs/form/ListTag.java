@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.webed.taglibs.form;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -72,6 +71,7 @@ public class ListTag extends TagSupport {
    *
    * @return <code>EVAL_BODY_INCLUDE</code>
    */
+  @Override
   public int doStartTag() {
     return EVAL_BODY_INCLUDE;
   }
@@ -81,6 +81,7 @@ public class ListTag extends TagSupport {
    *
    * @exception JspException if a JSP exception has occurred
    */
+  @Override
   public int doEndTag() throws JspException {
     // original value; used to detect changes
     Set value = new HashSet();
@@ -128,7 +129,7 @@ public class ListTag extends TagSupport {
     }    
 
     if (id != null) vc.put("id", id);
-    vc.put("readonly", new Boolean(readonly));
+    vc.put("readonly", readonly);
     if (klass != null) vc.put("class", klass);
     vc.put("type", type);
 
@@ -166,6 +167,7 @@ public class ListTag extends TagSupport {
   /**
    * Release any acquired resources.
    */
+  @Override
   public void release() {
     super.release();
     id = null;
@@ -185,6 +187,7 @@ public class ListTag extends TagSupport {
    * Sets the id of the tag. This value will be used as the value of
    * an ID attribute in the generated output.
    */
+  @Override
   public void setId(String id) {
     this.id = id;
   }

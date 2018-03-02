@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class ROTransaction extends AbstractTransaction {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ROTransaction.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ROTransaction.class.getName());
   
   public ROTransaction(StorageAccessIF access) {
     super("TX" + access.getId(), access);
@@ -60,10 +60,12 @@ public class ROTransaction extends AbstractTransaction {
     this.oaccess = new PersistentObjectAccess(this);
   }
 
+  @Override
   public boolean isClean() {
     return true;
   }
   
+  @Override
   public boolean isReadOnly() {
     return true;
   }
@@ -72,16 +74,19 @@ public class ROTransaction extends AbstractTransaction {
   // Life cycle
   // -----------------------------------------------------------------------------
   
+  @Override
   public void assignIdentity(PersistentIF object) {
     if (!isactive) throw new TransactionNotActiveException();
     throw new ReadOnlyTransactionException();
   }
   
+  @Override
   public void create(PersistentIF object) {
     if (!isactive) throw new TransactionNotActiveException();
     throw new ReadOnlyTransactionException();
   }
   
+  @Override
   public void delete(PersistentIF object) {    
     if (!isactive) throw new TransactionNotActiveException();
     throw new ReadOnlyTransactionException();
@@ -91,6 +96,7 @@ public class ROTransaction extends AbstractTransaction {
   // Lifecycle
   // -----------------------------------------------------------------------------
   
+  @Override
   public void flush() {
     // no-op
   }
@@ -99,21 +105,27 @@ public class ROTransaction extends AbstractTransaction {
   // Object modification callbacks (called by PersistentIFs)
   // -----------------------------------------------------------------------------
   
+  @Override
   public void objectDirty(PersistentIF object) {
     throw new ReadOnlyTransactionException();
   }
 
+  @Override
   public void objectRead(IdentityIF identity) {
+    // no-op
   }
 
+  @Override
   public void objectCreated(PersistentIF object) {
     throw new ReadOnlyTransactionException();
   }
 
+  @Override
   public void objectDeleted(PersistentIF object) {
     throw new ReadOnlyTransactionException();
   }
 
+  @Override
   public boolean isObjectClean(IdentityIF identity) {
     return true;
   }
@@ -122,18 +134,22 @@ public class ROTransaction extends AbstractTransaction {
   // Transaction boundary callbacks
   // -----------------------------------------------------------------------------
   
+  @Override
   protected void transactionPreCommit() {
     // no-op
   }
   
+  @Override
   protected void transactionPostCommit() {
     // no-op
   }
   
+  @Override
   protected void transactionPreAbort() {
     // no-op
   }
   
+  @Override
   protected void transactionPostAbort() {
     // no-op
   }

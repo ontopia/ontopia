@@ -23,19 +23,19 @@ package net.ontopia.topicmaps.query.impl.basic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
@@ -43,8 +43,8 @@ import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Shared utilities for the predicate implementations.
@@ -169,12 +169,12 @@ public class PredicateUtils {
           newRow[toix] = ((TopicNameIF) newRow[fromix]).getValue();
         else if (newRow[fromix] instanceof VariantNameIF) {
 					VariantNameIF vn = (VariantNameIF) newRow[fromix];
-					if (ObjectUtils.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
+					if (Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
 						continue;
 					newRow[toix] = vn.getValue();
 				} else if (newRow[fromix] instanceof OccurrenceIF) {
 					OccurrenceIF occ = (OccurrenceIF) newRow[fromix];
-					if (ObjectUtils.equals(occ.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
+					if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
 						continue;
 					newRow[toix] = occ.getValue();
 				}
@@ -385,11 +385,11 @@ public class PredicateUtils {
           object = ((TopicNameIF) matches.data[ix][ix1]).getValue();
         else if (matches.data[ix][ix1] instanceof VariantNameIF) {
 					VariantNameIF vn = (VariantNameIF) matches.data[ix][ix1];
-					if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
+					if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
 						object = vn.getValue();
         } else if (matches.data[ix][ix1] instanceof OccurrenceIF) {
 					OccurrenceIF occ2 = (OccurrenceIF) matches.data[ix][ix1];
-					if (ObjectUtils.different(occ2.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
+					if (!Objects.equals(occ2.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
 						object = occ2.getValue();
 				}
         break;
@@ -508,11 +508,11 @@ public class PredicateUtils {
           other = ((TopicNameIF) objects[oix]).getValue();
         else if (objects[oix] instanceof VariantNameIF) {
 					VariantNameIF vn = (VariantNameIF) objects[oix];
-					if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI						
+					if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI						
 						other = vn.getValue();
         } else {
 					OccurrenceIF occ = (OccurrenceIF) objects[oix];
-					if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI						
+					if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI						
 						other = occ.getValue();
 				}
         break;

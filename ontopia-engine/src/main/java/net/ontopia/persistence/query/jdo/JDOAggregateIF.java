@@ -31,19 +31,19 @@ public interface JDOAggregateIF {
   /**
    * INTERNAL: Constant referring to the COUNT aggregate function.
    */
-  public static final int COUNT = 1;
+  int COUNT = 1;
 
   /**
    * INTERNAL: Returns the aggregate function type indicated by one of
    * the constants in the {@link JDOAggregateIF} interface.
    */
-  public int getType();
+  int getType();
 
   /**
    * INTERNAL: Returns the JDOValueIF that the aggregate function is
    * to be evaluated against.
    */
-  public JDOValueIF getValue();
+  JDOValueIF getValue();
   
 }
 

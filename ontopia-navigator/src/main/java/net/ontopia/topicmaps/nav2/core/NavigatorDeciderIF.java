@@ -35,7 +35,7 @@ public interface NavigatorDeciderIF<T> {
    * INTERNAL: if implemented criteria are matched: deliver true,
    * otherwise false.
    */
-  public boolean ok(NavigatorPageIF contextTag, T obj);
+  boolean ok(NavigatorPageIF contextTag, T obj);
   
 }
 

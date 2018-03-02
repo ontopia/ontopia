@@ -20,25 +20,25 @@
 
 package net.ontopia.topicmaps.webed.utils;
 
-import EDU.oswego.cs.dl.util.concurrent.SynchronizedInt;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import net.ontopia.utils.ontojsp.FakeHttpSession;
-import net.ontopia.utils.ontojsp.FakeServletContext;
-import net.ontopia.topicmaps.webed.impl.utils.SessionListener;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.impl.basic.NavigatorConfiguration;
 import net.ontopia.topicmaps.nav2.impl.framework.User;
 import net.ontopia.topicmaps.webed.impl.utils.LockResult;
 import net.ontopia.topicmaps.webed.impl.utils.NamedLockManager;
+import net.ontopia.topicmaps.webed.impl.utils.SessionListener;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.ontojsp.FakeHttpSession;
+import net.ontopia.utils.ontojsp.FakeServletContext;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Ignore;
 
 /**
  * INTERNAL: Test class for testing distributed NamedLockManager locks.
@@ -61,12 +61,12 @@ public class ClusteredNamedLockManagerTest {
   private boolean master;
   private int participantCount;
 
-  private SynchronizedInt lock;
+  private AtomicInteger lock;
 
   public ClusteredNamedLockManagerTest(boolean master, int participantCount) {
     this.master = master;
     this.participantCount = participantCount;
-    this.lock = new SynchronizedInt(0);
+    this.lock = new AtomicInteger(0);
   }
   
   public void setUp() {
@@ -123,7 +123,7 @@ public class ClusteredNamedLockManagerTest {
     assertNoUnlockables(res1);
     System.out.println("OK: m1");
 
-    lock.increment();    
+    lock.getAndIncrement();    
     await(2);
     
     // User 1 attempts to lock the objects, but fails.
@@ -137,7 +137,7 @@ public class ClusteredNamedLockManagerTest {
     assertNoUnlockables(res3);
     System.out.println("OK: m3");
 
-    lock.increment();
+    lock.getAndIncrement();
     
   }
   
@@ -163,7 +163,7 @@ public class ClusteredNamedLockManagerTest {
     assertNoUnlockables(res2);
     System.out.println("OK: s2");
 
-    lock.increment();    
+    lock.getAndIncrement();    
     await(3);
     
     // User 2 attempts to lock the objects twice, but fails.
@@ -176,7 +176,7 @@ public class ClusteredNamedLockManagerTest {
 
     lockMan.unlock(user2, lockName1, true);
 
-    lock.increment();    
+    lock.getAndIncrement();    
   }
 
   protected void assertEquals(Object o1, Object o2) {

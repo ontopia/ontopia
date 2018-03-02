@@ -27,10 +27,10 @@ import java.util.List;
  * INTERNAL: 
  */
 public class DocumentClassifier {
-  TermDatabase tdb;
-  TermStemmerIF termStemmer;
-  List<DocumentAnalyzerIF> docAnalyzers = new ArrayList<DocumentAnalyzerIF>();
-  List<TermAnalyzerIF> termAnalyzers = new ArrayList<TermAnalyzerIF>();
+  private TermDatabase tdb;
+  private TermStemmerIF termStemmer;
+  private List<DocumentAnalyzerIF> docAnalyzers = new ArrayList<DocumentAnalyzerIF>();
+  private List<TermAnalyzerIF> termAnalyzers = new ArrayList<TermAnalyzerIF>();
 
   public DocumentClassifier(TermDatabase tdb) {
     this.tdb = tdb;

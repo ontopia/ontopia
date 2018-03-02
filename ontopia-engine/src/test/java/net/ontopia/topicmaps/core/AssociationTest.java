@@ -160,6 +160,7 @@ public abstract class AssociationTest extends AbstractTypedScopedTest {
     
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     assoc = builder.makeAssociation(builder.makeTopic());
@@ -168,6 +169,7 @@ public abstract class AssociationTest extends AbstractTypedScopedTest {
     typed = assoc;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     return builder.makeAssociation(builder.makeTopic());
   }

@@ -47,7 +47,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class URLTopicMapSource implements TopicMapSourceIF {
 
   // initialization of log facility
-  private static Logger log = LoggerFactory.getLogger(URLTopicMapSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(URLTopicMapSource.class.getName());
   
   protected String id;
   protected String refid;
@@ -70,10 +70,12 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     this.url = url;
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -94,10 +96,12 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     this.refid = refid;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -223,11 +227,13 @@ public class URLTopicMapSource implements TopicMapSourceIF {
 
   // ----
   
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (reflist == null) refresh();
     return reflist;
   }
 
+  @Override
   public synchronized void refresh() {
     if (url == null)
       throw new OntopiaRuntimeException("'url' property has not been set.");
@@ -262,7 +268,7 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     
     if (syntax == null) {
       throw new OntopiaRuntimeException("Syntax not specified for '" + url + "'. Please set the 'syntax' parameter.");
-    } else if (syntax.equalsIgnoreCase("XTM")) {
+    } else if ("XTM".equalsIgnoreCase(syntax)) {
       // Create XTM reference
       XTMTopicMapReference ref = new XTMTopicMapReference(url2, refid, title, base_address);
       ref.setSource(this);
@@ -272,21 +278,21 @@ public class URLTopicMapSource implements TopicMapSourceIF {
         ref.setExternalReferenceHandler(ref_handler);
       reflist = Collections.singleton((TopicMapReferenceIF)ref);
 
-    } else if (syntax.equalsIgnoreCase("LTM")) {
+    } else if ("LTM".equalsIgnoreCase(syntax)) {
       // Create LTM reference
       LTMTopicMapReference ref = new LTMTopicMapReference(url2, refid, title, base_address);
       ref.setDuplicateSuppression(duplicate_suppression);
       ref.setSource(this);
       reflist = Collections.singleton((TopicMapReferenceIF)ref);
 
-    } else if (syntax.equalsIgnoreCase("RDF/XML") ||
-               syntax.equalsIgnoreCase("RDF") ||
-               syntax.equalsIgnoreCase("N3") ||
-               syntax.equalsIgnoreCase("N-TRIPLE")) {
+    } else if ("RDF/XML".equalsIgnoreCase(syntax) ||
+               "RDF".equalsIgnoreCase(syntax) ||
+               "N3".equalsIgnoreCase(syntax) ||
+               "N-TRIPLE".equalsIgnoreCase(syntax)) {
       // Create RDF reference
       AbstractURLTopicMapReference ref = null;
       for (ImportExportServiceIF service : ImportExportUtils.getServices()) {
-        if (service.canRead(url.toString())) {
+        if (service.canRead(url2)) {
           ref = service.createReference(url2, refid, title, base_address);
           break;
         }
@@ -310,14 +316,17 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     // Do nothing
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }

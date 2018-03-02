@@ -44,7 +44,7 @@ public interface NavigatorApplicationIF {
    *
    * @see net.ontopia.topicmaps.nav2.impl.basic.NavigatorApplication
    */
-  public static final String NAV_APP_KEY = "ontopiaNavigatorApplication";
+  String NAV_APP_KEY = "ontopiaNavigatorApplication";
 
   /**
    * INTERNAL: The request scope attribute under which the root
@@ -52,7 +52,7 @@ public interface NavigatorApplicationIF {
    *
    * @see net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag
    */
-  public static final String CONTEXT_KEY = "ontopiaContext";
+  String CONTEXT_KEY = "ontopiaContext";
 
   /**
    * INTERNAL: The session scope attribute for storing information
@@ -61,7 +61,7 @@ public interface NavigatorApplicationIF {
    *
    * @see net.ontopia.topicmaps.nav2.core.UserIF
    */
-  public static final String USER_KEY = "ontopiaUser";
+  String USER_KEY = "ontopiaUser";
   
   // -----------------------------------------------------------------------
   // constants defining attribute names specific inside a
@@ -72,19 +72,19 @@ public interface NavigatorApplicationIF {
    * INTERNAL: Variable name which is used/setup inside a foreach-tag
    * for describing if it is the first iteration we are in.
    */
-  public static final String FOREACH_SEQ_FIRST_KEY = "sequence-first";
+  String FOREACH_SEQ_FIRST_KEY = "sequence-first";
 
   /**
    * INTERNAL: Variable name which is used/setup inside a foreach-tag
    * for describing if it is the last iteration we are in.
    */
-  public static final String FOREACH_SEQ_LAST_KEY = "sequence-last";
+  String FOREACH_SEQ_LAST_KEY = "sequence-last";
 
   /**
    * INTERNAL: Variable name which is used/setup inside a foreach-tag
    * for describing the index number iterated currently.
    */
-  public static final String FOREACH_SEQ_INDEX_KEY = "sequence-index";
+  String FOREACH_SEQ_INDEX_KEY = "sequence-index";
 
   
   // -----------------------------------------------------------------------
@@ -95,13 +95,13 @@ public interface NavigatorApplicationIF {
    * INTERNAL: The context parameter name for the Log4J configuration
    * file which value can be specified in <code>web.xml</code>.
    */
-  public static final String LOG4J_CONFIG_KEY = "log4j_config";
+  String LOG4J_CONFIG_KEY = "log4j_config";
 
   /**
    * INTERNAL: Default value for the Log4J configuration filename.
    * <code>WEB-INF/config/log4j.properties</code>
    */
-  public static final String LOG4J_CONFIG_DEFAULT_VALUE =
+  String LOG4J_CONFIG_DEFAULT_VALUE =
     "WEB-INF/config/log4j.properties";
 
   /**
@@ -109,13 +109,13 @@ public interface NavigatorApplicationIF {
    * configuration file which value can be specified in
    * <code>web.xml</code>.
    */
-  public static final String APP_CONFIG_KEY = "app_config";
+  String APP_CONFIG_KEY = "app_config";
 
   /**
    * INTERNAL: Default value for the Application configuration
    * filename. <code>WEB-INF/config/application.xml</code>
    */
-  public static final String APP_CONFIG_DEFAULT_VALUE =
+  String APP_CONFIG_DEFAULT_VALUE =
     "WEB-INF/config/application.xml";
 
   /**
@@ -123,18 +123,18 @@ public interface NavigatorApplicationIF {
    * configuration file which value can be specified in
    * <code>web.xml</code>.
    */
-  public static final String SOURCE_CONFIG_KEY = "source_config";
+  String SOURCE_CONFIG_KEY = "source_config";
 
   /**
    * INTERNAL: The id of the topic maps repository to use..
    */
-  public static final String TOPICMAPS_REPOSITORY_ID = "topicmaps_repository_id";
+  String TOPICMAPS_REPOSITORY_ID = "topicmaps_repository_id";
 
   /**
    * INTERNAL: Default value for the TopicMap Sources configuration
    * filename. <code>WEB-INF/config/tm-sources.xml</code>
    */
-  public static final String SOURCE_CONFIG_DEFAULT_VALUE =
+  String SOURCE_CONFIG_DEFAULT_VALUE =
     "WEB-INF/config/tm-sources.xml";
 
   /**
@@ -144,7 +144,7 @@ public interface NavigatorApplicationIF {
    * then the application will not fallback to a default value, but
    * use no plugins at all.
    */
-  public static final String PLUGINS_ROOTDIR_KEY = "plugins_rootdir";
+  String PLUGINS_ROOTDIR_KEY = "plugins_rootdir";
 
   // -----------------------------------------------------------------------
   // Attributes for controlling the access rights to the shared store 
@@ -159,7 +159,7 @@ public interface NavigatorApplicationIF {
    *
    * @since 1.3.2
    */
-  public static final String JNDI_REPOSITORY_KEY = "jndi_repository";
+  String JNDI_REPOSITORY_KEY = "jndi_repository";
 
 
   // -----------------------------------------------------------------------
@@ -171,13 +171,13 @@ public interface NavigatorApplicationIF {
    *
    * @since 1.3
    */
-  public String getName();
+  String getName();
   
   /**
    * INTERNAL: Get <code>NavigatorConfigurationIF</code> object which allows
    * access to all application relevant configuration information.
    */
-  public NavigatorConfigurationIF getConfiguration();
+  NavigatorConfigurationIF getConfiguration();
 
   /**
    * INTERNAL: Get an object instance of specified class name
@@ -193,7 +193,7 @@ public interface NavigatorApplicationIF {
    *
    * @see net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF
    */
-  public Object getInstanceOf(String classname)
+  Object getInstanceOf(String classname)
     throws NavigatorRuntimeException;
 
   /**
@@ -202,24 +202,24 @@ public interface NavigatorApplicationIF {
    *
    * @since 2.1
    */
-  public TopicMapRepositoryIF getTopicMapRepository();
+  TopicMapRepositoryIF getTopicMapRepository();
 
   /**
    * INTERNAL: Refresh topic map registry.
    */
-  public void refreshTopicMapRegistry();
+  void refreshTopicMapRegistry();
 
   /**
    * INTERNAL: Refresh application configuration.
    */
-  public void refreshAppConfig();
+  void refreshAppConfig();
 
   /**
    * INTERNAL: Get <code>TopicMapIF</code> object for specified TopicMap
    * String Identifier which is in accordance to the identifiers used
    * by the TopicMapRepositoryIF.
    */
-  public TopicMapIF getTopicMapById(String topicmapId)
+  TopicMapIF getTopicMapById(String topicmapId)
     throws NavigatorRuntimeException;
 
   /**
@@ -229,7 +229,7 @@ public interface NavigatorApplicationIF {
    *
    * @since 2.1
    */
-  public TopicMapIF getTopicMapById(String topicmapId, boolean readonly)
+  TopicMapIF getTopicMapById(String topicmapId, boolean readonly)
     throws NavigatorRuntimeException;
   
   /**
@@ -240,7 +240,7 @@ public interface NavigatorApplicationIF {
    *
    * @since 2.0.7
    */
-  public void returnTopicMap(TopicMapIF topicmap);
+  void returnTopicMap(TopicMapIF topicmap);
   
   /**
    * INTERNAL: Get <code>UserStoreRegistry</code> object which allows
@@ -253,7 +253,7 @@ public interface NavigatorApplicationIF {
    * @deprecated
    */
   @Deprecated
-  public UserStoreRegistry getUserStoreRegistry();
+  UserStoreRegistry getUserStoreRegistry();
 
   /**
    * INTERNAL: Get the reference ID of the topic map within the
@@ -261,14 +261,14 @@ public interface NavigatorApplicationIF {
    *
    * @since 1.3.3
    */
-  public String getTopicMapRefId(TopicMapIF topicmap);
+  String getTopicMapRefId(TopicMapIF topicmap);
   
   /**
    * INTERNAL: Return <code>ModuleIF</code> object for specified
    * resource location (given as URL) of module. If the module cannot
    * be found in internal object pool a new instance is created.
    */
-  public ModuleIF getModule(URL location)
+  ModuleIF getModule(URL location)
     throws NavigatorRuntimeException;
   
   /**
@@ -277,6 +277,6 @@ public interface NavigatorApplicationIF {
    *
    * @since 2.1
    */
-  public void close();
+  void close();
 
 }

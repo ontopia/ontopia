@@ -30,29 +30,29 @@ import javax.swing.SwingUtilities;
  * the SwingWorker after creating it.
  */
 public abstract class SwingWorker {
-  Object value; // see getValue(), setValue()
+  private Object value; // see getValue(), setValue()
+
+  private ThreadVar threadVar;
 
   /**
    * Class to maintain reference to current worker thread under separate
    * synchronization control.
    */
   static class ThreadVar {
-    Thread thread;
+    private Thread thread;
 
     ThreadVar(Thread t) {
       thread = t;
     }
 
-    synchronized Thread get() {
+    private synchronized Thread get() {
       return thread;
     }
 
-    synchronized void clear() {
+    private synchronized void clear() {
       thread = null;
     }
   }
-
-  private ThreadVar threadVar;
 
   /**
    * Get the value produced by the worker thread, or null if it hasn't been
@@ -78,7 +78,7 @@ public abstract class SwingWorker {
    * Called on the event dispatching thread (not on the worker thread) after
    * the <code>construct</code> method has returned.
    */
-  public void finished() {}
+  public void finished() { /* no-op */ }
 
   /**
    * A new method that interrupts the worker thread. Call this method to force
@@ -120,12 +120,14 @@ public abstract class SwingWorker {
    */
   public SwingWorker() {
     final Runnable doFinished = new Runnable() {
+      @Override
       public void run() {
         finished();
       }
     };
 
     Runnable doConstruct = new Runnable() {
+      @Override
       public void run() {
         try {
           setValue(construct());

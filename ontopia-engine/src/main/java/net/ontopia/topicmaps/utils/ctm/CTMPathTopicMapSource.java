@@ -55,6 +55,7 @@ public class CTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     super(path, filter);
   }
 
+  @Override
   public TopicMapReferenceIF createReference(URL url, String id, String title,
                                              LocatorIF base) {
     CTMTopicMapReference ref = new CTMTopicMapReference(url, id, title, base);
@@ -66,6 +67,7 @@ public class CTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     return ref;
   }
 
+  @Override
   public TopicMapWriterIF getWriter(File file) throws IOException {
     throw new UnsupportedOperationException("No CTM writer exists");
   }

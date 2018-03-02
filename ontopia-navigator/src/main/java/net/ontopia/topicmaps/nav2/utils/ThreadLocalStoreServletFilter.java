@@ -49,20 +49,23 @@ import org.slf4j.LoggerFactory;
 
 public class ThreadLocalStoreServletFilter implements Filter {
 
-  static Logger log = LoggerFactory.getLogger(ThreadLocalStoreServletFilter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ThreadLocalStoreServletFilter.class.getName());
 
   private static ThreadLocal data = new ThreadLocal();
   
   private FilterConfig filterConfig;
     
+  @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     this.filterConfig = filterConfig;
   }
   
+  @Override
   public void destroy() {
     this.filterConfig = null;
   }
   
+  @Override
   public void doFilter(ServletRequest request, ServletResponse response,
                        FilterChain chain) throws IOException,
                                                  ServletException {

@@ -119,14 +119,17 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
   
   // LifeCycleListener implementation
   
+  @Override
   public void onAfterCreate(Topic topic, TopicType topicType) {    
 //    System.out.println("oAC: " + topic + " " + topicType);
   }
 
+  @Override
   public void onBeforeDelete(Topic topic) {
 //    System.out.println("oBD: " + topic);    
   }
 
+  @Override
   public void onAfterAdd(Topic topic, FieldDefinition fieldDefinition, Object value) {
 //    System.out.println("oAA: " + fieldInstance + " " + value);
     // add name scoped by role type to association type
@@ -153,6 +156,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
     }
   }
 
+  @Override
   public void onBeforeRemove(Topic topic, FieldDefinition fieldDefinition, Object value) {    
 //    System.out.println("oBR: " + fieldInstance + " " + value);
 

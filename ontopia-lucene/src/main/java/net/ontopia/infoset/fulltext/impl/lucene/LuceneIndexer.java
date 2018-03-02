@@ -63,21 +63,29 @@ public class LuceneIndexer implements IndexerIF {
     return writer.numDocs();
   }
   
+  @Override
   public synchronized void index(DocumentIF document) throws IOException {
     writer.addDocument(getDocument(document));
   }
   
+  @Override
   public synchronized void delete(String field, String value) throws IOException {
     writer.deleteDocuments(new Term(field, value));
   }
 
+  @Override
   public synchronized void flush() throws IOException {
+    // no-op
   }
   
+  @Override
   public synchronized void delete() throws IOException {
+    // no-op
   }
 
+  @Override
   public synchronized void close() throws IOException {
+    // no-op
   }
   
   protected Document getDocument(DocumentIF document) throws IOException {

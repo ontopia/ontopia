@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(SuperclassesTag.class.getName());
 
   private static TypeHierarchyUtils hierUtils = new TypeHierarchyUtils();
@@ -51,6 +51,7 @@ public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
   // tag attributes
   private Integer levelNumber = null;
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all superclasses of all topics in collection
     if (topics == null || topics.isEmpty())

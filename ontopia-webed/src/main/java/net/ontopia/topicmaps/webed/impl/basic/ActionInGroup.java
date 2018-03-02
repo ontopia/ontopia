@@ -48,6 +48,7 @@ public class ActionInGroup {
     return exclusive;
   }
 
+  @Override
   public String toString() {
     return "<ActionInGroup " + name + " " + action + ">";
   }

@@ -30,19 +30,19 @@ public interface FormatModuleIF {
    * INTERNAL: Returns true if the content of the classifiable content
    * is considered to be of the supported format.
    */
-  public boolean matchesContent(ClassifiableContentIF cc);
+  boolean matchesContent(ClassifiableContentIF cc);
 
   /**
    * INTERNAL: Returns true if the identifier of the classifiable
    * content is considered to be indicating the supported format.
    */
-  public boolean matchesIdentifier(ClassifiableContentIF cc);
+  boolean matchesIdentifier(ClassifiableContentIF cc);
 
   /**
    * INTERNAL: Reads and analyzes the classifiable content and
    * triggers callbacks on the text handler to identify the text and
    * the structure of the classifiable content.
    */
-  public void readContent(ClassifiableContentIF cc, TextHandlerIF handler);
+  void readContent(ClassifiableContentIF cc, TextHandlerIF handler);
   
 }

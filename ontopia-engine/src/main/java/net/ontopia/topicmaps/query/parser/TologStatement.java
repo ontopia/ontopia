@@ -29,9 +29,6 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 public abstract class TologStatement {
   protected TologOptions options;
 
-  public TologStatement() {
-  }
-  
   public TologOptions getOptions() {
     return options;
   }

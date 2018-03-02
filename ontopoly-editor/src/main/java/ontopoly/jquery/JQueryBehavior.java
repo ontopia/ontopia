@@ -30,6 +30,7 @@ public abstract class JQueryBehavior extends AbstractDefaultAjaxBehavior {
   public static final JavascriptResourceReference JS_JQUERY = new JavascriptResourceReference(Resources.class, "jquery/jquery.js"); 
   public static final JavascriptResourceReference JS_JQUERY_UI = new JavascriptResourceReference(Resources.class, "jquery/jquery.ui.js"); 
   
+  @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     response.renderJavascriptReference(JS_JQUERY);

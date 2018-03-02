@@ -31,7 +31,7 @@ public interface CachedIF {
   /**
    * Refreshes the cache.
    */
-  public void refresh();
+  void refresh();
 
 }
 

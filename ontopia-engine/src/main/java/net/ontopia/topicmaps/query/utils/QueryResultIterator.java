@@ -44,10 +44,12 @@ public class QueryResultIterator implements Iterator<Map<String, Object>>  {
     has_next = result.next();
   }
   
+  @Override
   public boolean hasNext() {
     return has_next;
   }
   
+  @Override
   public Map<String, Object> next() {
     if (!has_next)
       throw new NoSuchElementException();
@@ -56,6 +58,7 @@ public class QueryResultIterator implements Iterator<Map<String, Object>>  {
     return rowmap;
   }
   
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
   }

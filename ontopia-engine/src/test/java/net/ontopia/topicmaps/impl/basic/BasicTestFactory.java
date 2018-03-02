@@ -32,10 +32,12 @@ public class BasicTestFactory implements TestFactoryIF {
     return this;
   }
 
+  @Override
   public TopicMapStoreIF makeStandaloneTopicMapStore() {
     return new InMemoryTopicMapStore();
   }
 
+  @Override
   public TopicMapReferenceIF makeTopicMapReference() {
     //! // Create new store
     //! InMemoryTopicMapStore store = new InMemoryTopicMapStore();
@@ -44,12 +46,14 @@ public class BasicTestFactory implements TestFactoryIF {
 
     return new StoreFactoryReference("basic", "Basic Implementation",
                                      new TopicMapStoreFactoryIF() {
+      @Override
                                        public TopicMapStoreIF createStore() {
                                          return new InMemoryTopicMapStore();
                                        }
                                      });
   }
 
+  @Override
   public void releaseTopicMapReference(TopicMapReferenceIF topicmapRef) {
     topicmapRef.close();
     //! TopicMapStoreIF store = topicmap.getStore();

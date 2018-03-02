@@ -27,10 +27,8 @@ import javax.servlet.jsp.JspWriter;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.entry.StoreRegistry;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
   
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,9 +42,10 @@ import org.slf4j.LoggerFactory;
 public class TopicMapIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(TopicMapIdTag.class.getName());
   
+  @Override
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 

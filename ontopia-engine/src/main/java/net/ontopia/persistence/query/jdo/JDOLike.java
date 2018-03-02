@@ -39,6 +39,7 @@ public class JDOLike implements JDOExpressionIF {
     this.caseSensitive = caseSensitive;
   }
   
+  @Override
   public int getType() {
     return LIKE;
   }
@@ -55,10 +56,12 @@ public class JDOLike implements JDOExpressionIF {
     return caseSensitive;
   }
   
+  @Override
   public int hashCode() {
     return left.hashCode() + right.hashCode() + STARTS_WITH;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOLike) {
@@ -69,10 +72,12 @@ public class JDOLike implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return left + ".like(" + right + ")";
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(left);
     visitor.visitable(right);

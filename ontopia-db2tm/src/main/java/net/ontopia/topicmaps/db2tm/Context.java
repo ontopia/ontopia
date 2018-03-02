@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 public class Context {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Context.class);
+  private static Logger log = LoggerFactory.getLogger(Context.class);
 
   protected RelationMapping rmapping;
 
@@ -174,7 +174,7 @@ public class Context {
    * builder is retrieved from the current topic map, so this is
    * primarily a convenience method.
    */
-  TopicMapBuilderIF getBuilder() {
+  protected TopicMapBuilderIF getBuilder() {
     return builder;
   }
 
@@ -185,7 +185,7 @@ public class Context {
   /**
    * INTERNAL: Sets the current entity object.
    */    
-  void setEntityObject(int ix, Object object) {
+  protected void setEntityObject(int ix, Object object) {
     this.entityObjects[ix] = object;
     // remove object from extent
     if (object != null && this.extents[ix] != null) {
@@ -196,7 +196,7 @@ public class Context {
   /**
    * INTERNAL: Gets the entity object by id
    */    
-  Object getEntityObjectById(String id) {
+  protected Object getEntityObjectById(String id) {
     List<Entity> entities = relation.getEntities();
     for (int i=0; i < entityObjects.length; i++) {
       Entity e = entities.get(i);
@@ -211,7 +211,7 @@ public class Context {
    * INTERNAL: Merge two topics. This method will replace all
    * references to the old topic with references to the new one.
    */    
-  void mergeTopics(TopicIF target, TopicIF source) {
+  protected void mergeTopics(TopicIF target, TopicIF source) {
     // replace in entity object array
     for (int i=0; i < entityObjects.length; i++) {
       Object eo = entityObjects[i];
@@ -227,7 +227,7 @@ public class Context {
    * INTERNAL: Register an object as an existing topic map object. The
    * method will return true if this is the first time we've seen it.
    */    
-  boolean registerOldObject(Object object) {
+  protected boolean registerOldObject(Object object) {
     if (this.newObjects.contains(object))
       // if it is a new object return false
       return false;
@@ -241,7 +241,7 @@ public class Context {
    * by db2tm). The method will return true if this is the first time
    * we've seen it.
    */    
-  boolean registerNewObject(Object object) {
+  protected boolean registerNewObject(Object object) {
     // return true if this is the first time we see this object
     return this.newObjects.add(object);
   }
@@ -249,14 +249,14 @@ public class Context {
   /**
    * INTERNAL: Register the existing field values of an old object.
    */    
-  void registerOldFieldValues(Object object, List<?>[] values) {
+  protected void registerOldFieldValues(Object object, List<?>[] values) {
     this.oldValues.put(object, values);
   }
 
   /**
    * INTERNAL: Return the existing field values of an old object.
    */    
-  Object reuseOldFieldValue(Object object, int fieldIndex) {
+  protected Object reuseOldFieldValue(Object object, int fieldIndex) {
     List<?>[] fieldValues = this.oldValues.get(object);
     if (fieldValues == null || fieldIndex > fieldValues.length-1)
       return null;
@@ -267,7 +267,7 @@ public class Context {
     return values.remove(values.size() - 1);
   }
 
-  void removeOldValues() {
+  protected void removeOldValues() {
     for (List<?>[] fields : this.oldValues.values()) {
       if (fields != null && fields.length != 0) {
         for (List<?> value : fields) {
@@ -429,7 +429,7 @@ public class Context {
   // Duplicate suppression
   // ---------------------------------------------------------------------------
   
-  void characteristicsChanged(TopicIF topic) {
+  protected void characteristicsChanged(TopicIF topic) {
     dsCandidates.add(topic);    
     if (dsCandidates.size() == MAX_DSCANDIDATES) {
       log.debug("Suppressing duplicates: {}", dsCandidates.size());

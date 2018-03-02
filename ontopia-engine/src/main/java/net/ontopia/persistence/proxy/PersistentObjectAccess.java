@@ -34,10 +34,12 @@ public class PersistentObjectAccess implements ObjectAccessIF {
     this.txn = txn;
   }
 
+  @Override
   public Object getObject(IdentityIF identity) {
     return txn.getObject(identity);
   }
   
+  @Override
   public IdentityIF getIdentity(Object object) {
     if (object == null)
       return null;
@@ -45,6 +47,7 @@ public class PersistentObjectAccess implements ObjectAccessIF {
       return ((PersistentIF)object)._p_getIdentity();
   }
 
+  @Override
   public Class<?> getType(Object object) {
     return ((PersistentIF)object)._p_getType();
   }
@@ -52,6 +55,7 @@ public class PersistentObjectAccess implements ObjectAccessIF {
   //! public Object getValue(Object object, int field) {
   //!   return ((PersistentIF)object).loadValue(field);
   //! }
+  @Override
   public Object getValue(Object object, FieldInfoIF finfo) {
     
     return ((PersistentIF)object).loadValue(finfo);
@@ -71,22 +75,27 @@ public class PersistentObjectAccess implements ObjectAccessIF {
   //!   dcache.valueRemoved(identity, field, value);
   //! }
 
+  @Override
   public boolean isDirty(Object object) {
     return ((PersistentIF)object).isDirty();
   }
 
+  @Override
   public boolean isDirty(Object object, int field) {
     return ((PersistentIF)object).isDirty(field);
   }
 
+  @Override
   public int nextDirty(Object object, int start) {
     return ((PersistentIF)object).nextDirty(start);
   }
 
+  @Override
   public int nextDirty(Object object, int start, int end) {
     return ((PersistentIF)object).nextDirty(start, end);
   }
   
+  @Override
   public void setDirtyFlushed(Object object, int field) {
     ((PersistentIF)object).setDirtyFlushed(field, true);
   }

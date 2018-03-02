@@ -52,7 +52,9 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
   /** 
    * setVisible is not supported in Vizigator.
    */
+  @Override
   public final void setVisible(boolean visible) {
+    // no-op
   }
   
   /**
@@ -83,6 +85,7 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
   /**
    * @return An iterator on all the edges.
    */
+  @Override
   public Iterator getEdges() {
     // For some strange reason, the superclass implementation
     // of this method returns NULL if there are no edges !!!
@@ -122,6 +125,7 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
    * Set the node background color. Also applies a simple colour inversion
    * algorithm on the text colour.
    */
+  @Override
   public void setBackColor(Color bgColor) {
     super.setBackColor(bgColor);
     setTextColor(TMAbstractNode.textColourForBackground(bgColor));
@@ -135,12 +139,14 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
     this.icon = icon;
   }
 
+  @Override
   public Color getPaintBorderColor(TGPanel tgPanel) {
     if (this == tgPanel.getDragNode()) return BORDER_DRAG_COLOR;
     else if (this == tgPanel.getMouseOverN()) return BORDER_MOUSE_OVER_COLOR;
     return TGPanel.BACK_COLOR;
   }
 
+  @Override
   public Color getPaintBackColor(TGPanel tgPanel) {
     // Overwritten to allways show @backColor except when selected
     if (this == tgPanel.getSelect()) return BACK_SELECT_COLOR;
@@ -192,6 +198,7 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
    * This is how TG gets the color it actually uses for the painting, which in
    * our case may be different from the preset text color.
    */
+  @Override
   public Color getPaintTextColor(TGPanel tgPanel) {
     if (this == tgPanel.getSelect())
     // given the select color, black is right

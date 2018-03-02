@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
@@ -45,7 +44,7 @@ public abstract class BaseOutputProducingTag extends TagSupport
   implements OutputProducingTagIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(BaseOutputProducingTag.class.getName());
 
   // members
@@ -72,18 +71,9 @@ public abstract class BaseOutputProducingTag extends TagSupport
   }
 
   /**
-   */
-  protected final void setEscapeEntities(boolean escapeEntities) {
-  }
-
-  /**
-   */
-  protected final void setSuppressEmptyCollection(boolean suppressEmptyCollection) {
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // retrieve collection from ContextManager by Name
     this.contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -122,6 +112,7 @@ public abstract class BaseOutputProducingTag extends TagSupport
     return SKIP_BODY;
   }
 
+  @Override
   public final int doEndTag() {
     // reset members
     this.contextTag = null;
@@ -132,11 +123,13 @@ public abstract class BaseOutputProducingTag extends TagSupport
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!
   }
 
+  @Override
   public abstract void generateOutput(JspWriter out, Iterator iterator)
     throws JspTagException, IOException;
   

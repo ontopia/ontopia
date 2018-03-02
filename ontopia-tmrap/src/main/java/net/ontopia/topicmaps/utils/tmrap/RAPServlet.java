@@ -85,12 +85,13 @@ public class RAPServlet extends HttpServlet {
   public static final String RAP_NAMESPACE = "http://psi.ontopia.net/tmrap/";
   
   // Used to register type listeners
-  Map<TopicIF, Map<String, String>> clientListeners = new HashMap<TopicIF, Map<String, String>>();
+  private Map<TopicIF, Map<String, String>> clientListeners = new HashMap<TopicIF, Map<String, String>>();
   
   private TMRAPConfiguration rapconfig;
 
   // --- Servlet interface implementation
   
+  @Override
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     rapconfig = new TMRAPConfiguration(config);
@@ -103,6 +104,7 @@ public class RAPServlet extends HttpServlet {
    *  GET /topic-page?topicmap=[]&source=[]&indicator=[]
    * </pre>
    */         
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     doGet(request, response, request.getRequestURL().toString());
@@ -124,6 +126,7 @@ public class RAPServlet extends HttpServlet {
       reportError(response, "No such GET request: " + URLString);
   }
   
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     doPost(request, response, request.getRequestURL().toString());
@@ -577,15 +580,9 @@ public class RAPServlet extends HttpServlet {
     // Much wanted by Serializable. (The number is randomly typed).
     private static final long serialVersionUID = 7912425438445764224l;
 
-    String message;
-    
     public RAPServletException(String message) {
-      this.message = message;
+      super(message);
       log.warn(message, this);      
-    }
-    
-    public String getMessage() {
-      return message;
     }
   }
   

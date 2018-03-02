@@ -20,36 +20,33 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.Set;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.DeciderUtils;
-import net.ontopia.utils.CompactHashSet;
+import java.util.Map;
+import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.ScopedIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.ReifiableIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.DeciderUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +57,7 @@ import org.slf4j.LoggerFactory;
 public class TopicMapSynchronizer {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(TopicMapSynchronizer.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TopicMapSynchronizer.class.getName());
   
   /**
    * PUBLIC: Updates the target topic map against the source topic,

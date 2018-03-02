@@ -48,6 +48,7 @@ public class AssociatedTag extends BaseScopedTag {
   protected String totopic;
   protected boolean produceTopics = true;
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     if (topics == null || topics.isEmpty())
       return Collections.EMPTY_SET;
@@ -152,9 +153,9 @@ public class AssociatedTag extends BaseScopedTag {
   }
 
   public void setProduce(String produce) {
-    if (produce.equals("topics"))
+    if ("topics".equals(produce))
       produceTopics = true;
-    else if (produce.equals("associations"))
+    else if ("associations".equals(produce))
       produceTopics = false;
     else
       throw new IllegalArgumentException("Invalid value for 'produce' attribute of element 'associated' tag: <" + produce + ">");

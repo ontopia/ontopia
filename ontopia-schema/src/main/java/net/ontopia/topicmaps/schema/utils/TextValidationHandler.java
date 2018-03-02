@@ -83,6 +83,7 @@ public class TextValidationHandler implements ValidationHandlerIF {
 
   // --- ValidationHandlerIF methods
   
+  @Override
   public void violation(String message, TMObjectIF container,
                         Object offender, ConstraintIF constraint) {
     err.println();
@@ -142,9 +143,12 @@ public class TextValidationHandler implements ValidationHandlerIF {
     }
   }
 
+  @Override
   public void startValidation() {
+    // no-op
   }
     
+  @Override
   public void endValidation() {
     err.println();
     err.println("" + errors + " error(s).");
@@ -167,7 +171,7 @@ public class TextValidationHandler implements ValidationHandlerIF {
       return "<null>";
       
     String name = stringifier.toString(topic);
-    if (name.equals("[No name]"))
+    if ("[No name]".equals(name))
       return topic.toString();
     else
       return name;

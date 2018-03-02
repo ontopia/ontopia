@@ -38,37 +38,37 @@ public interface AccessRegistrarIF {
    * INTERNAL: Factory method for creating new identity objects. Key
    * is guaranteed to have a width of 1 and key value which a Long.
    */
-  public IdentityIF createIdentity(Class<?> type, long key);
+  IdentityIF createIdentity(Class<?> type, long key);
 
   /**
    * INTERNAL: Factory method for creating new identity objects. Key
    * is guaranteed to have a width of 1.
    */
-  public IdentityIF createIdentity(Class<?> type, Object key);
+  IdentityIF createIdentity(Class<?> type, Object key);
   
   /**
    * INTERNAL: Factory method for creating new identity objects. Key
    * can have any width.
    */
-  public IdentityIF createIdentity(Class<?> type, Object[] keys);
+  IdentityIF createIdentity(Class<?> type, Object[] keys);
 
   /**
    * INTERNAL: Get ticket that should be used as first argument to
    * register methods. The ticket is used figure out if value should
    * be registered or not.
    */
-  public TicketIF getTicket();
+  TicketIF getTicket();
   
   /**
    * INTERNAL: Called by storage accessors (QueryIFs or FieldAccessIF)
    * when they locate the identity of an object in the database.
    */  
-  public void registerIdentity(TicketIF ticket, IdentityIF identity);
+  void registerIdentity(TicketIF ticket, IdentityIF identity);
 
   /**
    * INTERNAL: Called by storage accessors (FieldAccessIF) when they
    * read the value of an object field from the database.
    */  
-  public void registerField(TicketIF ticket, IdentityIF identity, int field, Object value);
+  void registerField(TicketIF ticket, IdentityIF identity, int field, Object value);
   
 }

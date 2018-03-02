@@ -66,6 +66,7 @@ public class TologContextFilter implements Filter {
   protected String topicmapid_parameter;
   protected String topicmapid;
 
+  @Override
   public void init(FilterConfig fconfig) throws ServletException {
     // override topic map request attribute name
     String aname = fconfig.getInitParameter("attribute");
@@ -78,6 +79,7 @@ public class TologContextFilter implements Filter {
     this.topicmapid = fconfig.getInitParameter("topicmap");
   }
 
+  @Override
   public void doFilter(ServletRequest request, ServletResponse response,
       FilterChain chain) throws IOException, ServletException {
 
@@ -103,7 +105,9 @@ public class TologContextFilter implements Filter {
     }
   }
 
+  @Override
   public void destroy() {
+    // no-op
   }
 
 }

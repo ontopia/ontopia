@@ -35,6 +35,7 @@ public class JDONotEquals implements JDOExpressionIF {
     this.right = right;
   }
   
+  @Override
   public int getType() {
     return NOT_EQUALS;
   }
@@ -47,10 +48,12 @@ public class JDONotEquals implements JDOExpressionIF {
     return right;
   }
   
+  @Override
   public int hashCode() {
     return left.hashCode() + right.hashCode() + NOT_EQUALS;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDONotEquals) {
@@ -61,10 +64,12 @@ public class JDONotEquals implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return left + " != " + right;
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(left);
     visitor.visitable(right);

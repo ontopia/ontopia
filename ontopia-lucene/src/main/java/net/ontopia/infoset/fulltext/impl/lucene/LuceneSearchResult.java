@@ -40,14 +40,17 @@ public class LuceneSearchResult implements SearchResultIF {
     this.searcher = searcher;
   }
   
+  @Override
   public DocumentIF getDocument(int hit) throws IOException {
     return new LuceneDocument(searcher.doc(hits.scoreDocs[hit].doc));
   }
 
+  @Override
   public float getScore(int hit) throws IOException {
     return hits.scoreDocs[hit].score;
   }
 
+  @Override
   public int hits() {
     return hits.totalHits;
   }

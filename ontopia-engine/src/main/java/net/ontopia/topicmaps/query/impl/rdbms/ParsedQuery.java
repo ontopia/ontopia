@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
 public final class ParsedQuery implements ParsedQueryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ParsedQuery.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(ParsedQuery.class.getName());
 
   protected TologQuery query;
 
@@ -280,16 +280,19 @@ public final class ParsedQuery implements ParsedQueryIF {
     protected Set varnames = new HashSet(5);
     protected Set parnames = new HashSet(5);
 
+    @Override
     public void visitable(JDOExpressionIF expr) {
       expr.visit(this);
     }
 
+    @Override
     public void visitable(JDOExpressionIF[] exprs) {
       for (int i = 0; i < exprs.length; i++) {
         exprs[i].visit(this);
       }
     }
 
+    @Override
     public void visitable(JDOValueIF value) {
       if (value.getType() == JDOValueIF.VARIABLE) {
         varnames.add(((JDOVariable) value).getName());
@@ -299,6 +302,7 @@ public final class ParsedQuery implements ParsedQueryIF {
       value.visit(this);
     }
 
+    @Override
     public void visitable(JDOValueIF[] values) {
       for (int i = 0; i < values.length; i++) {
         visitable(values[i]);
@@ -385,22 +389,27 @@ public final class ParsedQuery implements ParsedQueryIF {
 
   // / ParsedQueryIF implementation [the class does not implement the interface]
 
+  @Override
   public List getSelectedVariables() {
     return getVariables(query.getSelectedVariables());
   }
 
+  @Override
   public Collection getAllVariables() {
     return getVariables(query.getAllVariables());
   }
 
+  @Override
   public Collection getCountedVariables() {
     return getVariables(query.getCountedVariables());
   }
 
+  @Override
   public List getOrderBy() {
     return getVariables(query.getOrderBy());
   }
 
+  @Override
   public boolean isOrderedAscending(String name) {
     return query.isOrderedAscending(name);
   }
@@ -414,10 +423,12 @@ public final class ParsedQuery implements ParsedQueryIF {
     return results;
   }
 
+  @Override
   public QueryResultIF execute() throws InvalidQueryException {
     return execute(null);
   }
 
+  @Override
   public QueryResultIF execute(Map arguments) throws InvalidQueryException {
     // sanity-check arguments
     QueryAnalyzer.verifyParameters(query, arguments);
@@ -711,6 +722,7 @@ public final class ParsedQuery implements ParsedQueryIF {
 
   // / java.lang.Object implementation
 
+  @Override
   public String toString() {
     return query.toString();
   }

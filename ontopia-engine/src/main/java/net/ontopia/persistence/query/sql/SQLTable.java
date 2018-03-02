@@ -47,10 +47,12 @@ public class SQLTable {
     return alias;
   }
 
+  @Override
   public int hashCode() {
     return name.hashCode() + alias.hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof SQLTable)) return false;
     SQLTable table = (SQLTable)obj;
@@ -59,6 +61,7 @@ public class SQLTable {
     return true;
   }
   
+  @Override
   public String toString() {
     return getName() + " " + getAlias();
   }

@@ -83,6 +83,7 @@ public class QueryField extends FieldDefinition {
 
       QueryMapper<Object> qm = getTopicMap().newQueryMapperNoWrap();
       return qm.queryForList(query, new RowMapperIF<Object>() {
+        @Override
         public Object mapRow(QueryResultIF queryResult, int rowno) {
           Object value = queryResult.getValue(0);
           if (value instanceof TopicIF) {

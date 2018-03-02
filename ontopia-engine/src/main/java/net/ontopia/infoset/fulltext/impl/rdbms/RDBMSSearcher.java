@@ -33,9 +33,6 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapTransaction;
 import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: A generic RDBMS fulltext searcher implementation. Note that the class
  * only accepts an RDBMS topic map in its constructor.
@@ -43,9 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 
 public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSSearcher.class.getName());
 
   protected final static int FT_PLATFORM_GENERIC = 1;
   protected final static int FT_PLATFORM_ORACLE_TEXT = 2;
@@ -72,16 +66,25 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
                        .getTransaction().getStorageAccess().getStorage())
       .getProperty("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type");
     if (platform != null) {
-      if (platform.equals("oracle_text"))
-        this.ft_platform = FT_PLATFORM_ORACLE_TEXT;
-      else if (platform.equals("tsearch2"))
-        this.ft_platform = FT_PLATFORM_TSEARCH2;
-      else if (platform.equals("postgresql"))
-        this.ft_platform = FT_PLATFORM_TSEARCH2;
-      else if (platform.equals("sqlserver"))
-        this.ft_platform = FT_PLATFORM_SQLSERVER;
-      else if (platform.equals("generic"))
-        this.ft_platform = FT_PLATFORM_GENERIC;
+      switch (platform) {
+        case "oracle_text":
+          this.ft_platform = FT_PLATFORM_ORACLE_TEXT;
+          break;
+        case "tsearch2":
+          this.ft_platform = FT_PLATFORM_TSEARCH2;
+          break;
+        case "postgresql":
+          this.ft_platform = FT_PLATFORM_TSEARCH2;
+          break;
+        case "sqlserver":
+          this.ft_platform = FT_PLATFORM_SQLSERVER;
+          break;
+        case "generic":
+          this.ft_platform = FT_PLATFORM_GENERIC;
+          break;
+        default:
+          break;
+      }
     }
     
     // DEPRECATED: check platforms property as fallback
@@ -97,6 +100,7 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
     }
   }
 
+  @Override
   public SearchResultIF search(String query) throws IOException {
     TransactionIF txn = tmtxn.getTransaction();
 
@@ -141,12 +145,14 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
       return new Object[] { topicmap, query, topicmap, query, topicmap, query };      
   }
 
+  @Override
   public void close() throws IOException {
     tmtxn = null;
   }
 
   // --- IndexIF implementation
 
+  @Override
   public IndexIF getIndex() {
     return this;
   }

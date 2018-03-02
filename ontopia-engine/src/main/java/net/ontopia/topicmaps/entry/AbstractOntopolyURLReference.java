@@ -27,7 +27,7 @@ import java.util.Set;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.FulltextImplementationIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
@@ -65,16 +65,21 @@ public abstract class AbstractOntopolyURLReference
     }
     super.open();
 
-    if (maintainFulltextIndexes && alwaysReindexOnLoad) {
+    if (maintainFulltextIndexes) {
       for (FulltextImplementationIF ft : ftmanagers) {
-        ft.synchronize(store);
+        if (alwaysReindexOnLoad) {
+          ft.reindex();
+        } else {
+          ft.synchronize(store);
+        }
       }
     }
   }
 
+  @Override
   protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
     // create topic map importer
-    TopicMapImporterIF reader = getImporter();
+    TopicMapReaderIF reader = getImporter();
 
     // create empty topic map
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
@@ -118,6 +123,7 @@ public abstract class AbstractOntopolyURLReference
     this.alwaysReindexOnLoad = alwaysReindexOnLoad;
   }
 
+  @Override
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -172,10 +178,12 @@ public abstract class AbstractOntopolyURLReference
   // TransactionEventListenerIF implementation
   // --------------------------------------------------------------------------
 
+  @Override
   public void transactionCommit(TopicMapTransactionIF transaction) {
     synchronizeFulltextIndex(transaction.getStore());
   }
 
+  @Override
   public void transactionAbort(TopicMapTransactionIF transaction) {
     synchronizeFulltextIndex(transaction.getStore());
   }
@@ -184,6 +192,6 @@ public abstract class AbstractOntopolyURLReference
   // Abstract methods
   // --------------------------------------------------------------------------
 
-  protected abstract TopicMapImporterIF getImporter();
+  protected abstract TopicMapReaderIF getImporter() throws IOException;
   
 }

@@ -20,14 +20,14 @@
 
 package net.ontopia.xml;
 
-import java.io.Writer;
-import java.io.IOException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
-import org.xml.sax.SAXException;
+import java.io.Writer;
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import net.ontopia.utils.StringUtils;
 
 public class ContentWriter extends DefaultHandler {
   private Writer out;
@@ -41,6 +41,7 @@ public class ContentWriter extends DefaultHandler {
     out = new OutputStreamWriter(new FileOutputStream(file), encoding);
   }
   
+  @Override
   public void startElement(String namespaceURI,
                            String localName,
                            String qName,
@@ -60,6 +61,7 @@ public class ContentWriter extends DefaultHandler {
     content = false;
   }
 
+  @Override
   public void characters(char[] buf, int start, int len) throws SAXException {
     try {
       out.write(buf, start, len);
@@ -70,6 +72,7 @@ public class ContentWriter extends DefaultHandler {
     content = true;
   }
   
+  @Override
   public void endElement(String namespaceURI,
                          String localName,
                          String qName) throws SAXException {
@@ -85,6 +88,7 @@ public class ContentWriter extends DefaultHandler {
     content = true;
   }
 
+  @Override
   public void endDocument() throws SAXException {
     try {
       out.close();
@@ -96,9 +100,9 @@ public class ContentWriter extends DefaultHandler {
   // --- Internal
 
   protected String escape(String attrval) {
-    return StringUtils.replace(StringUtils.replace(StringUtils.replace(attrval, '&', "&amp;"),
-                                                   '<', "&lt;"),
-                               '"', "&quot;");
+    return StringUtils.replace(StringUtils.replace(StringUtils.replaceChars(attrval, "&", "&amp;"),
+                                                   "<", "&lt;"),
+                               "\"", "&quot;");
   }
   
 }  

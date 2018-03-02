@@ -33,6 +33,16 @@ import java.util.Set;
  */
 public class UniqueSet<E> extends CompactHashSet<E> {
   
+  // Number of external references to this particular set
+  private int refcount;
+  //! private final static UniqueSet EMPTY_SET = new UniqueSet();
+  
+  private final static int OP_ADD = 1;
+  private final static int OP_REMOVE = 2;
+
+  protected int hc;
+  protected int hc_modCount = -1;
+  
   public UniqueSet() {
     super();
   }
@@ -48,13 +58,6 @@ public class UniqueSet<E> extends CompactHashSet<E> {
       super.add(e.next());
     }
   }
-
-  // Number of external references to this particular set
-  private int refcount;
-  //! private final static UniqueSet EMPTY_SET = new UniqueSet();
-  
-  private final static int OP_ADD = 1;
-  private final static int OP_REMOVE = 2;
 
   public UniqueSet(UniqueSet<E> s) {
     super(s.objects.length);
@@ -269,6 +272,7 @@ public class UniqueSet<E> extends CompactHashSet<E> {
   }
   
   @SuppressWarnings("unchecked")
+  @Override
   public void dump() {
     System.out.println("Reference count: " + refcount);
     Iterator<E> iter = iterator();
@@ -280,32 +284,37 @@ public class UniqueSet<E> extends CompactHashSet<E> {
   
   // ---- Set is immutable
   
+  @Override
 	public boolean add(Object o) {
     throw new UnsupportedOperationException();
   }  
+  @Override
 	public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public boolean addAll(Collection<? extends E> coll) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public boolean removeAll(Collection<?> coll) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public boolean retainAll(Collection<?> coll) {
     throw new UnsupportedOperationException();
   }
+  @Override
 	public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String toString() {
     return super.toString() + getReferenceCount();
   }
   
-  protected int hc;
-  protected int hc_modCount = -1;
-  
+  @Override
   public int hashCode() {
     // recompute hashcode only when neccessary
     if (modCount != hc_modCount) {

@@ -52,6 +52,7 @@ public class FieldInstancesPanel extends Panel {
     this.readonly = readonly;
     
     listView = new ListView<FieldInstanceModel>("fields", fieldInstanceModels) {
+      @Override
       public void populateItem(final ListItem<FieldInstanceModel> item) {
         FieldInstanceModel fieldInstanceModel = item.getModelObject();
         item.setRenderBodyOnly(true);

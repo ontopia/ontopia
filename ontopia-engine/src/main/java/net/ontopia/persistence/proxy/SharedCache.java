@@ -37,12 +37,14 @@ import org.slf4j.LoggerFactory;
  */
 
 public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
+  private static final String NULL = "null";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
   
   protected StorageIF storage;
   protected Map<IdentityIF, CacheEntry> datacache;
+  protected Map<Object, Integer> field_counts = new HashMap<Object, Integer>();
 
   protected long current_ticket_value;
   protected TicketIF current_ticket;
@@ -73,15 +75,18 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // StorageCacheIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public AccessRegistrarIF getRegistrar() {
     return this;
   }
   
+  @Override
   public void close() {
     // TODO: clear cache? and if persistent maybe delete physical
     // cache. this might also be done on startup.
   }
   
+  @Override
   public boolean exists(StorageAccessIF access, IdentityIF identity) {
     // Check to see if identity is registered here
     if (datacache.get(identity) == null) {
@@ -97,6 +102,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     return true;
   }
   
+  @Override
   public Object getValue(StorageAccessIF access, IdentityIF identity, int field) {
     CacheEntry fields = datacache.get(identity);
     
@@ -119,6 +125,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     return access.loadField(this, identity, field);
   }
   
+  @Override
   public boolean isObjectLoaded(IdentityIF identity) {
     // TODO: flag argument for also checking parent caches too?
     if (datacache.get(identity) != null)
@@ -127,6 +134,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       return false;      
   }
   
+  @Override
   public boolean isFieldLoaded(IdentityIF identity, int field) {
     // TODO: flag argument for also checking parent caches too?
     // If identity does not exist, nor does field
@@ -137,6 +145,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       return false;
   }
   
+  @Override
   public void evictIdentity(IdentityIF identity, boolean notifyCluster) {
     if (debug)
       log.debug("SharedCache: evicting identity " + identity);
@@ -146,6 +155,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     if (cluster != null && notifyCluster) cluster.evictIdentity(identity);
   }
   
+  @Override
   public void evictFields(IdentityIF identity, boolean notifyCluster) {
     if (debug)
       log.debug("SharedCache: evicting fields " + identity);
@@ -158,6 +168,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     if (cluster != null && notifyCluster) cluster.evictFields(identity);
   }
   
+  @Override
   public void evictField(IdentityIF identity, int field, boolean notifyCluster) {
     CacheEntry fields = datacache.get(identity);
     if (fields != null) {
@@ -172,6 +183,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // prefetch
   // -----------------------------------------------------------------------------
   
+  @Override
   public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     long start = System.currentTimeMillis();
     int num = identities.size();
@@ -222,6 +234,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // AccessRegistrarIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public IdentityIF createIdentity(Class<?> type, long key) {
     // do identity interning
     IdentityIF identity = new LongIdentity(type, key);
@@ -229,18 +242,21 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     return (entry == null ? identity : entry.getIdentity());
   }
   
+  @Override
   public IdentityIF createIdentity(Class<?> type, Object key) {
     IdentityIF identity = new AtomicIdentity(type, key);
     CacheEntry entry = datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
+  @Override
   public IdentityIF createIdentity(Class<?> type, Object[] keys) {
     IdentityIF identity = new Identity(type, keys);
     CacheEntry entry = datacache.get(identity);
     return (entry == null ? identity : entry.getIdentity());
   }
   
+  @Override
   public void registerIdentity(TicketIF ticket, IdentityIF identity) {
     // validate ticket
     if (!ticket.isValid()) return;
@@ -257,6 +273,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     }
   }
   
+  @Override
   public void registerField(TicketIF ticket, IdentityIF identity, int field, Object value) {
     // validate ticket
     if (!ticket.isValid()) return;
@@ -281,15 +298,18 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // Tickets
   // -----------------------------------------------------------------------------
 
+  @Override
   public TicketIF getTicket() {
     return current_ticket;
   }
 
+  @Override
   public synchronized void registerEviction() {
     eviction++;
     this.current_ticket = new Ticket(++current_ticket_value);
   }
   
+  @Override
   public synchronized void releaseEviction() {
     eviction--;
   }
@@ -311,6 +331,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
     private Ticket(long value) {
       this.value = value;
     }
+    @Override
     public boolean isValid() {
       return value == current_ticket_value && !isRunningEviction();
     }
@@ -319,8 +340,6 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // -----------------------------------------------------------------------------
   // CacheEntry initialization
   // -----------------------------------------------------------------------------
-  
-  protected Map<Object, Integer> field_counts = new HashMap<Object, Integer>();
   
   protected int getFieldsCount(Class<?> type) {
     synchronized (field_counts) {
@@ -344,6 +363,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // Cache reset + statistics
   // -----------------------------------------------------------------------------
   
+  @Override
   public void clear(boolean notifyCluster) {
     this.datacache.clear();
     if (cluster != null && notifyCluster) {
@@ -379,9 +399,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       for (Object key : stats.keySet()) {
         Integer val = stats.get(key);
           out.write("<tr><td>");
-          out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
+          out.write((key == null ? NULL : StringUtils.escapeHTMLEntities(key.toString())));
           out.write("</td><td>");
-          out.write((val == null ? "null" : StringUtils.escapeHTMLEntities(val.toString())));
+          out.write((val == null ? NULL : StringUtils.escapeHTMLEntities(val.toString())));
           out.write("</td></tr>\n");
       }
       out.write("</table><br>\n");
@@ -393,9 +413,9 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
             if (key == null) continue;
             CacheEntry val = datacache.get(key);
             out.write("<tr><td>");
-            out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));
+            out.write((key == null ? NULL : StringUtils.escapeHTMLEntities(key.toString())));
             out.write("</td><td>");
-            out.write((val == null ? "null" : StringUtils.escapeHTMLEntities(val.toString())));
+            out.write((val == null ? NULL : StringUtils.escapeHTMLEntities(val.toString())));
             out.write("</td></tr>\n");
           }
           out.write("</table><br>\n");
@@ -410,11 +430,11 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   // Misc
   // -----------------------------------------------------------------------------
   
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("proxy.SharedCache@");
-    sb.append(System.identityHashCode(this));
-    return sb.toString();
+    return new StringBuilder("proxy.SharedCache@")
+        .append(System.identityHashCode(this))
+        .toString();
   }
   
 }

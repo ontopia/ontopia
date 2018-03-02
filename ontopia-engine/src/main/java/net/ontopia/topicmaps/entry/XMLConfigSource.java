@@ -37,19 +37,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Reads store configuration parameters from an XML
@@ -114,9 +113,10 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class XMLConfigSource {
+  private static final String CWD = "CWD";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(XMLConfigSource.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(XMLConfigSource.class.getName());
 
   /**
    * INTERNAL: Don't call constructor directly. Instead used static
@@ -166,11 +166,11 @@ public class XMLConfigSource {
     // build configuration environment
     if (environ == null)
       environ = new HashMap<String, String>(1);
-    if (url.getProtocol().equals("file")) {
+    if ("file".equals(url.getProtocol())) {
       String file = url.getFile();
-      environ.put("CWD", file.substring(0, file.lastIndexOf('/')));
+      environ.put(CWD, file.substring(0, file.lastIndexOf('/')));
     } else
-      environ.put("CWD", ".");
+      environ.put(CWD, ".");
 
     // read configuration and create the repository instance
     try {
@@ -250,16 +250,15 @@ public class XMLConfigSource {
   public static List<TopicMapSourceIF> readSources(String config_file, Map<String, String> environ) {
     if (environ == null) environ = new HashMap<String, String>(1);
     // add CWD entry
-    if (!environ.containsKey("CWD")) {
+    if (!environ.containsKey(CWD)) {
       File file = new File(config_file);
       if (!file.exists())
         throw new OntopiaRuntimeException("Config file '" + config_file +
                                           "' does not exist.");
-      environ.put("CWD", file.getParent());
+      environ.put(CWD, file.getParent());
     }
 
-    String url = URIUtils.getURI(config_file).getAddress();
-    return readSources(new InputSource(url), environ);
+    return readSources(new InputSource(URIUtils.toURL(new File(config_file)).toString()), environ);
   }
 
   // ------------------------------------------------------------
@@ -270,7 +269,7 @@ public class XMLConfigSource {
     ConfigHandler handler = new ConfigHandler(environ);
     
     try {
-      XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+      XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(inp_source);
@@ -289,19 +288,20 @@ public class XMLConfigSource {
   // ------------------------------------------------------------
   
   static class ConfigHandler extends DefaultHandler {
-    Map<String, String> environ;
+    private Map<String, String> environ;
     //Map params = new HashMap();
-    List<TopicMapSourceIF> sources = new ArrayList<TopicMapSourceIF>();
+    private List<TopicMapSourceIF> sources = new ArrayList<TopicMapSourceIF>();
     
-    TopicMapSourceIF source;
+    private TopicMapSourceIF source;
     
     ConfigHandler(Map<String, String> environ) {
       this.environ = environ;
     }
     
+    @Override
     public void startElement(String uri, String name, String qName,
                               Attributes atts) throws SAXException {
-      if (qName.equals("source")) {
+      if ("source".equals(qName)) {
         // Clear source member
         source = null;
         try {
@@ -318,7 +318,7 @@ public class XMLConfigSource {
           log.error("Exception: " + e.getClass().getName() + ": " + e.getMessage());
         }
       }
-      else if (qName.equals("param") && source != null) {
+      else if ("param".equals(qName) && source != null) {
         String param_name = atts.getValue("name");
         String param_value = atts.getValue("value");
         Iterator<String> iter = environ.keySet().iterator();
@@ -342,7 +342,7 @@ public class XMLConfigSource {
                 break;
               }
               else if (props[i].getPropertyType().equals(boolean.class)) {
-                setter.invoke(source, new Object[] {new Boolean(PropertyUtils.isTrue(param_value))});
+                setter.invoke(source, new Object[] {Boolean.parseBoolean(param_value)});
                 found_property = true;
                 break;
               }
@@ -361,8 +361,9 @@ public class XMLConfigSource {
       }
     }
 
+    @Override
     public void endElement(String uri, String name, String qName) throws SAXException {
-      if (qName.equals("source")) {     
+      if ("source".equals(qName)) {     
         source = null;
       }
     }

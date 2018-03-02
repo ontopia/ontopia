@@ -23,30 +23,30 @@ package net.ontopia.topicmaps.nav2.servlets;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Iterator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Map;
 import java.util.HashMap;
-import javax.servlet.jsp.PageContext;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
+import javax.servlet.jsp.PageContext;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.TopicTreeNode;
-import net.ontopia.topicmaps.query.core.ParsedQueryIF;
-import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.utils.Stringificator;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.ParsedQueryIF;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.TopicTreeNode;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * EXPERIMENTAL: This class is highly experimental. We recommend that
@@ -294,7 +294,6 @@ public class TreeWidget {
   private void writeHTML(TopicTreeNode node, int topline, Writer writer) throws IOException {
     int nodes = countNodes(node);
     staticurl = ownpage + "topline=";    
-    startRender(writer);
 
     if (topline > 1)
       renderBackButton(writer, topline);
@@ -317,7 +316,6 @@ public class TreeWidget {
     if (topline + windowSize < nodes)
       renderForwardButton(writer, topline);
 
-    endRender(writer);
   }
   
   private int writeNode(TopicTreeNode node, int topline, Writer writer, int level, int lineno, boolean indoc) throws IOException {
@@ -332,7 +330,7 @@ public class TreeWidget {
         writer.write("<img border=0 src=" + imageurl + "spacer.gif width=" + (level * 30) + " height=5>" +
                      "<img border=0 src=" + imageurl + "boxed.gif>");
       else
-        renderNodeButton(topline, level, action.equals("open") ? OPEN : CLOSE,
+        renderNodeButton(topline, level, "open".equals(action) ? OPEN : CLOSE,
                          id, writer);
 
       writer.write("<a name=" + id + "></a>");
@@ -358,16 +356,13 @@ public class TreeWidget {
     if (action == null)
       action = "close";
 
-    if (action.equals("open"))
-      return OPEN;
-    else if (action.equals("close"))
-      return CLOSE;
-    else if (action.equals("expandall"))
-      return EXPAND_ALL;
-    else if (action.equals("closeall"))
-      return CLOSE_ALL;
-    else
-      return -1;
+    switch (action) {
+      case "open": return OPEN;
+      case "close": return CLOSE;
+      case "expandall": return EXPAND_ALL;
+      case "closeall": return CLOSE_ALL;
+      default: return -1;
+    }
   }
 
   private Set getOpenNodes(HttpServletRequest request) {
@@ -520,11 +515,6 @@ public class TreeWidget {
     out.write("<a href=\"" + staticurl + (topline + windowSize) + "\" title='Show next page'><img border=0 src=" + imageurl + "nav_next.gif></a>");
   }
   
-  protected void startRender(Writer out) throws IOException {
-  }
-  
-  protected void endRender(Writer out) throws IOException {
-  }
 
   // --- UniversalSet class
 
@@ -540,6 +530,7 @@ public class TreeWidget {
   
   class UniversalSet extends HashSet {
 
+    @Override
     public boolean contains(Object object) {
       return true;
     }

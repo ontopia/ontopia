@@ -35,12 +35,14 @@ public class MySQLGenerator extends GenericSQLGenerator {
   // TODO: string = operations are case-insensitive. they should not
   // be. cast expression to 'binary L = R'.
 
+  @Override
   public void fromSubSelectAlias(StringBuilder sql, BuildInfo info) {
     // sub-SELECT in FROM must have an alias.
     // For example, FROM (SELECT ...) [AS] foo
     sql.append(" as FOOBAR");
   }
 
+  @Override
   protected StringBuilder createOffsetLimitClause(int offset, int limit, BuildInfo info) {    
     // NOTE: offset supported in versions > 4.0
 

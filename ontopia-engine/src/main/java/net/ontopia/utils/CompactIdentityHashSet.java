@@ -53,6 +53,7 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
    * @param o element whose presence in this set is to be tested.
    * @return <tt>true</tt> if this set contains the specified element.
    */
+  @Override
   public boolean contains(Object o) {
     if (o == null) o = nullObject;
     
@@ -79,6 +80,7 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
    * @return <tt>true</tt> if the set did not already contain the specified
    * element.
    */
+  @Override
   public boolean add(Object o) {
     if (o == null) o = nullObject;
 
@@ -122,6 +124,7 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
   /**
    * Removes the specified element from the set.
    */
+  @Override
   public boolean remove(Object o) {
     if (o == null) o = nullObject;
     
@@ -154,6 +157,7 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
   /**
    * INTERNAL: Rehashes the hashset to a bigger size.
    */
+  @Override
   protected void rehash(int newCapacity) {
     int oldCapacity = objects.length;
     E[] newObjects = (E[]) new Object[newCapacity];

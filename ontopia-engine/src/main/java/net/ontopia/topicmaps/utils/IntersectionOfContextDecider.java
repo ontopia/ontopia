@@ -42,6 +42,7 @@ public class IntersectionOfContextDecider<S extends ScopedIF> implements Decider
     context.toArray(this.context);
   }
 
+  @Override
   public boolean ok(S scoped) {
     return ScopeUtils.isIntersectionOfContext(scoped, context);
   }

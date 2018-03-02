@@ -21,23 +21,21 @@
 package net.ontopia.topicmaps.db2tm;
 
 import au.com.bytecode.opencsv.CSVReader;
-import java.util.Map;
-import java.util.List;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.PropertyUtils;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
+import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.utils.PropertyUtils;
+import net.ontopia.utils.TestFileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,14 +50,14 @@ public class ChangelogTestCase {
   
   private final static String testdataDirectory = "db2tm";
       
+  private String base;
+  private String casename;
+
   @Parameters
   public static List<String[]> generateTests() throws IOException {
     TestFileUtils.transferTestInputDirectory(testdataDirectory + "/in/sync");
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in/sync", ".xml");
   }
-
-  private String base;
-  private String casename;
 
   public ChangelogTestCase(String root, String xmlfile) {
     this.casename = xmlfile.substring(0, xmlfile.length() - 4);
@@ -70,13 +68,13 @@ public class ChangelogTestCase {
   public void testFile() throws IOException, SQLException {
     // this particular test file is for FullRescanEventTest, and we don't
     // want to test it again here. we lack the -changelog.csv in any case.
-    if (casename.equals("EVENTS"))
+    if ("EVENTS".equals(casename))
       return;
     
     TestFileUtils.verifyDirectory(base, "out");
       
     String cfg = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".xml").getPath();
-    String tm = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm").getPath();
+    File tm = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm");
     File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", casename + ".cxtm");
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "in/sync/baseline", casename + ".cxtm");
       
@@ -92,7 +90,7 @@ public class ChangelogTestCase {
               false);
       
     // Import the topic map seed.
-    TopicMapIF topicmap = ImportExportUtils.getReader("file:" + tm).read();
+    TopicMapIF topicmap = ImportExportUtils.getReader(tm).read();
       
     // Extend the topic map seed with the the config file.
     DB2TM.add(cfg, topicmap);
@@ -106,19 +104,17 @@ public class ChangelogTestCase {
     DB2TM.sync(cfg, topicmap);
 
     // Canonicalize!
-    FileOutputStream fos = new FileOutputStream(out);
-    (new CanonicalXTMWriter(fos)).write(topicmap);
-    fos.close();
+    new CanonicalXTMWriter(out).write(topicmap);
       
     // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + casename
                       + " does not match the baseline: " + out + " " + baseline,
-                      FileUtils.compareFileToResource(out, baseline));
+                      TestFileUtils.compareFileToResource(out, baseline));
   }
 
   // public so it can be accessed from FullRescanEventTest
   public static Connection getConnection() throws SQLException, IOException {
-    String propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
+    File propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties");
     Map<Object, Object> props = PropertyUtils.loadProperties(propfile);
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
     DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);

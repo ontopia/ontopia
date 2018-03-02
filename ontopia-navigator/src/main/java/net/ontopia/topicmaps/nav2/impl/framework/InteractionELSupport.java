@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class InteractionELSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(InteractionELSupport.class.getName());
 
   /**

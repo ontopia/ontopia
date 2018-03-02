@@ -46,13 +46,14 @@ public class OSpinner extends JPanel {
   private int increment = 1;
   private int value = min;
 
-  JButton north;
-  JButton south;
+  private JButton north;
+  private JButton south;
   
   private Box buttonPanel = new Box(BoxLayout.Y_AXIS);
   private NumberFormat formatter = NumberFormat.getNumberInstance();
   private JTextField input = new JTextField();
 
+  @Override
   public void setEnabled(boolean enabled) {
     super.setEnabled(enabled);
     input.setEnabled(enabled);
@@ -78,6 +79,7 @@ public class OSpinner extends JPanel {
 
     input.addFocusListener(new FocusAdapter() {
 
+      @Override
       public void focusLost(FocusEvent evt) {
 
         setValue(input.getText());
@@ -86,6 +88,7 @@ public class OSpinner extends JPanel {
     });
 
     input.addKeyListener(new KeyAdapter() {
+      @Override
       public void keyPressed(KeyEvent evt) {
         if (evt.getKeyCode() == (KeyEvent.VK_UP))
           incrementValue();
@@ -95,18 +98,21 @@ public class OSpinner extends JPanel {
     });
 
     input.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent aE) {
         setValue(input.getText());
       }
     });
 
     north.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         incrementValue();
       }
     });
 
     south.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         decrementValue();
       }

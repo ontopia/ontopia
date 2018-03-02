@@ -36,7 +36,7 @@ public abstract class AbstractLocatorTest extends TestCase {
   
   public void testEqualsNullArgument() {
     LocatorIF locator = createLocator();
-    assertTrue("checking equality with null object", locator.equals(null) == false);
+    assertFalse("checking equality with null object", locator.equals(null));
   }
   
   public void testIdenticalEquality() {

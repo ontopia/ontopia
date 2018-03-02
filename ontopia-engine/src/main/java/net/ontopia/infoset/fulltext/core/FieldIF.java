@@ -32,37 +32,37 @@ public interface FieldIF {
   /**
    * INTERNAL: Returns the name of the field.
    */
-  public String getName();
+  String getName();
 
   /**
    * INTERNAL: Returns the String value of the field. Note that null is
    * returned if the field has a reader set.
    */
-  public String getValue();
+  String getValue();
 
   /**
    * INTERNAL: Returns the Reader value of the field. Note that null is
    * returned if the field has a value set.
    */
-  public Reader getReader();
+  Reader getReader();
 
   /**
    * INTERNAL: Returns true if the field is to be stored in the index
    * for return with search hits.
    */
-  public boolean isStored();
+  boolean isStored();
 
   /**
    * INTERNAL: Returns true if the field is to be indexed, so that it
    * may be searched on.
    */
-  public boolean isIndexed();
+  boolean isIndexed();
 
   /**
    * INTERNAL: Returns true if the field is to be tokenized prior to
    * indexing.
    */
-  public boolean isTokenized();
+  boolean isTokenized();
   
 }
 

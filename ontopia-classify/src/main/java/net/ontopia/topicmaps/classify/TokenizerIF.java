@@ -25,10 +25,10 @@ package net.ontopia.topicmaps.classify;
  */
 public interface TokenizerIF {
 
-  public void setText(String text);
+  void setText(String text);
   
-  public boolean next();
+  boolean next();
   
-  public String getToken();
+  String getToken();
   
 }

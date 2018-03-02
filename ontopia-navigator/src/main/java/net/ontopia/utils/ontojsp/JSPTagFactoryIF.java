@@ -33,7 +33,7 @@ public interface JSPTagFactoryIF {
    * Creates the correct tag for this JSPTreeNode, depending on the
    * tagname.
    */
-  public TagSupport getTagInstance(String tagname, Map<String, String> attrVals,
+  TagSupport getTagInstance(String tagname, Map<String, String> attrVals,
                                    TagSupport parentTag) 
     throws NavigatorRuntimeException;
   

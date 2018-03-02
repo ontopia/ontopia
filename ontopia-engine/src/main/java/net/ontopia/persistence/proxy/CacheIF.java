@@ -28,16 +28,16 @@ import java.util.Collection;
 
 public interface CacheIF<K, V> {
 
-  public V get(K key);
+  V get(K key);
 
-  public V put(K key, V value);
+  V put(K key, V value);
 
-  public V remove(K key, boolean notifyCluster);
+  V remove(K key, boolean notifyCluster);
 
-  public void removeAll(Collection<K> keys, boolean notifyCluster);
+  void removeAll(Collection<K> keys, boolean notifyCluster);
 
-  public void clear(boolean notifyCluster);
+  void clear(boolean notifyCluster);
 
-  public void writeReport(java.io.Writer out, boolean dumpCache) throws java.io.IOException;
+  void writeReport(java.io.Writer out, boolean dumpCache) throws java.io.IOException;
   
 }

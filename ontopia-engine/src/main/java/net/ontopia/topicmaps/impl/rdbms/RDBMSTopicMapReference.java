@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.StorePoolableObjectFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   public static final String EXHAUSED_FAIL = "fail";
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(RDBMSTopicMapReference.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RDBMSTopicMapReference.class.getName());
 
   protected StorageIF storage;
 
@@ -79,6 +80,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   protected void init() {
     // store factory
     TopicMapStoreFactoryIF sfactory = new TopicMapStoreFactoryIF() {
+      @Override
       public TopicMapStoreIF createStore() {
        return _createStore(false);
       }
@@ -89,7 +91,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     this.pool = new GenericObjectPool(ofactory);
     this.pool.setTestOnBorrow(true);
 
-    Map properties = storage.getProperties();
+    Map<String, String> properties = storage.getProperties();
     if (properties != null) {
       // Set minimum pool size (default: 0)
       String _minsize = PropertyUtils.getProperty(properties,
@@ -106,8 +108,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
       pool.setMaxActive(maxsize); // 0 = no limit
 
       // Set soft maximum - emergency objects (default: false)
-      boolean softmax = PropertyUtils.isTrue(properties,
-          "net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum", false);
+      boolean softmax = MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum", false);
       log.debug("Setting StorePool.SoftMaximum '" + softmax + "'");
       if (softmax)
         pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
@@ -139,6 +140,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
 
   }
 
+  @Override
   public synchronized void open() {
     // ignore if already open
     if (isOpen())
@@ -151,6 +153,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     this.isopen = true;
   }
 
+  @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly) {
     if (!isOpen())
       open();
@@ -228,6 +231,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void close() {
     // ISSUE: should block until all stores are returned to pool?
     this.isopen = false;
@@ -248,6 +252,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void clear() {
     if (isDeleted())
       throw new StoreDeletedException(
@@ -268,6 +273,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
   public synchronized void delete() {
     if (source == null)
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
@@ -287,6 +293,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     this.deleted = store.delete(this);
   }
 
+  @Override
   public String toString() {
     return super.toString() + " [" + topicmap_id + "]";
   }
@@ -299,6 +306,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   
   // --- store pooling
   
+  @Override
   public synchronized void storeClosed(TopicMapStoreIF store) {
     if (!store.isReadOnly()) {
       // dereference listeners

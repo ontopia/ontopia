@@ -33,6 +33,7 @@ public class EqualsDecider<T> implements DeciderIF<T> {
     this.refobj = refobj;
   }
   
+  @Override
   public boolean ok(T object) {
     return refobj.equals(object);
   }

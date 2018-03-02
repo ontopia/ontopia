@@ -27,6 +27,7 @@ public class AssociationTest extends net.ontopia.topicmaps.core.AssociationTest 
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

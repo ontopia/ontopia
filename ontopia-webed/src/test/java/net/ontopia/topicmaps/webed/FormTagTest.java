@@ -23,9 +23,6 @@ package net.ontopia.topicmaps.webed;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
 

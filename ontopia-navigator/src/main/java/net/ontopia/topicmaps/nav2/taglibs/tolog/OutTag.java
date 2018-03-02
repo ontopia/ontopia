@@ -49,15 +49,9 @@ public class OutTag extends BaseOutputProducingTag {
   protected String scope;
 
   /**
-   * Default constructor.
-   */
-  public OutTag() {
-    super();
-  }
-  
-  /**
    * Process the start tag for this instance.
    */
+  @Override
   public void generateOutput(JspWriter out, Object outObject)
       throws JspTagException, IOException {
 
@@ -110,6 +104,7 @@ public class OutTag extends BaseOutputProducingTag {
   /**
    * Resets the state of the Tag.
    */
+  @Override
   public void release() {
     super.release();
   }
@@ -130,6 +125,7 @@ public class OutTag extends BaseOutputProducingTag {
                            escape.equalsIgnoreCase("true"));
   }
 
+  @Override
   public String getName() {
     return getClass().getName();
   }

@@ -30,8 +30,8 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 
 public class TopicPages {
 
-  Map<String, Collection<TopicPage>> pagesMap;
-  Map<String, String> tmNameMap;
+  private Map<String, Collection<TopicPage>> pagesMap;
+  private Map<String, String> tmNameMap;
   private String name;
   private Collection<LocatorIF> sourceLocators;
   private Collection<LocatorIF> subjectIndicators;

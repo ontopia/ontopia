@@ -28,6 +28,7 @@ import java.util.List;
 
 public class CheckboxTagBeanInfo extends SimpleBeanInfo {
   
+  @Override
   public PropertyDescriptor[] getPropertyDescriptors() {
     List proplist = new ArrayList();
     

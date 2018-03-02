@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(SQLBatchObjectAccess.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(SQLBatchObjectAccess.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_create;
@@ -46,6 +46,7 @@ public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF
     super(access, cinfo);
   }
   
+  @Override
   protected FieldAccessIF getFieldAccess(int field) {
     // Create a field access instance for the given field
     FieldInfoIF finfo = value_fields[field];
@@ -64,6 +65,7 @@ public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF
     }
   }
   
+  @Override
   public void flush() throws Exception {
     // Do nothing if no statement
     if (stm_create != null) {
@@ -94,6 +96,7 @@ public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF
   /**
    * INTERNAL: Creates the new object identity in the database.
    */
+  @Override
   public void create(ObjectAccessIF oaccess, Object object) throws Exception {
     // Get batch statement
     PreparedStatement stm = get_createStatement();

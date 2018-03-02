@@ -42,10 +42,12 @@ public class TestTMPrefsFactory extends TopicMapPreferencesFactory {
 	}
 	
 
+  @Override
 	protected String getSystemKey() {
 		return fixedReferences.get();
 	}
 
+  @Override
 	protected TopicMapReferenceIF getSystemTopicMapReference(String key) {
 		TopicMapReferenceIF reference = references.get();
 		if (reference == null) {
@@ -60,12 +62,15 @@ public class TestTMPrefsFactory extends TopicMapPreferencesFactory {
 	}
 	
 	
+  @Override
 	protected TopicMapReferenceIF getUserTopicMapReference(String key) {
 		return null; // not used
 	}
+  @Override
 	protected String getUserKey() {
 		return null; // not used
 	}
+  @Override
 	protected TopicIF createUserRootTopic(TopicMapIF topicmap) {
 		return null; // not used
 	}

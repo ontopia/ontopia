@@ -41,7 +41,7 @@ public interface StorageCacheIF {
    * repository is actually asked depends on the policy of the storage
    * cache.
    */
-  public boolean exists(StorageAccessIF access, IdentityIF identity);
+  boolean exists(StorageAccessIF access, IdentityIF identity);
 
   //! /**
   //!  * INTERNAL: A call to this method makes sure that the object is
@@ -57,20 +57,20 @@ public interface StorageCacheIF {
    *
    * @throws IdentityNotFoundException if the identity was not found.
    */    
-  public Object getValue(StorageAccessIF access, IdentityIF identity, int field)
+  Object getValue(StorageAccessIF access, IdentityIF identity, int field)
     throws IdentityNotFoundException;
 
   /**
    * INTERNAL: Can be called to check if the identity has been
    * registered with the cache. The data repository will not be asked.
    */
-  public boolean isObjectLoaded(IdentityIF identity);
+  boolean isObjectLoaded(IdentityIF identity);
 
   /**
    * INTERNAL: Can be called to check if the specfied field has been
    * registered with the cache. The data repository will not be asked.
    */
-  public boolean isFieldLoaded(IdentityIF identity, int field);
+  boolean isFieldLoaded(IdentityIF identity, int field);
 
   // -----------------------------------------------------------------------------
   // eviction
@@ -79,38 +79,38 @@ public interface StorageCacheIF {
   /**
    * INTERNAL: Tells the cache that eviction is starting.
    */
-  public void registerEviction();
+  void registerEviction();
   
   /**
    * INTERNAL: Deregister eviction.
    */
-  public void releaseEviction();
+  void releaseEviction();
 
   /**
    * INTERNAL: Evict the identity from the cache.
    */
-  public void evictIdentity(IdentityIF identity, boolean notifyCluster);
+  void evictIdentity(IdentityIF identity, boolean notifyCluster);
 
   /**
    * INTERNAL: Evict all the identity's field values from the cache.
    */
-  public void evictFields(IdentityIF identity, boolean notifyCluster);
+  void evictFields(IdentityIF identity, boolean notifyCluster);
 
   /**
    * INTERNAL: Evict the identity's field value from the cache.
    */
-  public void evictField(IdentityIF identity, int field, boolean notifyCluster);
+  void evictField(IdentityIF identity, int field, boolean notifyCluster);
 
   /**
    * INTERNAL: Clears the cache.
    */
-  public void clear(boolean notifyCluster);
+  void clear(boolean notifyCluster);
 
   // -----------------------------------------------------------------------------
   // prefetch
   // -----------------------------------------------------------------------------
 
-  public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities);
+  int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities);
   
   // -----------------------------------------------------------------------------
   // AccessRegistrar
@@ -121,7 +121,7 @@ public interface StorageCacheIF {
    * the storage cache. If it does not need an access registrar, or it
    * does not have one, null is returned.
    */    
-  public AccessRegistrarIF getRegistrar();
+  AccessRegistrarIF getRegistrar();
   
   // Need the following methods in order to be able to invalidate and
   // update the contents of the storage cache.
@@ -143,7 +143,7 @@ public interface StorageCacheIF {
   /**
    * INTERNAL: Releases all resources used by the storage cache.
    */
-  public void close();
+  void close();
   
 }
 

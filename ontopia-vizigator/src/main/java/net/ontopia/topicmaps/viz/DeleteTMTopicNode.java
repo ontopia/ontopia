@@ -28,6 +28,7 @@ public class DeleteTMTopicNode implements RecoveryObjectIF {
     this.topic = topic;
   }
 
+  @Override
   public void execute(TopicMapView view) {
     TMTopicNode node = view.assertNode(topic, false);
     if (node != null) {

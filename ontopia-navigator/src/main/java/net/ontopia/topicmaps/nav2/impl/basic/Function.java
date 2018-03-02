@@ -70,18 +70,22 @@ public final class Function extends AbstractFunction {
   // FunctionIF implementation
   // -------------------------------------------------------
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public Collection getParameters() {
     return params;
   }
 
+  @Override
   public String getReturnVariableName() {
     return returnVariableName;
   }
 
+  @Override
   public void call(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException {
 
@@ -91,10 +95,12 @@ public final class Function extends AbstractFunction {
 
   // --- deprecated methods
   
+  @Override
   public JSPTreeNodeIF getRootNode() {
     return rootNode;
   }
   
+  @Override
   public ModuleIF getModule() {
     return module;
   }
@@ -103,6 +109,7 @@ public final class Function extends AbstractFunction {
   // overwrite Object implementation 
   // -------------------------------------------------------
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(64);
     sb.append("[Function: ")

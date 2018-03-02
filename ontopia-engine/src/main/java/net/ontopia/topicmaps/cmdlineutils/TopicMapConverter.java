@@ -25,10 +25,10 @@ import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -143,9 +143,9 @@ public class TopicMapConverter {
       if (options.encoding != null)
         new XTMTopicMapWriter(new File(outfile), options.encoding).write(tm);
       else
-        new XTMTopicMapWriter(outfile).write(tm);
+        new XTMTopicMapWriter(new File(outfile)).write(tm);
     } else
-      ImportExportUtils.getWriter(outfile, options.encoding).write(tm);
+      ImportExportUtils.getWriter(new File(outfile), options.encoding).write(tm);
 
   }
 
@@ -159,11 +159,12 @@ public class TopicMapConverter {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean xtm = false;
-    boolean validate = true;
-    String encoding = null;
-    String rdfmap = null;
+    private boolean xtm = false;
+    private boolean validate = true;
+    private String encoding = null;
+    private String rdfmap = null;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 'x') xtm = true;

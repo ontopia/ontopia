@@ -21,10 +21,9 @@
 package net.ontopia.persistence.query.sql;
 
 import java.util.Arrays;
-
 import net.ontopia.persistence.proxy.DefaultFieldHandler;
 import net.ontopia.persistence.proxy.FieldHandlerIF;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: Represents a set of columns from a given table. The
@@ -67,30 +66,37 @@ public class SQLColumns implements SQLValueIF {
   //!   this.alias = alias;
   //! }
 
+  @Override
   public int getType() {
     return COLUMNS;
   }
 
+  @Override
   public int getArity() {
     return cols.length;
   }
 
+  @Override
   public int getValueArity() {
     return 1;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
@@ -103,10 +109,12 @@ public class SQLColumns implements SQLValueIF {
     return cols;
   }
 
+  @Override
   public Class getValueType() {    
     return (vtype == null ? DEFAULT_VALUE_TYPE : vtype);
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
@@ -116,14 +124,17 @@ public class SQLColumns implements SQLValueIF {
    * field handler is DefaultFieldHandler with type
    * java.sql.Types.VARCHAR when not specified.
    */
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return (fhandler == null ? DEFAULT_FIELD_HANDLER : fhandler);
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
 
+  @Override
   public int hashCode() {
     int hashCode = table.hashCode();
     for (int ix = 0; ix < cols.length; ix++) {
@@ -133,6 +144,7 @@ public class SQLColumns implements SQLValueIF {
     return hashCode;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLColumns) {
       SQLColumns other = (SQLColumns)obj;
@@ -144,17 +156,17 @@ public class SQLColumns implements SQLValueIF {
     return false;
   }
   
+  @Override
   public String toString() {
     if (getArity() == 1)
       return getTable().getAlias() + "." + cols[0];
     else {
-      StringBuilder sb = new StringBuilder();
-      sb.append("columns:");
-      sb.append(getTable().getAlias());
-      sb.append("(");
-      sb.append(StringUtils.join(cols, ", "));
-      sb.append(")");
-      return sb.toString();
+      return new StringBuilder("columns:")
+          .append(getTable().getAlias())
+          .append('(')
+          .append(StringUtils.join(cols, ", "))
+          .append(')')
+          .toString();
     }
   }
     

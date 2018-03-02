@@ -89,6 +89,7 @@ public class AssocInfoStorage {
     return sortName;
   }
 
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof AssocInfoStorage))
       return false;
@@ -97,11 +98,13 @@ public class AssocInfoStorage {
       compare(cmp.getType(), type);
   }
 
+  @Override
   public int hashCode() {
     return (roleType != null ? roleType.hashCode() : 0) +
       (type != null ? type.hashCode() : 0);
   }
   
+  @Override
   public String toString() {
     return "[AssocInfoStorage, AssocRoleType: " + getRoleType() +
       ", AssocType: " + getType() + "]";

@@ -20,10 +20,7 @@
 
 package net.ontopia.topicmaps.nav.taglibs.template;
 
-import java.util.Map;
-import java.util.Stack;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +45,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 public class GetTag extends AbstractTemplateTag {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(GetTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(GetTag.class.getName());
 
   private boolean fallback = false;
 
@@ -69,6 +66,7 @@ public class GetTag extends AbstractTemplateTag {
     this.fallback = fallback;
   }
 
+  @Override
   public int doStartTag() throws JspException {
     if (log.isDebugEnabled())
       log.debug("doStartTag, name: " + name);
@@ -96,6 +94,7 @@ public class GetTag extends AbstractTemplateTag {
       return SKIP_BODY;
   }
 
+  @Override
   public int doEndTag() throws JspException {
     if (log.isDebugEnabled())
       log.debug("doEndTag, name: " + name);

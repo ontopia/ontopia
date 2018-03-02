@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public final class HighLowKeyGenerator implements KeyGeneratorIF {
   
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(HighLowKeyGenerator.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(HighLowKeyGenerator.class.getName());
   
   protected ConnectionFactoryIF connfactory;
   
@@ -76,6 +76,7 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     max_value = -1;
   }
   
+  @Override
   public synchronized IdentityIF generateKey(Class<?> type) {
     
     // If we've used up the reserved interval fetch a new one from the database.
@@ -112,12 +113,12 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     // not all databases support this.
     
     String sql_select;
-    if (lkw == null && (database.equals("sqlserver"))) {
+    if (lkw == null && ("sqlserver".equals(database))) {
       sql_select = "select " + valcol + " from " + table + " with (XLOCK) where " + keycol + " = ?";
       
     } else {
       if (lkw == null) {      
-        if (database.equals("sapdb"))
+        if ("sapdb".equals(database))
           lkw = "with lock";
         else 
           lkw = "for update";

@@ -51,23 +51,28 @@ public class GlobalParseContext implements ParseContextIF {
     this.base = base;
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return topicmap;
   }
 
+  @Override
   public LocatorIF resolveQName(QName qname) {
     // FIXME: right exception?
     throw new OntopiaRuntimeException("No such prefix " + qname.getPrefix());
   }
   
+  @Override
   public void addPrefixBinding(String prefix, String uri, int qualification) {
     throw new OntopiaRuntimeException("Can't add bindings to global context");
   }
 
+  @Override
   public void addPredicate(PredicateIF predicate) {
     throw new OntopiaRuntimeException("Can't add predicates to global context");
   }
 
+  @Override
   public LocatorIF absolutify(String uriref) throws AntlrWrapException {
     try {
       LocatorIF loc = null;
@@ -95,10 +100,12 @@ public class GlobalParseContext implements ParseContextIF {
     return topicmap.getObjectByItemIdentifier(loc);
   }
 
+  @Override
   public TMObjectIF getObjectByObjectId(String id) throws AntlrWrapException {
     return topicmap.getObjectById(id);
   }
   
+  @Override
   public TopicIF getTopicBySubjectIdentifier(String uri) 
     throws AntlrWrapException {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(absolutify(uri));
@@ -107,6 +114,7 @@ public class GlobalParseContext implements ParseContextIF {
     return topic;
   }
 
+  @Override
   public TopicIF getTopicBySubjectLocator(String uri) 
     throws AntlrWrapException {
     TopicIF topic = topicmap.getTopicBySubjectLocator(absolutify(uri));
@@ -115,6 +123,7 @@ public class GlobalParseContext implements ParseContextIF {
     return topic;
   }
 
+  @Override
   public TMObjectIF getObjectByItemId(String uri) 
     throws AntlrWrapException {
     TMObjectIF object = topicmap.getObjectByItemIdentifier(absolutify(uri));
@@ -123,6 +132,7 @@ public class GlobalParseContext implements ParseContextIF {
     return object;
   }
 
+  @Override
   public TMObjectIF getObject(QName qname) throws AntlrWrapException {
     if (qname.getPrefix() != null) // no prefixes bound here, so report error
       throw new AntlrWrapException(
@@ -132,12 +142,14 @@ public class GlobalParseContext implements ParseContextIF {
     return getObjectByIdentifier(qname.getLocalName());
   }
 
+  @Override
   public TopicIF getTopic(QName qname) throws AntlrWrapException {
     TMObjectIF object = getObject(qname);
     // FIXME: check type
     return (TopicIF) object;
   }
 
+  @Override
   public PredicateIF getPredicate(QName qname, boolean assoc)
     throws AntlrWrapException {
     PredicateIF predicate = factory.createPredicate(qname.getLocalName());
@@ -151,27 +163,33 @@ public class GlobalParseContext implements ParseContextIF {
     return predicate;
   }
 
+  @Override
   public PredicateIF getPredicate(TopicIF topic, boolean assoc) {
     return factory.createPredicate(topic, assoc);
   }
 
+  @Override
   public PredicateIF getPredicate(ParsedRule rule) {
     return factory.createPredicate(rule);
   }
 
+  @Override
   public ModuleIF getModule(String uri) {
     return factory.createModule(uri);
   }
 
+  @Override
   public boolean isLoading(String uri) {
     return false;
   }
   
+  @Override
   public boolean isBuiltInPredicate(String name) {
     return factory.isBuiltInPredicate(name);
   }
 
 
+  @Override
   public void dump() {
     System.out.println("===== GlobalParseContext " + this);
   }  

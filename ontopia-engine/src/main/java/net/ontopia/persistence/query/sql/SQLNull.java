@@ -34,57 +34,67 @@ public class SQLNull implements SQLValueIF {
   protected Class vtype;
   protected FieldHandlerIF fhandler;
   
-  public SQLNull() {
-  }
-
+  @Override
   public int getType() {
     return NULL;
   }
   
+  @Override
   public int getArity() {
     return 1;
   }
 
+  @Override
   public int getValueArity() {
     return 1;
   }
 
+  @Override
   public String getAlias() {
     return alias;
   }
 
+  @Override
   public void setAlias(String alias) {
     this.alias = alias;
   }
 
+  @Override
   public boolean isReference() {
     return false;
   }
   
+  @Override
   public SQLValueIF getReference() {
     throw new UnsupportedOperationException("SQLValueIF is not a reference, so this method should not be called.");
   }
 
+  @Override
   public Class getValueType() {    
     return vtype;
   }
 
+  @Override
   public void setValueType(Class vtype) {
     this.vtype = vtype;
   }
 
+  @Override
   public FieldHandlerIF getFieldHandler() {
     return (fhandler == null ? new DefaultFieldHandler(java.sql.Types.NULL) : fhandler);
   }
 
+  @Override
   public void setFieldHandler(FieldHandlerIF fhandler) {
     this.fhandler = fhandler;
   }
 
+  @Override
   public int hashCode() {
     return 123; // Just some random number
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof SQLNull)
       return true;
@@ -92,6 +102,7 @@ public class SQLNull implements SQLValueIF {
       return false;
   }
   
+  @Override
   public String toString() {
     return "null";
   }

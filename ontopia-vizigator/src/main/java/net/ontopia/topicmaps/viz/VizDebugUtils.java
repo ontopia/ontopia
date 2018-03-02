@@ -27,6 +27,8 @@ import java.util.Map;
 public class VizDebugUtils {
   
   public static TimerManager man = new TimerManager();
+  private static boolean instrumentedDebugOn = false;
+  private static long startTime = System.currentTimeMillis();
   
   // NOTE: Don't turn on debugging at runtime. Can cause NullPointerException
   private static boolean isDebugEnabled = false;
@@ -72,8 +74,6 @@ public class VizDebugUtils {
       out.println(getTimeDelta() + " - " + label);
   }
   
-  private static long startTime = System.currentTimeMillis();
-  
   public static void resetTimer() {
     startTime = System.currentTimeMillis();
   }
@@ -106,8 +106,6 @@ public class VizDebugUtils {
   public static long getTimeDeltaValue() {
     return System.currentTimeMillis() - startTime;
   }
-  
-  private static boolean instrumentedDebugOn = false;
   
   public static void instrumentedDebug(String source) {
     if (instrumentedDebugOn)
@@ -192,11 +190,11 @@ public class VizDebugUtils {
   }
   
   public static class CodeTimer {
-    String title;
-    boolean started;
-    long startTime;
-    int stopCount;
-    long totalTime;
+    private String title;
+    private boolean started;
+    private long startTime;
+    private int stopCount;
+    private long totalTime;
     
     public CodeTimer(String title) {
       if (!isDebugEnabled)

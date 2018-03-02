@@ -24,13 +24,11 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Properties;
-
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class DDLExecuter {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(DDLExecuter.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(DDLExecuter.class.getName());
   
   public static void main(String[] argv) throws Exception {
 
@@ -75,7 +73,7 @@ public class DDLExecuter {
     String dbprops = args[1];
     String action = args[2];
 
-    if (! (action.equals("create") || action.equals("drop") || action.equals("recreate"))) {
+    if (! ("create".equals(action) || "drop".equals(action) || "recreate".equals(action))) {
       System.err.println("Error: unknown action: " + action);
       usage();
       System.exit(1);
@@ -114,11 +112,11 @@ public class DDLExecuter {
     
     // Execute statements
     try {
-      if (action.equals("create"))
+      if ("create".equals(action))
         producer.executeCreate(conn);
-      else if (action.equals("drop"))
+      else if ("drop".equals(action))
         producer.executeDrop(conn);
-      else if (action.equals("recreate")) {
+      else if ("recreate".equals(action)) {
         producer.executeDrop(conn);
         producer.executeCreate(conn);
       }
@@ -156,11 +154,11 @@ public class DDLExecuter {
   }
 
   public static GenericSQLProducer getSQLProducer(Project project, String platform) {
-    if (platform.equals("generic"))
+    if ("generic".equals(platform))
       return new GenericSQLProducer(project);
-    else if (platform.equals("oracle"))
+    else if ("oracle".equals(platform))
       return new OracleSQLProducer(project);
-    else if (platform.equals("mysql"))
+    else if ("mysql".equals(platform))
       return new MySqlSQLProducer(project);
     else
       return null;

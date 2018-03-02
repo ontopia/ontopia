@@ -38,7 +38,7 @@ public interface StringifierIF<T> {
    * @return a string representation of the <code>object</code>
    * argument.
    */
-  public String toString(T object);
+  String toString(T object);
 
 }
 

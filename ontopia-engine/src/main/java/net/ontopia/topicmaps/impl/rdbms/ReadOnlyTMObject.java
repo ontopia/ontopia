@@ -34,9 +34,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  */
 public abstract class ReadOnlyTMObject extends AbstractROPersistent implements TMObjectIF {
 
-  public ReadOnlyTMObject() {
-  }
-  
   // ---------------------------------------------------------------------------
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
@@ -48,20 +45,23 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
    */
   public abstract String getClassIndicator();
   
-  long getLongId() {
-    return ((Long)id.getKey(0)).longValue();
+  protected long getLongId() {
+    return (Long) id.getKey(0);
   }
   
   // ---------------------------------------------------------------------------
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public abstract String getObjectId();
 
+  @Override
   public boolean isReadOnly() {
     return true;
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     try {
       return this.<TopicMapIF>loadField(TMObject.LF_topicmap);
@@ -71,18 +71,22 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
     }
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     return this.<LocatorIF>loadCollectionField(TMObject.LF_sources);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
     throw new ReadOnlyException();
   }
 
+  @Override
   public void remove() {
     throw new ReadOnlyException();
   }

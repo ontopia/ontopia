@@ -37,10 +37,12 @@ public abstract class FunctionBoxPanel extends Panel {
     super(id, model);
     ListView<List<Component>> nestedComponentList = new ListView<List<Component>>("outerList",
         getFunctionBoxComponentList("content")) {
+      @Override
       protected void populateItem(ListItem<List<Component>> item) {
         List<Component> componentGroups = item.getModelObject();
 
         item.add(new ListView<Component>("innerList", componentGroups) {
+          @Override
           protected void populateItem(ListItem<Component> item) {
             item.add(item.getModelObject());
           }

@@ -20,13 +20,14 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.URIUtils;
 import org.junit.BeforeClass;
 
 public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.CanonicalXTMimportIntoTests {
@@ -36,11 +37,12 @@ public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.Canon
     RDBMSTestFactory.checkDatabasePresence();
   }
 
-  public CanonicalXTMimportIntoTests(String root, String filename) {
-    super(root, filename);
+  public CanonicalXTMimportIntoTests(URL inputFile, String filename) {
+    super(inputFile, filename);
   }
 
-  protected void canonicalize(String infile, String outfile) throws IOException {
+  @Override
+  protected void canonicalize(URL infile, File outfile) throws IOException {
     // Import document
     TopicMapStoreIF store1 = new RDBMSTopicMapStore();
     TopicMapIF source1 = store1.getTopicMap();
@@ -48,7 +50,7 @@ public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.Canon
     // Get hold of topic map id
     long topicmap_id = Long.parseLong(source1.getObjectId().substring(1));
     
-    XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
+    XTMTopicMapReader reader = new XTMTopicMapReader(infile);
     reader.setValidation(false);
     reader.importInto(source1);
     
@@ -60,7 +62,7 @@ public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.Canon
     TopicMapIF source2 = store2.getTopicMap();
 
     CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
-    cwriter.setBaseLocator(new URILocator(file2URL(infile)));      
+    cwriter.setBaseLocator(new URILocator(infile));
     cwriter.write(source2);
 
     store2.delete(true);

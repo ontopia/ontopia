@@ -26,12 +26,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.utils.CompactHashSet;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -51,6 +47,10 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.DeciderUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * PUBLIC: Utilities for merging topics and topic maps. This class
@@ -70,21 +70,21 @@ public class MergeUtils {
    */
   public static boolean shouldMerge(TopicIF t1, TopicIF t2) {
     // check subject locators
-    if (CollectionUtils.overlaps(t1.getSubjectLocators(), t2.getSubjectLocators()))
+    if (CollectionUtils.containsAny(t1.getSubjectLocators(), t2.getSubjectLocators()))
       return true;
     
     // check subject indicators and source locators
-    if (CollectionUtils.overlaps(t1.getSubjectIdentifiers(), t2.getSubjectIdentifiers()) ||
-        CollectionUtils.overlaps(t1.getItemIdentifiers(), t2.getSubjectIdentifiers()))
+    if (CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getSubjectIdentifiers()) ||
+        CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getSubjectIdentifiers()))
       return true;
-    if (CollectionUtils.overlaps(t1.getItemIdentifiers(), t2.getItemIdentifiers()) ||
-        CollectionUtils.overlaps(t1.getSubjectIdentifiers(), t2.getItemIdentifiers()))
+    if (CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getItemIdentifiers()) ||
+        CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getItemIdentifiers()))
       return true;
 
     // should merge if they reify the same object
     ReifiableIF r1 = t1.getReified();
     ReifiableIF r2 = t2.getReified();
-    if (r1 != null && ObjectUtils.equals(r1, r2))
+    if (r1 != null && Objects.equals(r1, r2))
       return true;
 
     return false;
@@ -114,7 +114,7 @@ public class MergeUtils {
       throw new IllegalArgumentException("Source topic has no topic map");
     if (!target.getTopicMap().equals(source.getTopicMap()))
       throw new IllegalArgumentException("Topics not in same topic map");
-    if (target == source)
+    if (target.equals(source))
       throw new IllegalArgumentException("Cannot merge topic with itself!");
 
     // move reified
@@ -591,7 +591,7 @@ public class MergeUtils {
         AssociationRoleIF rtarget = 
           builder.makeAssociationRole(atarget,
                                       resolveTopic(builder.getTopicMap(), rsource.getType()),
-                                      (rsource == rstart ? target : copyTopic(targettm, rsource.getPlayer())));
+                                      (rsource.equals(rstart) ? target : copyTopic(targettm, rsource.getPlayer())));
         rtarget = resolveIdentities(rtarget, rsource);
         copyReifier(rtarget, rsource);
       }
@@ -658,7 +658,7 @@ public class MergeUtils {
       if (targetReifier == null) {
         if (sourceReifier != null) target.setReifier(sourceReifier);
       } else if (sourceReifier != null) {
-        if (targetReifier != sourceReifier)
+        if (!targetReifier.equals(sourceReifier))
           mergeInto(targetReifier, sourceReifier);
       }
     }
@@ -686,7 +686,7 @@ public class MergeUtils {
       LocatorIF loc = it.next();
       TopicIF found = targettm.getTopicBySubjectLocator(loc);
       if (found != null) {
-        if (found != target) {
+        if (!found.equals(target)) {
           mergeInto(found, target);
           target = found;
         }

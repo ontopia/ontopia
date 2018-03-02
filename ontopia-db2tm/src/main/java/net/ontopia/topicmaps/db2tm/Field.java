@@ -62,6 +62,8 @@ public class Field {
   public static final int OPTIONAL_TRUE = 1;
   public static final int OPTIONAL_FALSE = 2;
   protected int optional = OPTIONAL_DEFAULT;
+
+  protected ValueIF cvalue;
   
   Field(int ftype, Entity entity) {
     this.ftype = ftype;
@@ -161,8 +163,6 @@ public class Field {
   }
 
   // -- pattern
-
-  protected ValueIF cvalue;
   
   public String getValue(String[] tuple) {
     return cvalue.getValue(tuple);

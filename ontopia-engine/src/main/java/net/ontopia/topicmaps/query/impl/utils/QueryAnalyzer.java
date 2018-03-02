@@ -39,6 +39,8 @@ import net.ontopia.topicmaps.query.parser.TologQuery;
  */
 public class QueryAnalyzer {
 
+  private static final Class[] TYPES_TOPIC = { TopicIF.class };
+
   public static BindingContext analyzeTypes(TologQuery query) 
     throws InvalidQueryException {
     boolean strict = query.getOptions().getBooleanValue("compiler.typecheck");
@@ -124,8 +126,6 @@ public class QueryAnalyzer {
     }
   }
 
-  private static final Class[] TYPES_TOPIC = { TopicIF.class };
-  
   private static void analyzeArguments(PredicateClause clause, BindingContext bc)
     throws InvalidQueryException {
     

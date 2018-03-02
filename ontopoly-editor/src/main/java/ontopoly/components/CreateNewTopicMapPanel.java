@@ -87,7 +87,7 @@ public class CreateNewTopicMapPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         String name = nameField.getModel().getObject();
-        if(!name.equals("")) {
+        if(!name.isEmpty()) {
           TopicMapSource topicMapSource = (TopicMapSource) sourcesDropDown.getModelObject();
           String referenceId = OntopolyContext.getOntopolyRepository().createOntopolyTopicMap(topicMapSource.getId(), name);
           

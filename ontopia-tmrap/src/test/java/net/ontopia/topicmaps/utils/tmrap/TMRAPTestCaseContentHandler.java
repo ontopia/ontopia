@@ -51,7 +51,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class TMRAPTestCaseContentHandler extends SAXTracker {
 
-  static Logger log = LoggerFactory
+  private static Logger log = LoggerFactory
     .getLogger(TMRAPTestCaseContentHandler.class.getName());
 
   protected ErrorHandler ehandler;
@@ -76,18 +76,22 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
     ehandler = parser.getErrorHandler();
   }
 
+  @Override
   public void startDocument() {
     parents = new Stack();
   }
 
+  @Override
   public void endDocument() {
+    // no-op
   }
 
+  @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) {
-    if (qname.equals("tests"))
+    if ("tests".equals(qname))
       tests = new ArrayList();
-    if (qname.equals("test")) {    
+    if ("test".equals(qname)) {    
       String id = attrs.getValue("id");
       String edit = attrs.getValue("edit");
       String uri = attrs.getValue("uri");
@@ -101,6 +105,7 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
     parents.push(qname);
   }
 
+  @Override
   public void endElement(String nsuri, String name, String qname) {
     parents.pop();
   }

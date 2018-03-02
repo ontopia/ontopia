@@ -44,49 +44,48 @@ import net.ontopia.utils.CollectionMap;
 
 public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   
-  protected CollectionMap basenames;
-  protected CollectionMap variants;
-  protected CollectionMap occurs;
-  protected CollectionMap assocs;
+  protected CollectionMap<TopicIF, TopicNameIF> basenames;
+  protected CollectionMap<TopicIF, VariantNameIF> variants;
+  protected CollectionMap<TopicIF, OccurrenceIF> occurs;
+  protected CollectionMap<TopicIF, AssociationIF> assocs;
 
   ScopeIndex(IndexManagerIF imanager, EventManagerIF emanager, ObjectTreeManager otree) {
 
     // Initialize index maps
-    basenames = new CollectionMap();
-    variants = new CollectionMap();
-    occurs = new CollectionMap();
-    assocs = new CollectionMap();
+    basenames = new CollectionMap<TopicIF, TopicNameIF>();
+    variants = new CollectionMap<TopicIF, VariantNameIF>();
+    occurs = new CollectionMap<TopicIF, OccurrenceIF>();
+    assocs = new CollectionMap<TopicIF, AssociationIF>();
 
     // Initialize object tree event handlers [objects added or removed]    
-    otree.addListener(new ScopedIF_added(basenames, TopicNameIF.EVENT_ADD_THEME), TopicNameIF.EVENT_ADDED);
-    otree.addListener(new ScopedIF_removed(basenames, TopicNameIF.EVENT_REMOVE_THEME), TopicNameIF.EVENT_REMOVED);
+    otree.addListener(new ScopedIF_added<TopicNameIF>(basenames, TopicNameIF.EVENT_ADD_THEME), TopicNameIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed<TopicNameIF>(basenames, TopicNameIF.EVENT_REMOVE_THEME), TopicNameIF.EVENT_REMOVED);
                           
-    otree.addListener(new ScopedIF_added(variants, VariantNameIF.EVENT_ADD_THEME), VariantNameIF.EVENT_ADDED);
-    otree.addListener(new ScopedIF_removed(variants, VariantNameIF.EVENT_REMOVE_THEME), VariantNameIF.EVENT_REMOVED);
+    otree.addListener(new ScopedIF_added<VariantNameIF>(variants, VariantNameIF.EVENT_ADD_THEME), VariantNameIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed<VariantNameIF>(variants, VariantNameIF.EVENT_REMOVE_THEME), VariantNameIF.EVENT_REMOVED);
                           
-    otree.addListener(new ScopedIF_added(occurs, OccurrenceIF.EVENT_ADD_THEME), OccurrenceIF.EVENT_ADDED);
-    otree.addListener(new ScopedIF_removed(occurs, OccurrenceIF.EVENT_REMOVE_THEME), OccurrenceIF.EVENT_REMOVED);
+    otree.addListener(new ScopedIF_added<OccurrenceIF>(occurs, OccurrenceIF.EVENT_ADD_THEME), OccurrenceIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed<OccurrenceIF>(occurs, OccurrenceIF.EVENT_REMOVE_THEME), OccurrenceIF.EVENT_REMOVED);
                           
-    otree.addListener(new ScopedIF_added(assocs, AssociationIF.EVENT_ADD_THEME), AssociationIF.EVENT_ADDED);
-    otree.addListener(new ScopedIF_removed(assocs, AssociationIF.EVENT_REMOVE_THEME), AssociationIF.EVENT_REMOVED);
+    otree.addListener(new ScopedIF_added<AssociationIF>(assocs, AssociationIF.EVENT_ADD_THEME), AssociationIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed<AssociationIF>(assocs, AssociationIF.EVENT_REMOVE_THEME), AssociationIF.EVENT_REMOVED);
         
     // Initialize object property event handlers
-    handlers.put(TopicNameIF.EVENT_ADD_THEME, new ScopedIF_addTheme(basenames));
-    handlers.put(TopicNameIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(basenames));
+    handlers.put(TopicNameIF.EVENT_ADD_THEME, new ScopedIF_addTheme<TopicNameIF>(basenames));
+    handlers.put(TopicNameIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme<TopicNameIF>(basenames));
 
-    handlers.put(VariantNameIF.EVENT_ADD_THEME, new ScopedIF_addTheme(variants));
-    handlers.put(VariantNameIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(variants));
+    handlers.put(VariantNameIF.EVENT_ADD_THEME, new ScopedIF_addTheme<VariantNameIF>(variants));
+    handlers.put(VariantNameIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme<VariantNameIF>(variants));
 
-    handlers.put(OccurrenceIF.EVENT_ADD_THEME, new ScopedIF_addTheme(occurs));
-    handlers.put(OccurrenceIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(occurs));
+    handlers.put(OccurrenceIF.EVENT_ADD_THEME, new ScopedIF_addTheme<OccurrenceIF>(occurs));
+    handlers.put(OccurrenceIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme<OccurrenceIF>(occurs));
 
-    handlers.put(AssociationIF.EVENT_ADD_THEME, new ScopedIF_addTheme(assocs));
-    handlers.put(AssociationIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(assocs));
+    handlers.put(AssociationIF.EVENT_ADD_THEME, new ScopedIF_addTheme<AssociationIF>(assocs));
+    handlers.put(AssociationIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme<AssociationIF>(assocs));
     
     // Register dynamic index as event listener
-    Iterator iter = handlers.keySet().iterator();
-    while (iter.hasNext()) {
-      emanager.addListener(this, (String)iter.next());
+    for (String handlerKey : handlers.keySet()) {
+      emanager.addListener(this, handlerKey);
     }
   }
 
@@ -94,78 +93,91 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   // ScopeIndexIF
   // -----------------------------------------------------------------------------
     
-  public Collection getTopicNames(TopicIF theme) {
-    Collection result = (Collection)basenames.get(theme);
-    if (result == null) return Collections.EMPTY_SET;
+  @Override
+  public Collection<TopicNameIF> getTopicNames(TopicIF theme) {
+    Collection<TopicNameIF> result = basenames.get(theme);
+    if (result == null) return Collections.<TopicNameIF>emptySet();
     // Create new collection
-    return new ArrayList(result);    
+    return new ArrayList<TopicNameIF>(result);    
   }
   
-  public Collection getVariants(TopicIF theme) {
-    Collection result = (Collection)variants.get(theme);
-    if (result == null) return Collections.EMPTY_SET;
+  @Override
+  public Collection<VariantNameIF> getVariants(TopicIF theme) {
+    Collection<VariantNameIF> result = variants.get(theme);
+    if (result == null) return Collections.<VariantNameIF>emptySet();
     // Create new collection
-    return new ArrayList(result);    
+    return new ArrayList<VariantNameIF>(result);    
   }
   
-  public Collection getOccurrences(TopicIF theme) {
+  @Override
+  public Collection<OccurrenceIF> getOccurrences(TopicIF theme) {
     Collection result = (Collection)occurs.get(theme);
-    if (result == null) return Collections.EMPTY_SET;
+    if (result == null) return Collections.<OccurrenceIF>emptySet();
     // Create new collection
     return new ArrayList(result);    
   }
   
-  public Collection getAssociations(TopicIF theme) {
-    Collection result = (Collection)assocs.get(theme);
-    if (result == null) return Collections.EMPTY_SET;
+  @Override
+  public Collection<AssociationIF> getAssociations(TopicIF theme) {
+    Collection<AssociationIF> result = assocs.get(theme);
+    if (result == null) return Collections.<AssociationIF>emptySet();
     // Create new collection
-    return new ArrayList(result);    
+    return new ArrayList<AssociationIF>(result);    
   }
     
-  public Collection getTopicNameThemes() {
+  @Override
+  public Collection<TopicIF> getTopicNameThemes() {
     // Create new collection
-    Collection result = new ArrayList(basenames.keySet());
+    Collection<TopicIF> result = new ArrayList(basenames.keySet());
     result.remove(null);
     return result;
   }
 
-  public Collection getVariantThemes() {
+  @Override
+  public Collection<TopicIF> getVariantThemes() {
     // Create new collection
-    Collection result = new ArrayList(variants.keySet()); 
+    Collection<TopicIF> result = new ArrayList(variants.keySet()); 
     result.remove(null);
     return result;
  }
 
-  public Collection getOccurrenceThemes() {
+ @Override
+  public Collection<TopicIF> getOccurrenceThemes() {
     // Create new collection
-    Collection result = new ArrayList(occurs.keySet());
+    Collection<TopicIF> result = new ArrayList(occurs.keySet());
     result.remove(null);
     return result;
   }
   
-  public Collection getAssociationThemes() {
+  @Override
+  public Collection<TopicIF> getAssociationThemes() {
     // Create new collection
-    Collection result = new ArrayList(assocs.keySet());
+    Collection<TopicIF> result = new ArrayList(assocs.keySet());
     result.remove(null);
     return result;
   }
 
+  @Override
   public boolean usedAsTopicNameTheme(TopicIF topic) {
     return basenames.containsKey(topic);
   }
 
+  @Override
   public boolean usedAsVariantTheme(TopicIF topic) {
     return variants.containsKey(topic);
   }
 
+  @Override
   public boolean usedAsOccurrenceTheme(TopicIF topic) {
     return occurs.containsKey(topic);
   }
 
+  @Override
   public boolean usedAsAssociationTheme(TopicIF topic) {
     return assocs.containsKey(topic);
   }
   
+  @Override
   public boolean usedAsTheme(TopicIF topic) {
     return (basenames.containsKey(topic) ||
             variants.containsKey(topic) ||
@@ -180,16 +192,15 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   /**
    * EventHandler: ScopedIF.addTheme
    */
-  class ScopedIF_addTheme extends EventHandler {
-    protected CollectionMap objects;
-    ScopedIF_addTheme(CollectionMap objects) {
+  class ScopedIF_addTheme<S extends ScopedIF> extends EventHandler<S, TopicIF> {
+    protected CollectionMap<TopicIF, S> objects;
+    ScopedIF_addTheme(CollectionMap<TopicIF, S> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      ScopedIF scoped = (ScopedIF)object;
-
+    @Override
+    public void processEvent(S scoped, String event, TopicIF new_value, TopicIF old_value) {
       // Register scope
-      Collection scope = scoped.getScope();
+      Collection<TopicIF> scope = scoped.getScope();
       if (scope.isEmpty())
         // Unregister null theme
         objects.remove(null, scoped);
@@ -201,16 +212,15 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   /**
    * EventHandler: ScopedIF.removeTheme
    */
-  class ScopedIF_removeTheme extends EventHandler {
-    protected CollectionMap objects;
-    ScopedIF_removeTheme(CollectionMap objects) {
+  class ScopedIF_removeTheme<S extends ScopedIF> extends EventHandler<S, TopicIF> {
+    protected CollectionMap<TopicIF, S> objects;
+    ScopedIF_removeTheme(CollectionMap<TopicIF, S> objects) {
       this.objects = objects;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      ScopedIF scoped = (ScopedIF)object;
-
+    @Override
+    public void processEvent(S scoped, String event, TopicIF new_value, TopicIF old_value) {
       // Register themes
-      Collection scope = scoped.getScope();
+      Collection<TopicIF> scope = scoped.getScope();
       if (scope.size() == 1 && scope.contains(old_value))
         // Unregister null theme
         objects.add(null, scoped);
@@ -223,45 +233,43 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   /**
    * EventHandler: ScopedIF.added
    */
-  class ScopedIF_added extends EventHandler {
-    protected CollectionMap objects;
+  class ScopedIF_added<S extends ScopedIF> extends EventHandler<Object, S> {
+    protected CollectionMap<TopicIF, S> objects;
     protected String child_event;
-    ScopedIF_added(CollectionMap objects, String child_event) {
+    ScopedIF_added(CollectionMap<TopicIF, S> objects, String child_event) {
       this.objects = objects;
       this.child_event = child_event;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      ScopedIF added = (ScopedIF)new_value;
+    @Override
+    public void processEvent(Object object, String event, S added, S old_value) {
       // Register themes
-      Collection scope = added.getScope();
+      Collection<TopicIF> scope = added.getScope();
       if (scope.isEmpty()) {
         // Register the null theme
         objects.add(null, added);       
       } else {
-        Object[] _scope = scope.toArray();
-        for (int i=0; i < _scope.length; i++)
-          addEvent(added, child_event, _scope[i]);
+        for (TopicIF _scope : scope)
+          addEvent(added, child_event, _scope);
       }
     }
   }
   /**
    * EventHandler: ScopedIF.removed
    */
-  class ScopedIF_removed extends EventHandler {
-    protected CollectionMap objects;
+  class ScopedIF_removed<S extends ScopedIF> extends EventHandler<Object, S> {
+    protected CollectionMap<TopicIF, S> objects;
     protected String child_event;
-    ScopedIF_removed(CollectionMap objects, String child_event) {
+    ScopedIF_removed(CollectionMap<TopicIF, S> objects, String child_event) {
       this.objects = objects;
       this.child_event = child_event;
     }
-    public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      ScopedIF removed = (ScopedIF)old_value;
+    @Override
+    public void processEvent(Object object, String event, S new_value, S removed) {
       // Unregister themes
-      Collection scope = removed.getScope();
+      Collection<TopicIF> scope = removed.getScope();
       if (!scope.isEmpty()) {
-        Object[] _scope = scope.toArray();
-        for (int i=0; i < _scope.length; i++)     
-          removeEvent(removed, child_event, _scope[i]);
+        for (TopicIF _scope : scope)
+          removeEvent(removed, child_event, _scope);
       }
       // Unregister null theme
       objects.remove(null, removed);

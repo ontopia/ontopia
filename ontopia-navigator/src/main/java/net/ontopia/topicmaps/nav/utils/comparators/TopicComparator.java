@@ -74,6 +74,7 @@ public class TopicComparator implements Comparator<TopicIF> {
   /**
    * implementing method which is required for Comparator interface.
    */
+  @Override
   public int compare(TopicIF o1, TopicIF o2) {
 
     // this method is time-critical, since it is called n*log(n) times

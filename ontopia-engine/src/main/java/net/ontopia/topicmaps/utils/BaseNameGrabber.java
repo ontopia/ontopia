@@ -68,6 +68,7 @@ public class BaseNameGrabber implements GrabberIF<TopicIF, TopicNameIF> {
    * @exception throws OntopiaRuntimeException if the given topic is not
    *            a TopicIF object.
    */
+  @Override
   public TopicNameIF grab(TopicIF _topic) {
     if (_topic == null)
       return null;

@@ -35,7 +35,7 @@ public class FakeBodyContent extends BodyContent {
 
   private char[] cb;
   private int nextChar;
-  static String lineSeparator = System.getProperty("line.separator");
+  private static String lineSeparator = System.getProperty("line.separator");
 
   public FakeBodyContent(JspWriter writer) {
     super(writer);

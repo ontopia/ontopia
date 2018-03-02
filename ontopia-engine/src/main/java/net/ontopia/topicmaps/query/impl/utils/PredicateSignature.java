@@ -54,6 +54,7 @@ public class PredicateSignature extends ArgumentValidator {
     super(signature);
   }
 
+  @Override
   public void interpretCharacter(char ch, Argument curarg) {
     if (ch == 'p')
       curarg.addType(Pair.class); 

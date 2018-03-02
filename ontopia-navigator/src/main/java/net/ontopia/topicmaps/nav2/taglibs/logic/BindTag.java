@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class BindTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(BindTag.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(BindTag.class.getName());
 
   // members
   private ContextManagerIF ctxtMgr;
@@ -49,6 +49,7 @@ public class BindTag extends TagSupport {
   /**
    * Process the start tag.
    */
+  @Override
   public int doStartTag() throws JspTagException {
 
     // retrieve collection from ContextManager by Name
@@ -93,6 +94,7 @@ public class BindTag extends TagSupport {
   /**
    * Actions after the body.
    */
+  @Override
   public int doEndTag() throws JspTagException {
     // establish old lexical scope, back to outside of the condition
     ctxtMgr.popScope();
@@ -106,6 +108,7 @@ public class BindTag extends TagSupport {
   /**
    * reset the state of the Tag.
    */
+  @Override
   public void release() {
     // overwrite default behaviour
     // do not set parent to null!!!

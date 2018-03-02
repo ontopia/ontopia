@@ -49,14 +49,17 @@ public class ActionResponse implements ActionResponseIF {
 
   // --- implementation of ActionResponseIF
 
+  @Override
   public void addParameter(String key, String value) {
     params.put(key, value);
   }
   
+  @Override
   public Map getParameters() {
     return params;
   }
 
+  @Override
   public String getParameter(String key) {
     return (String) params.get(key);
   }
@@ -67,6 +70,7 @@ public class ActionResponse implements ActionResponseIF {
     user.addLogMessage(message);
   }
 
+  @Override
   public void setForward(String relativeUrl) {
     int pos = relativeUrl.indexOf("?");
     if (pos == -1) {
@@ -83,6 +87,7 @@ public class ActionResponse implements ActionResponseIF {
     }
   }
 
+  @Override
   public String getForward() {
     return forwardurl;
   }

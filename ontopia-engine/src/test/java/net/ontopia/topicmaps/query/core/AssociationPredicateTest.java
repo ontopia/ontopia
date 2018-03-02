@@ -32,6 +32,7 @@ public class AssociationPredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

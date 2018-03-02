@@ -22,10 +22,8 @@ package net.ontopia.topicmaps.nav2.portlets.pojos;
 
 import java.util.List;
 import java.util.ArrayList;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.query.utils.QueryWrapper;
@@ -106,6 +104,7 @@ public class YahooTree {
       this.qw = qw;
     }
     
+    @Override
     public Object mapRow(QueryResultIF result, int row) {
       return new TreeNode((TopicIF) result.getValue(0), qw);
     }

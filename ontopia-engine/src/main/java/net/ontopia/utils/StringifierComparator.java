@@ -21,6 +21,7 @@
 package net.ontopia.utils;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * INTERNAL: Comparator that stringifies the arguments and compares them
@@ -60,8 +61,9 @@ public class StringifierComparator<T> implements Comparator<T> {
     this.comparator = comparator;
   }
   
+  @Override
   public int compare(T obj1, T obj2) {
-    if (obj1 == obj2) return 0;
+    if (Objects.equals(obj1, obj2)) return 0;
 
     String name1 = stringifier.toString(obj1);
     String name2 = stringifier.toString(obj2);

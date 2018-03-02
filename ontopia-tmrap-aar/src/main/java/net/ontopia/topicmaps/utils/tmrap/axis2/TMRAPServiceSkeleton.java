@@ -40,6 +40,7 @@ import org.xml.sax.ContentHandler;
 
 public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
 
+  @Override
   public GetTopicResponse getTopic(GetTopicRequest param) {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
@@ -63,6 +64,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     return null;
   }
 
+  @Override
   public GetTologResponse getTolog(GetTologRequest param) {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
@@ -84,6 +86,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     return null;
   }
 
+  @Override
   public DeleteTopicResponse deleteTopic(DeleteTopicRequest param) {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
@@ -102,6 +105,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     return null;
   }
 
+  @Override
   public void addFragment(AddFragmentRequest param) {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
@@ -116,6 +120,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     }
   }
 
+  @Override
   public void updateTopic(UpdateTopicRequest param) {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();
@@ -133,6 +138,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     }
   }
 
+  @Override
   public GetTopicPageResponse getTopicPage(GetTopicPageRequest param) {
     try {
       NavigatorApplicationIF navapp = getNavigatorApplication();

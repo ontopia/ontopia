@@ -88,6 +88,7 @@ public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
     this.nulls     = nulls;
   }
   
+  @Override
   public E get(K key) {
     Entry entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
 
@@ -107,6 +108,7 @@ public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
     return (E) entry.value;
   }
 
+  @Override
   public E put(K key, E value) {
     // check if key already there; otherwise may end up with two entries
     // with same key
@@ -122,6 +124,7 @@ public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
     return value;
   }
 
+  @Override
   public E remove(K key) {
     int ix = (key.hashCode() & 0x7FFFFFFF) % data.length;
     Entry<K, E> entry = data[ix];

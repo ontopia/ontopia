@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
@@ -28,11 +29,11 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryTracer;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * PUBLIC: Runs tolog queries against a given topic map.
@@ -125,7 +126,7 @@ public class TologQuery {
     if (qryfile.trim().endsWith("?"))
       query = qryfile;
     else
-      query = StreamUtils.read(new java.io.FileReader(qryfile));
+      query = IOUtils.toString(new java.io.FileReader(qryfile));
 
     QueryProcessorIF processor = QueryUtils.getQueryProcessor(tm);
     ParsedQueryIF pquery = processor.parse(query);
@@ -139,7 +140,7 @@ public class TologQuery {
       while (it.hasNext()) {
         String var = (String) it.next();
         System.out.println(var + ": " +
-                           net.ontopia.utils.DebugUtils.toString(pq.getVariableTypes(var)));
+                           Arrays.toString(pq.getVariableTypes(var)));
       }
     }
 
@@ -175,10 +176,11 @@ public class TologQuery {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean trace;
-    boolean debug;
-    boolean timeit;
+    private boolean trace;
+    private boolean debug;
+    private boolean timeit;
     
+    @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 't') trace = true;
@@ -188,10 +190,12 @@ public class TologQuery {
   }
 
   private static class OutQueryTracer extends QueryTracer.TracePrinter {
+    @Override
     public boolean isEnabled() {
       return true;
     }
 
+    @Override
     public void output(String message) {
       System.out.println(message);
       System.out.flush();

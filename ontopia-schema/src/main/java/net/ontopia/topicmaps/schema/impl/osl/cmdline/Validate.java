@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class Validate {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(Validate.class.getName());
+  private static Logger log = LoggerFactory.getLogger(Validate.class.getName());
 
   public static void main(String[] args) {
     // Initialize logging

@@ -53,6 +53,7 @@ public class BooleanQueryResult implements QueryResultIF {
 
   // --- QueryResultIF implementation
     
+  @Override
   public boolean next() {
     if (row < maxrow) {
       row++;
@@ -61,10 +62,12 @@ public class BooleanQueryResult implements QueryResultIF {
       return false;    
   }
 
+  @Override
   public Object getValue(int ix) {
     return values[ix];
   }
   
+  @Override
   public Object getValue(String colname) {
     int index = getIndex(colname);
     if (index < 0)
@@ -72,10 +75,12 @@ public class BooleanQueryResult implements QueryResultIF {
     return values[index];
   }
 
+  @Override
   public int getWidth() {
     return colnames.length;
   }
 
+  @Override
   public int getIndex(String colname) {
     for (int i = 0; i < colnames.length; i++) {
       if (colnames[i].equals(colname)) return i;
@@ -83,23 +88,28 @@ public class BooleanQueryResult implements QueryResultIF {
     return -1;
   }
 
+  @Override
   public String[] getColumnNames() {
     return colnames;
   }
 
+  @Override
   public String getColumnName(int ix) {
     return colnames[ix];
   }
 
+  @Override
   public Object[] getValues() {
     return values;
   }
 
+  @Override
   public Object[] getValues(Object[] values) {
     System.arraycopy(this.values, 0, values, 0, this.values.length);
     return values;
   }
 
+  @Override
   public void close() {
     // Nothing needs to be released.
   }

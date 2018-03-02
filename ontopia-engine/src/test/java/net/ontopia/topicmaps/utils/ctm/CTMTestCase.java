@@ -21,16 +21,13 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
-import java.util.List;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,28 +59,24 @@ public class CTMTestCase {
       // produce canonical output
       String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename);
-      String out = base + File.separator + "out" + File.separator +
-        filename;
+      File out = new File(base + File.separator + "out" + File.separator +
+        filename);
 
       TopicMapIF source = null;
       try {
-        source = new CTMTopicMapReader(URIUtils.getURI(in)).read();
+        source = new CTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();
       } catch (Exception e) {
         throw new OntopiaRuntimeException("Error in " + in, e);
       }
 
       DuplicateSuppressionUtils.removeDuplicates(source);
-      try {
-        new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException("Error in " + in, e);
-      }
+      new CanonicalXTMWriter(out).write(source);
   
       // compare results
       String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-                 FileUtils.compareFileToResource(out, baseline));
+                 TestFileUtils.compareFileToResource(out, baseline));
     }
 
 }

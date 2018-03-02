@@ -39,18 +39,22 @@ public class ActionRegistry implements ActionRegistryIF {
     fields = new HashMap();
   }
   
+  @Override
   public void addActionGroup(ActionGroupIF actionGroup) {
     actionGroups.put(actionGroup.getName(), actionGroup);
   }
 
+  @Override
   public ActionGroupIF getActionGroup(String groupName) {
     return (ActionGroupIF) actionGroups.get(groupName);
   }
 
+  @Override
   public void addImage(ImageInformationIF image) {
     images.put(image.getName(), image);
   }
   
+  @Override
   public ImageInformationIF getImage(String imageName) {
     if (!images.containsKey(imageName))
       throw new IllegalArgumentException("Image with name '" + imageName + "' " +
@@ -58,10 +62,12 @@ public class ActionRegistry implements ActionRegistryIF {
     return (ImageInformationIF) images.get(imageName);
   }
   
+  @Override
   public void addField(FieldInformationIF field) {
     fields.put(field.getName(), field);
   }
   
+  @Override
   public FieldInformationIF getField(String fieldName) {
     if (!fields.containsKey(fieldName))
       throw new IllegalArgumentException("Field with name '" + fieldName + "' " +
@@ -69,11 +75,13 @@ public class ActionRegistry implements ActionRegistryIF {
     return (FieldInformationIF) fields.get(fieldName);
   }
 
+  @Override
   public boolean hasImage(String imageName) {
     return images.containsKey(imageName);
   }
   // --- overwrite method(s) from Object implementation
   
+  @Override
   public String toString() {
     return "[ActionRegistry: actionGroups=" + actionGroups + "]";
   }

@@ -36,6 +36,7 @@ public class CheckUserTag extends TagSupport {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // ensure that valid user object exists, otherwise create new one
     FrameworkUtils.getUser(pageContext);

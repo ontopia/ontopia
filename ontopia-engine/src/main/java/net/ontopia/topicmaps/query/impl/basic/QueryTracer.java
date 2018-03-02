@@ -20,15 +20,14 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
-
 import net.ontopia.topicmaps.query.impl.utils.QueryTraceListenerIF;
 import net.ontopia.topicmaps.query.parser.AbstractClause;
 import net.ontopia.topicmaps.query.parser.NotClause;
 import net.ontopia.topicmaps.query.parser.OrClause;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QueryTracer {
   // --- initialize logging facility.
-  static Logger logger = LoggerFactory.getLogger(QueryTracer.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(QueryTracer.class.getName());
   
   private static List listeners = new java.util.ArrayList();
 
@@ -71,22 +70,19 @@ public class QueryTracer {
     }
   }
   
-  public static void trace(BasicPredicateIF predicate, List arguments) {
-  }
-
   public static void trace(String msg) {
     write(msg + "\n");
   }
 
   public static void trace(String msg, int[] array) {
-    write(msg + ": " + net.ontopia.utils.DebugUtils.toString(array) + "\n");
+    write(msg + ": " + Arrays.toString(array) + "\n");
   }
   
   public static void trace(String msg, Object[] array) {
     Iterator it = listeners.iterator();
     while (it.hasNext()) {
       QueryTraceListenerIF listener = (QueryTraceListenerIF) it.next();
-      listener.trace(msg + ": " + net.ontopia.utils.DebugUtils.toString(array) + "\n");
+      listener.trace(msg + ": " + Arrays.toString(array) + "\n");
     }
   }
   
@@ -210,6 +206,7 @@ public class QueryTracer {
       logger.debug(message);
     }
 
+    @Override
     public void startQuery() {
       if (isEnabled()) {
         Info info = new Info();
@@ -224,6 +221,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void endQuery() {
       long memoryDelta = 0l;
       float elapsed = 0f;
@@ -248,6 +246,7 @@ public class QueryTracer {
         logger.warn("Query execution exceeded time elapsed threshold " + elapsed + " seconds", new RuntimeException());      
     }
     
+    @Override
     public void enter(BasicPredicateIF predicate, AbstractClause clause, 
                       QueryMatches input) {
       if (isEnabled()) {
@@ -257,6 +256,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void leave(QueryMatches result) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -281,6 +281,7 @@ public class QueryTracer {
       return clause.toString();
     }
     
+    @Override
     public void enter(OrClause clause, QueryMatches input) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -289,16 +290,19 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void enter(List branch) {
       if (!isEnabled())
         return;
     }
 
+    @Override
     public void leave(List branch) {
       if (!isEnabled())
         return;
     }
 
+    @Override
     public void enterOrderBy() {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -307,6 +311,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void leaveOrderBy() {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -315,6 +320,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void enterSelect(QueryMatches result) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -323,6 +329,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void leaveSelect(QueryMatches result) {
       if (isEnabled()) {
         Info info = (Info)ti.get();
@@ -331,6 +338,7 @@ public class QueryTracer {
       }
     }
 
+    @Override
     public void trace(String message) {
       if (isEnabled()) {
         Info info = (Info)ti.get();

@@ -31,6 +31,7 @@ public class BaseLocatorPredicateTest extends AbstractPredicateTest {
     super(name);
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

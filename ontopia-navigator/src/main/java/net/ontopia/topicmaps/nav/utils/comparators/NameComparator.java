@@ -67,8 +67,6 @@ public class NameComparator implements Comparator<NameIF> {
   }
 
 
-  protected static final URILocator SORT_LOCATOR = PSI.getXTMSort();
-
   /**
    * INTERNAL: setup variant sort name grabber.
    * Attention: reuse same sort name grabber for this NameComparator
@@ -76,7 +74,7 @@ public class NameComparator implements Comparator<NameIF> {
    */
   protected final void initSortNameGrabber(TMObjectIF tmObj) {
     if (sortNameGrabber == null) {
-      TopicIF sortTopic = tmObj.getTopicMap().getTopicBySubjectIdentifier(SORT_LOCATOR);
+      TopicIF sortTopic = tmObj.getTopicMap().getTopicBySubjectIdentifier(PSI.getXTMSort());
       Collection<TopicIF> sortScope = new ArrayList<TopicIF>(1);
       sortScope.add( sortTopic );
       sortNameGrabber = new VariantNameGrabber(sortScope);
@@ -126,6 +124,7 @@ public class NameComparator implements Comparator<NameIF> {
   /**
    * Compares two TopicNameIFs / VariantNameIFs.
    */
+  @Override
   public int compare(NameIF o1, NameIF o2) {
     String value1 = getName(o1);
     String value2 = getName(o2);

@@ -47,6 +47,7 @@ public class TMRevitalizer implements TMRevitalizerIF {
     this.processed = new IdentityHashMap();
   }
   
+  @Override
   public Object revitalize(Object o) {
     // no need to revitalize null
     if (o == null) return null;

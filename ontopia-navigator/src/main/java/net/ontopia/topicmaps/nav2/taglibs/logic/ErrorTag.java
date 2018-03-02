@@ -39,6 +39,7 @@ public class ErrorTag extends TagSupport  implements ValueAcceptingTagIF {
   /**
    * Process the start tag for this instance.
    */
+  @Override
   public int doStartTag() throws JspTagException {
     // evaluate first the children
     return EVAL_BODY_INCLUDE;
@@ -47,6 +48,7 @@ public class ErrorTag extends TagSupport  implements ValueAcceptingTagIF {
   /**
    * Process the end tag.
    */
+  @Override
   public int doEndTag() throws JspTagException {
     String collstr = (inputCollection == null ? null : inputCollection.toString());
     inputCollection = null;
@@ -60,6 +62,7 @@ public class ErrorTag extends TagSupport  implements ValueAcceptingTagIF {
   // ValueAcceptingTagIF implementation
   // -----------------------------------------------------------------
   
+  @Override
   public void accept(Collection value) {
     this.inputCollection = value;
   }

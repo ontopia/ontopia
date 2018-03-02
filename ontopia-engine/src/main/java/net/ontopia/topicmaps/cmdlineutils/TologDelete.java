@@ -20,9 +20,10 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
+import java.io.File;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
@@ -31,7 +32,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class TologDelete {
   
   // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
 
   TologDelete() {
   }
@@ -80,73 +80,68 @@ public class TologDelete {
       System.exit(3);
     }
 
+    // open topic map
+    String tmurl = ohandler.tm;
+    if (tmurl == null)
+      throw new OntopiaRuntimeException("--tm option must be specified");
+
+    boolean simulate = false;
+    if (ohandler.simulate != null)
+      simulate = Boolean.valueOf(ohandler.simulate).booleanValue();
+
+    System.out.println("Simulate: " + simulate + ":" + ohandler.simulate);
+    log.debug("Loading topic map '" + tmurl + "'");
+    TopicMapReaderIF reader = ImportExportUtils.getReader(tmurl);
+    TopicMapStoreIF store = reader.read().getStore();
+
     try {
-      // open topic map
-      String tmurl = ohandler.tm;
-      if (tmurl == null)
-        throw new OntopiaRuntimeException("--tm option must be specified");
-
-      boolean simulate = false;
-      if (ohandler.simulate != null)
-        simulate = Boolean.valueOf(ohandler.simulate).booleanValue();
-
-      System.out.println("Simulate: " + simulate + ":" + ohandler.simulate);
-      log.debug("Loading topic map '" + tmurl + "'");
-      TopicMapReaderIF reader = ImportExportUtils.getReader(tmurl);
-      TopicMapStoreIF store = reader.read().getStore();
-      
-      try {
-        // parse queries before attempting to modify topic map
-        QueryProcessorIF qp = QueryUtils.getQueryProcessor(store.getTopicMap());
-        ParsedQueryIF[] pqs = new ParsedQueryIF[args.length];        
-        for (int i=0; i < args.length; i++) {
-          System.out.println("Query: " + i + " " + args[i]);
-          pqs[i] = qp.parse(args[i]);
-        }
-
-        // for each query delete topic map objects
-        for (int i=0; i < pqs.length; i++) {
-          QueryResultIF result = pqs[i].execute();
-          try {
-            // complain if multiple columns
-            if (result.getWidth() != 1)
-              throw new OntopiaRuntimeException("Query must project exactly one column: " + args[i]);
-            
-            while (result.next()) {
-              TMObjectIF o = (TMObjectIF)result.getValue(0);
-              System.out.println("Removing: " + o);
-              log.debug("Removing: " + o);
-              if (!simulate)
-                o.remove();
-            }
-          } finally {
-            result.close();
-          }
-        }
-
-        // export topicmap
-        if (ohandler.out != null) {
-          String outfile = ohandler.out;
-          log.debug("Exporting topic map to " + outfile);
-          TopicMapWriterIF writer = ImportExportUtils.getWriter(outfile);
-          writer.write(store.getTopicMap());
-        }
-        
-        // commit transaction
-        store.commit();
-        log.debug("Transaction committed.");
-      } catch (Exception t) {
-        log.error("Error occurred", t);
-        // abort transaction
-        store.abort();
-        log.debug("Transaction aborted.");
-        throw t;
-      } finally {
-        if (store.isOpen()) store.close();
+      // parse queries before attempting to modify topic map
+      QueryProcessorIF qp = QueryUtils.getQueryProcessor(store.getTopicMap());
+      ParsedQueryIF[] pqs = new ParsedQueryIF[args.length];        
+      for (int i=0; i < args.length; i++) {
+        System.out.println("Query: " + i + " " + args[i]);
+        pqs[i] = qp.parse(args[i]);
       }
-      
-    } catch (Exception e) {
-      throw ObjectUtils.getRealCause(e);
+
+      // for each query delete topic map objects
+      for (int i=0; i < pqs.length; i++) {
+        QueryResultIF result = pqs[i].execute();
+        try {
+          // complain if multiple columns
+          if (result.getWidth() != 1)
+            throw new OntopiaRuntimeException("Query must project exactly one column: " + args[i]);
+
+          while (result.next()) {
+            TMObjectIF o = (TMObjectIF)result.getValue(0);
+            System.out.println("Removing: " + o);
+            log.debug("Removing: " + o);
+            if (!simulate)
+              o.remove();
+          }
+        } finally {
+          result.close();
+        }
+      }
+
+      // export topicmap
+      if (ohandler.out != null) {
+        String outfile = ohandler.out;
+        log.debug("Exporting topic map to " + outfile);
+        TopicMapWriterIF writer = ImportExportUtils.getWriter(new File(outfile));
+        writer.write(store.getTopicMap());
+      }
+
+      // commit transaction
+      store.commit();
+      log.debug("Transaction committed.");
+    } catch (Exception t) {
+      log.error("Error occurred", t);
+      // abort transaction
+      store.abort();
+      log.debug("Transaction aborted.");
+      throw t;
+    } finally {
+      if (store.isOpen()) store.close();
     }
   }
   
@@ -166,9 +161,10 @@ public class TologDelete {
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    String tm;
-    String out;
-    String simulate;
+    private String tm;
+    private String out;
+    private String simulate;
+    @Override
     public void processOption(char option, String value) {
       if (option == 't') tm = value;
       else if (option == 'o') out = value;

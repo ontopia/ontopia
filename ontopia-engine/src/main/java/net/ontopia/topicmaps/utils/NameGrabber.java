@@ -180,6 +180,7 @@ public class NameGrabber implements GrabberIF<TopicIF, NameIF> {
    *         basenames.
    * @exception throws OntopiaRuntimeException if object is not a topic.
    */
+  @Override
   public NameIF grab(TopicIF topic) {
     if (topic == null)
       return null;

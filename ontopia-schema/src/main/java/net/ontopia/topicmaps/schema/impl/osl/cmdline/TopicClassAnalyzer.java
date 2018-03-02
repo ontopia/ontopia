@@ -116,7 +116,7 @@ public class TopicClassAnalyzer extends AbstractSchemaAnalyzer {
     while (othertypes.hasNext()) {
       TopicIF othertype = (TopicIF)othertypes.next();
       // Add if not equal to primary type
-      if (othertype != ttype &&
+      if (!othertype.equals(ttype) &&
           !otherClasses.contains(othertype.getObjectId())) {
         tclass.addOtherClass(getTypeSpecification(othertype));
           otherClasses.add(othertype.getObjectId());

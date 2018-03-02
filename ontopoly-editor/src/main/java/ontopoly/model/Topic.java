@@ -48,6 +48,8 @@ public class Topic {
 
   private String cachedName;
 
+  private static final TypeHierarchyUtils thutils = new TypeHierarchyUtils();
+
   /**
    * Constructor. 
    * 
@@ -392,6 +394,7 @@ public class Topic {
     return getTopicIF().hashCode();
   }
 
+  @Override
   public String toString() {
     return super.toString() + "[" + getTopicIF() + "]";
   }
@@ -400,8 +403,6 @@ public class Topic {
     return new Topic(CopyUtils.copyCharacteristics(getTopicIF()), getTopicMap());
   }
 
-  private static final TypeHierarchyUtils thutils = new TypeHierarchyUtils();
-  
   public boolean isInstanceOf(Topic type) {
     return thutils.isInstanceOf(getTopicIF(), type.getTopicIF());
   }

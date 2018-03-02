@@ -296,12 +296,14 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
   
   // --- Internal methods
 
+  @Override
   public void setUp() throws Exception {
     super.setUp();
     tm = topicmap;
     object = tm;
   }
 
+  @Override
   protected TMObjectIF makeObject() {
     return null;
   }

@@ -42,9 +42,10 @@ import org.slf4j.LoggerFactory;
 public class SplitterTag extends BaseValueProducingAndAcceptingTag {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(SplitterTag.class.getName());
 
+  @Override
   public Collection process(Collection names) throws JspTagException {
     
     if (names == null || names.isEmpty())

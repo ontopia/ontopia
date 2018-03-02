@@ -71,7 +71,7 @@ import org.xml.sax.SAXParseException;
 public final class NavigatorApplication implements NavigatorApplicationIF {
 
   // initialization of log facility
-  private static Logger log = LoggerFactory.getLogger(NavigatorApplication.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(NavigatorApplication.class.getName());
 
   // the name of a plug-in specification file in a plug-in directory
   private static final String PLUGIN_SPEC = "plugin.xml";
@@ -152,19 +152,23 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    * @return Display name of the web application {@link
    *         javax.servlet.ServletContext#getServletContextName()}.
    */
+  @Override
   public String getName() {
     return JSPEngineWrapper.getServletContextName(servlet_context);
   }
   
+  @Override
   public NavigatorConfigurationIF getConfiguration() {
     return navConfig;
   }
 
+  @Override
   public TopicMapRepositoryIF getTopicMapRepository() {
       return repository;
   }
 
   @Deprecated
+  @Override
   public UserStoreRegistry getUserStoreRegistry() {
     throw new UnsupportedOperationException("Method is no longer supported.");
   }
@@ -175,17 +179,20 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    * @deprecated
    */  
   @Deprecated
+  @Override
   public void refreshAppConfig() {
     readInAppConfig();
     // refresh also plug-ins because they are assigned to navigation configuration
     readAndSetPlugins();
   }
 
+  @Override
   public TopicMapIF getTopicMapById(String topicmapId)
     throws NavigatorRuntimeException {
     return getTopicMapById(topicmapId, false);
   }
   
+  @Override
   public TopicMapIF getTopicMapById(String topicmapId, boolean readonly)
     throws NavigatorRuntimeException {
     
@@ -210,18 +217,21 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     return store.getTopicMap();
   }
 
+  @Override
   public void returnTopicMap(TopicMapIF topicmap) {
     TopicMapStoreIF store = topicmap.getStore();
     log.debug("Returning store: " + store);
     store.close();
   }
 
+  @Override
   public String getTopicMapRefId(TopicMapIF topicmap) {
     TopicMapStoreIF store = topicmap.getStore();
     TopicMapReferenceIF ref = store.getReference();
     return (ref == null ? null : getTopicMapRepository().getReferenceKey(ref));
   }
 
+  @Override
   public Object getInstanceOf(String classname)
     throws NavigatorRuntimeException {
 
@@ -263,6 +273,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    * Gets module from internal cache, if it is not in or should be
    * refreshed the module resource is loaded in again.
    */
+  @Override
   public ModuleIF getModule(URL location)
     throws NavigatorRuntimeException {
     
@@ -292,6 +303,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     return module;
   }
 
+  @Override
   public void close() {
     if (repository != null && localRepository) {
       try {
@@ -458,6 +470,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    * @deprecated
    */
   @Deprecated
+  @Override
   public synchronized void refreshTopicMapRegistry() {
     //! WARNING: the below is inherently unsafe, so it has been disabled
   }

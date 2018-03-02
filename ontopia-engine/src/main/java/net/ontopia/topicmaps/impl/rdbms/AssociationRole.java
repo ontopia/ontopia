@@ -39,6 +39,8 @@ import net.ontopia.topicmaps.impl.utils.PhantomAssociation;
 
 public class AssociationRole extends TMObject implements AssociationRoleIF {
   
+  public static final String CLASS_INDICATOR = "R";
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -51,6 +53,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   protected static final int LF_reifier = 5;
   protected static final String[] fields = {"sources", "topicmap", "assoc", "type", "player", "reifier"};
 
+  @Override
   public void detach() {
     detachCollectionField(LF_sources);
     detachField(LF_topicmap);
@@ -60,6 +63,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     detachField(LF_player);
   }
 
+  @Override
   public void _p_setTransaction(TransactionIF txn) {
     super._p_setTransaction(txn);
     // make sure that association field is always initialized
@@ -69,8 +73,6 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // ---------------------------------------------------------------------------
   // Data members
   // ---------------------------------------------------------------------------
-
-  public static final String CLASS_INDICATOR = "R";
 
   public AssociationRole() {
   }
@@ -83,6 +85,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // PersistentIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public int _p_getFieldCount() {
     return fields.length;
   }
@@ -91,10 +94,12 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public String getClassIndicator() {
     return CLASS_INDICATOR;
   }
 
+  @Override
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
@@ -103,6 +108,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // AssociationRoleIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public AssociationIF getAssociation() {
     try {
       return this.<AssociationIF>loadFieldNoCheck(LF_association);
@@ -116,14 +122,14 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   /**
    * INTERNAL: Sets the association that the association role belongs to. [parent]
    */
-  void setAssociation(AssociationIF assoc) {
+  protected void setAssociation(AssociationIF assoc) {
     // Set parent topic map
     setTopicMap((assoc == null ? null : (TopicMap)assoc.getTopicMap()));
     // Notify transaction
     valueChanged(LF_association, assoc, true);
   }
 
-  void setTopicMap(TopicMap topicmap) {    
+  protected void setTopicMap(TopicMap topicmap) {    
     // Notify player
     Topic player = (Topic)getPlayer();
     if (player != null)
@@ -139,6 +145,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     valueChanged(LF_topicmap, topicmap, true);    
   }
 
+  @Override
   public TopicIF getPlayer() {
     try {
       return this.<TopicIF>loadField(LF_player);
@@ -148,6 +155,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     }
   }
   
+  @Override
   public void setPlayer(TopicIF player) {
     if (player == null)
       throw new NullPointerException("Association role player must not be null.");
@@ -170,6 +178,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
       ((Topic)player).addRole(this);
   }
 
+  @Override
   public void remove() {
     Association parent = (Association)getAssociation();
     if (parent != null) {
@@ -182,6 +191,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // TypedIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getType() {
     try {
       return this.<TopicIF>loadField(LF_type);
@@ -191,6 +201,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     }
   }
 
+  @Override
   public void setType(TopicIF type) {
     if (type == null)
       throw new NullPointerException("Association role type must not be null.");
@@ -205,6 +216,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     try {
       return this.<TopicIF>loadField(LF_reifier);
@@ -214,6 +226,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     }
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
@@ -231,6 +244,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // Misc. methods
   // ---------------------------------------------------------------------------
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("rdbms.AssociationRole", (AssociationRoleIF)this);
   }

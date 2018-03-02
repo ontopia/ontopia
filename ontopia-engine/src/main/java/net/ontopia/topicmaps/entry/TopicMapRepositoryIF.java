@@ -50,54 +50,54 @@ public interface TopicMapRepositoryIF {
    *
    * @since 3.4
    */
-  public TopicMapStoreIF createStore(String refkey, boolean readonly);
+  TopicMapStoreIF createStore(String refkey, boolean readonly);
   
   /**
    * PUBLIC: Gets a topic map reference by its reference key. Returns
    * null if not found.
    */
-  public TopicMapReferenceIF getReferenceByKey(String refkey);
+  TopicMapReferenceIF getReferenceByKey(String refkey);
 
   /**
    * PUBLIC: Gets the key used to identify the reference in the
    * repository.
    */
-  public String getReferenceKey(TopicMapReferenceIF ref);
+  String getReferenceKey(TopicMapReferenceIF ref);
   
   /**
    * PUBLIC: Returns a collection containing all references.
    */
-  public Collection<TopicMapReferenceIF> getReferences();
+  Collection<TopicMapReferenceIF> getReferences();
   // returns TopicMapReferenceIF objects; unmodifiable
   // no removeReference; do reference.deactivate or reference.delete instead
   
   /**
    * PUBLIC: Returns a collection containing the keys of all references.
    */
-  public Collection<String> getReferenceKeys();
+  Collection<String> getReferenceKeys();
 
   /**
    * PUBLIC: Refreshes all sources and recreates the reference map.
    */
-  public void refresh();
+  void refresh();
   // clear reference Map, refresh all sources, recreate reference Map
 
   /**
    * PUBLIC: Returns the topic map source that has the given source id.
    */
-  public TopicMapSourceIF getSourceById(String source_id);
+  TopicMapSourceIF getSourceById(String source_id);
 
   /**
    * PUBLIC: Returns an immutable collection containing the
    * TopicMapSourceIFs registered with the topic map repository.
    */
-  public Collection<TopicMapSourceIF> getSources();
+  Collection<TopicMapSourceIF> getSources();
   // FIXME: Is the collection updated when the repository is updated?
   
   /**
    * PUBLIC: Adds the source to the repository.
    */
-  public void addSource(TopicMapSourceIF source);
+  void addSource(TopicMapSourceIF source);
   // if source already present; do nothing
   // disallow "." in source IDs
   // while (source.getId() is a duplicate) { source.setId(origId + num++); }
@@ -105,7 +105,7 @@ public interface TopicMapRepositoryIF {
   /**
    * PUBLIC: Removes the source from the repository.
    */
-  public void removeSource(TopicMapSourceIF source);
+  void removeSource(TopicMapSourceIF source);
 
   /**
    * PUBLIC: Closes the repository and releases all resources bound by
@@ -115,6 +115,6 @@ public interface TopicMapRepositoryIF {
    *
    * @since 2.1
    */
-  public void close();
+  void close();
 
 }

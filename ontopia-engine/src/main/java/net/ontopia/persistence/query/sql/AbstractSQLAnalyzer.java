@@ -134,6 +134,7 @@ public abstract class AbstractSQLAnalyzer {
   }
 
   protected void analyzeFalse(SQLFalse expr) {
+    // no-op
   }
 
   protected void analyzeIn(SQLIn expr) {
@@ -174,6 +175,7 @@ public abstract class AbstractSQLAnalyzer {
   }
 
   protected void analyzeVerbatimExpression(SQLVerbatimExpression expr) {
+    // no-op
   }
 
   protected void analyzeValueExpression(SQLValueExpression expr) {
@@ -221,15 +223,19 @@ public abstract class AbstractSQLAnalyzer {
   }
 
   protected void analyzeColumns(SQLExpressionIF expr, SQLColumns value) {
+    // no-op
   }
 
   protected void analyzeNull(SQLExpressionIF expr, SQLNull value) {
+    // no-op
   }
 
   protected void analyzeParameter(SQLExpressionIF expr, SQLParameter value) {
+    // no-op
   }
 
   protected void analyzePrimitive(SQLExpressionIF expr, SQLPrimitive value) {
+    // no-op
   }
 
   protected void analyzeTuple(SQLExpressionIF expr, SQLTuple value) {
@@ -237,6 +243,7 @@ public abstract class AbstractSQLAnalyzer {
   }
 
   protected void analyzeVerbatim(SQLExpressionIF expr, SQLVerbatim value) {
+    // no-op
   }
 
   protected void analyzeFunction(SQLExpressionIF expr, SQLFunction value) {

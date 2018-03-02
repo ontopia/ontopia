@@ -70,6 +70,7 @@ public class SQLOrderBy {
     this.value = value;
   }
 
+  @Override
   public String toString() {
     if (aggregate == null)
       return value + (order == ASCENDING ? " asc" : " desc");

@@ -29,7 +29,6 @@ import javax.servlet.jsp.JspTagException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.infoset.core.LocatorIF;
 
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 import net.ontopia.utils.CollectionUtils;
 
@@ -39,6 +38,7 @@ import net.ontopia.utils.CollectionUtils;
  */
 public class SubjectAddressTag extends BaseValueProducingAndAcceptingTag {
   
+  @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all subject addresses of all topics in collection
     List subjectAddresses = new ArrayList();

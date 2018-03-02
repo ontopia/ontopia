@@ -40,14 +40,17 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 public class OSLValidate implements OSLSchemaAwareIF {
   private OSLSchema schema;
   
+  @Override
   public OSLSchema getSchema() {
     return schema;
   }
 
+  @Override
   public void setSchema(OSLSchema schema) {
     this.schema = schema;
   }
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     // validate parameters
     ActionSignature paramsType = ActionSignature.getSignature("mta");

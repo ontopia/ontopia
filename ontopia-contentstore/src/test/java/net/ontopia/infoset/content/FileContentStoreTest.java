@@ -23,7 +23,7 @@ package net.ontopia.infoset.content;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import net.ontopia.utils.FileUtils;
+import org.apache.commons.io.FileUtils;
 
 public class FileContentStoreTest extends AbstractContentStoreTest {
   
@@ -31,13 +31,14 @@ public class FileContentStoreTest extends AbstractContentStoreTest {
     super(name);
   }
 
+  @Override
   public void setUp() throws IOException, ContentStoreException {
     File tstdir = getTestDirectory("content");
 
     if (tstdir.exists()) {
       File[] files = tstdir.listFiles();
       for (int ix = 0; ix < files.length; ix++)
-        FileUtils.delete(files[ix], true);
+        FileUtils.forceDelete(files[ix]);
     } else
       tstdir.mkdir();
 

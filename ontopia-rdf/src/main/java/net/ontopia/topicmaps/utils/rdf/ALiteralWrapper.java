@@ -35,14 +35,19 @@ import com.hp.hpl.jena.shared.JenaException;
 public class ALiteralWrapper implements ALiteral {
   public Literal literal;
 
+  private boolean tainted;
+
+  @Override
   public boolean isWellFormedXML() {
     return literal.isWellFormedXML();
   }
 
+  @Override
   public String getParseType() {
     return null;
   }
 
+  @Override
   public String toString() {
     try {
       return literal.getString();
@@ -51,20 +56,22 @@ public class ALiteralWrapper implements ALiteral {
     }
   }
 
+  @Override
   public String getLang() {
     return literal.getLanguage();
   }
 
+  @Override
   public String getDatatypeURI() {
     return null;
   }
 
-  private boolean tainted;
-
+  @Override
   public void taint() {
     tainted = true;
   }
 
+  @Override
   public boolean isTainted() {
     return tainted;
   }

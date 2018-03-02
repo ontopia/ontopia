@@ -73,6 +73,7 @@ public class RDBMSStoreFactory implements TopicMapStoreFactoryIF {
     this.topicmap_id = topicmap_id;
   }
   
+  @Override
   public TopicMapStoreIF createStore() {
     try {
       if (topicmap_id < 0) {

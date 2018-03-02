@@ -36,6 +36,7 @@ public class ActiveTransactionTrackingTest extends AbstractTopicMapTest {
   }
 
   @Before
+  @Override
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
     super.setUp();

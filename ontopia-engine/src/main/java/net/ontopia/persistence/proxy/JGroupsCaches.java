@@ -32,16 +32,18 @@ import org.apache.commons.collections4.map.ReferenceMap;
 
 public class JGroupsCaches implements CachesIF {
 
-  final ClusterIF cluster;
+  private final ClusterIF cluster;
   
-  JGroupsCaches(ClusterIF cluster) {
+  protected JGroupsCaches(ClusterIF cluster) {
     this.cluster = cluster;
   }
   
+  @Override
   public <K, V> Map<K, V> createDataCache() {
     return Collections.synchronizedMap(this.<K, V>createSoftHashMap());
   }
   
+  @Override
   public <K, V>CacheIF<K, V> createCache(int cacheType, IdentityIF namespace) {
     switch (cacheType) {
     case CachesIF.QUERY_CACHE_SRCLOC:

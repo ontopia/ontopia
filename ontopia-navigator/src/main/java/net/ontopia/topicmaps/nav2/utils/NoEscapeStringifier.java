@@ -32,6 +32,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
  */
 public class NoEscapeStringifier implements StringifierIF {
   
+  @Override
   public String toString(Object object) {
     if (object instanceof OccurrenceIF) 
       return ((OccurrenceIF) object).getValue();

@@ -36,7 +36,7 @@ public interface ContextManagerIF {
    * about this object, and should <strong>not</strong> try to
    * modify it or work directly with it.
    */
-  public Object getCurrentScope();
+  Object getCurrentScope();
   
   /**
    * INTERNAL: Gets value for specified variable name.
@@ -48,7 +48,7 @@ public interface ContextManagerIF {
    * @throws VariableNotSetException if value is due
    *         to a not set variable not available.
    */
-  public Collection getValue(String name)
+  Collection getValue(String name)
     throws VariableNotSetException;
 
   /**
@@ -58,24 +58,24 @@ public interface ContextManagerIF {
    *
    * @since 1.4.1
    */
-  public Collection getValue(String name, Collection defaultValue);
+  Collection getValue(String name, Collection defaultValue);
 
   /**
    * INTERNAL: Add Collection with specified name to registry.
    */
-  public void setValue(String name, Collection coll);
+  void setValue(String name, Collection coll);
 
   /**
    * INTERNAL: Add Collection with specified name to registry.
    *         The object get internally transformed to a Collection.
    */
-  public void setValue(String name, Object obj);
+  void setValue(String name, Object obj);
 
   /**
    * INTERNAL: Add Collection with specified name to to the registry
    *         identified by <code>scope</code>.
    */
-  public void setValueInScope(Object scope, String name, Collection obj);
+  void setValueInScope(Object scope, String name, Collection obj);
 
   /**
    * INTERNAL: Gets the default value in the current scope.
@@ -83,33 +83,33 @@ public interface ContextManagerIF {
    * @throws VariableNotSetException if value is due
    *         to a not set variable not available.
    */
-  public Collection getDefaultValue() throws VariableNotSetException;
+  Collection getDefaultValue() throws VariableNotSetException;
   
   /**
    * INTERNAL: Sets the default value in the current scope.
    */
-  public void setDefaultValue(Collection coll);
+  void setDefaultValue(Collection coll);
 
   /**
    * INTERNAL: Sets the default value in the current scope.
    *         The object get internally transformed to a Collection.
    */
-  public void setDefaultValue(Object obj);
+  void setDefaultValue(Object obj);
 
   /**
    * INTERNAL: Pushes a new set of variables (name/collection-pairs)
    * onto the top of this stack.
    */
-  public void pushScope();
+  void pushScope();
   
   /**
    * INTERNAL: Removes the current set of variables at the top of this stack.
    */
-  public void popScope();
+  void popScope();
 
   /**
    * INTERNAL: Clear all variables hold on stack.
    */
-  public void clear();
+  void clear();
   
 }

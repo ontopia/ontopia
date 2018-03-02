@@ -31,6 +31,6 @@ public interface ModuleIF {
    * @param name The local name of the predicate; that is the part of
    * the QName <em>after</em> the colon.
    */
-  public PredicateIF getPredicate(String name);
+  PredicateIF getPredicate(String name);
   
 }

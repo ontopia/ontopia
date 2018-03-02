@@ -41,9 +41,11 @@ public class DeleteTest extends AbstractQueryTest {
 
   /// context management
 
+  @Override
   public void setUp() {
   }
 
+  @Override
   public void tearDown() {
     closeStore();
   }

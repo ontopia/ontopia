@@ -54,6 +54,7 @@ public class JDOFunction implements JDOValueIF {
     this.args = args;
   }
   
+  @Override
   public int getType() {
     return FUNCTION;
   }
@@ -70,6 +71,7 @@ public class JDOFunction implements JDOValueIF {
     return args;
   }
   
+  @Override
   public int hashCode() {
     int retval = name.hashCode() + value_type.hashCode();
     for (int i=0; i < args.length; i++) {
@@ -78,6 +80,7 @@ public class JDOFunction implements JDOValueIF {
     return retval;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj instanceof JDOFunction) {
@@ -89,6 +92,7 @@ public class JDOFunction implements JDOValueIF {
     return false;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(name).append('(');
@@ -100,6 +104,7 @@ public class JDOFunction implements JDOValueIF {
     return sb.toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     for (int i=0; i < args.length; i++) {
       visitor.visitable(args[i]);

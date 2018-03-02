@@ -47,6 +47,7 @@ public class InstancesTag extends BaseValueProducingAndAcceptingTag {
   protected String instancesAs = KIND_TOPIC; // default behaviour
 
   
+  @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     ClassInstanceIndexIF index = null;
 

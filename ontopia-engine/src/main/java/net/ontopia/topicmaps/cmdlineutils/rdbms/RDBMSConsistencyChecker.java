@@ -41,6 +41,32 @@ import net.ontopia.utils.CmdlineUtils;
  * Outputs field-combinations that fail the uniqueness test.
  */
 public class RDBMSConsistencyChecker {
+  private static final String TM_ASSOCIATION = "TM_ASSOCIATION";
+  private static final String TM_ASSOCIATION_ROLE = "TM_ASSOCIATION_ROLE";
+  private static final String TM_ASSOCIATION_SCOPE = "TM_ASSOCIATION_SCOPE";
+  private static final String TM_BASE_NAME = "TM_BASE_NAME";
+  private static final String TM_BASE_NAME_SCOPE = "TM_BASE_NAME_SCOPE";
+  private static final String TM_OCCURRENCE = "TM_OCCURRENCE";
+  private static final String TM_OCCURRENCE_SCOPE = "TM_OCCURRENCE_SCOPE";
+  private static final String TM_TOPIC_MAP = "TM_TOPIC_MAP";
+  private static final String TM_TOPIC = "TM_TOPIC";
+  private static final String TM_TOPIC_TYPES = "TM_TOPIC_TYPES";
+  private static final String TM_SUBJECT_LOCATORS = "TM_SUBJECT_LOCATORS";
+  private static final String TM_SUBJECT_IDENTIFIERS = "TM_SUBJECT_IDENTIFIERS";
+  private static final String TM_ITEM_IDENTIFIERS = "TM_ITEM_IDENTIFIERS";
+  private static final String TM_VARIANT_NAME = "TM_VARIANT_NAME";
+  private static final String TM_VARIANT_NAME_SCOPE = "TM_VARIANT_NAME_SCOPE";
+  private static final String ID = "id";
+  private static final String TYPE_ID = "type_id";
+  private static final String TOPIC_ID = "topic_id";
+  private static final String TOPICMAP_ID = "topicmap_id";
+  private static final String BASENAME_ID = "basename_id";
+  private static final String THEME_ID = "theme_id";
+  private static final String SCOPED_ID = "scoped_id";
+  private static final String PLAYER_ID = "player_id";
+  private static final String ASSOC_ID = "assoc_id";
+  private static final String ADDRESS = "address";
+  private static final String NOTATION = "notation";
 
   protected Connection conn;
   protected Writer out;
@@ -56,86 +82,59 @@ public class RDBMSConsistencyChecker {
       boolean consistent = true;
 
       // Consistency checks for foreign keys in TM_ASSOCIATION
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION", "topicmap_id",
-              "TM_TOPIC_MAP", "id");
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION", "type_id",
-              "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION, TOPICMAP_ID, TM_TOPIC_MAP, ID);
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION, TYPE_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in TM_ASSOCIATION_ROLE
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION_ROLE",
-              "assoc_id", "TM_ASSOCIATION", "id");
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION_ROLE",
-              "topicmap_id", "TM_TOPIC_MAP", "id");
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION_ROLE",
-              "type_id", "TM_TOPIC", "id");
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION_ROLE",
-              "player_id", "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION_ROLE, ASSOC_ID, TM_ASSOCIATION, ID);
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION_ROLE, TOPICMAP_ID, TM_TOPIC_MAP, ID);
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION_ROLE, TYPE_ID, TM_TOPIC, ID);
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION_ROLE, PLAYER_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in TM_ASSOCIATION_SCOPE
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION_SCOPE",
-              "scoped_id", "TM_ASSOCIATION", "id");
-      consistent &= referentialIntegrityCheck("TM_ASSOCIATION_SCOPE",
-              "theme_id", "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION_SCOPE, SCOPED_ID, TM_ASSOCIATION, ID);
+      consistent &= referentialIntegrityCheck(TM_ASSOCIATION_SCOPE, THEME_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in TM_BASE_NAME
-      consistent &= referentialIntegrityCheck("TM_BASE_NAME", "topic_id",
-              "TM_TOPIC", "id");
-      consistent &= referentialIntegrityCheck("TM_BASE_NAME", "topicmap_id",
-              "TM_TOPIC_MAP", "id");
+      consistent &= referentialIntegrityCheck(TM_BASE_NAME, TOPIC_ID, TM_TOPIC, ID);
+      consistent &= referentialIntegrityCheck(TM_BASE_NAME, TOPICMAP_ID, TM_TOPIC_MAP, ID);
 
       // Consistency checks for foreign keys in TM_BASE_NAME_SCOPE
-      consistent &=  referentialIntegrityCheck("TM_BASE_NAME_SCOPE",
-              "theme_id", "TM_TOPIC", "id");
-      consistent &=  referentialIntegrityCheck("TM_BASE_NAME_SCOPE",
-              "scoped_id", "TM_BASE_NAME", "id");
+      consistent &=  referentialIntegrityCheck(TM_BASE_NAME_SCOPE, THEME_ID, TM_TOPIC, ID);
+      consistent &=  referentialIntegrityCheck(TM_BASE_NAME_SCOPE, SCOPED_ID, TM_BASE_NAME, ID);
 
       // Consistency checks for foreign keys in TM_OCCURRENCE
-      consistent &= referentialIntegrityCheck("TM_OCCURRENCE", "topic_id",
-              "TM_TOPIC", "id");
-      consistent &= referentialIntegrityCheck("TM_OCCURRENCE", "topicmap_id",
-              "TM_TOPIC_MAP", "id");
-      consistent &= referentialIntegrityCheck("TM_OCCURRENCE", "type_id",
-              "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_OCCURRENCE, TOPIC_ID, TM_TOPIC, ID);
+      consistent &= referentialIntegrityCheck(TM_OCCURRENCE, TOPICMAP_ID, TM_TOPIC_MAP, ID);
+      consistent &= referentialIntegrityCheck(TM_OCCURRENCE, TYPE_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in TM_OCCURRENCE_SCOPE
-      consistent &=  referentialIntegrityCheck("TM_OCCURRENCE_SCOPE",
-              "theme_id", "TM_TOPIC", "id");
-      consistent &=  referentialIntegrityCheck("TM_OCCURRENCE_SCOPE",
-              "scoped_id", "TM_OCCURRENCE", "id");
+      consistent &=  referentialIntegrityCheck(TM_OCCURRENCE_SCOPE, THEME_ID, TM_TOPIC, ID);
+      consistent &=  referentialIntegrityCheck(TM_OCCURRENCE_SCOPE, SCOPED_ID, TM_OCCURRENCE, ID);
 
       // Consistency checks for foreign keys in TM_ITEM_IDENTIFIERS
-      consistent &= referentialIntegrityCheck("TM_ITEM_IDENTIFIERS",
-              "topicmap_id", "TM_TOPIC_MAP", "id");
+      consistent &= referentialIntegrityCheck(TM_ITEM_IDENTIFIERS, TOPICMAP_ID, TM_TOPIC_MAP, ID);
 
       // Consistency checks for foreign keys in TM_SUBJECT_IDENTIFIERS
-      consistent &= referentialIntegrityCheck("TM_SUBJECT_IDENTIFIERS",
-              "topic_id", "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_SUBJECT_IDENTIFIERS, TOPIC_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in TM_SUBJECT_LOCATORS
-      consistent &= referentialIntegrityCheck("TM_SUBJECT_LOCATORS",
-              "topic_id", "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_SUBJECT_LOCATORS, TOPIC_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in TM_TOPIC
-      consistent &= referentialIntegrityCheck("TM_TOPIC", "topicmap_id",
-              "TM_TOPIC_MAP", "id");
+      consistent &= referentialIntegrityCheck(TM_TOPIC, TOPICMAP_ID, TM_TOPIC_MAP, ID);
 
       // Consistency checks for foreign keys in TM_TOPIC_TYPES
-      consistent &= referentialIntegrityCheck("TM_TOPIC_TYPES", "topic_id",
-              "TM_TOPIC", "id");
-      consistent &=  referentialIntegrityCheck("TM_TOPIC_TYPES", "type_id",
-              "TM_TOPIC", "id");
+      consistent &= referentialIntegrityCheck(TM_TOPIC_TYPES, TOPIC_ID, TM_TOPIC, ID);
+      consistent &=  referentialIntegrityCheck(TM_TOPIC_TYPES, TYPE_ID, TM_TOPIC, ID);
 
       // Consistency checks for foreign keys in
-      consistent &= referentialIntegrityCheck("TM_VARIANT_NAME",
-              "basename_id", "TM_BASE_NAME", "id");
-      consistent &= referentialIntegrityCheck("TM_VARIANT_NAME",
-              "topicmap_id", "TM_TOPIC_MAP", "id");
+      consistent &= referentialIntegrityCheck(TM_VARIANT_NAME, BASENAME_ID, TM_BASE_NAME, ID);
+      consistent &= referentialIntegrityCheck(TM_VARIANT_NAME, TOPICMAP_ID, TM_TOPIC_MAP, ID);
 
       // Consistency checks for foreign keys in TM_VARIANT_NAME_SCOPE
-      consistent &= referentialIntegrityCheck("TM_VARIANT_NAME_SCOPE",
-              "theme_id", "TM_TOPIC", "id");
-      consistent &=  referentialIntegrityCheck("TM_VARIANT_NAME_SCOPE",
-              "scoped_id", "TM_VARIANT_NAME", "id");
+      consistent &= referentialIntegrityCheck(TM_VARIANT_NAME_SCOPE, THEME_ID, TM_TOPIC, ID);
+      consistent &=  referentialIntegrityCheck(TM_VARIANT_NAME_SCOPE, SCOPED_ID, TM_VARIANT_NAME, ID);
 
       out.write(consistent
               ? "There were no missing foreign keys.\n"
@@ -143,12 +142,9 @@ public class RDBMSConsistencyChecker {
 
       out.flush();
 
-      uniquenessCheck(new String[]{"topicmap_id", "notation", "address"},
-              "tm_item_identifiers");
-      uniquenessCheck(new String[]{"topic_id", "notation", "address"},
-              "tm_subject_identifiers");
-      uniquenessCheck(new String[]{"topic_id", "notation", "address"},
-              "tm_subject_locators");
+      uniquenessCheck(new String[]{TOPICMAP_ID, NOTATION, ADDRESS}, TM_ITEM_IDENTIFIERS);
+      uniquenessCheck(new String[]{TOPIC_ID, NOTATION, ADDRESS}, TM_SUBJECT_IDENTIFIERS);
+      uniquenessCheck(new String[]{TOPIC_ID, NOTATION, ADDRESS}, TM_SUBJECT_LOCATORS);
 
       storage.close();
       out.flush();

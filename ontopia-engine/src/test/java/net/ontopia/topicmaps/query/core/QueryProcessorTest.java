@@ -26,10 +26,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
@@ -41,20 +40,6 @@ import net.ontopia.utils.URIUtils;
 
 public class QueryProcessorTest extends AbstractQueryTest {
   
-  public QueryProcessorTest(String name) {
-    super(name);
-  }
-
-  /// context management
-
-  public void setUp() {
-    QueryMatches.initialSize = 1;
-  }
-
-  public void tearDown() {
-    closeStore();
-  }
-
   /// constants for various options
 
   private static final String HIERARCHY_WALKER_ON =
@@ -62,6 +47,22 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
   private static final String HIERARCHY_WALKER_OFF =
     "/* #OPTION: optimizer.hierarchy-walker = false */ ";
+
+  public QueryProcessorTest(String name) {
+    super(name);
+  }
+
+  /// context management
+
+  @Override
+  public void setUp() {
+    QueryMatches.initialSize = 1;
+  }
+
+  @Override
+  public void tearDown() {
+    closeStore();
+  }
 
   /// empty topic map
   

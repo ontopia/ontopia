@@ -30,7 +30,7 @@ public interface TupleReaderIF {
    * INTERNAL: Returns the next tuple. Method will return null when
    * there are no more tuples.
    */
-  public String[] readNext();
+  String[] readNext();
 
   // NOTE: next method intended for further performance improvements
   //! public boolean readNext(String[] tuple, int offset, int length);
@@ -39,6 +39,6 @@ public interface TupleReaderIF {
    * INTERNAL: Releases all resources held by the tuple reader. This
    * method should be called when done with the tuple reader.
    */
-  public void close();
+  void close();
 
 }

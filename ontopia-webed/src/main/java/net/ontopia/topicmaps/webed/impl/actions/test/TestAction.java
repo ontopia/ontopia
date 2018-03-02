@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
  */
 public class TestAction implements ActionIF {
 
+    @Override
     public void perform(ActionParametersIF params, ActionResponseIF response)
         throws ActionRuntimeException {
       response.addParameter("result", "SUCCESS");

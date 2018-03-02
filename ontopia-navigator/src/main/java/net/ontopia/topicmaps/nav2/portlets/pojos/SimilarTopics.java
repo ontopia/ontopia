@@ -38,9 +38,6 @@ import net.ontopia.topicmaps.query.utils.QueryWrapper;
  */
 public class SimilarTopics {
 
-  public SimilarTopics() {
-  }
-
   // --- Configuration
 
   // set a limit for how many similar topics to include
@@ -73,7 +70,7 @@ public class SimilarTopics {
       List<TopicIF> similars = getRelated(related);
       float score = 100.0f / similars.size();
       for (TopicIF similar : similars) {
-        if (similar == topic)
+        if (similar.equals(topic))
           continue;
         Float prev = points.get(similar);
         if (prev == null)
@@ -111,6 +108,7 @@ public class SimilarTopics {
       this.points = points;
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
       Float f1 = points.get((TopicIF) o1);
       Float f2 = points.get((TopicIF) o2);

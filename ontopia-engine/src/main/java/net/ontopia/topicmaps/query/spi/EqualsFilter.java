@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.query.spi;
 
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 /**
@@ -32,11 +32,12 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 public class EqualsFilter extends FilterPredicate {
 
+  @Override
   public boolean filter(Object[] objects) throws InvalidQueryException {
     // return true if  all objects are equal.
     if (objects.length > 1) {
       for (int i=1; i < objects.length; i++) {
-        if (ObjectUtils.different(objects[i-1], objects[i]))
+        if (!Objects.equals(objects[i-1], objects[i]))
           return false;
       }      
     }

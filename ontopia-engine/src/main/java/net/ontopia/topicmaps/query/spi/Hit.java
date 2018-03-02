@@ -47,6 +47,7 @@ public class Hit {
     return score;
   }
 
+  @Override
   public String toString() {
     return "[Hit " + getValue() + ", " + getScore() + "]";
   }

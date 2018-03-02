@@ -40,6 +40,7 @@ public class NumbersModule implements ModuleIF {
 
   public static final String MODULE_URI = 
     "http://psi.ontopia.net/tolog/numbers/";
+  private static final String SHARED_SIGNATURE = "n n! n!+";
 
   private Map<String, PredicateIF> predicates;
 
@@ -60,6 +61,7 @@ public class NumbersModule implements ModuleIF {
     predicates.put(predicate.getName(), predicate);
   }
 
+  @Override
   public PredicateIF getPredicate(String name) {
     return predicates.get(name);
   }
@@ -132,6 +134,7 @@ public class NumbersModule implements ModuleIF {
   // --- AbstractPredicate
   abstract class AbstractPredicate implements BasicPredicateIF {
 
+    @Override
     public int getCost(boolean[] boundparams) {
       try {
         int signLenghth = -1;
@@ -193,6 +196,7 @@ public class NumbersModule implements ModuleIF {
       }
     }
 
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments) throws InvalidQueryException {
       if (unboundArgument == null) {
         calculateUnboundArgument();
@@ -248,6 +252,7 @@ public class NumbersModule implements ModuleIF {
   // --- AbstractNumbersArrayPickerPredicate -- returns element from array, in stead of calculated result
   abstract class AbstractNumbersArrayPickerPredicate extends AbstractNumbersPredicate {
 
+    @Override
     protected Number calculateResult(Number[] values) throws InvalidQueryException {
       switch (NumberSupport.getHighestPrecision(values)) {
         case INTEGER: return values[calculateResult(NumberSupport.castToIntegers(values)).intValue()];
@@ -261,14 +266,17 @@ public class NumbersModule implements ModuleIF {
   // --- value(string, result, pattern?, locale?)
   class NumbersValuePredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "value";
     }
 
+    @Override
     public String getSignature() {
       return "s! n s!? s!?";
     }
 
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments) throws InvalidQueryException {
       PredicateSignature sign = PredicateSignature.getSignature(this);
       sign.verifyBound(matches, arguments, this);
@@ -340,14 +348,17 @@ public class NumbersModule implements ModuleIF {
   // --- format(number, result, pattern?, locale?)
   class NumbersFormatPredicate extends AbstractPredicate {
 
+    @Override
     public String getName() {
       return "format";
     }
 
+    @Override
     public String getSignature() {
       return "n! s s!? s!?";
     }
 
+    @Override
     public QueryMatches satisfy(QueryMatches matches, Object[] arguments) throws InvalidQueryException {
       PredicateSignature sign = PredicateSignature.getSignature(this);
       sign.verifyBound(matches, arguments, this);
@@ -406,18 +417,22 @@ public class NumbersModule implements ModuleIF {
   // --- absolute(number, result)
   class NumbersAbsolutePredicate extends AbstractNumbersPredicate {
 
+    @Override
     public String getName() {
       return "absolute";
     }
 
+    @Override
     public String getSignature() {
       return "n! n";
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) {
       return Math.abs(values[0]);
     }
 
+    @Override
     protected Number calculateResult(Float[] values) {
       return Math.abs(values[0]);
     }
@@ -427,14 +442,17 @@ public class NumbersModule implements ModuleIF {
   // --- add(result, number, number+)
   class NumbersAddPredicate extends AbstractNumbersPredicate {
 
+    @Override
     public String getName() {
       return "add";
     }
 
+    @Override
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) {
       int result = 0;
       for (int value : values) {
@@ -443,6 +461,7 @@ public class NumbersModule implements ModuleIF {
       return result;
     }
 
+    @Override
     protected Number calculateResult(Float[] values) {
       float result = 0.0f;
       for (float value : values) {
@@ -456,14 +475,17 @@ public class NumbersModule implements ModuleIF {
   // --- subtract(result, number, number+)
   class NumbersSubtractPredicate extends AbstractNumbersPredicate {
 
+    @Override
     public String getName() {
       return "subtract";
     }
 
+    @Override
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) {
       int result = 0;
       int first = -1;
@@ -474,6 +496,7 @@ public class NumbersModule implements ModuleIF {
       return result;
     }
 
+    @Override
     protected Number calculateResult(Float[] values) {
       float result = 0.0f;
       int first = -1;
@@ -489,14 +512,17 @@ public class NumbersModule implements ModuleIF {
   // --- multiply(result, number, number+)
   class NumbersMultiplyPredicate extends AbstractNumbersPredicate {
 
+    @Override
     public String getName() {
       return "multiply";
     }
 
+    @Override
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) {
       int result = 1;
       for (int value : values) {
@@ -505,6 +531,7 @@ public class NumbersModule implements ModuleIF {
       return result;
     }
 
+    @Override
     protected Number calculateResult(Float[] values) {
       float result = 1.0f;
       for (float value : values) {
@@ -518,14 +545,17 @@ public class NumbersModule implements ModuleIF {
   // --- divide(result, number, number+)
   class NumbersDividePredicate extends AbstractNumbersPredicate {
 
+    @Override
     public String getName() {
       return "divide";
     }
 
+    @Override
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) throws InvalidQueryException {
       try {
         int result = 1;
@@ -542,6 +572,7 @@ public class NumbersModule implements ModuleIF {
       }
     }
 
+    @Override
     protected Number calculateResult(Float[] values) throws InvalidQueryException {
       try {
         float result = 1.0f;
@@ -563,14 +594,17 @@ public class NumbersModule implements ModuleIF {
   // --- min(result, number, number+)
   class NumbersMinimumPredicate extends AbstractNumbersArrayPickerPredicate {
 
+    @Override
     public String getName() {
       return "min";
     }
 
+    @Override
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) {
       Integer minimum = values[0];
       int index = 0;
@@ -585,6 +619,7 @@ public class NumbersModule implements ModuleIF {
       return index;
     }
 
+    @Override
     protected Number calculateResult(Float[] values) {
       Float minimum = values[0];
       int index = 0;
@@ -604,14 +639,17 @@ public class NumbersModule implements ModuleIF {
   // --- max(result, number, number+)
   class NumbersMaximumPredicate extends AbstractNumbersArrayPickerPredicate {
 
+    @Override
     public String getName() {
       return "max";
     }
 
+    @Override
     public String getSignature() {
-      return "n n! n!+";
+      return SHARED_SIGNATURE;
     }
 
+    @Override
     protected Number calculateResult(Integer[] values) {
       Integer maximum = values[0];
       int index = 0;
@@ -626,6 +664,7 @@ public class NumbersModule implements ModuleIF {
       return index;
     }
 
+    @Override
     protected Number calculateResult(Float[] values) {
       Float maximum = values[0];
       int index = 0;

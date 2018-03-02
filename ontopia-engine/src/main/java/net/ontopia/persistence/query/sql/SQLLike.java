@@ -44,6 +44,7 @@ public class SQLLike implements SQLExpressionIF {
     this.caseSensitive = caseSensitive;
   }
 
+  @Override
   public int getType() {
     return LIKE;
   }
@@ -72,6 +73,7 @@ public class SQLLike implements SQLExpressionIF {
     this.caseSensitive = caseSensitive;
   }
 
+  @Override
   public String toString() {
     return getLeft() + " like " + getRight();
   }

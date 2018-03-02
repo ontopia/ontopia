@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Iterator;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -28,10 +29,9 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
 import net.ontopia.topicmaps.query.impl.utils.PredicateOptions;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
-import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Implements occurrence predicates.
@@ -49,10 +49,12 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
     occindex = (OccurrenceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.OccurrenceIndexIF");
   }
 
+  @Override
   public String getSignature() {
     return "t s z?"; // third arg is PredicateOptions, inserted by optimizer
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -64,6 +66,7 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
       return PredicateDrivenCostEstimator.BIG_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 
@@ -137,7 +140,7 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
 
         String occval = occ.getValue();
 
-        if (ObjectUtils.different(value, occval))
+        if (!Objects.equals(value, occval))
           continue;
         
         if (result.last+1 == result.size) 

@@ -30,24 +30,21 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
-import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Parses menu configuration files.
  */
 public class MenuFileParser {
   private String source;
-  Map enabled;
-  int lineIndex;
-  boolean succeeded;
+  private Map enabled;
+  private int lineIndex;
   
   /**
    * Create new from a given file.
@@ -150,7 +147,7 @@ public class MenuFileParser {
     VizDebugUtils.debug("value: " + value);
     validateValue(value);
     
-    enabled.put(name, value.equals("on") ? Boolean.TRUE : Boolean.FALSE);
+    enabled.put(name, "on".equals(value) ? Boolean.TRUE : Boolean.FALSE);
   }
   
   private void validateName (String name) throws MenuFileParseError {
@@ -179,7 +176,7 @@ public class MenuFileParser {
   
   private void validateValue (String value) throws MenuFileParseError {
     // Value must be either "on" or "off".
-    if (!(value.equals("on") || value.equals("off")))
+    if (!("on".equals(value) || "off".equals(value)))
       throw new MenuFileParseError("The value \"" + value +
           "\" is not on the form \"on\" or \"off\"");
   }
@@ -192,7 +189,7 @@ public class MenuFileParser {
     Reader reader = new InputStreamReader(stream, "iso-8859-1");
 
     StringWriter writer = new StringWriter();
-    StreamUtils.transfer(reader, writer);
+    IOUtils.copy(reader, writer);
 
     stream.close();
 
@@ -222,6 +219,7 @@ public class MenuFileParser {
         
       // Will listen for and act upon changes to the OK button.
       ActionListener okListener = new ActionListener() {
+          @Override
           public void actionPerformed(ActionEvent action) {
             setVisible(false);
           }
@@ -242,12 +240,13 @@ public class MenuFileParser {
    * Indicates a parse or syntax error in MenuFileParser.
    */
   public class MenuFileParseError extends Exception {
-    String message;
+    private String message;
     
     public MenuFileParseError(String message) {
       this.message = message;
     }
     
+    @Override
     public String getMessage() {
       return message;
     }

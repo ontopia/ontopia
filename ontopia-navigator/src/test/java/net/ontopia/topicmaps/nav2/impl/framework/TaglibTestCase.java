@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import javax.servlet.jsp.PageContext;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
@@ -45,7 +44,7 @@ import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.JSPPageExecuter;
 import net.ontopia.utils.ontojsp.JSPPageReader;
 import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
-import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +87,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     InputStream in = StreamUtils.getInputStream(
             TestFileUtils.getTestInputFile(testdataDirectory, "config", "tests.xml"));
 
-    XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
+    XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
     TestCaseContentHandler handler = new TestCaseContentHandler();
     handler.register(parser);
     parser.parse(new InputSource(in));
@@ -119,7 +118,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     }
     if (params.containsKey("fail")) {
       String test = (String) params.get("fail");
-      if (test.equals("true"))
+      if ("true".equals(test))
         shouldFail = true;
       else
         shouldFail = false;
@@ -144,8 +143,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     try {
       // setup environment and execute single test case
       PageContext page = makePageContext();
-      String jspSource = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", jspfile);
-      JSPPageReader reader = new JSPPageReader(jspSource);
+      JSPPageReader reader = new JSPPageReader(TestFileUtils.getTestInputURL(testdataDirectory, "jsp", jspfile));
       JSPTreeNodeIF root = reader.read(useTagPooling);
       JSPPageExecuter exec = new JSPPageExecuter();
       log.info("Run testcase for " + generateTestCaseDescriptor());
@@ -211,11 +209,11 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     if (shouldFail) {
       Assert.assertTrue("This testcase should have failed, but the result from the JSP file" +
                  " is the same as the baseline. [" + infile + "]",
-                 !FileUtils.compareFileToResource(outfile, infile));
+                 !TestFileUtils.compareFileToResource(outfile, infile));
     } else {
       Assert.assertTrue("Result from the JSP file is not the same as baseline. [" +
                  infile + "]",
-                 FileUtils.compareFileToResource(outfile, infile));
+                 TestFileUtils.compareFileToResource(outfile, infile));
     }
   }
 

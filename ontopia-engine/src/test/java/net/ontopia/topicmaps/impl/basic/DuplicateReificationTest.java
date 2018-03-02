@@ -27,6 +27,7 @@ public class DuplicateReificationTest extends net.ontopia.topicmaps.core.Duplica
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

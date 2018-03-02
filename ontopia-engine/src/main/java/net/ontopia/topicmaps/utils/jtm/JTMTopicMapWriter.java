@@ -19,6 +19,8 @@
  */
 package net.ontopia.topicmaps.utils.jtm;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -26,23 +28,21 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +54,11 @@ import org.slf4j.LoggerFactory;
  * @since 5.1.0
  */
 public class JTMTopicMapWriter implements TopicMapWriterIF {
-  static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
       .getLogger(JTMTopicMapWriter.class.getName());
 
+  private static final String TYPE = "type";
+  private static final String SI = "si:";
   private final static String VERSION = "1.0";
 
   private JSONWriter writer;
@@ -66,6 +68,29 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     IID,
     SID,
     SL
+  }
+  
+  /**
+   * PUBLIC: Create an JTMTopicMapWriter that writes to a given File in
+   * UTF-8. <b>Warning:</b> Use of this method is discouraged, as it is very
+   * easy to get character encoding errors with this method.
+   * 
+   * @param file Where the output should be written.
+   */
+  public JTMTopicMapWriter(File file) throws IOException {
+    this(new FileOutputStream(file), "utf-8");
+  }
+  
+  /**
+   * PUBLIC: Create an JTMTopicMapWriter that writes to a given File in
+   * the given encoding.
+   * 
+   * @param file Where the output should be written.
+   * @param encoding The desired character encoding.
+   */
+  public JTMTopicMapWriter(File file, String encoding) throws IOException {
+    this(new FileOutputStream(file), encoding);
+    writer.setCloseWriter(true);
   }
   
   /**
@@ -105,6 +130,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param tm The topic map to be serialized as JTM.
    */
+  @Override
   public void write(TopicMapIF tm) throws IOException {
     write((TMObjectIF) tm);
   }
@@ -187,7 +213,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param tm the topic map to be serialized as JTM.
    */
-  @SuppressWarnings("unchecked")
   private void serializeTopicMap(TopicMapIF tm) throws IOException {
     // ----------------- Topics --------------------
     Collection<TopicIF> topics = tm.getTopics();
@@ -241,7 +266,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * @param topic the topic to be serialized.
    * @param topLevel if the element is serialized as top-level element.
    */
-  @SuppressWarnings("unchecked")
   private void serializeTopic(TopicIF topic, boolean topLevel)
       throws IOException {
     if (!topLevel) {
@@ -281,7 +305,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * @param association the association to be serialized.
    * @param topLevel if the element is serialized as top-level element.
    */
-  @SuppressWarnings("unchecked")
   private void serializeAssociation(AssociationIF association, boolean topLevel)
       throws IOException {
     if (!topLevel) {
@@ -321,7 +344,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     
     writer.
       pair("player", getTopicRef(role.getPlayer())).
-      pair("type", getTopicRef(role.getType()));
+      pair(TYPE, getTopicRef(role.getType()));
     
     serializeItemIdentifiers(role);
     serializeReifier(role);
@@ -337,19 +360,19 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    */
   private void serializeTypeInstanceAssociation(TopicIF type, TopicIF instance)
       throws IOException {
-    writer.object().pair("type", "si:" + PSI.getSAMTypeInstance().getExternalForm());
+    writer.object().pair(TYPE, SI + PSI.getSAMTypeInstance().getExternalForm());
     writer.key("roles").array();
     
     // Type Role
     writer.object();
     writer.pair("player", getTopicRef(type));
-    writer.pair("type", "si:" + PSI.getSAMType().getExternalForm());
+    writer.pair(TYPE, SI + PSI.getSAMType().getExternalForm());
     writer.endObject();
 
     // Instance Role
     writer.object();
     writer.pair("player", getTopicRef(instance));
-    writer.pair("type", "si:" + PSI.getSAMInstance().getExternalForm());
+    writer.pair(TYPE, SI + PSI.getSAMInstance().getExternalForm());
     writer.endObject();
     
     writer.endArray();
@@ -362,7 +385,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * @param name the name to be serialized.
    * @param topLevel if the element is serialized as top-level element.
    */
-  @SuppressWarnings("unchecked")
   private void serializeName(TopicNameIF name, boolean topLevel)
       throws IOException {
     if (!topLevel) {
@@ -476,7 +498,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param obj the {@link TMObjectIF} to be serialized.
    */
-  @SuppressWarnings("unchecked")
   private void serializeItemIdentifiers(TMObjectIF obj)
       throws IOException {
     Collection<LocatorIF> ids = obj.getItemIdentifiers();
@@ -489,7 +510,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param topic the {@link TopicIF} to be serialized.
    */
-  @SuppressWarnings("unchecked")
   private void serializeSubjectIdentifiers(TopicIF topic)
       throws IOException {
     Collection<LocatorIF> sids = topic.getSubjectIdentifiers();
@@ -502,7 +522,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param topic the {@link TopicIF} to be serialized.
    */
-  @SuppressWarnings("unchecked")
   private void serializeSubjectLocators(TopicIF topic)
       throws IOException {
     Collection<LocatorIF> slocs = topic.getSubjectLocators();
@@ -532,7 +551,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param obj the scoped object to be used.
    */
-  @SuppressWarnings("unchecked")
   private void serializeScope(ScopedIF obj)
       throws IOException {
     Collection<TopicIF> scopes = obj.getScope();
@@ -555,7 +573,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       throws IOException {
     TopicIF type = obj.getType();
     if (type != null) {
-      writer.pair("type", getTopicRef(type));
+      writer.pair(TYPE, getTopicRef(type));
     }
   }
 
@@ -684,7 +702,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       // should not happen, as every topic needs to have one of them
       log.warn("Topic with objectID:" + ref.getObjectId()
           + " has not a single item/subject identifier or locator.");
-      return new String("");
+      return "";
     }
   }
   
@@ -710,16 +728,16 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       sb.append("ii:");
       String id = normaliseLocatorReference(loc);
       if (!id.startsWith("http://") && !id.startsWith("#")) {
-        sb.append("#");
+        sb.append('#');
       }
       sb.append(id);
       break;
     case SID:
-      sb.append("si:");
+      sb.append(SI);
       sb.append(loc.getAddress());
       break;
     case SL:
-      sb.append("si:");
+      sb.append(SI);
       sb.append(loc.getAddress());
       break;
     }
@@ -730,6 +748,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * JTMTopicMapWriter has no additional properties.
    * @param properties 
    */
+  @Override
   public void setAdditionalProperties(Map<String, Object> properties) {
     // no-op
   }

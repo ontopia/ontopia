@@ -45,14 +45,17 @@ public class ItemIdentifierPredicate implements BasicPredicateIF {
     this.predicateName = predicateName;
   }
   
+  @Override
   public String getName() {
     return predicateName;
   }
 
+  @Override
   public String getSignature() {
     return "x s";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -64,6 +67,7 @@ public class ItemIdentifierPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

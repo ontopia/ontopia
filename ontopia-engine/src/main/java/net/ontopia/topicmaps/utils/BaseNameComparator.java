@@ -37,6 +37,7 @@ public class BaseNameComparator extends ScopedIFComparator<TopicNameIF> {
     super(scope);
   }
   
+  @Override
   public int compare(TopicNameIF o1, TopicNameIF o2) {
     TopicIF t1 = o1.getType();
     TopicIF t2 = o2.getType();

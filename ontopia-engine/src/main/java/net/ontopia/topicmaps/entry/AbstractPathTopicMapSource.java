@@ -27,7 +27,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -83,18 +82,22 @@ public abstract class AbstractPathTopicMapSource
   }
 
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(String title) {
     this.title = title;
   }
@@ -193,23 +196,28 @@ public abstract class AbstractPathTopicMapSource
     this.duplicate_suppression = duplicate_suppression;
   }
   
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (refmap == null) refresh();
     return refmap.values();
   }
 
+  @Override
   public boolean supportsCreate() {
     return false;
   }
 
+  @Override
   public boolean supportsDelete() {
     return false;
   }
 
+  @Override
   public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized void refresh() {
     if (path == null)
       throw new OntopiaRuntimeException("'path' property has not been set.");
@@ -242,17 +250,12 @@ public abstract class AbstractPathTopicMapSource
 
     // Loop over matched files.
     for (int i=0; i < files.length; i++) {
-      try {
-        String filename = files[i].getName();
-        String id = filename;
-        URL url = URIUtils.toURL(files[i]);
-        TopicMapReferenceIF ref = createReference(url, id, filename);
-        if (ref != null)
-          newmap.put(id, ref);
-        
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e);
-      }
+      String filename = files[i].getName();
+      String id = filename;
+      URL url = URIUtils.toURL(files[i]);
+      TopicMapReferenceIF ref = createReference(url, id, filename);
+      if (ref != null)
+        newmap.put(id, ref);
     }
     return newmap;
   }
@@ -263,17 +266,12 @@ public abstract class AbstractPathTopicMapSource
     }
     Map newmap = new HashMap();
     ResourcesDirectoryReader reader = new ResourcesDirectoryReader(path.substring("classpath:".length()), suffix);
-    for (String resource : reader.getResources()) {
-      try {
-        String filename = resource.substring(resource.lastIndexOf("/") + 1);
-        String id = filename;
-        URL url = new URL(URIUtils.getURI("classpath:" + resource).getAddress());
-        TopicMapReferenceIF ref = createReference(url, id, filename);
-        if (ref != null) {
-          newmap.put(id, ref);
-        }
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e);
+    for (URL resource : reader.getResources()) {
+      String file = resource.getFile();
+      String id = file.substring(file.lastIndexOf('/') + 1);
+      TopicMapReferenceIF ref = createReference(resource, id, id);
+      if (ref != null) {
+        newmap.put(id, ref);
       }
     }
     return newmap;
@@ -325,6 +323,7 @@ public abstract class AbstractPathTopicMapSource
    * if it is not a directory and the filename ends with the specified
    * suffix.
    */
+  @Override
   public boolean accept(File file) {
     // default FileFilter implementation
     return (!file.isDirectory() && file.getName().endsWith(suffix));

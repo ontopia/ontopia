@@ -32,6 +32,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  */
 public class RemoveType extends AbstractTopicMapAction {
 
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     //test params
     ActionSignature paramsType = ActionSignature.getSignature("t t");

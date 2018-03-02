@@ -43,52 +43,63 @@ public class ReadOnlySet<E> implements Set<E> {
   
   // -- immutable collection
 
+  @Override
   public void clear() {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
 
   // -- size
 
+  @Override
   public int size() {
     return coll.size();
   }
 
+  @Override
   public boolean isEmpty() {
     return coll.isEmpty();
   }
 
   // -- iterator
 
+  @Override
   public Iterator<E> iterator() {
     return new PersistentIterator<E>(txn, false, coll.iterator());
   }
 
   // -- other
 
+  @Override
   public boolean contains(Object o) {
     return coll.contains((o instanceof PersistentIF ? ((PersistentIF)o)._p_getIdentity() : o));
   }
 
+  @Override
   public boolean containsAll(Collection<?> c) {
     Iterator<?> e = c.iterator();
     while (e.hasNext())
@@ -98,6 +109,7 @@ public class ReadOnlySet<E> implements Set<E> {
     return true;
   }
 
+  @Override
   public Object[] toArray() {
     Object[] result = new Object[size()];
     Iterator<E> e = iterator();
@@ -107,6 +119,7 @@ public class ReadOnlySet<E> implements Set<E> {
   }
 
   @SuppressWarnings("unchecked")
+  @Override
   public <T> T[] toArray(T[] a) {
     int size = size();
     if (a.length < size)

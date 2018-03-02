@@ -20,15 +20,11 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultIfDecider implements NavigatorDeciderIF {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(DefaultIfDecider.class.getName());
   
   // members
@@ -88,6 +84,7 @@ public class DefaultIfDecider implements NavigatorDeciderIF {
   // Implementation of NavigatorDeciderIF
   // -----------------------------------------------------------
 
+  @Override
   public boolean ok(NavigatorPageIF contextTag, Object obj) {
     if (obj == null)
       return false;

@@ -44,23 +44,23 @@ public interface QueryResultIF extends AutoCloseable {
    * was found, and false if there are no more matches. Must be called
    * before values can be returned.
    */
-  public boolean next();
+  boolean next();
 
   /**
    * PUBLIC: Returns the number of columns in the result.
    */
-  public int getWidth();
+  int getWidth();
 
   /**
    * PUBLIC: Returns the index of the named column. Returns -1 if the
    * column does not exist. The column index is zero-based.
    */
-  public int getIndex(String colname);
+  int getIndex(String colname);
 
   /**
    * PUBLIC: Returns the names of the columns.
    */
-  public String[] getColumnNames();
+  String[] getColumnNames();
 
   /**
    * PUBLIC: Returns the name of the given column.  The column index
@@ -68,7 +68,7 @@ public interface QueryResultIF extends AutoCloseable {
    *
    * @throws IndexOutOfBoundsException if there is no such column.
    */
-  public String getColumnName(int ix);
+  String getColumnName(int ix);
 
   /**
    * PUBLIC: Returns the value in the given column in the current
@@ -77,14 +77,14 @@ public interface QueryResultIF extends AutoCloseable {
    *
    * @throws IndexOutOfBoundsException if there is no such column.
    */
-  public Object getValue(int ix);
+  Object getValue(int ix);
   
   /**
    * PUBLIC: Returns the value in the given column in the current
    * match.  Requires <code>next()</code> to have been called first.
    * @throws IllegalArgumentException if there is no such column.
    */
-  public Object getValue(String colname);
+  Object getValue(String colname);
 
   /**
    * PUBLIC: Returns the current match as an array of values. Note
@@ -92,7 +92,7 @@ public interface QueryResultIF extends AutoCloseable {
    * undefined results. Requires <code>next()</code> to have been
    * called first.
    */
-  public Object[] getValues();
+  Object[] getValues();
 
   /**
    * PUBLIC: Reads the values of the current match into the specified
@@ -100,7 +100,7 @@ public interface QueryResultIF extends AutoCloseable {
    *
    * @since 1.3.2
    */
-  public Object[] getValues(Object[] values);
+  Object[] getValues(Object[] values);
 
   /**
    * PUBLIC: Closes the query result, which allows it to free its
@@ -108,6 +108,7 @@ public interface QueryResultIF extends AutoCloseable {
    *
    * @since 1.3.4
    */
-  public void close();
+  @Override
+  void close();
   
 }

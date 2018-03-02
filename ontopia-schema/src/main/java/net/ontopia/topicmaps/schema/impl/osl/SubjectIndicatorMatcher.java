@@ -48,6 +48,7 @@ public class SubjectIndicatorMatcher implements TMObjectMatcherIF {
 
   // --- TMObjectMatcherIF methods
   
+  @Override
   public boolean matches(TMObjectIF object) {
     if (!(object instanceof TopicIF))
       return false;
@@ -58,10 +59,12 @@ public class SubjectIndicatorMatcher implements TMObjectMatcherIF {
 
   // --- Object methods
   
+  @Override
   public String toString() {
     return "<SubjectIndicatorMatcher '" + locator + "'>";
   }
 
+  @Override
   public boolean equals(TMObjectMatcherIF object) {
     if (object instanceof SubjectIndicatorMatcher)
       return ((SubjectIndicatorMatcher)object).getLocator() == this.getLocator();

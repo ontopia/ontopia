@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -38,9 +37,9 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.TopicMap;
+import org.apache.commons.lang3.StringUtils;
 
 public class Upgrade_1_9 extends UpgradeBase {
   
@@ -1437,7 +1436,7 @@ public class Upgrade_1_9 extends UpgradeBase {
           int order = Integer.parseInt(occ.getValue());
           if (order < 1000) {
             int neworder = (order * 1000) + 1000;
-            occ.setValue(StringUtils.pad(neworder, '0', 9));
+            occ.setValue(StringUtils.leftPad(Integer.toString(neworder), 9, '0'));
           }
         } catch (NumberFormatException e) {
           // ignore

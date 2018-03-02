@@ -48,6 +48,7 @@ public class TopicListPanel extends Panel {
       super(id, list);
     }
     
+    @Override
     protected void populateItem(ListItem<Topic> item) {
       Topic topic = item.getModelObject();
       // FIXME: upgrade to TopicLink

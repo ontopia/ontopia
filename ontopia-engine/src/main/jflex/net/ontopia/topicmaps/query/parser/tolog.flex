@@ -230,7 +230,7 @@ String = "\"" ([^\"] | "\"\"" )* "\""
   {String}           {
     String str = yytext();
     str = str.substring(1, str.length() - 1);
-    str = net.ontopia.utils.StringUtils.replace(str, "\"\"", "\"");
+    str = org.apache.commons.lang3.StringUtils.replace(str, "\"\"", "\"");
     return newToken(RealTologParser.STRING, str);
   }
   

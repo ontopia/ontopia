@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
  */
 public abstract class ProcessPredicate extends JavaPredicate {
 
+  @Override
   public final QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
     // validate arguments
@@ -47,13 +48,13 @@ public abstract class ProcessPredicate extends JavaPredicate {
 
   static class Result implements ResultIF {
 
-    QueryMatches input;
-    QueryMatches output;
+    private QueryMatches input;
+    private QueryMatches output;
     
-    int[] argindexes;
-    boolean[] boundparams;
+    private int[] argindexes;
+    private boolean[] boundparams;
 
-    int rownum;
+    private int rownum;
     
     Result(QueryMatches matches, Object[] arguments) {
       this.input = matches;
@@ -84,6 +85,7 @@ public abstract class ProcessPredicate extends JavaPredicate {
       }
     }
       
+    @Override
     public void add(Object[] row) {
       if (output.last+1 == output.size) 
         output.increaseCapacity();

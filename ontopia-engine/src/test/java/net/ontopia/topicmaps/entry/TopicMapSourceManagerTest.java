@@ -24,12 +24,13 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import junit.framework.TestCase;
 
 public class TopicMapSourceManagerTest extends TestCase {
-  TopicMapSourceManager manager;
+  private TopicMapSourceManager manager;
 
   public TopicMapSourceManagerTest(String name) {
     super(name);
   }
 
+  @Override
   public void setUp() {
     manager = new TopicMapSourceManager();
   }

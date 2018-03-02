@@ -79,6 +79,7 @@ public class PropertiesPanel extends JScrollPane {
     goToMenuItem.setEnabled(controller.isApplet());
     goToMenuItem.addActionListener(new ActionListener() {
 
+      @Override
       public void actionPerformed(ActionEvent anEvent) {
 
         controller.openPropertiesURL(anEvent.getActionCommand());
@@ -88,10 +89,12 @@ public class PropertiesPanel extends JScrollPane {
     popup.add(goToMenuItem);
 
     tree.addMouseListener(new MouseInputAdapter() {
+      @Override
       public void mousePressed(MouseEvent anEvent) {
         maybeShowPopupMenu(anEvent);
       }
 
+      @Override
       public void mouseReleased(MouseEvent anEvent) {
         maybeShowPopupMenu(anEvent);
       }

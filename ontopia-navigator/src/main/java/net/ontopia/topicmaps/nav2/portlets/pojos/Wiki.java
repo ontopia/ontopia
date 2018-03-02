@@ -20,29 +20,33 @@
 
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
-import java.util.Map;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.io.Writer;
-import java.io.IOException;
-
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringifierIF;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * PUBLIC: This component can render wiki formatting a la MediaWiki
  * into HTML.
  */
 public class Wiki {
+  private static StringifierIF strify =
+    TopicStringifiers.getDefaultStringifier();
+  private static StringifierIF linker =
+    new Linker();
+
   public static void render(String text, Writer out, TopicMapIF topicmap,
                             Map params) throws IOException {
     out.write("<p>");
@@ -142,16 +146,6 @@ public class Wiki {
     return ix - 2;
   }
   
-  private static String debug(char ch) {
-    if (ch == ' ')
-      return "SPACE";
-    if (ch == '\n')
-      return "NEWLINE";
-    if (ch == '\r')
-      return "CR";
-    return "" + ch + " (" + ((int) ch) + ")";
-  }
-  
   private static String runQuery(String query, TopicMapIF topicmap, Map params) {
     try {
       StringBuilder out = new StringBuilder();
@@ -176,11 +170,6 @@ public class Wiki {
       throw new OntopiaRuntimeException(e);
     }
   }
-  
-  private static StringifierIF strify =
-    TopicStringifiers.getDefaultStringifier();
-  private static StringifierIF linker =
-    new Linker();
   
   private static String getString(Object value, Map params) {
     if (value instanceof TopicIF) {
@@ -212,6 +201,7 @@ public class Wiki {
   }
 
   static class Linker implements StringifierIF {
+    @Override
     public String toString(Object o) {
       TopicIF topic = (TopicIF) o;
       return "<a href=\"topic.jsp?id=" + getId(topic) +

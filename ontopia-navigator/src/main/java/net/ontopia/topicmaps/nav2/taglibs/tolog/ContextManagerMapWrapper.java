@@ -41,14 +41,17 @@ public class ContextManagerMapWrapper implements Map {
     this.contextManager = contextManager;
   }
 
+  @Override
   public Object get(Object key) {
     return contextManager.getValue((String) key, null);
   }
     
+  @Override
   public boolean containsKey(Object key) {
     return contextManager.getValue((String)key, null) != null;
   }
 
+  @Override
   public Object put(Object key, Object value) {
     Object retVal;
     try {
@@ -72,6 +75,7 @@ public class ContextManagerMapWrapper implements Map {
     return retVal;
   }
   
+  @Override
   public int size() { 
     // we shouldn't really implement this method, as we have no idea
     // how many (if any) variables there are inside the context, but
@@ -83,26 +87,32 @@ public class ContextManagerMapWrapper implements Map {
   
   // Interface methods that are not supported.
   
+  @Override
   public void clear() { 
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean containsValue(Object value) { 
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public Set entrySet() { 
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public boolean isEmpty() { 
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public Set keySet() { 
     throw new UnsupportedOperationException();
   }
   
+  @Override
   public void putAll(Map t) {
     throw new UnsupportedOperationException();
   }
@@ -115,6 +125,7 @@ public class ContextManagerMapWrapper implements Map {
    * but size is not implemented, and will not be.
    * @param key - The key of the mapping.
    */
+  @Override
   public Object remove(Object key) {
     // Get the old mapped value of the key, if there is one
     Object retVal = get(key);
@@ -129,6 +140,7 @@ public class ContextManagerMapWrapper implements Map {
     return retVal;
   }
   
+  @Override
   public Collection values() { 
     throw new UnsupportedOperationException();
   }

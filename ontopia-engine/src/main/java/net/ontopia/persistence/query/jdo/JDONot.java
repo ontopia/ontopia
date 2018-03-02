@@ -34,6 +34,7 @@ public class JDONot implements JDOExpressionIF {
     this.expression = expression;
   }
   
+  @Override
   public int getType() {
     return NOT;
   }
@@ -42,10 +43,12 @@ public class JDONot implements JDOExpressionIF {
     return expression;
   }
 
+  @Override
   public int hashCode() {
     return expression.hashCode();
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof JDONot) {
       JDONot other = (JDONot)obj;
@@ -54,14 +57,15 @@ public class JDONot implements JDOExpressionIF {
     return false;
   }
 
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("!(");
-    sb.append(expression);
-    sb.append(")");
-    return sb.toString();
+    return new StringBuilder("!(")
+        .append(expression)
+        .append(')')
+        .toString();
   }
 
+  @Override
   public void visit(JDOVisitorIF visitor) {
     visitor.visitable(expression);
   }

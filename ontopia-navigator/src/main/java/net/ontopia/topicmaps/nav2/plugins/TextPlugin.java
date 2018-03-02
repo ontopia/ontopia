@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import javax.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
 /**
@@ -28,6 +27,7 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
  */
 public class TextPlugin extends DefaultPlugin {
 
+  @Override
   public String generateHTML(ContextTag context) {
     return getParameter("text");
   }

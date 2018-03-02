@@ -53,6 +53,7 @@ public class SpecialCharNormalizer implements TermNormalizerIF, DelimiterTrimmer
     }
   }
   
+  @Override
   public String normalize(String term) {
     int length = term.length();
     int start = 0;
@@ -77,6 +78,7 @@ public class SpecialCharNormalizer implements TermNormalizerIF, DelimiterTrimmer
       return term.substring(start, end+1);
   }
   
+  @Override
   public int trimStart(String token) {
     int start = 0;
     int end = token.length()-1;
@@ -89,6 +91,7 @@ public class SpecialCharNormalizer implements TermNormalizerIF, DelimiterTrimmer
     return start;
   }
   
+  @Override
   public int trimEnd(String token) {
     int end = token.length()-1;
     for (int i=end; i >= 0; i--) {

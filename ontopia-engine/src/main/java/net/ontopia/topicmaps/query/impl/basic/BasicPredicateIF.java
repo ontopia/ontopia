@@ -28,7 +28,7 @@ import net.ontopia.topicmaps.query.parser.PredicateIF;
  */
 public interface BasicPredicateIF extends PredicateIF {
 
-  public QueryMatches satisfy(QueryMatches result, Object[] arguments)
+  QueryMatches satisfy(QueryMatches result, Object[] arguments)
     throws InvalidQueryException;
   
 }

@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
  */
 public class DummyAction implements ActionIF {
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
   }
   

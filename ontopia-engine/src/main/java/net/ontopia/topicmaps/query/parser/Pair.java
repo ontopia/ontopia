@@ -40,10 +40,12 @@ public class Pair {
     return second;
   }
   
+  @Override
   public String toString() {
     return first + " : " + second;
   }
   
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof Pair))
       return false;
@@ -53,6 +55,7 @@ public class Pair {
             second.equals(pair.second));
   }
 
+  @Override
   public int hashCode() {
     return first.hashCode() + second.hashCode();
   }

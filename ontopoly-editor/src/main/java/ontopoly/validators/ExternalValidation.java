@@ -34,12 +34,15 @@ public class ExternalValidation {
   public static void validate(final FormComponent<String> component, final String value) {
     List<IValidator<String>> validators = component.getValidators();
     final IValidatable<String> validatable = new IValidatable<String>() {
+      @Override
       public void error(IValidationError error) {
         component.error(error);
       }
+      @Override
       public String getValue() {
         return value;
       }
+      @Override
       public boolean isValid() {
         return component.isValid();
       }

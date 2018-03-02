@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.core.events;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import net.ontopia.infoset.core.Locators;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -44,6 +44,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     super(name);
   }
   
+  @Override
   public void setUp() throws Exception {
     // get a new topic map object from the factory.
     factory = getFactory();
@@ -52,16 +53,17 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     TopicMapEvents.addTopicListener(topicmapRef, listener);
     // load topic map
     topicmap = topicmapRef.createStore(false).getTopicMap();
-    ImportExportUtils.getImporter(TestFileUtils.getTestInputFile("various", "bart.ltm")).importInto(topicmap);
+    ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "bart.ltm")).importInto(topicmap);
     topicmap.getStore().commit();
     
     // get the builder of that topic map.
     builder = topicmap.getBuilder();
 
     // get test topic
-    bart = topicmap.getTopicBySubjectIdentifier(Locators.getURILocator("test:bart"));
+    bart = topicmap.getTopicBySubjectIdentifier(URILocator.create("test:bart"));
   }
 
+  @Override
   public void tearDown() {
     TopicMapEvents.removeTopicListener(topicmapRef, listener);
     super.tearDown();
@@ -69,17 +71,22 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
   
   // --- Test cases
 
-  class TesterListener implements TopicMapListenerIF {
-    Collection snapshots = new HashSet();
+  protected class TesterListener implements TopicMapListenerIF {
+    private Collection snapshots = new HashSet();
     
+    @Override
     public void objectAdded(TMObjectIF o) {
+      // no-op
     }
 
+    @Override
     public void objectModified(TMObjectIF snapshot) {      
       this.snapshots.add(((TopicIF)snapshot).getObjectId());
     }
     
+    @Override
     public void objectRemoved(TMObjectIF o) {
+      // no-op
     }
 
     public void reset() {
@@ -102,22 +109,22 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // TopicIF.addSubjectLocator
     beforeTest();
-    bart.addSubjectLocator(Locators.getURILocator("x:subject-locator"));
+    bart.addSubjectLocator(URILocator.create("x:subject-locator"));
     afterTest();
 
     // TopicIF.removeSubjectLocator
     beforeTest();
-    bart.removeSubjectLocator(Locators.getURILocator("x:subject-locator"));
+    bart.removeSubjectLocator(URILocator.create("x:subject-locator"));
     afterTest();
 
     // TopicIF.addSubjectIdentifier
     beforeTest();
-    bart.addSubjectIdentifier(Locators.getURILocator("x:subject-indicator"));
+    bart.addSubjectIdentifier(URILocator.create("x:subject-indicator"));
     afterTest();
 
     // TopicIF.removeSubjectIdentifier
     beforeTest();
-    bart.removeSubjectIdentifier(Locators.getURILocator("x:subject-indicator"));
+    bart.removeSubjectIdentifier(URILocator.create("x:subject-indicator"));
     afterTest();
 
     // TopicIF.addTopicName
@@ -142,7 +149,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // TopicIF.addType
     beforeTest();
-    TopicIF other = topicmap.getTopicBySubjectIdentifier(Locators.getURILocator("test:other"));
+    TopicIF other = topicmap.getTopicBySubjectIdentifier(URILocator.create("test:other"));
     bart.addType(other);
     afterTest();
 
@@ -153,12 +160,12 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // TopicIF.addItemIdentifier
     beforeTest();
-    bart.addItemIdentifier(Locators.getURILocator("x:source-locator"));
+    bart.addItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // TopicIF.removeItemIdentifier
     beforeTest();
-    bart.removeItemIdentifier(Locators.getURILocator("x:source-locator"));
+    bart.removeItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
 
     // -----------------------------------------------------------------------------
@@ -171,12 +178,12 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // TopicNameIF.addItemIdentifier
     beforeTest();
-    bn.addItemIdentifier(Locators.getURILocator("x:source-locator"));
+    bn.addItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // TopicNameIF.removeItemIdentifier
     beforeTest();
-    bn.removeItemIdentifier(Locators.getURILocator("x:source-locator"));
+    bn.removeItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
 
     // TopicNameIF.addTheme
@@ -206,17 +213,17 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // VariantNameIF.setLocator
     beforeTest();
-    vn.setLocator(Locators.getURILocator("x:variant-locator"));
+    vn.setLocator(URILocator.create("x:variant-locator"));
     afterTest();
 
     // VariantNameIF.addItemIdentifier
     beforeTest();
-    vn.addItemIdentifier(Locators.getURILocator("x:source-locator"));
+    vn.addItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // VariantNameIF.removeItemIdentifier
     beforeTest();
-    vn.removeItemIdentifier(Locators.getURILocator("x:source-locator"));
+    vn.removeItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
 
     // VariantNameIF.addTheme
@@ -244,17 +251,17 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     
     // OccurrenceIF.setLocator
     beforeTest();
-    oc.setLocator(Locators.getURILocator("x:occurrence-locator"));
+    oc.setLocator(URILocator.create("x:occurrence-locator"));
     afterTest();
 
     // OccurrenceIF.addItemIdentifier
     beforeTest();
-    oc.addItemIdentifier(Locators.getURILocator("x:source-locator"));
+    oc.addItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // OccurrenceIF.removeItemIdentifier
     beforeTest();
-    oc.removeItemIdentifier(Locators.getURILocator("x:source-locator"));
+    oc.removeItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
 
     // OccurrenceIF.addTheme
@@ -295,22 +302,22 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // AssociationIF.addItemIdentifier
     beforeTest();
-    as.addItemIdentifier(Locators.getURILocator("x:source-locator"));
+    as.addItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // AssociationIF.removeItemIdentifier
     beforeTest();
-    as.removeItemIdentifier(Locators.getURILocator("x:source-locator"));
+    as.removeItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
 
     // AssociationRoleIF.addItemIdentifier
     beforeTest();
-    ar.addItemIdentifier(Locators.getURILocator("x:source-locator"));
+    ar.addItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // AssociationRoleIF.removeItemIdentifier
     beforeTest();
-    ar.removeItemIdentifier(Locators.getURILocator("x:source-locator"));
+    ar.removeItemIdentifier(URILocator.create("x:source-locator"));
     afterTest();
     
     // AssociationIF.addTheme

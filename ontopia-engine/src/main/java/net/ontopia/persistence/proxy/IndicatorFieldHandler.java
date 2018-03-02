@@ -29,18 +29,12 @@ import net.ontopia.persistence.query.sql.SQLValueIF;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: The indicator field handler implementation that is able
  * to...<p>
  */
 
 public class IndicatorFieldHandler implements FieldHandlerIF {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(IndicatorFieldHandler.class.getName());
 
   protected final ObjectRelationalMappingIF mapping;
   protected final Map<Object, Class<?>> indicators;
@@ -55,6 +49,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     this.indicators = indicators;
   }
   
+  @Override
   public int getColumnCount() {
     if (common_handler == null)
       // Register common handler by pulling out first indicated class.
@@ -62,6 +57,7 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     return 1 + common_handler.getColumnCount();
   }
   
+  @Override
   public boolean isIdentityField() {
     return true;
   }

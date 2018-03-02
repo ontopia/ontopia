@@ -23,9 +23,8 @@ package net.ontopia.persistence.proxy;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
-import net.ontopia.utils.NullObject;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.collections4.map.LRUMap;
 
@@ -34,33 +33,35 @@ import org.apache.commons.collections4.map.LRUMap;
  * databases using JDBC.
  */
 
-public class QueryCache implements EvictableIF {
+public class QueryCache<K, E> implements EvictableIF<K, E> {
 
   protected DetachedQueryIF query;
-  protected CacheIF cache;
-  protected Map lru;
+  protected CacheIF<K, E> cache;
+  protected Map<K, E> lru;
   protected int lrusize;
+  private final E NULLOBJECT;
   
-  QueryCache(DetachedQueryIF query, CacheIF cache, int lrusize) {
+  QueryCache(DetachedQueryIF query, CacheIF<K, E> cache, int lrusize, E nullObject) {
     this.query = query;
     this.cache = cache;
-    this.lru = Collections.synchronizedMap(new LRUMap(lrusize));
+    this.lru = Collections.synchronizedMap(new LRUMap<K, E>(lrusize));
     this.lrusize = lrusize;
+    NULLOBJECT = nullObject;
   }
   
-  public Object executeQuery(StorageAccessIF access, Object cachekey, Object[] query_params) {
+  public E executeQuery(StorageAccessIF access, K cachekey, Object[] query_params) {
     try {
-      Object result = cache.get(cachekey);
+      E result = cache.get(cachekey);
       if (result == null) {
         // cache miss
-        result = query.executeQuery(((RDBMSAccess)access).getConnection(), query_params);
-        cache.put(cachekey, (result == null ? NullObject.INSTANCE : result));
-        lru.put(cachekey, (result == null ? NullObject.INSTANCE : result));
+        result = (E) query.executeQuery(((RDBMSAccess)access).getConnection(), query_params);
+        cache.put(cachekey, (result == null ? NULLOBJECT : result));
+        lru.put(cachekey, (result == null ? NULLOBJECT : result));
         return result;
       } else {
         // cache hit
         lru.put(cachekey, result);
-        return (ObjectUtils.equals(NullObject.INSTANCE, result) ? null : result);
+        return (Objects.equals(NULLOBJECT, result) ? null : result);
       }
     } catch (RuntimeException e1) {
       throw e1;
@@ -69,11 +70,11 @@ public class QueryCache implements EvictableIF {
     }
   }
 
-  public Object remove(Object key) {
+  public E remove(K key) {
     return remove(key, true);
   }
 
-  public void removeAll(Collection keys) {
+  public void removeAll(Collection<K> keys) {
     removeAll(keys, true);
   }
   
@@ -84,14 +85,17 @@ public class QueryCache implements EvictableIF {
   // NOTE: following methods used by transactions on commit to evict
   // entries from shared query cache
 
-  public Object remove(Object key, boolean notifyCluster) {
+  @Override
+  public E remove(K key, boolean notifyCluster) {
     return cache.remove(key, notifyCluster);
   }
   
-  public void removeAll(Collection keys, boolean notifyCluster) {
+  @Override
+  public void removeAll(Collection<K> keys, boolean notifyCluster) {
     cache.removeAll(keys, notifyCluster);
   }  
   
+  @Override
   public void clear(boolean notifyCluster) {
     lru.clear();
     cache.clear(notifyCluster);

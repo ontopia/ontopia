@@ -50,6 +50,7 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
   protected Map rcmap = new HashMap();
   protected Map rtmap = new HashMap();
 
+  @Override
   public SQLQuery optimize(SQLQuery query) {
     // analyze query
     Analyzer analyzer = new Analyzer();
@@ -136,6 +137,7 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
 
   class Analyzer extends AbstractSQLAnalyzer {
 
+    @Override
     protected void analyzeVerbatim(SQLExpressionIF expr, SQLVerbatim value) {
       SQLTable[] tables = value.getTables();
       for (int i=0; i < tables.length; i++) {
@@ -143,6 +145,7 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
       }
     }
     
+    @Override
     protected void analyzeVerbatimExpression(SQLVerbatimExpression expr) {
       SQLTable[] tables = expr.getTables();
       for (int i=0; i < tables.length; i++) {
@@ -150,6 +153,7 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
       }
     }
     
+    @Override
     protected void analyzeColumns(SQLExpressionIF expr, SQLColumns value) {
       addTableColumns(expr, value);
     }
@@ -157,6 +161,7 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
 
   /* --- optimization -- */
 
+  @Override
   protected SQLValueIF filterValue(SQLValueIF value) {
     // ISSUE: should possibly prefer values in select clause, so that
     // the same column aliases can be kept

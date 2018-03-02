@@ -63,7 +63,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
   protected RoleFieldModel roleFieldModel;
   protected TopicTypeModel topicTypeModel;
   
-  int createAction;
+  private int createAction;
   
   public FieldInstanceCreatePlayerPanel(String id, 
       FieldInstanceModel _fieldInstanceModel, FieldsViewModel fieldsViewModel, 
@@ -82,6 +82,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
+          // no-op
         }        
       };
       add(button);
@@ -120,6 +121,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
         }
         @Override
         public void onClick() {
+          // no-op
         }      
       };
       add(button);
@@ -212,6 +214,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     createModal.setCookieName("createModal");
     
     createModal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
+      @Override
       public boolean onCloseButtonClicked(AjaxRequestTarget target) {
     	// modal already closed, now update parent 
         FieldInstanceCreatePlayerPanel.this.hideInstancePage(target);

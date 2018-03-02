@@ -34,11 +34,10 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  */
 
 public abstract class TMObject implements TMObjectIF, java.io.Serializable {
-  protected static final String MSG_NULL_ARGUMENT = "null is not a valid argument.";
   
-  TopicMap topicmap;
-  String oid;
-  TMObject parent;
+  protected TopicMap topicmap;
+  protected String oid;
+  protected TMObject parent;
   protected Set<LocatorIF> sources;
 
   TMObject() {
@@ -52,19 +51,23 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
   // TMObjectIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public String getObjectId() {
     return oid;
   }
 
+  @Override
   public boolean isReadOnly() {
     if (!isConnected()) return true;
     return topicmap.getStore().isReadOnly();
   }
 
+  @Override
   public TopicMapIF getTopicMap() {
     return isConnected() ? topicmap : null;
   }
 
+  @Override
   public Collection<LocatorIF> getItemIdentifiers() {
     if (sources == null)
       return Collections.emptySet();
@@ -72,14 +75,15 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
       return Collections.unmodifiableSet(sources);
   }
 
+  @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
     if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (!isConnected())
-      throw new ConstraintViolationException("Cannot modify source locators when object isn't attached to a topic map.");
+      throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
     if (sources == null)
       sources = topicmap.cfactory.makeSmallSet();
-    // Check to see if the source locator is already a source locator of this topic.
+    // Check to see if the item identifier is already a item identifier of this topic.
     else if (sources.contains(source_locator)) return;
     // Notify listeners
     fireEvent(TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, source_locator, null);
@@ -87,12 +91,13 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
     sources.add(source_locator);
   }
 
+  @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
     if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (!isConnected())
-      throw new ConstraintViolationException("Cannot modify source locators when object isn't attached to a topic map.");
-    // Check to see if source locator is a source locator of this topic.
+      throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
+    // Check to see if item identifier is a item identifier of this topic.
     if (sources == null || !sources.contains(source_locator)) return;
     // Notify listeners
     fireEvent(TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, source_locator);

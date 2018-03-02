@@ -76,9 +76,9 @@ public class RDFToTopicMapConverter {
   private TopicMapBuilderIF builder;
   private boolean lenient;
 
-  static Logger logger = LoggerFactory.getLogger(RDFToTopicMapConverter.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(RDFToTopicMapConverter.class.getName());
 
-  static final String RTM_PREFIX = "http://psi.ontopia.net/rdf2tm/#";
+  protected static final String RTM_PREFIX = "http://psi.ontopia.net/rdf2tm/#";
   public static final String RTM_MAPSTO             = RTM_PREFIX + "maps-to";
   public static final String RTM_BASENAME           = RTM_PREFIX + "basename";
   public static final String RTM_INSTANCE_OF        = RTM_PREFIX + "instance-of";
@@ -110,7 +110,7 @@ public class RDFToTopicMapConverter {
    *        correctly mapped (for example, a statement type is mapped to a
    *        topic name, but has a URI value).
    */
-  public static void convert(String infileurl, String syntax,
+  public static void convert(URL infileurl, String syntax,
                              String mappingurl, String mappingsyntax,
                              TopicMapIF topicmap, boolean lenient)
     throws JenaException, IOException {
@@ -119,6 +119,33 @@ public class RDFToTopicMapConverter {
       new RDFToTopicMapConverter(mappingurl, mappingsyntax, topicmap);
     converter.setLenient(lenient);
     converter.doConversion(infileurl, syntax);
+
+  }
+
+  /**
+   * EXPERIMENTAL: Converts an RDF model into the topic map using the
+   * given mapping.
+   * @param input the InputStream to read the input data from
+   * @param syntax the syntax of the input data. Values are "RDF/XML", "N3",
+   *               and "N-TRIPLE". Defaults to "RDF/XML" if null.
+   * @param mappingurl the URL to read the mapping from. If null the mapping
+   *                   is taken from the input data.
+   * @param mappingsyntax the syntax of the mapping. Values are "RDF/XML", "N3",
+   *                   and "N-TRIPLE". Defaults to "RDF/XML" if null.
+   * @param topicmap The topic map to add the converted data to.
+   * @param lenient When false, errors are thrown if the RDF data cannot be
+   *        correctly mapped (for example, a statement type is mapped to a
+   *        topic name, but has a URI value).
+   */
+  public static void convert(InputStream input, String syntax,
+                             String mappingurl, String mappingsyntax,
+                             TopicMapIF topicmap, boolean lenient)
+    throws JenaException, IOException {
+
+    RDFToTopicMapConverter converter =
+      new RDFToTopicMapConverter(mappingurl, mappingsyntax, topicmap);
+    converter.setLenient(lenient);
+    converter.doConversion(input, syntax);
 
   }
 
@@ -221,21 +248,31 @@ public class RDFToTopicMapConverter {
     this.lenient = lenient;
   }
 
-  private void doConversion(String url, String syntax)
+  private void doConversion(URL url, String syntax)
     throws JenaException, IOException {
 
     if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
       RDFUtils.parseRDFXML(url, new ToTMStatementHandler());
 
     else {
-      URL uri;
-      try {
-        uri = new URL(url);
-      } catch (MalformedURLException mufe) {
-        throw new IOException(mufe);
-      }
       Model model = ModelFactory.createDefaultModel();
-      model.read(uri.openStream(), url, syntax);
+      model.read(url.openStream(), url.toString(), syntax);
+      if (mappings == null)
+        buildMappings(model);
+
+      doConversion(model);
+    }
+  }
+
+  private void doConversion(InputStream input, String syntax)
+    throws JenaException, IOException {
+
+    if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
+      RDFUtils.parseRDFXML(input, new ToTMStatementHandler());
+
+    else {
+      Model model = ModelFactory.createDefaultModel();
+      model.read(input, input.toString(), syntax);
       if (mappings == null)
         buildMappings(model);
 
@@ -366,14 +403,6 @@ public class RDFToTopicMapConverter {
     return null;
   }
 
-  private TopicIF getTopic(Resource subject, String property, Model model)
-    throws JenaException, MalformedURLException {
-    LocatorIF loc = getTopicIndicator(subject, property, model);
-    if (loc == null)
-      return null;
-    return getTopic(loc);
-  }
-
   private TopicIF getTopic(LocatorIF loc) {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);
     if (topic == null) {
@@ -472,6 +501,7 @@ public class RDFToTopicMapConverter {
         scoped.addTheme((TopicIF) it.next());
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       String msg = "Statements mapped to " + construct + " cannot have literal " +
                    "objects. Found (" + sub + ", " + pred + ", " + lit + ")";
@@ -480,6 +510,7 @@ public class RDFToTopicMapConverter {
         throw new RDFMappingException(msg);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       String msg = "Statements mapped to " + construct + " cannot have URI " +
         "reference objects. Found (" + sub + ", " + pred + ", " + obj + ")";
@@ -513,6 +544,7 @@ public class RDFToTopicMapConverter {
       super("rtm:instance-of");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       TopicIF topic = getSubject(sub);
       TopicIF type = getObject(obj);
@@ -533,6 +565,7 @@ public class RDFToTopicMapConverter {
       abuilder = new AssociationBuilder(assoc, role1, role2);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       TopicIF topic = getSubject(sub);
       TopicIF type = getObject(obj);
@@ -556,6 +589,7 @@ public class RDFToTopicMapConverter {
       super("rtm:subject-identifier");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank nodes cannot be subject identifiers; " +
@@ -574,7 +608,7 @@ public class RDFToTopicMapConverter {
       }
 
       TopicIF other = topicmap.getTopicBySubjectIdentifier(loc);
-      if (other != null && other != topic)
+      if (other != null && !other.equals(topic))
         MergeUtils.mergeInto(other, topic);
       else
         topic.addSubjectIdentifier(loc);
@@ -586,6 +620,7 @@ public class RDFToTopicMapConverter {
       super("rtm:source-locator");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank nodes cannot be source locators; " +
@@ -607,7 +642,7 @@ public class RDFToTopicMapConverter {
       TMObjectIF other = topicmap.getObjectByItemIdentifier(loc);
       if (other instanceof TopicIF) {
         TopicIF othert = (TopicIF) other;
-        if (othert != null && othert != topic)
+        if (othert != null && !othert.equals(topic))
           MergeUtils.mergeInto(othert, topic);
         else
           topic.addItemIdentifier(loc);
@@ -620,6 +655,7 @@ public class RDFToTopicMapConverter {
       super("rtm:subject-locator");
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank nodes cannot be subject locators; " +
@@ -651,6 +687,7 @@ public class RDFToTopicMapConverter {
       super("rtm:basename", scope);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       TopicIF topic = getSubject(sub); // FIXME: support xml:lang here?
       TopicNameIF bn = builder.makeTopicName(topic, lit.toString());
@@ -666,6 +703,7 @@ public class RDFToTopicMapConverter {
       this.type = type;
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       if (obj.isAnonymous()) {
         logger.warn("Blank node cannot be occurrence value; " +
@@ -692,6 +730,7 @@ public class RDFToTopicMapConverter {
       }
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       TopicIF topic = getSubject(sub);
       TopicIF ourtype = type;
@@ -717,6 +756,7 @@ public class RDFToTopicMapConverter {
       this.oroleloc = oroleloc;
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       TopicIF topic = getSubject(sub);
       TopicIF object = getObject(obj);
@@ -740,12 +780,14 @@ public class RDFToTopicMapConverter {
 
   class ToTMStatementHandler implements StatementHandler {
 
+    @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       StatementHandler handler = (StatementHandler) mappings.get(pred.getURI());
       if (handler != null)
         handler.statement(sub, pred, lit);
     }
 
+    @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       StatementHandler handler = (StatementHandler) mappings.get(pred.getURI());
       if (handler != null)

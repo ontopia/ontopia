@@ -33,11 +33,13 @@ public class TestOccSetValue2 extends TestOccSetValue {
     super(name);
   }
 
+  @Override
   public void setUp() {
     super.setUp();
     action = new SetValue2();
   }
  
+  @Override
   public void testEmptyValue() throws IOException {
     // get ready
     TopicIF topic = getTopicById(tm, "tromso");

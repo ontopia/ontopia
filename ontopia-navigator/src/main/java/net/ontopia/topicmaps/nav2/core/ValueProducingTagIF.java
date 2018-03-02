@@ -36,6 +36,6 @@ public interface ValueProducingTagIF {
    *
    * @see net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingTag
    */
-  public Collection process(Collection inputCollection) throws JspException;
+  Collection process(Collection inputCollection) throws JspException;
   
 }

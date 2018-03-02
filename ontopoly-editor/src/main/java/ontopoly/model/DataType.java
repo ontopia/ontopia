@@ -39,6 +39,7 @@ public class DataType extends Topic {
     super(topic, tm);
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof DataType))
       return false;

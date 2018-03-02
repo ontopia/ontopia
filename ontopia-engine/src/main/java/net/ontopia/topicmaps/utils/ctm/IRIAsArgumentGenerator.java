@@ -38,26 +38,32 @@ public class IRIAsArgumentGenerator implements ValueGeneratorIF {
     this.locator = locator;
   }
 
+  @Override
   public boolean isTopic() {
     return true;
   }  
   
+  @Override
   public TopicIF getTopic() {
     return context.makeTopicBySubjectIdentifier(locator);
   }
 
+  @Override
   public ValueGeneratorIF copy() {
     return this; // should be OK
   }
   
+  @Override
   public String getLiteral() {
     return locator.getAddress();
   }
   
+  @Override
   public LocatorIF getDatatype() {
     return PSI.getXSDURI();
   }
 
+  @Override
   public LocatorIF getLocator() {
     return locator;
   }

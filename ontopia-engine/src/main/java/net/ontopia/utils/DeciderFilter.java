@@ -39,6 +39,7 @@ public class DeciderFilter<T> implements FilterIF<T> {
     this.decider = decider;
   }
   
+  @Override
   public Collection<T> filter(Iterator<T> objects) {
     // Initialize result
     List<T> result = new ArrayList<T>();

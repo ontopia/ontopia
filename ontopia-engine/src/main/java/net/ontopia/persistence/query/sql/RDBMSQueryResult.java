@@ -52,10 +52,12 @@ public class RDBMSQueryResult implements QueryResultIF {
     this.lookup_identities = lookup_identities;
   }
   
+  @Override
   public int getWidth() {
     return stm.getWidth();
   }
 
+  @Override
   public String[] getColumnNames() {
     try {
       synchronized (this) {
@@ -71,6 +73,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
 
+  @Override
   public String getColumnName(int ix) {
     try {
       synchronized (this) {
@@ -83,6 +86,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
   
+  @Override
   public Object getValue(int index) {
     try {
       synchronized (this) {
@@ -93,6 +97,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
   
+  @Override
   public Object[] getValues() {
     try {
       synchronized (this) {
@@ -103,6 +108,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
   
+  @Override
   public Object[] getValues(Object[] values) {
     try {
       synchronized (this) {
@@ -113,6 +119,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
   
+  @Override
   public boolean next() {
     if (rs == null) return false;
     try {
@@ -128,6 +135,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
 
+  @Override
   public void close() {    
     if (rs == null) return;
     try {
@@ -145,6 +153,7 @@ public class RDBMSQueryResult implements QueryResultIF {
     }
   }
 
+  @Override
   protected void finalize() throws Throwable {
     if (rs != null) close();
   }

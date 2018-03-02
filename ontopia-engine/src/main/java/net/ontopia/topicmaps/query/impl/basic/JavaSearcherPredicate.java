@@ -20,21 +20,22 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
-import net.ontopia.topicmaps.query.spi.SearcherIF;
+import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 import net.ontopia.topicmaps.query.spi.SearchResultIF;
+import net.ontopia.topicmaps.query.spi.SearcherIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.URIUtils;
 
 /**
  * EXPERIMENTAL: Java searcher predicate.<p>
@@ -52,10 +53,12 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
     this.searcher = searcher;
   }
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getSignature() {
     int valtype = searcher.getValueType();
     switch (valtype) {
@@ -74,10 +77,12 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
     }
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     return PredicateDrivenCostEstimator.FILTER_RESULT; // FIXME: is this right?
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 
@@ -207,21 +212,25 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
   }
   
   protected Object getObject(Object value, int valtype) {
-    switch (valtype) {
-    case SearcherIF.STRING_VALUE:
-      return value.toString();
-    case SearcherIF.OBJECT_VALUE:
-      return value;
-    case SearcherIF.OBJECT_ID:
-      return topicmap.getObjectById((String)value);
-    case SearcherIF.SUBJECT_LOCATOR:
-      return topicmap.getTopicBySubjectLocator(URIUtils.getURILocator((String)value));
-    case SearcherIF.SUBJECT_IDENTIFIER:
-      return topicmap.getTopicBySubjectIdentifier(URIUtils.getURILocator((String)value));
-    case SearcherIF.ITEM_IDENTIFIER:
-      return topicmap.getObjectByItemIdentifier(URIUtils.getURILocator((String)value));
-    default:
-      throw new OntopiaRuntimeException("Unknown searche value type: " + valtype);
+    try {
+      switch (valtype) {
+      case SearcherIF.STRING_VALUE:
+        return value.toString();
+      case SearcherIF.OBJECT_VALUE:
+        return value;
+      case SearcherIF.OBJECT_ID:
+        return topicmap.getObjectById((String)value);
+      case SearcherIF.SUBJECT_LOCATOR:
+        return topicmap.getTopicBySubjectLocator(new URILocator((String)value));
+      case SearcherIF.SUBJECT_IDENTIFIER:
+        return topicmap.getTopicBySubjectIdentifier(new URILocator((String)value));
+      case SearcherIF.ITEM_IDENTIFIER:
+        return topicmap.getObjectByItemIdentifier(new URILocator((String)value));
+      default:
+        throw new OntopiaRuntimeException("Unknown searche value type: " + valtype);
+      }
+    } catch (MalformedURLException m) {
+      throw new OntopiaRuntimeException(m);
     }
   } 
   

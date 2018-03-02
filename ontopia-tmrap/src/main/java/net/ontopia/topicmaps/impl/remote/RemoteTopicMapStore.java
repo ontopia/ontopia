@@ -44,6 +44,7 @@ public class RemoteTopicMapStore extends InMemoryTopicMapStore {
                                        tmid);  
   }
   
+  @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
     if (!isOpen()) open();

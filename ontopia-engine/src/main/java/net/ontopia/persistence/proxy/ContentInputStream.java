@@ -45,6 +45,7 @@ public class ContentInputStream extends FilterInputStream {
     return length;
   }
 
+  @Override
   public int read() throws IOException {
     int result = super.read();
     if (result != -1)
@@ -54,6 +55,7 @@ public class ContentInputStream extends FilterInputStream {
     return result;
   }
 
+  @Override
   public int read(byte[] bbuf) throws IOException {
     int result = super.read(bbuf);
     if (result != -1)
@@ -64,6 +66,7 @@ public class ContentInputStream extends FilterInputStream {
     return result;
   }
 
+  @Override
   public int read(byte[] bbuf, int off, int len) throws IOException {
     int result = super.read(bbuf, off, len);
     if (result != -1)
@@ -72,6 +75,7 @@ public class ContentInputStream extends FilterInputStream {
     return result;
   }
 
+  @Override
   public void close() throws IOException {
     if (closed) return;
     closed = true;

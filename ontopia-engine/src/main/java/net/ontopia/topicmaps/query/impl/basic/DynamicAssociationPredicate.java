@@ -39,6 +39,17 @@ import net.ontopia.topicmaps.query.parser.Variable;
  * INTERNAL: Implements association type predicates.
  */
 public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
+
+  // -- Prefetcher constants
+  
+  private final static int[] Prefetcher_RBT_fields = 
+    new int[] { Prefetcher.AssociationRoleIF_association,
+                Prefetcher.AssociationIF_roles,
+                Prefetcher.AssociationRoleIF_player };
+  
+  private final static boolean[] Prefetcher_RBT_traverse =
+    new boolean[] { true, false, false }; // ISSUE: traverse R.player?
+
   protected TopicMapIF topicmap;
   protected ClassInstanceIndexIF index;
   
@@ -49,10 +60,12 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
   }
 
+  @Override
   public String getSignature() {
     return "p+";
   }
 
+  @Override
   public int getCost(boolean[] boundparams) {
     int open = 0;
     int closed = 0;
@@ -71,6 +84,7 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       return PredicateDrivenCostEstimator.BIG_RESULT - closed;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
     
@@ -214,10 +228,6 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     return result;
   }
 
-  private String roleDebug(AssociationRoleIF role) {
-    return "[" + role.getObjectId() + ", " + role.getPlayer() + "]";
-  }
-  
   /**
    * INTERNAL: Faster version of satisfy for use when one variable has
    * already been bound, because it is much faster in that case. It is
@@ -480,15 +490,4 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       return "<AP$ArgPair " + ix + ":" + roleType + ">";
     }
   }
-
-  // -- Prefetcher constants
-  
-  private final static int[] Prefetcher_RBT_fields = 
-    new int[] { Prefetcher.AssociationRoleIF_association,
-                Prefetcher.AssociationIF_roles,
-                Prefetcher.AssociationRoleIF_player };
-  
-  private final static boolean[] Prefetcher_RBT_traverse =
-    new boolean[] { true, false, false }; // ISSUE: traverse R.player?
-    
 }

@@ -46,6 +46,7 @@ public class StatisticsIndex<K, V> implements LookupIndexIF<K, V> {
     this.index = index;
   }
   
+  @Override
   public V get(K key) {
     total++;
 
@@ -64,6 +65,7 @@ public class StatisticsIndex<K, V> implements LookupIndexIF<K, V> {
     return (V)retval;
   }
 
+  @Override
   public V put(K key, V value) {
     Reference<V> retval = index.put(key, new SoftReference<V>(value));
     if (retval == null)
@@ -72,6 +74,7 @@ public class StatisticsIndex<K, V> implements LookupIndexIF<K, V> {
       return retval.get();
   }
 
+  @Override
   public V remove(K key) {
     Reference<V> retval = index.remove(key);
     if (retval == null)

@@ -37,11 +37,9 @@ public class CompactHashSetTest extends TestCase {
     super(name);
   }
 
+  @Override
   public void setUp() {
     set = new CompactHashSet();
-  }
-
-  protected void tearDown() {
   }
 
   // --- Test cases
@@ -99,7 +97,7 @@ public class CompactHashSetTest extends TestCase {
                it.hasNext());
 
     assertTrue("iterator didn't find object in set",
-               it.next().equals("hei"));
+            "hei".equals(it.next()));
     
     assertTrue("iterator from set(1) thinks it has a second object",
                !it.hasNext());
@@ -115,14 +113,14 @@ public class CompactHashSetTest extends TestCase {
 
     Object obj = it.next();
     assertTrue("iterator didn't find object in set",
-               obj.equals("hei") || obj.equals("hei2"));
+               "hei".equals(obj) || "hei2".equals(obj));
 
     assertTrue("iterator from set(2) doesn't think it has a second object",
                it.hasNext());
     
     obj = it.next();
     assertTrue("iterator didn't find object in set",
-               obj.equals("hei") || obj.equals("hei2"));    
+               "hei".equals(obj) || "hei2".equals(obj));    
     
     assertTrue("iterator from set(2) thinks it has a third object",
                !it.hasNext());
@@ -684,14 +682,17 @@ public class CompactHashSetTest extends TestCase {
       this.name = name;
     }
     
+    @Override
     public int hashCode() {
       return 0;
     }
 
+    @Override
     public String toString() {
       return "<ObjectWithStupidHashCode " + name + ">";
     }
 
+    @Override
     public boolean equals(Object other) {
       return ((ObjectWithStupidHashCode) other).name.equals(name);
     }

@@ -36,14 +36,17 @@ public class ReifiesPredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "reifies";
   }
 
+  @Override
   public String getSignature() {
     return "t marbvo";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -55,6 +58,7 @@ public class ReifiesPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.BIG_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

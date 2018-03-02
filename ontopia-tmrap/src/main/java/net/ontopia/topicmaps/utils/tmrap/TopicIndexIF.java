@@ -44,7 +44,7 @@ public interface TopicIndexIF extends IndexIF {
    *
    * @return Collection of TopicIF
    */
-  public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
+  Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects);
 
@@ -52,7 +52,7 @@ public interface TopicIndexIF extends IndexIF {
    * Loads all the topics that are directly associated with the given topics.
    * @param two_steps If true, topics two steps out will also be loaded.
    */  
-  public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
+  Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
                                       boolean two_steps);
@@ -68,7 +68,7 @@ public interface TopicIndexIF extends IndexIF {
    *
    * @return Collection of TopicPage
    */
-  public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
+  Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
                                   Collection<LocatorIF> sources,
                                   Collection<LocatorIF> subjects);
 
@@ -83,7 +83,7 @@ public interface TopicIndexIF extends IndexIF {
    *
    * @return Collection of TopicPage
    */
-  public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
+  TopicPages getTopicPages2(Collection<LocatorIF> indicators,
                                    Collection<LocatorIF> sources,
                                    Collection<LocatorIF> subjects);
 
@@ -91,5 +91,5 @@ public interface TopicIndexIF extends IndexIF {
    * Lets go of any underlying resources used by the index. Must be
    * called when used with the RDBMS backend.
    */
-  public void close();
+  void close();
 }

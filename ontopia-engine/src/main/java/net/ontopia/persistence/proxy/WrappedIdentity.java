@@ -59,30 +59,37 @@ public final class WrappedIdentity implements IdentityIF, Externalizable {
       return new WrappedIdentity(identity);
   }
 
+  @Override
   public Class<?> getType() {
     return wrapped.getType();
   }
 
+  @Override
   public int getWidth() {
     return wrapped.getWidth();
   }
 
+  @Override
   public Object getKey(int index) {
     return wrapped.getKey(index);
   }
   
+  @Override
   public Object createInstance() throws Exception {
     return wrapped.createInstance();
   }
   
+  @Override
   public int hashCode() {
     return wrapped.hashCode();
   }
 
+  @Override
   public boolean equals(Object object) {
     return wrapped.equals(object);
   }
   
+  @Override
   public String toString() {
     return wrapped.toString();
   }
@@ -91,14 +98,17 @@ public final class WrappedIdentity implements IdentityIF, Externalizable {
   // Externalization
   // -----------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(wrapped);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     wrapped = (IdentityIF)in.readObject();
   }
 
+  @Override
   public Object clone() {
     try {
       return super.clone();

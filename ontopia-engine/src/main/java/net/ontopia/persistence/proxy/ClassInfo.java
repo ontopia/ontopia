@@ -23,8 +23,6 @@ package net.ontopia.persistence.proxy;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class descriptor-like class that is used by the RDBMS
@@ -32,9 +30,6 @@ import org.slf4j.LoggerFactory;
  * object relational class descriptor in an optimized manner.<p>
  */
 public class ClassInfo implements ClassInfoIF {
-
-  // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(ClassInfo.class.getName());
 
   protected RDBMSMapping mapping;
   protected ClassDescriptor cdesc;
@@ -67,7 +62,7 @@ public class ClassInfo implements ClassInfoIF {
    * optimized form. Called from RDBSMapping, because calling it in
    * the constructor leads to never-ending recursion.
    */
-  void compile() {
+  protected void compile() {
     // compute identity fields
     identity_field = new IdentityFieldInfo(this, compileFieldInfos(this, cdesc.getIdentityFields()));
     
@@ -103,10 +98,12 @@ public class ClassInfo implements ClassInfoIF {
    * INTERNAL: Returns the RDBMS specific object relational mapping
    * instance.
    */
+  @Override
   public ObjectRelationalMappingIF getMapping() {
     return mapping;
   }
 
+  @Override
   public String getName() {
     return klass.getName();
   }
@@ -115,10 +112,12 @@ public class ClassInfo implements ClassInfoIF {
    * INTERNAL: Return the descriptor class described by the
    * descriptor.
    */
+  @Override
   public Class<?> getDescriptorClass() {
     return klass;
   }
   
+  @Override
   public Object createInstance(boolean immutable) throws Exception {
     if (immutable)
       return klass_immutable.newInstance();
@@ -129,6 +128,7 @@ public class ClassInfo implements ClassInfoIF {
   /**
    * INTERNAL: Get the field info by name.
    */
+  @Override
   public FieldInfoIF getFieldInfoByName(String name) {
     // System.out.println("WARN: should deprecate getFieldInfoByName or rename to getValueFieldInfoByName.");
     return fields.get(name);
@@ -137,12 +137,14 @@ public class ClassInfo implements ClassInfoIF {
   /**
    * INTERNAL: Get the identity field infos.
    */
+  @Override
   public FieldInfoIF getIdentityFieldInfo() {
     return identity_field;
   }
   /**
    * INTERNAL: Get the value field infos.
    */
+  @Override
   public FieldInfoIF[] getValueFieldInfos() {
     return value_fields;
   }
@@ -150,6 +152,7 @@ public class ClassInfo implements ClassInfoIF {
   /**
    * INTERNAL: Get the 1:1 field infos.
    */
+  @Override
   public FieldInfoIF[] getOne2OneFieldInfos() {
     return o2o_fields;
   }
@@ -157,6 +160,7 @@ public class ClassInfo implements ClassInfoIF {
   /**
    * INTERNAL: Get the 1:M field infos.
    */
+  @Override
   public FieldInfoIF[] getOne2ManyFieldInfos() {
     return o2m_fields;
   }
@@ -164,26 +168,32 @@ public class ClassInfo implements ClassInfoIF {
   /**
    * INTERNAL: Get the M:M field infos.
    */
+  @Override
   public FieldInfoIF[] getMany2ManyFieldInfos() {
     return m2m_fields;
   }
 
+  @Override
   public boolean isAbstract() {
     return cdesc.isAbstract();
   }
 
+  @Override
   public boolean isIdentifiable() {
     return (cdesc.getType() == ClassInfoIF.TYPE_IDENTIFIABLE);
   }
 
+  @Override
   public boolean isAggregate() {
     return (cdesc.getType() == ClassInfoIF.TYPE_AGGREGATE);
   }
 
+  @Override
   public int getStructure() {
     return cdesc.getStructure();
   }
   
+  @Override
   public String getMasterTable() {
     return cdesc.getMasterTable();
   }
@@ -236,6 +246,7 @@ public class ClassInfo implements ClassInfoIF {
       throw new OntopiaRuntimeException("Unknown field type: " + fdesc);
   }
   
+  @Override
   public String toString() {
     return "<ClassInfo " + cdesc.getName() + ">";
   }

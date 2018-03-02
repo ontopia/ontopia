@@ -109,19 +109,29 @@ public abstract class AbstractTopicMapReferenceTest extends TestCase {
     private String id;
     private String title;
     EmptyTopicMapSource(String id) { this.id = id; }
+    @Override
     public String getId() { return id; }
+    @Override
     public void setId(String id) { this.id = id; }
+    @Override
     public String getTitle() { return title; }
+    @Override
     public void setTitle(String title) { this.title = title; }
+    @Override
     public Collection getReferences() { return Collections.EMPTY_SET; }
-    public void refresh() {};    
-    public void close() {}
+    @Override
+    public void refresh() { /* no-op */ };    
+    @Override
+    public void close() { /* no-op */ }
+    @Override
     public boolean supportsCreate() {
       return false;
     }
+    @Override
     public boolean supportsDelete() {
       return false;
     }
+    @Override
     public TopicMapReferenceIF createTopicMap(String name, String baseAddress) {
       throw new UnsupportedOperationException();
     }

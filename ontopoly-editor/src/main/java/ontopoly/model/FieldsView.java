@@ -21,13 +21,11 @@
 package ontopoly.model;
 
 import java.util.Iterator;
-
-import ontopoly.utils.OntopolyModelUtils;
-
+import java.util.Objects;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents a fields view.
@@ -44,6 +42,7 @@ public class FieldsView extends Topic {
     super(topic, tm);
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof FieldsView))
       return false;
@@ -65,7 +64,7 @@ public class FieldsView extends Topic {
     while (iter.hasNext()) {
       AssociationRoleIF role = iter.next();
       AssociationIF assoc = role.getAssociation();
-      if (ObjectUtils.equals(assoc.getType(), associationType)) {
+      if (Objects.equals(assoc.getType(), associationType)) {
         isEmbeddedView = 1;
         return true;
       }

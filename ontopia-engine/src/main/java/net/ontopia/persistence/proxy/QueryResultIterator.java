@@ -47,10 +47,12 @@ public class QueryResultIterator<E> implements Iterator<E> {
     has_next = result.next();
   }
   
+  @Override
   public synchronized boolean hasNext() {
     return has_next;
   }
   
+  @Override
   public E next() {
     if (!has_next)
       throw new NoSuchElementException();
@@ -63,6 +65,7 @@ public class QueryResultIterator<E> implements Iterator<E> {
     }
   }
   
+  @Override
   public void remove() {
     throw new UnsupportedOperationException();
   }
@@ -84,6 +87,7 @@ public class QueryResultIterator<E> implements Iterator<E> {
     }
   }
   
+  @Override
   protected void finalize() {
     close();
   }

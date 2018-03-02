@@ -30,14 +30,12 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.GrabberStringifier;
 
-import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
@@ -56,7 +54,7 @@ import org.slf4j.LoggerFactory;
 public final class Stringificator {
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory
+  private static final Logger log = LoggerFactory
     .getLogger(Stringificator.class.getName());
   
   // default stringifier
@@ -210,12 +208,13 @@ public final class Stringificator {
     protected String getValue(String value) {
       if (value == null)
         return stringValueNull;
-      else if (value.equals(""))
+      else if (value.isEmpty())
         return stringValueEmpty;
       else
         return value;
     }
     
+    @Override
     public String toString(Object object) {
       // 0: verify that we have a topic at all
       if (object == null)

@@ -47,6 +47,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see net.ontopia.topicmaps.impl.tmapi2.Construct#getWrapped()
    */
   
+  @Override
   public OccurrenceIF getWrapped() {
     return wrapped;
   }
@@ -57,6 +58,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.Occurrence#getParent()
    */
   
+  @Override
   public Topic getParent() {
     return topicMap.wrapTopic(wrapped.getTopic());
   }
@@ -67,6 +69,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.Typed#getType()
    */
   
+  @Override
   public Topic getType() {
     return topicMap.wrapTopic(wrapped.getType());
   }
@@ -77,6 +80,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.Typed#setType(org.tmapi.core.Topic)
    */
   
+  @Override
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
     Check.typeInTopicMap(getTopicMap(), type);
@@ -89,6 +93,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.DatatypeAware#getDatatype()
    */
   
+  @Override
   public Locator getDatatype() {
     return topicMap.wrapLocator(wrapped.getDataType());
   }
@@ -99,6 +104,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.DatatypeAware#getValue()
    */
   
+  @Override
   public String getValue() {
     return wrapped.getValue();
   }
@@ -109,6 +115,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.DatatypeAware#locatorValue()
    */
   
+  @Override
   public Locator locatorValue() {
     Locator loc = topicMap.wrapLocator(wrapped.getLocator());
     if (loc != null) {
@@ -131,6 +138,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.DatatypeAware#setValue(java.lang.String)
    */
   
+  @Override
   public void setValue(String value) {
     Check.valueNotNull(this, value);
     wrapped.setValue(value);
@@ -142,6 +150,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see org.tmapi.core.DatatypeAware#setValue(org.tmapi.core.Locator)
    */
   
+  @Override
   public void setValue(Locator value) {
     Check.valueNotNull(this, value);
     wrapped.setLocator(topicMap.unwrapLocator(value));
@@ -151,6 +160,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
    * @see net.ontopia.topicmaps.impl.tmapi2.DatatypeAware#setValue(java.lang.String, net.ontopia.infoset.core.LocatorIF)
    */
   
+  @Override
   protected void setValue(String value, LocatorIF datatype) {
     wrapped.setValue(value, datatype);
   }

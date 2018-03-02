@@ -43,6 +43,7 @@ public class IncludeTopicMapDTDEntityResolver extends ConfigurableEntityResolver
 
   public IncludeTopicMapDTDEntityResolver() {
     InputSourceFactoryIF xtm_factory = new InputSourceFactoryIF() {
+        @Override
         public InputSource createInputSource() {
           return new InputSource(IncludeTopicMapDTDEntityResolver.class.getResourceAsStream(XTM_1_0_DTD));
         }

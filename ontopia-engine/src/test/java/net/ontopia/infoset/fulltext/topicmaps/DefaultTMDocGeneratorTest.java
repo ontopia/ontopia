@@ -49,6 +49,7 @@ public class DefaultTMDocGeneratorTest extends TestCase {
     super(name);
   }
   
+  @Override
   public void setUp() {
     TopicMapStoreIF store = new InMemoryTopicMapStore();
     topicmap = store.getTopicMap();

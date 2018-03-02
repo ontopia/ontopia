@@ -42,6 +42,7 @@ public class ActionConfigWatchdog extends FileWatchdog {
    * Calls {@link ActionConfigurator#readRegistryConfiguration()} to
    * reconfigure the action registry.
    */
+  @Override
   public void doOnChange() {
     configurator.readRegistryConfiguration();
   }

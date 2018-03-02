@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.webed.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,13 +30,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
@@ -60,7 +59,6 @@ import net.ontopia.topicmaps.webed.impl.basic.ActionInGroup;
 import net.ontopia.topicmaps.webed.impl.basic.ActionParameters;
 import net.ontopia.topicmaps.webed.impl.basic.ActionRegistryIF;
 import net.ontopia.topicmaps.webed.impl.basic.ActionResponse;
-import net.ontopia.topicmaps.webed.impl.basic.ActionValidationException;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.webed.impl.basic.NoActionDataFoundException;
 import net.ontopia.topicmaps.webed.impl.basic.ParamRuleIF;
@@ -71,9 +69,7 @@ import net.ontopia.topicmaps.webed.impl.utils.NamedLockManager;
 import net.ontopia.topicmaps.webed.impl.utils.Parameters;
 import net.ontopia.topicmaps.webed.impl.utils.ReqParamUtils;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
-import net.ontopia.utils.DebugUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,6 +88,7 @@ public final class ProcessServlet extends HttpServlet {
   /**
    * INTERNAL: Handles a HTTP GET request.
    */
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     processRequest(request, response);
@@ -100,6 +97,7 @@ public final class ProcessServlet extends HttpServlet {
   /**
    * INTERNAL: Handles a HTTP POST request.
    */
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     processRequest(request, response);
@@ -584,7 +582,7 @@ public final class ProcessServlet extends HttpServlet {
     while (it.hasNext()) {
       String paramname = (String) it.next();
       logger.debug("Param '" + paramname + "': '"
-          + DebugUtils.toString(params.getValues(paramname)) + "'");
+          + Arrays.toString(params.getValues(paramname)) + "'");
     }
   }
 
@@ -593,7 +591,7 @@ public final class ProcessServlet extends HttpServlet {
     while (it.hasNext()) {
       String paramname = (String) it.next();
       logger.error(indentation + "Param '" + paramname + "': '"
-          + DebugUtils.toString(params.getValues(paramname)) + "'");
+          + Arrays.toString(params.getValues(paramname)) + "'");
     }
   }
 

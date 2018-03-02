@@ -55,18 +55,22 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // Topic stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getTopicCount() {
     return getCount("Stats.topics");
   }
 
+  @Override
   public int getTypedTopicCount() {
     return getCount("Stats.topicTyped");
   }
 
+  @Override
   public int getUntypedTopicCount() {
     return getCount("Stats.topicUntyped");
   }
 
+  @Override
   public int getTopicTypeCount() {
     return getCount("Stats.topicTypes");
   }
@@ -75,14 +79,17 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // TopicName stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getTopicNameCount() {
     return getCount("Stats.names");
   }
 
+  @Override
   public int getNoNameTopicCount() {
     return getCount("Stats.nonames");
   }
 
+  @Override
   public int getTopicNameTypeCount() {
     return getCount("Stats.nameTypes");
   }
@@ -91,6 +98,7 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // VariantName stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getVariantCount() {
     return getCount("Stats.variants");
   }
@@ -99,10 +107,12 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // Occurrence stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getOccurrenceCount() {
     return getCount("Stats.occurrences");
   }
 
+  @Override
   public int getOccurrenceTypeCount() {
     return getCount("Stats.occurrenceTypes");
   }
@@ -111,10 +121,12 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // Association stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getAssociationCount() {
     return getCount("Stats.associations");
   }
 
+  @Override
   public int getAssociationTypeCount() {
     return getCount("Stats.associationTypes");
   }
@@ -123,10 +135,12 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // Association role stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getRoleCount() {
     return getCount("Stats.roles");
   }
 
+  @Override
   public int getRoleTypeCount() {
     return getCount("Stats.roleTypes");
   }
@@ -135,14 +149,17 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
   // Locator stats
   // ---------------------------------------------------------------------------
 
+  @Override
   public int getSubjectIdentifierCount() {
     return getCount("Stats.psis");
   }
 
+  @Override
   public int getSubjectLocatorCount() {
     return getCount("Stats.sls");
   }
 
+  @Override
   public int getItemIdentifierCount() {
     return getCount("Stats.iis");
   }

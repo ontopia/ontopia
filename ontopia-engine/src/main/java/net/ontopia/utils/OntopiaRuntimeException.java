@@ -55,6 +55,7 @@ public class OntopiaRuntimeException extends RuntimeException {
   /**
    * @since 1.3
    */
+  @Override
   public Throwable getCause() {
     return cause;
   }
@@ -62,6 +63,7 @@ public class OntopiaRuntimeException extends RuntimeException {
   /**
    * @since 1.3.2
    */
+  @Override
   public String getMessage() {
     String message = super.getMessage();
     if (message != null)
@@ -70,6 +72,7 @@ public class OntopiaRuntimeException extends RuntimeException {
       return cause.toString();
   }
   
+  @Override
   public void printStackTrace() {
     super.printStackTrace();
     if (cause != null) {
@@ -77,6 +80,7 @@ public class OntopiaRuntimeException extends RuntimeException {
       cause.printStackTrace();
     }
   }
+  @Override
   public void printStackTrace(PrintStream ps) {
     super.printStackTrace(ps);
     if (cause != null) {
@@ -84,6 +88,7 @@ public class OntopiaRuntimeException extends RuntimeException {
       cause.printStackTrace(ps);
     }
   }
+  @Override
   public void printStackTrace(PrintWriter pw) {
     super.printStackTrace(pw);
     if (cause != null) {

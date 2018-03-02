@@ -39,14 +39,17 @@ public class HTMLFormatModule extends XMLFormatModule {
     setSkipElements(Arrays.asList(new String[] {"style", "STYLE", "pre", "PRE", "script", "SCRIPT"}));
   }
 
+  @Override
   public boolean matchesContent(ClassifiableContentIF cc) {
     return FormatModule.startsWithSkipWhitespace(cc.getContent(), magicBytes);
   }
   
+  @Override
   protected XMLReader createXMLReader() throws SAXException {
     return new org.ccil.cowan.tagsoup.Parser();
   }
 
+  @Override
   protected ContentHandler getContentHandler(TextHandlerIF handler) {
     return new HTMLHandler(handler);
   }
@@ -60,6 +63,7 @@ public class HTMLFormatModule extends XMLFormatModule {
       this.thandler = thandler;
     }
     
+    @Override
     public void startElement(String nsuri, String lname, String qname,
                              Attributes attrs) throws SAXException {
       if (skipElements != null && skipElements.contains(lname)) {
@@ -69,11 +73,13 @@ public class HTMLFormatModule extends XMLFormatModule {
       }
     }
     
+    @Override
     public void characters (char[] ch, int start, int length) {
       if (skipLevel == 0)
         thandler.text(ch, start, length);
     }
     
+    @Override
     public void endElement(String nsuri, String lname, String qname) throws SAXException {
       if (skipElements != null && skipElements.contains(lname)) {
         skipLevel--;        

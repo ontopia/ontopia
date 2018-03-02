@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.basic;
 
-import net.ontopia.utils.ObjectUtils;
+import java.util.Objects;
 
 /**
  * INTERNAL: Default implementation of the ImageInformationIF
@@ -46,26 +46,32 @@ public class ImageInformation implements ImageInformationIF {
     this.align = align;
   }
   
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getRelativeURL() {
     return relative_url;
   }
 
+  @Override
   public String getWidth() {
     return width;
   }
 
+  @Override
   public String getHeight() {
     return height;
   }
 
+  @Override
   public String getBorder() {
     return border;
   }
 
+  @Override
   public String getAlign() {
     return align;
   }
@@ -73,6 +79,7 @@ public class ImageInformation implements ImageInformationIF {
 
   // --- overwrite methods from java.lang.Object
 
+  @Override
   public int hashCode() {
     StringBuilder sb = new StringBuilder(32);
     sb.append(name).append(relative_url).append(width).append(height)
@@ -80,18 +87,20 @@ public class ImageInformation implements ImageInformationIF {
     return sb.toString().hashCode();
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof ImageInformation))
       return false;
     ImageInformation compObj = (ImageInformation) obj;
-    return (ObjectUtils.equals(compObj.getName(), name)
-            && ObjectUtils.equals(compObj.getRelativeURL(), relative_url)
-            && ObjectUtils.equals(compObj.getWidth(), width)
-            && ObjectUtils.equals(compObj.getHeight(), height)
-            && ObjectUtils.equals(compObj.getBorder(), border)
-            && ObjectUtils.equals(compObj.getAlign(), align));
+    return (Objects.equals(compObj.getName(), name)
+            && Objects.equals(compObj.getRelativeURL(), relative_url)
+            && Objects.equals(compObj.getWidth(), width)
+            && Objects.equals(compObj.getHeight(), height)
+            && Objects.equals(compObj.getBorder(), border)
+            && Objects.equals(compObj.getAlign(), align));
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder(48);
     sb.append("[ImageInformation: ").append(name).append(", ")

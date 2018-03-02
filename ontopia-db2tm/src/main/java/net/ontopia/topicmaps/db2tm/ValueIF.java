@@ -31,6 +31,6 @@ public interface ValueIF {
   /**
    * INTERNAL: Returns the value of the virtual column.
    */
-  public String getValue(String[] tuple);
+  String getValue(String[] tuple);
 
 }

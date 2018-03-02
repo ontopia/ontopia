@@ -34,13 +34,12 @@ public class QueryWrapperTest extends AbstractQueryTest {
 
   /// context management
 
-  public void setUp() {
-  }
-
+  @Override
   public void tearDown() {
     closeStore();
   }
 
+  @Override
   public void load(String tmid) throws IOException {
     super.load(tmid);
     wrapper = new QueryWrapper(topicmap);

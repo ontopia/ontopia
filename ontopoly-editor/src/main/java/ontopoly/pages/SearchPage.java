@@ -92,6 +92,7 @@ public class SearchPage extends OntopolyAbstractPage {
     };
     
     final WebMarkupContainer searchResultContainer = new WebMarkupContainer("searchResultContainer") {
+      @Override
       public boolean isVisible() {
         return ((List<Topic>)searchResultModel.getObject()).isEmpty() ? false : true;      
       }
@@ -100,6 +101,7 @@ public class SearchPage extends OntopolyAbstractPage {
     add(searchResultContainer);
     
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
+      @Override
       public boolean isVisible() {
           return !searchField.getModel().getObject().equals("") && ((List<Topic>)searchResultModel.getObject()).isEmpty() ? true : false;      
       }

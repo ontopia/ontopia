@@ -57,6 +57,7 @@ public class DisplayNameGrabber implements GrabberIF<TopicIF, NameIF> {
    * VariantNameIF, null if the topic has no basenames.
    * @exception Throws OntopiaRuntimeException if object is not a topic.
    */
+  @Override
   public NameIF grab(TopicIF object) {
     return subGrabber.grab(object);
   }

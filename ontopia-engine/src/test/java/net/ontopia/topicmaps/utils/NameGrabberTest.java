@@ -29,7 +29,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
@@ -37,86 +36,64 @@ import net.ontopia.utils.GrabberIF;
 
 public class NameGrabberTest extends TestCase {
 
-  InMemoryTopicMapStore store;
-  TopicMapBuilderIF builder;
-  TopicMapIF topicmap; 
-  TopicIF topicSort;
-  TopicIF topicPlay;
-  TopicIF topicWriter;
-  TopicIF topic1;
-  TopicNameIF basename1;
-  VariantNameIF variant1A;
-  TopicIF topic2;
-  TopicNameIF basename2;
-  VariantNameIF variant2A;
-  TopicIF topic3;
-  TopicNameIF basename3;
-  VariantNameIF variant3A;
-  TopicIF topic4;
-  TopicNameIF basename4;
-  VariantNameIF variant4A;
-  TopicIF topic5;
-  TopicNameIF basename5A, basename5B, basename5C;
-  VariantNameIF variant5A, variant5B, variant5C;
+  private TopicIF topicSort;
+  private TopicIF topicPlay;
+  private TopicIF topic5;
+  private TopicNameIF basename5A;
+  private TopicNameIF basename5B;
   
   public NameGrabberTest(String name) {
     super(name);
   }
   
+  @Override
   public void setUp() throws MalformedURLException {
-    store = new InMemoryTopicMapStore();
-    builder = store.getTopicMap().getBuilder();
+    InMemoryTopicMapStore store = new InMemoryTopicMapStore();
+    TopicMapBuilderIF builder = store.getTopicMap().getBuilder();
     
-    topicmap = makeTopicMap(); 
-
     topicSort = builder.makeTopic();
     LocatorIF sortRef = new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#sort");
     topicSort.addSubjectIdentifier(sortRef);
     topicPlay = builder.makeTopic();
-    topicWriter = builder.makeTopic();
+    TopicIF topicWriter = builder.makeTopic();
 
     
-    topic1 = builder.makeTopic();
-    basename1 = builder.makeTopicName(topic1, "Wilhelmine von Hillern");
+    TopicIF topic1 = builder.makeTopic();
+    TopicNameIF basename1 = builder.makeTopicName(topic1, "Wilhelmine von Hillern");
     basename1.addTheme(topicWriter);
-    variant1A = builder.makeVariantName(basename1, "Hillern, Wilhelmine");
+    VariantNameIF variant1A = builder.makeVariantName(basename1, "Hillern, Wilhelmine");
     variant1A.addTheme(topicSort);
     
-    topic2 = builder.makeTopic();
-    basename2 = builder.makeTopicName(topic2, "Alphonse Daudet");
+    TopicIF topic2 = builder.makeTopic();
+    TopicNameIF basename2 = builder.makeTopicName(topic2, "Alphonse Daudet");
     basename2.addTheme(topicWriter);
-    variant2A = builder.makeVariantName(basename2, "Daudet, Alphonse");
+    VariantNameIF variant2A = builder.makeVariantName(basename2, "Daudet, Alphonse");
     variant2A.addTheme(topicSort);
 
-    topic3 = builder.makeTopic();
-    basename3 = builder.makeTopicName(topic3, "El trovador");
+    TopicIF topic3 = builder.makeTopic();
+    TopicNameIF basename3 = builder.makeTopicName(topic3, "El trovador");
     basename3.addTheme(topicPlay);
-    variant3A = builder.makeVariantName(basename3, "Trovador");
+    VariantNameIF variant3A = builder.makeVariantName(basename3, "Trovador");
     variant3A.addTheme(topicSort);
 
-    topic4 = builder.makeTopic();
-    basename4 = builder.makeTopicName(topic4, "The Merry Wives of Windsor");
+    TopicIF topic4 = builder.makeTopic();
+    TopicNameIF basename4 = builder.makeTopicName(topic4, "The Merry Wives of Windsor");
     basename4.addTheme(topicPlay);
-    variant4A = builder.makeVariantName(basename4, "Merry Wives of Windsor");
+    VariantNameIF variant4A = builder.makeVariantName(basename4, "Merry Wives of Windsor");
     variant4A.addTheme(topicSort);
 
     topic5 = builder.makeTopic();
     basename5A = builder.makeTopicName(topic5, "Die Jungfrau von Orleans");
     basename5A.addTheme(topicPlay);
-    variant5A = builder.makeVariantName(basename5A, "Jungfrau von Orleans");
+    VariantNameIF variant5A = builder.makeVariantName(basename5A, "Jungfrau von Orleans");
     variant5A.addTheme(topicSort);
     
     basename5B = builder.makeTopicName(topic5, "Jungfrau von Orleans");
 
-    basename5C = builder.makeTopicName(topic5, "Jungfrau von Orleans, Die");
-    variant5C = builder.makeVariantName(basename5A, "Jungfrau von Orleans");
+    VariantNameIF variant5C = builder.makeVariantName(basename5A, "Jungfrau von Orleans");
     variant5C.addTheme(topicPlay);
   }
 
-  public TopicMapIF makeTopicMap() {
-    return store.getTopicMap();
-  }
- 
   // --- Test cases
 
   public void testNameGrabber5A() {

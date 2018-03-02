@@ -27,6 +27,7 @@ package net.ontopia.utils;
 
 public class SameGrabber<T> implements GrabberIF<T, T> {
   
+  @Override
   public T grab(T object) {
     return object;
   }

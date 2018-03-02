@@ -56,7 +56,6 @@ import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.tmrap.TopicIndexIF;
 import net.ontopia.topicmaps.viz.TMClassInstanceAssociation.Key;
 import net.ontopia.topicmaps.viz.VizController.VizHoverHelpManager;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 import com.touchgraph.graphlayout.Edge;
@@ -99,13 +98,20 @@ public class TopicMapView {
   
   protected Debug debug;
 
-  Collection nodesUpdateCount;
+  protected Collection nodesUpdateCount;
   
   public PerformanceStat stat;
   public PerformanceStat stat1;
 
-  MotionKiller motionKiller;
-  VizigatorUser vizigatorUser;
+  protected MotionKiller motionKiller;
+  protected VizigatorUser vizigatorUser;
+
+  protected List foregroundQueue = new ArrayList();
+  private int maxTopicNameLength = VizTopicMapConfigurationManager
+      .DEFAULT_MAX_TOPIC_NAME_LENGTH;
+  
+  public static int NODE_LOCALITY = 0;
+  public static int EDGE_LOCALITY = 1;
 
   /**
    * Creates the view and updates the TGPanel to show the new view. The TGPanel
@@ -1046,6 +1052,7 @@ public class TopicMapView {
     dialog.setContentPane(pane);
     dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     dialog.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent we) {
         running[0] = (JOptionPane
             .showConfirmDialog(
@@ -1055,6 +1062,7 @@ public class TopicMapView {
       }
     });
     pane.addPropertyChangeListener(new PropertyChangeListener() {
+      @Override
       public void propertyChange(PropertyChangeEvent e) {
         if (pane.getValue() == cancelOptions[0]) {
           running[0] = (JOptionPane
@@ -1072,6 +1080,7 @@ public class TopicMapView {
     dialog.setLocationRelativeTo(frame);
 
     final SwingWorker worker = new SwingWorker() {
+      @Override
       public Object construct() {
         Iterator it = topics.iterator();
         int max = topics.size();
@@ -1098,6 +1107,7 @@ public class TopicMapView {
               // load a tad, but means that the progress bar is allways
               // in sync.
               EventQueue.invokeAndWait(new Runnable() {
+                @Override
                 public void run() {
                   progressBar.setValue(progress[0]);
                 }
@@ -1110,6 +1120,7 @@ public class TopicMapView {
         return null;
       }
 
+      @Override
       public void finished() {
         dialog.hide();
       }
@@ -1149,10 +1160,6 @@ public class TopicMapView {
 
     return node;
   }
-  
-  protected List foregroundQueue = new ArrayList();
-  private int maxTopicNameLength = VizTopicMapConfigurationManager
-      .DEFAULT_MAX_TOPIC_NAME_LENGTH;
   
   protected void queueInForeground(TMAbstractNode node) {
     foregroundQueue.add(node);
@@ -1434,8 +1441,7 @@ public class TopicMapView {
 
     // Find a potential duplicate
     Node collidingNode = tgPanel.getGES().findNode(node.getID());
-    if (collidingNode != null && collidingNode.getClass().getName() == 
-                                 node.getClass().getName()) {
+    if (collidingNode != null && collidingNode.getClass().getName().equals(node.getClass().getName())) {
       // First try to find the collision. If found, remove it and try again
       if (node instanceof TMTopicNode) {
         TMTopicNode tNode = (TMTopicNode)node;
@@ -1698,9 +1704,6 @@ public class TopicMapView {
         .NODE_ORIENTED;
   }
   
-  public static int NODE_LOCALITY = 0;
-  public static int EDGE_LOCALITY = 1;
-
   private void createAllRoles(TMAssociationNode node, boolean create) {
     Collection roles = new ArrayList(node.getAssociation().getRoles());
 
@@ -2281,22 +2284,23 @@ public class TopicMapView {
   /**
    * INTERNAL: PRIVATE: Purpose: Output debug information
    */
-  protected class Debug extends Object {
+  protected class Debug {
+    private boolean reportAndCrash = false;
 
     protected void execute(String operation) {
-      if (operation.equals("count"))
+      if ("count".equals(operation))
         counts();
-      if (operation.equals("gc"))
+      if ("gc".equals(operation))
         collectGarbage();
-      if (operation.equals("paint"))
+      if ("paint".equals(operation))
         paintNodes(true);
-      if (operation.equals("paint-h"))
+      if ("paint-h".equals(operation))
         paintNodes(false);
-      if (operation.equals("paint-all"))
+      if ("paint-all".equals(operation))
         paintNodes();
-      if (operation.equals("assoc-v"))
+      if ("assoc-v".equals(operation))
         outputAssociaitonNames(true);
-      if (operation.equals("h-assoc-h"))
+      if ("h-assoc-h".equals(operation))
         outputAssociaitonNames(false);
     }
 
@@ -2845,8 +2849,6 @@ public class TopicMapView {
       // System.out.println("EXITING VIZIGATOR");
       // System.exit(1);
     }
-    
-    private boolean reportAndCrash = false;
     
     private String leadCap(String source) {
       String lead = source.substring(0, 1);

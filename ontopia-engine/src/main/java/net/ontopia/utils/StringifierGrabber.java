@@ -51,6 +51,7 @@ public class StringifierGrabber<T> implements GrabberIF<T, String> {
     this.stringifier = stringifier;
   }
   
+  @Override
   public String grab(T object) {
     return stringifier.toString(object);
   }

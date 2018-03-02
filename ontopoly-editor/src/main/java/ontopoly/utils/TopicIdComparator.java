@@ -21,9 +21,8 @@ package ontopoly.utils;
 
 import java.io.Serializable;
 import java.util.Comparator;
-
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.Topic;
+import org.apache.commons.lang3.StringUtils;
 
 public class TopicIdComparator implements Comparator<Topic>, Serializable {
 
@@ -33,8 +32,9 @@ public class TopicIdComparator implements Comparator<Topic>, Serializable {
     // don't call me
   }
   
+  @Override
   public int compare(Topic t1, Topic t2) {
-    return ObjectUtils.compare(t1.getId(), t2.getId());
+    return StringUtils.compare(t1.getId(), t2.getId());
   }
 
 }

@@ -32,6 +32,7 @@ public class SQLNot implements SQLExpressionIF {
     this.expression = expression;
   }
 
+  @Override
   public int getType() {
     return NOT;
   }
@@ -44,6 +45,7 @@ public class SQLNot implements SQLExpressionIF {
     this.expression = expression;
   }
   
+  @Override
   public String toString() {
     return "not (" + getExpression().toString() + ")";
   }

@@ -72,6 +72,7 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
         validateCardinality();
         super.onBeforeRender();
       }
+      @Override
       public void populateItem(final ListItem<FieldValueModel> item) {
         final FieldValueModel fieldValueModel = item.getModelObject();
 

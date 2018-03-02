@@ -19,8 +19,8 @@
  */
 package ontopoly.models;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
 import ontopoly.model.AssociationType;
 import ontopoly.model.NameType;
@@ -111,8 +111,8 @@ public class TopicModel<T extends Topic> extends MutableLoadableDetachableModel<
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof TopicModel)
-      return ObjectUtils.equals(topicMapId, ((TopicModel)obj).topicMapId) &&
-        ObjectUtils.equals(topicId, ((TopicModel)obj).topicId);
+      return Objects.equals(topicMapId, ((TopicModel)obj).topicMapId) &&
+        Objects.equals(topicId, ((TopicModel)obj).topicId);
     else
       return false;
   }

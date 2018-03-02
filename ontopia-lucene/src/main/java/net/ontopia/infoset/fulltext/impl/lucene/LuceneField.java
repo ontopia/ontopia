@@ -37,26 +37,32 @@ public class LuceneField implements FieldIF {
     this.field = field;
   }
   
+  @Override
   public String getName() {
     return field.name();
   }
   
+  @Override
   public String getValue() {
     return field.stringValue();
   }
 
+  @Override
   public Reader getReader() {
     return field.readerValue();
   }
   
+  @Override
   public boolean isStored() {
     return field.fieldType().stored();
   }
 
+  @Override
   public boolean isIndexed() {
     return field.fieldType().indexOptions() != IndexOptions.NONE;
   }
 
+  @Override
   public boolean isTokenized() {
     return field.fieldType().tokenized();
   }

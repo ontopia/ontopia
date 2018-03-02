@@ -44,6 +44,7 @@ public class TopicStringifiersTest extends TestCase {
     super(name);
   }
     
+  @Override
   public void setUp() {
     topicmap = makeTopicMap();
     topic = builder.makeTopic();

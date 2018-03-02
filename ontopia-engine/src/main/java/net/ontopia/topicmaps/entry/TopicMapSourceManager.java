@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
 public class TopicMapSourceManager implements TopicMapRepositoryIF {
 
   // Define a logging category.
-  static Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
 
   protected Set<TopicMapSourceIF> sources = new CompactHashSet<TopicMapSourceIF>();
 
@@ -79,28 +79,33 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
       addSource(iter.next());
   }
 
+  @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (!refreshed)
       refresh();
     return keyrefs.values();
   }
 
+  @Override
   public synchronized Collection<String> getReferenceKeys() {
     if (!refreshed)
       refresh();
     return keyrefs.keySet();
   }
 
+  @Override
   public synchronized TopicMapReferenceIF getReferenceByKey(String key) {
     if (!refreshed)
       refresh();
     return keyrefs.get(key);
   }
 
+  @Override
   public synchronized String getReferenceKey(TopicMapReferenceIF ref) {
     return refkeys.get(ref);
   }
 
+  @Override
   public TopicMapStoreIF createStore(String refkey, boolean readonly) {
     TopicMapReferenceIF ref = getReferenceByKey(refkey);
     if (ref == null)
@@ -112,14 +117,17 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     }
   }
 
+  @Override
   public synchronized TopicMapSourceIF getSourceById(String source_id) {
     return smap.get(source_id);
   }
 
+  @Override
   public synchronized Collection<TopicMapSourceIF> getSources() {
     return Collections.unmodifiableCollection(sources);
   }
 
+  @Override
   public synchronized void addSource(TopicMapSourceIF source) {
     // Add source to set of sources
     if (sources.add(source)) {
@@ -136,6 +144,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     }
   }
 
+  @Override
   public synchronized void removeSource(TopicMapSourceIF source) {
     // Remove source from set of sources
     if (sources.remove(source)) {
@@ -147,6 +156,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     }
   }
 
+  @Override
   public synchronized void refresh() {
     // Clear reference map
     refreshed = false;
@@ -199,6 +209,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     return refkey;
   }
 
+  @Override
   public synchronized void close() {
     Iterator<TopicMapReferenceIF> iter = refkeys.keySet().iterator();
     while (iter.hasNext()) {

@@ -27,10 +27,10 @@ package net.ontopia.utils;
  */
 public interface LookupIndexIF<K, E> {
 
-  public E get(K key);
+  E get(K key);
 
-  public E put(K key, E value);
+  E put(K key, E value);
 
-  public E remove(K key);
+  E remove(K key);
   
 }

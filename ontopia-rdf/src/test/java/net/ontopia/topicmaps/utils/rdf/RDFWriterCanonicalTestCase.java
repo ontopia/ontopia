@@ -31,8 +31,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,15 +44,15 @@ public class RDFWriterCanonicalTestCase {
 
   private final static String testdataDirectory = "tm2rdf";
 
+  private String base;
+  private String filename;
+
   @Parameters
   public static List generateTests() {
     return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm|.ltm|.ctm");
   }
 
   // --- Canonical test case class
-
-    private String base;
-    private String filename;
 
     public RDFWriterCanonicalTestCase(String root, String filename) {
       this.filename = filename;

@@ -44,12 +44,14 @@ public class Issue409Test {
    
     mergeTypedIF(new TypedIFCreator() {
 
+      @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
         builder.makeOccurrence(builder.makeTopic(), type, "foo1");
         builder.makeOccurrence(builder.makeTopic(), type, "foo2");
         builder.makeOccurrence(builder.makeTopic(), type, "foo3");
       }
 
+      @Override
       public TypedIF getTyped(TopicIF topic) {
         if (topic.getOccurrences().size() == 0) {
           return null;
@@ -67,6 +69,7 @@ public class Issue409Test {
 
      mergeTypedIF(new TypedIFCreator() {
 
+      @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
         
         type.addSubjectIdentifier(URILocator.create("foo:bar"));
@@ -76,6 +79,7 @@ public class Issue409Test {
         builder.makeOccurrence(builder.makeTopic(), type, "foo3");
       }
 
+      @Override
       public TypedIF getTyped(TopicIF topic) {
         if (topic.getOccurrences().size() == 0) {
           return null;
@@ -93,12 +97,14 @@ public class Issue409Test {
 
     mergeTypedIF(new TypedIFCreator() {
 
+      @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
         builder.makeTopicName(builder.makeTopic(), type, "foo1");
         builder.makeTopicName(builder.makeTopic(), type, "foo2");
         builder.makeTopicName(builder.makeTopic(), type, "foo3");
       }
 
+      @Override
       public TypedIF getTyped(TopicIF topic) {
         if (topic.getTopicNames().size() == 0) {
           return null;
@@ -120,6 +126,7 @@ public class Issue409Test {
 
      mergeTypedIF(new TypedIFCreator() {
 
+      @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
         
         type.addSubjectIdentifier(URILocator.create("foo:bar"));
@@ -129,6 +136,7 @@ public class Issue409Test {
         builder.makeTopicName(builder.makeTopic(), type, "foo3");
       }
 
+      @Override
       public TypedIF getTyped(TopicIF topic) {
         if (topic.getTopicNames().size() == 0) {
           return null;

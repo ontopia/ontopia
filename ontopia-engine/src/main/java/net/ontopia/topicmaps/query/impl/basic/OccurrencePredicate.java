@@ -37,14 +37,17 @@ public class OccurrencePredicate implements BasicPredicateIF {
     this.topicmap = topicmap;
   }
   
+  @Override
   public String getName() {
     return "occurrence";
   }
 
+  @Override
   public String getSignature() {
     return "t o";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -56,6 +59,7 @@ public class OccurrencePredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 
@@ -122,24 +126,4 @@ public class OccurrencePredicate implements BasicPredicateIF {
 
     return result;
   }
-
-  private QueryMatches filter(QueryMatches matches, int topicix, int occix) {
-
-    int nextix = 0;
-    for (int ix = 0; ix <= matches.last; ix++) {
-      if (!(matches.data[ix][occix] instanceof OccurrenceIF) ||
-          !(matches.data[ix][topicix] instanceof TopicIF))
-        continue;
-      
-      OccurrenceIF occ = (OccurrenceIF) matches.data[ix][occix];
-      TopicIF topic = (TopicIF) matches.data[ix][topicix];
-
-      if (occ.getTopic().equals(topic))
-        matches.data[nextix++] = matches.data[ix];
-    }
-
-    matches.last = nextix - 1;
-    return matches;
-  }
-  
 }

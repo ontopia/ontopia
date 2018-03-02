@@ -28,22 +28,22 @@ public interface SkinIF {
   /**
    * PUBLIC: Returns the display title of the skin.
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * PUBLIC: Sets the display title of the skin.
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
   /**
    * PUBLIC: Returns the ID of the skin.
    */
-  public String getId();
+  String getId();
 
   /**
    * PUBLIC: Sets the ID of the skin.
    */
-  public void setId(String id);
+  void setId(String id);
   
 }
 

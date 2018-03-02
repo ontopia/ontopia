@@ -44,6 +44,7 @@ public class ScopeIndex extends RDBMSIndex implements ScopeIndexIF {
   // ScopeIndexIF
   // ---------------------------------------------------------------------------
     
+  @Override
   public Collection<TopicNameIF> getTopicNames(TopicIF theme) {
     if (theme == null) {
       Object[] params = new Object[] { getTopicMap() };
@@ -56,6 +57,7 @@ public class ScopeIndex extends RDBMSIndex implements ScopeIndexIF {
     }
   }
   
+  @Override
   public Collection<VariantNameIF> getVariants(TopicIF theme) {
     if (theme == null) {
       Object[] params = new Object[] { getTopicMap() };
@@ -68,6 +70,7 @@ public class ScopeIndex extends RDBMSIndex implements ScopeIndexIF {
     }
   }
   
+  @Override
   public Collection<OccurrenceIF> getOccurrences(TopicIF theme) {
     if (theme == null) {
       Object[] params = new Object[] { getTopicMap() };
@@ -80,6 +83,7 @@ public class ScopeIndex extends RDBMSIndex implements ScopeIndexIF {
     }
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations(TopicIF theme) {
     if (theme == null) {
       Object[] params = new Object[] { getTopicMap() };
@@ -92,42 +96,51 @@ public class ScopeIndex extends RDBMSIndex implements ScopeIndexIF {
     }
   }
     
+  @Override
   public Collection<TopicIF> getTopicNameThemes() {
     return (Collection)executeQuery("ScopeIndexIF.getTopicNameThemes",
                                     new Object[] { getTopicMap() });
   }
 
+  @Override
   public Collection<TopicIF> getVariantThemes() {
     return (Collection)executeQuery("ScopeIndexIF.getVariantThemes",
                                     new Object[] { getTopicMap() });
   }
 
+  @Override
   public Collection<TopicIF> getOccurrenceThemes() {
     return (Collection)executeQuery("ScopeIndexIF.getOccurrenceThemes",
                                     new Object[] { getTopicMap() });
   }
   
+  @Override
   public Collection<TopicIF> getAssociationThemes() {
     return (Collection)executeQuery("ScopeIndexIF.getAssociationThemes",
                                     new Object[] { getTopicMap() });
   }
 
+  @Override
   public boolean usedAsTopicNameTheme(TopicIF topic) {
     return !(getTopicNames(topic).isEmpty());    
   }
 
+  @Override
   public boolean usedAsVariantTheme(TopicIF topic) {
     return !(getVariants(topic).isEmpty());    
   }
 
+  @Override
   public boolean usedAsOccurrenceTheme(TopicIF topic) {
     return !(getOccurrences(topic).isEmpty());    
   }
 
+  @Override
   public boolean usedAsAssociationTheme(TopicIF topic) {
     return !(getAssociations(topic).isEmpty());    
   }
   
+  @Override
   public boolean usedAsTheme(TopicIF topic) {
     return (usedAsTopicNameTheme(topic) ||
             usedAsVariantTheme(topic) ||

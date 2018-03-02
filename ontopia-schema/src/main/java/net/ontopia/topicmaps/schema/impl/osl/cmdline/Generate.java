@@ -38,13 +38,6 @@ import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 public class Generate {
 
   /**
-   * default constructor.
-   */
-  public Generate() {
-    super();
-  }
-
-  /**
    * Creates a schema from the given topic map which is read in fist.
    *
    * @param input filename of the input topic map.

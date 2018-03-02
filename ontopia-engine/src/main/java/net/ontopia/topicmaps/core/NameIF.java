@@ -28,7 +28,7 @@ public interface NameIF extends TMObjectIF {
    * @return The topic named by this name; an object implementing TopicIF.
    *
    */
-  public TopicIF getTopic();
+  TopicIF getTopic();
 
   /**
    * PUBLIC: Gets the value of this name. This corresponds to
@@ -40,7 +40,7 @@ public interface NameIF extends TMObjectIF {
    *
    * @return A string which is the value of this topic name.
    */
-  public String getValue();
+  String getValue();
 
   /**
    * PUBLIC: Sets the value of this topic name. This corresponds to
@@ -51,6 +51,6 @@ public interface NameIF extends TMObjectIF {
    *
    * @param name A string which is the value of this topic name.
    */
-  public void setValue(String name);
+  void setValue(String name);
 
 }

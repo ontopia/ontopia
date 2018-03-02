@@ -44,19 +44,19 @@ import net.ontopia.infoset.core.LocatorIF;
 
 public interface TopicIF extends TMObjectIF {
 
-  public static final String EVENT_ADDED = "TopicIF.added";
-  public static final String EVENT_MODIFIED = "TopicIF.modified";
-  public static final String EVENT_REMOVED = "TopicIF.removed";
-  public static final String EVENT_ADD_TYPE = "TopicIF.addType";
-  public static final String EVENT_REMOVE_TYPE = "TopicIF.removeType";
-  public static final String EVENT_ADD_SUBJECTLOCATOR = "TopicIF.addSubjectLocator";
-  public static final String EVENT_REMOVE_SUBJECTLOCATOR = "TopicIF.removeSubjectLocator";
-  public static final String EVENT_ADD_SUBJECTIDENTIFIER = "TopicIF.addSubjectIdentifier";
-  public static final String EVENT_REMOVE_SUBJECTIDENTIFIER = "TopicIF.removeSubjectIdentifier";
-  public static final String EVENT_ADD_TOPICNAME = "TopicIF.addTopicName";
-  public static final String EVENT_REMOVE_TOPICNAME = "TopicIF.removeTopicName";
-  public static final String EVENT_ADD_OCCURRENCE = "TopicIF.addOccurrence";
-  public static final String EVENT_REMOVE_OCCURRENCE = "TopicIF.removeOccurrence";
+  String EVENT_ADDED = "TopicIF.added";
+  String EVENT_MODIFIED = "TopicIF.modified";
+  String EVENT_REMOVED = "TopicIF.removed";
+  String EVENT_ADD_TYPE = "TopicIF.addType";
+  String EVENT_REMOVE_TYPE = "TopicIF.removeType";
+  String EVENT_ADD_SUBJECTLOCATOR = "TopicIF.addSubjectLocator";
+  String EVENT_REMOVE_SUBJECTLOCATOR = "TopicIF.removeSubjectLocator";
+  String EVENT_ADD_SUBJECTIDENTIFIER = "TopicIF.addSubjectIdentifier";
+  String EVENT_REMOVE_SUBJECTIDENTIFIER = "TopicIF.removeSubjectIdentifier";
+  String EVENT_ADD_TOPICNAME = "TopicIF.addTopicName";
+  String EVENT_REMOVE_TOPICNAME = "TopicIF.removeTopicName";
+  String EVENT_ADD_OCCURRENCE = "TopicIF.addOccurrence";
+  String EVENT_REMOVE_OCCURRENCE = "TopicIF.removeOccurrence";
   
   /**
    * PUBLIC: Gets the subject locators of this topic. These are
@@ -68,7 +68,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of LocatorIF objects serving as subject locators.
    * @since 4.0
    */
-  public Collection<LocatorIF> getSubjectLocators();
+  Collection<LocatorIF> getSubjectLocators();
 
   /**
    * PUBLIC: Adds the given subject locator to the set of subject locators
@@ -81,7 +81,7 @@ public interface TopicIF extends TMObjectIF {
    *                        an object implementing LocatorIF.
    * @since 4.0
    */
-  public void addSubjectLocator(LocatorIF subject_locator)
+  void addSubjectLocator(LocatorIF subject_locator)
       throws ConstraintViolationException;
 
   /**
@@ -93,7 +93,7 @@ public interface TopicIF extends TMObjectIF {
    *                        an object implementing LocatorIF.
    * @since 4.0
    */
-  public void removeSubjectLocator(LocatorIF subject_locator);
+  void removeSubjectLocator(LocatorIF subject_locator);
   
   /**
    * PUBLIC: Gets the subject identitifers of this topic. These are
@@ -106,7 +106,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of LocatorIF objects serving as subject identifiers.
    * @since 4.0
    */
-  public Collection<LocatorIF> getSubjectIdentifiers();
+  Collection<LocatorIF> getSubjectIdentifiers();
 
   /**
    * PUBLIC: Adds the given subject identifier to the set of subject identifiers
@@ -119,7 +119,7 @@ public interface TopicIF extends TMObjectIF {
    *                           an object implementing LocatorIF.
    * @since 4.0
    */
-  public void addSubjectIdentifier(LocatorIF subject_identifier)
+  void addSubjectIdentifier(LocatorIF subject_identifier)
       throws ConstraintViolationException;
 
   /**
@@ -131,7 +131,7 @@ public interface TopicIF extends TMObjectIF {
    *                           an object implementing LocatorIF.
    * @since 4.0
    */
-  public void removeSubjectIdentifier(LocatorIF subject_identifier);
+  void removeSubjectIdentifier(LocatorIF subject_identifier);
 
   /**
    * PUBLIC: Gets the types that this topic is an instance of. There
@@ -139,14 +139,14 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection<TopicIF> getTypes();
+  Collection<TopicIF> getTypes();
 
   /**
    * PUBLIC: Adds a type to this topic.
    *
    * @param type The additional type; an object implementing TopicIF.
    */
-  public void addType(TopicIF type);
+  void addType(TopicIF type);
 
   /**
    * PUBLIC: Removes a type from this topic. If the given topic is not
@@ -154,14 +154,14 @@ public interface TopicIF extends TMObjectIF {
    *
    * @param type The type to be removed; an object implementing TopicIF.
    */
-  public void removeType(TopicIF type);
+  void removeType(TopicIF type);
 
   /**
    * PUBLIC: Gets the names of this topic.
    *
    * @return A collection of TopicNameIF objects.
    */
-  public Collection<TopicNameIF> getTopicNames();
+  Collection<TopicNameIF> getTopicNames();
   
   /**
    * PUBLIC: Gets the topic names of this topic with a specified type. 
@@ -169,7 +169,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of TopicNameIF objects typed by specified 
    * type.
    */
-  public Collection<TopicNameIF> getTopicNamesByType(TopicIF type);
+  Collection<TopicNameIF> getTopicNamesByType(TopicIF type);
   
   /**
    * PUBLIC: Gets the occurrences of this topic. The occurrences are
@@ -177,7 +177,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of OccurrenceIF objects.
    */
-  public Collection<OccurrenceIF> getOccurrences();
+  Collection<OccurrenceIF> getOccurrences();
   
   /**
    * PUBLIC: Gets the occurrences of this topic with a specified type. 
@@ -186,7 +186,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of OccurrenceIF objects typed by specified 
    * type.
    */
-  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type);
+  Collection<OccurrenceIF> getOccurrencesByType(TopicIF type);
 
   /**
    * PUBLIC: Gets the association roles played by this topic. There
@@ -194,7 +194,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of AssociationRoleIF objects.
    */
-  public Collection<AssociationRoleIF> getRoles();
+  Collection<AssociationRoleIF> getRoles();
 
   /**
    * PUBLIC: Gets the association roles of the specifed type played
@@ -204,7 +204,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of AssociationRoleIF objects.
    * @since 2.2
    */
-  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype);
+  Collection<AssociationRoleIF> getRolesByType(TopicIF roletype);
 
   /**
    * PUBLIC: Gets the association roles of the specifed type played
@@ -215,7 +215,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of AssociationRoleIF objects.
    * @since 2.2
    */
-  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype,
+  Collection<AssociationRoleIF> getRolesByType(TopicIF roletype,
                                                       TopicIF assoc_type);
 
   /**
@@ -224,7 +224,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of AssociationIF objects.
    */
-  public Collection<AssociationIF> getAssociations();
+  Collection<AssociationIF> getAssociations();
   
   /**
    * PUBLIC: Gets the associations that have roles played by this topic,
@@ -233,7 +233,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of AssociationIF objects.
    */
-  public Collection<AssociationIF> getAssociationsByType(TopicIF type);
+  Collection<AssociationIF> getAssociationsByType(TopicIF type);
   
   /**
    * EXPERIMENTAL: Merges the characteristics of one topic into
@@ -251,13 +251,13 @@ public interface TopicIF extends TMObjectIF {
    *
    * @since 2.0.4
    */
-  public void merge(TopicIF topic);
+  void merge(TopicIF topic);
 
   /**
    * PUBLIC: Returns the topic map object that this topic reifies.
    *
    * @since 4.0
    */
-  public ReifiableIF getReified();
+  ReifiableIF getReified();
 
 }

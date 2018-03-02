@@ -26,6 +26,7 @@ package net.ontopia.utils;
 
 public class DefaultStringifier<T> implements StringifierIF<T> {
 
+  @Override
   public String toString(T object) {
     if (object == null) return "null";
     return object.toString();

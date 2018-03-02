@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.Iterator;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -42,6 +41,7 @@ public class ClassInstanceTest extends TestCase {
         super(name);
     }
 
+    @Override
     protected void setUp() {
         topicmap = makeTopicMap();
         index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
@@ -291,7 +291,7 @@ public class ClassInstanceTest extends TestCase {
         assertTrue("topic with null type found",
                index.getTopics(null).size() == 3);
 
-        assertTrue("index claims null used as topic type",
+        assertFalse("index claims null used as topic type",
                index.usedAsTopicType(null));
         // --
 

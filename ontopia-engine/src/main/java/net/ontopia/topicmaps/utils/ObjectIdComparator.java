@@ -39,6 +39,7 @@ public class ObjectIdComparator implements Comparator<TMObjectIF> {
    * @return int; 0 if the two objects have the same object id; otherwise positive/negative
    *        according to compareTo on the (string) values of the object ids
    */ 
+  @Override
   public int compare(TMObjectIF obj1, TMObjectIF obj2) {
     return obj1.getObjectId().compareTo(obj2.getObjectId());
   }

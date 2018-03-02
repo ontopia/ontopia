@@ -54,10 +54,10 @@ import net.ontopia.utils.UniqueSet;
 
 public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
 
-  static final long serialVersionUID = -1334945778216658155L;
+  private static final long serialVersionUID = -1334945778216658155L;
 
-  transient InMemoryTopicMapTransaction txn;  
-  transient CollectionFactoryIF cfactory;
+  protected transient InMemoryTopicMapTransaction txn;  
+  protected transient CollectionFactoryIF cfactory;
   public transient UniqueSet<TopicIF> setpool = new UniqueSet<TopicIF>();
   
   protected transient SubjectIdentityCache sicache;
@@ -93,6 +93,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // TMObjectIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public TopicMapIF getTopicMap() {
     return this;
   }
@@ -101,6 +102,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // TopicMapIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicMapStoreIF getStore() {
     return txn.getStore();
   }
@@ -109,19 +111,21 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     return txn;
   }
 
+  @Override
   public TopicMapBuilderIF getBuilder() {
     return getTransaction().getBuilder();
   }
 
+  @Override
   public Object getIndex(String name) {
     return getTransaction().getIndexManager().getIndex(name);
   }
 
-  SubjectIdentityCache getSubjectIdentityCache() {
+  protected SubjectIdentityCache getSubjectIdentityCache() {
     return sicache;
   }
   
-  void setSubjectIdentityCache(SubjectIdentityCache sicache) {
+  protected void setSubjectIdentityCache(SubjectIdentityCache sicache) {
     // Unregister topic map with old subject identity cache
     if (this.sicache != null)
       this.sicache.unregisterObject(this);
@@ -130,6 +134,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     this.sicache = sicache;
   }
   
+  @Override
   public Collection<TopicIF> getTopics() {
     return Collections.unmodifiableSet(topics);
   }
@@ -182,6 +187,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     topics.remove(topic);
   }
   
+  @Override
   public Collection<AssociationIF> getAssociations() {
     return Collections.unmodifiableSet(assocs);
   }
@@ -246,35 +252,41 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     assocs.remove(association);
   }
 
+  @Override
   public void remove() {
     getStore().delete(true);
   }
 
+  @Override
   public void clear() {
     DeletionUtils.clear(this);
   }
 
+  @Override
   public TMObjectIF getObjectById(String object_id) {
     if (object_id == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getObjectById(object_id);
   }
 
+  @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     if (locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getObjectByItemIdentifier(locator);
   }
 
+  @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) { 
     if (locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getTopicBySubjectLocator(locator);
   }
 
+  @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
     if (locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+      throw new NullPointerException(MSG_NULL_ARGUMENT);
     return sicache.getTopicBySubjectIdentifier(locator);
   }
   
@@ -282,10 +294,12 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // ReifiableIF implementation
   // -----------------------------------------------------------------------------
 
+  @Override
   public TopicIF getReifier() {
     return reifier;
   }
   
+  @Override
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     if (DuplicateReificationException.check(this, _reifier)) { return; }
@@ -302,10 +316,12 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // Misc. methods
   // -----------------------------------------------------------------------------
 
+  @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
     processEvent(this, event, new_value, old_value);
   }
 
+  @Override
   public String toString() {
     return ObjectStrings.toString("basic.TopicMap", (TopicMapIF)this);
   }
@@ -314,6 +330,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // EventManagerIF implementation
   // -----------------------------------------------------------------------------
   
+  @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
     if (listener == this)
@@ -330,6 +347,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     }
   }
 
+  @Override
   public void removeListener(EventListenerIF listener, String event) {
     synchronized (listeners) {
       if (listeners.containsKey(event)) {
@@ -349,6 +367,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // EventListenerIF
   // -----------------------------------------------------------------------------
 
+  @Override
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     // Look up event listeners
     EventListenerIF[] event_listeners = listeners.get(event);

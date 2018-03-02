@@ -26,12 +26,12 @@ import java.util.Collection;
  * INTERNAL: Simple interface used by helper objects for invalidation purposes.
  */
 
-public interface EvictableIF {
+public interface EvictableIF<K, E> {
 
-  public Object remove(Object key, boolean notifyCluster);
+  E remove(K key, boolean notifyCluster);
 
-  public void removeAll(Collection keys, boolean notifyCluster);
+  void removeAll(Collection<K> keys, boolean notifyCluster);
 
-  public void clear(boolean notifyCluster);
+  void clear(boolean notifyCluster);
   
 }

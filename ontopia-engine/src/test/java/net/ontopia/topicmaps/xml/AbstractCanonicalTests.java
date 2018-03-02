@@ -21,13 +21,14 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.io.InputStream;
+import java.net.URL;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +57,7 @@ public abstract class AbstractCanonicalTests {
   /**
    * INTERNAL: Performs the actual canonicalization.
    */
-  protected abstract void canonicalize(String infile, String outfile)
+  protected abstract void canonicalize(URL infile, File outfile)
     throws IOException;
 
   /**
@@ -69,6 +70,7 @@ public abstract class AbstractCanonicalTests {
   // --- Test case class
 
     protected String base;
+    protected URL inputFile;
     protected String filename;
     protected String _testdataDirectory;
 
@@ -77,29 +79,16 @@ public abstract class AbstractCanonicalTests {
       TestFileUtils.verifyDirectory(base, "out");
       
       // setup canonicalization filenames
-      String in = TestFileUtils.getTestInputFile(_testdataDirectory, getFileDirectory(), 
-        filename);
-      String out = base + File.separator + "out" + File.separator +
-        getOutFilename(filename);
+      File out = new File(base + File.separator + "out" + File.separator + getOutFilename(filename));
+
       // produce canonical output
-      canonicalize(in, out);
+      canonicalize(inputFile, out);
       
       // compare results
-      String baseline = TestFileUtils.getTestInputFile(_testdataDirectory, "baseline", 
-        getOutFilename(filename));
-      Assert.assertTrue("test file " + filename + " canonicalized wrongly",
-              FileUtils.compareFileToResource(out, baseline));
+      URL baselineURL = new URL(inputFile, "../baseline/" + getOutFilename(filename));
+      try (InputStream baselineIn = baselineURL.openStream(); FileInputStream in = new FileInputStream(out)) {
+        Assert.assertTrue("test file " + filename + " canonicalized wrongly",
+                IOUtils.contentEquals(in, baselineIn));
+      }
     }
-
-  // -- internal
-
-  public static String file2URL(String filename) {
-    if (filename.startsWith("classpath:")) {
-      return net.ontopia.utils.URIUtils.getURI(filename).getExternalForm();
-    } else try {
-      return URIUtils.toURL(new File(filename)).toExternalForm();
-    } catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-  }
 }

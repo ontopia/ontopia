@@ -28,6 +28,7 @@ public class OccurrenceIndexTest extends net.ontopia.topicmaps.core.index.Occurr
     super(name);
   }
 
+  @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();
   }

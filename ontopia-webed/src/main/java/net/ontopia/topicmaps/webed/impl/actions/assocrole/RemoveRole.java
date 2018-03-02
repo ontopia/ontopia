@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
  */
 public class RemoveRole implements ActionIF {
   
+  @Override
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 
     AssociationRoleIF role = (AssociationRoleIF) params.get(0);

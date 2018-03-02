@@ -60,6 +60,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getAssociationTypes()
    */
+  @Override
   public Collection<Topic> getAssociationTypes() {
     return new LazySet<Topic>(topicMap, classInstanceIndex
         .getAssociationTypes());
@@ -71,6 +72,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * @see
    * org.tmapi.index.TypeInstanceIndex#getAssociations(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Association> getAssociations(Topic type) {
     return new LazySet<Association>(topicMap, classInstanceIndex
         .getAssociations(topicMap.unwrapTopic(type)));
@@ -81,6 +83,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getNameTypes()
    */
+  @Override
   public Collection<Topic> getNameTypes() {
     return new LazySet<Topic>(topicMap, classInstanceIndex.getTopicNameTypes());
   }
@@ -90,6 +93,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getNames(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Name> getNames(Topic type) {
     return new LazySet<Name>(topicMap, classInstanceIndex
         .getTopicNames(topicMap.unwrapTopic(type)));
@@ -100,6 +104,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getOccurrenceTypes()
    */
+  @Override
   public Collection<Topic> getOccurrenceTypes() {
     return new LazySet<Topic>(topicMap, classInstanceIndex.getOccurrenceTypes());
   }
@@ -109,6 +114,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getOccurrences(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Occurrence> getOccurrences(Topic type) {
     return new LazySet<Occurrence>(topicMap, classInstanceIndex
         .getOccurrences(topicMap.unwrapTopic(type)));
@@ -119,6 +125,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getRoleTypes()
    */
+  @Override
   public Collection<Topic> getRoleTypes() {
     return new LazySet<Topic>(topicMap, classInstanceIndex
         .getAssociationRoleTypes());
@@ -129,6 +136,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getRoles(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Role> getRoles(Topic type) {
     return new LazySet<Role>(topicMap, classInstanceIndex
         .getAssociationRoles(topicMap.unwrapTopic(type)));
@@ -139,6 +147,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getTopicTypes()
    */
+  @Override
   public Collection<Topic> getTopicTypes() {
     return new LazySet<Topic>(topicMap, classInstanceIndex.getTopicTypes());
   }
@@ -148,6 +157,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.TypeInstanceIndex#getTopics(org.tmapi.core.Topic)
    */
+  @Override
   public Collection<Topic> getTopics(Topic type) {
     TopicIF ontType = null;
     if (type != null)
@@ -162,6 +172,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * @see org.tmapi.index.TypeInstanceIndex#getTopics(org.tmapi.core.Topic[],
    * boolean)
    */
+  @Override
   public Collection<Topic> getTopics(Topic[] types, boolean matchAll) {
 
     Set<TopicIF> resultSet = new HashSet<TopicIF>();
@@ -186,7 +197,9 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.Index#close()
    */
+  @Override
   public void close() {
+    // no-op
   }
 
   /*
@@ -194,6 +207,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.Index#isAutoUpdated()
    */
+  @Override
   public boolean isAutoUpdated() {
     return true;
   }
@@ -203,6 +217,7 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.Index#isOpen()
    */
+  @Override
   public boolean isOpen() {
     return true;
   }
@@ -212,7 +227,9 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.Index#open()
    */
+  @Override
   public void open() {
+    // no-op
   }
 
   /*
@@ -220,7 +237,9 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
    * 
    * @see org.tmapi.index.Index#reindex()
    */
+  @Override
   public void reindex() {
+    // no-op
   }
 
 }

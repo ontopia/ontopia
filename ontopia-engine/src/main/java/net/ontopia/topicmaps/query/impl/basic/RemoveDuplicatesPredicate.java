@@ -37,14 +37,17 @@ public class RemoveDuplicatesPredicate implements BasicPredicateIF {
     this.first = first;
   }
   
+  @Override
   public String getName() {
     return "remove-duplicates";
   }
 
+  @Override
   public String getSignature() {
     return "";
   }
   
+  @Override
   public int getCost(boolean[] boundparams) {
     if (first)
       // optimizer puts us first
@@ -54,6 +57,7 @@ public class RemoveDuplicatesPredicate implements BasicPredicateIF {
       return PredicateDrivenCostEstimator.INFINITE_RESULT;
   }
 
+  @Override
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
 

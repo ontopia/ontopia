@@ -28,7 +28,7 @@ import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * INTERNAL: class which implements interface LinkGeneratorIF.
@@ -51,6 +51,7 @@ public class ModelLinkGenerator implements LinkGeneratorIF {
   public static final String LINK_MODEL_KEY = "%model%";
 
   
+  @Override
   public String generate(ContextTag contextTag, TMObjectIF tmObj,
                          String topicmapId, String template)
     throws NavigatorRuntimeException {
@@ -75,6 +76,7 @@ public class ModelLinkGenerator implements LinkGeneratorIF {
     return link;
   }
 
+  @Override
   public String generate(ContextTag contextTag, TopicMapReferenceIF tmRefObj,
                          String template) 
     throws NavigatorRuntimeException {

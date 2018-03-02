@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -36,24 +36,24 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 
 public abstract class SAXTracker extends DefaultHandler {
-  protected Set          keepContentsOf;
+  protected Set<String>  keepContentsOf;
   protected Locator      locator;
   /**
    * The contents of the current element, or null if not
    * instructed to keep the contents of the current element.
    */
   protected StringBuilder content;
-  private   boolean      keepContents;
+  private   boolean       keepContents;
   /**
    * The stack of currently open elements.
    */
-  protected Stack        openElements;
+  protected Stack<String> openElements;
   
   // --- Configuration interface
   
   public SAXTracker() {
-    keepContentsOf = new HashSet();
-    openElements = new Stack();
+    keepContentsOf = new HashSet<>();
+    openElements = new Stack<>();
   }
 
   /**
@@ -76,6 +76,7 @@ public abstract class SAXTracker extends DefaultHandler {
   
   // --- ContentHandler interface
 
+  @Override
   public void startElement(String nsuri, String lname, String qname,
 			   Attributes attrs) throws SAXException {
     openElements.push(qname);
@@ -85,16 +86,19 @@ public abstract class SAXTracker extends DefaultHandler {
       content = new StringBuilder();
   }
 
+  @Override
   public void characters(char[] chars, int start, int length) {
     if (keepContents)
       content.append(chars, start, length);
   }
     
+  @Override
   public void endElement(String nsuri, String lname, String qname) throws SAXException {
     keepContents = false;
     openElements.pop();
   }
 
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator;
   }

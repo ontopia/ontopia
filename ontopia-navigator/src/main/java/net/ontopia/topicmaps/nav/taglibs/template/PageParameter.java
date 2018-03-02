@@ -58,11 +58,13 @@ public class PageParameter implements Externalizable {
   // Externalization
   // --------------------------------------------------------------------------
   
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeUTF(content);
     out.writeBoolean(direct);
   }
 
+  @Override
   public void readExternal(ObjectInput in) throws IOException {
     content = in.readUTF();
     direct = in.readBoolean();

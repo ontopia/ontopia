@@ -55,7 +55,7 @@ public interface TopicMapListenerIF {
    * object. To get more information about the object, look it up in
    * your own transaction using the object ID.</p>
    */
-  public void objectAdded(TMObjectIF snapshot);
+  void objectAdded(TMObjectIF snapshot);
 
   /**
    * PUBLIC: Callback method called when a topic map object has been
@@ -69,7 +69,7 @@ public interface TopicMapListenerIF {
    *
    * @since 3.4.3
    */
-  public void objectModified(TMObjectIF snapshot);
+  void objectModified(TMObjectIF snapshot);
 
   /**
    * PUBLIC: Callback method called when a topic map object has been
@@ -89,6 +89,6 @@ public interface TopicMapListenerIF {
    * snapshot will only be stubs and thus only contain the topic's
    * object ID.
    */
-  public void objectRemoved(TMObjectIF snapshot);
+  void objectRemoved(TMObjectIF snapshot);
   
 }

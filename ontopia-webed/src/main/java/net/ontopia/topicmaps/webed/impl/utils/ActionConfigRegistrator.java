@@ -42,6 +42,7 @@ public class ActionConfigRegistrator implements ConfigurationObserverIF {
     this.ctxt = ctxt;
   }
 
+  @Override
   public void configurationChanged(Object configuration) {
     // remove registry from servlet context
     ctxt.removeAttribute(Constants.AA_REGISTRY);
