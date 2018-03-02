@@ -28,37 +28,31 @@
 	<build>
 		<finalName>ontopoly</finalName>
 		<plugins>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<!-- execution to collect omnigator webapp documentation -->
-					<execution>
-						<id>collect-ontopoly-docs</id>
-						<phase>prepare-package</phase>
-						<goals><goal>run</goal></goals>
-						<configuration>
-							<target>
-<!--								<property name="finalName" value="${project.build.finalName}" />
-								<ant antfile="../src/docbook/ant/build.xml" target="collect-ontopoly-docs" />-->
-							</target>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>move-docs-in-place</id>
-						<phase>package</phase>
-						<goals><goal>run</goal></goals>
-						<configuration>
-							<target>
-<!--								<copy todir="target/site/ontopoly">
-									<fileset dir="target/${project.build.finalName}/doc/" />
-								</copy>
-								<ant antfile="../src/docbook/ant/build.xml" target="main" />-->
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+      <plugin>
+        <groupId>net.ontopia</groupId>
+        <artifactId>documentation-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site-default</id>
+            <configuration>
+              <!-- move documentation into ontopoly war -->
+              <outDirectory>${project.build.directory}/${project.build.finalName}/doc</outDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.warmuuh</groupId>
+        <artifactId>libsass-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site-default</id>
+            <configuration>
+              <outputPath>${project.build.directory}/${project.build.finalName}/doc</outputPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 		</plugins>
 	</build>
 
