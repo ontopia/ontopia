@@ -14,11 +14,11 @@ this release?* document for information about this release.
 
 ### Requirements ###
 
-The most important requirement is that you must have the Java 2 Software Development Kit (SDK)
-version 1.5 or newer. There should be no platform dependencies in the code, so the software should
+The most important requirement is that you must have the Java Software Development Kit (SDK)
+version 1.7 or newer. There should be no platform dependencies in the code, so the software should
 run on all operating systems for which there is a supported JDK available.
 
-We have verified that the Navigator Framework runs in Tomcat versions 3.3, 4.1, 5.0, and 5.5,
+We have verified that the Navigator Framework runs in Tomcat versions 3, 4, 5, 6, and 7, 
 Oracle9i AS 9.0.3, WebLogic 7.0, and WebSphere versions 4.0 and 5.0. It is quite likely that the
 framework also works in other application servers than these, but this has not been
 verified.
