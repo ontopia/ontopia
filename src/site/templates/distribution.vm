@@ -50,9 +50,7 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/mode/htmlembedded/htmlembedded.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/mode/python/python.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/mode/dtd/dtd.js"></script>
-		<script type="text/javascript" src="${root}js/codemirror/topicmap.js"></script>
-		<script type="text/javascript" src="${root}js/codemirror/rest.js"></script>
-		<script type="text/javascript" src="${root}js/ontopia.js"></script>
+		<script type="text/javascript" src="${root}ontopia.js"></script>
 	</body>
 </html>
 
