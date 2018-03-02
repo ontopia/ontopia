@@ -26,56 +26,6 @@
 		</copy>
 	</target>
 
-	<!-- Collects all the omnigator documentation that is included in the WAR -->
-	<target name="collect-omnigator-docs">
-		<!-- omnigator -->
-		<copy todir="target/docbook-collected/omnigator">
-			<fileset dir="src/docbook/omnigator"/>
-		</copy>
-		<copy todir="target/docbook-collected/resources/omnigator">
-			<fileset dir="src/docbook/resources/omnigator"/>
-			<fileset dir="../src/docbook/resources"/>
-		</copy> 
-		
-		<!-- query -->
-		<copy todir="target/docbook-collected/query">
-			<fileset dir="../ontopia-engine/src/docbook/query"/>
-		</copy>
-		<copy todir="target/docbook-collected/resources/query">
-			<fileset dir="../src/docbook/resources"/>
-		</copy>
-
-		<!-- schema -->
-		<copy todir="target/docbook-collected/schema">
-			<fileset dir="../ontopia-engine/src/docbook/schema"/>
-		</copy>
-		<copy todir="target/docbook-collected/resources/schema">
-			<fileset dir="../ontopia-engine/src/docbook/resources/schema"/>
-			<fileset dir="../src/docbook/resources"/>
-		</copy>
-
-		<!-- vizigator -->
-		<copy todir="target/docbook-collected/vizigator">
-			<fileset dir="../ontopia-vizigator/src/docbook/vizigator"/>
-		</copy>
-		<copy todir="target/docbook-collected/resources/vizigator">
-			<fileset dir="../ontopia-vizigator/src/docbook/resources/vizigator"/>
-			<fileset dir="../src/docbook/resources"/>
-		</copy>
-		
-		<!-- jill.xtm -->
-		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/jill.xtm"
-			tofile="target/docbook-collected/resources/omnigator/jill.xtm"/>
-
-		<!-- i18n.ltm -->
-		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/i18n.ltm"
-			tofile="target/docbook-collected/resources/omnigator/i18n.ltm"/>
-
-		<!-- ItalianOpera.ltm -->
-		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/ItalianOpera.ltm"
-			tofile="target/docbook-collected/resources/omnigator/ItalianOpera.ltm"/>
-	</target>
-	
 	<!-- Collects all the ontopoly documentation that is included in the WAR -->
 	<target name="collect-ontopoly-docs">
 		<property name="ontodocs" value="target/${finalName}/doc"/>
