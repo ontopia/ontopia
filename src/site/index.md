@@ -10,8 +10,8 @@ Documentation
 
 * [What's new in this release?](whatsnew.html)
 * [Installation and getting started](install.html)
-* [License](license.txt)
-* [Third-party license information](copyrights.txt)
+* [License](license.html)
+* [Third-party license information](copyrights.html)
 
 ### Applications ###
 
