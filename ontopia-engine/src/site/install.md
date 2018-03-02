@@ -15,7 +15,7 @@ this release?* document for information about this release.
 ### Requirements ###
 
 The most important requirement is that you must have the Java Software Development Kit (SDK)
-version 1.7 or newer. There should be no platform dependencies in the code, so the software should
+version 1.8 or newer. There should be no platform dependencies in the code, so the software should
 run on all operating systems for which there is a supported JDK available.
 
 We have verified that the Navigator Framework runs in Tomcat versions 3, 4, 5, 6, and 7, 
