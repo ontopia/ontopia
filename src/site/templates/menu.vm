@@ -111,5 +111,5 @@
 		<li><a href="${root}ontopoly/user-guide.html"><i class="fa fa-fw fa-rocket"></i> Ontopoloy user guide</a></li>
 	#end
 
-	<li><a href="${root}api/"><i class="fa fa-fw fa-terminal"></i> API</a></li>
+	<li><a href="${root}api/index.html"><i class="fa fa-fw fa-terminal"></i> API</a></li>
 <ul>
