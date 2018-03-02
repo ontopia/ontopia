@@ -26,17 +26,4 @@
 		</copy>
 	</target>
 
-	<!-- Collects all the ontopoly documentation that is included in the WAR -->
-	<target name="collect-ontopoly-docs">
-		<property name="ontodocs" value="target/${finalName}/doc"/>
-		<mkdir dir="${ontodocs}"/>
-		
-		<copy todir="target/docbook-collected">
-			<fileset dir="src/docbook/ontopoly"/>
-		</copy>
-		<copy todir="target/docbook-collected/resources">
-			<fileset dir="src/docbook/resources/ontopoly"/>
-			<fileset dir="../src/docbook/resources"/>
-		</copy> 
-	</target>
 </project>
