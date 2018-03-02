@@ -150,6 +150,49 @@
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
 		<rdbms-drop-postfix>.drop.sql</rdbms-drop-postfix>
 	</properties>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>net.ontopia</groupId>
+        <artifactId>documentation-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site-default</id>
+            <configuration>
+              <!-- aggregate all documentation and resources -->
+              <rootDirectory>${project.parent.basedir}</rootDirectory>
+              <includes>
+                <include>**/src/site/**/*.md</include>
+              </includes>
+              <excludes>
+                <exclude>*/src/site/index.md</exclude>
+              </excludes>
+              <resources>
+                <resource>${project.parent.basedir}</resource>
+              </resources>
+              <resourceIncludes>
+                <resourceInclude>**/src/site/resources/**</resourceInclude>
+              </resourceIncludes>
+              <outDirectory>${project.build.directory}/${project.build.finalName}/doc</outDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.warmuuh</groupId>
+        <artifactId>libsass-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site-default</id>
+            <configuration>
+              <outputPath>${project.build.directory}/${project.build.finalName}/doc</outputPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 	
 	<profiles>
 		<profile>
