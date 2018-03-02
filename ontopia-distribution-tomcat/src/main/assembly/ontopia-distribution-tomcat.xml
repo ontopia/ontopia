@@ -58,6 +58,11 @@
 			</includes>
 		</fileSet>
 		
+		<!-- site inclusion (needed because maven-assembly-plugin:single can only take current project's site due to bug) -->
+		<fileSet>
+			<directory>${project.parent.reporting.outputDirectory}</directory>
+			<outputDirectory>doc</outputDirectory>
+		</fileSet>
 	</fileSets>
 	
 	<files>
