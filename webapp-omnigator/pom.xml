@@ -75,38 +75,75 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-jspc-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<!-- execution to collect omnigator webapp documentation -->
-					<execution>
-						<id>collect-omnigator-docs</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target>
-								<!--<ant antfile="../src/docbook/ant/build.xml" target="collect-omnigator-docs" />-->
-							</target>
-						</configuration>
-					</execution>
-										
-					<execution>
-						<id>move-docs-in-place</id>
-						<phase>package</phase>
-						<goals><goal>run</goal></goals>
-						<configuration>
-							<target>
-<!--								<copy todir="target/site/">
-									<fileset dir="target/${project.build.finalName}/docs/" />
-								</copy>
-								<ant antfile="../src/docbook/ant/build.xml" target="main" />-->
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+      <plugin>
+        <groupId>net.ontopia</groupId>
+        <artifactId>documentation-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site-default</id>
+            <configuration>
+              <!-- move documentation into omnigator war -->
+              <rootDirectory>${project.parent.basedir}</rootDirectory>
+              <includes>
+                <include>**/webapp-omnigator/src/site/**/*.md</include>
+                <include>**/ontopia-engine/src/site/**/*.md</include>
+                <include>**/ontopia-vizigator/src/site/**/*.md</include>
+              </includes>
+              <excludes>
+                <exclude>src/site/index.md</exclude>
+                <exclude>**/ontopia-engine/src/site/index.md</exclude>
+                <exclude>**/ontopia-vizigator/src/site/index.md</exclude>
+              </excludes>
+              <resources>
+                <resource>${project.parent.basedir}</resource>
+              </resources>
+              <resourceIncludes>
+                <resourceInclude>src/site/resources/*</resourceInclude>
+                <resourceInclude>**/webapp-omnigator/src/site/resources/**</resourceInclude>
+                <resourceInclude>**/ontopia-engine/src/site/resources/**</resourceInclude>
+                <resourceInclude>**/ontopia-vizigator/src/site/resources/**</resourceInclude>
+              </resourceIncludes>
+              <outDirectory>${project.build.directory}/${project.build.finalName}/docs</outDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.warmuuh</groupId>
+        <artifactId>libsass-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site-default</id>
+            <configuration>
+              <outputPath>${project.build.directory}/${project.build.finalName}/docs</outputPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>      
+     <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <id>documentation-resources</id>
+            <phase>prepare-package</phase>
+            <goals><goal>copy-resources</goal></goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${project.build.finalName}/docs/omnigator</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>${project.basedir}/../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/</directory>
+                  <includes>
+                    <include>jill.xtm</include>
+                    <include>i18n.ltm</include>
+                    <include>ItalianOpera.ltm</include>
+                  </includes>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>      
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>

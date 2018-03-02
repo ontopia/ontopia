@@ -5,7 +5,7 @@
 	## -- shared menu items
 	<li><a href="${root}index.html"><i class="fa fa-fw fa-list"></i> Overview</a>
 
-	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat")
+	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat" || $id == "webapp-omnigator")
 	<li><a href="#"><i class="fa fa-fw fa-book"></i> General <i class="fa arrow"></i></a>
 		<ul class="nav">
 			<li><a href="${root}whatsnew.html">What's new / Changelog</a></li>
@@ -50,6 +50,13 @@
 			<li><a href="${root}rdbms/devguide.html">Developer guide</a></li>
 		</ul>
 	</li>
+	#end
+
+	#if ($id == "webapp-omnigator")
+		<li><a href="${root}omnigator/userguide.html"><i class="fa fa-fw fa-rocket"></i> Omnigator user guide</a></li>
+	#end
+
+	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat" || $id == "webapp-omnigator")
 	<li><a href="#"><i class="fa fa-fw fa-search"></i> Query <i class="fa arrow"></i></a>
 		<ul class="nav collapse">
 			<li><a href="${root}query/tutorial.html">Tutorial</a></li>
@@ -104,12 +111,11 @@
 	#if ($id == "ontopia-vizigator")
 		<li><a href="${root}vizigator/userguide.html"><i class="fa fa-fw fa-image"></i>Vizigator user guide</a></li>
 	#end
-	#if ($id == "webapp-omnigator")
-		<li><a href="${root}omnigator/userguide.html"><i class="fa fa-fw fa-rocket"></i> Omnigator user guide</a></li>
-	#end
 	#if ($id == "webapp-ontopoly")
 		<li><a href="${root}ontopoly/user-guide.html"><i class="fa fa-fw fa-rocket"></i> Ontopoloy user guide</a></li>
 	#end
 
+	#if ($id != "webapp-ontopoly" && $id != "webapp-omnigator")
 	<li><a href="${root}api/index.html"><i class="fa fa-fw fa-terminal"></i> API</a></li>
+	#end
 <ul>
