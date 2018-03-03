@@ -23,13 +23,13 @@ package net.ontopia.topicmaps.utils.rdf;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.Iterator;
 import java.util.Collections;
-import net.ontopia.topicmaps.core.TopicIF;
+import java.util.Iterator;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 /**
  * PUBLIC: An RDF fragment exporter which produces RDF/XML. It does so

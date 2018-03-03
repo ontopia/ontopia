@@ -21,10 +21,9 @@
 package net.ontopia.topicmaps.utils.rdf;
 
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdfxml.xmlinput.ALiteral;
+import org.apache.jena.shared.JenaException;
 
 /**
  * INTERNAL: This class is used to wrap Jena Literal objects in the
