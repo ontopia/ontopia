@@ -229,21 +229,6 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
-						<configuration>
-							<includeProjectDependencies>false</includeProjectDependencies>
-							<includePluginDependencies>true</includePluginDependencies>
-							<executableDependency>
-								<groupId>${project.parent.groupId}</groupId>
-								<artifactId>ontopia-engine</artifactId>
-							</executableDependency>
-						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>${project.parent.groupId}</groupId>
-								<artifactId>ontopia-engine</artifactId>
-								<version>${project.parent.version}</version>
-							</dependency>
-						</dependencies>
 						<executions>
 							<execution>
 								<id>generate-rdbms-schemas</id>
@@ -252,6 +237,10 @@
 								<configuration>
 									<mainClass>net.ontopia.persistence.rdbms.DistributionDDLWriter</mainClass>
 									<commandlineArgs>${rdbms-setup}</commandlineArgs>
+									<executableDependency>
+										<groupId>${project.parent.groupId}</groupId>
+										<artifactId>ontopia-engine</artifactId>
+									</executableDependency>
 								</configuration>
 							</execution>
 						</executions>
