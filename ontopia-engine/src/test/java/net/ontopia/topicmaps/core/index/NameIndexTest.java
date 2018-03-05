@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.core.index;
 
+import java.util.Collection;
 import java.util.Collections;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -277,6 +278,23 @@ public abstract class NameIndexTest extends AbstractIndexTest {
                ix.getVariants(loc1.getAddress(), DataTypes.TYPE_URI).size() == 2);
     }
   
+  public void testNulls() {
+    Collection<VariantNameIF> variants = ix.getVariants(null);
+    assertNotNull(variants);
+    assertTrue(variants.isEmpty());
+
+    variants = ix.getVariants(null, null);
+    assertNotNull(variants);
+    assertTrue(variants.isEmpty());
+
+    Collection<TopicNameIF> names = ix.getTopicNames(null);
+    assertNotNull(names);
+    assertTrue(names.isEmpty());
+
+    names = ix.getTopicNames(null, null);
+    assertNotNull(names);
+    assertTrue(names.isEmpty());
+  }
 }
 
 

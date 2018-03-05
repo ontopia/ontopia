@@ -580,13 +580,13 @@
     <param class="java.lang.String"/>
 
     <statement platform="generic"
-     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content &lt; ?"/>
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content &lt;= ?"/>
 
     <statement platform="oracle"
-     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) &lt; ?"/>
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) &lt;= ?"/>
 
     <statement platform="mysql"
-     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content &lt; ?"/>
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content &lt;= ?"/>
 
   </query>
 

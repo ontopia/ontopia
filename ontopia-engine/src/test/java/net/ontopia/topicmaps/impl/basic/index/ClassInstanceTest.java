@@ -291,7 +291,7 @@ public class ClassInstanceTest extends TestCase {
         assertTrue("topic with null type found",
                index.getTopics(null).size() == 3);
 
-        assertTrue("index claims null used as topic type",
+        assertFalse("index claims null used as topic type",
                index.usedAsTopicType(null));
         // --
 

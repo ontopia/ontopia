@@ -53,7 +53,7 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 	}
 
 	public PagedResourceTest() {
-		super(OPERA_TM, "topics");
+		super(PAGED_LTM, "topics");
 	}
 
 	private void request(Integer limit, Integer offset) throws IOException {
@@ -75,14 +75,14 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 		request(null, null);
 		Assert.assertEquals(100, topics.size());
 		int count = HeaderUtils.getCount(response);
-		Assert.assertTrue(count >= 2000);
+		Assert.assertEquals(300, count);
 		Assert.assertEquals(100, HeaderUtils.getLimit(response));
 		Assert.assertEquals(0, HeaderUtils.getOffset(response));
 	}
 
 	@Test
 	public void testOffsetToLarge() throws IOException {
-		request(null, null); // to get a count
+		request(null, null);
 		int count = HeaderUtils.getCount(response);
 
 		request(null, count + 10);
@@ -96,7 +96,7 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 	public void testOffset() throws IOException {
 		request(null, 50);
 		Assert.assertEquals(100, topics.size());
-		Assert.assertTrue(HeaderUtils.getCount(response) >= 2000);
+		Assert.assertEquals(300, HeaderUtils.getCount(response));
 		Assert.assertEquals(100, HeaderUtils.getLimit(response));
 		Assert.assertEquals(50, HeaderUtils.getOffset(response));
 	}
@@ -105,7 +105,7 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 	public void testLimit() throws IOException {
 		request(10, null);
 		Assert.assertEquals(10, topics.size());
-		Assert.assertTrue(HeaderUtils.getCount(response) >= 2000);
+		Assert.assertEquals(300, HeaderUtils.getCount(response));
 		Assert.assertEquals(10, HeaderUtils.getLimit(response));
 		Assert.assertEquals(0, HeaderUtils.getOffset(response));
 	}
@@ -114,7 +114,7 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 	public void testNegativeLimit() throws IOException {
 		request(-10, null);
 		Assert.assertEquals(0, topics.size());
-		Assert.assertTrue(HeaderUtils.getCount(response) >= 2000);
+		Assert.assertEquals(300, HeaderUtils.getCount(response));
 		Assert.assertEquals(-10, HeaderUtils.getLimit(response));
 		Assert.assertEquals(0, HeaderUtils.getOffset(response));
 	}
@@ -123,7 +123,7 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 	public void testNegativeOffset() throws IOException {
 		request(null, -10);
 		Assert.assertEquals(0, topics.size());
-		Assert.assertTrue(HeaderUtils.getCount(response) >= 2000);
+		Assert.assertEquals(300, HeaderUtils.getCount(response));
 		Assert.assertEquals(100, HeaderUtils.getLimit(response));
 		Assert.assertEquals(-10, HeaderUtils.getOffset(response));
 	}

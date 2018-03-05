@@ -34,7 +34,7 @@ import org.junit.Test;
 public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 
 	public AssociationResourcePUTTest() {
-		super(OPERA_TM, "associations");
+		super(ASSOCIATIONS_LTM, "associations");
 	}
 
 	/* -- Successfull requests -- */
@@ -72,8 +72,8 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	public void testMultipleRoles() {
 		Association association = createAssociation();
 		AssociationRole role = new AssociationRole();
-		role.setType(new Topic("261"));
-		role.setPlayer(new Topic("261"));
+		role.setType(new Topic("4"));
+		role.setPlayer(new Topic("4"));
 		association.getRoles().add(role);
 
 		Association added = put(association, Association.class);
@@ -86,7 +86,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 		Association association = createAssociation();
 		AssociationRole role = new AssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		role.setType(topic);
 		role.setPlayer(topic);
 		association.getRoles().clear();
@@ -98,27 +98,27 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 		AssociationRole r = added.getRoles().iterator().next();
 		Assert.assertNotNull(r);
 		Assert.assertNotNull(r.getType());
-		Assert.assertEquals("261", r.getType().getObjectId());
+		Assert.assertEquals("1", r.getType().getObjectId());
 		Assert.assertNotNull(r.getPlayer());
-		Assert.assertEquals("261", r.getPlayer().getObjectId());
+		Assert.assertEquals("1", r.getPlayer().getObjectId());
 	}
 	
 	@Test
 	public void testInvalidRole() {
 		Association association = createAssociation();
 		association.getRoles().clear();
-		AssociationRole role = new AssociationRole("13"); // object with id 13 is an occurrence
-		role.setType(new Topic("261"));
-		role.setPlayer(new Topic("261"));
+		AssociationRole role = new AssociationRole("1");
+		role.setType(new Topic("1"));
+		role.setPlayer(new Topic("1"));
 		association.getRoles().add(role);
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added.getRoles());
 		AssociationRole r = added.getRoles().iterator().next();
-		Assert.assertFalse("13".equals(added.getObjectId()));
+		Assert.assertFalse("1".equals(added.getObjectId()));
 		Assert.assertNotNull(r.getType());
-		Assert.assertEquals("261", r.getType().getObjectId());
+		Assert.assertEquals("1", r.getType().getObjectId());
 		Assert.assertNotNull(r.getPlayer());
-		Assert.assertEquals("261", r.getPlayer().getObjectId());
+		Assert.assertEquals("1", r.getPlayer().getObjectId());
 	}
 
 	@Test
@@ -126,49 +126,49 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 		Association association = createAssociation();
 		association.getRoles().clear();
 		AssociationRole role = new AssociationRole("unexisting_role_id");
-		role.setType(new Topic("261"));
-		role.setPlayer(new Topic("261"));
+		role.setType(new Topic("1"));
+		role.setPlayer(new Topic("1"));
 		association.getRoles().add(role);
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added.getRoles());
 		AssociationRole r = added.getRoles().iterator().next();
 		Assert.assertFalse("unexisting_role_id".equals(added.getObjectId()));
 		Assert.assertNotNull(r.getType());
-		Assert.assertEquals("261", r.getType().getObjectId());
+		Assert.assertEquals("1", r.getType().getObjectId());
 		Assert.assertNotNull(r.getPlayer());
-		Assert.assertEquals("261", r.getPlayer().getObjectId());
+		Assert.assertEquals("1", r.getPlayer().getObjectId());
 	}
 
 	@Test
 	public void testExistingRole() {
 		Association association = createAssociation();
 		association.getRoles().clear();
-		AssociationRole role = new AssociationRole("16071");
-		role.setType(new Topic("261"));
-		role.setPlayer(new Topic("261"));
+		AssociationRole role = new AssociationRole("6");
+		role.setType(new Topic("1"));
+		role.setPlayer(new Topic("1"));
 		association.getRoles().add(role);
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added.getRoles());
 		AssociationRole r = added.getRoles().iterator().next();
-		Assert.assertFalse("16071".equals(added.getObjectId()));
+		Assert.assertFalse("6".equals(added.getObjectId()));
 		Assert.assertNotNull(r.getType());
-		Assert.assertEquals("261", r.getType().getObjectId());
+		Assert.assertEquals("1", r.getType().getObjectId());
 		Assert.assertNotNull(r.getPlayer());
-		Assert.assertEquals("261", r.getPlayer().getObjectId());
+		Assert.assertEquals("1", r.getPlayer().getObjectId());
 	}
 
 	@Test
 	public void testWithTypeByItemIdentifier() {
 		Association association = createAssociation();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		association.setType(topic);
 		Association added = put(association, Association.class);
 
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("261", added.getType().getObjectId());
+		Assert.assertEquals("1", added.getType().getObjectId());
 	}
 
 	@Test
@@ -224,21 +224,21 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopes() {
 		Association association = createAssociation();
 		association.getScope().add(new Topic("1"));
-		association.getScope().add(new Topic("12"));
+		association.getScope().add(new Topic("4"));
 
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(2, added.getScope().size());
-		assertContainsTopics(added.getScope(), "1", "12");
+		assertContainsTopics(added.getScope(), "1", "4");
 	}
 
 	@Test
 	public void testWithScopeByItemIdentifier() {
 		Association association = createAssociation();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		association.getScope().add(topic);
 
 		Association added = put(association, Association.class);
@@ -246,31 +246,31 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(1, added.getScope().size());
-		assertContainsTopics(added.getScope(), "261");
+		assertContainsTopics(added.getScope(), "4");
 	}
 
 	@Test
 	public void testWithReification() {
 		Association association = createAssociation();
-		association.setReifier(new Topic("6689"));
+		association.setReifier(new Topic("1"));
 
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("6689", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testWithReificationByItemIdentifier() {
 		Association association = createAssociation();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#milio-dufresne"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		association.setReifier(topic);
 
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("2598", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	/* -- Failing requests -- */
@@ -295,7 +295,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidType() {
 		Association association = createAssociation();
-		association.setType(new Topic("13")); // object with id 13 is an occurrence
+		association.setType(new Topic("7"));
 		assertPutFails(association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -316,7 +316,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidReification() {
 		Association association = createAssociation();
-		association.setReifier(new Topic("13")); // object with id 13 is an occurrence
+		association.setReifier(new Topic("7"));
 		assertPutFails(association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -330,7 +330,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidScope() {
 		Association association = createAssociation();
-		association.getScope().add(new Topic("13")); // object with id 13 is an occurrence
+		association.getScope().add(new Topic("7"));
 		assertPutFails(association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 

@@ -31,7 +31,7 @@ import org.junit.Test;
 public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	public TopicNameResourcePOSTTest() {
-		super(OPERA_TM, "names");
+		super(NAMES_LTM, "names");
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testTopic() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.setTopic(new Topic("12"));
+		topicname.setTopic(new Topic("3"));
 
 		TopicName changed = post("2", topicname, TopicName.class);
 		
@@ -101,7 +101,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTopicByItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		topicname.setTopic(topic);
 
 		TopicName changed = post("2", topicname, TopicName.class);
@@ -113,20 +113,20 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testType() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.setType(new Topic("1"));
+		topicname.setType(new Topic("6"));
 
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("1", changed.getType().getObjectId());
+		Assert.assertEquals("6", changed.getType().getObjectId());
 	}
 	
 	@Test
 	public void testNullType() {
-		TopicName topicname = get("2599", TopicName.class);
+		TopicName topicname = get("2", TopicName.class);
 		topicname.setType(null);
 
-		TopicName changed = post("2599", topicname, TopicName.class);
+		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getType());
 		Assert.assertEquals("3", changed.getType().getObjectId());
@@ -136,29 +136,29 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTypeByItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		topicname.setType(topic);
 
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("261", changed.getType().getObjectId());
+		Assert.assertEquals("4", changed.getType().getObjectId());
 	}
 	
 	@Test
 	public void testReifier() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.setReifier(new Topic("5962"));
+		topicname.setReifier(new Topic("6"));
 		
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getReifier());
-		Assert.assertEquals("5962", changed.getReifier().getObjectId());
+		Assert.assertEquals("6", changed.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testClearReifier() {
-		TopicName topicname = get("2", TopicName.class);
+		TopicName topicname = get("8", TopicName.class);
 		topicname.setReifier(null);
 		
 		TopicName changed = post("2", topicname, TopicName.class);
@@ -170,56 +170,56 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testReifierByItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#la-vergine-di-kermo"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		topicname.setReifier(topic);
 
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getReifier());
-		Assert.assertEquals("5432", changed.getReifier().getObjectId());
+		Assert.assertEquals("4", changed.getReifier().getObjectId());
 	}
 	
 	@Test
 	public void testScope() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.getScope().add(new Topic("1"));
+		topicname.getScope().add(new Topic("9"));
 		
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
-		assertContainsTopics(changed.getScope(), "1");
+		assertContainsTopics(changed.getScope(), "9");
 	}
 	
 	@Test
 	public void testScopes() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.getScope().add(new Topic("1"));
-		topicname.getScope().add(new Topic("12"));
+		topicname.getScope().add(new Topic("4"));
+		topicname.getScope().add(new Topic("9"));
 		
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
-		assertContainsTopics(changed.getScope(), "1", "12");
+		assertContainsTopics(changed.getScope(), "4", "9");
 	}
 	
 	@Test
 	public void testRemoveScope() {
-		TopicName topicname = get("3252", TopicName.class);
-		removeById(topicname.getScope(), "5");
+		TopicName topicname = get("5", TopicName.class);
+		removeById(topicname.getScope(), "6");
 		
-		TopicName changed = post("3252", topicname, TopicName.class);
+		TopicName changed = post("5", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(1, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "838");
+		assertContainsTopics(changed.getScope(), "1");
 	}
 	
 	@Test
 	public void testClearScope() {
-		TopicName topicname = get("5913", TopicName.class);
+		TopicName topicname = get("5", TopicName.class);
 		topicname.getScope().clear();
 		
-		TopicName changed = post("5913", topicname, TopicName.class);
+		TopicName changed = post("5", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(0, changed.getScope().size());
@@ -227,62 +227,62 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testChangeScope() {
-		TopicName topicname = get("5906", TopicName.class);
-		removeById(topicname.getScope(), "5");
-		topicname.getScope().add(new Topic("1"));
+		TopicName topicname = get("5", TopicName.class);
+		removeById(topicname.getScope(), "6");
+		topicname.getScope().add(new Topic("9"));
 		
-		TopicName changed = post("5906", topicname, TopicName.class);
+		TopicName changed = post("5", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(2, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "149", "1");
+		assertContainsTopics(changed.getScope(), "1", "9");
 	}
 	
 	@Test
 	public void testChangeScopeVoid() {
-		TopicName topicname = get("875", TopicName.class);
+		TopicName topicname = get("5", TopicName.class);
 		topicname.setScope(null);
 		
-		TopicName changed = post("875", topicname, TopicName.class);
+		TopicName changed = post("5", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(2, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "5", "876");
+		assertContainsTopics(changed.getScope(), "1", "6");
 	}
 	
 	@Test
 	public void testChangeScopeByItemIdentifier() {
-		TopicName topicname = get("787", TopicName.class);
+		TopicName topicname = get("5", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#style"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic4"));
 		topicname.getScope().add(topic);
 		
-		TopicName changed = post("787", topicname, TopicName.class);
+		TopicName changed = post("5", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(3, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "165", "5", "287");
+		assertContainsTopics(changed.getScope(), "1", "6", "7");
 	}
 	
 	@Test
 	public void testAddItemIdentifier() {
-		TopicName topicname = get("2382", TopicName.class);
-		topicname.getItemIdentifiers().add(URILocator.create("foo:bar5"));
+		TopicName topicname = get("2", TopicName.class);
+		topicname.getItemIdentifiers().add(URILocator.create("foo:bar"));
 		
-		TopicName changed = post("2382", topicname, TopicName.class);
+		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertEquals("foo:bar5", changed.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:bar", changed.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testAddItemIdentifiers() {
-		TopicName topicname = get("4187", TopicName.class);
-		topicname.getItemIdentifiers().add(URILocator.create("foo:bar6"));
-		topicname.getItemIdentifiers().add(URILocator.create("foo:bar7"));
+		TopicName topicname = get("2", TopicName.class);
+		topicname.getItemIdentifiers().add(URILocator.create("foo:bar"));
+		topicname.getItemIdentifiers().add(URILocator.create("foo:baz"));
 		
-		TopicName changed = post("4187", topicname, TopicName.class);
+		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(2, changed.getItemIdentifiers().size());
@@ -292,15 +292,15 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testRemoveItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		TopicName name = get("787", TopicName.class);
+		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
 		
-		name = post("787", name, TopicName.class);
+		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
 		
 		name.getItemIdentifiers().remove(locator);
-		name = post("787", name, TopicName.class);
+		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertTrue(name.getItemIdentifiers().isEmpty());
 	}
@@ -309,15 +309,15 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testClearItemIdentifiers() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		TopicName name = get("787", TopicName.class);
+		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
 		
-		name = post("787", name, TopicName.class);
+		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
 		
 		name.getItemIdentifiers().clear();
-		name = post("787", name, TopicName.class);
+		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertTrue(name.getItemIdentifiers().isEmpty());
 	}
@@ -326,16 +326,16 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		TopicName name = get("537", TopicName.class);
+		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
 		
-		name = post("537", name, TopicName.class);
+		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
 		
 		name.getItemIdentifiers().remove(locator);
 		name.getItemIdentifiers().add(URILocator.create("foo:to-keep-name"));
-		name = post("537", name, TopicName.class);
+		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
 		Assert.assertEquals("foo:to-keep-name", name.getItemIdentifiers().iterator().next().getAddress());
@@ -343,7 +343,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testChangeItemIdentifierVoid() {
-		final URILocator locator = URILocator.create("foo:to-keep-name-2");
+		final URILocator locator = URILocator.create("foo:to-keep-name");
 
 		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);

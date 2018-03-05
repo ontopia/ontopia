@@ -28,13 +28,13 @@ import org.junit.Test;
 public class AssociationResourceDELETETest extends AbstractV1ResourceTest {
 	
 	public AssociationResourceDELETETest() {
-		super(OPERA_TM, "associations");
+		super(ASSOCIATIONS_LTM, "associations");
 	}
 
 	@Test
 	public void deleteAssociation() {
-		delete("8961", Association.class);
-		assertGetFails("8961", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
+		delete("2", Association.class);
+		assertGetFails("2", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 
 	@Test

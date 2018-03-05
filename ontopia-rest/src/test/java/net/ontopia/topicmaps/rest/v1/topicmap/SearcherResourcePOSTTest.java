@@ -35,15 +35,15 @@ public class SearcherResourcePOSTTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Map>> REF = new TypeReference<Collection<Map>>(){};
 
 	public SearcherResourcePOSTTest() {
-		super(OPERA_TM, "search");
+		super(TOPICS_LTM, "search");
 	}
 
 	@Test
 	public void testSearch() throws IOException {
-		Collection<Map> results = post(null, REF, "Steve Pepper");
+		Collection<Map> results = post(null, REF, "sloc");
 
 		Assert.assertNotNull(results);
-		Assert.assertEquals(2, results.size());
+		Assert.assertEquals(1, results.size());
 
 		Iterator<Map> iterator = results.iterator();
 
@@ -53,22 +53,14 @@ public class SearcherResourcePOSTTest extends AbstractV1ResourceTest {
 
 		Map o1 = (Map) first.get("object");
 		Assert.assertNotNull(o1);
-		Assert.assertEquals("55", o1.get("objectId"));
-
-		Map second = iterator.next();
-		Assert.assertNotNull(second);
-		Assert.assertEquals("O", second.get("class"));
-
-		Map o2 = (Map) second.get("object");
-		Assert.assertNotNull(o2);
-		Assert.assertEquals("13", o2.get("objectId"));
+		Assert.assertEquals("6", o1.get("objectId"));
 	}
 
 	/* failing requests */
 
 	@Test
 	public void searchWithoutIndex() {
-		tmid = "jill.xtm";
+		tmid = "empty.xtm";
 		assertPostFails(null, "foo", OntopiaRestErrors.INDEX_NOT_SUPPORTED);
 	}
 

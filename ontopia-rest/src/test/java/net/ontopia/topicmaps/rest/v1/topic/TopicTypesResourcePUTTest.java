@@ -34,33 +34,33 @@ public class TopicTypesResourcePUTTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public TopicTypesResourcePUTTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
 	public void testAdd() throws IOException {
-		Collection<Topic> types = put("3254/types", REF, new Topic("3705"));
+		Collection<Topic> types = put("1/types", REF, new Topic("5"));
 
 		Assert.assertNotNull(types);
 		Assert.assertEquals(2, types.size());
-		assertContainsTopics(types, "165", "3705");
+		assertContainsTopics(types, "1", "5");
 	}
 
 	/* Failing requests */
 
 	@Test
 	public void testAddUnexistingType() throws IOException {
-		assertPutFails("3254/types", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("1/types", new Topic("unexisting"), OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
 	public void testAddInvalidType() throws IOException {
-		assertPutFails("3254/types", new Topic("13"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPutFails("1/types", new Topic("2"), OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testAddEmptyType() throws IOException {
-		assertPutFails("3254/types", null, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPutFails("1/types", null, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
@@ -70,6 +70,6 @@ public class TopicTypesResourcePUTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testInvalidAddType() throws IOException {
-		assertPutFails("13/types", new Topic("1"), OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertPutFails("2/types", new Topic("1"), OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 }

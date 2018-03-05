@@ -34,12 +34,12 @@ public class ScopedResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public ScopedResourceGETTest() {
-		super(OPERA_TM, null);
+		super(SCOPED_LTM, null);
 	}
 
 	@Test
 	public void testEmptyScope() throws IOException {
-		Collection<Topic> scope = get("associations/9537/scope", REF);
+		Collection<Topic> scope = get("associations/9/scope", REF);
 
 		Assert.assertNotNull(scope);
 		Assert.assertTrue(scope.isEmpty());
@@ -47,38 +47,38 @@ public class ScopedResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testScopedName() throws IOException {
-		Collection<Topic> scope = get("names/1879/scope", REF);
+		Collection<Topic> scope = get("names/4/scope", REF);
 
 		Assert.assertNotNull(scope);
 		Assert.assertEquals(2, scope.size());
-		assertContainsTopics(scope, "1880", "5");
+		assertContainsTopics(scope, "1", "3");
 	}
 
 	@Test
 	public void testScopedOccurrence() throws IOException {
-		Collection<Topic> scope = get("occurrences/5375/scope", REF);
+		Collection<Topic> scope = get("occurrences/2/scope", REF);
 
 		Assert.assertNotNull(scope);
 		Assert.assertEquals(2, scope.size());
-		assertContainsTopics(scope, "141", "4778");
+		assertContainsTopics(scope, "1", "3");
 	}
 
 	@Test
 	public void testScopedAssociation() throws IOException {
-		Collection<Topic> scope = get("associations/11793/scope", REF);
+		Collection<Topic> scope = get("associations/7/scope", REF);
 
 		Assert.assertNotNull(scope);
-		Assert.assertEquals(1, scope.size());
-		assertContainsTopics(scope, "2956");
+		Assert.assertEquals(2, scope.size());
+		assertContainsTopics(scope, "1", "3");
 	}
 
 	@Test
 	public void testScopedVariant() throws IOException {
-		Collection<Topic> scope = get("variants/6023/scope", REF);
+		Collection<Topic> scope = get("variants/6/scope", REF);
 
 		Assert.assertNotNull(scope);
-		Assert.assertEquals(3, scope.size());
-		assertContainsTopics(scope, "5", "174", "149");
+		Assert.assertEquals(2, scope.size());
+		assertContainsTopics(scope, "1", "3");
 	}
 
 	/* -- Failing requests -- */

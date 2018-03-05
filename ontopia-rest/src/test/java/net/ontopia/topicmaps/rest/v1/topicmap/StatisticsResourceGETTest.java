@@ -29,7 +29,7 @@ import org.junit.Test;
 public class StatisticsResourceGETTest extends AbstractV1ResourceTest {
 
 	public StatisticsResourceGETTest() {
-		super(OPERA_TM, "statistics");
+		super(TOPICS_LTM, "statistics");
 	}
 
 	@Test
@@ -38,54 +38,54 @@ public class StatisticsResourceGETTest extends AbstractV1ResourceTest {
 
 		Assert.assertNotNull(json);
 		Assert.assertNotNull(json.get("untypedTopicCount"));
-		Assert.assertTrue((int) json.get("untypedTopicCount") > 10);
+		Assert.assertEquals(6, (int) json.get("untypedTopicCount"));
 
 		Assert.assertNotNull(json.get("topicTypeCount"));
-		Assert.assertTrue((int) json.get("topicTypeCount") > 10);
+		Assert.assertEquals(3, (int) json.get("topicTypeCount"));
 
 		Assert.assertNotNull(json.get("typedTopicCount"));
-		Assert.assertTrue((int) json.get("typedTopicCount") > 1000);
+		Assert.assertEquals(4, (int) json.get("typedTopicCount"));
 
 		Assert.assertNotNull(json.get("topicCount"));
-		Assert.assertTrue((int) json.get("topicCount") > 1000);
+		Assert.assertEquals(9, (int) json.get("topicCount"));
 
 		Assert.assertNotNull(json.get("associationCount"));
-		Assert.assertTrue((int) json.get("associationCount") > 3000);
+		Assert.assertEquals(3, (int) json.get("associationCount"));
 
 		Assert.assertNotNull(json.get("associationTypeCount"));
-		Assert.assertTrue((int) json.get("associationTypeCount") > 10);
+		Assert.assertEquals(2, (int) json.get("associationTypeCount"));
 
 		Assert.assertNotNull(json.get("roleCount"));
-		Assert.assertTrue((int) json.get("roleCount") > 7000);
+		Assert.assertEquals(3, (int) json.get("roleCount"));
 
 		Assert.assertNotNull(json.get("roleTypeCount"));
-		Assert.assertTrue((int) json.get("roleTypeCount") > 10);
+		Assert.assertEquals(2, (int) json.get("roleTypeCount"));
 
 		Assert.assertNotNull(json.get("occurrenceCount"));
-		Assert.assertTrue((int) json.get("occurrenceCount") > 1000);
+		Assert.assertEquals(3, (int) json.get("occurrenceCount"));
 
 		Assert.assertNotNull(json.get("occurrenceTypeCount"));
-		Assert.assertTrue((int) json.get("occurrenceTypeCount") > 10);
+		Assert.assertEquals(3, (int) json.get("occurrenceTypeCount"));
 
 		Assert.assertNotNull(json.get("topicNameCount"));
-		Assert.assertTrue((int) json.get("topicNameCount") > 2000);
+		Assert.assertEquals(3, (int) json.get("topicNameCount"));
 
 		Assert.assertNotNull(json.get("noNameTopicCount"));
-		Assert.assertTrue((int) json.get("noNameTopicCount") > 0);
+		Assert.assertEquals(6, (int) json.get("noNameTopicCount"));
 
 		Assert.assertNotNull(json.get("topicNameTypeCount"));
-		Assert.assertTrue((int) json.get("topicNameTypeCount") > 0);
+		Assert.assertEquals(1, (int) json.get("topicNameTypeCount"));
 
 		Assert.assertNotNull(json.get("variantCount"));
-		Assert.assertTrue((int) json.get("variantCount") > 100);
+		Assert.assertEquals(1, (int) json.get("variantCount"));
 
 		Assert.assertNotNull(json.get("subjectIdentifierCount"));
-		Assert.assertTrue((int) json.get("subjectIdentifierCount") > 400);
+		Assert.assertEquals(2, (int) json.get("subjectIdentifierCount"));
 
 		Assert.assertNotNull(json.get("subjectLocatorCount"));
-		Assert.assertTrue((int) json.get("subjectLocatorCount") > 0);
+		Assert.assertEquals(1, (int) json.get("subjectLocatorCount"));
 
 		Assert.assertNotNull(json.get("itemIdentifierCount"));
-		Assert.assertTrue((int) json.get("itemIdentifierCount") > 1000);
+		Assert.assertEquals(8, (int) json.get("itemIdentifierCount"));
 	}
 }

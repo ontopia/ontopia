@@ -422,4 +422,13 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     builder.makeAssociationRole(builder.makeAssociation(type), type, type);
     assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
   }
+
+  public void testBug536() {
+    assertFalse(clsix.usedAsAssociationRoleType(null));
+    assertFalse(clsix.usedAsAssociationType(null));
+    assertFalse(clsix.usedAsOccurrenceType(null));
+    assertFalse(clsix.usedAsTopicNameType(null));
+    assertFalse(clsix.usedAsTopicType(null));
+    assertFalse(clsix.usedAsType(null));
+  }
 }

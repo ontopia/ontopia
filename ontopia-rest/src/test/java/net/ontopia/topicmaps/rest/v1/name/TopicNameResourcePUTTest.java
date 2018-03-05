@@ -32,7 +32,7 @@ import org.junit.Test;
 public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 
 	public TopicNameResourcePUTTest() {
-		super(OPERA_TM, "names");
+		super(NAMES_LTM, "names");
 	}
 
 	/* -- Successfull requests -- */
@@ -40,8 +40,8 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	private TopicName createTopicName() {
 		TopicName name = new TopicName();
 		name.setValue("foo");
-		name.setTopic(new Topic("1"));
-		name.setType(new Topic("12"));
+		name.setTopic(new Topic("6"));
+		name.setType(new Topic("9"));
 		return name;
 	}
 
@@ -52,9 +52,9 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getTopic());
-		Assert.assertEquals("1", added.getTopic().getObjectId());
+		Assert.assertEquals("6", added.getTopic().getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("12", added.getType().getObjectId());
+		Assert.assertEquals("9", added.getType().getObjectId());
 		Assert.assertEquals("foo", added.getValue());
 	}
 
@@ -62,55 +62,55 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTopicByItemIdentifier() {
 		TopicName name = createTopicName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		name.setTopic(topic);
 		TopicName added = put(name, TopicName.class);
 
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getTopic());
-		Assert.assertEquals("261", added.getTopic().getObjectId());
+		Assert.assertEquals("1", added.getTopic().getObjectId());
 	}
 
 	@Test
 	public void testWithTypeByItemIdentifier() {
 		TopicName name = createTopicName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		name.setType(topic);
 		TopicName added = put(name, TopicName.class);
 
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getObjectId());
 		Assert.assertNotNull(added.getType());
-		Assert.assertEquals("261", added.getType().getObjectId());
+		Assert.assertEquals("1", added.getType().getObjectId());
 	}
 
 	@Test
 	public void testWithItemIdentifier() {
 		TopicName name = createTopicName();
-		name.getItemIdentifiers().add(URILocator.create("foo:name:bar"));
+		name.getItemIdentifiers().add(URILocator.create("foo:bar"));
 
 		TopicName added = put(name, TopicName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertFalse(added.getItemIdentifiers().isEmpty());
-		Assert.assertEquals("foo:name:bar", added.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:bar", added.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
 	public void testWithItemIdentifiers() {
 		TopicName name = createTopicName();
-		name.getItemIdentifiers().add(URILocator.create("bar:name:foo"));
-		name.getItemIdentifiers().add(URILocator.create("bar:name:bar"));
+		name.getItemIdentifiers().add(URILocator.create("foo:bar"));
+		name.getItemIdentifiers().add(URILocator.create("bar:foo"));
 
 		TopicName added = put(name, TopicName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertFalse(added.getItemIdentifiers().isEmpty());
 		Assert.assertEquals(2, added.getItemIdentifiers().size());
-		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("bar:name:foo")));
-		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("bar:name:bar")));
+		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:bar")));
+		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("bar:foo")));
 	}
 
 	@Test
@@ -140,21 +140,21 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopes() {
 		TopicName name = createTopicName();
 		name.getScope().add(new Topic("1"));
-		name.getScope().add(new Topic("12"));
+		name.getScope().add(new Topic("6"));
 
 		TopicName added = put(name, TopicName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(2, added.getScope().size());
-		assertContainsTopics(added.getScope(), "1", "12");
+		assertContainsTopics(added.getScope(), "1", "6");
 	}
 
 	@Test
 	public void testWithScopeByItemIdentifier() {
 		TopicName name = createTopicName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		name.getScope().add(topic);
 
 		TopicName added = put(name, TopicName.class);
@@ -162,31 +162,31 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(added.getScope());
 		Assert.assertFalse(added.getScope().isEmpty());
 		Assert.assertEquals(1, added.getScope().size());
-		assertContainsTopics(added.getScope(), "261");
+		assertContainsTopics(added.getScope(), "1");
 	}
 
 	@Test
 	public void testWithReification() {
 		TopicName name = createTopicName();
-		name.setReifier(new Topic("3666"));
+		name.setReifier(new Topic("1"));
 
 		TopicName added = put(name, TopicName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("3666", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testWithReificationByItemIdentifier() {
 		TopicName name = createTopicName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#timur"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		name.setReifier(topic);
 
 		TopicName added = put(name, TopicName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getReifier());
-		Assert.assertEquals("3242", added.getReifier().getObjectId());
+		Assert.assertEquals("1", added.getReifier().getObjectId());
 	}
 
 	@Test
@@ -221,7 +221,7 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidTopic() {
 		TopicName name = createTopicName();
-		name.setTopic(new Topic("13")); // object with id 13 is an name
+		name.setTopic(new Topic("2"));
 		assertPutFails(name, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -235,7 +235,7 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidType() {
 		TopicName name = createTopicName();
-		name.setType(new Topic("13")); // object with id 13 is an occurrence
+		name.setType(new Topic("2"));
 		assertPutFails(name, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -256,7 +256,7 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidReification() {
 		TopicName name = createTopicName();
-		name.setReifier(new Topic("13")); // object with id 13 is an name
+		name.setReifier(new Topic("2"));
 		assertPutFails(name, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
@@ -270,7 +270,7 @@ public class TopicNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testInvalidScope() {
 		TopicName name = createTopicName();
-		name.getScope().add(new Topic("13")); // object with id 13 is an name
+		name.getScope().add(new Topic("2"));
 		assertPutFails(name, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 

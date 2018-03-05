@@ -33,7 +33,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<TopicName>> REF = new TypeReference<Collection<TopicName>>(){};
 
 	public IndexResourcePOSTTest() {
-		super(OPERA_TM, "names/index");
+		super(NAMES_LTM, "names/index");
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
 		Assert.assertNotNull(names);
 		Assert.assertEquals(1, names.size());
-		assertContainsTopics(names, "122");
+		assertContainsTopics(names, "14");
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 
 		Assert.assertNotNull(names);
 		Assert.assertEquals(1, names.size());
-		assertContainsTopics(names, "203");
+		assertContainsTopics(names, "16");
 	}
 
 	@Test

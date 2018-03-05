@@ -31,7 +31,7 @@ import org.restlet.util.Series;
 public class HeaderTest extends AbstractV1ResourceTest {
 
 	public HeaderTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
@@ -44,6 +44,6 @@ public class HeaderTest extends AbstractV1ResourceTest {
 		Assert.assertEquals("v1", headers.getFirstValue("X-Ontopia-API-Version"));
 		Assert.assertEquals("n.o.t.r.OntopiaRestApplication", headers.getFirstValue("X-Ontopia-Application"));
 		Assert.assertEquals("n.o.t.r.v1.topic.TopicsResource", headers.getFirstValue("X-Ontopia-Resource"));
-		Assert.assertEquals("ItalianOpera.ltm", headers.getFirstValue("X-Ontopia-Topicmap"));
+		Assert.assertEquals("topics.ltm", headers.getFirstValue("X-Ontopia-Topicmap"));
 	}
 }

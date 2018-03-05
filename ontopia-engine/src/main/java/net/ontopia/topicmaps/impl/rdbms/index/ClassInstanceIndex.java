@@ -177,26 +177,31 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   @Override
   public boolean usedAsTopicType(TopicIF topic) {
+    if (topic == null) { return false; }
     return !(getTopics(topic).isEmpty());    
   }
 
   @Override
   public boolean usedAsTopicNameType(TopicIF topic) {
+    if (topic == null) { return false; }
     return !(getTopicNames(topic).isEmpty());
   }
 
   @Override
   public boolean usedAsOccurrenceType(TopicIF topic) {
+    if (topic == null) { return false; }
     return !(getOccurrences(topic).isEmpty());
   }
 
   @Override
   public boolean usedAsAssociationType(TopicIF topic) {
+    if (topic == null) { return false; }
     return !(getAssociations(topic).isEmpty());
   }
   
   @Override
   public boolean usedAsAssociationRoleType(TopicIF topic) {
+    if (topic == null) { return false; }
     return !(getAssociationRoles(topic).isEmpty());
   }
   

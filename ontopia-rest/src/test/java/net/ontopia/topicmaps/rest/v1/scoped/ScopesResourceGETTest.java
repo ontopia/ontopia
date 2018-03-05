@@ -33,7 +33,7 @@ public class ScopesResourceGETTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Topic>> REF = new TypeReference<Collection<Topic>>(){};
 
 	public ScopesResourceGETTest() {
-		super(OPERA_TM, "scopes");
+		super(SCOPED_LTM, "scopes");
 	}
 
 	@Test
@@ -41,8 +41,8 @@ public class ScopesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> scopes = get("associations", REF);
 
 		Assert.assertNotNull(scopes);
-		Assert.assertTrue(scopes.size() >= 2); // added to by tests
-		assertContainsTopics(scopes, "2965", "2956");
+		Assert.assertEquals(2, scopes.size());
+		assertContainsTopics(scopes, "1", "3");
 	}
 
 	@Test
@@ -50,8 +50,8 @@ public class ScopesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> scopes = get("occurrences", REF);
 
 		Assert.assertNotNull(scopes);
-		Assert.assertTrue(scopes.size() >= 25); // added to by tests
-		assertContainsTopics(scopes, "6150", "143", "4855");
+		Assert.assertEquals(2, scopes.size());
+		assertContainsTopics(scopes, "1", "3");
 	}
 
 	@Test
@@ -59,7 +59,8 @@ public class ScopesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> scopes = get("names", REF);
 
 		Assert.assertNotNull(scopes);
-		Assert.assertEquals(100, scopes.size()); // added to by tests, paged
+		Assert.assertEquals(2, scopes.size());
+		assertContainsTopics(scopes, "1", "3");
 	}
 
 	@Test
@@ -67,7 +68,7 @@ public class ScopesResourceGETTest extends AbstractV1ResourceTest {
 		Collection<Topic> scopes = get("variants", REF);
 
 		Assert.assertNotNull(scopes);
-		Assert.assertTrue(scopes.size() >= 16); // added to by tests
-		assertContainsTopics(scopes, "5", "179");
+		Assert.assertEquals(2, scopes.size());
+		assertContainsTopics(scopes, "1", "3");
 	}
 }

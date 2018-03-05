@@ -30,12 +30,12 @@ import org.junit.Test;
 public class ScopeUseResourceGETTest extends AbstractV1ResourceTest {
 
 	public ScopeUseResourceGETTest() {
-		super(OPERA_TM, "topics");
+		super(TOPICS_LTM, "topics");
 	}
 
 	@Test
 	public void testOccurrenceScopeUse() throws IOException {
-		Map<String, Object> use = getAsJson("5490/scope/use");
+		Map<String, Object> use = getAsJson("5/scope/use");
 
 		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsOccurrenceTheme"));
@@ -44,7 +44,7 @@ public class ScopeUseResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAssociationScopeUse() throws IOException {
-		Map<String, Object> use = getAsJson("2965/scope/use");
+		Map<String, Object> use = getAsJson("1/scope/use");
 
 		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsAssociationTheme"));
@@ -53,7 +53,7 @@ public class ScopeUseResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testVariantScopeUse() throws IOException {
-		Map<String, Object> use = getAsJson("589/scope/use");
+		Map<String, Object> use = getAsJson("7/scope/use");
 
 		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsVariantTheme"));
@@ -62,7 +62,7 @@ public class ScopeUseResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testNameScopeUse() throws IOException {
-		Map<String, Object> use = getAsJson("3931/scope/use");
+		Map<String, Object> use = getAsJson("7/scope/use");
 
 		Assert.assertNotNull(use);
 		Assert.assertEquals(true, (Boolean) use.get("usedAsTopicNameTheme"));
@@ -85,7 +85,7 @@ public class ScopeUseResourceGETTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testInvalidScopeUse() {
-		assertGetFails("13/scope/use", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("2/scope/use", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	@Test

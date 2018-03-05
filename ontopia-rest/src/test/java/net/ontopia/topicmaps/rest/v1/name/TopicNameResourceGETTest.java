@@ -33,7 +33,7 @@ import org.restlet.data.MediaType;
 public class TopicNameResourceGETTest extends AbstractV1ResourceTest {
 
 	public TopicNameResourceGETTest() {
-		super(OPERA_TM, "names");
+		super(NAMES_LTM, "names");
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class TopicNameResourceGETTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(name.getTopic());
 		Assert.assertEquals("1", name.getTopic().getObjectId());
 		
-		Assert.assertEquals("Italian Opera Topic Map", name.getValue());
+		Assert.assertEquals("Topic 1", name.getValue());
 		
 		// has no reifier
 		Assert.assertNull(name.getReifier());
@@ -66,12 +66,12 @@ public class TopicNameResourceGETTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testWithScope() {
-		TopicName name = get("1516", TopicName.class);
+		TopicName name = get("5", TopicName.class);
 		
 		Assert.assertNotNull(name.getScope());
 		Assert.assertFalse(name.getScope().isEmpty());
 		Assert.assertEquals(2, name.getScope().size());
-		assertContainsTopics(name.getScope(), "5", "1517");
+		assertContainsTopics(name.getScope(), "1", "6");
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class TopicNameResourceGETTest extends AbstractV1ResourceTest {
 		Map<String, Object> parsed = getAsJson("2");
 		Assert.assertNotNull(parsed);
 		Assert.assertEquals("2", parsed.get("objectId"));
-		Assert.assertEquals("Italian Opera Topic Map", (String)parsed.get("value"));
+		Assert.assertEquals("Topic 1", (String)parsed.get("value"));
 	}
 	
 	// test recoverable client failures
@@ -87,7 +87,7 @@ public class TopicNameResourceGETTest extends AbstractV1ResourceTest {
 		assertGetFails("foo", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 	@Test public void testGetWrongType() throws IOException {
-		assertGetFails("13", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
+		assertGetFails("1", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE);
 	}
 
 	// Unsupported topicmap media types: CTM, LTM, XTM, TMXML all result in http 406

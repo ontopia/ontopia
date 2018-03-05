@@ -34,12 +34,12 @@ public class QueryResourcePOSTTest extends AbstractV1ResourceTest {
 	private final TypeReference<Collection<Map<String, Object>>> REF = new TypeReference<Collection<Map<String, Object>>>(){};
 
 	public QueryResourcePOSTTest() {
-		super(OPERA_TM, "query");
+		super(TOPICS_LTM, "query");
 	}
 	
 	@Test
 	public void testQuery() throws IOException {
-		Collection<Map<String, Object>> result = post(null, REF, "reifies($topic, $reified), topicmap($reified)?");
+		Collection<Map<String, Object>> result = post(null, REF, "reifies($topic, $reified)?");
 		
 		Assert.assertNotNull(result);
 		Assert.assertEquals(1, result.size());

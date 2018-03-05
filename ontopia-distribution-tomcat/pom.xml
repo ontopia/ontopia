@@ -52,6 +52,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-rest</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>ontopia-tmrap</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
@@ -144,7 +149,7 @@
 	</dependencies>
 	
 	<properties>
-		<tomcat.version>7.0.10</tomcat.version>
+		<tomcat.version>7.0.85</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
 		<rdbms-setup>${basedir}/target/${project.artifactId}-${project.version}/rdbms/setup/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
@@ -216,7 +221,7 @@
 						<configuration>
 							<optimizations>false</optimizations>
 							<patchDirectory>src/main/patches</patchDirectory>
-							<patches>001.catalina.properties.patch, 002.server.xml.patch</patches>
+							<patches>001.catalina.properties.patch,002.server.xml.patch</patches>
 							<targetDirectory>target/${project.build.finalName}/apache-tomcat/</targetDirectory>
 						</configuration>
 					</plugin>
@@ -224,92 +229,18 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
-						<configuration>
-							<includeProjectDependencies>false</includeProjectDependencies>
-							<includePluginDependencies>true</includePluginDependencies>
-							<executableDependency>
-								<groupId>${project.parent.groupId}</groupId>
-								<artifactId>ontopia-engine</artifactId>
-							</executableDependency>
-						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>${project.parent.groupId}</groupId>
-								<artifactId>ontopia-engine</artifactId>
-								<version>${project.parent.version}</version>
-							</dependency>
-						</dependencies>
 						<executions>
 							<execution>
-								<id>generate-rdbms-schema-generic</id>
+								<id>generate-rdbms-schemas</id>
 								<goals><goal>java</goal></goals>
 								<phase>package</phase>
 								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} generic generic ${rdbms-setup}generic${rdbms-create-postfix} ${rdbms-setup}generic${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-oracle</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} oracle oracle8,oracle,generic ${rdbms-setup}oracle${rdbms-create-postfix} ${rdbms-setup}oracle${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-oracle9i</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} oracle9i oracle9i,oracle,generic ${rdbms-setup}oracle9i${rdbms-create-postfix} ${rdbms-setup}oracle9i${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-oracle10g</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} oracle10g oracle10g,oracle,generic ${rdbms-setup}oracle10g${rdbms-create-postfix} ${rdbms-setup}oracle10g${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-postgresql</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} postgresql postgresql,generic ${rdbms-setup}postgresql${rdbms-create-postfix} ${rdbms-setup}postgresql${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-sqlserver</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} sqlserver sqlserver,generic ${rdbms-setup}sqlserver${rdbms-create-postfix} ${rdbms-setup}sqlserver${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-mysql</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} mysql mysql,generic ${rdbms-setup}mysql${rdbms-create-postfix} ${rdbms-setup}mysql${rdbms-drop-postfix}</commandlineArgs>
-								</configuration>
-							</execution>
-							<execution>
-								<id>generate-rdbms-schema-h2</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DDLWriter</mainClass>
-									<commandlineArgs>${rdbms-schema} generic generic ${rdbms-setup}h2${rdbms-create-postfix} ${rdbms-setup}h2${rdbms-drop-postfix}</commandlineArgs>
+									<mainClass>net.ontopia.persistence.rdbms.DistributionDDLWriter</mainClass>
+									<commandlineArgs>${rdbms-setup}</commandlineArgs>
+									<executableDependency>
+										<groupId>${project.parent.groupId}</groupId>
+										<artifactId>ontopia-engine</artifactId>
+									</executableDependency>
 								</configuration>
 							</execution>
 						</executions>

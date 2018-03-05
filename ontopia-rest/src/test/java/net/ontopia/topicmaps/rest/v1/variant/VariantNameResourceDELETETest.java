@@ -28,13 +28,13 @@ import org.junit.Test;
 public class VariantNameResourceDELETETest extends AbstractV1ResourceTest {
 	
 	public VariantNameResourceDELETETest() {
-		super(OPERA_TM, "variants");
+		super(VARIANTS_LTM, "variants");
 	}
 
 	@Test
 	public void deleteVariantName() {
-		delete("5966", VariantName.class);
-		assertGetFails("5966", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
+		delete("4", VariantName.class);
+		assertGetFails("4", OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL);
 	}
 
 	@Test

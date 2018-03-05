@@ -32,150 +32,150 @@ import org.junit.Test;
 public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	public AssociationResourcePOSTTest() {
-		super(OPERA_TM, "associations");
+		super(ASSOCIATIONS_LTM, "associations");
 	}
 	
 	@Test
 	public void testAddRole() {
-		Association association = get("10350", Association.class);
+		Association association = get("2", Association.class);
 		AssociationRole r = new AssociationRole();
 		r.setType(new Topic("1"));
 		r.setPlayer(new Topic("1"));
 		association.getRoles().add(r);
 		
-		Association changed = post("10350", association, Association.class);
+		Association changed = post("2", association, Association.class);
 		Assert.assertNotNull(changed.getRoles());
-		Assert.assertEquals(2, changed.getRoles().size()); // changes to roles are ignored
+		Assert.assertEquals(1, changed.getRoles().size()); // changes to roles are ignored
 	}
 
 	@Test
 	public void testRemoveRole() {
-		Association association = get("10350", Association.class);
-		removeById(association.getRoles(), "10352");
+		Association association = get("2", Association.class);
+		removeById(association.getRoles(), "3");
 		
-		Association changed = post("10350", association, Association.class);
+		Association changed = post("2", association, Association.class);
 		Assert.assertNotNull(changed.getRoles());
-		Assert.assertEquals(2, changed.getRoles().size()); // changes to roles are ignored
+		Assert.assertEquals(1, changed.getRoles().size()); // changes to roles are ignored
 	}
 
 	@Test
 	public void testEmptyRoles() {
-		Association association = get("10350", Association.class);
+		Association association = get("2", Association.class);
 		association.getRoles().clear();
 		
-		Association changed = post("10350", association, Association.class);
+		Association changed = post("2", association, Association.class);
 		Assert.assertNotNull(changed.getRoles());
-		Assert.assertEquals(2, changed.getRoles().size()); // changes to roles are ignored
+		Assert.assertEquals(1, changed.getRoles().size()); // changes to roles are ignored
 	}
 
 	@Test
 	public void testVoidRoles() {
-		Association association = get("10350", Association.class);
+		Association association = get("2", Association.class);
 		association.setRoles(null);
 		
-		Association changed = post("10350", association, Association.class);
+		Association changed = post("2", association, Association.class);
 		Assert.assertNotNull(changed.getRoles());
-		Assert.assertEquals(2, changed.getRoles().size()); // changes to roles are ignored
+		Assert.assertEquals(1, changed.getRoles().size()); // changes to roles are ignored
 	}
 
 	@Test
 	public void testType() {
-		Association association = get("17157", Association.class);
-		association.setType(new Topic("1"));
+		Association association = get("2", Association.class);
+		association.setType(new Topic("4"));
 
-		Association changed = post("17157", association, Association.class);
+		Association changed = post("2", association, Association.class);
+
+		Assert.assertNotNull(changed.getType());
+		Assert.assertEquals("4", changed.getType().getObjectId());
+	}
+
+	@Test
+	public void testNullType() {
+		Association association = get("2", Association.class);
+		association.setType(null);
+
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getType());
 		Assert.assertEquals("1", changed.getType().getObjectId());
 	}
 
 	@Test
-	public void testNullType() {
-		Association association = get("8889", Association.class);
-		association.setType(null);
-
-		Association changed = post("8889", association, Association.class);
-
-		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("441", changed.getType().getObjectId());
-	}
-
-	@Test
 	public void testTypeByItemIdentifier() {
-		Association association = get("12582", Association.class);
+		Association association = get("2", Association.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
 		association.setType(topic);
 
-		Association changed = post("12582", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getType());
-		Assert.assertEquals("261", changed.getType().getObjectId());
+		Assert.assertEquals("4", changed.getType().getObjectId());
 	}
 
 	@Test
 	public void testReifier() {
-		Association association = get("10872", Association.class);
-		association.setReifier(new Topic("1464"));
+		Association association = get("2", Association.class);
+		association.setReifier(new Topic("9"));
 
-		Association changed = post("10872", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getReifier());
-		Assert.assertEquals("1464", changed.getReifier().getObjectId());
+		Assert.assertEquals("9", changed.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testClearReifier() {
-		Association association = get("10125", Association.class);
+		Association association = get("5", Association.class);
 		association.setReifier(null);
 
-		Association changed = post("10125", association, Association.class);
+		Association changed = post("5", association, Association.class);
 
 		Assert.assertNull(changed.getReifier());
 	}
 
 	@Test
 	public void testReifierByItemIdentifier() {
-		Association association = get("10581", Association.class);
+		Association association = get("2", Association.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#deutsche-oper"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic3"));
 		association.setReifier(topic);
 
-		Association changed = post("10581", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getReifier());
-		Assert.assertEquals("6174", changed.getReifier().getObjectId());
+		Assert.assertEquals("9", changed.getReifier().getObjectId());
 	}
 
 	@Test
 	public void testScope() {
-		Association association = get("17157", Association.class);
-		association.getScope().add(new Topic("1"));
+		Association association = get("2", Association.class);
+		association.getScope().add(new Topic("4"));
 
-		Association changed = post("17157", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
-		assertContainsTopics(changed.getScope(), "1");
+		assertContainsTopics(changed.getScope(), "4");
 	}
 
 	@Test
 	public void testScopes() {
-		Association association = get("17157", Association.class);
+		Association association = get("2", Association.class);
 		association.getScope().add(new Topic("1"));
-		association.getScope().add(new Topic("12"));
+		association.getScope().add(new Topic("4"));
 
-		Association changed = post("17157", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
-		assertContainsTopics(changed.getScope(), "1", "12");
+		assertContainsTopics(changed.getScope(), "1", "4");
 	}
 
 	@Test
 	public void testRemoveScope() {
-		Association association = get("11547", Association.class);
-		removeById(association.getScope(), "2965");
+		Association association = get("5", Association.class);
+		removeById(association.getScope(), "4");
 
-		Association changed = post("11547", association, Association.class);
+		Association changed = post("5", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertTrue(changed.getScope().isEmpty());
@@ -183,10 +183,10 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testClearScope() {
-		Association association = get("13431", Association.class);
+		Association association = get("5", Association.class);
 		association.getScope().clear();
 
-		Association changed = post("13431", association, Association.class);
+		Association changed = post("5", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertTrue(changed.getScope().isEmpty());
@@ -194,11 +194,11 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testChangeScope() {
-		Association association = get("14085", Association.class);
-		removeById(association.getScope(), "2965");
+		Association association = get("5", Association.class);
+		removeById(association.getScope(), "4");
 		association.getScope().add(new Topic("1"));
 
-		Association changed = post("14085", association, Association.class);
+		Association changed = post("5", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(1, changed.getScope().size());
@@ -207,36 +207,36 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testChangeScopeVoid() {
-		Association association = get("12087", Association.class);
+		Association association = get("5", Association.class);
 		association.setScope(null);
 
-		Association changed = post("12087", association, Association.class);
+		Association changed = post("5", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(1, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "2956");
+		assertContainsTopics(changed.getScope(), "4");
 	}
 
 	@Test
 	public void testChangeScopeByItemIdentifier() {
-		Association association = get("16474", Association.class);
+		Association association = get("2", Association.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#style"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
 		association.getScope().add(topic);
 
-		Association changed = post("16474", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getScope());
 		Assert.assertEquals(1, changed.getScope().size());
-		assertContainsTopics(changed.getScope(), "287");
+		assertContainsTopics(changed.getScope(), "1");
 	}
 
 	@Test
 	public void testAddItemIdentifier() {
-		Association association = get("17157", Association.class);
+		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(URILocator.create("foo:bar8"));
 
-		Association changed = post("17157", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
@@ -245,11 +245,11 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testAddItemIdentifiers() {
-		Association association = get("8889", Association.class);
+		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(URILocator.create("foo:bar21"));
 		association.getItemIdentifiers().add(URILocator.create("foo:bar22"));
 
-		Association changed = post("8889", association, Association.class);
+		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(2, changed.getItemIdentifiers().size());
@@ -259,15 +259,15 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testRemoveItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Association association = get("8424", Association.class);
+		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
 
-		association = post("8424", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 
 		association.getItemIdentifiers().remove(locator);
-		association = post("8424", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertTrue(association.getItemIdentifiers().isEmpty());
 	}
@@ -276,15 +276,15 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testClearItemIdentifiers() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Association association = get("11721", Association.class);
+		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
 
-		association = post("11721", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 
 		association.getItemIdentifiers().clear();
-		association = post("11721", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertTrue(association.getItemIdentifiers().isEmpty());
 	}
@@ -293,16 +293,16 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeItemIdentifier() {
 		final URILocator locator = URILocator.create("foo:to-remove");
 
-		Association association = get("15448", Association.class);
+		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
 
-		association = post("15448", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 
 		association.getItemIdentifiers().remove(locator);
 		association.getItemIdentifiers().add(URILocator.create("foo:to-keep-association"));
-		association = post("15448", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 		Assert.assertEquals("foo:to-keep-association", association.getItemIdentifiers().iterator().next().getAddress());
@@ -312,15 +312,15 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeItemIdentifierVoid() {
 		final URILocator locator = URILocator.create("foo:to-keep-association-2");
 
-		Association association = get("14632", Association.class);
+		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
 
-		association = post("14632", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 
 		association.setItemIdentifiers(null);
-		association = post("14632", association, Association.class);
+		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 	}
@@ -329,49 +329,49 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testInvalidType() {
-		Association association = get("17157", Association.class);
-		association.setType(new Topic("17157"));
+		Association association = get("2", Association.class);
+		association.setType(new Topic("2"));
 
-		assertPostFails("17157", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPostFails("2", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testUnexistingType() {
-		Association association = get("17157", Association.class);
+		Association association = get("2", Association.class);
 		association.setType(new Topic("unexistig_topic_id"));
 
-		assertPostFails("17157", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPostFails("2", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
 	public void testInvalidReifier() {
-		Association association = get("17157", Association.class);
-		association.setReifier(new Topic("17157"));
+		Association association = get("2", Association.class);
+		association.setReifier(new Topic("2"));
 
-		assertPostFails("17157", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPostFails("2", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testUnexistingReifier() {
-		Association association = get("17157", Association.class);
+		Association association = get("2", Association.class);
 		association.setReifier(new Topic("unexistig_topic_id"));
 
-		assertPostFails("17157", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPostFails("2", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 
 	@Test
 	public void testInvalidScope() {
-		Association association = get("17157", Association.class);
-		association.getScope().add(new Topic("17157"));
+		Association association = get("2", Association.class);
+		association.getScope().add(new Topic("2"));
 
-		assertPostFails("17157", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
+		assertPostFails("2", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_WRONG_TYPE);
 	}
 
 	@Test
 	public void testUnexistingScope() {
-		Association association = get("17157", Association.class);
+		Association association = get("2", Association.class);
 		association.getScope().add(new Topic("unexisting_topic_id"));
 
-		assertPostFails("17157", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
+		assertPostFails("2", association, OntopiaRestErrors.MANDATORY_OBJECT_IS_NULL);
 	}
 }
