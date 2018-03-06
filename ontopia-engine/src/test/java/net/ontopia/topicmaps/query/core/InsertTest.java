@@ -21,13 +21,11 @@
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -270,7 +268,7 @@ public class InsertTest extends AbstractQueryTest {
     Assert.assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == (topics + 1));
 
-    TopicIF test = topicmap.getTopicBySubjectIdentifier(new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
+    TopicIF test = topicmap.getTopicBySubjectIdentifier(URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
     Assert.assertTrue("no xtm:test after insert", test != null);
   }  
 
@@ -293,12 +291,7 @@ public class InsertTest extends AbstractQueryTest {
     // this one is valid because there are no relative URIs
     assertUpdate("insert <urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304> .");
 
-    LocatorIF si;
-    try {
-      si = new URILocator("urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304");
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    LocatorIF si = URILocator.create("urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304");
     
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(si);
     Assert.assertTrue("topic was not inserted", topic != null);
@@ -335,7 +328,7 @@ public class InsertTest extends AbstractQueryTest {
            "from " +
            "  $psi = \"http://example.com\" ");
 
-    LocatorIF psi = new URILocator("http://example.com");
+    LocatorIF psi = URILocator.create("http://example.com");
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(psi);
     Assert.assertTrue("topic not found by PSI", topic != null);
   }
@@ -369,7 +362,7 @@ public class InsertTest extends AbstractQueryTest {
     Assert.assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == (topics + 1));
 
-    TopicIF test = topicmap.getTopicBySubjectIdentifier(new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
+    TopicIF test = topicmap.getTopicBySubjectIdentifier(URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
     Assert.assertTrue("no xtm:test after insert", test != null);
   }  
 

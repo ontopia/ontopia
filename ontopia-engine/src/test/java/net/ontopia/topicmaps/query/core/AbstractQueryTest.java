@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +42,6 @@ import net.ontopia.topicmaps.query.impl.basic.QueryProcessor;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -62,8 +60,8 @@ public abstract class AbstractQueryTest {
   
   // ===== Helper methods (topic maps)
 
-  protected TopicIF getTopicBySI(String uri) throws MalformedURLException {
-    return topicmap.getTopicBySubjectIdentifier(new URILocator(uri));
+  protected TopicIF getTopicBySI(String uri) {
+    return topicmap.getTopicBySubjectIdentifier(URILocator.create(uri));
   }
   
   protected TopicIF getTopicById(String id) {
@@ -126,12 +124,8 @@ public abstract class AbstractQueryTest {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
 
     if (setbase) {
-      try {
-        base = new URILocator("http://example.com");
-        store.setBaseAddress(base);
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e);
-      }
+      base = URILocator.create("http://example.com");
+      store.setBaseAddress(base);
     }
     
     topicmap = store.getTopicMap();    

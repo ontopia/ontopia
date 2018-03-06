@@ -56,13 +56,7 @@ public class MergeCopyTest {
   }
 
   public URILocator makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    }
-    catch (java.net.MalformedURLException e) {
-      Assert.fail("malformed URL given: " + e);
-      return null; // never executed...
-    }
+    return URILocator.create(uri);
   }
 
   public void onlyContains(String what, Collection coll, Object element) {

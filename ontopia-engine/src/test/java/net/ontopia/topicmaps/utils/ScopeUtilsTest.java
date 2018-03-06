@@ -65,13 +65,7 @@ public class ScopeUtilsTest {
   }
   
   public URILocator makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    }
-    catch (java.net.MalformedURLException e) {
-      Assert.fail("malformed URL given: " + e);
-      return null; // never executed...
-    }
+    return URILocator.create(uri);
   }
 
   // public void check(String deciderName, String object, String user, boolean res) {

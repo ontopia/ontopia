@@ -80,7 +80,7 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
 
   private TopicMapIF makeEmptyTopicMap() throws IOException {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    store.setBaseAddress(new URILocator("http://www.ontopia.net"));
+    store.setBaseAddress(URILocator.create("http://www.ontopia.net"));
     return store.getTopicMap();
   }
 }

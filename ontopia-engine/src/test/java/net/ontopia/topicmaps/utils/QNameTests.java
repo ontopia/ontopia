@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -140,8 +139,8 @@ public class QNameTests {
   }
 
   @Test
-  public void testSimpleLookupSucceeds() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testSimpleLookupSucceeds() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addSubjectIdentifier(loc);
     
     registry.registerPrefix("tst", "http://psi.example.org/");
@@ -151,8 +150,8 @@ public class QNameTests {
   }
 
   @Test
-  public void testSimpleLookupFails2() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testSimpleLookupFails2() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addItemIdentifier(loc);
     
     registry.registerPrefix("tst", "http://psi.example.org/");
@@ -162,8 +161,8 @@ public class QNameTests {
   }
 
   @Test
-  public void testSimpleLookupFails3() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testSimpleLookupFails3() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addSubjectLocator(loc);
     
     registry.registerPrefix("tst", "http://psi.example.org/");
@@ -173,8 +172,8 @@ public class QNameTests {
   }
   
   @Test
-  public void testRegisterTwice2() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testRegisterTwice2() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addSubjectIdentifier(loc);
     
     registry.registerPrefix("tst", "http://www.example.org/");

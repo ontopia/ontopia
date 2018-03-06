@@ -178,7 +178,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     prepareTopicMap();
 
     TopicIF topic = builder.makeTopic();
-		LocatorIF loc = new URILocator("http://www.ontopia.net");
+		LocatorIF loc = URILocator.create("http://www.ontopia.net");
 		topic.addSubjectIdentifier(loc);
     TopicIF otype = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, loc);
@@ -271,7 +271,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     prepareTopicMap();
 
     TopicIF topic = builder.makeTopic();
-		LocatorIF loc = new URILocator("http://www.ontopia.net");
+		LocatorIF loc = URILocator.create("http://www.ontopia.net");
 		topic.addSubjectIdentifier(loc);
     TopicIF otype = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, "");
