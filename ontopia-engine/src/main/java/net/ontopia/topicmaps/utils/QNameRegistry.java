@@ -20,13 +20,13 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.Map;
+import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.net.MalformedURLException;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * PUBLIC: A utility class for producing full URIs from QNames. Allows
@@ -74,7 +74,7 @@ public class QNameRegistry {
 
     try {
       return new URILocator(uri + localpart);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException("QName " + qname + " produced invalid " +
                                         "URI", e);
     }

@@ -5,6 +5,7 @@ header { package net.ontopia.topicmaps.utils.ctm; }
   import java.io.Reader;
   import java.io.IOException;
   import java.net.MalformedURLException;
+  import java.net.URISyntaxException;
   import java.net.URL;
   import java.util.Set;
   import java.util.Map;
@@ -121,7 +122,7 @@ options {
   private LocatorIF getAbsoluteLocator() throws antlr.TokenStreamException {
     try {
       return new URILocator(LT(0).getText());
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e); // FIXME!          
     }
   }

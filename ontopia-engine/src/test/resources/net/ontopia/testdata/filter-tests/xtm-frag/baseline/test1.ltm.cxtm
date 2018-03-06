@@ -24,7 +24,7 @@
 </topic>
 <topic number="5">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#at1</locator>
+<locator>http://xtmFragmentExporter/tests#at1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id14</locator>
@@ -36,7 +36,7 @@
 </topic>
 <topic number="6">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#at2</locator>
+<locator>http://xtmFragmentExporter/tests#at2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id16</locator>
@@ -48,7 +48,7 @@
 </topic>
 <topic number="7">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#ot1</locator>
+<locator>http://xtmFragmentExporter/tests#ot1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id6</locator>
@@ -60,7 +60,7 @@
 </topic>
 <topic number="8">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#ot2</locator>
+<locator>http://xtmFragmentExporter/tests#ot2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id8</locator>
@@ -72,7 +72,7 @@
 </topic>
 <topic number="9">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#rt1</locator>
+<locator>http://xtmFragmentExporter/tests#rt1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id10</locator>
@@ -84,7 +84,7 @@
 </topic>
 <topic number="10">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#rt2</locator>
+<locator>http://xtmFragmentExporter/tests#rt2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id12</locator>
@@ -96,7 +96,7 @@
 </topic>
 <topic number="11">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#tt1</locator>
+<locator>http://xtmFragmentExporter/tests#tt1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id1</locator>
@@ -112,7 +112,7 @@
 </topic>
 <topic number="12">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#tt1-i1</locator>
+<locator>http://xtmFragmentExporter/tests#tt1-i1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id18</locator>
@@ -140,7 +140,7 @@
 </topic>
 <topic number="13">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#tt1-i2</locator>
+<locator>http://xtmFragmentExporter/tests#tt1-i2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id22</locator>
@@ -154,7 +154,7 @@
 </topic>
 <topic number="14">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#tt1-i3</locator>
+<locator>http://xtmFragmentExporter/tests#tt1-i3</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id25</locator>
@@ -170,7 +170,7 @@
 </topic>
 <topic number="15">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#tt1-i4</locator>
+<locator>http://xtmFragmentExporter/tests#tt1-i4</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id27</locator>
@@ -185,7 +185,7 @@
 </topic>
 <topic number="16">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#tt2-i1</locator>
+<locator>http://xtmFragmentExporter/tests#tt2-i1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id29</locator>

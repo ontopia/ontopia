@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -285,7 +285,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     } else if (locator != null && locator.getSystemId() != null) {
       try {
         bases.push(new URILocator(locator.getSystemId()));
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         // Ignore; throw exception later instead [see getBaseAddress()].
       } 
     }
@@ -1245,7 +1245,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   protected LocatorIF createURILocator(String address) {
     try {
       return new URILocator(address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

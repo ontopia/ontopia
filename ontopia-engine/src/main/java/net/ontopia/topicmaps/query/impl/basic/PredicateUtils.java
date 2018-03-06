@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -772,7 +773,7 @@ public class PredicateUtils {
   private static LocatorIF getLocator(Object locator) throws InvalidQueryException {
     try {
       return new URILocator((String) locator);
-    } catch (java.net.MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new InvalidQueryException("Illegal URI: " + locator);
     }
   }

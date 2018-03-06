@@ -5,7 +5,7 @@
 
   <topic id="topic">
       <occurrence>			
-	<resourceRef xlink:href="file:/c:/program files/foo.txt"/>   
+	<resourceRef xlink:href="file:/c:/program%20files/foo.txt"/>   
       </occurrence>
   </topic>
 

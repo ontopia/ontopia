@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -93,7 +93,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     }
     try {
       return new URILocator(base_address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

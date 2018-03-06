@@ -4,12 +4,12 @@
 <locator>#topicA</locator>
 </itemIdentifiers>
 <occurrence number="1">
-<value>http://resourcea/</value>
+<value>http://resourceA</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="4"></type>
 </occurrence>
 <occurrence number="2">
-<value>http://resourceb/</value>
+<value>http://resourceB</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="3"></type>
 </occurrence>
@@ -19,12 +19,12 @@
 <locator>#topicB</locator>
 </itemIdentifiers>
 <occurrence number="1">
-<value>http://resourcea/</value>
+<value>http://resourceA</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="3"></type>
 </occurrence>
 <occurrence number="2">
-<value>http://resourcea/</value>
+<value>http://resourceA</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="4"></type>
 </occurrence>

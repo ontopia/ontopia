@@ -8,9 +8,9 @@
     </baseName>    
     <occurrence>
       <instanceOf>
-        <subjectIndicatorRef xlink:href='http://www.ikke.no'/>
+        <subjectIndicatorRef xlink:href='http://www.ikke.no/'/>
       </instanceOf>
-      <resourceRef xlink:href="http://www.norge.no"/>
+      <resourceRef xlink:href="http://www.norge.no/"/>
     </occurrence>
   </topic>
 
@@ -20,15 +20,15 @@
     </baseName>    
     <occurrence>
       <instanceOf>
-        <subjectIndicatorRef xlink:href='http://www.ikke.no'/>
+        <subjectIndicatorRef xlink:href='http://www.ikke.no/'/>
       </instanceOf>
-      <resourceRef xlink:href="http://www.sverige.se"/>
+      <resourceRef xlink:href="http://www.sverige.se/"/>
     </occurrence>
   </topic>
 
   <topic id='ja'>
     <subjectIdentity>
-        <subjectIndicatorRef xlink:href='http://www.ikke.no'/>
+        <subjectIndicatorRef xlink:href='http://www.ikke.no/'/>
     </subjectIdentity>
     <baseName>
       <baseNameString>Nei</baseNameString>

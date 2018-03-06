@@ -6,7 +6,7 @@
 </topic>
 <topic number="2">
 <subjectLocators>
-<locator>http://topic1/</locator>
+<locator>http://topic1</locator>
 </subjectLocators>
 <itemIdentifiers>
 <locator>#topic1</locator>

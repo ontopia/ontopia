@@ -14,7 +14,7 @@
 <type topicref="1"></type>
 </occurrence>
 <occurrence number="2">
-<value>http://example.org/</value>
+<value>http://example.org</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="1"></type>
 </occurrence>

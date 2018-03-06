@@ -1315,7 +1315,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("topic3"),
                       "V", "topic3");
     addMatch(matches, "T", getTopicById("topic6"),
-                      "V", "topic3://woohoo/");
+                      "V", "topic3://woohoo");
     
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +

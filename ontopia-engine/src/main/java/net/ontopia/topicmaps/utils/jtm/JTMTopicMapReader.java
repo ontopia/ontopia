@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -45,7 +44,7 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
    * 
    * @param url The URL of the LTM file.
    */
-  public JTMTopicMapReader(URL url) throws MalformedURLException {
+  public JTMTopicMapReader(URL url) {
     super(url);
   }
 
@@ -79,7 +78,7 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
    * 
    * @param file The file object from which to read the topic map.
    */
-  public JTMTopicMapReader(File file) throws IOException {
+  public JTMTopicMapReader(File file) {
     super(file);
   }
 

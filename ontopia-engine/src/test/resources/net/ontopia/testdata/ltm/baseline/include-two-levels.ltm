@@ -18,7 +18,7 @@
 </topic>
 <topic id="id4">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/%20xtm/1.0/core.xtm#subclass"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
 <instanceOf href="#id3"></instanceOf>

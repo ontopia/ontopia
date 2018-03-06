@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -347,7 +347,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   }
   
   public void endElement_(String uri, String name, String qName)
-    throws MalformedURLException {
+    throws URISyntaxException {
     if (!NS_XTM2.equals(uri)) { // we only react to XTM 2.0 elements
       return;
     }

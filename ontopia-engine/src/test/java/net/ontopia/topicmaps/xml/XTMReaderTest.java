@@ -81,12 +81,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   }
 
   protected URILocator makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    } catch (java.net.MalformedURLException e) {
-      System.err.println("(INTERNAL) " + e);
-      return null;
-    }
+    return URILocator.create(uri);
   }
 
   // --- Test cases
@@ -212,9 +207,9 @@ public class XTMReaderTest extends AbstractXMLTestCase {
         .size() == 4);
 
     Iterator it = norway.getOccurrences().iterator();
-    LocatorIF norge = makeLocator("http://www.norge.no");
-    LocatorIF norwaycom = makeLocator("http://www.norway.com");
-    LocatorIF visit = makeLocator("http://www.visitnorway.com");
+    LocatorIF norge = makeLocator("http://www.norge.no/");
+    LocatorIF norwaycom = makeLocator("http://www.norway.com/");
+    LocatorIF visit = makeLocator("http://www.visitnorway.com/");
     while (it.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it.next();
 

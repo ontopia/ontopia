@@ -19,18 +19,18 @@
 </baseName>
 <occurrence>
 <instanceOf href="#id1"></instanceOf>
-<resourceRef href="http://www.country.net/"></resourceRef>
+<resourceRef href="http://www.country.net"></resourceRef>
 </occurrence>
 <occurrence>
 <instanceOf href="#id1"></instanceOf>
 <scope>
 <topicRef href="#id4"></topicRef>
 </scope>
-<resourceRef href="http://www.country.no/"></resourceRef>
+<resourceRef href="http://www.country.no"></resourceRef>
 </occurrence>
 <occurrence>
 <instanceOf href="#id1"></instanceOf>
-<resourceRef href="http://www.country.org/"></resourceRef>
+<resourceRef href="http://www.country.org"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id4">

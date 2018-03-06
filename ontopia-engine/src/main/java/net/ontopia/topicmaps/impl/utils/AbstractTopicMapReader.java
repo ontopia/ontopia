@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PushbackInputStream;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -53,7 +52,7 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
   protected LocatorIF base_address;
   protected TopicMapStoreFactoryIF store_factory;
 
-  public AbstractTopicMapReader(URL url) throws MalformedURLException {
+  public AbstractTopicMapReader(URL url) {
     this(url, new URILocator(url));
   }
 
@@ -72,7 +71,7 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
     this.base_address = base_address;
   }
 
-  public AbstractTopicMapReader(File file) throws MalformedURLException {
+  public AbstractTopicMapReader(File file) {
     this(URIUtils.toURL(file));
   }
 

@@ -9,7 +9,7 @@
 </topic>
 <topic number="2">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#at1</locator>
+<locator>http://xtmFragmentExporter/tests#at1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id1</locator>
@@ -21,7 +21,7 @@
 </topic>
 <topic number="3">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#at2</locator>
+<locator>http://xtmFragmentExporter/tests#at2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id11</locator>
@@ -33,7 +33,7 @@
 </topic>
 <topic number="4">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#rt1</locator>
+<locator>http://xtmFragmentExporter/tests#rt1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id6</locator>
@@ -41,7 +41,7 @@
 </topic>
 <topic number="5">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#rt2</locator>
+<locator>http://xtmFragmentExporter/tests#rt2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id9</locator>
@@ -49,7 +49,7 @@
 </topic>
 <topic number="6">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#t1</locator>
+<locator>http://xtmFragmentExporter/tests#t1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id5</locator>
@@ -58,7 +58,7 @@
 </topic>
 <topic number="7">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#t2</locator>
+<locator>http://xtmFragmentExporter/tests#t2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id8</locator>

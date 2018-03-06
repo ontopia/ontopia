@@ -9,7 +9,7 @@
 <type topicref="2"></type>
 </occurrence>
 <occurrence number="2">
-<value>http://external.string/</value>
+<value>http://external.string</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="2"></type>
 </occurrence>

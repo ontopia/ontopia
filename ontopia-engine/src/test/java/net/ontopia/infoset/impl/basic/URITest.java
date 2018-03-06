@@ -20,7 +20,7 @@
 
 package net.ontopia.infoset.impl.basic;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.junit.Assert;
@@ -32,17 +32,12 @@ public class URITest {
 
   @Test
   public void testHttpOrdinary() {
-    assertNormalizesTo("http://www.ontopia.net", "http://www.ontopia.net/");
-  }
-
-  @Test
-  public void testHttpOrdinarySlash() {
     assertNormalizesTo("http://www.ontopia.net/", "http://www.ontopia.net/");
   }
 
   @Test
   public void testHttpPort80() {
-    assertNormalizesTo("http://www.ontopia.net:80", "http://www.ontopia.net/");
+    assertNormalizesTo("http://www.ontopia.net:80", "http://www.ontopia.net:80");
   }
 
   @Test
@@ -53,30 +48,13 @@ public class URITest {
 
   @Test
   public void testHttpPort80Slash() {
-    assertNormalizesTo("http://www.ontopia.net:80/", "http://www.ontopia.net/");
-  }
-
-  @Test
-  public void testHttpPort8080() {
-    assertNormalizesTo("http://www.ontopia.net:8080",
-		 "http://www.ontopia.net:8080/");
+    assertNormalizesTo("http://www.ontopia.net:80/", "http://www.ontopia.net:80/");
   }
 
   @Test
   public void testHttpPort8080Slash() {
     assertNormalizesTo("http://www.ontopia.net:8080/",
 		 "http://www.ontopia.net:8080/");
-  }
-
-  @Test
-  public void testFtpPort21() {
-    assertNormalizesTo("ftp://ftp.ontopia.net:21", "ftp://ftp.ontopia.net/");
-  }
-
-  @Test
-  public void testFtpPort21Dir() {
-    assertNormalizesTo("ftp://ftp.ontopia.net:21/pub",
-		 "ftp://ftp.ontopia.net/pub");
   }
 
   @Test
@@ -115,39 +93,10 @@ public class URITest {
 		 "file://LOCALHOST/home/larsga/.bashrc");
   }
   
-//    public void testFileWithDriveColon() {
-//      normalizesTo("file:///c:/something/blah.txt",
-//  		 "file:/c|/something/blah.txt");
-//    }
-
   @Test
   public void testUNCFileNames() {
     assertNormalizesTo("file://server/directory/file.doc",
                  "file://server/directory/file.doc");
-  }
-
-  @Test
-  public void testPercentEscapeAtEnd() {
-    assertNormalizesTo("gopher://spinaltap.micro.umn.edu/00/Weather/California/Los%20",
-		 "gopher://spinaltap.micro.umn.edu/00/Weather/California/Los ");
-  }
-
-  @Test
-  public void testGopher70() {
-    assertNormalizesTo("gopher://spinaltap.micro.umn.edu:70/00/Weather/California",
-		 "gopher://spinaltap.micro.umn.edu/00/Weather/California");
-  }
-
-  @Test
-  public void testPercentEscapeWithUpAlpha() {
-    assertNormalizesTo("http://www.ontopia.net/%4a",
-		 "http://www.ontopia.net/J");
-  }
-
-  @Test
-  public void testPercentEscapeWithLowAlpha() {
-    assertNormalizesTo("http://www.ontopia.net/%4A",
-		 "http://www.ontopia.net/J");
   }
 
   @Test
@@ -177,7 +126,7 @@ public class URITest {
   @Test
   public void testUpOneDirTooFar() {
     assertNormalizesTo("http://www.ontopia.net/a/d/e/../../../../b/c.html",
-		 "http://www.ontopia.net/b/c.html");
+		 "http://www.ontopia.net/../b/c.html");
   }
 
   @Test
@@ -192,63 +141,10 @@ public class URITest {
 		 "http://JUSTIN:PASSWORD@www.vlc.com.au/ABC");
   }
 
-//    public void testCommonMistake2() {
-//      normalizesTo("http:www.vlc.com.au",
-//  		 "http://www.vlc.com.au");
-//    }
-  
   @Test
   public void testVLC1() {
     assertNormalizesTo("http://www.vlc.com.au/something",
 		 "http://www.vlc.com.au/something");
-  }
-
-  @Test
-  public void testVLC2() {
-    assertNormalizesTo("http://www.vlc.com.au/something?query=another+thisthing",
-		 "http://www.vlc.com.au/something?query=another thisthing");
-  }
-
-  @Test
-  public void testVLC3() {
-    assertNormalizesTo("http://www.vlc.com.au/something?query=another+thisthing#ref",
-		 "http://www.vlc.com.au/something?query=another thisthing#ref");
-  }
-  
-  @Test
-  public void testVLC4() {
-    assertNormalizesTo("http://www.vlc.com.au?query",
-		 "http://www.vlc.com.au/?query");
-  }
-
-  @Test
-  public void testVLC5() {
-    assertNormalizesTo("http://www.vlc.com.au?query=another+thisthing",
-		 "http://www.vlc.com.au/?query=another thisthing");
-  }
-
-  @Test
-  public void testVLC6() {
-    assertNormalizesTo("http://www.vlc.com.au?query=another+thisthing#ref",
-		 "http://www.vlc.com.au/?query=another thisthing#ref");
-  }
-
-  @Test
-  public void testVLC7() {
-    assertNormalizesTo("http://www.vlc.com.au:80?query=another+thisthing#ref",
-		 "http://www.vlc.com.au/?query=another thisthing#ref");
-  }
-
-  @Test
-  public void testVLC8() {
-    assertNormalizesTo("http://www.vlc.com.au?query#ref",
-		 "http://www.vlc.com.au/?query#ref");
-  }
-
-  @Test
-  public void testVLC9() {
-    assertNormalizesTo("http://www.vlc.com.au#ref",
-		 "http://www.vlc.com.au/#ref");
   }
 
   @Test
@@ -264,20 +160,8 @@ public class URITest {
   }
 
   @Test
-  public void testVLC12() {
-    assertNormalizesTo("http://www.vlc.com.au:8080",
-		 "http://www.vlc.com.au:8080/");
-  }
-
-  @Test
   public void testVLC13() {
     assertNormalizesTo("http://justin@www.vlc.com.au:8080/",
-		 "http://justin@www.vlc.com.au:8080/");
-  }
-
-  @Test
-  public void testVLC14() {
-    assertNormalizesTo("http://justin@www.vlc.com.au:8080",
 		 "http://justin@www.vlc.com.au:8080/");
   }
 
@@ -288,51 +172,15 @@ public class URITest {
   }
 
   @Test
-  public void testVLC16() {
-    assertNormalizesTo("http://justin:password@www.vlc.com.au:8080",
-		 "http://justin:password@www.vlc.com.au:8080/");
-  }
-
-  @Test
   public void testVLC17() {
     assertNormalizesTo("http://justin:password@www.vlc.com.au/",
 		 "http://justin:password@www.vlc.com.au/");
   }
 
   @Test
-  public void testVLC18() {
-    assertNormalizesTo("http://justin:password@www.vlc.com.au",
-		 "http://justin:password@www.vlc.com.au/");
-  }
-
-  @Test
-  public void testVLC19() {
-    assertNormalizesTo("http://justin@www.vlc.com.au",
-		 "http://justin@www.vlc.com.au/");
-  }
-
-  @Test
-  public void testVLC20() {
-    assertNormalizesTo("file:///c|/something/blah.txt",
-		 "file:/c|/something/blah.txt");
-  }
-
-  @Test
-  public void testVLC21() {
-    assertNormalizesTo("file:/c|/something/blah.txt",
-		 "file:/c|/something/blah.txt");
-  }
-  
-  @Test
   public void testRFC2396_1() {
     assertNormalizesTo("ftp://ftp.is.co.za/rfc/rfc1808.txt",
 		 "ftp://ftp.is.co.za/rfc/rfc1808.txt");
-  }
-
-  @Test
-  public void testRFC2396_2() {
-    assertNormalizesTo("gopher://spinaltap.micro.umn.edu/00/Weather/California/Los%20Angeles",
-		 "gopher://spinaltap.micro.umn.edu/00/Weather/California/Los Angeles");
   }
 
   @Test
@@ -403,13 +251,14 @@ public class URITest {
     assertIllegal("http://www.viessmann.com#test#again");
   }
 
-//   public void testWhitespace() {
-//     verifyIllegal("  ftp://ftp.ontopia.net/pub/  ");
-//   }
+  @Test
+ public void testWhitespace() throws URISyntaxException {
+   assertIllegal("  ftp://ftp.ontopia.net/pub/  ");
+ }
 
   @Test
-  public void testNonAsciiCharsInFragment() {
-    assertIllegal("http://www.math.uio.no/abc/#f\u00F8\u00F8");
+  public void testNonAsciiCharsInFragment() throws URISyntaxException {
+    assertNormalizesTo("http://www.math.uio.no/abc/#f\u00F8\u00F8", "http://www.math.uio.no/abc/#f\u00F8\u00F8");
   }
   
   // --- relative URI resolution
@@ -471,9 +320,8 @@ public class URITest {
   }
 
   @Test
-  public void testFileOperaFuckup() throws MalformedURLException {
-    LocatorIF base =
-      new URILocator("file:/home/larsga/cvs-co/topicmaps/opera/opera.xtm");
+  public void testFileOperaFuckup() {
+    LocatorIF base = URILocator.create("file:/home/larsga/cvs-co/topicmaps/opera/opera.xtm");
     LocatorIF base2 = base.resolveAbsolute("opera-template.xtm");
     LocatorIF abs = base2.resolveAbsolute("geography.xtm");
 
@@ -499,7 +347,7 @@ public class URITest {
   public void testFileUpOneDirTooFarResolution() {
     assertResolvesTo("file:/home/out.xtm",
 	       "../../out.xtm",
-	       "file:/out.xtm");
+	       "file:/../out.xtm");
   }
 
   @Test
@@ -522,18 +370,6 @@ public class URITest {
 	       "http://www.ontopia.net:8080/ugga/bugga.xtm",
 	       "http://www.ontopia.net:8080/ugga/bugga.xtm");
   }
-
-  @Test
-  public void testMailToInvalid() {
-    assertResolveInvalid("mailto:larsga@ontopia.net",
-			 "//www.ontopia.net:8080/ugga/bugga.xtm");
-  }
-
-  //public void testCommonMistake() {
-  //  resolvesTo("http:www.ontopia.net",
-  //             "index.html",
-  //             "http://www.ontopia.net/index.html");
-  //}
 
   @Test
   public void testRFC2396C_1() {
@@ -570,12 +406,12 @@ public class URITest {
 	       "http://a/g");
   }
 
-  // FIXME: A minor bug. Costly to fix.
-//    public void testRFC2396C_5Variant() {
-//      resolvesTo("http://a/b/c/d;p?q",
-//  	       "/g/../y",
-//  	       "http://a/y");
-//    }
+  @Test
+  public void testRFC2396C_5Variant() {
+    assertResolvesTo("http://a/b/c/d;p?q",
+         "/g/../y",
+         "http://a/y");
+  }
   
   @Test
   public void testRFC2396C_6() {
@@ -707,14 +543,14 @@ public class URITest {
   public void testRFC2396C_24() {
     assertResolvesTo("http://a/b/c/d;p?q",
 	       "../../../g",
-	       "http://a/g"); // slight deviation from RFC here
+	       "http://a/../g");
   }
   
   @Test
   public void testRFC2396C_25() {
     assertResolvesTo("http://a/b/c/d;p?q",
 	       "../../../../g",
-	       "http://a/g"); // slight deviation from RFC here
+	       "http://a/../../g");
   }
   
   @Test
@@ -823,13 +659,6 @@ public class URITest {
   }
 
   @Test
-  public void testExposedByLTM2() {
-    assertResolvesTo("http://psi.ontopia.net",
-	       "ontopia",
-	       "http://psi.ontopia.net/ontopia");
-  }
-
-  @Test
   public void testExposedByLTM3() {
     assertResolvesTo("http://psi.ontopia.net/",
 	       "ontopia",
@@ -851,21 +680,10 @@ public class URITest {
 	       "http://example.org/dir/file");
   }
 
-  @Test
-  public void testNormalizationTrickery() {
-    assertResolvesTo("%68ttp://www.m%61th.uio.no/%61bc/#foo", "",
-               "http://www.math.uio.no/abc/");
-  }
-
-//   public void testEscapedCharsInFragment() {
-//     normalizesTo("http://www.math.uio.no/abc/#f%F8%F8",
-//                  "http://www.math.uio.no/abc/#f\u00F8\u00F8");
-//   }
-  
   // --- equals
 
   @Test
-  public void testEqual() throws MalformedURLException {
+  public void testEqual() throws URISyntaxException {
     URILocator loc1 = new URILocator("http://www.ontopia.net");    
     URILocator loc2 = new URILocator("http://www.ontopia.net");
     Assert.assertTrue("URILocator does not equal itself",
@@ -873,7 +691,7 @@ public class URITest {
   }
 
   @Test
-  public void testNotEqual2() throws MalformedURLException {
+  public void testNotEqual2() throws URISyntaxException {
     URILocator loc1 = new URILocator("http://www.ontopia.net");    
     URILocator loc2 = new URILocator("http://www.ontopia.com");
     Assert.assertTrue("URILocator equals different URI",
@@ -881,16 +699,38 @@ public class URITest {
   }
 
   @Test
-  public void testNotEqual() throws MalformedURLException {
+  public void testNotEqual() throws URISyntaxException {
     URILocator loc1 = new URILocator("http://www.ontopia.net");    
-    Assert.assertTrue("URILocator equals null",
-	   !loc1.equals(null));
+    Assert.assertFalse("URILocator equals null",
+	   loc1.equals(null));
+  }
+
+  @Test
+  public void testEqualCapsHost() throws URISyntaxException {
+    Assert.assertEquals("URILocator equals is not equal when host has caps",
+            new URILocator("http://www.ONTOPIA.net"), new URILocator("http://www.ontopia.net"));
+  }
+
+  @Test
+  public void testEqualCapsSchema() throws URISyntaxException {
+    Assert.assertEquals("URILocator equals is not equal when schema has caps",
+            new URILocator("HTTP://www.ontopia.net"), new URILocator("http://www.ontopia.net"));
+  }
+  
+  @Test
+  public void testRelativeURI() {
+    assertIllegal("#foo");
+  }
+
+  @Test
+  public void testResolveRelative() {
+    assertResolvesTo("foo:bar", "#foo", "foo:bar#foo");
   }
 
   // --- constructors
 
   @Test
-  public void testConstructorNull() throws MalformedURLException {
+  public void testConstructorNull() throws URISyntaxException {
     try {
       new URILocator((String) null);
       Assert.fail("URILocator accepted null argument to constructor"); 
@@ -906,41 +746,36 @@ public class URITest {
       new URILocator(uri);
       Assert.fail("URI '" + uri + "' considered legal");
     }
-    catch (MalformedURLException e) {
+    catch (URISyntaxException e) {
     }
   }
 
   private void assertNormalizesTo(String url, String result) {
     try {
-      String normalized = new URILocator(url).getAddress();
-      Assert.assertTrue("'" + url + "' normalized to '" + normalized + "'",
-	     normalized.equals(result));
+      Assert.assertEquals(new URILocator(result), new URILocator(url));
     }
-    catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException("ERROR: " + e);
+    catch (URISyntaxException e) {
+      throw new OntopiaRuntimeException("ERROR: " + e, e);
     }
   }
 
   private void assertResolveInvalid(String base, String uri) {
     try {
-      new URILocator(base).resolveAbsolute(uri);
-      Assert.fail("URI '" + uri + "' relative to '" + base + "' considered legal");
+      LocatorIF resolved = new URILocator(base).resolveAbsolute(uri);
+      Assert.fail("URI '" + uri + "' relative to '" + base + "' considered legal: " + resolved);
     }
     catch (OntopiaRuntimeException e) {
     }
-    catch (MalformedURLException e) {
+    catch (URISyntaxException e) {
       Assert.fail("Base URI '" + base + "' considered illegal");
     }
   }
 
   private void assertResolvesTo(String base, String url, String result) {
     try {
-      String resolved = new URILocator(base).resolveAbsolute(url).getAddress();
-      Assert.assertTrue("'" + url + "' relative to '" + base + "' became '" +
-	     resolved + "'",
-	     resolved.equals(result));
+      Assert.assertEquals(new URILocator(result), new URILocator(base).resolveAbsolute(url));
     }
-    catch (MalformedURLException e) {
+    catch (URISyntaxException e) {
       Assert.fail("IMPOSSIBLE ERROR: " + e);
     }
   }
