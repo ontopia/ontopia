@@ -107,12 +107,19 @@ public class StreamUtils {
   }
   
   /**
-   * INTERNAL: Returns an input stream for the given url. Supports
-   * file: and classpath:. If no schema given then file system will be
-   * checked before classpath. Exception will be thrown if resource is
-   * not found when schema is given. If no schema was given null is
-   * returned.
-   *
+   * INTERNAL: Returns an URL for the given resource name. 
+   * 
+   * The order of resolving is: <ol>
+   * <li>If name starts with 'classpath:' a resource on the classpath will be resolved.
+   * If the resource cannot be found, a 'FileNotFoundException' is thrown</li>
+   * <li>If name starts with 'file:' a resource on the filesystem will be resolved.
+   * If the file cannot be found, a 'FileNotFoundException' is thrown</li>
+   * <li>if name starts with 'jar:' a jar-URL will be created and returned. Only fails if name is not a valid URL</li>
+   * <li>name is treated as a file system path, if a file exists an URL to it will be returned</li>
+   * <li>name is treated as a classpath resource, if it is a valid URL and the resource exists, it will be returned.</li>
+   * <li>null is returned</li>
+   * </ol>
+   * 
    * @since 3.4.3
    */
   public static URL getResource(String name) throws IOException {
