@@ -93,7 +93,7 @@ public class URILocator implements LocatorIF, Externalizable {
    */
   public URILocator(File file) {
     this(file.toURI());
-}
+  }
 
   // --------------------------------------------------------------------------
   // LocatorIF implementation
