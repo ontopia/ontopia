@@ -45,7 +45,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#guidelines"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#ontopus"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/region.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/region.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#guidelines"/></instanceOf>
@@ -739,7 +739,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/ar.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/ar.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -759,7 +759,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/uk.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/uk.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -815,7 +815,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/it.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/it.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -835,7 +835,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/be.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/be.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -855,7 +855,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/sz.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/sz.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -879,7 +879,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/us.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/us.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -899,7 +899,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/fr.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/fr.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -919,7 +919,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/rs.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/rs.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -939,7 +939,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/eg.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/eg.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -959,7 +959,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/ja.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/ja.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -979,7 +979,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/nl.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/nl.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -999,7 +999,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/sp.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/sp.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1019,7 +1019,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/cy.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/cy.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1039,7 +1039,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/gm.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/gm.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1059,7 +1059,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/gr.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/gr.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1079,7 +1079,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/au.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/au.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1099,7 +1099,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/ch.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/ch.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1119,7 +1119,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/is.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/is.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
@@ -1139,7 +1139,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#cia"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/ontologies/country/cia/html/tu.html"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/ontologies/country/cia/html/tu.html"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="#factbook"/></instanceOf>

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.utils;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -115,7 +115,7 @@ public final class NavigatorUtils {
     // 1. try to match a subject indicator
     try {
       t = tm.getTopicBySubjectIdentifier(new URILocator(s));
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       // apparently not a URL, so try something else
     }
    
@@ -230,7 +230,7 @@ public final class NavigatorUtils {
     // 1. try to match a subject indicator
     try {
       t = tm.getTopicBySubjectIdentifier(new URILocator(s));
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       // apparently not a URL, so try something else
     }
    

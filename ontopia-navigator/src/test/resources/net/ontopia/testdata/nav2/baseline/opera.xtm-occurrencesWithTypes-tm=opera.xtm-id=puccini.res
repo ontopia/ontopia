@@ -19,9 +19,9 @@
   	
   	  <tr>
 	    <td><b>article:</b></td>
-  	    <td><a href='file:/C|/ontopia/topicmaps/opera/occurs/snl/puccini.htm'>
+  	    <td><a href='file:///C:/ontopia/topicmaps/opera/occurs/snl/puccini.htm'>
   		  
-  		  file:/C|/ontopia/topicmaps/opera/occurs/snl/puccini.htm
+  		  file:///C:/ontopia/topicmaps/opera/occurs/snl/puccini.htm
   		</a>
   	    </td>
 	  </tr>
@@ -44,9 +44,9 @@
   	
   	  <tr>
 	    <td><b>description:</b></td>
-  	    <td><a href='file:/C|/ontopia/topicmaps/opera/occurs/hnh-puccini.htm'>
+  	    <td><a href='file:///C:/ontopia/topicmaps/opera/occurs/hnh-puccini.htm'>
   		  
-  		  file:/C|/ontopia/topicmaps/opera/occurs/hnh-puccini.htm
+  		  file:///C:/ontopia/topicmaps/opera/occurs/hnh-puccini.htm
   		</a>
   	    </td>
 	  </tr>
@@ -69,9 +69,9 @@
   	
   	  <tr>
 	    <td><b>gallery:</b></td>
-  	    <td><a href='file:/C|/ontopia/topicmaps/opera/occurs/puccini-gallery.htm'>
+  	    <td><a href='file:///C:/ontopia/topicmaps/opera/occurs/puccini-gallery.htm'>
   		  
-  		  file:/C|/ontopia/topicmaps/opera/occurs/puccini-gallery.htm
+  		  file:///C:/ontopia/topicmaps/opera/occurs/puccini-gallery.htm
   		</a>
   	    </td>
 	  </tr>

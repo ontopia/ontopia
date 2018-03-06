@@ -8,7 +8,7 @@
     
       The topic (XSLT) has subject address:
       
-         * http://www.example.com/
+         * http://www.example.com
       
     
     
