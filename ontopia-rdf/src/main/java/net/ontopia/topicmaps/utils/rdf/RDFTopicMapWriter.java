@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -527,7 +528,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     try {
       LocatorIF loc = new URILocator(NS_TM2RDF + fragment);
       return topicmap.getTopicBySubjectIdentifier(loc);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
