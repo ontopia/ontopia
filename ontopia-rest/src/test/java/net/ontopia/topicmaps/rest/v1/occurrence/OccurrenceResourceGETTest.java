@@ -22,12 +22,12 @@ package net.ontopia.topicmaps.rest.v1.occurrence;
 
 import java.io.IOException;
 import java.util.Map;
-import org.junit.Assert;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Occurrence;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.restlet.data.MediaType;
 

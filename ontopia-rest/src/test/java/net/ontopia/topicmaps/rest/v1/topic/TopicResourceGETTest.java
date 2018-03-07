@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.rest.v1.topic;
 
 import java.io.IOException;
 import java.util.Map;
-import org.junit.Assert;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;
@@ -31,6 +30,7 @@ import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import net.ontopia.topicmaps.xml.TMXMLReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.restlet.data.MediaType;
