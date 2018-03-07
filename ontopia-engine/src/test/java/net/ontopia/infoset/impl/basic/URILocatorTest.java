@@ -138,6 +138,24 @@ public class URILocatorTest extends AbstractLocatorTest {
                  original, uri2.getExternalForm());
   }
   
+  // https://github.com/ontopia/ontopia/issues/414
+  public void testIssue414() {
+    URILocator locator = URILocator.create("http://www.example.org/cablemap/european-cables.ctm#EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE");
+    URILocator locator2 = URILocator.create("http://www.example.org/example#fragm%7Bent");
+
+    assertNotNull(locator);
+    assertNotNull(locator2);
+    
+    assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("european-cables.ctm"));
+    assertTrue(locator2.getUri().getSchemeSpecificPart().endsWith("example"));
+    
+    assertEquals("EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE", locator.getUri().getRawFragment());
+    assertEquals("fragm%7Bent", locator2.getUri().getRawFragment());
+
+    assertEquals("EASTERN EUROPEAN POSTS COLLECTIVE", locator.getUri().getFragment());
+    assertEquals("fragm{ent", locator2.getUri().getFragment());
+  }
+  
   // --- Internal
 
   private void assertAbsoluteResolution(String base, String uri, String external) {
