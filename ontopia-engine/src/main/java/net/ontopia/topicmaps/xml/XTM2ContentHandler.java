@@ -49,6 +49,7 @@ import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -300,7 +301,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <MERGEMAP
     } else if ("mergeMap".equals(name)) {
-      loadMap(makeLocator(atts.getValue("", HREF)));
+      loadMap(URIUtils.resolveMergeResource(doc_address, atts.getValue("", HREF)));
 
       // <VARIANT
     } else if ("variant".equals(name)) {

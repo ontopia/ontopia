@@ -53,6 +53,7 @@ import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -744,7 +745,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         }
         
         // Put merge map on info map
-        ExternalDocument merge_map = new ExternalDocument(createLocator(href));
+        ExternalDocument merge_map = new ExternalDocument(URIUtils.resolveMergeResource(getBaseAddress(), href));
         info.put(EL_MERGEMAP, merge_map);
         
         // Push element on parent stack
