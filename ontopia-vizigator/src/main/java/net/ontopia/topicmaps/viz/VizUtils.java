@@ -28,11 +28,11 @@ import java.util.Iterator;
 import java.util.function.Function;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Helper methods.
