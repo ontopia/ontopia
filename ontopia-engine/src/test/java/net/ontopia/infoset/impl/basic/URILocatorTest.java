@@ -139,6 +139,7 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
   
   // https://github.com/ontopia/ontopia/issues/414
+  @Test
   public void testIssue414() {
     URILocator locator = URILocator.create("http://www.example.org/cablemap/european-cables.ctm#EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE");
     URILocator locator2 = URILocator.create("http://www.example.org/example#fragm%7Bent");
@@ -157,6 +158,7 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
   
   // https://github.com/ontopia/ontopia/issues/366
+  @Test
   public void testIssue366() {
     String fragmentUTF = "MAIN-\u30BF\u30A4\u30C8\u30EB\u8AAD\u307F";
     
@@ -169,6 +171,7 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
 
   // https://github.com/ontopia/ontopia/issues/289
+  @Test
   public void testIssue289() {
     URILocator locator = URILocator.create("http://en.wikipedia.org/wiki/Beethoven/x+y/");
 
