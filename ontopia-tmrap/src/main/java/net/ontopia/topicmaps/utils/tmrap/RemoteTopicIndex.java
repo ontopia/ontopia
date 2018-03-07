@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -406,7 +407,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
         pages.add(new TopicPage(null, subject.getAddress(),
                                 null, null, null));
       }
-    } catch (IOException e) {
+    } catch (IOException | URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
 
@@ -566,13 +567,17 @@ public class RemoteTopicIndex implements TopicIndexIF {
   private void loadXTM(String request, String params, boolean compress,
                        TopicMapIF topicmap)
     throws IOException {
-    InputSource src = getInputSource(request, params, compress);
-    String baseuri = viewBaseuri == null ? editBaseuri : viewBaseuri;
-    LocatorIF base = new URILocator(baseuri + request);
-    XTMTopicMapReader reader = new XTMTopicMapReader(src, base);
-    reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
-    reader.setValidation(false); // means we don't need Jing
-    reader.importInto(topicmap);
+    try {
+      InputSource src = getInputSource(request, params, compress);
+      String baseuri = viewBaseuri == null ? editBaseuri : viewBaseuri;
+      LocatorIF base = new URILocator(baseuri + request);
+      XTMTopicMapReader reader = new XTMTopicMapReader(src, base);
+      reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
+      reader.setValidation(false); // means we don't need Jing
+      reader.importInto(topicmap);
+    } catch (URISyntaxException e) {
+      throw new IOException(e);
+    }
   }
 
   private void transferLoadedTopics(Collection<TopicIF> loaded,
