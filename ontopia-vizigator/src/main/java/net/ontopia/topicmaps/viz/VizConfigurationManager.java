@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.viz;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -153,7 +153,7 @@ public abstract class VizConfigurationManager {
       }
 
       return t;
-    } catch (MalformedURLException mue) {
+    } catch (URISyntaxException mue) {
       throw new OntopiaRuntimeException(Messages
           .getString("Viz.MalformedURLForTopicSubjectIndicator"), mue);
     }
@@ -252,7 +252,7 @@ public abstract class VizConfigurationManager {
       // portability problems with local ids in visualized topic maps
       try {
         store.setBaseAddress(new URILocator("x-ontopia:this:is:a:fake:url"));
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("IMPOSSIBLE ERROR", e);
       }
     }
