@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.rest.utils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -65,7 +65,7 @@ public class DefaultParameterResolver implements ParameterResolverIF {
 			} else if (LocatorIF.class.isAssignableFrom(klass)) {
 				try {
 					resolved = new URILocator(stringId);
-				} catch (MalformedURLException me) {
+				} catch (URISyntaxException me) {
 					throw new OntopiaClientException(Status.CLIENT_ERROR_BAD_REQUEST, "Malformed URI: " + stringId, me);
 				}
 			} else if (TMObjectIF.class.isAssignableFrom(klass)) {
@@ -150,7 +150,7 @@ public class DefaultParameterResolver implements ParameterResolverIF {
 		try {
 			LocatorIF locator = new URILocator(stringId);
 			return resolveAsLocator(topicmap, locator);
-		} catch (MalformedURLException me) {
+		} catch (URISyntaxException me) {
 			// not an uri, ignore
 		}
 		return null;

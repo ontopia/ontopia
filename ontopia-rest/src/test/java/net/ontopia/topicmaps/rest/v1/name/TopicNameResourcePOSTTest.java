@@ -101,7 +101,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTopicByItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		topicname.setTopic(topic);
 
 		TopicName changed = post("2", topicname, TopicName.class);
@@ -136,7 +136,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTypeByItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		topicname.setType(topic);
 
 		TopicName changed = post("2", topicname, TopicName.class);
@@ -170,7 +170,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testReifierByItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		topicname.setReifier(topic);
 
 		TopicName changed = post("2", topicname, TopicName.class);
@@ -254,7 +254,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeScopeByItemIdentifier() {
 		TopicName topicname = get("5", TopicName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic4"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic4"));
 		topicname.getScope().add(topic);
 		
 		TopicName changed = post("5", topicname, TopicName.class);
@@ -267,20 +267,20 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddItemIdentifier() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.getItemIdentifiers().add(URILocator.create("foo:bar"));
+		topicname.getItemIdentifiers().add(URILocator.create("foo:barbar"));
 		
 		TopicName changed = post("2", topicname, TopicName.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertEquals("foo:bar", changed.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar", changed.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testAddItemIdentifiers() {
 		TopicName topicname = get("2", TopicName.class);
-		topicname.getItemIdentifiers().add(URILocator.create("foo:bar"));
-		topicname.getItemIdentifiers().add(URILocator.create("foo:baz"));
+		topicname.getItemIdentifiers().add(URILocator.create("foo:barbar"));
+		topicname.getItemIdentifiers().add(URILocator.create("foo:barbaz"));
 		
 		TopicName changed = post("2", topicname, TopicName.class);
 		
@@ -290,7 +290,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testRemoveItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
@@ -307,7 +307,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testClearItemIdentifiers() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
@@ -324,7 +324,7 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testChangeItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
@@ -334,16 +334,16 @@ public class TopicNameResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
 		
 		name.getItemIdentifiers().remove(locator);
-		name.getItemIdentifiers().add(URILocator.create("foo:to-keep-name"));
+		name.getItemIdentifiers().add(URILocator.create("foo:barto-keep-name"));
 		name = post("2", name, TopicName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
-		Assert.assertEquals("foo:to-keep-name", name.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barto-keep-name", name.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testChangeItemIdentifierVoid() {
-		final URILocator locator = URILocator.create("foo:to-keep-name");
+		final URILocator locator = URILocator.create("foo:barto-keep-name");
 
 		TopicName name = get("2", TopicName.class);
 		name.getItemIdentifiers().add(locator);
