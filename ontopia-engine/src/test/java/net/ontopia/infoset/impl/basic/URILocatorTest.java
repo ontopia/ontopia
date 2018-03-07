@@ -156,6 +156,18 @@ public class URILocatorTest extends AbstractLocatorTest {
     assertEquals("fragm{ent", locator2.getUri().getFragment());
   }
   
+  // https://github.com/ontopia/ontopia/issues/366
+  public void testIssue366() {
+    String fragmentUTF = "MAIN-\u30BF\u30A4\u30C8\u30EB\u8AAD\u307F";
+    
+    URILocator locator = URILocator.create("http://www.infocom.co.jp/dsp/sample#" + fragmentUTF);
+
+    assertNotNull(locator);
+    assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("sample"));
+    assertEquals(fragmentUTF, locator.getUri().getRawFragment());
+    assertEquals(fragmentUTF, locator.getUri().getFragment());
+  }
+
   // --- Internal
 
   private void assertAbsoluteResolution(String base, String uri, String external) {
