@@ -471,9 +471,6 @@ public class RDFToTopicMapConverter {
           // cleanup the id: x-anon:<-24324d21:15bda0c7eee:-7fff> is not a legal uri
           id = id.replaceAll("<", "").replaceAll(">", "");
           
-          // cleanup the id: x-anon:<-24324d21:15bda0c7eee:-7fff> is not a legal uri
-          id = id.replaceAll("<", "").replaceAll(">", "");
-          
           // we don't want the pseudo-URIs of anonymous nodes as
           // subject identifiers
           LocatorIF loc = new URILocator("x-anon:" + id);
