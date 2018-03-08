@@ -257,7 +257,7 @@ String = "\"" ([^\"] | "\"\"" )* "\""
 }
 
 /* error fallback */
-.|\n {
+.|[^] {
   throw new JFlexWrapException(
     new InvalidQueryException("Illegal character <"+yytext()+"> at " +
                               (yyline+1) + ":" + yycolumn)); }

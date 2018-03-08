@@ -189,7 +189,7 @@
 			</plugin>
 			<plugin>
 				<groupId>de.jflex</groupId>
-				<artifactId>maven-jflex-plugin</artifactId>
+				<artifactId>jflex-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
