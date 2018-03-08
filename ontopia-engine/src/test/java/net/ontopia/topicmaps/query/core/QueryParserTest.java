@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.ontopia.infoset.impl.basic.URILocator;
 
 public class QueryParserTest extends AbstractQueryTest {
   
@@ -841,4 +842,13 @@ public class QueryParserTest extends AbstractQueryTest {
     getParseError("occurrence($T, $O), type($O, i\"http://psi.ontopia.net/#foo#\")?");
   }
   
+  public void testIssue424() throws IOException, InvalidQueryException {
+    final String PREFIX = "http://psi.rijksoverheid.nl/";
+    final String IDENTIFIER = "reden-be\u00ebindiging-ambtsbekleding";
+
+    load("issue424.ltm");
+    
+    assertNotNull(topicmap.getTopicBySubjectIdentifier(URILocator.create(PREFIX + IDENTIFIER)));
+    findAny("using k for i\"" + PREFIX + "\" $t = k:" + IDENTIFIER + "?");
+  }
 }
