@@ -146,4 +146,17 @@ public class DeletionUtilsTest extends TestCase {
     assertNull("Topic name bound to topicmap after removal", name.getTopicMap());
     assertNull("Variant name bound to topicmap after removal", variant.getTopicMap());
   }
+  
+  public void testIssue347() {
+    TopicMapIF topicmap = makeTopicMap();
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF topic1 = builder.makeTopic();
+    TopicIF topic2 = builder.makeTopic();
+    
+    // create an indirect loop
+    topic1.addType(topic2);
+    topic2.addType(topic1);
+    
+    topic1.remove();
+  }
 }
