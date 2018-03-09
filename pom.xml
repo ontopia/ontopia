@@ -230,7 +230,7 @@
 						<version>true</version>
 						<use>true</use>
 						<public>true</public>
-						<bottom><![CDATA[<i>Copyright &#169; 2000-2012 <a href="http://www.ontopia.net">Ontopia</a>.</i>]]></bottom>
+						<bottom><![CDATA[<div style="text-align:center;">Copyright &copy; ${current.year} <a href="http://www.ontopia.net">Ontopia</a>.</div>]]></bottom>
 						<doctitle>Ontopia API documentation</doctitle>
 						<windowtitle>Ontopia</windowtitle>
 						<excludePackageNames>org.apache.jsp</excludePackageNames>
@@ -704,6 +704,25 @@
 			<id>ontopia-distribution-tomcat</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>current-year</id>
+								<inherited>false</inherited>
+								<goals>
+									<goal>timestamp-property</goal>
+								</goals>
+								<phase>validate</phase>
+								<configuration>
+									<name>current.year</name>
+									<pattern>yyyy</pattern>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
