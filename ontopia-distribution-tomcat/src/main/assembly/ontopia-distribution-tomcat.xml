@@ -76,6 +76,7 @@
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<excludes>
 				<exclude>*:war:*</exclude>
 				<exclude>*:vizlet:*</exclude>
@@ -85,6 +86,7 @@
 		
 		<dependencySet>
 			<outputDirectory>extras</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<includes>
 				<include>*:vizlet:*</include>
 			</includes>
@@ -95,6 +97,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-root:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/ROOT</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
@@ -109,6 +112,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-accessctl:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/accessctl</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
@@ -123,6 +127,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-xmltools:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/xtmltools</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
@@ -137,6 +142,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-i18n:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/i18n</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
@@ -151,6 +157,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-omnigator:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/omnigator</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
@@ -165,6 +172,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-ontopoly:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/ontopoly</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<includes>
@@ -182,6 +190,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-manager:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/manage</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
@@ -196,6 +205,7 @@
 		<dependencySet>
 			<includes><include>*:webapp-tmrap:war</include></includes>
 			<outputDirectory>apache-tomcat/webapps/tmrap</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>

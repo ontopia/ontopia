@@ -20,15 +20,6 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdf.model.AnonId;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdfxml.xmlinput.ALiteral;
-import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
-import com.hp.hpl.jena.rdfxml.xmlinput.StatementHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -60,6 +51,15 @@ import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.jena.rdf.model.AnonId;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdfxml.xmlinput.ALiteral;
+import org.apache.jena.rdfxml.xmlinput.AResource;
+import org.apache.jena.rdfxml.xmlinput.StatementHandler;
 
 /**
  * PUBLIC: A topic map writer that can convert topic maps to RDF.  The
@@ -738,6 +738,11 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       return id;
     }
     
+    // required to avoid RDF/XML from creating multiple anonymous nodes for the same topic in jena > 2
+    @Override
+    public String getLabelString() {
+      return id;
+    }
   }
   
   /**

@@ -148,7 +148,13 @@ ObjectId = "@" [A-Za-z0-9]*
 
 Name = {NameStart} {NameChar}*
 NameStart = [A-Za-z_]
-NameChar = [-A-Za-z0-9_]
+NameChar = [-A-Za-z0-9_]| [\u00C0-\u00D6] | [\u00D8-\u00F6] 
+                        | [\u00F8-\u02FF] | [\u0370-\u037D] 
+                        | [\u037F-\u1FFF] | [\u200C-\u200D] 
+                        | [\u2070-\u218F] | [\u2C00-\u2FEF] 
+                        | [\u3001-\uD7FF] | [\uF900-\uFDCF] 
+                        | [\uFDF0-\uFFFD] | \u00B7 
+                        | [\u0300-\u036F] | [\u203F-\u2040]
 Identifier = {Name} ( ":" {NameChar}+)?
 Variable = "$" {Name}
 Parameter = "%" {Name} "%"
@@ -257,7 +263,7 @@ String = "\"" ([^\"] | "\"\"" )* "\""
 }
 
 /* error fallback */
-.|\n {
+.|[^] {
   throw new JFlexWrapException(
     new InvalidQueryException("Illegal character <"+yytext()+"> at " +
                               (yyline+1) + ":" + yycolumn)); }

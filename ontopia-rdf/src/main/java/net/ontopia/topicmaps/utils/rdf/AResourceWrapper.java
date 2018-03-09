@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import com.hp.hpl.jena.rdfxml.xmlinput.AResource;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdfxml.xmlinput.AResource;
 
 /**
  * INTERNAL: This class is used to wrap Jena Resource objects in the

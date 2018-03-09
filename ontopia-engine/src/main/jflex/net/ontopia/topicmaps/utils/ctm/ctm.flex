@@ -206,7 +206,7 @@ DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit} ("." {Dig
 }
 
 /* error fallback */
-.|\n {
+.|[^] {
   throw new InvalidTopicMapException("Illegal character <"+yytext()+"> at " +
                                      docuri + ":" + (yyline+1) + ":" + yycolumn); }
 <<EOF>> { return newToken(CTMParser.EOF); }

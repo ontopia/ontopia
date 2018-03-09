@@ -93,8 +93,11 @@ public class DeletionUtils {
         object.remove();
       }
       // Remove instances of the topic
-      for (TopicIF object : cindex.getTopics(topic)) {
-        if (!object.equals(topic)) {
+      // preload instances to avoid index changes on type change
+      Collection<TopicIF> instances = cindex.getTopics(topic);
+      for (TopicIF object : instances) {
+        if ((object != null) && !object.equals(topic)) {
+          object.removeType(topic); // prevent secondary loops, see #347
           object.remove();
         }
       }

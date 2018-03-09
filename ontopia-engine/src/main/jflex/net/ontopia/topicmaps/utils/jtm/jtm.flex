@@ -103,5 +103,5 @@ String          = \"([^\\\"]|(\\[\\\"rntu/]))*\"
     ":"                 { return _token(JSONToken.COLON); }
 }
 
-.|\n                    { throw new Error("Illegal character <" + yytext() + "> at line " + getLine() + " column: " + getColumn()); }
+.|[^]                    { throw new Error("Illegal character <" + yytext() + "> at line " + getLine() + " column: " + getColumn()); }
 
