@@ -20,10 +20,9 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.Iterator;
 import java.util.Collection;
+import java.util.Iterator;
 import junit.framework.TestCase;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -32,6 +31,7 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.DeciderUtils;
 
 public class MergeCopyTest extends TestCase {
@@ -59,13 +59,7 @@ public class MergeCopyTest extends TestCase {
   }
 
   public URILocator makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    }
-    catch (java.net.MalformedURLException e) {
-      fail("malformed URL given: " + e);
-      return null; // never executed...
-    }
+    return URILocator.create(uri);
   }
 
   public void onlyContains(String what, Collection coll, Object element) {

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -54,7 +54,7 @@ public class CreateReifiedOccurrence implements ActionIF {
     URILocator locator = null;
     try {
       locator = new URILocator(Constants.DUMMY_LOCATOR);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for occurrence: " + e);
     }
 
@@ -68,7 +68,7 @@ public class CreateReifiedOccurrence implements ActionIF {
     LocatorIF srcloc;
     try {
 			srcloc= new URILocator("http://net.ontopia.identity/occur#" + occurrence.getObjectId());
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for occurrence source locator: " + e);
     }
 

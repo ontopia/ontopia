@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -54,12 +53,7 @@ public class TestVarSetLocator extends AbstractWebedTestCase {
       bn.getTopicMap().getBuilder();
     
     // create new (external) variant for base name
-    URILocator locator = null;
-    try {
-      locator = new URILocator("http://www.snus.org");
-    } catch (MalformedURLException e) {
-      throw new ActionRuntimeException("Malformed URL for occurrence: " + e);
-    }
+    URILocator locator = URILocator.create("http://www.snus.org");
     
     VariantNameIF var = builder.makeVariantName(bn, locator);
     
@@ -76,7 +70,7 @@ public class TestVarSetLocator extends AbstractWebedTestCase {
     //test              
     LocatorIF locNew = var.getLocator();
     assertFalse("The locator is not correct", 
-		!(var.getLocator().getAddress().equals("http://www.sf.net/")));
+		!(var.getLocator().getAddress().equals("http://www.sf.net")));
   }
 
   public void testNormalOperation2() throws IOException {
@@ -110,7 +104,7 @@ public class TestVarSetLocator extends AbstractWebedTestCase {
     LocatorIF locNew = varNew.getLocator();
     
      assertFalse("The locator is not correct", 
-		!(var.getLocator().getAddress().equals("http://www.sf.net/")));
+		!(var.getLocator().getAddress().equals("http://www.sf.net")));
   }
 
 
@@ -138,12 +132,7 @@ public void testEmptyParams() throws IOException {
       bn.getTopicMap().getBuilder();
     
     // create new (external) variant for base name
-    URILocator locator = null;
-    try {
-      locator = new URILocator("http://www.snus.org");
-    } catch (MalformedURLException e) {
-      throw new ActionRuntimeException("Malformed URL for occurrence: " + e);
-    }
+    URILocator locator = URILocator.create("http://www.snus.org");
     
     VariantNameIF var = builder.makeVariantName(bn, locator);
         

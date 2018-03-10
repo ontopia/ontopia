@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.variant;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -61,7 +61,7 @@ public class SetLocator implements ActionIF {
       URILocator loc = new URILocator(value);
 
       variant.setLocator(loc);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for variant: '" + value + "'", false);
     }
 

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.topic;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
@@ -60,7 +60,7 @@ public class SetSubjectLocator implements ActionIF {
     else if (param1 instanceof String) {
       try {
         locator = new URILocator((String) param1);
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new ActionRuntimeException("Malformed URL for subject locator: '"
             + param1 + "'", false);
       }
@@ -88,7 +88,7 @@ public class SetSubjectLocator implements ActionIF {
 			// add new
 			if (newloc != null)
 				topic.addSubjectLocator(newloc);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for subject locator: '" +
                                        newAddress + "'", false);
     } catch (UniquenessViolationException e) {

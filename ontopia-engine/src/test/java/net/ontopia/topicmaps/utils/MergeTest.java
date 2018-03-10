@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.Objects;
 import junit.framework.TestCase;
@@ -67,13 +66,7 @@ public class MergeTest extends TestCase {
   }
 
   public URILocator makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    }
-    catch (java.net.MalformedURLException e) {
-      fail("malformed URL given" + e.getMessage());
-      return null; // never executed...
-    }
+      return URILocator.create(uri);
   }
     
   // --- Test cases for shouldMerge
@@ -903,22 +896,19 @@ public class MergeTest extends TestCase {
   public void testMergeDuplicateSourceLocator() {
     try {
       TopicIF t1 = builder1.makeTopic();
-      t1.addItemIdentifier(new URILocator("http://www.example.com"));
+      t1.addItemIdentifier(URILocator.create("http://www.example.com"));
       TopicNameIF bn1 = builder1.makeTopicName(t1, "boodoo");
-      bn1.addItemIdentifier(new URILocator("http://www.example.com/#1"));
+      bn1.addItemIdentifier(URILocator.create("http://www.example.com/#1"));
 
       TopicIF t2 = builder2.makeTopic();
-      t2.addItemIdentifier(new URILocator("http://www.example.com"));
+      t2.addItemIdentifier(URILocator.create("http://www.example.com"));
       TopicNameIF bn2 = builder2.makeTopicName(t2, "boodoo");
-      bn2.addItemIdentifier(new URILocator("http://www.example.com/#1"));
+      bn2.addItemIdentifier(URILocator.create("http://www.example.com/#1"));
 
       MergeUtils.mergeInto(topicmap1, t2);
     }
     catch (ConstraintViolationException e) {
       fail("merge of topics unaccountably failed" + e.getMessage());
-    }
-    catch (java.net.MalformedURLException e) {
-      fail("URI literals malformed" + e.getMessage());
     }
   }
 
@@ -929,22 +919,19 @@ public class MergeTest extends TestCase {
     
     try {
       TopicIF t1 = builder1.makeTopic();
-      t1.addItemIdentifier(new URILocator("http://www.example.com"));
+      t1.addItemIdentifier(URILocator.create("http://www.example.com"));
       TopicNameIF bn1 = builder1.makeTopicName(t1, "boodoo");
-      bn1.addItemIdentifier(new URILocator("http://www.example.com/#1"));
+      bn1.addItemIdentifier(URILocator.create("http://www.example.com/#1"));
 
       TopicIF t2 = builder2.makeTopic();
-      t2.addItemIdentifier(new URILocator("http://www.example.com"));
+      t2.addItemIdentifier(URILocator.create("http://www.example.com"));
       TopicNameIF bn2 = builder2.makeTopicName(t2, "boovoo");
-      bn2.addItemIdentifier(new URILocator("http://www.example.com/#1"));
+      bn2.addItemIdentifier(URILocator.create("http://www.example.com/#1"));
 
       MergeUtils.mergeInto(topicmap1, t2);
       fail("merge succeeded, even though duplicates did not match");
     }
     catch (ConstraintViolationException e) {
-    }
-    catch (java.net.MalformedURLException e) {
-      fail("URI literals malformed" + e.getMessage());
     }
   }
   
@@ -955,14 +942,14 @@ public class MergeTest extends TestCase {
 
       TopicIF t2 = builder2.makeTopic();
       TopicNameIF bn2 = builder2.makeTopicName(t2, "boodoo");
-      bn2.addItemIdentifier(new URILocator("http://www.example.com/#1"));
+      bn2.addItemIdentifier(URILocator.create("http://www.example.com/#1"));
       bn2.setReifier(t1);
       MergeUtils.mergeInto(topicmap1, t2);
 
       assertTrue("reifying topic was not included",
                  topicmap1.getTopics().size() >= 2);
 
-      TopicNameIF bn = (TopicNameIF) topicmap1.getObjectByItemIdentifier(new URILocator("http://www.example.com/#1"));
+      TopicNameIF bn = (TopicNameIF) topicmap1.getObjectByItemIdentifier(URILocator.create("http://www.example.com/#1"));
       TopicIF reifier = bn.getReifier();
       
       assertTrue("reification link was broken", reifier != null);
@@ -976,12 +963,9 @@ public class MergeTest extends TestCase {
     catch (ConstraintViolationException e) {
       fail("merge of topics unaccountably failed" + e.getMessage());
     }
-    catch (MalformedURLException e) {
-      fail("URI literals malformed" + e.getMessage());
-    }
   }
 
-  public void testMergeAllTopics() throws MalformedURLException, IOException {
+  public void testMergeAllTopics() throws IOException {
     String sep = File.separator;
     String root = TestFileUtils.getTestdataOutputDirectory();
     TestFileUtils.verifyDirectory(root, "canonical", "out");

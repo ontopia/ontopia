@@ -91,7 +91,7 @@ public class NextPreviousOptimizerTest extends AbstractQueryTest {
     load("int-occs-2.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "DESC", "topic3://woohoo/",
+    addMatch(matches, "DESC", "topic3://woohoo",
              "TOPIC", getTopicById("topic6"));
     
     verifyQuery(matches,
@@ -104,7 +104,7 @@ public class NextPreviousOptimizerTest extends AbstractQueryTest {
     load("int-occs-2.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "DESC", "topic3://woohoo/",
+    addMatch(matches, "DESC", "topic3://woohoo",
              "TOPIC", getTopicById("topic6"));
     
     verifyQuery(matches,
@@ -118,7 +118,7 @@ public class NextPreviousOptimizerTest extends AbstractQueryTest {
     load("int-occs-2.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "DESC", "topic3://woohoo/",
+    addMatch(matches, "DESC", "topic3://woohoo",
              "TOPIC", getTopicById("topic6"));
     
     verifyQuery(matches,

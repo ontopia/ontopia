@@ -58,7 +58,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
       LocatorIF SLnew = topic.getItemIdentifiers().iterator().next();
       
       assertFalse("new address not set correctly", 
-		  !(SLnew.getAddress().equals("http://mama.no/")));      
+		  !(SLnew.getAddress().equals("http://mama.no")));      
     } catch (ActionRuntimeException e) {
     }
   }
@@ -80,7 +80,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
       
       LocatorIF SLnew = topic.getItemIdentifiers().iterator().next();
       assertFalse("new address not set correctly", 
-		  !(SLnew.getAddress().equals("http://mama.no/")));
+		  !(SLnew.getAddress().equals("http://mama.no")));
     } catch (ActionRuntimeException e) {
     }
   }

@@ -21,6 +21,7 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
@@ -58,7 +59,7 @@ public class XTMWriterFilterTestCase {
   }
 
   @Test
-  public void testFile() throws IOException {
+  public void testFile() throws IOException, URISyntaxException {
     TestFileUtils.verifyDirectory(base, "filter-out");
     TestFileUtils.verifyDirectory(base, "filter-xtm");
 

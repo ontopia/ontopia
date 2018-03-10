@@ -60,13 +60,7 @@ public class MergeTMTest extends TestCase {
   }
 
   public URILocator makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    }
-    catch (java.net.MalformedURLException e) {
-      fail("malformed URL given" + e.getMessage());
-      return null; // never executed...
-    }
+      return URILocator.create(uri);
   }
     
   // --- Test cases for mergeInto(TM, TM)

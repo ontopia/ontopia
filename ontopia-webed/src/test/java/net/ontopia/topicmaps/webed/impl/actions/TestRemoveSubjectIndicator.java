@@ -40,7 +40,7 @@ public class TestRemoveSubjectIndicator extends AbstractWebedTestCase {
   public void testNormalOperation() throws java.io.IOException{
     TopicIF topic = getTopicById(tm, "gamst");
     
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     topic.addSubjectIdentifier(newSL);
     int numSLs = topic.getSubjectIdentifiers().size();
    
@@ -64,7 +64,7 @@ public class TestRemoveSubjectIndicator extends AbstractWebedTestCase {
           throws java.io.IOException{
     TopicIF topic = getTopicById(tm, "gamst");
     
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     topic.addSubjectIdentifier(newSL);
     int numSLs = topic.getSubjectIdentifiers().size();
    
@@ -115,7 +115,7 @@ public class TestRemoveSubjectIndicator extends AbstractWebedTestCase {
   }
   
   public void testBadTopicParam() throws java.io.IOException{
-    LocatorIF newSL = new net.ontopia.infoset.impl.basic.URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     
     //make action
     ActionIF action = new RemoveSubjectIndicator();
@@ -133,7 +133,7 @@ public class TestRemoveSubjectIndicator extends AbstractWebedTestCase {
   public void testDeleteNonLocator() throws java.io.IOException{
     TopicIF topic = getTopicById(tm, "gamst");
     
-    LocatorIF newSL = new net.ontopia.infoset.impl.basic.URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     
     int numSLs = topic.getSubjectIdentifiers().size();
    

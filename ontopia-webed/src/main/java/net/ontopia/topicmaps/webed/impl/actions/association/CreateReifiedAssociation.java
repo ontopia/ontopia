@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.association;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -64,7 +64,7 @@ public class CreateReifiedAssociation implements ActionIF {
     LocatorIF srcloc;
     try {
       srcloc= new URILocator("http://net.ontopia.identity/assoc#" + assoc.getObjectId());
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for occurrence source locator: " + e);
     }
 

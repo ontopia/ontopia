@@ -20,17 +20,17 @@
 
 package net.ontopia.topicmaps.query.parser;
 
+import java.net.URISyntaxException;
 import java.util.Map;
-import java.net.MalformedURLException;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Represents an UPDATE statement.
@@ -101,7 +101,7 @@ public class UpdateStatement extends ModificationFunctionStatement {
           ((VariantNameIF) object).setLocator(loc);
         else
           throw new OntopiaRuntimeException("OUCH!");
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException(e);
       }
     }

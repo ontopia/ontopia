@@ -38,7 +38,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate0() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF player = builder.makeTopic();
@@ -51,7 +51,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate1() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF atype = builder.makeTopic();
@@ -69,7 +69,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate2() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF atype = builder.makeTopic();
@@ -90,7 +90,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate3() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF atype = builder.makeTopic();
@@ -116,7 +116,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate1b() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF atype = builder.makeTopic();
@@ -134,7 +134,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate2b() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF atype = builder.makeTopic();
@@ -155,7 +155,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
   public void testRolePlayerPredicate3b() throws InvalidQueryException, IOException {
     makeEmpty();
-    base = new URILocator("http://www.example.com");
+    base = URILocator.create("http://www.example.com");
 
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF atype = builder.makeTopic();

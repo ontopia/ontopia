@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.rest.v1.variant;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -72,7 +73,7 @@ public class VariantNameController extends AbstractController {
 		if (DataTypes.TYPE_URI.equals(dataType)) {
 			try {
 				result = builder.makeVariantName(name, new URILocator(variant.getValue()), resolvedScope);
-			} catch (MalformedURLException mufe) {
+			} catch (URISyntaxException mufe) {
 				throw OntopiaRestErrors.MALFORMED_LOCATOR.build(mufe, variant.getValue());
 			}
 		} else {

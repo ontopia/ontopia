@@ -87,7 +87,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("horse"));
     
-    verifyQuery(matches, "nettressurs($TOPIC, \"http://www.hest.no/\")?");
+    verifyQuery(matches, "nettressurs($TOPIC, \"http://www.hest.no\")?");
   }
 
   public void testWithBothBoundTrue() throws InvalidQueryException, IOException {

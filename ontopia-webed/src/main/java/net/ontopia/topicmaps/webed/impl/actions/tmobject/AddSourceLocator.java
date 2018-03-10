@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.tmobject;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
@@ -54,7 +54,7 @@ public class AddSourceLocator implements ActionIF {
     
     try {
       object.addItemIdentifier(new URILocator(value));
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for source locator: '" + value + "'", false);
     } catch (UniquenessViolationException e) {
       throw new ActionRuntimeException("Some other topic map object has the given source locator: '" + value + "'", false);

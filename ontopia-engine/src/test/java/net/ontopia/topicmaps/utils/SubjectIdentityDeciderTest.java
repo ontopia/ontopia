@@ -115,13 +115,7 @@ public class SubjectIdentityDeciderTest extends TestCase {
   }
   
   public URILocator makeLocator(String uri) {
-    try {
-      return new URILocator("http://psi.ontopia.net/fake/" + uri);
-    }
-    catch (java.net.MalformedURLException e) {
-      fail("malformed URL given: " + e);
-      return null; // never executed...
-    }
+    return URILocator.create("http://psi.ontopia.net/fake/" + uri);
   }
   
 }

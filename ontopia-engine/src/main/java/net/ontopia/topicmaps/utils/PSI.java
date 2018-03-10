@@ -262,11 +262,6 @@ public class PSI {
   }
   
   private static URILocator makeLocator(String loc) {
-    try {
-      return new URILocator(loc);
-    }
-    catch (java.net.MalformedURLException e) {
-      throw new net.ontopia.utils.OntopiaRuntimeException(e);
-    }
+    return URILocator.create(loc);
   }
 }

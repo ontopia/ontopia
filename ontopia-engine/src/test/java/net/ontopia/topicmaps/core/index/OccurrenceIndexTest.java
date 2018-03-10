@@ -424,16 +424,8 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
   }
 
     public void testOccurrences() {
-        URILocator loc1 = null;
-        URILocator loc2 = null;
-
-        try {
-            loc1 = new URILocator("http://www.ontopia.net");
-            loc2 = new URILocator("ftp://sandbox.ontopia.net");
-        }
-        catch (java.net.MalformedURLException e) {
-            fail("(INTERNAL) bad URLs given");
-        }
+        URILocator loc1 = URILocator.create("http://www.ontopia.net");
+        URILocator loc2 = URILocator.create("ftp://sandbox.ontopia.net");
         
         // STATE 1: empty topic map
         // assertTrue("index finds spurious occurrence locators",

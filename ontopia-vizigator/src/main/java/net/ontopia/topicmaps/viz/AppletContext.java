@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.viz;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -153,7 +154,7 @@ public class AppletContext extends ApplicationContext {
       else
         sublocs = Collections.singleton(locator);
       return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
-    } catch (MalformedURLException m) {
+    } catch (URISyntaxException m) {
       throw new OntopiaRuntimeException(m);
     }
   }
@@ -211,7 +212,7 @@ public class AppletContext extends ApplicationContext {
     LocatorIF locator;
     try {
       locator = new URILocator(idValue);
-    } catch (MalformedURLException m) {
+    } catch (URISyntaxException m) {
       throw new OntopiaRuntimeException(m);
     }
     

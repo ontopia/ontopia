@@ -26,7 +26,6 @@ import java.io.FileWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
@@ -80,8 +79,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
   public void testLocator() {
     assertTrue("initial locator not null", variant.getLocator() == null);
 
-    try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       variant.setLocator(loc);
       assertTrue("locator identity not maintained after set",
              variant.getLocator().equals(loc));            
@@ -92,10 +90,6 @@ public abstract class VariantNameTest extends AbstractScopedTest {
 				fail("value could be set to null");
 			} catch (NullPointerException e) {
 			}
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) given URI was malformed");
-    }
   }
 
 	public void testNonURILocator() {

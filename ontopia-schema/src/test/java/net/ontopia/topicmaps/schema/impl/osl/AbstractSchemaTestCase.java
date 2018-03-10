@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import net.ontopia.topicmaps.schema.core.SchemaIF;
 import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import net.ontopia.utils.TestFileUtils;
@@ -38,8 +39,12 @@ public abstract class AbstractSchemaTestCase {
       File file = TestFileUtils.getTestOutputFile(testdataDirectory, directory, filename);
       reader = new OSLSchemaReader(file);
     } else {
-      String file = TestFileUtils.getTestInputFile(testdataDirectory, directory, filename);
-      reader = new OSLSchemaReader(file);
+      try {
+        String file = TestFileUtils.getTestInputFile(testdataDirectory, directory, filename);
+        reader = new OSLSchemaReader(file);
+      } catch (URISyntaxException uri) {
+        throw new IOException(uri);
+      }
     }
     return reader.read();
   }

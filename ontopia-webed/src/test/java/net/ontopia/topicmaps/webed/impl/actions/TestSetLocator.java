@@ -99,7 +99,7 @@ public class TestSetLocator extends AbstractWebedTestCase {
     boolean hasit = false;
     while (i.hasNext()){
       OccurrenceIF foo = i.next();
-      if (foo.getLocator().getAddress().equals("http://www.sf.net/"))
+      if (foo.getLocator().getAddress().equals("http://www.sf.net"))
         hasit = true; 
     }
     assertFalse("Occurrence is not set for the topic", !(hasit));
@@ -127,7 +127,7 @@ public class TestSetLocator extends AbstractWebedTestCase {
     boolean hasit = false;
     while (i.hasNext()){
       OccurrenceIF foo = i.next();
-      if ((foo.getLocator().getAddress().equals("http://www.sf.net/")) && 
+      if ((foo.getLocator().getAddress().equals("http://www.sf.net")) && 
           (foo.getType() == type))
         hasit = true; 
     }
@@ -297,7 +297,7 @@ public class TestSetLocator extends AbstractWebedTestCase {
     boolean hasit = false;
     while (i.hasNext()){
       OccurrenceIF foo = i.next();
-      if (foo.getLocator().getAddress().equals("http://www.sf.net/"))
+      if (foo.getLocator().getAddress().equals("http://www.sf.net"))
         hasit = true; 
     }
     assertFalse("Occurrence is set for the other topic", hasit);

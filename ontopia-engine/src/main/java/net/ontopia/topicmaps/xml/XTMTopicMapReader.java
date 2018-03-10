@@ -25,7 +25,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,7 +71,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
    * arguments.   
    * @param url The URL of the topic map document.
    */  
-  public XTMTopicMapReader(URL url) throws MalformedURLException {
+  public XTMTopicMapReader(URL url) {
     super(url);
   }
   
@@ -107,7 +106,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
    * arguments.   
    * @param file The file object from which to read the topic map.
    */
-  public XTMTopicMapReader(File file) throws IOException {
+  public XTMTopicMapReader(File file) {
     super(file);
   }
   

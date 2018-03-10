@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.topic;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -61,7 +61,7 @@ public class SetSubjectIndicator2 implements ActionIF {
       else {
         try {
           locator = new URILocator((String) param1);
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException e) {
           throw new ActionRuntimeException(
               "Unable to create URI locator from '" + param1 + "'", false);
         }

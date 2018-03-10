@@ -60,7 +60,7 @@ public class TestAddSourceLocator extends AbstractWebedTestCase {
       while (i.hasNext()) {
 	LocatorIF locator = i.next(); 
 	String url = locator.getAddress();
-	if (url.equals("http://slashdot.org/")) {
+	if (url.equals("http://slashdot.org")) {
 	  excists = true;
 	  break;
 	}

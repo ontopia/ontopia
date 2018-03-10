@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -176,11 +177,8 @@ public class TestOSLValidate extends AbstractWebedTestCase {
 
   // --- Helpers
 
-  private OSLSchema loadSchema(String file) 
-    throws IOException, SchemaSyntaxException {
-    file = TestFileUtils.getTestInputFile(testdataDirectory, file);
-    OSLSchemaReader reader = new OSLSchemaReader(file);
-    return (OSLSchema) reader.read();
+  private OSLSchema loadSchema(String file) throws IOException, SchemaSyntaxException, URISyntaxException {
+    return (OSLSchema) new OSLSchemaReader(TestFileUtils.getTestInputFile(testdataDirectory, file)).read();
   }
   
 }

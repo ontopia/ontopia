@@ -20,15 +20,14 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.net.MalformedURLException;
 import junit.framework.TestCase;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 public class QNameTests extends TestCase {
   protected TopicMapIF        topicmap; 
@@ -132,8 +131,8 @@ public class QNameTests extends TestCase {
                found == null);
   }
 
-  public void testSimpleLookupSucceeds() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testSimpleLookupSucceeds() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addSubjectIdentifier(loc);
     
     registry.registerPrefix("tst", "http://psi.example.org/");
@@ -142,8 +141,8 @@ public class QNameTests extends TestCase {
                topic == found);
   }
 
-  public void testSimpleLookupFails2() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testSimpleLookupFails2() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addItemIdentifier(loc);
     
     registry.registerPrefix("tst", "http://psi.example.org/");
@@ -152,8 +151,8 @@ public class QNameTests extends TestCase {
                found == null);
   }
 
-  public void testSimpleLookupFails3() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testSimpleLookupFails3() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addSubjectLocator(loc);
     
     registry.registerPrefix("tst", "http://psi.example.org/");
@@ -162,8 +161,8 @@ public class QNameTests extends TestCase {
                found == null);
   }
   
-  public void testRegisterTwice2() throws MalformedURLException {
-    URILocator loc = new URILocator("http://psi.example.org/test");
+  public void testRegisterTwice2() {
+    URILocator loc = URILocator.create("http://psi.example.org/test");
     topic.addSubjectIdentifier(loc);
     
     registry.registerPrefix("tst", "http://www.example.org/");

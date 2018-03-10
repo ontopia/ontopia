@@ -6,5 +6,5 @@
 {topic3, topic3, [[foo]]} ~ topic5
 {topic4, topic4, [[Opera]]}
 {topic5, topic5, [[作曲家]]}
-{topic6, topic6, "foo:bar"}
+{topic6, topic6, "foo:barbar"}
 {topic6, topic1, [[foo]]}

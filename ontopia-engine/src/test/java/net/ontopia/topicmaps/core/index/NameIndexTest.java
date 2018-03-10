@@ -187,12 +187,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
     VariantNameIF vn = builder.makeVariantName(bn, "", Collections.<TopicIF>emptySet());
-    LocatorIF loc = null;
-    try {
-      loc = new URILocator("http://www.ontopia.net/test-data/variant-locator.xml");
-    } catch (java.net.MalformedURLException ex) {
-      fail("Test Setup: Malformed URL while creating locator for variant name test.");
-    }
+    LocatorIF loc = URILocator.create("http://www.ontopia.net/test-data/variant-locator.xml");
     assertTrue("Index of variant names by locator is not empty.", 
 							 ix.getVariants(loc.getAddress(), DataTypes.TYPE_URI).isEmpty());
 
@@ -230,16 +225,8 @@ public abstract class NameIndexTest extends AbstractIndexTest {
   }
 
     public void testVariants() {
-        URILocator loc1 = null;
-        URILocator loc2 = null;
-
-        try {
-            loc1 = new URILocator("http://www.ontopia.net");
-            loc2 = new URILocator("ftp://sandbox.ontopia.net");
-        }
-        catch (java.net.MalformedURLException e) {
-            fail("(INTERNAL) bad URLs given");
-        }
+        URILocator loc1 = URILocator.create("http://www.ontopia.net");
+        URILocator loc2 = URILocator.create("ftp://sandbox.ontopia.net");
         
         // STATE 1: empty topic map
         // assertTrue("index finds spurious variant locators",

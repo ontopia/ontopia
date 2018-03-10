@@ -47,7 +47,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
   public void testNormalOperation() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
     int numSLs = topic.getSubjectIdentifiers().size();
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     
     //build parms
     ActionParametersIF params = makeParameters(makeList
@@ -61,7 +61,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
             .size());
     LocatorIF loc = topic.getSubjectIdentifiers().iterator().next();
     assertFalse("SI not set to new value", !(loc.getAddress()
-            .equals("http://www.freshmeat.net/")));
+            .equals("http://www.freshmeat.net")));
   }
   
   public void testNoParams() throws IOException {        
@@ -93,7 +93,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
   }
   
   public void testWrongParams2() throws IOException {        
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     
     //build parms
     ActionParametersIF params = makeParameters(makeList("", newSL));
@@ -124,7 +124,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
   
   public void testWrongURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     
     //build parms
     ActionParametersIF params = makeParameters(makeList
@@ -142,7 +142,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
   public void testSameURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
     int numSLs = topic.getSubjectIdentifiers().size();
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     
     //build parms
     ActionParametersIF params = makeParameters(makeList
@@ -172,12 +172,12 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
             .size());
     LocatorIF loc = topic.getSubjectIdentifiers().iterator().next();
     assertFalse("SI not set to new value", !(loc.getAddress()
-            .equals("http://www.freshmeat.net/")));
+            .equals("http://www.freshmeat.net")));
   }
 
   public void testEmptyURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     topic.addSubjectIdentifier(newSL);
     int sisbefore = topic.getSubjectIdentifiers().size();
     

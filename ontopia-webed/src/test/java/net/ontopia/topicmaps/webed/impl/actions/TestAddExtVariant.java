@@ -58,7 +58,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
     
     VariantNameIF vNew = bn.getVariants().iterator().next();
     assertFalse("The URL is not correct", 
-		!(vNew.getLocator().getAddress().equals("http://www.sf.net/")));
+		!(vNew.getLocator().getAddress().equals("http://www.sf.net")));
   }
 
   public void testNormalOperation2() throws IOException {
@@ -87,7 +87,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
     
     VariantNameIF vNew = bn.getVariants().iterator().next();
     assertFalse("The URL is not correct", 
-                !(vNew.getLocator().getAddress().equals("http://www.sf.net/")));
+                !(vNew.getLocator().getAddress().equals("http://www.sf.net")));
     assertFalse("The scope is not correct",
                 vNew.getScope().contains(scope) && vNew.getScope().size() == 2);
   }

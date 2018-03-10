@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.schema.core.SchemaIF;
 import net.ontopia.topicmaps.schema.core.SchemaReaderIF;
@@ -51,7 +51,7 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
   /**
    * PUBLIC: Creates a reader bound to the given URI.
    */
-  public OSLSchemaReader(String uri) throws MalformedURLException, IOException {
+  public OSLSchemaReader(String uri) throws URISyntaxException, IOException {
     source = uri.startsWith("classpath:") 
       ? new InputSource(StreamUtils.getInputStream(uri)) 
       : new InputSource(uri);
@@ -66,7 +66,7 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
       source = new InputSource(URIUtils.toURL(file).toExternalForm());
       base_address = new URILocator(URIUtils.toURL(file).toExternalForm());
     }
-    catch (MalformedURLException e) {
+    catch (URISyntaxException e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR: " + e);
     }
   }

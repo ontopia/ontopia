@@ -43,7 +43,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 
 /**
@@ -74,11 +73,7 @@ public class RDBMSBackendTests extends TestCase {
   }
   
   protected TopicIF getTopic(TopicMapIF tm, String psi) {
-    try {
-      return tm.getTopicBySubjectIdentifier(new URILocator(psi));
-    } catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    return tm.getTopicBySubjectIdentifier(URILocator.create(psi));
   }
 
   protected long importTopicMap(String filename) throws IOException {
@@ -176,7 +171,7 @@ public class RDBMSBackendTests extends TestCase {
       assertTrue("topic3 does not have one occurrence", topic3.getOccurrences().size()  == 1);
 
       // add subject indicator
-      topic3.addSubjectIdentifier(new URILocator("test:eva_kernst"));
+      topic3.addSubjectIdentifier(URILocator.create("test:eva_kernst"));
 
       TopicIF _topic3 = getTopic(tm3, "test:eva_kernst");
       assertTrue("topic3 != _topic3", topic3 == _topic3);
@@ -212,14 +207,14 @@ public class RDBMSBackendTests extends TestCase {
       assertTrue("topic1 != _topic1", topic1 == _topic1);
 
       // remove subject indicator
-      _topic2.removeSubjectIdentifier(new URILocator("test:eva_kernst"));      
+      _topic2.removeSubjectIdentifier(URILocator.create("test:eva_kernst"));      
       store2.commit();
 
       _topic1 = getTopic(tm1, "test:eva_kernst");
       assertTrue("topic1 != null", _topic1 == null);
 
       // add subject indicator, but abort txn
-      topic1.addSubjectIdentifier(new URILocator("test:eva_kernst2"));      
+      topic1.addSubjectIdentifier(URILocator.create("test:eva_kernst2"));      
 
       _topic2 = getTopic(tm2, "test:eva_kernst2");
       assertTrue("_topic2 != null", _topic2 == null);

@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.net.MalformedURLException;
 import net.ontopia.infoset.impl.basic.URILocator;
 
 public abstract class TopicTest extends AbstractTMObjectTest {
@@ -41,15 +40,12 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     assertTrue("subject not null initially", topic.getSubjectLocators().isEmpty());
 
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net/");
+      URILocator loc = URILocator.create("http://www.ontopia.net/");
       topic.addSubjectLocator(loc);
       assertTrue("subject not set properly", topic.getSubjectLocators().contains(loc));
 
       topic.removeSubjectLocator(loc);
       assertTrue("couldn't set subject to null", topic.getSubjectLocators().isEmpty());
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
       fail("constraint violated for no good reason");
@@ -60,12 +56,9 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     TopicIF topic = builder.makeTopic();
     topic.remove();
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       topic.addSubjectLocator(loc);
       fail("subject assigned when not attached to topic map");
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
     }
@@ -73,7 +66,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     
   public void testDuplicateSubject() {
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       topic.addSubjectLocator(loc);
 
       TopicIF topic2 = builder.makeTopic();
@@ -83,9 +76,6 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       }
       catch (ConstraintViolationException e) {
       }
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
       fail("constraint violated for no good reason");
@@ -232,7 +222,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     URILocator indicator = null;
     try {
       // STATE 2
-      indicator = new URILocator("ftp://ftp.ontopia.net");
+      indicator = URILocator.create("ftp://ftp.ontopia.net");
       topic.addSubjectIdentifier(indicator);
             
       assertTrue("indicator not added",
@@ -244,9 +234,6 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       topic.addSubjectIdentifier(indicator);       
       assertTrue("duplicate not rejected",
                  topic.getSubjectIdentifiers().size() == 1);
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
     }
     catch (ConstraintViolationException e) {
       fail("spurious ConstraintViolationException");
@@ -266,12 +253,9 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     topic.remove();
 
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       topic.addSubjectIdentifier(loc);
       fail("subject indicator assigned when not attached to topic map");
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
     }
@@ -282,7 +266,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     TopicIF t2 = builder.makeTopic();
 
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       t1.addSubjectIdentifier(loc);
 
       try {
@@ -291,9 +275,6 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       }
       catch (ConstraintViolationException e) {
       }
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
       fail("constraint violated for no good reason");
@@ -306,16 +287,13 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     // the collision is not allowed, but for all other TMObjectIFs it
     // is allowed (to provide reification)
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
 
       TopicIF topic = builder.makeTopic();                    
       object.addItemIdentifier(loc);
                         
       topic.addSubjectIdentifier(loc);
       fail("allowed subject indicator of one topic to be source locator of another");
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
     }
     catch (ConstraintViolationException e) {
     }
@@ -325,7 +303,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
   public void testSourceLocatorTopicSubjectIndicator() {
     // this is forbidden, according to the TMDM
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
 
       TopicIF topic2 = builder.makeTopic();
       topic2.addSubjectIdentifier(loc);
@@ -334,9 +312,6 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       fail("subject identifier of one topic allowed to be item identifier " +
            "of another");
     }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
-    }
     catch (ConstraintViolationException e) {
     }
   }
@@ -344,7 +319,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
   public void testSourceLocatorTopicSubjectIndicator2() {
     // this is forbidden, according to the TMDM
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       topic.addItemIdentifier(loc);
 
       TopicIF topic2 = builder.makeTopic();
@@ -353,55 +328,40 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       fail("item identifier of one topic allowed to be subject identifier " +
            "of another");
     }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
-    }
     catch (ConstraintViolationException e) {
     }
   }
   
   public void testBug652a() {
-    try {
       TopicIF topic = builder.makeTopic();
-      URILocator loc = new URILocator("http://www.ontopia.net/A");
+      URILocator loc = URILocator.create("http://www.ontopia.net/A");
       topic.addItemIdentifier(loc);
       topic.addSubjectIdentifier(loc);
       topic.removeSubjectIdentifier(loc);
       topic.removeItemIdentifier(loc);
       topic.remove();
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
-    }
   }
 
   public void testBug652b() {
-    try {
       TopicIF topic = builder.makeTopic();
-      URILocator loc = new URILocator("http://www.ontopia.net/B");
+      URILocator loc = URILocator.create("http://www.ontopia.net/B");
       topic.addSubjectIdentifier(loc);
       topic.addItemIdentifier(loc);
       topic.removeItemIdentifier(loc);
       topic.removeSubjectIdentifier(loc);
       topic.remove();
-    } 
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
-    }
   }
 
   public void testBug652c() {
     try {
       TopicIF t1 = builder.makeTopic();
-      URILocator loc = new URILocator("http://www.ontopia.net/B");
+      URILocator loc = URILocator.create("http://www.ontopia.net/B");
       t1.addSubjectIdentifier(loc);
 
       TopicIF t2 = builder.makeTopic();
       t2.addItemIdentifier(loc);
       fail("subject identifier of one topic allowed to be item identifier of " +
            "another");
-    } catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
     } catch (UniquenessViolationException e) {
       // this is the expected outcome
     }

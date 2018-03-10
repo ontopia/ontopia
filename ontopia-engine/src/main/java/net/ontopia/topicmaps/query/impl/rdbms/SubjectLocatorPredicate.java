@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.query.impl.rdbms;
 
+import java.net.URISyntaxException;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.query.jdo.JDOBoolean;
@@ -75,7 +75,7 @@ public class SubjectLocatorPredicate
         LocatorIF locator = null;
         try {
           locator = new SubjectLocator(new URILocator((String)args[1]));
-        } catch (java.net.MalformedURLException e) {
+        } catch (URISyntaxException e) {
           throw new InvalidQueryException("Not a valid URI: " + args[1]);
         }
 

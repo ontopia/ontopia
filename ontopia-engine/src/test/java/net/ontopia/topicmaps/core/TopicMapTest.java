@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.net.MalformedURLException;
 import net.ontopia.infoset.impl.basic.URILocator;
 
 public abstract class TopicMapTest extends AbstractTMObjectTest {
@@ -125,7 +124,7 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
   public void testTopicBySubject() {
     try {
       TopicIF topic = builder.makeTopic();
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       topic.addSubjectLocator(loc);
 
       TopicIF found = tm.getTopicBySubjectLocator(loc);
@@ -151,9 +150,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
         // Expected
       }
     }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
-    }
     catch (ConstraintViolationException e) {
       e.printStackTrace();
       fail("spurious ConstraintViolationException");
@@ -163,7 +159,7 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
   public void testTopicByIndicator() {
     try {
       TopicIF topic = builder.makeTopic();
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       topic.addSubjectIdentifier(loc);
 
       TopicIF found = tm.getTopicBySubjectIdentifier(loc);
@@ -190,9 +186,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
       }
                     
     }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
-    }
     catch (ConstraintViolationException e) {
       fail("spurious ConstraintViolationException");
     }
@@ -201,7 +194,7 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
   public void testObjectBySourceLocator() {
     try {
       TopicIF topic = builder.makeTopic();
-      URILocator loc = new URILocator("http://www.ontopia.net/topicmaptest.xtm#foo");
+      URILocator loc = URILocator.create("http://www.ontopia.net/topicmaptest.xtm#foo");
       topic.addItemIdentifier(loc);
 
       TopicIF found = (TopicIF)tm.getObjectByItemIdentifier(loc);
@@ -227,9 +220,6 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
         // Expected.
       }
                     
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
     }
     catch (ConstraintViolationException e) {
       fail("spurious ConstraintViolationException");

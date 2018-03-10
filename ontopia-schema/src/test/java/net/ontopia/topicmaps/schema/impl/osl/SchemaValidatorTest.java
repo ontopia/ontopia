@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -53,7 +54,7 @@ public class SchemaValidatorTest extends AbstractSchemaTestCase {
 
     try {
       store.setBaseAddress(new URILocator("http://test.ontopia.net"));
-    } catch (java.net.MalformedURLException e) {
+    } catch (URISyntaxException e) {
       Assert.fail("couldn't create URI");
     }
   }

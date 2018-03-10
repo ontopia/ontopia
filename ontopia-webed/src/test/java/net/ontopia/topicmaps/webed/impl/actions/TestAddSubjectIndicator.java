@@ -57,7 +57,7 @@ public class TestAddSubjectIndicator extends AbstractWebedTestCase {
     //test  
     assertFalse("New subjectIndicator not set", topic.getSubjectIdentifiers().size() < numIndikators);
     LocatorIF loc = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
-    assertFalse("New subjectIndicator not set correctly", !(loc.getAddress().equals("http://www.slashdot.org/")));
+    assertFalse("New subjectIndicator not set correctly", !(loc.getAddress().equals("http://www.slashdot.org")));
   }
   
   

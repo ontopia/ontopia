@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.variant;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -63,7 +63,7 @@ public class AddExtVariant extends AbstractTopicMapAction {
     URILocator locator = null;
     try {
       locator = new URILocator(value);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for variant: '" + value + "'", false);
     }
     

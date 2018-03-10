@@ -115,7 +115,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     OccurrenceIF occ = getOccurrence(hest, nettressurs);
     
     List matches = new ArrayList();
-    addMatch(matches, "LOCATOR", "http://www.hest.no/");
+    addMatch(matches, "LOCATOR", "http://www.hest.no");
     
     verifyQuery(matches, "resource(@" + occ.getObjectId() + ", $LOCATOR)?");
     

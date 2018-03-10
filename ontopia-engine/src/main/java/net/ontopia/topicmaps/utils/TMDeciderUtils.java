@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -54,7 +55,7 @@ public class TMDeciderUtils {
    * @param okpsis a collection of LocatorIF or String objects
    */
   public static DeciderIF getTypePSIDecider(Collection okpsis)
-    throws MalformedURLException {
+    throws URISyntaxException {
     return new TypePSIDecider(okpsis);
   }
 
@@ -80,7 +81,7 @@ public class TMDeciderUtils {
   static class TypePSIDecider implements DeciderIF {
     private Collection okpsis;
     
-    public TypePSIDecider(Collection okpsis) throws MalformedURLException {
+    public TypePSIDecider(Collection okpsis) throws URISyntaxException {
       this.okpsis = new HashSet();
       Iterator it = okpsis.iterator();
       while (it.hasNext()) {

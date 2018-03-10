@@ -40,15 +40,9 @@ import net.ontopia.topicmaps.webed.core.WebEdRequestIF;
  * @since 2.0
  */
 public class SetPassword implements ActionIF {
-  private static final String PSI_URI = "http://psi.ontopia.net/userman/password";
-  private LocatorIF psi;
+  private static final LocatorIF psi = URILocator.create("http://psi.ontopia.net/userman/password");
   
   public SetPassword() {
-    try {
-      psi = new URILocator(PSI_URI);
-    } catch (java.net.MalformedURLException e) {
-      throw new net.ontopia.utils.OntopiaRuntimeException(e);
-    }
   }
 
   @Override

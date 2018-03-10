@@ -588,7 +588,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/boito.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/boito.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -680,7 +680,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/cilea.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/cilea.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -760,7 +760,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/giordano.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/giordano.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -806,7 +806,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/leoncavallo.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/leoncavallo.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -860,7 +860,7 @@ L'oracolo:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/mascagni.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/mascagni.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -914,7 +914,7 @@ L'oracolo:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/ponchielli.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/ponchielli.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -965,7 +965,7 @@ L'oracolo:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/puccini.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/puccini.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -975,7 +975,7 @@ L'oracolo:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#gallery"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/puccini-gallery.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/puccini-gallery.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#website"/></instanceOf>
@@ -1004,7 +1004,7 @@ L'oracolo:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#webpage"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#naxos"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/hnh-puccini.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/hnh-puccini.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#date-of-birth"/></instanceOf>
@@ -1051,7 +1051,7 @@ L'oracolo:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/verdi.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/verdi.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -4079,7 +4079,7 @@ Maria Egiziaca (unvollendet, vielleicht vernichtet, nicht aufgeführt)
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/ac_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/ac_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -5298,7 +5298,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/lg_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/lg_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -5313,7 +5313,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/la-gioconda.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/la-gioconda.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -5465,7 +5465,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#gallery"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/background-manon_lescaut.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/background-manon_lescaut.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#gallery"/></instanceOf>
@@ -5531,7 +5531,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/lb_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/lb_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -5551,7 +5551,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/la-boheme.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/la-boheme.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -5600,7 +5600,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/tosca.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/tosca.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -5615,7 +5615,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/tosca_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/tosca_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -5625,7 +5625,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#operanews"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/tosca-synopsis.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/tosca-synopsis.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -5635,7 +5635,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#libretto"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/tosca-libretto.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/tosca-libretto.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#libretto"/></instanceOf>
@@ -5645,7 +5645,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#poster"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/tosca_poster.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/tosca_poster.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#poster"/></instanceOf>
@@ -5655,7 +5655,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/vissi-darte.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/vissi-darte.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -5702,7 +5702,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/madama-butterfly.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/madama-butterfly.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -5717,7 +5717,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/mb_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/mb_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -5789,7 +5789,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/ggw_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/ggw_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -6030,7 +6030,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#snl"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/snl/turandot.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/snl/turandot.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
@@ -6045,7 +6045,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/turandot-synopsis.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/turandot-synopsis.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -6060,7 +6060,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/t_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/t_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -6070,7 +6070,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/nessun-dorma.mp3"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/nessun-dorma.mp3"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -6832,7 +6832,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/it_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/it_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -6894,7 +6894,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/lt_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/lt_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -6924,7 +6924,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/la-traviata.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/la-traviata.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -7087,7 +7087,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/ubm_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/ubm_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -7185,7 +7185,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/dc_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/dc_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -7232,7 +7232,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/a_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/a_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -7293,7 +7293,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#az-opera"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/o_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/o_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#synopsis"/></instanceOf>
@@ -7323,7 +7323,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/otello.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/otello.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -17412,7 +17412,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/vissi-darte.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/vissi-darte.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -17510,7 +17510,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/nessun-dorma.mp3"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/nessun-dorma.mp3"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -17564,7 +17564,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/la-mamma-morta.wav"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/la-mamma-morta.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtmp#sound-clip"/></instanceOf>
@@ -18066,7 +18066,7 @@ Ginevra
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#description"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/verismo.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/verismo.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#description"/></instanceOf>

@@ -63,12 +63,12 @@ public class TestSetSubjectLocator extends AbstractWebedTestCase {
     // test
     assertTrue("Topic got no subject locator", topic.getSubjectLocators().size() > 0);
     assertTrue("Topic got wrong subject locator",
-               topic.getSubjectLocators().contains(new URILocator("http://www.example.com")));
+               topic.getSubjectLocators().contains(URILocator.create("http://www.example.com")));
   }
 
   public void testChangeLocator() throws MalformedURLException {
     // add locator to topic
-    LocatorIF oldloc = new URILocator("urn:x-test:old");
+    LocatorIF oldloc = URILocator.create("urn:x-test:old");
     topic.addSubjectLocator(oldloc);
     
     // run action
@@ -79,12 +79,12 @@ public class TestSetSubjectLocator extends AbstractWebedTestCase {
     // test
     assertTrue("Topic got no subject locator", topic.getSubjectLocators().size() > 0);
     assertTrue("Topic got wrong subject locator",
-               topic.getSubjectLocators().contains(new URILocator("http://www.example.com")));
+               topic.getSubjectLocators().contains(URILocator.create("http://www.example.com")));
   }
 
   public void testBadURL() throws MalformedURLException {
     // add locator to topic
-    LocatorIF oldloc = new URILocator("urn:x-test:old");
+    LocatorIF oldloc = URILocator.create("urn:x-test:old");
     topic.addSubjectLocator(oldloc);
     
     // run action
@@ -114,9 +114,9 @@ public class TestSetSubjectLocator extends AbstractWebedTestCase {
 
   public void testChangeNonExistentURL() throws MalformedURLException {
     // add locator to topic
-    LocatorIF oldloc = new URILocator("urn:x-test:old");
+    LocatorIF oldloc = URILocator.create("urn:x-test:old");
     topic.addSubjectLocator(oldloc);
-    LocatorIF paramloc = new URILocator("urn:x-test:param");
+    LocatorIF paramloc = URILocator.create("urn:x-test:param");
     
     // run action
     try {
@@ -131,7 +131,7 @@ public class TestSetSubjectLocator extends AbstractWebedTestCase {
 
   public void testChangeNonExistentURL2() throws MalformedURLException {
     // create parameter locator
-    LocatorIF paramloc = new URILocator("urn:x-test:param");
+    LocatorIF paramloc = URILocator.create("urn:x-test:param");
     
     // run action
     try {
@@ -146,7 +146,7 @@ public class TestSetSubjectLocator extends AbstractWebedTestCase {
 
   public void testEmptyURL() throws MalformedURLException {
     // add locator to topic
-    LocatorIF oldloc = new URILocator("urn:x-test:old");
+    LocatorIF oldloc = URILocator.create("urn:x-test:old");
     topic.addSubjectLocator(oldloc);
     
     // run action

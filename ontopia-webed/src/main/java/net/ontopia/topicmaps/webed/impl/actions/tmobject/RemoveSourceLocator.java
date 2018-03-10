@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.tmobject;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -53,7 +53,7 @@ public class RemoveSourceLocator implements ActionIF {
     else if (param1 instanceof String) {
       try {
         locator = new URILocator((String) param1);
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new ActionRuntimeException("Unable to create URI locator from '" + param1 + "'", false);
       }
     } else

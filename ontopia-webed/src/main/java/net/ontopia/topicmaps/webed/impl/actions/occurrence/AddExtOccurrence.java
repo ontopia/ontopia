@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -64,7 +64,7 @@ public class AddExtOccurrence implements ActionIF {
     URILocator locator = null;
     try {
       locator = new URILocator(value);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException("Malformed URL for occurrence: '" + value + "'", false);
     }
 

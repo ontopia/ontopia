@@ -45,7 +45,7 @@ public class TestSetSubjectIndicator2 extends TestSetSubjectIndicator {
   @Override
   public void testEmptyURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
-    LocatorIF newSL = new URILocator("http://www.slashdot.org");
+    LocatorIF newSL = URILocator.create("http://www.slashdot.org");
     topic.addSubjectIdentifier(newSL);
     int sisbefore = topic.getSubjectIdentifiers().size();
     

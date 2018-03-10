@@ -32,11 +32,7 @@ public class SchemaWriterTest extends AbstractSchemaTestCase {
   
   @Before
   public void setUp() {
-    try {
-      schema = new OSLSchema(new URILocator("http://www.ontopia.net"));
-    } catch (java.net.MalformedURLException e) {
-      throw new net.ontopia.utils.OntopiaRuntimeException(e);
-    }
+    schema = new OSLSchema(URILocator.create("http://www.ontopia.net"));
   }
   
   // --- Test methods
@@ -64,7 +60,7 @@ public class SchemaWriterTest extends AbstractSchemaTestCase {
   public void testEmptyClass() throws IOException, SchemaSyntaxException {
     TopicClass klass = new TopicClass(schema, "bingo");
     TypeSpecification typespec = new TypeSpecification();
-    typespec.setClassMatcher(new SubjectIndicatorMatcher(new URILocator("http://psi.ontopia.net/bongo/#bongo")));
+    typespec.setClassMatcher(new SubjectIndicatorMatcher(URILocator.create("http://psi.ontopia.net/bongo/#bongo")));
     klass.setTypeSpecification(typespec);
     schema.addTopicClass(klass);
     writeSchema("out", "emptyclass.xml", schema);
@@ -84,12 +80,12 @@ public class SchemaWriterTest extends AbstractSchemaTestCase {
   public void testUnscopedOccurrence() throws IOException, SchemaSyntaxException {
     TopicClass klass = new TopicClass(schema, "bingo");
     TypeSpecification typespec = new TypeSpecification();
-    typespec.setClassMatcher(new SubjectIndicatorMatcher(new URILocator("http://psi.ontopia.net/bongo/#bongo")));
+    typespec.setClassMatcher(new SubjectIndicatorMatcher(URILocator.create("http://psi.ontopia.net/bongo/#bongo")));
     klass.setTypeSpecification(typespec);
 
     OccurrenceConstraint oc = new OccurrenceConstraint(klass);
     typespec = new TypeSpecification();
-    typespec.setClassMatcher(new SubjectIndicatorMatcher(new URILocator("http://psi.ontopia.net/bongo/#rongo")));
+    typespec.setClassMatcher(new SubjectIndicatorMatcher(URILocator.create("http://psi.ontopia.net/bongo/#rongo")));
     oc.setTypeSpecification(typespec);
     klass.addOccurrenceConstraint(oc);    
     schema.addTopicClass(klass);

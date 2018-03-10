@@ -20,11 +20,8 @@
 
 package net.ontopia.topicmaps.query.core;
 
-import java.util.Map;
 import java.io.IOException;
-import java.net.MalformedURLException;
-
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -262,7 +259,7 @@ public class InsertTest extends AbstractQueryTest {
     assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == (topics + 1));
 
-    TopicIF test = topicmap.getTopicBySubjectIdentifier(new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
+    TopicIF test = topicmap.getTopicBySubjectIdentifier(URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
     assertTrue("no xtm:test after insert", test != null);
   }  
 
@@ -283,12 +280,7 @@ public class InsertTest extends AbstractQueryTest {
     // this one is valid because there are no relative URIs
     update("insert <urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304> .");
 
-    LocatorIF si;
-    try {
-      si = new URILocator("urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304");
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    LocatorIF si = URILocator.create("urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304");
     
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(si);
     assertTrue("topic was not inserted", topic != null);
@@ -322,7 +314,7 @@ public class InsertTest extends AbstractQueryTest {
            "from " +
            "  $psi = \"http://example.com\" ");
 
-    LocatorIF psi = new URILocator("http://example.com");
+    LocatorIF psi = URILocator.create("http://example.com");
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(psi);
     assertTrue("topic not found by PSI", topic != null);
   }
@@ -353,7 +345,7 @@ public class InsertTest extends AbstractQueryTest {
     assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == (topics + 1));
 
-    TopicIF test = topicmap.getTopicBySubjectIdentifier(new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
+    TopicIF test = topicmap.getTopicBySubjectIdentifier(URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
     assertTrue("no xtm:test after insert", test != null);
   }  
 

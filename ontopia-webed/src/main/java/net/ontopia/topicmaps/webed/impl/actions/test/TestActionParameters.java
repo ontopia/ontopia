@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.actions;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -50,7 +50,7 @@ public class TestActionParameters implements ActionIF {
     LocatorIF testLocator = null;
     try {
       testLocator = new URILocator("http://psi.ontopia.net/test/test-topic");
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   

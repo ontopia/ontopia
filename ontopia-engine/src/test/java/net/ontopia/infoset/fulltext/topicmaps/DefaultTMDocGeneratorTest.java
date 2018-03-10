@@ -20,23 +20,21 @@
 
 package net.ontopia.infoset.fulltext.topicmaps;
 
-import java.net.MalformedURLException;
 import java.util.Collection;
 import junit.framework.TestCase;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
@@ -125,7 +123,7 @@ public class DefaultTMDocGeneratorTest extends TestCase {
 
     verifyObjectId(occ, doc.getField("object_id"));
     verifyClass(doc.getField("class"), "O");
-    verifyLocator(doc, "http://www.ontopia.net/");
+    verifyLocator(doc, "http://www.ontopia.net");
   }
   
   public void testTopicGenerate() {
@@ -178,7 +176,7 @@ public class DefaultTMDocGeneratorTest extends TestCase {
 
     verifyObjectId(vn, doc.getField("object_id"));
     verifyClass(doc.getField("class"), "N");
-    verifyLocator(doc, "http://www.ontopia.no/");
+    verifyLocator(doc, "http://www.ontopia.no");
   }
   
   // --- helper methods
@@ -212,13 +210,7 @@ public class DefaultTMDocGeneratorTest extends TestCase {
 
 
   private LocatorIF makeLocator(String uri) {
-    try {
-      return new URILocator(uri);
-    }
-    catch (MalformedURLException e) {
-      fail("INTERNAL: URI was malformed");
-      return null; // never returns
-    }
+    return URILocator.create(uri);
   }
   
 }

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 
 import net.ontopia.infoset.content.ContentStoreException;
@@ -95,7 +95,7 @@ public class UploadFile implements ActionIF {
 			}
     } catch (ContentStoreException e) {
       throw new ActionRuntimeException(e);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new ActionRuntimeException(e);
     } catch (java.io.IOException e) {
       throw new ActionRuntimeException("Error when saving file to content store", e);

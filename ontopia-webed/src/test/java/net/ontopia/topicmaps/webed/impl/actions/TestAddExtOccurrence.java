@@ -66,7 +66,7 @@ public class TestAddExtOccurrence extends AbstractWebedTestCase {
     while (occIT.hasNext()){
       OccurrenceIF occ = occIT.next();
             
-      if (occ.getLocator().getAddress().equals("http://www.sf.net/"))
+      if (occ.getLocator().getAddress().equals("http://www.sf.net"))
 	hasit = true;
     }
     assertFalse("The Occurrence is not correct", !(hasit));
@@ -94,7 +94,7 @@ public class TestAddExtOccurrence extends AbstractWebedTestCase {
     boolean hasit = false;
     while (occIT.hasNext()){
       OccurrenceIF occ = occIT.next();
-      if ((occ.getLocator().getAddress().equals("http://www.sf.net/")) && 
+      if ((occ.getLocator().getAddress().equals("http://www.sf.net")) && 
 	  (occ.getType() == type))
 	hasit = true;
       
@@ -124,7 +124,7 @@ public class TestAddExtOccurrence extends AbstractWebedTestCase {
     boolean hasit = false;
     while (occIT.hasNext()){
       OccurrenceIF occ = occIT.next();
-      if ((occ.getLocator().getAddress().equals("http://www.sf.net/")) && 
+      if ((occ.getLocator().getAddress().equals("http://www.sf.net")) && 
 	  (occ.getType() == type) &&
 	  (occ.getScope().iterator().next() == scope))
 	hasit = true;

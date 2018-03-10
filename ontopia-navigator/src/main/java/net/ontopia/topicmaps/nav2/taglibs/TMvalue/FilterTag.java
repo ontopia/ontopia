@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Collection;
@@ -166,7 +166,7 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
         if (topic != null)
           classes.add(topic);
       }
-      catch (MalformedURLException e) {
+      catch (URISyntaxException e) {
         // --- 2nd try: interpret <instanceOf> as variable name
         classes = contextTag.getContextManager().getValue(instanceOf);
       }

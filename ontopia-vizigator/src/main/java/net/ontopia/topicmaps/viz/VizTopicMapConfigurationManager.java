@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1157,7 +1157,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
           String data = occurrence.getValue();
           try {
             locator = new URILocator(base + data);
-          } catch (MalformedURLException e) {
+          } catch (URISyntaxException e) {
             // Ignore any errors
           }
         }
@@ -1171,7 +1171,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
           String data = occurrence.getValue();
           try {
             locator = new URILocator(base + data);
-          } catch (MalformedURLException e) {
+          } catch (URISyntaxException e) {
             // Ignore any errors
           }
         }

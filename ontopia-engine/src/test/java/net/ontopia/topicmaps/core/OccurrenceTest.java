@@ -31,7 +31,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
@@ -39,7 +38,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.ReaderInputStream;
-import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.io.IOUtils;
@@ -97,8 +95,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   public void testLocator() {
     assertTrue("initial locator not null", occurrence.getLocator() == null);
 
-    try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       occurrence.setLocator(loc);
       assertTrue("locator identity not maintained after set",
              occurrence.getLocator().equals(loc));
@@ -112,10 +109,6 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
       assertTrue("locator identity not maintained after set",
              occurrence.getLocator().equals(loc));
 			assertTrue("data type is incorrect. should be xsd:anyURI", Objects.equals(occurrence.getDataType(), DataTypes.TYPE_URI));
-    }
-    catch (MalformedURLException e) {
-      fail("(INTERNAL) given URI was malformed");
-    }
   }
 
 	public void testNonURILocator() {

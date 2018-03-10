@@ -27,7 +27,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: An RDF file topic map reference.
@@ -39,7 +38,7 @@ public class RDFTopicMapReference extends AbstractOntopolyURLReference {
   private boolean lenient;
   
   public RDFTopicMapReference(URL url, String id, String title) {
-    super(url, id, title, URILocator.create(url.toString()));
+    super(url, id, title, new URILocator(url));
   }
   
   public RDFTopicMapReference(URL url, String id, String title, LocatorIF base_address, String syntax) {

@@ -3,7 +3,7 @@
   <topic id="norge">
     <baseName><baseNameString>Norge</baseNameString></baseName>
     <occurrence>
-      <resourceRef xlink:href="http://www.norge.no"/>
+      <resourceRef xlink:href="http://www.norge.no/"/>
     </occurrence>
   </topic>
 

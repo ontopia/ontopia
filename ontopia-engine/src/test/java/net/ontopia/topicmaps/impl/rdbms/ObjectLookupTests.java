@@ -70,9 +70,9 @@ public class ObjectLookupTests extends TestCase {
     tm = store.getTopicMap();
 
     // Test TopicMapIF.getTopicBySubjectIdentifier
-    TopicIF topic = tm.getTopicBySubjectIdentifier(new URILocator("http://test.ontopia.net/indicator1"));
+    TopicIF topic = tm.getTopicBySubjectIdentifier(URILocator.create("http://test.ontopia.net/indicator1"));
     assertTrue("topic not found by indicator [1]", topic != null);
-    topic = tm.getTopicBySubjectIdentifier(new URILocator("http://test.ontopia.net/indicator2"));
+    topic = tm.getTopicBySubjectIdentifier(URILocator.create("http://test.ontopia.net/indicator2"));
     assertTrue("topic not found by indicator [2]", topic != null);
     
     // Test TopicMapIF.getObjectByItemIdentifier
@@ -84,7 +84,7 @@ public class ObjectLookupTests extends TestCase {
     assertTrue("tmobject not found by source locator [C]", tmobject != null);
 
     // Test TopicMapIF.getTopicBySubject
-    topic = tm.getTopicBySubjectLocator(new URILocator("http://test.ontopia.net/subject"));
+    topic = tm.getTopicBySubjectLocator(URILocator.create("http://test.ontopia.net/subject"));
     assertTrue("topic not found by subject", topic != null);
 
     store.delete(true);
