@@ -55,6 +55,7 @@ public class Occurrence extends Scoped {
 		return dataType;
 	}
 
+	@JsonIgnore
 	public void setDatatype(URILocator datatype) {
 		this.dataType = datatype;
 	}
