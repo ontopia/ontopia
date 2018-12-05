@@ -81,7 +81,7 @@
 		<jtm.revision>46</jtm.revision>
 		<tmxml.revision>68</tmxml.revision>
 		<!-- reused dependency versions -->
-		<lucene.version>6.5.0</lucene.version>
+		<lucene.version>7.1.0</lucene.version>
 		<lucene.snowball.version>3.0.3</lucene.snowball.version>
 		<axis2.version>1.6.2</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
