@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import net.ontopia.utils.OntopiaUnsupportedException;
@@ -58,7 +59,7 @@ public class AbstractTransactionalResource extends AbstractPagedResource {
 		super.setInfoHeaders();
 		TopicMapReferenceIF reference = getTopicMapReference();
 		if (openStore && (reference != null)) {
-			HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Topicmap", reference.getId());
+			HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_ONTOPIA_TOPICMAP, reference.getId());
 		}
 	}
 

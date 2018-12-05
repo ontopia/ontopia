@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.rest.utils;
 
+import net.ontopia.topicmaps.rest.Constants;
 import org.restlet.Response;
 import org.restlet.engine.header.Header;
 import org.restlet.util.Series;
@@ -41,15 +42,15 @@ public class HeaderUtils {
 	}
 	
 	public static int getCount(Response response) {
-		return getIntHeader(response, "X-Paging-Count");
+		return getIntHeader(response, Constants.HEADER_PAGING_COUNT);
 	}
 
 	public static int getLimit(Response response) {
-		return getIntHeader(response, "X-Paging-Limit");
+		return getIntHeader(response, Constants.HEADER_PAGING_LIMIT);
 	}
 
 	public static int getOffset(Response response) {
-		return getIntHeader(response, "X-Paging-Offset");
+		return getIntHeader(response, Constants.HEADER_PAGING_OFFSET);
 	}
 
 	private static int getIntHeader(Response response, String header) {

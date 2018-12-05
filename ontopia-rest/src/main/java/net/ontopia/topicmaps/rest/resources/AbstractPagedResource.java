@@ -123,9 +123,9 @@ public class AbstractPagedResource extends AbstractOntopiaResource {
 	}
 
 	protected void addPagingHeaders(int size, int offset, int limit) {
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging-Count", Integer.toString(size));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging-Limit", Integer.toString(limit));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging-Offset", Integer.toString(offset));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging", offset + "-" + (Math.min(offset + limit, size) - 1) + "/" + size);
+		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_PAGING_COUNT, Integer.toString(size));
+		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_PAGING_LIMIT, Integer.toString(limit));
+		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_PAGING_OFFSET, Integer.toString(offset));
+		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_PAGING, offset + "-" + (Math.min(offset + limit, size) - 1) + "/" + size);
 	}
 }

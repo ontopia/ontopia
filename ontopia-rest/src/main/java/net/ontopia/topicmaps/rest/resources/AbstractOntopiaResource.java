@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.OntopiaRestApplication;
 import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.converters.jackson.JacksonRepresentationImpl;
@@ -57,8 +58,8 @@ public class AbstractOntopiaResource extends ServerResource {
 	}
 
 	protected void setInfoHeaders() {
-		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Resource", ClassUtils.collapsedName(getClass()));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Application", ClassUtils.collapsedName(getOntopia().getClass()));
+		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_ONTOPIA_RESOURCE, ClassUtils.collapsedName(getClass()));
+		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_ONTOPIA_APPLICATION, ClassUtils.collapsedName(getOntopia().getClass()));
 	}
 	
 	/**
