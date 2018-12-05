@@ -58,8 +58,8 @@ public class AbstractOntopiaResource extends ServerResource {
 	}
 
 	protected void setInfoHeaders() {
-		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_ONTOPIA_RESOURCE, ClassUtils.collapsedName(getClass()));
-		HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_ONTOPIA_APPLICATION, ClassUtils.collapsedName(getOntopia().getClass()));
+		addResponseHeader(Constants.HEADER_ONTOPIA_RESOURCE, ClassUtils.collapsedName(getClass()));
+		addResponseHeader(Constants.HEADER_ONTOPIA_APPLICATION, ClassUtils.collapsedName(getOntopia().getClass()));
 	}
 	
 	/**
@@ -130,5 +130,9 @@ public class AbstractOntopiaResource extends ServerResource {
 		} else {
 			super.doError(status);
 		}
+	}
+	
+	protected void addResponseHeader(String name, String value) {
+		HeaderUtils.addResponseHeader(getResponse(), name, value);
 	}
 }

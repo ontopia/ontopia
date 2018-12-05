@@ -27,7 +27,6 @@ import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import net.ontopia.utils.OntopiaUnsupportedException;
 import org.restlet.data.Method;
 import org.restlet.resource.ResourceException;
@@ -59,7 +58,7 @@ public class AbstractTransactionalResource extends AbstractPagedResource {
 		super.setInfoHeaders();
 		TopicMapReferenceIF reference = getTopicMapReference();
 		if (openStore && (reference != null)) {
-			HeaderUtils.addResponseHeader(getResponse(), Constants.HEADER_ONTOPIA_TOPICMAP, reference.getId());
+			addResponseHeader(Constants.HEADER_ONTOPIA_TOPICMAP, reference.getId());
 		}
 	}
 
