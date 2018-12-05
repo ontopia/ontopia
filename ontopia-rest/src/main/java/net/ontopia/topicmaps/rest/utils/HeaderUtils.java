@@ -21,22 +21,10 @@
 package net.ontopia.topicmaps.rest.utils;
 
 import org.restlet.Response;
-import org.restlet.engine.header.Header;
-import org.restlet.util.Series;
 
 public class HeaderUtils {
 
 	public static void addResponseHeader(Response response, String header, String value) {
-		getHeaders(response).add(new Header(header, value));
-	}
-
-	@SuppressWarnings("unchecked")
-	public static Series<Header> getHeaders(Response response) {
-		Series<Header> headers = (Series<Header>) response.getAttributes().get("org.restlet.http.headers");
-		if (headers == null) {
-			headers = new Series<>(Header.class);
-			response.getAttributes().put("org.restlet.http.headers", headers);
-		}
-		return headers;
+		response.getHeaders().add(header, value);
 	}
 }

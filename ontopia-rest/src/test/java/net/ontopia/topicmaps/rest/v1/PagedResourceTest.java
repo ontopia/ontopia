@@ -27,7 +27,6 @@ import java.util.Collection;
 import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.OntopiaTestResource;
 import net.ontopia.topicmaps.rest.model.Topic;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -143,7 +142,7 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 
 	private int getIntHeader(Response response, String header) {
 		try {
-			return Integer.parseInt(HeaderUtils.getHeaders(response).getFirstValue(header));
+			return Integer.parseInt(response.getHeaders().getFirstValue(header));
 		} catch (NumberFormatException nfe) {
 			return -1;
 		}

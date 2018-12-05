@@ -35,7 +35,6 @@ import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.converters.jackson.JacksonRepresentationImpl;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.utils.ClassUtils;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
 import org.restlet.data.Status;
@@ -133,6 +132,6 @@ public class AbstractOntopiaResource extends ServerResource {
 	}
 	
 	protected void addResponseHeader(String name, String value) {
-		HeaderUtils.addResponseHeader(getResponse(), name, value);
+		getResponse().getHeaders().add(name, value);
 	}
 }
