@@ -1,3 +1,8 @@
+![build status](https://img.shields.io/travis/com/ontopia/ontopia.svg)
+![code quality](https://img.shields.io/codacy/grade/4861113723a34cdba6ef3b7034d86b15.svg)
+![license](https://img.shields.io/github/license/ontopia/ontopia.svg)
+![release](https://img.shields.io/github/release/ontopia/ontopia.svg)
+
 ![Ontopia Logo](https://ontopia.net/images/logoBig.gif)
 
 Welcome to Ontopia, the open source tools for building, maintaining and deploying 
