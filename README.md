@@ -2,6 +2,7 @@
 ![code quality](https://img.shields.io/codacy/grade/4861113723a34cdba6ef3b7034d86b15.svg)
 ![license](https://img.shields.io/github/license/ontopia/ontopia.svg)
 ![release](https://img.shields.io/github/release/ontopia/ontopia.svg)
+![maven central](https://img.shields.io/maven-central/v/net.ontopia/ontopia-engine.svg)
 
 ![Ontopia Logo](https://ontopia.net/images/logoBig.gif)
 
