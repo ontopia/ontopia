@@ -25,7 +25,7 @@ If you are a starting user of Ontopia, or want more general information, we reco
 ## Using Ontopia
 You can use the above link to download a full Ontopia package that includes a fully configured 
 [Tomcat](http://tomcat.apache.org/) instance that you can run on your local machine. This will allow you to start 
-working with Topic Maps. See the [requirements](./InstallGuide#Requirements) and [[installation guide|InstallGuide]].
+working with Topic Maps. See the [requirements](https://github.com/ontopia/ontopia/wiki/InstallGuide#requirements) and [installation guide](https://github.com/ontopia/ontopia/wiki/InstallGuide).
 
 ### Maven
 You can also use Ontopia as a [maven](https://maven.apache.org/) dependency, allowing you to build Topic Maps 
