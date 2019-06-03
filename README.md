@@ -1,4 +1,4 @@
-![Ontopia Logo](https://www.ontopia.net/images/logoBig.gif)
+![Ontopia Logo](https://ontopia.net/images/logoBig.gif)
 
 Welcome to Ontopia, the open source tools for building, maintaining and deploying 
 [Topic Maps](http://en.wikipedia.org/wiki/Topic_Maps)-based applications. 
@@ -7,7 +7,7 @@ If you are a starting user of Ontopia, or want more general information, we reco
 [the Ontopia.net website](http://ontopia.net).
 
 ## Get Ontopia
-[<img src="https://www.ontopia.net/images/download-button.png"/>](../releases/latest)
+[<img src="https://ontopia.net/images/download-button.png"/>](../releases/latest)
 
 ### Older versions
  * [Ontopia 5.2.2](../releases/tag/ontopia-5.2.2)
