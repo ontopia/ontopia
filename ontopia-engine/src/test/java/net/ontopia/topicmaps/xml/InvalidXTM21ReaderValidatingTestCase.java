@@ -26,8 +26,12 @@ import java.util.List;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class InvalidXTM21ReaderValidatingTestCase {
   
   private final static String testdataDirectory = "xtm21";
@@ -47,6 +51,7 @@ public class InvalidXTM21ReaderValidatingTestCase {
       this.inputFile = inputFile;
     }
 
+    @Test
     public void testFile() throws IOException {
       XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(true);

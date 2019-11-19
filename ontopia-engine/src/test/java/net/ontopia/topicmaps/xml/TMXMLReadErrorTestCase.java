@@ -25,8 +25,12 @@ import java.util.List;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class TMXMLReadErrorTestCase {
 
   private final static String testdataDirectory = "tmxml";
@@ -44,6 +48,7 @@ public class TMXMLReadErrorTestCase {
     this.inputFile = inputFile;
   }
 
+  @Test
   public void testFile() throws IOException {
     TMXMLReader reader = new TMXMLReader(inputFile);
 

@@ -32,8 +32,12 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class CanonicalExporterMultiXTMTests {
   
   private final static String testdataDirectory = "canonical";
@@ -57,7 +61,7 @@ public class CanonicalExporterMultiXTMTests {
   }
 
   // --- Test case class
-
+    @Test
     public void testExport() throws IOException {
       
       // Get store factory
