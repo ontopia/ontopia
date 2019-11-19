@@ -23,31 +23,23 @@ package net.ontopia.topicmaps.query.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class QueryResultTest extends AbstractQueryTest {
   
-  public QueryResultTest(String name) {
-    super(name);
-  }
-
   /// setup
 
-  @Override
+  @Before
   public void setUp() {
     QueryMatches.initialSize = 1;
   }
 
-  /// setup
-
-  @Override
-  public void tearDown() {    
-    closeStore();
-  }
-
   /// test cases
   
+  @Test
   public void testColumnNameNoSelect() throws InvalidQueryException, IOException {
     load("family.ltm");
 
@@ -60,46 +52,48 @@ public class QueryResultTest extends AbstractQueryTest {
     QueryResultIF result = processor.execute(query);
 
     for (int ix = 0; ix < 3; ix++)
-      assertTrue("unknown variable " + result.getColumnName(ix) + " found",
+      Assert.assertTrue("unknown variable " + result.getColumnName(ix) + " found",
                  vars.remove(result.getColumnName(ix)));
 
-    assertTrue("not all variables found", vars.isEmpty());
+    Assert.assertTrue("not all variables found", vars.isEmpty());
     
     try {
       result.getColumnName(3);
-      fail("accepted non-existent column");
+      Assert.fail("accepted non-existent column");
     } catch (IndexOutOfBoundsException e) {
     }
 
     try {
       result.getColumnName(-1);
-      fail("accepted non-existent column");
+      Assert.fail("accepted non-existent column");
     } catch (IndexOutOfBoundsException e) {
     }
   }  
 
+  @Test
   public void testColumnNameSelect() throws InvalidQueryException, IOException {
     load("family.ltm");
     
     String query = "select $M, $F from parenthood($M : mother, $F : father, $C : child)?";
     QueryResultIF result = processor.execute(query);
 
-    assertTrue("M not first column", result.getColumnName(0).equals("M"));
-    assertTrue("F not second column", result.getColumnName(1).equals("F"));
+    Assert.assertTrue("M not first column", result.getColumnName(0).equals("M"));
+    Assert.assertTrue("F not second column", result.getColumnName(1).equals("F"));
     
     try {
       result.getColumnName(2);
-      fail("accepted non-existent column");
+      Assert.fail("accepted non-existent column");
     } catch (IndexOutOfBoundsException e) {
     }
 
     try {
       result.getColumnName(-1);
-      fail("accepted non-existent column");
+      Assert.fail("accepted non-existent column");
     } catch (IndexOutOfBoundsException e) {
     }
   }
 
+  @Test
   public void testColumnNamesNoSelect() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -107,7 +101,7 @@ public class QueryResultTest extends AbstractQueryTest {
     QueryResultIF result = processor.execute(query);
     String[] cols = result.getColumnNames();
 
-    assertTrue("wrong length of column name array", cols.length == 3);
+    Assert.assertTrue("wrong length of column name array", cols.length == 3);
 
     List vars = new ArrayList();
     vars.add("M");
@@ -115,12 +109,13 @@ public class QueryResultTest extends AbstractQueryTest {
     vars.add("C");
 
     for (int ix = 0; ix < 3; ix++)
-      assertTrue("unknown variable " + cols[ix] + " found",
+      Assert.assertTrue("unknown variable " + cols[ix] + " found",
                  vars.remove(cols[ix]));
 
-    assertTrue("not all variables found", vars.isEmpty());
+    Assert.assertTrue("not all variables found", vars.isEmpty());
   }  
 
+  @Test
   public void testColumnNamesSelect() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -128,56 +123,60 @@ public class QueryResultTest extends AbstractQueryTest {
     QueryResultIF result = processor.execute(query);
     String[] cols = result.getColumnNames();
 
-    assertTrue("wrong length of column name array", cols.length == 2);
-    assertTrue("M not first column", cols[0].equals("M"));
-    assertTrue("F not second column", cols[1].equals("F"));
+    Assert.assertTrue("wrong length of column name array", cols.length == 2);
+    Assert.assertTrue("M not first column", cols[0].equals("M"));
+    Assert.assertTrue("F not second column", cols[1].equals("F"));
   }
 
+  @Test
   public void testGetIndexNoSelect() throws InvalidQueryException, IOException{
     load("family.ltm");
     
     String query = "parenthood($M : mother, $F : father, $C : child)?";
     QueryResultIF result = processor.execute(query);
 
-    assertTrue("variable M had bad index",
+    Assert.assertTrue("variable M had bad index",
                result.getIndex("M") >= 0 && result.getIndex("M") < 3);
-    assertTrue("variable F had bad index",
+    Assert.assertTrue("variable F had bad index",
                result.getIndex("F") >= 0 && result.getIndex("F") < 3);
-    assertTrue("variable C had bad index",
+    Assert.assertTrue("variable C had bad index",
                result.getIndex("C") >= 0 && result.getIndex("C") < 3);
-    assertTrue("non-existent variable Q was found",
+    Assert.assertTrue("non-existent variable Q was found",
                result.getIndex("Q") == -1);
   }  
 
+  @Test
   public void testGetIndexSelect() throws InvalidQueryException, IOException{
     load("family.ltm");
     
     String query = "select $M, $F from parenthood($M : mother, $F : father, $C : child)?";
     QueryResultIF result = processor.execute(query);
 
-    assertTrue("variable M had bad index",
+    Assert.assertTrue("variable M had bad index",
                result.getIndex("M") == 0);
-    assertTrue("variable F had bad index",
+    Assert.assertTrue("variable F had bad index",
                result.getIndex("F") == 1);
-    assertTrue("non-existent variable Q was found",
+    Assert.assertTrue("non-existent variable Q was found",
                result.getIndex("Q") == -1);
   }
   
+  @Test
   public void testGetWidthNoSelect() throws InvalidQueryException, IOException{
     load("family.ltm");
     
     String query = "parenthood($M : mother, $F : father, $C : child)?";
     QueryResultIF result = processor.execute(query);
 
-    assertTrue("result had wrong width", result.getWidth() == 3);    
+    Assert.assertTrue("result had wrong width", result.getWidth() == 3);    
   }  
   
+  @Test
   public void testGetWidthSelect() throws InvalidQueryException, IOException{
     load("family.ltm");
     
     String query = "select $M, $F from parenthood($M : mother, $F : father, $C : child)?";
     QueryResultIF result = processor.execute(query);
-    assertTrue("result had wrong width", result.getWidth() == 2);    
+    Assert.assertTrue("result had wrong width", result.getWidth() == 2);    
   }
   
 }

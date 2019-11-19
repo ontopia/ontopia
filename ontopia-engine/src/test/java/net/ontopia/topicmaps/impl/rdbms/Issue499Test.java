@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
 import java.util.Collections;
-import junit.framework.Assert;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -39,6 +38,7 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.utils.StreamUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

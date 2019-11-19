@@ -20,21 +20,20 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import net.ontopia.topicmaps.core.TestFactoryIF;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class OccurrenceTest extends net.ontopia.topicmaps.core.OccurrenceTest {
-
-  public OccurrenceTest(String name) {
-    super(name);
-  }
 
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();
   }
 
+  @Test
   public void testIssue494() throws Exception {
     // bug is only triggered if the value is committed
     topicmap.getStore().commit();
-    assertNotNull("Bug 494: empty occurrence value returned as null", occurrence.getValue());
+    Assert.assertNotNull("Bug 494: empty occurrence value returned as null", occurrence.getValue());
   }
 }

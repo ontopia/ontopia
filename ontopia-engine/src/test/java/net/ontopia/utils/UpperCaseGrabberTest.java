@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class UpperCaseGrabberTest extends AbstractGrabberTest {
 
-  public UpperCaseGrabberTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(UpperCaseGrabberTest.class);
-  }
-  
+  @Test
   public void testUpperCaseGrabber() {
     String str = "Don't you eat that YELLOW snow!";
       
@@ -40,7 +32,3 @@ public class UpperCaseGrabberTest extends AbstractGrabberTest {
   }
 
 }
-
-
-
-

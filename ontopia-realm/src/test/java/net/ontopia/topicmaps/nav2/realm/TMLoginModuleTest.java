@@ -22,11 +22,10 @@ package net.ontopia.topicmaps.nav2.realm;
 
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-
-import java.security.Principal;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -34,18 +33,13 @@ import javax.security.auth.callback.NameCallback;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
-
+import org.junit.Assert;
 import org.junit.Test;
-import junit.framework.TestCase;
 
 /**
  * INTERNAL: Tests the TMLoginModule class.
  */
-public class TMLoginModuleTest extends TestCase {
-
-  public TMLoginModuleTest(String name) {
-    super(name);
-  }
+public class TMLoginModuleTest {
 
   @Test
   public void testLoginModulePlaintextSucce() throws Exception{
@@ -115,22 +109,22 @@ public class TMLoginModuleTest extends TestCase {
               _principals, options);
 
     // should fail with incorrect password
-    assertFalse("Could log in with wrong password", loginModule.login());
-    assertTrue("Could not log out (1)", loginModule.logout());
+    Assert.assertFalse("Could log in with wrong password", loginModule.login());
+    Assert.assertTrue("Could not log out (1)", loginModule.logout());
 
     // should succeed
-    assertTrue("Could not log in with correct tokens (2)", loginModule.login());
-    assertTrue("Could not log out (2)", loginModule.logout());
+    Assert.assertTrue("Could not log in with correct tokens (2)", loginModule.login());
+    Assert.assertTrue("Could not log out (2)", loginModule.logout());
 
     // should fail with other user's password
-    assertFalse("Could log in with other user's password", loginModule.login());
-    assertTrue("Could not log out (3)", loginModule.logout());
+    Assert.assertFalse("Could log in with other user's password", loginModule.login());
+    Assert.assertTrue("Could not log out (3)", loginModule.logout());
 
     // should succeed
-    assertTrue("Could not log in with correct tokens", loginModule.login());
+    Assert.assertTrue("Could not log in with correct tokens", loginModule.login());
 
     // accept last token
-    assertTrue("Could not commit", loginModule.commit());
+    Assert.assertTrue("Could not commit", loginModule.commit());
 
     // verify roles
     Collection principals = subject.getPrincipals();
@@ -142,7 +136,7 @@ public class TMLoginModuleTest extends TestCase {
     //! assertTrue("Subject does not have correct number of principals", 
     //!            principals.size() == pnames.length);
 
-    assertEquals("Subject does not have correct number of principals " + java.util.Arrays.asList(principals), pnames.length, principals.size());
+    Assert.assertEquals("Subject does not have correct number of principals " + java.util.Arrays.asList(principals), pnames.length, principals.size());
 
     Iterator iter = principals.iterator();
     while (iter.hasNext()) {
@@ -155,7 +149,7 @@ public class TMLoginModuleTest extends TestCase {
 	  break;
 	}
       }
-      if (!ok) fail("User did not have proper principals: " + java.util.Arrays.asList(pnames));	
+      if (!ok) Assert.fail("User did not have proper principals: " + java.util.Arrays.asList(pnames));	
     }
   }
   

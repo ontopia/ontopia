@@ -20,27 +20,24 @@
 
 package net.ontopia.topicmaps.impl.tmapi2;
 
-import junit.framework.TestCase;
-import org.tmapi.core.TopicMapSystemFactory;
+import org.junit.Assert;
+import org.junit.Test;
 import org.tmapi.core.TopicMapSystem;
+import org.tmapi.core.TopicMapSystemFactory;
 
 /**
  * INTERNAL.
  */
-public class TopicMapSystemFactoryTest 
-  extends TestCase {
+public class TopicMapSystemFactoryTest {
 
-  public TopicMapSystemFactoryTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testFactory() throws org.tmapi.core.TMAPIException {
     TopicMapSystemFactory tmsf = TopicMapSystemFactory.newInstance();
-    assertTrue("TopicMapSystemFactory is not net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemFactory", 
+    Assert.assertTrue("TopicMapSystemFactory is not net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemFactory", 
 	       tmsf instanceof net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemFactory);
 
     TopicMapSystem ts = tmsf.newTopicMapSystem();
-    assertTrue("TopicMapSystem is not net.ontopia.topicmaps.impl.tmapi2.TopicMapSystem", 
+    Assert.assertTrue("TopicMapSystem is not net.ontopia.topicmaps.impl.tmapi2.TopicMapSystem", 
 	       ts instanceof net.ontopia.topicmaps.impl.tmapi2.MemoryTopicMapSystemImpl);
 
     ts.close();

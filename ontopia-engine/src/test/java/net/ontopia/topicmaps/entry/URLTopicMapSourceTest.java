@@ -23,15 +23,14 @@ package net.ontopia.topicmaps.entry;
 import java.util.Collection;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
 
-  public URLTopicMapSourceTest(String name) {
-    super(name);
-  }
-
   // --- Test cases (XTM)
 
+  @Test
   public void testXTM() {
     URLTopicMapSource source = new URLTopicMapSource("file:/tmp/foobar.xtm");
     source.setId("fooid");
@@ -42,6 +41,7 @@ public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
     doAbstractTopicMapSourceTests(source);
   }
 
+  @Test
   public void testXTM1() {
     URLTopicMapSource source = new URLTopicMapSource("file:/tmp/foobar.xtm");
     source.setId("fooid");
@@ -50,6 +50,7 @@ public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
     verifyXTMSource(source);
   }
 
+  @Test
   public void testXTM2() {
     URLTopicMapSource source = new URLTopicMapSource();
     source.setUrl("file:/tmp/foobar.xtm");
@@ -60,15 +61,16 @@ public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
 
   protected void verifyXTMSource(URLTopicMapSource source) {
     Collection refs = source.getReferences();
-    assertTrue("URLTopicMapSource.getReferences().size() != 1", refs.size() == 1);
+    Assert.assertTrue("URLTopicMapSource.getReferences().size() != 1", refs.size() == 1);
     TopicMapReferenceIF ref = (TopicMapReferenceIF)refs.iterator().next();
-    assertTrue("!TopicMapReference.getId().equals('foobar')", "fooid".equals(ref.getId()));
-    assertTrue("!TopicMapReference.getTitle().equals('foobar')", "footitle".equals(ref.getTitle()));    
-    assertTrue("!(TopicMapReferenceIF instanceof XTMTopicMapReference)", ref instanceof XTMTopicMapReference);
+    Assert.assertTrue("!TopicMapReference.getId().equals('foobar')", "fooid".equals(ref.getId()));
+    Assert.assertTrue("!TopicMapReference.getTitle().equals('foobar')", "footitle".equals(ref.getTitle()));    
+    Assert.assertTrue("!(TopicMapReferenceIF instanceof XTMTopicMapReference)", ref instanceof XTMTopicMapReference);
   }
 
   // --- Test cases (LTM)
 
+  @Test
   public void testLTM1() {
     URLTopicMapSource source = new URLTopicMapSource("file:/tmp/foobar.ltm");
     source.setId("fooid");
@@ -77,6 +79,7 @@ public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
     verifyLTMSource(source);
   }
 
+  @Test
   public void testLTM2() {
     URLTopicMapSource source = new URLTopicMapSource();
     source.setUrl("file:/tmp/foobar.ltm");
@@ -87,10 +90,10 @@ public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
 
   protected void verifyLTMSource(URLTopicMapSource source) {
     Collection refs = source.getReferences();
-    assertTrue("URLTopicMapSource.getReferences().size() != 1", refs.size() == 1);
+    Assert.assertTrue("URLTopicMapSource.getReferences().size() != 1", refs.size() == 1);
     TopicMapReferenceIF ref = (TopicMapReferenceIF)refs.iterator().next();
-    assertTrue("!TopicMapReference.getId().equals('foobar')", "fooid".equals(ref.getId()));
-    assertTrue("!TopicMapReference.getTitle().equals('foobar')", "footitle".equals(ref.getTitle()));    
-    assertTrue("!(TopicMapReferenceIF instanceof LTMTopicMapReference)", ref instanceof LTMTopicMapReference);
+    Assert.assertTrue("!TopicMapReference.getId().equals('foobar')", "fooid".equals(ref.getId()));
+    Assert.assertTrue("!TopicMapReference.getTitle().equals('foobar')", "footitle".equals(ref.getTitle()));    
+    Assert.assertTrue("!(TopicMapReferenceIF instanceof LTMTopicMapReference)", ref instanceof LTMTopicMapReference);
   }
 }

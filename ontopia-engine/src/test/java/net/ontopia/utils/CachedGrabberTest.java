@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestSuite;
-import junit.framework.Test;
+import org.junit.Test;
 
 public class CachedGrabberTest extends AbstractGrabberTest {
 
-  public CachedGrabberTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(CachedGrabberTest.class);
-  }
-  
+  @Test
   public void testCachedGrabber() {
     CachedGrabber grb = new CachedGrabber(new SubstringGrabber(5, 15));
     
@@ -54,7 +46,3 @@ public class CachedGrabberTest extends AbstractGrabberTest {
   }
 
 }
-
-
-
-

@@ -24,10 +24,6 @@ import net.ontopia.topicmaps.impl.basic.BasicTestFactory;
 
 public class EventManagerTests extends net.ontopia.topicmaps.core.events.EventManagerTests {
 
-  public EventManagerTests(String name) {
-    super(name);
-  }
-
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();

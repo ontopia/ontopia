@@ -20,18 +20,16 @@
 
 package net.ontopia.topicmaps.classify;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class SnowballStemmerTestCase extends TestCase {
-  
-  public SnowballStemmerTestCase(String name) {
-    super(name);
-  }
-  
+public class SnowballStemmerTestCase {
+
+  @Test  
   public void testNormalizer() {
     SnowballStemmer s = new SnowballStemmer("no");
 
-    assertEquals(s.stem("hopper"), "hopp");
+    Assert.assertEquals(s.stem("hopper"), "hopp");
   }
   
 }

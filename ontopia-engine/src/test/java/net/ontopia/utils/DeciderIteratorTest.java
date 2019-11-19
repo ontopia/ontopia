@@ -21,19 +21,11 @@
 package net.ontopia.utils;
 
 import java.util.Iterator;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class DeciderIteratorTest extends AbstractIteratorTest {
 
-  public DeciderIteratorTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(DeciderIteratorTest.class);
-  }
-  
+  @Test
   public void testDeciderIterator() {
 
     int size = 5;
@@ -51,7 +43,3 @@ public class DeciderIteratorTest extends AbstractIteratorTest {
   }
 
 }
-
-
-
-

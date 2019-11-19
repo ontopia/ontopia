@@ -25,20 +25,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import junit.framework.TestCase;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class ResourceBundlesTest extends TestCase {
+public class ResourceBundlesTest {
 
-  public ResourceBundlesTest(String name) {
-    super(name);
-  }
-  
   /**
    * Checks all properties files in a given directory for consistency
    * against the master file. Note that the properties are loaded from
    * the classpath.
    */
+  @Test
   public void testTranslationsAreConsistent() throws IOException {
     String languages[] = { "de", "no", "ja" };
     
@@ -59,7 +57,7 @@ public class ResourceBundlesTest extends TestCase {
           missing.add(prop);
       }
 
-      assertTrue(buildReport(file, missing, extra),
+      Assert.assertTrue(buildReport(file, missing, extra),
                  missing.isEmpty() && extra.isEmpty());
     }
   }

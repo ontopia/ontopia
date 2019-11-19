@@ -23,11 +23,11 @@ package net.ontopia.topicmaps.query.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import org.junit.Test;
 
 /**
  * INTERNAL: A set of tests for the BrainBank project which exercises
@@ -35,12 +35,9 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
  */
 public class BrainBankTests extends AbstractPredicateTest {
   
-  public BrainBankTests(String name) {
-    super(name);
-  }
-
   /// tests
   
+  @Test
   public void testFindHorseInName() throws InvalidQueryException, IOException {
     load("bb-test.ltm", true);
 
@@ -68,6 +65,7 @@ public class BrainBankTests extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testFindHorseInAssocDesc() throws InvalidQueryException, IOException {
     load("bb-test.ltm", true);
 
@@ -99,6 +97,7 @@ public class BrainBankTests extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testFindHorseInComments() throws InvalidQueryException, IOException {
     load("bb-test.ltm", true);
 

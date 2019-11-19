@@ -24,27 +24,25 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.utils.StringifierIF;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class TopicStringifiersTest extends TestCase {
+public class TopicStringifiersTest {
 
   protected TopicMapIF        topicmap; 
   protected TopicIF           topic; 
   protected TopicMapBuilderIF builder;
   protected Collection        empty;
 
-  public TopicStringifiersTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
     topic = builder.makeTopic();
@@ -61,20 +59,23 @@ public class TopicStringifiersTest extends TestCase {
 
   // getTopicNameStringifier
 
+  @Test
   public void testBNSEmpty() {
     StringifierIF sf = TopicStringifiers.getTopicNameStringifier(empty);
-    assertTrue("Stringifying topic with no names did not give \"[No name]\"",
+    Assert.assertTrue("Stringifying topic with no names did not give \"[No name]\"",
            sf.toString(topic).equals("[No name]"));
   }
         
+  @Test
   public void testBNSSingle() {
     StringifierIF sf = TopicStringifiers.getTopicNameStringifier(empty);
     builder.makeTopicName(topic, "Name");
                 
-    assertTrue("Stringifying topic with one name did not give that name",
+    Assert.assertTrue("Stringifying topic with one name did not give that name",
            sf.toString(topic).equals("Name"));
   }
 
+  @Test
   public void testBNSDouble1() {
     TopicIF theme = builder.makeTopic();
 
@@ -86,10 +87,11 @@ public class TopicStringifiersTest extends TestCase {
     scope.add(theme);
     StringifierIF sf = TopicStringifiers.getTopicNameStringifier(scope);
                 
-    assertTrue("Stringifying topic gave wrong name",
+    Assert.assertTrue("Stringifying topic gave wrong name",
            sf.toString(topic).equals("Name2"));
   }
 
+  @Test
   public void testBNSDouble2() {
     TopicIF theme = builder.makeTopic();
 
@@ -99,26 +101,29 @@ public class TopicStringifiersTest extends TestCase {
 
     StringifierIF sf = TopicStringifiers.getTopicNameStringifier(empty);
                 
-    assertTrue("Stringifying topic gave wrong name",
+    Assert.assertTrue("Stringifying topic gave wrong name",
            sf.toString(topic).equals("Name1"));
   }
 
   // getDefaultStringifier
 
+  @Test
   public void testDSEmpty() {
     StringifierIF sf = TopicStringifiers.getDefaultStringifier();
-    assertTrue("Stringifying topic with no names did not give \"[No name]\"",
+    Assert.assertTrue("Stringifying topic with no names did not give \"[No name]\"",
            sf.toString(topic).equals("[No name]"));
   }
         
+  @Test
   public void testDSSingle() {
     StringifierIF sf = TopicStringifiers.getDefaultStringifier();
     builder.makeTopicName(topic, "Name");
                 
-    assertTrue("Stringifying topic with one name did not give that name",
+    Assert.assertTrue("Stringifying topic with one name did not give that name",
            sf.toString(topic).equals("Name"));
   }
 
+  @Test
   public void testDSComplex() {
     TopicIF theme = builder.makeTopic();
 
@@ -128,10 +133,11 @@ public class TopicStringifiersTest extends TestCase {
 
     StringifierIF sf = TopicStringifiers.getDefaultStringifier();
                 
-    assertTrue("Stringifying topic gave wrong name",
+    Assert.assertTrue("Stringifying topic gave wrong name",
            sf.toString(topic).equals("Name1"));
   }
 
+  @Test
   public void testDSDisplay() {
     TopicIF display = builder.makeTopic();
     display.addSubjectIdentifier(PSI.getXTMDisplay());
@@ -144,36 +150,40 @@ public class TopicStringifiersTest extends TestCase {
     VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch");
 
     StringifierIF sf = TopicStringifiers.getDefaultStringifier();
-    assertTrue("Stringifying topic gave wrong display name",
+    Assert.assertTrue("Stringifying topic gave wrong display name",
            sf.toString(topic).equals("Display name"));
   }
 
+  @Test
   public void testDSNull() {
     StringifierIF sf = TopicStringifiers.getDefaultStringifier();
 
     String result = sf.toString(null);
     String wanted = "[No name]";
     
-    assertTrue("Stringifying null gave '" + result + "' instead of '" +
+    Assert.assertTrue("Stringifying null gave '" + result + "' instead of '" +
                wanted + "'", wanted.equals(sf.toString(null)));
   }
   
   // getSortNameStringifier
 
+  @Test
   public void testSSEmpty() {
     StringifierIF sf = TopicStringifiers.getSortNameStringifier();
-    assertTrue("Stringifying topic with no names did not give \"[No name]\"",
+    Assert.assertTrue("Stringifying topic with no names did not give \"[No name]\"",
            sf.toString(topic).equals("[No name]"));
   }
         
+  @Test
   public void testSSSingle() {
     StringifierIF sf = TopicStringifiers.getSortNameStringifier();
     builder.makeTopicName(topic, "Name");
                 
-    assertTrue("Stringifying topic with one name did not give that name",
+    Assert.assertTrue("Stringifying topic with one name did not give that name",
            sf.toString(topic).equals("Name"));
   }
 
+  @Test
   public void testSSComplex() {
     TopicIF theme = builder.makeTopic();
 
@@ -183,10 +193,11 @@ public class TopicStringifiersTest extends TestCase {
 
     StringifierIF sf = TopicStringifiers.getSortNameStringifier();
                 
-    assertTrue("Stringifying topic gave wrong name",
+    Assert.assertTrue("Stringifying topic gave wrong name",
            sf.toString(topic).equals("Name1"));
   }
 
+  @Test
   public void testSSSort() {
     TopicIF sort = builder.makeTopic();
     sort.addSubjectIdentifier(PSI.getXTMSort());
@@ -199,10 +210,11 @@ public class TopicStringifiersTest extends TestCase {
     VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch");
 
     StringifierIF sf = TopicStringifiers.getSortNameStringifier();
-    assertTrue("Stringifying topic gave wrong sort name",
+    Assert.assertTrue("Stringifying topic gave wrong sort name",
            sf.toString(topic).equals("Sort name"));
   }
 
+  @Test
   public void testVariantName() {
     TopicIF sort = builder.makeTopic();
     sort.addSubjectIdentifier(PSI.getXTMSort());
@@ -216,7 +228,7 @@ public class TopicStringifiersTest extends TestCase {
 
     StringifierIF sf =
       TopicStringifiers.getVariantNameStringifier(Collections.singleton(sort));
-    assertTrue("Stringifying topic gave wrong variant name",
+    Assert.assertTrue("Stringifying topic gave wrong variant name",
            sf.toString(topic).equals("Sort name"));
   }
 }

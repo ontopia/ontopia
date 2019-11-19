@@ -20,16 +20,14 @@
 
 package net.ontopia.topicmaps.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class ImportExportUtilsTest extends TestCase {
-
-  public ImportExportUtilsTest(String name) {
-    super(name);
-  }
+public class ImportExportUtilsTest {
 
   // --- Tests
 
+  @Test
   public void testGetTopicMapId() {
     testId("1", 1L);
     testId("123", 123L);
@@ -43,7 +41,7 @@ public class ImportExportUtilsTest extends TestCase {
   
   private void testId(String id, long y) {
     long x = ImportExportUtils.getTopicMapId(id);
-    assertTrue("Invalid id: " + x + " (should have been: " + y + ")", x == y);
+    Assert.assertTrue("Invalid id: " + x + " (should have been: " + y + ")", x == y);
   }
   
 }

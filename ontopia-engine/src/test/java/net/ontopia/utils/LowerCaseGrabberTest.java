@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class LowerCaseGrabberTest extends AbstractGrabberTest {
 
-  public LowerCaseGrabberTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(LowerCaseGrabberTest.class);
-  }
-  
+  @Test
   public void testLowerCaseGrabber() {
     String str = "Jazz is NOT dead, it JUST SMELLS funny";
       
@@ -40,7 +32,3 @@ public class LowerCaseGrabberTest extends AbstractGrabberTest {
   }
 
 }
-
-
-
-

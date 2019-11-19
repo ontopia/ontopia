@@ -23,13 +23,9 @@ package net.ontopia.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import junit.framework.TestCase;
+import org.junit.Assert;
 
-public abstract class AbstractIteratorTest extends TestCase {
-
-  public AbstractIteratorTest(String name) {
-    super(name);
-  }
+public abstract class AbstractIteratorTest {
 
   protected Iterator getIterator(int size) {
     return getCollection(size).iterator();
@@ -52,11 +48,7 @@ public abstract class AbstractIteratorTest extends TestCase {
       Object element = iterator.next();
       // System.out.println("Object #" + count + ":" + iterator.next());
     }
-    assertTrue("Number of elements equal", count == size);
+    Assert.assertTrue("Number of elements equal", count == size);
   }
 
 }
-
-
-
-

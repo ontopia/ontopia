@@ -21,9 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.util.Iterator;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -34,18 +32,18 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class MergeTMTest extends TestCase {
+public class MergeTMTest {
   protected TopicMapIF    topicmap1; 
   protected TopicMapIF    topicmap2; 
   protected TopicMapBuilderIF builder1;
   protected TopicMapBuilderIF builder2;
 
-  public MergeTMTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap1 = makeTopicMap();
     topicmap2 = makeTopicMap();
@@ -64,22 +62,24 @@ public class MergeTMTest extends TestCase {
       return new URILocator(uri);
     }
     catch (java.net.MalformedURLException e) {
-      fail("malformed URL given" + e.getMessage());
+      Assert.fail("malformed URL given" + e.getMessage());
       return null; // never executed...
     }
   }
     
   // --- Test cases for mergeInto(TM, TM)
 
+  @Test
   public void testEmptyTopicMaps() {
     try {
       MergeUtils.mergeInto(topicmap1, topicmap2);
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   }
  
+  @Test
   public void testEmptyTopics() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -87,16 +87,17 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("topics lost in merge",
+      Assert.assertTrue("topics lost in merge",
              topicmap1.getTopics().size() == 2);
-      assertTrue("original topic lost in merge",
+      Assert.assertTrue("original topic lost in merge",
              topicmap1.getTopics().contains(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   }    
 
+  @Test
   public void testSubjectMerge() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -106,18 +107,19 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("topics merged incorrectly",
+      Assert.assertTrue("topics merged incorrectly",
              topicmap1.getTopics().size() == 1);
-      assertTrue("original topic lost in merge",
+      Assert.assertTrue("original topic lost in merge",
              topicmap1.getTopics().contains(t1));
-      assertTrue("original topic subject lost in merge",
+      Assert.assertTrue("original topic subject lost in merge",
              ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectLocators().contains(makeLocator("http://www.ontopia.net")));
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   }    
 
+  @Test
   public void testSubjectIndicatorMerge() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -128,18 +130,19 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("topics merged incorrectly",
+      Assert.assertTrue("topics merged incorrectly",
              topicmap1.getTopics().size() == 1);
-      assertTrue("original topic lost in merge",
+      Assert.assertTrue("original topic lost in merge",
              topicmap1.getTopics().contains(t1));
-      assertTrue("topic subject indicator lost in merge",
+      Assert.assertTrue("topic subject indicator lost in merge",
              ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectIdentifiers().size() == 2);
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   }    
     
+  @Test
   public void testTopicIsSubjectIndicatorMerge() {
     TopicIF t1 = builder1.makeTopic();
     t1.addItemIdentifier(makeLocator("http://www.ontopia.net"));
@@ -149,9 +152,9 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
            topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
            topicmap1.getTopics().contains(t1));
 
     // NOTE: According to bug #652 it is now allowed for topics to
@@ -159,15 +162,16 @@ public class MergeTMTest extends TestCase {
     // indicators properties. Thus the following test has been updated
     // to check for 2 locators.
     TopicIF topic = (TopicIF) topicmap1.getTopics().iterator().next();
-    assertTrue("topic has wrong number of subject identifiers",
+    Assert.assertTrue("topic has wrong number of subject identifiers",
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
     // https://github.com/ontopia/ontopia/issues/28
-    assertTrue("topic lost item identifier in merge",
+    Assert.assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
 
+  @Test
   public void testTopicIsSubjectIndicatorMerge2() {
     TopicIF t1 = builder1.makeTopic();
     t1.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
@@ -177,9 +181,9 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
            topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
            topicmap1.getTopics().contains(t1));
 
     // NOTE: According to bug #652 it is now allowed for topics to
@@ -187,15 +191,16 @@ public class MergeTMTest extends TestCase {
     // indicators properties. Thus the following test has been updated
     // to check for 2 locators.
     TopicIF topic = (TopicIF) topicmap1.getTopics().iterator().next();
-    assertTrue("topic has wrong number of subject identifiers",
+    Assert.assertTrue("topic has wrong number of subject identifiers",
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
     // https://github.com/ontopia/ontopia/issues/28
-    assertTrue("topic lost item identifier in merge",
+    Assert.assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
 
+  @Test
   public void testTopicIsSubjectIndicatorMerge3() {
     TopicIF t1 = builder1.makeTopic();
     t1.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
@@ -205,9 +210,9 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, t2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
            topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
            topicmap1.getTopics().contains(t1));
 
     // NOTE: According to bug #652 it is now allowed for topics to
@@ -215,15 +220,16 @@ public class MergeTMTest extends TestCase {
     // indicators properties. Thus the following test has been updated
     // to check for 2 locators.
     TopicIF topic = (TopicIF) topicmap1.getTopics().iterator().next();
-    assertTrue("topic has wrong number of subject identifiers",
+    Assert.assertTrue("topic has wrong number of subject identifiers",
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
     // https://github.com/ontopia/ontopia/issues/28
-    assertTrue("topic lost item identifier in merge",
+    Assert.assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
 
+  @Test
   public void testTopicIsSubjectIndicatorMerge4() {
     TopicIF t1 = builder1.makeTopic();
     t1.addItemIdentifier(makeLocator("http://www.ontopia.net"));
@@ -233,9 +239,9 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, t2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
            topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
            topicmap1.getTopics().contains(t1));
 
     // NOTE: According to bug #652 it is now allowed for topics to
@@ -243,15 +249,16 @@ public class MergeTMTest extends TestCase {
     // indicators properties. Thus the following test has been updated
     // to check for 2 locators.
     TopicIF topic = (TopicIF) topicmap1.getTopics().iterator().next();
-    assertTrue("topic has wrong number of subject identifiers",
+    Assert.assertTrue("topic has wrong number of subject identifiers",
                topic.getSubjectIdentifiers().size() == 2);
 
     // Of course, the item identifier should not be lost
     // https://github.com/ontopia/ontopia/issues/28
-    assertTrue("topic lost item identifier in merge",
+    Assert.assertTrue("topic lost item identifier in merge",
                topic.getItemIdentifiers().size() == 1);
   }    
   
+  @Test
   public void testNoSubjectConflict() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -264,10 +271,11 @@ public class MergeTMTest extends TestCase {
       MergeUtils.mergeInto(topicmap1, topicmap2);
     }
     catch (ConstraintViolationException e) {
-      fail("subject conflict should not have been detected" + e.getMessage());
+      Assert.fail("subject conflict should not have been detected" + e.getMessage());
     }
   }
 
+  @Test
   public void testThreeTopicMerge() {
     // one topic from target and two from source become one topic
     try {
@@ -281,18 +289,19 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("topics merged incorrectly",
+      Assert.assertTrue("topics merged incorrectly",
              topicmap1.getTopics().size() == 1);
-      assertTrue("original topic lost in merge",
+      Assert.assertTrue("original topic lost in merge",
              topicmap1.getTopics().contains(t1));
-      assertTrue("topic subject indicator lost in merge",
+      Assert.assertTrue("topic subject indicator lost in merge",
              ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectIdentifiers().size() == 2);
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   } 
 
+  @Test
   public void testCascadingMerge() {
     // merging in one topic from source makes two topics in target
     // merge
@@ -307,15 +316,16 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
                topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
                topicmap1.getTopics().contains(t1) ||
                topicmap1.getTopics().contains(t2));
-    assertTrue("topic subject indicator lost in merge",
+    Assert.assertTrue("topic subject indicator lost in merge",
                ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectIdentifiers().size() == 2);
   } 
   
+  @Test
   public void testCascadingMerge2() {
     // merging in two topics from source makes two topics in target
     // merge, end result is one topic
@@ -334,15 +344,16 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
            topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
            topicmap1.getTopics().contains(t1) ||
            topicmap1.getTopics().contains(t2));
-    assertTrue("topic subject indicator lost in merge",
+    Assert.assertTrue("topic subject indicator lost in merge",
            ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectIdentifiers().size() == 3);
   } 
   
+  @Test
   public void testCascadingMerge3() {
     // merging in three topics from source makes three topics in target
     // merge, end result is one topic
@@ -367,16 +378,17 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
            topicmap1.getTopics().size() == 1);
-    assertTrue("original topic lost in merge",
+    Assert.assertTrue("original topic lost in merge",
            topicmap1.getTopics().contains(t1) ||
            topicmap1.getTopics().contains(t2) ||
            topicmap1.getTopics().contains(t3));
-    assertTrue("topic subject indicator lost in merge",
+    Assert.assertTrue("topic subject indicator lost in merge",
            ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectIdentifiers().size() == 5);
   } 
   
+  @Test
   public void testTopicsCopied() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -385,14 +397,14 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("topic not copied to target topic map",
+      Assert.assertTrue("topic not copied to target topic map",
              topicmap1.getTopics().size() == 2);
 
       t2 = topicmap1.getTopicBySubjectLocator(makeLocator("http://www.ontopia.net"));
-      assertTrue("topic copied but not registered in subject map",
+      Assert.assertTrue("topic copied but not registered in subject map",
              t2 != null);
 
-      assertTrue("topic not copied correctly",
+      Assert.assertTrue("topic not copied correctly",
              t2.getTopicNames().size() == 0 &&
              t2.getOccurrences().size() == 0 &&
              t2.getSubjectIdentifiers().size() == 0 &&
@@ -400,10 +412,11 @@ public class MergeTMTest extends TestCase {
              t2.getTypes().size() == 0);
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicNames() { // F.5.1, 2
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -414,19 +427,20 @@ public class MergeTMTest extends TestCase {
       TopicNameIF bn2 = builder2.makeTopicName(t2, "bn2");
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
-      assertTrue("wrong number of base names after merge",
+      Assert.assertTrue("wrong number of base names after merge",
              t1.getTopicNames().size() == 2);
             
-      assertTrue("original base name lost",
+      Assert.assertTrue("original base name lost",
              t1.getTopicNames().contains(bn1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
   // FIXME: test base names with scope and variants and value
 
+  @Test
   public void testMergeOccurrences() { // F.5.1, 6
     try {
       TopicIF ot1 = builder1.makeTopic();
@@ -445,7 +459,7 @@ public class MergeTMTest extends TestCase {
       OccurrenceIF oc2 = builder2.makeOccurrence(t2, ot2, loc2);
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
-      assertTrue("wrong number of occurrences after merge",
+      Assert.assertTrue("wrong number of occurrences after merge",
              t1.getOccurrences().size() == 2);
 
       Iterator it = t1.getOccurrences().iterator();
@@ -453,21 +467,22 @@ public class MergeTMTest extends TestCase {
         OccurrenceIF occ = (OccurrenceIF) it.next();
                 
         if (occ.getLocator() != null && occ.getLocator().equals(loc2))
-          assertTrue("source occurrence type not copied correctly",
+          Assert.assertTrue("source occurrence type not copied correctly",
                  occ.getType().getSubjectLocators().contains(makeLocator("http://www.ikke.no")));
         else
-          assertTrue("mysterious occurrence after merge: " + occ,
+          Assert.assertTrue("mysterious occurrence after merge: " + occ,
                  occ.equals(oc1));
                 
-        assertTrue("original occurrence lost",
+        Assert.assertTrue("original occurrence lost",
                t1.getOccurrences().contains(oc1));
       }
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeSourceLocators() {
     try {
       LocatorIF loc = makeLocator("http://www.ontopia.net/tst.xtm#id");
@@ -478,16 +493,17 @@ public class MergeTMTest extends TestCase {
       t2.addItemIdentifier(loc);
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
-      assertTrue("source locator not copied",
+      Assert.assertTrue("source locator not copied",
              t1.getItemIdentifiers().size() == 1);
-      assertTrue("source locator identity lost",
+      Assert.assertTrue("source locator identity lost",
              t1.getItemIdentifiers().contains(loc));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
     
+  @Test
   public void testMergeTypes() {
     try {
       TopicIF tt1 = builder1.makeTopic();
@@ -501,24 +517,25 @@ public class MergeTMTest extends TestCase {
       t2.addSubjectLocator(makeLocator("http://www.ontopia.net"));
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
-      assertTrue("wrong number of types after merge",
+      Assert.assertTrue("wrong number of types after merge",
              t1.getTypes().size() == 2);
 
       Iterator it = t1.getTypes().iterator();
       while (it.hasNext()) {
         TopicIF type = (TopicIF) it.next();
-        assertTrue("null type sneaked in somehow!",
+        Assert.assertTrue("null type sneaked in somehow!",
                type != null);
-        assertTrue("strange type appeared after merging",
+        Assert.assertTrue("strange type appeared after merging",
                type.equals(tt1) ||
                type.getSubjectLocators().contains(makeLocator("http://www.oppvask.com")));
       }
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTypes2() {
     // a test for a specific bug I once had where when a topic
     // had a type not already copied the source would be copied
@@ -546,16 +563,17 @@ public class MergeTMTest extends TestCase {
           break;
       }
 
-      assertTrue("wrong number of types after merge",
+      Assert.assertTrue("wrong number of types after merge",
              topic.getTypes().size() == 1);
-      assertTrue("wrong topic type after merge",
+      Assert.assertTrue("wrong topic type after merge",
              ((TopicIF) topic.getTypes().iterator().next()).getSubjectLocators().contains(makeLocator("http://www.oppvask.com")));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
     
+  @Test
   public void testMergeAssociation() { // F.5.1, 5
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -568,22 +586,23 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("association not copied in merge",
+      Assert.assertTrue("association not copied in merge",
              topicmap1.getAssociations().size() == 1);
 
       assoc1 = (AssociationIF) topicmap1.getAssociations().iterator().next();
-      assertTrue("wrong number of roles in copied association",
+      Assert.assertTrue("wrong number of roles in copied association",
              assoc1.getRoles().size() == 1);
             
       ar1 = (AssociationRoleIF) assoc1.getRoles().iterator().next();
-      assertTrue("original player lost",
+      Assert.assertTrue("original player lost",
              ar1.getPlayer().getSubjectLocators().contains(makeLocator("http://www.m.tv")));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testTopicNameScopeCopy() {
     // used to have a bug on this, hence the test
     TopicIF tt1 = builder1.makeTopic();
@@ -599,17 +618,18 @@ public class MergeTMTest extends TestCase {
     
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("incorrect number of topics in merged topic map",
+    Assert.assertTrue("incorrect number of topics in merged topic map",
                topicmap1.getTopics().size() == (before + 2));
 
     t2 = (TopicIF) topicmap1.getObjectByItemIdentifier(makeLocator("http://www.ontopia.net"));
     bn1 = (TopicNameIF) t2.getTopicNames().iterator().next();
-    assertTrue("merged topic lost base name",
+    Assert.assertTrue("merged topic lost base name",
                bn1 != null);
-    assertTrue("merged base name lost scope",
+    Assert.assertTrue("merged base name lost scope",
                bn1.getScope().size() == 1);
   }
 
+  @Test
   public void testVariantNameCopy() {
     TopicIF t1 = builder1.makeTopic();
     t1.addSubjectIdentifier(makeLocator("http://psi.ontopia.net"));
@@ -624,20 +644,21 @@ public class MergeTMTest extends TestCase {
     
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("incorrect number of topics in merged topic map",
+    Assert.assertTrue("incorrect number of topics in merged topic map",
                topicmap1.getTopics().size() == before);
 
     TopicNameIF bnx = (TopicNameIF) t1.getTopicNames().iterator().next();
-    assertTrue("merged topic lost base name",
+    Assert.assertTrue("merged topic lost base name",
                bnx != null);
 
     VariantNameIF vn1 = (VariantNameIF) bnx.getVariants().iterator().next();
-    assertTrue("merged topic lost variant name",
+    Assert.assertTrue("merged topic lost variant name",
                vn1 != null);
-    assertTrue("variant name lost value",
+    Assert.assertTrue("variant name lost value",
                vn1.getValue() != null && vn1.getValue().equals("variant1"));
   }
 
+  @Test
   public void testSourceLocSubjIndConflict() {
     // used to have a bug on this, hence the test
     TopicIF t1 = builder1.makeTopic();
@@ -647,10 +668,11 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("incorrect number of topics in merged topic map",
+    Assert.assertTrue("incorrect number of topics in merged topic map",
            topicmap1.getTopics().size() == 1);
   }
 
+  @Test
   public void testTMSourceLocators() {
     URILocator orig = makeLocator("http://www.ontopia.net");
     URILocator extra = makeLocator("ftp://ftp.ontopia.net");
@@ -659,7 +681,7 @@ public class MergeTMTest extends TestCase {
     topicmap2.addItemIdentifier(extra);
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("wrong number of source locators after merge",
+    Assert.assertTrue("wrong number of source locators after merge",
            topicmap1.getItemIdentifiers().size() == 1);
   }
  
@@ -692,15 +714,16 @@ public class MergeTMTest extends TestCase {
     
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
-    assertTrue("topics with equal base names in same scope not merged",
+    Assert.assertTrue("topics with equal base names in same scope not merged",
            topicmap1.getTopics().size() == 1);
 
     t1 = (TopicIF) topicmap1.getTopics().iterator().next();
     
-    assertTrue("base name duplicates not suppressed",
+    Assert.assertTrue("base name duplicates not suppressed",
            t1.getTopicNames().size() == 4);
   }
  
+  @Test
   public void testMergeBug222() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -716,21 +739,22 @@ public class MergeTMTest extends TestCase {
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      assertTrue("topics merged incorrectly",
+      Assert.assertTrue("topics merged incorrectly",
              topicmap1.getTopics().size() == 4);
-      assertTrue("association not copied",
+      Assert.assertTrue("association not copied",
              topicmap1.getAssociations().size() == 1);
-      assertTrue("original topic lost in merge",
+      Assert.assertTrue("original topic lost in merge",
              topicmap1.getTopics().contains(t1));
 			TopicIF xt = topicmap1.getTopicBySubjectIdentifier(loc);
-      assertTrue("topic subject indicator lost in merge",
+      Assert.assertTrue("topic subject indicator lost in merge",
              xt.getSubjectIdentifiers().size() == 1);
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException" + e.getMessage());
+      Assert.fail("spurious ConstraintViolationException" + e.getMessage());
     }
   }    
 
+  @Test
   public void testMergeBug657() {
     LocatorIF psi = makeLocator("http://www.ontopia.net");
     TopicIF t1 = builder1.makeTopic();
@@ -756,14 +780,15 @@ public class MergeTMTest extends TestCase {
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
     TopicIF merged = topicmap1.getTopicBySubjectIdentifier(psi);
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
                topicmap1.getTopics().size() == (before - 1));
-    assertTrue("base names lost in merge",
+    Assert.assertTrue("base names lost in merge",
                merged.getTopicNames().size() == 5);
-    assertTrue("topic subject indicator lost in merge",
+    Assert.assertTrue("topic subject indicator lost in merge",
                merged.getSubjectIdentifiers().size() == 2);
   }
   
+  @Test
   public void testBug1790() {
     // test case for bug #1790
     
@@ -775,10 +800,11 @@ public class MergeTMTest extends TestCase {
 
     MergeUtils.mergeInto(t2, t1);
 
-    assertTrue("topics merged incorrectly",
+    Assert.assertTrue("topics merged incorrectly",
                topicmap1.getTopics().size() == 1);
   }
 
+  @Test
   public void testTMReifier() {
     // build test case
     TopicIF reifier = builder2.makeTopic();
@@ -788,10 +814,10 @@ public class MergeTMTest extends TestCase {
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
     // verify
-    assertTrue("topicmap1 had reifier after merge",
+    Assert.assertTrue("topicmap1 had reifier after merge",
                topicmap1.getReifier() == null);
     reifier = (TopicIF) topicmap1.getTopics().iterator().next();
-    assertTrue("imported topic still reifying old topic map",
+    Assert.assertTrue("imported topic still reifying old topic map",
                reifier.getReified() == null);
   }
 

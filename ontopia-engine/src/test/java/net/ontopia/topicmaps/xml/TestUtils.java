@@ -20,16 +20,14 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.util.Iterator;
-import java.util.ArrayList;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.xml.AbstractTopicMapExporter;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-
 import org.junit.Ignore;
 
 /**

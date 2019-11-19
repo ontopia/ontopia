@@ -24,10 +24,6 @@ import net.ontopia.topicmaps.impl.basic.BasicTestFactory;
 
 public class ScopeIndexTest extends net.ontopia.topicmaps.core.index.ScopeIndexTest {
 
-  public ScopeIndexTest(String name) {
-    super(name);
-  }
-
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new BasicTestFactory();

@@ -20,21 +20,19 @@
 
 package net.ontopia.topicmaps.classify;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class SpecialCharNormalizerTestCase extends TestCase {
-  
-  public SpecialCharNormalizerTestCase(String name) {
-    super(name);
-  }
-  
+public class SpecialCharNormalizerTestCase {
+
+  @Test
   public void testNormalizer() {
     String prechars = "<')(\"[ {\u00B7-%\u201c\u2018/$.,";
     String poschars = ">')(.,\"':;!]? |}*\u00B7-%\u201d\u2019";
 
     SpecialCharNormalizer n = new SpecialCharNormalizer(prechars, poschars);
 
-    assertEquals(n.normalize(prechars+"foo"+poschars), "foo");
+    Assert.assertEquals(n.normalize(prechars+"foo"+poschars), "foo");
   }
   
 }

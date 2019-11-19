@@ -20,31 +20,32 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CachedIndexTest extends TestCase {
+public class CachedIndexTest {
   private CachedIndex index;
   
-  public CachedIndexTest(String name) {
-    super(name);
-  }
-
-  @Override
-  protected void setUp() {
+  @Before
+  public void setUp() {
     index = new CachedIndex(new EmptyIndex());
   }
 
   // --- Test cases
 
+  @Test
   public void testEmpty() {
-    assertTrue("found key in empty index",
+    Assert.assertTrue("found key in empty index",
            index.get("larsga") == null);
   }
 
+  @Test
   public void testFind() {
     check("larsga", "Lars Marius Garshol");
   }
   
+  @Test
   public void testFindMore() {
     check("larsga", "Lars Marius Garshol");
     check("grove", "Geir Ove Gronmo");
@@ -68,10 +69,11 @@ public class CachedIndexTest extends TestCase {
     lookfor("kal", "Kal Ahmed");
     lookfor("murray", "Murray Woodman");
 
-    assertTrue("non-existent key found",
+    Assert.assertTrue("non-existent key found",
            index.get("dummy") == null);
   }
 
+  @Test
   public void testExpand() {
     index = new CachedIndex(new EmptyIndex(), 1000, 5, true);
     
@@ -97,23 +99,25 @@ public class CachedIndexTest extends TestCase {
     lookfor("kal", "Kal Ahmed");
     lookfor("murray", "Murray Woodman");
 
-    assertTrue("non-existent key found",
+    Assert.assertTrue("non-existent key found",
            index.get("dummy") == null);
   }
 
+  @Test
   public void testPrune() {
     index = new CachedIndex(new SameIndex(), 250, 5, true);
 
     for (int ix = 0; ix < 10000; ix++) {
       String key = Integer.toString((int) (Math.random() * 500));
-      assertTrue("didn't find value",
+      Assert.assertTrue("didn't find value",
              index.get(key).equals(key));
     }
 
-    assertTrue("number of keys in index too high",
+    Assert.assertTrue("number of keys in index too high",
            index.getKeyNumber() <= 250);
   }
 
+  @Test
   public void testChange() {
     check("larsga", "Lars Marius Garshol");
     check("larsga", "LMG");
@@ -131,9 +135,9 @@ public class CachedIndexTest extends TestCase {
 
   private void lookfor(String key, String value) {
     String found = (String) index.get(key);
-    assertTrue("did not find value on lookup",
+    Assert.assertTrue("did not find value on lookup",
            found != null);
-    assertTrue("found '" + found + "' on lookup, expected '" + value + "'",
+    Assert.assertTrue("found '" + found + "' on lookup, expected '" + value + "'",
            found.equals(value));
   }
   
@@ -176,7 +180,3 @@ public class CachedIndexTest extends TestCase {
   }
   
 }
-
-
-
-

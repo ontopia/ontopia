@@ -20,54 +20,56 @@
 
 package net.ontopia.topicmaps.core;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 public abstract class AssociationRoleTest extends AbstractTypedTest {
   protected AssociationRoleIF role;
   
-  public AssociationRoleTest(String name) {
-    super(name);
-  }
-    
   // --- Test cases
 
+  @Test
   public void testReification() {
     TopicIF reifier = builder.makeTopic();
     ReifiableIF reifiable = role;
     
-    assertTrue("Object reified by the reifying topic was found",
+    Assert.assertTrue("Object reified by the reifying topic was found",
                reifier.getReified() == null);
-    assertTrue("Topic reifying the reifiable was found",
+    Assert.assertTrue("Topic reifying the reifiable was found",
                reifiable.getReifier() == null);
     
     reifiable.setReifier(reifier);
-    assertTrue("No topic reifying the reifiable was found",
+    Assert.assertTrue("No topic reifying the reifiable was found",
                reifiable.getReifier() == reifier);
-    assertTrue("No object reified by the reifying topic was found",
+    Assert.assertTrue("No object reified by the reifying topic was found",
                reifier.getReified() == reifiable);
     
     reifiable.setReifier(null);
-    assertTrue("Object reified by the reifying topic was found",
+    Assert.assertTrue("Object reified by the reifying topic was found",
                reifier.getReified() == null);
-    assertTrue("Topic reifying the first reifiable was found",
+    Assert.assertTrue("Topic reifying the first reifiable was found",
                reifiable.getReifier() == null);
   }
 
+  @Test
   public void testPlayer() {
-    assertTrue("player null initially", role.getPlayer() != null);
+    Assert.assertTrue("player null initially", role.getPlayer() != null);
 
     TopicIF player = builder.makeTopic();
     role.setPlayer(player);
-    assertTrue("player not set properly", role.getPlayer().equals(player));
+    Assert.assertTrue("player not set properly", role.getPlayer().equals(player));
 
     try {
       role.setPlayer(null);
-      fail("player could be set to null");
+      Assert.fail("player could be set to null");
     } catch (NullPointerException e) {
     }
-    assertTrue("player not retained", role.getPlayer().equals(player));
+    Assert.assertTrue("player not retained", role.getPlayer().equals(player));
   }
 
+  @Test
   public void testParentAssociation() {
-    assertTrue("parent not set to right object",
+    Assert.assertTrue("parent not set to right object",
                role.getAssociation().equals(parent));
   }
 

@@ -20,41 +20,39 @@
 
 package net.ontopia.topicmaps.classify;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class DefaultTokenizerTestCase extends TestCase {
+public class DefaultTokenizerTestCase {
   
-  public DefaultTokenizerTestCase(String name) {
-    super(name);
-  }
-  
+  @Test
   public void testTokenizer() {
     DefaultTokenizer t = new DefaultTokenizer();
     t.setText("  one two\nthree\t\tfour five six seven eight nine ten\n");
 
     t.next();
-    assertEquals(t.getToken(), "one");
+    Assert.assertEquals(t.getToken(), "one");
     t.next();
-    assertEquals(t.getToken(), "two");
+    Assert.assertEquals(t.getToken(), "two");
     t.next();
-    assertEquals(t.getToken(), "three");
+    Assert.assertEquals(t.getToken(), "three");
     t.next();
-    assertEquals(t.getToken(), "four");
+    Assert.assertEquals(t.getToken(), "four");
     t.next();
-    assertEquals(t.getToken(), "five");
+    Assert.assertEquals(t.getToken(), "five");
     t.next();
-    assertEquals(t.getToken(), "six");
+    Assert.assertEquals(t.getToken(), "six");
     t.next();
-    assertEquals(t.getToken(), "seven");
+    Assert.assertEquals(t.getToken(), "seven");
     t.next();
-    assertEquals(t.getToken(), "eight");
+    Assert.assertEquals(t.getToken(), "eight");
     t.next();
-    assertEquals(t.getToken(), "nine");
+    Assert.assertEquals(t.getToken(), "nine");
 
-    assertTrue(t.next());
-    assertEquals(t.getToken(), "ten");
+    Assert.assertTrue(t.next());
+    Assert.assertEquals(t.getToken(), "ten");
 
-    assertFalse(t.next());
+    Assert.assertFalse(t.next());
   }
   
 }

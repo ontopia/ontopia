@@ -22,63 +22,64 @@ package net.ontopia.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class CmdlineOptionsTest extends TestCase {
+public class CmdlineOptionsTest {
   private CmdlineOptions options;
   private Listener listener;
   
-  public CmdlineOptionsTest(String name) {
-    super(name);
-  }
-
   // --- Test cases
 
+  @Test
   public void testSimple() throws CmdlineOptions.OptionsException {
     String[] argv = {"propfile", "tmfile.xtm"};
     setupRDBMS(argv);
     options.parse();
 
     String args[] = options.getArguments();
-    assertTrue("Wrong number of arguments", args.length == 2);
-    assertTrue("First argument is wrong", args[0].equals("propfile"));
-    assertTrue("Second argument is wrong", args[1].equals("tmfile.xtm"));
-    assertTrue("tmid options incorrectly set", listener.getOption('t') == null);
+    Assert.assertTrue("Wrong number of arguments", args.length == 2);
+    Assert.assertTrue("First argument is wrong", args[0].equals("propfile"));
+    Assert.assertTrue("Second argument is wrong", args[1].equals("tmfile.xtm"));
+    Assert.assertTrue("tmid options incorrectly set", listener.getOption('t') == null);
   }
 
+  @Test
   public void testWithOption() throws CmdlineOptions.OptionsException {
     String[] argv = {"--tmid=140", "propfile", "tmfile.xtm"};
     setupRDBMS(argv);
     options.parse();
 
     String args[] = options.getArguments();
-    assertTrue("Wrong number of arguments", args.length == 2);
-    assertTrue("First argument is wrong", args[0].equals("propfile"));
-    assertTrue("Second argument is wrong", args[1].equals("tmfile.xtm"));
-    assertTrue("tmid options incorrectly set", listener.getOption('t').equals("140"));
+    Assert.assertTrue("Wrong number of arguments", args.length == 2);
+    Assert.assertTrue("First argument is wrong", args[0].equals("propfile"));
+    Assert.assertTrue("Second argument is wrong", args[1].equals("tmfile.xtm"));
+    Assert.assertTrue("tmid options incorrectly set", listener.getOption('t').equals("140"));
   }
 
+  @Test
   public void testWithMistypedOption() throws CmdlineOptions.OptionsException {
     String[] argv = {"-tmid=140", "propfile", "tmfile.xtm"};
     setupRDBMS(argv);
 
     try {
       options.parse();
-      fail("Incorrect options allowed");
+      Assert.fail("Incorrect options allowed");
     } catch (CmdlineOptions.OptionsException e) {
-      assertTrue("Wrong problem reported" + e.getArgument(), e.getArgument().equals("-tmid=140"));
+      Assert.assertTrue("Wrong problem reported" + e.getArgument(), e.getArgument().equals("-tmid=140"));
     }
   }
 
+  @Test
   public void testWithMistypedOption2() throws CmdlineOptions.OptionsException {
     String[] argv = {"-tmid", "propfile", "tmfile.xtm"};
     setupRDBMS(argv);
 
     try {
       options.parse();
-      fail("Incorrect options allowed");
+      Assert.fail("Incorrect options allowed");
     } catch (CmdlineOptions.OptionsException e) {
-      assertTrue("Wrong problem reported" + e.getArgument(), e.getArgument().equals("-tmid"));
+      Assert.assertTrue("Wrong problem reported" + e.getArgument(), e.getArgument().equals("-tmid"));
     }
   }
   

@@ -20,18 +20,18 @@
 
 package net.ontopia.topicmaps.core;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 public abstract class AbstractScopedTest extends AbstractTMObjectTest {
   protected ScopedIF scoped;
   
-  public AbstractScopedTest(String name) {
-    super(name);
-  }
-
   // --- Test cases
 
+  @Test
   public void testScope() {
     // STATE 1: empty scope
-    assertTrue("scope initially not empty", scoped.getScope().size() == 0);
+    Assert.assertTrue("scope initially not empty", scoped.getScope().size() == 0);
     
     TopicIF theme = builder.makeTopic();
     scoped.removeTheme(theme); // just checking that this works, is all
@@ -39,14 +39,14 @@ public abstract class AbstractScopedTest extends AbstractTMObjectTest {
     // STATE 2: one topic in scope
     TopicIF topic = builder.makeTopic();
     scoped.addTheme(topic);
-    assertTrue("theme not added", scoped.getScope().size() == 1);
+    Assert.assertTrue("theme not added", scoped.getScope().size() == 1);
 
     scoped.addTheme(topic);
-    assertTrue("duplicate not rejected", scoped.getScope().size() == 1);
+    Assert.assertTrue("duplicate not rejected", scoped.getScope().size() == 1);
 
     // STATE 3: empty scope again
     scoped.removeTheme(topic);
-    assertTrue("theme not removed", scoped.getScope().size() == 0);
+    Assert.assertTrue("theme not removed", scoped.getScope().size() == 0);
 
     scoped.removeTheme(topic); // removing theme that is not present
   }
@@ -54,17 +54,18 @@ public abstract class AbstractScopedTest extends AbstractTMObjectTest {
   /**
    * Verify that methods handle null arguments the way they should.
    */
+  @Test
   public void testNullScopedArguments() {
     try {
       scoped.addTheme(null);
-      fail("was allowed to add null theme");
+      Assert.fail("was allowed to add null theme");
     } catch (NullPointerException e) {
       // expected
     }
 
     try {
       scoped.removeTheme(null);
-      fail("was allowed to remove null theme");
+      Assert.fail("was allowed to remove null theme");
     } catch (NullPointerException e) {
       // expected
     }

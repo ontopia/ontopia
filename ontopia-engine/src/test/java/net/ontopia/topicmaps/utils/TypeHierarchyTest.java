@@ -26,19 +26,20 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TypeHierarchyTest extends AbstractUtilsTestCase {
-  public TypeHierarchyTest(String name) {
-    super(name);
-  }
 
-  @Override
+  @Before
   public void setUp() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     TopicMapBuilderIF builder = store.getTopicMap().getBuilder();
     tm = store.getTopicMap();
   }
 
+  @Test
   public void testOne() {
     readFile("types.xtm");
         
@@ -48,27 +49,28 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
     TopicIF thing = getTopic("thing");
 
     TypeHierarchyUtils u = new TypeHierarchyUtils();
-    assertTrue(u.isInstanceOf(kal, musician));
-    assertTrue(u.isInstanceOf(kal, living_thing));
-    assertTrue(u.isInstanceOf(kal, thing));
+    Assert.assertTrue(u.isInstanceOf(kal, musician));
+    Assert.assertTrue(u.isInstanceOf(kal, living_thing));
+    Assert.assertTrue(u.isInstanceOf(kal, thing));
 
     Collection c = u.getSuperclasses(musician);
-    assertTrue(c.size() == 4);
+    Assert.assertTrue(c.size() == 4);
 
     c = u.getSuperclasses(kal);
-    assertTrue(c.size() == 0);
+    Assert.assertTrue(c.size() == 0);
             
     c = u.getSubclasses(thing);
-    assertTrue(c.size() == 5);
+    Assert.assertTrue(c.size() == 5);
         
     c = u.getSupertypes(kal);
-    assertTrue("Expected 5 supertypes for 'kal'. Found: " + String.valueOf(c.size()),
+    Assert.assertTrue("Expected 5 supertypes for 'kal'. Found: " + String.valueOf(c.size()),
            c.size() == 5);
 
     c = u.getSupertypes(musician);
-    assertTrue(c.size() == 0);
+    Assert.assertTrue(c.size() == 0);
   }
 
+  @Test
   public void testIsAssociatedWith() {
     TopicMapBuilderIF builder = tm.getBuilder();
 
@@ -80,10 +82,11 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
     AssociationRoleIF role2 = builder.makeAssociationRole(assoc, builder.makeTopic(), topic2);
 
     TypeHierarchyUtils u = new TypeHierarchyUtils();
-    assertTrue("failed to find topics associated with each other",
+    Assert.assertTrue("Assert.failed to find topics associated with each other",
            u.isAssociatedWith(topic1, topic2));
   }
 
+  @Test
   public void testIsAssociatedWithNull() {
     TopicMapBuilderIF builder = tm.getBuilder();
 
@@ -95,7 +98,7 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
     AssociationRoleIF role2 = builder.makeAssociationRole(assoc, builder.makeTopic(), builder.makeTopic());
 
     TypeHierarchyUtils u = new TypeHierarchyUtils();
-    assertTrue("found false positive",
+    Assert.assertTrue("found false positive",
            !u.isAssociatedWith(topic1, topic2));
   }
   

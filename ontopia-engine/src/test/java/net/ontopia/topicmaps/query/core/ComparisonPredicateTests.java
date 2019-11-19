@@ -23,22 +23,13 @@ package net.ontopia.topicmaps.query.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Test;
 
 public class ComparisonPredicateTests extends AbstractPredicateTest {
   
-  public ComparisonPredicateTests(String name) {
-    super(name);
-  }
-
-  /// setup
-
-  @Override
-  public void tearDown() {    
-    closeStore();
-  }
-  
   /// tests
 
+  @Test
   public void testGreaterThan() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -51,6 +42,7 @@ public class ComparisonPredicateTests extends AbstractPredicateTest {
     verifyQuery(matches, "select $V from topic-name($T, $BN), value($BN, $V), $V > \"Tr\"?");
   }
 
+  @Test
   public void testLessThan() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -62,6 +54,7 @@ public class ComparisonPredicateTests extends AbstractPredicateTest {
     verifyQuery(matches, "select $V from topic-name($T, $BN), value($BN, $V), $V < \"Bh\"?");
   }
 
+  @Test
   public void testLessThanEqual() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -74,6 +67,7 @@ public class ComparisonPredicateTests extends AbstractPredicateTest {
     verifyQuery(matches, "select $V from topic-name($T, $BN), value($BN, $V), $V <= \"Bj\u00F8rg England\"?");
   }
 
+  @Test
   public void testGreaterThanEqual() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -86,6 +80,7 @@ public class ComparisonPredicateTests extends AbstractPredicateTest {
     verifyQuery(matches, "select $V from topic-name($T, $BN), value($BN, $V), $V >= \"Trygve Garshol\"?");
   }
 
+  @Test
   public void testBetween1() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -100,6 +95,7 @@ public class ComparisonPredicateTests extends AbstractPredicateTest {
     verifyQuery(matches, "select $V from topic-name($T, $BN), value($BN, $V), $V > \"K\", $V < \"N\"?");
   }
 
+  @Test
   public void testBetween2() throws InvalidQueryException, IOException {
     load("family.ltm");
     
@@ -113,6 +109,7 @@ public class ComparisonPredicateTests extends AbstractPredicateTest {
     verifyQuery(matches, "select $V from topic-name($T, $BN), value($BN, $V), $V >= \"Kjellaug Garshol\", $V <= \"May Stenersen\"?");
   }
 
+  @Test
   public void testBug2123() throws InvalidQueryException, IOException {
     load("family.ltm");
 

@@ -30,19 +30,20 @@ import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import org.apache.commons.collections4.IteratorUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public abstract class OccurrenceIndexTest extends AbstractIndexTest {
   protected OccurrenceIndexIF ix;
   
-  public OccurrenceIndexTest(String name) {
-    super(name);
-  }
-
   @Override
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     ix = (OccurrenceIndexIF)super.setUp("OccurrenceIndexIF");
   }
 
+  @Test
   public void testOccurrenceIndex() {
     // STATE 1: No Occurrence locators defined
     TopicIF topic = builder.makeTopic();
@@ -51,44 +52,45 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
 		String value1 = "dummy";
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, value0);
 
-    assertTrue("Index of occurrences by value is not empty.", 
+    Assert.assertTrue("Index of occurrences by value is not empty.", 
 							 ix.getOccurrences(value1, DataTypes.TYPE_STRING).isEmpty());
 
-    assertTrue("Index of occurrences by value is not empty.", 
+    Assert.assertTrue("Index of occurrences by value is not empty.", 
 							 ix.getOccurrences(value1).isEmpty());
 
     // STATE 2: Occurrence value added
     occ.setValue(value1);
     
-    assertTrue("Index of occurrences by value does not contain test value.",
+    Assert.assertTrue("Index of occurrences by value does not contain test value.",
            ix.getOccurrences(value1, DataTypes.TYPE_STRING).contains(occ));
-    assertTrue("Index of occurrences by value does not contain test value.",
+    Assert.assertTrue("Index of occurrences by value does not contain test value.",
            ix.getOccurrences(value1).contains(occ));
 
     // STATE 3: Duplicate occurrence value added
     OccurrenceIF occ2 = builder.makeOccurrence(topic, otype, value1);
 
-    assertTrue("second occurrence not found by value",
+    Assert.assertTrue("second occurrence not found by value",
            ix.getOccurrences(value1, DataTypes.TYPE_STRING).size() == 2);
-    assertTrue("second occurrence not found by value",
+    Assert.assertTrue("second occurrence not found by value",
            ix.getOccurrences(value1).size() == 2);
 
     // STATE 4: Change first occurrence value
     String value2 = "dummy2";
     occ.setValue(value2);
 
-    assertTrue("list of occurrences not updated",
+    Assert.assertTrue("list of occurrences not updated",
            ix.getOccurrences(value1, DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("list of occurrences not updated",
+    Assert.assertTrue("list of occurrences not updated",
            ix.getOccurrences(value1).size() == 1);
 
-    assertTrue("first occurrence not found by new value",
+    Assert.assertTrue("first occurrence not found by new value",
            ix.getOccurrences(value2, DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("first occurrence not found by new value",
+    Assert.assertTrue("first occurrence not found by new value",
            ix.getOccurrences(value2).size() == 1);
 
   }
 
+  @Test
   public void testOccurrenceIndexByType() {
     // STATE 1: no occurrence values defined
     TopicIF topic = builder.makeTopic();
@@ -97,68 +99,69 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
     String value0 = "dummy0";
     String value1 = "dummy";
     OccurrenceIF occ = builder.makeOccurrence(topic, otype1, value0);
-    assertTrue("Index of occurrences by value and type is not empty.",
+    Assert.assertTrue("Index of occurrences by value and type is not empty.",
       ix.getOccurrences(value1, otype1).isEmpty());
-    assertTrue("Index of occurrences by value and type is not empty.",
+    Assert.assertTrue("Index of occurrences by value and type is not empty.",
       ix.getOccurrences(value1, DataTypes.TYPE_STRING, otype1).isEmpty());
 
     // STATE 2: Occurrence value added
     occ.setValue(value1);
-    assertTrue("Index of occurrences by value and type does not contain test value.",
+    Assert.assertTrue("Index of occurrences by value and type does not contain test value.",
       ix.getOccurrences(value1, otype1).contains(occ));
-    assertTrue("Index of occurrences by value and type does not contain test value.",
+    Assert.assertTrue("Index of occurrences by value and type does not contain test value.",
       ix.getOccurrences(value1, DataTypes.TYPE_STRING, otype1).contains(occ));
 
     // STATE 3: Duplicate occurrence value added
     OccurrenceIF occ2 = builder.makeOccurrence(topic, otype1, value1);
-    assertTrue("second occurrence not found by value",
+    Assert.assertTrue("second occurrence not found by value",
       ix.getOccurrences(value1, otype1).size() == 2);
-    assertTrue("second occurrence not found by value",
+    Assert.assertTrue("second occurrence not found by value",
       ix.getOccurrences(value1, DataTypes.TYPE_STRING, otype1).size() == 2);
 
     // STATE 4: Change first occurrence value
     String value2 = "dummy2";
     occ.setValue(value2);
-    assertTrue("list of occurrences not updated",
+    Assert.assertTrue("list of occurrences not updated",
       ix.getOccurrences(value1, otype1).size() == 1);
-    assertTrue("list of occurrences not updated",
+    Assert.assertTrue("list of occurrences not updated",
       ix.getOccurrences(value1, DataTypes.TYPE_STRING, otype1).size() == 1);
-    assertTrue("first occurrence not found by new value",
+    Assert.assertTrue("first occurrence not found by new value",
       ix.getOccurrences(value2, otype1).size() == 1);
-    assertTrue("first occurrence not found by new value",
+    Assert.assertTrue("first occurrence not found by new value",
       ix.getOccurrences(value2, DataTypes.TYPE_STRING, otype1).size() == 1);
 
     // STATE 5: Change occurrence types
-    assertTrue("Index of occurrences by value and type is not empty for original type",
+    Assert.assertTrue("Index of occurrences by value and type is not empty for original type",
       ix.getOccurrences(value2, otype2).isEmpty());
-    assertTrue("Index of occurrences by value and type is not empty for original type",
+    Assert.assertTrue("Index of occurrences by value and type is not empty for original type",
       ix.getOccurrences(value2, DataTypes.TYPE_STRING, otype2).isEmpty());
     occ.setType(otype2);
-    assertFalse("Index of occurrences by value and type does not detect changed type",
+    Assert.assertFalse("Index of occurrences by value and type does not detect changed type",
       ix.getOccurrences(value2, otype2).isEmpty());
-    assertFalse("Index of occurrences by value and type does not detect changed type",
+    Assert.assertFalse("Index of occurrences by value and type does not detect changed type",
       ix.getOccurrences(value2, DataTypes.TYPE_STRING, otype2).isEmpty());
-    assertTrue("Index of occurrences by value and type does not detect aborted type",
+    Assert.assertTrue("Index of occurrences by value and type does not detect aborted type",
       ix.getOccurrences(value2, otype1).isEmpty());
-    assertTrue("Index of occurrences by value and type does not detect aborted type",
+    Assert.assertTrue("Index of occurrences by value and type does not detect aborted type",
       ix.getOccurrences(value2, DataTypes.TYPE_STRING, otype1).isEmpty());
 
     // STATE 6: Change second occurrence type
     occ2.setType(otype2);
-    assertFalse("Index of occurrences by value and type contains occurrence with wrong value",
+    Assert.assertFalse("Index of occurrences by value and type contains occurrence with wrong value",
       ix.getOccurrences(value2, otype2).contains(occ2));
-    assertFalse("Index of occurrences by value and type contains occurrence with wrong value",
+    Assert.assertFalse("Index of occurrences by value and type contains occurrence with wrong value",
       ix.getOccurrences(value2, DataTypes.TYPE_STRING, otype2).contains(occ2));
   }
 
+  @Test
   public void testOccurrenceIndexByPrefix() {
     // STATE 1: no occurrence values defined
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
 
-    assertTrue("Index of occurrences by value is not empty.", 
+    Assert.assertTrue("Index of occurrences by value is not empty.", 
 							 ix.getOccurrencesByPrefix("a", DataTypes.TYPE_STRING).isEmpty());
-    assertTrue("Index of occurrences by value is not empty.", 
+    Assert.assertTrue("Index of occurrences by value is not empty.", 
 							 ix.getOccurrencesByPrefix("a").isEmpty());
 
     // STATE 2: adding occurrences
@@ -170,62 +173,62 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
     OccurrenceIF oacde = builder.makeOccurrence(topic, otype, "acde");
     OccurrenceIF oz = builder.makeOccurrence(topic, otype, "y");
 
-    //! assertTrue("Occurrences by prefix '' does not return 7.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not return 7.", 
     //!       ix.getOccurrencesByPrefix("", DataTypes.TYPE_STRING).size() == 7);
 
-    assertTrue("Occurrences by prefix 'a' does not return 6.", 
+    Assert.assertTrue("Occurrences by prefix 'a' does not return 6.", 
            ix.getOccurrencesByPrefix("a", DataTypes.TYPE_STRING).size() == 6);
-    assertTrue("Occurrences by prefix 'a' does not return 6.", 
+    Assert.assertTrue("Occurrences by prefix 'a' does not return 6.", 
            ix.getOccurrencesByPrefix("a").size() == 6);
 
-    assertTrue("Occurrences by prefix 'ab' does not return 3." + ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_STRING), 
+    Assert.assertTrue("Occurrences by prefix 'ab' does not return 3." + ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_STRING), 
            ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_STRING).size() == 3);
-    assertTrue("Occurrences by prefix 'ab' does not return 3." + ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_STRING), 
+    Assert.assertTrue("Occurrences by prefix 'ab' does not return 3." + ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_STRING), 
            ix.getOccurrencesByPrefix("ab").size() == 3);
 
-    assertTrue("Occurrences by prefix 'abc' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'abc' does not return 2.", 
            ix.getOccurrencesByPrefix("abc", DataTypes.TYPE_STRING).size() == 2);
-    assertTrue("Occurrences by prefix 'abc' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'abc' does not return 2.", 
            ix.getOccurrencesByPrefix("abc").size() == 2);
 
-    assertTrue("Occurrences by prefix 'abcd' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'abcd' does not return 1.", 
            ix.getOccurrencesByPrefix("abcd", DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("Occurrences by prefix 'abcd' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'abcd' does not return 1.", 
            ix.getOccurrencesByPrefix("abcd").size() == 1);
 
-    assertTrue("Occurrences by prefix 'abcde' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'abcde' does not return 1.", 
            ix.getOccurrencesByPrefix("abcde", DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("Occurrences by prefix 'abcde' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'abcde' does not return 1.", 
            ix.getOccurrencesByPrefix("abcde").size() == 1);
 
-    assertTrue("Occurrences by prefix 'abcdef' does not return 0.", 
+    Assert.assertTrue("Occurrences by prefix 'abcdef' does not return 0.", 
            ix.getOccurrencesByPrefix("abcdef", DataTypes.TYPE_STRING).size() == 0);
-    assertTrue("Occurrences by prefix 'abcdef' does not return 0.", 
+    Assert.assertTrue("Occurrences by prefix 'abcdef' does not return 0.", 
            ix.getOccurrencesByPrefix("abcdef").size() == 0);
 
-    assertTrue("Occurrences by prefix 'ac' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'ac' does not return 2.", 
            ix.getOccurrencesByPrefix("ac", DataTypes.TYPE_STRING).size() == 2);
-    assertTrue("Occurrences by prefix 'ac' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'ac' does not return 2.", 
            ix.getOccurrencesByPrefix("ac").size() == 2);
 
-    assertTrue("Occurrences by prefix 'acd' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'acd' does not return 1.", 
            ix.getOccurrencesByPrefix("acd", DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("Occurrences by prefix 'acd' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'acd' does not return 1.", 
            ix.getOccurrencesByPrefix("acd").size() == 1);
 
-    assertTrue("Occurrences by prefix 'acde' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'acde' does not return 1.", 
            ix.getOccurrencesByPrefix("acde", DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("Occurrences by prefix 'acde' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'acde' does not return 1.", 
            ix.getOccurrencesByPrefix("acde").size() == 1);
 
-    assertTrue("Occurrences by prefix 'x' does not return 0.", 
+    Assert.assertTrue("Occurrences by prefix 'x' does not return 0.", 
            ix.getOccurrencesByPrefix("x", DataTypes.TYPE_STRING).size() == 0);
-    assertTrue("Occurrences by prefix 'x' does not return 0.", 
+    Assert.assertTrue("Occurrences by prefix 'x' does not return 0.", 
            ix.getOccurrencesByPrefix("x").size() == 0);
 
-    assertTrue("Occurrences by prefix 'y' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'y' does not return 1.", 
            ix.getOccurrencesByPrefix("y", DataTypes.TYPE_STRING).size() == 1);
-    assertTrue("Occurrences by prefix 'y' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'y' does not return 1.", 
            ix.getOccurrencesByPrefix("y").size() == 1);
 
     // WARNING: "z" does not work correctly with postgresql 7.x as
@@ -234,21 +237,22 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
     // STATE 3: changing one of the occurrences
     oabc.setValue("bcd");
 
-    //! assertTrue("Occurrences by prefix 'ab' does not return 2.", 
+    //! Assert.assertTrue("Occurrences by prefix 'ab' does not return 2.", 
     //!        ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_STRING).size() == 2);
 
-    //! assertTrue("Occurrences by prefix '' does not return 7.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not return 7.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_STRING).size() == 7);
 
-    //! assertTrue("Occurrences by prefix '' does not contain 'a'.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not contain 'a'.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_STRING).contains(oa));
 
-    //! assertTrue("Occurrences by prefix '' does not contain 'acde'.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not contain 'acde'.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_STRING).contains(oacde));
 
 
   }
 
+  @Test
   public void testOccurrenceIndexLocator() {
     // STATE 1: No Occurrence locators defined
     TopicIF topic = builder.makeTopic();
@@ -258,34 +262,35 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
 
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, loc1);
 
-    assertTrue("Index of occurrences by locator is not one.", 
+    Assert.assertTrue("Index of occurrences by locator is not one.", 
 							 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).size() == 1);
-    assertTrue("Index of occurrences by locator is not empty.", 
+    Assert.assertTrue("Index of occurrences by locator is not empty.", 
 							 ix.getOccurrences(loc2.getAddress(), DataTypes.TYPE_URI).isEmpty());
 
     // STATE 2: Occurrence locator added
     occ.setLocator(loc2);
     
-    assertTrue("Index of occurrences by locator does not contain test value.",
+    Assert.assertTrue("Index of occurrences by locator does not contain test value.",
 							 ix.getOccurrences(loc2.getAddress(), DataTypes.TYPE_URI).contains(occ));
-    assertTrue("Index of occurrences by locator is not empty.", 
+    Assert.assertTrue("Index of occurrences by locator is not empty.", 
 							 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).isEmpty());
 
     // STATE 3: Duplicate occurrence locator added
     OccurrenceIF occ2 = builder.makeOccurrence(topic, otype, loc2);
 
-    assertTrue("second occurrence not found by locator",
+    Assert.assertTrue("second occurrence not found by locator",
 							 ix.getOccurrences(loc2.getAddress(), DataTypes.TYPE_URI).size() == 2);
 
   }
 
+  @Test
   public void testOccurrenceIndexByPrefixLocator() {
     // STATE 1: no occurrence values defined
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
     final String notation = "URI";
 
-    assertTrue("Index of occurrences by value is not empty.", 
+    Assert.assertTrue("Index of occurrences by value is not empty.", 
            ix.getOccurrencesByPrefix("a", DataTypes.TYPE_URI).isEmpty());
 
     // STATE 2: adding occurrences
@@ -297,115 +302,118 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
     OccurrenceIF oacde = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "acde"));
     OccurrenceIF oz = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "y"));
 
-    //! assertTrue("Occurrences by prefix '' does not return 7.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not return 7.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_URI).size() == 7);
 
-    assertTrue("Occurrences by prefix 'a' does not return 6.", 
+    Assert.assertTrue("Occurrences by prefix 'a' does not return 6.", 
            ix.getOccurrencesByPrefix("a", DataTypes.TYPE_URI).size() == 6);
 
-    assertTrue("Occurrences by prefix 'ab' does not return 3.", 
+    Assert.assertTrue("Occurrences by prefix 'ab' does not return 3.", 
            ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_URI).size() == 3);
 
-    assertTrue("Occurrences by prefix 'abc' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'abc' does not return 2.", 
            ix.getOccurrencesByPrefix("abc", DataTypes.TYPE_URI).size() == 2);
 
-    assertTrue("Occurrences by prefix 'abcd' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'abcd' does not return 1.", 
            ix.getOccurrencesByPrefix("abcd", DataTypes.TYPE_URI).size() == 1);
 
-    assertTrue("Occurrences by prefix 'abcde' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'abcde' does not return 1.", 
            ix.getOccurrencesByPrefix("abcde", DataTypes.TYPE_URI).size() == 1);
 
-    assertTrue("Occurrences by prefix 'abcdef' does not return 0.", 
+    Assert.assertTrue("Occurrences by prefix 'abcdef' does not return 0.", 
            ix.getOccurrencesByPrefix("abcdef", DataTypes.TYPE_URI).size() == 0);
 
-    assertTrue("Occurrences by prefix 'ac' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'ac' does not return 2.", 
            ix.getOccurrencesByPrefix("ac", DataTypes.TYPE_URI).size() == 2);
 
-    assertTrue("Occurrences by prefix 'acd' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'acd' does not return 1.", 
            ix.getOccurrencesByPrefix("acd", DataTypes.TYPE_URI).size() == 1);
 
-    assertTrue("Occurrences by prefix 'acde' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'acde' does not return 1.", 
            ix.getOccurrencesByPrefix("acde", DataTypes.TYPE_URI).size() == 1);
 
-    assertTrue("Occurrences by prefix 'x' does not return 0.", 
+    Assert.assertTrue("Occurrences by prefix 'x' does not return 0.", 
            ix.getOccurrencesByPrefix("x", DataTypes.TYPE_URI).size() == 0);
 
-    assertTrue("Occurrences by prefix 'y' does not return 1.", 
+    Assert.assertTrue("Occurrences by prefix 'y' does not return 1.", 
            ix.getOccurrencesByPrefix("y", DataTypes.TYPE_URI).size() == 1);
 
     // STATE 3: changing one of the occurrences
     oabc.setLocator(new GenericLocator(notation, "bcd"));
 
-    assertTrue("Occurrences by prefix 'ab' does not return 2.", 
+    Assert.assertTrue("Occurrences by prefix 'ab' does not return 2.", 
            ix.getOccurrencesByPrefix("ab", DataTypes.TYPE_URI).size() == 2);
 
-    //! assertTrue("Occurrences by prefix '' does not return 7.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not return 7.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_URI).size() == 7);
 
-    //! assertTrue("Occurrences by prefix '' does not contain 'a'.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not contain 'a'.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_URI).contains(oa));
 
-    //! assertTrue("Occurrences by prefix '' does not contain 'acde'.", 
+    //! Assert.assertTrue("Occurrences by prefix '' does not contain 'acde'.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_URI).contains(oacde));
   }
 
+  @Test
   public void testNullParameters() {
     Collection<OccurrenceIF> occurrences = ix.getOccurrences(null);
-    assertNotNull(occurrences);
-    assertTrue(occurrences.isEmpty());
+    Assert.assertNotNull(occurrences);
+    Assert.assertTrue(occurrences.isEmpty());
     
     occurrences = ix.getOccurrences(null, (LocatorIF) null);
-    assertNotNull(occurrences);
-    assertTrue(occurrences.isEmpty());
+    Assert.assertNotNull(occurrences);
+    Assert.assertTrue(occurrences.isEmpty());
 
     occurrences = ix.getOccurrences(null, (TopicIF) null);
-    assertNotNull(occurrences);
-    assertTrue(occurrences.isEmpty());
+    Assert.assertNotNull(occurrences);
+    Assert.assertTrue(occurrences.isEmpty());
     
     occurrences = ix.getOccurrences(null, null, null);
-    assertNotNull(occurrences);
-    assertTrue(occurrences.isEmpty());
+    Assert.assertNotNull(occurrences);
+    Assert.assertTrue(occurrences.isEmpty());
     
     occurrences = ix.getOccurrencesByPrefix(null);
-    assertNotNull(occurrences);
-    assertTrue(occurrences.isEmpty());
+    Assert.assertNotNull(occurrences);
+    Assert.assertTrue(occurrences.isEmpty());
     
     occurrences = ix.getOccurrencesByPrefix(null, null);
-    assertNotNull(occurrences);
-    assertTrue(occurrences.isEmpty());
+    Assert.assertNotNull(occurrences);
+    Assert.assertTrue(occurrences.isEmpty());
     
     Iterator<String> strings = ix.getValuesGreaterThanOrEqual(null);
-    assertNotNull(strings);
-    assertFalse(strings.hasNext());
+    Assert.assertNotNull(strings);
+    Assert.assertFalse(strings.hasNext());
     
     strings = ix.getValuesSmallerThanOrEqual(null);
-    assertNotNull(strings);
-    assertFalse(strings.hasNext());
+    Assert.assertNotNull(strings);
+    Assert.assertFalse(strings.hasNext());
   }
   
+  @Test
   public void testValuesGreaterThanOrEqual() {
-    assertFalse(ix.getValuesGreaterThanOrEqual("").hasNext());
+    Assert.assertFalse(ix.getValuesGreaterThanOrEqual("").hasNext());
     
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "a");
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "b");
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "c");
     
     Iterator<String> it = ix.getValuesGreaterThanOrEqual("a");
-    assertTrue(it.hasNext());
-    assertEquals("a", it.next());
-    assertEquals("b", it.next());
-    assertEquals("c", it.next());
-    assertFalse(it.hasNext());
+    Assert.assertTrue(it.hasNext());
+    Assert.assertEquals("a", it.next());
+    Assert.assertEquals("b", it.next());
+    Assert.assertEquals("c", it.next());
+    Assert.assertFalse(it.hasNext());
 
     it = ix.getValuesGreaterThanOrEqual("c");
-    assertTrue(it.hasNext());
-    assertEquals("c", it.next());
-    assertFalse(it.hasNext());
+    Assert.assertTrue(it.hasNext());
+    Assert.assertEquals("c", it.next());
+    Assert.assertFalse(it.hasNext());
   }
 
   // not using sorting, until #537 is fixed
+  @Test
   public void testValuesSmallerThanOrEqual() {
-    assertFalse(ix.getValuesSmallerThanOrEqual("").hasNext());
+    Assert.assertFalse(ix.getValuesSmallerThanOrEqual("").hasNext());
     
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "a");
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "b");
@@ -413,16 +421,17 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
     
     List<String> values = IteratorUtils.toList(ix.getValuesSmallerThanOrEqual("c"));
     
-    assertEquals(3, values.size());
-    assertTrue(values.contains("a"));
-    assertTrue(values.contains("b"));
-    assertTrue(values.contains("c"));
+    Assert.assertEquals(3, values.size());
+    Assert.assertTrue(values.contains("a"));
+    Assert.assertTrue(values.contains("b"));
+    Assert.assertTrue(values.contains("c"));
 
     values = IteratorUtils.toList(ix.getValuesSmallerThanOrEqual("a"));
-    assertEquals(1, values.size());
-    assertTrue(values.contains("a"));
+    Assert.assertEquals(1, values.size());
+    Assert.assertTrue(values.contains("a"));
   }
 
+    @Test
     public void testOccurrences() {
         URILocator loc1 = null;
         URILocator loc2 = null;
@@ -432,14 +441,14 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
             loc2 = new URILocator("ftp://sandbox.ontopia.net");
         }
         catch (java.net.MalformedURLException e) {
-            fail("(INTERNAL) bad URLs given");
+            Assert.fail("(INTERNAL) bad URLs given");
         }
         
         // STATE 1: empty topic map
-        // assertTrue("index finds spurious occurrence locators",
+        // Assert.assertTrue("index finds spurious occurrence locators",
         //        ix.getOccurrenceLocators().size() == 0);
 
-        assertTrue("index finds occurrences it shouldn't",
+        Assert.assertTrue("index finds occurrences it shouldn't",
 									 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).size() == 0);
 
         
@@ -449,26 +458,26 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
         OccurrenceIF o1 = builder.makeOccurrence(t1, otype, loc1);
         OccurrenceIF o2 = builder.makeOccurrence(t1, otype, "");
         
-        // assertTrue("occurrence locator not found via locator",
+        // Assert.assertTrue("occurrence locator not found via locator",
         //        ix.getOccurrenceLocators().size() == 2);
-        // assertTrue("occurrence locator identity lost",
+        // Assert.assertTrue("occurrence locator identity lost",
         //        ix.getOccurrenceLocators().contains(loc1));
-        // assertTrue("null locator not found",
+        // Assert.assertTrue("null locator not found",
         //        ix.getOccurrenceLocators().contains(null));
-        assertTrue("occurrence not found via locator",
+        Assert.assertTrue("occurrence not found via locator",
 									 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).size() == 1);
-        assertTrue("wrong occurrence found via locator",
+        Assert.assertTrue("wrong occurrence found via locator",
 									 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).iterator().next().equals(o1));
 
-        assertTrue("spurious occurrence found via locator",
+        Assert.assertTrue("spurious occurrence found via locator",
 									 ix.getOccurrences(loc2.getAddress(), DataTypes.TYPE_URI).size() == 0);
         
         // STATE 3: topic map with duplicates
         OccurrenceIF o3 = builder.makeOccurrence(t1, otype, loc1);
         
-        // assertTrue("duplicate occurrence locator not filtered out",
+        // Assert.assertTrue("duplicate occurrence locator not filtered out",
         //        ix.getOccurrenceLocators().size() == 2);
-        assertTrue("second occurrence not found via locator",
+        Assert.assertTrue("second occurrence not found via locator",
 									 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).size() == 2);
     }
   

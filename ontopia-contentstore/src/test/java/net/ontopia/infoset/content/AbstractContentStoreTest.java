@@ -27,62 +27,62 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import junit.framework.TestCase;
 import net.ontopia.utils.StringUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
-public abstract class AbstractContentStoreTest extends TestCase {
+public abstract class AbstractContentStoreTest {
   protected ContentStoreIF store;
   
-  public AbstractContentStoreTest(String name) {
-    super(name);
-  }
-
   // protocol expected from subclasses:
   //  - setUp must populate the store attribute with an empty store
   //  - tearDown must close it cleanly
 
   // --- Test methods
 
+  @Test
   public void testEmptyStore() throws ContentStoreException {
-    assertTrue("Empty store contains key 0", !store.containsKey(0));
-    assertTrue("Empty store contains key 1", !store.containsKey(1));
+    Assert.assertTrue("Empty store contains key 0", !store.containsKey(0));
+    Assert.assertTrue("Empty store contains key 1", !store.containsKey(1));
 
     try {
       store.get(0);
-      fail("Empty store allowed get of key 0");
+      Assert.fail("Empty store allowed get of key 0");
     } catch (ContentStoreException e) {}
 
     try {
       store.get(1);
-      fail("Empty store allowed get of key 1");
+      Assert.fail("Empty store allowed get of key 1");
     } catch (ContentStoreException e) {}
 
-    assertTrue("Empty store returned true on removal of key 0",
+    Assert.assertTrue("Empty store returned true on removal of key 0",
                !store.remove(0));
-    assertTrue("Empty store returned true on removal of key 1",
+    Assert.assertTrue("Empty store returned true on removal of key 1",
                !store.remove(1));
   }
 
+  @Test
   public void testAddOneEntry() throws ContentStoreException, IOException {
     String CONTENT = "content of first entry";
     int key = store.add(getStream(CONTENT.getBytes()));
 
-    assertTrue("Entry just added not in store (" + key + ")",
+    Assert.assertTrue("Entry just added not in store (" + key + ")",
                store.containsKey(key));
 
     compare(key, CONTENT.getBytes());
 
-    assertTrue("Entry just added could not be removed (" + key + ")",
+    Assert.assertTrue("Entry just added could not be removed (" + key + ")",
                store.remove(key));
 
-    assertTrue("Entry just removed still in store (" + key + ")",
+    Assert.assertTrue("Entry just removed still in store (" + key + ")",
                !store.containsKey(key));
 
-    assertTrue("Entry could be removed twice (" + key + ")",
+    Assert.assertTrue("Entry could be removed twice (" + key + ")",
                !store.remove(key));    
   }
 
+  @Test
   public void testUnusualBytes() throws ContentStoreException, IOException {
     byte[] CONTENT = new byte[256];
     for (int ix = 0; ix < CONTENT.length; ix++)
@@ -92,6 +92,7 @@ public abstract class AbstractContentStoreTest extends TestCase {
     compare(key, CONTENT);
   }
   
+  @Test
   public void testProbabilistic() throws ContentStoreException, IOException {
     Map entries = new HashMap();
 
@@ -119,13 +120,13 @@ public abstract class AbstractContentStoreTest extends TestCase {
         break;
       case DELETE:
         key = chooseRandomKey(entries);
-        assertTrue("Existing entry could not be deleted " + key,
+        Assert.assertTrue("Existing entry could not be deleted " + key,
                    store.remove(key));
         entries.remove(new Integer(key));
         break;
       case CHECK_PRESENCE:
         key = chooseRandomKey(entries) + 1;
-        assertTrue("Key presence does not match double-checking",
+        Assert.assertTrue("Key presence does not match double-checking",
                    entries.containsKey(new Integer(key)) == store.containsKey(key));
       }
     }
@@ -148,11 +149,11 @@ public abstract class AbstractContentStoreTest extends TestCase {
     byte[] content = IOUtils.toByteArray(cis);
     cis.close();
 
-    assertTrue("Returned content of wrong length",
+    Assert.assertTrue("Returned content of wrong length",
                content.length == CONTENT.length);
     
     for (int ix = 0; ix < CONTENT.length; ix++)
-      assertTrue("Returned content differs from original in byte " + ix,
+      Assert.assertTrue("Returned content differs from original in byte " + ix,
                  CONTENT[ix] == content[ix]);
   }
 }

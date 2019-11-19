@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ScopedIF;
@@ -33,16 +32,15 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.DeciderIF;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class ScopeUtilsTest extends TestCase {
+public class ScopeUtilsTest {
   protected TopicMapIF    topicmap; 
   protected TopicMapBuilderIF builder;
 
-  public ScopeUtilsTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
     makeTopic("A");
@@ -71,7 +69,7 @@ public class ScopeUtilsTest extends TestCase {
       return new URILocator(uri);
     }
     catch (java.net.MalformedURLException e) {
-      fail("malformed URL given: " + e);
+      Assert.fail("malformed URL given: " + e);
       return null; // never executed...
     }
   }
@@ -88,9 +86,9 @@ public class ScopeUtilsTest extends TestCase {
   //   else if (deciderName == "Related")
   //     decider = new InRelatedScopeDecider(userScope);
   //   else
-  //     fail("bad decider name given");
+  //     Assert.fail("bad decider name given");
   //   
-  //   assertTrue(deciderName + " decider got wrong result: " + object + "/" + user,
+  //   Assert.assertTrue(deciderName + " decider got wrong result: " + object + "/" + user,
   //          decider.ok(makeScoped(object)) == res);
   // }
 
@@ -251,25 +249,26 @@ public class ScopeUtilsTest extends TestCase {
 
   public void checkApplicableInContextDecider(String scope, String context, boolean res) {
     DeciderIF decider = new ApplicableInContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
            decider.ok(makeScoped(scope)) == res);    
   }
   public void checkSuperOfContextDecider(String scope, String context, boolean res) {
     DeciderIF decider = new SupersetOfContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
            decider.ok(makeScoped(scope)) == res);
   }
   public void checkSubOfContextDecider(String scope, String context, boolean res) {
     DeciderIF decider = new SubsetOfContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
            decider.ok(makeScoped(scope)) == res);
   }
   public void checkIntersectionOfContextDecider(String scope, String context, boolean res) {
     DeciderIF decider = new IntersectionOfContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
            decider.ok(makeScoped(scope)) == res);
   }
 
+  @Test
   public void testApplicableInContextDecider() {
     checkApplicableInContextDecider("", "", true);
     checkApplicableInContextDecider("", "A", true);
@@ -282,6 +281,7 @@ public class ScopeUtilsTest extends TestCase {
     checkApplicableInContextDecider("A, B", "A, B", true);
   }
   
+  @Test
   public void testSuperOfContextDecider() {
     checkSuperOfContextDecider("", "", true);
     checkSuperOfContextDecider("", "A", false);
@@ -294,6 +294,7 @@ public class ScopeUtilsTest extends TestCase {
     checkSuperOfContextDecider("A, B", "A, B", true);
   }
   
+  @Test
   public void testSubOfContextDecider() {
     checkSubOfContextDecider("", "", true);
     checkSubOfContextDecider("", "A", true);
@@ -306,6 +307,7 @@ public class ScopeUtilsTest extends TestCase {
     checkSubOfContextDecider("A, B", "A, B", true);
   }
   
+  @Test
   public void testIntersectionOfContextDecider() {
     checkIntersectionOfContextDecider("", "", false);
     checkIntersectionOfContextDecider("", "A", false);

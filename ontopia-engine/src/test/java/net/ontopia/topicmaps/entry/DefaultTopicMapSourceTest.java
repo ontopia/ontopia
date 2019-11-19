@@ -20,19 +20,17 @@
 
 package net.ontopia.topicmaps.entry;
 
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DefaultTopicMapSourceTest extends TestCase {
+public class DefaultTopicMapSourceTest {
   private TopicMapStoreIF store;
   private DefaultTopicMapSource source;
 
-  public DefaultTopicMapSourceTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() {
     store = new InMemoryTopicMapStore();
     source = new DefaultTopicMapSource();
@@ -40,32 +38,27 @@ public class DefaultTopicMapSourceTest extends TestCase {
   
   // --- Test cases
 
+  @Test
   public void testReferences() {
-    assertTrue("source not empty by default",
+    Assert.assertTrue("source not empty by default",
            source.getReferences().size() == 0);
 
     TopicMapReferenceIF ref =
       new DefaultTopicMapReference("id", "title", store);
     source.addReference(ref);
 
-    assertTrue("source not registered with reference",
+    Assert.assertTrue("source not registered with reference",
                ref.getSource() == source);
 
-    assertTrue("source did not discover add",
+    Assert.assertTrue("source did not discover add",
            source.getReferences().size() == 1);
-    assertTrue("reference identity lost",
+    Assert.assertTrue("reference identity lost",
            source.getReferences().iterator().next() == ref);
 
     source.removeReference(ref);
     
-    assertTrue("source not deregistered with reference",
+    Assert.assertTrue("source not deregistered with reference",
                ref.getSource() == null);
     
   }
 }
-
-
-
-
-
-

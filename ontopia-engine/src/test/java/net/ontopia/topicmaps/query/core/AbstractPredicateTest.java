@@ -24,10 +24,6 @@ package net.ontopia.topicmaps.query.core;
 public abstract class AbstractPredicateTest extends AbstractQueryTest {
   //! protected TopicMapBuilderIF builder;
   
-  public AbstractPredicateTest(String name) {
-    super(name);
-  }
-
   //! /// setup
   //! 
   //! public void setUp() {

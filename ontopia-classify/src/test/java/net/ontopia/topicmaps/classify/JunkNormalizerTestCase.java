@@ -20,20 +20,18 @@
 
 package net.ontopia.topicmaps.classify;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class JunkNormalizerTestCase extends TestCase {
+public class JunkNormalizerTestCase {
   
-  public JunkNormalizerTestCase(String name) {
-    super(name);
-  }
-  
+  @Test
   public void testNormalizer() {
     JunkNormalizer n = new JunkNormalizer();
 
-    assertEquals(n.normalize("abc"), "abc");
-    assertEquals(n.normalize("john's"), "john");
-    assertEquals(n.normalize(" abc "), "abc");
+    Assert.assertEquals(n.normalize("abc"), "abc");
+    Assert.assertEquals(n.normalize("john's"), "john");
+    Assert.assertEquals(n.normalize(" abc "), "abc");
   }
   
 }

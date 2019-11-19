@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class GrabberGrabberTest extends AbstractGrabberTest {
 
-  public GrabberGrabberTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(GrabberGrabberTest.class);
-  }
-  
+  @Test
   public void testGrabberGrabber() {
     LowerCaseGrabber grbLow = new LowerCaseGrabber();
     UpperCaseGrabber grbUp = new UpperCaseGrabber();
@@ -65,7 +57,3 @@ public class GrabberGrabberTest extends AbstractGrabberTest {
   }
 
 }
-
-
-
-

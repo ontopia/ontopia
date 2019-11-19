@@ -20,57 +20,57 @@
 
 package net.ontopia.infoset.impl.basic;
 
-import junit.framework.TestCase;
+import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class URIFragmentLocatorTest extends TestCase {
+public class URIFragmentLocatorTest {
   
-  public URIFragmentLocatorTest(String name) {
-    super(name);
-  }
-
   // --- tests
   
-  public void testGetExternalFormSimple() {
+  @Test
+  public void testGetExternalFormSimple() throws MalformedURLException {
     testExternalForm("http://www.example.com", "fragment");
   }
 
-  public void testGetExternalFormSimple2() {
+  @Test
+  public void testGetExternalFormSimple2() throws MalformedURLException {
     testExternalForm("http://www.example.com/index.jsp", "fragment");
   }
 
-  public void testGetExternalFormSimple3() {
+  @Test
+  public void testGetExternalFormSimple3() throws MalformedURLException {
     testExternalForm("http://www.example.com/index.jsp?bongo", "fragment");
   }
 
-  public void testGetExternalFormHostname() {
+  @Test
+  public void testGetExternalFormHostname() throws MalformedURLException {
     testExternalForm("http://www.%F8l.no/", "fragment");
   }
 
-  public void testGetExternalFormDirname() {
+  @Test
+  public void testGetExternalFormDirname() throws MalformedURLException {
     testExternalForm("http://www.ontopia.no/%F8l.html", "fragment");
   }
 
-  public void testGetExternalFormDirnameSpace() {
+  @Test
+  public void testGetExternalFormDirnameSpace() throws MalformedURLException {
     testExternalForm("http://www.ontopia.no/space%20in%20url.html",
                      "fragment");
   }
 
   // --- helpers
   
-  private void testExternalForm(String uri, String frag) {
-    try {
+  private void testExternalForm(String uri, String frag) throws MalformedURLException {
       LocatorIF base = new URILocator(uri);
       LocatorIF locator = base.resolveAbsolute("#" + frag);
 
       String correct = base.getExternalForm() + "#" + frag;
       String external = locator.getExternalForm();
       
-      assertTrue("incorrect external form for URI '" + locator.getAddress() +
+      Assert.assertTrue("incorrect external form for URI '" + locator.getAddress() +
                  "': '" + external + "', correct '" + correct + "'",
                  external.equals(correct));
-    } catch (java.net.MalformedURLException e) {
-      fail("INTERNAL ERROR: " + e);
-    }
   }  
 }

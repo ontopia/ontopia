@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.Objects;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -41,18 +40,17 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class MergeTest extends TestCase {
+public class MergeTest {
   protected TopicMapIF    topicmap1; 
   protected TopicMapIF    topicmap2; 
   protected TopicMapBuilderIF builder1;
   protected TopicMapBuilderIF builder2;
 
-  public MergeTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap1 = makeTopicMap();
     topicmap2 = makeTopicMap();
@@ -71,35 +69,38 @@ public class MergeTest extends TestCase {
       return new URILocator(uri);
     }
     catch (java.net.MalformedURLException e) {
-      fail("malformed URL given" + e.getMessage());
+      Assert.fail("malformed URL given" + e.getMessage());
       return null; // never executed...
     }
   }
     
   // --- Test cases for shouldMerge
 
+  @Test
   public void testShouldEmptyTopics() {
     TopicIF t1 = builder1.makeTopic();
     TopicIF t2 = builder2.makeTopic();
 
-    assertTrue("claims empty topics should be merged",
+    Assert.assertTrue("claims empty topics should be merged",
            !MergeUtils.shouldMerge(t1, t2));
   }
 
+  @Test
   public void testShouldNullSubject() {
     try {
       TopicIF t1 = builder1.makeTopic();
       t1.addSubjectLocator(makeLocator("http://www.ontopia.net"));
       TopicIF t2 = builder2.makeTopic();
             
-      assertTrue("claims topics with different subjects should merge",
+      Assert.assertTrue("claims topics with different subjects should merge",
              !MergeUtils.shouldMerge(t1, t2));
     }
     catch (ConstraintViolationException e) {
-      fail("(INTERNAL) " + e.getMessage());
+      Assert.fail("(INTERNAL) " + e.getMessage());
     }
   }
 
+  @Test
   public void testShouldSameSubject() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -107,14 +108,15 @@ public class MergeTest extends TestCase {
       TopicIF t2 = builder2.makeTopic();
       t2.addSubjectLocator(makeLocator("http://www.ontopia.net"));
             
-      assertTrue("claims topics with same subjects should not merge",
+      Assert.assertTrue("claims topics with same subjects should not merge",
              MergeUtils.shouldMerge(t1, t2));
     }
     catch (ConstraintViolationException e) {
-      fail("(INTERNAL) " + e.getMessage());
+      Assert.fail("(INTERNAL) " + e.getMessage());
     }
   }
 
+  @Test
   public void testShouldSameSubjectIndicator() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -122,44 +124,48 @@ public class MergeTest extends TestCase {
       TopicIF t2 = builder2.makeTopic();
       t2.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
             
-      assertTrue("claims topics with same subjects indicator should not merge",
+      Assert.assertTrue("claims topics with same subjects indicator should not merge",
              MergeUtils.shouldMerge(t1, t2));
     }
     catch (ConstraintViolationException e) {
-      fail("(INTERNAL) " + e.getMessage());
+      Assert.fail("(INTERNAL) " + e.getMessage());
     }
   }
 
+  @Test
   public void testShouldSameTopicName() {
     TopicIF t1 = builder1.makeTopic();
     builder1.makeTopicName(t1, "Ontopia");
     TopicIF t2 = builder2.makeTopic();
     builder2.makeTopicName(t2, "Ontopia");
         
-    assertTrue("claims topics with same base name in unconstrained scope should merge",
+    Assert.assertTrue("claims topics with same base name in unconstrained scope should merge",
            !MergeUtils.shouldMerge(t1, t2));
   }
 
+  @Test
   public void testShouldTopicIsSubjectIndicator() {
     TopicIF t1 = builder1.makeTopic();
     t1.addItemIdentifier(makeLocator("http://www.ontopia.net"));
     TopicIF t2 = builder2.makeTopic();
     t2.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
         
-    assertTrue("claims topics should not merge when one is subject indicator of other",
+    Assert.assertTrue("claims topics should not merge when one is subject indicator of other",
                MergeUtils.shouldMerge(t1, t2));
   }
   
+  @Test
   public void testShouldTopicIsSubjectIndicatorReverse() {
     TopicIF t1 = builder1.makeTopic();
     t1.addItemIdentifier(makeLocator("http://www.ontopia.net"));
     TopicIF t2 = builder2.makeTopic();
     t2.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
         
-    assertTrue("claims topics should not merge when one is subject indicator of other",
+    Assert.assertTrue("claims topics should not merge when one is subject indicator of other",
                MergeUtils.shouldMerge(t2, t1));
   }
   
+  @Test
   public void testSeveralTopicNames() {
     TopicIF dummy1 = builder1.makeTopic();
     TopicIF dummy2 = builder1.makeTopic();
@@ -177,19 +183,20 @@ public class MergeTest extends TestCase {
     TopicIF t2 = builder2.makeTopic();
     builder2.makeTopicName(t2, "Ontopia");
         
-    assertTrue("claims topics should merge when they have same BN in unconstrained scope",
+    Assert.assertTrue("claims topics should merge when they have same BN in unconstrained scope",
            !MergeUtils.shouldMerge(t1, t2));
   }
   
   // --- Test cases for mergeInto(TopicIF, TopicIF)
 
+  @Test
   public void testMergeEmptyTopics() {
     TopicIF t1 = builder1.makeTopic();
     TopicIF t2 = builder1.makeTopic();
 
     try {
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("source topic not removed from topic map!",
+      Assert.assertTrue("source topic not removed from topic map!",
              t2.getTopicMap() == null);
     }
     catch (Exception e) {
@@ -197,6 +204,7 @@ public class MergeTest extends TestCase {
     }
   }
 
+  @Test
   public void testMergeDifferentSubjects1() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -204,14 +212,15 @@ public class MergeTest extends TestCase {
       TopicIF t2 = builder1.makeTopic();
             
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("subject was lost during merge",
+      Assert.assertTrue("subject was lost during merge",
              t1.getSubjectLocators().contains(makeLocator("http://www.ontopia.net")));
     }
     catch (ConstraintViolationException e) {
-      fail("didn't accept merging when only one topic had a subject" + e.getMessage());
+      Assert.fail("didn't accept merging when only one topic had a subject" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeDifferentSubjects2() {  // F.5.1, 4
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -219,14 +228,15 @@ public class MergeTest extends TestCase {
       t2.addSubjectLocator(makeLocator("http://www.ontopia.net"));
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("subject was lost during merge",
+      Assert.assertTrue("subject was lost during merge",
              t1.getSubjectLocators().contains(makeLocator("http://www.ontopia.net")));
     }
     catch (ConstraintViolationException e) {
-      fail("didn't accept merging when only one topic had a subject" + e.getMessage());
+      Assert.fail("didn't accept merging when only one topic had a subject" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeDifferentSubjects3() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -237,10 +247,11 @@ public class MergeTest extends TestCase {
       MergeUtils.mergeInto(t1, t2);
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics with different subjects not accepted");
+      Assert.fail("merge of topics with different subjects not accepted");
     }
   }
 
+  @Test
   public void testMergeSubjectIndicators() {  // F.5.1, 3
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -253,21 +264,22 @@ public class MergeTest extends TestCase {
       t2.addSubjectIdentifier(loc3);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("wrong number of subject indicators after merge",
+      Assert.assertTrue("wrong number of subject indicators after merge",
              t1.getSubjectIdentifiers().size() == 3);
             
-      assertTrue("original subject indicator lost",
+      Assert.assertTrue("original subject indicator lost",
              t1.getSubjectIdentifiers().contains(loc1));
             
-      assertTrue("source subject indicator not copied",
+      Assert.assertTrue("source subject indicator not copied",
              t1.getSubjectIdentifiers().contains(loc2) &&
              t1.getSubjectIdentifiers().contains(loc3));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicNames() { // F.5.1, 2
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -276,17 +288,18 @@ public class MergeTest extends TestCase {
       TopicNameIF bn2 = builder1.makeTopicName(t2, "bn2");
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("wrong number of base names after merge",
+      Assert.assertTrue("wrong number of base names after merge",
              t1.getTopicNames().size() == 2);
             
-      assertTrue("original base name lost",
+      Assert.assertTrue("original base name lost",
              t1.getTopicNames().contains(bn1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicNameDuplicates() { // bug #228
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -296,11 +309,11 @@ public class MergeTest extends TestCase {
       TopicNameIF bn2 = builder1.makeTopicName(t2, "bn");
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("base name duplicates not suppressed",
+      Assert.assertTrue("base name duplicates not suppressed",
              t1.getTopicNames().size() == 1);
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
 
     try {
@@ -318,14 +331,15 @@ public class MergeTest extends TestCase {
       bn2.addTheme(tt2);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("base name duplicates not suppressed",
+      Assert.assertTrue("base name duplicates not suppressed",
              t1.getTopicNames().size() == 1);
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicNameDuplicatesWithVariants() {
     TopicIF t1 = builder1.makeTopic();
     TopicNameIF bn1 = builder1.makeTopicName(t1, "bn");
@@ -336,10 +350,11 @@ public class MergeTest extends TestCase {
     VariantNameIF vn2 = builder1.makeVariantName(bn2, "vn");
 
     MergeUtils.mergeInto(t1, t2);
-    assertTrue("base name duplicates not suppressed",
+    Assert.assertTrue("base name duplicates not suppressed",
            t1.getTopicNames().size() == 1);
   }
     
+  @Test
   public void testMergeOccurrences() { // F.5.1, 6
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -352,17 +367,18 @@ public class MergeTest extends TestCase {
       OccurrenceIF oc2 = builder1.makeOccurrence(t2, ot2, loc2);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("wrong number of occurrences after merge",
+      Assert.assertTrue("wrong number of occurrences after merge",
              t1.getOccurrences().size() == 2);
             
-      assertTrue("original occurrence lost",
+      Assert.assertTrue("original occurrence lost",
              t1.getOccurrences().contains(oc1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeOccurrenceDuplicates() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -374,11 +390,11 @@ public class MergeTest extends TestCase {
       OccurrenceIF oc2 = builder1.makeOccurrence(t2, ot1, loc1);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("occurrence duplicates not suppressed",
+      Assert.assertTrue("occurrence duplicates not suppressed",
              t1.getOccurrences().size() == 1);
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
 
     try {
@@ -398,14 +414,15 @@ public class MergeTest extends TestCase {
       oc2.addTheme(tt2);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("occurrence duplicates not suppressed",
+      Assert.assertTrue("occurrence duplicates not suppressed",
              t1.getOccurrences().size() == 1);
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTypes() {
     try {
       TopicIF tt1 = builder1.makeTopic();
@@ -416,20 +433,21 @@ public class MergeTest extends TestCase {
       t2.addType(tt2);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("wrong number of types after merge",
+      Assert.assertTrue("wrong number of types after merge",
              t1.getTypes().size() == 2);
             
-      assertTrue("original type lost",
+      Assert.assertTrue("original type lost",
              t1.getTypes().contains(tt1));
             
-      assertTrue("source type not copied",
+      Assert.assertTrue("source type not copied",
              t1.getTypes().contains(tt2));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
     
+  @Test
   public void testMergeRoles() { // F.5.1, 5
     try {
       TopicIF atype = builder1.makeTopic();
@@ -443,20 +461,21 @@ public class MergeTest extends TestCase {
       AssociationRoleIF ar2 = builder1.makeAssociationRole(assoc2, type2, t2);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("wrong number of roles after merge",
+      Assert.assertTrue("wrong number of roles after merge",
              t1.getRoles().size() == 2);
             
-      assertTrue("original role lost",
+      Assert.assertTrue("original role lost",
              t1.getRoles().contains(ar1));
             
-      assertTrue("source role not copied",
+      Assert.assertTrue("source role not copied",
              t1.getRoles().contains(ar2));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicTypeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -466,17 +485,18 @@ public class MergeTest extends TestCase {
       t3.addType(t2);
 
       MergeUtils.mergeInto(t1, t2);
-      assertTrue("types of unrelated topic corrupted",
+      Assert.assertTrue("types of unrelated topic corrupted",
              t3.getTypes().size() == 1);
             
-      assertTrue("topic type replacement not done correctly",
+      Assert.assertTrue("topic type replacement not done correctly",
              t3.getTypes().contains(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeAssociationRoleTypeUse() {
     try {
       TopicIF atype = builder1.makeTopic();
@@ -489,14 +509,15 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("association role type replacement not done correctly",
+      Assert.assertTrue("association role type replacement not done correctly",
              ar1.getType().equals(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeAssociationTypeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -506,14 +527,15 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("association type replacement not done correctly",
+      Assert.assertTrue("association type replacement not done correctly",
              assoc1.getType().equals(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicNameTypeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -523,14 +545,15 @@ public class MergeTest extends TestCase {
       
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("basename type replacement not done correctly",
+      Assert.assertTrue("basename type replacement not done correctly",
              bn.getType().equals(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeOccurrenceTypeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -540,14 +563,15 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("occurrence type replacement not done correctly",
+      Assert.assertTrue("occurrence type replacement not done correctly",
              occ.getType().equals(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeAssociationScopeUse() {
     try {
       TopicIF atype = builder1.makeTopic();
@@ -559,16 +583,17 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("association scope corrupted",
+      Assert.assertTrue("association scope corrupted",
              assoc.getScope().size() == 1);
-      assertTrue("association theme replacement not done correctly",
+      Assert.assertTrue("association theme replacement not done correctly",
              assoc.getScope().contains(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeTopicNameScopeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -579,16 +604,17 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("base name scope corrupted",
+      Assert.assertTrue("base name scope corrupted",
              bn.getScope().size() == 1);
-      assertTrue("base name theme replacement not done correctly",
+      Assert.assertTrue("base name theme replacement not done correctly",
              bn.getScope().contains(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeOccurrenceScopeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -600,16 +626,17 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("occurrence scope corrupted",
+      Assert.assertTrue("occurrence scope corrupted",
              occ.getScope().size() == 1);
-      assertTrue("occurrence theme replacement not done correctly",
+      Assert.assertTrue("occurrence theme replacement not done correctly",
              occ.getScope().contains(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeVariantNameScopeUse() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -621,16 +648,17 @@ public class MergeTest extends TestCase {
 
       MergeUtils.mergeInto(t1, t2);
             
-      assertTrue("variant name scope corrupted",
+      Assert.assertTrue("variant name scope corrupted",
              vn.getScope().size() == 1);
-      assertTrue("variant name theme replacement not done correctly",
+      Assert.assertTrue("variant name theme replacement not done correctly",
              vn.getScope().contains(t1));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeDuplicateAssociations() throws IOException {
     TopicMapIF tm = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "merge-duplicate-assoc.ltm")).read();
     LocatorIF base = tm.getStore().getBaseAddress();
@@ -642,22 +670,24 @@ public class MergeTest extends TestCase {
     // the new puccini should have only a single place of birth; in
     // fact, only a single association
 
-    assertTrue("Merge did not remove duplicate associations",
+    Assert.assertTrue("Merge did not remove duplicate associations",
                puccini1.getRoles().size() == 1);
   }
 
   // FIXME: must test duplicates
 
+  @Test
   public void testMergeSelf() throws IOException {
     TopicMapIF tm1 = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("query", "jill.xtm")).read();
     TopicMapIF tm2 = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("query", "jill.xtm")).read();
 
     MergeUtils.mergeInto(tm1, tm2);
     
-    assertEquals(tm1.getTopics().size(), tm2.getTopics().size());
-    assertEquals(tm1.getAssociations().size(), tm2.getAssociations().size());
+    Assert.assertEquals(tm1.getTopics().size(), tm2.getTopics().size());
+    Assert.assertEquals(tm1.getAssociations().size(), tm2.getAssociations().size());
   }
 
+  @Test
   public void testMergeReified() {
     // build TM
     TopicIF t1 = builder1.makeTopic();
@@ -669,12 +699,13 @@ public class MergeTest extends TestCase {
     MergeUtils.mergeInto(t1, t2);
 
     // check
-    assertTrue("Occurrence lost reifier on merge",
+    Assert.assertTrue("Occurrence lost reifier on merge",
                occ.getReifier() == t1);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                t1.getReified() == occ);
   }
 
+  @Test
   public void testMergeReified2() {
     // build TM
     TopicIF t1 = builder1.makeTopic();
@@ -687,12 +718,13 @@ public class MergeTest extends TestCase {
     MergeUtils.mergeInto(t2, t1);
 
     // check
-    assertTrue("Occurrence lost reifier on merge",
+    Assert.assertTrue("Occurrence lost reifier on merge",
                occ.getReifier() == t2);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                t2.getReified() == occ);
   }
 
+  @Test
   public void testMergeReified3() {
     // build TM
     TopicIF t1 = builder1.makeTopic();
@@ -706,11 +738,12 @@ public class MergeTest extends TestCase {
     // merge
     try {
       MergeUtils.mergeInto(t2, t1);
-      fail("Successfully merged topics which reify different objects");
+      Assert.fail("Successfully merged topics which reify different objects");
     } catch (ConstraintViolationException e) {
     }
   }
   
+  @Test
   public void testMergeReifiedTargetTopicMap() {
     // build TMs
     TopicIF reifier = builder1.makeTopic();
@@ -721,12 +754,13 @@ public class MergeTest extends TestCase {
     // its reifier
 
     // check
-    assertTrue("Topic map lost reifier on merge",
+    Assert.assertTrue("Topic map lost reifier on merge",
                topicmap1.getReifier() == reifier);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                reifier.getReified() == topicmap1);
   }
   
+  @Test
   public void testMergeReifiedSourceTopicMap() {
     // build TMs
     TopicIF reifier1 = builder1.makeTopic();
@@ -740,12 +774,13 @@ public class MergeTest extends TestCase {
     // its reifier (which it should)
 
     // check
-    assertTrue("Topic map did not lose reifier on merge",
+    Assert.assertTrue("Topic map did not lose reifier on merge",
                topicmap1.getReifier() == null);
-    assertTrue("Topic did become reifier on merge",
+    Assert.assertTrue("Topic did become reifier on merge",
                reifier1.getReified() == null);
   }
   
+  @Test
   public void testMergeReifiedTopicMaps() {
     // build TMs
     TopicIF reifier1 = builder1.makeTopic();
@@ -760,12 +795,13 @@ public class MergeTest extends TestCase {
     // its reifier
 
     // check
-    assertTrue("Topic map lost reifier on merge",
+    Assert.assertTrue("Topic map lost reifier on merge",
                topicmap1.getReifier() == reifier1);
-    assertTrue("Topic did become reifier on merge",
+    Assert.assertTrue("Topic did become reifier on merge",
                reifier1.getReified() == topicmap1);
   }
   
+  @Test
   public void testMergeReifiedBasename() {
     // build TM
     TopicIF t1 = builder1.makeTopic();
@@ -780,12 +816,13 @@ public class MergeTest extends TestCase {
 
     // check
     TopicNameIF newbn = (TopicNameIF)t1.getTopicNames().iterator().next();
-    assertTrue("Basename lost reifier on merge",
+    Assert.assertTrue("Basename lost reifier on merge",
                newbn.getReifier() == t2);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                t2.getReified() == newbn);
   }
   
+  @Test
   public void testMergeReifiedOccurrence() {
     // build TM
     TopicIF t1 = builder1.makeTopic();
@@ -800,12 +837,13 @@ public class MergeTest extends TestCase {
 
     // check
     OccurrenceIF newocc = (OccurrenceIF)t1.getOccurrences().iterator().next();
-    assertTrue("Occurrence lost reifier on merge",
+    Assert.assertTrue("Occurrence lost reifier on merge",
                newocc.getReifier() == t2);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                t2.getReified() == newocc);
   }
   
+  @Test
   public void testMergeReifiedAssociation() {
     // build TM
     TopicIF reifier = builder1.makeTopic();
@@ -828,12 +866,13 @@ public class MergeTest extends TestCase {
     // check
     AssociationRoleIF newrole = (AssociationRoleIF)target.getRoles().iterator().next();
     AssociationIF newassoc = newrole.getAssociation();
-    assertTrue("Association lost reifier on merge",
+    Assert.assertTrue("Association lost reifier on merge",
                newassoc.getReifier() == reifier);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                reifier.getReified() == newassoc);
   }
   
+  @Test
   public void testMergeReifiedNearRole() {
     // build TM
     TopicIF reifier = builder1.makeTopic();
@@ -855,12 +894,13 @@ public class MergeTest extends TestCase {
 
     // check
     AssociationRoleIF newnrole = (AssociationRoleIF)target.getRoles().iterator().next();
-    assertTrue("Near role lost reifier on merge",
+    Assert.assertTrue("Near role lost reifier on merge",
                newnrole.getReifier() == reifier);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                reifier.getReified() == newnrole);
   }
   
+  @Test
   public void testMergeReifiedDistantRole() {
     // build TM
     TopicIF reifier = builder1.makeTopic();
@@ -892,14 +932,15 @@ public class MergeTest extends TestCase {
         break;
       }
     }
-    assertTrue("Distant role lost reifier on merge",
+    Assert.assertTrue("Distant role lost reifier on merge",
                newdrole.getReifier() == reifier);
-    assertTrue("Topic lost reified on merge",
+    Assert.assertTrue("Topic lost reified on merge",
                reifier.getReified() == newdrole);
   }
   
   // --- Test cases for mergeInto(TopicMapIF, TopicIF)
 
+  @Test
   public void testMergeDuplicateSourceLocator() {
     try {
       TopicIF t1 = builder1.makeTopic();
@@ -915,13 +956,14 @@ public class MergeTest extends TestCase {
       MergeUtils.mergeInto(topicmap1, t2);
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
     catch (java.net.MalformedURLException e) {
-      fail("URI literals malformed" + e.getMessage());
+      Assert.fail("URI literals malformed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeDuplicateSourceLocator2() {
 
     // this test differs from the previous one in that the base names
@@ -939,15 +981,16 @@ public class MergeTest extends TestCase {
       bn2.addItemIdentifier(new URILocator("http://www.example.com/#1"));
 
       MergeUtils.mergeInto(topicmap1, t2);
-      fail("merge succeeded, even though duplicates did not match");
+      Assert.fail("merge succeeded, even though duplicates did not match");
     }
     catch (ConstraintViolationException e) {
     }
     catch (java.net.MalformedURLException e) {
-      fail("URI literals malformed" + e.getMessage());
+      Assert.fail("URI literals malformed" + e.getMessage());
     }
   }
   
+  @Test
   public void testMergeReifyingTopic() {
     try {
       TopicIF t1 = builder2.makeTopic();
@@ -959,28 +1002,29 @@ public class MergeTest extends TestCase {
       bn2.setReifier(t1);
       MergeUtils.mergeInto(topicmap1, t2);
 
-      assertTrue("reifying topic was not included",
+      Assert.assertTrue("reifying topic was not included",
                  topicmap1.getTopics().size() >= 2);
 
       TopicNameIF bn = (TopicNameIF) topicmap1.getObjectByItemIdentifier(new URILocator("http://www.example.com/#1"));
       TopicIF reifier = bn.getReifier();
       
-      assertTrue("reification link was broken", reifier != null);
+      Assert.assertTrue("reification link was broken", reifier != null);
 
-      assertTrue("reifier base name not copied", !reifier.getTopicNames().isEmpty());
+      Assert.assertTrue("reifier base name not copied", !reifier.getTopicNames().isEmpty());
 
       bn = (TopicNameIF) reifier.getTopicNames().iterator().next();
-      assertTrue("reifier base name not copied correctly",
+      Assert.assertTrue("reifier base name not copied correctly",
                  bn.getValue().equals("famous misspelling"));
     }
     catch (ConstraintViolationException e) {
-      fail("merge of topics unaccountably failed" + e.getMessage());
+      Assert.fail("merge of topics unaccountably Assert.failed" + e.getMessage());
     }
     catch (MalformedURLException e) {
-      fail("URI literals malformed" + e.getMessage());
+      Assert.fail("URI literals malformed" + e.getMessage());
     }
   }
 
+  @Test
   public void testMergeAllTopics() throws MalformedURLException, IOException {
     String sep = File.separator;
     String root = TestFileUtils.getTestdataOutputDirectory();
@@ -1003,10 +1047,11 @@ public class MergeTest extends TestCase {
     }
 
     new CanonicalTopicMapWriter(outfile).write(newtm);
-    assertTrue("Topic map created by merging over topics not equal to original",
+    Assert.assertTrue("Topic map created by merging over topics not equal to original",
                TestFileUtils.compareFileToResource(outfile, baseline));
   }
 
+  @Test
   public void testMergeReifiedNames() {
     TopicIF t1 = builder1.makeTopic();
     TopicNameIF bn1 = builder1.makeTopicName(t1, "bn1");
@@ -1022,21 +1067,22 @@ public class MergeTest extends TestCase {
 
     MergeUtils.mergeInto(t1, t2);
     
-    assertTrue("wrong number of base names after merge",
+    Assert.assertTrue("wrong number of base names after merge",
                t1.getTopicNames().size() == 1);
             
-    assertTrue("original base name lost",
+    Assert.assertTrue("original base name lost",
                t1.getTopicNames().contains(bn1));
 
     bn1 = (TopicNameIF) t1.getTopicNames().iterator().next();
     r1 = bn1.getReifier();
 
-    assertTrue("reifier lost", r1 != null);
+    Assert.assertTrue("reifier lost", r1 != null);
 
-    assertTrue("wrong number of names on reifier: " + r1.getTopicNames().size(),
+    Assert.assertTrue("wrong number of names on reifier: " + r1.getTopicNames().size(),
                r1.getTopicNames().size() == 2);
   }
 
+  @Test
   public void testMergeReifiedOccurrences() {
     TopicIF occtype = builder1.makeTopic();
     
@@ -1054,21 +1100,22 @@ public class MergeTest extends TestCase {
 
     MergeUtils.mergeInto(t1, t2);
     
-    assertTrue("wrong number of occurrences after merge",
+    Assert.assertTrue("wrong number of occurrences after merge",
                t1.getOccurrences().size() == 1);
             
-    assertTrue("original occurrence lost",
+    Assert.assertTrue("original occurrence lost",
                t1.getOccurrences().contains(occ1));
 
     occ1 = (OccurrenceIF) t1.getOccurrences().iterator().next();
     r1 = occ1.getReifier();
 
-    assertTrue("reifier lost", r1 != null);
+    Assert.assertTrue("reifier lost", r1 != null);
 
-    assertTrue("wrong number of names on reifier: " + r1.getTopicNames().size(),
+    Assert.assertTrue("wrong number of names on reifier: " + r1.getTopicNames().size(),
                r1.getTopicNames().size() == 2);
   }
 
+  @Test
   public void testMergeAssociationReifiers() {
     // the idea here is: what happens if you attempt to merge two topics
     // which reify duplicate associations?
@@ -1090,7 +1137,7 @@ public class MergeTest extends TestCase {
     
     MergeUtils.mergeInto(r1, r2);
     
-    assertTrue("wrong number of roles after merge",
+    Assert.assertTrue("wrong number of roles after merge",
                player.getRoles().size() == 1);
   }
 }

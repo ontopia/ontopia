@@ -24,17 +24,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
+import org.junit.Test;
 
 public class TopicMapPredicateTest extends AbstractPredicateTest {
   
-  public TopicMapPredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
   
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("family2.ltm");
 
@@ -45,6 +42,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificTopicMap() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -55,6 +53,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificNonTopicMap() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -64,6 +63,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithCrossJoin() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -73,6 +73,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testBug2003() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -83,6 +84,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
     
+  @Test
   public void testFiltering() throws InvalidQueryException, IOException {
     load("family.ltm");
 

@@ -21,28 +21,28 @@
 package net.ontopia.topicmaps.entry;
 
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class TopicMapSourceManagerTest extends TestCase {
+public class TopicMapSourceManagerTest {
   private TopicMapSourceManager manager;
 
-  public TopicMapSourceManagerTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() {
     manager = new TopicMapSourceManager();
   }
   
   // --- Test cases
 
+  @Test
   public void testEmpty() {
     verifyEmptyManager("");
     manager.refresh();
     verifyEmptyManager(" after refresh");
   }
 
+  @Test
   public void testSingleSourceSingleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
     DefaultTopicMapReference ref =
@@ -51,22 +51,22 @@ public class TopicMapSourceManagerTest extends TestCase {
     manager.addSource(source);
     manager.refresh();
 
-    assertTrue("id collection of wrong size",
+    Assert.assertTrue("id collection of wrong size",
            manager.getIds().size() == 1);
-    assertTrue("id of reference lost",
+    Assert.assertTrue("id of reference lost",
            manager.getIds().contains("id"));
                        
-    assertTrue("reference not found",
+    Assert.assertTrue("reference not found",
            manager.getReferenceById("id") == ref);
     
-    assertTrue("reference collection of wrong size",
+    Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 1);
-    assertTrue("reference identity lost",
+    Assert.assertTrue("reference identity lost",
            manager.getReferences().contains(ref));
     
-    assertTrue("source collection of wrong size",
+    Assert.assertTrue("source collection of wrong size",
            manager.getSources().size() == 1);
-    assertTrue("source lost",
+    Assert.assertTrue("source lost",
            manager.getSources().contains(source));
 
     manager.removeSource(source);
@@ -76,6 +76,7 @@ public class TopicMapSourceManagerTest extends TestCase {
     manager.removeSource(source); // checking that it's OK
   }
 
+  @Test
   public void testSingleSourceDoubleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
     DefaultTopicMapReference ref =
@@ -87,25 +88,25 @@ public class TopicMapSourceManagerTest extends TestCase {
     manager.addSource(source);
     manager.refresh();
 
-    assertTrue("id collection of wrong size",
+    Assert.assertTrue("id collection of wrong size",
            manager.getIds().size() == 2);
-    assertTrue("id of reference lost",
+    Assert.assertTrue("id of reference lost",
            manager.getIds().contains("id") &&
            manager.getIds().contains("id2"));
     
-    assertTrue("reference not found",
+    Assert.assertTrue("reference not found",
            manager.getReferenceById("id") == ref &&
            manager.getReferenceById("id2") == ref2 );
     
-    assertTrue("reference collection of wrong size",
+    Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 2);
-    assertTrue("reference identity lost",
+    Assert.assertTrue("reference identity lost",
            manager.getReferences().contains(ref) &&
            manager.getReferences().contains(ref2));
     
-    assertTrue("source collection of wrong size",
+    Assert.assertTrue("source collection of wrong size",
            manager.getSources().size() == 1);
-    assertTrue("source lost",
+    Assert.assertTrue("source lost",
            manager.getSources().contains(source));
 
     manager.removeSource(source);
@@ -115,6 +116,7 @@ public class TopicMapSourceManagerTest extends TestCase {
     manager.removeSource(source); // checking that it's OK
   }
 
+  @Test
   public void testDoubleSourceSingleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
     DefaultTopicMapReference ref =
@@ -129,25 +131,25 @@ public class TopicMapSourceManagerTest extends TestCase {
     manager.addSource(source2);
     manager.refresh();
     
-    assertTrue("id collection of wrong size",
+    Assert.assertTrue("id collection of wrong size",
            manager.getIds().size() == 2);
-    assertTrue("id of reference lost",
+    Assert.assertTrue("id of reference lost",
            manager.getIds().contains("id") &&
            manager.getIds().contains("id2"));
     
-    assertTrue("reference not found",
+    Assert.assertTrue("reference not found",
            manager.getReferenceById("id") == ref &&
            manager.getReferenceById("id2") == ref2 );
     
-    assertTrue("reference collection of wrong size",
+    Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 2);
-    assertTrue("reference identity lost",
+    Assert.assertTrue("reference identity lost",
            manager.getReferences().contains(ref) &&
            manager.getReferences().contains(ref2));
     
-    assertTrue("source collection of wrong size",
+    Assert.assertTrue("source collection of wrong size",
            manager.getSources().size() == 2);
-    assertTrue("source lost",
+    Assert.assertTrue("source lost",
            manager.getSources().contains(source) &&
            manager.getSources().contains(source2));
 
@@ -163,23 +165,16 @@ public class TopicMapSourceManagerTest extends TestCase {
   // --- INTERNAL METHODS
 
   private void verifyEmptyManager(String suffix) {
-    assertTrue("id collection not empty" + suffix,
+    Assert.assertTrue("id collection not empty" + suffix,
            manager.getIds().size() == 0);
 
-    assertTrue("non-existent reference found" + suffix,
+    Assert.assertTrue("non-existent reference found" + suffix,
            manager.getReferenceById("rongobongo") == null);
     
-    assertTrue("reference collection not empty" + suffix,
+    Assert.assertTrue("reference collection not empty" + suffix,
            manager.getReferences().size() == 0);
     
-    assertTrue("source collection not empty" + suffix,
+    Assert.assertTrue("source collection not empty" + suffix,
            manager.getSources().size() == 0);
   }
 }
-
-
-
-
-
-
-

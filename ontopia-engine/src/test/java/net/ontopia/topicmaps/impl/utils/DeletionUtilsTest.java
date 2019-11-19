@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Collections;
-import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -31,8 +30,10 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class DeletionUtilsTest extends TestCase {
+public class DeletionUtilsTest {
 
   protected TopicMapIF makeTopicMap() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
@@ -41,6 +42,7 @@ public class DeletionUtilsTest extends TestCase {
 
   // --- Test cases
 
+  @Test
   public void testTopicDeletion() {
     TopicMapIF topicmap = makeTopicMap();
     TopicMapBuilderIF builder = topicmap.getBuilder();
@@ -48,11 +50,12 @@ public class DeletionUtilsTest extends TestCase {
     TopicIF morituri = builder.makeTopic();
     morituri.remove();
 
-    assertTrue("Topic still connected to topic map",
+    Assert.assertTrue("Topic still connected to topic map",
                morituri.getTopicMap() == null);
-    assertTrue("Topic map not empty", topicmap.getTopics().isEmpty());
+    Assert.assertTrue("Topic map not empty", topicmap.getTopics().isEmpty());
   }
 
+  @Test
   public void testTopicTypeDeletion() {
     TopicMapIF topicmap = makeTopicMap();
     TopicMapBuilderIF builder = topicmap.getBuilder();
@@ -62,10 +65,11 @@ public class DeletionUtilsTest extends TestCase {
 
     morituri.remove();
 
-    assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
-    assertTrue("Topic map not empty", topicmap.getTopics().size() == 0);
+    Assert.assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
+    Assert.assertTrue("Topic map not empty", topicmap.getTopics().size() == 0);
   }
 
+  @Test
   public void testTopicAssociationRolePlayerDeletion() {
     TopicMapIF topicmap = makeTopicMap();
     TopicMapBuilderIF builder = topicmap.getBuilder();
@@ -80,13 +84,14 @@ public class DeletionUtilsTest extends TestCase {
 
     morituri.remove();
 
-    assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
-    assertTrue("Topic map has too many topics", topicmap.getTopics().size() == 4);
-    assertTrue("Role still part of topic map", role1.getTopicMap() == null);
-    assertTrue("other still has role", other.getRoles().size() == 0);
-    assertTrue("Topic map lost association", topicmap.getAssociations().size() == 0);
+    Assert.assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
+    Assert.assertTrue("Topic map has too many topics", topicmap.getTopics().size() == 4);
+    Assert.assertTrue("Role still part of topic map", role1.getTopicMap() == null);
+    Assert.assertTrue("other still has role", other.getRoles().size() == 0);
+    Assert.assertTrue("Topic map lost association", topicmap.getAssociations().size() == 0);
   }
 
+  @Test
   public void testTopicAssociationDeletion() {
     TopicMapIF topicmap = makeTopicMap();
     TopicMapBuilderIF builder = topicmap.getBuilder();
@@ -101,14 +106,15 @@ public class DeletionUtilsTest extends TestCase {
 
     morituri.remove();
 
-    assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
-    assertTrue("Topic map has too many topics", topicmap.getTopics().size() == 4);
-    assertTrue("Role 1 still connected to topic map", role1.getTopicMap() == null);
-    assertTrue("Role 2 still connected to topic map", role2.getTopicMap() == null);
-    assertTrue("Association still connected to topic map", assoc.getTopicMap() == null);
-    assertTrue("Topic map still has association", topicmap.getAssociations().size() == 0);
+    Assert.assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
+    Assert.assertTrue("Topic map has too many topics", topicmap.getTopics().size() == 4);
+    Assert.assertTrue("Role 1 still connected to topic map", role1.getTopicMap() == null);
+    Assert.assertTrue("Role 2 still connected to topic map", role2.getTopicMap() == null);
+    Assert.assertTrue("Association still connected to topic map", assoc.getTopicMap() == null);
+    Assert.assertTrue("Topic map still has association", topicmap.getAssociations().size() == 0);
   }
   
+  @Test
   public void testScopingTopicDeletion() {
     TopicMapIF topicmap = makeTopicMap();
     TopicMapBuilderIF builder = topicmap.getBuilder();
@@ -139,14 +145,15 @@ public class DeletionUtilsTest extends TestCase {
     morituri.remove();
     
     // remainder: 2 topics: other, default-name-type
-    assertEquals("Incorrect number of topics after removal", 2, topicmap.getTopics().size());
-    assertTrue("Incorrect number of association after removal", topicmap.getAssociations().isEmpty());
-    assertNull("Association bound to topicmap after removal", assoc.getTopicMap());
-    assertNull("Occurrence bound to topicmap after removal", occurrence.getTopicMap());
-    assertNull("Topic name bound to topicmap after removal", name.getTopicMap());
-    assertNull("Variant name bound to topicmap after removal", variant.getTopicMap());
+    Assert.assertEquals("Incorrect number of topics after removal", 2, topicmap.getTopics().size());
+    Assert.assertTrue("Incorrect number of association after removal", topicmap.getAssociations().isEmpty());
+    Assert.assertNull("Association bound to topicmap after removal", assoc.getTopicMap());
+    Assert.assertNull("Occurrence bound to topicmap after removal", occurrence.getTopicMap());
+    Assert.assertNull("Topic name bound to topicmap after removal", name.getTopicMap());
+    Assert.assertNull("Variant name bound to topicmap after removal", variant.getTopicMap());
   }
   
+  @Test
   public void testIssue347() {
     TopicMapIF topicmap = makeTopicMap();
     TopicMapBuilderIF builder = topicmap.getBuilder();

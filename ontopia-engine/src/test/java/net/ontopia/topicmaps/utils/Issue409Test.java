@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.HashSet;
 import java.util.Set;
-import junit.framework.Assert;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -30,6 +29,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class Issue409Test {

@@ -25,18 +25,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Test;
 
 public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
   
-  public SubjectIdentifierPredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
 
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
@@ -55,6 +52,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     closeStore();    
   }
   
+  @Test
   public void testTopicToLocator() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
@@ -65,6 +63,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testLocatorToTopic() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
@@ -75,6 +74,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testBothBoundFalse() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
@@ -84,6 +84,7 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testBothBoundTrue() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 

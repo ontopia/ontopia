@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class SubstringGrabberTest extends AbstractGrabberTest {
 
-  public SubstringGrabberTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(SubstringGrabberTest.class);
-  }
-  
+  @Test
   public void testSubstringGrabber() {
     String str = "Jazz is NOT dead, it JUST SMELLS funny";
       
@@ -42,7 +34,3 @@ public class SubstringGrabberTest extends AbstractGrabberTest {
   }
 
 }
-
-
-
-

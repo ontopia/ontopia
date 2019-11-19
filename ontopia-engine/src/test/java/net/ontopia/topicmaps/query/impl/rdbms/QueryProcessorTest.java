@@ -25,10 +25,6 @@ import java.io.IOException;
 public class QueryProcessorTest
   extends net.ontopia.topicmaps.query.core.QueryProcessorTest {
   
-  public QueryProcessorTest(String name) {
-    super(name);
-  }
-  
   @Override
   protected void load(String filename) throws IOException {
     RDBMSTestUtils.load(this, filename);

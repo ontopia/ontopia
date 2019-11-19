@@ -20,23 +20,15 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
-public abstract class AbstractGrabberTest extends TestCase {
+public abstract class AbstractGrabberTest {
 
   protected int intended_size = 8;
   
-  public AbstractGrabberTest(String name) {
-    super(name);
-  }
-
   protected void testGrabber(Object grb, Object identical, Object different) {
-    assertTrue("grabber is not equal", grb.equals(identical));
-    assertTrue("grabber is equal", !grb.equals(different));
+    Assert.assertTrue("grabber is not equal", grb.equals(identical));
+    Assert.assertTrue("grabber is equal", !grb.equals(different));
   }
   
 }
-
-
-
-

@@ -24,23 +24,22 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-
-import org.xml.sax.XMLReader;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.helpers.DefaultHandler;
-import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.TestFileUtils;
+import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 // extending XTMExporterTest in order to reuse some of the helper code
 public class XTM2ExporterTest extends AbstractXMLTestCase {

@@ -27,10 +27,6 @@ import org.junit.Ignore;
 public class InPredicateTest
   extends net.ontopia.topicmaps.query.core.InPredicateTest {
   
-  public InPredicateTest(String name) {
-    super(name);
-  }
-  
   @Override
   protected void load(String filename) throws IOException {
     RDBMSTestUtils.load(this, filename);

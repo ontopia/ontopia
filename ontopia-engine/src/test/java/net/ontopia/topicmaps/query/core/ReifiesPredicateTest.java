@@ -25,15 +25,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.Test;
 
 public class ReifiesPredicateTest extends AbstractPredicateTest {
   
-  public ReifiesPredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
   
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -49,6 +47,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificTopic() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -59,6 +58,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificTopicParameter() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -70,6 +70,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificTopicFalse() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -79,6 +80,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificReified() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -89,6 +91,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
   
+  @Test
   public void testWithSpecificReifiedParameter() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -100,6 +103,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testWithSpecificReifiedFalse() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -109,6 +113,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
   
+  @Test
   public void testWithBothBoundTrue() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -119,6 +124,7 @@ public class ReifiesPredicateTest extends AbstractPredicateTest {
     closeStore();
   }
   
+  @Test
   public void testWithBothBoundFalse() throws InvalidQueryException, IOException {
     load("jill.xtm");
 

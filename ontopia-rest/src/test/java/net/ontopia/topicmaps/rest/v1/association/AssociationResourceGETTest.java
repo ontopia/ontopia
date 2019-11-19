@@ -22,11 +22,11 @@ package net.ontopia.topicmaps.rest.v1.association;
 
 import java.io.IOException;
 import java.util.Map;
-import junit.framework.Assert;
 import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.model.Association;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.restlet.data.MediaType;
 

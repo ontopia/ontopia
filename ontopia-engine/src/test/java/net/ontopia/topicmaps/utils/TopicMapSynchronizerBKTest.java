@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -34,8 +33,11 @@ import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.DeciderUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class TopicMapSynchronizerBKTest extends TestCase {
+public class TopicMapSynchronizerBKTest {
   private String ttopicq;
   private String stopicq;
   private DeciderIF tchard;
@@ -44,11 +46,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
   
   private final static String testdataDirectory = "tmsync";
 
-  public TopicMapSynchronizerBKTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws MalformedURLException {
     String DECL = "using bk for i\"http://psi.bergen.kommune.no/portal/\" ";
     ttopicq = DECL + "select $T from  "+
@@ -73,6 +71,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     TestFileUtils.verifyDirectory(base, "out");
   }
 
+  @Test
   public void testEmptyTM() throws InvalidQueryException, IOException {
     TopicMapIF target = load("bk-empty.ltm");
     TopicMapIF source = load("livsit-1.ltm");
@@ -84,6 +83,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("bk-empty.cxtm");
   }
 
+  @Test
   public void testStaticTM() throws InvalidQueryException, IOException {
     TopicMapIF target = load("bk-static.ltm");
     TopicMapIF source = load("livsit-1.ltm");
@@ -95,6 +95,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("bk-static.cxtm");
   }
 
+  @Test
   public void testAddEmneord() throws InvalidQueryException, IOException {
     TopicMapIF target = load("bk-static.ltm");
     TopicMapIF source = load("livsit-2.ltm");
@@ -106,6 +107,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("bk-add-emneord.cxtm");
   }  
 
+  @Test
   public void testRemoveEmneord() throws InvalidQueryException, IOException {
     TopicMapIF target = load("bk-remove-emneord.ltm");
     TopicMapIF source = load("livsit-1.ltm");
@@ -117,6 +119,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("bk-remove-emneord.cxtm");
   }
 
+  @Test
   public void testBKEmneord() throws InvalidQueryException, IOException {
     TopicMapIF target = load("bk-private-emneord.ltm");
     TopicMapIF source = load("livsit-1.ltm");
@@ -128,6 +131,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("bk-private-emneord.cxtm");
   }
 
+  @Test
   public void testSameAssociation()
     throws InvalidQueryException, IOException {
     // Instead of having one relevant-for in LivsIT, and another
@@ -153,6 +157,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("bk-same-association.cxtm");
   }
 
+  @Test
   public void testSingleTopicTwoFilter() throws IOException {
     // Set up deciders
     tchard = DeciderUtils.getTrueDecider();
@@ -173,6 +178,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     compare("single-topic-two.filter.cxtm");
   }
 
+  @Test
   public void testReifiedAssociation() throws IOException, InvalidQueryException {
     // Set up deciders
     tchard = DeciderUtils.getTrueDecider();
@@ -208,7 +214,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
   private void compare(String filename) throws IOException {
     String out = base + File.separator + "out" + File.separator + filename;
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
-    assertTrue("test file " + filename + " canonicalized wrongly",
+    Assert.assertTrue("test file " + filename + " canonicalized wrongly",
                TestFileUtils.compareFileToResource(out, baseline));
   }
 }

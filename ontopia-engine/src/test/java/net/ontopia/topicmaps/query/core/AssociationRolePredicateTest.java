@@ -25,19 +25,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Test;
 
 public class AssociationRolePredicateTest extends AbstractPredicateTest {
   
-  public AssociationRolePredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
 
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -58,6 +55,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testSpecificAssoc() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -76,6 +74,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testSpecificRole() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -90,6 +89,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testBothBoundTrue() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -104,6 +104,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     closeStore();
   }
 
+  @Test
   public void testBothBoundFalse() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -119,6 +120,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     closeStore();
   } 
 
+  @Test
   public void testCrossJoin() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -132,6 +134,7 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     closeStore();
   } 
   
+  @Test
   public void testWithSpecificTopic() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 

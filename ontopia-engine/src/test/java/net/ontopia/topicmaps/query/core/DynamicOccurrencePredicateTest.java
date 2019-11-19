@@ -24,20 +24,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.junit.Test;
 
 public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
   
-  public DynamicOccurrencePredicateTest(String name) {
-    super(name);
-  }
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-  
   /// tests
   
+  @Test
   public void testWithSpecificTopicInternal() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
@@ -47,6 +40,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "description(topic1, $DESC)?");
   }
   
+  @Test
   public void testWithSpecificTopicExternal() throws InvalidQueryException, IOException {
     load("ext-occs.ltm"); // Note: this test case is for bug #1062
 
@@ -56,6 +50,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "homepage(topic1, $HOMEPAGE)?");
   }
   
+  @Test
   public void testWithAnyTopic() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
@@ -72,6 +67,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "description($TOPIC, $DESC)?");
   }
   
+  @Test
   public void testWithSpecificString() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
@@ -81,6 +77,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "description($TOPIC, \"topic1\")?");
   }
   
+  @Test
   public void testWithSpecificURL() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -90,6 +87,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "nettressurs($TOPIC, \"http://www.hest.no/\")?");
   }
 
+  @Test
   public void testWithBothBoundTrue() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
@@ -99,12 +97,14 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "description(topic1, \"topic1\")?");
   }
 
+  @Test
   public void testWithBothBoundFalse() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
     
     findNothing("description(topic2, \"topic1\")?");
   }
 
+  @Test
   public void testWithStringForTopic() throws InvalidQueryException, IOException {
     load("opera.ltm");
 
@@ -112,6 +112,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
                 "premiere-date(\"tosca\", $DATE)?");
   }
 
+  @Test
   public void testWithTopicForString() throws InvalidQueryException, IOException {
     load("opera.ltm");
 
@@ -119,6 +120,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
                 "premiere-date($DATE, tosca)?");
   }
 
+  @Test
   public void testWhenNoOccurrencesOfType() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
     findNothing("  kommentar($DOK, $DATE), " +
@@ -126,6 +128,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
                 "order by $DATE desc?");
   }
   
+  @Test
   public void testMultiDataType1() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -138,6 +141,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "bark($DOG, $VAL)?");
   }
   
+  @Test
   public void testMultiDataType2() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 

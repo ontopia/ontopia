@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
@@ -44,24 +43,22 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /** 
  * INTERNAL: Tests that tests the prefetching code used with the
  * RDBMS Backend Connector and the in-memory tolog implementation.  
  */
 
-public class PrefetcherTests extends TestCase {
+public class PrefetcherTests {
   
   private final static String testdataDirectory = "various";
 
-  public PrefetcherTests(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
-    super.setUp();
   }
 
   protected TopicIF getTopic(TopicMapIF tm, String psi) {
@@ -100,6 +97,7 @@ public class PrefetcherTests extends TestCase {
   /**
    * INTERNAL: 
    */
+  @Test
   public void testAssociationPrefetching() throws IOException {
     // Test will add one association and one occurrence
 
@@ -150,7 +148,7 @@ public class PrefetcherTests extends TestCase {
 	  QueryResultIF qr1 = qp1.parse("/* #OPTION: optimizer.reorder = false */ select $SPRAK from role-player($R1, %DOC%), association-role($A, $R1), type($A, har_sprak), association-role($A, $R2), role-player($R2, $SPRAK), $R1 /= $R2 order by $SPRAK?").execute(Collections.singletonMap("DOC", rpA1));
 
 	  if (qr1.next()) {
-	      fail("Query returned no rows.");
+	      Assert.fail("Query returned no rows.");
 	  }
       } catch (InvalidQueryException e) {
 	  throw new OntopiaRuntimeException(e);
@@ -168,10 +166,10 @@ public class PrefetcherTests extends TestCase {
 
 	  if (qr1.next()) {
 	      TopicIF rvB = (TopicIF)qr1.getValue(0);
-	      assertTrue("rvB.id != rpB.id", rpB_id.equals(rvB.getObjectId()));
-	      assertTrue("rvB.roles.size != 1", rvB.getRoles().size() == 1);
+	      Assert.assertTrue("rvB.id != rpB.id", rpB_id.equals(rvB.getObjectId()));
+	      Assert.assertTrue("rvB.roles.size != 1", rvB.getRoles().size() == 1);
 	  } else {
-	      fail("Query returned no rows.");
+	      Assert.fail("Query returned no rows.");
 	  }
       } catch (InvalidQueryException e) {
 	  throw new OntopiaRuntimeException(e);
@@ -192,10 +190,10 @@ public class PrefetcherTests extends TestCase {
 
 	  if (qr2.next()) {
 	      TopicIF rvB = (TopicIF)qr2.getValue(0);
-	      assertTrue("rvB.id != rpB.id", rpB_id.equals(rvB.getObjectId()));
-	      assertTrue("rvB.roles.size != 1", rvB.getRoles().size() == 1);
+	      Assert.assertTrue("rvB.id != rpB.id", rpB_id.equals(rvB.getObjectId()));
+	      Assert.assertTrue("rvB.roles.size != 1", rvB.getRoles().size() == 1);
 	  } else {
-	      fail("Query returned no rows.");
+	      Assert.fail("Query returned no rows.");
 	  }
       } catch (InvalidQueryException e) {
 	  throw new OntopiaRuntimeException(e);
@@ -204,11 +202,11 @@ public class PrefetcherTests extends TestCase {
       // look up topics in #3
       TopicIF rpA3 = (TopicIF)tm3.getObjectById(rpA_id);
       TopicIF rpB3 = (TopicIF)tm3.getObjectById(rpB_id);
-      assertTrue("rvA.roles.size != 1", rpA3.getRoles().size() == 1);
-      assertTrue("rvB.roles.size != 1", rpB3.getRoles().size() == 1);
+      Assert.assertTrue("rvA.roles.size != 1", rpA3.getRoles().size() == 1);
+      Assert.assertTrue("rvB.roles.size != 1", rpB3.getRoles().size() == 1);
 
-      assertTrue("rvA.roles.association.roles.size != 2", ((AssociationRoleIF)rpA3.getRoles().iterator().next()).getAssociation().getRoles().size() == 2);
-      assertTrue("rvB.roles.association.roles.size != 2", ((AssociationRoleIF)rpB3.getRoles().iterator().next()).getAssociation().getRoles().size() == 2);
+      Assert.assertTrue("rvA.roles.association.roles.size != 2", ((AssociationRoleIF)rpA3.getRoles().iterator().next()).getAssociation().getRoles().size() == 2);
+      Assert.assertTrue("rvB.roles.association.roles.size != 2", ((AssociationRoleIF)rpB3.getRoles().iterator().next()).getAssociation().getRoles().size() == 2);
 
       store1.close();
       store2.close();    
@@ -220,8 +218,3 @@ public class PrefetcherTests extends TestCase {
   }
   
 }
-
-
-
-
-

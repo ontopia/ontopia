@@ -22,63 +22,64 @@ package net.ontopia.topicmaps.core;
 
 import java.net.MalformedURLException;
 import net.ontopia.infoset.impl.basic.URILocator;
+import org.junit.Assert;
+import org.junit.Test;
 
 public abstract class TopicMapTest extends AbstractTMObjectTest {
 
   protected TopicMapIF tm;
 
-  public TopicMapTest(String name) {
-    super(name);
-  }
-    
   // --- Test cases
 
+	@Test
 	public void testReification() {
 		TopicIF reifier = builder.makeTopic();
 		ReifiableIF reifiable = tm;
 
-    assertTrue("Object reified by the reifying topic was found",
+    Assert.assertTrue("Object reified by the reifying topic was found",
 							 reifier.getReified() == null);
-    assertTrue("Topic reifying the reifiable was found",
+    Assert.assertTrue("Topic reifying the reifiable was found",
 							 reifiable.getReifier() == null);
 
 		reifiable.setReifier(reifier);
-    assertTrue("No topic reifying the reifiable was found",
+    Assert.assertTrue("No topic reifying the reifiable was found",
 							 reifiable.getReifier() == reifier);
-    assertTrue("No object reified by the reifying topic was found",
+    Assert.assertTrue("No object reified by the reifying topic was found",
 							 reifier.getReified() == reifiable);
 
 		reifiable.setReifier(null);
-    assertTrue("Object reified by the reifying topic was found",
+    Assert.assertTrue("Object reified by the reifying topic was found",
 							 reifier.getReified() == null);
-    assertTrue("Topic reifying the first reifiable was found",
+    Assert.assertTrue("Topic reifying the first reifiable was found",
 							 reifiable.getReifier() == null);
 	}
 
+  @Test
   public void testAssociations() {
     // STATE 1
-    assertTrue("association set not empty initially",
+    Assert.assertTrue("association set not empty initially",
            tm.getAssociations().size() == 0);
 
     // STATE 2
     AssociationIF association = builder.makeAssociation(builder.makeTopic());
     // added by builder
 
-    assertTrue("association not added",
+    Assert.assertTrue("association not added",
            tm.getAssociations().size() == 1);
 
-    assertTrue("association identity not retained",
+    Assert.assertTrue("association identity not retained",
            tm.getAssociations().iterator().next().equals(association));
 
     // STATE 2
     association.remove();
-    assertTrue("association not removed",
+    Assert.assertTrue("association not removed",
            tm.getAssociations().size() == 0);
 
     // verify that it's safe
     association.remove();
   }
     
+  @Test
   public void testAssociationRemove() {
     TopicIF at = builder.makeTopic();
     TopicIF rt1 = builder.makeTopic();
@@ -90,38 +91,40 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
     AssociationRoleIF role2 = builder.makeAssociationRole(association, rt2, t2);
 
     association.remove();
-    assertTrue("removing association from topic map does not remove child roles from their players",
+    Assert.assertTrue("removing association from topic map does not remove child roles from their players",
            t1.getRoles().size() == 0);
-    assertTrue("removing association from topic map does not remove child roles from their players",
+    Assert.assertTrue("removing association from topic map does not remove child roles from their players",
            t2.getRoles().size() == 0);
   }
     
+  @Test
   public void testTopics() {
     // STATE 1
-    assertTrue("topic set not empty initially",
+    Assert.assertTrue("topic set not empty initially",
            tm.getTopics().size() == 0);
 
     // STATE 2
     TopicIF topic = builder.makeTopic();
     // added by builder
 
-    assertTrue("topic not added",
+    Assert.assertTrue("topic not added",
            tm.getTopics().size() == 1);
 
-    assertTrue("topic identity not retained",
+    Assert.assertTrue("topic identity not retained",
            tm.getTopics().iterator().next().equals(topic));
 
     // STATE 3
     topic.remove();
-    assertTrue("topic not removed",
+    Assert.assertTrue("topic not removed",
            tm.getTopics().size() == 0);
-    assertTrue("topic topicMap property not reset after topic removed",
+    Assert.assertTrue("topic topicMap property not reset after topic removed",
            topic.getTopicMap() == null);
 
     // verify that it's safe
     topic.remove();
   }
 
+  @Test
   public void testTopicBySubject() {
     try {
       TopicIF topic = builder.makeTopic();
@@ -129,37 +132,38 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
       topic.addSubjectLocator(loc);
 
       TopicIF found = tm.getTopicBySubjectLocator(loc);
-      assertTrue("topic not found by subject", found.equals(topic));
+      Assert.assertTrue("topic not found by subject", found.equals(topic));
 
       topic.removeSubjectLocator(loc);
       found = tm.getTopicBySubjectLocator(loc);
-      assertTrue("topic found by subject when it shouldn't be",
+      Assert.assertTrue("topic found by subject when it shouldn't be",
              found == null);
 
       topic.addSubjectLocator(loc);        
-      assertTrue("topic not found by subject",
+      Assert.assertTrue("topic not found by subject",
              tm.getTopicBySubjectLocator(loc).equals(topic));
 
       tm.remove();
-      assertTrue("topic found by subject after it has been removed",
+      Assert.assertTrue("topic found by subject after it has been removed",
              tm.getTopicBySubjectLocator(loc) == null);            
 
       try {
         tm.getTopicBySubjectLocator(null);
-        fail("getTopicBySubjectLocator() accepts null parameter.");
+        Assert.fail("getTopicBySubjectLocator() accepts null parameter.");
       } catch (NullPointerException ex) {
         // Expected
       }
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
+      Assert.fail("(INTERNAL) bad URL given");
     }
     catch (ConstraintViolationException e) {
       e.printStackTrace();
-      fail("spurious ConstraintViolationException");
+      Assert.fail("spurious ConstraintViolationException");
     }
   }
 
+  @Test
   public void testTopicByIndicator() {
     try {
       TopicIF topic = builder.makeTopic();
@@ -167,37 +171,38 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
       topic.addSubjectIdentifier(loc);
 
       TopicIF found = tm.getTopicBySubjectIdentifier(loc);
-      assertTrue("topic not found by indicator", found.equals(topic));
+      Assert.assertTrue("topic not found by indicator", found.equals(topic));
 
       topic.removeSubjectIdentifier(loc);
       found = tm.getTopicBySubjectIdentifier(loc);
-      assertTrue("topic found by indicator when it shouldn't be",
+      Assert.assertTrue("topic found by indicator when it shouldn't be",
              found == null);
 
       topic.addSubjectIdentifier(loc);       
-      assertTrue("topic not found by indicator",
+      Assert.assertTrue("topic not found by indicator",
              tm.getTopicBySubjectIdentifier(loc).equals(topic));
 
       tm.remove();
-      assertTrue("topic found by indicator after it has been removed",
+      Assert.assertTrue("topic found by indicator after it has been removed",
              tm.getTopicBySubjectIdentifier(loc) == null);
 
       try {
         tm.getTopicBySubjectIdentifier(null);
-        fail("getTopicBySubjectIdentifier accepts null parameter");
+        Assert.fail("getTopicBySubjectIdentifier accepts null parameter");
       } catch (NullPointerException e) {
         // Expected.
       }
                     
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
+      Assert.fail("(INTERNAL) bad URL given");
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException");
+      Assert.fail("spurious ConstraintViolationException");
     }
   }
 
+  @Test
   public void testObjectBySourceLocator() {
     try {
       TopicIF topic = builder.makeTopic();
@@ -205,37 +210,38 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
       topic.addItemIdentifier(loc);
 
       TopicIF found = (TopicIF)tm.getObjectByItemIdentifier(loc);
-      assertTrue("topic not found by source locator", found.equals(topic));
+      Assert.assertTrue("topic not found by source locator", found.equals(topic));
 
       topic.removeItemIdentifier(loc);
       found = (TopicIF)tm.getObjectByItemIdentifier(loc);
-      assertTrue("topic found by source locator when it shouldn't be",
+      Assert.assertTrue("topic found by source locator when it shouldn't be",
              found == null);
 
       topic.addItemIdentifier(loc);          
-      assertTrue("topic not found by source locator",
+      Assert.assertTrue("topic not found by source locator",
              tm.getObjectByItemIdentifier(loc).equals(topic));
 
       tm.remove();
-      assertTrue("topic found by source locator after it has been removed",
+      Assert.assertTrue("topic found by source locator after it has been removed",
              tm.getObjectByItemIdentifier(loc) == null);
 
       try {
         tm.getObjectByItemIdentifier(null);
-        fail("getObjectByItemIdentifier accepts null parameter");
+        Assert.fail("getObjectByItemIdentifier accepts null parameter");
       } catch (NullPointerException e) {
         // Expected.
       }
                     
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
+      Assert.fail("(INTERNAL) bad URL given");
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException");
+      Assert.fail("spurious ConstraintViolationException");
     }
   }
 
+  @Test
   public void testTopicRemovalPolicyRole() {
     TopicIF topic = builder.makeTopic();
     TopicIF other = builder.makeTopic();
@@ -245,12 +251,13 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
 
     topic.remove();
 
-    assertTrue("association not deleted", assoc.getTopicMap() == null);
-    assertTrue("role1 not deleted", role1.getTopicMap() == null);
-    assertTrue("role2 not deleted", role2.getTopicMap() == null);
-    assertTrue("remaining topic has roles left", other.getRoles().size() == 0);
+    Assert.assertTrue("association not deleted", assoc.getTopicMap() == null);
+    Assert.assertTrue("role1 not deleted", role1.getTopicMap() == null);
+    Assert.assertTrue("role2 not deleted", role2.getTopicMap() == null);
+    Assert.assertTrue("remaining topic has roles left", other.getRoles().size() == 0);
   }
 
+  @Test
   public void testTopicRemovalPolicyTypeUse() {
     //! System.out.println("TM: " + tm.getTopics());
     //! System.out.println("--0");
@@ -261,15 +268,16 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
     //! System.out.println("--2");
     topic.remove();
     
-    assertEquals("To many topics after remove", 0, topicmap.getTopics().size());
+    Assert.assertEquals("To many topics after remove", 0, topicmap.getTopics().size());
   }
 
+  @Test
   public void testObjectById() {
     TopicIF topic = builder.makeTopic();
     String id = topic.getObjectId();
-    assertTrue("Could not locate object by ID (" + id + ")", tm.getObjectById(id) != null);
-    assertTrue("Found wrong object type by ID (" + id + ")", tm.getObjectById(id) instanceof TopicIF);
-    assertTrue("Found wrong object: " + tm.getObjectById(id).getObjectId() + " - " + topic.getObjectId(), 
+    Assert.assertTrue("Could not locate object by ID (" + id + ")", tm.getObjectById(id) != null);
+    Assert.assertTrue("Found wrong object type by ID (" + id + ")", tm.getObjectById(id) instanceof TopicIF);
+    Assert.assertTrue("Found wrong object: " + tm.getObjectById(id).getObjectId() + " - " + topic.getObjectId(), 
            tm.getObjectById(id).getObjectId().equals(topic.getObjectId()));
 
     topic.remove();
@@ -278,19 +286,20 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
     //! System.out.println("--" + topic.getTopicMap());
     //! System.out.println("--" + tm.getObjectById(id) + " " + System.identityHashCode(tm.getObjectById(id)));
     //! System.out.println("--" + tm.getObjectById(id).getTopicMap());
-    assertTrue("Found topic by ID after it was removed",
+    Assert.assertTrue("Found topic by ID after it was removed",
            tm.getObjectById(id) == null);
     
     try {
       tm.getObjectById(null);
-      fail("getObjectById accepts null parameter.");
+      Assert.fail("getObjectById accepts null parameter.");
     } catch (NullPointerException ex) {
       // Expected.
     }
   }
 
+  @Test
   public void testObjectByNonNumericId() {
-    assertTrue("Found object by non-sensical ID 'bongo'",
+    Assert.assertTrue("Found object by non-sensical ID 'bongo'",
                tm.getObjectById("Bongo") == null);
   }
   

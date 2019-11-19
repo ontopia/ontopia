@@ -22,29 +22,28 @@ package net.ontopia.utils;
 
 import java.io.File;
 import java.io.IOException;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class EncryptionUtilsTest extends TestCase {
+public class EncryptionUtilsTest {
 
   private final static String testdataDirectory = "various";
 
   private String baseDir;
   
-  public EncryptionUtilsTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws IOException {
     String root = TestFileUtils.getTestdataOutputDirectory();
     TestFileUtils.verifyDirectory(root, testdataDirectory);
     baseDir = root + File.separator + testdataDirectory;
   }
 
+  @Test
   public void testVerifyWritten() throws IOException {
     createEncryptedFile("plainTest.jsm", "plainTestEncrypted.jsm");
 
-    assertTrue("Read in file is not like encrypted base line file.",
+    Assert.assertTrue("Read in file is not like encrypted base line file.",
                compareToBaseline("plainTestEncrypted.jsm", "baseline-plainTestEncrypted.jsm"));
   }
 

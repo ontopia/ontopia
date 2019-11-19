@@ -21,19 +21,11 @@
 package net.ontopia.utils;
 
 import java.util.Comparator;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class GrabberComparatorTest extends AbstractComparatorTest {
 
-  public GrabberComparatorTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(GrabberComparatorTest.class);
-  }
-  
+  @Test
   public void testGrabberComparator() {
     UpperCaseGrabber upg = new UpperCaseGrabber();
     LowerCaseGrabber log = new LowerCaseGrabber();
@@ -48,7 +40,3 @@ public class GrabberComparatorTest extends AbstractComparatorTest {
   }
 
 }
-
-
-
-

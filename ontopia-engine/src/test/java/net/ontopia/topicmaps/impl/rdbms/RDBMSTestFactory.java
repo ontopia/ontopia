@@ -21,12 +21,12 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
-import java.util.Properties;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
-import net.ontopia.persistence.rdbms.DatabaseProjectReader;
 import net.ontopia.persistence.rdbms.DDLExecuter;
+import net.ontopia.persistence.rdbms.DatabaseProjectReader;
 import net.ontopia.persistence.rdbms.GenericSQLProducer;
 import net.ontopia.persistence.rdbms.Project;
 import net.ontopia.topicmaps.core.TestFactoryIF;

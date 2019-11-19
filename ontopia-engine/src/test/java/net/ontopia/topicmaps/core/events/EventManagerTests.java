@@ -18,8 +18,6 @@
  * !#
  */
 
-// $Id$
-
 package net.ontopia.topicmaps.core.events;
 
 import java.util.ArrayList;
@@ -40,11 +38,12 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.junit.Test;
   
 public abstract class EventManagerTests extends AbstractTopicMapTest {
 
@@ -52,10 +51,6 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   protected TopicMapIF topicmap;       // topic map of object being tested
   protected TopicMapBuilderIF builder; // builder used for creating new objects
   protected TesterListener listener;
-  
-  public EventManagerTests(String name) {
-    super(name);
-  }
   
   @Override
   public void setUp() throws Exception {
@@ -201,6 +196,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
 
   }
   
+  @Test
   public void testTopicLifecycle() {
 
     // --- topic events

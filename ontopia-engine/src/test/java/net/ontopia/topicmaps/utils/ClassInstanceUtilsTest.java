@@ -23,21 +23,18 @@ package net.ontopia.topicmaps.utils;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class ClassInstanceUtilsTest extends TestCase {
+public class ClassInstanceUtilsTest {
   protected TopicMapIF        topicmap; 
   protected LocatorIF         base;
 
   private final static String testdataDirectory = "various";
-
-  public ClassInstanceUtilsTest(String name) {
-    super(name);
-  }
 
   protected void load(String dir, String filename) throws IOException {
     filename = TestFileUtils.getTestInputFile(dir, filename);
@@ -51,23 +48,25 @@ public class ClassInstanceUtilsTest extends TestCase {
   
   // --- Test cases
 
+  @Test
   public void testGetInstancesOfEmpty() throws IOException {
     load(testdataDirectory, "small-test.ltm");
     Collection instances = ClassInstanceUtils.getInstancesOf(Collections.EMPTY_SET,
                                                              getTopicById("person"));
-    assertTrue("found instances in empty set", instances.isEmpty());
+    Assert.assertTrue("found instances in empty set", instances.isEmpty());
   }
 
+  @Test
   public void testGetInstancesOfTopic() throws IOException {
     load(testdataDirectory, "small-test.ltm");
     Collection instances = ClassInstanceUtils.getInstancesOf(topicmap.getTopics(),
                                                              getTopicById("person"));
-    assertTrue("wrong number of instances", instances.size() == 3);
-    assertTrue("instances does not contain 'lmg'",
+    Assert.assertTrue("wrong number of instances", instances.size() == 3);
+    Assert.assertTrue("instances does not contain 'lmg'",
                instances.contains(getTopicById("lmg")));
-    assertTrue("instances does not contain 'gra'",
+    Assert.assertTrue("instances does not contain 'gra'",
                instances.contains(getTopicById("gra")));
-    assertTrue("instances does not contain 'grove'",
+    Assert.assertTrue("instances does not contain 'grove'",
                instances.contains(getTopicById("grove")));
   }
 }

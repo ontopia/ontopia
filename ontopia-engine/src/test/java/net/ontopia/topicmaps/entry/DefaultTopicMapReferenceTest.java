@@ -20,20 +20,18 @@
 
 package net.ontopia.topicmaps.entry;
 
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import junit.framework.TestCase;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DefaultTopicMapReferenceTest extends TestCase {
+public class DefaultTopicMapReferenceTest {
   private TopicMapStoreIF store;
   private DefaultTopicMapSource source;
   private TopicMapReferenceIF reference;
 
-  public DefaultTopicMapReferenceTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() {
     store = new InMemoryTopicMapStore();
     source = new DefaultTopicMapSource();
@@ -43,26 +41,23 @@ public class DefaultTopicMapReferenceTest extends TestCase {
   
   // --- Test cases
 
+  @Test
   public void testId() {
-    assertTrue("default id not set", reference.getId().equals("id"));
+    Assert.assertTrue("default id not set", reference.getId().equals("id"));
     reference.setId("newid");
-    assertTrue("id not set correctly", reference.getId().equals("newid"));
+    Assert.assertTrue("id not set correctly", reference.getId().equals("newid"));
   }
 
+  @Test
   public void testTitle() {
-    assertTrue("default title not set", reference.getTitle().equals("title"));
+    Assert.assertTrue("default title not set", reference.getTitle().equals("title"));
     reference.setTitle("newtitle");
-    assertTrue("title not set correctly", reference.getTitle().equals("newtitle"));
+    Assert.assertTrue("title not set correctly", reference.getTitle().equals("newtitle"));
   }
 
+  @Test
   public void testStore() throws java.io.IOException {
-    assertTrue("default store not set [mutable]", reference.createStore(false) == store);
-    assertTrue("default store not set [readonly]", reference.createStore(true) == store);
+    Assert.assertTrue("default store not set [mutable]", reference.createStore(false) == store);
+    Assert.assertTrue("default store not set [readonly]", reference.createStore(true) == store);
   }
 }
-
-
-
-
-
-

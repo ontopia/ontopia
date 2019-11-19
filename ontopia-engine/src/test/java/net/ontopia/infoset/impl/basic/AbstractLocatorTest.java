@@ -20,31 +20,29 @@
 
 package net.ontopia.infoset.impl.basic;
 
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
+import org.junit.Assert;
+import org.junit.Test;
 
-public abstract class AbstractLocatorTest extends TestCase {
+public abstract class AbstractLocatorTest {
   
-  public AbstractLocatorTest(String name) {
-    super(name);
-  }
-
   protected abstract LocatorIF createLocator();
   protected abstract LocatorIF createLocator(String notation, String address);
     
   // --- tests
   
+  @Test
   public void testEqualsNullArgument() {
     LocatorIF locator = createLocator();
-    assertFalse("checking equality with null object", locator.equals(null));
+    Assert.assertFalse("checking equality with null object", locator.equals(null));
   }
   
+  @Test
   public void testIdenticalEquality() {
     LocatorIF locator1 = createLocator();
     LocatorIF locator2 = createLocator();
     
-    assertEquals("equal locators are not equal [1]", locator2, locator1);
-    assertEquals("equal locators are not equal [2]", locator1, locator2);
+    Assert.assertEquals("equal locators are not equal [1]", locator2, locator1);
+    Assert.assertEquals("equal locators are not equal [2]", locator1, locator2);
   }
-  
 }

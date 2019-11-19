@@ -23,37 +23,31 @@ package net.ontopia.topicmaps.query.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.OntopiaUnsupportedException;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class ValueLikePredicateTest extends AbstractPredicateTest {
   
-  public ValueLikePredicateTest(String name) {
-    super(name);
-  }
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-
   /// tests
+  @Test
   public void testWithoutFulltextIndex() throws IOException, InvalidQueryException {
     load("int-occs.ltm", false);
     try {
       findNothing("value-like($foo, \"foo\")?");
-      fail("Value-like on a topicmap without a fulltext index should fail, but didn't");
+      Assert.fail("Value-like on a topicmap without a fulltext index should Assert.fail, but didn't");
     } catch (OntopiaRuntimeException e) {
       if (!(e.getCause() instanceof OntopiaUnsupportedException)) {
-        fail("Value-like on a topicmap without a fulltext index threw wrong exception");
+        Assert.fail("Value-like on a topicmap without a fulltext index threw wrong exception");
       }
       // expected
     }
   }
 
+  @Test
   public void testWithSpecificOccurrenceAndString()
     throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
@@ -66,22 +60,25 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
     getParseError("value-like(@" + oid + ", \"topic1\")?");
   }
 
+  @Test
   public void testWithSpecificTopicAndVariable() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
     
-    // this predicate will fail because the first argument is of type TopicIF
+    // this predicate will Assert.fail because the first argument is of type TopicIF
     findNothing(OPT_TYPECHECK_OFF +
                 "value-like(topic1, $VALUE)?");
   }
 
+  @Test
   public void testWithSpecificTopicAndString() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
     
-    // this predicate will fail because the first argument is of type TopicIF
+    // this predicate will Assert.fail because the first argument is of type TopicIF
     findNothing(OPT_TYPECHECK_OFF +
                 "value-like(topic1, \"topic1\")?");
   }
 
+  @Test
   public void testWithUnboundBoth1() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
 
@@ -89,14 +86,16 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
     getParseError("value-like($FOO, $VALUE)?");
   }
 
+  @Test
   public void testWithUnboundBoth2() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
 
-    // this test will fail because the $TOPIC variable is of type TopicIF
+    // this test will Assert.fail because the $TOPIC variable is of type TopicIF
     findNothing(OPT_TYPECHECK_OFF +
                 "topic($TOPIC), value-like($TOPIC, $VALUE)?");
   }
 
+  @Test
   public void testWithUnboundPatternValue() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
 
@@ -107,6 +106,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
     getParseError("value-like(@" + oid + ", $VALUE)?");
   }
   
+  @Test
   public void testWithAnyObject() throws InvalidQueryException, IOException {
     load("family.ltm", true);
 
@@ -120,6 +120,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                          "  topic-name($TOPIC, $BNAME)?");
   }
   
+  @Test
   public void testWithScoreBound() throws InvalidQueryException, IOException {
     load("family.ltm", true);
     
@@ -130,6 +131,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
   
   // filtering on score is possible but not advised as it is searcher dependent and
   // might not be percentage based (like with lucene > 3.x)
+  @Test
   public void testWithScoreAbove001() throws InvalidQueryException, IOException {
     load("family.ltm", true);
 
@@ -143,6 +145,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                          "  topic-name($TOPIC, $BNAME), $SCORE > 0.01?");
   }
   
+  @Test
   public void testWithEscapedQuotes() throws InvalidQueryException, IOException {
     load("family.ltm", true);
 
@@ -152,6 +155,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                 "  topic-name($TOPIC, $BNAME)?");
   }
 
+  @Test
   public void testWithSingleQuote() throws InvalidQueryException, IOException {
     load("family.ltm", true);
     
@@ -161,6 +165,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
   }
 
   // see bug #955
+  @Test
   public void testWithEmptyString() throws InvalidQueryException, IOException {
     load("family.ltm", true);
 
@@ -169,6 +174,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                 "  topic-name($TOPIC, $BNAME)?");
   }
 
+  @Test
   public void testBug987() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
 
@@ -182,6 +188,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                 "  value-like($OCC, \"topic1\")?");
   }
 
+  @Test
   public void testIssue302() throws InvalidQueryException, IOException {
     load("int-occs.ltm", true);
 

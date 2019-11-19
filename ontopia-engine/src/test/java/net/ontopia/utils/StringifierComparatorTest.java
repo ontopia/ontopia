@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class StringifierComparatorTest extends AbstractComparatorTest {
 
-  public StringifierComparatorTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(StringifierComparatorTest.class);
-  }
-  
+  @Test
   public void testStringifierComparator() {
     UpperCaseGrabber upg = new UpperCaseGrabber();
     GrabberStringifier grb = new GrabberStringifier(upg);
@@ -40,7 +32,3 @@ public class StringifierComparatorTest extends AbstractComparatorTest {
   }
 
 }
-
-
-
-

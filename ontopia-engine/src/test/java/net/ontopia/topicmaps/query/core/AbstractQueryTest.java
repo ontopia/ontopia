@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.impl.basic.DummyFulltextSearcherIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -46,8 +45,10 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.After;
+import org.junit.Assert;
 
-public abstract class AbstractQueryTest extends TestCase {
+public abstract class AbstractQueryTest {
 
   private final static String testdataDirectory = "query";
 
@@ -58,10 +59,6 @@ public abstract class AbstractQueryTest extends TestCase {
   public TopicMapIF       topicmap;
   public TopicMapBuilderIF builder;
   public QueryProcessorIF processor;
-  
-  public AbstractQueryTest(String name) {
-    super(name);
-  }
   
   // ===== Helper methods (topic maps)
 
@@ -75,6 +72,11 @@ public abstract class AbstractQueryTest extends TestCase {
 
   protected TMObjectIF getObjectById(String id) {
     return topicmap.getObjectByItemIdentifier(base.resolveAbsolute("#"+id));
+  }
+
+  @After
+  public void tearDown() {
+    closeStore();
   }
 
   protected void closeStore() {
@@ -188,9 +190,9 @@ public abstract class AbstractQueryTest extends TestCase {
     // verify that we do not get any parse or query errors
     QueryResultIF result = processor.execute(query);
     try {
-      assertTrue(result.next());
-      assertEquals(0, result.getWidth());
-      assertFalse(result.next());
+      Assert.assertTrue(result.next());
+      Assert.assertEquals(0, result.getWidth());
+      Assert.assertFalse(result.next());
     } finally {
       result.close();
     }
@@ -233,7 +235,7 @@ public abstract class AbstractQueryTest extends TestCase {
         //! i++;
         //! System.out.println("    ROW " + i + ": " + Arrays.asList(result.getValues()));
         Map match = getMatch(result);
-        assertTrue("match not found in expected results: " + match + " => " + matches,
+        Assert.assertTrue("match not found in expected results: " + match + " => " + matches,
             matches.contains(match));
         matches.remove(match);
         //! System.out.println("____removing: " + match);
@@ -241,7 +243,7 @@ public abstract class AbstractQueryTest extends TestCase {
     } finally {
       result.close();
     }
-    assertTrue("expected matches not found: " + matches,
+    Assert.assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
   
@@ -288,7 +290,7 @@ public abstract class AbstractQueryTest extends TestCase {
     } finally {
       result.close();
     }
-    assertTrue("expected matches not found: " + matches,
+    Assert.assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
 
@@ -309,7 +311,7 @@ public abstract class AbstractQueryTest extends TestCase {
         //! i++;
         //! System.out.println("    ROW " + i + ": " + Arrays.asList(result.getValues()));
         Map match = getMatch(result);
-        assertTrue("match not found in expected results: " + match + " => " + matches,
+        Assert.assertTrue("match not found in expected results: " + match + " => " + matches,
             matches.contains(match));
         matches.remove(match);
         //! System.out.println("____removing: " + match);
@@ -318,7 +320,7 @@ public abstract class AbstractQueryTest extends TestCase {
       result.close();
     }
 
-    assertTrue("expected matches not found: " + matches,
+    Assert.assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
   
@@ -330,10 +332,10 @@ public abstract class AbstractQueryTest extends TestCase {
     try {
       while (result.next()) {
         if (matches.size() <= pos)
-          fail("too many rows in query result");
+          Assert.fail("too many rows in query result");
         
         Map match = getMatch(result);
-        assertTrue("match not found in position " +  pos + ": " + match + " => " + matches.get(pos),
+        Assert.assertTrue("match not found in position " +  pos + ": " + match + " => " + matches.get(pos),
             matches.get(pos).equals(match));
         pos++;
       }
@@ -341,7 +343,7 @@ public abstract class AbstractQueryTest extends TestCase {
       result.close();
     }
 
-    assertTrue("bad number of matches returned: " + pos,
+    Assert.assertTrue("bad number of matches returned: " + pos,
            matches.size() == pos);
   }
 
@@ -360,7 +362,7 @@ public abstract class AbstractQueryTest extends TestCase {
   protected void findNothing(String query) throws InvalidQueryException {
     QueryResultIF result = processor.execute(query);
     try {
-      assertTrue("found values, but shouldn't have",
+      Assert.assertTrue("found values, but shouldn't have",
                  !result.next());
     } finally {
       result.close();
@@ -370,7 +372,7 @@ public abstract class AbstractQueryTest extends TestCase {
   protected void findNothing(String query, Map args) throws InvalidQueryException {
     QueryResultIF result = processor.execute(query, args);
     try {
-      assertTrue("found values, but shouldn't have",
+      Assert.assertTrue("found values, but shouldn't have",
                  !result.next());
     } finally {
       result.close();
@@ -403,7 +405,7 @@ public abstract class AbstractQueryTest extends TestCase {
   public void updateError(String query) throws InvalidQueryException {
     try {
       update(query);
-      fail("No error from query");
+      Assert.fail("No error from query");
     } catch (InvalidQueryException e) {
       // as expected
     }
@@ -417,7 +419,7 @@ public abstract class AbstractQueryTest extends TestCase {
     QueryResultIF result = null;
     try {
       result = processor.execute(query, parameters);
-      fail("query '" + query + "' parsed OK, but shouldn't have");
+      Assert.fail("query '" + query + "' parsed OK, but shouldn't have");
     } catch (InvalidQueryException e) {
     } finally {
       if (result != null) result.close();

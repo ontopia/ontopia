@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -33,8 +32,11 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.GrabberIF;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class NameGrabberTest extends TestCase {
+public class NameGrabberTest {
 
   private TopicIF topicSort;
   private TopicIF topicPlay;
@@ -42,11 +44,7 @@ public class NameGrabberTest extends TestCase {
   private TopicNameIF basename5A;
   private TopicNameIF basename5B;
   
-  public NameGrabberTest(String name) {
-    super(name);
-  }
-  
-  @Override
+  @Before
   public void setUp() throws MalformedURLException {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     TopicMapBuilderIF builder = store.getTopicMap().getBuilder();
@@ -96,6 +94,7 @@ public class NameGrabberTest extends TestCase {
 
   // --- Test cases
 
+  @Test
   public void testNameGrabber5A() {
     List basenameScope = new ArrayList();
     basenameScope.add(topicPlay);
@@ -103,27 +102,25 @@ public class NameGrabberTest extends TestCase {
     variantScope.add(topicSort);
     GrabberIF grabber = new NameGrabber(basenameScope, variantScope);
 
-    assertTrue("wrong base name grabbed",
+    Assert.assertTrue("wrong base name grabbed",
            ((TopicNameIF) grabber.grab(topic5)).equals(basename5A));
   }
   
+  @Test
   public void testNameGrabber5B() {
     GrabberIF grabber = new NameGrabber(Collections.EMPTY_LIST);
 
-    assertTrue("wrong base name grabbed",
+    Assert.assertTrue("wrong base name grabbed",
            ((TopicNameIF) grabber.grab(topic5)).equals(basename5B));
   }
 
+  @Test
   public void testNameGrabber5C() {
     List variantScope = new ArrayList();
     variantScope.add(topicSort);
     GrabberIF grabber = new NameGrabber(Collections.EMPTY_LIST, variantScope);
 
-    assertTrue("wrong base name grabbed",
+    Assert.assertTrue("wrong base name grabbed",
            ((TopicNameIF) grabber.grab(topic5)).equals(basename5A));
   }
 }
-
-
-
-

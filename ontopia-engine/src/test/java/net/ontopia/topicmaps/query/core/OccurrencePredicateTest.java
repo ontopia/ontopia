@@ -26,23 +26,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Test;
 
 public class OccurrencePredicateTest extends AbstractPredicateTest {
   
-  public OccurrencePredicateTest(String name) {
-    super(name);
-  }
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-
   /// tests
   
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -60,6 +52,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "occurrence($TOPIC, $OCC)?");
   }
 
+  @Test
   public void testWithSpecificTopic() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -69,6 +62,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "occurrence(horse, $OCC)?");
   }
 
+  @Test
   public void testWithSpecificOccurrence() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -81,6 +75,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "occurrence($TOPIC, @" + occ.getObjectId() + ")?");
   }
 
+  @Test
   public void testWithTopicNames() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -88,6 +83,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
                 "topic-name(horse, $BN), occurrence($T, $BN)?");
   }
   
+  @Test
   public void testWithBothBoundTrue() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -97,6 +93,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "occurrence(jill-ontopia-topic, jills-contract)?");
   }
   
+  @Test
   public void testWithBothBoundFalse() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -107,6 +104,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "occurrence(equation, @" + occ.getObjectId() + ")?");
   }
 
+  @Test
   public void testKnownProblem() throws InvalidQueryException, IOException {
     load("bb-test.ltm", true);
     List matches = new ArrayList();
@@ -123,6 +121,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "value-like($OBJ, \"horse\"), occurrence($TOPIC, $OBJ)?");
   }    
 
+  @Test
   public void testNontopicVariable() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
     List matches = new ArrayList();
@@ -131,6 +130,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
                 "topicmap($TM), occurrence($TM, $OCC)?");
   }
 
+  @Test
   public void testNontopicParameter() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
     List matches = new ArrayList();
@@ -142,6 +142,7 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
                 "occurrence(%TM%, $OCC)?", args);
   }
 
+  @Test
   public void testBug1993() throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 

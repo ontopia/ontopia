@@ -20,19 +20,11 @@
 
 package net.ontopia.utils;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 public class StringifierGrabberTest extends AbstractGrabberTest {
 
-  public StringifierGrabberTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(StringifierGrabberTest.class);
-  }
-  
+  @Test
   public void testStringifierGrabber() {
     testGrabber(new StringifierGrabber().grab(new Float(1234.56)), new Float(1234.56).toString(), new Float(1234).toString()); 
     testGrabber(new StringifierGrabber().grab(new Double(4321.56)), new Double(4321.56).toString(), new Double(4321.57).toString()); 
@@ -42,7 +34,3 @@ public class StringifierGrabberTest extends AbstractGrabberTest {
   }
 
 }
-
-
-
-

@@ -23,25 +23,17 @@ package net.ontopia.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import junit.framework.TestSuite;
-import junit.framework.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class GrabberCollectionTest extends AbstractCollectionTest {
 
-  public GrabberCollectionTest(String name) {
-    super(name);
-  }
-
-  public static Test suite() {
-    return new TestSuite(GrabberCollectionTest.class);
-  }
-  
   @Override
   protected void testCollection(Collection coll, Collection identical, Collection smaller) {
     super.testCollection(coll, identical, smaller);
 
     String[] strings = new String[intended_size];
-    assertTrue("coll toarray[2]", coll.toArray(strings).length == intended_size);
+    Assert.assertTrue("coll toarray[2]", coll.toArray(strings).length == intended_size);
   }
 
   protected Collection getCollectionLow(int size) {
@@ -63,6 +55,7 @@ public class GrabberCollectionTest extends AbstractCollectionTest {
     return new OrDecider(ds);
   }  
 
+  @Test
   public void testGrabberCollection() {
     UpperCaseGrabber grbU = new UpperCaseGrabber();
     testCollection(new GrabberCollection(getCollectionLow(intended_size), grbU), getCollection(intended_size), getCollection(intended_size - 5));
@@ -71,7 +64,3 @@ public class GrabberCollectionTest extends AbstractCollectionTest {
   }
 
 }
-
-
-
-

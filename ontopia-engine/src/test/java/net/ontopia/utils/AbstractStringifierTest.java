@@ -20,23 +20,15 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
-public abstract class AbstractStringifierTest extends TestCase {
+public abstract class AbstractStringifierTest {
 
   protected int intended_size = 8;
   
-  public AbstractStringifierTest(String name) {
-    super(name);
-  }
-
   protected void testStringifier(Object str, Object identical, Object different) {
-    assertTrue("stringifier is not equal", str.equals(identical));
-    assertTrue("stringifier is equal", !str.equals(different));
+    Assert.assertTrue("stringifier is not equal", str.equals(identical));
+    Assert.assertTrue("stringifier is equal", !str.equals(different));
   }
   
 }
-
-
-
-

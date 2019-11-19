@@ -22,9 +22,6 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Collections;
 
-import net.ontopia.persistence.proxy.TrackableCollectionIF;
-import net.ontopia.persistence.proxy.TrackableSet;
-
 /**
  * INTERNAL: Test cases for testing the TrackableCollectionIF
  * interface implemented by the TrackableSet class. Actual test
@@ -32,13 +29,9 @@ import net.ontopia.persistence.proxy.TrackableSet;
  */
 public class TrackableSetTest extends TrackableCollectionTest {
   
-  public TrackableSetTest(String name) {
-    super(name);
-  }
-
   @Override
-  protected TrackableCollectionIF createTrackableCollection() {
-    return new TrackableSet(null, Collections.EMPTY_SET);
+  protected TrackableCollectionIF<Object> createTrackableCollection() {
+    return new TrackableSet<>(null, Collections.emptySet());
   }
   
 }
