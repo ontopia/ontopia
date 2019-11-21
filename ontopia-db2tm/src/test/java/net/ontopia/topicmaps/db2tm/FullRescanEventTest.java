@@ -22,19 +22,19 @@ package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import net.ontopia.utils.TestFileUtils;
+import java.sql.Statement;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.core.events.TopicMapEvents;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.entry.StoreFactoryReference;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
+import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * INTERNAL: Test for sync with full rescan. Requires H2 database.
@@ -58,6 +58,7 @@ public class FullRescanEventTest {
     Statement stm = conn.createStatement();
     
     // Load the starter data into the table
+    ChangelogTestCase.importCSV(stm, "ACTIVITYLOG", "ACTIVITYLOG-before.csv");
     ChangelogTestCase.importCSV(stm, casename, casename + "-before.csv");
     conn.commit(); // necessary to avoid timeout from DB2TM connection
       
@@ -80,7 +81,7 @@ public class FullRescanEventTest {
     DB2TM.sync(cfg, topicmap);
 
     // were there any events?
-    assertEquals("there were events during sync", 0, listener.getEventCount());
+    Assert.assertEquals("there were events during sync", 0, listener.getEventCount());
   }
 
   static class ErrorListener implements TopicMapListenerIF {
