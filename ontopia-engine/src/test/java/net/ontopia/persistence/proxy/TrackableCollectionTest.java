@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.proxy;
 
+import net.ontopia.topicmaps.impl.rdbms.Topic;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -128,4 +129,15 @@ public abstract class TrackableCollectionTest {
     Assert.assertTrue("size of trackable set removed is not 2", set.getRemoved().size() == 2);
   }
   
+  @Test
+  public void testStreamingIssue555() {
+    TrackableCollectionIF<Object> set = createTrackableCollection();
+    Topic topic = new Topic();
+    topic._p_setIdentity(new LongIdentity(Topic.class, 41));
+    set.addWithTracking(topic);
+
+    set.stream().forEach((t) -> {
+      Assert.assertTrue("Expected Topic, found " + t.getClass(), t instanceof Topic);
+    });
+  }
 }
