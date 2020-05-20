@@ -25,6 +25,7 @@ import java.net.URLConnection;
 import java.net.MalformedURLException;
 import java.io.InputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import org.xml.sax.InputSource;
 import org.xml.sax.EntityResolver;
 
@@ -72,6 +73,14 @@ public class TopicMapDTDEntityResolver implements EntityResolver {
         URL url = new URL(system_id);
         URLConnection conn = url.openConnection();
         conn.connect();
+
+        if (conn instanceof HttpURLConnection) {
+          int responseCode = ((HttpURLConnection) conn).getResponseCode();
+          if (responseCode == 301 || responseCode == 302 || responseCode == 303) {
+            return attemptResolution(public_id, conn.getHeaderField("Location"));
+          }
+        }
+
         InputStream stream = conn.getInputStream();
 
         InputSource src = new InputSource(system_id);
