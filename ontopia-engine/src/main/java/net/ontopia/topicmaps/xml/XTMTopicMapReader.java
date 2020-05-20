@@ -214,7 +214,11 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
     XMLReader parser;
     try {
       parser = DefaultXMLReaderFactory.createXMLReader();
-      parser.setEntityResolver(new TopicMapDTDEntityResolver());
+      if (validate) {
+        parser.setEntityResolver(new TopicMapDTDEntityResolver());
+      } else {
+        parser.setEntityResolver(new IgnoreTopicMapDTDEntityResolver());
+      }
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
     }
