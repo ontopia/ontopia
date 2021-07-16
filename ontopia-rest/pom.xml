@@ -21,7 +21,7 @@
 	<repositories>
 		<repository>
 			<id>Restlet</id>
-			<url>http://maven.restlet.org</url>
+			<url>https://maven.restlet.org</url>
 		</repository>
 	</repositories>
 
