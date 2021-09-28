@@ -3,7 +3,7 @@ variables:
   MAVEN_OPTS: "-Djansi.passthrough=true -Xmx512m"
 
 build:
-  image: maven:3-openjdk-17
+  image: jamesdbloom/docker-java7-maven:latest
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS clean install
