@@ -22,11 +22,11 @@ package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
-import net.ontopia.topicmaps.xml.InvalidTopicMapException;
-import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
+import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Topic map object deletion utilities.
@@ -48,7 +48,7 @@ public class ReificationUtils {
     if (existingReified != null &&
         ObjectUtils.different(existingReified, reifiable)) {
       if (existingReified instanceof TopicMapIF) {
-        throw new DuplicateReificationException("The topic " + reifier +
+        throw new InvalidTopicMapException("The topic " + reifier +
            " cannot reify more than one reifiable object. 1: " + existingReified +
            " 2: " + reifiable);
       }
