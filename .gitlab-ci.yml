@@ -1,0 +1,20 @@
+variables:
+  MAVEN_CLI_OPTS: "-V -B -Dstyle.color=always"
+  MAVEN_OPTS: "-Djansi.passthrough=true -Xmx512m"
+
+build:
+  image: maven:latest
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install
+  only:
+    - cherry
+
+release:
+  image: maven:latest
+  stage: deploy
+  script:
+    - echo "Release to artificatory"
+  when: manual
+  only:
+    - cherry
