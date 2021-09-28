@@ -11,10 +11,13 @@ build:
     - cherry
 
 release:
-  image: maven:latest
+  image: jamesdbloom/docker-java7-maven:latest
   stage: deploy
   script:
-    - echo "Release to artificatory"
+    - VERSION=`date +"%Y%m%d-%H%M"`
+    - mvn versions:set -DnewVersion=5.3.1-${VERSION}
+    - mvn package org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy -DaltDeploymentRepository=artifactory.switch.mssm.nl::default::https://switch.mssm.nl/artifactory/ontopia-releases
+    - mvn versions:revert
   when: manual
   only:
-    - cherry
+    - ci-test
