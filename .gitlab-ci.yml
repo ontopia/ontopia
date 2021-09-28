@@ -20,4 +20,4 @@ release:
     - mvn versions:revert
   when: manual
   only:
-    - ci-test
+    - cherry
