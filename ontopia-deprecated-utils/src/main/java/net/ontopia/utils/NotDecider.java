@@ -20,10 +20,13 @@
 
 package net.ontopia.utils;
 
+import net.ontopia.utils.DeciderIF;
+
 /**
  * INTERNAL: Decider that negates the decision of the nested decider.
  */
 
+@Deprecated
 public class NotDecider<T> implements DeciderIF<T> {
 
   protected DeciderIF<? super T> decider;
