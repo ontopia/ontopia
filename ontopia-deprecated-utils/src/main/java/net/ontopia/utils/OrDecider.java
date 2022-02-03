@@ -23,6 +23,7 @@ package net.ontopia.utils;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that checks all subdeciders and returns true of one
@@ -32,6 +33,7 @@ import java.util.Set;
  * gives a positive decision, the rest is then not checked.</p>
  */
 
+@Deprecated
 public class OrDecider implements DeciderIF {
 
   protected Set deciders = new HashSet();
