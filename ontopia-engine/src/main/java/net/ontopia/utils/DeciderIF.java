@@ -20,19 +20,28 @@
 
 package net.ontopia.utils;
 
+import java.util.function.Predicate;
+
 /**
  * PUBLIC: Interface for classes that decides whether an object is
  * acceptable or not. A decider is the same as a predicate, and can
  * e.g. be used to filter collections.</p>
+ * 
+ * @deprecated Use {@link Predicate}
  */
-
-public interface DeciderIF<T> {
+@Deprecated
+@FunctionalInterface
+public interface DeciderIF<T> extends Predicate<T> {
 
   /**
    * PUBLIC: Returns true if the object is accepted.
    */
   boolean ok(T object);
 
+  @Override
+  default boolean test(T object) {
+    return ok(object);
+  }
 }
 
 
