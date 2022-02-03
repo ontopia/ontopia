@@ -20,14 +20,20 @@
 
 package net.ontopia.utils;
 
+import java.util.function.Function;
+
 /**
  * INTERNAL: Grabs an object from another object.</p>
  * 
  * The object that is grabbed decided by the implementation of this
  * interface.</p>
+ * 
+ * @deprecated use {@link Function}
  */
 
-public interface GrabberIF<O, G> {
+@Deprecated
+@FunctionalInterface
+public interface GrabberIF<O, G> extends Function<O, G> {
 
   /**
    * Returns an object that is somehow extracted from the given
@@ -35,6 +41,10 @@ public interface GrabberIF<O, G> {
    */
   G grab(O object);
 
+  @Override
+  default G apply(O object) {
+    return grab(object);
+  }
 }
 
 
