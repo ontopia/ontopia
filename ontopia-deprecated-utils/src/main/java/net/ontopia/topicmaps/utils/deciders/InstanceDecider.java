@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * returns ok if it is an instance of one of the types it was
  * constructed with.
  */
+@Deprecated
 public class InstanceDecider implements DeciderIF<Object> {
 
   // Define a logging category.
