@@ -51,7 +51,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.IdentityUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.ContainmentDecider;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.StreamUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -144,7 +143,7 @@ public class DataIntegrationServlet extends HttpServlet {
             } finally {
               cqr.close();
             }
-            sfilter = new ContainmentDecider(characteristics);
+            sfilter = o -> characteristics.contains(o);
           }
           // synchronize topic
           TopicMapSynchronizer.update(target, src, tfilter, sfilter);

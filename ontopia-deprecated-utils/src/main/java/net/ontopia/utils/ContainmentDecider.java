@@ -22,6 +22,7 @@ package net.ontopia.utils;
 
 import java.util.Collection;
 import java.util.HashSet;
+import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that returns true if the object is contained in
@@ -30,6 +31,7 @@ import java.util.HashSet;
  * @since 4.0
  */
 
+@Deprecated
 public class ContainmentDecider<T> implements DeciderIF<T> {
 
     private Collection<T> objects = new HashSet<T>();
