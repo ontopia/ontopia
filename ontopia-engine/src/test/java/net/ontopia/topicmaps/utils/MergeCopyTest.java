@@ -31,7 +31,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.DeciderUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -291,7 +290,7 @@ public class MergeCopyTest {
     builder2.makeTopicName(theme, "The theme");
     bn.addTheme(theme);
 
-    MergeUtils.mergeInto(topicmap1, topic, DeciderUtils.<TMObjectIF>getFalseDecider());
+    MergeUtils.mergeInto(topicmap1, topic, (o) -> false);
     
     Assert.assertTrue("topic map has wrong number of topics after merge",
                topicmap1.getTopics().size() == 1); // topic
@@ -326,7 +325,7 @@ public class MergeCopyTest {
     builder2.makeTopicName(theme, "Sort name");
     vn.addTheme(theme);
 
-    MergeUtils.mergeInto(topicmap1, topic, DeciderUtils.<TMObjectIF>getTrueDecider());
+    MergeUtils.mergeInto(topicmap1, topic, (o) -> true);
     
     Assert.assertTrue("topic map has wrong number of topics after merge",
                topicmap1.getTopics().size() == 3); // topic + theme + default name type

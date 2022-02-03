@@ -45,7 +45,6 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +63,7 @@ public class TopicMapSynchronizer {
    * including all characteristics from the source topic.
    */
   public static void update(TopicMapIF target, TopicIF source) {
-    update(target, source, DeciderUtils.<TMObjectIF>getTrueDecider());
+    update(target, source, (o) -> true);
   }
   
   /**
@@ -74,7 +73,7 @@ public class TopicMapSynchronizer {
    */
   public static void update(TopicMapIF target, TopicIF source,
                             DeciderIF<TMObjectIF> tfilter) {
-    update(target, source, tfilter, DeciderUtils.<TMObjectIF>getTrueDecider());
+    update(target, source, tfilter, (o) -> true);
   }
 
   /**

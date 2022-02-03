@@ -31,7 +31,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +62,7 @@ public class TopicMapSynchronizerBKTest {
     tchard = TMDeciderUtils.getTypePSIDecider(psis);
 
     psis.clear();
-    schard = DeciderUtils.getTrueDecider();
+    schard = (o) -> true;
 
     String root = TestFileUtils.getTestdataOutputDirectory();
     base = root + File.separator + testdataDirectory + File.separator;
@@ -160,7 +159,7 @@ public class TopicMapSynchronizerBKTest {
   @Test
   public void testSingleTopicTwoFilter() throws IOException {
     // Set up deciders
-    tchard = DeciderUtils.getTrueDecider();
+    tchard = (o) -> true;
 
     List psis = new ArrayList();
     psis.add("http://psi.example.org/type-one");
@@ -181,7 +180,7 @@ public class TopicMapSynchronizerBKTest {
   @Test
   public void testReifiedAssociation() throws IOException, InvalidQueryException {
     // Set up deciders
-    tchard = DeciderUtils.getTrueDecider();
+    tchard = (o) -> true;
     schard = tchard;
 
     // Load topic maps

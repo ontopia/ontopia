@@ -49,7 +49,6 @@ import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**
@@ -505,7 +504,7 @@ public class MergeUtils {
    * @since 2.0
    */
   public static TopicIF mergeInto(TopicMapIF targettm, TopicIF source) {
-    return mergeInto(targettm, source, DeciderUtils.<TMObjectIF>getTrueDecider());
+    return mergeInto(targettm, source, (o) -> true);
   }
 
   /**
