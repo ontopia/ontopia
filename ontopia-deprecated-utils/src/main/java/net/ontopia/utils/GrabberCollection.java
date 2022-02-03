@@ -31,6 +31,7 @@ import java.util.Iterator;
  * the collection or not.</p>
  */
 
+@Deprecated
 public class GrabberCollection<O, G> implements Collection<G>, CachedIF {
 
   protected Collection<O> coll;
