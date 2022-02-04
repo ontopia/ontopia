@@ -27,6 +27,7 @@ import net.ontopia.utils.StringifierIF;
  * INTERNAL: Stringifier that returns the object id of a topic map object.
  */
 
+@Deprecated
 public class ObjectIdStringifier implements StringifierIF<TMObjectIF> {
   
   /**
