@@ -31,6 +31,7 @@ import net.ontopia.utils.DeciderIF;
  * @since 1.1
  */
 
+@Deprecated
 public class UnconstrainedScopeDecider implements DeciderIF<ScopedIF> {
   protected DeciderIF<? super ScopedIF> subdecider;
 
