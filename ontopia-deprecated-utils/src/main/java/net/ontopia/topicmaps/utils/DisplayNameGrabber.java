@@ -31,6 +31,7 @@ import net.ontopia.utils.GrabberIF;
  * @deprecated Since 1.1. Use TopicCharacteristicGrabbers instead.
  */
 
+@Deprecated
 public class DisplayNameGrabber implements GrabberIF<TopicIF, NameIF> {
   /**
    * PROTECTED: The NameGrabber used to implement the grabbing.
