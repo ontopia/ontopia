@@ -35,6 +35,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
  * INTERNAL: Decider for verifying if a given topic type is identical or
  * a subclass of a reference topic type (for example occurrence type).
  */
+@Deprecated
 public class TypeDecider implements DeciderIF<TopicIF>, NavigatorDeciderIF<TopicIF> {
 
   // constants
