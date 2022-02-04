@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.StringTemplateUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
