@@ -35,6 +35,7 @@ import java.util.Map;
  * refreshed automatically. This has to be done explicitly.</p>
  */
 
+@Deprecated
 public class CachedGrabber<O, G> implements GrabberIF<O, G>, CachedIF {
 
   protected GrabberIF<O, G> grabber;
