@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.utils.ScopedIFComparator;
 
 /**
  * DEPRECATED: Comparator that first sorts by type then by scope,
@@ -31,6 +32,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
  * @since 3.0
  * @deprecated Use TopicNameComparator instead.
  */
+@Deprecated
 public class BaseNameComparator extends ScopedIFComparator<TopicNameIF> {
   
   BaseNameComparator(Collection<TopicIF> scope) {
