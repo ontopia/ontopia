@@ -29,6 +29,7 @@ import net.ontopia.utils.GrabberIF;
  * association role.
  */
 
+@Deprecated
 public class RolePlayerGrabber implements GrabberIF<AssociationRoleIF, TopicIF> {
   
   /**
