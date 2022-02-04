@@ -25,6 +25,7 @@ package net.ontopia.utils;
  * the object that was given to it.</p>
  */
 
+@Deprecated
 public class SameGrabber<T> implements GrabberIF<T, T> {
   
   @Override
