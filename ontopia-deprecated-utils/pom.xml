@@ -12,6 +12,7 @@
 	<packaging>jar</packaging>
 	
 	<name>Ontopia Deprecated Utils</name>
+	<description>Utilities that are no longer used or based on deprecated API</description>
 
 	<dependencies>
 		<dependency>
