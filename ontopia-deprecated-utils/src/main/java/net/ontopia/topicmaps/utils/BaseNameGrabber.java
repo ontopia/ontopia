@@ -32,6 +32,7 @@ import net.ontopia.utils.GrabberIF;
  * topic.
  * @deprecated use TopicNameGrabber instead.
  */
+@Deprecated
 public class BaseNameGrabber implements GrabberIF<TopicIF, TopicNameIF> {
 
   /**
