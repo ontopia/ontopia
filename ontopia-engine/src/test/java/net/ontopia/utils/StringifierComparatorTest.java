@@ -26,7 +26,7 @@ public class StringifierComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void testStringifierComparator() {
-    UpperCaseGrabber upg = new UpperCaseGrabber();
+    GrabberIF<String, ?> upg = String::toUpperCase;
     GrabberStringifier grb = new GrabberStringifier(upg);
     testComparator(new StringifierComparator(grb).compare(upg.grab("foobar"), "FOOBAR"), 0, 1);
   }
