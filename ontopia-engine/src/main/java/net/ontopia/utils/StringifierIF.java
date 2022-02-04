@@ -20,6 +20,8 @@
 
 package net.ontopia.utils;
 
+import java.util.function.Function;
+
 /**
  * PUBLIC: Stringifies objects. The stringifier interface consists of
  * one method called toString which takes a single Object
@@ -27,7 +29,8 @@ package net.ontopia.utils;
  * representation of that object.</p>
  */
 
-public interface StringifierIF<T> {
+@FunctionalInterface
+public interface StringifierIF<T> extends Function<T, String> {
 
   /**
    * Returns a stringified version of the object, i.e. a string
@@ -40,6 +43,10 @@ public interface StringifierIF<T> {
    */
   String toString(T object);
 
+  @Override
+  public default String apply(T t) {
+    return toString(t);
+  }
 }
 
 
