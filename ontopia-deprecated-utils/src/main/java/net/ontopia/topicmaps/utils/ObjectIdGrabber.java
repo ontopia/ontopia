@@ -29,6 +29,7 @@ import net.ontopia.utils.GrabberIF;
  * this class implements GrabberIF instead of StringifierIF.</p>
  */
 
+@Deprecated
 public class ObjectIdGrabber<T extends TMObjectIF> implements GrabberIF<T, String> {
   
   /**
