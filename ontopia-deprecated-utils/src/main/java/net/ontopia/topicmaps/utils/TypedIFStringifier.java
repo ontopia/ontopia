@@ -34,6 +34,7 @@ import net.ontopia.utils.StringifierIF;
  * with a stringifier used to stringify the resulting topic.</p>
  */
 
+@Deprecated
 public class TypedIFStringifier<T extends TypedIF> implements StringifierIF<T> {
 
   protected GrabberIF<T, TopicIF> grabber = new TypedIFGrabber<T>();
