@@ -20,6 +20,8 @@
 
 package net.ontopia.utils;
 
+import java.util.Objects;
+
 /**
  * INTERNAL: Stringifies the object that the grabber
  * grabs. DefaultStringifier will be used if no nested stringifier is
@@ -32,7 +34,7 @@ public class GrabberStringifier<T, G> implements StringifierIF<T> {
   protected StringifierIF<? super G> stringifier;
   
   public GrabberStringifier(GrabberIF<T, G> grabber) {
-    this(grabber, new DefaultStringifier<G>());
+    this(grabber, Objects::toString);
   }
   
   public GrabberStringifier(GrabberIF<T, G> grabber, StringifierIF<? super G> stringifier) {

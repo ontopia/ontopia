@@ -35,7 +35,7 @@ public class StringifierComparator<T> implements Comparator<T> {
   protected StringifierIF<T> stringifier;
 
   public StringifierComparator() {
-    stringifier = new DefaultStringifier<T>();
+    stringifier = Objects::toString;
   }
 
   public StringifierComparator(StringifierIF<T> stringifier) {

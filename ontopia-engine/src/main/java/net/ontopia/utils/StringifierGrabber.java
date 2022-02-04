@@ -20,6 +20,8 @@
 
 package net.ontopia.utils;
 
+import java.util.Objects;
+
 /**
  * INTERNAL: Grabber that grabs a stringified version of the object
  * given to it.
@@ -30,7 +32,7 @@ public class StringifierGrabber<T> implements GrabberIF<T, String> {
   protected StringifierIF<T> stringifier;
 
   public StringifierGrabber() {
-    this(new DefaultStringifier<T>());
+    this(Objects::toString);
   }
   
   public StringifierGrabber(StringifierIF<T> stringifier) {
