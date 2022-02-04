@@ -24,10 +24,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.utils.DeciderIF;
@@ -59,7 +64,7 @@ public class TopicMapSynchronizerBKTest {
     List psis = new ArrayList();
     psis.add("http://psi.bergen.kommune.no/portal/forelder-barn");
     psis.add("http://psi.bergen.kommune.no/portal/livsit-relevant-for");
-    tchard = TMDeciderUtils.getTypePSIDecider(psis);
+    tchard = new TypePSIDecider(psis);
 
     psis.clear();
     schard = (o) -> true;
@@ -143,7 +148,7 @@ public class TopicMapSynchronizerBKTest {
     List psis = new ArrayList();
     psis.add("http://psi.bergen.kommune.no/portal/forelder-barn");
     psis.add("http://psi.bergen.kommune.no/portal/relevant-for");
-    tchard = TMDeciderUtils.getTypePSIDecider(psis);
+    tchard = new TypePSIDecider(psis);
 
     // Do actual test
     TopicMapIF target = load("bk-same-association.ltm");
@@ -163,7 +168,7 @@ public class TopicMapSynchronizerBKTest {
 
     List psis = new ArrayList();
     psis.add("http://psi.example.org/type-one");
-    schard = TMDeciderUtils.getTypePSIDecider(psis);
+    schard = new TypePSIDecider(psis);
 
     // Do actual test
     String psi = "http://psi.example.org/topic";
@@ -216,4 +221,37 @@ public class TopicMapSynchronizerBKTest {
     Assert.assertTrue("test file " + filename + " canonicalized wrongly",
                TestFileUtils.compareFileToResource(out, baseline));
   }
+
+  static class TypePSIDecider implements DeciderIF {
+    private Collection okpsis;
+    
+    public TypePSIDecider(Collection okpsis) throws MalformedURLException {
+      this.okpsis = new HashSet();
+      Iterator it = okpsis.iterator();
+      while (it.hasNext()) {
+        Object obj = it.next();
+        LocatorIF psi;
+        if (obj instanceof LocatorIF)
+          psi = (LocatorIF) obj;
+        else
+          psi = new URILocator((String) obj);
+        this.okpsis.add(psi);
+      }
+    }
+    
+    @Override
+    public boolean ok(Object object) {
+      if (object instanceof TypedIF) {
+        TopicIF type = ((TypedIF) object).getType();
+        if (type == null)
+          return false;
+        
+        Iterator it = type.getSubjectIdentifiers().iterator();
+        while (it.hasNext())
+          if (okpsis.contains(it.next()))
+            return true;
+      } 
+      return false;
+    }
+  }  
 }
