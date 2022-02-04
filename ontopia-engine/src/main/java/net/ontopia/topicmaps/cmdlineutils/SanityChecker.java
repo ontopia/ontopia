@@ -39,7 +39,6 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.URIUtils;
 
 /**
@@ -48,7 +47,6 @@ import net.ontopia.utils.URIUtils;
 public class SanityChecker {
 
   protected TopicMapIF tm;
-  protected StringifierIF ts = TopicStringifiers.getDefaultStringifier();
 
   public static void main(String [] argv) throws Exception {
 
