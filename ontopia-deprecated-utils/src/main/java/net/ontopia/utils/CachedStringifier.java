@@ -33,6 +33,7 @@ import java.util.Map;
  * updated.</p>
  */
 
+@Deprecated
 public class CachedStringifier<T> implements StringifierIF<T>, CachedIF {
 
   protected StringifierIF<? super T> stringifier;
