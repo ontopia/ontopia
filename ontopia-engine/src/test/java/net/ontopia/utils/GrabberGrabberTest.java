@@ -28,8 +28,8 @@ public class GrabberGrabberTest extends AbstractGrabberTest {
   public void testGrabberGrabber() {
     GrabberIF<String, ?> grbLow = String::toLowerCase;
     GrabberIF<String, ?> grbUp = String::toUpperCase;
-    SubstringGrabber grbSub1 = new SubstringGrabber(4, 15);
-    SubstringGrabber grbSub2 = new SubstringGrabber(2,7);
+    GrabberIF<String, ?> grbSub1 = o -> o.substring(4, 15);
+    GrabberIF<String, ?> grbSub2 = o -> o.substring(2, 7);
 
     GrabberGrabber grbGrb1 = new GrabberGrabber(grbLow, grbUp);
     GrabberGrabber grbGrb2 = new GrabberGrabber(grbLow, grbUp);
