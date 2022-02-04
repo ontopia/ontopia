@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.net.MalformedURLException;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.nav2.impl.basic.TypeDecider;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * it does not look up the 'sort' topic for you, but that this must be
  * provided explicitly to the constructors.
  */
+@Deprecated
 public class OccTypeComparator extends TopicComparator {
 
   // initialization of logging facility
