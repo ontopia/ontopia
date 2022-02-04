@@ -44,7 +44,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierComparator;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.xml.CanonicalPrinter;
@@ -678,42 +677,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       return orderedIterator(roles, roleComparator);
     }
   }
-    
-  class TopicRefComparator implements Comparator<TopicIF> {
-    private Map<TopicIF, String> topicIds;
-        
-    public TopicRefComparator(Map<TopicIF, String> topicIds) {
-      this.topicIds = topicIds;
-    }
 
-    @Override
-    public int compare(TopicIF o1, TopicIF o2) {
-      String s1 = topicIds.get(o1);
-      String s2 = topicIds.get(o2);
-      return s1.compareTo(s2);
-    }
-  }
-
-  class FirstGrabber<T> implements GrabberIF<Collection<T>, T> {
-    private Comparator<? super T> comparator;
-        
-    public FirstGrabber(Comparator<? super T> comparator) {
-      this.comparator = comparator;
-    }
-            
-    @Override
-    public T grab(Collection<T> coll) {
-      return orderedIterator(coll, comparator).next();
-    }
-  }
-
-  class StringComparator implements Comparator<String> {
-    @Override
-    public int compare(String s1, String s2) {
-      return s1.compareTo(s2);
-    }
-  }
-    
   class LocatorStringifier implements StringifierIF<LocatorIF> {
     @Override
     public String toString(LocatorIF loc) {
