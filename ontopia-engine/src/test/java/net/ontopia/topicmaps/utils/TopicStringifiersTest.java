@@ -109,18 +109,16 @@ public class TopicStringifiersTest {
 
   @Test
   public void testDSEmpty() {
-    StringifierIF sf = TopicStringifiers.getDefaultStringifier();
     Assert.assertTrue("Stringifying topic with no names did not give \"[No name]\"",
-           sf.toString(topic).equals("[No name]"));
+           TopicStringifiers.toString(topic).equals("[No name]"));
   }
         
   @Test
   public void testDSSingle() {
-    StringifierIF sf = TopicStringifiers.getDefaultStringifier();
     builder.makeTopicName(topic, "Name");
                 
     Assert.assertTrue("Stringifying topic with one name did not give that name",
-           sf.toString(topic).equals("Name"));
+           TopicStringifiers.toString(topic).equals("Name"));
   }
 
   @Test
@@ -131,10 +129,8 @@ public class TopicStringifiersTest {
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     bn2.addTheme(theme);
 
-    StringifierIF sf = TopicStringifiers.getDefaultStringifier();
-                
     Assert.assertTrue("Stringifying topic gave wrong name",
-           sf.toString(topic).equals("Name1"));
+           TopicStringifiers.toString(topic).equals("Name1"));
   }
 
   @Test
@@ -149,20 +145,17 @@ public class TopicStringifiersTest {
     TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
     VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch");
 
-    StringifierIF sf = TopicStringifiers.getDefaultStringifier();
     Assert.assertTrue("Stringifying topic gave wrong display name",
-           sf.toString(topic).equals("Display name"));
+           TopicStringifiers.toString(topic).equals("Display name"));
   }
 
   @Test
   public void testDSNull() {
-    StringifierIF sf = TopicStringifiers.getDefaultStringifier();
-
-    String result = sf.toString(null);
+    String result = TopicStringifiers.toString(null);
     String wanted = "[No name]";
     
     Assert.assertTrue("Stringifying null gave '" + result + "' instead of '" +
-               wanted + "'", wanted.equals(sf.toString(null)));
+               wanted + "'", wanted.equals(TopicStringifiers.toString(null)));
   }
   
   // getSortNameStringifier

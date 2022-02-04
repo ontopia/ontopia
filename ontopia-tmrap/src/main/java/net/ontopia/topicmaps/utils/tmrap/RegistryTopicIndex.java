@@ -47,7 +47,6 @@ public class RegistryTopicIndex implements TopicIndexIF {
   protected boolean readonly;
   protected String editBaseuri;
   protected String viewBaseuri;
-  protected StringifierIF<TopicIF> strify;
 
   /**
    * @param editBaseuri a URL of the form
@@ -61,7 +60,6 @@ public class RegistryTopicIndex implements TopicIndexIF {
     this.readonly = readonly;
     this.editBaseuri = editBaseuri;
     this.viewBaseuri = viewBaseuri;
-    this.strify = TopicStringifiers.getDefaultStringifier();
   }
 
   @Override
@@ -262,7 +260,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
     map.put("tmid", key);
     map.put("topicid", topic.getObjectId());
 
-    String name = strify.toString(topic);
+    String name = TopicStringifiers.toString(topic);
     String editUrl = null;
     String viewUrl = null;
     if (editBaseuri != null)

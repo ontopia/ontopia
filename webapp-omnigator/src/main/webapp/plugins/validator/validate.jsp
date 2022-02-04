@@ -40,7 +40,7 @@ class MVSValidationHandler extends HTMLValidationHandler {
     if (topic == null)
       return "&lt;null>";
 
-    String name = stringifier.toString(topic);
+    String name = TopicStringifiers.toString(topic);
     if (name.equals("[No name]"))
       name = topic.toString();
 

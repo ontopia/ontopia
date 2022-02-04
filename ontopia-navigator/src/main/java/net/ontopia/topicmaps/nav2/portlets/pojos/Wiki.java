@@ -42,8 +42,6 @@ import org.apache.commons.lang3.StringUtils;
  * into HTML.
  */
 public class Wiki {
-  private static StringifierIF strify =
-    TopicStringifiers.getDefaultStringifier();
   private static StringifierIF linker =
     new Linker();
 
@@ -205,7 +203,7 @@ public class Wiki {
     public String toString(Object o) {
       TopicIF topic = (TopicIF) o;
       return "<a href=\"topic.jsp?id=" + getId(topic) +
-        "\">" + strify.toString(topic) + "</a>";    
+        "\">" + TopicStringifiers.toString(topic) + "</a>";    
     }
 
     private String getId(TopicIF topic) {
