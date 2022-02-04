@@ -31,6 +31,7 @@ import net.ontopia.topicmaps.core.VariantNameIF;
  * belongs to this tmobject.
  */
 
+@Deprecated
 public class ObjectTopicIdStringifier {
 
 
