@@ -26,6 +26,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 /**
  * INTERNAL: ...
  */
+@Deprecated
 public class FirstUpperCaseStringifier implements StringifierIF {
 
   @Override
