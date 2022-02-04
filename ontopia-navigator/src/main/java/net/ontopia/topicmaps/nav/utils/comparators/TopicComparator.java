@@ -26,10 +26,11 @@ import java.util.Comparator;
 
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 
-import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
 
 /**
  * INTERNAL: A Comparator for ordering topics alphabetically. Note that
@@ -95,6 +96,35 @@ public class TopicComparator implements Comparator<TopicIF> {
       return -1;
     
     return n1.compareToIgnoreCase(n2);
+  }
+
+  /**
+   * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs.
+   */
+  public static class ComparatorNameStringifier implements StringifierIF<NameIF> {
+
+    /**
+     * INTERNAL: Stringifies the given basename or variant name.
+     *
+     * @param name the name object to use; TopicNameIF or VariantNameIF
+     * @return string containing name value or "~~~~~" if name not set
+     */
+    @Override
+    public String toString(NameIF name) {
+      if (name == null) {
+        return "~~~~~";
+      }
+      if (name instanceof TopicNameIF) {
+        return ((TopicNameIF) name).getValue();
+      } else {
+        VariantNameIF vname = (VariantNameIF) name;
+        if (vname.getValue() != null) {
+          return vname.getValue();
+        } else {
+          return vname.getLocator().getAddress();
+        }
+      }
+    }
   }
   
 }
