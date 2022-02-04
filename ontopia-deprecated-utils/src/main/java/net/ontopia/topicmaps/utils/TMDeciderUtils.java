@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.core.TypedIF;
  * INTERNAL: Utility class for creating topic map-based deciders.
  * @since 2.0
  */
+@Deprecated
 public class TMDeciderUtils {
 
   /**
