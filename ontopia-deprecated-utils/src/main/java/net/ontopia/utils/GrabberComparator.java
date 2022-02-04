@@ -27,6 +27,7 @@ import java.util.Comparator;
  * comparator.
  */
 
+@Deprecated
 public class GrabberComparator<T, G> implements Comparator<T> {
 
   protected GrabberIF<T, G> grabber1;
