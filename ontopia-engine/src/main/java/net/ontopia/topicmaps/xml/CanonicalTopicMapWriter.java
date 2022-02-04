@@ -45,7 +45,6 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.StringifierComparator;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.xml.CanonicalPrinter;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -182,12 +181,12 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       dh.startElement("", "", "subjectIdentity", empty);
 
       Iterator<LocatorIF> it = orderedIterator(topic.getSubjectLocators(),
-                           new StringifierComparator<LocatorIF>(new LocatorStringifier()));
+                           new StringifierComparator<>(LocatorIF::getExternalForm));
       while (it.hasNext())
         writeResourceRef(it.next(), dh);
 
       it = orderedIterator(topic.getSubjectIdentifiers(),
-                           new StringifierComparator<LocatorIF>(new LocatorStringifier()));
+                           new StringifierComparator<LocatorIF>(LocatorIF::getExternalForm));
       while (it.hasNext()) {
         LocatorIF loc = it.next();
         atts.addAttribute("", "", HREF, CDATA, resolveRelative(loc));
@@ -208,7 +207,8 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
         
     // occurrences
     Iterator<OccurrenceIF> it = orderedIterator(topic.getOccurrences(),
-                         new StringifierComparator<OccurrenceIF>(new OccurrenceStringifier()));
+            new StringifierComparator<>(occ -> 
+                    (occ.getLocator() != null) ? occ.getLocator().getExternalForm() : "$" + occ.getValue()));
     while (it.hasNext()) {
       OccurrenceIF occ = it.next();
       dh.startElement("", "", "occurrence", empty);
@@ -611,21 +611,6 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  // --- Sort key stringifiers
-
-  class TopicRefStringifier implements StringifierIF<TopicIF> {
-    private Map<TopicIF, String> topicIds;
-        
-    public TopicRefStringifier(Map<TopicIF, String> topicIds) {
-      this.topicIds = topicIds;
-    }
-                              
-    @Override
-    public String toString(TopicIF topic) {
-      return topicIds.get(topic);
-    }
-  }
-    
   // --- Other utilities
 
   class ContextHolder {
@@ -639,7 +624,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
     public ContextHolder(Map<TopicIF, String> topicIds) {
       this.topicIds = topicIds;
-      topicRefComparator = new StringifierComparator<TopicIF>(new TopicRefStringifier(topicIds));
+      topicRefComparator = new StringifierComparator<TopicIF>(topicIds::get);
       
       topicComparator = TopicComparator.getInstance();
       baseNameComparator = TopicNameComparator.getInstance();
@@ -675,23 +660,6 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
     public Iterator<AssociationRoleIF> rolesInOrder(Collection<AssociationRoleIF> roles) {
       return orderedIterator(roles, roleComparator);
-    }
-  }
-
-  class LocatorStringifier implements StringifierIF<LocatorIF> {
-    @Override
-    public String toString(LocatorIF loc) {
-      return loc.getExternalForm();
-    }
-  }
-
-  class OccurrenceStringifier implements StringifierIF<OccurrenceIF> {
-    @Override
-    public String toString(OccurrenceIF occ) {
-      if (occ.getLocator() != null)
-        return occ.getLocator().getExternalForm();
-      else
-        return "$" + occ.getValue();
     }
   }
 
