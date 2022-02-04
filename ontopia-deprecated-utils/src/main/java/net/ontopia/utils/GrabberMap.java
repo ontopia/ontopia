@@ -32,6 +32,7 @@ import java.util.Set;
  * value grabber to extract its content.
  */
 
+@Deprecated
 public class GrabberMap<O, KG, VG> implements Map<KG, Collection<VG>>, CachedIF {
 
   protected Collection<O> coll;
