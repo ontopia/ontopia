@@ -24,6 +24,7 @@ package net.ontopia.utils;
  * INTERNAL: Stringifier that calls the toString method on the object.
  */
 
+@Deprecated
 public class DefaultStringifier<T> implements StringifierIF<T> {
 
   @Override
