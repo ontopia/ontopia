@@ -26,7 +26,7 @@ public class GrabberGrabberTest extends AbstractGrabberTest {
 
   @Test
   public void testGrabberGrabber() {
-    LowerCaseGrabber grbLow = new LowerCaseGrabber();
+    GrabberIF<String, ?> grbLow = String::toLowerCase;
     UpperCaseGrabber grbUp = new UpperCaseGrabber();
     SubstringGrabber grbSub1 = new SubstringGrabber(4, 15);
     SubstringGrabber grbSub2 = new SubstringGrabber(2,7);

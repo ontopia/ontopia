@@ -28,7 +28,7 @@ public class GrabberComparatorTest extends AbstractComparatorTest {
   @Test
   public void testGrabberComparator() {
     UpperCaseGrabber upg = new UpperCaseGrabber();
-    LowerCaseGrabber log = new LowerCaseGrabber();
+    GrabberIF<String, ?> log = String::toLowerCase;
     Comparator sc = LexicalComparator.CASE_SENSITIVE;
     Comparator isc = new GrabberComparator(new UpperCaseGrabber(), sc);
 
