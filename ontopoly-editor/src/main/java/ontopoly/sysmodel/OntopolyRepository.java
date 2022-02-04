@@ -142,13 +142,10 @@ public class OntopolyRepository {
   }
 
   public List<TopicMapSource> getEditableSources() {
-    return getSources(new DeciderIF() {
-      @Override
-      public boolean ok(Object o) {
+    return getSources(o -> {
         TopicMapSourceIF source = (TopicMapSourceIF)o;
         return source.supportsCreate() && source.getId() != null;
-      }
-    });
+      });
   }
 
   private List<TopicMapSource> getSources(DeciderIF decider) {
