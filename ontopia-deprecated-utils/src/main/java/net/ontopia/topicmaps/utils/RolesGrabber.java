@@ -29,6 +29,7 @@ import net.ontopia.utils.GrabberIF;
  * INTERNAL: Grabber that grabs the association roles of an association.
  */
 
+@Deprecated
 public class RolesGrabber implements GrabberIF<AssociationIF, Collection<AssociationRoleIF>> {
   
   /**
