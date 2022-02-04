@@ -30,14 +30,7 @@ public class DeciderIteratorTest extends AbstractIteratorTest {
 
     int size = 5;
     
-    DeciderIF decider = new DeciderIF() {
-      @Override
-      public boolean ok(Object object) {
-        return !"B".equals(object);
-      }
-    };
-    
-    Iterator iter = new DeciderIterator(decider, getIterator(size));
+    Iterator iter = new DeciderIterator(o -> !"B".equals(o), getIterator(size));
 
     testIterator(iter, size - 1);
   }
