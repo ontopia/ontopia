@@ -29,6 +29,7 @@ import java.util.function.Function;
  * representation of that object.</p>
  */
 
+@Deprecated
 @FunctionalInterface
 public interface StringifierIF<T> extends Function<T, String> {
 
