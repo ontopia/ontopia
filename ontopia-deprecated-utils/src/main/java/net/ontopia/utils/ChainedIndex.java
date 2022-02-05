@@ -30,6 +30,7 @@ package net.ontopia.utils;
  *
  * @since 1.3.2
  */
+@Deprecated
 public class ChainedIndex<K, E> implements LookupIndexIF<K, E> {
 
   protected LookupIndexIF<K, E>[] getters;
