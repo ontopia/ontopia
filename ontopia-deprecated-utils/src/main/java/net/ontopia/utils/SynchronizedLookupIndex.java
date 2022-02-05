@@ -23,6 +23,7 @@ package net.ontopia.utils;
 /**
  * INTERNAL: Synchronized wrapper class for LookupIndexIF instances.
  */
+@Deprecated
 public class SynchronizedLookupIndex implements LookupIndexIF {
   
   protected LookupIndexIF index;
