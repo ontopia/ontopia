@@ -29,6 +29,7 @@ package net.ontopia.utils;
  * above this maximum size.
  */
 
+@Deprecated
 public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
   private LookupIndexIF<K, E> fallback;
   private int           max;       // max number of entries in cache
