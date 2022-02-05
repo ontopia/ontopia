@@ -31,11 +31,13 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.utils.TopicTreeNode;
 
 /**
  * EXPERIMENTAL.
  * @since 1.2
  */
+@Deprecated
 public class TopicTreeBuilder {
   protected TopicIF assocType;
   protected TopicIF parentRole;

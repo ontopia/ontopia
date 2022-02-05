@@ -32,11 +32,14 @@ import java.awt.image.BufferedImage;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.topicmaps.utils.TopicTreeNode;
 
 /**
  * EXPERIMENTAL.
  * @since 1.2
  */
+@Deprecated
 public class TopicTreeRendrer {
   protected TopicTreeNode root;
   protected TopicIF current;
