@@ -37,6 +37,7 @@ import java.util.Set;
  * cache managers.</p>
  */
 
+@Deprecated
 public class CacheManager implements CachedIF {
 
   protected Map<Object, Set<CachedIF>> caches = new HashMap<Object, Set<CachedIF>>();
