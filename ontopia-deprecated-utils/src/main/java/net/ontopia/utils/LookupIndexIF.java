@@ -25,6 +25,7 @@ package net.ontopia.utils;
  * look up information, but which can do no more. A simplified version
  * of the Map interface, used for lookup.
  */
+@Deprecated
 public interface LookupIndexIF<K, E> {
 
   E get(K key);
