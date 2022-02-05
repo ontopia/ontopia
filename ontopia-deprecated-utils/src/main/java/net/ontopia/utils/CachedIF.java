@@ -26,6 +26,7 @@ package net.ontopia.utils;
  * objects.</p>
  */
 
+@Deprecated
 public interface CachedIF {
 
   /**
