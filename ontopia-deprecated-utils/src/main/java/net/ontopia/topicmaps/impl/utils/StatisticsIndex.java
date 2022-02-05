@@ -31,6 +31,7 @@ import net.ontopia.utils.LookupIndexIF;
  * the nested index.
  */
 
+@Deprecated
 public class StatisticsIndex<K, V> implements LookupIndexIF<K, V> {
 
   protected int total;
