@@ -37,6 +37,7 @@ import net.ontopia.utils.CachedIF;
  * detached from the object model.
  */
 
+@Deprecated
 public abstract class AbstractAttachManager {
 
   protected ObjectTreeManager otree;

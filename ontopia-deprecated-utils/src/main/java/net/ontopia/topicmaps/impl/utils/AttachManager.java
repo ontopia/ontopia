@@ -39,6 +39,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * detached from the object model.
  */
 
+@Deprecated
 public class AttachManager extends AbstractAttachManager {
 
   protected Map<Class<?>, AttachHandlerIF> ahandlers;
