@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.GrabberDecider;
 
 /**
  * PUBLIC: Computes the transitive closure of a relation characterized by
@@ -92,9 +91,9 @@ public class AssociationWalker {
    * object implementing TopicIF.
    */
   public AssociationWalker(TopicIF associationType, TopicIF leftRoleSpec, TopicIF rightRoleSpec) {
-    assocDecider = new GrabberDecider<AssociationIF, TopicIF>(new TypedIFGrabber<AssociationIF>(), associationType::equals);
-    leftRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), leftRoleSpec::equals);
-    rightRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), rightRoleSpec::equals);
+    assocDecider = a -> associationType.equals(a.getType());
+    leftRoleDecider = r -> leftRoleSpec.equals(r.getType());
+    rightRoleDecider = r -> rightRoleSpec.equals(r.getType());
     listeners = new ArrayList<AssociationWalkerListenerIF>();
   }
 
