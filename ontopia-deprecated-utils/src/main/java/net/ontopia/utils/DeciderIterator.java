@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
  * another iterator.</p>
  */
 
+@Deprecated
 public class DeciderIterator<T> implements Iterator<T> {
 
   protected DeciderIF<T> decider;
