@@ -47,32 +47,32 @@ public class CollectionFactory implements CollectionFactoryIF, java.io.Serializa
 
   @Override
   public <T> Set<T> makeSmallSet() {
-    return (Set<T>) new HashSet<T>(initsize);
+    return new HashSet<>(initsize);
   }
 
   @Override
   public <T> Set<T> makeLargeSet() {
-    return (Set<T>) new HashSet<T>();
+    return new HashSet<>();
   }
 
   @Override
   public <V, K> Map<V, K> makeSmallMap() {
-    return (Map<V, K>) new HashMap<V, K>(initsize);
+    return new HashMap<>(initsize);
   }
 
   @Override
   public <V, K> Map<V, K> makeLargeMap() {
-    return (Map<V, K>) new HashMap<V, K>();
+    return new HashMap<>();
   }
   
   @Override
   public <T> List<T> makeSmallList() {
-    return (List<T>) new ArrayList<T>(initsize);
+    return new ArrayList<>(initsize);
   }
 
   @Override
   public <T> List<T> makeLargeList() {
-    return (List<T>) new ArrayList<T>();
+    return new ArrayList<>();
   }
 
 }
