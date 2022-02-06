@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.EqualsDecider;
 import net.ontopia.utils.GrabberDecider;
 
 /**
@@ -93,9 +92,9 @@ public class AssociationWalker {
    * object implementing TopicIF.
    */
   public AssociationWalker(TopicIF associationType, TopicIF leftRoleSpec, TopicIF rightRoleSpec) {
-    assocDecider = new GrabberDecider<AssociationIF, TopicIF>(new TypedIFGrabber<AssociationIF>(), new EqualsDecider<TopicIF>(associationType));
-    leftRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), new EqualsDecider<TopicIF>(leftRoleSpec));
-    rightRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), new EqualsDecider<TopicIF>(rightRoleSpec));
+    assocDecider = new GrabberDecider<AssociationIF, TopicIF>(new TypedIFGrabber<AssociationIF>(), associationType::equals);
+    leftRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), leftRoleSpec::equals);
+    rightRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), rightRoleSpec::equals);
     listeners = new ArrayList<AssociationWalkerListenerIF>();
   }
 
