@@ -25,6 +25,7 @@ package net.ontopia.utils;
  * object. The implementation uses the Object.equals method.</p>
  */
 
+@Deprecated
 public class EqualsDecider<T> implements DeciderIF<T> {
 
   protected T refobj;
