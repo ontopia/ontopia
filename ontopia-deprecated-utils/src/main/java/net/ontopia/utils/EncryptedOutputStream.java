@@ -27,6 +27,7 @@ import java.io.OutputStream;
  * INTERNAL: Output stream for reading in a encrypted input stream (for
  * example from a file) and giving back the decrypted values.
  */
+@Deprecated
 public class EncryptedOutputStream extends OutputStream {
 
   private final static int KEY = 0xFF;
