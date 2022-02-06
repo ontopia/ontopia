@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderIterator;
 import net.ontopia.utils.EqualsDecider;
 import net.ontopia.utils.GrabberDecider;
 
@@ -206,7 +205,7 @@ public class AssociationWalker {
     if (fromRoles.isEmpty()) {
       foundLeaf(state);
     } else {
-      DeciderIterator<AssociationRoleIF> leftRolesIt = new DeciderIterator<AssociationRoleIF>(leftRoleDecider, fromRoles.iterator());
+      Iterator<AssociationRoleIF> leftRolesIt = fromRoles.stream().filter(leftRoleDecider).iterator();
       if (!leftRolesIt.hasNext()) {
         foundLeaf(state);
       }
@@ -215,7 +214,7 @@ public class AssociationWalker {
         AssociationIF assoc = leftRole.getAssociation();
         if (assocDecider.ok(assoc)) {
           Collection<AssociationRoleIF> assocRoles = assoc.getRoles();
-          DeciderIterator<AssociationRoleIF> rightRolesIt = new DeciderIterator<AssociationRoleIF>(rightRoleDecider, assocRoles.iterator());
+          Iterator<AssociationRoleIF> rightRolesIt = assocRoles.stream().filter(rightRoleDecider).iterator();
           if (!rightRolesIt.hasNext()) {
             // We have traversed to a leaf. Add the current path to the tree set
             foundLeaf(state);
