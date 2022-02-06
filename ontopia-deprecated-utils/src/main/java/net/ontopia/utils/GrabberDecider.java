@@ -25,6 +25,7 @@ package net.ontopia.utils;
  * subdecider.
  */
 
+@Deprecated
 public class GrabberDecider<T, G> implements DeciderIF<T> {
 
   protected GrabberIF<T, G> grabber;
