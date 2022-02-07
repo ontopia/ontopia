@@ -32,6 +32,7 @@ import java.io.Writer;
  * INTERNAL: An InputStream stream that turns a Reader into an
  * InputStream given an encoding.
  */
+@Deprecated
 public class ReaderInputStream extends InputStream {
   protected Reader reader;
   protected ByteArrayOutputStream byteArrayOut;
