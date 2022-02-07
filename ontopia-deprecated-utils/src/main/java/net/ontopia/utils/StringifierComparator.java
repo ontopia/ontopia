@@ -29,6 +29,7 @@ import java.util.Objects;
  * stringifier.</p>
  */
 
+@Deprecated
 public class StringifierComparator<T> implements Comparator<T> {
   
   protected Comparator<? super T> comparator;
