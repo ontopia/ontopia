@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -79,7 +80,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     TopicIF topic = builder.makeTopic();
     TopicNameIF name = builder.makeTopicName(topic, "Topic");
     LocatorIF loc = new URILocator("http://example.org/foo+bar");
-    builder.makeVariantName(name, loc);
+    builder.makeVariantName(name, loc, Collections.emptySet());
 
     // export to file
     export();

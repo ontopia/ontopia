@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.Collections;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -44,7 +45,7 @@ public class NameStringifierTest {
     topicmap = makeTopicMap();
     topic = builder.makeTopic();
     basename = builder.makeTopicName(topic, "");
-    variant = builder.makeVariantName(basename, "");
+    variant = builder.makeVariantName(basename, "", Collections.emptySet());
     stringifier = new NameStringifier();
   }
     

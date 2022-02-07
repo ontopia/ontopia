@@ -139,11 +139,11 @@ public class TopicStringifiersTest {
     display.addSubjectIdentifier(PSI.getXTMDisplay());
 
     TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
-    VariantNameIF vn1 = builder.makeVariantName(bn1, "Display name");
+    VariantNameIF vn1 = builder.makeVariantName(bn1, "Display name", Collections.emptySet());
     vn1.addTheme(display);
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
-    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch");
+    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
 
     Assert.assertTrue("Stringifying topic gave wrong display name",
            TopicStringifiers.toString(topic).equals("Display name"));
@@ -196,11 +196,11 @@ public class TopicStringifiersTest {
     sort.addSubjectIdentifier(PSI.getXTMSort());
 
     TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
-    VariantNameIF vn1 = builder.makeVariantName(bn1, "Sort name");
+    VariantNameIF vn1 = builder.makeVariantName(bn1, "Sort name", Collections.emptySet());
     vn1.addTheme(sort);
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
-    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch");
+    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
 
     StringifierIF sf = TopicStringifiers.getSortNameStringifier();
     Assert.assertTrue("Stringifying topic gave wrong sort name",
@@ -213,11 +213,11 @@ public class TopicStringifiersTest {
     sort.addSubjectIdentifier(PSI.getXTMSort());
 
     TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
-    VariantNameIF vn1 = builder.makeVariantName(bn1, "Sort name");
+    VariantNameIF vn1 = builder.makeVariantName(bn1, "Sort name", Collections.emptySet());
     vn1.addTheme(sort);
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
-    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch");
+    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
 
     StringifierIF sf =
       TopicStringifiers.getVariantNameStringifier(Collections.singleton(sort));

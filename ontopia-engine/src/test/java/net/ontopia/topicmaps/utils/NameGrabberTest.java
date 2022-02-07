@@ -59,36 +59,36 @@ public class NameGrabberTest {
     TopicIF topic1 = builder.makeTopic();
     TopicNameIF basename1 = builder.makeTopicName(topic1, "Wilhelmine von Hillern");
     basename1.addTheme(topicWriter);
-    VariantNameIF variant1A = builder.makeVariantName(basename1, "Hillern, Wilhelmine");
+    VariantNameIF variant1A = builder.makeVariantName(basename1, "Hillern, Wilhelmine", Collections.emptySet());
     variant1A.addTheme(topicSort);
     
     TopicIF topic2 = builder.makeTopic();
     TopicNameIF basename2 = builder.makeTopicName(topic2, "Alphonse Daudet");
     basename2.addTheme(topicWriter);
-    VariantNameIF variant2A = builder.makeVariantName(basename2, "Daudet, Alphonse");
+    VariantNameIF variant2A = builder.makeVariantName(basename2, "Daudet, Alphonse", Collections.emptySet());
     variant2A.addTheme(topicSort);
 
     TopicIF topic3 = builder.makeTopic();
     TopicNameIF basename3 = builder.makeTopicName(topic3, "El trovador");
     basename3.addTheme(topicPlay);
-    VariantNameIF variant3A = builder.makeVariantName(basename3, "Trovador");
+    VariantNameIF variant3A = builder.makeVariantName(basename3, "Trovador", Collections.emptySet());
     variant3A.addTheme(topicSort);
 
     TopicIF topic4 = builder.makeTopic();
     TopicNameIF basename4 = builder.makeTopicName(topic4, "The Merry Wives of Windsor");
     basename4.addTheme(topicPlay);
-    VariantNameIF variant4A = builder.makeVariantName(basename4, "Merry Wives of Windsor");
+    VariantNameIF variant4A = builder.makeVariantName(basename4, "Merry Wives of Windsor", Collections.emptySet());
     variant4A.addTheme(topicSort);
 
     topic5 = builder.makeTopic();
     basename5A = builder.makeTopicName(topic5, "Die Jungfrau von Orleans");
     basename5A.addTheme(topicPlay);
-    VariantNameIF variant5A = builder.makeVariantName(basename5A, "Jungfrau von Orleans");
+    VariantNameIF variant5A = builder.makeVariantName(basename5A, "Jungfrau von Orleans", Collections.emptySet());
     variant5A.addTheme(topicSort);
     
     basename5B = builder.makeTopicName(topic5, "Jungfrau von Orleans");
 
-    VariantNameIF variant5C = builder.makeVariantName(basename5A, "Jungfrau von Orleans");
+    VariantNameIF variant5C = builder.makeVariantName(basename5A, "Jungfrau von Orleans", Collections.emptySet());
     variant5C.addTheme(topicPlay);
   }
 

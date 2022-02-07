@@ -407,18 +407,18 @@ public class XTM2ContentHandler extends DefaultHandler {
     } else if ("variant".equals(name)) {
       VariantNameIF variant;
       if (locator == null && datatype == null)
-        variant = builder.makeVariantName(basename, content.toString());
+        variant = builder.makeVariantName(basename, content.toString(), Collections.emptySet());
       else if (locator == null && datatype != null) {
         if (datatype.equals(XTM_URITYPE)) {
           locator = makeLocator(content.toString());
-          variant = builder.makeVariantName(basename, locator);
+          variant = builder.makeVariantName(basename, locator, Collections.emptySet());
         } else {
           LocatorIF dtloc = new URILocator(datatype);
           variant = builder.makeVariantName(basename, content.toString(),
-                                            dtloc);
+                                            dtloc, Collections.emptySet());
         }
       } else
-        variant = builder.makeVariantName(basename, locator);
+        variant = builder.makeVariantName(basename, locator, Collections.emptySet());
       addScope(variant);
       addItemIdentifiers(variant);
       reify(variant, reifier);

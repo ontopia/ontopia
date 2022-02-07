@@ -23,6 +23,7 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
@@ -154,7 +155,7 @@ public class LuceneTests {
   public void testVariantName() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
-    VariantNameIF vn = builder.makeVariantName(bn, "baz");
+    VariantNameIF vn = builder.makeVariantName(bn, "baz", Collections.emptySet());
     index();
 
     Assert.assertTrue("found non-existent objects in topic map",
@@ -179,7 +180,7 @@ public class LuceneTests {
   public void testVariantLocator() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
-    VariantNameIF vn = builder.makeVariantName(bn, makeLocator("http://www.ontopia.net"));
+    VariantNameIF vn = builder.makeVariantName(bn, makeLocator("http://www.ontopia.net"), Collections.emptySet());
     index();
 
     Assert.assertTrue("found non-existent objects in topic map",

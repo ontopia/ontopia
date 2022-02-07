@@ -21,6 +21,7 @@
 package net.ontopia.infoset.fulltext.topicmaps;
 
 import java.util.Collection;
+import java.util.Collections;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -157,7 +158,7 @@ public class DefaultTMDocGeneratorTest {
   public void testVariantGenerate() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "foo");
-    VariantNameIF vn = builder.makeVariantName(bn, "value");
+    VariantNameIF vn = builder.makeVariantName(bn, "value", Collections.emptySet());
     DocumentIF doc = generator.generate(vn);
 
     Collection<FieldIF> fields = doc.getFields();
@@ -173,7 +174,7 @@ public class DefaultTMDocGeneratorTest {
   public void testVariantGenerate2() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "foo");
-    VariantNameIF vn = builder.makeVariantName(bn, URILocator.create("http://www.ontopia.no"));
+    VariantNameIF vn = builder.makeVariantName(bn, URILocator.create("http://www.ontopia.no"), Collections.emptySet());
     DocumentIF doc = generator.generate(vn);
 
     Collection<FieldIF> fields = doc.getFields();

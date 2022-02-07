@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -548,7 +549,7 @@ public class MergeUtils {
         if (!decider.ok(vnsource))
           continue;
         
-        VariantNameIF vntarget = builder.makeVariantName(bntarget, vnsource.getValue(), vnsource.getDataType());
+        VariantNameIF vntarget = builder.makeVariantName(bntarget, vnsource.getValue(), vnsource.getDataType(), Collections.emptySet());
         copyScope(vntarget, vnsource);
         vntarget = resolveIdentities(vntarget, vnsource);
         copyReifier(vntarget, vnsource);
@@ -1127,7 +1128,7 @@ public class MergeUtils {
     Iterator<VariantNameIF> it = source.getVariants().iterator();
     while (it.hasNext()) {
       VariantNameIF sv = it.next();
-      VariantNameIF tv = builder.makeVariantName(target, sv.getValue(), sv.getDataType());
+      VariantNameIF tv = builder.makeVariantName(target, sv.getValue(), sv.getDataType(), Collections.emptySet());
       copyScope(tv, sv, mergemap);
 			copyReifier(tv, sv, mergemap);
       copySourceLocators(tv, sv);

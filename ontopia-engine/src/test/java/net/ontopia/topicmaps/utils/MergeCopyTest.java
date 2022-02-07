@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -318,7 +319,7 @@ public class MergeCopyTest {
     TopicIF topic = builder2.makeTopic();
     topic.addSubjectLocator(makeLocator("http://www.ontopia.com"));
     TopicNameIF bn = builder2.makeTopicName(topic, "The Ontopia Website");
-    VariantNameIF vn = builder2.makeVariantName(bn, "ontopia website, the");
+    VariantNameIF vn = builder2.makeVariantName(bn, "ontopia website, the", Collections.emptySet());
     
     TopicIF theme = builder2.makeTopic();
     theme.addSubjectIdentifier(PSI.getXTMSort());

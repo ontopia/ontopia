@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.webed.impl.actions.variant;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -54,7 +55,7 @@ public class SetLocator implements ActionIF {
       
       // create new occurrence
       TopicMapBuilderIF builder = basename.getTopicMap().getBuilder();
-      variant = builder.makeVariantName(basename, "");
+      variant = builder.makeVariantName(basename, "", Collections.emptySet());
     }
 
     try {

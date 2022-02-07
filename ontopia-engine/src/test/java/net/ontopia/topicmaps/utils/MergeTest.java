@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
@@ -343,11 +344,11 @@ public class MergeTest {
   public void testMergeTopicNameDuplicatesWithVariants() {
     TopicIF t1 = builder1.makeTopic();
     TopicNameIF bn1 = builder1.makeTopicName(t1, "bn");
-    VariantNameIF vn1 = builder1.makeVariantName(bn1, "vn");
+    VariantNameIF vn1 = builder1.makeVariantName(bn1, "vn", Collections.emptySet());
     
     TopicIF t2 = builder1.makeTopic();
     TopicNameIF bn2 = builder1.makeTopicName(t2, "bn");
-    VariantNameIF vn2 = builder1.makeVariantName(bn2, "vn");
+    VariantNameIF vn2 = builder1.makeVariantName(bn2, "vn", Collections.emptySet());
 
     MergeUtils.mergeInto(t1, t2);
     Assert.assertTrue("base name duplicates not suppressed",
@@ -643,7 +644,7 @@ public class MergeTest {
       TopicIF t2 = builder1.makeTopic();
 
       TopicNameIF bn = builder1.makeTopicName(t1, "");
-      VariantNameIF vn = builder1.makeVariantName(bn, "");
+      VariantNameIF vn = builder1.makeVariantName(bn, "", Collections.emptySet());
       vn.addTheme(t2);
 
       MergeUtils.mergeInto(t1, t2);

@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -365,7 +366,7 @@ public class TopicMapSynchronizer {
         origs.remove(key); // we've got it already; remember not to delete it
       else {
         // this is a new variant; add it
-        VariantNameIF tvn = builder.makeVariantName(tbn, svn.getValue(), svn.getDataType());
+        VariantNameIF tvn = builder.makeVariantName(tbn, svn.getValue(), svn.getDataType(), Collections.emptySet());
         addScope(tvn, tscope);
       }
     }

@@ -51,7 +51,7 @@ public class TestVarSetValue extends AbstractWebedTestCase {
     TopicMapBuilderIF builder =
       bn.getTopicMap().getBuilder();
             
-    VariantNameIF var = builder.makeVariantName(bn, "snus");
+    VariantNameIF var = builder.makeVariantName(bn, "snus", Collections.emptySet());
     
     //make action
     ActionIF action = new SetValue();
@@ -79,7 +79,7 @@ public class TestVarSetValue extends AbstractWebedTestCase {
     TopicMapBuilderIF builder =
       bn.getTopicMap().getBuilder();
     
-    VariantNameIF var = builder.makeVariantName(bn, "");
+    VariantNameIF var = builder.makeVariantName(bn, "", Collections.emptySet());
     int bnsize = bn.getVariants().size();
     
     //make action
@@ -151,7 +151,7 @@ public class TestVarSetValue extends AbstractWebedTestCase {
     TopicMapBuilderIF builder =
       bn.getTopicMap().getBuilder();
     
-    VariantNameIF var = builder.makeVariantName(bn, "");
+    VariantNameIF var = builder.makeVariantName(bn, "", Collections.emptySet());
     
         
     //make action
