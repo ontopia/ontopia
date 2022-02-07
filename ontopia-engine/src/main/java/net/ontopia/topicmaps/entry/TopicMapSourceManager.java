@@ -232,16 +232,4 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     }
   }
 
-  // -- legacy methods
-
-  /**
-   * INTERNAL: Gets the ids of the references managed by this manager.
-   * 
-   * @deprecated replaced by getReferenceKeys()
-   */
-  @Deprecated
-  public Collection<String> getIds() {
-    return getReferenceKeys();
-  }
-
 }
