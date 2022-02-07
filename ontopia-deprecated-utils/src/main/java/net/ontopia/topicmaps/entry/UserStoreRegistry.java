@@ -31,7 +31,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
  * @since 1.3.4
  * @deprecated
  */
-
+@Deprecated
 public class UserStoreRegistry {
 
   protected StoreRegistry registry;

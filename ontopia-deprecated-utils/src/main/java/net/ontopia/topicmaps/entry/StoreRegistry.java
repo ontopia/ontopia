@@ -44,6 +44,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * @since 1.3.2
  * @deprecated
  */
+@Deprecated
 public class StoreRegistry {
 
   protected TopicMapRepositoryIF repository;
