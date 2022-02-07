@@ -45,7 +45,6 @@ import net.ontopia.topicmaps.entry.SharedStoreRegistry;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
-import net.ontopia.topicmaps.entry.UserStoreRegistry;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
@@ -165,12 +164,6 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   @Override
   public TopicMapRepositoryIF getTopicMapRepository() {
       return repository;
-  }
-
-  @Deprecated
-  @Override
-  public UserStoreRegistry getUserStoreRegistry() {
-    throw new UnsupportedOperationException("Method is no longer supported.");
   }
 
   /**
