@@ -61,7 +61,7 @@ public class TopicMapSourceManagerTest {
            manager.getIds().contains("id"));
                        
     Assert.assertTrue("reference not found",
-           manager.getReferenceById("id") == ref);
+           manager.getReferenceByKey("id") == ref);
     
     Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 1);
@@ -97,8 +97,8 @@ public class TopicMapSourceManagerTest {
            manager.getIds().contains("id2"));
     
     Assert.assertTrue("reference not found",
-           manager.getReferenceById("id") == ref &&
-           manager.getReferenceById("id2") == ref2 );
+           manager.getReferenceByKey("id") == ref &&
+           manager.getReferenceByKey("id2") == ref2 );
     
     Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 2);
@@ -138,8 +138,8 @@ public class TopicMapSourceManagerTest {
            manager.getIds().contains("id2"));
     
     Assert.assertTrue("reference not found",
-           manager.getReferenceById("id") == ref &&
-           manager.getReferenceById("id2") == ref2 );
+           manager.getReferenceByKey("id") == ref &&
+           manager.getReferenceByKey("id2") == ref2 );
     
     Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 2);
@@ -169,7 +169,7 @@ public class TopicMapSourceManagerTest {
            manager.getIds().size() == 0);
 
     Assert.assertTrue("non-existent reference found" + suffix,
-           manager.getReferenceById("rongobongo") == null);
+           manager.getReferenceByKey("rongobongo") == null);
     
     Assert.assertTrue("reference collection not empty" + suffix,
            manager.getReferences().size() == 0);
