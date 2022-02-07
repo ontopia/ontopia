@@ -20,6 +20,7 @@
 
 package net.ontopia.utils;
 
+import net.ontopia.utils.AbstractGrabberTest;
 import org.junit.Test;
 
 public class StringifierGrabberTest extends AbstractGrabberTest {

@@ -27,6 +27,7 @@ import java.util.Objects;
  * given to it.
  */
 
+@Deprecated
 public class StringifierGrabber<T> implements GrabberIF<T, String> {
 
   protected StringifierIF<T> stringifier;
