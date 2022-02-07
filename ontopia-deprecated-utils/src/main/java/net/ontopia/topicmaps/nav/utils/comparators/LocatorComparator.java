@@ -22,13 +22,14 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.util.Collection;
 import java.util.Comparator;
-import net.ontopia.utils.StringifierComparator;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.utils.StringifierComparator;
 
 /**
  * INTERNAL: A Comparator for ordering locators alphabetically.
  */
+@Deprecated
 public class LocatorComparator implements Comparator<LocatorIF> {
 
   protected Comparator<String> tc;
