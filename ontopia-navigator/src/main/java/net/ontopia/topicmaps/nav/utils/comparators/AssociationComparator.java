@@ -54,13 +54,9 @@ public class AssociationComparator implements Comparator<AssociationIF> {
     if (scopes == null)
       scopes = Collections.emptyList();
 
-    tc = Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scopes).andThen(this::upperCase));
+    tc = Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scopes).andThen(String::toUpperCase));
   }
   
-  private String upperCase(Object object) {
-    return object.toString().toUpperCase();
-  }
-
   /**
    * Compares two AssociationIFs.
    */
