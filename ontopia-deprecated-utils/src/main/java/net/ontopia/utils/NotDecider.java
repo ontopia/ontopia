@@ -20,8 +20,6 @@
 
 package net.ontopia.utils;
 
-import net.ontopia.utils.DeciderIF;
-
 /**
  * INTERNAL: Decider that negates the decision of the nested decider.
  */

@@ -22,8 +22,6 @@ package net.ontopia.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.ontopia.utils.CachedIF;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that maintains a cache of decisions made on a set

@@ -23,7 +23,6 @@ package net.ontopia.utils;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that checks all subdeciders and returns true of one

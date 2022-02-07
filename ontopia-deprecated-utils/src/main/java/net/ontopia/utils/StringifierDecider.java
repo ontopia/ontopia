@@ -20,9 +20,6 @@
 
 package net.ontopia.utils;
 
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.StringifierIF;
-
 /**
  * INTERNAL: Decider that stringifies an object and passes it to the
  * subdecider.

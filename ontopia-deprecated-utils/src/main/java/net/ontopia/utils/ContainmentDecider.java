@@ -22,7 +22,6 @@ package net.ontopia.utils;
 
 import java.util.Collection;
 import java.util.HashSet;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that returns true if the object is contained in
