@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
-import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 
 /**
@@ -37,7 +37,7 @@ import net.ontopia.utils.StringifierIF;
 @Deprecated
 public class TypedIFStringifier<T extends TypedIF> implements StringifierIF<T> {
 
-  protected GrabberIF<T, TopicIF> grabber = new TypedIFGrabber<T>();
+  protected Function<T, TopicIF> grabber = TypedIF::getType;
   protected StringifierIF<? super TopicIF> topic_stringifier;
   
   public TypedIFStringifier(StringifierIF<? super TopicIF> topic_stringifier) {
@@ -54,7 +54,7 @@ public class TypedIFStringifier<T extends TypedIF> implements StringifierIF<T> {
    */
   @Override
   public String toString(T typed) {
-    TopicIF type = grabber.grab(typed);
+    TopicIF type = grabber.apply(typed);
     return topic_stringifier.toString(type);
   }
   

@@ -23,12 +23,12 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.Function;
 
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 
 
@@ -39,7 +39,7 @@ import net.ontopia.utils.StringifierIF;
  */
 public class TopicComparator implements Comparator<TopicIF> {
 
-  protected GrabberIF<TopicIF, NameIF> nameGrabber;
+  protected Function<TopicIF, NameIF> nameGrabber;
   protected StringifierIF<NameIF> nameStringifier;
 
   /**
@@ -87,8 +87,8 @@ public class TopicComparator implements Comparator<TopicIF> {
     if (o2 == null)
       return -1;
 
-    String n1 = nameStringifier.toString(nameGrabber.grab(o1));
-    String n2 = nameStringifier.toString(nameGrabber.grab(o2));
+    String n1 = nameStringifier.toString(nameGrabber.apply(o1));
+    String n2 = nameStringifier.toString(nameGrabber.apply(o2));
 
     if (n1 == null)
       return 1;

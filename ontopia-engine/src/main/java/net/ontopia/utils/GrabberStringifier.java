@@ -21,6 +21,7 @@
 package net.ontopia.utils;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * INTERNAL: Stringifies the object that the grabber
@@ -30,14 +31,14 @@ import java.util.Objects;
 
 public class GrabberStringifier<T, G> implements StringifierIF<T> {
 
-  protected GrabberIF<T, G> grabber;
+  protected Function<T, G> grabber;
   protected StringifierIF<? super G> stringifier;
   
-  public GrabberStringifier(GrabberIF<T, G> grabber) {
+  public GrabberStringifier(Function<T, G> grabber) {
     this(grabber, Objects::toString);
   }
   
-  public GrabberStringifier(GrabberIF<T, G> grabber, StringifierIF<? super G> stringifier) {
+  public GrabberStringifier(Function<T, G> grabber, StringifierIF<? super G> stringifier) {
     setGrabber(grabber);
     setStringifier(stringifier);
   }
@@ -45,7 +46,7 @@ public class GrabberStringifier<T, G> implements StringifierIF<T> {
   /**
    * Set the grabber which is to be used.
    */
-  public void setGrabber(GrabberIF<T, G> grabber) {
+  public void setGrabber(Function<T, G> grabber) {
     this.grabber = grabber;
   }
 
@@ -58,7 +59,7 @@ public class GrabberStringifier<T, G> implements StringifierIF<T> {
   
   @Override
   public String toString(T object) {
-    return stringifier.toString(grabber.grab(object));
+    return stringifier.toString(grabber.apply(object));
   }
   
 }

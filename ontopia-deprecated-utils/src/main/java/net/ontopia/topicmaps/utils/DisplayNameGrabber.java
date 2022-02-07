@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.GrabberIF;
@@ -36,7 +37,7 @@ public class DisplayNameGrabber implements GrabberIF<TopicIF, NameIF> {
   /**
    * PROTECTED: The NameGrabber used to implement the grabbing.
    */
-  protected GrabberIF<? super TopicIF, NameIF> subGrabber;
+  protected Function<? super TopicIF, NameIF> subGrabber;
  
   /**
    * PUBLIC: Creates the grabber and sets the comparator to be a 
@@ -60,7 +61,7 @@ public class DisplayNameGrabber implements GrabberIF<TopicIF, NameIF> {
    */
   @Override
   public NameIF grab(TopicIF object) {
-    return subGrabber.grab(object);
+    return subGrabber.apply(object);
   }
 
 }

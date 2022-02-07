@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -31,7 +32,6 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.GrabberIF;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -100,27 +100,27 @@ public class NameGrabberTest {
     basenameScope.add(topicPlay);
     List variantScope = new ArrayList();
     variantScope.add(topicSort);
-    GrabberIF grabber = new NameGrabber(basenameScope, variantScope);
+    Function grabber = new NameGrabber(basenameScope, variantScope);
 
     Assert.assertTrue("wrong base name grabbed",
-           ((TopicNameIF) grabber.grab(topic5)).equals(basename5A));
+           ((TopicNameIF) grabber.apply(topic5)).equals(basename5A));
   }
   
   @Test
   public void testNameGrabber5B() {
-    GrabberIF grabber = new NameGrabber(Collections.EMPTY_LIST);
+    Function grabber = new NameGrabber(Collections.EMPTY_LIST);
 
     Assert.assertTrue("wrong base name grabbed",
-           ((TopicNameIF) grabber.grab(topic5)).equals(basename5B));
+           ((TopicNameIF) grabber.apply(topic5)).equals(basename5B));
   }
 
   @Test
   public void testNameGrabber5C() {
     List variantScope = new ArrayList();
     variantScope.add(topicSort);
-    GrabberIF grabber = new NameGrabber(Collections.EMPTY_LIST, variantScope);
+    Function grabber = new NameGrabber(Collections.EMPTY_LIST, variantScope);
 
     Assert.assertTrue("wrong base name grabbed",
-           ((TopicNameIF) grabber.grab(topic5)).equals(basename5A));
+           ((TopicNameIF) grabber.apply(topic5)).equals(basename5A));
   }
 }

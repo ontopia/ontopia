@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -32,7 +33,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.GrabberStringifier;
 
@@ -71,7 +71,7 @@ public final class Stringificator {
                                 String basenameScopeVarName, String variantScopeVarName) throws NavigatorRuntimeException {
 
     StringifierIF stringifier = null;
-    GrabberIF nameGrabber = null;
+    Function nameGrabber = null;
     StringifierIF nameStringifier = null;
 
     if (nameStringifierCN != null)
@@ -81,7 +81,7 @@ public final class Stringificator {
       nameStringifier = DEF_NAME_STRINGIFIER;
 
     if (nameGrabberCN != null)
-      nameGrabber = (GrabberIF) context.getNavigatorApplication()
+      nameGrabber = (Function) context.getNavigatorApplication()
         .getInstanceOf(nameGrabberCN);
     
     // --- stringifier for topic
