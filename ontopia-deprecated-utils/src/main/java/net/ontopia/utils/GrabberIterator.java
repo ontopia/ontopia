@@ -27,6 +27,7 @@ import java.util.Iterator;
  * iterator.</p>
  */
 
+@Deprecated
 public class GrabberIterator<O, G> implements Iterator<G> {
 
   protected Iterator<O> iter;
