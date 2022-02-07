@@ -45,16 +45,6 @@ public class URIFragmentLocator extends AbstractLocator {
     this.lastSlash = lastSlash;
   }
 
-  /**
-   * INTERNAL: Returns the URI as a URL object.
-   * 
-   * @deprecated Because not all URIs can be represented as URL objects.
-   */
-
-  public URL getURL() throws MalformedURLException {
-    return new URL(address + "#" + fragment);
-  }
-
   // --------------------------------------------------------------------------
   // LocatorIF implementation
   // --------------------------------------------------------------------------
