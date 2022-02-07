@@ -43,7 +43,6 @@ import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
