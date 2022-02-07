@@ -56,9 +56,9 @@ public class TopicMapSourceManagerTest {
     manager.refresh();
 
     Assert.assertTrue("id collection of wrong size",
-           manager.getIds().size() == 1);
+           manager.getReferenceKeys().size() == 1);
     Assert.assertTrue("id of reference lost",
-           manager.getIds().contains("id"));
+           manager.getReferenceKeys().contains("id"));
                        
     Assert.assertTrue("reference not found",
            manager.getReferenceByKey("id") == ref);
@@ -91,10 +91,10 @@ public class TopicMapSourceManagerTest {
     manager.refresh();
 
     Assert.assertTrue("id collection of wrong size",
-           manager.getIds().size() == 2);
+           manager.getReferenceKeys().size() == 2);
     Assert.assertTrue("id of reference lost",
-           manager.getIds().contains("id") &&
-           manager.getIds().contains("id2"));
+           manager.getReferenceKeys().contains("id") &&
+           manager.getReferenceKeys().contains("id2"));
     
     Assert.assertTrue("reference not found",
            manager.getReferenceByKey("id") == ref &&
@@ -132,10 +132,10 @@ public class TopicMapSourceManagerTest {
     manager.refresh();
     
     Assert.assertTrue("id collection of wrong size",
-           manager.getIds().size() == 2);
+           manager.getReferenceKeys().size() == 2);
     Assert.assertTrue("id of reference lost",
-           manager.getIds().contains("id") &&
-           manager.getIds().contains("id2"));
+           manager.getReferenceKeys().contains("id") &&
+           manager.getReferenceKeys().contains("id2"));
     
     Assert.assertTrue("reference not found",
            manager.getReferenceByKey("id") == ref &&
@@ -166,7 +166,7 @@ public class TopicMapSourceManagerTest {
 
   private void verifyEmptyManager(String suffix) {
     Assert.assertTrue("id collection not empty" + suffix,
-           manager.getIds().size() == 0);
+           manager.getReferenceKeys().size() == 0);
 
     Assert.assertTrue("non-existent reference found" + suffix,
            manager.getReferenceByKey("rongobongo") == null);
