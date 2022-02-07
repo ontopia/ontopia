@@ -32,6 +32,7 @@ import java.util.List;
  * together.</p>
  */
 
+@Deprecated
 public class GrabberGrabber<O, G> implements GrabberIF<O, G> {
 
   protected GrabberIF<O, ?> firstGrabber;
