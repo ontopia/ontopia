@@ -44,7 +44,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringifierComparator;
 import net.ontopia.xml.CanonicalPrinter;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -181,12 +180,12 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       dh.startElement("", "", "subjectIdentity", empty);
 
       Iterator<LocatorIF> it = orderedIterator(topic.getSubjectLocators(),
-                           new StringifierComparator<>(LocatorIF::getExternalForm));
+                           Comparator.comparing(LocatorIF::getExternalForm));
       while (it.hasNext())
         writeResourceRef(it.next(), dh);
 
       it = orderedIterator(topic.getSubjectIdentifiers(),
-                           new StringifierComparator<LocatorIF>(LocatorIF::getExternalForm));
+                           Comparator.comparing(LocatorIF::getExternalForm));
       while (it.hasNext()) {
         LocatorIF loc = it.next();
         atts.addAttribute("", "", HREF, CDATA, resolveRelative(loc));
@@ -206,9 +205,8 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
         
     // occurrences
-    Iterator<OccurrenceIF> it = orderedIterator(topic.getOccurrences(),
-            new StringifierComparator<>(occ -> 
-                    (occ.getLocator() != null) ? occ.getLocator().getExternalForm() : "$" + occ.getValue()));
+    Iterator<OccurrenceIF> it = orderedIterator(topic.getOccurrences(), Comparator.comparing(occ -> 
+                    ((occ.getLocator() != null) ? occ.getLocator().getExternalForm() : "$" + occ.getValue()).toLowerCase()));
     while (it.hasNext()) {
       OccurrenceIF occ = it.next();
       dh.startElement("", "", "occurrence", empty);
@@ -624,7 +622,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
     public ContextHolder(Map<TopicIF, String> topicIds) {
       this.topicIds = topicIds;
-      topicRefComparator = new StringifierComparator<TopicIF>(topicIds::get);
+      topicRefComparator = Comparator.comparing(topicIds::get);
       
       topicComparator = TopicComparator.getInstance();
       baseNameComparator = TopicNameComparator.getInstance();
