@@ -132,33 +132,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     }
     return nameType;
   }
-  
-  @Override
-  public VariantNameIF makeVariantName(TopicNameIF name, String variant_name) {
-    if (name == null)
-      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
-    if (variant_name == null)
-      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
-    CrossTopicMapException.check(name, this.tm);
-    VariantNameIF vname = new VariantName(txn);
-    ((TopicName)name).addVariant(vname);
-    vname.setValue(variant_name);
-    return vname;
-  }
 
-  @Override
-  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator) {
-    if (name == null)
-      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
-    if (locator == null)
-      throw new NullPointerException(MSG_VARIANT_LOCATOR_NOT_NULL);
-    CrossTopicMapException.check(name, this.tm);
-    VariantNameIF vname = new VariantName(txn);
-    ((TopicName)name).addVariant(vname);
-    vname.setLocator(locator);
-    return vname;
-  }
-  
   @Override
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value) {
     if (topic == null)
@@ -270,21 +244,6 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   }
 
   @Override
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype) {
-    if (name == null)
-      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
-    if (value == null)
-      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
-    if (datatype == null)
-      throw new NullPointerException(MSG_VARIANT_DATATYPE_NOT_NULL);
-    CrossTopicMapException.check(name, this.tm);
-    VariantNameIF vname = new VariantName(txn);
-    ((TopicName)name).addVariant(vname);
-    vname.setValue(value, datatype);
-    return vname;
-  }
-
-  @Override
   public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection scope) {
     if (name == null)
       throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
@@ -298,21 +257,6 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     ((TopicName)name).addVariant(vname);
     vname.setValue(value, datatype);
     addScope(vname, scope);
-    return vname;
-  }
-
-  @Override
-  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype) {
-    if (name == null)
-      throw new NullPointerException(MSG_TOPIC_NAME_NOT_NULL);
-    if (value == null)
-      throw new NullPointerException(MSG_VARIANT_VALUE_NOT_NULL);
-    if (datatype == null)
-      throw new NullPointerException(MSG_VARIANT_DATATYPE_NOT_NULL);
-    CrossTopicMapException.check(name, this.tm);
-    VariantNameIF vname = new VariantName(txn);
-    ((TopicName)name).addVariant(vname);
-    vname.setReader(value, length, datatype);
     return vname;
   }
 
