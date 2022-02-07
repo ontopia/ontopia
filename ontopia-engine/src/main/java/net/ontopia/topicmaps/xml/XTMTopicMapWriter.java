@@ -28,9 +28,9 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Map;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.xml.PrettyPrinter;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -51,7 +51,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
   // If writer is instantiated here we'll close it when we're done.
   protected Writer writer;
   
-  protected DeciderIF filter;
+  protected Predicate filter;
 
   protected boolean export_srclocs = false;
   protected boolean add_ids = false;
@@ -119,7 +119,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
    *
    * @since 3.0
    */
-  public void setFilter(DeciderIF filter) {
+  public void setFilter(Predicate filter) {
     this.filter = filter;
   }
 
@@ -218,8 +218,8 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
       setVersion((XTMVersion) value);
     }
     value = properties.get(PROPERTY_FILTER);
-    if ((value != null) && (value instanceof DeciderIF)) {
-      setFilter((DeciderIF) value);
+    if ((value != null) && (value instanceof Predicate)) {
+      setFilter((Predicate) value);
     }
   }
 }

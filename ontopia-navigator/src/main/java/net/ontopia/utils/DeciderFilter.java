@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * INTERNAL: Filter that filters a collection using a decider. The
@@ -33,9 +34,9 @@ import java.util.List;
  */
 public class DeciderFilter<T> implements FilterIF<T> {
 
-  protected DeciderIF<T> decider;
+  protected Predicate<T> decider;
 
-  public DeciderFilter(DeciderIF<T> decider) {
+  public DeciderFilter(Predicate<T> decider) {
     this.decider = decider;
   }
   
@@ -48,7 +49,7 @@ public class DeciderFilter<T> implements FilterIF<T> {
     while (objects.hasNext()) {
       T object = objects.next();
       // Add object to result if accepted by decider
-      if (decider.ok(object))
+      if (decider.test(object))
         result.add(object);
     }
     return result;

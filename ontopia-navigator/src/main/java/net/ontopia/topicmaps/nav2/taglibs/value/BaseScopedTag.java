@@ -20,7 +20,8 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
-import net.ontopia.utils.DeciderIF;
+import java.util.function.Predicate;
+import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.utils.FilterIF;
 import net.ontopia.utils.DeciderFilter;
 
@@ -45,7 +46,7 @@ public abstract class BaseScopedTag extends BaseValueProducingAndAcceptingTag
    * @see net.ontopia.topicmaps.utils.IntersectionOfContextDecider
    * @see net.ontopia.topicmaps.utils.deciders.WithinScopeDecider
    */
-  public DeciderIF getScopeDecider(int scopeType) {
+  public Predicate<ScopedIF> getScopeDecider(int scopeType) {
     return ScopeUtils.getScopeDecider(pageContext, contextTag, scopeType);
   }
 
@@ -54,8 +55,8 @@ public abstract class BaseScopedTag extends BaseValueProducingAndAcceptingTag
    * filter out topic map objects of a collection which have not the
    * wanted scope.
    */
-  public FilterIF getScopeFilter(int scopeType) {
-    DeciderIF decider = getScopeDecider(scopeType);
+  public FilterIF<ScopedIF> getScopeFilter(int scopeType) {
+    Predicate decider = getScopeDecider(scopeType);
     if (decider == null)
       return null;
     else

@@ -20,21 +20,21 @@
 
 package net.ontopia.topicmaps.utils.deciders;
 
-import net.ontopia.utils.DeciderIF;
+import java.util.Iterator;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
-import java.util.Iterator;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * INTERNAL: Decider that allows the user to filter out chosen objects
  * used for testing the filtering of exporters.
  */
-public class TMDecider implements DeciderIF<Object> {
+public class TMDecider implements Predicate<Object> {
 
   @Override
-  public boolean ok(Object object) {
+  public boolean test(Object object) {
 
     // a topic can be disallowed by being named "Disallowed Topic"
     // a typed object can be disallowed by being typed with a topic named

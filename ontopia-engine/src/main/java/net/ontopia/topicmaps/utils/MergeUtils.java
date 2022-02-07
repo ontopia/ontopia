@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -49,7 +50,6 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.DeciderIF;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**
@@ -520,7 +520,7 @@ public class MergeUtils {
    * @since 2.0
    */
   public static TopicIF mergeInto(TopicMapIF targettm, TopicIF source,
-                                  DeciderIF<TMObjectIF> decider) {
+                                  Predicate<TMObjectIF> decider) {
     if (source.getTopicMap() == targettm)
       return source;
 
@@ -536,7 +536,7 @@ public class MergeUtils {
     Iterator<TopicNameIF> topicnameIterator = source.getTopicNames().iterator();
     while (topicnameIterator.hasNext()) {
       TopicNameIF bnsource = topicnameIterator.next();
-      if (!decider.ok(bnsource))
+      if (!decider.test(bnsource))
         continue;
       TopicNameIF bntarget = builder.makeTopicName(target, 
                                                  resolveTopic(builder.getTopicMap(), bnsource.getType()), 
@@ -546,7 +546,7 @@ public class MergeUtils {
       Iterator<VariantNameIF> it2 = bnsource.getVariants().iterator();
       while (it2.hasNext()) {
         VariantNameIF vnsource = it2.next();
-        if (!decider.ok(vnsource))
+        if (!decider.test(vnsource))
           continue;
         
         VariantNameIF vntarget = builder.makeVariantName(bntarget, vnsource.getValue(), vnsource.getDataType(), Collections.emptySet());
@@ -563,7 +563,7 @@ public class MergeUtils {
     Iterator<OccurrenceIF> occurrenceIterator = source.getOccurrences().iterator();
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF osource = occurrenceIterator.next();
-      if (!decider.ok(osource))
+      if (!decider.test(osource))
         continue;
       OccurrenceIF otarget = builder.makeOccurrence(target, 
                                                     resolveTopic(builder.getTopicMap(), osource.getType()), 
@@ -578,7 +578,7 @@ public class MergeUtils {
     Iterator<AssociationRoleIF> roleIterator = source.getRoles().iterator();
     while (roleIterator.hasNext()) {
       AssociationRoleIF rstart = roleIterator.next();
-      if (!decider.ok(rstart))
+      if (!decider.test(rstart))
         continue;
       AssociationIF asource = rstart.getAssociation();
 

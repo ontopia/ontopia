@@ -24,12 +24,12 @@ import java.util.HashSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Predicate;
 import javax.servlet.jsp.JspTagException;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
@@ -62,7 +62,7 @@ public class AssociatedTag extends BaseScopedTag {
       Collection associated = new HashSet();
 
       // setup scope filter for user context filtering
-      DeciderIF scopeDecider = null;
+      Predicate scopeDecider = null;
       if (useUserContextFilter)
         scopeDecider = getScopeDecider(SCOPE_ASSOCIATIONS);
 
@@ -91,7 +91,7 @@ public class AssociatedTag extends BaseScopedTag {
 
               if (currentPlayer != null) {
                 // add current player if within user context if specified
-                if (scopeDecider == null || scopeDecider.ok(currentPlayer)) {
+                if (scopeDecider == null || scopeDecider.test(currentPlayer)) {
                   if (produceTopics)
                     associated.add(currentPlayer);
                   else

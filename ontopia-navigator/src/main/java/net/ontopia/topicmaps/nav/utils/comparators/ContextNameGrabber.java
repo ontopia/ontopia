@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import net.ontopia.utils.DeciderIF;
+import java.util.function.Predicate;
 import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.topicmaps.core.NameIF;
@@ -41,7 +41,7 @@ import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
  */
 public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
 
-  protected DeciderIF<VariantNameIF> within;
+  protected Predicate<VariantNameIF> within;
   protected Comparator<TopicNameIF> bnComparator;
   protected Comparator<VariantNameIF> vnComparator;
  
@@ -104,7 +104,7 @@ public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
       Arrays.sort(myvariantnames, vnComparator);
     
     // Test that first variant is within scope
-    if (within.ok(myvariantnames[0]))
+    if (within.test(myvariantnames[0]))
       return myvariantnames[0];
     else
       return bestTopicName;

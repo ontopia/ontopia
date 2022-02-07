@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ScopedIF;
@@ -30,7 +31,6 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.DeciderIF;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -248,24 +248,24 @@ public class ScopeUtilsTest {
   // }
 
   public void checkApplicableInContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new ApplicableInContextDecider(makeContext(context));
+    Predicate decider = new ApplicableInContextDecider(makeContext(context));
     Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);    
+           decider.test(makeScoped(scope)) == res);    
   }
   public void checkSuperOfContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new SupersetOfContextDecider(makeContext(context));
+    Predicate decider = new SupersetOfContextDecider(makeContext(context));
     Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);
+           decider.test(makeScoped(scope)) == res);
   }
   public void checkSubOfContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new SubsetOfContextDecider(makeContext(context));
+    Predicate decider = new SubsetOfContextDecider(makeContext(context));
     Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);
+           decider.test(makeScoped(scope)) == res);
   }
   public void checkIntersectionOfContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new IntersectionOfContextDecider(makeContext(context));
+    Predicate decider = new IntersectionOfContextDecider(makeContext(context));
     Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);
+           decider.test(makeScoped(scope)) == res);
   }
 
   @Test

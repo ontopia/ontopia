@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -34,12 +35,12 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.BodyContent;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.CollectionMap;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.nav2.core.ScopeSupportIF;
 import net.ontopia.topicmaps.nav2.impl.basic.AssocInfoStorage;
 import net.ontopia.topicmaps.nav2.impl.basic.AssocInfoStorageComparator;
@@ -111,7 +112,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
 
     // get scope decider based on the user context filer
     // FIXME: Should avoid creating a new decider for every loop.
-    DeciderIF scopeDecider = null;
+    Predicate<ScopedIF> scopeDecider = null;
     if (useUserContextFilter)
       scopeDecider = ScopeUtils.getScopeDecider(pageContext, contextTag,
                                                 SCOPE_ASSOCIATIONS);
@@ -247,7 +248,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
    * order them by the name of the association type (in scope of the
    * association role type).
    */
-  private AssocInfoStorage[] createOrderedAssociationTypes(TopicIF topic, DeciderIF _scopeDec) {
+  private AssocInfoStorage[] createOrderedAssociationTypes(TopicIF topic, Predicate<ScopedIF> _scopeDec) {
     // contains AssocInfoStorage objects in the first instance without
     // associations assigned
     Set assocTypeStore = new HashSet();
@@ -258,7 +259,7 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
     while (it.hasNext()) {
       AssociationRoleIF assocRole = (AssociationRoleIF) it.next();
       AssociationIF assoc = assocRole.getAssociation();
-      if (_scopeDec != null && !_scopeDec.ok(assoc))
+      if (_scopeDec != null && !_scopeDec.test(assoc))
         continue;
         
       TopicIF assocType = assoc.getType();

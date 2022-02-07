@@ -639,7 +639,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   private void addReifierAttribute(ReifiableIF tmobject, AttributesImpl atts) {
     TopicIF reifier = tmobject.getReifier();
     if (reifier != null) {
-      if (filter == null || filter.ok(reifier)) {
+      if (filter == null || filter.test(reifier)) {
         String reifierAttribute = getTopicId(reifier);
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reifier", CDATA, reifierAttribute);
       }

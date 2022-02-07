@@ -20,23 +20,23 @@
 
 package ontopoly.utils;
 
+import java.util.function.Predicate;
 import ontopoly.model.PSI;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Filters out instances from the topic map so that only the
  * Ontopoly meta-ontology and the ontology remain.
  */
-public class SchemaOnlyFilter implements DeciderIF {
+public class SchemaOnlyFilter implements Predicate {
   protected TypeHierarchyUtils thutils = new TypeHierarchyUtils();
   
   @Override
-  public boolean ok(Object object) {
+  public boolean test(Object object) {
     if (object instanceof TopicIF)
       return includeTopic((TopicIF) object);
     else if (object instanceof AssociationIF)

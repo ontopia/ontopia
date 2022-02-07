@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -35,7 +36,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,8 +44,8 @@ import org.junit.Test;
 public class TopicMapSynchronizerBKTest {
   private String ttopicq;
   private String stopicq;
-  private DeciderIF tchard;
-  private DeciderIF schard;
+  private Predicate tchard;
+  private Predicate schard;
   private String base;
   
   private final static String testdataDirectory = "tmsync";
@@ -222,7 +222,7 @@ public class TopicMapSynchronizerBKTest {
                TestFileUtils.compareFileToResource(out, baseline));
   }
 
-  static class TypePSIDecider implements DeciderIF {
+  static class TypePSIDecider implements Predicate {
     private Collection okpsis;
     
     public TypePSIDecider(Collection okpsis) throws MalformedURLException {
@@ -240,7 +240,7 @@ public class TopicMapSynchronizerBKTest {
     }
     
     @Override
-    public boolean ok(Object object) {
+    public boolean test(Object object) {
       if (object instanceof TypedIF) {
         TopicIF type = ((TypedIF) object).getType();
         if (type == null)

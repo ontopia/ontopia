@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -33,7 +34,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.xml.PrettyPrinter;
@@ -103,7 +103,7 @@ public class TMExporterFilterTestCase {
       exporter.setExportSourceLocators(false);
       exporter.setAddIds(false);
       
-      DeciderIF filter = new TestDecider();
+      Predicate filter = new TestDecider();
       exporter.setFilter(filter);
       try {
         exporter.exportAll(topics.iterator(), prettyPrinter);
@@ -163,7 +163,7 @@ public class TMExporterFilterTestCase {
 
       TMXMLWriter exporter = new TMXMLWriter(tmxml);
       
-      DeciderIF filter = new TestDecider();
+      Predicate filter = new TestDecider();
       exporter.setFilter(filter);
       exporter.write(sourceMap);
       exporter.close();
@@ -217,7 +217,7 @@ public class TMExporterFilterTestCase {
 
       XTMTopicMapWriter exporter = new XTMTopicMapWriter(xtm);
       
-      DeciderIF filter = new TestDecider();
+      Predicate filter = new TestDecider();
       exporter.setFilter(filter);
       exporter.write(sourceMap);
 
@@ -272,7 +272,7 @@ public class TMExporterFilterTestCase {
 
       LTMTopicMapWriter exporter = new LTMTopicMapWriter(ltm);
       
-      DeciderIF filter = new TestDecider();
+      Predicate filter = new TestDecider();
       exporter.setFilter(filter);
       exporter.write(sourceMap);
 
@@ -288,9 +288,9 @@ public class TMExporterFilterTestCase {
 
     }
 
-  public class TestDecider implements DeciderIF {
+  public class TestDecider implements Predicate {
     @Override
-    public boolean ok(Object object) {
+    public boolean test(Object object) {
       if (object instanceof TopicIF) {
         TopicIF topic = (TopicIF)object;
         Iterator baseNamesIt = topic.getTopicNames().iterator();

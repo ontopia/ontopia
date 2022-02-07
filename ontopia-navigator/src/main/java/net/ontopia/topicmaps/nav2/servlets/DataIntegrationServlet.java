@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.IdentityUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.StreamUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -115,18 +115,13 @@ public class DataIntegrationServlet extends HttpServlet {
 
       if ("updated".equals(action) || "created".equals(action)) {
 
-        DeciderIF tfilter = new DeciderIF() {
-          @Override
-            public boolean ok(Object o) {
-              return true;
-            }
-          };              
+        Predicate tfilter = (o) -> true;
         
         Iterator iter = candidates.iterator();
         while (iter.hasNext()) {
           TopicIF src = (TopicIF)iter.next();
 
-          DeciderIF sfilter;
+          Predicate sfilter;
           if (characteristicsQuery == null) {
             // let everything through
             sfilter = tfilter;

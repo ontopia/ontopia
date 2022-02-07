@@ -26,12 +26,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
-import net.ontopia.utils.DeciderIF;
 
 
 /**
@@ -50,9 +50,9 @@ public class TypeHierarchyUtils {
    */
   public TypeHierarchyUtils() {
     
-    DeciderIF<AssociationIF> assocDecider = new SubjectIdentityDecider<AssociationIF>(PSI.getXTMSuperclassSubclass());
-    DeciderIF<AssociationRoleIF> subclassDecider = new SubjectIdentityDecider<AssociationRoleIF>(PSI.getXTMSubclass());
-    DeciderIF<AssociationRoleIF> superclassDecider = new SubjectIdentityDecider<AssociationRoleIF>(PSI.getXTMSuperclass());
+    Predicate<AssociationIF> assocDecider = new SubjectIdentityDecider<>(PSI.getXTMSuperclassSubclass());
+    Predicate<AssociationRoleIF> subclassDecider = new SubjectIdentityDecider<>(PSI.getXTMSubclass());
+    Predicate<AssociationRoleIF> superclassDecider = new SubjectIdentityDecider<>(PSI.getXTMSuperclass());
       
     supertypesWalker = new AssociationWalker(assocDecider, subclassDecider, superclassDecider);
     subtypesWalker = new AssociationWalker(assocDecider, superclassDecider, subclassDecider);
