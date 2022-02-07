@@ -34,6 +34,7 @@ import net.ontopia.topicmaps.utils.SameStoreFactory;
  * @deprecated Class is now superseded by StoreFactoryReference.
  */
 
+@Deprecated
 public class DefaultTopicMapReference extends StoreFactoryReference {
   
   public DefaultTopicMapReference(String id, String title, 
