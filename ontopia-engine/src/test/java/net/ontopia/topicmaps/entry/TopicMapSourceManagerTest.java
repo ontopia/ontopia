@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.entry;
 
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.SameStoreFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,10 @@ public class TopicMapSourceManagerTest {
     manager = new TopicMapSourceManager();
   }
   
+  protected static StoreFactoryReference createReference(String id) {
+    return new StoreFactoryReference(id, "title", new SameStoreFactory(new InMemoryTopicMapStore()));
+  }
+
   // --- Test cases
 
   @Test
@@ -45,8 +50,7 @@ public class TopicMapSourceManagerTest {
   @Test
   public void testSingleSourceSingleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref =
-      new DefaultTopicMapReference("id", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref = createReference("id");
     source.addReference(ref);
     manager.addSource(source);
     manager.refresh();
@@ -79,10 +83,8 @@ public class TopicMapSourceManagerTest {
   @Test
   public void testSingleSourceDoubleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref =
-      new DefaultTopicMapReference("id", "title", new InMemoryTopicMapStore());
-    DefaultTopicMapReference ref2 =
-      new DefaultTopicMapReference("id2", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref = createReference("id");
+    TopicMapReferenceIF ref2 = createReference("id2");
     source.addReference(ref);
     source.addReference(ref2);
     manager.addSource(source);
@@ -119,14 +121,12 @@ public class TopicMapSourceManagerTest {
   @Test
   public void testDoubleSourceSingleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref =
-      new DefaultTopicMapReference("id", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref = createReference("id");
     source.addReference(ref);
     manager.addSource(source);
     
     DefaultTopicMapSource source2 = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref2 =
-      new DefaultTopicMapReference("id2", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref2 = createReference("id2");
     source2.addReference(ref2);
     manager.addSource(source2);
     manager.refresh();
