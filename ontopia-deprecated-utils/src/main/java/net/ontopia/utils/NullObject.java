@@ -25,6 +25,7 @@ package net.ontopia.utils;
  * and an object is required.
  */
 
+@Deprecated
 public final class NullObject {
 
   public static final NullObject INSTANCE = new NullObject();
