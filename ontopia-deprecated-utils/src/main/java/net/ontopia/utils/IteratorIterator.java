@@ -28,6 +28,7 @@ import org.apache.commons.collections4.iterators.IteratorChain;
  * iterators. The iterator represents the sum of all the
  * iterators.
  */
+@Deprecated
 public class IteratorIterator<T> extends IteratorChain<T> {
 
   /**
