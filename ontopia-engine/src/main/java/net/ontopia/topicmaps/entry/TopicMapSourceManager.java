@@ -235,16 +235,6 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   // -- legacy methods
 
   /**
-   * INTERNAL: Gets the reference that has the given id.
-   * 
-   * @deprecated replaced by getReferenceByKey(String)
-   */
-  @Deprecated
-  public TopicMapReferenceIF getReferenceById(String reference_id) {
-    return getReferenceByKey(reference_id);
-  }
-
-  /**
    * INTERNAL: Returns true if the manager manages a reference with the given id.
    * 
    * @deprecated use 'getReferenceByKey(key) != null' instead
