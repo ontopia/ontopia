@@ -61,7 +61,7 @@ public class OccTypeComparator extends TopicComparator {
     if (o2 == null)
       return -1;
 
-    String n1 = nameStringifier.toString(nameGrabber.apply(o1));
+    String n1 = nameStringifier.apply(nameGrabber.apply(o1));
     if (n1 == null)
       return 1;
     // prefix
@@ -72,7 +72,7 @@ public class OccTypeComparator extends TopicComparator {
         n1 = "ZZZDESC" + n1;
     }
 
-    String n2 = nameStringifier.toString(nameGrabber.apply(o2));
+    String n2 = nameStringifier.apply(nameGrabber.apply(o2));
     if (n2 == null)
       return -1;
     // prefix

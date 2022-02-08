@@ -29,16 +29,16 @@ import java.util.function.Function;
  * specified.</p>
  */
 
-public class GrabberStringifier<T, G> implements StringifierIF<T> {
+public class GrabberStringifier<T, G> implements Function<T, String> {
 
   protected Function<T, G> grabber;
-  protected StringifierIF<? super G> stringifier;
+  protected Function<? super G, String> stringifier;
   
   public GrabberStringifier(Function<T, G> grabber) {
     this(grabber, Objects::toString);
   }
   
-  public GrabberStringifier(Function<T, G> grabber, StringifierIF<? super G> stringifier) {
+  public GrabberStringifier(Function<T, G> grabber, Function<? super G, String> stringifier) {
     setGrabber(grabber);
     setStringifier(stringifier);
   }
@@ -53,13 +53,13 @@ public class GrabberStringifier<T, G> implements StringifierIF<T> {
   /**
    * Set the stringifier which is to be used.
    */
-  public void setStringifier(StringifierIF<? super G> stringifier) {
+  public void setStringifier(Function<? super G, String> stringifier) {
     this.stringifier = stringifier;
   }
   
   @Override
-  public String toString(T object) {
-    return stringifier.toString(grabber.apply(object));
+  public String apply(T object) {
+    return stringifier.apply(grabber.apply(object));
   }
   
 }

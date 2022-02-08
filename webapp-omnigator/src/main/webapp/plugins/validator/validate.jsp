@@ -15,7 +15,6 @@
   net.ontopia.topicmaps.core.*,
   net.ontopia.topicmaps.utils.TopicStringifiers,
   net.ontopia.utils.OntopiaRuntimeException,
-  net.ontopia.utils.StringifierIF,
   net.ontopia.utils.StringUtils,
   net.ontopia.topicmaps.schema.core.*
   "

@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import net.ontopia.topicmaps.core.NameIF;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -33,7 +34,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.GrabberStringifier;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
@@ -58,7 +58,7 @@ public final class Stringificator {
     .getLogger(Stringificator.class.getName());
   
   // default stringifier
-  private static final StringifierIF DEF_NAME_STRINGIFIER =
+  private static final Function DEF_NAME_STRINGIFIER =
     new CustomNameStringifier();
   
   public static String toString(NavigatorPageIF context, Object elem)
@@ -70,12 +70,12 @@ public final class Stringificator {
                                 String nameGrabberCN, String nameStringifierCN,
                                 String basenameScopeVarName, String variantScopeVarName) throws NavigatorRuntimeException {
 
-    StringifierIF stringifier = null;
-    Function nameGrabber = null;
-    StringifierIF nameStringifier = null;
+    Function stringifier = null;
+    Function<? extends Object, String> nameGrabber = null;
+    Function<? extends Object, String> nameStringifier = null;
 
     if (nameStringifierCN != null)
-      nameStringifier = (StringifierIF) context.getNavigatorApplication()
+      nameStringifier = (Function) context.getNavigatorApplication()
         .getInstanceOf(nameStringifierCN);
     else
       nameStringifier = DEF_NAME_STRINGIFIER;
@@ -189,7 +189,7 @@ public final class Stringificator {
         ((CustomNameStringifier) stringifier).setStringValueEmpty(str);
     }
 
-    return stringifier.toString(elem);
+    return (String) stringifier.apply(elem);
   }
 
   // --- Fast stringifier (optimization for Nokia)
@@ -215,7 +215,7 @@ public final class Stringificator {
     }
     
     @Override
-    public String toString(Object object) {
+    public String apply(Object object) {
       // 0: verify that we have a topic at all
       if (object == null)
         return stringNonExistent;

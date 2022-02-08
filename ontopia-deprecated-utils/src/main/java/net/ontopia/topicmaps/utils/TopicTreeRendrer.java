@@ -28,6 +28,7 @@ import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -44,7 +45,7 @@ public class TopicTreeRendrer {
   protected TopicTreeNode root;
   protected TopicIF current;
   protected Graphics2D g2d;
-  protected StringifierIF<TopicIF> str;
+  protected Function<TopicIF, String> str;
 
   protected String title;
   protected Collection<TopicIF> bnscope;
@@ -209,7 +210,7 @@ public class TopicTreeRendrer {
       str = TopicStringifiers.getStringifier(bnscope, vnscope);
     
     if (topic != null) 
-      return str.toString(topic);
+      return str.apply(topic);
     else if (title != null)
       return title;
     else

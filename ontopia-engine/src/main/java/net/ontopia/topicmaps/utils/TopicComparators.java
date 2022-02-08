@@ -23,9 +23,9 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: A collection of topic related comparators.
@@ -51,7 +51,7 @@ public class TopicComparators {
     return new TypedIFComparator(Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scope)));
   }
 
-  public static <E> Comparator<E> getCaseInsensitiveComparator(StringifierIF<E> stringifier) {
+  public static <E> Comparator<E> getCaseInsensitiveComparator(Function<E, String> stringifier) {
     return Comparator.comparing(stringifier.andThen(String::toLowerCase));
   }
 }

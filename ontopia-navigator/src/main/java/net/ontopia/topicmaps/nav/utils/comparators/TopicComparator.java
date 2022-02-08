@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringifierIF;
 
 
 /**
@@ -40,7 +39,7 @@ import net.ontopia.utils.StringifierIF;
 public class TopicComparator implements Comparator<TopicIF> {
 
   protected Function<TopicIF, NameIF> nameGrabber;
-  protected StringifierIF<NameIF> nameStringifier;
+  protected Function<NameIF, String> nameStringifier;
 
   /**
    * Empty constructor, used on application startup to initialise a
@@ -87,8 +86,8 @@ public class TopicComparator implements Comparator<TopicIF> {
     if (o2 == null)
       return -1;
 
-    String n1 = nameStringifier.toString(nameGrabber.apply(o1));
-    String n2 = nameStringifier.toString(nameGrabber.apply(o2));
+    String n1 = nameStringifier.apply(nameGrabber.apply(o1));
+    String n2 = nameStringifier.apply(nameGrabber.apply(o2));
 
     if (n1 == null)
       return 1;
@@ -101,7 +100,7 @@ public class TopicComparator implements Comparator<TopicIF> {
   /**
    * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs.
    */
-  public static class ComparatorNameStringifier implements StringifierIF<NameIF> {
+  public static class ComparatorNameStringifier implements Function<NameIF, String> {
 
     /**
      * INTERNAL: Stringifies the given basename or variant name.
@@ -110,7 +109,7 @@ public class TopicComparator implements Comparator<TopicIF> {
      * @return string containing name value or "~~~~~" if name not set
      */
     @Override
-    public String toString(NameIF name) {
+    public String apply(NameIF name) {
       if (name == null) {
         return "~~~~~";
       }

@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav.utils.comparators.ContextNameGrabber;
@@ -36,7 +37,6 @@ import net.ontopia.topicmaps.utils.NameStringifier;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.GrabberStringifier;
 import net.ontopia.utils.LexicalComparator;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -50,7 +50,7 @@ public class ThemeCategorizer {
   protected static final String STRING_NO_CLASS = "[unspecified]";
   
   /** Stringifier for theme class topics */
-  protected StringifierIF stringifier;
+  protected Function<TopicIF, String> stringifier;
   /** for sorting the theme class strings */
   protected Comparator lexicalComparator;
   /** for sorting the theme topics */
@@ -92,7 +92,7 @@ public class ThemeCategorizer {
    * INTERNAL: Returns the internal stringifier used to stringify
    * topics correctly in the current context.
    */
-  public StringifierIF getTopicStringifier() {
+  public Function<TopicIF, String> getTopicStringifier() {
     return stringifier;
   }
   
@@ -125,7 +125,7 @@ public class ThemeCategorizer {
         String actThemeTypeString;
         while (itThemeTypes.hasNext()) {
           actThemeType = (TopicIF) itThemeTypes.next();
-          actThemeTypeString = stringifier.toString( actThemeType );
+          actThemeTypeString = stringifier.apply( actThemeType );
                                         
           // if theme class already exists, just get the set, otherwise create it
           if (themeClassMap.containsKey(actThemeTypeString)) {
@@ -152,8 +152,8 @@ public class ThemeCategorizer {
    * Note: In every theme class there are at least one theme.
    */
   public String generateThemeList(HashMap themeClassMap,
-                                  StringifierIF stringifierThemeClass,
-                                  StringifierIF stringifierTheme) {
+                                  Function<String, String> stringifierThemeClass,
+                                  Function<TopicIF, String> stringifierTheme) {
     return generateThemeList(themeClassMap, null,
                              stringifierThemeClass, stringifierTheme, null);
   }
@@ -166,9 +166,9 @@ public class ThemeCategorizer {
    */
   public String generateThemeList(HashMap themeClassMap,
                                   Collection selectedThemes,
-                                  StringifierIF stringifierThemeClass,
-                                  StringifierIF stringifierTheme,
-                                  StringifierIF stringifierSelectedTheme) {
+                                  Function<String, String> stringifierThemeClass,
+                                  Function<TopicIF, String> stringifierTheme,
+                                  Function<TopicIF, String> stringifierSelectedTheme) {
     if (themeClassMap == null
         || stringifierThemeClass == null
         || stringifierTheme == null)
@@ -194,7 +194,7 @@ public class ThemeCategorizer {
       // only proceed if category name has related themes
       if (actSet.size() > 0) {
         // append string representation for theme class
-        strBuf.append( stringifierThemeClass.toString( actThemeClass) );
+        strBuf.append( stringifierThemeClass.apply( actThemeClass) );
         themeList = new ArrayList( actSet );
         Collections.sort( themeList, topicComparator );
         itRelThemes = themeList.iterator();
@@ -203,11 +203,11 @@ public class ThemeCategorizer {
           // append string representation for theme
           if (selectedThemes != null && stringifierSelectedTheme != null) {
             if (selectedThemes.contains(actTheme))
-              strBuf.append( stringifierSelectedTheme.toString( actTheme ));
+              strBuf.append( stringifierSelectedTheme.apply( actTheme ));
             else
-              strBuf.append( stringifierTheme.toString( actTheme ));  
+              strBuf.append( stringifierTheme.apply( actTheme ));  
           } else {
-            strBuf.append( stringifierTheme.toString( actTheme ));
+            strBuf.append( stringifierTheme.apply( actTheme ));
           }
         } // while itRelThemes
       }
@@ -267,7 +267,7 @@ public class ThemeCategorizer {
           actTheme = (TopicIF) itRelThemes.next();
           // a: replace theme name
           tmp = StringUtils.replace(templTheme, "%themeName%",
-                                    stringifier.toString(actTheme));
+                                    stringifier.apply(actTheme));
           // b: replace theme id
           tmp = StringUtils.replace(tmp, "%themeId%",
                                     actTheme.getObjectId());

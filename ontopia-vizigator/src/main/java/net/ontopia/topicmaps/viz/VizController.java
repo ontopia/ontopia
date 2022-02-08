@@ -51,7 +51,6 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
 
 import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
@@ -60,6 +59,7 @@ import com.touchgraph.graphlayout.graphelements.Locality;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * INTERNAL: The VizController manages the interaction between the
@@ -81,7 +81,7 @@ public class VizController {
   private static final String SHORT_NAME = "http://psi.ontopia.net/basename/" +
       "#short-name";
 
-  private StringifierIF stringifier;
+  private Function<TopicIF, String> stringifier;
 
   private VizHoverHelpManager hoverHelpManager;
   private HighlightNode highlightNode;
@@ -823,7 +823,7 @@ public class VizController {
     headedDebug("expandNode - after", node);
   }
 
-  public StringifierIF getStringifier() {
+  public Function<TopicIF, String> getStringifier() {
     return (stringifier == null ? TopicStringifiers.getDefaultStringifier() 
         : stringifier);
   }
