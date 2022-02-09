@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
  * @see net.ontopia.topicmaps.nav2.taglibs.logic.CallTag
  * @deprecated use net.ontopia.topicmaps.nav2.taglibs.logic.IncludeTag instead
  */
+@Deprecated
 public class FunctionTag extends TagSupport {
 
   // initialization of logging facility
