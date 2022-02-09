@@ -129,11 +129,6 @@ public class User implements UserIF, Serializable {
   // -- logs
   
   @Override
-  public Logger getLogger() {
-    throw new OntopiaRuntimeException("This method has been disabled. Please contact <support@ontopia.net> if you were using it.");
-  }
-  
-  @Override
   public List getLogMessages() {
     synchronized (this) {
       if (log == null)
