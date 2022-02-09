@@ -166,19 +166,6 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       return repository;
   }
 
-  /**
-   * INTERNAL: Reloads application.xml and plug-in configurations.
-   *
-   * @deprecated
-   */  
-  @Deprecated
-  @Override
-  public void refreshAppConfig() {
-    readInAppConfig();
-    // refresh also plug-ins because they are assigned to navigation configuration
-    readAndSetPlugins();
-  }
-
   @Override
   public TopicMapIF getTopicMapById(String topicmapId)
     throws NavigatorRuntimeException {
@@ -455,19 +442,6 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     log.info("Navigator application '" + getName() + "' will use default shared topic maps repository");
   }
   
-  /**
-   * INTERNAL: Reloads the topic map repository, which stores
-   * information about which topicmaps should be made available to the
-   * web application.
-   *
-   * @deprecated
-   */
-  @Deprecated
-  @Override
-  public synchronized void refreshTopicMapRegistry() {
-    //! WARNING: the below is inherently unsafe, so it has been disabled
-  }
-
   /**
    * INTERNAL: Looks up the SharedStoreRegistry in JNDI.
    */

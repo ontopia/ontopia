@@ -204,16 +204,6 @@ public interface NavigatorApplicationIF {
   TopicMapRepositoryIF getTopicMapRepository();
 
   /**
-   * INTERNAL: Refresh topic map registry.
-   */
-  void refreshTopicMapRegistry();
-
-  /**
-   * INTERNAL: Refresh application configuration.
-   */
-  void refreshAppConfig();
-
-  /**
    * INTERNAL: Get <code>TopicMapIF</code> object for specified TopicMap
    * String Identifier which is in accordance to the identifiers used
    * by the TopicMapRepositoryIF.
