@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
  * (case-independent).
  * @deprecated Use TopicNameComparator instead.
  */
+@Deprecated
 public class BaseNameComparator implements Comparator<TopicNameIF> {
 
   /**
