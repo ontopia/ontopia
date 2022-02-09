@@ -64,8 +64,8 @@
            fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicComparator"/>
     <class shortcut="nameComparator"
            fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparator"/>
-    <class shortcut="basenameComparator"
-           fullname="net.ontopia.topicmaps.nav.utils.comparators.BaseNameComparator"/>
+    <class shortcut="topicNameComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicNameComparator"/>
     <class shortcut="nameComparatorWithGenerality"
            fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparatorWithGenerality"/>
     <class shortcut="assocComparator"
