@@ -57,6 +57,7 @@ import org.apache.commons.lang3.StringUtils;
  * @deprecated Use the version in nav2.utils. This version will be
  * removed soon.
  */
+@Deprecated
 public class TreeWidget {
   protected static final int OPEN       = 1;
   protected static final int CLOSE      = 2;
