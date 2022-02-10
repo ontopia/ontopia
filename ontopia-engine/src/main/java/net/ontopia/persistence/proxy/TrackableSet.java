@@ -246,7 +246,7 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
   // See issue 555
   @Override
   public Spliterator<E> spliterator() {
-    return Spliterators.spliterator(this, Spliterator.DISTINCT);
+    return Spliterators.spliterator(this, Spliterator.DISTINCT & Spliterator.SIZED);
   }
   
 }
