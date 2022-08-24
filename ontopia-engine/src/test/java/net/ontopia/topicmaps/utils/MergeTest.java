@@ -32,12 +32,15 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
@@ -1140,5 +1143,23 @@ public class MergeTest {
     
     Assert.assertTrue("wrong number of roles after merge",
                player.getRoles().size() == 1);
+  }
+
+  @Test
+  public void mergeReificationTest() throws IOException {
+    String sep = File.separator;
+    String root = TestFileUtils.getTestdataOutputDirectory();
+      
+    String targetFile = TestFileUtils.getTestInputFile("various", "merge-reified-target.ltm");
+    String sourceFile = TestFileUtils.getTestInputFile("various", "merge-reified-source.ltm");
+    String baseline = TestFileUtils.getTestInputFile("various", "merge-reified-source.xtm");
+
+    TopicMapIF targetTopicmap = new LTMTopicMapReader(TestFileUtils.getTestInputURL(targetFile)).read();
+    TopicMapIF sourceTopicmap = new LTMTopicMapReader(TestFileUtils.getTestInputURL(targetFile)).read();
+    
+    // should succeed
+    MergeUtils.mergeInto(targetTopicmap, sourceTopicmap);
+    
+    Assert.assertEquals(2, targetTopicmap.getAssociations().size());    
   }
 }
