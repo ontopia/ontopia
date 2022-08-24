@@ -147,9 +147,9 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.20.1</version>
+					<version>2.22.2</version>
 					<configuration>
-						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port}</argLine>
+						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} -Xmx1024m -XX:MaxPermSize=256m</argLine>
 						<includes>
 							<include>**/*Tests.java</include>
 							<include>**/*Test.java</include>
