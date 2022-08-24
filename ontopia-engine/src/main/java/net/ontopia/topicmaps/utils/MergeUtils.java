@@ -656,7 +656,13 @@ public class MergeUtils {
       TopicIF targetReifier = target.getReifier();
       TopicIF sourceReifier = resolveTopic(target.getTopicMap(), _sourceReifier, mergemap);
       if (targetReifier == null) {
-        if (sourceReifier != null) target.setReifier(sourceReifier);
+        if (sourceReifier != null) {
+          if (sourceReifier.getReified() != null) {
+            mergeInto(target, sourceReifier.getReified());
+          } else {
+            target.setReifier(sourceReifier);
+          }
+        }
       } else if (sourceReifier != null) {
         if (!targetReifier.equals(sourceReifier))
           mergeInto(targetReifier, sourceReifier);
