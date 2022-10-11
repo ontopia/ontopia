@@ -80,7 +80,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     String _minsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize", false);
     int minsize = (_minsize == null ? 20 : Integer.parseInt(_minsize));
     log.debug("Setting ConnectionPool.MinimumSize '" + minsize + "'");
-    pool.setMaxIdle(minsize); // 0 = no limit
+    pool.setMinIdle(minsize); // 0 = no limit
     
     // Set maximum pool size (default: Integer.MAX_VALUE)
     String _maxsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize", false);
