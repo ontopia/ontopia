@@ -76,17 +76,23 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     boolean autocommit = readonly;
     log.debug("Creating new DBCP connection factory, readonly=" + readonly + ", autocommit=" + autocommit);
 
-    // Set minimum pool size (default: 20)
+    // Set minimum pool size (default: 0)
     String _minsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize", false);
-    int minsize = (_minsize == null ? 20 : Integer.parseInt(_minsize));
+    int minsize = (_minsize == null ? 0 : Integer.parseInt(_minsize));
     log.debug("Setting ConnectionPool.MinimumSize '" + minsize + "'");
     pool.setMinIdle(minsize); // 0 = no limit
     
-    // Set maximum pool size (default: Integer.MAX_VALUE)
+    // Set maximum pool size (default: 8)
     String _maxsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize", false);
-    int maxsize = (_maxsize == null ? 0 : Integer.parseInt(_maxsize));
+    int maxsize = (_maxsize == null ? GenericObjectPool.DEFAULT_MAX_ACTIVE : Integer.parseInt(_maxsize));
     log.debug("Setting ConnectionPool.MaximumSize '" + maxsize + "'");
-    pool.setMaxActive(maxsize); // 0 = no limit
+    pool.setMaxActive(maxsize); // -1 = no limit
+
+    // Set maximum pool size (default: 8)
+    String _maxidle = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumIdle", false);
+    int maxidle = (_maxidle == null ? GenericObjectPool.DEFAULT_MAX_IDLE : Integer.parseInt(_maxidle));
+    log.debug("Setting ConnectionPool.MaximumSize '" + maxidle + "'");
+    pool.setMaxIdle(maxidle); // -1 = no limit
 
     // Set user timeout (default: never)
     String _utimeout = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout", false);
