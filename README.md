@@ -1,5 +1,5 @@
 [<img src="https://img.shields.io/travis/com/ontopia/ontopia.svg" alt="build status"/>](https://travis-ci.com/ontopia/ontopia)
-[<img src="https://img.shields.io/codacy/grade/4861113723a34cdba6ef3b7034d86b15.svg" alt="code quality"/>](https://app.codacy.com/manual/qsiebers/ontopia/dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/72f4a97299d3481db797de3c56b24096)](https://app.codacy.com/gh/ontopia/ontopia?utm_source=github.com&utm_medium=referral&utm_content=ontopia/ontopia&utm_campaign=Badge_Grade_Settings)
 [<img src="https://img.shields.io/github/license/ontopia/ontopia.svg" alt="license"/>](https://github.com/ontopia/ontopia/blob/master/LICENSE.txt)
 [<img src="https://img.shields.io/github/release/ontopia/ontopia.svg" alt="release"/>](https://github.com/ontopia/ontopia/releases)
 [<img src="https://img.shields.io/maven-central/v/net.ontopia/ontopia-engine.svg" alt="maven central"/>](https://search.maven.org/search?q=g:net.ontopia%20a:ontopia-engine)
