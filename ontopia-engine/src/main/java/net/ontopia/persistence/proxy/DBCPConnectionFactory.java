@@ -20,6 +20,9 @@
 
 package net.ontopia.persistence.proxy;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
@@ -28,10 +31,13 @@ import javax.sql.DataSource;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.dbcp.AbandonedConfig;
+import org.apache.commons.dbcp.AbandonedObjectPool;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
@@ -53,7 +59,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
-  protected GenericObjectPool pool;
+  protected AbandonedObjectPool pool;
   protected DataSource datasource;  
   protected TraceablePoolableConnectionFactory pcfactory;
   protected boolean defaultReadOnly;
@@ -68,7 +74,14 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   
   protected void initPool() {
     // Set up connection pool
-    pool = new GenericObjectPool(null);
+    AbandonedConfig config = new AbandonedConfig();
+    if (timeout > 0) {
+      config.setRemoveAbandoned(true);
+      config.setRemoveAbandonedTimeout(timeout);
+      config.setLogAbandoned(true);
+      config.setLogWriter(new PrintWriter(new TraceLogger(), true));
+    }
+    pool = new AbandonedObjectPool(null, config);
 
     // Read/Write by default
     boolean readonly = defaultReadOnly;
@@ -170,7 +183,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
       // Create data source
       this.pcfactory =
-        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readonly, autocommit);
+        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readonly, autocommit, config);
     
       // Set default transaction isolation level
       pcfactory.setDefaultTransactionIsolation(defaultTransactionIsolation);
@@ -216,8 +229,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     private int objectsActivated;
     private int objectsPassivated;
 
-    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, boolean defaultAutoCommit) {
-      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, defaultAutoCommit);
+    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, boolean defaultAutoCommit, AbandonedConfig config) {
+      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, defaultAutoCommit, config);
     }
 
     // PoolableObjectFactory implementation
@@ -255,7 +268,23 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     }
 
   }
-  
+
+  private class TraceLogger extends Writer {
+
+    private StringBuffer buffer = new StringBuffer();
+
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException {
+      buffer.append(cbuf, off, len);
+    }
+
+    @Override public void flush() throws IOException {
+      log.warn(StringUtils.removeEnd(buffer.toString(), "\n"));
+      buffer = new StringBuffer();
+    }
+
+    @Override public void close() throws IOException { }
+  }
 }
 
 
