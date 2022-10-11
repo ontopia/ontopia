@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -56,8 +57,8 @@ public class DuplicateSuppressionUtilsTest {
   public void testVariantRemoval() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate");
-    vn = builder.makeVariantName(bn, "duplicate");
+    VariantNameIF vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
+    vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(bn);
 
@@ -72,10 +73,10 @@ public class DuplicateSuppressionUtilsTest {
     
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate");
+    VariantNameIF vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     vn.addTheme(theme1);
     vn.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "duplicate");
+    vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     vn.addTheme(theme1);
     vn.addTheme(theme2);
 
@@ -94,12 +95,12 @@ public class DuplicateSuppressionUtilsTest {
     TopicNameIF bn = builder.makeTopicName(topic, "test");
     bn.addTheme(theme1);
     bn.addTheme(theme2);
-    VariantNameIF vn = builder.makeVariantName(bn, "not duplicate");
+    VariantNameIF vn = builder.makeVariantName(bn, "not duplicate", Collections.emptySet());
     
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
     bn2.addTheme(theme1);
     bn2.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "not duplicate, either");
+    vn = builder.makeVariantName(bn, "not duplicate, either", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
@@ -119,12 +120,12 @@ public class DuplicateSuppressionUtilsTest {
     TopicNameIF bn = builder.makeTopicName(topic, "test");
     bn.addTheme(theme1);
     bn.addTheme(theme2);
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate");
+    VariantNameIF vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
     bn2.addTheme(theme1);
     bn2.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "duplicate");
+    vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 

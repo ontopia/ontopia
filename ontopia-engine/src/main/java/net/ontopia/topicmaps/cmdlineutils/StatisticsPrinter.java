@@ -41,7 +41,6 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * PUBLIC: Prints various kinds of statistics for topic maps.</p>
@@ -52,7 +51,6 @@ public class StatisticsPrinter {
 
   protected static BufferedReader stdInn = new BufferedReader(new InputStreamReader(System.in));
   protected TopicMapIF tm;
-  protected StringifierIF ts = TopicStringifiers.getDefaultStringifier();
 
   /**
    * Constructor that accepts a topicmap as argument.
@@ -276,7 +274,7 @@ public class StatisticsPrinter {
         Iterator itr = roles.iterator();
         while (itr.hasNext()) {
           AssociationRoleIF arif = (AssociationRoleIF)itr.next();
-          print("Role : " + ts.toString(arif.getPlayer()) + "\n");
+          print("Role : " + TopicStringifiers.toString(arif.getPlayer()) + "\n");
         }
       }
     }

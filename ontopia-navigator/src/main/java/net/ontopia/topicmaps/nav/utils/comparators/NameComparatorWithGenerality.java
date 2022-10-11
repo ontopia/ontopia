@@ -69,7 +69,7 @@ public class NameComparatorWithGenerality extends NameComparator {
 
       // try to get sort variant name for this base name
       initSortNameGrabber( basename );
-      VariantNameIF sortVariant = sortNameGrabber.grab( basename );
+      VariantNameIF sortVariant = sortNameGrabber.apply( basename );
       if (sortVariant != null) {
         if (sortVariant.getValue() != null)
           value = sortVariant.getValue();

@@ -24,10 +24,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.StringifierIF;
 
 import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPanel;
+import java.util.function.Function;
 
 /**
  * INTERNAL: Node class representing topics.
@@ -46,7 +46,7 @@ public class TMTopicNode extends TMAbstractNode {
   public static int DEFAULT_SHAPE_PADDING = 0;
   public static int MAX_SHAPE_PADDING = 20;
 
-  private StringifierIF stringifier;
+  private Function<TopicIF, String> stringifier;
 
   private TopicIF scopingTopic;
   
@@ -69,7 +69,7 @@ public class TMTopicNode extends TMAbstractNode {
   }
 
   public String getTopicName() {
-    return this.getStringifier().toString(topic);
+    return this.getStringifier().apply(topic);
   }
   
   /**
@@ -83,7 +83,7 @@ public class TMTopicNode extends TMAbstractNode {
   
     if (underMouse) {
       topicMapView.setHighlightNode(this, g);
-      super.setLabel(this.getStringifier().toString(topic));
+      super.setLabel(this.getStringifier().apply(topic));
     } else if (tgPanel.getMouseOverN() == null && tgPanel.getSelect() == this) {
       topicMapView.setHighlightNode(null, g);
     }
@@ -214,13 +214,13 @@ public class TMTopicNode extends TMAbstractNode {
     return super.containsPoint(aPx, aPy);
   }
 
-  public StringifierIF getStringifier() {
+  public Function<TopicIF, String> getStringifier() {
     return this.stringifier;
   }
 
-  private void setStringifier(StringifierIF aStringifier) {
+  private void setStringifier(Function<TopicIF, String> aStringifier) {
     this.stringifier = aStringifier;
-    this.setLabel(stringifier.toString(topic));
+    this.setLabel(stringifier.apply(topic));
   }
 
   @Override

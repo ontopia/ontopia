@@ -249,7 +249,7 @@ public abstract class AbstractTransaction implements TransactionIF {
    * @param target The identity of the target object that was merged
    * @since %NEXT%
    */
-  public void objectMerged(IdentityIF source, IdentityIF target) {
+  public synchronized void objectMerged(IdentityIF source, IdentityIF target) {
     // does noting by default, see RWTransaction
   }
   

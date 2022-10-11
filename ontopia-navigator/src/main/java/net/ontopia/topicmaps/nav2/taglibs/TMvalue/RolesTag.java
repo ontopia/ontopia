@@ -24,12 +24,13 @@ import java.util.HashSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Predicate;
 import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.utils.DeciderIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
@@ -59,7 +60,7 @@ public class RolesTag extends BaseScopedTag {
       // retrieve collection which should be subtracted
       Collection excludedTopics = (varRemoveColl == null ? null : contextTag.getContextManager().getValue(varRemoveColl));
 
-      DeciderIF scopeDecider = null;
+      Predicate<ScopedIF> scopeDecider = null;
       // setup scope filter for user context filtering
       if (useUserContextFilter)
         scopeDecider = getScopeDecider(SCOPE_ASSOCIATIONS);
@@ -78,7 +79,7 @@ public class RolesTag extends BaseScopedTag {
             Iterator itRoles = _roles.iterator();
             while (itRoles.hasNext()) {
               AssociationRoleIF assocRole = (AssociationRoleIF) itRoles.next();
-              if (scopeDecider != null && !scopeDecider.ok(assocRole.getAssociation()))
+              if (scopeDecider != null && !scopeDecider.test(assocRole.getAssociation()))
                 continue;
               if (excludedTopics == null || !excludedTopics.contains(assocRole.getPlayer()))
                 assocRoles.add( assocRole );
@@ -94,7 +95,7 @@ public class RolesTag extends BaseScopedTag {
             Iterator itRoles = _roles.iterator();
             while (itRoles.hasNext()) {
               AssociationRoleIF assocRole = (AssociationRoleIF) itRoles.next();
-              if (scopeDecider != null && !scopeDecider.ok(assocRole.getAssociation()))
+              if (scopeDecider != null && !scopeDecider.test(assocRole.getAssociation()))
                 continue;
               if (excludedTopics == null || !excludedTopics.contains(assocRole.getPlayer()))
                 assocRoles.add( assocRole );

@@ -211,7 +211,7 @@ public class PropertiesPanel extends JScrollPane {
         Entry entry = (Map.Entry) occsByType.next();
         TopicIF type = (TopicIF) entry.getKey();
         DefaultMutableTreeNode sub = new DefaultMutableTreeNode(
-            controller.getStringifier().toString(type));
+            controller.getStringifier().apply(type));
 
         for (Iterator occs = ((List) entry.getValue()).iterator(); occs
             .hasNext();) {
@@ -234,7 +234,7 @@ public class PropertiesPanel extends JScrollPane {
   }
 
   private void addTypesTreeNodeTo(DefaultMutableTreeNode parent) {
-    Iterator types = target.getTypes().iterator();
+    Iterator<TopicIF> types = target.getTypes().iterator();
     if (types.hasNext()) {
 
       DefaultMutableTreeNode root = new DefaultMutableTreeNode(Messages
@@ -242,7 +242,7 @@ public class PropertiesPanel extends JScrollPane {
 
       while (types.hasNext()) {
         root.add(new DynamicUtilTreeNode(controller.getStringifier()
-            .toString(types.next()), null));
+            .apply(types.next()), null));
       }
       parent.add(root);
     }
@@ -262,9 +262,9 @@ public class PropertiesPanel extends JScrollPane {
         if (!name.getScope().isEmpty()) {
           buff.append(" - ");
           boolean first = true;
-          for (Iterator iter = name.getScope().iterator(); iter.hasNext();) {
+          for (Iterator<TopicIF> iter = name.getScope().iterator(); iter.hasNext();) {
             if (!first) buff.append(" : ");
-            buff.append(controller.getStringifier().toString(iter.next()));
+            buff.append(controller.getStringifier().apply(iter.next()));
             first = false;
           }
         }

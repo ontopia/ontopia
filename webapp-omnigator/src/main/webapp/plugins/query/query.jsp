@@ -1,6 +1,5 @@
 <%@ page import="
   java.io.StringWriter,
-  net.ontopia.utils.StringifierIF,
   net.ontopia.topicmaps.core.*,
   net.ontopia.topicmaps.nav2.core.*,
   net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
@@ -104,7 +103,6 @@ try {
     QueryResultIF result = null;
   
     if (!analyzeQuery && stmt != null) {
-      StringifierIF str = TopicStringifiers.getDefaultStringifier();
     
       if (tracer != null)
         QueryTracer.addListener(tracer);
@@ -144,7 +142,7 @@ try {
             if (row[ix] == null)
               tmp.write("<td><i>null</i></td>");
             else if (row[ix] instanceof TopicIF)
-              tmp.write("<td><a href=\"../../models/topic_" + model + ".jsp?tm=" + tmid  + "&id=" + ((TopicIF) row[ix]).getObjectId() + "\">" + str.toString(row[ix]) + "</a></td>");
+              tmp.write("<td><a href=\"../../models/topic_" + model + ".jsp?tm=" + tmid  + "&id=" + ((TopicIF) row[ix]).getObjectId() + "\">" + TopicStringifiers.toString((TopicIF) row[ix]) + "</a></td>");
             else if (row[ix] instanceof AssociationIF) {
               String objid = ((AssociationIF) row[ix]).getObjectId();
               tmp.write("<td><a href=\"../../models/association_" + model + ".jsp?tm=" + tmid  + "&id=" + objid + "\">Association " + objid + "</a></td>");

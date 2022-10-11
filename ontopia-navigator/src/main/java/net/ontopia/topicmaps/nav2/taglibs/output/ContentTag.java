@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.function.Function;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -34,14 +35,13 @@ import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Output Producing Tag for writing out the content of an
  * occurrence or a string.
  * <p>Note: Only outputs first element of collection.
  */
-public class ContentTag extends BaseOutputProducingTag implements StringifierIF {
+public class ContentTag extends BaseOutputProducingTag implements Function<Object, String> {
   
   protected String strifyCN;
   
@@ -49,9 +49,9 @@ public class ContentTag extends BaseOutputProducingTag implements StringifierIF 
   public final void generateOutput(JspWriter out, Iterator iter)
     throws JspTagException, IOException {
 
-    StringifierIF strify = this;
+    Function<Object, String> strify = this;
     if (strifyCN != null) 
-      strify = (StringifierIF)
+      strify = (Function<Object, String>)
         contextTag.getNavigatorApplication().getInstanceOf(strifyCN);
     
     Object elem = null;
@@ -67,7 +67,7 @@ public class ContentTag extends BaseOutputProducingTag implements StringifierIF 
     }
 
     // finally put out content
-    out.print(strify.toString(elem));
+    out.print(strify.apply(elem));
   }
 
   /**
@@ -85,7 +85,7 @@ public class ContentTag extends BaseOutputProducingTag implements StringifierIF 
    * PRIVATE: Included to implement StringifierIF interface.
    */
   @Override
-  public String toString(Object object) {
+  public String apply(Object object) {
     String content = null;
 
     String NULL_VALUE = null;

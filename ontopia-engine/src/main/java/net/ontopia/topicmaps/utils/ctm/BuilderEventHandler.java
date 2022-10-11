@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils.ctm;
 import java.util.List;
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -169,7 +170,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   @Override
   public void startVariant(ValueGeneratorIF value) {
     // FIXME: no support for datatypes here yet...
-    VariantNameIF variant = builder.makeVariantName(name, value.getLiteral());
+    VariantNameIF variant = builder.makeVariantName(name, value.getLiteral(), Collections.emptySet());
     scoped = variant;
     reifiable = variant;
   }

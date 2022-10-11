@@ -28,7 +28,6 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * Topic Map count methods
@@ -37,7 +36,6 @@ import net.ontopia.utils.StringifierIF;
 public class TopicCounter {
 
   private TopicMapIF tm;
-  private StringifierIF ts = TopicStringifiers.getDefaultStringifier();
   private int numberOfOccurrences, numberOfAssociations, numberOfTopics;
   private HashMap topicDetails, assocDetails, occurDetails;
 
@@ -131,8 +129,8 @@ public class TopicCounter {
     while (itt.hasNext()) {
       TopicIF t_temp = (TopicIF)itt.next();
       Collection c_temp = tindex.getTopics(t_temp);
-      retur.put(ts.toString(t_temp), new Integer(c_temp.size()));
-      topicDetails.put(ts.toString(t_temp), t_temp);
+      retur.put(TopicStringifiers.toString(t_temp), new Integer(c_temp.size()));
+      topicDetails.put(TopicStringifiers.toString(t_temp), t_temp);
     }
     return retur;
   }
@@ -156,8 +154,8 @@ public class TopicCounter {
     while (ita.hasNext()) {
       TopicIF t_temp = (TopicIF)ita.next();
       Collection c_temp = tindex.getAssociations(t_temp);
-      retur.put(ts.toString(t_temp), new Integer(c_temp.size()));
-      assocDetails.put(ts.toString(t_temp), t_temp);
+      retur.put(TopicStringifiers.toString(t_temp), new Integer(c_temp.size()));
+      assocDetails.put(TopicStringifiers.toString(t_temp), t_temp);
     }
     return retur;
   }
@@ -182,15 +180,15 @@ public class TopicCounter {
       TopicIF t_temp = (TopicIF)ito.next();
       Collection c_temp = tindex.getOccurrences(t_temp);
       if (!c_temp.isEmpty() && t_temp != null) {
-        retur.put(ts.toString(t_temp), new Integer(c_temp.size()));
-        occurDetails.put(ts.toString(t_temp), t_temp);
+        retur.put(TopicStringifiers.toString(t_temp), new Integer(c_temp.size()));
+        occurDetails.put(TopicStringifiers.toString(t_temp), t_temp);
       }
     }
     return retur;
   }
 
   public String getName(TopicIF topic) {
-    return ts.toString(topic);
+    return TopicStringifiers.toString(topic);
   }
 
   public Collection makeStrings(Collection topics) {

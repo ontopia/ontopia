@@ -25,6 +25,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Function;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -34,7 +35,6 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -42,9 +42,7 @@ import org.apache.commons.lang3.StringUtils;
  * into HTML.
  */
 public class Wiki {
-  private static StringifierIF strify =
-    TopicStringifiers.getDefaultStringifier();
-  private static StringifierIF linker =
+  private static Function<TopicIF, String> linker =
     new Linker();
 
   public static void render(String text, Writer out, TopicMapIF topicmap,
@@ -174,10 +172,10 @@ public class Wiki {
   private static String getString(Object value, Map params) {
     if (value instanceof TopicIF) {
       TopicIF topic = (TopicIF) value;
-      StringifierIF l = (StringifierIF) params.get("linker");
+      Function<TopicIF, String> l = (Function) params.get("linker");
       if (l == null)
         l = linker;
-      return l.toString(topic);
+      return l.apply(topic);
     } else
       return value.toString();
   }
@@ -200,12 +198,11 @@ public class Wiki {
     }
   }
 
-  static class Linker implements StringifierIF {
+  static class Linker implements Function<TopicIF, String> {
     @Override
-    public String toString(Object o) {
-      TopicIF topic = (TopicIF) o;
+    public String apply(TopicIF topic) {
       return "<a href=\"topic.jsp?id=" + getId(topic) +
-        "\">" + strify.toString(topic) + "</a>";    
+        "\">" + TopicStringifiers.toString(topic) + "</a>";    
     }
 
     private String getId(TopicIF topic) {

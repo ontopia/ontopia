@@ -55,10 +55,10 @@ public class SubjectIdentityDeciderTest {
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locA);
     Assert.assertTrue("Decider did not recognize topic",
-               decider.ok(topicA));
+               decider.test(topicA));
                
     Assert.assertTrue("Decider ok-d topic with wrong identifier",
-               !decider.ok(topicB));
+               !decider.test(topicB));
   }
 
   @Test
@@ -69,7 +69,7 @@ public class SubjectIdentityDeciderTest {
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locA);
     Assert.assertTrue("Decider recognized topic which had locator as subject address",
-               !decider.ok(topic));
+               !decider.test(topic));
   }
 
   @Test
@@ -81,10 +81,10 @@ public class SubjectIdentityDeciderTest {
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locC);
     Assert.assertTrue("Decider did not recognize instance of topic",
-               decider.ok(topicA));
+               decider.test(topicA));
                
     Assert.assertTrue("Decider ok-d topic which was instance of topic with wrong identifier",
-               !decider.ok(topicB));
+               !decider.test(topicB));
   }
 
   @Test
@@ -95,7 +95,7 @@ public class SubjectIdentityDeciderTest {
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locD);
     Assert.assertTrue("Decider recognized occurrence it shouldn't recognize",
-               !decider.ok(occC));
+               !decider.test(occC));
   }
   
   // --- Internal helpers

@@ -45,7 +45,6 @@ import net.ontopia.topicmaps.schema.impl.osl.TopicNameConstraint;
 import net.ontopia.topicmaps.schema.impl.osl.TopicRoleConstraint;
 import net.ontopia.topicmaps.schema.impl.osl.TypeSpecification;
 import net.ontopia.topicmaps.schema.impl.osl.TypedConstraintIF;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 
@@ -57,12 +56,10 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
   
   protected Writer out;
   protected int errors;
-  protected StringifierIF stringifier;
 
   public HTMLValidationHandler(Writer out) {
     this.out = out;
     this.errors = 0;
-    this.stringifier = TopicStringifiers.getDefaultStringifier();
   }
 
   @Override
@@ -176,7 +173,7 @@ public class HTMLValidationHandler implements ValidationHandlerIF {
     if (topic == null)
       return "[null]";
     
-    String name = stringifier.toString(topic);
+    String name = TopicStringifiers.toString(topic);
     if ("[No name]".equals(name))
       return topic.toString();
     else

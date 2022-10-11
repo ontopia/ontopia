@@ -46,32 +46,32 @@ public class SynchronizedCollectionFactory implements CollectionFactoryIF, java.
 
   @Override
   public <T> Set<T> makeSmallSet() {
-    return new SynchronizedCompactHashSet<T>();
+    return new SynchronizedCompactHashSet<>();
   }
 
   @Override
   public <T> Set<T> makeLargeSet() {
-    return new SynchronizedCompactHashSet<T>();
+    return new SynchronizedCompactHashSet<>();
   }
 
   @Override
   public <K, V> Map<K, V> makeSmallMap() {
-    return Collections.synchronizedMap(new HashMap<K, V>(initsize));
+    return Collections.synchronizedMap(new HashMap<>(initsize));
   }
 
   @Override
   public <K, V> Map<K, V> makeLargeMap() {
-    return Collections.synchronizedMap(new HashMap<K, V>());
+    return Collections.synchronizedMap(new HashMap<>());
   }
   
   @Override
   public <T> List<T> makeSmallList() {
-    return Collections.synchronizedList(new ArrayList<T>(initsize));
+    return Collections.synchronizedList(new ArrayList<>(initsize));
   }
 
   @Override
   public <T> List<T> makeLargeList() {
-    return Collections.synchronizedList(new ArrayList<T>());
+    return Collections.synchronizedList(new ArrayList<>());
   }
 
 }

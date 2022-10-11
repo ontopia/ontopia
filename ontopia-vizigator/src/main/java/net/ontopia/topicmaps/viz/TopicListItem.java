@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.viz;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.StringifierIF;
 
 /** Utility class to display topics in a List. */
 class TopicListItem {
@@ -43,9 +43,9 @@ class TopicListItem {
    * @param topic The topic of this list item.
    * @param stringifier Generates the name from the topic. 
    */
-  public TopicListItem(TopicIF topic, StringifierIF stringifier) {
+  public TopicListItem(TopicIF topic, Function<TopicIF, String> stringifier) {
     this.topic = topic;
-    this.name = stringifier.toString(topic);
+    this.name = stringifier.apply(topic);
   }
 
   /**

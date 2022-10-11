@@ -36,7 +36,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
 import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
-import net.ontopia.utils.DeciderIterator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -281,9 +280,8 @@ public abstract class TopicMapPackageTest {
     Assert.assertTrue("TopicIF.getTopicNames() size == 3", topic.getTopicNames().size() == 3);
 
     // Get appropriate base name by scope filtering
-    Iterator deciter = new DeciderIterator(new IntersectionOfContextDecider(Collections.singleton(dtheme)),
-                                           topic.getTopicNames().iterator());
-    TopicNameIF topic_name = (TopicNameIF)deciter.next();
+    Iterator<TopicNameIF> deciter = topic.getTopicNames().stream().filter(new IntersectionOfContextDecider(Collections.singleton(dtheme))).iterator();
+    TopicNameIF topic_name = deciter.next();
     
     //TopicNameIF topic_name = (TopicNameIF)ScopeUtils.getInBroadScope(topic.getTopicNames(), dtheme).iterator().next();
     tmobjectTest(topic_name, true, true);

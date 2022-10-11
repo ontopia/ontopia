@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import javax.servlet.jsp.tagext.TagSupport;
 import net.ontopia.infoset.impl.basic.URILocator; 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -41,7 +42,6 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import net.ontopia.utils.StringifierIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
   private static final Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // constants
-  private static final StringifierIF DEF_TOPIC_STRINGIFIER = TopicStringifiers
+  private static final Function DEF_TOPIC_STRINGIFIER = TopicStringifiers
     .getSortNameStringifier();
   private static final Comparator DEF_TOPIC_COMPARATOR = TopicComparators
     .getCaseInsensitiveComparator(DEF_TOPIC_STRINGIFIER);

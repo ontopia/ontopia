@@ -53,6 +53,7 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 
@@ -236,7 +237,7 @@ public class TMLoginModule implements LoginModule {
   // ... LoginModule interface methods.  
 
   private static String getName(TopicIF topic) {
-    return net.ontopia.topicmaps.utils.TopicStringifiers.getDefaultStringifier().toString(topic);
+    return TopicStringifiers.toString(topic);
   }
     
   protected TopicMapIF getTopicMap() {

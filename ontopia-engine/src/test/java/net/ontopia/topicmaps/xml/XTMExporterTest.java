@@ -26,6 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -153,7 +154,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
 
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bongomonog");
-    VariantNameIF vn = builder.makeVariantName(bn, "bongomonog");
+    VariantNameIF vn = builder.makeVariantName(bn, "bongomonog", Collections.emptySet());
     vn.addItemIdentifier(sourceLoc);
   
     reload();
@@ -240,7 +241,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
 
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "empty");
-    VariantNameIF vn = builder.makeVariantName(bn, "");
+    VariantNameIF vn = builder.makeVariantName(bn, "", Collections.emptySet());
 
     reload();
 

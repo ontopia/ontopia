@@ -21,6 +21,7 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -325,7 +326,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
       @Override
         public void run() {
           TopicNameIF bn = getTopicName();
-          VariantNameIF vn = builder.makeVariantName(bn, "");
+          VariantNameIF vn = builder.makeVariantName(bn, "", Collections.emptySet());
           this.data.put("VariantNameIF", vn);
           this.objectId = vn.getObjectId();
         }

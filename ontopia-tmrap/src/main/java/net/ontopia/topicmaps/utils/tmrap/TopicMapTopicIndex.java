@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import net.ontopia.utils.StringTemplateUtils;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * EXPERIMENTAL: An implementation that looks up topics in all the given topic
@@ -43,7 +42,6 @@ public class TopicMapTopicIndex implements TopicIndexIF {
   protected TopicMapIF topicmap;
   protected String editBaseuri;
   protected String viewBaseuri;
-  protected StringifierIF<TopicIF> strify;
   protected String tmid;
 
   /**
@@ -56,7 +54,6 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     this.topicmap = topicmap;
     this.editBaseuri = editBaseuri;
     this.viewBaseuri = viewBaseuri;
-    this.strify = TopicStringifiers.getDefaultStringifier();
     this.tmid = tmid;
   }
 
@@ -208,7 +205,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     map.put("tmid", tmid);
     map.put("topicid", topic.getObjectId());
 
-    String name = strify.toString(topic);
+    String name = TopicStringifiers.toString(topic);
     String editUrl = (editBaseuri == null) ? null
         : StringTemplateUtils.replace(editBaseuri, map);
     String viewUrl = (viewBaseuri == null) ? null

@@ -47,6 +47,13 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-engine</artifactId>
+			<version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

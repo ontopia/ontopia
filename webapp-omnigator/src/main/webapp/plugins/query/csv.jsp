@@ -1,5 +1,4 @@
 <%@ page import="
-  net.ontopia.utils.StringifierIF,
   net.ontopia.topicmaps.core.*,
   net.ontopia.topicmaps.nav2.core.*,
   net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
@@ -40,7 +39,6 @@ try {
   QueryProcessorFactoryIF factory = QueryUtils.getQueryProcessorFactory(processor);
   QueryProcessorIF proc = factory.createQueryProcessor(topicmap, null, null);
     
-  StringifierIF str = TopicStringifiers.getDefaultStringifier();
   QueryResultIF result = proc.execute(query);
   String[] variables = result.getColumnNames();
     
@@ -61,7 +59,7 @@ try {
       if (row[ix] == null)
         value = "null";
       else if (row[ix] instanceof TopicIF)
-        value = str.toString(row[ix]);
+        value = TopicStringifiers.toString((TopicIF) row[ix]);
       else if (row[ix] instanceof TopicNameIF)
         value = ((TopicNameIF) row[ix]).getValue();
       else if (row[ix] instanceof OccurrenceIF)

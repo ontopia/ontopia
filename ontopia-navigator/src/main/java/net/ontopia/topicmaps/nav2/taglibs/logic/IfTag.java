@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
@@ -256,8 +256,8 @@ public class IfTag extends TagSupport
       // if instance of DeciderIF we need to wrap in NavigatorDeciderWrapper
       if (obj instanceof NavigatorDeciderIF)
         return (NavigatorDeciderIF) obj;
-      else if (obj instanceof DeciderIF)
-        return new DeciderIFWrapper((DeciderIF)obj);
+      else if (obj instanceof Predicate)
+        return new DeciderIFWrapper((Predicate)obj);
       
     } catch (NavigatorRuntimeException e) {
       log.warn("Unable to retrieve instance of " + classname);

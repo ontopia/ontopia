@@ -23,13 +23,13 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.Function;
 
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.GrabberIF;
-import net.ontopia.utils.StringifierIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
-import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
 
 /**
  * INTERNAL: A Comparator for ordering topics alphabetically. Note that
@@ -38,8 +38,8 @@ import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
  */
 public class TopicComparator implements Comparator<TopicIF> {
 
-  protected GrabberIF<TopicIF, NameIF> nameGrabber;
-  protected StringifierIF<NameIF> nameStringifier;
+  protected Function<TopicIF, NameIF> nameGrabber;
+  protected Function<NameIF, String> nameStringifier;
 
   /**
    * Empty constructor, used on application startup to initialise a
@@ -86,8 +86,8 @@ public class TopicComparator implements Comparator<TopicIF> {
     if (o2 == null)
       return -1;
 
-    String n1 = nameStringifier.toString(nameGrabber.grab(o1));
-    String n2 = nameStringifier.toString(nameGrabber.grab(o2));
+    String n1 = nameStringifier.apply(nameGrabber.apply(o1));
+    String n2 = nameStringifier.apply(nameGrabber.apply(o2));
 
     if (n1 == null)
       return 1;
@@ -95,6 +95,35 @@ public class TopicComparator implements Comparator<TopicIF> {
       return -1;
     
     return n1.compareToIgnoreCase(n2);
+  }
+
+  /**
+   * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs.
+   */
+  public static class ComparatorNameStringifier implements Function<NameIF, String> {
+
+    /**
+     * INTERNAL: Stringifies the given basename or variant name.
+     *
+     * @param name the name object to use; TopicNameIF or VariantNameIF
+     * @return string containing name value or "~~~~~" if name not set
+     */
+    @Override
+    public String apply(NameIF name) {
+      if (name == null) {
+        return "~~~~~";
+      }
+      if (name instanceof TopicNameIF) {
+        return ((TopicNameIF) name).getValue();
+      } else {
+        VariantNameIF vname = (VariantNameIF) name;
+        if (vname.getValue() != null) {
+          return vname.getValue();
+        } else {
+          return vname.getLocator().getAddress();
+        }
+      }
+    }
   }
   
 }

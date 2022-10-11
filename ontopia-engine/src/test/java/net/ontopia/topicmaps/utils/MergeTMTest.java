@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.Collections;
 import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -638,7 +639,7 @@ public class MergeTMTest {
     TopicIF t2 = builder2.makeTopic();
     t2.addSubjectIdentifier(makeLocator("http://psi.ontopia.net"));
     TopicNameIF bn2 = builder2.makeTopicName(t2, "basename1");
-    builder2.makeVariantName(bn2, "variant1");
+    builder2.makeVariantName(bn2, "variant1", Collections.emptySet());
 
     int before = topicmap1.getTopics().size();
     

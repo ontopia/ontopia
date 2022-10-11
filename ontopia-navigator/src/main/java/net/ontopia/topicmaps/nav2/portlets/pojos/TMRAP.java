@@ -39,7 +39,6 @@ import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.TMXMLReader;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.InputSource;
 
@@ -49,7 +48,6 @@ import org.xml.sax.InputSource;
  */
 public class TMRAP {
   private Collection servers;
-  private StringifierIF strify;
   private static Map cache = new HashMap();
 
   /**
@@ -59,7 +57,6 @@ public class TMRAP {
    */
   public TMRAP(Collection servers) {
     this.servers = servers;
-    this.strify = TopicStringifiers.getDefaultStringifier();
   }
 
   /**
@@ -168,7 +165,7 @@ public class TMRAP {
     }
 
     public String getName() {
-      return strify.toString(topic);
+      return TopicStringifiers.toString(topic);
     }
 
     public TopicIF getTopic() {
@@ -230,7 +227,7 @@ public class TMRAP {
     }
 
     public String getName() {
-      return strify.toString(topic);
+      return TopicStringifiers.toString(topic);
     }
 
     public String getURI() {

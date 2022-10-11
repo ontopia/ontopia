@@ -105,13 +105,6 @@ public abstract class AbstractOntopolyTopicMapSource
     this.supportsCreate = supportsCreate;
   }
 
-  /**
-   * @deprecated Replaced by setSupportsCreate
-   */
-  public void setDeleteFiles(boolean supportsCreate) {
-    this.supportsCreate = supportsCreate;
-  }
-
   @Override
   public boolean supportsDelete() {
     return getSupportsDelete();

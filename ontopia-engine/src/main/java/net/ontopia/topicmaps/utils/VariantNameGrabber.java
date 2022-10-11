@@ -25,10 +25,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the most highest ranked variant name by
@@ -38,7 +38,7 @@ import net.ontopia.utils.GrabberIF;
  * variant names of the given basename. If the basename has no
  * applicable variant names, null is returned.</p>
  */
-public class VariantNameGrabber implements GrabberIF<TopicNameIF, VariantNameIF> {
+public class VariantNameGrabber implements Function<TopicNameIF, VariantNameIF> {
 
   /**
    * PROTECTED: The comparator used to sort the variant names.
@@ -75,7 +75,7 @@ public class VariantNameGrabber implements GrabberIF<TopicNameIF, VariantNameIF>
    *                   is not a TopicNameIF object.
    */
   @Override
-  public VariantNameIF grab(TopicNameIF basename) {
+  public VariantNameIF apply(TopicNameIF basename) {
     List<VariantNameIF> variants = new ArrayList<VariantNameIF>(basename.getVariants());
 
     // If there are no variant names return the base name itself.

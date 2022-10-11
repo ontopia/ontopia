@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.core.events;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -202,7 +203,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // TopicNameIF.addVariant
     beforeTest();
-    VariantNameIF vn = builder.makeVariantName(bn, "");
+    VariantNameIF vn = builder.makeVariantName(bn, "", Collections.emptySet());
     afterTest();
 
     // VariantNameIF.setValue
