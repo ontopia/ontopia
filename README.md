@@ -13,6 +13,9 @@ If you are a starting user of Ontopia, or want more general information, we reco
 [the Ontopia.net website](http://ontopia.net).
 
 ## Get Ontopia
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/72f4a97299d3481db797de3c56b24096)](https://app.codacy.com/gh/ontopia/ontopia?utm_source=github.com&utm_medium=referral&utm_content=ontopia/ontopia&utm_campaign=Badge_Grade_Settings)
+
 [<img src="https://ontopia.net/images/download-button.png"/>](../releases/latest)
 
 ### Older versions
