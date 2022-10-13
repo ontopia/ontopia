@@ -78,6 +78,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   public static final boolean DEFAULT_SOFT_MAXIMUM = true;
 
   public static final String EXHAUSTED_ACTION = ROOT + "WhenExhaustedAction";
+  public static final String POOL_STATEMENTS = ROOT + "PoolStatements";
+  public static final String VALIDATION_QUERY = ROOT + "ValidationQuery";
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
@@ -148,7 +150,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     // Statement pool
     GenericKeyedObjectPoolFactory stmpool = null;
-    if (MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
+    if (MapUtils.getBoolean(properties, POOL_STATEMENTS, true)) {
       log.debug("Using prepared statement pool: Yes");
       stmpool = new GenericKeyedObjectPoolFactory(null, 
                                                   -1, // unlimited maxActive (per key)
@@ -161,7 +163,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     }
 
     // Get validation query
-    String vquery = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ValidationQuery", false);
+    String vquery = PropertyUtils.getProperty(properties, VALIDATION_QUERY, false);
     if (vquery == null)
       vquery = "select seq_count from TM_ADMIN_SEQUENCE where seq_name = '<GLOBAL>'";
 
