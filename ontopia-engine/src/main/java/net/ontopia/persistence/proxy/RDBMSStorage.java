@@ -861,7 +861,8 @@ public class RDBMSStorage implements StorageIF {
     @Override
     public NonTransactionalReadConnection call() throws Exception {
       if (!connection.isClosed() && thread.isAlive() && connection.lastUsed() > 0) {
-        if ((connection.lastUsed() + TimeUnit.SECONDS.toMillis(nonTransactionalReadConnectionTimeout)) > System.currentTimeMillis()) {
+        long timeout = connection.lastUsed() + TimeUnit.SECONDS.toMillis(nonTransactionalReadConnectionTimeout);
+        if (timeout > System.currentTimeMillis()) {
           log.debug("NonTransactionalRead connection {} was used, resetting timeout for {}", Integer.toHexString(connection.hashCode()), thread);
           nonTransactionalReadConnectionTimer.schedule(this, nonTransactionalReadConnectionTimeout, TimeUnit.SECONDS);
           return connection;
