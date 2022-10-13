@@ -193,7 +193,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     @Override
   public Connection requestConnection() throws SQLException {
-    log.debug("Requesting connection from dbcp pool.");
+    log.debug("Requesting connection from {}-pool.", readOnly ? "ro" : "rw");
     return datasource.getConnection();
   }
 
@@ -254,12 +254,14 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     @Override
     public void activateObject(Object obj) throws Exception {
+      if (log.isDebugEnabled()) { log.debug("Got connection {} from {}-pool", Integer.toHexString(obj.hashCode()), _defaultReadOnly ? "ro" : "rw"); }
       super.activateObject(obj);
       objectsActivated++;
     }
 
     @Override
     public void passivateObject(Object obj) throws Exception {
+      if (log.isDebugEnabled()) { log.debug("Returned connection {} to pool", Integer.toHexString(obj.hashCode()),  _defaultReadOnly ? "ro" : "rw"); }
       super.passivateObject(obj);
       objectsPassivated++;
     }
