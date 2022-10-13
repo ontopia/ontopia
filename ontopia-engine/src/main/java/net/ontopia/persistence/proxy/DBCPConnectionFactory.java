@@ -62,12 +62,12 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   protected AbandonedObjectPool pool;
   protected DataSource datasource;  
   protected TraceablePoolableConnectionFactory pcfactory;
-  protected boolean defaultReadOnly;
+  protected boolean readOnly;
   protected int defaultTransactionIsolation = Connection.TRANSACTION_READ_COMMITTED;
   
-  public DBCPConnectionFactory(Map<String, String> properties, boolean defaultReadOnly) {
+  public DBCPConnectionFactory(Map<String, String> properties, boolean readOnly) {
     super(properties);
-    this.defaultReadOnly = defaultReadOnly;
+    this.readOnly = readOnly;
     // set up connection pool
     initPool();
   }
@@ -84,8 +84,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     pool = new AbandonedObjectPool(null, config);
 
     // Read/Write by default
-    boolean readonly = defaultReadOnly;
-    log.debug("Creating new DBCP connection factory, readonly=" + readonly);
+    log.debug("Creating new DBCP connection factory, readonly=" + readOnly);
 
     // Set minimum pool size (default: 0)
     String _minsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize", false);
@@ -181,7 +180,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
       // Create data source
       this.pcfactory =
-        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readonly, config);
+        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readOnly, config);
     
       // Set default transaction isolation level
       pcfactory.setDefaultTransactionIsolation(defaultTransactionIsolation);
