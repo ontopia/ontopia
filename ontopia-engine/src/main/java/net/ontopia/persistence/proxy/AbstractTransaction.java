@@ -45,6 +45,7 @@ public abstract class AbstractTransaction implements TransactionIF {
 
   protected boolean isactive;
   protected boolean isclosed;
+  protected boolean isaborted = false;
 
   protected String id;
   protected StorageAccessIF access;
@@ -152,6 +153,7 @@ public abstract class AbstractTransaction implements TransactionIF {
     } catch (Throwable t) {
       // ignore, because the txn will be invalid anyway
     }
+    isaborted = true;
     transactionPostAbort();
 
     log.debug(getId() + ": Transaction aborted.");
@@ -195,7 +197,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public boolean isObjectLoaded(IdentityIF identity) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     // check identity map
     synchronized (identity_map) { // read
@@ -208,7 +210,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public boolean isFieldLoaded(IdentityIF identity, int field) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     // check identity map
     synchronized (identity_map) { // read
@@ -223,7 +225,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public <F> F loadField(IdentityIF identity, int field) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     // NOTE: this methods is always called by a PersistentIF
     // NOTE: no need to check identity map first
@@ -273,7 +275,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public PersistentIF _getObject(IdentityIF identity) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     if (identity == null)
       throw new NullPointerException("null identities should not be looked up.");
