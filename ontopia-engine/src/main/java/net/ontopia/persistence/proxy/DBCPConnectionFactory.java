@@ -130,6 +130,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
         case EXHAUSED_BLOCK: pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK); break;
         case EXHAUSED_GROW: pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW); break;
         case EXHAUSED_FAIL: pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL); break;
+        default: break;
       }
     }
 
@@ -146,6 +147,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
       case GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK: log.debug("  exhaustedAction = BLOCK"); break;
       case GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW: log.debug("  exhaustedAction = GROW"); break;
       case GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL: log.debug("  exhaustedAction = FAIL"); break;
+      default: break;
     }
     if (config.getRemoveAbandoned()) {
       log.debug("  removeAbandoned = true");
