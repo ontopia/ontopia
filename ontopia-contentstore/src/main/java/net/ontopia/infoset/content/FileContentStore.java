@@ -45,7 +45,6 @@ public class FileContentStore implements ContentStoreIF {
   public static final int MAX_SPINS = 1000;
   public static final int SPIN_TIMEOUT = 10;
 
-  private int files_per_directory;
   private boolean open;
   private File store_root;
   private int last_key;
@@ -68,7 +67,6 @@ public class FileContentStore implements ContentStoreIF {
 
     // set up members
     this.store_root = store_root;
-    this.files_per_directory = FILES_PER_DIRECTORY;
     this.open = true;
     this.key_file = new File(store_root, "keyfile.txt");
 

@@ -107,14 +107,6 @@ public class TMRevitalizer implements TMRevitalizerIF {
       return revitalized;
   }
 
-  private Object[] revitalize(Object[] a) {
-    Object[] result = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), a.length);
-    for (int i=0; i < a.length; i++) {
-      result[i] = revitalize(a[i]);
-    }
-    return result;
-  }
-
   private Collection revitalize(Collection c) {
     Collection result = new ArrayList(c.size());
     Iterator iter = c.iterator();

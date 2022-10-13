@@ -64,7 +64,7 @@ public class SanityChecker {
       String[] args = options.getArguments();    
       
       if (args.length == 1) {
-        SanityChecker sp = new SanityChecker(args[0]);
+        new SanityChecker(args[0]);
       } else {
         System.err.println("Error: Illegal number of arguments.");
         usage();

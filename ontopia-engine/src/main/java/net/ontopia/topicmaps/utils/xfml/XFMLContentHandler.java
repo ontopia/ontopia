@@ -252,7 +252,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     
     // ----- </description> ---------------------------------------------------
     else if (EL_DESCRIPTION.equals(qName)) {
-      OccurrenceIF occ = builder.makeOccurrence(current_topic, PSI_DESCRIPTION, content.toString());
+      builder.makeOccurrence(current_topic, PSI_DESCRIPTION, content.toString());
     }
 
     // ----- </connect> -------------------------------------------------------

@@ -86,7 +86,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
   public void testTopicType() throws InvalidQueryException, IOException {
     makeEmpty();
     TopicIF type = builder.makeTopic();
-    TopicIF topic = builder.makeTopic(type);
+    builder.makeTopic(type);
 
     List matches = new ArrayList();
  
@@ -99,9 +99,9 @@ public class TypePredicateTest extends AbstractPredicateTest {
     TopicIF type1 = builder.makeTopic();
     TopicIF type2 = builder.makeTopic();
     TopicIF topic = builder.makeTopic();
-    TopicNameIF bname1 = builder.makeTopicName(topic, type1, "");
+    builder.makeTopicName(topic, type1, "");
     TopicNameIF bname2 = builder.makeTopicName(topic, type2, "");
-    TopicNameIF bnameN = builder.makeTopicName(topic, (TopicIF)null, "");
+    builder.makeTopicName(topic, (TopicIF)null, "");
 
     List matches = new ArrayList();
     addMatch(matches, "TYPE", type2);
@@ -115,9 +115,9 @@ public class TypePredicateTest extends AbstractPredicateTest {
     TopicIF type1 = builder.makeTopic();
     TopicIF type2 = builder.makeTopic();
     TopicIF topic = builder.makeTopic();
-    TopicNameIF bname1 = builder.makeTopicName(topic, type1, "");
+    builder.makeTopicName(topic, type1, "");
     TopicNameIF bname2 = builder.makeTopicName(topic, type2, "");
-    TopicNameIF bnameN = builder.makeTopicName(topic, (TopicIF)null, "");
+    builder.makeTopicName(topic, (TopicIF)null, "");
 
     List matches = new ArrayList();
     addMatch(matches, "BNAME", bname2);
@@ -167,7 +167,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype, other);
+    builder.makeAssociationRole(assoc, rtype, other);
 
     List matches = new ArrayList();
     addMatch(matches, "TYPE", rtype);
@@ -217,7 +217,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype, other);
+    builder.makeAssociationRole(assoc, rtype, other);
 
     List matches = new ArrayList();
     matches.add(new HashMap());
@@ -232,7 +232,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     TopicIF rtype = builder.makeTopic();
     TopicIF player = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype, player);
+    builder.makeAssociationRole(assoc, rtype, player);
     AssociationRoleIF role2 = builder.makeAssociationRole(assoc, player, player);
 
     List matches = new ArrayList();

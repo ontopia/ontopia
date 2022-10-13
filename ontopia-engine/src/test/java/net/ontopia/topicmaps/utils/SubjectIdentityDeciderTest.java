@@ -49,7 +49,7 @@ public class SubjectIdentityDeciderTest {
   @Test
   public void testSubjectIdentifiers() {
     LocatorIF locA = makeLocator("A");
-    LocatorIF locB = makeLocator("B");
+    makeLocator("B");
     TopicIF topicA = getTopic("A");
     TopicIF topicB = getTopic("B");
 
@@ -75,7 +75,7 @@ public class SubjectIdentityDeciderTest {
   @Test
   public void testInstances() {
     LocatorIF locC = makeLocator("C");
-    LocatorIF locD = makeLocator("D");
+    makeLocator("D");
     TopicIF topicA = getTopic("A");
     TopicIF topicB = getTopic("B");
 

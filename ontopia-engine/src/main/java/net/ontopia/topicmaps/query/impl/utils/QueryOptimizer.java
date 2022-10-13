@@ -990,7 +990,6 @@ public class QueryOptimizer {
 
   private static boolean isBoundAt(List clauses, Variable var,
                                    PredicateClause theclause, Set bound) {
-    Collection predicates = new ArrayList();
       
     for (int ix = 0; ix < clauses.size(); ix++) {
       AbstractClause clause = (AbstractClause) clauses.get(ix);

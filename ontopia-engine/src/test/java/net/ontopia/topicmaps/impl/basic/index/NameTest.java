@@ -91,7 +91,7 @@ public class NameTest {
                index.getTopicNames("").iterator().next().equals(bn2));
         
     // STATE 3: topic map with duplicates
-    TopicNameIF bn3 = builder.makeTopicName(t1, "bonka rakka");
+    builder.makeTopicName(t1, "bonka rakka");
         
     // Assert.assertTrue("duplicate base name string not filtered out",
     //        index.getTopicNameValues().size() == 2);
@@ -149,7 +149,7 @@ public class NameTest {
                index.getVariants("").iterator().next().equals(v2));
         
     // STATE 3: topic map with duplicates
-    VariantNameIF v3 = builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
+    builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
         
     Assert.assertTrue("duplicate variant name string not filtered out",
                index.getVariants("bonka rakka").size() == 2);

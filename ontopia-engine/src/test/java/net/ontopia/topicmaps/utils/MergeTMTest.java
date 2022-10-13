@@ -84,7 +84,7 @@ public class MergeTMTest {
   public void testEmptyTopics() {
     try {
       TopicIF t1 = builder1.makeTopic();
-      TopicIF t2 = builder2.makeTopic();
+      builder2.makeTopic();
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 
@@ -392,7 +392,7 @@ public class MergeTMTest {
   @Test
   public void testTopicsCopied() {
     try {
-      TopicIF t1 = builder1.makeTopic();
+      builder1.makeTopic();
       TopicIF t2 = builder2.makeTopic();
       t2.addSubjectLocator(makeLocator("http://www.ontopia.net"));
 
@@ -425,7 +425,7 @@ public class MergeTMTest {
       TopicNameIF bn1 = builder1.makeTopicName(t1, "bn1");
       TopicIF t2 = builder2.makeTopic();
       t2.addSubjectLocator(makeLocator("http://www.ontopia.net"));
-      TopicNameIF bn2 = builder2.makeTopicName(t2, "bn2");
+      builder2.makeTopicName(t2, "bn2");
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
       Assert.assertTrue("wrong number of base names after merge",
@@ -457,7 +457,7 @@ public class MergeTMTest {
       TopicIF t2 = builder2.makeTopic();
       t2.addSubjectLocator(makeLocator("http://www.ontopia.net"));
       URILocator loc2 = makeLocator("ftp://www.ontopia.net");
-      OccurrenceIF oc2 = builder2.makeOccurrence(t2, ot2, loc2);
+      builder2.makeOccurrence(t2, ot2, loc2);
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
       Assert.assertTrue("wrong number of occurrences after merge",
@@ -577,7 +577,7 @@ public class MergeTMTest {
   @Test
   public void testMergeAssociation() { // F.5.1, 5
     try {
-      TopicIF t1 = builder1.makeTopic();
+      builder1.makeTopic();
             
       AssociationIF assoc1 = builder2.makeAssociation(builder2.makeTopic());
       TopicIF t2 = builder2.makeTopic();
@@ -634,7 +634,7 @@ public class MergeTMTest {
   public void testVariantNameCopy() {
     TopicIF t1 = builder1.makeTopic();
     t1.addSubjectIdentifier(makeLocator("http://psi.ontopia.net"));
-    TopicNameIF bn1 = builder1.makeTopicName(t1, "basename1");
+    builder1.makeTopicName(t1, "basename1");
     
     TopicIF t2 = builder2.makeTopic();
     t2.addSubjectIdentifier(makeLocator("http://psi.ontopia.net"));
@@ -736,7 +736,7 @@ public class MergeTMTest {
       TopicIF rtype = builder2.makeTopic();
       TopicIF player = builder2.makeTopic();
       AssociationIF assoc = builder2.makeAssociation(builder2.makeTopic());
-      AssociationRoleIF role = builder2.makeAssociationRole(assoc, rtype, player);
+      builder2.makeAssociationRole(assoc, rtype, player);
 
       MergeUtils.mergeInto(topicmap1, topicmap2);
 

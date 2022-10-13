@@ -214,7 +214,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
 
     // builder adds role to assoc
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, type, topic);
+    builder.makeAssociationRole(assoc, type, topic);
 
     Assert.assertTrue("roles of correct type not found",
                topic.getRolesByType(type).size() == 1);
@@ -222,7 +222,7 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     // builder adds role to assoc
     TopicIF other = builder.makeTopic();
     TopicIF rtype = builder.makeTopic();
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype, other);
+    builder.makeAssociationRole(assoc, rtype, other);
 
     Assert.assertTrue("role with no type found",
                topic.getRolesByType(type).size() == 1);
@@ -441,8 +441,8 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     for (int ix = 0; ix < 150; ix++) {
       // must do this 100 times to trigger creation of TreeSet
       AssociationIF assoc = builder.makeAssociation(atype);
-      AssociationRoleIF role1 = builder.makeAssociationRole(assoc, roletype, other);
-      AssociationRoleIF role2 = builder.makeAssociationRole(assoc, roletype, topic);
+      builder.makeAssociationRole(assoc, roletype, other);
+      builder.makeAssociationRole(assoc, roletype, topic);
     }
 
     // then delete the topic
@@ -462,12 +462,12 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     Assert.assertTrue("occurrences by non-existent type initially not empty",
                topic.getOccurrencesByType(type).size() == 0);
 
-    OccurrenceIF occ = builder.makeOccurrence(topic, type, "foo");
+    builder.makeOccurrence(topic, type, "foo");
 
     Assert.assertTrue("occurrences of correct type not found",
                topic.getOccurrencesByType(type).size() == 1);
 
-    OccurrenceIF occ2 = builder.makeOccurrence(topic, builder.makeTopic(), "bar");
+    builder.makeOccurrence(topic, builder.makeTopic(), "bar");
 
     Assert.assertTrue("occurrence with with incorrect type found",
                topic.getOccurrencesByType(type).size() == 1);
@@ -480,12 +480,12 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     Assert.assertTrue("names by non-existent type initially not empty",
                topic.getTopicNamesByType(type).size() == 0);
 
-    TopicNameIF name = builder.makeTopicName(topic, type, "foo");
+   builder.makeTopicName(topic, type, "foo");
 
     Assert.assertTrue("names of correct type not found",
                topic.getTopicNamesByType(type).size() == 1);
 
-    TopicNameIF name2 = builder.makeTopicName(topic, builder.makeTopic(), "bar");
+    builder.makeTopicName(topic, builder.makeTopic(), "bar");
 
     Assert.assertTrue("name with with incorrect type found",
                topic.getTopicNamesByType(type).size() == 1);

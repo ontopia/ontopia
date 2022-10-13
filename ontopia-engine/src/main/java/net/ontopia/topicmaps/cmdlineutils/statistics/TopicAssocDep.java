@@ -36,12 +36,9 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 public class TopicAssocDep {
   private static final String NULL = "null";
 
-  private TopicMapIF tm;
-  private HashMap assocTypes, assocRoleTypes, assocDetails, associations;
-  private String[] roles;
+  private HashMap associations;
 
   public TopicAssocDep(TopicMapIF tm) throws NullPointerException {
-    this.tm = tm;
     associations = new HashMap();
     traverse(tm.getAssociations());
   }
@@ -155,7 +152,6 @@ public class TopicAssocDep {
 
   //Creates a string key for the association.
   private String createKey(AssociationIF aif) {
-    HashMap types = new HashMap();
     String assocname = "";
     try {
       assocname  = TopicStringifiers.toString(aif.getType());
@@ -217,7 +213,6 @@ public class TopicAssocDep {
   public String[] sortAlpha(Collection collection) {
     String[] retur = new String[collection.size()];
     Iterator it = collection.iterator();
-    int k = 0;
     
     for (int i = 0; i < collection.size(); i++) {
       retur[i] = (String)it.next();

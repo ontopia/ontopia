@@ -45,8 +45,6 @@ public class TologParser {
   protected TologOptions options;
   private static final Pattern insertP =
     Pattern.compile("(^|\\s+)insert\\s+", Pattern.CASE_INSENSITIVE);
-  private static final Pattern fromP =
-    Pattern.compile("\\s+from\\s+", Pattern.CASE_INSENSITIVE);
 
   public TologParser(ParseContextIF context, TologOptions options) {
     this.context = context;

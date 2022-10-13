@@ -82,7 +82,6 @@ public class JDBCContentStore implements ContentStoreIF {
     
     String global_entry = tblname;
     int grabsize = 5;
-    String select_suffix = "for update";
     this.keygen = new HighLowKeyGenerator(connfactory,
                                           "TM_ADMIN_SEQUENCE", "seq_name", "seq_count",
                                           global_entry, grabsize, "generic", Collections.EMPTY_MAP);

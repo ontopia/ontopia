@@ -527,7 +527,6 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
 
     private void handleReifier(ReifiableIF reifiable, String ref) {
       if (ref == null) return;      
-      LocatorIF base = doc_address;
       TopicIF reifier = getTopicByAttRef(ref);
 			reify(reifiable, reifier);
     }    

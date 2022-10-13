@@ -204,7 +204,6 @@ public class Utils {
       stm_assocs.setLong(1, id);
       ResultSet rs = stm_assocs.executeQuery();
 
-      long prev_topic_id = -1;
       Collection duplicates = new HashSet();
 
       while (rs.next()) {

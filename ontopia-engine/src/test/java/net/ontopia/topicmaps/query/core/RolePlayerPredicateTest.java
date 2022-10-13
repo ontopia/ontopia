@@ -122,7 +122,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
@@ -140,11 +140,11 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     AssociationIF assoc2 = builder.makeAssociation(atype);
     AssociationRoleIF role3 = builder.makeAssociationRole(assoc2, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc2, rtype2, other);
+    builder.makeAssociationRole(assoc2, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
@@ -178,7 +178,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
@@ -196,11 +196,11 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     AssociationIF assoc2 = builder.makeAssociation(atype);
-    AssociationRoleIF role3 = builder.makeAssociationRole(assoc2, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc2, rtype2, other);
+    builder.makeAssociationRole(assoc2, rtype1, player);
+    builder.makeAssociationRole(assoc2, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);

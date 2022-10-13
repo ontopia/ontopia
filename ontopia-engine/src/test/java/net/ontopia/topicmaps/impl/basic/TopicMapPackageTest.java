@@ -55,8 +55,8 @@ public abstract class TopicMapPackageTest {
 
   @Test
   public void testTopicMap() {
-    LocatorIF locat1 = base.resolveAbsolute("#post-added-theme-1"); 
-    LocatorIF locat2 = base.resolveAbsolute("#post-added-theme-2");
+    base.resolveAbsolute("#post-added-theme-1"); 
+    base.resolveAbsolute("#post-added-theme-2");
     LocatorIF locrt1 = base.resolveAbsolute("#removed-topic-1");
 
     // System.out.println("tm:" + tm);

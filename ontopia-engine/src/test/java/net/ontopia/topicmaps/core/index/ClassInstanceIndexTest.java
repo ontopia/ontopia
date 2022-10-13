@@ -358,7 +358,7 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
 
-    TopicNameIF bn1 = builder.makeTopicName(topic, otype, "foo");
+    builder.makeTopicName(topic, otype, "foo");
 
     Assert.assertTrue("index finds spurious basename types",
            clsix.getTopicNames(null).size() == 0);

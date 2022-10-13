@@ -24,8 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 import net.ontopia.infoset.core.LocatorIF;
@@ -46,9 +44,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class URLTopicMapSource implements TopicMapSourceIF {
 
-  // initialization of log facility
-  private static final Logger log = LoggerFactory.getLogger(URLTopicMapSource.class.getName());
-  
   protected String id;
   protected String refid;
   protected String title;

@@ -45,7 +45,7 @@ public abstract class AbstractIteratorTest {
     
     while (iterator.hasNext()) {
       count++;
-      Object element = iterator.next();
+      iterator.next();
       // System.out.println("Object #" + count + ":" + iterator.next());
     }
     Assert.assertTrue("Number of elements equal", count == size);

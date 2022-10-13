@@ -62,7 +62,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     try {
       // load topic map
       TopicMapStoreIF store = topicmapRef.createStore(false);
-      TopicMapIF tm = store.getTopicMap();
+      store.getTopicMap();
       EventManagerIF emanager = ((AbstractTopicMapStore)store).getEventManager();
       emanager.addListener(listener, AssociationIF.EVENT_ADD_ROLE);    
       emanager.addListener(listener, AssociationIF.EVENT_ADD_THEME);
@@ -128,13 +128,9 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   protected class Event {
     private Object object;
     private String event;
-    private Object new_value;
-    private Object old_value;
     Event(Object object, String event, Object new_value, Object old_value) {
       this.object = object;
       this.event = event;
-      this.new_value = new_value;
-      this.old_value = old_value;
     }
     @Override
     public String toString() {

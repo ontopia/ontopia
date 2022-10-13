@@ -124,7 +124,6 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
   @Test
   public void testNontopicVariable() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
-    List matches = new ArrayList();
 
     findNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), occurrence($TM, $OCC)?");
@@ -133,7 +132,6 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
   @Test
   public void testNontopicParameter() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
-    List matches = new ArrayList();
 
     Map args = new HashMap();
     args.put("TM", topicmap);

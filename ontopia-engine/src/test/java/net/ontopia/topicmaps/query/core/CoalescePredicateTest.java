@@ -63,7 +63,7 @@ public class CoalescePredicateTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    TopicIF topic = getTopicById("horse");
+    getTopicById("horse");
     addMatch(matches, "DESC", "The queen of england");
     addMatch(matches, "DESC", "Foobar");
 

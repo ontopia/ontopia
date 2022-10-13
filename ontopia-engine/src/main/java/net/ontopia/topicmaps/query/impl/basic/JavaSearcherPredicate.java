@@ -101,7 +101,6 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
       throw new InvalidQueryException("Third argument to " + getName() + " must " +
                                       "be unbound");
     
-    String previous = StringUtils.VERY_UNLIKELY_STRING;
     int valtype = searcher.getValueType();
 
     // find all distinct queries and initialize result maps

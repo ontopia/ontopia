@@ -410,7 +410,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
   public void testEmptyAssociation() throws IOException {
     prepareTopicMap();
     
-    AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
+    builder.makeAssociation(builder.makeTopic());
     reload(true); // validation will make this fail if bug #1024 is present
   }
 

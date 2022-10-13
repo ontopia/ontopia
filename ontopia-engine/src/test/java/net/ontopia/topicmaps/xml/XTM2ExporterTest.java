@@ -44,8 +44,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 // extending XTMExporterTest in order to reuse some of the helper code
 public class XTM2ExporterTest extends AbstractXMLTestCase {
-  
-  private final static String testdataDirectory = "canonical";
 
   @Before
   public void setVersion() {

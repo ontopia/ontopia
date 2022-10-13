@@ -87,8 +87,8 @@ public abstract class TopicMapTest extends AbstractTMObjectTest {
     TopicIF t1 = builder.makeTopic();
     TopicIF t2 = builder.makeTopic();
     AssociationIF association = builder.makeAssociation(at);
-    AssociationRoleIF role1 = builder.makeAssociationRole(association, rt1, t1);
-    AssociationRoleIF role2 = builder.makeAssociationRole(association, rt2, t2);
+    builder.makeAssociationRole(association, rt1, t1);
+    builder.makeAssociationRole(association, rt2, t2);
 
     association.remove();
     Assert.assertTrue("removing association from topic map does not remove child roles from their players",

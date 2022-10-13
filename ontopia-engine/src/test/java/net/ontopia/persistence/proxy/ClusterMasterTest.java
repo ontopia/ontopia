@@ -293,7 +293,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
       @Override
         public void run() {
           TopicNameIF bn = getTopicName();
-          TopicIF type = builder.makeTopic(); // create type
+          builder.makeTopic(); // create type
           bn.setType(null);
           TopicIF xtype = (TopicIF)this.data.remove("type"); // remove type
           xtype.remove();          
@@ -417,7 +417,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     tests.add(new MasterTest(shared, "TopicNameIF.removeVariant") {
       @Override
         public void run() {
-          TopicNameIF bn = getTopicName();
+          getTopicName();
           VariantNameIF vn = (VariantNameIF)this.data.remove("VariantNameIF");
           this.objectId = vn.getObjectId();
           vn.remove();
@@ -428,7 +428,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     tests.add(new MasterTest(shared, "TopicIF.removeTopicName") {
       @Override
         public void run() {
-          TopicIF t = getTopic();
+          getTopic();
           TopicNameIF bn = (TopicNameIF)this.data.remove("TopicNameIF");
           this.objectId = bn.getObjectId();
           bn.remove();
@@ -549,7 +549,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     tests.add(new MasterTest(shared, "TopicIF.removeOccurrence") {
       @Override
         public void run() {
-          TopicIF t = getTopic();
+          getTopic();
           OccurrenceIF o = (OccurrenceIF)this.data.remove("OccurrenceIF");
           this.objectId = o.getObjectId();
           o.remove();
@@ -724,7 +724,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
     tests.add(new MasterTest(shared, "TopicMapIF.removeAssociation") {
       @Override
         public void run() {
-          AssociationIF a = getAssociation();
+          getAssociation();
           AssociationRoleIF r = (AssociationRoleIF)this.data.remove("AssociationRoleIF");
           this.objectId = r.getObjectId();    
           r.remove();

@@ -75,7 +75,7 @@ public abstract class AbstractTopicMapReferenceTest {
 
     // should not be possible to create store after close
     try {
-      TopicMapStoreIF store = ref.createStore(true);
+      ref.createStore(true);
       Assert.assertTrue("Reference open after Assert.failed createStore", ref.isOpen());
     } catch (ReferenceNotOpenException e) {
       Assert.fail("Could not create store after reference " + ref + " had been closed.");

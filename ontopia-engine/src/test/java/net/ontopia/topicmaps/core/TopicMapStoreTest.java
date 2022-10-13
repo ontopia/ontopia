@@ -39,11 +39,11 @@ public abstract class TopicMapStoreTest extends AbstractTopicMapTest {
       Assert.assertTrue("Store open", !_store.isOpen());
       _store.open();
       Assert.assertTrue("Store not open", _store.isOpen());
-      TopicMapIF tm1 = _store.getTopicMap();
+      _store.getTopicMap();
       _store.close();
       Assert.assertTrue("Store not closed", !_store.isOpen());
       try {
-        TopicMapIF tm = _store.getTopicMap();
+        _store.getTopicMap();
         // Expected.
         _store.close();
       } catch (StoreNotOpenException ex) {

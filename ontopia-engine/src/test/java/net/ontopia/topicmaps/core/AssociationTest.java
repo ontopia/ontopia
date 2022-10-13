@@ -115,13 +115,13 @@ public abstract class AssociationTest extends AbstractTypedScopedTest {
     Assert.assertTrue("roles by non-existent type initially not empty",
                assoc.getRolesByType(rtype1).size() == 0);
 
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, builder.makeTopic());
+    builder.makeAssociationRole(assoc, rtype1, builder.makeTopic());
 
     Assert.assertTrue("roles of correct type not found",
                assoc.getRolesByType(rtype1).size() == 1);
 
 
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, builder.makeTopic());
+    builder.makeAssociationRole(assoc, rtype2, builder.makeTopic());
     // builder adds role to assoc
 
     Assert.assertTrue("role with no type found",
@@ -136,14 +136,14 @@ public abstract class AssociationTest extends AbstractTypedScopedTest {
     Assert.assertTrue("role type set not empty initially",
                assoc.getRoleTypes().size() == 0);
 
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, builder.makeTopic(), builder.makeTopic());
+    builder.makeAssociationRole(assoc, builder.makeTopic(), builder.makeTopic());
     // builder adds role to assoc
 
     Assert.assertTrue("the null type is being counted as a role type",
                assoc.getRoleTypes().size() == 1);
         
     TopicIF type = builder.makeTopic();
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, type, builder.makeTopic());
+    builder.makeAssociationRole(assoc, type, builder.makeTopic());
 
     Assert.assertTrue("role type lost",
                assoc.getRoleTypes().size() == 2);
@@ -151,7 +151,7 @@ public abstract class AssociationTest extends AbstractTypedScopedTest {
     Assert.assertTrue("role type identity lost",
                assoc.getRoleTypes().contains(type));
 
-    AssociationRoleIF role3 = builder.makeAssociationRole(assoc, type, builder.makeTopic());
+    builder.makeAssociationRole(assoc, type, builder.makeTopic());
 
     Assert.assertTrue("duplicate role types returned",
                assoc.getRoleTypes().size() == 2);

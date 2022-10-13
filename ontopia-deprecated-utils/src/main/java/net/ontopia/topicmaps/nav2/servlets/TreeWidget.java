@@ -77,7 +77,6 @@ public class TreeWidget {
   private String name;
   private ParsedQueryIF query;
   private TopicMapIF topicmap;
-  private LocatorIF base;
   private Map map;
   private String topquery;
   private String ownpage;
@@ -110,7 +109,6 @@ public class TreeWidget {
     this.querystr = query;
     this.name = "ONTOPIA-WIDGET-ATTRIBUTE";
     processor = QueryUtils.getQueryProcessor(topicmap);
-    base = topicmap.getStore().getBaseAddress();
     map = new HashMap();
     imageurl = "";
     addAnchor = true;

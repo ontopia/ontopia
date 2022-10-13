@@ -53,7 +53,6 @@ public class FunctionTag extends TagSupport {
   
   // tag attributes
   private String functionName;
-  private String paramNames;
   private Collection params;
   private String fileName;
   
@@ -127,7 +126,7 @@ public class FunctionTag extends TagSupport {
   public void setParams(String paramNames) {
     // TODO: check if this is needed at all?
     //       maybe just for validation purposes?
-    this.paramNames = paramNames;
+    //this.paramNames = paramNames;
     // split them up
     // params = NavigatorUtils.string2Collection(paramValueNames);
     this.params = Collections.EMPTY_LIST;

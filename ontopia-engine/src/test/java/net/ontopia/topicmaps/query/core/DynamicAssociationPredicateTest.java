@@ -100,7 +100,7 @@ public class DynamicAssociationPredicateTest extends AbstractPredicateTest {
     TopicIF topic = builder.makeTopic();
 
     AssociationIF assoc = builder.makeAssociation(atype);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, topic);
+    builder.makeAssociationRole(assoc, rtype1, topic);
     
     List matches = new ArrayList();
  

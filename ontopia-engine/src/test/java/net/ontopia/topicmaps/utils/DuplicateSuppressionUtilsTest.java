@@ -120,12 +120,12 @@ public class DuplicateSuppressionUtilsTest {
     TopicNameIF bn = builder.makeTopicName(topic, "test");
     bn.addTheme(theme1);
     bn.addTheme(theme2);
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
     bn2.addTheme(theme1);
     bn2.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
@@ -141,9 +141,9 @@ public class DuplicateSuppressionUtilsTest {
     TopicIF type = builder.makeTopic();
     
     TopicIF topic = builder.makeTopic();
-    OccurrenceIF occ = builder.makeOccurrence(topic, type, "duplicate");
+    builder.makeOccurrence(topic, type, "duplicate");
     
-    occ = builder.makeOccurrence(topic, type, "duplicate");
+    builder.makeOccurrence(topic, type, "duplicate");
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
@@ -160,12 +160,12 @@ public class DuplicateSuppressionUtilsTest {
     TopicIF player2 = builder.makeTopic();
     
     AssociationIF assoc = builder.makeAssociation(type);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
 
     assoc = builder.makeAssociation(type);
-    role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
 
     DuplicateSuppressionUtils.removeDuplicates(topicmap);
 
@@ -182,9 +182,9 @@ public class DuplicateSuppressionUtilsTest {
     TopicIF player2 = builder.makeTopic();
     
     AssociationIF assoc = builder.makeAssociation(type);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role2, player2);
 
     DuplicateSuppressionUtils.removeDuplicates(topicmap);
 
@@ -282,15 +282,15 @@ public class DuplicateSuppressionUtilsTest {
     TopicIF player2 = builder.makeTopic();
     
     AssociationIF assoc = builder.makeAssociation(type);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
     TopicIF r1 = builder.makeTopic();
     assoc.setReifier(r1);
     builder.makeTopicName(r1, "r1");
 
     assoc = builder.makeAssociation(type);
-    role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
     TopicIF r2 = builder.makeTopic();
     assoc.setReifier(r2);
     builder.makeTopicName(r2, "r2");
