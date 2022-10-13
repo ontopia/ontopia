@@ -32,7 +32,6 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -40,7 +39,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
-import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
@@ -183,7 +181,7 @@ public class MergeTest {
     TopicNameIF bn4 = builder1.makeTopicName(t1, "Ontopia");
     bn4.addTheme(dummy1);
     bn4.addTheme(dummy2);
-    TopicNameIF bn5 = builder1.makeTopicName(t1, "Ontopia");
+    builder1.makeTopicName(t1, "Ontopia");
     TopicIF t2 = builder2.makeTopic();
     builder2.makeTopicName(t2, "Ontopia");
         
@@ -289,7 +287,7 @@ public class MergeTest {
       TopicIF t1 = builder1.makeTopic();
       TopicNameIF bn1 = builder1.makeTopicName(t1, "bn1");
       TopicIF t2 = builder1.makeTopic();
-      TopicNameIF bn2 = builder1.makeTopicName(t2, "bn2");
+      builder1.makeTopicName(t2, "bn2");
 
       MergeUtils.mergeInto(t1, t2);
       Assert.assertTrue("wrong number of base names after merge",
@@ -307,10 +305,10 @@ public class MergeTest {
   public void testMergeTopicNameDuplicates() { // bug #228
     try {
       TopicIF t1 = builder1.makeTopic();
-      TopicNameIF bn1 = builder1.makeTopicName(t1, "bn");
+      builder1.makeTopicName(t1, "bn");
             
       TopicIF t2 = builder1.makeTopic();
-      TopicNameIF bn2 = builder1.makeTopicName(t2, "bn");
+      builder1.makeTopicName(t2, "bn");
 
       MergeUtils.mergeInto(t1, t2);
       Assert.assertTrue("base name duplicates not suppressed",
@@ -347,11 +345,11 @@ public class MergeTest {
   public void testMergeTopicNameDuplicatesWithVariants() {
     TopicIF t1 = builder1.makeTopic();
     TopicNameIF bn1 = builder1.makeTopicName(t1, "bn");
-    VariantNameIF vn1 = builder1.makeVariantName(bn1, "vn", Collections.emptySet());
+    builder1.makeVariantName(bn1, "vn", Collections.emptySet());
     
     TopicIF t2 = builder1.makeTopic();
     TopicNameIF bn2 = builder1.makeTopicName(t2, "bn");
-    VariantNameIF vn2 = builder1.makeVariantName(bn2, "vn", Collections.emptySet());
+    builder1.makeVariantName(bn2, "vn", Collections.emptySet());
 
     MergeUtils.mergeInto(t1, t2);
     Assert.assertTrue("base name duplicates not suppressed",
@@ -368,7 +366,7 @@ public class MergeTest {
       TopicIF t2 = builder1.makeTopic();
       URILocator loc2 = makeLocator("ftp://www.ontopia.net");
       TopicIF ot2 = builder1.makeTopic();
-      OccurrenceIF oc2 = builder1.makeOccurrence(t2, ot2, loc2);
+      builder1.makeOccurrence(t2, ot2, loc2);
 
       MergeUtils.mergeInto(t1, t2);
       Assert.assertTrue("wrong number of occurrences after merge",
@@ -388,10 +386,10 @@ public class MergeTest {
       TopicIF t1 = builder1.makeTopic();
       URILocator loc1 = makeLocator("http://www.ontopia.net");
       TopicIF ot1 = builder1.makeTopic();
-      OccurrenceIF oc1 = builder1.makeOccurrence(t1, ot1, loc1);
+      builder1.makeOccurrence(t1, ot1, loc1);
             
       TopicIF t2 = builder1.makeTopic();
-      OccurrenceIF oc2 = builder1.makeOccurrence(t2, ot1, loc1);
+      builder1.makeOccurrence(t2, ot1, loc1);
 
       MergeUtils.mergeInto(t1, t2);
       Assert.assertTrue("occurrence duplicates not suppressed",
@@ -859,8 +857,8 @@ public class MergeTest {
     TopicIF target = builder1.makeTopic();
 
     AssociationIF assoc = builder1.makeAssociation(at);
-    AssociationRoleIF nrole = builder1.makeAssociationRole(assoc, nrt, nrp);
-    AssociationRoleIF drole = builder1.makeAssociationRole(assoc, drt, drp);
+    builder1.makeAssociationRole(assoc, nrt, nrp);
+    builder1.makeAssociationRole(assoc, drt, drp);
     assoc.setReifier(reifier);
     // merge
     MergeUtils.mergeInto(target, nrp);
@@ -889,7 +887,7 @@ public class MergeTest {
 
     AssociationIF assoc = builder1.makeAssociation(at);
     AssociationRoleIF nrole = builder1.makeAssociationRole(assoc, nrt, nrp);
-    AssociationRoleIF drole = builder1.makeAssociationRole(assoc, drt, drp);
+    builder1.makeAssociationRole(assoc, drt, drp);
     nrole.setReifier(reifier);
     // merge
     MergeUtils.mergeInto(target, nrp);
@@ -916,7 +914,7 @@ public class MergeTest {
     TopicIF target = builder1.makeTopic();
 
     AssociationIF assoc = builder1.makeAssociation(at);
-    AssociationRoleIF nrole = builder1.makeAssociationRole(assoc, nrt, nrp);
+    builder1.makeAssociationRole(assoc, nrt, nrp);
     AssociationRoleIF drole = builder1.makeAssociationRole(assoc, drt, drp);
     drole.setReifier(reifier);
     // merge
@@ -998,7 +996,7 @@ public class MergeTest {
   public void testMergeReifyingTopic() {
     try {
       TopicIF t1 = builder2.makeTopic();
-      TopicNameIF bn1 = builder2.makeTopicName(t1, "famous misspelling");
+      builder2.makeTopicName(t1, "famous misspelling");
 
       TopicIF t2 = builder2.makeTopic();
       TopicNameIF bn2 = builder2.makeTopicName(t2, "boodoo");
@@ -1129,8 +1127,8 @@ public class MergeTest {
     AssociationIF assoc2 = builder1.makeAssociation(atype);
     TopicIF player = builder1.makeTopic();
     TopicIF type = builder1.makeTopic();
-    AssociationRoleIF ar1 = builder1.makeAssociationRole(assoc1, type, player);
-    AssociationRoleIF ar2 = builder1.makeAssociationRole(assoc2, type, player);
+    builder1.makeAssociationRole(assoc1, type, player);
+    builder1.makeAssociationRole(assoc2, type, player);
 
     // the two associations should be equal
 
@@ -1147,12 +1145,7 @@ public class MergeTest {
 
   @Test
   public void mergeReificationTest() throws IOException {
-    String sep = File.separator;
-    String root = TestFileUtils.getTestdataOutputDirectory();
-      
     String targetFile = TestFileUtils.getTestInputFile("various", "merge-reified-target.ltm");
-    String sourceFile = TestFileUtils.getTestInputFile("various", "merge-reified-source.ltm");
-    String baseline = TestFileUtils.getTestInputFile("various", "merge-reified-source.xtm");
 
     TopicMapIF targetTopicmap = new LTMTopicMapReader(TestFileUtils.getTestInputURL(targetFile)).read();
     TopicMapIF sourceTopicmap = new LTMTopicMapReader(TestFileUtils.getTestInputURL(targetFile)).read();

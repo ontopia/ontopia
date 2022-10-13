@@ -57,8 +57,8 @@ public class DuplicateSuppressionUtilsTest {
   public void testVariantRemoval() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
-    vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(bn);
 
@@ -95,12 +95,12 @@ public class DuplicateSuppressionUtilsTest {
     TopicNameIF bn = builder.makeTopicName(topic, "test");
     bn.addTheme(theme1);
     bn.addTheme(theme2);
-    VariantNameIF vn = builder.makeVariantName(bn, "not duplicate", Collections.emptySet());
+    builder.makeVariantName(bn, "not duplicate", Collections.emptySet());
     
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
     bn2.addTheme(theme1);
     bn2.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "not duplicate, either", Collections.emptySet());
+    builder.makeVariantName(bn, "not duplicate, either", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 

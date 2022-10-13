@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.function.Function;
-import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 

@@ -125,8 +125,8 @@ public class MergeTest extends AbstractQueryTest {
   public void testManyMerges() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    TopicIF topic1 = getTopicById("topic1");
-    TopicIF topic2 = getTopicById("topic2");
+    getTopicById("topic1");
+    getTopicById("topic2");
     int before = topicmap.getTopics().size();
 
     // merges topic1, topic2, topic3, and topic4 into a single topic

@@ -20,29 +20,25 @@
 
 package net.ontopia.topicmaps.nav2.utils;
 
-import java.util.Iterator;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
-import net.ontopia.topicmaps.core.NameIF;
-
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
+import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.topicmaps.nav2.core.UserIF;
+import net.ontopia.topicmaps.nav2.impl.basic.CustomNameStringifier;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.GrabberStringifier;
-
-import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
-import net.ontopia.topicmaps.nav2.core.UserIF;
-import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
-import net.ontopia.topicmaps.nav2.impl.basic.CustomNameStringifier;
-import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

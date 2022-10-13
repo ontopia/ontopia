@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.nav2.core;
 import java.util.List;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.utils.HistoryMap;
-import org.slf4j.Logger;
 
 /**
  * INTERNAL: interface for classes which implement user data management

@@ -79,7 +79,7 @@ public class TopicStringifiersTest {
   public void testBNSDouble1() {
     TopicIF theme = builder.makeTopic();
 
-    TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
+    builder.makeTopicName(topic, "Name1");
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     bn2.addTheme(theme);
 
@@ -95,7 +95,7 @@ public class TopicStringifiersTest {
   public void testBNSDouble2() {
     TopicIF theme = builder.makeTopic();
 
-    TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
+    builder.makeTopicName(topic, "Name1");
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     bn2.addTheme(theme);
 
@@ -125,7 +125,7 @@ public class TopicStringifiersTest {
   public void testDSComplex() {
     TopicIF theme = builder.makeTopic();
 
-    TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
+    builder.makeTopicName(topic, "Name1");
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     bn2.addTheme(theme);
 
@@ -141,9 +141,9 @@ public class TopicStringifiersTest {
     TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
     VariantNameIF vn1 = builder.makeVariantName(bn1, "Display name", Collections.emptySet());
     vn1.addTheme(display);
-    TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
-    TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
-    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
+    builder.makeTopicName(topic, "Name2");
+    builder.makeTopicName(topic, "Name3");
+    builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
 
     Assert.assertTrue("Stringifying topic gave wrong display name",
            TopicStringifiers.toString(topic).equals("Display name"));
@@ -180,7 +180,7 @@ public class TopicStringifiersTest {
   public void testSSComplex() {
     TopicIF theme = builder.makeTopic();
 
-    TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
+    builder.makeTopicName(topic, "Name1");
     TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
     bn2.addTheme(theme);
 
@@ -198,9 +198,9 @@ public class TopicStringifiersTest {
     TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
     VariantNameIF vn1 = builder.makeVariantName(bn1, "Sort name", Collections.emptySet());
     vn1.addTheme(sort);
-    TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
-    TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
-    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
+    builder.makeTopicName(topic, "Name2");
+    builder.makeTopicName(topic, "Name3");
+    builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
 
     Function sf = TopicStringifiers.getSortNameStringifier();
     Assert.assertTrue("Stringifying topic gave wrong sort name",
@@ -215,9 +215,9 @@ public class TopicStringifiersTest {
     TopicNameIF bn1 = builder.makeTopicName(topic, "Name1");
     VariantNameIF vn1 = builder.makeVariantName(bn1, "Sort name", Collections.emptySet());
     vn1.addTheme(sort);
-    TopicNameIF bn2 = builder.makeTopicName(topic, "Name2");
-    TopicNameIF bn3 = builder.makeTopicName(topic, "Name3");
-    VariantNameIF vn2 = builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
+    builder.makeTopicName(topic, "Name2");
+    builder.makeTopicName(topic, "Name3");
+    builder.makeVariantName(bn1, "Blecch", Collections.emptySet());
 
     Function sf =
       TopicStringifiers.getVariantNameStringifier(Collections.singleton(sort));

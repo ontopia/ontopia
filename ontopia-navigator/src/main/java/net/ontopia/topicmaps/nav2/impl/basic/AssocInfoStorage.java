@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Function;
-import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.utils.GrabberStringifier;

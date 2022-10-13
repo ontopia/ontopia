@@ -21,7 +21,6 @@
 package net.ontopia.infoset.impl.basic;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
