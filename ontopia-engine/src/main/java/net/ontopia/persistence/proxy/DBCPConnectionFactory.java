@@ -85,9 +85,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     // Read/Write by default
     boolean readonly = defaultReadOnly;
-    // Auto-commit disabled by default
-    boolean autocommit = readonly;
-    log.debug("Creating new DBCP connection factory, readonly=" + readonly + ", autocommit=" + autocommit);
+    log.debug("Creating new DBCP connection factory, readonly=" + readonly);
 
     // Set minimum pool size (default: 0)
     String _minsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize", false);
@@ -183,7 +181,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
       // Create data source
       this.pcfactory =
-        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readonly, autocommit, config);
+        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readonly, config);
     
       // Set default transaction isolation level
       pcfactory.setDefaultTransactionIsolation(defaultTransactionIsolation);
@@ -229,8 +227,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     private int objectsActivated;
     private int objectsPassivated;
 
-    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, boolean defaultAutoCommit, AbandonedConfig config) {
-      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, defaultAutoCommit, config);
+    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, AbandonedConfig config) {
+      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, false, config); // Auto-commit disabled by default
     }
 
     // PoolableObjectFactory implementation
