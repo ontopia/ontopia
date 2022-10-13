@@ -52,9 +52,9 @@ import org.slf4j.LoggerFactory;
 
 public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
-    public static final String EXHAUSED_BLOCK = "block";
-    public static final String EXHAUSED_GROW = "grow";
-    public static final String EXHAUSED_FAIL = "fail";
+  public static final String EXHAUSED_BLOCK = "block";
+  public static final String EXHAUSED_GROW = "grow";
+  public static final String EXHAUSED_FAIL = "fail";
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
