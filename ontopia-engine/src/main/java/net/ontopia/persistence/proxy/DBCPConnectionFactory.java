@@ -63,19 +63,19 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   public static final int DEFAULT_MIN_IDLE = GenericObjectPool.DEFAULT_MIN_IDLE; // 0
 
   public static final String MAX_ACTIVE = ROOT + "MaximumSize";
-  public static final int DEFAULT_MAX_ACTIVE = GenericObjectPool.DEFAULT_MAX_ACTIVE; // 8
+  public static final int DEFAULT_MAX_ACTIVE = 50;
 
   public static final String MAX_IDLE = ROOT + "MaximumIdle";
-  public static final int DEFAULT_MAX_IDLE = GenericObjectPool.DEFAULT_MAX_IDLE; // 8
+  public static final int DEFAULT_MAX_IDLE = 20;
 
   public static final String USER_TIMEOUT = ROOT + "UserTimeout";
-  public static final int DEFAULT_USER_TIMEOUT = -1; // never
+  public static final int DEFAULT_USER_TIMEOUT = 10000; // 10s
 
   public static final String IDLE_TIMEOUT = ROOT + "IdleTimeout";
-  public static final int DEFAULT_IDLE_TIMEOUT = -1; // never
+  public static final int DEFAULT_IDLE_TIMEOUT = 5 * 60 * 1000; // 5m
 
   public static final String SOFT_MAXIMUM = ROOT + "SoftMaximum";
-  public static final boolean DEFAULT_SOFT_MAXIMUM = true;
+  public static final boolean DEFAULT_SOFT_MAXIMUM = false;
 
   public static final String EXHAUSTED_ACTION = ROOT + "WhenExhaustedAction";
   public static final String POOL_STATEMENTS = ROOT + "PoolStatements";
