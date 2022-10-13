@@ -50,7 +50,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSStorage storage;
   protected RDBMSMapping mapping;
   
-  protected Connection conn_;
+  protected Connection connection;
 
   protected boolean closed;
   
@@ -107,7 +107,7 @@ public class RDBMSAccess implements StorageAccessIF {
    */
   private void requestConnectionFromStorage() {
     try {
-      this.conn_ = storage.getConnectionFactory(readonly).requestConnection();
+      this.connection = storage.getConnectionFactory(readonly).requestConnection();
     } catch (SQLException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -121,21 +121,21 @@ public class RDBMSAccess implements StorageAccessIF {
    * validated.
    */
   public Connection getConnection() {
-    if (this.conn_ == null) {
-      this.conn_ = storage.getNonTransactionalReadConnection();
+    if (this.connection == null) {
+      this.connection = storage.getNonTransactionalReadConnection();
     } else {
       // validate connection is still valid
-      if (!validateConnection(this.conn_)) {
+      if (!validateConnection(this.connection)) {
         // reopen
         if (closed) {
-          this.conn_ = storage.getNonTransactionalReadConnection();
+          this.connection = storage.getNonTransactionalReadConnection();
         } else {
           requestConnectionFromStorage();
         }
       }
     }
-    storage.touch(this.conn_);
-    return this.conn_;
+    storage.touch(this.connection);
+    return this.connection;
   }
   
   public PreparedStatement prepareStatement(String sql) throws SQLException {
@@ -239,9 +239,9 @@ public class RDBMSAccess implements StorageAccessIF {
   
   @Override
   public void commit() {
-    if (this.conn_ != null) {
+    if (this.connection != null) {
       try {
-        this.conn_.commit();
+        this.connection.commit();
         log.debug(getId() + ": Storage access rw committed.");      
       } catch (SQLException e) {
         throw new OntopiaRuntimeException(e);
@@ -253,9 +253,9 @@ public class RDBMSAccess implements StorageAccessIF {
   
   @Override
   public void abort() {
-    if (this.conn_ != null) {
+    if (this.connection != null) {
       try {
-        this.conn_.rollback();
+        this.connection.rollback();
         log.debug(getId() + ": Storage rw access aborted.");      
       } catch (SQLException e) {
         throw new OntopiaRuntimeException(e);
@@ -271,13 +271,13 @@ public class RDBMSAccess implements StorageAccessIF {
   public void close() {
     try {
       // Close/release connections
-      if (this.conn_ != null) {
+      if (this.connection != null) {
         try {
-          this.conn_.close();
+          this.connection.close();
         } catch (SQLException e) {
           // ignore
         } finally {
-          this.conn_ = null;
+          this.connection = null;
         }
         log.debug(getId() + ": Storage access rw closed.");
       } else {
