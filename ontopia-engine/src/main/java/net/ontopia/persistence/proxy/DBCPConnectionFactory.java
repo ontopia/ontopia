@@ -147,6 +147,12 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
       case GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW: log.debug("  exhaustedAction = GROW"); break;
       case GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL: log.debug("  exhaustedAction = FAIL"); break;
     }
+    if (config.getRemoveAbandoned()) {
+      log.debug("  removeAbandoned = true");
+      log.debug("  removeAbandonedTimeout = {}", config.getRemoveAbandonedTimeout());
+    } else {
+      log.debug("  removeAbandoned = false");
+    }
 
     // Statement pool
     GenericKeyedObjectPoolFactory stmpool = null;
