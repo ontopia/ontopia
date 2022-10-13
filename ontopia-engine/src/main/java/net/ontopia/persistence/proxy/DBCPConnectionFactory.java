@@ -295,7 +295,9 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
       buffer = new StringBuffer();
     }
 
-    @Override public void close() throws IOException { }
+    @Override public void close() throws IOException {
+      // no-op
+    }
   }
 }
 
