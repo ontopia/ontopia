@@ -25,8 +25,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 import net.ontopia.infoset.core.LocatorIF;
@@ -45,10 +43,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * @since 5.1
  */
 public class ResourceTopicMapSource implements TopicMapSourceIF {
-  // initialization of log facility
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory
-      .getLogger(ResourceTopicMapSource.class.getName());
 
   public enum REF_TYPE {
     XTM, LTM, RDF

@@ -2660,7 +2660,6 @@ public class TopicMapView {
       Collection hiddenEdgesTG = getTGEdgesOfType(Edge.class, true, false);
       
       // Topics in Viz
-      Collection topicsViz = getNodesOfType(TMTopicNode.class, false);
       Collection topicsViz_distinct = getNodesOfType(TMTopicNode.class,
                                                            true);
 

@@ -67,7 +67,7 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
            ix.getOccurrences(value1).contains(occ));
 
     // STATE 3: Duplicate occurrence value added
-    OccurrenceIF occ2 = builder.makeOccurrence(topic, otype, value1);
+    builder.makeOccurrence(topic, otype, value1);
 
     Assert.assertTrue("second occurrence not found by value",
            ix.getOccurrences(value1, DataTypes.TYPE_STRING).size() == 2);
@@ -165,13 +165,13 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
 							 ix.getOccurrencesByPrefix("a").isEmpty());
 
     // STATE 2: adding occurrences
-    OccurrenceIF oa = builder.makeOccurrence(topic, otype, "a");
-    OccurrenceIF oab = builder.makeOccurrence(topic, otype, "ab");
+    builder.makeOccurrence(topic, otype, "a");
+    builder.makeOccurrence(topic, otype, "ab");
     OccurrenceIF oabc = builder.makeOccurrence(topic, otype, "abc");
-    OccurrenceIF oabcde = builder.makeOccurrence(topic, otype, "abcde");
-    OccurrenceIF oac = builder.makeOccurrence(topic, otype, "ac");
-    OccurrenceIF oacde = builder.makeOccurrence(topic, otype, "acde");
-    OccurrenceIF oz = builder.makeOccurrence(topic, otype, "y");
+    builder.makeOccurrence(topic, otype, "abcde");
+    builder.makeOccurrence(topic, otype, "ac");
+    builder.makeOccurrence(topic, otype, "acde");
+    builder.makeOccurrence(topic, otype, "y");
 
     //! Assert.assertTrue("Occurrences by prefix '' does not return 7.", 
     //!       ix.getOccurrencesByPrefix("", DataTypes.TYPE_STRING).size() == 7);
@@ -276,7 +276,7 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
 							 ix.getOccurrences(loc1.getAddress(), DataTypes.TYPE_URI).isEmpty());
 
     // STATE 3: Duplicate occurrence locator added
-    OccurrenceIF occ2 = builder.makeOccurrence(topic, otype, loc2);
+    builder.makeOccurrence(topic, otype, loc2);
 
     Assert.assertTrue("second occurrence not found by locator",
 							 ix.getOccurrences(loc2.getAddress(), DataTypes.TYPE_URI).size() == 2);
@@ -294,13 +294,13 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
            ix.getOccurrencesByPrefix("a", DataTypes.TYPE_URI).isEmpty());
 
     // STATE 2: adding occurrences
-    OccurrenceIF oa = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "a"));
-    OccurrenceIF oab = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "ab"));
+    builder.makeOccurrence(topic, otype, new GenericLocator(notation, "a"));
+    builder.makeOccurrence(topic, otype, new GenericLocator(notation, "ab"));
     OccurrenceIF oabc = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "abc"));
-    OccurrenceIF oabcde = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "abcde"));
-    OccurrenceIF oac = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "ac"));
-    OccurrenceIF oacde = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "acde"));
-    OccurrenceIF oz = builder.makeOccurrence(topic, otype, new GenericLocator(notation, "y"));
+    builder.makeOccurrence(topic, otype, new GenericLocator(notation, "abcde"));
+    builder.makeOccurrence(topic, otype, new GenericLocator(notation, "ac"));
+    builder.makeOccurrence(topic, otype, new GenericLocator(notation, "acde"));
+    builder.makeOccurrence(topic, otype, new GenericLocator(notation, "y"));
 
     //! Assert.assertTrue("Occurrences by prefix '' does not return 7.", 
     //!        ix.getOccurrencesByPrefix("", DataTypes.TYPE_URI).size() == 7);
@@ -456,7 +456,7 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
         TopicIF t1 = builder.makeTopic();
         TopicIF otype = builder.makeTopic();
         OccurrenceIF o1 = builder.makeOccurrence(t1, otype, loc1);
-        OccurrenceIF o2 = builder.makeOccurrence(t1, otype, "");
+        builder.makeOccurrence(t1, otype, "");
         
         // Assert.assertTrue("occurrence locator not found via locator",
         //        ix.getOccurrenceLocators().size() == 2);
@@ -473,7 +473,7 @@ public abstract class OccurrenceIndexTest extends AbstractIndexTest {
 									 ix.getOccurrences(loc2.getAddress(), DataTypes.TYPE_URI).size() == 0);
         
         // STATE 3: topic map with duplicates
-        OccurrenceIF o3 = builder.makeOccurrence(t1, otype, loc1);
+        builder.makeOccurrence(t1, otype, loc1);
         
         // Assert.assertTrue("duplicate occurrence locator not filtered out",
         //        ix.getOccurrenceLocators().size() == 2);

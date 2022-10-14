@@ -548,7 +548,6 @@ public class QueryOptimizer {
           
           PredicateIF optimized = optimize(pclause);
           if (optimized != null) {
-            PredicateIF predicate = pclause.getPredicate();
             pclause.setPredicate(optimized);
           }
           

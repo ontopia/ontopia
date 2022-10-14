@@ -663,22 +663,6 @@ public class DynamicTreeWidget {
     return lineno;
   }
 
-  // --- Helpers
-
-  private int getAction(Map parameters) {
-    String action = get(parameters, "todo");
-    if (action == null)
-      action = "close";
-
-    switch (action) {
-      case "open": return OPEN;
-      case "close": return CLOSE;
-      case "expandall": return EXPAND_ALL;
-      case "closeall": return CLOSE_ALL;
-      default: return -1;
-    }
-  }
-
   // --- Utilities
 
   protected TopicIF getTopic(String id) {

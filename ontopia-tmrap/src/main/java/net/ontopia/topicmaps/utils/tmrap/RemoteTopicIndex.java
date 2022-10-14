@@ -239,7 +239,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
   
   private void setLoaded(TopicIF topic) { 
     if (topic instanceof net.ontopia.topicmaps.impl.remote.RemoteTopic) {
-      boolean prev = ((net.ontopia.topicmaps.impl.remote.RemoteTopic) topic).isLoaded();
       ((net.ontopia.topicmaps.impl.remote.RemoteTopic) topic).setLoaded(true);
     }
   }
@@ -278,7 +277,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
                                       boolean two_steps) {
-    long start = System.currentTimeMillis();
     if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty())
       return Collections.emptySet();
     

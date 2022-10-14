@@ -46,7 +46,6 @@ public class GrabberCollectionTest extends AbstractCollectionTest {
   }
 
   protected DeciderIF getDeciders(int size) {
-    Collection list = new ArrayList();
     HashSet ds = new HashSet();
     int c = 65;
     for (int i = 0; i < size; i++) {

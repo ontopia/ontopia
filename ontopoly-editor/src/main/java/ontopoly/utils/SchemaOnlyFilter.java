@@ -59,7 +59,6 @@ public class SchemaOnlyFilter implements Predicate {
     // to go.
     TopicIF metatype = topic.getTopicMap().
       getTopicBySubjectIdentifier(PSI.ON_TOPIC_TYPE);
-    boolean allpass = true;
     for (TopicIF topictype : topic.getTypes()) {
       // so, is ON_TOPIC_TYPE the only type this topic has?
       if (topictype.getTypes().contains(metatype) &&
