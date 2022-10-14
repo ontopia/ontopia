@@ -284,7 +284,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
       // lookup or create target topic
       TopicMapIF targetTopicMap = storefactory.createStore().getTopicMap();    
       TopicIF targetTopic = createTopic(targetTopicMap, indicators, sources, subjects);
-      int count = 0;
       
       // build identity predicates
       List<String> idpredicates_T = getIdPredicates(targetTopic, "T");
@@ -329,7 +328,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
       if (!isLoaded(targetTopic)) {
         setLoaded(targetTopic);
 				TopicMapSynchronizer.update(targetTopicMap, sourceTopic);
-        count++;
       }
 
       // get loaded topics (possibly 2 steps out)

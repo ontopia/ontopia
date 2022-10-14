@@ -179,13 +179,11 @@ public abstract class UpgradeBase {
     sb.append(")");
     sb.append("?");
     QueryResultIF qr = null;
-    int c = 0;
     try {
       qr =  qp.execute(sb.toString(), dc);
       while (qr.next()) {
         AssociationIF a = (AssociationIF)qr.getValue(0);
         a.remove();
-        c++;
       }              
     } finally {
       if (qr != null) qr.close();
