@@ -463,7 +463,7 @@ public class DatabaseProjectReader {
     protected Map<String, String> parseAttribs(String content) {
       Map<String, String> result = new HashMap<String, String>();
       
-      String[] fields = StringUtils.split(content.toString());
+      String[] fields = StringUtils.split(content);
       for (int i=0; i < fields.length; i++) {
         String field = fields[i];
         String[] entry = StringUtils.split(field, "=");
