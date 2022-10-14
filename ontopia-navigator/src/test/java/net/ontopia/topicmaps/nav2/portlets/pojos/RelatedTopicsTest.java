@@ -289,7 +289,7 @@ public class RelatedTopicsTest {
     TopicIF topic = getTopicById(tm, "article1");
     TopicIF created_by = getTopicById(tm, "created-by");
     TopicIF work = getTopicById(tm, "work");
-    TopicIF is_about = getTopicById(tm, "is-about");
+    getTopicById(tm, "is-about");
     TopicIF journo1 = getTopicById(tm, "journo1");
     TopicIF creator = getTopicById(tm, "creator");
     add(tm, "#PREFIX port @\"http://psi.ontopia.net/portlets/\" " +
@@ -418,7 +418,7 @@ public class RelatedTopicsTest {
     TopicIF topic = getTopicById(tm, "article1");
     TopicIF created_by = getTopicById(tm, "created-by");
     TopicIF work = getTopicById(tm, "work");
-    TopicIF is_about = getTopicById(tm, "is-about");
+    getTopicById(tm, "is-about");
     TopicIF journo1 = getTopicById(tm, "journo1");
     TopicIF employee = getTopicById(tm, "employee");
     TopicIF creator = getTopicById(tm, "creator"); 
@@ -561,7 +561,7 @@ public class RelatedTopicsTest {
     TopicIF is_about = getTopicById(tm, "is-about");
     TopicIF journo1 = getTopicById(tm, "journo1");
     TopicIF creator = getTopicById(tm, "creator");
-    TopicIF service = getTopicById(tm, "service");
+    getTopicById(tm, "service");
     add(tm, "#PREFIX port @\"http://psi.ontopia.net/portlets/\" " +
             "port:is-hidden-topic-type(service : port:type)");    
 
@@ -664,8 +664,8 @@ public class RelatedTopicsTest {
     TopicIF created_by = getTopicById(tm, "created-by");
     TopicIF work = getTopicById(tm, "work");
     TopicIF is_about = getTopicById(tm, "is-about");
-    TopicIF journo1 = getTopicById(tm, "journo1");
-    TopicIF creator = getTopicById(tm, "creator");
+    getTopicById(tm, "journo1");
+    getTopicById(tm, "creator");
 
     // test first heading
     RelatedTopics.Heading heading =
@@ -709,8 +709,8 @@ public class RelatedTopicsTest {
     TopicIF created_by = getTopicById(tm, "created-by");
     TopicIF work = getTopicById(tm, "work");
     TopicIF is_about = getTopicById(tm, "is-about");
-    TopicIF journo1 = getTopicById(tm, "journo1");
-    TopicIF creator = getTopicById(tm, "creator");
+    getTopicById(tm, "journo1");
+    getTopicById(tm, "creator");
 
     // test SECOND heading
     RelatedTopics.Heading heading =
@@ -748,8 +748,8 @@ public class RelatedTopicsTest {
     TopicIF created_by = getTopicById(tm, "created-by");
     TopicIF work = getTopicById(tm, "work");
     TopicIF is_about = getTopicById(tm, "is-about");
-    TopicIF journo1 = getTopicById(tm, "journo1");
-    TopicIF creator = getTopicById(tm, "creator");
+    getTopicById(tm, "journo1");
+    getTopicById(tm, "creator");
     TopicIF taule = getTopicById(tm, "taule");
     TopicIF it_avd = getTopicById(tm, "it-avd");
     TopicIF portal = getTopicById(tm, "portal");

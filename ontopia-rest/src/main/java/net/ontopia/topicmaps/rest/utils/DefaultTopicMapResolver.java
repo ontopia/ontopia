@@ -26,12 +26,8 @@ import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.rest.core.TopicMapResolverIF;
 import net.ontopia.topicmaps.rest.resources.Parameters;
 import org.restlet.Request;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DefaultTopicMapResolver implements TopicMapResolverIF {
-	private static final Logger logger = LoggerFactory.getLogger(DefaultTopicMapResolver.class);
-
 	private final TopicMapRepositoryIF repository;
 
 	public DefaultTopicMapResolver() {

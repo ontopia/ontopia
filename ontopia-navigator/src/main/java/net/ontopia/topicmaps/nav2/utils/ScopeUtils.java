@@ -39,18 +39,11 @@ import net.ontopia.topicmaps.nav2.core.ScopeSupportIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Framework related utility class providing some helper
  * methods needed to easier for access to scope information.
  */
 public final class ScopeUtils implements ScopeSupportIF {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory
-    .getLogger(FrameworkUtils.class.getName());
   
   /**
    * INTERNAL: Get FilterIF object which provides the possibility to

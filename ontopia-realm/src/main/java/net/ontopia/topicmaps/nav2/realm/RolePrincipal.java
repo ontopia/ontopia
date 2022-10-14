@@ -23,15 +23,9 @@ package net.ontopia.topicmaps.nav2.realm;
 import java.io.Serializable;
 import java.security.Principal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class RolePrincipal implements Principal, Serializable {
 
   public static final long serialVersionUID = 502L;
-  
-  // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(RolePrincipal.class.getName());
   
   private String name;
 

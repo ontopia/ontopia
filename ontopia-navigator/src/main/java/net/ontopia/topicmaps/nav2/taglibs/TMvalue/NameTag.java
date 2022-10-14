@@ -45,7 +45,6 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
   // tag attributes
   private Function nameGrabber;
   private String basenameScopeVarName;
-  private String variantScopeVarName;
 
   @Override
   public Collection process(Collection topics) throws JspTagException {
@@ -95,10 +94,6 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
 
   public final void setBasenameScope(String scopeVarName) {
     this.basenameScopeVarName = scopeVarName;
-  }
-  
-  public final void setVariantScope(String scopeVarName) {
-    this.variantScopeVarName = scopeVarName;
   }
   
 }

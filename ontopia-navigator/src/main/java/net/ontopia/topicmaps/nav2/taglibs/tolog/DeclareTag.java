@@ -31,17 +31,12 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Tolog Tag for making a set of tolog declarations
  * available within the nearest ancestor ContextTag.
  */
 public class DeclareTag extends BodyTagSupport {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(DeclareTag.class.getName());
   
   protected String declarations;
   

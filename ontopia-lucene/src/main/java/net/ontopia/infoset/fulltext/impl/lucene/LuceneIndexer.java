@@ -33,17 +33,12 @@ import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The Lucene indexer implementation. This indexer uses the
  * Lucene search engine to index documents.<p>
  */
 public class LuceneIndexer implements IndexerIF {
-
-  // Define a logging category.
-  private static Logger log = LoggerFactory.getLogger(LuceneIndexer.class.getName());
 
   protected IndexWriter writer;
 

@@ -74,7 +74,6 @@ public class RelatedTopics {
   // here
   private Set weaktypes_cache;
   private Set exclassocs_cache;
-  private Set exclroles_cache;
   private Set excltopics_cache;
   private Function<TopicIF, String> sort; // this one is also cached
   

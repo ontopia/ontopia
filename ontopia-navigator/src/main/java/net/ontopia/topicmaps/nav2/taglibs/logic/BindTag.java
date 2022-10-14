@@ -29,16 +29,11 @@ import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Bind Tag for turning map keys into variables.
  */
 public class BindTag extends TagSupport {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(BindTag.class.getName());
 
   // members
   private ContextManagerIF ctxtMgr;

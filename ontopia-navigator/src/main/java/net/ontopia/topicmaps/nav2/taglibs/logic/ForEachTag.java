@@ -53,7 +53,6 @@ public class ForEachTag extends BodyTagSupport {
   private static final Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
 
   // constants
-  private static final int DEF_MAX_ITER = 100; // fallback-default-value
   private static final Function DEF_TOPIC_STRINGIFIER = TopicStringifiers
     .getDefaultStringifier();
   

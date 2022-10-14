@@ -191,12 +191,10 @@ public final class Stringificator {
   // --- Fast stringifier (optimization for Nokia)
 
   static class FastStringifier extends CustomNameStringifier {
-    private TopicMapIF topicmap;
     private TopicIF vntheme;
     private TopicIF defnametype;
   
     public FastStringifier(TopicMapIF topicmap) {
-      this.topicmap = topicmap;
       this.defnametype = topicmap.getTopicBySubjectIdentifier(PSI.getSAMNameType());
       this.vntheme = topicmap.getTopicBySubjectIdentifier(PSI.getXTMDisplay());
     }

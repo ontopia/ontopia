@@ -192,12 +192,10 @@ public class TMRAP {
   }
 
   public class TopicMap {
-    private Server server;
     private TopicIF topic;
     private Collection pages;
 
     public TopicMap(Server server, TopicIF topic) {
-      this.server = server;
       this.topic = topic;
       this.pages = new ArrayList();
       server.addTopicMap(this);
@@ -217,11 +215,9 @@ public class TMRAP {
   }
 
   public class Page { // could be edit-page, view-page, or something else
-    private TopicMap topicmap;
     private TopicIF topic;
 
     public Page(TopicMap topicmap, TopicIF topic) {
-      this.topicmap = topicmap;
       this.topic = topic;
       topicmap.addPage(this);
     }
@@ -277,12 +273,10 @@ public class TMRAP {
   /* ----- CACHE ENTRY ----------------------------------------------- */
 
   class CacheEntry {
-    private long time;
     private Server object;
 
     public CacheEntry(Server object) {
       this.object = object;
-      this.time = System.currentTimeMillis();
     }
 
     public Server getObject() {

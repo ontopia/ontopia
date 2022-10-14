@@ -72,8 +72,6 @@ public class TMLoginModule implements LoginModule {
   // state obtained in the initialize() method
   private Subject subject;
   private CallbackHandler callbackHandler;
-  private Map<String, ?> sharedState;
-  private Map<String, ?> options;
 
   // the authentication status
   private boolean loginSucceeded;
@@ -159,8 +157,6 @@ public class TMLoginModule implements LoginModule {
     
     this.subject = subject;
     this.callbackHandler = callbackHandler;
-    this.sharedState = sharedState;
-    this.options = options;
     
     // get options
     jndiname = (String)options.get("jndi_repository");
