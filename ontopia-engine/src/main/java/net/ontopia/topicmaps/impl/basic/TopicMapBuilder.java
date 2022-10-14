@@ -156,12 +156,6 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     return occurs;
   }
   
-  public AssociationIF makeAssociation() {
-    AssociationIF assoc = new Association(tm);    
-    tm.addAssociation(assoc);
-    return assoc;
-  }
-
   @Override
   public AssociationIF makeAssociation(TopicIF assoc_type) {
     Objects.requireNonNull(assoc_type, MSG_ASSOCIATION_TYPE_NOT_NULL);
