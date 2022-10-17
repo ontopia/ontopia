@@ -30,9 +30,7 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.TopicTreeNode;
 

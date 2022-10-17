@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;

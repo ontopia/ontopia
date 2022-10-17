@@ -46,8 +46,6 @@ import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.impl.basic.NavigatorApplication;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;

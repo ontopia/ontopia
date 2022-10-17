@@ -35,7 +35,6 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 import net.ontopia.topicmaps.query.spi.SearchResultIF;
 import net.ontopia.topicmaps.query.spi.SearcherIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 
 /**
  * EXPERIMENTAL: Java searcher predicate.<p>
