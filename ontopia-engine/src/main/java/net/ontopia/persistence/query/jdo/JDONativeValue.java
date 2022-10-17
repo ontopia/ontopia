@@ -21,6 +21,7 @@
 package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -46,9 +47,10 @@ public class JDONativeValue implements JDOValueIF {
   }
 
   public JDONativeValue(JDOVariable root, String[] args, Class value_type) {
-    if (root == null) throw new NullPointerException("Value root cannot be null.");
-    if (args == null || args.length < 1) throw new NullPointerException("Field args cannot be null.");
-    if (value_type == null) throw new NullPointerException("Value value_type cannot be null.");
+    Objects.requireNonNull(root, "Value root cannot be null.");
+    Objects.requireNonNull(args, "Field args cannot be null.");
+    if (args.length < 1) { throw new IllegalArgumentException("Field args cannot be null."); }
+    Objects.requireNonNull(value_type, "Value value_type cannot be null.");
     this.root = root;
     this.args = args;
     this.value_type = value_type;

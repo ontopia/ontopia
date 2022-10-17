@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.query.jdo;
 
+import java.util.Objects;
 
 /**
  * INTERNAL: JDOQL value: variable. Class used to reference variables
@@ -31,7 +32,7 @@ public class JDOVariable implements JDOValueIF {
   protected String name;
 
   public JDOVariable(String name) {
-    if (name == null) throw new NullPointerException("Variable name cannot be null.");
+    Objects.requireNonNull(name, "Variable name cannot be null.");
     this.name = name;
   }
   

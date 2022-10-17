@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -264,29 +265,25 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
 
   @Override
   public TMObjectIF getObjectById(String object_id) {
-    if (object_id == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(object_id, MSG_NULL_ARGUMENT);
     return sicache.getObjectById(object_id);
   }
 
   @Override
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
-    if (locator == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(locator, MSG_NULL_ARGUMENT);
     return sicache.getObjectByItemIdentifier(locator);
   }
 
   @Override
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) { 
-    if (locator == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(locator, MSG_NULL_ARGUMENT);
     return sicache.getTopicBySubjectLocator(locator);
   }
 
   @Override
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
-    if (locator == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(locator, MSG_NULL_ARGUMENT);
     return sicache.getTopicBySubjectIdentifier(locator);
   }
   

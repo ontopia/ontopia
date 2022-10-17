@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.collections4.map.AbstractReferenceMap;
@@ -277,8 +278,7 @@ public abstract class AbstractTransaction implements TransactionIF {
   public PersistentIF _getObject(IdentityIF identity) {
     if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
-    if (identity == null)
-      throw new NullPointerException("null identities should not be looked up.");
+    Objects.requireNonNull(identity, "null identities should not be looked up.");
     
     // Check local identity map
     synchronized (identity_map) { // read

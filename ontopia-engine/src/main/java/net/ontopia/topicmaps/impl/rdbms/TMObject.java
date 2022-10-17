@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.AbstractRWPersistent;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
@@ -125,8 +126,7 @@ public abstract class TMObject extends AbstractRWPersistent
   @Override
   public void addItemIdentifier(LocatorIF source_locator)
     throws ConstraintViolationException {
-    if (source_locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
       throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
@@ -155,8 +155,7 @@ public abstract class TMObject extends AbstractRWPersistent
 
   @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
-    if (source_locator == null)
-      throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
       throw new ConstraintViolationException("Cannot modify item identifiers " +

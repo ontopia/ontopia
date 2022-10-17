@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -123,8 +124,8 @@ public class VariantName extends TMObject implements VariantNameIF {
 
   @Override
   public void setValue(String value, LocatorIF datatype) {
-    if (value == null) throw new NullPointerException("Variant value must not be null.");
-    if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
+    Objects.requireNonNull(value, "Variant value must not be null.");
+    Objects.requireNonNull(datatype, "Variant value datatype must not be null.");
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setDataType(datatype);
@@ -140,8 +141,8 @@ public class VariantName extends TMObject implements VariantNameIF {
   
   @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
-    if (value == null) throw new NullPointerException("Variant value must not be null.");
-    if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
+    Objects.requireNonNull(value, "Variant value must not be null.");
+    Objects.requireNonNull(datatype, "Variant value datatype must not be null.");
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     try {
@@ -160,7 +161,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   
   @Override
   public void setLocator(LocatorIF locator) {
-    if (locator == null) throw new NullPointerException("Variant locator must not be null.");
+    Objects.requireNonNull(locator, "Variant locator must not be null.");
     if (!"URI".equals(locator.getNotation()))
       throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
@@ -185,7 +186,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     _addTheme(theme, true);
   }
   protected void _addTheme(TopicIF theme, boolean validate) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(theme, "null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(VariantNameIF.EVENT_ADD_THEME, theme, null);
@@ -197,7 +198,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     _removeTheme(theme, true);
   }
   protected void _removeTheme(TopicIF theme, boolean validate) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(theme, "null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(VariantNameIF.EVENT_REMOVE_THEME, null, theme);

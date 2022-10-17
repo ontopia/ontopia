@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.nav2.realm;
 
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.Objects;
 
 public class RolePrincipal implements Principal, Serializable {
 
@@ -30,8 +31,7 @@ public class RolePrincipal implements Principal, Serializable {
   private String name;
 
   public RolePrincipal(String name) {
-    if (name == null)
-      throw new NullPointerException("illegal null input");    
+    Objects.requireNonNull(name, "illegal null input");
     this.name = name;
   }
   

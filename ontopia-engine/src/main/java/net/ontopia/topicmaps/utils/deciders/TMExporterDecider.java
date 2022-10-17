@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils.deciders;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -48,8 +49,7 @@ public class TMExporterDecider implements Predicate<Object> {
    * @param filter accepts or rejects an individual object
    */
   public TMExporterDecider(Predicate<Object> filter) {
-    if (filter == null)
-      throw new NullPointerException("Filter cannot be null.");
+    Objects.requireNonNull(filter, "Filter cannot be null.");
     this.filter = filter;
   }
 

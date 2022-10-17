@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -95,8 +96,7 @@ public class JDOQuery {
   }
   
   public void addParameter(String name, Class klass) {
-    if (klass == null)
-      throw new NullPointerException("JDO parameter class must not be null.");    
+    Objects.requireNonNull(klass, "JDO parameter class must not be null.");
     // Must be unique. Hides candidate class fields. Not 'this'.
     checkExistingName(name);
     if (params == null) params = new HashMap();
@@ -129,8 +129,7 @@ public class JDOQuery {
   }
   
   public void addVariable(String name, Class klass) {
-    if (klass == null)
-      throw new NullPointerException("The class of JDO variable '" + name + "' must not be null.");
+    Objects.requireNonNull(klass, "The class of JDO variable '" + name + "' must not be null.");
     // Must be unique and not conflict with parameter names. Hides
     // candidate class fields. Not 'this'.
     checkExistingName(name);

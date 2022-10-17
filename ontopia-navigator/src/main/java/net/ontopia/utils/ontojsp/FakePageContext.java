@@ -25,6 +25,7 @@ import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 import javax.el.ELContext;
 import javax.servlet.Servlet;
@@ -129,18 +130,15 @@ public class FakePageContext extends PageContext {
 
   @Override
   public void setAttribute(String name, Object value) {
-    if (value == null)
-      // JSP spec doesn't allow nulls
-      throw new NullPointerException("Null value not allowed");
-    else 
-      attrs.put(name, value);
+    // JSP spec doesn't allow nulls
+    Objects.requireNonNull(value, "Null value not allowed");
+    attrs.put(name, value);
   }
 
   @Override
   public void setAttribute(String name, Object value, int scope) {
-    if (value == null) 
-      // JSP spec doesn't allow nulls
-      throw new NullPointerException("Null value not allowed");
+    // JSP spec doesn't allow nulls
+    Objects.requireNonNull(value, "Null value not allowed");
 
     switch (scope) {
     case PageContext.APPLICATION_SCOPE:

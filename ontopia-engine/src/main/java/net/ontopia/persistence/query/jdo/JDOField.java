@@ -21,6 +21,7 @@
 package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
+import java.util.Objects;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -41,7 +42,7 @@ public class JDOField implements JDOValueIF {
   }
   public JDOField(JDOValueIF root, String name, boolean evaluatable) {
     this(root, new String[] { name }, evaluatable);
-    if (name == null) throw new NullPointerException("Field name cannot be null.");
+    Objects.requireNonNull(name, "Field name cannot be null.");
   }
 
   public JDOField(JDOValueIF root, String name1, String name2) {
@@ -77,9 +78,10 @@ public class JDOField implements JDOValueIF {
   }
 
   public JDOField(JDOValueIF root, String[] path, boolean evaluatable) {
-    if (root == null) throw new NullPointerException("Field root cannot be null.");
-    if (root instanceof JDOField) throw new OntopiaRuntimeException("Please do not use nested field objects.");
-    if (path == null || path.length < 1) throw new NullPointerException("Field path cannot be null.");
+    Objects.requireNonNull(root, "Field root cannot be null.");
+    if (root instanceof JDOField) { throw new OntopiaRuntimeException("Please do not use nested field objects."); }
+    Objects.requireNonNull(path, "Field path cannot be null.");
+    if (path.length < 1) { throw new IllegalArgumentException("Field path cannot be null."); }
     this.root = root;
     this.path = path;
     this.evaluatable = evaluatable;

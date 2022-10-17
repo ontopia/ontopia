@@ -23,6 +23,7 @@ package ontopoly.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -31,8 +32,7 @@ public abstract class ListModel<T,V> extends LoadableDetachableModel<List<T>> {
   private List<V> values;
 
   public ListModel(List<V> values) {
-    if (values == null)
-      throw new NullPointerException("values parameter cannot be null.");
+    Objects.requireNonNull(values, "values parameter cannot be null.");
     this.values = values;
   }
   

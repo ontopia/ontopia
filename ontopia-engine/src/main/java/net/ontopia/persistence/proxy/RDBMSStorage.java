@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
@@ -181,9 +182,7 @@ public class RDBMSStorage implements StorageIF {
    */
   public RDBMSStorage(String propfile) throws IOException {    
     // TODO: attempt to load props from CLASSPATH (file: oks.rdbms.props)
-    
-    if (propfile == null)
-      throw new NullPointerException("Property file cannot be null. Please set the 'net.ontopia.topicmaps.impl.rdbms.PropertyFile' property.");
+    Objects.requireNonNull(propfile, "Property file cannot be null. Please set the 'net.ontopia.topicmaps.impl.rdbms.PropertyFile' property.");
     
     // Load properties from file
     InputStream istream = StreamUtils.getInputStream(propfile);

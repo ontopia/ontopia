@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -140,8 +141,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   public void setValue(String value) {
-    if (value == null)
-      throw new NullPointerException("Topic name value must not be null.");
+    Objects.requireNonNull(value, "Topic name value must not be null.");
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_SET_VALUE, value, getValue());
     // Notify transaction
@@ -154,8 +154,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   }
 
   protected void addVariant(VariantNameIF variant) {
-    if (variant == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(variant, MSG_NULL_ARGUMENT);
     // Check to see if variant is already a member of this topic name
     if (variant.getTopicName() == this)
       return;
@@ -176,8 +175,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   }
 
   protected void removeVariant(VariantNameIF variant) {
-    if (variant == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(variant, MSG_NULL_ARGUMENT);
     // Check to see if variant is not a member of this topic name
     if (variant.getTopicName() != this)
       return;
@@ -215,8 +213,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   public void addTheme(TopicIF theme) {
-    if (theme == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(theme, MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);    
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_ADD_THEME, theme, null);
@@ -236,8 +233,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   public void removeTheme(TopicIF theme) {
-    if (theme == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(theme, MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_REMOVE_THEME, null, theme);

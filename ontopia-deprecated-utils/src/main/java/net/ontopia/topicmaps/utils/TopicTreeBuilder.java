@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -47,12 +48,9 @@ public class TopicTreeBuilder {
   public TopicTreeBuilder(TopicIF assocType,
                           TopicIF parentRole,
                           TopicIF childRole) {
-    if (assocType == null)
-      throw new NullPointerException("Association type cannot be null");
-    if (parentRole == null)
-      throw new NullPointerException("Parent role type cannot be null");
-    if (childRole == null)
-      throw new NullPointerException("Child role type cannot be null");
+    Objects.requireNonNull(assocType, "Association type cannot be null");
+    Objects.requireNonNull(parentRole, "Parent role type cannot be null");
+    Objects.requireNonNull(childRole, "Child role type cannot be null");
     this.assocType = assocType;
     this.parentRole = parentRole;
     this.childRole = childRole;

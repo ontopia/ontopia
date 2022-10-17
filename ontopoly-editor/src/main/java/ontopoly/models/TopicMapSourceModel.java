@@ -19,6 +19,7 @@
  */
 package ontopoly.models;
 
+import java.util.Objects;
 import ontopoly.sysmodel.TopicMapSource;
 
 public class TopicMapSourceModel extends MutableLoadableDetachableModel<TopicMapSource> {
@@ -27,15 +28,13 @@ public class TopicMapSourceModel extends MutableLoadableDetachableModel<TopicMap
 
   public TopicMapSourceModel(TopicMapSource topicMapSource) {
     super(topicMapSource);
-    if (topicMapSource == null)
-      throw new NullPointerException("topicMapSource parameter cannot be null.");
+    Objects.requireNonNull(topicMapSource, "topicMapSource parameter cannot be null.");
        
     this.topicMapSourceId = topicMapSource.getId(); 
   }
   
   public TopicMapSourceModel(String topicMapSourceId) {
-    if (topicMapSourceId == null)
-      throw new NullPointerException("topicMapSourceId parameter cannot be null.");
+    Objects.requireNonNull(topicMapSourceId, "topicMapSourceId parameter cannot be null.");
     this.topicMapSourceId = topicMapSourceId;    
   }
 
