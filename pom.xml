@@ -84,7 +84,7 @@
 		<!-- reused dependency versions -->
 		<lucene.version>7.1.0</lucene.version>
 		<lucene.snowball.version>3.0.3</lucene.snowball.version>
-		<axis2.version>1.6.3</axis2.version>
+		<axis2.version>1.6.4</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
 		<jena.version>3.17.0</jena.version>
@@ -589,7 +589,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.axis2</groupId>
-				<artifactId>axis2</artifactId>
+				<artifactId>axis2-kernel</artifactId>
 				<version>${axis2.version}</version>
 			</dependency>
 			<dependency>
