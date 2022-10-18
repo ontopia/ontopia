@@ -188,7 +188,7 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
   private void sendEvent(java.io.Serializable e) {
     log.debug("Sending: " + e);
     try {
-      Message msg = new Message(null, null, e);
+      Message msg = new Message(null, e);
       dchannel.send(msg);
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);

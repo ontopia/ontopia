@@ -793,7 +793,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
   protected void sendTest(MasterTest mt) {
     System.out.println("Sending: " + mt.testname);
     try {
-      Message msg = new Message(null, null, mt);
+      Message msg = new Message(null, mt);
       channel.send(msg);
     } catch (Exception ex1) {
       ex1.printStackTrace();
