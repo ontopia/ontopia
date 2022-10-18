@@ -701,8 +701,7 @@ public class URITest {
   @Test
   public void testNotEqual() throws URISyntaxException {
     URILocator loc1 = new URILocator("http://www.ontopia.net");    
-    Assert.assertFalse("URILocator equals null",
-	   loc1.equals(null));
+    Assert.assertNotEquals(null, loc1, "URILocator equals null");
   }
 
   @Test

@@ -126,8 +126,8 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
 
   // FIXME: this important test fails, but disabling for now
-  // @Test
-  public void _testNonAsciiIdempotency() throws URISyntaxException {
+  @Test
+  public void testNonAsciiIdempotency() throws URISyntaxException {
     String original = "http://dbpedia.org/resource/K%C3%B8benhavn";
 
     URILocator uri1 = new URILocator(original);
@@ -143,17 +143,17 @@ public class URILocatorTest extends AbstractLocatorTest {
     URILocator locator = URILocator.create("http://www.example.org/cablemap/european-cables.ctm#EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE");
     URILocator locator2 = URILocator.create("http://www.example.org/example#fragm%7Bent");
 
-    assertNotNull(locator);
-    assertNotNull(locator2);
+    Assert.assertNotNull(locator);
+    Assert.assertNotNull(locator2);
     
-    assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("european-cables.ctm"));
-    assertTrue(locator2.getUri().getSchemeSpecificPart().endsWith("example"));
+    Assert.assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("european-cables.ctm"));
+    Assert.assertTrue(locator2.getUri().getSchemeSpecificPart().endsWith("example"));
     
-    assertEquals("EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE", locator.getUri().getRawFragment());
-    assertEquals("fragm%7Bent", locator2.getUri().getRawFragment());
+    Assert.assertEquals("EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE", locator.getUri().getRawFragment());
+    Assert.assertEquals("fragm%7Bent", locator2.getUri().getRawFragment());
 
-    assertEquals("EASTERN EUROPEAN POSTS COLLECTIVE", locator.getUri().getFragment());
-    assertEquals("fragm{ent", locator2.getUri().getFragment());
+    Assert.assertEquals("EASTERN EUROPEAN POSTS COLLECTIVE", locator.getUri().getFragment());
+    Assert.assertEquals("fragm{ent", locator2.getUri().getFragment());
   }
   
   // https://github.com/ontopia/ontopia/issues/366
@@ -162,18 +162,18 @@ public class URILocatorTest extends AbstractLocatorTest {
     
     URILocator locator = URILocator.create("http://www.infocom.co.jp/dsp/sample#" + fragmentUTF);
 
-    assertNotNull(locator);
-    assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("sample"));
-    assertEquals(fragmentUTF, locator.getUri().getRawFragment());
-    assertEquals(fragmentUTF, locator.getUri().getFragment());
+    Assert.assertNotNull(locator);
+    Assert.assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("sample"));
+    Assert.assertEquals(fragmentUTF, locator.getUri().getRawFragment());
+    Assert.assertEquals(fragmentUTF, locator.getUri().getFragment());
   }
 
   // https://github.com/ontopia/ontopia/issues/289
   public void testIssue289() {
     URILocator locator = URILocator.create("http://en.wikipedia.org/wiki/Beethoven/x+y/");
 
-    assertNotNull(locator);
-    assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("x+y/"));
+    Assert.assertNotNull(locator);
+    Assert.assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("x+y/"));
   }
 
   // --- Internal
