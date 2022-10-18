@@ -11,7 +11,7 @@
   </context-param>
   <context-param>
     <param-name>db.url</param-name>
-    <param-value>jdbc:h2:ontopoly;MVCC=true;DB_CLOSE_ON_EXIT=FALSE</param-value>
+    <param-value>jdbc:h2:ontopoly;DB_CLOSE_ON_EXIT=FALSE</param-value>
   </context-param>
   <context-param>
     <param-name>db.user</param-name>
