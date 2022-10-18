@@ -19,7 +19,6 @@
  */
 package net.ontopia.topicmaps.utils.tmrap.axis2;
 
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;

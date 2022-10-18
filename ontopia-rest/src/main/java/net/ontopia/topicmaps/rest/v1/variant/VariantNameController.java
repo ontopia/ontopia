@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.rest.v1.variant;
 
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
