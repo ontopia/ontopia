@@ -37,7 +37,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "DESC", "topic1");
     
-    verifyQuery(matches, "description(topic1, $DESC)?");
+    assertQueryMatches(matches, "description(topic1, $DESC)?");
   }
   
   @Test
@@ -47,7 +47,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "HOMEPAGE", "http://example.org/topic1");
     
-    verifyQuery(matches, "homepage(topic1, $HOMEPAGE)?");
+    assertQueryMatches(matches, "homepage(topic1, $HOMEPAGE)?");
   }
   
   @Test
@@ -64,7 +64,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "TOPIC", getTopicById("topic4"),
                       "DESC", "topic4");
     
-    verifyQuery(matches, "description($TOPIC, $DESC)?");
+    assertQueryMatches(matches, "description($TOPIC, $DESC)?");
   }
   
   @Test
@@ -74,7 +74,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic1"));
     
-    verifyQuery(matches, "description($TOPIC, \"topic1\")?");
+    assertQueryMatches(matches, "description($TOPIC, \"topic1\")?");
   }
   
   @Test
@@ -84,7 +84,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("horse"));
     
-    verifyQuery(matches, "nettressurs($TOPIC, \"http://www.hest.no/\")?");
+    assertQueryMatches(matches, "nettressurs($TOPIC, \"http://www.hest.no/\")?");
   }
 
   @Test
@@ -94,21 +94,21 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "description(topic1, \"topic1\")?");
+    assertQueryMatches(matches, "description(topic1, \"topic1\")?");
   }
 
   @Test
   public void testWithBothBoundFalse() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
     
-    findNothing("description(topic2, \"topic1\")?");
+    assertFindNothing("description(topic2, \"topic1\")?");
   }
 
   @Test
   public void testWithStringForTopic() throws InvalidQueryException, IOException {
     load("opera.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "premiere-date(\"tosca\", $DATE)?");
   }
 
@@ -116,14 +116,14 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
   public void testWithTopicForString() throws InvalidQueryException, IOException {
     load("opera.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "premiere-date($DATE, tosca)?");
   }
 
   @Test
   public void testWhenNoOccurrencesOfType() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
-    findNothing("  kommentar($DOK, $DATE), " +
+    assertFindNothing("  kommentar($DOK, $DATE), " +
                 "  $DATE > \"2005-04-23\" " +
                 "order by $DATE desc?");
   }
@@ -138,7 +138,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "DOG", getTopicById("dog2"),
           		 			 "VAL", "voff:1");
     
-    verifyQuery(matches, "bark($DOG, $VAL)?");
+    assertQueryMatches(matches, "bark($DOG, $VAL)?");
   }
   
   @Test
@@ -149,7 +149,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "CAT", getTopicById("cat1"));
     addMatch(matches, "CAT", getTopicById("cat2"));
     
-    verifyQuery(matches, "beg($CAT, \"meow:1\")?");
+    assertQueryMatches(matches, "beg($CAT, \"meow:1\")?");
   }
 
 }

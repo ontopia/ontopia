@@ -48,7 +48,7 @@ public abstract class AbstractCollectionTest {
   }
 
 
-  protected void testCollection(Collection coll, Collection identical, Collection smaller) {
+  protected void assertCollection(Collection coll, Collection identical, Collection smaller) {
     // Size checks
     if (coll.size() > 0)
       Assert.assertTrue("coll is not empty[1]", coll.isEmpty() == false);

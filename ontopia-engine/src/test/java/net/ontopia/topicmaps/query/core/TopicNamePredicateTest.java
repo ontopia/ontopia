@@ -49,7 +49,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "topic-name($TOPIC, $BNAME)?");
+    assertQueryMatches(matches, "topic-name($TOPIC, $BNAME)?");
   }
 
   @Test
@@ -59,14 +59,14 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addTopicNames(matches, "BNAME", getTopicById("marriage"));
     
-    verifyQuery(matches, "topic-name(marriage, $BNAME)?");
+    assertQueryMatches(matches, "topic-name(marriage, $BNAME)?");
   }
 
   @Test
   public void testWithOccurrences() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "occurrence(white-horse, $OCC), topic-name($T, $OCC)?");
   }
 
@@ -80,7 +80,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
 
     addMatch(matches, "TOPIC", topic);
     
-    verifyQuery(matches, "topic-name($TOPIC, @" + bn.getObjectId() + ")?");
+    assertQueryMatches(matches, "topic-name($TOPIC, @" + bn.getObjectId() + ")?");
   }
   
   @Test
@@ -93,7 +93,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
 
     matches.add(new HashMap());
     
-    verifyQuery(matches, "topic-name(marriage, @" + bn.getObjectId() + ")?");
+    assertQueryMatches(matches, "topic-name(marriage, @" + bn.getObjectId() + ")?");
   }
   
   @Test
@@ -104,14 +104,14 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
     TopicIF topic = getTopicById("marriage");
     TopicNameIF bn = topic.getTopicNames().iterator().next();
     
-    verifyQuery(matches, "topic-name(parenthood, @" + bn.getObjectId() + ")?");
+    assertQueryMatches(matches, "topic-name(parenthood, @" + bn.getObjectId() + ")?");
   }
   
   @Test
   public void testTypeConflict() throws InvalidQueryException, IOException {
     load("family2.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), topic-name($TM, $BN)?");
   }
 
@@ -119,7 +119,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
   public void testTypeConflict2() throws InvalidQueryException, IOException {
     load("family2.ltm");
     
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic-name(@" + topicmap.getObjectId() + ", $BN)?");
   }
 
@@ -130,7 +130,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
     Map params = new HashMap();
     params.put("topic", topicmap);
     
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic-name(%topic%, $BN)?", params);
   }
 
@@ -141,7 +141,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
     Map params = new HashMap();
     params.put("bn", topicmap);
     
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topic-name($TOPIC, %bn%)?", params);
   }
   

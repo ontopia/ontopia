@@ -25,13 +25,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Function;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the most suitable name from a topic,
@@ -42,7 +42,7 @@ import net.ontopia.utils.GrabberIF;
  *
  * @since 1.1
  */
-public class NameGrabber implements GrabberIF<TopicIF, NameIF> {
+public class NameGrabber implements Function<TopicIF, NameIF> {
 
   /**
    * PROTECTED: The subject indicator of the theme used to decide
@@ -181,7 +181,7 @@ public class NameGrabber implements GrabberIF<TopicIF, NameIF> {
    * @exception throws OntopiaRuntimeException if object is not a topic.
    */
   @Override
-  public NameIF grab(TopicIF topic) {
+  public NameIF apply(TopicIF topic) {
     if (topic == null)
       return null;
     
@@ -221,7 +221,7 @@ public class NameGrabber implements GrabberIF<TopicIF, NameIF> {
         name = current;
 
       if (!variantScope.isEmpty()) {
-        vn = vngrabber.grab(current);
+        vn = vngrabber.apply(current);
         if (vn != null) {
           // TODO: Should not use intersection to find appropriate
           // variant, but rather exact matching, or perhaps ranking.

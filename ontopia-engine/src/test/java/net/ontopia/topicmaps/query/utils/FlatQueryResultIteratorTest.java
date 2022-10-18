@@ -38,7 +38,7 @@ public class FlatQueryResultIteratorTest extends AbstractQueryTest {
   @Test
   public void testNoResults() throws InvalidQueryException, IOException {
     load("family.ltm");
-    verifyResult(Collections.EMPTY_SET, "instance-of($PA, mother)?");    
+    assertResult(Collections.EMPTY_SET, "instance-of($PA, mother)?");    
     closeStore();   
   }
 
@@ -54,7 +54,7 @@ public class FlatQueryResultIteratorTest extends AbstractQueryTest {
     result.add(getTopicById("magnus"));
     result.add(getTopicById("unknown2"));
     
-    verifyResult(result, "instance-of($PA, father)?");    
+    assertResult(result, "instance-of($PA, father)?");    
     closeStore();      
   }
 
@@ -70,7 +70,7 @@ public class FlatQueryResultIteratorTest extends AbstractQueryTest {
     result.add(getTopicById("astri"));
     result.add(getTopicById("lms"));
     
-    verifyResult(result, "parenthood(bertha : mother, $MOTHER : child), " +
+    assertResult(result, "parenthood(bertha : mother, $MOTHER : child), " +
                          "parenthood($MOTHER : mother, $CHILD : child) " +
                          "order by $MOTHER?");
     closeStore();      
@@ -78,7 +78,7 @@ public class FlatQueryResultIteratorTest extends AbstractQueryTest {
 
   /// internal
 
-  protected void verifyResult(Collection result, String query)
+  protected void assertResult(Collection result, String query)
     throws InvalidQueryException {
     
     Iterator it = new FlatQueryResultIterator(processor.execute(query));

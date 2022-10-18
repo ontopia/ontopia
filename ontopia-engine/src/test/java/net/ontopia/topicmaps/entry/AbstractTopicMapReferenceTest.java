@@ -29,7 +29,7 @@ public abstract class AbstractTopicMapReferenceTest {
 
   // --- utility methods
 
-  public void doAbstractTopicMapReferenceTests(AbstractTopicMapReference ref, 
+  public void assertCompliesToAbstractTopicMapReference(AbstractTopicMapReference ref, 
                                                boolean checkOpenAfterClose) throws java.io.IOException {
     // WARNING: always run these tests as the last test as the
     // reference is being closed
@@ -75,7 +75,7 @@ public abstract class AbstractTopicMapReferenceTest {
 
     // should not be possible to create store after close
     try {
-      TopicMapStoreIF store = ref.createStore(true);
+      ref.createStore(true);
       Assert.assertTrue("Reference open after Assert.failed createStore", ref.isOpen());
     } catch (ReferenceNotOpenException e) {
       Assert.fail("Could not create store after reference " + ref + " had been closed.");

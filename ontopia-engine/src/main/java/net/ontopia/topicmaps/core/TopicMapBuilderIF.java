@@ -120,20 +120,6 @@ public interface TopicMapBuilderIF {
   TopicNameIF makeTopicName(TopicIF topic, TopicIF bntype, String value);
 
   /**
-   * DEPRECATED: Makes a new variant name with the specified name value
-   * for the specified topic name.
-   *
-   * @param name The given topic name; an object implmenting TopicNameIF.
-   *
-   * @param value A string which is the value of the variant name.
-   *
-   * @return An object implementing VariantNameIF.
-   * @deprecated Use makeVariantName(TopicNameIF, String, Collection)
-   */
-  @Deprecated
-  VariantNameIF makeVariantName(TopicNameIF name, String value);
-
-  /**
    * PUBLIC: Makes a new variant name with the specified name value
    * for the specified topic name in the given scope.
    *
@@ -145,20 +131,6 @@ public interface TopicMapBuilderIF {
    * @since 4.0
    */
   VariantNameIF makeVariantName(TopicNameIF name, String value, Collection<TopicIF> scope); // NEW
-
-  /**
-   * DEPRECATED: Makes a new variant name with the given locator for
-   * the specified topic name.
-   *
-   * @param name The given topic name; an object implmenting TopicNameIF.
-   *
-   * @param locator The locator for the variant name.
-   *
-   * @return An object implementing VariantNameIF.
-   * @deprecated Use makeVariantName(TopicNameIF, LocatorIF, Collection)
-   */
-  @Deprecated
-  VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator);
 
   /**
    * PUBLIC: Makes a new variant name with the given locator for
@@ -174,21 +146,6 @@ public interface TopicMapBuilderIF {
   VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection<TopicIF> scope); // NEW
 
   /**
-   * DEPRECATED: Makes a new variant name with the specified name value and datatype
-   * for the specified topic name.
-   *
-   * @param name The given name; an object implmenting TopicNameIF.
-   * @param value A string which is the value of the variant name.
-	 * @param datatype The datatype of the value
-   *
-   * @return An object implementing VariantNameIF.
-	 * @since 4.0
-	 * @deprecated Use makeVariantName(TopicNameIF, String, LocatorIF, Collection)
-   */
-  @Deprecated
-  VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype); // NEW
-
-  /**
    * PUBLIC: Makes a new variant name with the specified name value and datatype
    * for the specified name in the given scope.
    *
@@ -201,22 +158,6 @@ public interface TopicMapBuilderIF {
 	 * @since 4.0
    */
   VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection<TopicIF> scope); // NEW
-
-  /**
-   * DEPRECATED: Makes a new variant name with the specified name value reader and datatype
-   * for the specified topic name.
-   *
-   * @param name The given topic name; an object implmenting TopicNameIF.
-   * @param value A reader which contains the value of the variant name.
-	 * @param length The length of the reader value.
-	 * @param datatype The datatype of the value
-   *
-   * @return An object implementing VariantNameIF.
-	 * @since 4.0
-	 * @deprecated Use makeVariantName(TopicNameIF, Reader, long, LocatorIF, Collection)
-   */
-  @Deprecated
-  VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype); // NEW
 
   /**
    * PUBLIC: Makes a new variant name with the specified name value reader and datatype

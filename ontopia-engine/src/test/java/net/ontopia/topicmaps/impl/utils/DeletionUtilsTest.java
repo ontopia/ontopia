@@ -61,7 +61,7 @@ public class DeletionUtilsTest {
     TopicMapBuilderIF builder = topicmap.getBuilder();
 
     TopicIF morituri = builder.makeTopic();
-    TopicIF instance = builder.makeTopic(morituri);
+    builder.makeTopic(morituri);
 
     morituri.remove();
 
@@ -80,7 +80,7 @@ public class DeletionUtilsTest {
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
     AssociationRoleIF role1 = builder.makeAssociationRole(assoc, builder.makeTopic(), morituri);
 
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, builder.makeTopic(), other);
+    builder.makeAssociationRole(assoc, builder.makeTopic(), other);
 
     morituri.remove();
 

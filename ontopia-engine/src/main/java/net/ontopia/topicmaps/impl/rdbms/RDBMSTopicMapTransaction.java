@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.IdentityIF;
@@ -299,21 +300,21 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // ---------------------------------------------------------------------------
 
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
-    if (locator == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(locator, "null is not a valid argument.");
 
     // Get from subject identity cache
     return sicache.getObjectByItemIdentifier(locator);
   }
 
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
-    if (locator == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(locator, "null is not a valid argument.");
           
     // Get from subject identity cache
     return sicache.getTopicBySubjectLocator(locator);
   }
   
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
-    if (locator == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(locator, "null is not a valid argument.");
           
     // Get from subject identity cache
     return sicache.getTopicBySubjectIdentifier(locator);

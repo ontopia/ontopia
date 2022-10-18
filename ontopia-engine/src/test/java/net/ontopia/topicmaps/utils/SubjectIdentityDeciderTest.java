@@ -49,16 +49,16 @@ public class SubjectIdentityDeciderTest {
   @Test
   public void testSubjectIdentifiers() {
     LocatorIF locA = makeLocator("A");
-    LocatorIF locB = makeLocator("B");
+    makeLocator("B");
     TopicIF topicA = getTopic("A");
     TopicIF topicB = getTopic("B");
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locA);
     Assert.assertTrue("Decider did not recognize topic",
-               decider.ok(topicA));
+               decider.test(topicA));
                
     Assert.assertTrue("Decider ok-d topic with wrong identifier",
-               !decider.ok(topicB));
+               !decider.test(topicB));
   }
 
   @Test
@@ -69,22 +69,22 @@ public class SubjectIdentityDeciderTest {
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locA);
     Assert.assertTrue("Decider recognized topic which had locator as subject address",
-               !decider.ok(topic));
+               !decider.test(topic));
   }
 
   @Test
   public void testInstances() {
     LocatorIF locC = makeLocator("C");
-    LocatorIF locD = makeLocator("D");
+    makeLocator("D");
     TopicIF topicA = getTopic("A");
     TopicIF topicB = getTopic("B");
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locC);
     Assert.assertTrue("Decider did not recognize instance of topic",
-               decider.ok(topicA));
+               decider.test(topicA));
                
     Assert.assertTrue("Decider ok-d topic which was instance of topic with wrong identifier",
-               !decider.ok(topicB));
+               !decider.test(topicB));
   }
 
   @Test
@@ -95,7 +95,7 @@ public class SubjectIdentityDeciderTest {
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locD);
     Assert.assertTrue("Decider recognized occurrence it shouldn't recognize",
-               !decider.ok(occC));
+               !decider.test(occC));
   }
   
   // --- Internal helpers

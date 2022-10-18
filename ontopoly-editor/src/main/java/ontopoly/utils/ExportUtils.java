@@ -21,6 +21,7 @@ package ontopoly.utils;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.function.Predicate;
 
 import ontopoly.model.TopicMap;
 
@@ -34,7 +35,6 @@ import net.ontopia.topicmaps.xml.XTM2TopicMapWriter;
 import net.ontopia.topicmaps.xml.XTM21TopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMVersion;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 public class ExportUtils {
@@ -50,7 +50,7 @@ public class ExportUtils {
       String charset = "utf-8";
 
       TopicMapWriterIF writer;
-      DeciderIF filter = null;
+      Predicate filter = null;
       if (content == Content.INSTANCES_ONLY)
         filter = new SchemaFilter();
       else if (content == Content.SCHEMA_ONLY)

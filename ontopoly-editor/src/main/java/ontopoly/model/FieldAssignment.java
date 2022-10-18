@@ -31,7 +31,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.Ordering;
 

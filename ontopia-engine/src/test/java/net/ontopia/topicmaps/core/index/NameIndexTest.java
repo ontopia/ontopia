@@ -139,7 +139,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     // STATE 1: No variants
     TopicIF t1 = builder.makeTopic();
     TopicNameIF bn1 = builder.makeTopicName(t1, "");
-    TopicIF t2 = builder.makeTopic();
+    builder.makeTopic();
     TopicNameIF bn2 = builder.makeTopicName(t1, "");
 
     Assert.assertTrue("TopicName index is not empty", ix.getTopicNames("TopicName").isEmpty());
@@ -164,7 +164,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
     //!            ix.getVariants((String)null, DataTypes.TYPE_STRING).contains(vn3));
 
     // STATE 3: Duplicate added
-    VariantNameIF v4 = builder.makeVariantName(bn1, "VariantName", Collections.<TopicIF>emptySet());
+    builder.makeVariantName(bn1, "VariantName", Collections.<TopicIF>emptySet());
         
     Assert.assertTrue("duplicate variant name string not found via string",
            ix.getVariants("VariantName", DataTypes.TYPE_STRING).size() == 2);
@@ -207,7 +207,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
            ix.getVariants(loc.getAddress(), DataTypes.TYPE_URI).contains(vn));
 
     // STATE 3: Duplicate variant locator defined
-    VariantNameIF vn2 = builder.makeVariantName(bn, loc, Collections.<TopicIF>emptySet());
+    builder.makeVariantName(bn, loc, Collections.<TopicIF>emptySet());
     Assert.assertTrue("second variant not found by locator",
            ix.getVariants(loc.getAddress(), DataTypes.TYPE_URI).size() == 2);
   }
@@ -259,7 +259,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
         TopicIF t1 = builder.makeTopic();
         TopicNameIF bn1 = builder.makeTopicName(t1, "");
         VariantNameIF v1 = builder.makeVariantName(bn1, loc1, Collections.<TopicIF>emptySet());
-        VariantNameIF v2 = builder.makeVariantName(bn1, "", Collections.<TopicIF>emptySet());
+        builder.makeVariantName(bn1, "", Collections.<TopicIF>emptySet());
         
         // Assert.assertTrue("variant locator not found",
         //        ix.getVariantLocators().size() == 2);
@@ -276,7 +276,7 @@ public abstract class NameIndexTest extends AbstractIndexTest {
                ix.getVariants(loc2.getAddress(), DataTypes.TYPE_URI).size() == 0);
         
         // STATE 3: topic map with duplicates
-        VariantNameIF v3 = builder.makeVariantName(bn1, loc1, Collections.<TopicIF>emptySet());
+        builder.makeVariantName(bn1, loc1, Collections.<TopicIF>emptySet());
         
         // Assert.assertTrue("duplicate variant locator not filtered out",
         //        ix.getVariantLocators().size() == 2);

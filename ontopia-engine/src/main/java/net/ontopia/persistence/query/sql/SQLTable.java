@@ -20,6 +20,8 @@
 
 package net.ontopia.persistence.query.sql;
 
+import java.util.Objects;
+
 /**
  * INTERNAL: Represents a reference to a table in a relation
  * database. The reference consist of the name of the table and the
@@ -32,9 +34,9 @@ public class SQLTable {
   protected String alias;
   
   public SQLTable(String name, String alias) {
-    if (name == null) throw new NullPointerException("Table name cannot be null (alias=" + alias + ").");
+    Objects.requireNonNull(name, "Table name cannot be null (alias=" + alias + ").");
     // FIXME: Perhaps we should open for no table alias?
-    if (alias == null) throw new NullPointerException("Table alias cannot be null (name=" + name + ")."); 
+    Objects.requireNonNull(alias, "Table alias cannot be null (name=" + name + ").");
     this.name = name;
     this.alias = alias;
   }

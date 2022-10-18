@@ -21,7 +21,6 @@
 package net.ontopia.infoset.impl.basic;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -43,16 +42,6 @@ public class URIFragmentLocator extends AbstractLocator {
     this.schemeEnd = schemeEnd;
     this.authorityEnd = authorityEnd;
     this.lastSlash = lastSlash;
-  }
-
-  /**
-   * INTERNAL: Returns the URI as a URL object.
-   * 
-   * @deprecated Because not all URIs can be represented as URL objects.
-   */
-
-  public URL getURL() throws MalformedURLException {
-    return new URL(address + "#" + fragment);
   }
 
   // --------------------------------------------------------------------------

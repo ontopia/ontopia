@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.webed.impl.actions.variant;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -45,7 +45,7 @@ public class AddIntVariant extends AbstractTopicMapAction {
     paramsType.validateArguments(params, this);
 
     TopicNameIF basename = (TopicNameIF) params.get(0);
-    Collection themes = params.getCollection(1);
+    Collection<TopicIF> themes = params.getCollection(1);
     String value = params.getStringValue().trim();
     
     TopicMapBuilderIF builder =
@@ -56,13 +56,6 @@ public class AddIntVariant extends AbstractTopicMapAction {
       return;
     
     // create new (internal) variant for base name
-    VariantNameIF variant = builder.makeVariantName(basename, value);
-
-    // set scope, if provided
-    if (themes != null) {
-      Iterator it = themes.iterator();
-      while (it.hasNext()) 
-        variant.addTheme((TopicIF) it.next());
-    }
+    VariantNameIF variant = builder.makeVariantName(basename, value, themes == null ? Collections.emptySet() : themes);
   }
 }

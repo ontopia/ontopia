@@ -33,84 +33,84 @@ public class StringTemplateUtilsTest {
   
   @Test
   public void testProcessEmpty() {
-    verifyProcess("", "", Collections.EMPTY_MAP);
+    assertProcessesAs("", "", Collections.EMPTY_MAP);
   }
 
   @Test
   public void testProcessString() {
-    verifyProcess("a string", "a string", Collections.EMPTY_MAP);
+    assertProcessesAs("a string", "a string", Collections.EMPTY_MAP);
   }
 
   @Test
   public void testProcessSinglePercent() {
-    verifyProcess("a 100%% increase", "a 100% increase",
+    assertProcessesAs("a 100%% increase", "a 100% increase",
                   Collections.EMPTY_MAP);
   }
 
   @Test
   public void testProcessSinglePercentAtStart() {
-    verifyProcess("%% increase", "% increase", Collections.EMPTY_MAP);
+    assertProcessesAs("%% increase", "% increase", Collections.EMPTY_MAP);
   }
 
   @Test
   public void testProcessSinglePercentAtEnd() {
-    verifyProcess("120 %%", "120 %", Collections.EMPTY_MAP);
+    assertProcessesAs("120 %%", "120 %", Collections.EMPTY_MAP);
   }
 
   @Test
   public void testProcessDoublePercent() {
-    verifyProcess("aaa %%%% aaa", "aaa %% aaa", Collections.EMPTY_MAP);
+    assertProcessesAs("aaa %%%% aaa", "aaa %% aaa", Collections.EMPTY_MAP);
   }  
 
   @Test
   public void testProcessOnlySinglePercent() {
-    verifyProcess("%%", "%", Collections.EMPTY_MAP);
+    assertProcessesAs("%%", "%", Collections.EMPTY_MAP);
   }
 
   @Test
   public void testProcessParamRef() {
     Map map = new HashMap(); map.put("person", "Lars Marius");
-    verifyProcess("hi to %person%!", "hi to Lars Marius!", map);
+    assertProcessesAs("hi to %person%!", "hi to Lars Marius!", map);
   }
 
   @Test
   public void testProcessParamRefDirect() {
-    verifyProcess("hi to %person%!", "hi to Niko!", "person", "Niko");
+    assertProcessesAs("hi to %person%!", "hi to Niko!", "person", "Niko");
   }
   
   @Test
   public void testProcessParamRefDirectWithSep() {
-    verifyProcess("hi to #person#!", "hi to Niko!", "person", "Niko", '#');
+    assertProcessesAs("hi to #person#!", "hi to Niko!", "person", "Niko", '#');
   }
   
   @Test
   public void testProcessParamRefAndSingle() {
     Map map = new HashMap(); map.put("person", "Lars Marius");
-    verifyProcess("hi to %person%%%!", "hi to Lars Marius%!", map);
+    assertProcessesAs("hi to %person%%%!", "hi to Lars Marius%!", map);
   }
   
   @Test
   public void testProcessParamRefAtStart() {
     Map map = new HashMap(); map.put("person", "Lars Marius");
-    verifyProcess("%person% wrote this", "Lars Marius wrote this", map);
+    assertProcessesAs("%person% wrote this", "Lars Marius wrote this", map);
   }
   
   @Test
   public void testProcessParamRefAtStartDirect() {
-    verifyProcess("%person% extended this a bit", "Niko extended this a bit",
+    assertProcessesAs("%person% extended this a bit", "Niko extended this a bit",
                   "person", "Niko");
   }
   
   @Test
   public void testProcessParamRefAtEnd() {
     Map map = new HashMap(); map.put("person", "Lars Marius");
-    verifyProcess("hi to %person%", "hi to Lars Marius", map);
+    assertProcessesAs("hi to %person%", "hi to Lars Marius", map);
   }
   
   @Test
   public void testProcessOnlyParamRef() {
     Map map = new HashMap(); map.put("person", "Lars Marius");
-    verifyProcess("%person%", "Lars Marius", map);
+    assertProcessesAs("%person%", "Lars Marius", map);
   }
   
   @Test
@@ -118,7 +118,7 @@ public class StringTemplateUtilsTest {
     Map map = new HashMap();
     map.put("person", "Lars Marius");
     map.put("age", "28");
-    verifyProcess("in 2002 %person% is %age% years old",
+    assertProcessesAs("in 2002 %person% is %age% years old",
                   "in 2002 Lars Marius is 28 years old", map);
   }
 
@@ -128,7 +128,7 @@ public class StringTemplateUtilsTest {
     map.put("new", "123");
     map.put("new2", "456");
     map.put("value", "789");
-    verifyProcess("[%new% : %new2% = \"%value%\"]",
+    assertProcessesAs("[%new% : %new2% = \"%value%\"]",
                   "[123 : 456 = \"789\"]", map);
   }
   
@@ -137,7 +137,7 @@ public class StringTemplateUtilsTest {
     Map map = new HashMap();
     map.put("given", "Lars Marius");
     map.put("family", " Garshol");
-    verifyProcess("%given%%family%", "Lars Marius Garshol", map);
+    assertProcessesAs("%given%%family%", "Lars Marius Garshol", map);
   }
 
 
@@ -189,20 +189,20 @@ public class StringTemplateUtilsTest {
   
   // --- helpers
   
-  protected void verifyProcess(String template, String target, Map params) {
+  protected void assertProcessesAs(String template, String target, Map params) {
     String result = StringTemplateUtils.replace(template, params);
     Assert.assertTrue("'" + template + "'should resolve to '" + target +
                "', got '" + result + "'", target.equals(result));
   }
   
-  protected void verifyProcess(String template, String target,
+  protected void assertProcessesAs(String template, String target,
                                String param, String value) {
     String result = StringTemplateUtils.replace(template, param, value);
     Assert.assertTrue("'" + template + "'should resolve to '" + target +
                "', got '" + result + "'", target.equals(result));
   }
 
-  protected void verifyProcess(String template, String target,
+  protected void assertProcessesAs(String template, String target,
                                String param, String value, char sep) {
     String result = StringTemplateUtils.replace(template, param, value, sep);
     Assert.assertTrue("'" + template + "'should resolve to '" + target +

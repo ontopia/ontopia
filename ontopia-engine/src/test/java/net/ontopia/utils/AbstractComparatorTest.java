@@ -26,7 +26,7 @@ public abstract class AbstractComparatorTest {
 
   protected int intended_size = 8;
   
-  protected void testComparator(int comp, int identical, int different) {
+  protected void assertComparator(int comp, int identical, int different) {
     Assert.assertTrue("comparator is not equal", comp == identical);
     Assert.assertTrue("comparator is equal", comp != different);
   }

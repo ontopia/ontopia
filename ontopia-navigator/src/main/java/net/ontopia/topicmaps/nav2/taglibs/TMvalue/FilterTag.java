@@ -26,8 +26,8 @@ import java.util.HashSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Predicate;
 import javax.servlet.jsp.JspTagException;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -263,7 +263,7 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
       ScopedIF obj;
       while (iter.hasNext()) {
         obj = iter.next();
-        if (decider.ok(obj)) {
+        if (decider.test(obj)) {
           if (!invert)
             filtered.add(obj);
         } else {
@@ -408,8 +408,8 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
       // if instance of DeciderIF we need to wrap in NavigatorDeciderWrapper
       if (obj instanceof NavigatorDeciderIF)
         return (NavigatorDeciderIF) obj;
-      else if (obj instanceof DeciderIF)
-        return new DeciderIFWrapper((DeciderIF)obj);
+      else if (obj instanceof Predicate)
+        return new DeciderIFWrapper((Predicate)obj);
       
     } catch (NavigatorRuntimeException e) {
       log.warn("Unable to retrieve instance of " + classname);

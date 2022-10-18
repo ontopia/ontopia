@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionIF;
@@ -129,8 +130,7 @@ public class Association extends TMObject implements AssociationIF {
   
   @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
-    if (roletype == null)
-      throw new NullPointerException("Role type must not be null.");
+    Objects.requireNonNull(roletype, "Role type must not be null.");
     CrossTopicMapException.check(roletype, this);
     Collection<AssociationRoleIF> result = new CompactHashSet<AssociationRoleIF>();
     for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles))
@@ -150,8 +150,7 @@ public class Association extends TMObject implements AssociationIF {
   }
 
   protected void addRole(AssociationRoleIF assoc_role) {
-    if (assoc_role == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(assoc_role, MSG_NULL_ARGUMENT);
     // Check to see if association role is already a member of this association
     if (assoc_role.getAssociation() == this)
       return;
@@ -173,8 +172,7 @@ public class Association extends TMObject implements AssociationIF {
   }
 
   protected void removeRole(AssociationRoleIF assoc_role) {
-    if (assoc_role == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(assoc_role, MSG_NULL_ARGUMENT);
     // Check to see if association role is not a member of this association
     if (assoc_role.getAssociation() != this)
       return;
@@ -215,8 +213,7 @@ public class Association extends TMObject implements AssociationIF {
 
   @Override
   public void addTheme(TopicIF theme) {
-    if (theme == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(theme, MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(AssociationIF.EVENT_ADD_THEME, theme, null);
@@ -226,8 +223,7 @@ public class Association extends TMObject implements AssociationIF {
 
   @Override
   public void removeTheme(TopicIF theme) {
-    if (theme == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(theme, MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(AssociationIF.EVENT_REMOVE_THEME, null, theme);
@@ -251,8 +247,7 @@ public class Association extends TMObject implements AssociationIF {
 
   @Override
   public void setType(TopicIF type) {
-    if (type == null)
-      throw new NullPointerException("Association type must not be null.");
+    Objects.requireNonNull(type, "Association type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent(AssociationIF.EVENT_SET_TYPE, type, getType());

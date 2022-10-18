@@ -61,10 +61,10 @@ public class TMAssociationEdge extends TMAbstractEdge
     while (iterator.hasNext()) {
       AssociationRoleIF element = (AssociationRoleIF) iterator.next();
       if (element.getPlayer().equals(((TMTopicNode) this.from).getTopic()))
-        this.paintToolTipText(g, this.getStringifier().toString(
+        this.paintToolTipText(g, this.getStringifier().apply(
             element.getType()), getFromRolePosition());
       if (element.getPlayer().equals(((TMTopicNode) this.to).getTopic()))
-        this.paintToolTipText(g, this.getStringifier().toString(
+        this.paintToolTipText(g, this.getStringifier().apply(
             element.getType()), getToRolePosition());
     }
 

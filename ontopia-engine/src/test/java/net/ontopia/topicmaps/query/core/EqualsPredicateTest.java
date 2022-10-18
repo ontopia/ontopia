@@ -33,7 +33,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
   @Test
   public void testEqualsFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("topic1 = topic2?");
+    assertFindNothing("topic1 = topic2?");
   }
 
   @Test
@@ -41,7 +41,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"topic1 = topic1?");
+    assertQueryMatches(matches,"topic1 = topic1?");
   }
 
   @Test
@@ -51,7 +51,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic2"));
 
-    verifyQuery(matches, 
+    assertQueryMatches(matches, 
 		"select $TOPIC from occurrence($TOPIC, $O), " + 
 		"type($O, description), value($O, $DESC), " +
 		"$DESC = \"topic2\"?");
@@ -64,7 +64,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic4"));
 
-    verifyQuery(matches, "$TOPIC = topic4?");
+    assertQueryMatches(matches, "$TOPIC = topic4?");
   }
 
   @Test
@@ -74,7 +74,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic4"));
 
-    verifyQuery(matches, "topic4 = $TOPIC?");
+    assertQueryMatches(matches, "topic4 = $TOPIC?");
   }
 
   @Test
@@ -107,7 +107,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
                       "C2", getTopicById("kfg"),
                       "M", getTopicById("bjorg"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "parenthood(edvin : father, kjellaug : mother, $C1 : child)," +
                 "$C1 = $C2, " +
                 "parenthood($C2 : father, $M : mother, $GC : child)?");
@@ -120,7 +120,7 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic4"));
 
-    verifyQuery(matches, "topic($TOPIC), $TOPIC = topic4?");
+    assertQueryMatches(matches, "topic($TOPIC), $TOPIC = topic4?");
   }
 
   @Test
@@ -130,14 +130,14 @@ public class EqualsPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("topic4"));
 
-    verifyQuery(matches, "$TOPIC = topic4, topic($TOPIC)?");
+    assertQueryMatches(matches, "$TOPIC = topic4, topic($TOPIC)?");
   }
 
   @Test
   public void testUnboundVariable() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
-    getParseError("$A = $B?");
+    assertGetParseError("$A = $B?");
   }
   
 }

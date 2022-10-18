@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.VariantNameGrabber;
-import net.ontopia.infoset.impl.basic.URILocator;
 
 /**
  * INTERNAL: A Comparator for ordering TopicNameIFs and VariantNameIFs
@@ -96,7 +95,7 @@ public class NameComparator implements Comparator<NameIF> {
 
       // try to get sort variant name for this base name
       initSortNameGrabber( basename );
-      VariantNameIF sortVariant = sortNameGrabber.grab( basename );
+      VariantNameIF sortVariant = sortNameGrabber.apply( basename );
       if (sortVariant != null) {
         if (sortVariant.getValue() != null)
           value = sortVariant.getValue();

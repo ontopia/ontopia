@@ -20,13 +20,15 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.Collections;
+import java.util.function.Function;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.StringifierIF;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,14 +39,14 @@ public class NameStringifierTest {
   protected TopicNameIF        basename;
   protected VariantNameIF     variant;
   protected TopicMapBuilderIF builder;
-  protected StringifierIF     stringifier;
+  protected Function<NameIF, String> stringifier;
 
   @Before
   public void setUp() {
     topicmap = makeTopicMap();
     topic = builder.makeTopic();
     basename = builder.makeTopicName(topic, "");
-    variant = builder.makeVariantName(basename, "");
+    variant = builder.makeVariantName(basename, "", Collections.emptySet());
     stringifier = new NameStringifier();
   }
     
@@ -59,27 +61,27 @@ public class NameStringifierTest {
   @Test
   public void testTopicNameEmpty() {
     Assert.assertTrue("base name with no name did not stringify to \"\"",
-							 stringifier.toString(basename).equals(""));
+							 stringifier.apply(basename).equals(""));
   }
 
   @Test
   public void testTopicName() {
     basename.setValue("basename");
     Assert.assertTrue("base name stringified wrongly",
-           stringifier.toString(basename).equals("basename"));
+           stringifier.apply(basename).equals("basename"));
   }
 
   @Test
   public void testVariantEmpty() {
     Assert.assertTrue("variant with no name did not stringify to \"\"",
-							 stringifier.toString(variant).equals(""));
+							 stringifier.apply(variant).equals(""));
   }
 
   @Test
   public void testVariant() {
     variant.setValue("variant");
     Assert.assertTrue("variant stringified wrongly",
-           stringifier.toString(variant).equals("variant"));
+           stringifier.apply(variant).equals("variant"));
   }
   
 }

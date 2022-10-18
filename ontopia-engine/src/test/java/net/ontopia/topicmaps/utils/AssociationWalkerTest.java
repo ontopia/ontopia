@@ -99,7 +99,7 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     TopicIF descendant = getTopic("descendant");
 
     AssociationWalker ancestorsWalker = new AssociationWalker(descendant_of, descendant, ancestor);
-    AssociationWalker descendantsWalker = new AssociationWalker(descendant_of, ancestor, descendant);
+    new AssociationWalker(descendant_of, ancestor, descendant);
 
     TopicIF bart = getTopic("bart");
     TopicIF lisa = getTopic("lisa");

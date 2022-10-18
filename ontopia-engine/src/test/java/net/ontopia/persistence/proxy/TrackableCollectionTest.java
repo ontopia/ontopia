@@ -76,11 +76,11 @@ public abstract class TrackableCollectionTest {
     // Test clear() method
     TrackableCollectionIF<Object> set = createTrackableCollection();
 
-    Object obj1 = new String("1");
-    Object obj2 = new String("2");
-    Object obj3 = new String("3");
-    Object obj4 = new String("4");
-    Object obj5 = new String("5");
+    Object obj1 = "1";
+    Object obj2 = "2";
+    Object obj3 = "3";
+    Object obj4 = "4";
+    Object obj5 = "5";
     
     set.addWithTracking(obj1);
     set.addWithTracking(obj2);

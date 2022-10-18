@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.query.jdo;
 
+import java.util.Objects;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -32,8 +33,7 @@ public class JDOAggregate implements JDOAggregateIF {
   protected JDOValueIF value;
 
   public JDOAggregate(JDOValueIF value, int type) {
-    if (value == null)
-      throw new NullPointerException("Aggregate function variable cannot not be null.");
+    Objects.requireNonNull(value, "Aggregate function variable cannot not be null.");
     this.value = value;
     this.type = type;
   }

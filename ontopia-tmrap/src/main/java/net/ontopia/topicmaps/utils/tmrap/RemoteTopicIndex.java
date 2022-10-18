@@ -239,7 +239,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
   
   private void setLoaded(TopicIF topic) { 
     if (topic instanceof net.ontopia.topicmaps.impl.remote.RemoteTopic) {
-      boolean prev = ((net.ontopia.topicmaps.impl.remote.RemoteTopic) topic).isLoaded();
       ((net.ontopia.topicmaps.impl.remote.RemoteTopic) topic).setLoaded(true);
     }
   }
@@ -278,7 +277,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
                                       boolean two_steps) {
-    long start = System.currentTimeMillis();
     if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty())
       return Collections.emptySet();
     
@@ -286,7 +284,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
       // lookup or create target topic
       TopicMapIF targetTopicMap = storefactory.createStore().getTopicMap();    
       TopicIF targetTopic = createTopic(targetTopicMap, indicators, sources, subjects);
-      int count = 0;
       
       // build identity predicates
       List<String> idpredicates_T = getIdPredicates(targetTopic, "T");
@@ -331,7 +328,6 @@ public class RemoteTopicIndex implements TopicIndexIF {
       if (!isLoaded(targetTopic)) {
         setLoaded(targetTopic);
 				TopicMapSynchronizer.update(targetTopicMap, sourceTopic);
-        count++;
       }
 
       // get loaded topics (possibly 2 steps out)

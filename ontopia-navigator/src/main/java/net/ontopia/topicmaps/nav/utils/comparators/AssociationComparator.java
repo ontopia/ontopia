@@ -20,20 +20,12 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.util.Comparator;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.utils.NameStringifier;
-import net.ontopia.topicmaps.utils.TopicNameGrabber;
-import net.ontopia.utils.GrabberGrabber;
-import net.ontopia.utils.GrabberStringifier;
-import net.ontopia.utils.StringifierComparator;
-import net.ontopia.utils.StringifierGrabber;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.UpperCaseGrabber;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
 
 /**
  * INTERNAL: A Comparator for ordering AssociationIFs alphabetically
@@ -61,9 +53,8 @@ public class AssociationComparator implements Comparator<AssociationIF> {
     this.scopes = context;
     if (scopes == null)
       scopes = Collections.emptyList();
-    StringifierIF<TopicIF> bts = new GrabberStringifier<TopicIF, TopicNameIF>(new TopicNameGrabber(scopes),
-                                               new NameStringifier());
-    tc = new StringifierComparator<TopicIF>(new GrabberStringifier<TopicIF, String>(new GrabberGrabber<TopicIF, String>(new StringifierGrabber<TopicIF>(bts), new UpperCaseGrabber())));
+
+    tc = Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scopes).andThen(String::toUpperCase));
   }
   
   /**

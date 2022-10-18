@@ -81,8 +81,8 @@ public class QueryCacheTests {
       TopicMapBuilderIF builder = tmA.getBuilder();
 
       AssociationIF a1 = builder.makeAssociation(at);
-      AssociationRoleIF r1 = builder.makeAssociationRole(a1, rt1, p1);
-      AssociationRoleIF r2 = builder.makeAssociationRole(a1, rt2, p2);
+      builder.makeAssociationRole(a1, rt1, p1);
+      builder.makeAssociationRole(a1, rt2, p2);
 
       Assert.assertTrue("p1.roles.size is not 1.", p1.getRoles().size() == 1);
       Assert.assertTrue("p2.roles.size is not 1.", p2.getRoles().size() == 1);
@@ -190,8 +190,8 @@ public class QueryCacheTests {
       TopicMapBuilderIF builder = tmA.getBuilder();
 
       AssociationIF a1 = builder.makeAssociation(at1);
-      AssociationRoleIF r1 = builder.makeAssociationRole(a1, rt1, p1);
-      AssociationRoleIF r2 = builder.makeAssociationRole(a1, rt2, p2);
+      builder.makeAssociationRole(a1, rt1, p1);
+      builder.makeAssociationRole(a1, rt2, p2);
 
       Assert.assertTrue("p1.roles.size is not 1.", p1.getRoles().size() == 1);
       Assert.assertTrue("p2.roles.size is not 1.", p2.getRoles().size() == 1);
@@ -283,7 +283,7 @@ public class QueryCacheTests {
       Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
 
       // at1( p : rt1, o : rt2) -> at1( o : rt2)
-      AssociationIF aB = r1B.getAssociation();
+      r1B.getAssociation();
       r1B.remove();
       Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
       Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);

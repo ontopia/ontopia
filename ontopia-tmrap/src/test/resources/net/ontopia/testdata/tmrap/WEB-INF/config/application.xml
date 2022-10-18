@@ -37,8 +37,8 @@ Note: The location of this file needs to be recorded in web.xml.
      fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicComparator"/>
     <class shortcut="nameComparator"
      fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparator"/>
-    <class shortcut="basenameComparator"
-     fullname="net.ontopia.topicmaps.nav.utils.comparators.BaseNameComparator"/>
+    <class shortcut="topicNameComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicNameComparator"/>
     <class shortcut="assocComparator"
      fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationIDComparator"/>
     <class shortcut="assocTypeComparator"

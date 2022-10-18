@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.Function;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
@@ -38,7 +39,6 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.utils.TopicComparators;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.collections4.comparators.ReverseComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +53,7 @@ public class ForEachTag extends BodyTagSupport {
   private static final Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
 
   // constants
-  private static final int DEF_MAX_ITER = 100; // fallback-default-value
-  private static final StringifierIF DEF_TOPIC_STRINGIFIER = TopicStringifiers
+  private static final Function DEF_TOPIC_STRINGIFIER = TopicStringifiers
     .getDefaultStringifier();
   
   private static final Comparator DEF_TOPIC_COMPARATOR = TopicComparators

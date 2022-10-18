@@ -43,7 +43,7 @@ public class RDBMSTopicMapSourceTest extends AbstractTopicMapSourceTest {
     source.setSupportsDelete(true);
     
     // run abstract topic map source tests
-    doAbstractTopicMapSourceTests(source);
+    assertCompliesToAbstractTopicMapSource(source);
   }
   
 }

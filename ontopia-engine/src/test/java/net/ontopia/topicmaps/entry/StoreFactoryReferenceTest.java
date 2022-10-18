@@ -36,7 +36,7 @@ public class StoreFactoryReferenceTest extends AbstractTopicMapReferenceTest {
 
     // run abstract url topic map reference tests
     boolean checkOpenAfterClose = false;
-    doAbstractTopicMapReferenceTests(ref, checkOpenAfterClose);
+    assertCompliesToAbstractTopicMapReference(ref, checkOpenAfterClose);
   }
   
 }

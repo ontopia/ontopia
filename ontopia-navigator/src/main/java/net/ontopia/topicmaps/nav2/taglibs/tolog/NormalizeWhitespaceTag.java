@@ -55,7 +55,6 @@ public class NormalizeWhitespaceTag extends BodyTagSupport {
   private static class NormalizeWhitespaceWriter extends Writer {
     private Writer w;
     private boolean previousWasWS;
-    private boolean previousWasGT;
     private NormalizeWhitespaceWriter(Writer w) {
       this.w = w;
     }
@@ -71,14 +70,12 @@ public class NormalizeWhitespaceTag extends BodyTagSupport {
           previousWasWS = true;
           break;
         case '>':
-          previousWasGT = true;
           w.write(c);
           break;
         default:
           //if (previousWasWS && !(previousWasGT && c == '<')) w.write(' '); // dangerous
           if (previousWasWS) w.write(' ');
           previousWasWS = false;
-          previousWasGT = false;
           w.write(c);
         }
       }

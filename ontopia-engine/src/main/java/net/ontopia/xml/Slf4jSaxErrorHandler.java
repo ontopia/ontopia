@@ -21,7 +21,6 @@
 package net.ontopia.xml;
 
 import org.slf4j.Logger;
-import net.ontopia.utils.PropertyUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 

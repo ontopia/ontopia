@@ -21,6 +21,7 @@ package net.ontopia.topicmaps.core.events;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
@@ -151,19 +152,13 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
     public EventTrace(String event, String annotation, TMObjectIF tmObject) {
       super();
       
-      if(event == null) {
-        throw new NullPointerException("event must not be null");
-      }
+      Objects.requireNonNull(event, "event must not be null");
       this.event = event;
 
-      if(annotation == null) {
-        throw new NullPointerException("annotation must not be null");
-      }
+      Objects.requireNonNull(annotation, "annotation must not be null");
       this.annotation = annotation;
 
-      if(tmObject == null) {
-        throw new NullPointerException("tmObject must not be null");
-      }
+      Objects.requireNonNull(tmObject, "tmObject must not be null");
       this.tmObject = tmObject;
     }
         

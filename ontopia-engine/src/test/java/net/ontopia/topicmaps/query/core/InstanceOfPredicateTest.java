@@ -33,7 +33,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
   @Test
   public void testEmptyInstanceOfAB() throws InvalidQueryException {
     makeEmpty();
-    findNothing("instance-of($A, $B)?");
+    assertFindNothing("instance-of($A, $B)?");
   }
 
   @Test
@@ -46,7 +46,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "A", getTopicById("topic3"), "B", getTopicById("type2"));
     addMatch(matches, "A", getTopicById("topic4"), "B", getTopicById("type2"));
     
-    verifyQuery(matches, "instance-of($A, $B)?");
+    assertQueryMatches(matches, "instance-of($A, $B)?");
   }
   
   @Test
@@ -56,7 +56,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "B", getTopicById("type1"));
     
-    verifyQuery(matches, "instance-of(topic1, $B)?");
+    assertQueryMatches(matches, "instance-of(topic1, $B)?");
   }
 
   @Test
@@ -67,7 +67,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "A", getTopicById("topic1"));
     addMatch(matches, "A", getTopicById("topic2"));
     
-    verifyQuery(matches, "instance-of($A, type1)?");
+    assertQueryMatches(matches, "instance-of($A, type1)?");
   }
 
   @Test
@@ -77,13 +77,13 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "instance-of(topic1, type1)?");
+    assertQueryMatches(matches, "instance-of(topic1, type1)?");
   }
 
   @Test
   public void testInstanceOfWrong() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("instance-of(topic1, type2)?");
+    assertFindNothing("instance-of(topic1, type2)?");
   }
 
   @Test
@@ -98,7 +98,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "A", getTopicById("topic3"), "B", getTopicById("type1"));
     addMatch(matches, "A", getTopicById("topic4"), "B", getTopicById("type1"));
     
-    verifyQuery(matches, "instance-of($A, $B)?");
+    assertQueryMatches(matches, "instance-of($A, $B)?");
   }
   
   @Test
@@ -108,7 +108,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "B", getTopicById("type1"));
     
-    verifyQuery(matches, "instance-of(topic1, $B)?");
+    assertQueryMatches(matches, "instance-of(topic1, $B)?");
   }
 
   @Test
@@ -119,7 +119,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "B", getTopicById("type1"));
     addMatch(matches, "B", getTopicById("type2"));
     
-    verifyQuery(matches, "instance-of(topic3, $B)?");
+    assertQueryMatches(matches, "instance-of(topic3, $B)?");
   }
   
   @Test
@@ -132,7 +132,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "A", getTopicById("topic3"));
     addMatch(matches, "A", getTopicById("topic4"));
     
-    verifyQuery(matches, "instance-of($A, type1)?");
+    assertQueryMatches(matches, "instance-of($A, type1)?");
   }
 
   @Test
@@ -143,7 +143,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "A", getTopicById("topic3"));
     addMatch(matches, "A", getTopicById("topic4"));
     
-    verifyQuery(matches, "instance-of($A, type2)?");
+    assertQueryMatches(matches, "instance-of($A, type2)?");
   }
   
   @Test
@@ -153,7 +153,7 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "instance-of(topic1, type1)?");
+    assertQueryMatches(matches, "instance-of(topic1, type1)?");
   }
 
   @Test
@@ -163,40 +163,40 @@ public class InstanceOfPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "instance-of(topic2, type1)?");
+    assertQueryMatches(matches, "instance-of(topic2, type1)?");
   }
 
   @Test
   public void testInstanceOfWrongSub() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
-    findNothing("instance-of(topic1, type2)?");
+    assertFindNothing("instance-of(topic1, type2)?");
   }
 
   @Test
   public void testWrongType1() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), instance-of($TM, $TYPE)?");
   }
 
   @Test
   public void testWrongType2() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), instance-of($INSTANCE, $TM)?");
   }
 
   @Test
   public void testWrongType3() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), instance-of($TM, type1)?");
   }
 
   @Test
   public void testWrongType4() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "topicmap($TM), instance-of(topic1, $TM)?");
   }
   

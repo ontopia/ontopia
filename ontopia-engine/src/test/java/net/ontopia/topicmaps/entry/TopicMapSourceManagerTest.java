@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.entry;
 
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.SameStoreFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,31 +34,34 @@ public class TopicMapSourceManagerTest {
     manager = new TopicMapSourceManager();
   }
   
+  protected static StoreFactoryReference createReference(String id) {
+    return new StoreFactoryReference(id, "title", new SameStoreFactory(new InMemoryTopicMapStore()));
+  }
+
   // --- Test cases
 
   @Test
   public void testEmpty() {
-    verifyEmptyManager("");
+    assertEmptyManager("");
     manager.refresh();
-    verifyEmptyManager(" after refresh");
+    assertEmptyManager(" after refresh");
   }
 
   @Test
   public void testSingleSourceSingleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref =
-      new DefaultTopicMapReference("id", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref = createReference("id");
     source.addReference(ref);
     manager.addSource(source);
     manager.refresh();
 
     Assert.assertTrue("id collection of wrong size",
-           manager.getIds().size() == 1);
+           manager.getReferenceKeys().size() == 1);
     Assert.assertTrue("id of reference lost",
-           manager.getIds().contains("id"));
+           manager.getReferenceKeys().contains("id"));
                        
     Assert.assertTrue("reference not found",
-           manager.getReferenceById("id") == ref);
+           manager.getReferenceByKey("id") == ref);
     
     Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 1);
@@ -71,7 +75,7 @@ public class TopicMapSourceManagerTest {
 
     manager.removeSource(source);
     manager.refresh();
-    verifyEmptyManager(" after removal");
+    assertEmptyManager(" after removal");
 
     manager.removeSource(source); // checking that it's OK
   }
@@ -79,24 +83,22 @@ public class TopicMapSourceManagerTest {
   @Test
   public void testSingleSourceDoubleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref =
-      new DefaultTopicMapReference("id", "title", new InMemoryTopicMapStore());
-    DefaultTopicMapReference ref2 =
-      new DefaultTopicMapReference("id2", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref = createReference("id");
+    TopicMapReferenceIF ref2 = createReference("id2");
     source.addReference(ref);
     source.addReference(ref2);
     manager.addSource(source);
     manager.refresh();
 
     Assert.assertTrue("id collection of wrong size",
-           manager.getIds().size() == 2);
+           manager.getReferenceKeys().size() == 2);
     Assert.assertTrue("id of reference lost",
-           manager.getIds().contains("id") &&
-           manager.getIds().contains("id2"));
+           manager.getReferenceKeys().contains("id") &&
+           manager.getReferenceKeys().contains("id2"));
     
     Assert.assertTrue("reference not found",
-           manager.getReferenceById("id") == ref &&
-           manager.getReferenceById("id2") == ref2 );
+           manager.getReferenceByKey("id") == ref &&
+           manager.getReferenceByKey("id2") == ref2 );
     
     Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 2);
@@ -111,7 +113,7 @@ public class TopicMapSourceManagerTest {
 
     manager.removeSource(source);
     manager.refresh();
-    verifyEmptyManager(" after removal");
+    assertEmptyManager(" after removal");
 
     manager.removeSource(source); // checking that it's OK
   }
@@ -119,27 +121,25 @@ public class TopicMapSourceManagerTest {
   @Test
   public void testDoubleSourceSingleRef() {
     DefaultTopicMapSource source = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref =
-      new DefaultTopicMapReference("id", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref = createReference("id");
     source.addReference(ref);
     manager.addSource(source);
     
     DefaultTopicMapSource source2 = new DefaultTopicMapSource();
-    DefaultTopicMapReference ref2 =
-      new DefaultTopicMapReference("id2", "title", new InMemoryTopicMapStore());
+    TopicMapReferenceIF ref2 = createReference("id2");
     source2.addReference(ref2);
     manager.addSource(source2);
     manager.refresh();
     
     Assert.assertTrue("id collection of wrong size",
-           manager.getIds().size() == 2);
+           manager.getReferenceKeys().size() == 2);
     Assert.assertTrue("id of reference lost",
-           manager.getIds().contains("id") &&
-           manager.getIds().contains("id2"));
+           manager.getReferenceKeys().contains("id") &&
+           manager.getReferenceKeys().contains("id2"));
     
     Assert.assertTrue("reference not found",
-           manager.getReferenceById("id") == ref &&
-           manager.getReferenceById("id2") == ref2 );
+           manager.getReferenceByKey("id") == ref &&
+           manager.getReferenceByKey("id2") == ref2 );
     
     Assert.assertTrue("reference collection of wrong size",
            manager.getReferences().size() == 2);
@@ -156,7 +156,7 @@ public class TopicMapSourceManagerTest {
     manager.removeSource(source);
     manager.removeSource(source2);
     manager.refresh();
-    verifyEmptyManager(" after removal");
+    assertEmptyManager(" after removal");
 
     manager.removeSource(source); // checking that it's OK
   }
@@ -164,12 +164,12 @@ public class TopicMapSourceManagerTest {
   
   // --- INTERNAL METHODS
 
-  private void verifyEmptyManager(String suffix) {
+  private void assertEmptyManager(String suffix) {
     Assert.assertTrue("id collection not empty" + suffix,
-           manager.getIds().size() == 0);
+           manager.getReferenceKeys().size() == 0);
 
     Assert.assertTrue("non-existent reference found" + suffix,
-           manager.getReferenceById("rongobongo") == null);
+           manager.getReferenceByKey("rongobongo") == null);
     
     Assert.assertTrue("reference collection not empty" + suffix,
            manager.getReferences().size() == 0);

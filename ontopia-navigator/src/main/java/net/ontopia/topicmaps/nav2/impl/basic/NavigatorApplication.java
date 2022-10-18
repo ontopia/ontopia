@@ -45,7 +45,6 @@ import net.ontopia.topicmaps.entry.SharedStoreRegistry;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
-import net.ontopia.topicmaps.entry.UserStoreRegistry;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
@@ -165,25 +164,6 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   @Override
   public TopicMapRepositoryIF getTopicMapRepository() {
       return repository;
-  }
-
-  @Deprecated
-  @Override
-  public UserStoreRegistry getUserStoreRegistry() {
-    throw new UnsupportedOperationException("Method is no longer supported.");
-  }
-
-  /**
-   * INTERNAL: Reloads application.xml and plug-in configurations.
-   *
-   * @deprecated
-   */  
-  @Deprecated
-  @Override
-  public void refreshAppConfig() {
-    readInAppConfig();
-    // refresh also plug-ins because they are assigned to navigation configuration
-    readAndSetPlugins();
   }
 
   @Override
@@ -462,19 +442,6 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     log.info("Navigator application '" + getName() + "' will use default shared topic maps repository");
   }
   
-  /**
-   * INTERNAL: Reloads the topic map repository, which stores
-   * information about which topicmaps should be made available to the
-   * web application.
-   *
-   * @deprecated
-   */
-  @Deprecated
-  @Override
-  public synchronized void refreshTopicMapRegistry() {
-    //! WARNING: the below is inherently unsafe, so it has been disabled
-  }
-
   /**
    * INTERNAL: Looks up the SharedStoreRegistry in JNDI.
    */

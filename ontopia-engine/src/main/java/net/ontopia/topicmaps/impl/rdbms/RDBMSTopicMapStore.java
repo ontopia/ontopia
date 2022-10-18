@@ -333,8 +333,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       if (reference != null) {
         
         // rollback, but not invalidate, open transaction
-        if (transaction != null)
+        if (transaction != null) {
           ((AbstractTopicMapTransaction)transaction).abort(false);
+        }
         
         // notify topic map reference that store has been closed.
         reference.storeClosed(this);

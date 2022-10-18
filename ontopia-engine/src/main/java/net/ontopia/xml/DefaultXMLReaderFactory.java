@@ -22,8 +22,6 @@ package net.ontopia.xml;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
@@ -41,9 +39,6 @@ import org.xml.sax.XMLReader;
  */
 
 public class DefaultXMLReaderFactory {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
 
   private static final SAXParserFactory FACTORY = SAXParserFactory.newInstance();
 

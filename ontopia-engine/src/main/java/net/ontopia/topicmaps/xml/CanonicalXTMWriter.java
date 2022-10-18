@@ -885,32 +885,6 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   }
 
-  class SetComparator extends AbstractComparator {
-  
-    private Comparator elementComparator;
-    
-    public SetComparator(Comparator elementComparator) {
-      this.elementComparator = elementComparator;
-    }  
-  
-    @Override
-    public int compare(Object o1, Object o2) {
-      Collection c1 = (Collection) o1;
-      Collection c2 = (Collection) o2;
-      
-      int cmp = c1.size() - c2.size();
-
-      Iterator it1 = c1.iterator();
-      Iterator it2 = c2.iterator();
-      while (cmp == 0 && it1.hasNext()) {
-        cmp = elementComparator.compare(it1.next(), it2.next());
-      }
-
-      return cmp;
-    }
-  
-  }
-
   class VariantComparator extends AbstractComparator {
 
     @Override

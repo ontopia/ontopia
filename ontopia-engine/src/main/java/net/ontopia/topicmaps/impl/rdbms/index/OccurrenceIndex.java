@@ -28,8 +28,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
-import net.ontopia.utils.GrabberIF;
-import net.ontopia.utils.GrabberIterator;
+import org.apache.commons.collections4.iterators.TransformIterator;
 
 /**
  * INTERNAL: The rdbms occurrence index implementation.
@@ -84,22 +83,12 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
   @Override
   public Iterator<String> getValuesGreaterThanOrEqual(String value) {
     Collection<OccurrenceIF> coll = (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesGreaterThanOrEqual", new Object[] { getTopicMap(), value });
-    return new GrabberIterator<OccurrenceIF, String>(coll.iterator(), new GrabberIF<OccurrenceIF, String>() {
-      @Override
-        public String grab(OccurrenceIF o) {
-          return o.getValue();
-        }
-      });
+    return new TransformIterator<>(coll.iterator(), OccurrenceIF::getValue);
   }  
 
   @Override
   public Iterator<String> getValuesSmallerThanOrEqual(String value) {
     Collection<OccurrenceIF> coll = (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesLessThanOrEqual", new Object[] { getTopicMap(), value });
-    return new GrabberIterator<OccurrenceIF, String>(coll.iterator(), new GrabberIF<OccurrenceIF, String>() {
-      @Override
-        public String grab(OccurrenceIF o) {
-          return o.getValue();
-        }
-      });
+    return new TransformIterator<>(coll.iterator(), OccurrenceIF::getValue);
   }  
 }

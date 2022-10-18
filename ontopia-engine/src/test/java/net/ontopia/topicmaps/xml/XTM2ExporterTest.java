@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -43,8 +44,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 // extending XTMExporterTest in order to reuse some of the helper code
 public class XTM2ExporterTest extends AbstractXMLTestCase {
-  
-  private final static String testdataDirectory = "canonical";
 
   @Before
   public void setVersion() {
@@ -70,7 +69,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
       new SearchAttributeValue("resourceRef", "href", loc.getExternalForm(),
                                SearchAttributeValue.REQUIRED);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
 
   @Test
@@ -79,7 +78,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     TopicIF topic = builder.makeTopic();
     TopicNameIF name = builder.makeTopicName(topic, "Topic");
     LocatorIF loc = new URILocator("http://example.org/foo+bar");
-    builder.makeVariantName(name, loc);
+    builder.makeVariantName(name, loc, Collections.emptySet());
 
     // export to file
     export();
@@ -89,7 +88,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
       new SearchAttributeValue("resourceRef", "href", loc.getExternalForm(),
                                SearchAttributeValue.REQUIRED);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
 
   @Test
@@ -109,7 +108,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
                                DataTypes.TYPE_STRING.getAddress(),
                                SearchAttributeValue.FORBIDDEN);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
 
   @Test
@@ -131,7 +130,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
       new SearchAttributeValue("itemIdentity", "href", iid.getAddress(),
                                SearchAttributeValue.FORBIDDEN, false);
     parseFile(handler);
-    handler.check();
+    assertCorrectXTM2(handler);
   }
   
   @Test
@@ -191,6 +190,10 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     parser.parse(source);
   }
   
+  private void assertCorrectXTM2(SearchAttributeValue handler) {
+      handler.check();
+  }
+
   // --- Internal helper classes
 
   class SearchAttributeValue extends DefaultHandler {

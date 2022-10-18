@@ -20,19 +20,17 @@
 
 package net.ontopia.topicmaps.entry;
 
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.utils.SameStoreFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DefaultTopicMapSourceTest {
-  private TopicMapStoreIF store;
   private DefaultTopicMapSource source;
 
   @Before
   public void setUp() {
-    store = new InMemoryTopicMapStore();
     source = new DefaultTopicMapSource();
   }
   
@@ -44,7 +42,7 @@ public class DefaultTopicMapSourceTest {
            source.getReferences().size() == 0);
 
     TopicMapReferenceIF ref =
-      new DefaultTopicMapReference("id", "title", store);
+      new StoreFactoryReference("id", "title", new SameStoreFactory(new InMemoryTopicMapStore()));
     source.addReference(ref);
 
     Assert.assertTrue("source not registered with reference",

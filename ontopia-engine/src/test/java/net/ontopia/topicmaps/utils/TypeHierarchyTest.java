@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
@@ -35,7 +34,6 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
   @Before
   public void setUp() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    TopicMapBuilderIF builder = store.getTopicMap().getBuilder();
     tm = store.getTopicMap();
   }
 
@@ -78,8 +76,8 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
     TopicIF topic2 = builder.makeTopic();
 
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
-    AssociationRoleIF role1 = builder.makeAssociationRole(assoc, builder.makeTopic(), topic1);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, builder.makeTopic(), topic2);
+    builder.makeAssociationRole(assoc, builder.makeTopic(), topic1);
+    builder.makeAssociationRole(assoc, builder.makeTopic(), topic2);
 
     TypeHierarchyUtils u = new TypeHierarchyUtils();
     Assert.assertTrue("Assert.failed to find topics associated with each other",
@@ -94,8 +92,8 @@ public class TypeHierarchyTest extends AbstractUtilsTestCase {
     TopicIF topic2 = builder.makeTopic();
 
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
-    AssociationRoleIF role1 = builder.makeAssociationRole(assoc, builder.makeTopic(), topic1);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, builder.makeTopic(), builder.makeTopic());
+    builder.makeAssociationRole(assoc, builder.makeTopic(), topic1);
+    builder.makeAssociationRole(assoc, builder.makeTopic(), builder.makeTopic());
 
     TypeHierarchyUtils u = new TypeHierarchyUtils();
     Assert.assertTrue("found false positive",

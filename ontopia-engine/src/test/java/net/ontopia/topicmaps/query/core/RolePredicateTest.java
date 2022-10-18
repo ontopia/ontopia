@@ -42,7 +42,7 @@ public class RolePredicateTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
     closeStore();
   }
 
@@ -61,7 +61,7 @@ public class RolePredicateTest extends AbstractQueryTest {
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
     closeStore();
   }
 
@@ -78,12 +78,12 @@ public class RolePredicateTest extends AbstractQueryTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
     closeStore();
   }
 
@@ -100,17 +100,17 @@ public class RolePredicateTest extends AbstractQueryTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
-    AssociationIF assoc2 = builder.makeAssociation(atype);
+    builder.makeAssociation(atype);
     AssociationRoleIF role3 = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
     addMatch(matches, "ROLE", role3);
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
     closeStore();
   }
 
@@ -129,7 +129,7 @@ public class RolePredicateTest extends AbstractQueryTest {
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
  
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
     closeStore();
   }
 
@@ -146,12 +146,12 @@ public class RolePredicateTest extends AbstractQueryTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
  
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
     closeStore();
   }
 
@@ -168,16 +168,16 @@ public class RolePredicateTest extends AbstractQueryTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
-    AssociationIF assoc2 = builder.makeAssociation(atype);
-    AssociationRoleIF role3 = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc, rtype2, player);
+    builder.makeAssociation(atype);
+    builder.makeAssociationRole(assoc, rtype1, player);
+    builder.makeAssociationRole(assoc, rtype2, player);
     
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
  
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
     closeStore();
   }
 

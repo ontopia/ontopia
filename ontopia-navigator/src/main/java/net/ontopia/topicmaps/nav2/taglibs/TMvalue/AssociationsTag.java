@@ -24,12 +24,13 @@ import java.util.HashSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Predicate;
 import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.utils.DeciderIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseScopedTag;
@@ -54,7 +55,7 @@ public class AssociationsTag extends BaseScopedTag {
       AssociationIF currentAssoc = null;
       Object obj = null;
       Iterator iterRoles = null;
-      DeciderIF scopeDecider = null;
+      Predicate<ScopedIF> scopeDecider = null;
 
       // setup scope filter for user context filtering
       if (useUserContextFilter)
@@ -72,7 +73,7 @@ public class AssociationsTag extends BaseScopedTag {
               assocRole = (AssociationRoleIF) iterRoles.next();
               currentAssoc = assocRole.getAssociation();
               // add current assoc if within user context if specified
-              if (scopeDecider == null || scopeDecider.ok(currentAssoc))
+              if (scopeDecider == null || scopeDecider.test(currentAssoc))
                 associations.add( currentAssoc );
             } // while iterRoles
           }
@@ -83,7 +84,7 @@ public class AssociationsTag extends BaseScopedTag {
             currentAssoc = assocRole.getAssociation();
             // add current assoc if within user context if specified
             if (scopeDecider != null) {
-              if (scopeDecider.ok(currentAssoc))
+              if (scopeDecider.test(currentAssoc))
                 associations.add(currentAssoc);
             } else
               associations.add(currentAssoc);

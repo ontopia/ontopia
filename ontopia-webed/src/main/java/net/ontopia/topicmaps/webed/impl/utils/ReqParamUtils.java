@@ -32,7 +32,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.ontopia.topicmaps.webed.core.FileValueIF;
-import net.ontopia.utils.URIUtils;
 
 import org.apache.commons.fileupload.DefaultFileItemFactory;
 import org.apache.commons.fileupload.FileItem;

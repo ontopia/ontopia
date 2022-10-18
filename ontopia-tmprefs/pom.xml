@@ -27,11 +27,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+			<artifactId>slf4j-reload4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-engine</artifactId>
+			<version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
 		</dependency>
 	</dependencies>
 

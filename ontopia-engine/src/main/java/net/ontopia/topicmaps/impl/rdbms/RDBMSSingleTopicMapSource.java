@@ -253,24 +253,6 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
   }
   
   /**
-   * INTERNAL: Gets the alias of the topic map reference.
-   *
-   * @deprecated Replaced by getReferenceId().
-   */
-  public String getAlias() {
-    return getReferenceId();
-  }
-
-  /**
-   * INTERNAL: Sets the alias of the topic map reference.
-   *
-   * @deprecated Replaced by setReferenceId(String).
-   */
-  public void setAlias(String alias) {
-    setReferenceId(alias);
-  }
-
-  /**
    * PUBLIC: Gets the id of the topic map reference for this topic map
    * source.
    */

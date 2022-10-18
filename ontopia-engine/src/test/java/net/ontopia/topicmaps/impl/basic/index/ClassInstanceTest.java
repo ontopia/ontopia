@@ -73,8 +73,8 @@ public class ClassInstanceTest {
         AssociationRoleIF r2 = builder.makeAssociationRole(a1, art2, t2);
 
         AssociationIF a2 = builder.makeAssociation(at);
-        AssociationRoleIF r3 = builder.makeAssociationRole(a2, art3, t1);
-        AssociationRoleIF r4 = builder.makeAssociationRole(a2, art3, t2);
+        builder.makeAssociationRole(a2, art3, t1);
+        builder.makeAssociationRole(a2, art3, t2);
         
         Assert.assertTrue("role type not found",
                index.getAssociationRoles(art1).size() == 1);
@@ -119,7 +119,7 @@ public class ClassInstanceTest {
         // STATE 3: topic map has duplicates
         AssociationIF a3 = builder.makeAssociation(at);
         AssociationRoleIF r5 = builder.makeAssociationRole(a3, art1, t1);
-        AssociationRoleIF r6 = builder.makeAssociationRole(a3, art2, t2);
+        builder.makeAssociationRole(a3, art2, t2);
         
         Assert.assertTrue("role type not found",
                index.getAssociationRoles(art1).size() == 2);
@@ -143,12 +143,12 @@ public class ClassInstanceTest {
         TopicIF t2 = builder.makeTopic();
 
         AssociationIF a1 = builder.makeAssociation(at1);
-        AssociationRoleIF r1 = builder.makeAssociationRole(a1, builder.makeTopic(), t1);
-        AssociationRoleIF r2 = builder.makeAssociationRole(a1, builder.makeTopic(), t2);
+        builder.makeAssociationRole(a1, builder.makeTopic(), t1);
+        builder.makeAssociationRole(a1, builder.makeTopic(), t2);
 
         AssociationIF a2 = builder.makeAssociation(at2);
-        AssociationRoleIF r3 = builder.makeAssociationRole(a2, builder.makeTopic(), t1);
-        AssociationRoleIF r4 = builder.makeAssociationRole(a2, builder.makeTopic(), t2);
+        builder.makeAssociationRole(a2, builder.makeTopic(), t1);
+        builder.makeAssociationRole(a2, builder.makeTopic(), t2);
         
         Assert.assertTrue("association type not found",
                index.getAssociations(at1).size() == 1);
@@ -255,7 +255,7 @@ public class ClassInstanceTest {
         TopicIF tt1 = builder.makeTopic();
         TopicIF tt2 = builder.makeTopic();
         TopicIF t1 = builder.makeTopic();
-        TopicIF t2 = builder.makeTopic();
+        builder.makeTopic();
         t1.addType(tt1);
         t1.addType(tt2);
 
@@ -403,7 +403,7 @@ public class ClassInstanceTest {
         Assert.assertTrue("OccurrenceIF.setType(ot2) does not update index",
                index.getOccurrences(ot1).size() == 0);
 
-        OccurrenceIF o2 = builder.makeOccurrence(t1, ot1, "");
+        builder.makeOccurrence(t1, ot1, "");
         Assert.assertTrue("TopicIF.addOccurrence does not update index",
                index.getOccurrences(ot1).size() == 1);
         

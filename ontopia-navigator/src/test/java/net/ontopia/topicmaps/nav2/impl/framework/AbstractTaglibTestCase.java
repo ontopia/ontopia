@@ -22,16 +22,12 @@ package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Abstract class for handling a test case related to the
  * navigator taglib framework.
  */
 public abstract class AbstractTaglibTestCase {
-
-  private static final Logger log = LoggerFactory.getLogger(AbstractTaglibTestCase.class.getName());
   protected String jspfile;
   protected String topicmapId;
   protected Map<String, String[]> reqParams;

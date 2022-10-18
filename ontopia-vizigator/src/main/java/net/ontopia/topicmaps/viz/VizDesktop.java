@@ -58,10 +58,10 @@ import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.SimpleFileFilter;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.URIUtils;
 
 import com.touchgraph.graphlayout.Node;
+import java.util.function.Function;
 
 /**
  * INTERNAL: The top-level class for the VizDesktop. Can be run from the
@@ -92,7 +92,7 @@ public class VizDesktop implements VizFrontEndIF {
   private JMenuItem mapViewMenu;
   private JMenuItem clearStartMenu;
   private JMenu scopingTopicsMenu;
-  private StringifierIF stringifier;
+  private Function<TopicIF, String> stringifier;
   private TopicIF currentScope;
   private OpenRDBMSDialogBox openBox;
   private static final boolean enableRDBMSImport = true;
@@ -588,7 +588,7 @@ public class VizDesktop implements VizFrontEndIF {
       Collections.sort(untyped, new TopicComparator());
       for (Iterator iterator = untyped.iterator(); iterator.hasNext();) {
         TopicIF scope = (TopicIF) iterator.next();
-        JMenuItem scopeMenu = new JMenuItem(stringifier.toString(scope));
+        JMenuItem scopeMenu = new JMenuItem(stringifier.apply(scope));
         scopeMenu.addActionListener(new ScopeActionListener(scope));
         scopingTopicsMenu.add(scopeMenu);
         scopeMenu.setEnabled(!scope.equals(currentScope));
@@ -602,13 +602,13 @@ public class VizDesktop implements VizFrontEndIF {
 
       for (Iterator iter = grouping.iterator(); iter.hasNext();) {
         TopicIF group = (TopicIF) iter.next();
-        JMenu groupMenu = new JMenu(stringifier.toString(group));
+        JMenu groupMenu = new JMenu(stringifier.apply(group));
         scopingTopicsMenu.add(groupMenu);
         List list = (List) map.get(group);
         Collections.sort(list, new TopicComparator());
         for (Iterator iterator = list.iterator(); iterator.hasNext();) {
           TopicIF scope = (TopicIF) iterator.next();
-          JMenuItem scopeMenu = new JMenuItem(stringifier.toString(scope));
+          JMenuItem scopeMenu = new JMenuItem(stringifier.apply(scope));
           scopeMenu.addActionListener(new ScopeActionListener(scope));
           groupMenu.add(scopeMenu);
           scopeMenu.setEnabled(!scope.equals(currentScope));
@@ -711,7 +711,7 @@ public class VizDesktop implements VizFrontEndIF {
     String name =
         (type == controller.getConfigurationManager().defaultAssociationType)
         ? Messages.getString("Viz.DefaultType")
-        : stringifier.toString(type);
+        : stringifier.apply(type);
     
     ColouredSquareMenuItem mItem = new ColouredSquareMenuItem(name,
         stateOf(type, false));
@@ -728,7 +728,7 @@ public class VizDesktop implements VizFrontEndIF {
         .defaultType)
       name = Messages.getString("Viz.DefaultType");
     else
-      name = stringifier.toString(type);
+      name = stringifier.apply(type);
 
     // add new ones based on topicmap ontology.
     ColouredSquareMenuItem mItem = new ColouredSquareMenuItem(name,

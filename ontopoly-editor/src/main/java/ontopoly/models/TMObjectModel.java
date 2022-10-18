@@ -43,10 +43,8 @@ public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
   }
 
   public TMObjectModel(String topicMapId, String objectId) {
-    if (topicMapId == null)
-      throw new NullPointerException("topicMapId parameter cannot be null.");
-    if (objectId == null)
-      throw new NullPointerException("objectId parameter cannot be null.");
+    Objects.requireNonNull(topicMapId, "topicMapId parameter cannot be null.");
+    Objects.requireNonNull(objectId, "objectId parameter cannot be null.");
     this.topicMapId = topicMapId;
     this.objectId = objectId;
   }

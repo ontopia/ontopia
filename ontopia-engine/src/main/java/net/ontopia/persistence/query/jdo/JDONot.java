@@ -20,6 +20,8 @@
 
 package net.ontopia.persistence.query.jdo;
 
+import java.util.Objects;
+
 /**
  * INTERNAL: JDOQL logical expression: not (!). Syntax: '!( ... )'.
  */
@@ -29,8 +31,7 @@ public class JDONot implements JDOExpressionIF {
   protected JDOExpressionIF expression;
 
   public JDONot(JDOExpressionIF expression) {
-    if (expression == null)
-      throw new NullPointerException("Not expression must have nested expression.");
+    Objects.requireNonNull(expression, "Not expression must have nested expression.");
     this.expression = expression;
   }
   

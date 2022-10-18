@@ -264,7 +264,7 @@ public abstract class VariantNameTest extends AbstractScopedTest {
     Assert.assertTrue("Base name does have scope when it should not", bn.getScope().isEmpty());
     Assert.assertTrue("Variant does have scope when it should not", vn.getScope().isEmpty());
     
-    TopicIF theme = builder.makeTopic();
+    builder.makeTopic();
   }
     
   // --- Internal methods

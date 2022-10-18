@@ -51,7 +51,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "role-player($ROLE, $PLAYER)?");
+    assertQueryMatches(matches, "role-player($ROLE, $PLAYER)?");
   }  
 
   @Test
@@ -63,7 +63,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     AssociationRoleIF role = (AssociationRoleIF) teacher.getRoles().iterator().next();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", larer)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", larer)?");
   }
 
   @Test
@@ -74,7 +74,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF teacher = getTopicById("larer");
     AssociationRoleIF role = (AssociationRoleIF) teacher.getRoles().iterator().next();
     
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", gdm)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", gdm)?");
   } 
 
   @Test
@@ -83,7 +83,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     
-    verifyQuery(matches, OPT_TYPECHECK_OFF +
+    assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "topic($TOPIC), role-player($TOPIC, $ROLE)?");
   } 
   
@@ -94,7 +94,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
   }
 
   @Test
@@ -109,7 +109,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
   }
 
   @Test
@@ -122,12 +122,12 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
   }
 
   @Test
@@ -140,17 +140,17 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     AssociationIF assoc2 = builder.makeAssociation(atype);
     AssociationRoleIF role3 = builder.makeAssociationRole(assoc2, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc2, rtype2, other);
+    builder.makeAssociationRole(assoc2, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
     addMatch(matches, "ROLE", role3);
  
-    verifyQuery(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
+    assertQueryMatches(matches, "role-player($ROLE, @" + player.getObjectId() + ")?");
   }
 
   @Test
@@ -165,7 +165,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
  
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
   }
 
   @Test
@@ -178,12 +178,12 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
  
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
   }
 
   @Test
@@ -196,16 +196,16 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
     AssociationRoleIF role = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
+    builder.makeAssociationRole(assoc, rtype2, other);
 
     AssociationIF assoc2 = builder.makeAssociation(atype);
-    AssociationRoleIF role3 = builder.makeAssociationRole(assoc2, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc2, rtype2, other);
+    builder.makeAssociationRole(assoc2, rtype1, player);
+    builder.makeAssociationRole(assoc2, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "PLAYER", player);
  
-    verifyQuery(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
+    assertQueryMatches(matches, "role-player(@" + role.getObjectId() + ", $PLAYER)?");
   }
 
   @Test
@@ -216,7 +216,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "B", getTopicById("lmg"));
     addMatch(matches, "B", getTopicById("stine"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $B from role-player($A, $B), type($A, employee)?");
   }
@@ -231,7 +231,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "A", lmg.getRolesByType(employee).iterator().next());
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "type($A, employee), role-player($A, lmg)?");
   }
@@ -244,7 +244,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("lmg"));
     addMatch(matches, "T", getTopicById("stine"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "  type($A, works-for), " +
@@ -261,7 +261,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("lmg"));
     addMatch(matches, "T", getTopicById("stine"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "  type($A, works-for), " +
@@ -283,7 +283,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("employee"));
     addMatch(matches, "T", getTopicById("person"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "  role-player($R, $T), " +
@@ -299,14 +299,14 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("lmg"));
     addMatch(matches, "T", getTopicById("stine"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "  played-by(person : type, $RT : role), " +
                 "  role-player($R, $T), " +
                 "  type($R, $RT)?");
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T from " +
                 "  played-by(person : type, $RT : role), " +
                 "  role-player($R, $T), " +
@@ -321,13 +321,13 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("lmg"));
     addMatch(matches, "T", getTopicById("stine"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "role-player($R, $T), " +
                 "type($R, employee)?");
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T from " +
                 "role-player($R, $T), " +
                 "type($R, employee)?");
@@ -340,14 +340,14 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "T", getTopicById("lmg"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "instance-of($T, person), " +
                 "role-player($R, $T), " +
                 "type($R, owner)?");
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T from " +
                 "instance-of($T, person), " +
                 "role-player($R, $T), " +
@@ -362,7 +362,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("lmg"));
     addMatch(matches, "T", getTopicById("stine"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "  played-by(person : type, $RT : role), " +
@@ -370,7 +370,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
                 "  role-player($R, $T), " +
                 "  type($R, $RT)?");
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T from " +
                 "  played-by(person : type, $RT : role), " +
                 "  topic($T), " + // binds $T, but might be optimized away
@@ -388,7 +388,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("lmg"),   "RT", employee);
     addMatch(matches, "T", getTopicById("stine"), "RT", employee);
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T, $RT from " +
                 "  played-by(person : type, $RT : role), " +
@@ -396,7 +396,7 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
                 "  role-player($R, $T), " +
                 "  type($R, $RT)?");
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T, $RT from " +
                 "  played-by(person : type, $RT : role), " +
                 "  topic($T), " + // binds $T, but might be optimized away
@@ -416,13 +416,13 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     Map params = new HashMap();
     params.put("type", getTopicById("employee"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "role-player($R, $T), " +
                 "type($R, %type%)?", params);
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T from " +
                 "role-player($R, $T), " +
                 "type($R, %type%)?", params);
@@ -439,14 +439,14 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     Map params = new HashMap();
     params.put("type", getTopicById("owner"));
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "/* #OPTION: optimizer.reorder = false */ " +
                 "select $T from " +
                 "instance-of($T, person), " +
                 "role-player($R, $T), " +
                 "type($R, %type%)?", params);
 
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $T from " +
                 "instance-of($T, person), " +
                 "role-player($R, $T), " +

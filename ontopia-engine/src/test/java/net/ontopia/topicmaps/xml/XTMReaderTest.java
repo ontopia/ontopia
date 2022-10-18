@@ -61,19 +61,19 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   }
 
   // NOTE: this one validates!
-  protected TopicMapIF readTopicMap(String dir, String filename)
+  protected TopicMapIF assertReadTopicMap(String dir, String filename)
       throws IOException {
     filename = TestFileUtils.getTestInputFile(dir, filename);
     return new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename)).read();
   }
 
-  protected TopicMapIF readTopicMap(String dir, String subdir, String filename)
+  protected TopicMapIF assertReadTopicMap(String dir, String subdir, String filename)
       throws IOException {
     filename = TestFileUtils.getTestInputFile(dir, subdir, filename);
     return new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename)).read();
   }
 
-  protected Collection readTopicMaps(String filename) throws IOException {
+  protected Collection assertReadTopicMaps(String filename) throws IOException {
     filename = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
     XTMTopicMapReader reader = new XTMTopicMapReader(TestFileUtils.getTestInputURL(filename));
     reader.setValidation(false);
@@ -94,7 +94,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   @Test
   public void testNothing() throws IOException {
     try {
-      readTopicMap("various", "nothing.xtm");
+      assertReadTopicMap("various", "nothing.xtm");
       Assert.fail("reading XML document with no topic map did not throw exception");
     } catch (InvalidTopicMapException e) {
     } catch (net.ontopia.utils.OntopiaRuntimeException e) {
@@ -114,7 +114,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
 
   @Test
   public void testMultipleTopicMaps() throws IOException {
-    Collection tms = readTopicMaps("multiple-tms-read.xtm");
+    Collection tms = assertReadTopicMaps("multiple-tms-read.xtm");
     Assert.assertTrue("reader doesn't recognize correct number of topic maps", tms
         .size() == 2);
     Iterator iter = tms.iterator();
@@ -278,7 +278,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   // see http://www.y12.doe.gov/sgml/sc34/document/0299.htm#merge-prop-srclocs
   @Test
   public void testTopicMapReification() throws IOException {
-    TopicMapIF tm = readTopicMap(testdataDirectory, "extra",
+    TopicMapIF tm = assertReadTopicMap(testdataDirectory, "extra",
         "master-of-reified-tm.xtm");
     Assert.assertTrue("topic map has been incorrectly merged with child topic map", tm
         .getReifier() == null);
@@ -286,7 +286,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
 
   @Test
   public void testXMLBaseAndBaseLocator() throws IOException {
-    TopicMapIF tm = readTopicMap(testdataDirectory, "extra",
+    TopicMapIF tm = assertReadTopicMap(testdataDirectory, "extra",
         "tm-xmlbase.xtm");
     LocatorIF base = tm.getStore().getBaseAddress();
     Assert.assertTrue("topicmap.getBaseLocator() should not be set to xml:base", base
@@ -296,7 +296,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   // tests for bug #523
   @Test
   public void testEntity() throws IOException {
-    TopicMapIF tm = readTopicMap(testdataDirectory, "extra",
+    TopicMapIF tm = assertReadTopicMap(testdataDirectory, "extra",
         "entities.xtm");
     Collection<TopicIF> topics = tm.getTopics();
     for (TopicIF topic : topics) {
@@ -314,13 +314,13 @@ public class XTMReaderTest extends AbstractXMLTestCase {
 
   @Test
   public void testValidTM() throws IOException {
-    readTopicMap("various", "jill.xtm");
+    assertReadTopicMap("various", "jill.xtm");
   }
 
   @Test
   public void testInvalidTM() throws IOException {
     try {
-      readTopicMap(testdataDirectory, "errors", "badxtm.xtm");
+      assertReadTopicMap(testdataDirectory, "errors", "badxtm.xtm");
       Assert.fail("Invalid topic map was allowed to load");
     } catch (OntopiaRuntimeException e) {
       Assert.assertTrue("Error not from XTM validation: " + e.getCause(),
@@ -331,14 +331,14 @@ public class XTMReaderTest extends AbstractXMLTestCase {
   @Test
   public void testXTMValidIfDTDRead() throws IOException {
     // motivated by bug #864
-    readTopicMap("various", "valid-if-dtd-read.xtm");
+    assertReadTopicMap("various", "valid-if-dtd-read.xtm");
   }
 
   @Test
   public void testXTMValidIfDTDReadButDTDRefBad() throws IOException {
     // motivated by bug #864
     try {
-      readTopicMap("various", "valid-but-bad-dtdref.xtm");
+      assertReadTopicMap("various", "valid-but-bad-dtdref.xtm");
       Assert.fail("Invalid topic map was allowed to load"); // well, ok, it *is* valid,
                                                      // but
       // we can't know that
@@ -353,7 +353,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
     // verifies that the XTM 1.0 reader actually reports where in the file
     // invalidity errors occur
     try {
-      readTopicMap("various", "invalid1.xtm");
+      assertReadTopicMap("various", "invalid1.xtm");
       Assert.fail("No error detected in invalid file!");
     } catch (OntopiaRuntimeException e) {
       if (e.getCause() instanceof SAXParseException) {
@@ -372,7 +372,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
     // verifies that the XTM 2.0 reader actually reports where in the file
     // invalidity errors occur
     try {
-      readTopicMap("various", "invalid2.xtm");
+      assertReadTopicMap("various", "invalid2.xtm");
       Assert.fail("No error detected in invalid file!");
     } catch (OntopiaRuntimeException e) {
       if (e.getCause() instanceof SAXParseException) {
@@ -393,7 +393,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
     // leading to failures down the line.
 
     // first read one topic map
-    TopicMapIF tm = readTopicMap("various", "reification-bug-1.xtm");
+    TopicMapIF tm = assertReadTopicMap("various", "reification-bug-1.xtm");
 
     // then import the second one into it
     String file = TestFileUtils.getTestInputFile("various", "reification-bug-2.xtm");

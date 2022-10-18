@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.core.events;
 
+import java.util.Collections;
 import java.util.Iterator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
@@ -140,9 +141,9 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
     TopicNameIF bn = builder.makeTopicName(topic, type, bnval);
     bn.addTheme(theme);
     String bn_oid = bn.getObjectId();
-    VariantNameIF ivn = builder.makeVariantName(bn, vnval);
+    VariantNameIF ivn = builder.makeVariantName(bn, vnval, Collections.emptySet());
     ivn.addTheme(theme);
-    VariantNameIF evn = builder.makeVariantName(bn, vnloc);
+    VariantNameIF evn = builder.makeVariantName(bn, vnloc, Collections.emptySet());
     String ivn_oid = ivn.getObjectId();
     String evn_oid = evn.getObjectId();
       

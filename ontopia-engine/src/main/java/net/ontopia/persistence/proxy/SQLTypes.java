@@ -20,9 +20,11 @@
 
 package net.ontopia.persistence.proxy;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,25 +58,25 @@ public class SQLTypes {
     // interface.
     
     // Figure out the SQL type
-    if (klass.equals(java.lang.String.class))
+    if (klass.equals(String.class))
       return Types.VARCHAR;
-    else if (klass.equals(java.lang.Long.class))
+    else if (klass.equals(Long.class))
       return Types.BIGINT;
-    else if (klass.equals(java.lang.Integer.class))
+    else if (klass.equals(Integer.class))
       return Types.INTEGER;
-    else if (klass.equals(java.lang.Float.class))
+    else if (klass.equals(Float.class))
       return Types.FLOAT;
-    else if (klass.equals(java.lang.Double.class))
+    else if (klass.equals(Double.class))
       return Types.DOUBLE;
-    else if (klass.equals(java.lang.Boolean.class))
+    else if (klass.equals(Boolean.class))
       return Types.SMALLINT;
-    else if (klass.equals(java.lang.Character.class))
+    else if (klass.equals(Character.class))
       return Types.CHAR;
-    else if (klass.equals(java.lang.Short.class))
+    else if (klass.equals(Short.class))
       return Types.BIT;
-    else if (klass.equals(java.lang.Byte.class))
+    else if (klass.equals(Byte.class))
       return Types.TINYINT;
-    else if (klass.equals(java.io.Reader.class))
+    else if (klass.equals(Reader.class))
       return Types.CLOB;
     else
       throw new OntopiaRuntimeException("Cannot map value type " + klass + " to SQL type.");           
@@ -91,25 +93,25 @@ public class SQLTypes {
     // Figure out the SQL type
     switch (sql_type) {
     case Types.VARCHAR:
-      return java.lang.String.class;
+      return String.class;
     case Types.BIGINT:
-      return java.lang.Long.class;
+      return Long.class;
     case Types.INTEGER:
-      return java.lang.Integer.class;
+      return Integer.class;
     case Types.FLOAT:
-      return java.lang.Float.class;
+      return Float.class;
     case Types.DOUBLE:
-      return java.lang.Double.class;
+      return Double.class;
     case Types.SMALLINT:
-      return java.lang.Boolean.class;
+      return Boolean.class;
     case Types.CHAR:
-      return java.lang.Character.class;
+      return Character.class;
     case Types.BIT:
-      return java.lang.Short.class;
+      return Short.class;
     case Types.TINYINT:
-      return java.lang.Byte.class;
+      return Byte.class;
     case Types.CLOB:
-      return java.io.Reader.class;
+      return Reader.class;
     default:
       throw new OntopiaRuntimeException("Cannot map SQL type " + sql_type + " to value type.");
     }
@@ -265,7 +267,7 @@ public class SQLTypes {
         if (value instanceof byte[]) {
           //stmt.setString(index, (String)value);
           byte[] b = (byte[])value;
-          stmt.setBinaryStream(index, new java.io.ByteArrayInputStream(b), b.length);
+          stmt.setBinaryStream(index, new ByteArrayInputStream(b), b.length);
         } else if (value instanceof OnDemandValue) {
           OnDemandValue odv = (OnDemandValue)value;
           ContentInputStream blob = (ContentInputStream)odv.getValue();
@@ -279,7 +281,7 @@ public class SQLTypes {
         if (value instanceof String) {
           //stmt.setString(index, (String)value);
           String s = (String)value;
-          stmt.setCharacterStream(index, new java.io.StringReader(s), s.length());
+          stmt.setCharacterStream(index, new StringReader(s), s.length());
         } else if (value instanceof OnDemandValue) {
           OnDemandValue odv = (OnDemandValue)value;
           ContentReader clob = (ContentReader)odv.getValue();

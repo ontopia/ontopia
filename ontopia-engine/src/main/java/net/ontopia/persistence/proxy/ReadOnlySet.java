@@ -23,6 +23,8 @@ package net.ontopia.persistence.proxy;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 
 /**
  * INTERNAL: A set implementation that track the changes performed on
@@ -135,4 +137,10 @@ public class ReadOnlySet<E> implements Set<E> {
     return a;
   }
   
+  // return a spliterator based on the iterator of this set, to avoid issues with the lazy-loading iterator
+  // See issue 555
+  @Override
+  public Spliterator<E> spliterator() {
+    return Spliterators.spliterator(this, Spliterator.DISTINCT & Spliterator.SIZED);
+  }
 }

@@ -23,15 +23,15 @@ package net.ontopia.topicmaps.utils.deciders;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
+import java.util.Objects;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Accepts or rejects topic map constructs based on their
@@ -39,18 +39,17 @@ import net.ontopia.utils.DeciderIF;
  * decisions on an individual basis.  Used by the topic map exporters
  * to support topic filtering.
  */
-public class TMExporterDecider implements DeciderIF<Object> {
+public class TMExporterDecider implements Predicate<Object> {
 
   // Decides whether individual TMObjectIFs should be accepted or rejected.
-  private DeciderIF<Object> filter;
+  private Predicate<Object> filter;
 
   /**
    * Creates a new TMExporterDecider.
    * @param filter accepts or rejects an individual object
    */
-  public TMExporterDecider(DeciderIF<Object> filter) {
-    if (filter == null)
-      throw new NullPointerException("Filter cannot be null.");
+  public TMExporterDecider(Predicate<Object> filter) {
+    Objects.requireNonNull(filter, "Filter cannot be null.");
     this.filter = filter;
   }
 
@@ -60,28 +59,28 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * other objects. @param object The object to accept or reject.
    */
   @Override
-  public boolean ok(Object object) {
+  public boolean test(Object object) {
     // Check that none of the scoping topics are disallowed.
     if (object instanceof ScopedIF) {
       ScopedIF scoped = (ScopedIF)object;
       Iterator<TopicIF> scopeIt = scoped.getScope().iterator();
       while (scopeIt.hasNext())
-        if (!ok(scopeIt.next()))
+        if (!test(scopeIt.next()))
           return false;
     }
 
     if (object instanceof AssociationIF)
-      return ok((AssociationIF)object);
+      return test((AssociationIF)object);
     if (object instanceof TopicNameIF)
-      return ok((TopicNameIF)object);
+      return test((TopicNameIF)object);
     if (object instanceof Collection)
-      return ok((Collection<?>)object);
+      return test((Collection<?>)object);
     if (object instanceof OccurrenceIF)
-      return ok((OccurrenceIF)object);
+      return test((OccurrenceIF)object);
     if (object instanceof TopicIF)
-      return ok((TopicIF)object);
+      return test((TopicIF)object);
     if (object instanceof VariantNameIF)
-      return ok((VariantNameIF)object);
+      return test((VariantNameIF)object);
     return true;
   }
 
@@ -91,8 +90,8 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * @return true iff baseName is accepted by the filter and its scope is also
    *         accepted by the filter.
    */
-  public boolean ok(TopicNameIF baseName) {
-    return filter.ok(baseName) && filter.ok(baseName.getScope());
+  public boolean test(TopicNameIF baseName) {
+    return filter.test(baseName) && filter.test(baseName.getScope());
   }
 
   /**
@@ -101,8 +100,8 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * @return true iff variantName is accepted by the filter and its scope is
    *         also accepted by the filter.
    */
-  public boolean ok(VariantNameIF variantName) {
-    return filter.ok(variantName) && filter.ok(variantName.getScope());
+  public boolean test(VariantNameIF variantName) {
+    return filter.test(variantName) && filter.test(variantName.getScope());
   }
 
   /**
@@ -111,13 +110,13 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * @param association the association to test for acceptance.
    * @return true iff the association is accepted.
    */
-  public boolean ok(AssociationIF association) {
-    boolean retVal = ok(association.getType());
+  public boolean test(AssociationIF association) {
+    boolean retVal = test(association.getType());
     Iterator<AssociationRoleIF> rolesIt = association.getRoles().iterator();
     while (rolesIt.hasNext()) {
       AssociationRoleIF role = rolesIt.next();
-      retVal &= ok(role.getType()) && filter.ok(role.getPlayer())
-          && filter.ok(role);
+      retVal &= test(role.getType()) && filter.test(role.getPlayer())
+          && filter.test(role);
     }
     return retVal;
   }
@@ -129,9 +128,9 @@ public class TMExporterDecider implements DeciderIF<Object> {
    *        has already been tested and passed.
    * @return true iff occurrence is accepted.
    */
-  public boolean ok(OccurrenceIF occurrence) {
-    return filter.ok(occurrence) && ok(occurrence.getType())
-        && ok(occurrence.getScope()) && ok(occurrence.getTopic());
+  public boolean test(OccurrenceIF occurrence) {
+    return filter.test(occurrence) && test(occurrence.getType())
+        && test(occurrence.getScope()) && test(occurrence.getTopic());
   }
 
   /**
@@ -141,8 +140,8 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * @param topic The topic to test for acceptance.
    * @return true iff the topic is accepted.
    */
-  public boolean ok(TopicIF topic) {
-    return ok(topic, new ArrayList<TopicIF>());
+  public boolean test(TopicIF topic) {
+    return test(topic, new ArrayList<TopicIF>());
   }
 
   /**
@@ -150,10 +149,10 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * @param coll The collection to test (search)
    * @return true iff whole collection of topics are accepted by filter.
    */
-  private boolean ok(Collection<?> coll) {
+  private boolean test(Collection<?> coll) {
     Iterator<?> it = coll.iterator();
     while (it.hasNext())
-      if (!ok(it.next()))
+      if (!test(it.next()))
         return false;
     return true;
   }
@@ -166,14 +165,14 @@ public class TMExporterDecider implements DeciderIF<Object> {
    * @param checked Topics that have already been checked (passed).
    * @return true iff the topic is accepted.
    */
-  private boolean ok(TopicIF topic, Collection<TopicIF> checked) {
+  private boolean test(TopicIF topic, Collection<TopicIF> checked) {
     // Only check each topic once.
     if (checked.contains(topic))
       return true;
     if (topic == null)
       return true;
 
-    if (filter.ok(topic))
+    if (filter.test(topic))
       checked.add(topic);
     else
       return false;

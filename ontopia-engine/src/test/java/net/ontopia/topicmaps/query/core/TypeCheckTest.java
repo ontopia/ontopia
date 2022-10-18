@@ -48,42 +48,42 @@ public class TypeCheckTest extends AbstractQueryTest {
   public void testLiteralNontopic() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("instance-of(jill-ontopia-association, $B)?");
+    assertGetParseError("instance-of(jill-ontopia-association, $B)?");
   }
   
   @Test
   public void testLiteralTopic() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("type(jill, $TYPE)?");
+    assertGetParseError("type(jill, $TYPE)?");
   }
 
   @Test
   public void testLiteralString() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("value(\"huhei\", $OCC)?");
+    assertGetParseError("value(\"huhei\", $OCC)?");
   }
 
   @Test
   public void testLiteralInPair() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("employment(jill-ontopia-association : employee, $T : employer)?");
+    assertGetParseError("employment(jill-ontopia-association : employee, $T : employer)?");
   }
 
   @Test
   public void testLiteralOnUncaringPredicate() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    findNothing("jill-ontopia-association = \"oisann\"?");
+    assertFindNothing("jill-ontopia-association = \"oisann\"?");
   }
 
   @Test
   public void testLiteralInRule() throws InvalidQueryException, IOException {
     load("family.ltm");
 
-    getParseError("parent($P, $C) :- " +
+    assertGetParseError("parent($P, $C) :- " +
                   "  parenthood(\"oida\" : mother, $P : father, $C : child). " +
                      
                   "parent(petter, $C) " +
@@ -98,7 +98,7 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic($A), association($A)?");
+    assertGetParseError("topic($A), association($A)?");
   }
 
   @Test
@@ -107,7 +107,7 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic($A), type($A, $B)?");
+    assertGetParseError("topic($A), type($A, $B)?");
   }
 
   @Test
@@ -115,8 +115,8 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic($A), { $A = jill | association($A) }?");
-    getParseError("{ $A = jill | association($A) }, topic($A)?");
+    assertGetParseError("topic($A), { $A = jill | association($A) }?");
+    assertGetParseError("{ $A = jill | association($A) }, topic($A)?");
   }
 
   @Test
@@ -124,8 +124,8 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic($A), { topicmap($A) | association($A) }?");
-    getParseError("{ topicmap($A) | association($A) }, topic($A)?");
+    assertGetParseError("topic($A), { topicmap($A) | association($A) }?");
+    assertGetParseError("{ topicmap($A) | association($A) }, topic($A)?");
   }
 
   @Test
@@ -133,23 +133,23 @@ public class TypeCheckTest extends AbstractQueryTest {
     throws InvalidQueryException, IOException {
     load("jill.xtm");
 
-    getParseError("topic($A), { association($A) }?");
-    getParseError("{ association($A) }, topic($A)?");
+    assertGetParseError("topic($A), { association($A) }?");
+    assertGetParseError("{ association($A) }, topic($A)?");
   }
 
   @Test
   public void testNotTypesConflict() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("topic($A), not(association($A))?");    
-    getParseError("not(association($A)), topic($A)?");
+    assertGetParseError("topic($A), not(association($A))?");    
+    assertGetParseError("not(association($A)), topic($A)?");
   }
 
   @Test
   public void testRuleTypeConflict() throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("has-name($T, $V) :- topic-name($T, $N), value($V, $N). " +
+    assertGetParseError("has-name($T, $V) :- topic-name($T, $N), value($V, $N). " +
                   "has-name(jill, $N)?");
   }
 
@@ -161,7 +161,7 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic(%A%), association(%A%)?");
+    assertGetParseError("topic(%A%), association(%A%)?");
   }
 
   @Test
@@ -172,7 +172,7 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     Map params = new HashMap();
     params.put("A", topicmap);
-    getParseError("topic(%A%)?", params);
+    assertGetParseError("topic(%A%)?", params);
   }
   
   @Test
@@ -181,7 +181,7 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic(%A%), type(%A%, %B%)?");
+    assertGetParseError("topic(%A%), type(%A%, %B%)?");
   }
 
   @Test
@@ -190,8 +190,8 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic(%A%), { %A% = jill | association(%A%) }?");
-    getParseError("{ %A% = jill | association(%A%) }, topic(%A%)?");
+    assertGetParseError("topic(%A%), { %A% = jill | association(%A%) }?");
+    assertGetParseError("{ %A% = jill | association(%A%) }, topic(%A%)?");
   }
 
   @Test
@@ -200,8 +200,8 @@ public class TypeCheckTest extends AbstractQueryTest {
 
     load("jill.xtm");
     
-    getParseError("topic(%A%), { topicmap(%A%) | association(%A%) }?");
-    getParseError("{ topicmap(%A%) | association(%A%) }, topic(%A%)?");
+    assertGetParseError("topic(%A%), { topicmap(%A%) | association(%A%) }?");
+    assertGetParseError("{ topicmap(%A%) | association(%A%) }, topic(%A%)?");
   }
   
   @Test
@@ -209,8 +209,8 @@ public class TypeCheckTest extends AbstractQueryTest {
     throws InvalidQueryException, IOException {
     load("jill.xtm");
 
-    getParseError("topic(%A%), { association(%A%) }?");
-    getParseError("{ association(%A) }, topic(%A%)?");
+    assertGetParseError("topic(%A%), { association(%A%) }?");
+    assertGetParseError("{ association(%A) }, topic(%A%)?");
   }
 
   @Test
@@ -218,8 +218,8 @@ public class TypeCheckTest extends AbstractQueryTest {
     throws InvalidQueryException, IOException {
     load("jill.xtm");
     
-    getParseError("topic(%A%), not(association(%A%))?");    
-    getParseError("not(association(%A%)), topic(%A%)?");
+    assertGetParseError("topic(%A%), not(association(%A%))?");    
+    assertGetParseError("not(association(%A%)), topic(%A%)?");
   }
 
   @Test
@@ -230,7 +230,7 @@ public class TypeCheckTest extends AbstractQueryTest {
     List matches = new ArrayList();
     addMatch(matches, "PDATE", "1905-03-16");
     
-    verifyQuery(matches, "using op for i\"http://psi.ontopia.net/opera/\" " +
+    assertQueryMatches(matches, "using op for i\"http://psi.ontopia.net/opera/\" " +
                          "select $PDATE from " +
                          "$DATE = \"1905-01-01\", " +
                          "op:premiere-date($OPERA, $PDATE), " +
@@ -241,7 +241,7 @@ public class TypeCheckTest extends AbstractQueryTest {
   @Test
   public void testIssue254() throws InvalidQueryException, IOException {
     load("jill.xtm");
-    getParseError("reifies($R, $T), " +
+    assertGetParseError("reifies($R, $T), " +
                   "subject-identifier($T, \"http://psi.ontopia.net/xtm/occurrence-type/description\")?");
   }
   

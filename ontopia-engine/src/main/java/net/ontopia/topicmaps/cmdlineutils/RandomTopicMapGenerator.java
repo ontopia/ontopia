@@ -29,12 +29,10 @@ import java.util.Map;
 import java.util.Random;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CollectionUtils;
 
@@ -43,7 +41,6 @@ import net.ontopia.utils.CollectionUtils;
  */
 public class RandomTopicMapGenerator {
 
-  private TopicMapIF tm;
   private TopicMapBuilderIF b;
   private Random r = new Random();
   
@@ -53,8 +50,6 @@ public class RandomTopicMapGenerator {
   private int occurrenceTypes = 40;
   private int associationTypes = 30;
   
-  private double topicTypeFactor = 1.0d;  
-  private double occurrenceTypeFactor = 3.0f;
   
   // instances
   private int topics;
@@ -76,7 +71,6 @@ public class RandomTopicMapGenerator {
     private int rolesAvg = 3;
     private int rolesMax = 10;
 
-    private double[] associationTypeArities = new double[] { 0.02d, 0.95d, 0.03d };
   }
 
   class DataPool {
@@ -89,7 +83,6 @@ public class RandomTopicMapGenerator {
   }
   
   public RandomTopicMapGenerator(TopicMapIF tm) {
-    this.tm = tm;
     this.b = tm.getBuilder();
   }
 
@@ -136,7 +129,7 @@ public class RandomTopicMapGenerator {
   private TopicIF makeTopic(String prefix) {
     TopicIF topic = b.makeTopic();
     // default name
-    TopicNameIF bn = b.makeTopicName(topic, prefix + "-" + topic.getObjectId());
+    b.makeTopicName(topic, prefix + "-" + topic.getObjectId());
     return topic;
   }
   
@@ -183,16 +176,14 @@ public class RandomTopicMapGenerator {
   private void addNames(TopicIF t, DataPool dp, int count) {
     // typed name
     for (int i=0; i < count; i++) {
-      TopicNameIF bn = b.makeTopicName(t, 
-																		 (TopicIF)CollectionUtils.getRandom(dp.nameTypes),
+      b.makeTopicName(t, (TopicIF)CollectionUtils.getRandom(dp.nameTypes),
 																		 "topicname-" + (i+1));
     }
   }
 
   private void addOccurrences(TopicIF t, DataPool dp, int count) {
     for (int i=0; i < count; i++) {
-      OccurrenceIF occ = b.makeOccurrence(t, 
-																					(TopicIF)CollectionUtils.getRandom(dp.occurrenceTypes), 
+      b.makeOccurrence(t, (TopicIF)CollectionUtils.getRandom(dp.occurrenceTypes), 
 																					"occurrence-" + (i+1));
     }
   }

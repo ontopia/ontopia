@@ -86,8 +86,6 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> was found.");
 
-    ContextManagerIF ctxmgr = contextTag.getContextManager();
-
     // Get the TopicMap from the context.
     TopicMapIF topicmap = contextTag.getTopicMap();
 

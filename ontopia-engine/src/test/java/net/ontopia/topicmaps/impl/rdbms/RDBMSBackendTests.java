@@ -132,25 +132,25 @@ public class RDBMSBackendTests {
       TopicIF topic3 = getTopic(tm3, "http://psi.kulturnett.no/person/eva_kernst");
       Assert.assertTrue("topic3 not found by indicator", topic3 != null);
 
-      TopicMapBuilderIF b1 = tm1.getBuilder();
-      TopicMapBuilderIF b2 = tm2.getBuilder();
+      tm1.getBuilder();
+      tm2.getBuilder();
       TopicMapBuilderIF b3 = tm3.getBuilder();
 
       // look up ontology topics
-      TopicIF at1 = getTopic(tm1, "http://psi.kulturnett.no/ontologi/virker_som");
-      TopicIF at2 = getTopic(tm2, "http://psi.kulturnett.no/ontologi/virker_som");
-      TopicIF at3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/virker_som");
+      getTopic(tm1, "http://psi.kulturnett.no/ontologi/virker_som");
+      getTopic(tm2, "http://psi.kulturnett.no/ontologi/virker_som");
+      getTopic(tm3, "http://psi.kulturnett.no/ontologi/virker_som");
 
-      TopicIF rtA1 = getTopic(tm1, "http://psi.kulturnett.no/ontologi/person");
-      TopicIF rtA2 = getTopic(tm2, "http://psi.kulturnett.no/ontologi/person");
+      getTopic(tm1, "http://psi.kulturnett.no/ontologi/person");
+      getTopic(tm2, "http://psi.kulturnett.no/ontologi/person");
       TopicIF rtA3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/person");
 
-      TopicIF rtB1 = getTopic(tm1, "http://psi.kulturnett.no/ontologi/profesjon");
-      TopicIF rtB2 = getTopic(tm2, "http://psi.kulturnett.no/ontologi/profesjon");
+      getTopic(tm1, "http://psi.kulturnett.no/ontologi/profesjon");
+      getTopic(tm2, "http://psi.kulturnett.no/ontologi/profesjon");
       TopicIF rtB3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/profesjon");
 
-      TopicIF rp1 = getTopic(tm1, "http://psi.kulturnett.no/profesjon/jazzmusiker");
-      TopicIF rp2 = getTopic(tm2, "http://psi.kulturnett.no/profesjon/jazzmusiker");
+      getTopic(tm1, "http://psi.kulturnett.no/profesjon/jazzmusiker");
+      getTopic(tm2, "http://psi.kulturnett.no/profesjon/jazzmusiker");
       TopicIF rp3 = getTopic(tm3, "http://psi.kulturnett.no/profesjon/jazzmusiker");
 
       TopicIF ot3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/ingress");
@@ -163,8 +163,8 @@ public class RDBMSBackendTests {
 
       // add association
       AssociationIF a3 = b3.makeAssociation(b3.makeTopic());
-      AssociationRoleIF rA3 = b3.makeAssociationRole(a3, rtA3, topic3);
-      AssociationRoleIF rB3 = b3.makeAssociationRole(a3, rtB3, rp3);
+      b3.makeAssociationRole(a3, rtA3, topic3);
+      b3.makeAssociationRole(a3, rtB3, rp3);
 
       Assert.assertTrue("topic3 does not have two roles", topic3.getRoles().size()  == 2);
 
@@ -299,8 +299,8 @@ public class RDBMSBackendTests {
       String oid = r1.getObjectId(); // returns correct objectId
       Assert.assertTrue("r1.objectId is null", oid != null);
 
-      TopicIF rt1 = r1.getType(); // returns null
-      TopicIF rp1 = r1.getPlayer(); // returns null
+      r1.getType(); // returns null
+      r1.getPlayer(); // returns null
 
       // should get fake association
       AssociationIF a1 = r1.getAssociation();
@@ -592,7 +592,7 @@ public class RDBMSBackendTests {
       TopicMapIF tm1 = store1.getTopicMap();
       TopicIF topic1 = tm1.getBuilder().makeTopic();
       TopicIF otype1 = tm1.getBuilder().makeTopic();
-      OccurrenceIF occ1 = tm1.getBuilder().makeOccurrence(topic1, otype1, "FOO");
+      tm1.getBuilder().makeOccurrence(topic1, otype1, "FOO");
       oid = topic1.getObjectId();
       tmid = store1.getLongId();
       store1.commit();
@@ -747,7 +747,6 @@ public class RDBMSBackendTests {
     long tmid;
     String topicid;
     String otypeid;
-    String occid;
     try {
       // create topic map with one topic and one occurrence
       store1 = new RDBMSTopicMapStore();
@@ -774,7 +773,7 @@ public class RDBMSBackendTests {
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
       otypeid = otype2.getObjectId();
-      occid = occurrence.getObjectId();
+      occurrence.getObjectId();
       store1.commit();
     } finally {
       if (store1 != null) store1.close();
@@ -811,7 +810,6 @@ public class RDBMSBackendTests {
     long tmid;
     String topicid;
     String otypeid;
-    String occid;
     try {
       // create topic map with one topic and one occurrence
       store1 = new RDBMSTopicMapStore();
@@ -845,7 +843,7 @@ public class RDBMSBackendTests {
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
       otypeid = otype2.getObjectId();
-      occid = occurrence.getObjectId();
+      occurrence.getObjectId();
       store1.commit();
     } finally {
       if (store1 != null) store1.close();
@@ -880,10 +878,8 @@ public class RDBMSBackendTests {
     // initialize storage
     RDBMSTopicMapStore store1 = null;
     long tmid;
-    String topicid;
     String otype1id;
     String otype2id;
-    String occid;
     try {
       // create topic map with one topic and one occurrence
       store1 = new RDBMSTopicMapStore();
@@ -915,10 +911,10 @@ public class RDBMSBackendTests {
       Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
-      topicid = topic.getObjectId();
+      topic.getObjectId();
       otype1id = otype1.getObjectId();
       otype2id = otype2.getObjectId();
-      occid = occurrence.getObjectId();
+      occurrence.getObjectId();
       store1.commit();
     } finally {
       if (store1 != null) store1.close();

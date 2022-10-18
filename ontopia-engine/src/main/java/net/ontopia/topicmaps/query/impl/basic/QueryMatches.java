@@ -590,7 +590,6 @@ public class QueryMatches {
     Object[][] mdata = data;
     Object[][] rdata = result.data;
     ArrayWrapper wrapper = new ArrayWrapper(); // for instance reuse...
-    int colcount = result.colcount;
 
     for (int row = 0; row <= last; row++) {
       wrapper.setArray(mdata[row]); // reuse previous wrapper

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -43,7 +44,6 @@ import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -74,9 +74,8 @@ public class RelatedTopics {
   // here
   private Set weaktypes_cache;
   private Set exclassocs_cache;
-  private Set exclroles_cache;
   private Set excltopics_cache;
-  private StringifierIF sort; // this one is also cached
+  private Function<TopicIF, String> sort; // this one is also cached
   
   // the maximum number of children to show
   private int maxchildren = -1;
@@ -594,8 +593,8 @@ public class RelatedTopics {
       // compare topics
       TopicIF t1 = (TopicIF)o1;
       TopicIF t2 = (TopicIF)o2;
-      String s1 = sort.toString(t1);
-      String s2 = sort.toString(t2);
+      String s1 = sort.apply(t1);
+      String s2 = sort.apply(t2);
       return StringUtils.compareIgnoreCase(s1, s2);      
     }
     //! else if (o1 instanceof TMObjectIF && o2 instanceof TMObjectIF) {
@@ -677,8 +676,8 @@ public class RelatedTopics {
         }
       }
       Collection scope = (nearRoleType != null ? Collections.singleton(nearRoleType) : Collections.EMPTY_SET);
-      StringifierIF strify = TopicStringifiers.getTopicNameStringifier(scope);
-      return strify.toString(topic);
+      Function<TopicIF, String> strify = TopicStringifiers.getTopicNameStringifier(scope);
+      return strify.apply(topic);
     }
 
     public void setSortKey(Object sortkey) {
@@ -804,8 +803,8 @@ public class RelatedTopics {
 
     public String getTitle() {
       Collection scope = (roleType != null ? Collections.singleton(roleType) : Collections.EMPTY_SET);
-      StringifierIF strify = TopicStringifiers.getTopicNameStringifier(scope);
-      return strify.toString(player);
+      Function<TopicIF, String> strify = TopicStringifiers.getTopicNameStringifier(scope);
+      return strify.apply(player);
     }
 
     public void setSortKey(Object sortkey) {

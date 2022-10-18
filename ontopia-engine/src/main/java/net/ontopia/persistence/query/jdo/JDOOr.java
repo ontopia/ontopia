@@ -22,6 +22,7 @@ package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * INTERNAL: JDOQL logical expression: or (||). Syntax: '( ... || ... )'.
@@ -70,8 +71,8 @@ public class JDOOr implements JDOExpressionIF {
   }
 
   public void setExpressions(JDOExpressionIF[] expressions) {
-    if (expressions == null || expressions.length == 0)
-      throw new NullPointerException("Or expression must have nested expressions.");
+    Objects.requireNonNull(expressions, "Or expression must have nested expression.");
+    if (expressions.length == 0) { throw new IllegalArgumentException("Or expression must have nested expressions."); }
     this.expressions = expressions;
   }
   

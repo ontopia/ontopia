@@ -23,13 +23,13 @@ package net.ontopia.topicmaps.xml;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import org.xml.sax.helpers.AttributesImpl;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.CharacterSet;
 
 /**
@@ -42,7 +42,7 @@ public abstract class AbstractTopicMapExporter {
 
   protected static final String EMPTY_NAMESPACE = "";
   protected static final String EMPTY_LOCALNAME = "";
-  protected DeciderIF filter;
+  protected Predicate filter;
   
   /**
    * INTERNAL: Whether or not IDs should be added to all elements.
@@ -58,7 +58,7 @@ public abstract class AbstractTopicMapExporter {
    * @param filter Places constraints on individual topicmap constructs.
    * @since 3.2
    */
-  public void setFilter(DeciderIF filter) {
+  public void setFilter(Predicate filter) {
 
     // WARNING: Do NOT use the TMExporterDecider or any other kind of
     // wrapper around the filter here. Filters should be used raw. If
@@ -81,7 +81,7 @@ public abstract class AbstractTopicMapExporter {
     Iterator unfilteredIt = unfiltered.iterator();
     while (unfilteredIt.hasNext()) {
       Object current = unfilteredIt.next();
-      if (filter.ok(current))
+      if (filter.test(current))
         retVal.add(current);
     }
     return retVal;
@@ -96,7 +96,7 @@ public abstract class AbstractTopicMapExporter {
   protected boolean filterOk(Object unfiltered) {
     if (filter == null)
       return true;
-    return filter.ok(unfiltered);
+    return filter.test(unfiltered);
   }
   
   protected void addId(AttributesImpl atts, TMObjectIF tmobject) {

@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.nav2.core;
 import java.util.List;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.utils.HistoryMap;
-import org.slf4j.Logger;
 
 /**
  * INTERNAL: interface for classes which implement user data management
@@ -70,17 +69,6 @@ public interface UserIF {
    * @since 1.2.5
    */
   void setHistory(HistoryMap hm);
-
-  /**
-   * INTERNAL: Gets the Slf4J <code>Logger</code> object to which the
-   * User object should transmit the log messages. <b>This method is
-   * now deprecated, and we recommend using addLogMessage()
-   * instead.</b>
-   *
-   * @since 1.3.2
-   * @deprecated Use addLogMessage() instead
-   */
-  Logger getLogger();
 
   /**
    * INTERNAL: Adds a message to the user's log. The order of these

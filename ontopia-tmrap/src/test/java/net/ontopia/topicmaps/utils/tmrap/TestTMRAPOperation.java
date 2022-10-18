@@ -68,8 +68,6 @@ public abstract class TestTMRAPOperation {
   // FIXME: aaaarghgh! This is evil! Kill it!
   protected static final Hashtable paramsTable = createParamsTable();
 
-  private static int counter = 0;
-
   @BeforeClass
   public static void transferInputFiles() throws IOException {
     TestFileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");

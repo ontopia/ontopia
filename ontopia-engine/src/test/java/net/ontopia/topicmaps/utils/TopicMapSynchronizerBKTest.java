@@ -24,14 +24,18 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,8 +44,8 @@ import org.junit.Test;
 public class TopicMapSynchronizerBKTest {
   private String ttopicq;
   private String stopicq;
-  private DeciderIF tchard;
-  private DeciderIF schard;
+  private Predicate tchard;
+  private Predicate schard;
   private String base;
   
   private final static String testdataDirectory = "tmsync";
@@ -60,10 +64,10 @@ public class TopicMapSynchronizerBKTest {
     List psis = new ArrayList();
     psis.add("http://psi.bergen.kommune.no/portal/forelder-barn");
     psis.add("http://psi.bergen.kommune.no/portal/livsit-relevant-for");
-    tchard = TMDeciderUtils.getTypePSIDecider(psis);
+    tchard = new TypePSIDecider(psis);
 
     psis.clear();
-    schard = DeciderUtils.getTrueDecider();
+    schard = (o) -> true;
 
     String root = TestFileUtils.getTestdataOutputDirectory();
     base = root + File.separator + testdataDirectory + File.separator;
@@ -80,7 +84,7 @@ public class TopicMapSynchronizerBKTest {
                                 source, stopicq, schard);
 
     canonicalize("bk-empty.cxtm", target);
-    compare("bk-empty.cxtm");
+    assertEqualsToBaseline("bk-empty.cxtm");
   }
 
   @Test
@@ -92,7 +96,7 @@ public class TopicMapSynchronizerBKTest {
                                 source, stopicq, schard);
 
     canonicalize("bk-static.cxtm", target);
-    compare("bk-static.cxtm");
+    assertEqualsToBaseline("bk-static.cxtm");
   }
 
   @Test
@@ -104,7 +108,7 @@ public class TopicMapSynchronizerBKTest {
                                 source, stopicq, schard);
 
     canonicalize("bk-add-emneord.cxtm", target);
-    compare("bk-add-emneord.cxtm");
+    assertEqualsToBaseline("bk-add-emneord.cxtm");
   }  
 
   @Test
@@ -116,7 +120,7 @@ public class TopicMapSynchronizerBKTest {
                                 source, stopicq, schard);
 
     canonicalize("bk-remove-emneord.cxtm", target);
-    compare("bk-remove-emneord.cxtm");
+    assertEqualsToBaseline("bk-remove-emneord.cxtm");
   }
 
   @Test
@@ -128,7 +132,7 @@ public class TopicMapSynchronizerBKTest {
                                 source, stopicq, schard);
 
     canonicalize("bk-private-emneord.cxtm", target);
-    compare("bk-private-emneord.cxtm");
+    assertEqualsToBaseline("bk-private-emneord.cxtm");
   }
 
   @Test
@@ -144,7 +148,7 @@ public class TopicMapSynchronizerBKTest {
     List psis = new ArrayList();
     psis.add("http://psi.bergen.kommune.no/portal/forelder-barn");
     psis.add("http://psi.bergen.kommune.no/portal/relevant-for");
-    tchard = TMDeciderUtils.getTypePSIDecider(psis);
+    tchard = new TypePSIDecider(psis);
 
     // Do actual test
     TopicMapIF target = load("bk-same-association.ltm");
@@ -154,17 +158,17 @@ public class TopicMapSynchronizerBKTest {
                                 source, stopicq, schard);
 
     canonicalize("bk-same-association.cxtm", target);
-    compare("bk-same-association.cxtm");
+    assertEqualsToBaseline("bk-same-association.cxtm");
   }
 
   @Test
   public void testSingleTopicTwoFilter() throws IOException {
     // Set up deciders
-    tchard = DeciderUtils.getTrueDecider();
+    tchard = (o) -> true;
 
     List psis = new ArrayList();
     psis.add("http://psi.example.org/type-one");
-    schard = TMDeciderUtils.getTypePSIDecider(psis);
+    schard = new TypePSIDecider(psis);
 
     // Do actual test
     String psi = "http://psi.example.org/topic";
@@ -175,13 +179,13 @@ public class TopicMapSynchronizerBKTest {
     TopicMapSynchronizer.update(target, sourcet, tchard, schard);
 
     canonicalize("single-topic-two.filter.cxtm", target);
-    compare("single-topic-two.filter.cxtm");
+    assertEqualsToBaseline("single-topic-two.filter.cxtm");
   }
 
   @Test
   public void testReifiedAssociation() throws IOException, InvalidQueryException {
     // Set up deciders
-    tchard = DeciderUtils.getTrueDecider();
+    tchard = (o) -> true;
     schard = tchard;
 
     // Load topic maps
@@ -194,7 +198,7 @@ public class TopicMapSynchronizerBKTest {
 
     // Test
     canonicalize("reify-assoc.cxtm", target);
-    compare("reify-assoc.cxtm");
+    assertEqualsToBaseline("reify-assoc.cxtm");
   }
   
   // ===== INTERNAL
@@ -211,10 +215,43 @@ public class TopicMapSynchronizerBKTest {
     ImportExportUtils.getWriter(out).write(tm);*/
   }
 
-  private void compare(String filename) throws IOException {
+  private void assertEqualsToBaseline(String filename) throws IOException {
     String out = base + File.separator + "out" + File.separator + filename;
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
     Assert.assertTrue("test file " + filename + " canonicalized wrongly",
                TestFileUtils.compareFileToResource(out, baseline));
   }
+
+  static class TypePSIDecider implements Predicate {
+    private Collection okpsis;
+    
+    public TypePSIDecider(Collection okpsis) throws MalformedURLException {
+      this.okpsis = new HashSet();
+      Iterator it = okpsis.iterator();
+      while (it.hasNext()) {
+        Object obj = it.next();
+        LocatorIF psi;
+        if (obj instanceof LocatorIF)
+          psi = (LocatorIF) obj;
+        else
+          psi = new URILocator((String) obj);
+        this.okpsis.add(psi);
+      }
+    }
+    
+    @Override
+    public boolean test(Object object) {
+      if (object instanceof TypedIF) {
+        TopicIF type = ((TypedIF) object).getType();
+        if (type == null)
+          return false;
+        
+        Iterator it = type.getSubjectIdentifiers().iterator();
+        while (it.hasNext())
+          if (okpsis.contains(it.next()))
+            return true;
+      } 
+      return false;
+    }
+  }  
 }

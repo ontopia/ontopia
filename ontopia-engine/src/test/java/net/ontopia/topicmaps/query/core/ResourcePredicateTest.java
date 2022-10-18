@@ -65,7 +65,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "resource($OBJ, $LOCATOR)?");
+    assertQueryMatches(matches, "resource($OBJ, $LOCATOR)?");
     
     closeStore();    
   }
@@ -100,7 +100,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "resource($OBJ, $LOCATOR)?");
+    assertQueryMatches(matches, "resource($OBJ, $LOCATOR)?");
     
     closeStore();    
   }
@@ -116,7 +116,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", "http://www.hest.no/");
     
-    verifyQuery(matches, "resource(@" + occ.getObjectId() + ", $LOCATOR)?");
+    assertQueryMatches(matches, "resource(@" + occ.getObjectId() + ", $LOCATOR)?");
     
     closeStore();    
   }
@@ -132,7 +132,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "OBJ", occ);
     
-    verifyQuery(matches, "resource($OBJ, \"http://www.hest.no\")?");
+    assertQueryMatches(matches, "resource($OBJ, \"http://www.hest.no\")?");
     
     closeStore();    
   }
@@ -148,7 +148,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "OBJ", vn);
     
-    verifyQuery(matches, "resource($OBJ, \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
+    assertQueryMatches(matches, "resource($OBJ, \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
     
     closeStore();    
   }
@@ -164,7 +164,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "resource(@" + occ.getObjectId() + ", \"" + occ.getLocator().getAddress() + "\")?");
+    assertQueryMatches(matches, "resource(@" + occ.getObjectId() + ", \"" + occ.getLocator().getAddress() + "\")?");
     
     closeStore();    
   }
@@ -180,7 +180,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     
     List matches = new ArrayList();
     
-    verifyQuery(matches, "resource(@" + occ.getObjectId() + ", \"http://www.host.no\")?");
+    assertQueryMatches(matches, "resource(@" + occ.getObjectId() + ", \"http://www.host.no\")?");
     
     closeStore();    
   }
@@ -195,7 +195,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     
     List matches = new ArrayList();
 
-    verifyQuery(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.com/topicmaps/materials/logo.gif\")?");
+    assertQueryMatches(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.com/topicmaps/materials/logo.gif\")?");
     
     closeStore();    
   }
@@ -211,7 +211,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
+    assertQueryMatches(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
     
     closeStore();    
   }
@@ -227,7 +227,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", "http://www.ontopia.net/topicmaps/materials/logo.gif");
     
-    verifyQuery(matches, "resource(@" + vn.getObjectId() +", $LOCATOR)?");
+    assertQueryMatches(matches, "resource(@" + vn.getObjectId() +", $LOCATOR)?");
     
     closeStore();    
   } 

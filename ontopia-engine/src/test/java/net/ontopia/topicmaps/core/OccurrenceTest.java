@@ -38,10 +38,10 @@ import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
-import net.ontopia.utils.ReaderInputStream;
 import net.ontopia.utils.TestFileUtils;
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.ReaderInputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -228,6 +228,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
     TopicMapIF source = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "huge-occurrence.ltm")).read();
     MergeUtils.mergeInto(topicmap, source);
     topicmap.getStore().commit();
+    Assert.assertTrue(true); // for PMD
   }
   
   // --- Internal methods

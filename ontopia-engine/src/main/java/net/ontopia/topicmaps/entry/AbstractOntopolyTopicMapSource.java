@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.entry;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -102,13 +101,6 @@ public abstract class AbstractOntopolyTopicMapSource
   }
   
   public void setSupportsCreate(boolean supportsCreate) {
-    this.supportsCreate = supportsCreate;
-  }
-
-  /**
-   * @deprecated Replaced by setSupportsCreate
-   */
-  public void setDeleteFiles(boolean supportsCreate) {
     this.supportsCreate = supportsCreate;
   }
 

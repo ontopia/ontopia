@@ -20,6 +20,9 @@
 
 package net.ontopia.persistence.proxy;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
@@ -28,10 +31,13 @@ import javax.sql.DataSource;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.dbcp.AbandonedConfig;
+import org.apache.commons.dbcp.AbandonedObjectPool;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
@@ -46,89 +52,113 @@ import org.slf4j.LoggerFactory;
 
 public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
-    public static final String EXHAUSED_BLOCK = "block";
-    public static final String EXHAUSED_GROW = "grow";
-    public static final String EXHAUSED_FAIL = "fail";
+  public static final String EXHAUSED_BLOCK = "block";
+  public static final String EXHAUSED_GROW = "grow";
+  public static final String EXHAUSED_FAIL = "fail";
+
+  // configuration and defaul values
+  public static final String ROOT = "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.";
+
+  public static final String MIN_IDLE = ROOT + "MinimumSize";
+  public static final int DEFAULT_MIN_IDLE = GenericObjectPool.DEFAULT_MIN_IDLE; // 0
+
+  public static final String MAX_ACTIVE = ROOT + "MaximumSize";
+  public static final int DEFAULT_MAX_ACTIVE = 50;
+
+  public static final String MAX_IDLE = ROOT + "MaximumIdle";
+  public static final int DEFAULT_MAX_IDLE = 20;
+
+  public static final String USER_TIMEOUT = ROOT + "UserTimeout";
+  public static final int DEFAULT_USER_TIMEOUT = 10000; // 10s
+
+  public static final String IDLE_TIMEOUT = ROOT + "IdleTimeout";
+  public static final int DEFAULT_IDLE_TIMEOUT = 5 * 60 * 1000; // 5m
+
+  public static final String SOFT_MAXIMUM = ROOT + "SoftMaximum";
+  public static final boolean DEFAULT_SOFT_MAXIMUM = false;
+
+  public static final String EXHAUSTED_ACTION = ROOT + "WhenExhaustedAction";
+  public static final String POOL_STATEMENTS = ROOT + "PoolStatements";
+  public static final String VALIDATION_QUERY = ROOT + "ValidationQuery";
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
-  protected GenericObjectPool pool;
+  protected AbandonedObjectPool pool;
   protected DataSource datasource;  
   protected TraceablePoolableConnectionFactory pcfactory;
-  protected boolean defaultReadOnly;
+  protected boolean readOnly;
   protected int defaultTransactionIsolation = Connection.TRANSACTION_READ_COMMITTED;
   
-  public DBCPConnectionFactory(Map<String, String> properties, boolean defaultReadOnly) {
+  public DBCPConnectionFactory(Map<String, String> properties, boolean readOnly) {
     super(properties);
-    this.defaultReadOnly = defaultReadOnly;
+    this.readOnly = readOnly;
     // set up connection pool
     initPool();
   }
   
   protected void initPool() {
-    // Set up connection pool
-    pool = new GenericObjectPool(null);
-
     // Read/Write by default
-    boolean readonly = defaultReadOnly;
-    // Auto-commit disabled by default
-    boolean autocommit = readonly;
-    log.debug("Creating new DBCP connection factory, readonly=" + readonly + ", autocommit=" + autocommit);
+    log.debug("Creating new DBCP connection factory, readonly=" + readOnly);
 
-    // Set minimum pool size (default: 20)
-    String _minsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize", false);
-    int minsize = (_minsize == null ? 20 : Integer.parseInt(_minsize));
-    log.debug("Setting ConnectionPool.MinimumSize '" + minsize + "'");
-    pool.setMaxIdle(minsize); // 0 = no limit
-    
-    // Set maximum pool size (default: Integer.MAX_VALUE)
-    String _maxsize = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize", false);
-    int maxsize = (_maxsize == null ? 0 : Integer.parseInt(_maxsize));
-    log.debug("Setting ConnectionPool.MaximumSize '" + maxsize + "'");
-    pool.setMaxActive(maxsize); // 0 = no limit
+    // Set up connection pool
+    AbandonedConfig config = new AbandonedConfig();
+    if (timeout > 0) {
+      config.setRemoveAbandoned(true);
+      config.setRemoveAbandonedTimeout(timeout);
+      config.setLogAbandoned(true);
+      config.setLogWriter(new PrintWriter(new TraceLogger(), true));
+    }
+    pool = new AbandonedObjectPool(null, config);
 
-    // Set user timeout (default: never)
-    String _utimeout = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout", false);
-    int utimeout = (_utimeout == null ? -1 : Integer.parseInt(_utimeout));
-    pool.setMaxWait(utimeout); // -1 = never
-    
-    // EXPERIMENTAL!
-    String _etime = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.IdleTimeout", false);
-    int etime = (_etime == null ? -1 : Integer.parseInt(_etime));
+    pool.setMinIdle(getIntProperty(MIN_IDLE, DEFAULT_MIN_IDLE));
+    pool.setMaxActive(getIntProperty(MAX_ACTIVE, DEFAULT_MAX_ACTIVE)); // -1 = no limit
+    pool.setMaxIdle(getIntProperty(MAX_IDLE, DEFAULT_MAX_IDLE)); // -1 = no limit
+    pool.setMaxWait(getIntProperty(USER_TIMEOUT, DEFAULT_USER_TIMEOUT)); // -1 = never
+    int etime = getIntProperty(IDLE_TIMEOUT, DEFAULT_IDLE_TIMEOUT); // -1 = never
     pool.setTimeBetweenEvictionRunsMillis(etime);
     pool.setSoftMinEvictableIdleTimeMillis(etime);
-    
-   // Set soft maximum - emergency objects (default: true)
-    boolean softmax = MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
-    log.debug("Setting ConnectionPool.SoftMaximum '" + softmax + "'");
-    if (softmax)
-      pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
-    else
-      pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
+    boolean softmax = MapUtils.getBoolean(properties, SOFT_MAXIMUM, DEFAULT_SOFT_MAXIMUM);
+    pool.setWhenExhaustedAction(softmax ? GenericObjectPool.WHEN_EXHAUSTED_GROW : GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
 
     // allow the user to overwrite exhausted options
     // warning: when set to fail, make sure Maximum and Minimum are set correctly
-    // warning: when set to block, make sure a propper usertimeout is set, or pool will block
-    //          forever
-    String _whenExhaustedAction = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.WhenExhaustedAction", false);
-    if (EXHAUSED_BLOCK.equals(_whenExhaustedAction))
-      pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK);
-    if (EXHAUSED_GROW.equals(_whenExhaustedAction))
-      pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW);
-    if (EXHAUSED_FAIL.equals(_whenExhaustedAction))
-      pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL);
+    // warning: when set to block, make sure a propper usertimeout is set, or pool will block forever
+    String action = PropertyUtils.getProperty(properties, EXHAUSTED_ACTION, false);
+    if (action != null) {
+      switch (action) {
+        case EXHAUSED_BLOCK: pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK); break;
+        case EXHAUSED_GROW: pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW); break;
+        case EXHAUSED_FAIL: pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL); break;
+        default: break;
+      }
+    }
 
-    if (pool.getWhenExhaustedAction() == GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK)
-      log.debug("Pool is set to block on exhaused");
-    if (pool.getWhenExhaustedAction() == GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW)
-      log.debug("Pool is set to grow on exhaused");
-    if (pool.getWhenExhaustedAction() == GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL)
-      log.debug("Pool is set to fail on exhaused");
+    // Test on borrow
+    pool.setTestOnBorrow(true);
 
-   // Statement pool
+    log.debug("DBCP connection {}-pool configured:", readOnly ? "ro" : "rw");
+    log.debug("  minIdle = {}", pool.getMinIdle());
+    log.debug("  maxIdle = {}", pool.getMaxIdle());
+    log.debug("  maxActive = {}", pool.getMaxActive());
+    log.debug("  maxWait = {}", pool.getMaxWait());
+    log.debug("  evictionTime = {}", pool.getTimeBetweenEvictionRunsMillis());
+    switch (pool.getWhenExhaustedAction()) {
+      case GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK: log.debug("  exhaustedAction = BLOCK"); break;
+      case GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW: log.debug("  exhaustedAction = GROW"); break;
+      case GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL: log.debug("  exhaustedAction = FAIL"); break;
+      default: break;
+    }
+    if (config.getRemoveAbandoned()) {
+      log.debug("  removeAbandoned = true");
+      log.debug("  removeAbandonedTimeout = {}", config.getRemoveAbandonedTimeout());
+    } else {
+      log.debug("  removeAbandoned = false");
+    }
+
+    // Statement pool
     GenericKeyedObjectPoolFactory stmpool = null;
-    if (MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
+    if (MapUtils.getBoolean(properties, POOL_STATEMENTS, true)) {
       log.debug("Using prepared statement pool: Yes");
       stmpool = new GenericKeyedObjectPoolFactory(null, 
                                                   -1, // unlimited maxActive (per key)
@@ -140,11 +170,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
       log.debug("Using prepared statement pool: No");
     }
 
-    // Test on borrow
-    pool.setTestOnBorrow(true);
-
     // Get validation query
-    String vquery = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ValidationQuery", false);
+    String vquery = PropertyUtils.getProperty(properties, VALIDATION_QUERY, false);
     if (vquery == null)
       vquery = "select seq_count from TM_ADMIN_SEQUENCE where seq_name = '<GLOBAL>'";
 
@@ -164,7 +191,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
       // Create data source
       this.pcfactory =
-        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readonly, autocommit);
+        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readOnly, config);
     
       // Set default transaction isolation level
       pcfactory.setDefaultTransactionIsolation(defaultTransactionIsolation);
@@ -175,9 +202,13 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     }
   }
 
+  private int getIntProperty(String key, int defaultValue) {
+    return PropertyUtils.getInt(PropertyUtils.getProperty(properties, key, false), defaultValue);
+  }
+
     @Override
   public Connection requestConnection() throws SQLException {
-    log.debug("Requesting connection from dbcp pool.");
+    log.debug("Requesting connection from {}-pool.", readOnly ? "ro" : "rw");
     return datasource.getConnection();
   }
 
@@ -210,8 +241,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     private int objectsActivated;
     private int objectsPassivated;
 
-    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, boolean defaultAutoCommit) {
-      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, defaultAutoCommit);
+    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, AbandonedConfig config) {
+      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, false, config); // Auto-commit disabled by default
     }
 
     // PoolableObjectFactory implementation
@@ -238,18 +269,38 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     @Override
     public void activateObject(Object obj) throws Exception {
+      if (log.isDebugEnabled()) { log.debug("Got connection {} from {}-pool", Integer.toHexString(obj.hashCode()), _defaultReadOnly ? "ro" : "rw"); }
       super.activateObject(obj);
       objectsActivated++;
     }
 
     @Override
     public void passivateObject(Object obj) throws Exception {
+      if (log.isDebugEnabled()) { log.debug("Returned connection {} to pool", Integer.toHexString(obj.hashCode()),  _defaultReadOnly ? "ro" : "rw"); }
       super.passivateObject(obj);
       objectsPassivated++;
     }
 
   }
-  
+
+  private class TraceLogger extends Writer {
+
+    private StringBuffer buffer = new StringBuffer();
+
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException {
+      buffer.append(cbuf, off, len);
+    }
+
+    @Override public void flush() throws IOException {
+      log.warn(StringUtils.removeEnd(buffer.toString(), "\n"));
+      buffer = new StringBuffer();
+    }
+
+    @Override public void close() throws IOException {
+      // no-op
+    }
+  }
 }
 
 

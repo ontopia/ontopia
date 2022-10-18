@@ -23,10 +23,12 @@ package net.ontopia.topicmaps.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -44,8 +46,6 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ public class TopicMapSynchronizer {
    * including all characteristics from the source topic.
    */
   public static void update(TopicMapIF target, TopicIF source) {
-    update(target, source, DeciderUtils.<TMObjectIF>getTrueDecider());
+    update(target, source, (o) -> true);
   }
   
   /**
@@ -73,8 +73,8 @@ public class TopicMapSynchronizer {
    * accepted by the filter.
    */
   public static void update(TopicMapIF target, TopicIF source,
-                            DeciderIF<TMObjectIF> tfilter) {
-    update(target, source, tfilter, DeciderUtils.<TMObjectIF>getTrueDecider());
+                            Predicate<TMObjectIF> tfilter) {
+    update(target, source, tfilter, (o) -> true);
   }
 
   /**
@@ -88,7 +88,7 @@ public class TopicMapSynchronizer {
    * @since 3.2.0
    */
   public static void update(TopicMapIF target, TopicIF source,
-                            DeciderIF<TMObjectIF> tfilter, DeciderIF<TMObjectIF> sfilter) {
+                            Predicate<TMObjectIF> tfilter, Predicate<TMObjectIF> sfilter) {
     
     AssociationTracker tracker = new AssociationTracker();
     update(target, source, tfilter, sfilter, tracker);
@@ -114,7 +114,7 @@ public class TopicMapSynchronizer {
    * synchronized (they belong to the topics not being synchronized).
    */
   private static void update(TopicMapIF target, TopicIF source,
-                             DeciderIF<TMObjectIF> tfilter, DeciderIF<TMObjectIF> sfilter,
+                             Predicate<TMObjectIF> tfilter, Predicate<TMObjectIF> sfilter,
                              AssociationTracker tracker) {
 
     TopicMapBuilderIF builder = target.getBuilder();
@@ -149,7 +149,7 @@ public class TopicMapSynchronizer {
     Iterator<TopicNameIF> topicnameIterator = targett.getTopicNames().iterator();
     while (topicnameIterator.hasNext()) {
       TopicNameIF bn = topicnameIterator.next();
-      if (tfilter.ok(bn)) {
+      if (tfilter.test(bn)) {
         log.debug("  target name included {}", bn); 
         originalTopicNames.put(KeyGenerator.makeTopicNameKey(bn), bn);
       } else {
@@ -159,7 +159,7 @@ public class TopicMapSynchronizer {
     topicnameIterator = source.getTopicNames().iterator();
     while (topicnameIterator.hasNext()) {
       TopicNameIF sbn = topicnameIterator.next();
-      if (!sfilter.ok(sbn)) {
+      if (!sfilter.test(sbn)) {
         log.debug("  source name excluded {}", sbn); 
         continue;
       }
@@ -193,7 +193,7 @@ public class TopicMapSynchronizer {
     Iterator<OccurrenceIF> occurrenceIterator = targett.getOccurrences().iterator();
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF occ = occurrenceIterator.next();
-      if (tfilter.ok(occ)) {
+      if (tfilter.test(occ)) {
         log.debug("  target occurrence included: {}", occ); 
         originalOccurrences.put(KeyGenerator.makeOccurrenceKey(occ), occ);
       } else {
@@ -203,7 +203,7 @@ public class TopicMapSynchronizer {
     occurrenceIterator = source.getOccurrences().iterator();
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF socc = occurrenceIterator.next();
-      if (!sfilter.ok(socc)) {
+      if (!sfilter.test(socc)) {
         log.debug("  source occurrence excluded {}", socc); 
         continue;
       }
@@ -236,7 +236,7 @@ public class TopicMapSynchronizer {
     while (roleIterator.hasNext()) {
       AssociationRoleIF role = roleIterator.next();
       AssociationIF assoc = role.getAssociation();
-      if (tfilter.ok(assoc) && tracker.isWithinSyncSet(assoc)) {
+      if (tfilter.test(assoc) && tracker.isWithinSyncSet(assoc)) {
         log.debug("  target association included: {}", assoc); 
         tracker.unwanted(assoc); // means: unwanted if not found in source
       } else {
@@ -247,7 +247,7 @@ public class TopicMapSynchronizer {
     while (roleIterator.hasNext()) {
       AssociationRoleIF role = roleIterator.next();
       AssociationIF sassoc = role.getAssociation();
-      if (!sfilter.ok(sassoc)) {
+      if (!sfilter.test(sassoc)) {
         log.debug("  source association excluded {}", sassoc); 
         continue;
       }
@@ -292,8 +292,8 @@ public class TopicMapSynchronizer {
    * @param stopicq tolog query selecting the source topics to use
    * @param schard filter for the source characteristics to update
    */
-  public static void update(TopicMapIF target, String ttopicq, DeciderIF<TMObjectIF> tchard,
-                            TopicMapIF source, String stopicq, DeciderIF<TMObjectIF> schard)
+  public static void update(TopicMapIF target, String ttopicq, Predicate<TMObjectIF> tchard,
+                            TopicMapIF source, String stopicq, Predicate<TMObjectIF> schard)
     throws InvalidQueryException {   
     // build sets of topics    
     Set<TopicIF> targetts = queryForSet(target, ttopicq);
@@ -342,7 +342,7 @@ public class TopicMapSynchronizer {
   }
   
   private static void update(TopicNameIF tbn, TopicNameIF sbn,
-                             DeciderIF<TMObjectIF> tfilter) {
+                             Predicate<TMObjectIF> tfilter) {
     TopicMapIF target = tbn.getTopicMap();
     TopicMapBuilderIF builder = target.getBuilder();
     
@@ -351,7 +351,7 @@ public class TopicMapSynchronizer {
     Iterator<VariantNameIF> it = tbn.getVariants().iterator();
     while (it.hasNext()) {
       VariantNameIF vn = it.next();
-      if (tfilter.ok(vn))
+      if (tfilter.test(vn))
         origs.put(KeyGenerator.makeVariantKey(vn), vn);
     }
 
@@ -366,7 +366,7 @@ public class TopicMapSynchronizer {
         origs.remove(key); // we've got it already; remember not to delete it
       else {
         // this is a new variant; add it
-        VariantNameIF tvn = builder.makeVariantName(tbn, svn.getValue(), svn.getDataType());
+        VariantNameIF tvn = builder.makeVariantName(tbn, svn.getValue(), svn.getDataType(), Collections.emptySet());
         addScope(tvn, tscope);
       }
     }
@@ -456,7 +456,7 @@ public class TopicMapSynchronizer {
 
   // reifiers is topic in source, not target!
   private static void addReifier(ReifiableIF reified, TopicIF reifiers,
-                                 DeciderIF<TMObjectIF> tfilter, DeciderIF<TMObjectIF> sfilter,
+                                 Predicate<TMObjectIF> tfilter, Predicate<TMObjectIF> sfilter,
                                  AssociationTracker tracker) {
     if (reifiers == null)
       return;
@@ -464,7 +464,7 @@ public class TopicMapSynchronizer {
     if (!tracker.isSourceTopicsSet()) {
       // this means we're synchronizing a single topic. different mode
       // of operation
-      if (!sfilter.ok(reifiers))
+      if (!sfilter.test(reifiers))
         return; // client doesn't want the reifier, so we skip it
 
       // FIXME: if there is cycle of reification here we could fall into

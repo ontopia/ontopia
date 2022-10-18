@@ -35,7 +35,7 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
 
   // --- utility methods
 
-  public void doAbstractURLTopicMapReferenceTests(AbstractURLTopicMapReference ref) throws java.io.IOException {
+  public void assertCompliesToAbstractURLTopicMapReference(AbstractURLTopicMapReference ref) throws java.io.IOException {
     // test url
     Assert.assertTrue("URL == null", ref.getURL() != null);
 
@@ -68,7 +68,7 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     Assert.assertTrue("ReuseStore != RS", ref.getReuseStore() == rs);
 
     boolean checkOpenAfterClose = true;
-    doAbstractTopicMapReferenceTests(ref, checkOpenAfterClose);
+    assertCompliesToAbstractTopicMapReference(ref, checkOpenAfterClose);
   }
 
   // --- Test cases (XTM)
@@ -96,7 +96,7 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     Assert.assertTrue("ExtRefHandler is not null", ref.getExternalReferenceHandler() == null);   
 
     // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
+    assertCompliesToAbstractURLTopicMapReference(ref);
   }
 
   // --- Test cases (LTM)
@@ -109,6 +109,6 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     LTMTopicMapReference ref = new LTMTopicMapReference(file, id, title);
 
     // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
+    assertCompliesToAbstractURLTopicMapReference(ref);
   }
 }

@@ -31,7 +31,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import net.ontopia.utils.NullObject;
 
 /**
  * INTERNAL: Fake the ServletContext, needed for execution of servlets
@@ -54,11 +53,7 @@ public class FakeHttpSession implements HttpSession {
   
   @Override
   public Object getAttribute(String name) {
-    Object result = attrs.get(name);
-    if (result == NullObject.INSTANCE) 
-      return null;
-    else
-      return result;
+    return attrs.get(name);
   }
   
   @Override
@@ -74,7 +69,7 @@ public class FakeHttpSession implements HttpSession {
   @Override
   public void setAttribute(String name, Object value) {
     if (value == null) 
-      attrs.put(name, NullObject.INSTANCE);
+      attrs.remove(name);
     else 
       attrs.put(name, value);
   }

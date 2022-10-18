@@ -61,7 +61,7 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
     Assert.assertTrue("GenerateNames is not " + gg, gg == ref.getGenerateNames());
 
     // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
+    assertCompliesToAbstractURLTopicMapReference(ref);
 
   }
 }

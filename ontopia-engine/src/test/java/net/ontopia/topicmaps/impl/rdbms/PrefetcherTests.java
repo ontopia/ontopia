@@ -126,8 +126,8 @@ public class PrefetcherTests {
       TopicMapIF tm3 = store3.getTopicMap();
 
       TopicMapBuilderIF b1 = tm1.getBuilder();
-      TopicMapBuilderIF b2 = tm2.getBuilder();
-      TopicMapBuilderIF b3 = tm3.getBuilder();
+      tm2.getBuilder();
+      tm3.getBuilder();
 
       // add topics to #1
       TopicIF at1 = getTopic(tm1, "test:har_sprak");
@@ -156,8 +156,8 @@ public class PrefetcherTests {
 
       // add association to #1
       AssociationIF a1 = b1.makeAssociation(at1);
-      AssociationRoleIF rA1 = b1.makeAssociationRole(a1, rtA1, rpA1);
-      AssociationRoleIF rB1 = b1.makeAssociationRole(a1, rtB1, rpB1);
+      b1.makeAssociationRole(a1, rtA1, rpA1);
+      b1.makeAssociationRole(a1, rtB1, rpB1);
 
       // run query in #1
       try {	  

@@ -38,7 +38,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert() throws InvalidQueryException {
     makeEmpty();
-    update("insert topic . ");
+    assertUpdate("insert topic . ");
 
     TopicIF topic = getTopicById("topic");
     Assert.assertTrue("wrong number of topics after insert",
@@ -50,7 +50,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert2() throws InvalidQueryException {
     makeEmpty();
-    update("insert http://example.com . ");
+    assertUpdate("insert http://example.com . ");
 
     TopicIF topic = (TopicIF) topicmap.getTopics().iterator().next();
     Assert.assertTrue("wrong number of topics after insert",
@@ -64,7 +64,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert3() throws InvalidQueryException {
     makeEmpty();
-    update("insert = http://example.com . ");
+    assertUpdate("insert = http://example.com . ");
 
     TopicIF topic = (TopicIF) topicmap.getTopics().iterator().next();
     Assert.assertTrue("wrong number of topics after insert",
@@ -78,7 +78,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert4() throws InvalidQueryException {
     makeEmpty();
-    update("insert topic isa type . ");
+    assertUpdate("insert topic isa type . ");
 
     TopicIF topic = getTopicById("topic");
     TopicIF type = getTopicById("type");
@@ -95,7 +95,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert5() throws InvalidQueryException {
     makeEmpty();
-    update("using foo for i\"http://example.com/\" " +
+    assertUpdate("using foo for i\"http://example.com/\" " +
            "insert foo:bar . ");
 
     TopicIF topic = (TopicIF) topicmap.getTopics().iterator().next();
@@ -109,7 +109,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyWildcard() throws InvalidQueryException {
     makeEmpty();
-    update("insert ?foo . ");
+    assertUpdate("insert ?foo . ");
 
     Assert.assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == 1);
@@ -118,7 +118,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert6() throws InvalidQueryException {
     makeEmpty();
-    update("insert ^ http://example.com/test . ");
+    assertUpdate("insert ^ http://example.com/test . ");
 
     LocatorIF iid = URILocator.create("http://example.com/test");
     TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
@@ -130,7 +130,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testEmptyInsert7() throws InvalidQueryException {
     makeEmpty();
-    update("insert ^ <file:/example/test#foo> . ");
+    assertUpdate("insert ^ <file:/example/test#foo> . ");
 
     LocatorIF iid = URILocator.create("file:/example/test#foo");
     TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
@@ -145,7 +145,7 @@ public class InsertTest extends AbstractQueryTest {
   public void testName() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    update("insert topic1 - \"Emne1\" .");
+    assertUpdate("insert topic1 - \"Emne1\" .");
 
     TopicIF topic = getTopicById("topic1");
     Assert.assertTrue("topic did not get new name",
@@ -156,7 +156,7 @@ public class InsertTest extends AbstractQueryTest {
   public void testAddOccurrence() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    update("insert $topic newocctype: \"hey\" . from $topic = topic1");
+    assertUpdate("insert $topic newocctype: \"hey\" . from $topic = topic1");
 
     TopicIF topic = getTopicById("topic1");
     Assert.assertTrue("topic did not get new occurrence",
@@ -167,7 +167,7 @@ public class InsertTest extends AbstractQueryTest {
   public void testAddOccurrence2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    update("insert $topic objid: $id . from " +
+    assertUpdate("insert $topic objid: $id . from " +
            "$topic = topic1, object-id($topic, $id)");
 
     TopicIF topic = getTopicById("topic1");
@@ -180,7 +180,7 @@ public class InsertTest extends AbstractQueryTest {
     load("instance-of.ltm");
 
     int topicsbefore = topicmap.getTopics().size();
-    update("insert $type isa ?newtype . from " +
+    assertUpdate("insert $type isa ?newtype . from " +
            "$type = type1");
 
     TopicIF topic = getTopicById("type1");
@@ -195,7 +195,7 @@ public class InsertTest extends AbstractQueryTest {
     load("instance-of.ltm");
 
     int topicsbefore = topicmap.getTopics().size();
-    update("insert $type isa ?newtype . from " +
+    assertUpdate("insert $type isa ?newtype . from " +
            "{ $type = type1 | $type = type2 }");
 
     TopicIF topic1 = getTopicById("type1");
@@ -216,11 +216,11 @@ public class InsertTest extends AbstractQueryTest {
   public void testWildcard3() throws InvalidQueryException {
     makeEmpty();
 
-    update("insert ?topic . ");
+    assertUpdate("insert ?topic . ");
 
     Assert.assertTrue("topic not created?", topicmap.getTopics().size() == 1);
 
-    update("insert ?topic . "); // should create *another* topic
+    assertUpdate("insert ?topic . "); // should create *another* topic
 
     Assert.assertEquals("wildcard topics merged across queries",
                  topicmap.getTopics().size(), 2);
@@ -230,11 +230,11 @@ public class InsertTest extends AbstractQueryTest {
   public void testWildcard4() throws InvalidQueryException {
     makeEmpty();
 
-    update("insert ? . ");
+    assertUpdate("insert ? . ");
 
     Assert.assertEquals("problem in topic creation", topicmap.getTopics().size(), 1);
 
-    update("insert ? . "); // should create *another* topic
+    assertUpdate("insert ? . "); // should create *another* topic
 
     Assert.assertEquals("wildcard topics merged across queries",
                  topicmap.getTopics().size(), 2);
@@ -244,7 +244,7 @@ public class InsertTest extends AbstractQueryTest {
   public void testWildcard5() throws InvalidQueryException {
     makeEmpty();
 
-    update("insert ? . ? .");
+    assertUpdate("insert ? . ? .");
 
     Assert.assertEquals("problem in topic creation", topicmap.getTopics().size(), 2);
   }  
@@ -253,7 +253,7 @@ public class InsertTest extends AbstractQueryTest {
   public void testWildcard6() throws InvalidQueryException {
     makeEmpty();
 
-    update("insert ?topic . ?topic .");
+    assertUpdate("insert ?topic . ?topic .");
 
     Assert.assertEquals("problem in topic creation", topicmap.getTopics().size(), 1);
   }  
@@ -264,7 +264,7 @@ public class InsertTest extends AbstractQueryTest {
 
     int topics = topicmap.getTopics().size();
 
-    update("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" " +
+    assertUpdate("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" " +
            "insert xtm:test . ");
 
     Assert.assertTrue("wrong number of topics after insert",
@@ -280,7 +280,7 @@ public class InsertTest extends AbstractQueryTest {
 
     TopicIF topic = getTopicById("topic1");
     Map params = makeArguments("topic", topic);
-    update("insert $topic newocctype: \"hey\" . from $topic = %topic%", params);
+    assertUpdate("insert $topic newocctype: \"hey\" . from $topic = %topic%", params);
 
     Assert.assertTrue("topic did not get new occurrence",
                topic.getOccurrences().size() == 1);
@@ -291,7 +291,7 @@ public class InsertTest extends AbstractQueryTest {
     makeEmpty(false); // don't set base address
 
     // this one is valid because there are no relative URIs
-    update("insert <urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304> .");
+    assertUpdate("insert <urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304> .");
 
     LocatorIF si;
     try {
@@ -309,14 +309,14 @@ public class InsertTest extends AbstractQueryTest {
     makeEmpty(false); // don't set base address
 
     // this one is invalid because "#topic" isn't an absolute URI
-    updateError("insert topic .");
+    assertUpdateError("insert topic .");
   }
 
   @Test
   public void testIssue211() throws InvalidQueryException, IOException {
     load("JillsMusic.xtm");
 
-    update("using on for i\"http://psi.ontopia.net/ontology/\" " +
+    assertUpdate("using on for i\"http://psi.ontopia.net/ontology/\" " +
            "insert $ATYPE - $VALUE @ $RTYPE . " +
            "from " +
            "on:has-role-type($RF : on:role-field, $RTYPE : on:role-type), " +
@@ -330,7 +330,7 @@ public class InsertTest extends AbstractQueryTest {
   public void testTurnStringIntoURI() throws InvalidQueryException, IOException {
     makeEmpty();
 
-    update("insert " +
+    assertUpdate("insert " +
            "  topic $psi . " +
            "from " +
            "  $psi = \"http://example.com\" ");
@@ -347,14 +347,14 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testFromParsing() throws InvalidQueryException {
     makeEmpty();
-    update("insert topic isa $tt . # from \n" +
+    assertUpdate("insert topic isa $tt . # from \n" +
            "  from instance-of($t, $tt)");
   }  
 
   @Test
   public void testFromParsing2() throws InvalidQueryException {
     makeEmpty();
-    update("insert topic - \"Topic from CTM\" .");
+    assertUpdate("insert topic - \"Topic from CTM\" .");
   }
 
   @Test
@@ -364,7 +364,7 @@ public class InsertTest extends AbstractQueryTest {
     int topics = topicmap.getTopics().size();
 
     DeclarationContextIF ctxt = QueryUtils.parseDeclarations(topicmap, "using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"");
-    update("insert xtm:test . ", ctxt);
+    assertUpdate("insert xtm:test . ", ctxt);
 
     Assert.assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == (topics + 1));
@@ -379,7 +379,7 @@ public class InsertTest extends AbstractQueryTest {
 
     DeclarationContextIF ctxt = QueryUtils.parseDeclarations(topicmap, "using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"");
 
-    update("insert ^ http://example.com/test isa xtm:subject . ", ctxt);
+    assertUpdate("insert ^ http://example.com/test isa xtm:subject . ", ctxt);
 
     LocatorIF iid = URILocator.create("http://example.com/test");
     TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
@@ -394,7 +394,7 @@ public class InsertTest extends AbstractQueryTest {
 
     DeclarationContextIF ctxt = QueryUtils.parseDeclarations(topicmap, "using lr for i\"http://example.com/\"");
 
-    update(
+    assertUpdate(
       "insert lr:contains( lr:container : ^ <file:/foo/bar#baz> , " +
       "                    lr:containee : other )", ctxt);
 
@@ -418,7 +418,7 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testFromParsing4() throws InvalidQueryException {
     makeEmpty();
-    update("/* insert ... from test */ " +
+    assertUpdate("/* insert ... from test */ " +
            "insert topic isa $tt . " +
            "  from instance-of($t, $tt)");
   }  
@@ -426,6 +426,6 @@ public class InsertTest extends AbstractQueryTest {
   @Test
   public void testFromParsing5() throws InvalidQueryException {
     makeEmpty();
-    updateError("insert from isa topic .");
+    assertUpdateError("insert from isa topic .");
   }  
 }

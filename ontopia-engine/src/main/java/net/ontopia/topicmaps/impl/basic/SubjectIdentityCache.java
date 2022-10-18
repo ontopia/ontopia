@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -173,7 +174,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   @Override
   protected void registerObject(TMObjectIF o) {
     // Add object and its id from the identity maps.
-    if (o == null) throw new NullPointerException("Cannot register a null object with the identity map.");
+    Objects.requireNonNull(o, "Cannot register a null object with the identity map.");
     // Add new map entries
     TMObject object = (TMObject)o;
     // Create new id if not already created
@@ -189,7 +190,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   @Override
   protected void unregisterObject(TMObjectIF o) {
     // Clear object and its id from the identity maps.
-    if (o == null) throw new NullPointerException("Cannot unregister a null object with the identity map.");
+    Objects.requireNonNull(o, "Cannot unregister a null object with the identity map.");
 
     // Remove map entries
     id_objects.remove(((TMObject)o).oid);
