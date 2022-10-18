@@ -22,8 +22,8 @@ package net.ontopia.topicmaps.classify;
 
 import java.io.ByteArrayInputStream;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.poi.xslf.extractor.XSLFPowerPointExtractor;
-import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.sl.extractor.SlideShowExtractor;
+import org.apache.poi.sl.usermodel.SlideShowFactory;
 
 /**
  * INTERNAL: A format module for the OOXML PresentationML format.
@@ -50,8 +50,7 @@ public class OOXMLPowerpointFormatModule implements FormatModuleIF {
   @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
-      OPCPackage opc = OPCPackage.open(new ByteArrayInputStream(cc.getContent()));
-      XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(opc);
+      SlideShowExtractor<?, ?> extractor = new SlideShowExtractor<>(SlideShowFactory.create(new ByteArrayInputStream(cc.getContent())));
       String s = extractor.getText();
       char[] c = s.toCharArray();
       handler.startRegion("document");

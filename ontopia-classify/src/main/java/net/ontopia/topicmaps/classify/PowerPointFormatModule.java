@@ -20,10 +20,10 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.poi.hslf.extractor.PowerPointExtractor;
+import org.apache.poi.sl.extractor.SlideShowExtractor;
+import org.apache.poi.sl.usermodel.SlideShowFactory;
 
 /**
  * INTERNAL: 
@@ -49,7 +49,7 @@ public class PowerPointFormatModule implements FormatModuleIF {
   @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
-      PowerPointExtractor extractor = new PowerPointExtractor(new BufferedInputStream(new ByteArrayInputStream(cc.getContent())));
+      SlideShowExtractor<?, ?> extractor = new SlideShowExtractor<>(SlideShowFactory.create(new ByteArrayInputStream(cc.getContent())));
       String s = extractor.getText();
       char[] c = s.toCharArray();
       handler.startRegion("document");

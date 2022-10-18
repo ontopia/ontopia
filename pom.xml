@@ -89,6 +89,7 @@
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
 		<jena.version>3.17.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
+		<poi.version>5.2.3</poi.version>
 		
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -539,17 +540,17 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>
-				<version>3.12</version>
+				<version>${poi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
-				<version>4.1.1</version>
+				<version>${poi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-scratchpad</artifactId>
-				<version>5.2.1</version>
+				<version>${poi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
