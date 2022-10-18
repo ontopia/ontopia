@@ -21,8 +21,8 @@
 	</issueManagement>
 	<scm>
 		<url>https://github.com/ontopia/ontopia</url>
-		<connection>scm:git:git://github.com/ontopia/ontopia.git</connection>
-		<developerConnection>scm:git:git://github.com/ontopia/ontopia.git</developerConnection>
+		<connection>scm:git:git@github.com:ontopia/ontopia.git</connection>
+		<developerConnection>scm:git:git@github.com:ontopia/ontopia.git</developerConnection>
 	</scm>
 
 	<inceptionYear>2001</inceptionYear>
