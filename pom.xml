@@ -86,6 +86,7 @@
 		<lucene.snowball.version>3.0.3</lucene.snowball.version>
 		<axis2.version>1.6.4</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
+		<tmapi-tests.version>2.1.1</tmapi-tests.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
 		<jena.version>3.17.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>

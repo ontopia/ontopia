@@ -125,7 +125,7 @@
 								<artifactItem>
 									<groupId>${tmapi.group}</groupId>
 									<artifactId>tmapi-tests</artifactId>
-									<version>${tmapi.version}</version>
+									<version>${tmapi-tests.version}</version>
 									<outputDirectory>${project.build.directory}/test-classes/</outputDirectory>
 								</artifactItem>
 								<artifactItem>
