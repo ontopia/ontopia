@@ -150,7 +150,7 @@ public final class Ontopia {
    * PUBLIC: Returns true if the product is a beta release.
    */
   public static boolean isBeta() {
-    return (beta_version <= 0 ? false : true);
+    return (beta_version > 0);
   }
 
   /**
