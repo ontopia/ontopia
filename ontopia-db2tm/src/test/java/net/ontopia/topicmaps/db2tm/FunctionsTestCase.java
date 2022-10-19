@@ -144,7 +144,7 @@ public class FunctionsTestCase {
       Assert.fail("failIfEmpty shouldn't have failed.");
     }
     try {
-      Assert.assertEquals("wrong return value", Functions.failIfEmpty(" ", "some message"), " ");;
+      Assert.assertEquals("wrong return value", Functions.failIfEmpty(" ", "some message"), " ");
     } catch (DB2TMInputException e) {
       Assert.fail("failIfEmpty shouldn't have failed.");
     }

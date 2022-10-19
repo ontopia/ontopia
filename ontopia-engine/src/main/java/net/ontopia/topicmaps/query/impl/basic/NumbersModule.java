@@ -120,7 +120,7 @@ public class NumbersModule implements ModuleIF {
         : value.floatValue();
     }
 
-  };
+  }
 
 
   // --- AbstractPredicate

@@ -1481,7 +1481,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
   
   protected void whereSQLSetOperation(SQLSetOperation setop, StringBuilder sql, BuildInfo info) {    
-    String op = getSetOperator(setop.getOperator());;
+    String op = getSetOperator(setop.getOperator());
 
     // TODO: Verify "embed build info" code!
     

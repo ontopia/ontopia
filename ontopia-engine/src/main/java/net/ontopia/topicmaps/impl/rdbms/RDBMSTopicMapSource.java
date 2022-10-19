@@ -254,7 +254,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (conn != null) try { conn.close(); } catch (Exception e) { };
+      if (conn != null) try { conn.close(); } catch (Exception e) { }
     }
   }
 

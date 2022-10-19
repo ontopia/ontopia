@@ -37,7 +37,7 @@ public class AssociationIDComparator implements Comparator<AssociationIF> {
    * Default constructor.
    */  
   public AssociationIDComparator() {
-    ac = Collator.getInstance();;
+    ac = Collator.getInstance();
   }
   
   /**

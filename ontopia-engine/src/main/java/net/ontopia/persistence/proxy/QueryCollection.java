@@ -87,7 +87,7 @@ public class QueryCollection<E> extends AbstractCollection<E> {
       result = (QueryResultIF)txn.executeQuery(query_iterator, params_iterator);
       return new QueryResultIterator<E>(result);
     } catch (Throwable e) {
-      if (result != null) try { result.close(); } catch (Throwable t) {};
+      if (result != null) try { result.close(); } catch (Throwable t) {}
       if (e instanceof OntopiaRuntimeException) throw (OntopiaRuntimeException)e;
       throw new OntopiaRuntimeException(e);
     }
@@ -118,7 +118,7 @@ public class QueryCollection<E> extends AbstractCollection<E> {
       result.close();
       return integer.intValue();
     } catch (Throwable e) {
-      if (result != null) try { result.close(); } catch (Throwable t) {};
+      if (result != null) try { result.close(); } catch (Throwable t) {}
       if (e instanceof OntopiaRuntimeException) throw (OntopiaRuntimeException)e;
       throw new OntopiaRuntimeException(e);
     }

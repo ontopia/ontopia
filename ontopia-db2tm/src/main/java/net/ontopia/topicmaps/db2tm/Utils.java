@@ -79,7 +79,7 @@ public class Utils {
         if (frels.contains(relation)) {
           relationMapped = true;
           break;
-        };
+        }
       }
       if (!relationMapped) missingRelations.add(relation);
     }

@@ -325,7 +325,6 @@ public final class ParsedQuery implements ParsedQueryIF {
       Iterator iter1 = qcontext.expressions.iterator();
       while (iter1.hasNext()) {
         ((JDOExpressionIF) iter1.next()).visit(visitor);
-        ;
       }
 
       // Create query for AND'ed expressions
@@ -682,7 +681,6 @@ public final class ParsedQuery implements ParsedQueryIF {
       for (int i = 0; i < exprs.length; i++) {
         if (isIndependent(exprs[i]))
           return true;
-        ;
       }
       return false;
     }
@@ -691,7 +689,6 @@ public final class ParsedQuery implements ParsedQueryIF {
       for (int i = 0; i < exprs.length; i++) {
         if (isIndependent(exprs[i]))
           return true;
-        ;
       }
     }
     // case JDOExpressionIF.NOT_EQUAL:

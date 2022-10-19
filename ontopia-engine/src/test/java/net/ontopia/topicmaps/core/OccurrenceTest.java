@@ -167,7 +167,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 		try {
 			occurrence.setReader(ri, inlen, DataTypes.TYPE_BINARY);
 		} finally {
-			try { ri.close(); } catch (Exception e) { e.printStackTrace(); };
+			try { ri.close(); } catch (Exception e) { e.printStackTrace(); }
 		}
     Assert.assertTrue("Occurrence datatype is incorrect", Objects.equals(DataTypes.TYPE_BINARY, occurrence.getDataType()));
                  

@@ -122,7 +122,7 @@ public class HTTPSearcher extends AbstractSearcher {
     public void close() {
       // no-op
     }
-  };
+  }
 
   private class SearchHandler extends SAXTracker {
     private List hits;

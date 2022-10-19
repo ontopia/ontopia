@@ -141,6 +141,6 @@ public class RDBMSSearcher extends AbstractSearcher {
         throw new OntopiaRuntimeException(e);
       }
     }
-  };
+  }
 
 }

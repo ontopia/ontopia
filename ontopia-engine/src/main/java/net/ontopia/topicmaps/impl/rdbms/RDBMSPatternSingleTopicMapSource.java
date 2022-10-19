@@ -132,7 +132,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       } catch (Exception e) {
         throw new OntopiaRuntimeException(e);
       } finally {
-        try { conn.close(); } catch (Exception e) { };
+        try { conn.close(); } catch (Exception e) { }
       }
 
       // close existing reference if new topic map id
