@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -119,10 +120,8 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   @Override
   public void setValue(String value, LocatorIF datatype) {
-    if (value == null) 
-      throw new NullPointerException("Occurrence value must not be null.");
-    if (datatype == null) 
-      throw new NullPointerException("Occurrence value datatype must not be null.");
+    Objects.requireNonNull(value, "Occurrence value must not be null.");
+    Objects.requireNonNull(datatype, "Occurrence value datatype must not be null.");
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setDataType(datatype);
@@ -146,10 +145,8 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
-    if (value == null) 
-      throw new NullPointerException("Occurrence value must not be null.");
-    if (datatype == null) 
-      throw new NullPointerException("Occurrence value datatype must not be null.");
+    Objects.requireNonNull(value, "Occurrence value must not be null.");
+    Objects.requireNonNull(datatype, "Occurrence value datatype must not be null.");
     if (!"URI".equals(datatype.getNotation()))
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     try {
@@ -176,8 +173,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   
   @Override
   public void setLocator(LocatorIF locator) {
-    if (locator == null) 
-      throw new NullPointerException("Occurrence locator must not be null.");
+    Objects.requireNonNull(locator, "Occurrence locator must not be null.");
     if (!"URI".equals(locator.getNotation()))
       throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
@@ -199,8 +195,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
   @Override
   public void addTheme(TopicIF theme) {
-    if (theme == null) 
-      throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(theme, "null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(OccurrenceIF.EVENT_ADD_THEME, theme, null);
@@ -212,8 +207,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
   @Override
   public void removeTheme(TopicIF theme) {
-    if (theme == null) 
-      throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(theme, "null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent(OccurrenceIF.EVENT_REMOVE_THEME, null, theme);
@@ -234,8 +228,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   @Override
   public void setType(TopicIF type) {
-    if (type == null) 
-      throw new NullPointerException("Occurrence type must not be null.");
+    Objects.requireNonNull(type, "Occurrence type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent(OccurrenceIF.EVENT_SET_TYPE, type, getType());

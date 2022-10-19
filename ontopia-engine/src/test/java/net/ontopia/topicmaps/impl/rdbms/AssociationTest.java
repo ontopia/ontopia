@@ -23,10 +23,6 @@ import net.ontopia.topicmaps.core.TestFactoryIF;
 
 public class AssociationTest extends net.ontopia.topicmaps.core.AssociationTest {
 
-  public AssociationTest(String name) {
-    super(name);
-  }
-
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();

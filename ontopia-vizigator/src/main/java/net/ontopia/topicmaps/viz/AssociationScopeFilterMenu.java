@@ -133,7 +133,7 @@ public class AssociationScopeFilterMenu extends JMenu {
       TopicIF scope = (TopicIF)iter.next();
       
       // Add checkbox for this scope with appropriate name to the menu.
-      String name = TopicStringifiers.getDefaultStringifier().toString(scope);
+      String name = TopicStringifiers.toString(scope);
       boolean checked = controller.isInAssociationScopeFilter(scope);
       JCheckBoxMenuItem mItem = new JCheckBoxMenuItem(name, checked);
       add(mItem);

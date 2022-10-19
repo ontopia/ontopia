@@ -21,36 +21,33 @@
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 
-import junit.framework.TestCase;
-
-public abstract class AbstractTopicMapTest extends TestCase {
+public abstract class AbstractTopicMapTest {
 
   protected TestFactoryIF factory;
   protected TopicMapReferenceIF topicmapRef;
   protected TopicMapIF topicmap;       // topic map of object being tested
   protected TopicMapBuilderIF builder; // builder used for creating new objects
 
-  public AbstractTopicMapTest(String name) {
-    super(name);
-  }
-
   protected abstract TestFactoryIF getFactory() throws Exception;
   
-  @Override
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     factory = getFactory();
     // Get a new topic map object from the factory.
     topicmapRef = factory.makeTopicMapReference();
     topicmap = topicmapRef.createStore(false).getTopicMap();
-    assertTrue("Null topic map!" , topicmap != null);
+    Assert.assertTrue("Null topic map!" , topicmap != null);
     // Get the builder of that topic map.
     builder = topicmap.getBuilder();
-    assertTrue("Null builder!", builder != null);
+    Assert.assertTrue("Null builder!", builder != null);
   }
 
-  @Override
-  protected void tearDown() {
+  @After
+  public void tearDown() {
     if (topicmapRef != null) {
       // Inform the factory that the topic map is not needed anymore.
       topicmap.getStore().close();
@@ -61,10 +58,4 @@ public abstract class AbstractTopicMapTest extends TestCase {
       builder = null;
     }
   }
-
 }
-
-
-
-
-

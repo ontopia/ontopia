@@ -36,8 +36,6 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -69,7 +67,6 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   protected Set alreadyExported;   // objids topics & assocs already exported
   protected boolean use_local_ids; // see setUseLocalIds
   private String tmid;
-  private static final Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
   
   /**
    * PUBLIC: Initializes the exporter.

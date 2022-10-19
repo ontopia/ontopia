@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import junit.framework.TestCase;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ScopedIF;
@@ -31,18 +31,16 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.utils.DeciderIF;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class ScopeUtilsTest extends TestCase {
+public class ScopeUtilsTest {
   protected TopicMapIF    topicmap; 
   protected TopicMapBuilderIF builder;
 
-  public ScopeUtilsTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
     makeTopic("A");
@@ -71,7 +69,7 @@ public class ScopeUtilsTest extends TestCase {
       return new URILocator(uri);
     }
     catch (java.net.MalformedURLException e) {
-      fail("malformed URL given: " + e);
+      Assert.fail("malformed URL given: " + e);
       return null; // never executed...
     }
   }
@@ -88,9 +86,9 @@ public class ScopeUtilsTest extends TestCase {
   //   else if (deciderName == "Related")
   //     decider = new InRelatedScopeDecider(userScope);
   //   else
-  //     fail("bad decider name given");
+  //     Assert.fail("bad decider name given");
   //   
-  //   assertTrue(deciderName + " decider got wrong result: " + object + "/" + user,
+  //   Assert.assertTrue(deciderName + " decider got wrong result: " + object + "/" + user,
   //          decider.ok(makeScoped(object)) == res);
   // }
 
@@ -249,73 +247,77 @@ public class ScopeUtilsTest extends TestCase {
   //   check("Related", "   A, B, C", "D, E, F", false);
   // }
 
-  public void checkApplicableInContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new ApplicableInContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);    
+  public void assertApplicableInContextDecider(String scope, String context, boolean res) {
+    Predicate decider = new ApplicableInContextDecider(makeContext(context));
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+           decider.test(makeScoped(scope)) == res);    
   }
-  public void checkSuperOfContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new SupersetOfContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);
+  public void assertSuperOfContextDecider(String scope, String context, boolean res) {
+    Predicate decider = new SupersetOfContextDecider(makeContext(context));
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+           decider.test(makeScoped(scope)) == res);
   }
-  public void checkSubOfContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new SubsetOfContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);
+  public void assertSubOfContextDecider(String scope, String context, boolean res) {
+    Predicate decider = new SubsetOfContextDecider(makeContext(context));
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+           decider.test(makeScoped(scope)) == res);
   }
-  public void checkIntersectionOfContextDecider(String scope, String context, boolean res) {
-    DeciderIF decider = new IntersectionOfContextDecider(makeContext(context));
-    assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
-           decider.ok(makeScoped(scope)) == res);
+  public void assertIntersectionOfContextDecider(String scope, String context, boolean res) {
+    Predicate decider = new IntersectionOfContextDecider(makeContext(context));
+    Assert.assertTrue(decider + " decider got wrong result: " + scope + "/" + context,
+           decider.test(makeScoped(scope)) == res);
   }
 
+  @Test
   public void testApplicableInContextDecider() {
-    checkApplicableInContextDecider("", "", true);
-    checkApplicableInContextDecider("", "A", true);
-    checkApplicableInContextDecider("", "A, B", true);
-    checkApplicableInContextDecider("A", "", true);
-    checkApplicableInContextDecider("A", "A", true);
-    checkApplicableInContextDecider("A", "A, B", false);
-    checkApplicableInContextDecider("A, B", "", true);
-    checkApplicableInContextDecider("A, B", "A", true);
-    checkApplicableInContextDecider("A, B", "A, B", true);
+    assertApplicableInContextDecider("", "", true);
+    assertApplicableInContextDecider("", "A", true);
+    assertApplicableInContextDecider("", "A, B", true);
+    assertApplicableInContextDecider("A", "", true);
+    assertApplicableInContextDecider("A", "A", true);
+    assertApplicableInContextDecider("A", "A, B", false);
+    assertApplicableInContextDecider("A, B", "", true);
+    assertApplicableInContextDecider("A, B", "A", true);
+    assertApplicableInContextDecider("A, B", "A, B", true);
   }
   
+  @Test
   public void testSuperOfContextDecider() {
-    checkSuperOfContextDecider("", "", true);
-    checkSuperOfContextDecider("", "A", false);
-    checkSuperOfContextDecider("", "A, B", false);
-    checkSuperOfContextDecider("A", "", true);
-    checkSuperOfContextDecider("A", "A", true);
-    checkSuperOfContextDecider("A", "A, B", false);
-    checkSuperOfContextDecider("A, B", "", true);
-    checkSuperOfContextDecider("A, B", "A", true);
-    checkSuperOfContextDecider("A, B", "A, B", true);
+    assertSuperOfContextDecider("", "", true);
+    assertSuperOfContextDecider("", "A", false);
+    assertSuperOfContextDecider("", "A, B", false);
+    assertSuperOfContextDecider("A", "", true);
+    assertSuperOfContextDecider("A", "A", true);
+    assertSuperOfContextDecider("A", "A, B", false);
+    assertSuperOfContextDecider("A, B", "", true);
+    assertSuperOfContextDecider("A, B", "A", true);
+    assertSuperOfContextDecider("A, B", "A, B", true);
   }
   
+  @Test
   public void testSubOfContextDecider() {
-    checkSubOfContextDecider("", "", true);
-    checkSubOfContextDecider("", "A", true);
-    checkSubOfContextDecider("", "A, B", true);
-    checkSubOfContextDecider("A", "", false);
-    checkSubOfContextDecider("A", "A", true);
-    checkSubOfContextDecider("A", "A, B", true);
-    checkSubOfContextDecider("A, B", "", false);
-    checkSubOfContextDecider("A, B", "A", false);
-    checkSubOfContextDecider("A, B", "A, B", true);
+    assertSubOfContextDecider("", "", true);
+    assertSubOfContextDecider("", "A", true);
+    assertSubOfContextDecider("", "A, B", true);
+    assertSubOfContextDecider("A", "", false);
+    assertSubOfContextDecider("A", "A", true);
+    assertSubOfContextDecider("A", "A, B", true);
+    assertSubOfContextDecider("A, B", "", false);
+    assertSubOfContextDecider("A, B", "A", false);
+    assertSubOfContextDecider("A, B", "A, B", true);
   }
   
+  @Test
   public void testIntersectionOfContextDecider() {
-    checkIntersectionOfContextDecider("", "", false);
-    checkIntersectionOfContextDecider("", "A", false);
-    checkIntersectionOfContextDecider("", "A, B", false);
-    checkIntersectionOfContextDecider("A", "", false);
-    checkIntersectionOfContextDecider("A", "A", true);
-    checkIntersectionOfContextDecider("A", "A, B", true);
-    checkIntersectionOfContextDecider("A, B", "", false);
-    checkIntersectionOfContextDecider("A, B", "A", true);
-    checkIntersectionOfContextDecider("A, B", "A, B", true);
+    assertIntersectionOfContextDecider("", "", false);
+    assertIntersectionOfContextDecider("", "A", false);
+    assertIntersectionOfContextDecider("", "A, B", false);
+    assertIntersectionOfContextDecider("A", "", false);
+    assertIntersectionOfContextDecider("A", "A", true);
+    assertIntersectionOfContextDecider("A", "A, B", true);
+    assertIntersectionOfContextDecider("A, B", "", false);
+    assertIntersectionOfContextDecider("A, B", "A", true);
+    assertIntersectionOfContextDecider("A, B", "A, B", true);
   }
   
   // --- Helper classes

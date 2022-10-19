@@ -19,12 +19,12 @@
  */
 package ontopoly.utils;
 
-import junit.framework.Assert;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class OntopolyModelUtilsTests {

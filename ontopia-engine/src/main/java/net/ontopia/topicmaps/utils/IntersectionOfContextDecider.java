@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
-import net.ontopia.utils.DeciderIF;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
@@ -33,7 +33,7 @@ import net.ontopia.topicmaps.core.TopicIF;
  * more information.
  */
 
-public class IntersectionOfContextDecider<S extends ScopedIF> implements DeciderIF<S> {
+public class IntersectionOfContextDecider<S extends ScopedIF> implements Predicate<S> {
 
   protected TopicIF[] context;
   
@@ -43,7 +43,7 @@ public class IntersectionOfContextDecider<S extends ScopedIF> implements Decider
   }
 
   @Override
-  public boolean ok(S scoped) {
+  public boolean test(S scoped) {
     return ScopeUtils.isIntersectionOfContext(scoped, context);
   }
 

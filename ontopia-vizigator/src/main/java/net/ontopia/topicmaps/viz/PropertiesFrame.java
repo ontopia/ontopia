@@ -44,7 +44,7 @@ public class PropertiesFrame extends JFrame {
   
   public void setTarget(TopicIF topic) {
    this.setTitle(Messages.getString("Viz.PropertiesTitle") + controller
-       .getStringifier().toString(topic)); 
+       .getStringifier().apply(topic)); 
    propertiesPanel.setTarget(topic);
    this.resize();
   }

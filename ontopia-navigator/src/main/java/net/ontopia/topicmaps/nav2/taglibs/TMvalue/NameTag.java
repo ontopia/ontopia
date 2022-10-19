@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Function;
 import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.NameGrabber;
 import net.ontopia.topicmaps.utils.TopicCharacteristicGrabbers;
-import net.ontopia.utils.GrabberIF;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -43,9 +43,8 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 public class NameTag extends BaseValueProducingAndAcceptingTag {
 
   // tag attributes
-  private GrabberIF nameGrabber;
+  private Function nameGrabber;
   private String basenameScopeVarName;
-  private String variantScopeVarName;
 
   @Override
   public Collection process(Collection topics) throws JspTagException {
@@ -71,7 +70,7 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
       while (iter.hasNext()) {
         obj = iter.next();
         if (obj instanceof TopicIF) {
-          Object name = nameGrabber.grab(obj);
+          Object name = nameGrabber.apply(obj);
           if (name != null)
             names.add(name);
         }
@@ -87,18 +86,14 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
   public void setGrabber(String classname) throws NavigatorRuntimeException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     Object obj = contextTag.getNavigatorApplication().getInstanceOf(classname);
-    if (obj != null && obj instanceof GrabberIF)
-      this.nameGrabber = (GrabberIF) obj;
+    if (obj != null && obj instanceof Function)
+      this.nameGrabber = (Function) obj;
     else
       this.nameGrabber = null;
   }
 
   public final void setBasenameScope(String scopeVarName) {
     this.basenameScopeVarName = scopeVarName;
-  }
-  
-  public final void setVariantScope(String scopeVarName) {
-    this.variantScopeVarName = scopeVarName;
   }
   
 }

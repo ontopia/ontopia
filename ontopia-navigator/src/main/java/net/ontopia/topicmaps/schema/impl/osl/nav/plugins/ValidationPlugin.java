@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.schema.impl.osl.nav.plugins;
 
 import java.io.File;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import net.ontopia.topicmaps.nav2.plugins.DefaultPlugin;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
@@ -33,9 +32,6 @@ public class ValidationPlugin extends DefaultPlugin {
   public String generateHTML(ContextTag context) {
 
     ServletContext ctxt = context.getPageContext().getServletContext();
-    HttpServletRequest request =
-      (HttpServletRequest)context.getPageContext().getRequest();
-
     String tm = context.getTopicMapId();
 
     // Does the schme exist?

@@ -85,7 +85,6 @@ public class Stats {
     
     RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
     Integer c;
-    Integer[] cs;
     
     c = getCount("Stats.topicTypePairs", store);
     stats.put("topics.type.pairs", c);

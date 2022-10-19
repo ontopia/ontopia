@@ -46,13 +46,12 @@ import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.impl.basic.NavigatorApplication;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 
@@ -71,8 +70,6 @@ public class TMLoginModule implements LoginModule {
   // state obtained in the initialize() method
   private Subject subject;
   private CallbackHandler callbackHandler;
-  private Map<String, ?> sharedState;
-  private Map<String, ?> options;
 
   // the authentication status
   private boolean loginSucceeded;
@@ -158,8 +155,6 @@ public class TMLoginModule implements LoginModule {
     
     this.subject = subject;
     this.callbackHandler = callbackHandler;
-    this.sharedState = sharedState;
-    this.options = options;
     
     // get options
     jndiname = (String)options.get("jndi_repository");
@@ -236,7 +231,7 @@ public class TMLoginModule implements LoginModule {
   // ... LoginModule interface methods.  
 
   private static String getName(TopicIF topic) {
-    return net.ontopia.topicmaps.utils.TopicStringifiers.getDefaultStringifier().toString(topic);
+    return TopicStringifiers.toString(topic);
   }
     
   protected TopicMapIF getTopicMap() {

@@ -37,7 +37,6 @@
   TopicMapIF topicmap = (TopicMapIF)ContextUtils.getSingleValue("topicmap", pageContext);
 
   String key = (String)request.getParameter("id");
-  StringifierIF ts = TopicStringifiers.getDefaultStringifier();
 
   TopicIF topic = (TopicIF)topicmap.getObjectById(key);
   ClassInstanceIndexIF tindex = (ClassInstanceIndexIF)topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");

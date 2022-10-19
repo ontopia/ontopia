@@ -20,22 +20,25 @@
 
 package net.ontopia.utils;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 public class CompactIdentityHashSetTest extends CompactHashSetTest {
   
-  public CompactIdentityHashSetTest(String name) {
-    super(name);
-  }
-
+  @Before
   @Override
   public void setUp() {
     set = new CompactIdentityHashSet();
   }
 
   @Override
+  @Test
   public void testProbabilistic() {
     // NOTE: This test won't work with the IdentityHashSet since it
     // uses pointer comparsion, and none of the generated objects are
     // ever the same.
+    Assert.assertTrue(true); // for PMD
   }
   
 }

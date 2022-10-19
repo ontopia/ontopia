@@ -20,45 +20,46 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class CharacterSetTest extends TestCase {
+public class CharacterSetTest {
 
-  public CharacterSetTest(String name) {
-    super(name);
-  }
-  
+  @Test
   public void testEmpty() {
     CharacterSet set = new CharacterSet();
     set.close();
-    assertTrue("empty set contains character", !set.contains((char) 0x20));
-    assertTrue("empty set contains character", !set.contains((char) 0x51));
-    assertTrue("empty set contains character", !set.contains((char) 0x7F2E));
+    Assert.assertTrue("empty set contains character", !set.contains((char) 0x20));
+    Assert.assertTrue("empty set contains character", !set.contains((char) 0x51));
+    Assert.assertTrue("empty set contains character", !set.contains((char) 0x7F2E));
   }
   
+  @Test
   public void testSingleCharacter() {
     CharacterSet set = new CharacterSet();
     set.addInterval(' ', ' ');
     set.close();
     
-    assertTrue("set contains unknown character", !set.contains((char) 0x19));
-    assertTrue("set contains unknown character", !set.contains((char) 0x21));
-    assertTrue("set doesn't contain added character", set.contains(' '));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x19));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x21));
+    Assert.assertTrue("set doesn't contain added character", set.contains(' '));
   }
 
+  @Test
   public void testSingleInterval() {
     CharacterSet set = new CharacterSet();
     set.addInterval('a', 'z');
     set.close();
     
-    assertTrue("set contains unknown character", !set.contains((char) 0x19));
-    assertTrue("set contains unknown character", !set.contains((char) 0x21));
-    assertTrue("set contains unknown character", !set.contains(' '));
-    assertTrue("set doesn't contain added character", set.contains('a'));
-    assertTrue("set doesn't contain added character", set.contains('g'));
-    assertTrue("set doesn't contain added character", set.contains('z'));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x19));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x21));
+    Assert.assertTrue("set contains unknown character", !set.contains(' '));
+    Assert.assertTrue("set doesn't contain added character", set.contains('a'));
+    Assert.assertTrue("set doesn't contain added character", set.contains('g'));
+    Assert.assertTrue("set doesn't contain added character", set.contains('z'));
   }
 
+  @Test
   public void testMultipleIntervals() {
     CharacterSet set = new CharacterSet();
     // set contains A-Za-z0-9-:_
@@ -70,15 +71,15 @@ public class CharacterSetTest extends TestCase {
     set.addInterval('0', '9');
     set.close();
     
-    assertTrue("set contains unknown character", !set.contains((char) 0x19));
-    assertTrue("set contains unknown character", !set.contains((char) 0x21));
-    assertTrue("set contains unknown character", !set.contains(' '));
-    assertTrue("set contains unknown character", !set.contains((char) 0x0321));
-    assertTrue("set doesn't contain added character 'a'", set.contains('a'));
-    assertTrue("set doesn't contain added character 'g'", set.contains('g'));
-    assertTrue("set doesn't contain added character 'z'", set.contains('z'));
-    assertTrue("set doesn't contain added character '1'", set.contains('1'));
-    assertTrue("set doesn't contain added character ':'", set.contains(':'));
-    assertTrue("set doesn't contain added character 'A'", set.contains('A'));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x19));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x21));
+    Assert.assertTrue("set contains unknown character", !set.contains(' '));
+    Assert.assertTrue("set contains unknown character", !set.contains((char) 0x0321));
+    Assert.assertTrue("set doesn't contain added character 'a'", set.contains('a'));
+    Assert.assertTrue("set doesn't contain added character 'g'", set.contains('g'));
+    Assert.assertTrue("set doesn't contain added character 'z'", set.contains('z'));
+    Assert.assertTrue("set doesn't contain added character '1'", set.contains('1'));
+    Assert.assertTrue("set doesn't contain added character ':'", set.contains(':'));
+    Assert.assertTrue("set doesn't contain added character 'A'", set.contains('A'));
   }
 }

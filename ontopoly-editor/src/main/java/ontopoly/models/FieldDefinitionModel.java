@@ -37,8 +37,7 @@ public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinitio
   
   public FieldDefinitionModel(FieldDefinition fieldDefinition) {
     super(fieldDefinition);
-    if (fieldDefinition == null)
-      throw new NullPointerException("fieldDefinition parameter cannot be null.");
+    Objects.requireNonNull(fieldDefinition, "fieldDefinition parameter cannot be null.");
     
     TopicMap topicMap = fieldDefinition.getTopicMap();
     this.topicMapId = topicMap.getId();

@@ -25,26 +25,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import org.junit.Test;
 
 public class ScopePredicateTest extends AbstractPredicateTest {
   
-  public ScopePredicateTest(String name) {
-    super(name);
-  }
-
   /// setup
 
-  @Override
-  public void tearDown() {    
-    closeStore();
-  }
-
-  /// setup
-
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -63,15 +53,16 @@ public class ScopePredicateTest extends AbstractPredicateTest {
         addScopesOf(matches, ((TopicNameIF) it2.next()).getVariants());
     }
                 
-    verifyQuery(matches, "scope($SCOPED, $THEME)?");
+    assertQueryMatches(matches, "scope($SCOPED, $THEME)?");
   }
 
+  @Test
   public void testCrossJoin() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
     
-    verifyQuery(matches, OPT_TYPECHECK_OFF +
+    assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "association-role($ASSOC, $ROLE), scope($ROLE, $THEME)?");
   } 
   
@@ -85,6 +76,7 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     }
   }
   
+  @Test
   public void testTopicNameBothBound() throws InvalidQueryException, IOException {
     makeEmpty();
     TopicIF theme = builder.makeTopic();
@@ -95,9 +87,10 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches);
  
-    verifyQuery(matches, "scope(@" + thing.getObjectId() + ", @" + theme.getObjectId() + ")?");
+    assertQueryMatches(matches, "scope(@" + thing.getObjectId() + ", @" + theme.getObjectId() + ")?");
   }
   
+  @Test
   public void testTopicNameBothUnbound() throws InvalidQueryException, IOException {
     makeEmpty();
     TopicIF theme = builder.makeTopic();
@@ -109,9 +102,10 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "THING", thing, "THEME", theme);
 
     // NOTE: using topic-name predicate here to avoid type cross product
-    verifyQuery(matches, "topic-name(@" + topic.getObjectId() + ", $THING), scope($THING, $THEME)?");
+    assertQueryMatches(matches, "topic-name(@" + topic.getObjectId() + ", $THING), scope($THING, $THEME)?");
   }
   
+  @Test
   public void testTopicNameBound() throws InvalidQueryException, IOException {
     makeEmpty();
     TopicIF theme = builder.makeTopic();
@@ -122,9 +116,10 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "THEME", theme);
  
-    verifyQuery(matches, "scope(@" + thing.getObjectId() + ", $THEME)?");
+    assertQueryMatches(matches, "scope(@" + thing.getObjectId() + ", $THEME)?");
   }
   
+  @Test
   public void testTopicNameUnbound() throws InvalidQueryException, IOException {
     makeEmpty();
     TopicIF theme = builder.makeTopic();
@@ -136,9 +131,10 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "THING", thing);
  
     // NOTE: using topic-name predicate here to avoid type cross product
-    verifyQuery(matches, "topic-name(@" + topic.getObjectId() + ", $THING), scope($THING, @" + theme.getObjectId() + ")?");
+    assertQueryMatches(matches, "topic-name(@" + topic.getObjectId() + ", $THING), scope($THING, @" + theme.getObjectId() + ")?");
   }
   
+  @Test
   public void testSpecificTopicNameNoScope() throws InvalidQueryException, IOException {
     makeEmpty();
     TopicIF type = builder.makeTopic();
@@ -146,7 +142,7 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     TopicNameIF bn = builder.makeTopicName(topic, "name");
 
     List matches = new ArrayList();
-    verifyQuery(matches, "scope(@" + bn.getObjectId() + ", $THEME)?");
+    assertQueryMatches(matches, "scope(@" + bn.getObjectId() + ", $THEME)?");
   }
   
 }

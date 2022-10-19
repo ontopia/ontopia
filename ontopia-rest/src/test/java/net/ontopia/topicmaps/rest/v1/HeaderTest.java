@@ -21,11 +21,10 @@
 package net.ontopia.topicmaps.rest.v1;
 
 import net.ontopia.topicmaps.rest.OntopiaTestResource;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.restlet.data.Header;
 import org.restlet.data.Method;
-import org.restlet.engine.header.Header;
 import org.restlet.util.Series;
 
 public class HeaderTest extends AbstractV1ResourceTest {
@@ -38,7 +37,7 @@ public class HeaderTest extends AbstractV1ResourceTest {
 	public void testHeaders() {
 		OntopiaTestResource request = new OntopiaTestResource(Method.GET, getUrl(null), defaultMediatype);
 		request.request();
-		Series<Header> headers = HeaderUtils.getHeaders(request.getResponse());
+		Series<Header> headers = request.getResponse().getHeaders();
 
 		Assert.assertNotNull(headers);
 		Assert.assertEquals("v1", headers.getFirstValue("X-Ontopia-API-Version"));

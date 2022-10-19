@@ -29,23 +29,20 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * INTERNAL: Tests that tests various aspects about the query caches
  * used by the RDBMS Backend Connector.
  */
 
-public class QueryCacheTests extends TestCase {
+public class QueryCacheTests {
   
-  public QueryCacheTests(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
-    super.setUp();
   }
 
   /**
@@ -54,6 +51,7 @@ public class QueryCacheTests extends TestCase {
    * changes. This can either be if the role has been added, the role
    * deleted, or the role changes its type.
    */
+  @Test
   public void testRoleTypeInvalidation() throws IOException, java.net.MalformedURLException {
     // initialize storage
     StorageIF storage = new RDBMSStorage();
@@ -77,19 +75,19 @@ public class QueryCacheTests extends TestCase {
       String oid_rt1 = rt1.getObjectId();
       TopicIF rt2 = tmA.getBuilder().makeTopic();
 
-      assertTrue("p1.roles.size is not empty.", p1.getRoles().isEmpty());
-      assertTrue("p2.roles.size is not empty.", p2.getRoles().isEmpty());
+      Assert.assertTrue("p1.roles.size is not empty.", p1.getRoles().isEmpty());
+      Assert.assertTrue("p2.roles.size is not empty.", p2.getRoles().isEmpty());
 
       TopicMapBuilderIF builder = tmA.getBuilder();
 
       AssociationIF a1 = builder.makeAssociation(at);
-      AssociationRoleIF r1 = builder.makeAssociationRole(a1, rt1, p1);
-      AssociationRoleIF r2 = builder.makeAssociationRole(a1, rt2, p2);
+      builder.makeAssociationRole(a1, rt1, p1);
+      builder.makeAssociationRole(a1, rt2, p2);
 
-      assertTrue("p1.roles.size is not 1.", p1.getRoles().size() == 1);
-      assertTrue("p2.roles.size is not 1.", p2.getRoles().size() == 1);
+      Assert.assertTrue("p1.roles.size is not 1.", p1.getRoles().size() == 1);
+      Assert.assertTrue("p2.roles.size is not 1.", p2.getRoles().size() == 1);
 
-      assertTrue("p1.rolesByType(rt1).size is not 1.", p1.getRolesByType(rt1).size() == 1);
+      Assert.assertTrue("p1.rolesByType(rt1).size is not 1.", p1.getRolesByType(rt1).size() == 1);
 
       storeA.commit();
 
@@ -102,7 +100,7 @@ public class QueryCacheTests extends TestCase {
       //assertTrue("p1D.rolesByType(null).size is not 0.", p1D.getRolesByType(null).size() == 0);
 
       TopicIF rt1D = (TopicIF)tmD.getObjectById(oid_rt1);
-      assertTrue("p1D.rolesByType(rt1).size is not 1.", p1D.getRolesByType(rt1D).size() == 1);
+      Assert.assertTrue("p1D.rolesByType(rt1).size is not 1.", p1D.getRolesByType(rt1D).size() == 1);
 
       // open topic map store B
       storeB = new RDBMSTopicMapStore(storage, tmid);
@@ -113,13 +111,13 @@ public class QueryCacheTests extends TestCase {
       //assertTrue("p1B.rolesByType(null).size is not 0.", p1B.getRolesByType(null).size() == 0);
 
       TopicIF rt1B = (TopicIF)tmB.getObjectById(oid_rt1);
-      assertTrue("p1B.rolesByType(rt1).size is not 1.", p1B.getRolesByType(rt1B).size() == 1);
+      Assert.assertTrue("p1B.rolesByType(rt1).size is not 1.", p1B.getRolesByType(rt1B).size() == 1);
 
       // remove player from role and recheck state
       AssociationRoleIF r1B = (AssociationRoleIF)p1B.getRoles().iterator().next();
       r1B.setPlayer(tmB.getBuilder().makeTopic());
-      assertTrue("p1B.roles.size is not empty.", p1B.getRoles().size() == 0);
-      assertTrue("p1B.rolesByType(rt1B).size is not 0.", p1B.getRolesByType(rt1B).size() == 0);
+      Assert.assertTrue("p1B.roles.size is not empty.", p1B.getRoles().size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1B).size is not 0.", p1B.getRolesByType(rt1B).size() == 0);
       // no longer needed, there is a check in getRolesByType()
       //assertTrue("p1B.rolesByType(null).size is not 0.", p1B.getRolesByType(null).size() == 0);
 
@@ -134,7 +132,7 @@ public class QueryCacheTests extends TestCase {
       //assertTrue("p1C.rolesByType(null).size is not 0.", p1C.getRolesByType(null).size() == 0);
 
       TopicIF rt1C = (TopicIF)tmC.getObjectById(oid_rt1);
-      assertTrue("p1C.rolesByType(rt1).size is not 0.", p1C.getRolesByType(rt1C).size() == 0);
+      Assert.assertTrue("p1C.rolesByType(rt1).size is not 0.", p1C.getRolesByType(rt1C).size() == 0);
 
       storeC.commit();
       storeD.commit();
@@ -154,6 +152,7 @@ public class QueryCacheTests extends TestCase {
    * either be if the role has been added, the role deleted, or the
    * role changes its type.
    */
+  @Test
   public void testRoleTypeAssociationTypeInvalidation() throws IOException, java.net.MalformedURLException {
     // initialize storage
     StorageIF storage = new RDBMSStorage();
@@ -185,22 +184,22 @@ public class QueryCacheTests extends TestCase {
       String oid_rt2 = rt2.getObjectId();
       String oid_rt3 = rt3.getObjectId();
 
-      assertTrue("p1.roles.size is not empty.", p1.getRoles().isEmpty());
-      assertTrue("p2.roles.size is not empty.", p2.getRoles().isEmpty());
+      Assert.assertTrue("p1.roles.size is not empty.", p1.getRoles().isEmpty());
+      Assert.assertTrue("p2.roles.size is not empty.", p2.getRoles().isEmpty());
 
       TopicMapBuilderIF builder = tmA.getBuilder();
 
       AssociationIF a1 = builder.makeAssociation(at1);
-      AssociationRoleIF r1 = builder.makeAssociationRole(a1, rt1, p1);
-      AssociationRoleIF r2 = builder.makeAssociationRole(a1, rt2, p2);
+      builder.makeAssociationRole(a1, rt1, p1);
+      builder.makeAssociationRole(a1, rt2, p2);
 
-      assertTrue("p1.roles.size is not 1.", p1.getRoles().size() == 1);
-      assertTrue("p2.roles.size is not 1.", p2.getRoles().size() == 1);
+      Assert.assertTrue("p1.roles.size is not 1.", p1.getRoles().size() == 1);
+      Assert.assertTrue("p2.roles.size is not 1.", p2.getRoles().size() == 1);
 
-      assertTrue("p1.rolesByType(rt1,at1).size is not 1.", p1.getRolesByType(rt1, at1).size() == 1);
-      assertTrue("p1.rolesByType(rt2,at1).size is not 0.", p1.getRolesByType(rt2, at1).size() == 0);
-      assertTrue("p2.rolesByType(rt1,at1).size is not 0.", p2.getRolesByType(rt1, at1).size() == 0);
-      assertTrue("p2.rolesByType(rt2,at1).size is not 1.", p2.getRolesByType(rt2, at1).size() == 1);
+      Assert.assertTrue("p1.rolesByType(rt1,at1).size is not 1.", p1.getRolesByType(rt1, at1).size() == 1);
+      Assert.assertTrue("p1.rolesByType(rt2,at1).size is not 0.", p1.getRolesByType(rt2, at1).size() == 0);
+      Assert.assertTrue("p2.rolesByType(rt1,at1).size is not 0.", p2.getRolesByType(rt1, at1).size() == 0);
+      Assert.assertTrue("p2.rolesByType(rt2,at1).size is not 1.", p2.getRolesByType(rt2, at1).size() == 1);
 
       storeA.commit();
 
@@ -214,7 +213,7 @@ public class QueryCacheTests extends TestCase {
 
       TopicIF rt1D = (TopicIF)tmD.getObjectById(oid_rt1);
       TopicIF at1D = (TopicIF)tmD.getObjectById(oid_at1);
-      assertTrue("p1D.rolesByType(rt1,at1).size is not 1.", p1D.getRolesByType(rt1D, at1D).size() == 1);
+      Assert.assertTrue("p1D.rolesByType(rt1,at1).size is not 1.", p1D.getRolesByType(rt1D, at1D).size() == 1);
 
       // open topic map store E
       storeE = new RDBMSTopicMapStore(storage, tmid);
@@ -235,10 +234,10 @@ public class QueryCacheTests extends TestCase {
       AssociationRoleIF r1E = (AssociationRoleIF)p1E.getRolesByType(rt1E, at1E).iterator().next();
       r1E.getAssociation().setType(at2E);
       r1E.setType(rt3E);
-      assertTrue("p1E.rolesByType(rt1,at1).size is not 0.", p1E.getRolesByType(rt1E, at1E).size() == 0);
-      assertTrue("p1E.rolesByType(rt1,at2).size is not 0.", p1E.getRolesByType(rt1E, at2E).size() == 0);
-      assertTrue("p1E.rolesByType(rt3,at2).size is not 1.", p1E.getRolesByType(rt3E, at2E).size() == 1);
-      assertTrue("p2E.rolesByType(rt2,at2).size is not 1.", p2E.getRolesByType(rt2E, at2E).size() == 1);
+      Assert.assertTrue("p1E.rolesByType(rt1,at1).size is not 0.", p1E.getRolesByType(rt1E, at1E).size() == 0);
+      Assert.assertTrue("p1E.rolesByType(rt1,at2).size is not 0.", p1E.getRolesByType(rt1E, at2E).size() == 0);
+      Assert.assertTrue("p1E.rolesByType(rt3,at2).size is not 1.", p1E.getRolesByType(rt3E, at2E).size() == 1);
+      Assert.assertTrue("p2E.rolesByType(rt2,at2).size is not 1.", p2E.getRolesByType(rt2E, at2E).size() == 1);
 
       storeE.commit();
 
@@ -257,58 +256,58 @@ public class QueryCacheTests extends TestCase {
       TopicIF rt3B = (TopicIF)tmB.getObjectById(oid_rt3);
       TopicIF at1B = (TopicIF)tmB.getObjectById(oid_at1);
       TopicIF at2B = (TopicIF)tmB.getObjectById(oid_at2);
-      assertTrue("p1B.rolesByType(rt3,at2).size is not 1.", p1B.getRolesByType(rt3B, at2B).size() == 1);
+      Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 1.", p1B.getRolesByType(rt3B, at2B).size() == 1);
 
       AssociationRoleIF r1B = (AssociationRoleIF)p1B.getRoles().iterator().next();
-      assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt3,at2).size is not 1.", p1B.getRolesByType(rt3B,at2B).size() == 1);
-      assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 1.", p1B.getRolesByType(rt3B,at2B).size() == 1);
+      Assert.assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
 
-      assertTrue("p1B.rolesByType(rt2,at1).size is not 0.", p1B.getRolesByType(rt2B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt2,at2).size is not 0.", p1B.getRolesByType(rt2B,at2B).size() == 0);
-      assertTrue("p2B.rolesByType(rt2,at1).size is not 0.", p2B.getRolesByType(rt2B,at1B).size() == 0);
-      assertTrue("p2B.rolesByType(rt2,at2).size is not 1.", p2B.getRolesByType(rt2B,at2B).size() == 1);
+      Assert.assertTrue("p1B.rolesByType(rt2,at1).size is not 0.", p1B.getRolesByType(rt2B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt2,at2).size is not 0.", p1B.getRolesByType(rt2B,at2B).size() == 0);
+      Assert.assertTrue("p2B.rolesByType(rt2,at1).size is not 0.", p2B.getRolesByType(rt2B,at1B).size() == 0);
+      Assert.assertTrue("p2B.rolesByType(rt2,at2).size is not 1.", p2B.getRolesByType(rt2B,at2B).size() == 1);
 
       // at2( p : rt3, o : rt2) -> at1( p : rt3, o : rt2)
       r1B.getAssociation().setType(at1B);
-      assertTrue("p1B.rolesByType(rt3,at1).size is not 1.", p1B.getRolesByType(rt3B,at1B).size() == 1);
-      assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
-      assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 1.", p1B.getRolesByType(rt3B,at1B).size() == 1);
+      Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
       // at1( p : rt3, o : rt2) -> at1( p : rt1, o : rt2)
       r1B.setType(rt1B);
-      assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
-      assertTrue("p1B.rolesByType(rt1,at1).size is not 1.", p1B.getRolesByType(rt1B,at1B).size() == 1);
-      assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1,at1).size is not 1.", p1B.getRolesByType(rt1B,at1B).size() == 1);
+      Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
 
       // at1( p : rt1, o : rt2) -> at1( o : rt2)
-      AssociationIF aB = r1B.getAssociation();
+      r1B.getAssociation();
       r1B.remove();
-      assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
-      assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
-      assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
-      assertTrue("p2B.rolesByType(rt2,at1).size is not 1.", p2B.getRolesByType(rt2B,at1B).size() == 1);
-      assertTrue("p2B.rolesByType(rt2,at2).size is not 0.", p2B.getRolesByType(rt2B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
+      Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
+      Assert.assertTrue("p2B.rolesByType(rt2,at1).size is not 1.", p2B.getRolesByType(rt2B,at1B).size() == 1);
+      Assert.assertTrue("p2B.rolesByType(rt2,at2).size is not 0.", p2B.getRolesByType(rt2B,at2B).size() == 0);
       //! aB.addRole(r1B);
-      //! assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
-      //! assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
-      //! assertTrue("p1B.rolesByType(rt1,at1).size is not 1.", p1B.getRolesByType(rt1B,at1B).size() == 1);
-      //! assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
-      //! assertTrue("p2B.rolesByType(rt2,at1).size is not 1.", p2B.getRolesByType(rt2B,at1B).size() == 1);
-      //! assertTrue("p2B.rolesByType(rt2,at2).size is not 0.", p2B.getRolesByType(rt2B,at2B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(rt1,at1).size is not 1.", p1B.getRolesByType(rt1B,at1B).size() == 1);
+      //! Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
+      //! Assert.assertTrue("p2B.rolesByType(rt2,at1).size is not 1.", p2B.getRolesByType(rt2B,at1B).size() == 1);
+      //! Assert.assertTrue("p2B.rolesByType(rt2,at2).size is not 0.", p2B.getRolesByType(rt2B,at2B).size() == 0);
       //! 
       //! // at1( p : rt1, o : rt2) -> at1( null : rt1, o : rt2)
       //! r1B.setPlayer(null);
-      //! assertTrue("p1B.roles.size is not empty.", p1B.getRoles().size() == 0);
-      //! assertTrue("p2B.roles.size is not 1.", p2B.getRoles().size() == 1);
-      //! assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
-      //! assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
-      //! assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
-      //! assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
-      //! assertTrue("p1B.rolesByType(null,null).size is not 0.", p1B.getRolesByType(null,null).size() == 0);
+      //! Assert.assertTrue("p1B.roles.size is not empty.", p1B.getRoles().size() == 0);
+      //! Assert.assertTrue("p2B.roles.size is not 1.", p2B.getRoles().size() == 1);
+      //! Assert.assertTrue("p1B.rolesByType(rt3,at1).size is not 0.", p1B.getRolesByType(rt3B,at1B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(rt3,at2).size is not 0.", p1B.getRolesByType(rt3B,at2B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(rt1,at1).size is not 0.", p1B.getRolesByType(rt1B,at1B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(rt1,at2).size is not 0.", p1B.getRolesByType(rt1B,at2B).size() == 0);
+      //! Assert.assertTrue("p1B.rolesByType(null,null).size is not 0.", p1B.getRolesByType(null,null).size() == 0);
 
       storeB.commit();
 
@@ -330,10 +329,10 @@ public class QueryCacheTests extends TestCase {
       //assertTrue("p1C.rolesByType(null,at3).size is not 0.", p1C.getRolesByType(null,at2C).size() == 0);
       //assertTrue("p1C.rolesByType(rt1,null).size is not 0.", p1C.getRolesByType(rt1C, null).size() == 0);
       //assertTrue("p1C.rolesByType(rt3,null).size is not 0.", p1C.getRolesByType(rt3C, null).size() == 0);
-      assertTrue("p1C.rolesByType(rt3,at1).size is not 0.", p1C.getRolesByType(rt3C,at1C).size() == 0);
-      assertTrue("p1C.rolesByType(rt3,at2).size is not 0.", p1C.getRolesByType(rt3C,at2C).size() == 0);
-      assertTrue("p1C.rolesByType(rt1,at1).size is not 0.", p1C.getRolesByType(rt1C,at1C).size() == 0);
-      assertTrue("p1C.rolesByType(rt1,at2).size is not 0.", p1C.getRolesByType(rt1C,at2C).size() == 0);
+      Assert.assertTrue("p1C.rolesByType(rt3,at1).size is not 0.", p1C.getRolesByType(rt3C,at1C).size() == 0);
+      Assert.assertTrue("p1C.rolesByType(rt3,at2).size is not 0.", p1C.getRolesByType(rt3C,at2C).size() == 0);
+      Assert.assertTrue("p1C.rolesByType(rt1,at1).size is not 0.", p1C.getRolesByType(rt1C,at1C).size() == 0);
+      Assert.assertTrue("p1C.rolesByType(rt1,at2).size is not 0.", p1C.getRolesByType(rt1C,at2C).size() == 0);
 
       storeC.commit();
       storeD.commit();

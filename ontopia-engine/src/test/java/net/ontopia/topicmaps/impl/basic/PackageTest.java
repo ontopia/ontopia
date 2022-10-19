@@ -28,12 +28,8 @@ public class PackageTest extends TopicMapPackageTest {
   
   private final static String testdataDirectory = "various";
 
-  public PackageTest(String name) {
-    super(name);
-  }
-
   @Override
-  protected void setUp() {
+  public void setUp() {
     if (tm == null) {
       try {
         TopicMapReaderIF reader =
@@ -48,13 +44,8 @@ public class PackageTest extends TopicMapPackageTest {
   }
 
   @Override
-  protected void tearDown() {
+  public void tearDown() {
     //tm = null;
   }
   
 }
-
-
-
-
-

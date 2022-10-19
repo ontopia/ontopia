@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
@@ -75,7 +76,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   @Override
   public void setPlayer(TopicIF player) {
-    if (player == null) throw new NullPointerException("Association role player must not be null.");
+    Objects.requireNonNull(player, "Association role player must not be null.");
     CrossTopicMapException.check(player, this);
     // Notify listeners
     fireEvent(AssociationRoleIF.EVENT_SET_PLAYER, player, this.player);
@@ -108,7 +109,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   @Override
   public void setType(TopicIF type) {
-    if (type == null) throw new NullPointerException("Association role type must not be null.");
+    Objects.requireNonNull(type, "Association role type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent(AssociationRoleIF.EVENT_SET_TYPE, type, getType());

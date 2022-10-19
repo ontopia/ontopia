@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.query.jdo;
 
+import java.util.Objects;
 
 /**
  * INTERNAL: JDOQL value: parameter. Class used to reference
@@ -31,7 +32,7 @@ public class JDOParameter implements JDOValueIF {
   protected String name;
 
   public JDOParameter(String name) {
-    if (name == null) throw new NullPointerException("Parameter name cannot be null.");
+    Objects.requireNonNull(name, "Parameter name cannot be null.");
     this.name = name;
   }
   

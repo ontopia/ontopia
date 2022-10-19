@@ -26,21 +26,21 @@ import java.util.Collections;
 import java.util.List;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public abstract class StatisticsIndexTest extends AbstractIndexTest {
 
   protected StatisticsIndexIF stats;
-
-  public StatisticsIndexTest(String name) {
-    super(name);
-  }
 
   // ---------------------------------------------------------------------------
   // AbstractTopicMapTest
   // ---------------------------------------------------------------------------
 
   @Override
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     stats = (StatisticsIndexIF) super.setUp("StatisticsIndexIF");
   }
 
@@ -48,30 +48,34 @@ public abstract class StatisticsIndexTest extends AbstractIndexTest {
   // Topic stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetTopicCount() {
-    assertEquals(0, stats.getTopicCount());
+    Assert.assertEquals(0, stats.getTopicCount());
     builder.makeTopic();
-    assertEquals(1, stats.getTopicCount());
+    Assert.assertEquals(1, stats.getTopicCount());
   }
 
+  @Test
   public void testGetTypedTopicCount() {
-    assertEquals(0, stats.getTypedTopicCount());
+    Assert.assertEquals(0, stats.getTypedTopicCount());
     builder.makeTopic();
-    assertEquals(0, stats.getTypedTopicCount());
+    Assert.assertEquals(0, stats.getTypedTopicCount());
     builder.makeTopic(builder.makeTopic());
-    assertEquals(1, stats.getTypedTopicCount());
+    Assert.assertEquals(1, stats.getTypedTopicCount());
   }
 
+  @Test
   public void testGetUntypedTopicCount() {
-    assertEquals(0, stats.getUntypedTopicCount());
+    Assert.assertEquals(0, stats.getUntypedTopicCount());
     builder.makeTopic();
-    assertEquals(1, stats.getUntypedTopicCount());
+    Assert.assertEquals(1, stats.getUntypedTopicCount());
     builder.makeTopic(builder.makeTopic());
-    assertEquals(2, stats.getUntypedTopicCount());
+    Assert.assertEquals(2, stats.getUntypedTopicCount());
   }
 
+  @Test
   public void testGetTopicTypeCount() {
-    assertEquals(0, stats.getTopicTypeCount());
+    Assert.assertEquals(0, stats.getTopicTypeCount());
     TopicIF t1 = builder.makeTopic();
     TopicIF t2 = builder.makeTopic();
 
@@ -79,115 +83,128 @@ public abstract class StatisticsIndexTest extends AbstractIndexTest {
 
     builder.makeTopic(tts);
     builder.makeTopic(tts);
-    assertEquals(2, stats.getTopicTypeCount());
+    Assert.assertEquals(2, stats.getTopicTypeCount());
   }
 
   // ---------------------------------------------------------------------------
   // TopicName stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetTopicNameCount() {
-    assertEquals(0, stats.getTopicNameCount());
+    Assert.assertEquals(0, stats.getTopicNameCount());
     builder.makeTopicName(builder.makeTopic(), "foo");
-    assertEquals(1, stats.getTopicNameCount());
+    Assert.assertEquals(1, stats.getTopicNameCount());
   }
 
+  @Test
   public void testGetNoNameTopicCount() {
-    assertEquals(0, stats.getNoNameTopicCount());
+    Assert.assertEquals(0, stats.getNoNameTopicCount());
     builder.makeTopicName(builder.makeTopic(), "foo");
-    assertEquals(1, stats.getNoNameTopicCount());
+    Assert.assertEquals(1, stats.getNoNameTopicCount());
   }
 
+  @Test
   public void testGetTopicNameTypeCount() {
-    assertEquals(0, stats.getTopicNameTypeCount());
+    Assert.assertEquals(0, stats.getTopicNameTypeCount());
     builder.makeTopicName(builder.makeTopic(), "foo");
-    assertEquals(1, stats.getTopicNameTypeCount());
+    Assert.assertEquals(1, stats.getTopicNameTypeCount());
     builder.makeTopicName(builder.makeTopic(), builder.makeTopic(), "foo");
-    assertEquals(2, stats.getTopicNameTypeCount());
+    Assert.assertEquals(2, stats.getTopicNameTypeCount());
   }
 
   // ---------------------------------------------------------------------------
   // VariantName stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetVariantCount() {
-    assertEquals(0, stats.getVariantCount());
+    Assert.assertEquals(0, stats.getVariantCount());
     List<TopicIF> emptyList = Collections.emptyList();
     builder.makeVariantName(builder.makeTopicName(builder.makeTopic(), "foo"),
             "bar", emptyList);
-    assertEquals(1, stats.getVariantCount());
+    Assert.assertEquals(1, stats.getVariantCount());
   }
 
   // ---------------------------------------------------------------------------
   // Occurrence stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetOccurrenceCount() {
-    assertEquals(0, stats.getOccurrenceCount());
+    Assert.assertEquals(0, stats.getOccurrenceCount());
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "foo");
-    assertEquals(1, stats.getOccurrenceCount());
+    Assert.assertEquals(1, stats.getOccurrenceCount());
   }
 
+  @Test
   public void testGetOccurrenceTypeCount() {
-    assertEquals(0, stats.getOccurrenceTypeCount());
+    Assert.assertEquals(0, stats.getOccurrenceTypeCount());
     builder.makeOccurrence(builder.makeTopic(), builder.makeTopic(), "foo");
-    assertEquals(1, stats.getOccurrenceTypeCount());
+    Assert.assertEquals(1, stats.getOccurrenceTypeCount());
   }
 
   // ---------------------------------------------------------------------------
   // Association stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetAssociationCount() {
-    assertEquals(0, stats.getAssociationCount());
+    Assert.assertEquals(0, stats.getAssociationCount());
     builder.makeAssociation(builder.makeTopic());
-    assertEquals(1, stats.getAssociationCount());
+    Assert.assertEquals(1, stats.getAssociationCount());
   }
 
+  @Test
   public void testGetAssociationTypeCount() {
-    assertEquals(0, stats.getAssociationTypeCount());
+    Assert.assertEquals(0, stats.getAssociationTypeCount());
     builder.makeAssociation(builder.makeTopic());
-    assertEquals(1, stats.getAssociationTypeCount());
+    Assert.assertEquals(1, stats.getAssociationTypeCount());
   }
 
   // ---------------------------------------------------------------------------
   // Association role stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetRoleCount() {
-    assertEquals(0, stats.getRoleCount());
+    Assert.assertEquals(0, stats.getRoleCount());
     TopicIF t = builder.makeTopic();
     builder.makeAssociationRole(builder.makeAssociation(t), t, t);
-    assertEquals(1, stats.getRoleCount());
+    Assert.assertEquals(1, stats.getRoleCount());
   }
 
+  @Test
   public void testGetRoleTypeCount() {
-    assertEquals(0, stats.getRoleTypeCount());
+    Assert.assertEquals(0, stats.getRoleTypeCount());
     TopicIF t = builder.makeTopic();
     builder.makeAssociationRole(builder.makeAssociation(t), t, t);
-    assertEquals(1, stats.getRoleTypeCount());
+    Assert.assertEquals(1, stats.getRoleTypeCount());
   }
 
   // ---------------------------------------------------------------------------
   // Locator stats
   // ---------------------------------------------------------------------------
 
+  @Test
   public void testGetSubjectIdentifierCount() {
-    assertEquals(0, stats.getSubjectIdentifierCount());
+    Assert.assertEquals(0, stats.getSubjectIdentifierCount());
     builder.makeTopic().addSubjectIdentifier(URILocator.create("foo:bar"));
-    assertEquals(1, stats.getSubjectIdentifierCount());
+    Assert.assertEquals(1, stats.getSubjectIdentifierCount());
   }
 
+  @Test
   public void testGetSubjectLocatorCount() {
-    assertEquals(0, stats.getSubjectLocatorCount());
+    Assert.assertEquals(0, stats.getSubjectLocatorCount());
     builder.makeTopic().addSubjectLocator(URILocator.create("foo:bar"));
-    assertEquals(1, stats.getSubjectLocatorCount());
+    Assert.assertEquals(1, stats.getSubjectLocatorCount());
   }
 
+  @Test
   public void testGetItemIdentifierCount() {
-    assertEquals(0, stats.getItemIdentifierCount());
+    Assert.assertEquals(0, stats.getItemIdentifierCount());
     builder.makeTopic().addItemIdentifier(URILocator.create("foo:bar"));
-    assertEquals(1, stats.getItemIdentifierCount());
+    Assert.assertEquals(1, stats.getItemIdentifierCount());
   }
 
 }

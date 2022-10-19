@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase {
 
@@ -45,7 +46,8 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
       super(root, filename);
     }
 
-  @Override
+    @Override
+    @Test
     public void testMergeTM() throws IOException {
       TestFileUtils.verifyDirectory(base, "out");
       
@@ -114,8 +116,3 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
              TestFileUtils.compareFileToResource(out, baseline));
     }
 }
-
-
-
-
-

@@ -39,7 +39,6 @@ import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.TMXMLReader;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.InputSource;
 
@@ -49,7 +48,6 @@ import org.xml.sax.InputSource;
  */
 public class TMRAP {
   private Collection servers;
-  private StringifierIF strify;
   private static Map cache = new HashMap();
 
   /**
@@ -59,7 +57,6 @@ public class TMRAP {
    */
   public TMRAP(Collection servers) {
     this.servers = servers;
-    this.strify = TopicStringifiers.getDefaultStringifier();
   }
 
   /**
@@ -168,7 +165,7 @@ public class TMRAP {
     }
 
     public String getName() {
-      return strify.toString(topic);
+      return TopicStringifiers.toString(topic);
     }
 
     public TopicIF getTopic() {
@@ -195,12 +192,10 @@ public class TMRAP {
   }
 
   public class TopicMap {
-    private Server server;
     private TopicIF topic;
     private Collection pages;
 
     public TopicMap(Server server, TopicIF topic) {
-      this.server = server;
       this.topic = topic;
       this.pages = new ArrayList();
       server.addTopicMap(this);
@@ -220,17 +215,15 @@ public class TMRAP {
   }
 
   public class Page { // could be edit-page, view-page, or something else
-    private TopicMap topicmap;
     private TopicIF topic;
 
     public Page(TopicMap topicmap, TopicIF topic) {
-      this.topicmap = topicmap;
       this.topic = topic;
       topicmap.addPage(this);
     }
 
     public String getName() {
-      return strify.toString(topic);
+      return TopicStringifiers.toString(topic);
     }
 
     public String getURI() {
@@ -280,12 +273,10 @@ public class TMRAP {
   /* ----- CACHE ENTRY ----------------------------------------------- */
 
   class CacheEntry {
-    private long time;
     private Server object;
 
     public CacheEntry(Server object) {
       this.object = object;
-      this.time = System.currentTimeMillis();
     }
 
     public Server getObject() {

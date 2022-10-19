@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * Class used for locating associations and their types.
@@ -37,13 +36,9 @@ import net.ontopia.utils.StringifierIF;
 public class TopicAssocDep {
   private static final String NULL = "null";
 
-  private TopicMapIF tm;
-  private HashMap assocTypes, assocRoleTypes, assocDetails, associations;
-  private StringifierIF ts = TopicStringifiers.getDefaultStringifier();
-  private String[] roles;
+  private HashMap associations;
 
   public TopicAssocDep(TopicMapIF tm) throws NullPointerException {
-    this.tm = tm;
     associations = new HashMap();
     traverse(tm.getAssociations());
   }
@@ -157,10 +152,9 @@ public class TopicAssocDep {
 
   //Creates a string key for the association.
   private String createKey(AssociationIF aif) {
-    HashMap types = new HashMap();
     String assocname = "";
     try {
-      assocname  = ts.toString(aif.getType());
+      assocname  = TopicStringifiers.toString(aif.getType());
     } catch (NullPointerException e) {
       assocname = NULL;
     }
@@ -219,7 +213,6 @@ public class TopicAssocDep {
   public String[] sortAlpha(Collection collection) {
     String[] retur = new String[collection.size()];
     Iterator it = collection.iterator();
-    int k = 0;
     
     for (int i = 0; i < collection.size(); i++) {
       retur[i] = (String)it.next();
@@ -251,7 +244,7 @@ public class TopicAssocDep {
     if (topic == null)
       return NULL;
     else {
-      String name = ts.toString(topic);
+      String name = TopicStringifiers.toString(topic);
       if ("[No name]".equalsIgnoreCase(name))
         name = "{topicid: " + topic.getObjectId() + "}";
       return name;

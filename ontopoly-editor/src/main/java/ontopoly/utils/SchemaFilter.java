@@ -21,6 +21,7 @@
 package ontopoly.utils;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import ontopoly.model.PSI;
 
@@ -30,17 +31,16 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Filters out Ontopoly constructs from topic maps.
  */
-public class SchemaFilter implements DeciderIF {
+public class SchemaFilter implements Predicate {
   
   protected TypeHierarchyUtils thutils = new TypeHierarchyUtils();
   
   @Override
-  public boolean ok(Object object) {
+  public boolean test(Object object) {
     if (object instanceof TopicIF) {
       return includeTopic((TopicIF)object);
     } else if (object instanceof AssociationIF) {

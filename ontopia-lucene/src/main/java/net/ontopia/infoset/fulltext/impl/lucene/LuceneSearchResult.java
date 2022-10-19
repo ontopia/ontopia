@@ -52,7 +52,7 @@ public class LuceneSearchResult implements SearchResultIF {
 
   @Override
   public int hits() {
-    return hits.totalHits;
+    return (int) hits.totalHits;
   }
     
 }

@@ -365,7 +365,7 @@ public class RWTransaction extends AbstractTransaction {
    * allowing them to update their fields as needed.
    */
   @Override
-  public void objectMerged(IdentityIF source, IdentityIF target) {
+  public synchronized void objectMerged(IdentityIF source, IdentityIF target) {
     // let the added and modified objects update their fields as needed
     // todo: removed items shouldn't cause problems ??
     for (Object o : chgcre) {

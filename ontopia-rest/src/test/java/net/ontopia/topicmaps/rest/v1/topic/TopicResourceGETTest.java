@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.rest.v1.topic;
 
 import java.io.IOException;
 import java.util.Map;
-import junit.framework.Assert;
+import org.junit.Assert;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;

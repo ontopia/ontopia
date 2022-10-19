@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
@@ -45,22 +44,20 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * INTERNAL: Tests that tests various aspects about the RDBMS Backend
  * Connector.
  */
 
-public class RDBMSBackendTests extends TestCase {
+public class RDBMSBackendTests {
   
-  public RDBMSBackendTests(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
-    super.setUp();
   }
 
   protected TopicMapReferenceIF createReference(String id, String title, StorageIF storage, long topicmap_id, LocatorIF base_address) {
@@ -100,6 +97,7 @@ public class RDBMSBackendTests extends TestCase {
    * INTERNAL: Tests that verify that the shared cache works correctly
    * when concurrent stores are being accessed and modified.
    */
+  @Test
   public void testModificationsSharedCache() throws IOException {
     // Test will add one association and one occurrence
 
@@ -128,106 +126,106 @@ public class RDBMSBackendTests extends TestCase {
 
       // simple topic lookup to check that topic map is there
       TopicIF topic1 = getTopic(tm1, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic1 not found by indicator", topic1 != null);
+      Assert.assertTrue("topic1 not found by indicator", topic1 != null);
       TopicIF topic2 = getTopic(tm2, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic2 not found by indicator", topic2 != null);
+      Assert.assertTrue("topic2 not found by indicator", topic2 != null);
       TopicIF topic3 = getTopic(tm3, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic3 not found by indicator", topic3 != null);
+      Assert.assertTrue("topic3 not found by indicator", topic3 != null);
 
-      TopicMapBuilderIF b1 = tm1.getBuilder();
-      TopicMapBuilderIF b2 = tm2.getBuilder();
+      tm1.getBuilder();
+      tm2.getBuilder();
       TopicMapBuilderIF b3 = tm3.getBuilder();
 
       // look up ontology topics
-      TopicIF at1 = getTopic(tm1, "http://psi.kulturnett.no/ontologi/virker_som");
-      TopicIF at2 = getTopic(tm2, "http://psi.kulturnett.no/ontologi/virker_som");
-      TopicIF at3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/virker_som");
+      getTopic(tm1, "http://psi.kulturnett.no/ontologi/virker_som");
+      getTopic(tm2, "http://psi.kulturnett.no/ontologi/virker_som");
+      getTopic(tm3, "http://psi.kulturnett.no/ontologi/virker_som");
 
-      TopicIF rtA1 = getTopic(tm1, "http://psi.kulturnett.no/ontologi/person");
-      TopicIF rtA2 = getTopic(tm2, "http://psi.kulturnett.no/ontologi/person");
+      getTopic(tm1, "http://psi.kulturnett.no/ontologi/person");
+      getTopic(tm2, "http://psi.kulturnett.no/ontologi/person");
       TopicIF rtA3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/person");
 
-      TopicIF rtB1 = getTopic(tm1, "http://psi.kulturnett.no/ontologi/profesjon");
-      TopicIF rtB2 = getTopic(tm2, "http://psi.kulturnett.no/ontologi/profesjon");
+      getTopic(tm1, "http://psi.kulturnett.no/ontologi/profesjon");
+      getTopic(tm2, "http://psi.kulturnett.no/ontologi/profesjon");
       TopicIF rtB3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/profesjon");
 
-      TopicIF rp1 = getTopic(tm1, "http://psi.kulturnett.no/profesjon/jazzmusiker");
-      TopicIF rp2 = getTopic(tm2, "http://psi.kulturnett.no/profesjon/jazzmusiker");
+      getTopic(tm1, "http://psi.kulturnett.no/profesjon/jazzmusiker");
+      getTopic(tm2, "http://psi.kulturnett.no/profesjon/jazzmusiker");
       TopicIF rp3 = getTopic(tm3, "http://psi.kulturnett.no/profesjon/jazzmusiker");
 
       TopicIF ot3 = getTopic(tm3, "http://psi.kulturnett.no/ontologi/ingress");
 
-      assertTrue("topic2 does not have one role", topic2.getRoles().size()  == 1);
-      assertTrue("topic3 does not have one role", topic3.getRoles().size()  == 1);
+      Assert.assertTrue("topic2 does not have one role", topic2.getRoles().size()  == 1);
+      Assert.assertTrue("topic3 does not have one role", topic3.getRoles().size()  == 1);
 
-      assertTrue("topic2 does have occurrences", topic2.getOccurrences().size()  == 0);
-      assertTrue("topic3 does have occurrences", topic3.getOccurrences().size()  == 0);
+      Assert.assertTrue("topic2 does have occurrences", topic2.getOccurrences().size()  == 0);
+      Assert.assertTrue("topic3 does have occurrences", topic3.getOccurrences().size()  == 0);
 
       // add association
       AssociationIF a3 = b3.makeAssociation(b3.makeTopic());
-      AssociationRoleIF rA3 = b3.makeAssociationRole(a3, rtA3, topic3);
-      AssociationRoleIF rB3 = b3.makeAssociationRole(a3, rtB3, rp3);
+      b3.makeAssociationRole(a3, rtA3, topic3);
+      b3.makeAssociationRole(a3, rtB3, rp3);
 
-      assertTrue("topic3 does not have two roles", topic3.getRoles().size()  == 2);
+      Assert.assertTrue("topic3 does not have two roles", topic3.getRoles().size()  == 2);
 
       // add occurrence
       OccurrenceIF o3 = b3.makeOccurrence(topic3, ot3, "");
       String o3id = o3.getObjectId();
-      assertTrue("topic3 does not have one occurrence", topic3.getOccurrences().size()  == 1);
+      Assert.assertTrue("topic3 does not have one occurrence", topic3.getOccurrences().size()  == 1);
 
       // add subject indicator
       topic3.addSubjectIdentifier(new URILocator("test:eva_kernst"));
 
       TopicIF _topic3 = getTopic(tm3, "test:eva_kernst");
-      assertTrue("topic3 != _topic3", topic3 == _topic3);
+      Assert.assertTrue("topic3 != _topic3", topic3 == _topic3);
 
       TopicIF _topic2 = getTopic(tm2, "test:eva_kernst");
-      assertTrue("_topic2 != null", _topic2 == null);
+      Assert.assertTrue("_topic2 != null", _topic2 == null);
 
       TopicIF _topic1 = getTopic(tm1, "test:eva_kernst");
-      assertTrue("_topic1 != null", _topic1 == null);
+      Assert.assertTrue("_topic1 != null", _topic1 == null);
 
       store3.commit();
       store3.close();    
 
       // NOTE: topic2 probably only has one role and no occurrences
-      assertTrue("topic1 does not have two roles", topic1.getRoles().size()  == 2);
-      assertTrue("topic1 does not have one occurrence", topic1.getOccurrences().size()  == 1);
-      assertTrue("topic1 does not have one occurrence with right oid", o3id.equals(((OccurrenceIF)topic1.getOccurrences().iterator().next()).getObjectId()));
+      Assert.assertTrue("topic1 does not have two roles", topic1.getRoles().size()  == 2);
+      Assert.assertTrue("topic1 does not have one occurrence", topic1.getOccurrences().size()  == 1);
+      Assert.assertTrue("topic1 does not have one occurrence with right oid", o3id.equals(((OccurrenceIF)topic1.getOccurrences().iterator().next()).getObjectId()));
 
       // commit store and reacquire objects
       store2.commit();
       tm2 = store2.getTopicMap();
       topic2 = getTopic(tm2, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic2 not found by indicator", topic2 != null);
-      assertTrue("topic2 does not have two roles", topic2.getRoles().size()  == 2);
-      assertTrue("topic2 does not have one occurrence", topic2.getOccurrences().size()  == 1);
-      assertTrue("topic2 does not have one occurrence with right oid", o3id.equals(((OccurrenceIF)topic2.getOccurrences().iterator().next()).getObjectId()));
+      Assert.assertTrue("topic2 not found by indicator", topic2 != null);
+      Assert.assertTrue("topic2 does not have two roles", topic2.getRoles().size()  == 2);
+      Assert.assertTrue("topic2 does not have one occurrence", topic2.getOccurrences().size()  == 1);
+      Assert.assertTrue("topic2 does not have one occurrence with right oid", o3id.equals(((OccurrenceIF)topic2.getOccurrences().iterator().next()).getObjectId()));
 
       // verify subject indicator
       _topic2 = getTopic(tm2, "test:eva_kernst");
-      assertTrue("topic2 != _topic2", topic2 == _topic2);
+      Assert.assertTrue("topic2 != _topic2", topic2 == _topic2);
 
       _topic1 = getTopic(tm1, "test:eva_kernst");
-      assertTrue("topic1 != _topic1", topic1 == _topic1);
+      Assert.assertTrue("topic1 != _topic1", topic1 == _topic1);
 
       // remove subject indicator
       _topic2.removeSubjectIdentifier(new URILocator("test:eva_kernst"));      
       store2.commit();
 
       _topic1 = getTopic(tm1, "test:eva_kernst");
-      assertTrue("topic1 != null", _topic1 == null);
+      Assert.assertTrue("topic1 != null", _topic1 == null);
 
       // add subject indicator, but abort txn
       topic1.addSubjectIdentifier(new URILocator("test:eva_kernst2"));      
 
       _topic2 = getTopic(tm2, "test:eva_kernst2");
-      assertTrue("_topic2 != null", _topic2 == null);
+      Assert.assertTrue("_topic2 != null", _topic2 == null);
 
       store1.abort();
 
       _topic2 = getTopic(tm2, "test:eva_kernst2");
-      assertTrue("_topic2 != null", _topic2 == null);
+      Assert.assertTrue("_topic2 != null", _topic2 == null);
 
       store1.close();    
       store2.close();    
@@ -236,17 +234,17 @@ public class RDBMSBackendTests extends TestCase {
       TopicMapIF tm4 = store4.getTopicMap();
 
       TopicIF topic4 = getTopic(tm4, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic4 not found by indicator", topic4 != null);
+      Assert.assertTrue("topic4 not found by indicator", topic4 != null);
 
-      assertTrue("topic4 does not have two roles", topic4.getRoles().size()  == 2);
-      assertTrue("topic4 does not have one occurrence", topic4.getOccurrences().size()  == 1);
-      assertTrue("topic4 does not have one occurrence with right oid", o3id.equals(((OccurrenceIF)topic4.getOccurrences().iterator().next()).getObjectId()));
+      Assert.assertTrue("topic4 does not have two roles", topic4.getRoles().size()  == 2);
+      Assert.assertTrue("topic4 does not have one occurrence", topic4.getOccurrences().size()  == 1);
+      Assert.assertTrue("topic4 does not have one occurrence with right oid", o3id.equals(((OccurrenceIF)topic4.getOccurrences().iterator().next()).getObjectId()));
 
       TopicIF _topic4;
       _topic4 = getTopic(tm4, "test:eva_kernst");
-      assertTrue("_topic4 != null", _topic4 == null);
+      Assert.assertTrue("_topic4 != null", _topic4 == null);
       _topic4 = getTopic(tm4, "test:eva_kernst2");
-      assertTrue("_topic4 != null", _topic4 == null);
+      Assert.assertTrue("_topic4 != null", _topic4 == null);
 
     } finally {
       ref.delete();
@@ -257,6 +255,7 @@ public class RDBMSBackendTests extends TestCase {
    * INTERNAL: Tests that verify that the API works gracefully on
    * deleted objects.
    */
+  @Test
   public void testGracefulAPISharedCache() throws IOException {
     // Test will add one association and one occurrence
 
@@ -284,9 +283,9 @@ public class RDBMSBackendTests extends TestCase {
 
       // simple topic lookup to check that topic map is there
       TopicIF topic1 = getTopic(tm1, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic1 not found by indicator", topic1 != null);
+      Assert.assertTrue("topic1 not found by indicator", topic1 != null);
       TopicIF topic2 = getTopic(tm2, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic2 not found by indicator", topic2 != null);
+      Assert.assertTrue("topic2 not found by indicator", topic2 != null);
 
       // load roles of topic1      
       AssociationRoleIF r1 = (AssociationRoleIF)topic1.getRoles().iterator().next();
@@ -298,18 +297,18 @@ public class RDBMSBackendTests extends TestCase {
 
       // try to access deleted role in txn1
       String oid = r1.getObjectId(); // returns correct objectId
-      assertTrue("r1.objectId is null", oid != null);
+      Assert.assertTrue("r1.objectId is null", oid != null);
 
-      TopicIF rt1 = r1.getType(); // returns null
-      TopicIF rp1 = r1.getPlayer(); // returns null
+      r1.getType(); // returns null
+      r1.getPlayer(); // returns null
 
       // should get fake association
       AssociationIF a1 = r1.getAssociation();
-      assertTrue("a1 is null", a1 != null);
+      Assert.assertTrue("a1 is null", a1 != null);
 
       // interrogate fake association
       a1.getType(); // returns null
-      assertTrue("a1 is null", a1.getRoles() != null); // returns empty collection
+      Assert.assertTrue("a1 is null", a1.getRoles() != null); // returns empty collection
       
       store1.close();    
       store2.close();    
@@ -325,6 +324,7 @@ public class RDBMSBackendTests extends TestCase {
    * commits, but not after rollbacks. If the transaction rolled back
    * all objects must be reaquired through a new transaction instance.
    */
+  @Test
   public void testAfterTxnEnd() throws IOException {
     // initialize storage
     StorageIF storage = new RDBMSStorage();
@@ -348,46 +348,46 @@ public class RDBMSBackendTests extends TestCase {
 
       // find topic1
       TopicIF topic1 = getTopic(tm1, "test:topic1");
-      assertTrue("topic1 not found by indicator", topic1 != null);
+      Assert.assertTrue("topic1 not found by indicator", topic1 != null);
 
       // test topic1 before commit
-      assertTrue("topic1.subjectIndicators.size != 1", topic1.getSubjectIdentifiers().size() == 1);
-      assertTrue("topic1.baseNames.size != 1", topic1.getTopicNames().size() == 1);
+      Assert.assertTrue("topic1.subjectIndicators.size != 1", topic1.getSubjectIdentifiers().size() == 1);
+      Assert.assertTrue("topic1.baseNames.size != 1", topic1.getTopicNames().size() == 1);
       String bnv1 = ((TopicNameIF)topic1.getTopicNames().iterator().next()).getValue();
-      assertTrue("bnv1.value != 'Topic 1'", "Topic 1".equals(bnv1));
+      Assert.assertTrue("bnv1.value != 'Topic 1'", "Topic 1".equals(bnv1));
 
       // find topic3
       TopicIF topic3 = getTopic(tm1, "test:topic3");
-      assertTrue("topic3 not found by indicator", topic3 != null);
+      Assert.assertTrue("topic3 not found by indicator", topic3 != null);
 
       // remove topic3 from topic map
-      assertTrue("topic3.baseNames.size != 1 (A)", topic3.getTopicNames().size() == 1);
+      Assert.assertTrue("topic3.baseNames.size != 1 (A)", topic3.getTopicNames().size() == 1);
       topic3.remove();
-      assertTrue("topic3.baseNames.size != 1 (B)", topic3.getTopicNames().size() == 1);
+      Assert.assertTrue("topic3.baseNames.size != 1 (B)", topic3.getTopicNames().size() == 1);
 
       store1.commit();
 
       // test topic1 after commit
-      assertTrue("topic1.subjectIndicators.size != 1", topic1.getSubjectIdentifiers().size() == 1);
-      assertTrue("topic1.baseNames.size != 1", topic1.getTopicNames().size() == 1);
+      Assert.assertTrue("topic1.subjectIndicators.size != 1", topic1.getSubjectIdentifiers().size() == 1);
+      Assert.assertTrue("topic1.baseNames.size != 1", topic1.getTopicNames().size() == 1);
       bnv1 = ((TopicNameIF)topic1.getTopicNames().iterator().next()).getValue();
-      assertTrue("bnv1.value != 'Topic 1'", "Topic 1".equals(bnv1));
+      Assert.assertTrue("bnv1.value != 'Topic 1'", "Topic 1".equals(bnv1));
 
       // find topic2
       TopicIF topic2 = getTopic(tm1, "test:topic2");
-      assertTrue("topic2 not found by indicator", topic2 != null);
+      Assert.assertTrue("topic2 not found by indicator", topic2 != null);
 
       // test topic2 after commit
-      assertTrue("topic2.subjectIndicators.size != 1", topic2.getSubjectIdentifiers().size() == 1);
-      assertTrue("topic2.baseNames.size != 1", topic2.getTopicNames().size() == 1);
+      Assert.assertTrue("topic2.subjectIndicators.size != 1", topic2.getSubjectIdentifiers().size() == 1);
+      Assert.assertTrue("topic2.baseNames.size != 1", topic2.getTopicNames().size() == 1);
       String bnv2 = ((TopicNameIF)topic2.getTopicNames().iterator().next()).getValue();
-      assertTrue("bnv2.value != 'Topic 2'", "Topic 2".equals(bnv2));
+      Assert.assertTrue("bnv2.value != 'Topic 2'", "Topic 2".equals(bnv2));
 
       // test topic3 after commit
       try {
         // try to access topic3
         topic3.getTopicNames().size();
-        fail("Could access topic3.baseNames");
+        Assert.fail("Could access topic3.baseNames");
       } catch (IdentityNotFoundException e) {
         // ok
       }
@@ -399,20 +399,20 @@ public class RDBMSBackendTests extends TestCase {
         // should not be possible to access same objects after
         // rollback, must instead reacquire all topic map objects.
         topic1.getTopicNames().size();
-        fail("Could access topic1.baseNames after rollback");
+        Assert.fail("Could access topic1.baseNames after rollback");
       } catch (TransactionNotActiveException e) {
         // ok
       }
 
       // reaquire topic map instance and topic1 
       topic1 = getTopic(store1.getTopicMap(), "test:topic1");
-      assertTrue("topic1 not found by indicator", topic1 != null);
+      Assert.assertTrue("topic1 not found by indicator", topic1 != null);
 
       // test topic1 before commit (2)
-      assertTrue("topic1.subjectIndicators.size != 1", topic1.getSubjectIdentifiers().size() == 1);
-      assertTrue("topic1.baseNames.size != 1", topic1.getTopicNames().size() == 1);
+      Assert.assertTrue("topic1.subjectIndicators.size != 1", topic1.getSubjectIdentifiers().size() == 1);
+      Assert.assertTrue("topic1.baseNames.size != 1", topic1.getTopicNames().size() == 1);
       bnv1 = ((TopicNameIF)topic1.getTopicNames().iterator().next()).getValue();
-      assertTrue("bnv1.value != 'Topic 1'", "Topic 1".equals(bnv1));
+      Assert.assertTrue("bnv1.value != 'Topic 1'", "Topic 1".equals(bnv1));
 
       store1.close();    
 
@@ -425,6 +425,7 @@ public class RDBMSBackendTests extends TestCase {
    * INTERNAL: Verify that it is not possible to look up object by id
    * from other committed transactions.
    */
+  @Test
   public void testLookupByObjectId() throws IOException {
     // initialize storage
     StorageIF storage = new RDBMSStorage();
@@ -447,8 +448,8 @@ public class RDBMSBackendTests extends TestCase {
       store2.commit();
 
       // try to do cross lookup      
-      assertTrue("Possible to look up topic from first topic map.", tm2.getObjectById(oid1) == null);
-      assertTrue("Possible to look up topic from second topic map.", tm1.getObjectById(oid2) == null);
+      Assert.assertTrue("Possible to look up topic from first topic map.", tm2.getObjectById(oid1) == null);
+      Assert.assertTrue("Possible to look up topic from second topic map.", tm1.getObjectById(oid2) == null);
 
     } finally {
       if (store1 != null) store1.delete(true);
@@ -460,6 +461,7 @@ public class RDBMSBackendTests extends TestCase {
    * INTERNAL: Verify that it is not possible to look up object by uri
    * identity from other uncommitted transactions.
    */
+  @Test
   public void testLookupObjectsByIdentity() throws IOException {
 
     // verify that shared cache is enabled
@@ -487,7 +489,7 @@ public class RDBMSBackendTests extends TestCase {
 
       // add new identities
       TopicIF topic1 = getTopic(tm1, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic1 not found by indicator", topic1 != null);
+      Assert.assertTrue("topic1 not found by indicator", topic1 != null);
 
       LocatorIF subind = URILocator.create("test:subind:eva_kernst");
       LocatorIF subloc = URILocator.create("test:subloc:eva_kernst");
@@ -499,44 +501,44 @@ public class RDBMSBackendTests extends TestCase {
 
       // then look them up through the same transaction
       TopicIF topic1_ = tm1.getTopicBySubjectIdentifier(subind);
-      assertTrue("topic1_ not found by indicator", topic1_ != null);
+      Assert.assertTrue("topic1_ not found by indicator", topic1_ != null);
       topic1_ = tm1.getTopicBySubjectLocator(subloc);
-      assertTrue("topic1_ not found by subject locator", topic1_ != null);
+      Assert.assertTrue("topic1_ not found by subject locator", topic1_ != null);
       topic1_ = (TopicIF)tm1.getObjectByItemIdentifier(srcloc);
-      assertTrue("topic1_ not found by item identifier", topic1_ != null);
+      Assert.assertTrue("topic1_ not found by item identifier", topic1_ != null);
 
       // then look it up through the other transaction
       TopicIF topic2 = getTopic(tm2, "http://psi.kulturnett.no/person/eva_kernst");
-      assertTrue("topic2 not found by indicator", topic2 != null);
+      Assert.assertTrue("topic2 not found by indicator", topic2 != null);
 
       TopicIF topic2_ = tm2.getTopicBySubjectIdentifier(subind);
-      assertTrue("topic2_ found by subject identifier when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by subject identifier when it shouldn't", topic2_ == null);
       topic2_ = tm2.getTopicBySubjectLocator(subloc);
-      assertTrue("topic2_ found by subject locator when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by subject locator when it shouldn't", topic2_ == null);
       topic2_ = (TopicIF)tm2.getObjectByItemIdentifier(srcloc);
-      assertTrue("topic2_ found by item identifier when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by item identifier when it shouldn't", topic2_ == null);
 
       // now a new topic and track its object id
       TopicIF newtopic = tm1.getBuilder().makeTopic();
       String noid = newtopic.getObjectId();
       topic1_ = (TopicIF)tm1.getObjectById(noid);
-      assertTrue("topic1_ not found by object id", topic1_ != null);
+      Assert.assertTrue("topic1_ not found by object id", topic1_ != null);
 
       // should not find it in the other topic map
       topic2_ = (TopicIF)tm2.getObjectById(noid);
-      assertTrue("topic2_ found by object id when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by object id when it shouldn't", topic2_ == null);
       
       store1.commit();
 
       // should now find them
       topic2_ = tm2.getTopicBySubjectIdentifier(subind);
-      assertTrue("topic2_ not found by subject identifier", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by subject identifier", topic2_ != null);
       topic2_ = tm2.getTopicBySubjectLocator(subloc);
-      assertTrue("topic2_ not found by subject locator", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by subject locator", topic2_ != null);
       topic2_ = (TopicIF)tm2.getObjectByItemIdentifier(srcloc);
-      assertTrue("topic2_ not found by item identifier", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by item identifier", topic2_ != null);
       topic2_ = (TopicIF)tm2.getObjectById(noid);
-      assertTrue("topic2_ not found by object id", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by object id", topic2_ != null);
 
       // now remove the identities      
       topic1.removeSubjectIdentifier(subind);
@@ -545,25 +547,25 @@ public class RDBMSBackendTests extends TestCase {
 
       // should still find them
       topic2_ = tm2.getTopicBySubjectIdentifier(subind);
-      assertTrue("topic2_ not found by subject identifier", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by subject identifier", topic2_ != null);
       topic2_ = tm2.getTopicBySubjectLocator(subloc);
-      assertTrue("topic2_ not found by subject locator", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by subject locator", topic2_ != null);
       topic2_ = (TopicIF)tm2.getObjectByItemIdentifier(srcloc);
-      assertTrue("topic2_ not found by item identifier", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by item identifier", topic2_ != null);
       topic2_ = (TopicIF)tm2.getObjectById(noid);
-      assertTrue("topic2_ not found by object id", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by object id", topic2_ != null);
       
       store1.commit();
 
       // should not find them anymore
       topic2_ = tm2.getTopicBySubjectIdentifier(subind);
-      assertTrue("topic2_ found by subject identifier when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by subject identifier when it shouldn't", topic2_ == null);
       topic2_ = tm2.getTopicBySubjectLocator(subloc);
-      assertTrue("topic2_ found by subject locator when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by subject locator when it shouldn't", topic2_ == null);
       topic2_ = (TopicIF)tm2.getObjectByItemIdentifier(srcloc);
-      assertTrue("topic2_ found by item identifier when it shouldn't", topic2_ == null);
+      Assert.assertTrue("topic2_ found by item identifier when it shouldn't", topic2_ == null);
       topic2_ = (TopicIF)tm2.getObjectById(noid);
-      assertTrue("topic2_ not found by object id", topic2_ != null);
+      Assert.assertTrue("topic2_ not found by object id", topic2_ != null);
       
       store2.commit();
       
@@ -578,6 +580,7 @@ public class RDBMSBackendTests extends TestCase {
   /**
    * INTERNAL: Test that reproduces bug #2025.
    */
+  @Test
   public void testBug2025() throws IOException {
     // initialize storage
     RDBMSTopicMapStore store1 = null;
@@ -589,7 +592,7 @@ public class RDBMSBackendTests extends TestCase {
       TopicMapIF tm1 = store1.getTopicMap();
       TopicIF topic1 = tm1.getBuilder().makeTopic();
       TopicIF otype1 = tm1.getBuilder().makeTopic();
-      OccurrenceIF occ1 = tm1.getBuilder().makeOccurrence(topic1, otype1, "FOO");
+      tm1.getBuilder().makeOccurrence(topic1, otype1, "FOO");
       oid = topic1.getObjectId();
       tmid = store1.getLongId();
       store1.commit();
@@ -608,8 +611,8 @@ public class RDBMSBackendTests extends TestCase {
         OccurrenceIF occ2 = (OccurrenceIF)iter.next();
         LocatorIF loc = occ2.getLocator();
         String value = occ2.getValue();
-        assertTrue("Found locator value when there shouldn't be one: " + loc, loc == null);
-        assertTrue("Incorrect occurrence value:" + value, "FOO".equals(value));
+        Assert.assertTrue("Found locator value when there shouldn't be one: " + loc, loc == null);
+        Assert.assertTrue("Incorrect occurrence value:" + value, "FOO".equals(value));
       }
       store2.commit();
 
@@ -618,6 +621,7 @@ public class RDBMSBackendTests extends TestCase {
     }
   }
   
+  @Test
   public void testIssue61() throws Exception {
     // initialize storage
     RDBMSTopicMapStore store1 = null;
@@ -636,8 +640,8 @@ public class RDBMSBackendTests extends TestCase {
       reifierid = oreifier.getObjectId();
       occurrence.setReifier(oreifier);
 
-      assertTrue("Wrong reifier (rw)", Objects.equals(occurrence.getReifier(), oreifier));
-      assertTrue("Wrong reified (rw)", Objects.equals(occurrence, oreifier.getReified()));
+      Assert.assertTrue("Wrong reifier (rw)", Objects.equals(occurrence.getReifier(), oreifier));
+      Assert.assertTrue("Wrong reified (rw)", Objects.equals(occurrence, oreifier.getReified()));
 
       tmid = store1.getLongId();
       store1.commit();
@@ -654,8 +658,8 @@ public class RDBMSBackendTests extends TestCase {
       OccurrenceIF occurrence = (OccurrenceIF)tm2.getObjectById(occid);
       TopicIF oreifier = (TopicIF)tm2.getObjectById(reifierid);
 
-      assertTrue("Wrong reifier (ro)", Objects.equals(occurrence.getReifier(), oreifier));
-      assertTrue("Wrong reified (ro)", Objects.equals(occurrence, oreifier.getReified()));
+      Assert.assertTrue("Wrong reifier (ro)", Objects.equals(occurrence.getReifier(), oreifier));
+      Assert.assertTrue("Wrong reified (ro)", Objects.equals(occurrence, oreifier.getReified()));
 
     } finally {
       if (store2 != null) store2.close();
@@ -670,6 +674,7 @@ public class RDBMSBackendTests extends TestCase {
 
   }
 
+  @Test
   public void testIssue159a() throws Exception {
     // make long string
     char[] chars = new char[65536];
@@ -689,20 +694,20 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, largeValue);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       otypeid = otype2.getObjectId();
@@ -721,8 +726,8 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
       OccurrenceIF occurrence = (OccurrenceIF)tm2.getObjectById(occid);
       occurrence.getType();
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
       if (store2 != null) store2.close();
@@ -730,6 +735,7 @@ public class RDBMSBackendTests extends TestCase {
 
   }
 
+  @Test
   public void testIssue159b() throws Exception {
     // make long string
     char[] chars = new char[65536];
@@ -741,7 +747,6 @@ public class RDBMSBackendTests extends TestCase {
     long tmid;
     String topicid;
     String otypeid;
-    String occid;
     try {
       // create topic map with one topic and one occurrence
       store1 = new RDBMSTopicMapStore();
@@ -750,25 +755,25 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, largeValue);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
       otypeid = otype2.getObjectId();
-      occid = occurrence.getObjectId();
+      occurrence.getObjectId();
       store1.commit();
     } finally {
       if (store1 != null) store1.close();
@@ -783,8 +788,8 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
       TopicIF topic = (TopicIF)tm2.getObjectById(topicid);
       OccurrenceIF occurrence = (OccurrenceIF)topic.getOccurrences().iterator().next();
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
       if (store2 != null) store2.close();
@@ -792,6 +797,7 @@ public class RDBMSBackendTests extends TestCase {
 
   }
 
+  @Test
   public void testIssue159c() throws Exception {
     // make long string
     char[] chars = new char[65536];
@@ -804,7 +810,6 @@ public class RDBMSBackendTests extends TestCase {
     long tmid;
     String topicid;
     String otypeid;
-    String occid;
     try {
       // create topic map with one topic and one occurrence
       store1 = new RDBMSTopicMapStore();
@@ -813,32 +818,32 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, smallValue);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
       occurrence.setValue(largeValue);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:2"));
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
       topicid = topic.getObjectId();
       otypeid = otype2.getObjectId();
-      occid = occurrence.getObjectId();
+      occurrence.getObjectId();
       store1.commit();
     } finally {
       if (store1 != null) store1.close();
@@ -853,8 +858,8 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
       TopicIF topic = (TopicIF)tm2.getObjectById(topicid);
       OccurrenceIF occurrence = (OccurrenceIF)topic.getOccurrences().iterator().next();
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
       if (store2 != null) store2.close();
@@ -862,6 +867,7 @@ public class RDBMSBackendTests extends TestCase {
 
   }
 
+  @Test
   public void testIssue159d() throws Exception {
     // make long string
     char[] chars = new char[65536];
@@ -872,10 +878,8 @@ public class RDBMSBackendTests extends TestCase {
     // initialize storage
     RDBMSTopicMapStore store1 = null;
     long tmid;
-    String topicid;
     String otype1id;
     String otype2id;
-    String occid;
     try {
       // create topic map with one topic and one occurrence
       store1 = new RDBMSTopicMapStore();
@@ -884,33 +888,33 @@ public class RDBMSBackendTests extends TestCase {
       TopicIF otype1 = tm1.getBuilder().makeTopic();
       OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype1, smallValue);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:1"));
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), smallValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
 
       TopicIF otype2 = tm1.getBuilder().makeTopic();
       occurrence.setType(otype2);
       occurrence.setValue(largeValue);
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       // look up arbitrary object to force flushing
       tm1.getObjectByItemIdentifier(new URILocator("test:2"));
 
-      assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-      assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
+      Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+      Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
       tmid = store1.getLongId();
-      topicid = topic.getObjectId();
+      topic.getObjectId();
       otype1id = otype1.getObjectId();
       otype2id = otype2.getObjectId();
-      occid = occurrence.getObjectId();
+      occurrence.getObjectId();
       store1.commit();
     } finally {
       if (store1 != null) store1.close();
@@ -935,8 +939,8 @@ public class RDBMSBackendTests extends TestCase {
         // look up arbitrary object to force flushing
         tm2.getObjectByItemIdentifier(new URILocator("test:1"));
 
-        assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
-        assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
+        Assert.assertTrue("Wrong occurrence value", Objects.equals(occurrence.getValue(), largeValue));
+        Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype1));
       }
 
     } finally {
@@ -946,8 +950,3 @@ public class RDBMSBackendTests extends TestCase {
   }
 
 }
-
-
-
-
-

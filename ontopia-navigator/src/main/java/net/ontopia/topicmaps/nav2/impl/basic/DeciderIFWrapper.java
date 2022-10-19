@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import net.ontopia.utils.DeciderIF;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 
@@ -29,14 +29,14 @@ import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
  * INTERNAL: A NavigatorDeciderIF implementation which wraps DeciderIF,
  * so that they can work with the navigator decider interface.
  */
-public class DeciderIFWrapper implements NavigatorDeciderIF {
+public class DeciderIFWrapper<T> implements NavigatorDeciderIF<T> {
 
-  protected DeciderIF decider;
+  protected Predicate<T> decider;
   
   /**
    * INTERNAL: Default constructor.
    */
-  public DeciderIFWrapper(DeciderIF decider) {
+  public DeciderIFWrapper(Predicate<T> decider) {
     this.decider = decider;
   }
     
@@ -45,8 +45,8 @@ public class DeciderIFWrapper implements NavigatorDeciderIF {
   // -----------------------------------------------------------
 
   @Override
-  public boolean ok(NavigatorPageIF contextTag, Object obj) {
-    return decider.ok(obj);
+  public boolean ok(NavigatorPageIF contextTag, T obj) {
+    return decider.test(obj);
   }
   
 }

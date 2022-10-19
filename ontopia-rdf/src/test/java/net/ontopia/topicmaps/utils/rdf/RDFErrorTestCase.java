@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.utils.rdf;
 import java.io.IOException;
 import java.util.List;
 import net.ontopia.utils.TestFileUtils;
-import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

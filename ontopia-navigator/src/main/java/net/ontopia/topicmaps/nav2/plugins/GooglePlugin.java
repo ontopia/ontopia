@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.net.URLEncoder;
 
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
@@ -54,18 +53,17 @@ public class GooglePlugin extends DefaultPlugin {
       title = "Google it!";
 
     // Stringify the topic, get most appropiate name
-    StringifierIF ts = TopicStringifiers.getDefaultStringifier();
     StringBuilder query = new StringBuilder();
     Iterator it = topics.iterator();
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
-      query.append(ts.toString(topic));
+      query.append(TopicStringifiers.toString(topic));
       // --- Parameter "types"
       if (getParameter("types") != null && getParameter("types").equals("yes")) {
         // List all the types as well
-        Iterator iter = topic.getTypes().iterator();
+        Iterator<TopicIF> iter = topic.getTypes().iterator();
         while (iter.hasNext()) {
-          query.append(" ").append( ts.toString(iter.next()) );
+          query.append(" ").append( TopicStringifiers.toString(iter.next()) );
         }
       }
     } // while it

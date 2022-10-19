@@ -43,8 +43,7 @@ public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignmen
   
   public FieldAssignmentModel(FieldAssignment fieldAssignment) {
     super(fieldAssignment);
-    if (fieldAssignment == null)
-      throw new NullPointerException("fieldAssignment parameter cannot be null.");
+    Objects.requireNonNull(fieldAssignment, "fieldAssignment parameter cannot be null.");
        
     TopicType topicType = fieldAssignment.getTopicType();
     this.topicTypeId = topicType.getId();

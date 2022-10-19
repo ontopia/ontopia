@@ -29,12 +29,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.OntopiaRestApplication;
 import net.ontopia.topicmaps.rest.controller.AbstractController;
 import net.ontopia.topicmaps.rest.converters.jackson.JacksonRepresentationImpl;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.utils.ClassUtils;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
 import org.restlet.data.Status;
@@ -57,8 +57,8 @@ public class AbstractOntopiaResource extends ServerResource {
 	}
 
 	protected void setInfoHeaders() {
-		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Resource", ClassUtils.collapsedName(getClass()));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Ontopia-Application", ClassUtils.collapsedName(getOntopia().getClass()));
+		addResponseHeader(Constants.HEADER_ONTOPIA_RESOURCE, ClassUtils.collapsedName(getClass()));
+		addResponseHeader(Constants.HEADER_ONTOPIA_APPLICATION, ClassUtils.collapsedName(getOntopia().getClass()));
 	}
 	
 	/**
@@ -129,5 +129,9 @@ public class AbstractOntopiaResource extends ServerResource {
 		} else {
 			super.doError(status);
 		}
+	}
+	
+	protected void addResponseHeader(String name, String value) {
+		getResponse().getHeaders().add(name, value);
 	}
 }

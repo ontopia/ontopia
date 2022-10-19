@@ -136,8 +136,7 @@ public class Topic extends TMObject implements TopicIF {
   @Override
   public void addSubjectLocator(LocatorIF subject_locator)
     throws ConstraintViolationException {
-    if (subject_locator == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(subject_locator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
     if (tm == null)
@@ -158,7 +157,7 @@ public class Topic extends TMObject implements TopicIF {
 
   @Override
   public void removeSubjectLocator(LocatorIF subject_locator) {
-    if (subject_locator == null) throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(subject_locator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
     if (tm == null)
@@ -185,7 +184,7 @@ public class Topic extends TMObject implements TopicIF {
   @Override
   public void addSubjectIdentifier(LocatorIF subject_indicator)
     throws ConstraintViolationException {
-    if (subject_indicator == null) throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(subject_indicator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
     if (tm == null)
@@ -206,7 +205,7 @@ public class Topic extends TMObject implements TopicIF {
 
   @Override
   public void removeSubjectIdentifier(LocatorIF subject_indicator) {
-    if (subject_indicator == null) throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(subject_indicator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
     if (tm == null)
@@ -236,8 +235,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   protected void addTopicName(TopicNameIF name) {
-    if (name == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(name, MSG_NULL_ARGUMENT);
     // Check to see if name is already a member of this topic
     if (name.getTopic() == this) return;
     // Check if used elsewhere.
@@ -253,8 +251,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   protected void removeTopicName(TopicNameIF name) {
-    if (name == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(name, MSG_NULL_ARGUMENT);
     // Check to see if name is not a member of this topic
     if (name.getTopic() != this) return;
     
@@ -277,8 +274,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   protected void addOccurrence(OccurrenceIF occurrence) {
-    if (occurrence == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(occurrence, MSG_NULL_ARGUMENT);
     // Check to see if occurrence is already a member of this topic
     if (occurrence.getTopic() == this)
       return;
@@ -295,8 +291,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   protected void removeOccurrence(OccurrenceIF occurrence) {
-    if (occurrence == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(occurrence, MSG_NULL_ARGUMENT);
     // Check to see if occurrence is not a member of this topic
     if (occurrence.getTopic() != this) return;
     
@@ -315,8 +310,7 @@ public class Topic extends TMObject implements TopicIF {
   
   @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
-    if (roletype == null)
-      throw new NullPointerException("Role type cannot be null.");
+    Objects.requireNonNull(roletype, "Role type cannot be null.");
     // if roles already loaded filter by role type
     if (isLoaded(LF_roles)) {
       Collection<AssociationRoleIF> roles = (Collection<AssociationRoleIF>)
@@ -343,10 +337,8 @@ public class Topic extends TMObject implements TopicIF {
   @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype,
                                                       TopicIF assoc_type) {
-    if (roletype == null)
-      throw new NullPointerException("Role type cannot be null.");
-    if (assoc_type == null)
-      throw new NullPointerException("Association type cannot be null.");
+    Objects.requireNonNull(roletype, "Role type cannot be null.");
+    Objects.requireNonNull(assoc_type, "Association type cannot be null.");
     // if roles already loaded filter by role type
     if (isLoaded(LF_roles)) {
       Collection<AssociationRoleIF> roles = (Collection<AssociationRoleIF>)
@@ -427,8 +419,7 @@ public class Topic extends TMObject implements TopicIF {
   
   @Override
   public void addType(TopicIF type) {
-    if (type == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(type, MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(type, this);    
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_TYPE, type, null);
@@ -438,8 +429,7 @@ public class Topic extends TMObject implements TopicIF {
   
   @Override
   public void removeType(TopicIF type) {
-    if (type == null)
-      throw new NullPointerException(MSG_NULL_ARGUMENT);
+    Objects.requireNonNull(type, MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(type, this);    
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_TYPE, null, type);

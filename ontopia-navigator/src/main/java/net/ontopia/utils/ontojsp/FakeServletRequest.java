@@ -42,7 +42,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import net.ontopia.utils.NullObject;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -74,10 +73,7 @@ public class FakeServletRequest implements HttpServletRequest {
   
   @Override
   public Object getAttribute(String name) {
-    Object result = attrs.get(name);
-    if (result == NullObject.INSTANCE) 
-      return null;
-    return result;
+    return attrs.get(name);
   }
 
   @Override
@@ -88,7 +84,7 @@ public class FakeServletRequest implements HttpServletRequest {
   @Override
   public void setAttribute(String name, Object value) {
     if (value == null) 
-      attrs.put(name, NullObject.INSTANCE);
+      attrs.remove(name);
     else 
       attrs.put(name, value);
   }

@@ -20,20 +20,16 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import junit.framework.Assert;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.TestFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ActiveTransactionTrackingTest extends AbstractTopicMapTest {
-
-  public ActiveTransactionTrackingTest(String name) {
-    super(name);
-  }
 
   @Before
   @Override

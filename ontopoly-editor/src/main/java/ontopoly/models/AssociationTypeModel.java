@@ -20,6 +20,7 @@
 package ontopoly.models;
 
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
 import ontopoly.model.AssociationType;
@@ -35,8 +36,7 @@ public class AssociationTypeModel extends LoadableDetachableModel<AssociationTyp
   
   public AssociationTypeModel(AssociationType associationType) {
     super(associationType);
-    if (associationType == null)
-      throw new NullPointerException("associationType parameter cannot be null.");
+    Objects.requireNonNull(associationType, "associationType parameter cannot be null.");
        
     TopicMap topicMap = associationType.getTopicMap();
     this.topicMapId = topicMap.getId();    
@@ -44,10 +44,8 @@ public class AssociationTypeModel extends LoadableDetachableModel<AssociationTyp
   }
   
   public AssociationTypeModel(String topicMapId, String topicId) {
-    if (topicMapId == null)
-      throw new NullPointerException("topicMapId parameter cannot be null.");
-    if (topicId == null)
-      throw new NullPointerException("topicId parameter cannot be null.");
+    Objects.requireNonNull(topicMapId, "topicMapId parameter cannot be null.");
+    Objects.requireNonNull(topicId, "topicId parameter cannot be null.");
     this.topicMapId = topicMapId;
     this.topicId = topicId;
   }

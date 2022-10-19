@@ -39,7 +39,6 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.AssociationBuilder;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.QueryMapper;
 import ontopoly.model.TopicMap;
 

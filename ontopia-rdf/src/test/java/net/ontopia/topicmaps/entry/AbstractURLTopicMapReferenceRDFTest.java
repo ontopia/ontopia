@@ -21,17 +21,15 @@ package net.ontopia.topicmaps.entry;
 
 import java.net.URL;
 import java.util.Objects;
-import static junit.framework.Assert.assertTrue;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapReferenceTest {
 
-  public AbstractURLTopicMapReferenceRDFTest(String name) {
-    super(name);
-  }
-
   // --- Test cases (RDF)
+  @Test
   public void testRDFRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "instance-of.rdf";
     String title = "RDFTM";
@@ -40,30 +38,30 @@ public class AbstractURLTopicMapReferenceRDFTest extends AbstractURLTopicMapRefe
 
     // test mapping file
     String mf = ref.getMappingFile();
-    assertTrue("Mappingfile default is set", ref.getMappingFile() == null);
+    Assert.assertTrue("Mappingfile default is set", ref.getMappingFile() == null);
     ref.setMappingFile("foo");
-    assertTrue("Mappingfile not equals 'foo'", "foo".equals(ref.getMappingFile()));
+    Assert.assertTrue("Mappingfile not equals 'foo'", "foo".equals(ref.getMappingFile()));
     ref.setMappingFile(mf);
-    assertTrue("Mappingfile != " + mf, Objects.equals(mf, ref.getMappingFile()));
+    Assert.assertTrue("Mappingfile != " + mf, Objects.equals(mf, ref.getMappingFile()));
 
     // test syntax
     String sx = ref.getSyntax();
-    assertTrue("Syntax default is set", ref.getSyntax() == null);
+    Assert.assertTrue("Syntax default is set", ref.getSyntax() == null);
     ref.setSyntax("foo");
-    assertTrue("Syntax not equals 'foo'", "foo".equals(ref.getSyntax()));
+    Assert.assertTrue("Syntax not equals 'foo'", "foo".equals(ref.getSyntax()));
     ref.setSyntax(sx);
-    assertTrue("Syntax != " + sx, Objects.equals(sx, ref.getSyntax()));
+    Assert.assertTrue("Syntax != " + sx, Objects.equals(sx, ref.getSyntax()));
 
     // test generate names
     boolean gg = ref.getGenerateNames();
-    assertTrue("GenerateNames default is not false", !gg);
+    Assert.assertTrue("GenerateNames default is not false", !gg);
     ref.setGenerateNames(true);
-    assertTrue("GenerateNames is not true", ref.getGenerateNames());
+    Assert.assertTrue("GenerateNames is not true", ref.getGenerateNames());
     ref.setGenerateNames(gg);
-    assertTrue("GenerateNames is not " + gg, gg == ref.getGenerateNames());
+    Assert.assertTrue("GenerateNames is not " + gg, gg == ref.getGenerateNames());
 
     // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
+    assertCompliesToAbstractURLTopicMapReference(ref);
 
   }
 }

@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.impl.basic.DummyFulltextSearcherIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -46,8 +45,10 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.After;
+import org.junit.Assert;
 
-public abstract class AbstractQueryTest extends TestCase {
+public abstract class AbstractQueryTest {
 
   private final static String testdataDirectory = "query";
 
@@ -58,10 +59,6 @@ public abstract class AbstractQueryTest extends TestCase {
   public TopicMapIF       topicmap;
   public TopicMapBuilderIF builder;
   public QueryProcessorIF processor;
-  
-  public AbstractQueryTest(String name) {
-    super(name);
-  }
   
   // ===== Helper methods (topic maps)
 
@@ -75,6 +72,11 @@ public abstract class AbstractQueryTest extends TestCase {
 
   protected TMObjectIF getObjectById(String id) {
     return topicmap.getObjectByItemIdentifier(base.resolveAbsolute("#"+id));
+  }
+
+  @After
+  public void tearDown() {
+    closeStore();
   }
 
   protected void closeStore() {
@@ -184,34 +186,34 @@ public abstract class AbstractQueryTest extends TestCase {
    * i.e. a query match with no unbound variables.
    * @param query The query to test.
    */
-  protected void verifyQuery(String query) throws InvalidQueryException {
+  protected void assertQuery(String query) throws InvalidQueryException {
     // verify that we do not get any parse or query errors
     QueryResultIF result = processor.execute(query);
     try {
-      assertTrue(result.next());
-      assertEquals(0, result.getWidth());
-      assertFalse(result.next());
+      Assert.assertTrue(result.next());
+      Assert.assertEquals(0, result.getWidth());
+      Assert.assertFalse(result.next());
     } finally {
       result.close();
     }
   }
   
-  protected void verifyQuery(List matches, String query)
+  protected void assertQueryMatches(List matches, String query)
     throws InvalidQueryException {
-    verifyQuery(matches, query, null, null);
+    assertQueryMatches(matches, query, null, null);
   }
   
-  protected void verifyQuery(List matches, String query, Map args)
+  protected void assertQueryMatches(List matches, String query, Map args)
     throws InvalidQueryException {
-    verifyQuery(matches, query, null, args);
+    assertQueryMatches(matches, query, null, args);
   }
   
-  protected void verifyQuery(List matches, String query, String ruleset)
+  protected void assertQueryMatches(List matches, String query, String ruleset)
     throws InvalidQueryException {
-    verifyQuery(matches, query, ruleset, null);
+    assertQueryMatches(matches, query, ruleset, null);
   }
   
-  protected void verifyQuery(List matches, String query, String ruleset, Map args)
+  protected void assertQueryMatches(List matches, String query, String ruleset, Map args)
     throws InvalidQueryException {
 
     matches = new ArrayList(matches); // avoid modifying caller's list
@@ -233,7 +235,7 @@ public abstract class AbstractQueryTest extends TestCase {
         //! i++;
         //! System.out.println("    ROW " + i + ": " + Arrays.asList(result.getValues()));
         Map match = getMatch(result);
-        assertTrue("match not found in expected results: " + match + " => " + matches,
+        Assert.assertTrue("match not found in expected results: " + match + " => " + matches,
             matches.contains(match));
         matches.remove(match);
         //! System.out.println("____removing: " + match);
@@ -241,11 +243,11 @@ public abstract class AbstractQueryTest extends TestCase {
     } finally {
       result.close();
     }
-    assertTrue("expected matches not found: " + matches,
+    Assert.assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
   
-  protected void verifyQuerySubset(List matches, String query)
+  protected void assertQuerySubset(List matches, String query)
     throws InvalidQueryException {
     verifyQuerySubset(matches, query, null, null);
   }
@@ -288,11 +290,11 @@ public abstract class AbstractQueryTest extends TestCase {
     } finally {
       result.close();
     }
-    assertTrue("expected matches not found: " + matches,
+    Assert.assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
 
-  protected void verifyQueryPre(List matches, String decls, String query)
+  protected void assertQueryPre(List matches, String decls, String query)
     throws InvalidQueryException {
 
     // parse the declarations
@@ -309,7 +311,7 @@ public abstract class AbstractQueryTest extends TestCase {
         //! i++;
         //! System.out.println("    ROW " + i + ": " + Arrays.asList(result.getValues()));
         Map match = getMatch(result);
-        assertTrue("match not found in expected results: " + match + " => " + matches,
+        Assert.assertTrue("match not found in expected results: " + match + " => " + matches,
             matches.contains(match));
         matches.remove(match);
         //! System.out.println("____removing: " + match);
@@ -318,11 +320,11 @@ public abstract class AbstractQueryTest extends TestCase {
       result.close();
     }
 
-    assertTrue("expected matches not found: " + matches,
+    Assert.assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
   
-  protected void verifyQueryOrder(List matches, String query)
+  protected void assertQueryOrder(List matches, String query)
     throws InvalidQueryException {
 
     int pos = 0;
@@ -330,10 +332,10 @@ public abstract class AbstractQueryTest extends TestCase {
     try {
       while (result.next()) {
         if (matches.size() <= pos)
-          fail("too many rows in query result");
+          Assert.fail("too many rows in query result");
         
         Map match = getMatch(result);
-        assertTrue("match not found in position " +  pos + ": " + match + " => " + matches.get(pos),
+        Assert.assertTrue("match not found in position " +  pos + ": " + match + " => " + matches.get(pos),
             matches.get(pos).equals(match));
         pos++;
       }
@@ -341,11 +343,11 @@ public abstract class AbstractQueryTest extends TestCase {
       result.close();
     }
 
-    assertTrue("bad number of matches returned: " + pos,
+    Assert.assertTrue("bad number of matches returned: " + pos,
            matches.size() == pos);
   }
 
-  protected void findAny(String query) throws InvalidQueryException {
+  protected void assertFindAny(String query) throws InvalidQueryException {
     // verify that we do not get any parse or query errors
     QueryResultIF result = processor.execute(query);
     try {
@@ -357,20 +359,20 @@ public abstract class AbstractQueryTest extends TestCase {
     }
   }
 
-  protected void findNothing(String query) throws InvalidQueryException {
+  protected void assertFindNothing(String query) throws InvalidQueryException {
     QueryResultIF result = processor.execute(query);
     try {
-      assertTrue("found values, but shouldn't have",
+      Assert.assertTrue("found values, but shouldn't have",
                  !result.next());
     } finally {
       result.close();
     }
   }
 
-  protected void findNothing(String query, Map args) throws InvalidQueryException {
+  protected void assertFindNothing(String query, Map args) throws InvalidQueryException {
     QueryResultIF result = processor.execute(query, args);
     try {
-      assertTrue("found values, but shouldn't have",
+      Assert.assertTrue("found values, but shouldn't have",
                  !result.next());
     } finally {
       result.close();
@@ -382,42 +384,42 @@ public abstract class AbstractQueryTest extends TestCase {
     return QueryUtils.parseDeclarations(topicmap, decls);
   }
 
-  public int update(String query) throws InvalidQueryException {
+  public int assertUpdate(String query) throws InvalidQueryException {
     return processor.update(query);
   }
 
-  public int update(String query, DeclarationContextIF context)
+  public int assertUpdate(String query, DeclarationContextIF context)
     throws InvalidQueryException {
     return processor.update(query, null, context);
   }
   
-  public int update(String query, Map params) throws InvalidQueryException {
+  public int assertUpdate(String query, Map params) throws InvalidQueryException {
     return processor.update(query, params);
   }
 
-  public int update(String query, Map params, DeclarationContextIF context)
+  public int assertUpdate(String query, Map params, DeclarationContextIF context)
     throws InvalidQueryException {
     return processor.update(query, params, context);
   }
   
-  public void updateError(String query) throws InvalidQueryException {
+  public void assertUpdateError(String query) throws InvalidQueryException {
     try {
-      update(query);
-      fail("No error from query");
+      assertUpdate(query);
+      Assert.fail("No error from query");
     } catch (InvalidQueryException e) {
       // as expected
     }
   }
   
-  protected void getParseError(String query) {
-    getParseError(query, Collections.EMPTY_MAP);
+  protected void assertGetParseError(String query) {
+    assertGetParseError(query, Collections.EMPTY_MAP);
   }
 
-  protected void getParseError(String query, Map parameters) {
+  protected void assertGetParseError(String query, Map parameters) {
     QueryResultIF result = null;
     try {
       result = processor.execute(query, parameters);
-      fail("query '" + query + "' parsed OK, but shouldn't have");
+      Assert.fail("query '" + query + "' parsed OK, but shouldn't have");
     } catch (InvalidQueryException e) {
     } finally {
       if (result != null) result.close();

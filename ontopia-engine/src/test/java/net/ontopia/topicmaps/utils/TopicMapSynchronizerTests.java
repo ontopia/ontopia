@@ -39,7 +39,6 @@ public class TopicMapSynchronizerTests {
   private final static String testdataDirectory = "tmsync";
 
   private String base;
-  private String root;
   private String filename;
 
   @Parameters
@@ -48,7 +47,6 @@ public class TopicMapSynchronizerTests {
   }
 
   public TopicMapSynchronizerTests(String root, String filename) {
-    this.root = root;
     this.filename = filename;
     this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
   }

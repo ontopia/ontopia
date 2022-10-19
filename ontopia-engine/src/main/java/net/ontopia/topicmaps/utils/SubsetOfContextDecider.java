@@ -21,9 +21,9 @@
 package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that decides whether the ScopedIF's scope is a
@@ -33,7 +33,7 @@ import net.ontopia.utils.DeciderIF;
  * more information.
  */
 
-public class SubsetOfContextDecider implements DeciderIF<ScopedIF> {
+public class SubsetOfContextDecider implements Predicate<ScopedIF> {
   
   protected Collection<TopicIF> context;
   
@@ -42,7 +42,7 @@ public class SubsetOfContextDecider implements DeciderIF<ScopedIF> {
   }
   
   @Override
-  public boolean ok(ScopedIF scoped) {
+  public boolean test(ScopedIF scoped) {
     return ScopeUtils.isSubsetOfContext(scoped, context);
   }
 

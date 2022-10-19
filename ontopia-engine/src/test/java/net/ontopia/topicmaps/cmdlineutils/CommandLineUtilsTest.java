@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.cmdlineutils;
 
 import java.util.Collection;
 import java.util.HashMap;
-import junit.framework.TestCase;
 import net.ontopia.topicmaps.cmdlineutils.sanity.AssociationSanity;
 import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateNames;
 import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateOccurrences;
@@ -31,21 +30,21 @@ import net.ontopia.topicmaps.cmdlineutils.statistics.NoTypeCount;
 import net.ontopia.topicmaps.cmdlineutils.statistics.TopicAssocDep;
 import net.ontopia.topicmaps.cmdlineutils.statistics.TopicCounter;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public abstract class CommandLineUtilsTest extends TestCase {
+public abstract class CommandLineUtilsTest {
 
   public static TopicMapIF tm;
 
 
-  public CommandLineUtilsTest(String name) {
-    super(name);
-  }
+  @Before
+  public abstract void setUp();
 
-  @Override
-  protected abstract void setUp();
-
-  @Override
-  protected abstract void tearDown();
+  @After
+  public abstract void tearDown();
 
   /**
    * **********************************************
@@ -53,6 +52,7 @@ public abstract class CommandLineUtilsTest extends TestCase {
    * **********************************************
    */
 
+  @Test
   public void testTopicCounter() {
     TopicCounter test = new TopicCounter(tm);
     
@@ -60,38 +60,38 @@ public abstract class CommandLineUtilsTest extends TestCase {
     try {
       test.count();
     } catch (NullPointerException e) {
-      fail("Cought an \"unexpected\" null pointer exception");
+      Assert.fail("Cought an \"unexpected\" null pointer exception");
     }
     
-    assertTrue(test != null);
+    Assert.assertTrue(test != null);
 
     //Type checking
 
-    assertTrue("check (getTopicTypes)", test.getTopicTypes() instanceof HashMap); 
-    assertTrue("check (getAssociationTypes)", 
+    Assert.assertTrue("check (getTopicTypes)", test.getTopicTypes() instanceof HashMap); 
+    Assert.assertTrue("check (getAssociationTypes)", 
            test.getAssociationTypes() instanceof HashMap); 
-    assertTrue("check (getOccurrenceTypes)", 
+    Assert.assertTrue("check (getOccurrenceTypes)", 
            test.getOccurrenceTypes() instanceof HashMap); 
 
     //Test the "normal" operations using a spesial designed topicmap.
 
-    assertTrue("checking (getnumberOfTopics)", 
+    Assert.assertTrue("checking (getnumberOfTopics)", 
            test.getNumberOfTopics() == tm.getTopics().size());
     //note: comparing with previous version:
     //      +1 because names must have a type (thus a typing topic)
-    assertEquals(15, test.getNumberOfTopics());
+    Assert.assertEquals(15, test.getNumberOfTopics());
 
-    assertTrue("check (getNumberOfAssociations)", 
+    Assert.assertTrue("check (getNumberOfAssociations)", 
            test.getNumberOfAssociations() == tm.getAssociations().size());
-    assertEquals(3, test.getNumberOfAssociations());
+    Assert.assertEquals(3, test.getNumberOfAssociations());
     
-    assertEquals(3, test.getNumberOfOccurrences());  
+    Assert.assertEquals(3, test.getNumberOfOccurrences());  
 
-    assertTrue("Variable numberOfOccurrences not null", 
+    Assert.assertTrue("Variable numberOfOccurrences not null", 
            test.getNumberOfOccurrences() != 0);
-    assertTrue("Variable numberOfAssociations not null", 
+    Assert.assertTrue("Variable numberOfAssociations not null", 
            test.getNumberOfAssociations() != 0);
-    assertTrue("Variable numberOfOcurrences not null", 
+    Assert.assertTrue("Variable numberOfOcurrences not null", 
            test.getNumberOfOccurrences() != 0);
 
 
@@ -101,65 +101,67 @@ public abstract class CommandLineUtilsTest extends TestCase {
 
     try {
       test.count();
-      fail("Should raise a NullPointerException");
+      Assert.fail("Should raise a NullPointerException");
     } catch (NullPointerException e){
       //Test succesfull
     }
 
-    assertEquals(0, test.getNumberOfTopics());
-    assertEquals(0, test.getNumberOfAssociations());
-    assertEquals(0, test.getNumberOfOccurrences());
+    Assert.assertEquals(0, test.getNumberOfTopics());
+    Assert.assertEquals(0, test.getNumberOfAssociations());
+    Assert.assertEquals(0, test.getNumberOfOccurrences());
 
     
   }
 
+  @Test
   public void testTopicAssocDep() {
 
     TopicAssocDep test = new TopicAssocDep(tm);
 
     //Type checking
     
-    assertTrue("check type (getAssociations()) with 'foo'", 
+    Assert.assertTrue("check type (getAssociations()) with 'foo'", 
            test.getAssociations() instanceof Collection);
 
     try {
       test = new TopicAssocDep(null);
       // test.getAssociationDependencies(); // traverse() is now executed in constructor
-      fail("Should raise a NullPointerException");
+      Assert.fail("Should raise a NullPointerException");
     } catch (NullPointerException e) {
       //Test succesfull
     }
 
   }
 
+  @Test
   public void testNoTypeCount() {
     
     NoTypeCount test = new NoTypeCount(tm);
     test.traverse();
     //Type checking.
-    assertTrue("check type (getNoTypeTopics)", 
+    Assert.assertTrue("check type (getNoTypeTopics)", 
            test.getNoTypeTopics() instanceof Collection);
 
     // note: comparing with previous version:
     //       +1 because names must have a type since 5.1.0 and this type topic has no type
-    assertEquals(11, test.getNoTypeTopics().size());
+    Assert.assertEquals(11, test.getNoTypeTopics().size());
 
-    assertTrue("check type (getNoTypeAssociations)", 
+    Assert.assertTrue("check type (getNoTypeAssociations)", 
            test.getNoTypeAssociations() instanceof Collection);
 
-    assertEquals(0, test.getNoTypeAssociations().size());
+    Assert.assertEquals(0, test.getNoTypeAssociations().size());
 
-    assertTrue("check type (getNoTypeOccurrences)", 
+    Assert.assertTrue("check type (getNoTypeOccurrences)", 
            test.getNoTypeOccurrences() instanceof Collection);
 
-    assertEquals(0, test.getNoTypeOccurrences().size());
+    Assert.assertEquals(0, test.getNoTypeOccurrences().size());
 
     
     //set test.tm = null
     test = new NoTypeCount(null);
     try {
       test.traverse();
-      fail("Should raise a NullPointerException");
+      Assert.fail("Should raise a NullPointerException");
     } catch (NullPointerException e) {
       //Test succesfull
     }
@@ -173,20 +175,22 @@ public abstract class CommandLineUtilsTest extends TestCase {
    * *******************************************
    */
 
+  @Test
   public void testDuplicateAssociations() {
     
     AssociationSanity test = new AssociationSanity(tm);
 
     test.traverse();
 
-    assertTrue("type checking (getDuplicateAssociations)", 
+    Assert.assertTrue("type checking (getDuplicateAssociations)", 
            test.getDuplicateAssociations() instanceof HashMap);
-    assertTrue("type checking (getNumberOfDuplicates)", 
+    Assert.assertTrue("type checking (getNumberOfDuplicates)", 
            test.getNumberOfDuplicates() instanceof HashMap);
     
-    assertEquals(1, test.getDuplicateAssociations().size());
+    Assert.assertEquals(1, test.getDuplicateAssociations().size());
   }
 
+  @Test
   public void testNoNameTopics() {
     
     NoNames test = new NoNames(tm);
@@ -196,41 +200,43 @@ public abstract class CommandLineUtilsTest extends TestCase {
 
     //Type checking
 
-    assertTrue("type checking (getNoNameTopics)", 
+    Assert.assertTrue("type checking (getNoNameTopics)", 
            test.getNoNameTopics() instanceof Collection);
 
-    assertTrue("type checking (getNoCharacteristics)", 
+    Assert.assertTrue("type checking (getNoCharacteristics)", 
            test.getNoCharacteristics() instanceof Collection);
 
-    assertTrue("type checking (getNoNameUnconstrained)", 
+    Assert.assertTrue("type checking (getNoNameUnconstrained)", 
            test.getNoNameUnconstrained() instanceof Collection);
 
 
-    assertEquals(2, test.getNoNameTopics().size());
-    assertEquals(2, test.getNoCharacteristics().size());
-    //! assertEquals(8, test.getNoNameUnconstrained().size());
+    Assert.assertEquals(2, test.getNoNameTopics().size());
+    Assert.assertEquals(2, test.getNoCharacteristics().size());
+    //! Assert.assertEquals(8, test.getNoNameUnconstrained().size());
 
   }
 
+  @Test
   public void testDuplicateOccurrences() {
     
     DuplicateOccurrences test = new DuplicateOccurrences(tm);
     
-    assertTrue("type checking (getDuplicateOccurrences)",
+    Assert.assertTrue("type checking (getDuplicateOccurrences)",
            test.getDuplicateOccurrences() instanceof Collection);
     
-    assertEquals(1, test.getDuplicateOccurrences().size());
+    Assert.assertEquals(1, test.getDuplicateOccurrences().size());
 
   }
 
+  @Test
   public void testDuplicateNames() {
 
     DuplicateNames test = new DuplicateNames(tm);
 
-    assertTrue("type checking (getDuplicateNames)",
+    Assert.assertTrue("type checking (getDuplicateNames)",
            test.getDuplicatedNames() instanceof Collection);
 
-    assertEquals(0, test.getDuplicatedNames().size());
+    Assert.assertEquals(0, test.getDuplicatedNames().size());
 
   }
 }

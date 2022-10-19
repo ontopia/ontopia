@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.query.sql;
 
+import java.util.Objects;
 import net.ontopia.persistence.proxy.FieldHandlerIF;
 
 /**
@@ -37,10 +38,10 @@ public class SQLParameter implements SQLValueIF {
   protected FieldHandlerIF fhandler;
   
   public SQLParameter(String name, int arity) {
-    if (name == null)
-      throw new NullPointerException("A SQL parameter must have a name.");
-    if (arity < 1)
+    Objects.requireNonNull(name, "A SQL parameter must have a name.");
+    if (arity < 1) {
       throw new IllegalArgumentException("The arity of a SQL parameter must be 1 or more; " + arity + " specified.");
+    }
     this.name = name;
     this.arity = arity;
   }

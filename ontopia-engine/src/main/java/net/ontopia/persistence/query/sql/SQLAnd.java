@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.query.sql;
 
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -39,7 +40,7 @@ public class SQLAnd implements SQLExpressionIF {
   }
   
   public SQLAnd(SQLExpressionIF[] expressions) {
-    if (expressions == null) throw new NullPointerException("And expressions cannot be null.");
+    Objects.requireNonNull(expressions, "And expressions cannot be null.");
     this.expressions = expressions;
   }
 

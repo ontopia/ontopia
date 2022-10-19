@@ -20,6 +20,7 @@
 package ontopoly.models;
 
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TMObjectIF;
 
 import ontopoly.model.RoleField;
@@ -35,8 +36,7 @@ public class FieldValueModel extends LoadableDetachableModel<Object> {
   
   private FieldValueModel(FieldInstanceModel fieldInstanceModel, Object value, boolean isExistingValue) {
     super(value);
-    if (fieldInstanceModel == null)
-      throw new NullPointerException("fieldInstanceModel parameter cannot be null.");
+    Objects.requireNonNull(fieldInstanceModel, "fieldInstanceModel parameter cannot be null.");
     this.fieldInstanceModel = fieldInstanceModel;
 
     setValueInternal(value);

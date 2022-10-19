@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -56,7 +57,6 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.deciders.TMExporterDecider;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.IteratorComparator;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
@@ -86,7 +86,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   protected Calendar calendar;
   protected String base;
 
-  protected DeciderIF<Object> filter;
+  protected Predicate<Object> filter;
   // Constrains which topic map constructs should be included in the exported
   // Ltm file.
 
@@ -209,7 +209,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * disallowed.   
    * @param filter Places constraints on individual topicmap constructs.
    */
-  public void setFilter(DeciderIF<Object> filter) {
+  public void setFilter(Predicate<Object> filter) {
     this.filter = new TMExporterDecider(filter);
   }
 
@@ -808,7 +808,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     Iterator<E> unfilteredIt = unfiltered.iterator();
     while (unfilteredIt.hasNext()) {
       E current = unfilteredIt.next();
-      if (filter.ok(current))
+      if (filter.test(current))
         retVal.add(current);
     }
     return retVal;
@@ -823,7 +823,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   private boolean filterOk(Object unfiltered) {
     if (filter == null)
       return true;
-    return filter.ok(unfiltered);
+    return filter.test(unfiltered);
   }
 
   /**
@@ -1865,8 +1865,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       setPreserveIds((Boolean) value);
     }
     value = properties.get(PROPERTY_FILTER);
-    if ((value != null) && (value instanceof DeciderIF)) {
-      setFilter((DeciderIF) value);
+    if ((value != null) && (value instanceof Predicate)) {
+      setFilter((Predicate) value);
     }
     value = properties.get(PROPERTY_PREFIXES);
     if ((value != null) && (value instanceof Map)) {

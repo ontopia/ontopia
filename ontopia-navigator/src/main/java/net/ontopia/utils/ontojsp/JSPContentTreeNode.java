@@ -24,8 +24,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.jsp.tagext.TagSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The Ontopia JSPTreeNode class. This class is the node of
@@ -34,10 +32,6 @@ import org.slf4j.LoggerFactory;
  * @see net.ontopia.utils.ontojsp.JSPContentHandler
  */ 
 public class JSPContentTreeNode implements JSPTreeNodeIF {
-
-  // initialization of logging facility
-  private static final Logger logger =
-    LoggerFactory.getLogger(JSPContentTreeNode.class.getName());
   
   protected String content;
   protected JSPTreeNodeIF parent;

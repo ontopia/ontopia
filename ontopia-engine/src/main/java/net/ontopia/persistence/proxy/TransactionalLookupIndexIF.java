@@ -21,13 +21,18 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
-import net.ontopia.utils.LookupIndexIF;
 
 /**
  * INTERNAL: Interface shared by the lookup indexes that look up data
  * in the backend storage.
  */
-public interface TransactionalLookupIndexIF<K, E> extends LookupIndexIF<K, E> {
+public interface TransactionalLookupIndexIF<K, E> {
+
+  E get(K key);
+
+  E put(K key, E value);
+
+  E remove(K key);
 
   void removeAll(Collection<K> keys);
   

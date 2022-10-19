@@ -21,8 +21,8 @@
 	</issueManagement>
 	<scm>
 		<url>https://github.com/ontopia/ontopia</url>
-		<connection>scm:git:git://github.com/ontopia/ontopia.git</connection>
-		<developerConnection>scm:git:git://github.com/ontopia/ontopia.git</developerConnection>
+		<connection>scm:git:git@github.com:ontopia/ontopia.git</connection>
+		<developerConnection>scm:git:git@github.com:ontopia/ontopia.git</developerConnection>
 	</scm>
 
 	<inceptionYear>2001</inceptionYear>
@@ -56,6 +56,7 @@
 		<module>ontopia-jdbcspy7</module>
 		<module>ontopia-lucene</module>
 		<module>ontopia-rest</module>
+		<module>ontopia-deprecated-utils</module>
 		
 		<!-- Web Apps -->
 		<module>webapp-root</module>
@@ -81,13 +82,15 @@
 		<jtm.revision>46</jtm.revision>
 		<tmxml.revision>68</tmxml.revision>
 		<!-- reused dependency versions -->
-		<lucene.version>6.5.0</lucene.version>
+		<lucene.version>7.1.0</lucene.version>
 		<lucene.snowball.version>3.0.3</lucene.snowball.version>
-		<axis2.version>1.6.2</axis2.version>
+		<axis2.version>1.6.4</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
+		<tmapi-tests.version>2.1.1</tmapi-tests.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
-		<jena.version>3.2.0</jena.version>
+		<jena.version>3.17.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
+		<poi.version>5.2.3</poi.version>
 		
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -126,9 +129,9 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.20.1</version>
+					<version>2.22.2</version>
 					<configuration>
-						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port}</argLine>
+						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} -Xmx1024m -XX:MaxPermSize=256m</argLine>
 						<includes>
 							<include>**/*Tests.java</include>
 							<include>**/*Test.java</include>
@@ -477,7 +480,7 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.5</version>
+				<version>2.7</version>
 			</dependency>
 			<dependency>
 				<groupId>urbanophile</groupId>
@@ -487,7 +490,7 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.7.25</version>
+				<version>1.7.36</version>
 			</dependency>
 			<dependency>
 				<groupId>antlr</groupId>
@@ -508,7 +511,7 @@
 			<dependency>
 				<groupId>org.jgroups</groupId>
 				<artifactId>jgroups</artifactId>
-				<version>3.4.4.Final</version>
+				<version>4.0.0.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -538,7 +541,7 @@
 			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
-				<version>1.3</version>
+				<version>1.3.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.velocity</groupId>
@@ -558,22 +561,22 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>
-				<version>3.12</version>
+				<version>${poi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
-				<version>3.12</version>
+				<version>${poi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-scratchpad</artifactId>
-				<version>3.12</version>
+				<version>${poi.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
-				<version>1.1.0</version>
+				<version>2.0.24</version>
 			</dependency>
 			<dependency>
 				<groupId>org.ccil.cowan.tagsoup</groupId>
@@ -607,7 +610,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.axis2</groupId>
-				<artifactId>axis2</artifactId>
+				<artifactId>axis2-kernel</artifactId>
 				<version>${axis2.version}</version>
 			</dependency>
 			<dependency>
@@ -645,14 +648,14 @@
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.7.25</version>
+				<artifactId>slf4j-reload4j</artifactId>
+				<version>1.7.36</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<version>4.13.1</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>

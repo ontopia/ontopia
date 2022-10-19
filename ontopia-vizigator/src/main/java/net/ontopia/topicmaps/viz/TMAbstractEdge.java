@@ -41,12 +41,12 @@ import java.util.List;
 import javax.swing.Icon;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.StringifierIF;
 
 import com.touchgraph.graphlayout.Edge;
 import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
 import com.touchgraph.graphlayout.TGPanel;
+import java.util.function.Function;
 
 /**
  * INTERNAL: Common abstract superclass for all edges representing
@@ -59,7 +59,7 @@ public abstract class TMAbstractEdge extends Edge
   protected int shape = TMRoleEdge.DEFAULT_SHAPE;
   protected Icon icon;
   protected Font font;
-  protected StringifierIF stringifier;
+  protected Function<TopicIF, String> stringifier;
   protected boolean underMouse = false;
   static protected final int LOADING = 50;
   
@@ -479,7 +479,7 @@ public abstract class TMAbstractEdge extends Edge
     return Collections.singletonList(this.getOtherEndpt(find));
   }
   
-  public StringifierIF getStringifier() {
+  public Function<TopicIF, String> getStringifier() {
     return this.stringifier;
   }
   
@@ -489,7 +489,7 @@ public abstract class TMAbstractEdge extends Edge
     this.setStringifier(VizUtils.stringifierFor(aTopic));
   }
   
-  protected void setStringifier(StringifierIF aStringifier) {
+  protected void setStringifier(Function<TopicIF, String> aStringifier) {
     this.stringifier = aStringifier;   
   }
 

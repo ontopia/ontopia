@@ -25,20 +25,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import org.junit.Test;
 
 public class ResourcePredicateTest extends AbstractPredicateTest {
   
-  public ResourcePredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
 
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -68,11 +65,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "resource($OBJ, $LOCATOR)?");
+    assertQueryMatches(matches, "resource($OBJ, $LOCATOR)?");
     
     closeStore();    
   }
 
+  @Test
   public void testCompletelyOpen2() throws InvalidQueryException, IOException {
     load("uri-vn.xtm");
 
@@ -102,11 +100,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "resource($OBJ, $LOCATOR)?");
+    assertQueryMatches(matches, "resource($OBJ, $LOCATOR)?");
     
     closeStore();    
   }
   
+  @Test
   public void testOccurrenceResource() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -117,11 +116,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", "http://www.hest.no/");
     
-    verifyQuery(matches, "resource(@" + occ.getObjectId() + ", $LOCATOR)?");
+    assertQueryMatches(matches, "resource(@" + occ.getObjectId() + ", $LOCATOR)?");
     
     closeStore();    
   }
 
+  @Test
   public void testLookupOccurrence() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -132,11 +132,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "OBJ", occ);
     
-    verifyQuery(matches, "resource($OBJ, \"http://www.hest.no\")?");
+    assertQueryMatches(matches, "resource($OBJ, \"http://www.hest.no\")?");
     
     closeStore();    
   }
 
+  @Test
   public void testLookupVariant() throws InvalidQueryException, IOException {
     load("uri-vn.xtm");
 
@@ -147,11 +148,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "OBJ", vn);
     
-    verifyQuery(matches, "resource($OBJ, \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
+    assertQueryMatches(matches, "resource($OBJ, \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
     
     closeStore();    
   }
 
+  @Test
   public void testBothBoundTrue() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -162,12 +164,13 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "resource(@" + occ.getObjectId() + ", \"" + occ.getLocator().getAddress() + "\")?");
+    assertQueryMatches(matches, "resource(@" + occ.getObjectId() + ", \"" + occ.getLocator().getAddress() + "\")?");
     
     closeStore();    
   }
 
 
+  @Test
   public void testBothBoundFalse() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -177,11 +180,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     
     List matches = new ArrayList();
     
-    verifyQuery(matches, "resource(@" + occ.getObjectId() + ", \"http://www.host.no\")?");
+    assertQueryMatches(matches, "resource(@" + occ.getObjectId() + ", \"http://www.host.no\")?");
     
     closeStore();    
   }
 
+  @Test
   public void testBothBoundFalseVariant() throws InvalidQueryException, IOException {
     load("uri-vn.xtm");
 
@@ -191,11 +195,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     
     List matches = new ArrayList();
 
-    verifyQuery(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.com/topicmaps/materials/logo.gif\")?");
+    assertQueryMatches(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.com/topicmaps/materials/logo.gif\")?");
     
     closeStore();    
   }
 
+  @Test
   public void testBothBoundTrueVariant() throws InvalidQueryException, IOException {
     load("uri-vn.xtm");
 
@@ -206,11 +211,12 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
+    assertQueryMatches(matches, "resource(@" + vn.getObjectId() +", \"http://www.ontopia.net/topicmaps/materials/logo.gif\")?");
     
     closeStore();    
   }
 
+  @Test
   public void testGetVariantLocator() throws InvalidQueryException, IOException {
     load("uri-vn.xtm");
 
@@ -221,7 +227,7 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", "http://www.ontopia.net/topicmaps/materials/logo.gif");
     
-    verifyQuery(matches, "resource(@" + vn.getObjectId() +", $LOCATOR)?");
+    assertQueryMatches(matches, "resource(@" + vn.getObjectId() +", $LOCATOR)?");
     
     closeStore();    
   } 

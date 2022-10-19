@@ -25,14 +25,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the most appropriate basename from a topic.
  */
-public class TopicNameGrabber implements GrabberIF<TopicIF, TopicNameIF> {
+public class TopicNameGrabber implements Function<TopicIF, TopicNameIF> {
 
   /**
    * PROTECTED: The comparator used to sort the base names.
@@ -69,7 +69,7 @@ public class TopicNameGrabber implements GrabberIF<TopicIF, TopicNameIF> {
    *            a TopicIF object.
    */
   @Override
-  public TopicNameIF grab(TopicIF topic) {
+  public TopicNameIF apply(TopicIF topic) {
     if (topic == null)
       return null;
     

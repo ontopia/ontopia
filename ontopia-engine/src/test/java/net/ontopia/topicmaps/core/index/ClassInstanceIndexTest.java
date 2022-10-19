@@ -28,87 +28,90 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.PSI;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
   
   protected ClassInstanceIndexIF clsix;
   protected TopicIF type;
 
-  public ClassInstanceIndexTest(String name) {
-    super(name);
-  }
-
   @Override
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     clsix = (ClassInstanceIndexIF) super.setUp("ClassInstanceIndexIF");
     type = builder.makeTopic();
   }
   
+  @Test
   public void testEmptyTypesIndexes() {
-    assertTrue("AssociationRoleTypes not empty.", clsix.getAssociationRoleTypes().isEmpty());
-    assertTrue("AssociationTypes not empty.", clsix.getAssociationTypes().isEmpty());
-    assertTrue("OccurrenceTypes not empty", clsix.getOccurrenceTypes().isEmpty());
-    assertTrue("TopicTypes not empty", clsix.getTopicTypes().isEmpty());
+    Assert.assertTrue("AssociationRoleTypes not empty.", clsix.getAssociationRoleTypes().isEmpty());
+    Assert.assertTrue("AssociationTypes not empty.", clsix.getAssociationTypes().isEmpty());
+    Assert.assertTrue("OccurrenceTypes not empty", clsix.getOccurrenceTypes().isEmpty());
+    Assert.assertTrue("TopicTypes not empty", clsix.getTopicTypes().isEmpty());
   }
 
+  @Test
   public void testTopicTypes() {
     // STATE 1: empty topic map
-    assertTrue("index finds spurious (or most likely no) topic types",
+    Assert.assertTrue("index finds spurious (or most likely no) topic types",
            clsix.getTopics(null).size() == 1);
 
     /* This test cannot be performed as the type topic is already
        created and it has a null type.
-    assertTrue("null used as topic type in empty topic map",
+    Assert.assertTrue("null used as topic type in empty topic map",
            !clsix.usedAsTopicType(null));
     */
-    assertTrue("index finds topic types in empty topic map",
+    Assert.assertTrue("index finds topic types in empty topic map",
            clsix.getTopicTypes().size() == 0);
 
     // STATE 2: untyped topic
     TopicIF inst = builder.makeTopic();
 
-    assertTrue("Found topic type when none expected.", clsix.getTopicTypes().size() == 0);
-    assertTrue("<type> incorrectly indexed as a topic type.", !clsix.usedAsTopicType(type));
-    assertTrue("Expected no topics of type <type>", clsix.getTopics(type).size() == 0);
-    assertTrue("Expected <type> to not be used as type.", !clsix.usedAsType(type));
-    assertTrue("Expected <inst> to be indexed with null type.", clsix.getTopics(null).contains(inst));
+    Assert.assertTrue("Found topic type when none expected.", clsix.getTopicTypes().size() == 0);
+    Assert.assertTrue("<type> incorrectly indexed as a topic type.", !clsix.usedAsTopicType(type));
+    Assert.assertTrue("Expected no topics of type <type>", clsix.getTopics(type).size() == 0);
+    Assert.assertTrue("Expected <type> to not be used as type.", !clsix.usedAsType(type));
+    Assert.assertTrue("Expected <inst> to be indexed with null type.", clsix.getTopics(null).contains(inst));
 
     // STATE 3: typed topic
     inst.addType(type);
 
-    assertTrue("Expected one topic type.", clsix.getTopicTypes().size() == 1);
-    assertTrue("<type> not indexed as topic type.", clsix.getTopicTypes().contains(type));
-    assertTrue("<type> not indexed as topic type.", clsix.usedAsTopicType(type));
-    assertTrue("Expected one topic of type <type>", clsix.getTopics(type).size() == 1);
-    assertTrue("Expected <inst> as instance of <type>", clsix.getTopics(type).contains(inst));
-    assertTrue("Expected <type> to be used as type.", clsix.usedAsType(type));
+    Assert.assertTrue("Expected one topic type.", clsix.getTopicTypes().size() == 1);
+    Assert.assertTrue("<type> not indexed as topic type.", clsix.getTopicTypes().contains(type));
+    Assert.assertTrue("<type> not indexed as topic type.", clsix.usedAsTopicType(type));
+    Assert.assertTrue("Expected one topic of type <type>", clsix.getTopics(type).size() == 1);
+    Assert.assertTrue("Expected <inst> as instance of <type>", clsix.getTopics(type).contains(inst));
+    Assert.assertTrue("Expected <type> to be used as type.", clsix.usedAsType(type));
 
     // STATE 4: untyped topic (via type removal)
     inst.removeType(type);
 
-    assertTrue("Found topic type when none expected.", clsix.getTopicTypes().size() == 0);
-    assertTrue("<type> incorrectly indexed as a topic type.", !clsix.usedAsTopicType(type));
-    assertTrue("Expected no topics of type <type>", clsix.getTopics(type).size() == 0);
-    assertTrue("Expected <type> to not be used as type.", !clsix.usedAsType(type));
-    assertTrue("Expected <inst> to be indexed with null type.", clsix.getTopics(null).contains(inst));
+    Assert.assertTrue("Found topic type when none expected.", clsix.getTopicTypes().size() == 0);
+    Assert.assertTrue("<type> incorrectly indexed as a topic type.", !clsix.usedAsTopicType(type));
+    Assert.assertTrue("Expected no topics of type <type>", clsix.getTopics(type).size() == 0);
+    Assert.assertTrue("Expected <type> to not be used as type.", !clsix.usedAsType(type));
+    Assert.assertTrue("Expected <inst> to be indexed with null type.", clsix.getTopics(null).contains(inst));
 
     // STATE 5: duplicate typed topic
     TopicIF dup = builder.makeTopic();
     dup.addType(type);
 
-    assertTrue("topic type not found",
+    Assert.assertTrue("topic type not found",
            clsix.getTopics(type).size() == 1);
-    assertTrue("topic not found via type",
+    Assert.assertTrue("topic not found via type",
            clsix.getTopics(type).contains(dup));
-    assertTrue("duplicate topic types not suppressed",
+    Assert.assertTrue("duplicate topic types not suppressed",
            clsix.getTopicTypes().size() == 1);
   }
 
+  @Test
   public void testAssociationTypes() {
     // STATE 1: empty topic map
-    assertTrue("index finds role types in empty topic map",
+    Assert.assertTrue("index finds role types in empty topic map",
            clsix.getAssociationTypes().size() == 0);
-    assertTrue("index finds role types in empty topic map",
+    Assert.assertTrue("index finds role types in empty topic map",
            clsix.getAssociationRoleTypes().size() == 0);
 
     // Create untyped association and association role
@@ -116,75 +119,76 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     AssociationRoleIF role = builder.makeAssociationRole(inst, type, type);
 
     // STATE 2: Topic map contains untyped association and association role
-    assertTrue("Found association type when none expected.", 
+    Assert.assertTrue("Found association type when none expected.", 
            clsix.getAssociationTypes().size() == 1);
-    assertTrue("<type> incorrectly indexed as an association type.", 
+    Assert.assertTrue("<type> incorrectly indexed as an association type.", 
            clsix.usedAsAssociationType(type));
-    assertTrue("Expected one associations of type <type>", 
+    Assert.assertTrue("Expected one associations of type <type>", 
            clsix.getAssociations(type).size() == 1);
 
-    assertTrue("Expected one role type.", 
+    Assert.assertTrue("Expected one role type.", 
            clsix.getAssociationRoleTypes().size() == 1);
-    assertTrue("<type> not indexed as an association role type.", 
+    Assert.assertTrue("<type> not indexed as an association role type.", 
            clsix.usedAsAssociationRoleType(type));
 
     inst.setType(type);
     role.setType(type);
 
     // STATE 3: Topic map contains typed association and association role
-    assertTrue("Expected one association type.", 
+    Assert.assertTrue("Expected one association type.", 
            clsix.getAssociationTypes().size() == 1);
-    assertTrue("<type> not indexed as association type.",
+    Assert.assertTrue("<type> not indexed as association type.",
            clsix.getAssociationTypes().contains(type));
-    assertTrue("<type> not indexed as association type.", 
+    Assert.assertTrue("<type> not indexed as association type.", 
            clsix.usedAsAssociationType(type));
-    assertTrue("Expected one association of type <type>", 
+    Assert.assertTrue("Expected one association of type <type>", 
            clsix.getAssociations(type).size() == 1);
-    assertTrue("Expected <inst> as instance of <type>", 
+    Assert.assertTrue("Expected <inst> as instance of <type>", 
            clsix.getAssociations(type).contains(inst));
 
-    assertTrue("Expected one association role type.", 
+    Assert.assertTrue("Expected one association role type.", 
            clsix.getAssociationRoleTypes().size() == 1);
-    assertTrue("<type> not indexed as association role type.",
+    Assert.assertTrue("<type> not indexed as association role type.",
            clsix.getAssociationRoleTypes().contains(type));
-    assertTrue("<type> not indexed as association role type.", 
+    Assert.assertTrue("<type> not indexed as association role type.", 
            clsix.usedAsAssociationRoleType(type));
-    assertTrue("Expected one association role of type <type>", 
+    Assert.assertTrue("Expected one association role of type <type>", 
            clsix.getAssociationRoles(type).size() == 1);
-    assertTrue("Expected <role> as instance of <type>", 
+    Assert.assertTrue("Expected <role> as instance of <type>", 
            clsix.getAssociationRoles(type).contains(role));
-    assertTrue("Expected one association role of type <type> with at of <type>", 
+    Assert.assertTrue("Expected one association role of type <type> with at of <type>", 
            clsix.getAssociationRoles(type, type).size() == 1);
-    assertTrue("Expected <role> as instance of <type> with at of <type>", 
+    Assert.assertTrue("Expected <role> as instance of <type> with at of <type>", 
            clsix.getAssociationRoles(type, type).contains(role));
 
     // STATE 4: Topic map has duplicates
     AssociationIF dup = builder.makeAssociation(type);
     AssociationRoleIF dupRole = builder.makeAssociationRole(dup, type , type);
     
-    assertTrue("assoc type not found",
+    Assert.assertTrue("assoc type not found",
            clsix.getAssociations(type).size() == 2);
-    assertTrue("assoc not found via type",
+    Assert.assertTrue("assoc not found via type",
            clsix.getAssociations(type).contains(dup));
-    assertTrue("duplicate assoc types not suppressed",
+    Assert.assertTrue("duplicate assoc types not suppressed",
            clsix.getAssociationTypes().size() == 1);
 
-    assertTrue("role type not found", 
+    Assert.assertTrue("role type not found", 
            clsix.getAssociationRoles(type).size() == 2);
-    assertTrue("roles not found via type",
+    Assert.assertTrue("roles not found via type",
            clsix.getAssociationRoles(type).contains(dupRole));
-    assertTrue("duplicate role types not suppressed",
+    Assert.assertTrue("duplicate role types not suppressed",
            clsix.getAssociationRoleTypes().size() == 1);
 
-    assertTrue("role type not found", 
+    Assert.assertTrue("role type not found", 
            clsix.getAssociationRoles(type, type).size() == 2);
-    assertTrue("roles not found via type",
+    Assert.assertTrue("roles not found via type",
            clsix.getAssociationRoles(type, type).contains(dupRole));
   }
 
+  @Test
   public void testOccurrenceTypes() {
     // STATE 1: empty topic map
-    assertTrue("index finds occurrence types in empty topic map",
+    Assert.assertTrue("index finds occurrence types in empty topic map",
            clsix.getOccurrenceTypes().size() == 0);
     
     TopicIF topic = builder.makeTopic();
@@ -193,38 +197,39 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     // STATE 3: Contains typed occurrences
     inst.setType(type);
 
-    assertTrue("Expected one occurrence type.", 
+    Assert.assertTrue("Expected one occurrence type.", 
            clsix.getOccurrenceTypes().size() == 1);
-    assertTrue("<type> not indexed as occurrence type.",
+    Assert.assertTrue("<type> not indexed as occurrence type.",
            clsix.getOccurrenceTypes().contains(type));
-    assertTrue("<type> not indexed as occurrence type.", 
+    Assert.assertTrue("<type> not indexed as occurrence type.", 
            clsix.usedAsOccurrenceType(type));
-    assertTrue("Expected one occurrence of type <type>", 
+    Assert.assertTrue("Expected one occurrence of type <type>", 
            clsix.getOccurrences(type).size() == 1);
-    assertTrue("Expected <inst> as instance of <type>", 
+    Assert.assertTrue("Expected <inst> as instance of <type>", 
            clsix.getOccurrences(type).contains(inst));
 
     // STATE 4: Contains duplicate type occurrence
     OccurrenceIF dup = builder.makeOccurrence(topic, type, "");
 
-    assertTrue("occ type not found",
+    Assert.assertTrue("occ type not found",
            clsix.getOccurrences(type).size() == 2);
-    assertTrue("occ not found via type",
+    Assert.assertTrue("occ not found via type",
            clsix.getOccurrences(type).contains(dup));
-    assertTrue("duplicate occ types not suppressed",
+    Assert.assertTrue("duplicate occ types not suppressed",
            clsix.getOccurrenceTypes().size() == 1);    
   }
 
+  @Test
   public void testTopicNameTypes() {
     
     // STATE 1: empty topic map
-    assertTrue("index finds spurious basename types",
+    Assert.assertTrue("index finds spurious basename types",
            clsix.getTopicNames(null).size() == 0);
     
-    assertTrue("null used as basename type in empty topic map",
+    Assert.assertTrue("null used as basename type in empty topic map",
            !clsix.usedAsTopicNameType(null));
     
-    assertTrue("index finds basename types in empty topic map",
+    Assert.assertTrue("index finds basename types in empty topic map",
            clsix.getTopicNameTypes().size() == 0);
     
     // STATE 2: Contains basenames with default name type
@@ -234,156 +239,161 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     TopicIF defaultNameType = topicmap.getTopicBySubjectIdentifier(PSI
         .getSAMNameType());
     
-    assertTrue("not exactly one default name type basename",
+    Assert.assertTrue("not exactly one default name type basename",
            clsix.getTopicNames(defaultNameType).size() == 1);
 
-    assertTrue("Found no basename type when one expected.", 
+    Assert.assertTrue("Found no basename type when one expected.", 
            clsix.getTopicNameTypes().size() == 1);
-    assertTrue("<type> incorrectly indexed as an basename type.", 
+    Assert.assertTrue("<type> incorrectly indexed as an basename type.", 
            !clsix.usedAsTopicNameType(type));
-    assertTrue("Expected no basenames of type <type>", 
+    Assert.assertTrue("Expected no basenames of type <type>", 
            clsix.getTopicNames(type).size() == 0);
-    assertTrue("Expected <inst> to be indexed with default name type.", 
+    Assert.assertTrue("Expected <inst> to be indexed with default name type.", 
            clsix.getTopicNames(defaultNameType).contains(inst));
         
     // STATE 3: Contains typed basenames
     inst.setType(type);
 
-    assertTrue("Expected one basename type.", 
+    Assert.assertTrue("Expected one basename type.", 
            clsix.getTopicNameTypes().size() == 1);
-    assertTrue("<type> not indexed as basename type.",
+    Assert.assertTrue("<type> not indexed as basename type.",
            clsix.getTopicNameTypes().contains(type));
-    assertTrue("<type> not indexed as basename type.", 
+    Assert.assertTrue("<type> not indexed as basename type.", 
            clsix.usedAsTopicNameType(type));
-    assertTrue("Expected one basename of type <type>", 
+    Assert.assertTrue("Expected one basename of type <type>", 
            clsix.getTopicNames(type).size() == 1);
-    assertTrue("Expected <inst> as instance of <type>", 
+    Assert.assertTrue("Expected <inst> as instance of <type>", 
            clsix.getTopicNames(type).contains(inst));
 
     // STATE 4: Contains duplicate type basename
     TopicNameIF dup = builder.makeTopicName(topic, "");
     dup.setType(type);
 
-    assertTrue("basename type not found",
+    Assert.assertTrue("basename type not found",
            clsix.getTopicNames(type).size() == 2);
-    assertTrue("basename not found via type",
+    Assert.assertTrue("basename not found via type",
            clsix.getTopicNames(type).contains(dup));
-    assertTrue("duplicate basename types not suppressed",
+    Assert.assertTrue("duplicate basename types not suppressed",
            clsix.getTopicNameTypes().size() == 1);
 
     // STATE 5: Reset type
     dup.setType(null);
 
-    assertTrue("not exactly one untyped basename",
+    Assert.assertTrue("not exactly one untyped basename",
            clsix.getTopicNames(defaultNameType).size() == 1);
     
   }
 
+  @Test
   public void testAllTopicNames() {
-    assertEquals(0, clsix.getAllTopicNames().size());
+    Assert.assertEquals(0, clsix.getAllTopicNames().size());
     
     TopicIF topic = builder.makeTopic();
     TopicNameIF tn = builder.makeTopicName(topic, "foo");
     TopicNameIF tn2 = builder.makeTopicName(topic, topic, "bar");
-    assertEquals(2, clsix.getAllTopicNames().size());
-    assertTrue(clsix.getAllTopicNames().contains(tn));
-    assertTrue(clsix.getAllTopicNames().contains(tn2));
+    Assert.assertEquals(2, clsix.getAllTopicNames().size());
+    Assert.assertTrue(clsix.getAllTopicNames().contains(tn));
+    Assert.assertTrue(clsix.getAllTopicNames().contains(tn2));
     
     tn.setType(topic);
-    assertEquals(2, clsix.getAllTopicNames().size());
+    Assert.assertEquals(2, clsix.getAllTopicNames().size());
     
     tn.remove();
-    assertEquals(1, clsix.getAllTopicNames().size());
-    assertFalse(clsix.getAllTopicNames().contains(tn));
+    Assert.assertEquals(1, clsix.getAllTopicNames().size());
+    Assert.assertFalse(clsix.getAllTopicNames().contains(tn));
     
     topic.remove();
-    assertEquals(0, clsix.getAllTopicNames().size());
-    assertFalse(clsix.getAllTopicNames().contains(tn2));
+    Assert.assertEquals(0, clsix.getAllTopicNames().size());
+    Assert.assertFalse(clsix.getAllTopicNames().contains(tn2));
   }
 
+  @Test
   public void testAllVariantNames() {
-    assertEquals(0, clsix.getAllVariantNames().size());
+    Assert.assertEquals(0, clsix.getAllVariantNames().size());
     
     TopicIF topic = builder.makeTopic();
     TopicNameIF tn = builder.makeTopicName(topic, "foo");
     VariantNameIF vn = builder.makeVariantName(tn, "bar", Collections.singleton(topic));
     VariantNameIF vn2 = builder.makeVariantName(tn, "bar2", Collections.singleton(topic));
-    assertEquals(2, clsix.getAllVariantNames().size());
-    assertTrue(clsix.getAllVariantNames().contains(vn));
-    assertTrue(clsix.getAllVariantNames().contains(vn2));
+    Assert.assertEquals(2, clsix.getAllVariantNames().size());
+    Assert.assertTrue(clsix.getAllVariantNames().contains(vn));
+    Assert.assertTrue(clsix.getAllVariantNames().contains(vn2));
     
     vn2.remove();
-    assertEquals(1, clsix.getAllVariantNames().size());
-    assertFalse(clsix.getAllVariantNames().contains(vn2));
+    Assert.assertEquals(1, clsix.getAllVariantNames().size());
+    Assert.assertFalse(clsix.getAllVariantNames().contains(vn2));
     
     tn.remove();
-    assertEquals(0, clsix.getAllVariantNames().size());
-    assertFalse(clsix.getAllVariantNames().contains(vn));
+    Assert.assertEquals(0, clsix.getAllVariantNames().size());
+    Assert.assertFalse(clsix.getAllVariantNames().contains(vn));
   }
 
+  @Test
   public void testAllOccurrences() {
-    assertEquals(0, clsix.getAllOccurrences().size());
+    Assert.assertEquals(0, clsix.getAllOccurrences().size());
     
     TopicIF topic = builder.makeTopic();
     
     OccurrenceIF o = builder.makeOccurrence(topic, topic, "foo");
     OccurrenceIF o2 = builder.makeOccurrence(topic, topic, "bar");
-    assertEquals(2, clsix.getAllOccurrences().size());
-    assertTrue(clsix.getAllOccurrences().contains(o));
-    assertTrue(clsix.getAllOccurrences().contains(o2));
+    Assert.assertEquals(2, clsix.getAllOccurrences().size());
+    Assert.assertTrue(clsix.getAllOccurrences().contains(o));
+    Assert.assertTrue(clsix.getAllOccurrences().contains(o2));
     
     o.remove();
-    assertEquals(1, clsix.getAllOccurrences().size());
-    assertFalse(clsix.getAllOccurrences().contains(o));
+    Assert.assertEquals(1, clsix.getAllOccurrences().size());
+    Assert.assertFalse(clsix.getAllOccurrences().contains(o));
     
     topic.remove();
-    assertEquals(0, clsix.getAllOccurrences().size());
-    assertFalse(clsix.getAllOccurrences().contains(o2));
+    Assert.assertEquals(0, clsix.getAllOccurrences().size());
+    Assert.assertFalse(clsix.getAllOccurrences().contains(o2));
   }
 
+  @Test
   public void testBug1438_basenames() {
 
-    assertTrue("index finds spurious occurrence types",
+    Assert.assertTrue("index finds spurious occurrence types",
            clsix.getTopicNames(null).size() == 0);
     
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
 
-    TopicNameIF bn1 = builder.makeTopicName(topic, otype, "foo");
+    builder.makeTopicName(topic, otype, "foo");
 
-    assertTrue("index finds spurious basename types",
+    Assert.assertTrue("index finds spurious basename types",
            clsix.getTopicNames(null).size() == 0);
 
     TopicNameIF bn2 = builder.makeTopicName(topic, otype, "foo");
 
     bn2.remove();
-    assertTrue("index finds spurious basename types",
+    Assert.assertTrue("index finds spurious basename types",
            clsix.getTopicNames(null).size() == 0);    
   }
 
+  @Test
   public void testBug1438_topics() {
-    assertTrue("index finds spurious topics (0)",
+    Assert.assertTrue("index finds spurious topics (0)",
            clsix.getTopics(null).size() == 1);
     
     TopicIF topic = builder.makeTopic();
     
-    assertTrue("index finds spurious topics (1)",
+    Assert.assertTrue("index finds spurious topics (1)",
            clsix.getTopics(null).size() == 2);
 
     topic.addType(type);
 
-    assertTrue("index finds spurious topics (2)",
+    Assert.assertTrue("index finds spurious topics (2)",
            clsix.getTopics(null).size() == 1);
 
-    assertTrue("index finds spurious topics (3)",
+    Assert.assertTrue("index finds spurious topics (3)",
            clsix.getTopics(type).size() == 1);
 
     topic.remove();
 
-    assertTrue("index finds spurious topics (4)",
+    Assert.assertTrue("index finds spurious topics (4)",
            clsix.getTopics(null).size() == 1);
 
-    assertTrue("index finds spurious topics (5)",
+    Assert.assertTrue("index finds spurious topics (5)",
            clsix.getTopics(type).size() == 0);
 
   }
@@ -393,42 +403,48 @@ public abstract class ClassInstanceIndexTest extends AbstractIndexTest {
     regarding null values for occurrence, name, role and association type.
   */
   
+  @Test
   public void testBug510_N_default() {
-    assertEquals("Index finds spurious names", 0, clsix.getTopicNames(null).size());
+    Assert.assertEquals("Index finds spurious names", 0, clsix.getTopicNames(null).size());
     builder.makeTopicName(type, "");
-    assertEquals("Index does not find default name type names", 1, clsix.getTopicNames(null).size());
+    Assert.assertEquals("Index does not find default name type names", 1, clsix.getTopicNames(null).size());
   }
 
+  @Test
   public void testBug510_N_notDefault() {
-    assertEquals("Index finds spurious names", 0, clsix.getTopicNames(null).size());
+    Assert.assertEquals("Index finds spurious names", 0, clsix.getTopicNames(null).size());
     builder.makeTopicName(type, type, "");
-    assertEquals("Index finds names with wrong type", 0, clsix.getTopicNames(null).size());
+    Assert.assertEquals("Index finds names with wrong type", 0, clsix.getTopicNames(null).size());
   }
 
+  @Test
   public void testBug510_O() {
-    assertEquals("Index finds spurious occurrences", 0, clsix.getOccurrences(null).size());
+    Assert.assertEquals("Index finds spurious occurrences", 0, clsix.getOccurrences(null).size());
     builder.makeOccurrence(type, type, "");
-    assertEquals("Index finds spurious occurrences", 0, clsix.getOccurrences(null).size());
+    Assert.assertEquals("Index finds spurious occurrences", 0, clsix.getOccurrences(null).size());
   }
   
+  @Test
   public void testBug510_A() {
-    assertEquals("Index finds spurious associations", 0, clsix.getAssociations(null).size());
+    Assert.assertEquals("Index finds spurious associations", 0, clsix.getAssociations(null).size());
     builder.makeAssociation(type);
-    assertEquals("Index finds spurious associations", 0, clsix.getAssociations(null).size());
+    Assert.assertEquals("Index finds spurious associations", 0, clsix.getAssociations(null).size());
   }
   
+  @Test
   public void testBug510_R() {
-    assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
+    Assert.assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
     builder.makeAssociationRole(builder.makeAssociation(type), type, type);
-    assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
+    Assert.assertEquals("Index finds spurious roles", 0, clsix.getAssociationRoles(null).size());
   }
 
+  @Test
   public void testBug536() {
-    assertFalse(clsix.usedAsAssociationRoleType(null));
-    assertFalse(clsix.usedAsAssociationType(null));
-    assertFalse(clsix.usedAsOccurrenceType(null));
-    assertFalse(clsix.usedAsTopicNameType(null));
-    assertFalse(clsix.usedAsTopicType(null));
-    assertFalse(clsix.usedAsType(null));
+    Assert.assertFalse(clsix.usedAsAssociationRoleType(null));
+    Assert.assertFalse(clsix.usedAsAssociationType(null));
+    Assert.assertFalse(clsix.usedAsOccurrenceType(null));
+    Assert.assertFalse(clsix.usedAsTopicNameType(null));
+    Assert.assertFalse(clsix.usedAsTopicType(null));
+    Assert.assertFalse(clsix.usedAsType(null));
   }
 }

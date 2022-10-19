@@ -23,8 +23,8 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.GrabberIF;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -39,9 +39,9 @@ import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
  * found. If no better variant name can be found, the base name is
  * used. This class is much used for grabbing display and sort names.
  */
-public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
+public class ContextNameGrabber implements Function<TopicIF, NameIF> {
 
-  protected DeciderIF<VariantNameIF> within;
+  protected Predicate<VariantNameIF> within;
   protected Comparator<TopicNameIF> bnComparator;
   protected Comparator<VariantNameIF> vnComparator;
  
@@ -72,7 +72,7 @@ public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
    * not a TopicIF object.
    */
   @Override
-  public NameIF grab(TopicIF mytopic) {
+  public NameIF apply(TopicIF mytopic) {
     // --- pick out best basename
     Collection<TopicNameIF> basenames = mytopic.getTopicNames();
     int basenames_size = basenames.size();
@@ -104,7 +104,7 @@ public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
       Arrays.sort(myvariantnames, vnComparator);
     
     // Test that first variant is within scope
-    if (within.ok(myvariantnames[0]))
+    if (within.test(myvariantnames[0]))
       return myvariantnames[0];
     else
       return bestTopicName;

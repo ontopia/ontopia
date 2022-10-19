@@ -124,7 +124,7 @@ public class TMRoleEdge extends TMAbstractEdge {
   
   @Override
   protected String getMainHoverHelpText() {
-    return this.getStringifier().toString(role.getType());
+    return this.getStringifier().apply(role.getType());
   }
   
   @Override

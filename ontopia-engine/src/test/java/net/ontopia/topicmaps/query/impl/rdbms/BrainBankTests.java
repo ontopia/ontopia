@@ -25,10 +25,6 @@ import java.io.IOException;
 public class BrainBankTests
   extends net.ontopia.topicmaps.query.core.BrainBankTests {
   
-  public BrainBankTests(String name) {
-    super(name);
-  }
-  
   @Override
   protected void load(String filename) throws IOException {
     RDBMSTestUtils.load(this, filename);

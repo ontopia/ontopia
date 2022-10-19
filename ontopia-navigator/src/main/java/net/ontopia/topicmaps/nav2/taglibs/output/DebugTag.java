@@ -34,9 +34,6 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Output-producing tag used for debugging. It calls
  * toString() on the collection to show unambiguously what it
@@ -46,9 +43,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DebugTag extends TagSupport
   implements OutputProducingTagIF {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(DebugTag.class.getName());
 
   // members
   protected ContextTag contextTag;  

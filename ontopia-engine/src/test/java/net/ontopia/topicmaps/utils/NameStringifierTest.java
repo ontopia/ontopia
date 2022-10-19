@@ -20,33 +20,33 @@
 
 package net.ontopia.topicmaps.utils;
 
-import junit.framework.TestCase;
+import java.util.Collections;
+import java.util.function.Function;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class NameStringifierTest extends TestCase {
+public class NameStringifierTest {
   protected TopicMapIF        topicmap; 
   protected TopicIF           topic;
   protected TopicNameIF        basename;
   protected VariantNameIF     variant;
   protected TopicMapBuilderIF builder;
-  protected StringifierIF     stringifier;
+  protected Function<NameIF, String> stringifier;
 
-  public NameStringifierTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
     topic = builder.makeTopic();
     basename = builder.makeTopicName(topic, "");
-    variant = builder.makeVariantName(basename, "");
+    variant = builder.makeVariantName(basename, "", Collections.emptySet());
     stringifier = new NameStringifier();
   }
     
@@ -58,30 +58,30 @@ public class NameStringifierTest extends TestCase {
  
   // --- Test cases
 
+  @Test
   public void testTopicNameEmpty() {
-    assertTrue("base name with no name did not stringify to \"\"",
-							 stringifier.toString(basename).equals(""));
+    Assert.assertTrue("base name with no name did not stringify to \"\"",
+							 stringifier.apply(basename).equals(""));
   }
 
+  @Test
   public void testTopicName() {
     basename.setValue("basename");
-    assertTrue("base name stringified wrongly",
-           stringifier.toString(basename).equals("basename"));
+    Assert.assertTrue("base name stringified wrongly",
+           stringifier.apply(basename).equals("basename"));
   }
 
+  @Test
   public void testVariantEmpty() {
-    assertTrue("variant with no name did not stringify to \"\"",
-							 stringifier.toString(variant).equals(""));
+    Assert.assertTrue("variant with no name did not stringify to \"\"",
+							 stringifier.apply(variant).equals(""));
   }
 
+  @Test
   public void testVariant() {
     variant.setValue("variant");
-    assertTrue("variant stringified wrongly",
-           stringifier.toString(variant).equals("variant"));
+    Assert.assertTrue("variant stringified wrongly",
+           stringifier.apply(variant).equals("variant"));
   }
   
 }
-
-
-
-

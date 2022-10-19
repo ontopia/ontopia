@@ -22,22 +22,16 @@ package net.ontopia.topicmaps.nav2.realm;
 
 import java.io.Serializable;
 import java.security.Principal;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Objects;
 
 public class RolePrincipal implements Principal, Serializable {
 
   public static final long serialVersionUID = 502L;
   
-  // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(RolePrincipal.class.getName());
-  
   private String name;
 
   public RolePrincipal(String name) {
-    if (name == null)
-      throw new NullPointerException("illegal null input");    
+    Objects.requireNonNull(name, "illegal null input");
     this.name = name;
   }
   

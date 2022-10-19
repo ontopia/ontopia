@@ -21,10 +21,9 @@
 package net.ontopia.topicmaps.utils;
 
 import java.net.MalformedURLException;
-import junit.framework.TestCase;
+import java.util.Collections;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -32,16 +31,15 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DuplicateSuppressionUtilsTest extends TestCase {
+public class DuplicateSuppressionUtilsTest {
   protected TopicMapIF        topicmap; 
   protected TopicMapBuilderIF builder;
 
-  public DuplicateSuppressionUtilsTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
   }
@@ -54,37 +52,40 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
  
   // --- Test cases
 
+  @Test
   public void testVariantRemoval() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate");
-    vn = builder.makeVariantName(bn, "duplicate");
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(bn);
 
-    assertTrue("duplicate variant names were not removed",
+    Assert.assertTrue("duplicate variant names were not removed",
            bn.getVariants().size() == 1);
   }
 
+  @Test
   public void testVariantRemovalWithScope() {
     TopicIF theme1 = builder.makeTopic();
     TopicIF theme2 = builder.makeTopic();
     
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate");
+    VariantNameIF vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     vn.addTheme(theme1);
     vn.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "duplicate");
+    vn = builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     vn.addTheme(theme1);
     vn.addTheme(theme2);
 
     DuplicateSuppressionUtils.removeDuplicates(bn);
 
-    assertTrue("duplicate variant names were not removed",
+    Assert.assertTrue("duplicate variant names were not removed",
            bn.getVariants().size() == 1);
   }
 
+  @Test
   public void testTopicNameRemovalWithScope() {
     TopicIF theme1 = builder.makeTopic();
     TopicIF theme2 = builder.makeTopic();
@@ -93,22 +94,23 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
     TopicNameIF bn = builder.makeTopicName(topic, "test");
     bn.addTheme(theme1);
     bn.addTheme(theme2);
-    VariantNameIF vn = builder.makeVariantName(bn, "not duplicate");
+    builder.makeVariantName(bn, "not duplicate", Collections.emptySet());
     
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
     bn2.addTheme(theme1);
     bn2.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "not duplicate, either");
+    builder.makeVariantName(bn, "not duplicate, either", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate base names were not removed",
+    Assert.assertTrue("duplicate base names were not removed",
            topic.getTopicNames().size() == 1);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
-    assertTrue("variant names were not merged",
+    Assert.assertTrue("variant names were not merged",
            bn.getVariants().size() == 2);
   }
 
+  @Test
   public void testTopicNameAndVariantNameRemovalWithScope() {
     TopicIF theme1 = builder.makeTopic();
     TopicIF theme2 = builder.makeTopic();
@@ -117,36 +119,38 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
     TopicNameIF bn = builder.makeTopicName(topic, "test");
     bn.addTheme(theme1);
     bn.addTheme(theme2);
-    VariantNameIF vn = builder.makeVariantName(bn, "duplicate");
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
     
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
     bn2.addTheme(theme1);
     bn2.addTheme(theme2);
-    vn = builder.makeVariantName(bn, "duplicate");
+    builder.makeVariantName(bn, "duplicate", Collections.emptySet());
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate base names were not removed",
+    Assert.assertTrue("duplicate base names were not removed",
            topic.getTopicNames().size() == 1);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
-    assertTrue("duplicate variant names were not removed",
+    Assert.assertTrue("duplicate variant names were not removed",
            bn.getVariants().size() == 1);
   }
   
+  @Test
   public void testOccurrenceRemoval() {
     TopicIF type = builder.makeTopic();
     
     TopicIF topic = builder.makeTopic();
-    OccurrenceIF occ = builder.makeOccurrence(topic, type, "duplicate");
+    builder.makeOccurrence(topic, type, "duplicate");
     
-    occ = builder.makeOccurrence(topic, type, "duplicate");
+    builder.makeOccurrence(topic, type, "duplicate");
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate occurrence were not removed",
+    Assert.assertTrue("duplicate occurrence were not removed",
            topic.getOccurrences().size() == 1);
   }
 
+  @Test
   public void testAssociationRemoval() {
     TopicIF type = builder.makeTopic();
     TopicIF role1 = builder.makeTopic();
@@ -155,19 +159,20 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
     TopicIF player2 = builder.makeTopic();
     
     AssociationIF assoc = builder.makeAssociation(type);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
 
     assoc = builder.makeAssociation(type);
-    role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
 
     DuplicateSuppressionUtils.removeDuplicates(topicmap);
 
-    assertTrue("duplicate association was not removed",
+    Assert.assertTrue("duplicate association was not removed",
            topicmap.getAssociations().size() == 1);
   }
 
+  @Test
   public void testAssociationRoleRemoval() {
     TopicIF type = builder.makeTopic();
     TopicIF role1 = builder.makeTopic();
@@ -176,16 +181,17 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
     TopicIF player2 = builder.makeTopic();
     
     AssociationIF assoc = builder.makeAssociation(type);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role2, player2);
 
     DuplicateSuppressionUtils.removeDuplicates(topicmap);
 
-    assertTrue("duplicate association role was not removed",
+    Assert.assertTrue("duplicate association role was not removed",
                assoc.getRoles().size() == 2);
   }
 
+  @Test
   public void testTopicNameItemIds() throws MalformedURLException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "test");
@@ -195,13 +201,14 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate base names were not removed",
+    Assert.assertTrue("duplicate base names were not removed",
                topic.getTopicNames().size() == 1);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
-    assertTrue("item IDs were not merged",
+    Assert.assertTrue("item IDs were not merged",
                bn.getItemIdentifiers().size() == 2);
   }
 
+  @Test
   public void testOccurrenceItemIds() throws MalformedURLException {
     TopicIF type = builder.makeTopic();
     TopicIF topic = builder.makeTopic();
@@ -212,13 +219,14 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate occurrence were not removed",
+    Assert.assertTrue("duplicate occurrence were not removed",
            topic.getOccurrences().size() == 1);
     occ = (OccurrenceIF) topic.getOccurrences().iterator().next();
-    assertTrue("item IDs were not merged",
+    Assert.assertTrue("item IDs were not merged",
                occ.getItemIdentifiers().size() == 2);
   }
 
+  @Test
   public void testTopicNameReifiers() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "test");
@@ -232,14 +240,15 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate base names were not removed",
+    Assert.assertTrue("duplicate base names were not removed",
                topic.getTopicNames().size() == 1);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
     r1 = bn.getReifier();
-    assertTrue("reifier was lost", r1 != null);
-    assertTrue("reifiers were not merged", r1.getTopicNames().size() == 2);
+    Assert.assertTrue("reifier was lost", r1 != null);
+    Assert.assertTrue("reifiers were not merged", r1.getTopicNames().size() == 2);
   }
 
+  @Test
   public void testOccurrenceReifiers() {
     TopicIF type = builder.makeTopic();
     TopicIF topic = builder.makeTopic();
@@ -255,14 +264,15 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
-    assertTrue("duplicate occurrences were not removed",
+    Assert.assertTrue("duplicate occurrences were not removed",
                topic.getOccurrences().size() == 1);
     occ = (OccurrenceIF) topic.getOccurrences().iterator().next();
     r1 = occ.getReifier();
-    assertTrue("reifier was lost", r1 != null);
-    assertTrue("reifiers were not merged", r1.getTopicNames().size() == 2);
+    Assert.assertTrue("reifier was lost", r1 != null);
+    Assert.assertTrue("reifiers were not merged", r1.getTopicNames().size() == 2);
   }
 
+  @Test
   public void testAssociationReifiers() {
     TopicIF type = builder.makeTopic();
     TopicIF role1 = builder.makeTopic();
@@ -271,27 +281,27 @@ public class DuplicateSuppressionUtilsTest extends TestCase {
     TopicIF player2 = builder.makeTopic();
     
     AssociationIF assoc = builder.makeAssociation(type);
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
     TopicIF r1 = builder.makeTopic();
     assoc.setReifier(r1);
     builder.makeTopicName(r1, "r1");
 
     assoc = builder.makeAssociation(type);
-    role = builder.makeAssociationRole(assoc, role1, player1);
-    role = builder.makeAssociationRole(assoc, role2, player2);
+    builder.makeAssociationRole(assoc, role1, player1);
+    builder.makeAssociationRole(assoc, role2, player2);
     TopicIF r2 = builder.makeTopic();
     assoc.setReifier(r2);
     builder.makeTopicName(r2, "r2");
 
     DuplicateSuppressionUtils.removeDuplicates(topicmap);
 
-    assertTrue("duplicate association was not removed",
+    Assert.assertTrue("duplicate association was not removed",
                topicmap.getAssociations().size() == 1);
 
     assoc = (AssociationIF) topicmap.getAssociations().iterator().next();
-    assertTrue("reifier was lost", assoc.getReifier() != null);
-    assertTrue("reifiers were not merged",
+    Assert.assertTrue("reifier was lost", assoc.getReifier() != null);
+    Assert.assertTrue("reifiers were not merged",
                assoc.getReifier().getTopicNames().size() == 2);
   }
 }

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.utils;
 
-import net.ontopia.utils.StringifierIF;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 
 /**
@@ -30,10 +30,10 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
  *
  * @since 2.0
  */
-public class NoEscapeStringifier implements StringifierIF {
+public class NoEscapeStringifier implements Function<Object, String> {
   
   @Override
-  public String toString(Object object) {
+  public String apply(Object object) {
     if (object instanceof OccurrenceIF) 
       return ((OccurrenceIF) object).getValue();
     else 

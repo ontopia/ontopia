@@ -23,7 +23,6 @@ package net.ontopia.persistence.proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
-
 import net.ontopia.utils.PropertyUtils;
   
 /** 
@@ -40,6 +39,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
   protected String driver;
   protected String username;
   protected String password;
+  protected int timeout;
 
   public AbstractConnectionFactory(Map<String, String> properties) {
     this.properties = properties;
@@ -53,6 +53,8 @@ public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
 
     username = properties.get("net.ontopia.topicmaps.impl.rdbms.UserName");
     password = properties.get("net.ontopia.topicmaps.impl.rdbms.Password");
+
+    timeout = PropertyUtils.getInt(properties.get("net.ontopia.topicmaps.impl.rdbms.connection.AbandonedConnectionTimeout"), 600); // 10min
   }
   
   @Override

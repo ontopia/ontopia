@@ -231,7 +231,6 @@ public class BindingContext {
     Iterator iter = map2.keySet().iterator();
     while (iter.hasNext()) {
       Object key = iter.next();
-      Object[] types1 = (Object[]) map1.get(key);
       Object[] types2 = (Object[]) map2.get(key);
       if (!map1.containsKey(key)) {
         Object[] existing = (Object[]) theory1.get(key);

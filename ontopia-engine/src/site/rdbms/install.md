@@ -330,21 +330,46 @@ net.ontopia.topicmaps.impl.rdbms.ConnectionPool
     transaction.
 
 net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize
-:   Type: integer (# connections), Default: 20
-:   The minimum number of connections in the pool. The number of connections in the pool will never
+:   Type: integer (# connections), Default: 0
+:   The minimum number of idle connections in the pool. The number of connections in the pool will never
     shrink below this size.
 
 net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize
-:   Type: integer (# connections), Default: Integer.MAX_VALUE
-:   The maximum number of connections in the pool. The number of connections will never grow larger than
-    this number, unless the soft maximum is enabled.
+:   Type: integer (# connections), Default: 50
+:   The maximum number of active connections in the pool. The number of connections will never grow larger
+    than this number, unless the soft maximum is enabled.
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumIdle
+:   Type: integer (# connections), Default: 20
+:   The maximum number of idle connections in the pool. When there are more idle connections in the pool,
+    the pool will start closing them.
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool.IdleTimeout
+:   Type: integer (# miliseconds), Default: 300000 (5m)
+:   The maximum time an idle connection stays in the pool. If exceeded and there are more than `MaximumIdle`
+    connections in the pool, the connection is closed. Setting the timeout to -1 means idle connections are
+    never closed.
 
 net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum
-:   Type: boolean, Default: true
+:   Type: boolean, Default: false
 :   If the maximum pool size is reached but there are outstanding requests for connections emergency
     connections will be created if this property is true. This will temporarily increase the size of the
-    pool, but the pool will shrink back to an acceptable size when the activity is lower. If this
-    setting is false, requests will block until a connection is available.
+    pool, but the pool will shrink back to an acceptable size when the activity is lower. If this setting is
+    false, requests will block until a connection is available. Using this option can lead the exceeding
+    the maximum number of connections the database supports.
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool.WhenExhaustedAction
+:   Type: String (`grow`, `block`, `fail`), Default: block
+:   What to do when the pool is exhausted but a new connection is request. When set to `grow`: the pool will
+    temporarly grow (see `SoftMaximum`). When set to `fail`: requesting a connection when the pool is exhausted will
+    lead to an exception. When set to `block`: the request for a connection will block until a connection is available.
+    Note: overrides the `SoftMaximum` setting.
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout
+:   Type: integer (# miliseconds), Default: 10000
+:   When `SoftMaximum` is set to false, or `WhenExhaustedAction` is set to block, this is the maximum
+    time that the connection request will block. If exceeded an exception is thrown. If set to -1, the
+    request will block indefinitely.
 
 net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements
 :   Type: boolean, Default: true

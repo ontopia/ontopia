@@ -20,6 +20,7 @@
 package ontopoly.models;
 
 
+import java.util.Objects;
 import ontopoly.OntopolyContext;
 import ontopoly.model.TopicMap;
 
@@ -39,8 +40,7 @@ public class TopicMapModel extends LoadableDetachableModel<TopicMap> {
   }
 
   public TopicMapModel(String topicMapId) {
-    if (topicMapId == null)
-      throw new NullPointerException("topicMapId parameter cannot be null.");
+    Objects.requireNonNull(topicMapId, "topicMapId parameter cannot be null.");
     this.topicMapId = topicMapId;    
   }
 

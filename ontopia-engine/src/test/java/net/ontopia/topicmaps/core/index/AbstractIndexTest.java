@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.core.index;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
+import org.junit.Assert;
 
 public abstract class AbstractIndexTest extends AbstractTopicMapTest {
   
@@ -32,14 +33,10 @@ public abstract class AbstractIndexTest extends AbstractTopicMapTest {
   // which does not accept it.
   protected static String NULLPOINTERMESSAGE = "null is not a valid argument.";
   
-  public AbstractIndexTest(String name) {
-    super(name);
-  }
-
   protected Object setUp(String indexInterface) throws Exception {
     super.setUp();
     _ix = topicmap.getIndex("net.ontopia.topicmaps.core.index." + indexInterface);
-    assertTrue("Null " + indexInterface, _ix != null);
+    Assert.assertTrue("Null " + indexInterface, _ix != null);
     return _ix;
   }
 
@@ -53,19 +50,19 @@ public abstract class AbstractIndexTest extends AbstractTopicMapTest {
       params[0] = null;
       try {
         m.invoke(_ix, params);
-        fail(methodName + " accepts null parameter.");
+        Assert.fail(methodName + " accepts null parameter.");
       } catch (NullPointerException ex) {
-        assertTrue("NullPointerException does not have expected message.",
+        Assert.assertTrue("NullPointerException does not have expected message.",
                ex.getMessage().equals(NULLPOINTERMESSAGE));
       }
     } catch(ClassNotFoundException ex) {
-      fail("Test setup error: " + ex.getMessage());
+      Assert.fail("Test setup error: " + ex.getMessage());
     } catch(NoSuchMethodException ex) {
-      fail("Test setup error: " + ex.getMessage());
+      Assert.fail("Test setup error: " + ex.getMessage());
     } catch(IllegalAccessException ex) {
-      fail("Test setup error: " + ex.getMessage());
+      Assert.fail("Test setup error: " + ex.getMessage());
     } catch(InvocationTargetException ex) {
-      fail("Test setup error: " + ex.getMessage());
+      Assert.fail("Test setup error: " + ex.getMessage());
     }
   }
 }

@@ -28,104 +28,108 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Set;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CompactHashSetTest extends TestCase {
+public class CompactHashSetTest {
   protected Set set;
   
-  public CompactHashSetTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() {
     set = new CompactHashSet();
   }
 
   // --- Test cases
 
+  @Test
   public void testEmpty() {
-    assertTrue("empty set doesn't know it's empty", set.isEmpty());
+    Assert.assertTrue("empty set doesn't know it's empty", set.isEmpty());
 
-    assertTrue("empty set size != 0", set.size() == 0);
+    Assert.assertTrue("empty set size != 0", set.size() == 0);
 
-    assertTrue("iterator on empty set has next element", 
+    Assert.assertTrue("iterator on empty set has next element", 
 	   !set.iterator().hasNext());
 
-    assertTrue("empty set claims to contain object", !set.contains("hei"));
+    Assert.assertTrue("empty set claims to contain object", !set.contains("hei"));
 
     set.clear();
-    assertTrue("empty set size != 0", set.size() == 0);
+    Assert.assertTrue("empty set size != 0", set.size() == 0);
   }
 
+  @Test
   public void testAdd() {
     set.add("hei");
 
-    assertTrue("set with 1 element thinks it's empty", !set.isEmpty());
-    assertTrue("set size != 1", set.size() == 1);
+    Assert.assertTrue("set with 1 element thinks it's empty", !set.isEmpty());
+    Assert.assertTrue("set size != 1", set.size() == 1);
 
-    assertTrue("add thinks object just added is not contained",
+    Assert.assertTrue("add thinks object just added is not contained",
                !set.add("hei"));
 
-    assertTrue("set with 1 element thinks it's empty", !set.isEmpty());
-    assertTrue("set size != 1", set.size() == 1);
+    Assert.assertTrue("set with 1 element thinks it's empty", !set.isEmpty());
+    Assert.assertTrue("set size != 1", set.size() == 1);
 
-    assertTrue("set thinks new object is already contained",
+    Assert.assertTrue("set thinks new object is already contained",
 	   set.add("hei2"));
 
-    assertTrue("set size != 2", set.size() == 2);
+    Assert.assertTrue("set size != 2", set.size() == 2);
 
-    assertTrue("add thinks object just added is not contained",
+    Assert.assertTrue("add thinks object just added is not contained",
                !set.add("hei"));
-    assertTrue("add thinks object just added is not contained",
+    Assert.assertTrue("add thinks object just added is not contained",
                !set.add("hei2"));
   }
 
+  @Test
   public void testContains() {
     set.add("hei");
-    assertTrue("set doesn't think just added object is contained",
+    Assert.assertTrue("set doesn't think just added object is contained",
                set.contains("hei"));
-    assertTrue("set thinks not added object is contained",
+    Assert.assertTrue("set thinks not added object is contained",
                !set.contains("hei2"));
   }
 
+  @Test
   public void testIterator1() {
     set.add("hei");
     
     Iterator it = set.iterator();
-    assertTrue("iterator from set(1) doesn't think it has a next",
+    Assert.assertTrue("iterator from set(1) doesn't think it has a next",
                it.hasNext());
 
-    assertTrue("iterator didn't find object in set",
+    Assert.assertTrue("iterator didn't find object in set",
             "hei".equals(it.next()));
     
-    assertTrue("iterator from set(1) thinks it has a second object",
+    Assert.assertTrue("iterator from set(1) thinks it has a second object",
                !it.hasNext());
   }
 
+  @Test
   public void testIterator2() {
     set.add("hei");
     set.add("hei2");
     
     Iterator it = set.iterator();
-    assertTrue("iterator from set(2) doesn't think it has a first",
+    Assert.assertTrue("iterator from set(2) doesn't think it has a first",
                it.hasNext());
 
     Object obj = it.next();
-    assertTrue("iterator didn't find object in set",
+    Assert.assertTrue("iterator didn't find object in set",
                "hei".equals(obj) || "hei2".equals(obj));
 
-    assertTrue("iterator from set(2) doesn't think it has a second object",
+    Assert.assertTrue("iterator from set(2) doesn't think it has a second object",
                it.hasNext());
     
     obj = it.next();
-    assertTrue("iterator didn't find object in set",
+    Assert.assertTrue("iterator didn't find object in set",
                "hei".equals(obj) || "hei2".equals(obj));    
     
-    assertTrue("iterator from set(2) thinks it has a third object",
+    Assert.assertTrue("iterator from set(2) thinks it has a third object",
                !it.hasNext());
   }
 
+  @Test
   public void testIterator3() {
     set.add("hei");
     set.add("hei2");
@@ -136,10 +140,11 @@ public class CompactHashSetTest extends TestCase {
     while (it.hasNext())
       otherSet.add(it.next());
 
-    assertTrue("not all objects in set(3) iterated to",
+    Assert.assertTrue("not all objects in set(3) iterated to",
 	   set.containsAll(otherSet) && otherSet.containsAll(set));
   }
 
+  @Test
   public void testIteratorRemove() {
 
     set.add("hei");
@@ -151,7 +156,7 @@ public class CompactHashSetTest extends TestCase {
 
     try {
       it.remove();
-      fail("could remove before iterator.next() called first time.");
+      Assert.fail("could remove before iterator.next() called first time.");
     }
     catch (IllegalStateException e) {
     }
@@ -164,25 +169,26 @@ public class CompactHashSetTest extends TestCase {
 	otherSet.add(x);
     }
 
-    assertTrue("set(2).size() != 2", set.size() == 2);
-    assertTrue("iterator.remove() did not remove object",
+    Assert.assertTrue("set(2).size() != 2", set.size() == 2);
+    Assert.assertTrue("iterator.remove() did not remove object",
 	       !set.contains("hei2"));
-    assertTrue("set(2) not equal otherSet(2)",
+    Assert.assertTrue("set(2) not equal otherSet(2)",
 	       otherSet.equals(set));
 
     try {
       try {
 	it.next();
-	fail("could call next after !iterator.hasNext().");
+	Assert.fail("could call next after !iterator.hasNext().");
       } catch (NoSuchElementException e) {
       }
       it.remove();
-      fail("could remove when iterator.next() after last.");
+      Assert.fail("could remove when iterator.next() after last.");
     }
     catch (IllegalStateException e) {
     }
   }
 
+  @Test
   public void testConcurrentModification() {
     set.add("hei");
     set.add("hei3");
@@ -193,7 +199,7 @@ public class CompactHashSetTest extends TestCase {
     set.add("hei2");
     try {
       it.next();
-      fail("set modification not detected");
+      Assert.fail("set modification not detected");
     }
     catch (ConcurrentModificationException e) {
     }
@@ -203,7 +209,7 @@ public class CompactHashSetTest extends TestCase {
       it.next();
       set.remove("hei4");
       it.next();
-      fail("set modification not detected");
+      Assert.fail("set modification not detected");
     }
     catch (ConcurrentModificationException e) {
     }
@@ -212,20 +218,24 @@ public class CompactHashSetTest extends TestCase {
     set.clear();
     try {
       it.next();
-      fail("set modification not detected");
+      Assert.fail("set modification not detected");
     }
     catch (ConcurrentModificationException e) {
     }
   }
   
+  @Test
   public void testClear() {
     set.add("hei");
     set.add("hei2");
     set.clear();
 
+    Assert.assertTrue(set.isEmpty()); // for PMD
+    
     testEmpty();
   }
   
+  @Test
   public void testRehash() {
     set.add("hei");
     set.add("hei2");
@@ -252,21 +262,22 @@ public class CompactHashSetTest extends TestCase {
     set.add("$_bei3");
     set.add("$_bei4");
 
-    assertTrue("set(24).size() != 24", set.size() == 24);
-    assertTrue("contained object lost", set.contains("hei"));
-    assertTrue("contained object lost", set.contains("hei2"));
-    assertTrue("contained object lost", set.contains("hei3"));
-    assertTrue("contained object lost", set.contains("hei4"));
-    assertTrue("contained object lost", set.contains("_hei"));
-    assertTrue("contained object lost", set.contains("_hei2"));
-    assertTrue("contained object lost", set.contains("_hei3"));
-    assertTrue("contained object lost", set.contains("_hei4"));
-    assertTrue("contained object lost", set.contains("$_hei"));
-    assertTrue("contained object lost", set.contains("$_hei2"));
-    assertTrue("contained object lost", set.contains("$_hei3"));
-    assertTrue("contained object lost", set.contains("$_hei4"));
+    Assert.assertTrue("set(24).size() != 24", set.size() == 24);
+    Assert.assertTrue("contained object lost", set.contains("hei"));
+    Assert.assertTrue("contained object lost", set.contains("hei2"));
+    Assert.assertTrue("contained object lost", set.contains("hei3"));
+    Assert.assertTrue("contained object lost", set.contains("hei4"));
+    Assert.assertTrue("contained object lost", set.contains("_hei"));
+    Assert.assertTrue("contained object lost", set.contains("_hei2"));
+    Assert.assertTrue("contained object lost", set.contains("_hei3"));
+    Assert.assertTrue("contained object lost", set.contains("_hei4"));
+    Assert.assertTrue("contained object lost", set.contains("$_hei"));
+    Assert.assertTrue("contained object lost", set.contains("$_hei2"));
+    Assert.assertTrue("contained object lost", set.contains("$_hei3"));
+    Assert.assertTrue("contained object lost", set.contains("$_hei4"));
   }
   
+  @Test
   public void testHashcodeNastiness() {
     Object o1 = new ObjectWithStupidHashCode("o1"); 
     Object o2 = new ObjectWithStupidHashCode("o2"); 
@@ -275,101 +286,108 @@ public class CompactHashSetTest extends TestCase {
     Object o5 = new ObjectWithStupidHashCode("o5"); 
     Object o6 = new ObjectWithStupidHashCode("o6");
 
-    assertTrue("object number 1 was already there!", set.add(o1));
-    assertTrue("object number 2 was already there!", set.add(o2));
-    assertTrue("object number 3 was already there!", set.add(o3));
-    assertTrue("object number 4 was already there!", set.add(o4));
-    assertTrue("object number 5 was already there!", set.add(o5));
-    assertTrue("object number 6 was already there!", set.add(o6));
+    Assert.assertTrue("object number 1 was already there!", set.add(o1));
+    Assert.assertTrue("object number 2 was already there!", set.add(o2));
+    Assert.assertTrue("object number 3 was already there!", set.add(o3));
+    Assert.assertTrue("object number 4 was already there!", set.add(o4));
+    Assert.assertTrue("object number 5 was already there!", set.add(o5));
+    Assert.assertTrue("object number 6 was already there!", set.add(o6));
     
-    assertTrue("object number 1 was lost!", set.contains(o1));
-    assertTrue("object number 2 was lost!", set.contains(o2));
-    assertTrue("object number 3 was lost!", set.contains(o3));
-    assertTrue("object number 4 was lost!", set.contains(o4));
-    assertTrue("object number 5 was lost!", set.contains(o5));
-    assertTrue("object number 6 was lost!", set.contains(o6));
+    Assert.assertTrue("object number 1 was lost!", set.contains(o1));
+    Assert.assertTrue("object number 2 was lost!", set.contains(o2));
+    Assert.assertTrue("object number 3 was lost!", set.contains(o3));
+    Assert.assertTrue("object number 4 was lost!", set.contains(o4));
+    Assert.assertTrue("object number 5 was lost!", set.contains(o5));
+    Assert.assertTrue("object number 6 was lost!", set.contains(o6));
 
-    assertTrue("object number 1 was lost! (2)", set.remove(o1));
-    assertTrue("object number 2 was lost! (2)", set.remove(o2));
-    assertTrue("object number 3 was lost! (2)", set.remove(o3));
-    assertTrue("object number 4 was lost! (2)", set.remove(o4));
-    assertTrue("object number 5 was lost! (2)", set.remove(o5));
-    assertTrue("object number 6 was lost! (2)", set.remove(o6));
+    Assert.assertTrue("object number 1 was lost! (2)", set.remove(o1));
+    Assert.assertTrue("object number 2 was lost! (2)", set.remove(o2));
+    Assert.assertTrue("object number 3 was lost! (2)", set.remove(o3));
+    Assert.assertTrue("object number 4 was lost! (2)", set.remove(o4));
+    Assert.assertTrue("object number 5 was lost! (2)", set.remove(o5));
+    Assert.assertTrue("object number 6 was lost! (2)", set.remove(o6));
 
-    assertTrue("wrong set size", set.size() == 0);
-    assertTrue("object number 1 still present!", !set.contains(o1));
-    assertTrue("object number 2 still present!", !set.contains(o2));
-    assertTrue("object number 3 still present!", !set.contains(o3));
-    assertTrue("object number 4 still present!", !set.contains(o4));
-    assertTrue("object number 5 still present!", !set.contains(o5));
-    assertTrue("object number 6 still present!", !set.contains(o6));
+    Assert.assertTrue("wrong set size", set.size() == 0);
+    Assert.assertTrue("object number 1 still present!", !set.contains(o1));
+    Assert.assertTrue("object number 2 still present!", !set.contains(o2));
+    Assert.assertTrue("object number 3 still present!", !set.contains(o3));
+    Assert.assertTrue("object number 4 still present!", !set.contains(o4));
+    Assert.assertTrue("object number 5 still present!", !set.contains(o5));
+    Assert.assertTrue("object number 6 still present!", !set.contains(o6));
   }
   
+  @Test
   public void testNull() {
     set.add(null);
     
-    assertTrue("null was not found", set.contains(null));
-    assertTrue("null was not found with iterator", set.iterator().next() == null);
+    Assert.assertTrue("null was not found", set.contains(null));
+    Assert.assertTrue("null was not found with iterator", set.iterator().next() == null);
   }
 
+  @Test
   public void testNull2() {
-    assertTrue("null was found", !set.contains(null));
+    Assert.assertTrue("null was found", !set.contains(null));
   }
 
+  @Test
   public void testNull3() {
     set.add(null);
     Object[] array = set.toArray();
-    assertTrue("wrong size of array", array.length == 1);
-    assertTrue("array doesn't contain null: " + array[0],
+    Assert.assertTrue("wrong size of array", array.length == 1);
+    Assert.assertTrue("array doesn't contain null: " + array[0],
                array[0] == null);
   }
 
+  @Test
   public void testNull4() {
     set.add(null);
     Object[] array = set.toArray(new Object[1]);
-    assertTrue("wrong size of array", array.length == 1);
-    assertTrue("array doesn't contain null: " + array[0],
+    Assert.assertTrue("wrong size of array", array.length == 1);
+    Assert.assertTrue("array doesn't contain null: " + array[0],
                array[0] == null);
   }
   
+  @Test
   public void testRemove() {
     set.add("hei");
-    assertTrue("remove didn't know element was in set",
+    Assert.assertTrue("remove didn't know element was in set",
                set.remove("hei"));
-    assertTrue("removing only element in set does not make it empty",
+    Assert.assertTrue("removing only element in set does not make it empty",
                set.isEmpty());
   }
 
+  @Test
   public void testRemove2() {
     set.add("hei");
     set.add("hei2");
     set.add("hei3");
     
-    assertTrue("remove didn't know element was in set",
+    Assert.assertTrue("remove didn't know element was in set",
                set.remove("hei"));
-    assertTrue("member count wrong after remove",
+    Assert.assertTrue("member count wrong after remove",
                set.size() == 2);
-    assertTrue("element not removed by remove",
+    Assert.assertTrue("element not removed by remove",
                !set.contains("hei"));
     
-    assertTrue("remove didn't know element was in set",
+    Assert.assertTrue("remove didn't know element was in set",
                set.remove("hei2"));
-    assertTrue("member count wrong after remove",
+    Assert.assertTrue("member count wrong after remove",
                set.size() == 1);
-    assertTrue("element not removed by remove",
+    Assert.assertTrue("element not removed by remove",
                !set.contains("hei2"));
     
-    assertTrue("remove didn't know element was in set",
+    Assert.assertTrue("remove didn't know element was in set",
                set.remove("hei3"));
-    assertTrue("member count wrong after remove",
+    Assert.assertTrue("member count wrong after remove",
                set.size() == 0);
-    assertTrue("element not removed by remove",
+    Assert.assertTrue("element not removed by remove",
                !set.contains("hei3"));
     
-    assertTrue("removing all elements in set does not make it empty",
+    Assert.assertTrue("removing all elements in set does not make it empty",
                set.isEmpty());
   }
 
+  @Test
   public void testRemoveAll() {
     set.add("hei");
     set.add("hei2");
@@ -381,21 +399,23 @@ public class CompactHashSetTest extends TestCase {
 
     set.removeAll(list);
     
-    assertTrue("wrong set element lost after removeAll",
+    Assert.assertTrue("wrong set element lost after removeAll",
                set.contains("hei"));
-    assertTrue("wrong set element lost after removeAll",
+    Assert.assertTrue("wrong set element lost after removeAll",
                set.contains("hei3"));
-    assertTrue("element not removed by removeAll",
+    Assert.assertTrue("element not removed by removeAll",
                !set.contains("hei2"));
-    assertTrue("wrong set size after removeAll",
+    Assert.assertTrue("wrong set size after removeAll",
                set.size() == 2);
   }
 
+  @Test
   public void testRemoveIteration() {
     testRemoveAll();
-    checkIterator();
+    assertIterator();
   }
 
+  @Test
   public void testRemoveModification() {
     set.add("hei");
     set.add("hei123");
@@ -405,12 +425,13 @@ public class CompactHashSetTest extends TestCase {
     set.remove("hei123");
     try {
       it.next();
-      fail("set modification not detected");
+      Assert.fail("set modification not detected");
     }
     catch (ConcurrentModificationException e) {
     }
   }
 
+  @Test
   public void testRemoveAndAdd() {
     set.add("Lars Marius");
     set.add("Steve");
@@ -421,8 +442,8 @@ public class CompactHashSetTest extends TestCase {
     set.add("Sylvia Schwab");
     set.add("Ann Wrightson");
 
-    assertTrue("wrong set size", set.size() == 8);
-    checkIterator();
+    Assert.assertTrue("wrong set size", set.size() == 8);
+    assertIterator();
 
     set.remove("Kal Ahmed");
     set.remove("Pam Gennusa");
@@ -430,44 +451,45 @@ public class CompactHashSetTest extends TestCase {
     set.remove("Ann Wrightson");
     set.add("Niko Schmuck");
     
-    assertTrue("wrong set size after modification (1)", set.size() == 5);
-    checkIterator();
-    assertTrue("element lost!", set.contains("Lars Marius"));
-    assertTrue("element lost!", set.contains("Steve"));
-    assertTrue("element lost!", set.contains("Geir Ove"));
-    assertTrue("element lost!", set.contains("Sylvia Schwab"));
-    assertTrue("element lost!", set.contains("Niko Schmuck"));
-    assertTrue("element not gone!", !set.contains("Kal Ahmed"));
-    assertTrue("element not gone!", !set.contains("Pam Gennusa"));
-    assertTrue("element not gone!", !set.contains("Murray Woodman"));
-    assertTrue("element not gone!", !set.contains("Ann Wrightson"));
+    Assert.assertTrue("wrong set size after modification (1)", set.size() == 5);
+    assertIterator();
+    Assert.assertTrue("element lost!", set.contains("Lars Marius"));
+    Assert.assertTrue("element lost!", set.contains("Steve"));
+    Assert.assertTrue("element lost!", set.contains("Geir Ove"));
+    Assert.assertTrue("element lost!", set.contains("Sylvia Schwab"));
+    Assert.assertTrue("element lost!", set.contains("Niko Schmuck"));
+    Assert.assertTrue("element not gone!", !set.contains("Kal Ahmed"));
+    Assert.assertTrue("element not gone!", !set.contains("Pam Gennusa"));
+    Assert.assertTrue("element not gone!", !set.contains("Murray Woodman"));
+    Assert.assertTrue("element not gone!", !set.contains("Ann Wrightson"));
 
     set.add("Harald Kuhn");
     set.remove("Harald Kuhn");
     set.remove("Niko Schmuck");
     
-    assertTrue("wrong set size after modification (2)", set.size() == 4);
-    checkIterator();
-    assertTrue("element lost!", set.contains("Lars Marius"));
-    assertTrue("element lost!", set.contains("Steve"));
-    assertTrue("element lost!", set.contains("Geir Ove"));
-    assertTrue("element lost!", set.contains("Sylvia Schwab"));
-    assertTrue("element not gone!", !set.contains("Niko Schmuck"));
-    assertTrue("element not gone!", !set.contains("Harald Kuhn"));
+    Assert.assertTrue("wrong set size after modification (2)", set.size() == 4);
+    assertIterator();
+    Assert.assertTrue("element lost!", set.contains("Lars Marius"));
+    Assert.assertTrue("element lost!", set.contains("Steve"));
+    Assert.assertTrue("element lost!", set.contains("Geir Ove"));
+    Assert.assertTrue("element lost!", set.contains("Sylvia Schwab"));
+    Assert.assertTrue("element not gone!", !set.contains("Niko Schmuck"));
+    Assert.assertTrue("element not gone!", !set.contains("Harald Kuhn"));
 
     set.add("Graham Moore");
     set.add("Pam Gennusa");
 
-    assertTrue("wrong set size after modification (3)", set.size() == 6);
-    checkIterator();
-    assertTrue("element lost!", set.contains("Lars Marius"));
-    assertTrue("element lost!", set.contains("Steve"));
-    assertTrue("element lost!", set.contains("Geir Ove"));
-    assertTrue("element lost!", set.contains("Sylvia Schwab"));
-    assertTrue("element lost!", set.contains("Graham Moore"));
-    assertTrue("element lost!", set.contains("Pam Gennusa"));
+    Assert.assertTrue("wrong set size after modification (3)", set.size() == 6);
+    assertIterator();
+    Assert.assertTrue("element lost!", set.contains("Lars Marius"));
+    Assert.assertTrue("element lost!", set.contains("Steve"));
+    Assert.assertTrue("element lost!", set.contains("Geir Ove"));
+    Assert.assertTrue("element lost!", set.contains("Sylvia Schwab"));
+    Assert.assertTrue("element lost!", set.contains("Graham Moore"));
+    Assert.assertTrue("element lost!", set.contains("Pam Gennusa"));
   }
 
+  @Test
   public void testRemoveRehash() {
     set.add("hei");
     set.add("hei2");
@@ -496,7 +518,7 @@ public class CompactHashSetTest extends TestCase {
 
     Iterator it = new ArrayList(set).iterator();
     while (it.hasNext())
-      assertTrue("object to be removed not found",
+      Assert.assertTrue("object to be removed not found",
                  set.remove(it.next()));
 
     
@@ -549,10 +571,11 @@ public class CompactHashSetTest extends TestCase {
     set.add("xyx$_bei3");
     set.add("xyx$_bei4");
 
-    assertTrue("wrong size of reconstituted set",
+    Assert.assertTrue("wrong size of reconstituted set",
                set.size() == 48);
   }
 
+  @Test
   public void testProbabilistic() {
     Random random = new Random();
     Set hashset = new HashSet();
@@ -563,36 +586,37 @@ public class CompactHashSetTest extends TestCase {
       if (random.nextBoolean()) {
         // we're adding
 
-        assertTrue("add returned wrong value",
+        Assert.assertTrue("add returned wrong value",
                    set.add(value) == hashset.add(value));
-        assertTrue("size was wrong after add",
+        Assert.assertTrue("size was wrong after add",
                    set.size() == hashset.size());
-        assertTrue("added object not found",
+        Assert.assertTrue("added object not found",
                    set.contains(value));
         
       } else {
         // we're removing
         
-        assertTrue("remove returned wrong value",
+        Assert.assertTrue("remove returned wrong value",
                    set.remove(value) == hashset.remove(value));
-        assertTrue("size was wrong after remove",
+        Assert.assertTrue("size was wrong after remove",
                    set.size() == hashset.size());
-        assertTrue("removed object found",
+        Assert.assertTrue("removed object found",
                    !set.contains(value));
       }
 
-      checkIterator();
+      assertIterator();
       checkToArray();
     }
   }
 
+  @Test
   public void testIteratorRemove2() {
     set.add("1");
     set.add("2");
     set.add("3");
     set.add("4");
 
-    assertTrue("wrong size", set.size() == 4);
+    Assert.assertTrue("wrong size", set.size() == 4);
 
     Iterator it = set.iterator();
     while (it.hasNext()) {
@@ -600,20 +624,21 @@ public class CompactHashSetTest extends TestCase {
         it.remove();
     }
 
-    assertTrue("1 was lost!", set.contains("1"));
-    assertFalse("2 was not removed!", set.contains("2"));
-    assertTrue("3 was lost!", set.contains("3"));
-    assertTrue("4 was lost!", set.contains("4"));
-    assertTrue("wrong number of elements", set.size() == 3);
+    Assert.assertTrue("1 was lost!", set.contains("1"));
+    Assert.assertFalse("2 was not removed!", set.contains("2"));
+    Assert.assertTrue("3 was lost!", set.contains("3"));
+    Assert.assertTrue("4 was lost!", set.contains("4"));
+    Assert.assertTrue("wrong number of elements", set.size() == 3);
   }
 
+  @Test
   public void testIteratorRemove3() {
     set.add("1");
     set.add("2");
     set.add("3");
     set.add("4");
 
-    assertTrue("wrong size", set.size() == 4);
+    Assert.assertTrue("wrong size", set.size() == 4);
 
     Iterator it = set.iterator();
     it.next();
@@ -622,40 +647,41 @@ public class CompactHashSetTest extends TestCase {
     it.remove(); // whoa!
 
     try {
-      it2.next(); // should fail, because we modified the set
-      fail("undetected modification");
+      it2.next(); // should Assert.fail, because we modified the set
+      Assert.fail("undetected modification");
     } catch (ConcurrentModificationException e) {
       // as required
     }
   }  
 
+  @Test
   public void testIteratorRemove4() {
     set.add("1");
     set.add("2");
     set.add("3");
     set.add("4");
 
-    assertTrue("wrong size", set.size() == 4);
+    Assert.assertTrue("wrong size", set.size() == 4);
 
     Iterator it = set.iterator();
     it.next();
     it.remove(); 
     it.next(); // verifies that removing a value doesn't cause ConcModExc
     
-    assertTrue("wrong size", set.size() == 3);    
+    Assert.assertTrue("wrong size", set.size() == 3);    
   }
   
   // --- Internal helper methods
 
-  private void checkIterator() {
+  private void assertIterator() {
     List list = new ArrayList();
     Iterator it = set.iterator();
     while (it.hasNext())
       list.add(it.next());
 
-    assertTrue("wrong number of elements found",
+    Assert.assertTrue("wrong number of elements found",
                list.size() == set.size());
-    assertTrue("not all objects in set iterated to",
+    Assert.assertTrue("not all objects in set iterated to",
                set.containsAll(list) && list.containsAll(set));
   }
 
@@ -667,9 +693,9 @@ public class CompactHashSetTest extends TestCase {
     for (int ix = 0; ix < ints.length && ints[ix] != null; ix++)
       list.add(ints[ix]);
 
-    assertTrue("wrong number of elements found",
+    Assert.assertTrue("wrong number of elements found",
                list.size() == set.size());
-    assertTrue("not all objects in set iterated to",
+    Assert.assertTrue("not all objects in set iterated to",
                set.containsAll(list) && list.containsAll(set));
   }
   

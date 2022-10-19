@@ -28,7 +28,13 @@
 		<!-- Axis2 dependencies will be included in webapp-tmrap -->
 		<dependency>
 			<groupId>org.apache.axis2</groupId>
-			<artifactId>axis2</artifactId>
+			<artifactId>axis2-kernel</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-adb</artifactId>
+			<version>${axis2.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

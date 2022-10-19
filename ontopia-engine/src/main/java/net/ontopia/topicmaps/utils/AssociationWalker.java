@@ -28,14 +28,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.DeciderIterator;
-import net.ontopia.utils.EqualsDecider;
-import net.ontopia.utils.GrabberDecider;
 
 /**
  * PUBLIC: Computes the transitive closure of a relation characterized by
@@ -61,17 +58,17 @@ public class AssociationWalker {
    * PROTECTED: The decider used to filter associations to only those
    * which are being walked
    */
-  protected DeciderIF<AssociationIF> assocDecider;
+  protected Predicate<AssociationIF> assocDecider;
   /**
    * PROTECTED: The decider used to filter the left-hand role of the
    * transitive association
    */
-  protected DeciderIF<AssociationRoleIF> leftRoleDecider;
+  protected Predicate<AssociationRoleIF> leftRoleDecider;
   /**
    * PROTECTED: The decider used to filter the right-hand role of the
    * transitive association.
    */
-  protected DeciderIF<AssociationRoleIF> rightRoleDecider;
+  protected Predicate<AssociationRoleIF> rightRoleDecider;
 
   /**
    * PROTECTED: The listeners to be informed as the walker processes
@@ -94,9 +91,9 @@ public class AssociationWalker {
    * object implementing TopicIF.
    */
   public AssociationWalker(TopicIF associationType, TopicIF leftRoleSpec, TopicIF rightRoleSpec) {
-    assocDecider = new GrabberDecider<AssociationIF, TopicIF>(new TypedIFGrabber<AssociationIF>(), new EqualsDecider<TopicIF>(associationType));
-    leftRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), new EqualsDecider<TopicIF>(leftRoleSpec));
-    rightRoleDecider = new GrabberDecider<AssociationRoleIF, TopicIF>(new TypedIFGrabber<AssociationRoleIF>(), new EqualsDecider<TopicIF>(rightRoleSpec));
+    assocDecider = a -> associationType.equals(a.getType());
+    leftRoleDecider = r -> leftRoleSpec.equals(r.getType());
+    rightRoleDecider = r -> rightRoleSpec.equals(r.getType());
     listeners = new ArrayList<AssociationWalkerListenerIF>();
   }
 
@@ -107,7 +104,7 @@ public class AssociationWalker {
    * @param fromRoleDecider ; an object implementing DeciderIF.
    * @param toRoleDecider ; an object implementing DeciderIF.
    */
-  public AssociationWalker(DeciderIF<AssociationIF> assocDecider, DeciderIF<AssociationRoleIF> fromRoleDecider, DeciderIF<AssociationRoleIF> toRoleDecider) {
+  public AssociationWalker(Predicate<AssociationIF> assocDecider, Predicate<AssociationRoleIF> fromRoleDecider, Predicate<AssociationRoleIF> toRoleDecider) {
     this.assocDecider = assocDecider;
     leftRoleDecider = fromRoleDecider;
     rightRoleDecider = toRoleDecider;
@@ -206,16 +203,16 @@ public class AssociationWalker {
     if (fromRoles.isEmpty()) {
       foundLeaf(state);
     } else {
-      DeciderIterator<AssociationRoleIF> leftRolesIt = new DeciderIterator<AssociationRoleIF>(leftRoleDecider, fromRoles.iterator());
+      Iterator<AssociationRoleIF> leftRolesIt = fromRoles.stream().filter(leftRoleDecider).iterator();
       if (!leftRolesIt.hasNext()) {
         foundLeaf(state);
       }
       while (!state.foundTopic && leftRolesIt.hasNext()) {
         AssociationRoleIF leftRole = leftRolesIt.next();
         AssociationIF assoc = leftRole.getAssociation();
-        if (assocDecider.ok(assoc)) {
+        if (assocDecider.test(assoc)) {
           Collection<AssociationRoleIF> assocRoles = assoc.getRoles();
-          DeciderIterator<AssociationRoleIF> rightRolesIt = new DeciderIterator<AssociationRoleIF>(rightRoleDecider, assocRoles.iterator());
+          Iterator<AssociationRoleIF> rightRolesIt = assocRoles.stream().filter(rightRoleDecider).iterator();
           if (!rightRolesIt.hasNext()) {
             // We have traversed to a leaf. Add the current path to the tree set
             foundLeaf(state);

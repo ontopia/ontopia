@@ -35,9 +35,7 @@ public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFiel
 
   public AssociationFieldValueModel(RoleField.ValueIF afv) {
     super(afv);
-    if (afv == null)
-      throw new NullPointerException(
-          "association field value  parameter cannot be null.");
+    Objects.requireNonNull(afv, "association field value  parameter cannot be null.");
 
     RoleField[] rfields = afv.getRoleFields();    
     Topic[] players = afv.getPlayers();

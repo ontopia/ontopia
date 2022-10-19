@@ -21,14 +21,13 @@ package net.ontopia.topicmaps.entry;
 
 import java.util.Collection;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class URLTopicMapSourceRDFTest extends AbstractTopicMapSourceTest {
 
-  public URLTopicMapSourceRDFTest(String name) {
-    super(name);
-  }
-
   // --- Test cases (RDF)
+  @Test
   public void testRDF1() {
     URLTopicMapSource source = new URLTopicMapSource("file:/tmp/foobar.rdf");
     source.setId("fooid");
@@ -37,6 +36,7 @@ public class URLTopicMapSourceRDFTest extends AbstractTopicMapSourceTest {
     verifyRDFSource(source);
   }
 
+  @Test
   public void testRDF2() {
     URLTopicMapSource source = new URLTopicMapSource();
     source.setUrl("file:/tmp/foobar.rdf");
@@ -47,10 +47,10 @@ public class URLTopicMapSourceRDFTest extends AbstractTopicMapSourceTest {
 
   protected void verifyRDFSource(URLTopicMapSource source) {
     Collection refs = source.getReferences();
-    assertTrue("URLTopicMapSource.getReferences().size() != 1", refs.size() == 1);
+    Assert.assertTrue("URLTopicMapSource.getReferences().size() != 1", refs.size() == 1);
     TopicMapReferenceIF ref = (TopicMapReferenceIF) refs.iterator().next();
-    assertTrue("!TopicMapReference.getId().equals('foobar')", "fooid".equals(ref.getId()));
-    assertTrue("!TopicMapReference.getTitle().equals('foobar')", "footitle".equals(ref.getTitle()));
-    assertTrue("!(TopicMapReferenceIF instanceof RDFTopicMapReference)", ref instanceof RDFTopicMapReference);
+    Assert.assertTrue("!TopicMapReference.getId().equals('foobar')", "fooid".equals(ref.getId()));
+    Assert.assertTrue("!TopicMapReference.getTitle().equals('foobar')", "footitle".equals(ref.getTitle()));
+    Assert.assertTrue("!(TopicMapReferenceIF instanceof RDFTopicMapReference)", ref instanceof RDFTopicMapReference);
   }
 }

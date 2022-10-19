@@ -351,12 +351,12 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         VariantNameIF vn;
         if (isuri) {
           try {
-            vn = builder.makeVariantName(basename, new URILocator(buffer.toString()));
+            vn = builder.makeVariantName(basename, new URILocator(buffer.toString()), Collections.emptySet());
           } catch (MalformedURLException e) {
             throw new SAXException("Invalid URI for variant name", e);
           }
         } else {
-          vn = builder.makeVariantName(basename, buffer.toString());
+          vn = builder.makeVariantName(basename, buffer.toString(), Collections.emptySet());
 				}
         addScope(vn);
         handleReifier(vn, reifier);
@@ -527,7 +527,6 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
 
     private void handleReifier(ReifiableIF reifiable, String ref) {
       if (ref == null) return;      
-      LocatorIF base = doc_address;
       TopicIF reifier = getTopicByAttRef(ref);
 			reify(reifiable, reifier);
     }    

@@ -20,30 +20,28 @@
 
 package net.ontopia.topicmaps.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class ImportExportUtilsTest extends TestCase {
-
-  public ImportExportUtilsTest(String name) {
-    super(name);
-  }
+public class ImportExportUtilsTest {
 
   // --- Tests
 
+  @Test
   public void testGetTopicMapId() {
-    testId("1", 1L);
-    testId("123", 123L);
-    testId("M1", 1L);
-    testId("M123", 123L);
-    testId("x-ontopia:tm-rdbms:1", 1L);
-    testId("x-ontopia:tm-rdbms:123", 123L);
-    testId("x-ontopia:tm-rdbms:M1", 1L);
-    testId("x-ontopia:tm-rdbms:M123", 123L);
+    assertCorrectId("1", 1L);
+    assertCorrectId("123", 123L);
+    assertCorrectId("M1", 1L);
+    assertCorrectId("M123", 123L);
+    assertCorrectId("x-ontopia:tm-rdbms:1", 1L);
+    assertCorrectId("x-ontopia:tm-rdbms:123", 123L);
+    assertCorrectId("x-ontopia:tm-rdbms:M1", 1L);
+    assertCorrectId("x-ontopia:tm-rdbms:M123", 123L);
   }
   
-  private void testId(String id, long y) {
+  private void assertCorrectId(String id, long y) {
     long x = ImportExportUtils.getTopicMapId(id);
-    assertTrue("Invalid id: " + x + " (should have been: " + y + ")", x == y);
+    Assert.assertTrue("Invalid id: " + x + " (should have been: " + y + ")", x == y);
   }
   
 }

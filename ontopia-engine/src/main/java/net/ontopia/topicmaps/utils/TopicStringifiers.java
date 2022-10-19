@@ -23,20 +23,20 @@ package net.ontopia.topicmaps.utils;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.GrabberStringifier;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * PUBLIC: Creates stringifiers that extract strings representing
  * names from topics, according to various criteria, including scope.
  */
 public class TopicStringifiers {
-  private static final StringifierIF<TopicIF> DEFAULT_STRINGIFIER
+  private static final Function<TopicIF, String> DEFAULT_STRINGIFIER
     = new GrabberStringifier<TopicIF, NameIF>(TopicCharacteristicGrabbers.getDisplayNameGrabber(),
                              new NameStringifier());
 
@@ -52,7 +52,7 @@ public class TopicStringifiers {
    *    display name of its given topic if present, otherwise
    *    the least constrained topic name.
    */
-  public static StringifierIF<TopicIF> getDefaultStringifier() {
+  public static Function<TopicIF, String> getDefaultStringifier() {
     return DEFAULT_STRINGIFIER;
   }
 
@@ -67,7 +67,7 @@ public class TopicStringifiers {
    *    topic name of its given topic, selected according to the 
    *    logic in TopicNameGrabber.
    */
-  public static StringifierIF<TopicIF> getTopicNameStringifier(Collection<TopicIF> scope) {
+  public static Function<TopicIF, String> getTopicNameStringifier(Collection<TopicIF> scope) {
     return new GrabberStringifier<TopicIF, TopicNameIF>(new TopicNameGrabber(scope),
                                   new NameStringifier());
   }
@@ -83,7 +83,7 @@ public class TopicStringifiers {
    *    variant name of its given topic, selected according to the 
    *    logic in VariantNameGrabber.
    */  
-  public static StringifierIF<TopicIF> getVariantNameStringifier(Collection<TopicIF> scope) {
+  public static Function<TopicIF, String> getVariantNameStringifier(Collection<TopicIF> scope) {
     return new GrabberStringifier<TopicIF, VariantNameIF>(new TopicVariantNameGrabber(scope),
                                   new NameStringifier());
   }
@@ -98,7 +98,7 @@ public class TopicStringifiers {
    *    logic in SortNameGrabber.
    * @since 1.1
    */
-  public static StringifierIF<TopicIF> getSortNameStringifier() {
+  public static Function<TopicIF, String> getSortNameStringifier() {
     return new GrabberStringifier<TopicIF, NameIF>(TopicCharacteristicGrabbers.getSortNameGrabber(),
                                   new NameStringifier());
   }
@@ -110,7 +110,7 @@ public class TopicStringifiers {
    * the one used by tolog.
    * @since 5.1.0
    */
-  public static StringifierIF<TopicIF> getFastSortNameStringifier(TopicMapIF tm) {
+  public static Function<TopicIF, String> getFastSortNameStringifier(TopicMapIF tm) {
     return new FastSortNameStringifier(tm);
   }
 
@@ -127,7 +127,7 @@ public class TopicStringifiers {
    * @return the configured stringifier
    * @since 1.3.2
    */  
-  public static StringifierIF<TopicIF> getStringifier(Collection<TopicIF> tnscope,
+  public static Function<TopicIF, String> getStringifier(Collection<TopicIF> tnscope,
                                              Collection<TopicIF> vnscope) {
     if (tnscope == null || tnscope.isEmpty()) {
       if (vnscope == null || vnscope.isEmpty())
@@ -147,7 +147,7 @@ public class TopicStringifiers {
    * @since 2.0
    */
   public static String toString(TopicIF topic) {
-    return DEFAULT_STRINGIFIER.toString(topic);
+    return DEFAULT_STRINGIFIER.apply(topic);
   }
 
   // FIXME: The following methods must later be optimized by
@@ -161,8 +161,8 @@ public class TopicStringifiers {
    * @since 2.0
    */
   public static String toString(TopicIF topic, TopicIF tntheme) {
-    StringifierIF<TopicIF> strfy = getStringifier(Collections.singleton(tntheme), null);
-    return strfy.toString(topic);
+    Function<TopicIF, String> strfy = getStringifier(Collections.singleton(tntheme), null);
+    return strfy.apply(topic);
   }
 
   /**
@@ -172,8 +172,8 @@ public class TopicStringifiers {
    * @since 2.0
    */
   public static String toString(TopicIF topic, Collection<TopicIF> tnscope) {
-    StringifierIF<TopicIF> strfy = getStringifier(tnscope, null);
-    return strfy.toString(topic);
+    Function<TopicIF, String> strfy = getStringifier(tnscope, null);
+    return strfy.apply(topic);
   }
 
   /**
@@ -183,8 +183,8 @@ public class TopicStringifiers {
    * @since 2.0
    */
   public static String toString(TopicIF topic, TopicIF tntheme, TopicIF vntheme) {
-    StringifierIF<TopicIF> strfy = getStringifier(Collections.singleton(tntheme), Collections.singleton(vntheme));
-    return strfy.toString(topic);
+    Function<TopicIF, String> strfy = getStringifier(Collections.singleton(tntheme), Collections.singleton(vntheme));
+    return strfy.apply(topic);
   }
 
 
@@ -195,8 +195,8 @@ public class TopicStringifiers {
    * @since 2.0
    */
   public static String toString(TopicIF topic, Collection<TopicIF> tnscope, TopicIF vntheme) {
-    StringifierIF<TopicIF> strfy = getStringifier(tnscope, Collections.singleton(vntheme));
-    return strfy.toString(topic);
+    Function<TopicIF, String> strfy = getStringifier(tnscope, Collections.singleton(vntheme));
+    return strfy.apply(topic);
   }
 
 
@@ -207,13 +207,13 @@ public class TopicStringifiers {
    * @since 2.0
    */
   public static String toString(TopicIF topic, Collection<TopicIF> tnscope, Collection<TopicIF> vnscope) {
-    StringifierIF<TopicIF> strfy = getStringifier(tnscope, vnscope);
-    return strfy.toString(topic);
+    Function<TopicIF, String> strfy = getStringifier(tnscope, vnscope);
+    return strfy.apply(topic);
   }
 
   // ===== INTERNAL
 
-  public static class FastSortNameStringifier implements StringifierIF<TopicIF> {
+  public static class FastSortNameStringifier implements Function<TopicIF, String> {
     private TopicIF defnametype;
     private TopicIF sort;
 
@@ -223,7 +223,7 @@ public class TopicStringifiers {
     }
 
     @Override
-    public String toString(TopicIF topic) {
+    public String apply(TopicIF topic) {
       // 0: verify that we have a topic at all
       if (topic == null)
         return "[No name]";

@@ -21,10 +21,10 @@
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import javax.servlet.jsp.PageContext;
-
-import net.ontopia.utils.DeciderIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ApplicableInContextDecider;
@@ -39,18 +39,11 @@ import net.ontopia.topicmaps.nav2.core.ScopeSupportIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Framework related utility class providing some helper
  * methods needed to easier for access to scope information.
  */
 public final class ScopeUtils implements ScopeSupportIF {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory
-    .getLogger(FrameworkUtils.class.getName());
   
   /**
    * INTERNAL: Get FilterIF object which provides the possibility to
@@ -60,7 +53,7 @@ public final class ScopeUtils implements ScopeSupportIF {
    * @see net.ontopia.topicmaps.utils.IntersectionOfContextDecider
    * @see net.ontopia.topicmaps.utils.deciders.WithinScopeDecider
    */
-  public static DeciderIF getScopeDecider(PageContext pageContext,
+  public static Predicate<ScopedIF> getScopeDecider(PageContext pageContext,
                                           ContextTag contextTag,
                                           int scopeType) {
     UserIF user = FrameworkUtils.getUser(pageContext); 
@@ -92,7 +85,7 @@ public final class ScopeUtils implements ScopeSupportIF {
     // construct decider in accordance to property setting
     String decSetting = contextTag.getNavigatorConfiguration()
       .getProperty(decPropName, DEC_INTERSECTION);
-    DeciderIF scopeDecider = null;
+    Predicate scopeDecider = null;
     if (context != null && !context.isEmpty()) {
       if (decSetting.equalsIgnoreCase(DEC_INTERSECTION))
         scopeDecider = new IntersectionOfContextDecider(context);

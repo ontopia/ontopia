@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.Objects;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -270,8 +271,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
 
   @Override
   public TMObjectIF getObjectById(String object_id) {
-    if (object_id == null)
-      throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(object_id, "null is not a valid argument.");
 
     // Cut off the indicator character and lookup identity in the database.
     try {

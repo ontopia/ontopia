@@ -64,8 +64,8 @@
            fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicComparator"/>
     <class shortcut="nameComparator"
            fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparator"/>
-    <class shortcut="basenameComparator"
-           fullname="net.ontopia.topicmaps.nav.utils.comparators.BaseNameComparator"/>
+    <class shortcut="topicNameComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicNameComparator"/>
     <class shortcut="nameComparatorWithGenerality"
            fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparatorWithGenerality"/>
     <class shortcut="assocComparator"
@@ -84,8 +84,6 @@
            fullname="net.ontopia.topicmaps.nav.utils.comparators.FacetValueComparator"/>
     <class shortcut="topicMapRefComparator"
            fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator"/>
-    <class shortcut="ontopiaOccTypeComparator"
-           fullname="net.ontopia.topicmaps.nav.utils.comparators.OccTypeComparator"/>
     <!-- NB these two classes are used for the XMLconf application and are not (yet) part
          of any general distribution -->
     <class shortcut="lower"

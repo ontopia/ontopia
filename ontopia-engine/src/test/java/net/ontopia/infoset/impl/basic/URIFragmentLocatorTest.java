@@ -20,45 +20,49 @@
 
 package net.ontopia.infoset.impl.basic;
 
-import junit.framework.TestCase;
+import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class URIFragmentLocatorTest extends TestCase {
+public class URIFragmentLocatorTest {
   
-  public URIFragmentLocatorTest(String name) {
-    super(name);
-  }
-
   // --- tests
   
+  @Test
   public void testGetExternalFormSimple() {
-    testExternalForm("http://www.example.com", "fragment");
+    assertExternalForm("http://www.example.com", "fragment");
   }
 
+  @Test
   public void testGetExternalFormSimple2() {
-    testExternalForm("http://www.example.com/index.jsp", "fragment");
+    assertExternalForm("http://www.example.com/index.jsp", "fragment");
   }
 
+  @Test
   public void testGetExternalFormSimple3() {
-    testExternalForm("http://www.example.com/index.jsp?bongo", "fragment");
+    assertExternalForm("http://www.example.com/index.jsp?bongo", "fragment");
   }
 
+  @Test
   public void testGetExternalFormHostname() {
-    testExternalForm("http://www.%F8l.no/", "fragment");
+    assertExternalForm("http://www.%F8l.no/", "fragment");
   }
 
+  @Test
   public void testGetExternalFormDirname() {
-    testExternalForm("http://www.ontopia.no/%F8l.html", "fragment");
+    assertExternalForm("http://www.ontopia.no/%F8l.html", "fragment");
   }
 
+  @Test
   public void testGetExternalFormDirnameSpace() {
-    testExternalForm("http://www.ontopia.no/space%20in%20url.html",
+    assertExternalForm("http://www.ontopia.no/space%20in%20url.html",
                      "fragment");
   }
 
   // --- helpers
   
-  private void testExternalForm(String uri, String frag) {
+  private void assertExternalForm(String uri, String frag) {
     try {
       LocatorIF base = new URILocator(uri);
       LocatorIF locator = base.resolveAbsolute("#" + frag);
@@ -66,11 +70,11 @@ public class URIFragmentLocatorTest extends TestCase {
       String correct = base.getExternalForm() + "#" + frag;
       String external = locator.getExternalForm();
       
-      assertTrue("incorrect external form for URI '" + locator.getAddress() +
+      Assert.assertTrue("incorrect external form for URI '" + locator.getAddress() +
                  "': '" + external + "', correct '" + correct + "'",
                  external.equals(correct));
-    } catch (java.net.MalformedURLException e) {
-      fail("INTERNAL ERROR: " + e);
+    } catch (MalformedURLException e) {
+      Assert.fail("INTERNAL ERROR: " + e);
     }
   }  
 }

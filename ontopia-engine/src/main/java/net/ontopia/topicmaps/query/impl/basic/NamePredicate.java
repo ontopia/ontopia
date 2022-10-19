@@ -20,19 +20,17 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
 
 /**
  * INTERNAL: The implementation of the 'name(topic, name-string)' predicate.
  */
 public class NamePredicate implements BasicPredicateIF {
-  protected StringifierIF strify;
 
   public NamePredicate() {
-    strify = TopicStringifiers.getDefaultStringifier();
   }
 
   @Override
@@ -70,7 +68,7 @@ public class NamePredicate implements BasicPredicateIF {
     
     
     for (int ix = 0; ix <= result.last; ix++) {
-      String value = strify.toString(result.data[ix][topicix]);
+      String value = TopicStringifiers.toString((TopicIF) result.data[ix][topicix]);
       result.data[ix][valueix] = value;
     }
     

@@ -21,414 +21,477 @@
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class NumbersModuleTest extends AbstractPredicateTest {
 
   private final static String PREFIX = 
     "import \"http://psi.ontopia.net/tolog/numbers/\" as numbers ";
 
-  public NumbersModuleTest(String name) {
-    super(name);
-  }
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-
-
   // --- value(string, result, pattern?, locale?)
+  @Test
   public void testNumbersValueClosedInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:value(\"1234\", 1234)?");
+    assertQuery(PREFIX + "numbers:value(\"1234\", 1234)?");
   }
+  @Test
   public void testNumbersValueClosedNegativeInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:value(\"-1234\", -1234)?");
+    assertQuery(PREFIX + "numbers:value(\"-1234\", -1234)?");
   }
+  @Test
   public void testNumbersValueClosedIntegerNotMatch() throws InvalidQueryException, IOException {
     load("numbers.ltm");
       List matches = new ArrayList(); // false
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234\", 1235)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234\", 1235)?");
   }
+  @Test
   public void testNumbersValueClosedIntegerAsFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:value(\"1234.0\", 1234.0)?");
+    assertQuery(PREFIX + "numbers:value(\"1234.0\", 1234.0)?");
   }
+  @Test
   public void testNumbersValueClosedIntegerAsFloatNotMatch() throws InvalidQueryException, IOException {
     load("numbers.ltm");
       List matches = new ArrayList(); // false
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234.0\", 1234)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234.0\", 1234)?");
   }
+  @Test
   public void testNumbersValueClosedFloatAsIntegerNotMatch() throws InvalidQueryException, IOException {
     load("numbers.ltm");
       List matches = new ArrayList(); // false
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234\", 1234.0)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234\", 1234.0)?");
   }
+  @Test
   public void testNumbersValueClosedFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:value(\"1234.5678\", 1234.5678)?");
+    assertQuery(PREFIX + "numbers:value(\"1234.5678\", 1234.5678)?");
   }
+  @Test
   public void testNumbersValueClosedFloatNotMatch() throws InvalidQueryException, IOException {
     load("numbers.ltm");
       List matches = new ArrayList(); // false
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234.5678\", 1235.8632)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234.5678\", 1235.8632)?");
   }
+  @Test
   public void testNumbersValueOpenInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
       addMatch(matches, "result", 1234);
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234\", $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234\", $result)?");
   }
+  @Test
   public void testNumbersValueOpenNegativeInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
       addMatch(matches, "result", -1234);
-    verifyQuery(matches, PREFIX + "numbers:value(\"-1234\", $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"-1234\", $result)?");
   }
+  @Test
   public void testNumbersValueOpenIntegerAsFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234.0f);
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234.0\", $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234.0\", $result)?");
   }
+  @Test
   public void testNumbersValueOpenFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
       addMatch(matches, "result", 1234.5678f);
-    verifyQuery(matches, PREFIX + "numbers:value(\"1234.5678\", $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1234.5678\", $result)?");
   }
+  @Test
   public void testNumbersValueOpenNegativeFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
       addMatch(matches, "result", -1234.5678f);
-    verifyQuery(matches, PREFIX + "numbers:value(\"-1234.5678\", $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"-1234.5678\", $result)?");
   }
+  @Test
   public void testNumbersValueClosedPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:value(\"1.234.567,89\", 1234567.8901234, \"#,##0.00\", \"NL\")?");
+    assertQuery(PREFIX + "numbers:value(\"1.234.567,89\", 1234567.8901234, \"#,##0.00\", \"NL\")?");
   }
+  @Test
   public void testNumbersValueOpenPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234567.8901234f);
-    verifyQuery(matches, PREFIX + "numbers:value(\"1.234.567,89\", $result, \"#,##0.00\", \"NL\")?");
+    assertQueryMatches(matches, PREFIX + "numbers:value(\"1.234.567,89\", $result, \"#,##0.00\", \"NL\")?");
   }
+  @Test
   public void testNumbersValueInvalidPattern() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     try {
-      verifyQuery(PREFIX + "numbers:value(\"1234\", 1234, \"#.##0,##\")?");
-      fail("Failed to detect invalid pattern");
+      assertQuery(PREFIX + "numbers:value(\"1234\", 1234, \"#.##0,##\")?");
+      Assert.fail("Failed to detect invalid pattern");
     } catch (InvalidQueryException e) {
       // Invalid pattern detected correctly
     }
   }
+  @Test
   public void testNumbersValueInvalidPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     try {
-      verifyQuery(PREFIX + "numbers:value(\"1234\", 1234, \"#.##0,##\", \"NL\")?");
-      fail("Failed to detect invalid pattern");
+      assertQuery(PREFIX + "numbers:value(\"1234\", 1234, \"#.##0,##\", \"NL\")?");
+      Assert.fail("Failed to detect invalid pattern");
     } catch (InvalidQueryException e) {
       // Invalid pattern detected correctly
     }
   }
 
   // --- format(number, result, pattern?, locale?)
+  @Test
   public void testNumbersFormatClosedInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:format(1234, \"1234\")?");
+    assertQuery(PREFIX + "numbers:format(1234, \"1234\")?");
   }
+  @Test
   public void testNumbersFormatOpenInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", "1234");
-    verifyQuery(matches, PREFIX + "numbers:format(1234, $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:format(1234, $result)?");
   }
+  @Test
   public void testNumbersFormatClosedFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:format(1234.5678, \"1234.5677\")?"); // Float works in mysterious ways
+    assertQuery(PREFIX + "numbers:format(1234.5678, \"1234.5677\")?"); // Float works in mysterious ways
   }
+  @Test
   public void testNumbersFormatOpenFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", "1234.5677"); // Float works in mysterious ways
-    verifyQuery(matches, PREFIX + "numbers:format(1234.5678, $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:format(1234.5678, $result)?");
   }
+  @Test
   public void testNumbersFormatClosedPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:format(1234, \"1.234,00\", \"#,##0.00\", \"NL\")?");
+    assertQuery(PREFIX + "numbers:format(1234, \"1.234,00\", \"#,##0.00\", \"NL\")?");
   }
+  @Test
   public void testNumbersFormatOpenPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", "1.234,00");
-    verifyQuery(matches, PREFIX + "numbers:format(1234, $result, \"#,##0.00\", \"NL\")?");
+    assertQueryMatches(matches, PREFIX + "numbers:format(1234, $result, \"#,##0.00\", \"NL\")?");
   }
+  @Test
   public void testNumbersFormatInvalidPattern() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     try {
-      verifyQuery(PREFIX + "numbers:format(1234, \"1234\", \"#.##0,##\")?");
-      fail("Failed to detect invalid pattern");
+      assertQuery(PREFIX + "numbers:format(1234, \"1234\", \"#.##0,##\")?");
+      Assert.fail("Failed to detect invalid pattern");
     } catch (InvalidQueryException e) {
       // Invalid pattern detected correctly
     }
   }
+  @Test
   public void testNumbersFormatInvalidPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     try {
-      verifyQuery(PREFIX + "numbers:format(1234, \"1234\", \"#.##0,##\", \"NL\")?");
-      fail("Failed to detect invalid pattern");
+      assertQuery(PREFIX + "numbers:format(1234, \"1234\", \"#.##0,##\", \"NL\")?");
+      Assert.fail("Failed to detect invalid pattern");
     } catch (InvalidQueryException e) {
       // Invalid pattern detected correctly
     }
   }
 
   // --- absolute(number, result)
+  @Test
   public void testNumbersAbsoluteClosedPositiveInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:absolute(1234, 1234)?");
+    assertQuery(PREFIX + "numbers:absolute(1234, 1234)?");
   }
+  @Test
   public void testNumbersAbsoluteClosedNegativeInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:absolute(-1234, 1234)?");
+    assertQuery(PREFIX + "numbers:absolute(-1234, 1234)?");
   }
+  @Test
   public void testNumbersAbsoluteClosedPositiveFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:absolute(1234.5678, 1234.5678)?");
+    assertQuery(PREFIX + "numbers:absolute(1234.5678, 1234.5678)?");
   }
+  @Test
   public void testNumbersAbsoluteClosedNegativeFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:absolute(-1234.5678, 1234.5678)?");
+    assertQuery(PREFIX + "numbers:absolute(-1234.5678, 1234.5678)?");
   }
+  @Test
   public void testNumbersAbsoluteOpenPositiveInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234);
-    verifyQuery(matches, PREFIX + "numbers:absolute(1234, $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:absolute(1234, $result)?");
   }
+  @Test
   public void testNumbersAbsoluteOpenNegativeInteger() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234);
-    verifyQuery(matches, PREFIX + "numbers:absolute(-1234, $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:absolute(-1234, $result)?");
   }
+  @Test
   public void testNumbersAbsoluteOpenPositiveFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234.5678f);
-    verifyQuery(matches, PREFIX + "numbers:absolute(1234.5678, $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:absolute(1234.5678, $result)?");
   }
+  @Test
   public void testNumbersAbsoluteOpenNegativeFloat() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234.5678f);
-    verifyQuery(matches, PREFIX + "numbers:absolute(-1234.5678, $result)?");
+    assertQueryMatches(matches, PREFIX + "numbers:absolute(-1234.5678, $result)?");
   }
 
   // --- add(result, number, number+)
+  @Test
   public void testNumbersAddClosedIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:add(6912, 1234, 5678)?");
+    assertQuery(PREFIX + "numbers:add(6912, 1234, 5678)?");
   }
+  @Test
   public void testNumbersAddClosedFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:add(" + (1234.5678f + 8765.4321f) + ", 1234.5678, 8765.4321)?");
+    assertQuery(PREFIX + "numbers:add(" + (1234.5678f + 8765.4321f) + ", 1234.5678, 8765.4321)?");
   }
+  @Test
   public void testNumbersAddClosedIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:add(-88.0, 12, 34.0, -56, -78)?");
+    assertQuery(PREFIX + "numbers:add(-88.0, 12, 34.0, -56, -78)?");
   }
+  @Test
   public void testNumbersAddOpenIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 6912);
-    verifyQuery(matches, PREFIX + "numbers:add($result, 1234, 5678)?");
+    assertQueryMatches(matches, PREFIX + "numbers:add($result, 1234, 5678)?");
   }
+  @Test
   public void testNumbersAddOpenFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234.5678f + 8765.4321f);
-    verifyQuery(matches, PREFIX + "numbers:add($result, 1234.5678, 8765.4321)?");
+    assertQueryMatches(matches, PREFIX + "numbers:add($result, 1234.5678, 8765.4321)?");
   }
+  @Test
   public void testNumbersAddOpenIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -88.0f);
-    verifyQuery(matches, PREFIX + "numbers:add($result, 12, 34.0, -56, -78)?");
+    assertQueryMatches(matches, PREFIX + "numbers:add($result, 12, 34.0, -56, -78)?");
   }
 
   // --- subtract(result, number, number+)
+  @Test
   public void testNumbersSubtractClosedIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:subtract(-4444, 1234, 5678)?");
+    assertQuery(PREFIX + "numbers:subtract(-4444, 1234, 5678)?");
   }
+  @Test
   public void testNumbersSubtractClosedFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:subtract(" + (1234.5678f - 8765.4321f) + ", 1234.5678, 8765.4321)?");
+    assertQuery(PREFIX + "numbers:subtract(" + (1234.5678f - 8765.4321f) + ", 1234.5678, 8765.4321)?");
   }
+  @Test
   public void testNumbersSubtractClosedIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:subtract(" + (-1234f + 5678f - 4039.596f) + ", -1234, -5678, 4039.596)?");
+    assertQuery(PREFIX + "numbers:subtract(" + (-1234f + 5678f - 4039.596f) + ", -1234, -5678, 4039.596)?");
   }
+  @Test
   public void testNumbersSubtractOpenIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -4444);
-    verifyQuery(matches, PREFIX + "numbers:subtract($result, 1234, 5678)?");
+    assertQueryMatches(matches, PREFIX + "numbers:subtract($result, 1234, 5678)?");
   }
+  @Test
   public void testNumbersSubtractOpenFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 1234.5678f - 8765.4321f);
-    verifyQuery(matches, PREFIX + "numbers:subtract($result, 1234.5678, 8765.4321)?");
+    assertQueryMatches(matches, PREFIX + "numbers:subtract($result, 1234.5678, 8765.4321)?");
   }
+  @Test
   public void testNumbersSubtractOpenIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -1234f + 5678f - 4039.596f);
-    verifyQuery(matches, PREFIX + "numbers:subtract($result, -1234, -5678, 4039.596)?");
+    assertQueryMatches(matches, PREFIX + "numbers:subtract($result, -1234, -5678, 4039.596)?");
   }
 
   // --- multiply(result, number, number+)
+  @Test
   public void testNumbersMultiplyClosedIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:multiply(408, 12, 34)?");
+    assertQuery(PREFIX + "numbers:multiply(408, 12, 34)?");
   }
+  @Test
   public void testNumbersMultiplyClosedFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:multiply(700.6652, 12.34, 56.78)?");
+    assertQuery(PREFIX + "numbers:multiply(700.6652, 12.34, 56.78)?");
   }
+  @Test
   public void testNumbersMultiplyClosedIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:multiply(-51.0, -12, 34, -0.25, -0.5)?");
+    assertQuery(PREFIX + "numbers:multiply(-51.0, -12, 34, -0.25, -0.5)?");
   }
+  @Test
   public void testNumbersMultiplyOpenIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 408);
-    verifyQuery(matches, PREFIX + "numbers:multiply($result, 12, 34)?");
+    assertQueryMatches(matches, PREFIX + "numbers:multiply($result, 12, 34)?");
   }
+  @Test
   public void testNumbersMultiplyOpenFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 700.6652f);
-    verifyQuery(matches, PREFIX + "numbers:multiply($result, 12.34, 56.78)?");
+    assertQueryMatches(matches, PREFIX + "numbers:multiply($result, 12.34, 56.78)?");
   }
+  @Test
   public void testNumbersMultiplyOpenIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -51.0f);
-    verifyQuery(matches, PREFIX + "numbers:multiply($result, -12, 34, -0.25, -0.5)?");
+    assertQueryMatches(matches, PREFIX + "numbers:multiply($result, -12, 34, -0.25, -0.5)?");
   }
 
   // --- divide(result, number, number+)
+  @Test
   public void testNumbersDivideClosedIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:divide(3, 56, 16)?");
+    assertQuery(PREFIX + "numbers:divide(3, 56, 16)?");
   }
+  @Test
   public void testNumbersDivideClosedFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:divide(-3.5, 56.0, -16.0)?");
+    assertQuery(PREFIX + "numbers:divide(-3.5, 56.0, -16.0)?");
   }
+  @Test
   public void testNumbersDivideClosedIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:divide(-45.2, -678, 6, 2.5)?");
+    assertQuery(PREFIX + "numbers:divide(-45.2, -678, 6, 2.5)?");
   }
+  @Test
   public void testNumbersDivideOpenIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 3);
-    verifyQuery(matches, PREFIX + "numbers:divide($result, 56, 16)?");
+    assertQueryMatches(matches, PREFIX + "numbers:divide($result, 56, 16)?");
   }
+  @Test
   public void testNumbersDivideOpenFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 3.5f);
-    verifyQuery(matches, PREFIX + "numbers:divide($result, 56.0, 16.0)?");
+    assertQueryMatches(matches, PREFIX + "numbers:divide($result, 56.0, 16.0)?");
   }
+  @Test
   public void testNumbersDivideOpenIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -45.2f);
-    verifyQuery(matches, PREFIX + "numbers:divide($result, -678, 6, 2.5)?");
+    assertQueryMatches(matches, PREFIX + "numbers:divide($result, -678, 6, 2.5)?");
   }
+  @Test
   public void testNumbersDivideByZero() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     try {
-      verifyQuery(PREFIX + "numbers:divide(2, 1, 0)?");
-      fail("Failed to detect divide by zero exception");
+      assertQuery(PREFIX + "numbers:divide(2, 1, 0)?");
+      Assert.fail("Failed to detect divide by zero exception");
     } catch (InvalidQueryException e) {
       // OK, exception should occur
     }
   }
 
   // --- min(result, number, number+)
+  @Test
   public void testNumbersMinimumClosedIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:min(101, 105, 103, 108, 101, 105)?");
+    assertQuery(PREFIX + "numbers:min(101, 105, 103, 108, 101, 105)?");
   }
+  @Test
   public void testNumbersMinimumClosedFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:min(-1.234, 6.7, -0.1, 8.9, -1.234)?");
+    assertQuery(PREFIX + "numbers:min(-1.234, 6.7, -0.1, 8.9, -1.234)?");
   }
+  @Test
   public void testNumbersMinimumClosedIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:min(-4, -4, 1.2345)?");
+    assertQuery(PREFIX + "numbers:min(-4, -4, 1.2345)?");
   }
+  @Test
   public void testNumbersMinimumOpenIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 101);
-    verifyQuery(matches, PREFIX + "numbers:min($result, 105, 103, 108, 101, 105)?");
+    assertQueryMatches(matches, PREFIX + "numbers:min($result, 105, 103, 108, 101, 105)?");
   }
+  @Test
   public void testNumbersMinimumOpenFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -1.234f);
-    verifyQuery(matches, PREFIX + "numbers:min($result, 6.7, -0.1, 8.9, -1.234)?");
+    assertQueryMatches(matches, PREFIX + "numbers:min($result, 6.7, -0.1, 8.9, -1.234)?");
   }
+  @Test
   public void testNumbersMinimumOpenIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", -4);
-    verifyQuery(matches, PREFIX + "numbers:min($result, -4, 1.2345)?");
+    assertQueryMatches(matches, PREFIX + "numbers:min($result, -4, 1.2345)?");
   }
 
   // --- max(result, number, number+)
+  @Test
   public void testNumbersMaximumClosedIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:max(108, 105, 103, 108, 101, 105)?");
+    assertQuery(PREFIX + "numbers:max(108, 105, 103, 108, 101, 105)?");
   }
+  @Test
   public void testNumbersMaximumClosedFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:max(8.9, 6.7, -0.1, 8.9, -1.234)?");
+    assertQuery(PREFIX + "numbers:max(8.9, 6.7, -0.1, 8.9, -1.234)?");
   }
+  @Test
   public void testNumbersMaximumClosedIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:max(4, 4, -1.2345)?");
+    assertQuery(PREFIX + "numbers:max(4, 4, -1.2345)?");
   }
+  @Test
   public void testNumbersMaximumOpenIntegers() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 108);
-    verifyQuery(matches, PREFIX + "numbers:max($result, 105, 103, 108, 101, 105)?");
+    assertQueryMatches(matches, PREFIX + "numbers:max($result, 105, 103, 108, 101, 105)?");
   }
+  @Test
   public void testNumbersMaximumOpenFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 8.9f);
-    verifyQuery(matches, PREFIX + "numbers:max($result, 6.7, -0.1, 8.9, -1.234)?");
+    assertQueryMatches(matches, PREFIX + "numbers:max($result, 6.7, -0.1, 8.9, -1.234)?");
   }
+  @Test
   public void testNumbersMaximumOpenIntegersAndFloats() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
     addMatch(matches, "result", 4);
-    verifyQuery(matches, PREFIX + "numbers:max($result, 4, -1.2345)?");
+    assertQueryMatches(matches, PREFIX + "numbers:max($result, 4, -1.2345)?");
   }
 
   // putting it all together
+  @Test
   public void testNumbersPIAT() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
@@ -436,7 +499,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     addMatch(matches, "name", "Object 5", "percentage",  "25,17 %", "quotient", 0.2516892f);
     addMatch(matches, "name", "Object 6", "percentage",  "10,00 %", "quotient", 0.1f);
     addMatch(matches, "name", "Object 1", "percentage",   "8,33 %", "quotient", 0.083333336f);
-    verifyQueryOrder(matches, PREFIX + 
+    assertQueryOrder(matches, PREFIX + 
       "select $name, $percentage, $quotient from " +
       "topic-name($object, $objectname)," +
       "value($objectname, $name)," +
@@ -455,6 +518,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
   }
 
   // sorting
+  @Test
   public void testIntegerSorting() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
@@ -462,7 +526,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     addMatch(matches, "value", 45);
     addMatch(matches, "value", 78);
     addMatch(matches, "value", 123);
-    verifyQueryOrder(matches, PREFIX +
+    assertQueryOrder(matches, PREFIX +
       "select $value from " +
       "{ numbers:value(\"6\", $value)" +
       "| numbers:value(\"78\", $value)" +
@@ -471,6 +535,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
       "} order by $value?"
     );
   }
+  @Test
   public void testFloatSorting() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
@@ -478,7 +543,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     addMatch(matches, "value", 45.0f);
     addMatch(matches, "value", 78.0f);
     addMatch(matches, "value", 123.0f);
-    verifyQueryOrder(matches, PREFIX +
+    assertQueryOrder(matches, PREFIX +
       "select $value from " +
       "{ numbers:value(\"6.0\", $value)" +
       "| numbers:value(\"78.0\", $value)" +
@@ -487,6 +552,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
       "} order by $value?"
     );
   }
+  @Test
   public void testIntegerAndFloatSorting() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     List matches = new ArrayList();
@@ -494,7 +560,7 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     addMatch(matches, "value", 45);
     addMatch(matches, "value", 78.0f);
     addMatch(matches, "value", 123);
-    verifyQueryOrder(matches, PREFIX +
+    assertQueryOrder(matches, PREFIX +
       "select $value from " +
       "{ numbers:value(\"6.0\", $value)" +
       "| numbers:value(\"78.0\", $value)" +

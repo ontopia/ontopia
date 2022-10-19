@@ -24,6 +24,7 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.AbstractLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -46,8 +47,7 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
   }
 
   private RDBMSLocator(String address) {
-    if (address == null)
-      throw new NullPointerException("The locator address cannot be null.");
+    Objects.requireNonNull(address, "The locator address cannot be null.");
     this.address = address;
   }
 

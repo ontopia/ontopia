@@ -22,6 +22,7 @@ package net.ontopia.persistence.query.jdo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * INTERNAL: JDOQL logical expression: and (&&). Syntax: '( ... && ... )'.
@@ -70,8 +71,8 @@ public class JDOAnd implements JDOExpressionIF {
   }
   
   public void setExpressions(JDOExpressionIF[] expressions) {
-    if (expressions == null || expressions.length == 0)
-      throw new NullPointerException("And expression must have nested expressions.");
+    Objects.requireNonNull(expressions, "And expression must have nested expressions.");
+    if (expressions.length == 0) { throw new IllegalArgumentException("And expression must have nested expressions."); }
     this.expressions = expressions;
   }
   

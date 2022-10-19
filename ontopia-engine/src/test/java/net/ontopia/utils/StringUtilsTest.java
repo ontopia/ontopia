@@ -20,93 +20,104 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class StringUtilsTest extends TestCase {
+public class StringUtilsTest {
   
-  public StringUtilsTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testEscapeEntitiesAmp() {
-    verifyEscapedEquals("intro & Co", "intro &amp; Co");
+    assertEscapedEquals("intro & Co", "intro &amp; Co");
   }
 
+  @Test
   public void testEscapeEntitiesLt() {
-    verifyEscapedEquals("23 < 42", "23 &lt; 42");
+    assertEscapedEquals("23 < 42", "23 &lt; 42");
   }
   
+  @Test
   public void testEscapeEntitiesTag() {
-    verifyEscapedEquals("<boring>", "&lt;boring&gt;");
+    assertEscapedEquals("<boring>", "&lt;boring&gt;");
   }
   
+  @Test
   public void testEscapeEntitiesQuot() {
-    verifyEscapedEquals("Do know \"So, what?\"", "Do know &quot;So, what?&quot;");
+    assertEscapedEquals("Do know \"So, what?\"", "Do know &quot;So, what?&quot;");
   }
   
-  protected void verifyEscapedEquals(String to_esc, String expected) {
+  protected void assertEscapedEquals(String to_esc, String expected) {
     String result = StringUtils.escapeHTMLEntities(to_esc);
-    assertTrue("'" + result + "' did not equal the escaped string '" + expected +"'",
+    Assert.assertTrue("'" + result + "' did not equal the escaped string '" + expected +"'",
                result.equals(expected));
   }
 
   // --- makeRandomId test cases
 
+  @Test
   public void testMakeRandomId() {
     String id = StringUtils.makeRandomId(10);
-    assertTrue("random id had wrong length", id.length() == 10);
+    Assert.assertTrue("random id had wrong length", id.length() == 10);
   }
 
+  @Test
   public void testMakeTwoRandomIds() {
     String id1 = StringUtils.makeRandomId(10);
     String id2 = StringUtils.makeRandomId(10);
-    assertTrue("random id1 had wrong length", id1.length() == 10);
-    assertTrue("random id2 had wrong length", id2.length() == 10);
-    assertTrue("random ids are equal!", !id1.equals(id2));
+    Assert.assertTrue("random id1 had wrong length", id1.length() == 10);
+    Assert.assertTrue("random id2 had wrong length", id2.length() == 10);
+    Assert.assertTrue("random ids are equal!", !id1.equals(id2));
   }
 
   // --- normalizeId test cases
 
+  @Test
   public void testNormalizeIdEmpty() {
-    assertTrue("incorrect normalization of empty string",
+    Assert.assertTrue("incorrect normalization of empty string",
                StringUtils.normalizeId("") == null);
   }
 
+  @Test
   public void testNormalizeIdOK() {
-    assertEquals("incorrect normalization",
+    Assert.assertEquals("incorrect normalization",
                  StringUtils.normalizeId("abc"), "abc");
   }
 
+  @Test
   public void testNormalizeIdOK1() {
-    assertEquals("incorrect normalization",
+    Assert.assertEquals("incorrect normalization",
                  StringUtils.normalizeId("a"), "a");
   }
 
+  @Test
   public void testNormalizeIdLowerCase() {
-    assertEquals("incorrect normalization",
+    Assert.assertEquals("incorrect normalization",
                  StringUtils.normalizeId("ABCD"), "abcd");
   }
 
+  @Test
   public void testNormalizeIdStripAccents() {
     String input = "ab\u00C6\u00D8\u00E5\u00E9\u00FF\u00FCab\u00CF";
-    assertEquals("incorrect normalization",
+    Assert.assertEquals("incorrect normalization",
                  StringUtils.normalizeId(input), "abeoaeyuabi");
   }
 
+  @Test
   public void testNormalizeIdKeepSpecials() {
-    assertEquals("incorrect normalization",
+    Assert.assertEquals("incorrect normalization",
                  StringUtils.normalizeId("ab._-"), "ab._-");
   }
 
+  @Test
   public void testNormalizeIdGetRidOfSpaces() {
     String id = StringUtils.normalizeId("  ab   ab  ");
-    assertTrue("incorrect normalization, should be 'ab-ab', but was '" + id + "'",
+    Assert.assertTrue("incorrect normalization, should be 'ab-ab', but was '" + id + "'",
                "ab-ab".equals(id));
   }
 
+  @Test
   public void testNormalizeIdEarlyDiscard() {
     String id = StringUtils.normalizeId("@@ab");
-    assertTrue("incorrect normalization, should be '__ab', but was '" + id + "'",
+    Assert.assertTrue("incorrect normalization, should be '__ab', but was '" + id + "'",
                "__ab".equals(id));
   }
 }

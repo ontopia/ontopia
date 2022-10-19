@@ -24,64 +24,60 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Test;
 
 public class DatatypePredicateTest extends AbstractPredicateTest {
   private static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
   private static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
   
-  public DatatypePredicateTest(String name) {
-    super(name);
-  }
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-
   /// tests
 
+  @Test
   public void testWithSpecificOcc() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
     List matches = new ArrayList();
     addMatch(matches, "DT", XTM_STRINGTYPE);
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $DT from " +
                 "  occurrence(topic1, $OCC), " +
                 "  datatype($OCC, $DT)?");
   }  
 
+  @Test
   public void testWithSpecificOcc2() throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 
     List matches = new ArrayList();
     addMatch(matches, "DT", XTM_URITYPE);
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "select $DT from " +
                 "  occurrence(topic1, $OCC), " +
                 "  datatype($OCC, $DT)?");
   }
 
+  @Test
   public void testWithSpecificWrongType()
     throws InvalidQueryException, IOException {
     load("int-occs.ltm");
                 
-    findNothing("$A = 2, " +
+    assertFindNothing("$A = 2, " +
                 "datatype($A, $OCC)?");
   }    
 
+  @Test
   public void testWithSpecificWrongType2()
     throws InvalidQueryException, IOException {
     load("int-occs.ltm");
                 
-    getParseError("datatype(2, $OCC)?");
+    assertGetParseError("datatype(2, $OCC)?");
   }    
   
+  @Test
   public void testFilterWithSpecificType()
     throws InvalidQueryException, IOException {
     load("uc-literature.xtm");
@@ -95,11 +91,12 @@ public class DatatypePredicateTest extends AbstractPredicateTest {
         addMatch(matches, "OCC", occ);
     }
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "occurrence(d-topicmaps-color, $OCC), " +
                 "datatype($OCC, \"http://www.w3.org/2001/XMLSchema#string\")?");
   }
 
+  @Test
   public void testFilterWithSpecificType2()
     throws InvalidQueryException, IOException {
     load("uc-literature.xtm");
@@ -113,84 +110,94 @@ public class DatatypePredicateTest extends AbstractPredicateTest {
         addMatch(matches, "OCC", occ);
     }
     
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "occurrence(d-topicmaps-color, $OCC), " +
                 "datatype($OCC, \"http://www.w3.org/2001/XMLSchema#anyURI\")?");
   }
   
+  @Test
   public void testFilterByWrongType() throws InvalidQueryException, IOException {
     load("uc-literature.xtm");
                 
-    findNothing("$DT = 2, " +
+    assertFindNothing("$DT = 2, " +
                 "occurrence(d-topicmaps-color, $OCC), " +
                 "datatype($OCC, $DT)?");
   }  
 
+  @Test
   public void testFilterByWrongType2()
     throws InvalidQueryException, IOException {
     load("uc-literature.xtm");
                 
-    getParseError("occurrence(d-topicmaps-color, $OCC), " +
+    assertGetParseError("occurrence(d-topicmaps-color, $OCC), " +
                   "datatype($OCC, 2)?");
   }  
   
+  @Test
   public void testLookupByType()
     throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
     List matches = getByType(XTM_STRINGTYPE);   
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "datatype($OCC, \"http://www.w3.org/2001/XMLSchema#string\")?");
   }
 
+  @Test
   public void testLookupByType2()
     throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
-    findNothing("datatype($OCC, \"http://www.w3.org/2001/XMLSchema#anyURI\")?");
+    assertFindNothing("datatype($OCC, \"http://www.w3.org/2001/XMLSchema#anyURI\")?");
   }
 
+  @Test
   public void testLookupByType3()
     throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 
-    findNothing("datatype($OCC, \"http://www.w3.org/2001/XMLSchema#string\")?");
+    assertFindNothing("datatype($OCC, \"http://www.w3.org/2001/XMLSchema#string\")?");
   }
 
+  @Test
   public void testLookupByType4()
     throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 
     List matches = getByType(XTM_URITYPE);
-    verifyQuery(matches,
+    assertQueryMatches(matches,
                 "datatype($OCC, \"http://www.w3.org/2001/XMLSchema#anyURI\")?");
   }
 
+  @Test
   public void testLookupByWrongType() throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 
-    findNothing("$DT = 2, " +
+    assertFindNothing("$DT = 2, " +
                 "datatype($OCC, $DT)?");
   }
 
+  @Test
   public void testLookupByWrongType2()
     throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 
-    getParseError("datatype($OCC, 2)?");
+    assertGetParseError("datatype($OCC, 2)?");
   }
   
+  @Test
   public void testProduceAll()
     throws InvalidQueryException, IOException {
     load("int-occs.ltm");
 
-    verifyQuery(getAll(), "datatype($OCC, $DT)?");
+    assertQueryMatches(getAll(), "datatype($OCC, $DT)?");
   }
 
+  @Test
   public void testProduceAll2() throws InvalidQueryException, IOException {
     load("ext-occs.ltm");
 
-    verifyQuery(getAll(), "datatype($OCC, $DT)?");
+    assertQueryMatches(getAll(), "datatype($OCC, $DT)?");
   }
   
   // MISSING TESTS:

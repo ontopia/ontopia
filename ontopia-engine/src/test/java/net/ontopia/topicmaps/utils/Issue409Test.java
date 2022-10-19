@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.HashSet;
 import java.util.Set;
-import junit.framework.Assert;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -30,6 +29,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class Issue409Test {
@@ -42,7 +42,7 @@ public class Issue409Test {
   @Test
   public void testOccsWithoutPSI() {
    
-    mergeTypedIF(new TypedIFCreator() {
+    assertMergeTypedIF(new TypedIFCreator() {
 
       @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
@@ -67,7 +67,7 @@ public class Issue409Test {
   @Test
   public void testOccsWithPSI() {
 
-     mergeTypedIF(new TypedIFCreator() {
+     assertMergeTypedIF(new TypedIFCreator() {
 
       @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
@@ -95,7 +95,7 @@ public class Issue409Test {
   @Test
   public void testNamesWithoutPSI() {
 
-    mergeTypedIF(new TypedIFCreator() {
+    assertMergeTypedIF(new TypedIFCreator() {
 
       @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
@@ -124,7 +124,7 @@ public class Issue409Test {
   @Test
   public void testNamesWithPSI() {
 
-     mergeTypedIF(new TypedIFCreator() {
+     assertMergeTypedIF(new TypedIFCreator() {
 
       @Override
       public void createTypedIFs(TopicMapBuilderIF builder, TopicIF type) {
@@ -150,7 +150,7 @@ public class Issue409Test {
     }); 
   }
   
-  private void mergeTypedIF(TypedIFCreator creator) {
+  private void assertMergeTypedIF(TypedIFCreator creator) {
     
     TopicMapIF source = new InMemoryTopicMapStore().getTopicMap();
     TopicMapBuilderIF builder = source.getBuilder();

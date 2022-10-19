@@ -23,10 +23,6 @@ import net.ontopia.topicmaps.core.TestFactoryIF;
 
 public class VariantNameTest extends net.ontopia.topicmaps.core.VariantNameTest {
 
-  public VariantNameTest(String name) {
-    super(name);
-  }
-
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();

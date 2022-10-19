@@ -22,6 +22,7 @@ package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -77,7 +78,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
 
   @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
-    if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
     if (!isConnected())
       throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
@@ -93,7 +94,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
 
   @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
-    if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
+    Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
     if (!isConnected())
       throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");

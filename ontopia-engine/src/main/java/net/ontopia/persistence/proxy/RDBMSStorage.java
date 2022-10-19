@@ -22,6 +22,8 @@ package net.ontopia.persistence.proxy;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,8 +31,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
@@ -50,7 +58,9 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
+import org.apache.commons.dbcp.DelegatingConnection;
 import org.apache.commons.lang3.StringUtils;
+import org.jgroups.util.DefaultThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +73,7 @@ public class RDBMSStorage implements StorageIF {
   
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
+  private static final ThreadFactory tFactory = new DefaultThreadFactory("nonTransactionalReadConnectionTimer-", true, true);
 
   public static final Set<String> known_properties;
   static {
@@ -102,6 +113,7 @@ public class RDBMSStorage implements StorageIF {
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MinimumSize");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.UserName");
+    known_properties.add("net.ontopia.topicmaps.impl.rdbms.NonTransactionalRead");
     known_properties.add("net.ontopia.topicmaps.query.core.QueryProcessorIF");
     known_properties.add("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale");
     known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValuePredicate.function");
@@ -136,6 +148,11 @@ public class RDBMSStorage implements StorageIF {
 
   private final Set<AbstractTransaction> transactions = Collections.newSetFromMap(new WeakHashMap<AbstractTransaction, Boolean>());
 
+  private boolean nonTransactionalReadAllowed = true;
+  private int nonTransactionalReadConnectionTimeout = 10;
+  private final ScheduledExecutorService nonTransactionalReadConnectionTimer = Executors.newSingleThreadScheduledExecutor(tFactory);
+  private final Map<Thread, NonTransactionalReadConnection> nonTransactionalReadConnections = new WeakHashMap<>();
+
   private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
     @Override
     public Class<?> getType() { throw new UnsupportedOperationException(); }
@@ -165,9 +182,7 @@ public class RDBMSStorage implements StorageIF {
    */
   public RDBMSStorage(String propfile) throws IOException {    
     // TODO: attempt to load props from CLASSPATH (file: oks.rdbms.props)
-    
-    if (propfile == null)
-      throw new NullPointerException("Property file cannot be null. Please set the 'net.ontopia.topicmaps.impl.rdbms.PropertyFile' property.");
+    Objects.requireNonNull(propfile, "Property file cannot be null. Please set the 'net.ontopia.topicmaps.impl.rdbms.PropertyFile' property.");
     
     // Load properties from file
     InputStream istream = StreamUtils.getInputStream(propfile);
@@ -243,6 +258,10 @@ public class RDBMSStorage implements StorageIF {
       this.ro_connfactory = new DefaultConnectionFactory(properties, true);
     }
     
+    nonTransactionalReadAllowed = PropertyUtils.isTrue(properties.get("net.ontopia.topicmaps.impl.rdbms.NonTransactionalRead"), true);
+    log.debug((nonTransactionalReadAllowed ? "Allowing" : "Not allowing") + " non-transactional reads");
+    nonTransactionalReadConnectionTimeout = PropertyUtils.getInt(properties.get("net.ontopia.topicmaps.impl.rdbms.NonTransactionalReadTimeout"), 10); // 10s
+
     // Get database
     this.database = getProperty("net.ontopia.topicmaps.impl.rdbms.Database");
     if (this.database == null)
@@ -445,7 +464,21 @@ public class RDBMSStorage implements StorageIF {
   }
   
   @Override
-  public void close() {
+  public synchronized void close() {
+    nonTransactionalReadConnectionTimer.shutdownNow();
+    synchronized (nonTransactionalReadConnections) {
+      nonTransactionalReadConnections.values().forEach(connection -> {
+        try {
+          if (!connection.isClosed()) {
+              connection.close();
+          }
+        } catch (SQLException e) {
+          throw new OntopiaRuntimeException(e);
+        }
+      });
+      nonTransactionalReadConnections.clear();
+    }
+
     if (cluster != null) {
       try {
         cluster.leave();
@@ -748,15 +781,13 @@ public class RDBMSStorage implements StorageIF {
    * @param cause The transaction that committed the merge
    * @since %NEXT%
    */
-  public void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
+  public synchronized void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
     // block other transactons until we have processed the merge
-    synchronized (transactions) {
       for (AbstractTransaction transaction : transactions) {
         if (!transaction.equals(cause)) {
           transaction.objectMerged(source, target);
         }
       }
-    }
   }
 
   public int getActiveTransactionCount() {
@@ -773,5 +804,105 @@ public class RDBMSStorage implements StorageIF {
    */
   public Set<AbstractTransaction> getTransactions() {
     return transactions;
+  }
+
+  protected synchronized Connection getNonTransactionalReadConnection() {
+    if (!nonTransactionalReadAllowed) {
+      throw new TransactionNotActiveException();
+    }
+
+    final Thread thread = Thread.currentThread();
+    NonTransactionalReadConnection connection;
+    try {
+      synchronized (nonTransactionalReadConnections) {
+        connection = nonTransactionalReadConnections.get(thread);
+        if (connection != null) {
+          if (connection.isClosed()) {
+            nonTransactionalReadConnections.remove(thread);
+            // boem
+          } else {
+            connection.touch();
+            return connection;
+          }
+        }
+      }
+      connection = new NonTransactionalReadConnection(getConnectionFactory(true).requestConnection());
+
+      synchronized (nonTransactionalReadConnections) {
+        nonTransactionalReadConnections.put(thread, connection);
+      }
+
+      new NonTransactionalReadConnectionCleanup(connection, thread);
+    } catch (SQLException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+    log.debug("Requested NonTransactionalRead connection " + Integer.toHexString(connection.hashCode()) + " for " + thread);
+    return connection;
+  }
+
+  protected void touch(Connection connection) {
+    if (connection instanceof NonTransactionalReadConnection) {
+      ((NonTransactionalReadConnection) connection).touch();
+    }
+  }
+
+  private class NonTransactionalReadConnectionCleanup implements Callable<NonTransactionalReadConnection> {
+
+    private final NonTransactionalReadConnection connection;
+    private final Thread thread;
+
+    public NonTransactionalReadConnectionCleanup(NonTransactionalReadConnection connection, Thread thread) {
+      this.connection = connection;
+      this.thread = thread;
+      nonTransactionalReadConnectionTimer.schedule(this, nonTransactionalReadConnectionTimeout, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public NonTransactionalReadConnection call() throws Exception {
+      if (!connection.isClosed() && thread.isAlive() && connection.lastUsed() > 0) {
+        long timeout = connection.lastUsed() + TimeUnit.SECONDS.toMillis(nonTransactionalReadConnectionTimeout);
+        if (timeout > System.currentTimeMillis()) {
+          log.debug("NonTransactionalRead connection {} was used, resetting timeout for {}", Integer.toHexString(connection.hashCode()), thread);
+          nonTransactionalReadConnectionTimer.schedule(this, nonTransactionalReadConnectionTimeout, TimeUnit.SECONDS);
+          return connection;
+        }
+      }
+      clean();
+      return connection;
+    }
+
+    private void clean() {
+      log.debug("Closing NonTransactionalRead connection {} for {}", Integer.toHexString(connection.hashCode()), thread);
+      try {
+          connection.close();
+      } catch (SQLException e) {
+        throw new OntopiaRuntimeException(e);
+      } finally {
+        synchronized (nonTransactionalReadConnections) {
+          nonTransactionalReadConnections.remove(thread);
+        }
+      }
+    }
+  }
+
+  private class NonTransactionalReadConnection extends DelegatingConnection {
+
+    public NonTransactionalReadConnection(Connection c) {
+      super(c);
+    }
+
+    private void touch() {
+      setLastUsed();
+    }
+
+    private long lastUsed() {
+      return getLastUsed();
+    }
+
+    @Override
+    public void close() throws SQLException {
+      // skip passivate, as it registers as 'already closed', blocking the return to the pool
+      getDelegate().close();
+    }
   }
 }

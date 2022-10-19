@@ -20,6 +20,7 @@
 
 package net.ontopia;
 
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -53,11 +54,19 @@ public class OntopiaTest {
   
   @Test
   public void testCheckClasses() {
-    Ontopia.checkClasses();
+    try {
+      Ontopia.checkClasses();
+    } catch (OntopiaRuntimeException ore) {
+      Assert.fail(ore.getMessage());
+    }
   }
   
   @Test
   public void testCheck() {
-    Ontopia.check();
+    try {
+      Ontopia.check();
+    } catch (OntopiaRuntimeException ore) {
+      Assert.fail(ore.getMessage());
+    }
   }
 }

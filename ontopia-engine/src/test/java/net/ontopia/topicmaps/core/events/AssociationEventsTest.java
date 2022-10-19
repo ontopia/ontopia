@@ -21,19 +21,21 @@ package net.ontopia.topicmaps.core.events;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-
+import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
 public abstract class AssociationEventsTest extends AbstractTopicMapTest {
 
@@ -42,10 +44,6 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
   protected TopicMapBuilderIF builder; // builder used for creating new objects
   protected EventListener listener;
   
-
-  public AssociationEventsTest(String name) {
-    super(name);
-  }
 
   @Override
   public void setUp() throws Exception {
@@ -92,12 +90,13 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
   
   // --- Test Cases
   
+  @Test
   public void testRolePlayerEvent1() throws MalformedURLException {
     TopicIF johnDoe = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#JohnDoe"));
     TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#graduatedFrom"));
     TopicIF alumnusRoleType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#Alumnus"));
   
-    assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
+    Assert.assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
     
     final String annotation1 = "create association";
     listener.traceAnnotation = annotation1;
@@ -107,10 +106,11 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
     listener.traceAnnotation = annotation2;
     builder.makeAssociationRole(grad, alumnusRoleType, johnDoe);
     topicmap.getStore().commit();
-    assertTrue("no event for " + johnDoe + " when it became a role player; event list: " + listener.traces, 
+    Assert.assertTrue("no event for " + johnDoe + " when it became a role player; event list: " + listener.traces, 
         listener.findTrace(null, annotation2, johnDoe) != null);
   }
   
+  @Test
   public void testRolePlayerEvent2() throws MalformedURLException {
     TopicIF johnDoe = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#JohnDoe"));
     TopicIF uOfSwhere = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#UniversityOfSomewhere"));
@@ -118,7 +118,7 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
     TopicIF alumnusRoleType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#Alumnus"));
     TopicIF almaMaterRoleType = getTopicBySubjectIdentifier(URILocator.create("http://psi.chludwig.de/playground#AlmaMater"));
   
-    assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
+    Assert.assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
     
     final String annotation1 = "create association";
     listener.traceAnnotation = annotation1;
@@ -135,9 +135,9 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
     topicmap.getStore().commit();
     
     // Note: the first test ignores the annotation, so it only checks that johnDoe was modified at some point
-    assertTrue("no event for " + johnDoe + " when it became a role player; event list: " + listener.traces, 
+    Assert.assertTrue("no event for " + johnDoe + " when it became a role player; event list: " + listener.traces, 
         listener.findTrace(null, null, johnDoe) != null);
-    assertTrue("no event for " + uOfSwhere + " when it became a role player; event list: " + listener.traces, 
+    Assert.assertTrue("no event for " + uOfSwhere + " when it became a role player; event list: " + listener.traces, 
         listener.findTrace(null, annotation3, uOfSwhere) != null);
   }
   
@@ -152,19 +152,13 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
     public EventTrace(String event, String annotation, TMObjectIF tmObject) {
       super();
       
-      if(event == null) {
-        throw new NullPointerException("event must not be null");
-      }
+      Objects.requireNonNull(event, "event must not be null");
       this.event = event;
 
-      if(annotation == null) {
-        throw new NullPointerException("annotation must not be null");
-      }
+      Objects.requireNonNull(annotation, "annotation must not be null");
       this.annotation = annotation;
 
-      if(tmObject == null) {
-        throw new NullPointerException("tmObject must not be null");
-      }
+      Objects.requireNonNull(tmObject, "tmObject must not be null");
       this.tmObject = tmObject;
     }
         

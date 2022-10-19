@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -60,7 +61,6 @@ import net.ontopia.topicmaps.query.utils.TologSpy;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -452,7 +452,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     private int[] orderColumns;
     private int[] orderType;
     private boolean[] isAscending;
-    private StringifierIF sort;
+    private Function<TopicIF, String> sort;
 
     private final static int ORDER_UNKNOWN = -1;
     private final static int ORDER_TOPIC = 0;
@@ -537,8 +537,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           if (row1[orderColumns[ix]] == row2[orderColumns[ix]])
             comp = 0;
           else {
-            String name1 = sort.toString(row1[orderColumns[ix]]);
-            String name2 = sort.toString(row2[orderColumns[ix]]);
+            String name1 = sort.apply((TopicIF) row1[orderColumns[ix]]);
+            String name2 = sort.apply((TopicIF) row2[orderColumns[ix]]);
             
             if (name1 == null)
               comp = name2 == null ? 0 : -1;
@@ -571,8 +571,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
             if (row1[orderColumns[ix]] == row2[orderColumns[ix]])
               comp = 0;
             else {
-              String name1 = sort.toString(row1[orderColumns[ix]]);
-              String name2 = sort.toString(row2[orderColumns[ix]]);
+              String name1 = sort.apply((TopicIF) row1[orderColumns[ix]]);
+              String name2 = sort.apply((TopicIF) row2[orderColumns[ix]]);
               
               if (name1 == null)
                 comp = name2 == null ? 0 : -1;

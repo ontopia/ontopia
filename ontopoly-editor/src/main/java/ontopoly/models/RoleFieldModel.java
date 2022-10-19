@@ -38,17 +38,14 @@ public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
   
   public RoleFieldModel(RoleField roleField) {
     super(roleField);
-    if (roleField == null)
-      throw new NullPointerException("roleField parameter cannot be null.");
+    Objects.requireNonNull(roleField, "roleField parameter cannot be null.");
     topicMapId = roleField.getTopicMap().getId();
     fieldId = roleField.getId();
   }
 
   public RoleFieldModel(String topicMapId, String fieldId) {
-    if (topicMapId == null)
-      throw new NullPointerException("topicMapId parameter cannot be null.");
-    if (fieldId == null)
-      throw new NullPointerException("fieldId parameter cannot be null.");
+    Objects.requireNonNull(topicMapId, "topicMapId parameter cannot be null.");
+    Objects.requireNonNull(fieldId, "fieldId parameter cannot be null.");
     this.topicMapId = topicMapId;
     this.fieldId = fieldId;
   }

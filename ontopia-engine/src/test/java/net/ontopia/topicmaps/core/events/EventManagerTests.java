@@ -18,12 +18,11 @@
  * !#
  */
 
-// $Id$
-
 package net.ontopia.topicmaps.core.events;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -40,11 +39,12 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.utils.OntopiaRuntimeException;
+import org.junit.Test;
   
 public abstract class EventManagerTests extends AbstractTopicMapTest {
 
@@ -52,10 +52,6 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   protected TopicMapIF topicmap;       // topic map of object being tested
   protected TopicMapBuilderIF builder; // builder used for creating new objects
   protected TesterListener listener;
-  
-  public EventManagerTests(String name) {
-    super(name);
-  }
   
   @Override
   public void setUp() throws Exception {
@@ -66,7 +62,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     try {
       // load topic map
       TopicMapStoreIF store = topicmapRef.createStore(false);
-      TopicMapIF tm = store.getTopicMap();
+      store.getTopicMap();
       EventManagerIF emanager = ((AbstractTopicMapStore)store).getEventManager();
       emanager.addListener(listener, AssociationIF.EVENT_ADD_ROLE);    
       emanager.addListener(listener, AssociationIF.EVENT_ADD_THEME);
@@ -132,13 +128,9 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
   protected class Event {
     private Object object;
     private String event;
-    private Object new_value;
-    private Object old_value;
     Event(Object object, String event, Object new_value, Object old_value) {
       this.object = object;
       this.event = event;
-      this.new_value = new_value;
-      this.old_value = old_value;
     }
     @Override
     public String toString() {
@@ -201,6 +193,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
 
   }
   
+  @Test
   public void testTopicLifecycle() {
 
     // --- topic events
@@ -294,7 +287,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
 
     // TopicNameIF.addVariant
     String vn_vn1 = "vn1";
-    VariantNameIF vn = builder.makeVariantName(tn, vn_vn1);
+    VariantNameIF vn = builder.makeVariantName(tn, vn_vn1, Collections.emptySet());
 
     // VariantNameIF.setValue
     String vn_vn2 = "123";

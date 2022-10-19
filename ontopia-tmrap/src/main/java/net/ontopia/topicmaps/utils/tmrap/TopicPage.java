@@ -71,8 +71,7 @@ public class TopicPage {
   public static String getReifierName(TopicMapIF topicmap) {
     TopicIF topicmapReifier = topicmap.getReifier();
     if (topicmapReifier != null) {
-      return TopicStringifiers.getDefaultStringifier()
-          .toString(topicmapReifier);
+      return TopicStringifiers.toString(topicmapReifier);
     }
     return null;
   }

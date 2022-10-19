@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
@@ -51,6 +52,7 @@ public class VariantName extends Scoped {
 		return dataType;
 	}
 
+	@JsonIgnore
 	public void setDatatype(URILocator datatype) {
 		this.dataType = datatype;
 	}

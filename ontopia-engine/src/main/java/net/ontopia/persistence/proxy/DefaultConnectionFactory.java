@@ -25,9 +25,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import net.ontopia.utils.OntopiaRuntimeException;
-
+import org.jgroups.util.DefaultThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
@@ -41,8 +43,10 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DefaultConnectionFactory.class.getName());
+  private static final DefaultThreadFactory tFactory = new DefaultThreadFactory("connectionCleanup-", true, true);
 
   protected boolean readOnly;
+  protected ScheduledExecutorService connectionTimeoutExecutor = null;
   
   public DefaultConnectionFactory(Map properties, boolean readOnly) {
     super(properties);
@@ -57,6 +61,10 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
     catch (ClassNotFoundException e) {
       throw new OntopiaRuntimeException("Couldn't find JDBC driver class '" + getDriver() + "' (name taken from init property net.ontopia.topicmaps.impl.rdbms.DriverClass)");
     }    
+
+    if (timeout > -1) {
+      connectionTimeoutExecutor = Executors.newSingleThreadScheduledExecutor(tFactory);
+    }
   }
 
   @Override
@@ -82,7 +90,30 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
     
     // disable auto-commit
     conn.setAutoCommit(false);    
-    return conn;
+    return applyTimeout(conn);
   }
-  
+
+  protected Connection applyTimeout(Connection connection) {
+    if (timeout > -1) {
+      final Exception trace = new Exception();
+      connectionTimeoutExecutor.schedule(() -> {
+        try {
+          if (!connection.isClosed()) {
+            log.warn("Connection {} was not returned to store within {} seconds, closing the connection.", connection, timeout, trace);
+            connection.close();
+          }
+        } catch (SQLException e) {
+          throw new OntopiaRuntimeException(e);
+        }
+      }, timeout, TimeUnit.SECONDS);
+    }
+    return connection;
+  }
+
+  @Override
+  public void close() {
+    if (connectionTimeoutExecutor != null) {
+      connectionTimeoutExecutor.shutdownNow();
+    }
+  }
 }

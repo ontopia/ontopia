@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.utils;
 
 import java.io.Reader;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -155,7 +156,7 @@ public class CopyUtils {
    */
   public static VariantNameIF copyVariant(TopicNameIF target, VariantNameIF source) {
     TopicMapBuilderIF builder = target.getTopicMap().getBuilder();
-    VariantNameIF n = builder.makeVariantName(target, ""); // HACK: needs improvement
+    VariantNameIF n = builder.makeVariantName(target, "", Collections.emptySet()); // HACK: needs improvement
     copyScope(n, source);
     copyVariantData(n, source);
     return n;

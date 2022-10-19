@@ -78,10 +78,8 @@ public class DynamicTreeWidget {
   protected String ownpage;
   private String querystr; // string repr of query, parsed into 'query'
   private String nodeFrame;
-  private boolean addAnchor = true;
 
   private String tablequery;
-  private String dataquery;
   private java.util.Comparator childrenComparator = new java.util.Comparator() {
       private java.util.Comparator c = net.ontopia.topicmaps.utils.TopicComparators.getTopicNameComparator(java.util.Collections.EMPTY_SET);
       @Override
@@ -202,14 +200,6 @@ public class DynamicTreeWidget {
   }
 
   /**
-   * PUBLIC: If set to true the widget will add anchors on all links that
-   * open/close nodes in the tree. The default is true.
-   */
-  public void setAddAnchor(boolean addAnchor) {
-    this.addAnchor = addAnchor;
-  }
-
-  /**
    * PUBLIC: Sets the maximum number of nodes displayed by the widget at once.
    * If the number of nodes to display exceeds the maximum the widget will break
    * the display into multiple "pages".
@@ -251,9 +241,6 @@ public class DynamicTreeWidget {
     else
       this.topquery = topquery;
   }
-  public void setDataQuery(String dataquery) {
-    this.dataquery = dataquery;
-  }
 
   /**
    * PUBLIC: Runs the widget, producing the output.
@@ -271,13 +258,6 @@ public class DynamicTreeWidget {
     // check that query has been parsed
     if (query == null && querystr != null)
       query = processor.parse(querystr, context.getDeclarationContext());
-
-    // get current node
-    TopicIF current = null;
-    if (parameters.containsKey("current"))
-      current = getTopic(get(parameters, "current"));
-
-    int action = getAction(parameters);
 
     int topline = 0;
     if (parameters.containsKey("topline")) {
@@ -681,22 +661,6 @@ public class DynamicTreeWidget {
     }
 
     return lineno;
-  }
-
-  // --- Helpers
-
-  private int getAction(Map parameters) {
-    String action = get(parameters, "todo");
-    if (action == null)
-      action = "close";
-
-    switch (action) {
-      case "open": return OPEN;
-      case "close": return CLOSE;
-      case "expandall": return EXPAND_ALL;
-      case "closeall": return CLOSE_ALL;
-      default: return -1;
-    }
   }
 
   // --- Utilities

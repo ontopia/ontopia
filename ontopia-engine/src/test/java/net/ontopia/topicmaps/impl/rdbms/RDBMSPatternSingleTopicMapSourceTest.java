@@ -23,27 +23,27 @@ package net.ontopia.topicmaps.impl.rdbms;
 import java.io.IOException;
 import net.ontopia.topicmaps.entry.AbstractTopicMapSourceTest;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class RDBMSPatternSingleTopicMapSourceTest
   extends AbstractTopicMapSourceTest {
 
-  public RDBMSPatternSingleTopicMapSourceTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
-    super.setUp();
   }
 
   // --- Test cases
 
+  @Test
   public void testSource() {
     // run abstract topic map source tests
-    doAbstractTopicMapSourceTests(makeSource());
+    assertCompliesToAbstractTopicMapSource(makeSource());
   }
 
+  @Test
   public void testRefresh() throws IOException {
     // constants
     final String title = "test-topic-map";
@@ -63,7 +63,7 @@ public class RDBMSPatternSingleTopicMapSourceTest
       source.setPattern(title);
       TopicMapReferenceIF ref = (TopicMapReferenceIF)
         source.getReferences().iterator().next();
-      assertTrue("reference has wrong ID: " + ref,
+      Assert.assertTrue("reference has wrong ID: " + ref,
                  ((RDBMSTopicMapReference) ref).getTopicMapId() == store.getLongId());
 
       // make another topic map matching pattern
@@ -74,7 +74,7 @@ public class RDBMSPatternSingleTopicMapSourceTest
       // verify that new topic map is being picked up
       source.refresh();
       ref = (TopicMapReferenceIF) source.getReferences().iterator().next();
-      assertTrue("reference has wrong ID: " + ref,
+      Assert.assertTrue("reference has wrong ID: " + ref,
                  ((RDBMSTopicMapReference) ref).getTopicMapId() == store2.getLongId());
     } finally {
       // clean up

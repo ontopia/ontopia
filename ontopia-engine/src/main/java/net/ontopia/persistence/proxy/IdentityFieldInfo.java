@@ -274,17 +274,13 @@ public class IdentityFieldInfo implements FieldInfoIF {
 
     if (identity == null) {
       // All keys bind null
-      int offset = stmt_index;
       for (int i=0; i < fields_length; i++) {
         fields[i].bind(null, stm, stmt_index);   
-        offset += fields[i].getColumnCount();
       }
     } else {
       // Bind key value
-      int offset = stmt_index;
       for (int i=0; i < fields_length; i++) {
         fields[i].bind(identity.getKey(i), stm, stmt_index);   
-        offset += fields[i].getColumnCount();
       }
     }
   }

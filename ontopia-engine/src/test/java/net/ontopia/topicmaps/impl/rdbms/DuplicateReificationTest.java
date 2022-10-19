@@ -23,10 +23,6 @@ import net.ontopia.topicmaps.core.TestFactoryIF;
 
 public class DuplicateReificationTest extends net.ontopia.topicmaps.core.DuplicateReificationTest {
 
-  public DuplicateReificationTest(String name) {
-    super(name);
-  }
-
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();

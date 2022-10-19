@@ -20,18 +20,16 @@
 
 package net.ontopia.topicmaps.classify;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class DowncaseNormalizerTestCase extends TestCase {
-  
-  public DowncaseNormalizerTestCase(String name) {
-    super(name);
-  }
-  
+public class DowncaseNormalizerTestCase {
+
+  @Test
   public void testNormalizer() {
     DowncaseNormalizer n = new DowncaseNormalizer();
 
-    assertEquals(n.normalize("AbC"), "abc");
+    Assert.assertEquals(n.normalize("AbC"), "abc");
   }
   
 }

@@ -20,24 +20,22 @@
 
 package net.ontopia.topicmaps.utils;
 
-import junit.framework.TestCase;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class IdentityUtilsTest extends TestCase {
+public class IdentityUtilsTest {
   protected TopicMapIF    topicmap; 
   protected TopicMapBuilderIF builder;
 
-  public IdentityUtilsTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
     builder = topicmap.getBuilder();
@@ -49,6 +47,7 @@ public class IdentityUtilsTest extends TestCase {
     return store.getTopicMap();
   }
 
+  @Test
   public void testGetObjectBySymbolicId() {
     String symbolicId = "foo";
     TopicIF topic = builder.makeTopic();
@@ -57,15 +56,16 @@ public class IdentityUtilsTest extends TestCase {
     topic.addItemIdentifier(loc);
 
     TMObjectIF topic2 = IdentityUtils.getObjectBySymbolicId(topicmap, symbolicId);
-    assertEquals("Topic not found by symbolic id", topic, topic2);    
+    Assert.assertEquals("Topic not found by symbolic id", topic, topic2);    
   }
 
+  @Test
   public void testGetSymbolicIdLocator() {
     String symbolicId = "foo";
     LocatorIF base = topicmap.getStore().getBaseAddress();
     LocatorIF loc = base.resolveAbsolute("#" + symbolicId);
     LocatorIF loc2 = IdentityUtils.getSymbolicIdLocator(topicmap, symbolicId);
-    assertEquals("Symbolic locators not equal", loc, loc2);
+    Assert.assertEquals("Symbolic locators not equal", loc, loc2);
   }
   
 }
