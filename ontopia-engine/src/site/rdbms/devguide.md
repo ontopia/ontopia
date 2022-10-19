@@ -394,7 +394,7 @@ topic map references.
   rep.close();
 ````
 
-See [The Ontopia Navigator Framework Configuration Guide](../navigator/config.html#sect-sources-xml)
+See [The Ontopia Navigator Framework Configuration Guide](../navigator/config.html#tm-sourcesxml)
 for more information on how to set up the tm-sources.xml file.
 
 ### Locating RDBMS topic maps ###

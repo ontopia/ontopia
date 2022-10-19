@@ -16,7 +16,7 @@ of how to configure them.
 
 > **Note**
 > This is a short summary of the installation process for the impatient. If you want more detail,
-> jump to [the introduction](#sect-intro) and read on from there.
+> jump to [the introduction](#introduction) and read on from there.
 
 In order to use the RDBMS backend you need:
 
