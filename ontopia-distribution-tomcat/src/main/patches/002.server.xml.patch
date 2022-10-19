@@ -1,40 +1,39 @@
---- conf/server.xml
-+++ conf/server.xml
-@@ -70,12 +70,14 @@
-     -->
-     <Connector port="8080" protocol="HTTP/1.1"
-                connectionTimeout="20000"
-+               URIEncoding="UTF-8"
-                redirectPort="8443" />
-     <!-- A "Connector" using the shared thread pool-->
-     <!--
-     <Connector executor="tomcatThreadPool"
-                port="8080" protocol="HTTP/1.1"
-                connectionTimeout="20000"
-+               URIEncoding="UTF-8"
-                redirectPort="8443" />
-     -->
-     <!-- Define a SSL HTTP/1.1 Connector on port 8443
-@@ -90,7 +92,7 @@
-     -->
- 
-     <!-- Define an AJP 1.3 Connector on port 8009 -->
--    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
-+    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" URIEncoding="UTF-8"/>
- 
- 
-     <!-- An Engine represents the entry point (within Catalina) that processes
-@@ -138,6 +140,13 @@
-                prefix="localhost_access_log." suffix=".txt"
-                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
- 
-+        <Context path="/accessctl">
-+          <Realm className="org.apache.catalina.realm.JAASRealm" appName="accessctl"
-+                useContextClassLoader="false"
-+                userClassNames="net.ontopia.topicmaps.nav2.realm.UserPrincipal"
-+                roleClassNames="net.ontopia.topicmaps.nav2.realm.RolePrincipal"/>
-+
-+        </Context>
-       </Host>
-     </Engine>
-   </Service>
+--- conf/server.xml	2022-10-19 16:12:11.000000000 +0200
++++ conf/server.xml	2022-10-19 16:12:17.000000000 +0200
+@@ -68,12 +68,14 @@
+     -->
+     <Connector port="8080" protocol="HTTP/1.1"
+                connectionTimeout="20000"
++               URIEncoding="UTF-8"
+                redirectPort="8443" />
+     <!-- A "Connector" using the shared thread pool-->
+     <!--
+     <Connector executor="tomcatThreadPool"
+                port="8080" protocol="HTTP/1.1"
+                connectionTimeout="20000"
++               URIEncoding="UTF-8"
+                redirectPort="8443" />
+     -->
+     <!-- Define an SSL/TLS HTTP/1.1 Connector on port 8443
+@@ -116,6 +118,7 @@
+     <Connector protocol="AJP/1.3"
+                address="::1"
+                port="8009"
++               URIEncoding="UTF-8"
+                redirectPort="8443" />
+     -->
+ 
+@@ -164,6 +167,13 @@
+                prefix="localhost_access_log" suffix=".txt"
+                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+ 
++        <Context path="/accessctl">
++          <Realm className="org.apache.catalina.realm.JAASRealm" appName="accessctl"
++                useContextClassLoader="false"
++                userClassNames="net.ontopia.topicmaps.nav2.realm.UserPrincipal"
++                roleClassNames="net.ontopia.topicmaps.nav2.realm.RolePrincipal"/>
++
++        </Context>
+       </Host>
+     </Engine>
+   </Service>
