@@ -99,7 +99,7 @@
       <br><b>User guides:</b>
 
       <ul>
-        <li><a href="ontopoly/doc/user-guide.html">Ontopoly</a>
+        <li><a href="ontopoly/doc/ontopoly/user-guide.html">Ontopoly</a>
         <li><a href="omnigator/docs/omnigator/userguide.html">Omnigator</a>
         <li><a href="omnigator/docs/vizigator/userguide.html">Vizigator</a>
       </ul>
