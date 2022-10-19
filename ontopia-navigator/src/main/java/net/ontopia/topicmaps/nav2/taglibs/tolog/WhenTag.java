@@ -23,8 +23,6 @@ package net.ontopia.topicmaps.nav2.taglibs.tolog;
 import javax.servlet.jsp.JspTagException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Variant of IfTag, which sets a parent alerts a parent ChooseTag,
@@ -32,9 +30,6 @@ import org.slf4j.LoggerFactory;
  * If the body is evaluated parentChooser.setFoundMatchingWhen() is called.
  */
 public class WhenTag extends IfTag {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
 
   // members
   protected ChooseTag parentChooser;

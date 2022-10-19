@@ -676,22 +676,6 @@ public class URILocator extends AbstractLocator implements Externalizable {
       return (char) ('A' + (value - 10));
   }
   
-  // --- Debugging methods
-
-  @SuppressWarnings("unused")
-  private void debugPrint(char[] uri, int length, int[] indexes, int count) {
-    System.out.println("\n" + new String(uri, 0, length));
-    int next = 0;
-    for (int ix = 0; ix < length; ix++) {
-      if (indexes[next] == ix) {
-        System.out.print("^");
-        next++;
-      } else
-        System.out.print(" ");
-    }
-    System.out.println("");
-  }
-
   // --------------------------------------------------------------------------
   // Misc
   // --------------------------------------------------------------------------

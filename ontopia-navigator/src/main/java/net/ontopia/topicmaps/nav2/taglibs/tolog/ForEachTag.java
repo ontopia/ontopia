@@ -35,8 +35,6 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL:  
@@ -63,9 +61,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ForEachTag extends BodyTagSupport {
-
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(ForEachTag.class.getName());
 
   // members
   protected ForEachTag groupingAncestor; 

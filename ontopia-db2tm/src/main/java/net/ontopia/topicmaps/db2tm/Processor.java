@@ -762,8 +762,7 @@ public class Processor {
   
   protected static void addIdentities(AssociationIF assoc, Relation relation, Entity entity,
                                       String[] tuple, Context ctx) {
-    if (assoc == null)
-      throw new NullPointerException("Cannot add identities to null association.");
+    Objects.requireNonNull(assoc, "Cannot add identities to null association.");
     for (Field field : entity.getIdentityFields()) {
       if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
         LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);

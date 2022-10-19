@@ -22,17 +22,14 @@ package net.ontopia.topicmaps.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * This class is the base class for all test cases which test the collection properties
  * handling of the different implementations of the core topic map interfaces.
  */
-public abstract class CollectionPropertiesTest extends AbstractTopicMapTest
-{
-
-  public CollectionPropertiesTest(String name) {
-    super(name);
-  }
+public abstract class CollectionPropertiesTest extends AbstractTopicMapTest {
 
   protected void testMethod(Object obj, String methodName, String propType) {
     Class cls = obj.getClass();
@@ -43,9 +40,9 @@ public abstract class CollectionPropertiesTest extends AbstractTopicMapTest
       parmCls[0] = Class.forName(propType);
       method = cls.getMethod(methodName, parmCls);
     } catch (ClassNotFoundException ex) {
-      fail("Test setup failure. Cannot find class: " + propType);
+      Assert.fail("Test setup failure. Cannot find class: " + propType);
     } catch (NoSuchMethodException ex) {
-      fail("Test setup failure: Cannot find method: " + methodName);
+      Assert.fail("Test setup failure: Cannot find method: " + methodName);
     }
         
 
@@ -56,45 +53,48 @@ public abstract class CollectionPropertiesTest extends AbstractTopicMapTest
       method.invoke(obj, (Object[])null);
 
       // If we get to here without an exception, the test failed.
-      fail("Allowed to pass null to " + cls.getName() + "." + methodName);
+      Assert.fail("Allowed to pass null to " + cls.getName() + "." + methodName);
     } catch(IllegalArgumentException ex) {
       // This is expected
     } catch(IllegalAccessException ex) {
-      fail("Test setup failure: Cannot access method " + cls.getName() + "." + methodName);
+      Assert.fail("Test setup failure: Cannot access method " + cls.getName() + "." + methodName);
     } catch(InvocationTargetException ex) {
-      fail("Test setup failure: Cannot invoke method " + cls.getName() + "." + methodName);
+      Assert.fail("Test setup failure: Cannot invoke method " + cls.getName() + "." + methodName);
     }
   }
 
-  protected void testProperty(Object obj, String propName, String propClass) {
+  protected void assertProperty(Object obj, String propName, String propClass) {
     testMethod(obj, "add" + propName, propClass);
     testMethod(obj, "remove" + propName, propClass);
   }
 
+  @Test
   public void testTopic() {
     TopicIF topic = builder.makeTopic();
-    testTMObject(topic);
+    assertTMObject(topic);
   }
 
+  @Test
   public void testAssociation() {
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
-    testScoped(assoc);
-    testTMObject(assoc);
+    assertScoped(assoc);
+    assertTMObject(assoc);
   }
 
+  @Test
   public void testTopicName() {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "");
-    testScoped(bn);
-    testTMObject(bn);
+    assertScoped(bn);
+    assertTMObject(bn);
   }
 
-  protected void testScoped(ScopedIF obj) {
-    testProperty(obj, "Theme", "net.ontopia.topicmaps.core.TopicIF");
+  protected void assertScoped(ScopedIF obj) {
+    assertProperty(obj, "Theme", "net.ontopia.topicmaps.core.TopicIF");
   }
         
-  protected void testTMObject(TMObjectIF obj) {
-    testProperty(obj, "ItemIdentifier", "net.ontopia.infoset.core.LocatorIF");
+  protected void assertTMObject(TMObjectIF obj) {
+    assertProperty(obj, "ItemIdentifier", "net.ontopia.infoset.core.LocatorIF");
   }
         
 }

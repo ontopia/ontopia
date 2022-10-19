@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.cmdlineutils.sanity.AssociationSanity;
 import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateNames;
 import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateOccurrences;
@@ -36,11 +35,8 @@ import net.ontopia.topicmaps.cmdlineutils.sanity.NoNames;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.URIUtils;
 
 /**
  * PUBLIC: Checks a topic map for dubious constructs.</p>
@@ -48,7 +44,6 @@ import net.ontopia.utils.URIUtils;
 public class SanityChecker {
 
   protected TopicMapIF tm;
-  protected StringifierIF ts = TopicStringifiers.getDefaultStringifier();
 
   public static void main(String [] argv) throws Exception {
 
@@ -69,7 +64,7 @@ public class SanityChecker {
       String[] args = options.getArguments();    
       
       if (args.length == 1) {
-        SanityChecker sp = new SanityChecker(args[0]);
+        new SanityChecker(args[0]);
       } else {
         System.err.println("Error: Illegal number of arguments.");
         usage();

@@ -21,19 +21,17 @@
 package net.ontopia.xml;
 
 import java.io.StringWriter;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-public class PrettyPrinterTest extends TestCase {
+public class PrettyPrinterTest {
   protected static final String EMPTY_NAMESPACE = "";
   protected static final String EMPTY_LOCALNAME = "";
   private static final String NL = System.getProperty("line.separator");
     
-  public PrettyPrinterTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testMinimalDocument() {
     try {
       StringWriter writer = new StringWriter();
@@ -48,10 +46,11 @@ public class PrettyPrinterTest extends TestCase {
 	     + "</doc>" + NL);
     }
     catch (SAXException e) {
-      assertTrue("SAXException: " + e, false);
+      Assert.assertTrue("SAXException: " + e, false);
     }
   }
 
+  @Test
   public void testDocumentWithAllConstructs() {
     try {
       StringWriter writer = new StringWriter();
@@ -74,10 +73,11 @@ public class PrettyPrinterTest extends TestCase {
 	     + "A bit of character data!</doc>" + NL);
     }
     catch (SAXException e) {
-      assertTrue("SAXException: " + e, false);
+      Assert.assertTrue("SAXException: " + e, false);
     }
   }
 
+  @Test
   public void testChardataEscaping() {
     try {
       StringWriter writer = new StringWriter();
@@ -94,10 +94,11 @@ public class PrettyPrinterTest extends TestCase {
 	     + "<doc>A &lt;, and a &amp; and a &gt;.</doc>" + NL);
     }
     catch (SAXException e) {
-      assertTrue("SAXException: " + e, false);
+      Assert.assertTrue("SAXException: " + e, false);
     }
   }
 
+  @Test
   public void testAttributeEscaping() {
     try {
       StringWriter writer = new StringWriter();
@@ -114,7 +115,7 @@ public class PrettyPrinterTest extends TestCase {
 	     + "<doc a=\"&quot;&lt;&amp;\"></doc>" + NL);
     }
     catch (SAXException e) {
-      assertTrue("SAXException: " + e, false);
+      Assert.assertTrue("SAXException: " + e, false);
     }
   }
 
@@ -139,13 +140,13 @@ public class PrettyPrinterTest extends TestCase {
       ;
 
     if (ix < rlen && rlen > elen)
-      fail("Result longer than expected; expected: " + elen + "; " +
+      Assert.fail("Result longer than expected; expected: " + elen + "; " +
            "result: " + rlen + "; rest: " + getRest(result, expected));
     else if (ix < elen && rlen < elen)
-      fail("Result shorter than expected; expected: " + elen + "; " +
+      Assert.fail("Result shorter than expected; expected: " + elen + "; " +
            "result: " + rlen + "; rest: " + getRest(expected, result));
     else if (ix < rlen && rlen == elen)
-      fail("Result differs from expected in position " + ix + "; " +
+      Assert.fail("Result differs from expected in position " + ix + "; " +
            "result: " + result.charAt(ix) + " (" +
            encode(result.charAt(ix)) + "; " +
            "expected: " + expected.charAt(ix) + " (" +

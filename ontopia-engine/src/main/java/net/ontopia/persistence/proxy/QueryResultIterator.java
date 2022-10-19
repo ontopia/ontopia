@@ -45,6 +45,7 @@ public class QueryResultIterator<E> implements Iterator<E> {
 
     // check to see if there is a next element
     has_next = result.next();
+    if (!has_next) { close(); }
   }
   
   @Override
@@ -61,6 +62,7 @@ public class QueryResultIterator<E> implements Iterator<E> {
       E value = (E) result.getValue(index);
       // skip to next row
       has_next = result.next();
+      if (!has_next) { close(); }
       return value;
     }
   }

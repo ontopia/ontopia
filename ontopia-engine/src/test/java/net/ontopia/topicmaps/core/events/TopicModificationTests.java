@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.core.events;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -34,15 +35,13 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Test;
   
 public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
   protected TopicIF bart;
   protected TesterListener listener;
-  
-  public TopicModificationTests(String name) {
-    super(name);
-  }
   
   @Override
   public void setUp() throws Exception {
@@ -96,16 +95,17 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
   protected void beforeTest() {
     listener.reset();
-    assertTrue("listener not properly reset", listener.snapshots.isEmpty());
+    Assert.assertTrue("listener not properly reset", listener.snapshots.isEmpty());
   }
   
   protected void afterTest() {
     topicmap.getStore().commit();
-    assertTrue("topic was not registered as modified", listener.snapshots.contains(bart.getObjectId()));
+    Assert.assertTrue("topic was not registered as modified", listener.snapshots.contains(bart.getObjectId()));
   }
   
+  @Test
   public void testTopicLifecycle() {
-    assertTrue("Could not find topic.", bart != null);
+    Assert.assertTrue("Could not find topic.", bart != null);
 
     // TopicIF.addSubjectLocator
     beforeTest();
@@ -203,7 +203,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // TopicNameIF.addVariant
     beforeTest();
-    VariantNameIF vn = builder.makeVariantName(bn, "");
+    VariantNameIF vn = builder.makeVariantName(bn, "", Collections.emptySet());
     afterTest();
 
     // VariantNameIF.setValue
@@ -297,8 +297,8 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     TopicIF springfield = or.getPlayer();
     or.setPlayer(or.getType());
     topicmap.getStore().commit();
-    assertTrue("bart was not registered as modified", listener.snapshots.contains(bart.getObjectId()));
-    assertTrue("springfield was not registered as modified", listener.snapshots.contains(springfield.getObjectId()));
+    Assert.assertTrue("bart was not registered as modified", listener.snapshots.contains(bart.getObjectId()));
+    Assert.assertTrue("springfield was not registered as modified", listener.snapshots.contains(springfield.getObjectId()));
 
     // AssociationIF.addItemIdentifier
     beforeTest();

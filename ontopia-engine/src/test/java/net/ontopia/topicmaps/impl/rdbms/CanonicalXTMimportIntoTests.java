@@ -70,8 +70,3 @@ public class CanonicalXTMimportIntoTests extends net.ontopia.topicmaps.xml.Canon
   }
   
 }
-
-
-
-
-

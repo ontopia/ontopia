@@ -527,7 +527,10 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     Collection subjids = topic.getSubjectIdentifiers();
     if (!subjids.isEmpty()) {
       LocatorIF subjid = (LocatorIF) subjids.iterator().next();
-      return getElementTypeName(subjid.getAddress());
+      String elementTypeName = getElementTypeName(subjid.getAddress());
+      if (elementTypeName != null) {
+        return elementTypeName;
+      }
     }
     
     return getTopicId(topic);
@@ -540,7 +543,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
     String localname = psi.substring(pos + 1); // FIXME: could crash
     String prefix = getPrefix(psi.substring(0, pos + 1));
-    return prefix + ":" + localname;
+    return localname.isEmpty() ? null : (prefix + ":" + localname); // avoid creating <www.ikke.no:> element
   }
 
   private String getPrefix(String baseurl) {
@@ -635,11 +638,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    */
   private void addReifierAttribute(ReifiableIF tmobject, AttributesImpl atts) {
     TopicIF reifier = tmobject.getReifier();
-    if (reifier != null) {
-      if (filter == null || filter.ok(reifier)) {
-        String reifierAttribute = getTopicId(reifier);
-        atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reifier", CDATA, reifierAttribute);
-      }
+    if (reifier != null && (filter == null || filter.test(reifier))) {
+      String reifierAttribute = getTopicId(reifier);
+      atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "reifier", CDATA, reifierAttribute);
     }
   }
   

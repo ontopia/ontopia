@@ -32,6 +32,7 @@ import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.function.Function;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -45,7 +46,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Prompter for selecting a specific topic from a given list
@@ -55,14 +55,14 @@ public class TopicSelectionPrompter extends JDialog {
   private TopicIF selectedTopic;
 
   public TopicSelectionPrompter(Frame aFrame, Collection list,
-      StringifierIF stringifier) {
+          Function<TopicIF, String> stringifier) {
 
     super(aFrame, Messages.getString("Viz.SelectInitialTopic"), true);
     buildContents(list, stringifier);
     setLocationRelativeTo(aFrame);
   }
 
-  private void buildContents(Collection aList, StringifierIF stringifier) {
+  private void buildContents(Collection aList, Function<TopicIF, String> stringifier) {
     Vector list = new Vector(aList.size());
     Iterator iterator = aList.iterator();
     while (iterator.hasNext()) {

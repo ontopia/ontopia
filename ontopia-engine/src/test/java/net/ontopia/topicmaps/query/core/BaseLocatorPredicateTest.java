@@ -24,29 +24,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.junit.Test;
 
 public class BaseLocatorPredicateTest extends AbstractPredicateTest {
   
-  public BaseLocatorPredicateTest(String name) {
-    super(name);
-  }
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-  
   /// tests
   
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("family2.ltm");
 
     List matches = new ArrayList();
     addMatch(matches, "BASE", topicmap.getStore().getBaseAddress().getAddress());
     
-    verifyQuery(matches, "base-locator($BASE)?");
+    assertQueryMatches(matches, "base-locator($BASE)?");
   }
   
+  @Test
   public void testCompletelyOpenNoValue() throws InvalidQueryException, IOException {
     makeEmpty();
 
@@ -54,31 +48,35 @@ public class BaseLocatorPredicateTest extends AbstractPredicateTest {
     // gets base locator implicitly.
     if (topicmap.getStore().getBaseAddress() == null) {
       List matches = new ArrayList();    
-      verifyQuery(matches, "base-locator($BASE)?");
+      assertQueryMatches(matches, "base-locator($BASE)?");
     }
   }
 
+  @Test
   public void testWithSpecificValueFalse() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "base-locator(jillstm)?");
   }
 
+  @Test
   public void testWithSpecificValueFalse2() throws InvalidQueryException, IOException{
     load("jill.xtm");
 
     List matches = new ArrayList();    
-    verifyQuery(matches, "base-locator(\"jillstm\")?");
+    assertQueryMatches(matches, "base-locator(\"jillstm\")?");
   }
 
+  @Test
   public void testWithSpecificValueFalse3() throws InvalidQueryException, IOException{
     makeEmpty();
 
     List matches = new ArrayList();    
-    verifyQuery(matches, "base-locator(\"file://tst.xtm\")?");
+    assertQueryMatches(matches, "base-locator(\"file://tst.xtm\")?");
   }
   
+  @Test
   public void testWithSpecificValueTrue() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -86,7 +84,7 @@ public class BaseLocatorPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "base-locator(\"" + base + "\")?");
+    assertQueryMatches(matches, "base-locator(\"" + base + "\")?");
   }
   
 }

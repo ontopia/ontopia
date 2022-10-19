@@ -54,6 +54,16 @@ public final class Constants {
 	public static final MediaType XTM_MEDIA_TYPE = new MediaType("application/xml+xtm", "XTM 2.1 topicmaps format");
 	public static final MediaType JTM_MEDIATYPE = new MediaType("application/jtm", "JTM 1.1 topicmap json format");
 
+	// headers
+	public static final String HEADER_ONTOPIA_APPLICATION = "X-Ontopia-Application";
+	public static final String HEADER_ONTOPIA_API_VERSION = "X-Ontopia-API-Version";
+	public static final String HEADER_ONTOPIA_RESOURCE = "X-Ontopia-Resource";
+	public static final String HEADER_ONTOPIA_TOPICMAP = "X-Ontopia-Topicmap";
+	public static final String HEADER_PAGING_OFFSET = "X-Paging-Offset";
+	public static final String HEADER_PAGING_COUNT = "X-Paging-Count";
+	public static final String HEADER_PAGING = "X-Paging";
+	public static final String HEADER_PAGING_LIMIT = "X-Paging-Limit";
+
 	private Constants() {
 		// don't call me
 	}

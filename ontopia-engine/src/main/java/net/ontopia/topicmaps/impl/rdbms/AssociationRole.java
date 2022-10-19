@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
+import java.util.Objects;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.IdentityNotFoundException;
 import net.ontopia.persistence.proxy.TransactionIF;
@@ -157,8 +158,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   
   @Override
   public void setPlayer(TopicIF player) {
-    if (player == null)
-      throw new NullPointerException("Association role player must not be null.");
+    Objects.requireNonNull(player, "Association role player must not be null.");
     CrossTopicMapException.check(player, this);
     TopicIF oldplayer = getPlayer();
     
@@ -203,8 +203,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   @Override
   public void setType(TopicIF type) {
-    if (type == null)
-      throw new NullPointerException("Association role type must not be null.");
+    Objects.requireNonNull(type, "Association role type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent(AssociationRoleIF.EVENT_SET_TYPE, type, getType());

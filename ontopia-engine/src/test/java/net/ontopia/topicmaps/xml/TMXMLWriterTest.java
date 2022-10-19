@@ -20,24 +20,24 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.util.Map;
-import java.io.IOException;
-import java.io.Writer;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.file.Files;
+import java.util.Map;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import org.xml.sax.SAXException;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import net.ontopia.utils.TestFileUtils;
+import org.xml.sax.SAXException;
 
 public class TMXMLWriterTest {
   private TopicMapIF topicmap;
@@ -161,6 +161,8 @@ public class TMXMLWriterTest {
     writer.write(topicmap);
     // if bug 2116 occurs we'll get an NPE on the previous line and never
     // get here.
+    
+    Assert.assertTrue(true); // for PMD
   }
   
   @Test

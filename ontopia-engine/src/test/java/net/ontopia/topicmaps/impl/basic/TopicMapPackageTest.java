@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Collections;
 import java.util.Iterator;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -37,45 +36,45 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
 import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
-import net.ontopia.utils.DeciderIterator;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public abstract class TopicMapPackageTest extends TestCase {
+public abstract class TopicMapPackageTest {
   public static TopicMapIF tm;
   public static LocatorIF base;
 
   protected boolean session = true;
   
-  public TopicMapPackageTest(String name) {
-    super(name);
-  }
+  @Before
+  public abstract void setUp();
 
-  @Override
-  protected abstract void setUp();
+  @After
+  public abstract void tearDown();
 
-  @Override
-  protected abstract void tearDown();
-
+  @Test
   public void testTopicMap() {
-    LocatorIF locat1 = base.resolveAbsolute("#post-added-theme-1"); 
-    LocatorIF locat2 = base.resolveAbsolute("#post-added-theme-2");
+    base.resolveAbsolute("#post-added-theme-1"); 
+    base.resolveAbsolute("#post-added-theme-2");
     LocatorIF locrt1 = base.resolveAbsolute("#removed-topic-1");
 
     // System.out.println("tm:" + tm);
-    tmobjectTest(tm, false, false);
+    assertTMObject(tm, false, false);
 
     // Topics
-    assertTrue("getTopics (not null)", tm.getTopics() != null);
-    assertTrue("getTopics (type check)", tm.getTopics() instanceof java.util.Collection);
+    Assert.assertTrue("getTopics (not null)", tm.getTopics() != null);
+    Assert.assertTrue("getTopics (type check)", tm.getTopics() instanceof java.util.Collection);
     int topic_count = tm.getTopics().size();
     TopicIF removed_topic = (TopicIF)tm.getObjectByItemIdentifier(locrt1);
     removed_topic.remove();
-    assertTrue("removeTopic", tm.getTopics().size() == topic_count -1);
+    Assert.assertTrue("removeTopic", tm.getTopics().size() == topic_count -1);
 
     if (session) {
 
       // Associations
-      assertTrue("getAssociations (not null)", tm.getAssociations() != null);
-      assertTrue("getAssociations (type check)", tm.getAssociations() instanceof java.util.Collection);
+      Assert.assertTrue("getAssociations (not null)", tm.getAssociations() != null);
+      Assert.assertTrue("getAssociations (type check)", tm.getAssociations() instanceof java.util.Collection);
       int association_count = tm.getAssociations().size();
 
       // FIXME: Removing associations means clearing the player of its roles! [see bug #74]
@@ -83,20 +82,20 @@ public abstract class TopicMapPackageTest extends TestCase {
       AssociationIF removed_association = ((AssociationRoleIF)((TopicIF)tm.getObjectByItemIdentifier(loct3)).getRoles().iterator().next()).getAssociation();
       // AssociationIF removed_association = (AssociationIF)(new ArrayList(tm.getAssociations()).get(0));
       removed_association.remove();
-      assertTrue("removeAssociation", tm.getAssociations().size() == association_count -1);
+      Assert.assertTrue("removeAssociation", tm.getAssociations().size() == association_count -1);
     }
     
     // Topic lookup
     LocatorIF loc1 = base.resolveAbsolute("#topic-1");
     LocatorIF locno = base.resolveAbsolute("#unknown-topic");
-    assertTrue("getTopic (known topic)", (TopicIF)tm.getObjectByItemIdentifier(loc1) instanceof TopicIF);
-    assertTrue("getTopic (unknown topic)", (TopicIF)tm.getObjectByItemIdentifier(locno) == null);
+    Assert.assertTrue("getTopic (known topic)", (TopicIF)tm.getObjectByItemIdentifier(loc1) instanceof TopicIF);
+    Assert.assertTrue("getTopic (unknown topic)", (TopicIF)tm.getObjectByItemIdentifier(locno) == null);
 
     if (session) {
-      assertTrue("getTopicsByIndicator (known identity)" + base.resolveAbsolute("#topic-identity-1"),
+      Assert.assertTrue("getTopicsByIndicator (known identity)" + base.resolveAbsolute("#topic-identity-1"),
                  tm.getTopicBySubjectIdentifier(base.resolveAbsolute("#topic-identity-1"))
                  instanceof TopicIF);
-      assertTrue("getTopicsByIndicator (unknown identity)",
+      Assert.assertTrue("getTopicsByIndicator (unknown identity)",
                  tm.getTopicBySubjectIdentifier(base.resolveAbsolute("#unknown-identity"))
                  == null);
     }
@@ -104,119 +103,120 @@ public abstract class TopicMapPackageTest extends TestCase {
     //      try {
     //        // SGML ids
     //        ((TopicIF)tm.getObjectById("topic-2")).setSGMLId("topic-2-with-new-id");
-    //        assertTrue("getTopic not null (before)", (TopicIF)tm.getObjectById("topic-2-with-new-id") != null);
-    //        assertTrue("getSGMLId equal set value (before)", ((TopicIF)tm.getObjectById("topic-2-with-new-id")).getSGMLId().equals("topic-2-with-new-id"));
+    //        Assert.assertTrue("getTopic not null (before)", (TopicIF)tm.getObjectById("topic-2-with-new-id") != null);
+    //        Assert.assertTrue("getSGMLId equal set value (before)", ((TopicIF)tm.getObjectById("topic-2-with-new-id")).getSGMLId().equals("topic-2-with-new-id"));
       
     //        ((TopicIF)tm.getObjectById("topic-2-with-new-id")).setSGMLId("topic-2");
-    //        assertTrue("getTopic not null (after)", (TopicIF)tm.getObjectById("topic-2") != null);
-    //        assertTrue("getSGMLId equal set value (after)", ((TopicIF)tm.getObjectById("topic-2")).getSGMLId().equals("topic-2"));
+    //        Assert.assertTrue("getTopic not null (after)", (TopicIF)tm.getObjectById("topic-2") != null);
+    //        Assert.assertTrue("getSGMLId equal set value (after)", ((TopicIF)tm.getObjectById("topic-2")).getSGMLId().equals("topic-2"));
       
     //        // Identities
-    //        assertTrue("getIdentities (type check)", tm.getIdentities() instanceof java.util.Collection);
+    //        Assert.assertTrue("getIdentities (type check)", tm.getIdentities() instanceof java.util.Collection);
     //        int identity_count = tm.getIdentities().size();
     //        ((TopicIF)tm.getObjectById("topic-2")).setIdentity("topic-identity-2");
-    //        assertTrue("getIdentities not null", ((TopicIF)tm.getObjectById("topic-2")).getIdentity() != null);
-    //        assertTrue("getIdentities (size check after change)", tm.getIdentities().size() == identity_count + 1);
+    //        Assert.assertTrue("getIdentities not null", ((TopicIF)tm.getObjectById("topic-2")).getIdentity() != null);
+    //        Assert.assertTrue("getIdentities (size check after change)", tm.getIdentities().size() == identity_count + 1);
     //        ((TopicIF)tm.getObjectById("topic-2")).setIdentity(null);
-    //        assertTrue("getIdentities null", ((TopicIF)tm.getObjectById("topic-2")).getIdentity() == null);
-    //        assertTrue("getIdentities (size check after reset)" + tm.getIdentities().size() +" "+ identity_count, tm.getIdentities().size() == identity_count);
+    //        Assert.assertTrue("getIdentities null", ((TopicIF)tm.getObjectById("topic-2")).getIdentity() == null);
+    //        Assert.assertTrue("getIdentities (size check after reset)" + tm.getIdentities().size() +" "+ identity_count, tm.getIdentities().size() == identity_count);
     //      } catch(UniquenessViolationException e) {
-    //        assertTrue("Error: " + e.toString(), false);
+    //        Assert.assertTrue("Error: " + e.toString(), false);
     //      }
   }
 
+  @Test
   public void testTopic() {
     LocatorIF loc1 = base.resolveAbsolute("#topic-1");
     LocatorIF loc1i = base.resolveAbsolute("#topic-identity-1");
     LocatorIF loc2 = base.resolveAbsolute("#topic-2");
     TopicIF topic1 = (TopicIF)tm.getObjectByItemIdentifier(loc1);
     TopicIF topic2 = (TopicIF)tm.getObjectByItemIdentifier(loc2);
-    tmobjectTest(topic1, true, false);
-    tmobjectTest(topic2, true, false);
+    assertTMObject(topic1, true, false);
+    assertTMObject(topic2, true, false);
 
     // SGML id (see testTopicMap for a complete test)
-    assertTrue("getResId topic-1", topic1.getItemIdentifiers().contains(loc1));
-    assertTrue("getResId topic-2", topic2.getItemIdentifiers().contains(loc2));
+    Assert.assertTrue("getResId topic-1", topic1.getItemIdentifiers().contains(loc1));
+    Assert.assertTrue("getResId topic-2", topic2.getItemIdentifiers().contains(loc2));
 
     // Identity (see testTopicMap for a complete test)
-    assertTrue("getSubjInd topic-1", topic1.getSubjectIdentifiers().contains(loc1i));
-    assertTrue("getSubjInd topic-2", topic2.getSubjectIdentifiers().size() == 0);
+    Assert.assertTrue("getSubjInd topic-1", topic1.getSubjectIdentifiers().contains(loc1i));
+    Assert.assertTrue("getSubjInd topic-2", topic2.getSubjectIdentifiers().size() == 0);
 
     // Linktype
     // String linktype = topic1.getLinkType();
     // topic1.setLinkType("linktype1");
-    // assertTrue(topic1.getLinkType() != null);
-    // assertTrue(topic1.getLinkType().equals("linktype1"));
+    // Assert.assertTrue(topic1.getLinkType() != null);
+    // Assert.assertTrue(topic1.getLinkType().equals("linktype1"));
     // topic1.setLinkType(linktype);
 
     // Names
     int org_count = topic2.getTopicNames().size();
-    assertTrue("getNames (size check before add)", org_count == 3);
+    Assert.assertTrue("getNames (size check before add)", org_count == 3);
     TopicNameIF name = tm.getBuilder().makeTopicName(topic2, "");
 
     // Note: the builder adds it for us.
-    assertTrue("getTopicNames (size check after add)",
+    Assert.assertTrue("getTopicNames (size check after add)",
                topic2.getTopicNames().size() == org_count + 1);
     name.remove();
-    assertTrue("getTopicNames (size check after remove)",
+    Assert.assertTrue("getTopicNames (size check after remove)",
                topic2.getTopicNames().size() == org_count);
 
     // Occurrences
-    assertTrue("getOccurrences (type check)",
+    Assert.assertTrue("getOccurrences (type check)",
                topic2.getOccurrences() instanceof java.util.Collection);
     int occurs_count = topic2.getOccurrences().size();
-    assertTrue("getOccurrences (size check before add)",
+    Assert.assertTrue("getOccurrences (size check before add)",
                topic2.getOccurrences().size() == 2);
     OccurrenceIF occurs =
       tm.getBuilder().makeOccurrence(topic2, tm.getBuilder().makeTopic(), "");
 
     // Note: the factory adds it for us.
-    assertTrue("getOccurrences (size check after add)", topic2.getOccurrences().size() == occurs_count + 1);
+    Assert.assertTrue("getOccurrences (size check after add)", topic2.getOccurrences().size() == occurs_count + 1);
     occurs.remove();
-    assertTrue("getOccurrences (size check after remove)", topic2.getOccurrences().size() == occurs_count);
+    Assert.assertTrue("getOccurrences (size check after remove)", topic2.getOccurrences().size() == occurs_count);
 
     // Association roles
-    assertTrue("getRoles (type check)",
+    Assert.assertTrue("getRoles (type check)",
                topic2.getRoles() instanceof java.util.Collection);
     int assocrl_count = topic2.getRoles().size();
-    assertTrue("getRoles (size check before add)", topic2.getRoles().size() == 1);
+    Assert.assertTrue("getRoles (size check before add)", topic2.getRoles().size() == 1);
     AssociationIF assoc = tm.getBuilder().makeAssociation(tm.getBuilder().makeTopic());
     AssociationRoleIF assocrl = tm.getBuilder().makeAssociationRole(assoc, tm.getBuilder().makeTopic(), tm.getBuilder().makeTopic());
     
     // the topic should not have this role yet, because the
     // association is not part of the TM yet
-    assertTrue("getRoles (size check after role add)",
+    Assert.assertTrue("getRoles (size check after role add)",
                topic2.getRoles().size() == assocrl_count);
 
     assocrl.setPlayer(topic2);
 
     // the role should now have been added
-    assertTrue("getRoles (size check after player set)",
+    Assert.assertTrue("getRoles (size check after player set)",
                topic2.getRoles().size() == assocrl_count + 1);
 
 		TopicIF otopic = tm.getBuilder().makeTopic();
     assocrl.setPlayer(otopic);
     
-    assertTrue("getRoles (size check after player remove)",
+    Assert.assertTrue("getRoles (size check after player remove)",
                topic2.getRoles().size() == assocrl_count);
 
-    assertTrue("getRoles (size check after player add)",
+    Assert.assertTrue("getRoles (size check after player add)",
                otopic.getRoles().size() == 1);
 
     // Types
-    assertTrue("getTypes (size check before add)", topic1.getTypes().size() == 2);
+    Assert.assertTrue("getTypes (size check before add)", topic1.getTypes().size() == 2);
   }
 
-  protected void tmobjectTest(TMObjectIF tmobject, boolean typed,
+  protected void assertTMObject(TMObjectIF tmobject, boolean typed,
                               boolean scoped) {
     if (tmobject != tm)
-      assertTrue("getTopicMap" + tmobject + tmobject.getClass() +
+      Assert.assertTrue("getTopicMap" + tmobject + tmobject.getClass() +
                  tmobject.getTopicMap(),
                  tmobject.getTopicMap() == tm);
 
-    assertTrue("isTyped", (tmobject instanceof TypedIF ||
+    Assert.assertTrue("isTyped", (tmobject instanceof TypedIF ||
                            tmobject instanceof TopicIF) == typed);
-    assertTrue("isScoped", (tmobject instanceof ScopedIF) == scoped);
+    Assert.assertTrue("isScoped", (tmobject instanceof ScopedIF) == scoped);
     if (tmobject instanceof TypedIF || tmobject instanceof TopicIF)
       typedTest(tmobject);
     if (tmobject instanceof ScopedIF) scopedTest((ScopedIF) tmobject);
@@ -225,28 +225,28 @@ public abstract class TopicMapPackageTest extends TestCase {
   protected void scopedTest(ScopedIF scoped) {
     LocatorIF loc = base.resolveAbsolute("#theme-1");
     TopicIF theme = (TopicIF)tm.getObjectByItemIdentifier(loc);
-    assertTrue("getScope (type check)",
+    Assert.assertTrue("getScope (type check)",
                scoped.getScope() instanceof java.util.Collection);
     int scope_count = scoped.getScope().size();
 
     scoped.addTheme(theme);    
-    assertTrue("getScope (size check after add)",
+    Assert.assertTrue("getScope (size check after add)",
                scoped.getScope().size() == scope_count + 1);
     scoped.removeTheme(theme);
-    assertTrue("getScope (size check after remove)",
+    Assert.assertTrue("getScope (size check after remove)",
                scoped.getScope().size() == scope_count);    
   }
 
   protected void typedTest(TMObjectIF tmobject) {
     // Check if this really is a typed object
     if (!(tmobject instanceof TypedIF || tmobject instanceof TopicIF))
-      fail("Object " + tmobject + " isnt't typed.");
+      Assert.fail("Object " + tmobject + " isnt't typed.");
     
     // Topic
     if (tmobject instanceof TopicIF) {
       TopicIF topic = (TopicIF) tmobject;
-      assertTrue("getTypes (not null)", topic.getTypes() != null);
-      assertTrue("getTypes (type check)",
+      Assert.assertTrue("getTypes (not null)", topic.getTypes() != null);
+      Assert.assertTrue("getTypes (type check)",
                  topic.getTypes() instanceof java.util.Collection);
 
       int types_size = topic.getTypes().size();
@@ -255,106 +255,111 @@ public abstract class TopicMapPackageTest extends TestCase {
       LocatorIF loc2 = base.resolveAbsolute("#post-added-type-2");
       topic.addType((TopicIF)tm.getObjectByItemIdentifier(loc1));
       topic.addType((TopicIF)tm.getObjectByItemIdentifier(loc2));
-      assertTrue("getTypes (size check after add)", topic.getTypes().size() == types_size + 2);
+      Assert.assertTrue("getTypes (size check after add)", topic.getTypes().size() == types_size + 2);
       topic.removeType((TopicIF)tm.getObjectByItemIdentifier(loc1));
       topic.removeType((TopicIF)tm.getObjectByItemIdentifier(loc2));
-      assertTrue("getTypes (size check after remove)", topic.getTypes().size() == types_size);
+      Assert.assertTrue("getTypes (size check after remove)", topic.getTypes().size() == types_size);
     }
     // Single typed
     else {
       TypedIF typed = (TypedIF)tmobject;
       if (!(typed instanceof TopicNameIF)) {
-	assertTrue("getType (not null)", typed.getType() != null);
-	assertTrue("getType (type check)", typed.getType() instanceof TopicIF);
+	Assert.assertTrue("getType (not null)", typed.getType() != null);
+	Assert.assertTrue("getType (type check)", typed.getType() instanceof TopicIF);
       }
     }
   }
   
+  @Test
   public void testTopicName() {
     LocatorIF loc1 = base.resolveAbsolute("#topic-2");
     LocatorIF loc2 = base.resolveAbsolute("#double");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc1);
     TopicIF dtheme = (TopicIF)tm.getObjectByItemIdentifier(loc2);
 
-    assertTrue("TopicIF.getTopicNames() size == 3", topic.getTopicNames().size() == 3);
+    Assert.assertTrue("TopicIF.getTopicNames() size == 3", topic.getTopicNames().size() == 3);
 
     // Get appropriate base name by scope filtering
-    Iterator deciter = new DeciderIterator(new IntersectionOfContextDecider(Collections.singleton(dtheme)),
-                                           topic.getTopicNames().iterator());
-    TopicNameIF topic_name = (TopicNameIF)deciter.next();
+    Iterator<TopicNameIF> deciter = topic.getTopicNames().stream().filter(new IntersectionOfContextDecider(Collections.singleton(dtheme))).iterator();
+    TopicNameIF topic_name = deciter.next();
     
     //TopicNameIF topic_name = (TopicNameIF)ScopeUtils.getInBroadScope(topic.getTopicNames(), dtheme).iterator().next();
-    tmobjectTest(topic_name, true, true);
-    assertTrue("getTopic", topic_name.getTopic() == topic);
-    //      assertTrue("getTopicNames (size check before add)", topic_name.getTopicNames().size() == 2);  
-    //      assertTrue("getDisplayNames (size check before add)", topic_name.getDisplayNames().size() == 2);  
-    //      assertTrue("getSortNames (size check before add)", topic_name.getSortNames().size() == 2);
+    assertTMObject(topic_name, true, true);
+    Assert.assertTrue("getTopic", topic_name.getTopic() == topic);
+    //      Assert.assertTrue("getTopicNames (size check before add)", topic_name.getTopicNames().size() == 2);  
+    //      Assert.assertTrue("getDisplayNames (size check before add)", topic_name.getDisplayNames().size() == 2);  
+    //      Assert.assertTrue("getSortNames (size check before add)", topic_name.getSortNames().size() == 2);
 
     int org_count = topic.getTopicNames().size();
     
     TopicMapBuilderIF builder = tm.getBuilder();
     TopicNameIF basename = builder.makeTopicName(topic, "");
-    assertTrue("getTopicNames (size check after add)"+topic.getTopicNames().size(), topic.getTopicNames().size() == org_count + 1);  
+    Assert.assertTrue("getTopicNames (size check after add)"+topic.getTopicNames().size(), topic.getTopicNames().size() == org_count + 1);  
 
     basename.remove();
-    assertTrue("getTopicNames (size check after remove)", topic.getTopicNames().size() == org_count);  
+    Assert.assertTrue("getTopicNames (size check after remove)", topic.getTopicNames().size() == org_count);  
   }
   
+  @Test
   public void testName() {
     LocatorIF loc = base.resolveAbsolute("#topic-2");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     TopicNameIF topic_name = (TopicNameIF)topic.getTopicNames().iterator().next();
-    tmobjectTest(topic_name, true, true);
-    assertTrue("getTopicName", topic_name.getTopic() == topic);
+    assertTMObject(topic_name, true, true);
+    Assert.assertTrue("getTopicName", topic_name.getTopic() == topic);
   }
 
+  @Test
   public void testOccurrence() {
     LocatorIF loc = base.resolveAbsolute("#topic-2");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     Iterator iter = topic.getOccurrences().iterator();
     while (iter.hasNext()) {
       OccurrenceIF occurs = (OccurrenceIF)iter.next();
-      tmobjectTest(occurs, true, true);
+      assertTMObject(occurs, true, true);
     }
   }
   
+  @Test
   public void testAssociation() {
     LocatorIF loc = base.resolveAbsolute("#topic-1");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     AssociationRoleIF assocrl = (AssociationRoleIF)topic.getRoles().iterator().next();
     AssociationIF association = assocrl.getAssociation();
-    tmobjectTest(association, true, true);
+    assertTMObject(association, true, true);
   }
 
+  @Test
   public void testAssociationRole() {
     LocatorIF loc = base.resolveAbsolute("#topic-1");
     LocatorIF loc2 = base.resolveAbsolute("#topic-2");
     TopicIF topic = (TopicIF)tm.getObjectByItemIdentifier(loc);
     AssociationRoleIF assocrl = (AssociationRoleIF)topic.getRoles().iterator().next();
-    tmobjectTest(assocrl, true, false);
+    assertTMObject(assocrl, true, false);
     // Properties
-    assertTrue("getPlayer (equal topic-1 before set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc));
+    Assert.assertTrue("getPlayer (equal topic-1 before set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc));
     assocrl.setPlayer((TopicIF)tm.getObjectByItemIdentifier(loc2));
-    assertTrue("getPlayer (equal topic-2 after set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc2));
+    Assert.assertTrue("getPlayer (equal topic-2 after set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc2));
     assocrl.setPlayer((TopicIF)tm.getObjectByItemIdentifier(loc));
-    assertTrue("getPlayer (equal topic-1 after set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc));
+    Assert.assertTrue("getPlayer (equal topic-1 after set)", assocrl.getPlayer() == tm.getObjectByItemIdentifier(loc));
   }
 
+  @Test
   public void testTopicMapBuilder() throws UniquenessViolationException {
     TopicMapBuilderIF builder = tm.getBuilder();
-    assertTrue("getBuilder (not null)", builder != null);
+    Assert.assertTrue("getBuilder (not null)", builder != null);
 
     // makeTopic(topicmap, sgmlid)
     try {
       TopicIF topic1 = builder.makeTopic();
       topic1.addItemIdentifier(base.resolveAbsolute("#grove"));
-      assertTrue("makeTopic1 (resid not empty)",
+      Assert.assertTrue("makeTopic1 (resid not empty)",
                  topic1.getItemIdentifiers().size() > 0);
-      assertTrue("makeTopic1 (sgmlid is set)",
+      Assert.assertTrue("makeTopic1 (sgmlid is set)",
                  topic1.getItemIdentifiers().contains(base.resolveAbsolute("#grove")));
     }
     catch (ConstraintViolationException e) {
-      fail("Source locator was duplicated");
+      Assert.fail("Source locator was duplicated");
     }
   }
   

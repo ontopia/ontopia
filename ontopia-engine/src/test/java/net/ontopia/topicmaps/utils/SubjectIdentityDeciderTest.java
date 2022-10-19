@@ -20,24 +20,22 @@
 
 package net.ontopia.topicmaps.utils;
 
-import junit.framework.TestCase;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class SubjectIdentityDeciderTest extends TestCase {
+public class SubjectIdentityDeciderTest {
   protected TopicMapIF        topicmap; 
   protected TopicMapBuilderIF builder;
 
-  public SubjectIdentityDeciderTest(String name) {
-    super(name);
-  }
-    
-  @Override
+  @Before
   public void setUp() {
     topicmap = makeTopicMap();
     TopicIF a = makeTopic("A");
@@ -48,52 +46,56 @@ public class SubjectIdentityDeciderTest extends TestCase {
 
   // --- Tests
 
+  @Test
   public void testSubjectIdentifiers() {
     LocatorIF locA = makeLocator("A");
-    LocatorIF locB = makeLocator("B");
+    makeLocator("B");
     TopicIF topicA = getTopic("A");
     TopicIF topicB = getTopic("B");
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locA);
-    assertTrue("Decider did not recognize topic",
-               decider.ok(topicA));
+    Assert.assertTrue("Decider did not recognize topic",
+               decider.test(topicA));
                
-    assertTrue("Decider ok-d topic with wrong identifier",
-               !decider.ok(topicB));
+    Assert.assertTrue("Decider ok-d topic with wrong identifier",
+               !decider.test(topicB));
   }
 
+  @Test
   public void testSubjectAddresses() {
     LocatorIF locA = makeLocator("A");
     TopicIF topic = builder.makeTopic();
     topic.addSubjectLocator(locA);
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locA);
-    assertTrue("Decider recognized topic which had locator as subject address",
-               !decider.ok(topic));
+    Assert.assertTrue("Decider recognized topic which had locator as subject address",
+               !decider.test(topic));
   }
 
+  @Test
   public void testInstances() {
     LocatorIF locC = makeLocator("C");
-    LocatorIF locD = makeLocator("D");
+    makeLocator("D");
     TopicIF topicA = getTopic("A");
     TopicIF topicB = getTopic("B");
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locC);
-    assertTrue("Decider did not recognize instance of topic",
-               decider.ok(topicA));
+    Assert.assertTrue("Decider did not recognize instance of topic",
+               decider.test(topicA));
                
-    assertTrue("Decider ok-d topic which was instance of topic with wrong identifier",
-               !decider.ok(topicB));
+    Assert.assertTrue("Decider ok-d topic which was instance of topic with wrong identifier",
+               !decider.test(topicB));
   }
 
+  @Test
   public void testNoType() {
     LocatorIF locD = makeLocator("D");
 		TopicIF otype = builder.makeTopic();
     OccurrenceIF occC = builder.makeOccurrence(getTopic("C"), otype, locD);
 
     SubjectIdentityDecider decider = new SubjectIdentityDecider(locD);
-    assertTrue("Decider recognized occurrence it shouldn't recognize",
-               !decider.ok(occC));
+    Assert.assertTrue("Decider recognized occurrence it shouldn't recognize",
+               !decider.test(occC));
   }
   
   // --- Internal helpers
@@ -119,7 +121,7 @@ public class SubjectIdentityDeciderTest extends TestCase {
       return new URILocator("http://psi.ontopia.net/fake/" + uri);
     }
     catch (java.net.MalformedURLException e) {
-      fail("malformed URL given: " + e);
+      Assert.fail("malformed URL given: " + e);
       return null; // never executed...
     }
   }

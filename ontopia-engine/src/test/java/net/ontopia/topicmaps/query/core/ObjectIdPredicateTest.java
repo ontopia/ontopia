@@ -25,22 +25,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import org.junit.Test;
 
 public class ObjectIdPredicateTest extends AbstractPredicateTest {
   
-  public ObjectIdPredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
   
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -83,10 +80,11 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
       }
     }
     
-    verifyQuery(matches, "object-id($OBJECT, $ID)?");
+    assertQueryMatches(matches, "object-id($OBJECT, $ID)?");
     closeStore();
   }
 
+  @Test
   public void testWithSpecificTopic() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -95,10 +93,11 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "ID", horse.getObjectId());
     
-    verifyQuery(matches, "object-id(horse, $ID)?");
+    assertQueryMatches(matches, "object-id(horse, $ID)?");
     closeStore();
   }
 
+  @Test
   public void testWithSpecificId() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -106,18 +105,20 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
     TopicIF topic = getTopicById("thequeen");
     addMatch(matches, "TOPIC", topic);
     
-    verifyQuery(matches, "object-id($TOPIC, \"" + topic.getObjectId() + "\")?");
+    assertQueryMatches(matches, "object-id($TOPIC, \"" + topic.getObjectId() + "\")?");
     closeStore();
   }
 
+  @Test
   public void testWithTopicNames() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
-    findNothing(OPT_TYPECHECK_OFF +
+    assertFindNothing(OPT_TYPECHECK_OFF +
                 "object-id(horse, $BN), topic-name($T, $BN)?");
     closeStore();
   }
   
+  @Test
   public void testWithBothBoundTrue() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
@@ -126,17 +127,18 @@ public class ObjectIdPredicateTest extends AbstractPredicateTest {
 
     TopicIF topic = getTopicById("thequeen");
     
-    verifyQuery(matches, "object-id(thequeen, \"" + topic.getObjectId() +"\")?");
+    assertQueryMatches(matches, "object-id(thequeen, \"" + topic.getObjectId() +"\")?");
     closeStore();
   }
   
+  @Test
   public void testWithBothBoundFalse() throws InvalidQueryException, IOException {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
     TopicIF topic = getTopicById("thequeen");
     
-    verifyQuery(matches, "object-id(equation, \"" + topic.getObjectId() + "\")?");
+    assertQueryMatches(matches, "object-id(equation, \"" + topic.getObjectId() + "\")?");
     closeStore();
   }
   

@@ -25,10 +25,6 @@ import java.io.IOException;
 public class SourceLocatorPredicateTest
   extends net.ontopia.topicmaps.query.core.SourceLocatorPredicateTest {
   
-  public SourceLocatorPredicateTest(String name) {
-    super(name);
-  }
-  
   @Override
   protected void load(String filename) throws IOException {
     RDBMSTestUtils.load(this, filename);

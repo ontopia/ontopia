@@ -21,8 +21,7 @@
 package net.ontopia.topicmaps.utils.deciders;
 
 import java.util.Collection;
-
-import net.ontopia.utils.DeciderIF;
+import java.util.function.Predicate;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
@@ -31,7 +30,7 @@ import net.ontopia.topicmaps.core.TopicIF;
  * than the context. The context must be identical or a subset of the
  * scopes. If there is no context, there can be no "ok".
  */
-public class WithinScopeDecider implements DeciderIF<ScopedIF> {
+public class WithinScopeDecider implements Predicate<ScopedIF> {
   
   protected Collection<TopicIF> context;
 
@@ -40,7 +39,7 @@ public class WithinScopeDecider implements DeciderIF<ScopedIF> {
   }
 
   @Override
-  public boolean ok(ScopedIF scoped) { 
+  public boolean test(ScopedIF scoped) { 
     if (context == null || context.isEmpty())
       return false;
     Collection<TopicIF> objscope = scoped.getScope();

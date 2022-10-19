@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.HistoryMap;
-import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.collections4.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,11 +126,6 @@ public class User implements UserIF, Serializable {
   }
 
   // -- logs
-  
-  @Override
-  public Logger getLogger() {
-    throw new OntopiaRuntimeException("This method has been disabled. Please contact <support@ontopia.net> if you were using it.");
-  }
   
   @Override
   public List getLogMessages() {

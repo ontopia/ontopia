@@ -61,8 +61,6 @@ public class TopicMapLinkPlugin extends DefaultPlugin {
         tmtitle = reference.getTitle();
     }
 
-    String tmids = getParameter("uri");
-    
     return "<a href=\"" + uri + "/models/topicmap_" + model + ".jsp?tm=" + tmid + "\" title=\"Link to topic map page.\">" + tmtitle + "</a>";
   }
 

@@ -308,8 +308,8 @@ public class StringModule implements ModuleIF {
       
       int str1ix = matches.getIndex(arguments[0]); // output
       int str2ix = matches.getIndex(arguments[1]); // input
-      int str3ix = matches.getIndex(arguments[2]); // fromstr
-      int str4ix = matches.getIndex(arguments[3]); // tostr
+      matches.getIndex(arguments[2]); // fromstr
+      matches.getIndex(arguments[3]); // tostr
       int str5ix = -1;                             // deletestr
       if (arguments.length > 4)
         str5ix = matches.getIndex(arguments[4]); 

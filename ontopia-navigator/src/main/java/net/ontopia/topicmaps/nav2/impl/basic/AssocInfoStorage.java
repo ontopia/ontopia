@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.NameGrabber;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.GrabberStringifier;
 
 /**
@@ -36,7 +36,7 @@ import net.ontopia.utils.GrabberStringifier;
 public class AssocInfoStorage {
 
   // constant
-  private static final StringifierIF DEF_NAME_STRINGIFIER = new CustomNameStringifier();
+  private static final Function<Object, String> DEF_NAME_STRINGIFIER = new CustomNameStringifier();
 
   // members
   private Collection associations;
@@ -52,10 +52,10 @@ public class AssocInfoStorage {
   }
 
   private String stringify(TopicIF type, TopicIF roleType) {
-    Collection scope = Collections.singleton(roleType);
-    StringifierIF grabber = new GrabberStringifier(new NameGrabber(scope),
+    Collection<TopicIF> scope = Collections.singleton(roleType);
+    Function<TopicIF, String> grabber = new GrabberStringifier<>(new NameGrabber(scope),
                                                    DEF_NAME_STRINGIFIER);
-    return grabber.toString(type);
+    return grabber.apply(type);
   }
   
   public void setType(TopicIF type) {

@@ -20,116 +20,114 @@
 
 package net.ontopia.topicmaps.query.core;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.io.IOException;
-
-import net.ontopia.topicmaps.core.TopicIF;
+import java.util.HashMap;
+import java.util.Map;
 import net.ontopia.topicmaps.core.DataTypes;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import org.junit.Assert;
+import org.junit.Test;
 
 // FIXME: value() with three parameters
 // FIXME: URLs which aren't really
 
 public class UpdateTest extends AbstractQueryTest {
   
-  public UpdateTest(String name) {
-    super(name);
-  }
-
-  /// context management
-
-  @Override
-  public void tearDown() {
-    closeStore();
-  }
-
   /// empty topic map
   
+  @Test
   public void testEmptyUpdate() throws InvalidQueryException {
     makeEmpty();
-    update("update value($TN, \"foo\") from topic-name($T, $TN)");
+    assertUpdate("update value($TN, \"foo\") from topic-name($T, $TN)");
   }
 
   /// instance-of topic map
 
+  @Test
   public void testStaticNameChange() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
     TopicNameIF name = (TopicNameIF) getObjectById("jills-name");
     
-    update("update value(jills-name, \"Jill R. Hacker\")");
+    assertUpdate("update value(jills-name, \"Jill R. Hacker\")");
 
-    assertTrue("name not changed after update",
+    Assert.assertTrue("name not changed after update",
                name.getValue().equals("Jill R. Hacker"));
   }
   
+  @Test
   public void testDynamicNameChange() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
     TopicIF topic1 = getTopicById("topic1");
     TopicNameIF name = topic1.getTopicNames().iterator().next();
     
-    update("update value($N, \"TOPIC1\") from topic-name(topic1, $N)");
+    assertUpdate("update value($N, \"TOPIC1\") from topic-name(topic1, $N)");
 
-    assertTrue("name not changed after update",
+    Assert.assertTrue("name not changed after update",
                name.getValue().equals("TOPIC1"));
   }
 
+  @Test
   public void testStaticOccChange() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
     OccurrenceIF occ = (OccurrenceIF) getObjectById("jills-contract");
     
-    update("update value(jills-contract, \"No such contract\")");
+    assertUpdate("update value(jills-contract, \"No such contract\")");
 
-    assertTrue("occurrence not changed after update",
+    Assert.assertTrue("occurrence not changed after update",
                occ.getValue().equals("No such contract"));
-    assertTrue("incorrect datatype after update",
+    Assert.assertTrue("incorrect datatype after update",
                occ.getDataType().equals(DataTypes.TYPE_STRING));
   }
   
+  @Test
   public void testDynamicOccChange() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
     OccurrenceIF occ = (OccurrenceIF) getObjectById("jills-contract");
     
-    update("update value($C, \"No such contract\") from type($C, contract)");
+    assertUpdate("update value($C, \"No such contract\") from type($C, contract)");
 
-    assertTrue("occurrence not changed after update",
+    Assert.assertTrue("occurrence not changed after update",
                occ.getValue().equals("No such contract"));
-    assertTrue("incorrect datatype after update",
+    Assert.assertTrue("incorrect datatype after update",
                occ.getDataType().equals(DataTypes.TYPE_STRING));
   }
 
+  @Test
   public void testStaticResource() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
     OccurrenceIF occ = (OccurrenceIF) getObjectById("jills-contract");
     
-    update("update resource(jills-contract, \"http://example.com\")");
+    assertUpdate("update resource(jills-contract, \"http://example.com\")");
 
-    assertTrue("occurrence not changed after update: " + occ.getLocator(),
+    Assert.assertTrue("occurrence not changed after update: " + occ.getLocator(),
                occ.getLocator().getAddress().equals("http://example.com/"));
-    assertTrue("incorrect datatype after update",
+    Assert.assertTrue("incorrect datatype after update",
                occ.getDataType().equals(DataTypes.TYPE_URI));
   }
 
+  @Test
   public void testDynamicResource() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
     OccurrenceIF occ = (OccurrenceIF) getObjectById("jills-contract");
     
-    update("update resource($C, \"http://example.com\") " +
+    assertUpdate("update resource($C, \"http://example.com\") " +
            "from type($C, contract)");
 
-    assertTrue("occurrence not changed after update: " + occ.getLocator(),
+    Assert.assertTrue("occurrence not changed after update: " + occ.getLocator(),
                occ.getLocator().getAddress().equals("http://example.com/"));
-    assertTrue("incorrect datatype after update",
+    Assert.assertTrue("incorrect datatype after update",
                occ.getDataType().equals(DataTypes.TYPE_URI));
   }
 
+  @Test
   public void testParam() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
 
@@ -137,12 +135,13 @@ public class UpdateTest extends AbstractQueryTest {
     TopicNameIF name = subclass.getTopicNames().iterator().next();
     Map params = makeArguments("name", name);
 
-    update("update value(%name%, \"SUBCLASS\")", params);
+    assertUpdate("update value(%name%, \"SUBCLASS\")", params);
 
-    assertTrue("name value not changed",
+    Assert.assertTrue("name value not changed",
                name.getValue().equals("SUBCLASS"));
   }  
 
+  @Test
   public void testParam2() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
 
@@ -151,12 +150,13 @@ public class UpdateTest extends AbstractQueryTest {
     Map params = new HashMap();
     params.put("v", "SUBCLASS");
 
-    update("update value(@" + name.getObjectId() + ", %v%)", params);
+    assertUpdate("update value(@" + name.getObjectId() + ", %v%)", params);
 
-    assertTrue("name value not changed",
+    Assert.assertTrue("name value not changed",
                name.getValue().equals("SUBCLASS"));
   }
 
+  @Test
   public void testParam3() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
 
@@ -164,26 +164,29 @@ public class UpdateTest extends AbstractQueryTest {
     TopicNameIF name = subclass.getTopicNames().iterator().next();
     Map params = makeArguments("name", name);
 
-    update("update value($N, \"SUBCLASS\") from $N = %name%", params);
+    assertUpdate("update value($N, \"SUBCLASS\") from $N = %name%", params);
 
-    assertTrue("name value not changed",
+    Assert.assertTrue("name value not changed",
                name.getValue().equals("SUBCLASS"));
   }
   
   /// error tests
 
+  @Test
   public void testNotAString() throws InvalidQueryException, IOException {
     load("jill.xtm");
-    updateError("update value(jills-contract, 5)");
+    assertUpdateError("update value(jills-contract, 5)");
   }
 
+  @Test
   public void testNotAString2() throws InvalidQueryException, IOException {
     load("jill.xtm");
-    updateError("update value(jills-contract, jill)");
+    assertUpdateError("update value(jills-contract, jill)");
   }
 
+  @Test
   public void testHasNoValue() throws InvalidQueryException, IOException {
     load("jill.xtm");
-    updateError("update value(jill, \"foo\")");
+    assertUpdateError("update value(jill, \"foo\")");
   }
 }

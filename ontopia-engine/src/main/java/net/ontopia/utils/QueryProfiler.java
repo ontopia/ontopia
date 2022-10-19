@@ -101,13 +101,11 @@ public class QueryProfiler {
     long executeTime = 0;
     long executeNum = 0;
     long traverseTime = 0;
-    long traverseNum = 0;
     for (int i=0; i < events.length; i++) {
       Event event = (Event)events[i];
       executeTime += event.executeTime;
       executeNum += event.executeNum;
       traverseTime += event.traverseTime;
-      traverseNum += event.traverseNum;
     }
 
     // output data      
@@ -187,18 +185,6 @@ public class QueryProfiler {
 
       executeTime = executeTime + time;
       executeNum++;
-    }
-
-    private void addExecute(long startTime, long endTime, int executeCount) {
-      int time = (int)(endTime - startTime);
-      float timeAvg = (time/(executeCount*1.0f));
-      if (executeTimeMax == -1.0f || timeAvg > executeTimeMax)
-        executeTimeMax = timeAvg;
-      if (executeTimeMin == -1.0f || timeAvg < executeTimeMin)
-        executeTimeMin = timeAvg;
-
-      executeTime = executeTime + time;
-      executeNum += executeCount;
     }
 
     private void addTraverse(boolean hasNext, long startTime, long endTime) {

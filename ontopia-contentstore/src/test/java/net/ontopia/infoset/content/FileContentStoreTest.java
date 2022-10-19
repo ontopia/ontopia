@@ -24,14 +24,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class FileContentStoreTest extends AbstractContentStoreTest {
   
-  public FileContentStoreTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws IOException, ContentStoreException {
     File tstdir = getTestDirectory("content");
 
@@ -47,6 +46,7 @@ public class FileContentStoreTest extends AbstractContentStoreTest {
 
   // --- Specific tests
 
+  @Test
   public void testCloseAndReopen() throws IOException, ContentStoreException {
     // add one entry
     String CONTENT = "adding whatever entry";
@@ -59,7 +59,7 @@ public class FileContentStoreTest extends AbstractContentStoreTest {
       store = new FileContentStore(tstdir);
 
       // is the old entry OK?
-      assertTrue("Entry added before close/reopen is missing",
+      Assert.assertTrue("Entry added before close/reopen is missing",
                  store.containsKey(key));
       compare(key, CONTENT.getBytes());
 

@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
@@ -44,7 +45,6 @@ import net.ontopia.topicmaps.utils.IdentityUtils;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
-import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import ontopoly.model.PSI;
@@ -142,23 +142,10 @@ public class OntopolyRepository {
   }
 
   public List<TopicMapSource> getEditableSources() {
-    return getSources(new DeciderIF() {
-      @Override
-      public boolean ok(Object o) {
-        TopicMapSourceIF source = (TopicMapSourceIF)o;
-        return source.supportsCreate() && source.getId() != null;
-      }
-    });
-  }
-
-  private List<TopicMapSource> getSources(DeciderIF decider) {
-    Collection<TopicMapSourceIF> sources = getTopicMapRepository().getSources();
-    List<TopicMapSource> result = new ArrayList<TopicMapSource>(sources.size());
-    for (TopicMapSourceIF source : sources) {
-      if (decider.ok(source))
-        result.add(new TopicMapSource(source.getId()));
-    }
-    return result;
+    return getTopicMapRepository().getSources().stream()
+      .filter(source -> source.supportsCreate() && source.getId() != null)
+      .map(source -> new TopicMapSource(source.getId()))
+      .collect(Collectors.toList());
   }
 
   /**

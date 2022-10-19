@@ -22,55 +22,57 @@ package net.ontopia.topicmaps.core;
 
 import java.net.MalformedURLException;
 import net.ontopia.infoset.impl.basic.URILocator;
+import org.junit.Assert;
+import org.junit.Test;
 
 public abstract class TopicTest extends AbstractTMObjectTest {
   protected TopicIF topic;
   
-  public TopicTest(String name) {
-    super(name);
-  }
-    
   // --- Test cases
 
+  @Test
   public void testParentTopicMap() {
-    assertTrue("parent topic map is not correct",
+    Assert.assertTrue("parent topic map is not correct",
                topic.getTopicMap() == topicmap);
   }
 
+  @Test
   public void testSubject() {
-    assertTrue("subject not null initially", topic.getSubjectLocators().isEmpty());
+    Assert.assertTrue("subject not null initially", topic.getSubjectLocators().isEmpty());
 
     try {
       URILocator loc = new URILocator("http://www.ontopia.net/");
       topic.addSubjectLocator(loc);
-      assertTrue("subject not set properly", topic.getSubjectLocators().contains(loc));
+      Assert.assertTrue("subject not set properly", topic.getSubjectLocators().contains(loc));
 
       topic.removeSubjectLocator(loc);
-      assertTrue("couldn't set subject to null", topic.getSubjectLocators().isEmpty());
+      Assert.assertTrue("couldn't set subject to null", topic.getSubjectLocators().isEmpty());
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
+      Assert.fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
-      fail("constraint violated for no good reason");
+      Assert.fail("constraint violated for no good reason");
     }
   }
 
+  @Test
   public void testSubjectUnassignable() {
     TopicIF topic = builder.makeTopic();
     topic.remove();
     try {
       URILocator loc = new URILocator("http://www.ontopia.net");
       topic.addSubjectLocator(loc);
-      fail("subject assigned when not attached to topic map");
+      Assert.fail("subject assigned when not attached to topic map");
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
+      Assert.fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
     }
   }
     
+  @Test
   public void testDuplicateSubject() {
     try {
       URILocator loc = new URILocator("http://www.ontopia.net");
@@ -79,52 +81,54 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       TopicIF topic2 = builder.makeTopic();
       try {
         topic2.addSubjectLocator(loc);
-        fail("duplicate subject allowed");
+        Assert.fail("duplicate subject allowed");
       }
       catch (ConstraintViolationException e) {
       }
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
+      Assert.fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
-      fail("constraint violated for no good reason");
+      Assert.fail("constraint violated for no good reason");
     }
   }
     
+  @Test
   public void testTypes() {
     // STATE 1
-    assertTrue("type set not empty initially",
+    Assert.assertTrue("type set not empty initially",
                topic.getTypes().size() == 0);
 
     // STATE 2
     TopicIF type = builder.makeTopic();
     topic.addType(type);
 
-    assertTrue("type not added",
+    Assert.assertTrue("type not added",
                topic.getTypes().size() == 1);
 
-    assertTrue("type identity not retained",
+    Assert.assertTrue("type identity not retained",
                topic.getTypes().iterator().next().equals(type));
 
     topic.addType(type);
 
-    assertTrue("duplicate not rejected",
+    Assert.assertTrue("duplicate not rejected",
                topic.getTypes().size() == 1);
 
     // STATE 2
     topic.removeType(type);
         
-    assertTrue("type not removed",
+    Assert.assertTrue("type not removed",
                topic.getTypes().size() == 0);
 
     // verify that it's safe
     topic.removeType(type);
   }
   
+  @Test
   public void testOccurrences() {
     // STATE 1
-    assertTrue("occurrence set not empty initially",
+    Assert.assertTrue("occurrence set not empty initially",
                topic.getOccurrences().size() == 0);
 
     // STATE 2
@@ -132,101 +136,105 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     OccurrenceIF occurrence = builder.makeOccurrence(topic, otype, "");
     // added by builder
 
-    assertTrue("occurrence not added",
+    Assert.assertTrue("occurrence not added",
                topic.getOccurrences().size() == 1);
 
-    assertTrue("occurrence identity not retained",
+    Assert.assertTrue("occurrence identity not retained",
                topic.getOccurrences().iterator().next().equals(occurrence));
 
     // STATE 2
     occurrence.remove();
-    assertTrue("occurrence not removed",
+    Assert.assertTrue("occurrence not removed",
                topic.getOccurrences().size() == 0);
 
     // verify that it's safe
     occurrence.remove();
   }
     
+  @Test
   public void testTopicNames() {
     // STATE 1
-    assertTrue("basename set not empty initially",
+    Assert.assertTrue("basename set not empty initially",
                topic.getTopicNames().size() == 0);
 
     // STATE 2
     TopicNameIF basename = builder.makeTopicName(topic, "");
     // added by builder
 
-    assertTrue("basename not added",
+    Assert.assertTrue("basename not added",
                topic.getTopicNames().size() == 1);
 
-    assertTrue("basename identity not retained",
+    Assert.assertTrue("basename identity not retained",
                topic.getTopicNames().iterator().next().equals(basename));
 
     // STATE 2
     basename.remove();
-    assertTrue("basename not removed",
+    Assert.assertTrue("basename not removed",
                topic.getTopicNames().size() == 0);
 
     // verify that it's safe
     basename.remove();
   }
 
+  @Test
   public void testRoles() {
     // STATE 1
-    assertTrue("role set not empty initially",
+    Assert.assertTrue("role set not empty initially",
                topic.getRoles().size() == 0);
 
     // STATE 2
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
     AssociationRoleIF role = builder.makeAssociationRole(assoc, builder.makeTopic(), topic);
 
-    assertTrue("role not added",
+    Assert.assertTrue("role not added",
                topic.getRoles().size() == 1);
 
-    assertTrue("role identity not retained",
+    Assert.assertTrue("role identity not retained",
                topic.getRoles().iterator().next().equals(role));
 
     role.setPlayer(topic);
-    assertTrue("duplicate not rejected",
+    Assert.assertTrue("duplicate not rejected",
                topic.getRoles().size() == 1);
 
     try {
       role.setPlayer(null);
-      fail("player could be set to null");
+      Assert.fail("player could be set to null");
     } catch (NullPointerException e) {
     }
-    assertTrue("player not retained", role.getPlayer().equals(topic));
+    Assert.assertTrue("player not retained", role.getPlayer().equals(topic));
   }
   
+  @Test
   public void testRolesByType() {
     TopicIF type = builder.makeTopic();
         
-    assertTrue("roles by non-existent type initially not empty",
+    Assert.assertTrue("roles by non-existent type initially not empty",
                topic.getRolesByType(type).size() == 0);
 
     AssociationIF assoc = builder.makeAssociation(builder.makeTopic());
 
     // builder adds role to assoc
-    AssociationRoleIF role = builder.makeAssociationRole(assoc, type, topic);
+    builder.makeAssociationRole(assoc, type, topic);
 
-    assertTrue("roles of correct type not found",
+    Assert.assertTrue("roles of correct type not found",
                topic.getRolesByType(type).size() == 1);
 
     // builder adds role to assoc
     TopicIF other = builder.makeTopic();
     TopicIF rtype = builder.makeTopic();
-    AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype, other);
+    builder.makeAssociationRole(assoc, rtype, other);
 
-    assertTrue("role with no type found",
+    Assert.assertTrue("role with no type found",
                topic.getRolesByType(type).size() == 1);
 
-    assertTrue("role with no type not found",
+    Assert.assertTrue("role with no type not found",
                other.getRolesByType(rtype).size() == 1);
   }
     
+  @Test
   public void testSubjectIndicators() {
     // STATE 1
-    assertTrue("indicator set not empty initially",
+    Assert.assertTrue("indicator set not empty initially",
                topic.getSubjectIdentifiers().size() == 0);
 
     URILocator indicator = null;
@@ -235,32 +243,33 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       indicator = new URILocator("ftp://ftp.ontopia.net");
       topic.addSubjectIdentifier(indicator);
             
-      assertTrue("indicator not added",
+      Assert.assertTrue("indicator not added",
                  topic.getSubjectIdentifiers().size() == 1);
             
-      assertTrue("indicator identity not retained",
+      Assert.assertTrue("indicator identity not retained",
                  topic.getSubjectIdentifiers().iterator().next().equals(indicator));
             
       topic.addSubjectIdentifier(indicator);       
-      assertTrue("duplicate not rejected",
+      Assert.assertTrue("duplicate not rejected",
                  topic.getSubjectIdentifiers().size() == 1);
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given");
+      Assert.fail("(INTERNAL) bad URL given");
     }
     catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException");
+      Assert.fail("spurious ConstraintViolationException");
     }
 
     // STATE 3
     topic.removeSubjectIdentifier(indicator);
-    assertTrue("indicator not removed",
+    Assert.assertTrue("indicator not removed",
                topic.getSubjectIdentifiers().size() == 0);
 
     // verify that it's safe
     topic.removeSubjectIdentifier(indicator);
   }
     
+  @Test
   public void testSubjectIndicatorUnassignable() {
     TopicIF topic = builder.makeTopic();
     topic.remove();
@@ -268,15 +277,16 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     try {
       URILocator loc = new URILocator("http://www.ontopia.net");
       topic.addSubjectIdentifier(loc);
-      fail("subject indicator assigned when not attached to topic map");
+      Assert.fail("subject indicator assigned when not attached to topic map");
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
+      Assert.fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
     }
   }
 
+  @Test
   public void testSubjectIndicatorDuplicate() {
     TopicIF t1 = builder.makeTopic();
     TopicIF t2 = builder.makeTopic();
@@ -287,20 +297,21 @@ public abstract class TopicTest extends AbstractTMObjectTest {
 
       try {
         t2.addSubjectIdentifier(loc);
-        fail("accepted two subject indicators being set to the same URI");
+        Assert.fail("accepted two subject indicators being set to the same URI");
       }
       catch (ConstraintViolationException e) {
       }
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) URL malformed");
+      Assert.fail("(INTERNAL) URL malformed");
     }
     catch (ConstraintViolationException e) {
-      fail("constraint violated for no good reason");
+      Assert.fail("constraint violated for no good reason");
     }
   }
 
   @Override
+  @Test
   public void testTopicSubjectIndicatorSourceLocator() {
     // this is overridden from AbstractTMObject, because in this case
     // the collision is not allowed, but for all other TMObjectIFs it
@@ -312,16 +323,17 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       object.addItemIdentifier(loc);
                         
       topic.addSubjectIdentifier(loc);
-      fail("allowed subject indicator of one topic to be source locator of another");
+      Assert.fail("allowed subject indicator of one topic to be source locator of another");
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
+      Assert.fail("(INTERNAL) bad URL given" + e);
     }
     catch (ConstraintViolationException e) {
     }
   }
 
   @Override
+  @Test
   public void testSourceLocatorTopicSubjectIndicator() {
     // this is forbidden, according to the TMDM
     try {
@@ -331,16 +343,17 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       topic2.addSubjectIdentifier(loc);
                         
       topic.addItemIdentifier(loc);
-      fail("subject identifier of one topic allowed to be item identifier " +
+      Assert.fail("subject identifier of one topic allowed to be item identifier " +
            "of another");
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
+      Assert.fail("(INTERNAL) bad URL given" + e);
     }
     catch (ConstraintViolationException e) {
     }
   }
 
+  @Test
   public void testSourceLocatorTopicSubjectIndicator2() {
     // this is forbidden, according to the TMDM
     try {
@@ -350,16 +363,17 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       TopicIF topic2 = builder.makeTopic();
       topic2.addSubjectIdentifier(loc);
                         
-      fail("item identifier of one topic allowed to be subject identifier " +
+      Assert.fail("item identifier of one topic allowed to be subject identifier " +
            "of another");
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
+      Assert.fail("(INTERNAL) bad URL given" + e);
     }
     catch (ConstraintViolationException e) {
     }
   }
   
+  @Test
   public void testBug652a() {
     try {
       TopicIF topic = builder.makeTopic();
@@ -371,10 +385,11 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       topic.remove();
     }
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
+      Assert.fail("(INTERNAL) bad URL given" + e);
     }
   }
 
+  @Test
   public void testBug652b() {
     try {
       TopicIF topic = builder.makeTopic();
@@ -386,10 +401,11 @@ public abstract class TopicTest extends AbstractTMObjectTest {
       topic.remove();
     } 
     catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
+      Assert.fail("(INTERNAL) bad URL given" + e);
     }
   }
 
+  @Test
   public void testBug652c() {
     try {
       TopicIF t1 = builder.makeTopic();
@@ -398,22 +414,24 @@ public abstract class TopicTest extends AbstractTMObjectTest {
 
       TopicIF t2 = builder.makeTopic();
       t2.addItemIdentifier(loc);
-      fail("subject identifier of one topic allowed to be item identifier of " +
+      Assert.fail("subject identifier of one topic allowed to be item identifier of " +
            "another");
     } catch (MalformedURLException e) {
-      fail("(INTERNAL) bad URL given" + e);
+      Assert.fail("(INTERNAL) bad URL given" + e);
     } catch (UniquenessViolationException e) {
       // this is the expected outcome
     }
   }
 
+  @Test
   public void testDeleteInstanceOfSelf() {
     TopicIF topic = builder.makeTopic();
     topic.addType(topic);
     topic.remove();
-    assertTrue("topic was not deleted", topic.getTopicMap() == null);
+    Assert.assertTrue("topic was not deleted", topic.getTopicMap() == null);
   }
 
+  @Test
   public void testDeleteTopicWithRole() {
     // first create a ternary association
     TopicIF atype = builder.makeTopic();
@@ -423,84 +441,88 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     for (int ix = 0; ix < 150; ix++) {
       // must do this 100 times to trigger creation of TreeSet
       AssociationIF assoc = builder.makeAssociation(atype);
-      AssociationRoleIF role1 = builder.makeAssociationRole(assoc, roletype, other);
-      AssociationRoleIF role2 = builder.makeAssociationRole(assoc, roletype, topic);
+      builder.makeAssociationRole(assoc, roletype, other);
+      builder.makeAssociationRole(assoc, roletype, topic);
     }
 
     // then delete the topic
     topic.remove(); // boom
 
     // now verify that it's gone
-    assertEquals("wrong number of topics in TM",
+    Assert.assertEquals("wrong number of topics in TM",
                  3, topicmap.getTopics().size());
-    assertTrue("wrong number of associations in TM",
+    Assert.assertTrue("wrong number of associations in TM",
                topicmap.getAssociations().size() == 0);
   }
   
+  @Test
   public void testOccurrencesByType() {
     TopicIF type = builder.makeTopic();
         
-    assertTrue("occurrences by non-existent type initially not empty",
+    Assert.assertTrue("occurrences by non-existent type initially not empty",
                topic.getOccurrencesByType(type).size() == 0);
 
-    OccurrenceIF occ = builder.makeOccurrence(topic, type, "foo");
+    builder.makeOccurrence(topic, type, "foo");
 
-    assertTrue("occurrences of correct type not found",
+    Assert.assertTrue("occurrences of correct type not found",
                topic.getOccurrencesByType(type).size() == 1);
 
-    OccurrenceIF occ2 = builder.makeOccurrence(topic, builder.makeTopic(), "bar");
+    builder.makeOccurrence(topic, builder.makeTopic(), "bar");
 
-    assertTrue("occurrence with with incorrect type found",
+    Assert.assertTrue("occurrence with with incorrect type found",
                topic.getOccurrencesByType(type).size() == 1);
   }
   
+  @Test
   public void testNamesByType() {
     TopicIF type = builder.makeTopic();
         
-    assertTrue("names by non-existent type initially not empty",
+    Assert.assertTrue("names by non-existent type initially not empty",
                topic.getTopicNamesByType(type).size() == 0);
 
-    TopicNameIF name = builder.makeTopicName(topic, type, "foo");
+   builder.makeTopicName(topic, type, "foo");
 
-    assertTrue("names of correct type not found",
+    Assert.assertTrue("names of correct type not found",
                topic.getTopicNamesByType(type).size() == 1);
 
-    TopicNameIF name2 = builder.makeTopicName(topic, builder.makeTopic(), "bar");
+    builder.makeTopicName(topic, builder.makeTopic(), "bar");
 
-    assertTrue("name with with incorrect type found",
+    Assert.assertTrue("name with with incorrect type found",
                topic.getTopicNamesByType(type).size() == 1);
   }
   
+  @Test
   public void testAssociations() {
     
-    assertTrue("associations initially not empty",
+    Assert.assertTrue("associations initially not empty",
                topic.getAssociations().size() == 0);
     
     builder.makeAssociation(builder.makeTopic(), builder.makeTopic(), topic);
        
-    assertTrue("associations incorrect count",
+    Assert.assertTrue("associations incorrect count",
                topic.getAssociations().size() == 1);
     
     builder.makeAssociation(builder.makeTopic(), builder.makeTopic(), topic);
        
-    assertTrue("associations incorrect count",
+    Assert.assertTrue("associations incorrect count",
                topic.getAssociations().size() == 2);
   }  
 
+  @Test
   public void testAssociationsByType() {
     TopicIF type = builder.makeTopic();
         
-    assertTrue("associations by non-existent type initially not empty",
+    Assert.assertTrue("associations by non-existent type initially not empty",
                topic.getAssociationsByType(type).size() == 0);
 
     builder.makeAssociation(type, builder.makeTopic(), topic);
 
-    assertTrue("associations of correct type not found",
+    Assert.assertTrue("associations of correct type not found",
                topic.getAssociationsByType(type).size() == 1);
 
     builder.makeAssociation(builder.makeTopic(), builder.makeTopic(), topic);
 
-    assertTrue("associations with with incorrect type found",
+    Assert.assertTrue("associations with with incorrect type found",
                topic.getAssociationsByType(type).size() == 1);
   }
   

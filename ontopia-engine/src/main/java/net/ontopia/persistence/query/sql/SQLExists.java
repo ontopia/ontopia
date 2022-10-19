@@ -20,6 +20,8 @@
 
 package net.ontopia.persistence.query.sql;
 
+import java.util.Objects;
+
 /**
  * INTERNAL: SQL condition: exists. Evaluates to true if the left
  * value contains the right value.<p>
@@ -32,8 +34,7 @@ public class SQLExists implements SQLExpressionIF {
   protected SQLExpressionIF expression;
 
   public SQLExists(SQLExpressionIF expression) {
-    if (expression == null)
-      throw new NullPointerException("Expression must not be null.");
+    Objects.requireNonNull(expression, "Expressions must not be null.");
     this.expression = expression;
   }
 

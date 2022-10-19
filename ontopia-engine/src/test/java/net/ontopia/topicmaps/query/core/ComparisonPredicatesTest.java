@@ -24,94 +24,97 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.junit.Test;
 
 public class ComparisonPredicatesTest extends AbstractPredicateTest {
   
-  public ComparisonPredicatesTest(String name) {
-    super(name);
-  }
-
-  /// setup
-
-  @Override
-  public void tearDown() {    
-    closeStore();
-  }
-  
   /// tests
 
+  @Test
   public void testLTFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("\"b\" < \"a\"?");
+    assertFindNothing("\"b\" < \"a\"?");
   }
 
+  @Test
   public void testLTFalse2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("\"a\" < \"a\"?");
+    assertFindNothing("\"a\" < \"a\"?");
   }
   
+  @Test
   public void testLTEFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("\"b\" <= \"a\"?");
+    assertFindNothing("\"b\" <= \"a\"?");
   }
   
+  @Test
   public void testGTFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("\"a\" > \"b\"?");
+    assertFindNothing("\"a\" > \"b\"?");
   }
   
+  @Test
   public void testGTFalse2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("\"a\" > \"a\"?");
+    assertFindNothing("\"a\" > \"a\"?");
   }
   
+  @Test
   public void testGTEFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("\"a\" >= \"b\"?");
+    assertFindNothing("\"a\" >= \"b\"?");
   }
   
+  @Test
   public void testLTTrue() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"\"a\" < \"b\"?");
+    assertQueryMatches(matches,"\"a\" < \"b\"?");
   }
   
+  @Test
   public void testLTETrue() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"\"a\" <= \"b\"?");
+    assertQueryMatches(matches,"\"a\" <= \"b\"?");
   }
   
+  @Test
   public void testLTETrue2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"\"a\" <= \"a\"?");
+    assertQueryMatches(matches,"\"a\" <= \"a\"?");
   }
   
+  @Test
   public void testGTTrue() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"\"b\" > \"a\"?");
+    assertQueryMatches(matches,"\"b\" > \"a\"?");
   }
   
+  @Test
   public void testGTETrue() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"\"b\" >= \"a\"?");
+    assertQueryMatches(matches,"\"b\" >= \"a\"?");
   }
   
+  @Test
   public void testGTETrue2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches,"\"a\" >= \"a\"?");
+    assertQueryMatches(matches,"\"a\" >= \"a\"?");
   }
 
+  @Test
   public void testLTVariable() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
@@ -119,10 +122,11 @@ public class ComparisonPredicatesTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("topic1"));
     addMatch(matches, "T", getTopicById("topic2"));
     
-    verifyQuery(matches, "select $T from " +
+    assertQueryMatches(matches, "select $T from " +
                 "topic-name($T, $N), value($N, $V), $V < \"Topic3\"?");
   } 
 
+  @Test
   public void testLTVariable2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
@@ -130,33 +134,38 @@ public class ComparisonPredicatesTest extends AbstractPredicateTest {
     addMatch(matches, "T", getTopicById("topic1"));
     addMatch(matches, "T", getTopicById("topic2"));
     
-    verifyQuery(matches, "select $T from " +
+    assertQueryMatches(matches, "select $T from " +
                 "topic-name($T, $N), $V < \"Topic3\", value($N, $V)?");
   } 
 
+  @Test
   public void testUnboundVariable() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     
-    getParseError("topic-name($T, $N), $V < \"Topic3\"?"); // V never bound...
+    assertGetParseError("topic-name($T, $N), $V < \"Topic3\"?"); // V never bound...
   }
 
+  @Test
   public void testTypeClash() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
-    findNothing("description($TOPIC, $VALUE), $VALUE < 1?");
+    assertFindNothing("description($TOPIC, $VALUE), $VALUE < 1?");
   }
 
+  @Test
   public void testTypeClash2() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
-    findNothing("description($TOPIC, $VALUE), $VALUE <= 1?");
+    assertFindNothing("description($TOPIC, $VALUE), $VALUE <= 1?");
   }
 
+  @Test
   public void testTypeClash3() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
-    findNothing("description($TOPIC, $VALUE), 1 > $VALUE?");
+    assertFindNothing("description($TOPIC, $VALUE), 1 > $VALUE?");
   }
 
+  @Test
   public void testTypeClash4() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
-    findNothing("description($TOPIC, $VALUE), 1 >= $VALUE?");
+    assertFindNothing("description($TOPIC, $VALUE), 1 >= $VALUE?");
   }
 }

@@ -28,53 +28,52 @@ import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceTest {
 
-  public AbstractURLTopicMapReferenceTest(String name) {
-    super(name);
-  }
-
   // --- utility methods
 
-  public void doAbstractURLTopicMapReferenceTests(AbstractURLTopicMapReference ref) throws java.io.IOException {
+  public void assertCompliesToAbstractURLTopicMapReference(AbstractURLTopicMapReference ref) throws java.io.IOException {
     // test url
-    assertTrue("URL == null", ref.getURL() != null);
+    Assert.assertTrue("URL == null", ref.getURL() != null);
 
     // test base address
     LocatorIF ba = ref.getBaseAddress();
     LocatorIF nba = new GenericLocator("URI", "file:/tmp/foo");
     ref.setBaseAddress(nba);
-    assertTrue("BaseAddress != NBA", ref.getBaseAddress() == nba);
+    Assert.assertTrue("BaseAddress != NBA", ref.getBaseAddress() == nba);
     ref.setBaseAddress(null);
-    assertTrue("BaseAddress is not null", ref.getBaseAddress() == null);   
+    Assert.assertTrue("BaseAddress is not null", ref.getBaseAddress() == null);   
     ref.setBaseAddress(ba);
-    assertTrue("BaseAddress != BA", ref.getBaseAddress() == ba);   
+    Assert.assertTrue("BaseAddress != BA", ref.getBaseAddress() == ba);   
 
     // test duplicate suppression
     boolean ds = ref.getDuplicateSuppression();
     ref.setDuplicateSuppression(true);
-    assertTrue("DuplicateSuppression != true", ref.getDuplicateSuppression());
+    Assert.assertTrue("DuplicateSuppression != true", ref.getDuplicateSuppression());
     ref.setDuplicateSuppression(false);
-    assertTrue("DuplicateSuppression != false", !ref.getDuplicateSuppression());
+    Assert.assertTrue("DuplicateSuppression != false", !ref.getDuplicateSuppression());
     ref.setDuplicateSuppression(ds);
-    assertTrue("DuplicateSuppression != DS", ref.getDuplicateSuppression() == ds);
+    Assert.assertTrue("DuplicateSuppression != DS", ref.getDuplicateSuppression() == ds);
 
     // reuse store
     boolean rs = ref.getReuseStore();
     ref.setReuseStore(true);
-    assertTrue("ReuseStore != true", ref.getReuseStore());
+    Assert.assertTrue("ReuseStore != true", ref.getReuseStore());
     ref.setReuseStore(false);
-    assertTrue("ReuseStore != false", !ref.getReuseStore());
+    Assert.assertTrue("ReuseStore != false", !ref.getReuseStore());
     ref.setReuseStore(rs);
-    assertTrue("ReuseStore != RS", ref.getReuseStore() == rs);
+    Assert.assertTrue("ReuseStore != RS", ref.getReuseStore() == rs);
 
     boolean checkOpenAfterClose = true;
-    doAbstractTopicMapReferenceTests(ref, checkOpenAfterClose);
+    assertCompliesToAbstractTopicMapReference(ref, checkOpenAfterClose);
   }
 
   // --- Test cases (XTM)
 
+  @Test
   public void testXTMRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "jill.xtm";
     String title = "XTMTM";
@@ -82,26 +81,27 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     XTMTopicMapReference ref = new XTMTopicMapReference(file, id, title);
 
     // test validation
-    assertTrue("Validation default is not true", ref.getValidation());   
+    Assert.assertTrue("Validation default is not true", ref.getValidation());   
     ref.setValidation(false);
-    assertTrue("Validation is not false", !ref.getValidation());   
+    Assert.assertTrue("Validation is not false", !ref.getValidation());   
     ref.setValidation(true);
-    assertTrue("Validation is not true", ref.getValidation());   
+    Assert.assertTrue("Validation is not true", ref.getValidation());   
 
     // test external reference handler
     ExternalReferenceHandlerIF nerh = new NullResolvingExternalReferenceHandler();
-    assertTrue("ExtRefHandler default is not null", ref.getExternalReferenceHandler() == null);   
+    Assert.assertTrue("ExtRefHandler default is not null", ref.getExternalReferenceHandler() == null);   
     ref.setExternalReferenceHandler(nerh);
-    assertTrue("ExtRefHandler != NERH", ref.getExternalReferenceHandler() == nerh);
+    Assert.assertTrue("ExtRefHandler != NERH", ref.getExternalReferenceHandler() == nerh);
     ref.setExternalReferenceHandler(null);
-    assertTrue("ExtRefHandler is not null", ref.getExternalReferenceHandler() == null);   
+    Assert.assertTrue("ExtRefHandler is not null", ref.getExternalReferenceHandler() == null);   
 
     // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
+    assertCompliesToAbstractURLTopicMapReference(ref);
   }
 
   // --- Test cases (LTM)
 
+  @Test
   public void testLTMRef() throws java.net.MalformedURLException, java.io.IOException {
     String id = "small-test.ltm";
     String title = "LTMTM";
@@ -109,6 +109,6 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     LTMTopicMapReference ref = new LTMTopicMapReference(file, id, title);
 
     // run abstract url topic map reference tests
-    doAbstractURLTopicMapReferenceTests(ref);
+    assertCompliesToAbstractURLTopicMapReference(ref);
   }
 }

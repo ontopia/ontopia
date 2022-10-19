@@ -30,7 +30,6 @@ import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.utils.TestFileUtils;
 import org.junit.BeforeClass;
 
 public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.CanonicalExporterXTMTests {
@@ -100,8 +99,3 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.Canonic
   }
   
 }
-
-
-
-
-

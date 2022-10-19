@@ -50,8 +50,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSStorage storage;
   protected RDBMSMapping mapping;
   
-  protected Connection conn_;
-  protected ThreadLocal<Connection> conn_map = new InheritableThreadLocal<>();
+  protected Connection connection;
 
   protected boolean closed;
   
@@ -73,6 +72,9 @@ public class RDBMSAccess implements StorageAccessIF {
     handlers = new HashMap<Class<?>, ClassAccessIF>();
     flushable = new HashSet<FlushableIF>();
     
+    // Request new connection from storage
+    requestConnectionFromStorage();
+
     log.debug(getId() + ": Storage access created");    
   }
   
@@ -100,59 +102,44 @@ public class RDBMSAccess implements StorageAccessIF {
   // RDBMS specific
   // -----------------------------------------------------------------------------
 
-  protected Connection getConn() {
-    if (readonly)
-      return conn_map.get();
-    else
-      return conn_;
-  }
-  protected void setConn(Connection conn) {
-    if (readonly)
-      if (conn == null) {
-        this.conn_map.remove();
-      } else {
-        this.conn_map.set(conn);
-      }
-    else
-      this.conn_ = conn;
+  /**
+   * INTERNAL: Requests a normal connection from the storage, to be used in a transaction.
+   */
+  private void requestConnectionFromStorage() {
+    try {
+      this.connection = storage.getConnectionFactory(readonly).requestConnection();
+    } catch (SQLException e) {
+      throw new OntopiaRuntimeException(e);
+    }
   }
 
   /**
    * INTERNAL: Returns the JDBC database connection used. It is important that 
    * this connection is neither closed, nor commited or rolled back. 
+   * If this access has already been closed, a non-transactional read connection is requested
+   * from the storage. The connection is validated using validateConnection and renewed if not
+   * validated.
    */
-  public Connection getConnection() {    
-    Connection conn = getConn();
-    if (conn == null) {
-      try {
-        // Request new connection object from storage
-        conn = storage.getConnectionFactory(readonly).requestConnection();
-        setConn(conn);
-        return conn;
-      } catch (SQLException e) {
-        throw new OntopiaRuntimeException(e);
+  public Connection getConnection() {
+    if (this.connection == null) {
+      this.connection = storage.getNonTransactionalReadConnection();
+    } else {
+      // validate connection is still valid
+      if (!validateConnection(this.connection)) {
+        // reopen
+        if (closed) {
+          this.connection = storage.getNonTransactionalReadConnection();
+        } else {
+          requestConnectionFromStorage();
+        }
       }
-    } else
-      return conn;
+    }
+    storage.touch(this.connection);
+    return this.connection;
   }
   
   public PreparedStatement prepareStatement(String sql) throws SQLException {
     return getConnection().prepareStatement(sql);
-  }
-  
-  protected synchronized void resetConnection() {
-    // NOTE: method used to reset connection for read-only access, so
-    // that a second attempt can be made.
-    Connection conn = getConn();
-    if (conn != null) {
-      try {
-        conn.close();
-      } catch (SQLException e) {
-        // ignore
-      } finally {
-        setConn(null);
-      }
-    }
   }
   
   protected boolean isSQLException(Throwable e) {
@@ -165,14 +152,6 @@ public class RDBMSAccess implements StorageAccessIF {
       return false;    
   }
 
-  /**
-   * INTERNAL: exposes the ThreadLocal of connections cached in this access.
-   * @since %NEXT%
-   */
-  public ThreadLocal<Connection> getConnections() {
-    return conn_map;
-  }
-  
   // -----------------------------------------------------------------------------
   // Handlers
   // -----------------------------------------------------------------------------
@@ -214,7 +193,8 @@ public class RDBMSAccess implements StorageAccessIF {
   
   @Override
   public boolean validate() {
-    Connection conn = getConn();
+    if (closed) { return false; }
+    Connection conn = getConnection();
     return !(closed || (conn == null ? false : !validateConnection(conn)));
   }
   
@@ -259,10 +239,9 @@ public class RDBMSAccess implements StorageAccessIF {
   
   @Override
   public void commit() {
-    Connection conn = getConn();
-    if (conn != null) {
+    if (this.connection != null) {
       try {
-        conn.commit();
+        this.connection.commit();
         log.debug(getId() + ": Storage access rw committed.");      
       } catch (SQLException e) {
         throw new OntopiaRuntimeException(e);
@@ -274,20 +253,14 @@ public class RDBMSAccess implements StorageAccessIF {
   
   @Override
   public void abort() {
-    Connection conn = getConn();
-    if (conn != null) {
+    if (this.connection != null) {
       try {
-        conn.rollback();
+        this.connection.rollback();
         log.debug(getId() + ": Storage rw access aborted.");      
       } catch (SQLException e) {
         throw new OntopiaRuntimeException(e);
-      }
-      try {
-        conn.close();
-      } catch (SQLException e) {
-        // ignore
       } finally {
-        setConn(null);
+        close();
       }
     } else {
       log.debug(getId() + ": Storage access aborted (no connection).");      
@@ -298,14 +271,13 @@ public class RDBMSAccess implements StorageAccessIF {
   public void close() {
     try {
       // Close/release connections
-      Connection conn = getConn();
-      if (conn != null) {
+      if (this.connection != null) {
         try {
-          conn.close();
+          this.connection.close();
         } catch (SQLException e) {
           // ignore
         } finally {
-          setConn(null);
+          this.connection = null;
         }
         log.debug(getId() + ": Storage access rw closed.");
       } else {
@@ -344,13 +316,6 @@ public class RDBMSAccess implements StorageAccessIF {
         return getHandler(identity.getType()).load(registrar, identity);
       } catch (IdentityNotFoundException e) {
         throw e;
-      } catch (Exception e) {
-        if (readonly && isSQLException(e)) {
-          // if read-only, reset connection and try again
-          resetConnection();
-          log.warn(getId() + ": Connection seems to be down. Resetting read-only connection before second attempt (loadObject).", e);
-          return getHandler(identity.getType()).load(registrar, identity);
-        } else throw e;
       }
     } catch (RuntimeException e) {
       throw e;
@@ -368,13 +333,6 @@ public class RDBMSAccess implements StorageAccessIF {
         return getHandler(identity.getType()).loadField(registrar, identity, field);
       } catch (IdentityNotFoundException e) {
         throw e;
-      } catch (Exception e) {
-        if (readonly && isSQLException(e)) {
-          // if read-only, reset connection and try again
-          resetConnection();
-          log.warn(getId() + ": Connection seems to be down. Resetting read-only connection before second attempt (loadField).", e);
-          return getHandler(identity.getType()).loadField(registrar, identity, field);  
-        } else throw e;
       }
     } catch (RuntimeException e) {
       throw e;
@@ -398,13 +356,6 @@ public class RDBMSAccess implements StorageAccessIF {
         return getHandler(type).loadFieldMultiple(registrar, identities, current, field);
       } catch (IdentityNotFoundException e) {
         throw e;
-      } catch (Exception e) {
-        if (readonly && isSQLException(e)) {
-          // if read-only, reset connection and try again
-          resetConnection();
-          log.warn(getId() + ": Connection seems to be down. Resetting read-only connection before second attempt (loadFieldMultiple).", e);
-          return getHandler(type).loadFieldMultiple(registrar, identities, current, field);
-        } else throw e;
       }
     } catch (RuntimeException e) {
       throw e;

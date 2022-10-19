@@ -23,6 +23,9 @@ package net.ontopia.topicmaps.core.index;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public abstract class IdentifierIndexTest extends AbstractIndexTest {
 
@@ -33,118 +36,119 @@ public abstract class IdentifierIndexTest extends AbstractIndexTest {
 
   private IdentifierIndexIF ix;
 
-  public IdentifierIndexTest(String name) {
-    super(name);
-  }
-
   @Override
-  protected void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     ix = (IdentifierIndexIF) super.setUp("IdentifierIndexIF");
   }
 
+  @Test
   public void testItemIdentifiers() {
-    assertEquals(0, ix.getItemIdentifiers().size());
+    Assert.assertEquals(0, ix.getItemIdentifiers().size());
     
     TopicIF topic1 = builder.makeTopic();
     TopicIF topic2 = builder.makeTopic();
     
     topic1.addItemIdentifier(loc1);
     topic2.addItemIdentifier(loc2);
-    assertEquals(2, ix.getItemIdentifiers().size());
+    Assert.assertEquals(2, ix.getItemIdentifiers().size());
     
     OccurrenceIF o = builder.makeOccurrence(topic1, topic1, "foo");
     o.addItemIdentifier(loc3);
-    assertEquals(3, ix.getItemIdentifiers().size());
+    Assert.assertEquals(3, ix.getItemIdentifiers().size());
     
-    assertTrue(ix.getItemIdentifiers().contains(loc1));
-    assertTrue(ix.getItemIdentifiers().contains(loc2));
-    assertTrue(ix.getItemIdentifiers().contains(loc3));
+    Assert.assertTrue(ix.getItemIdentifiers().contains(loc1));
+    Assert.assertTrue(ix.getItemIdentifiers().contains(loc2));
+    Assert.assertTrue(ix.getItemIdentifiers().contains(loc3));
     
     o.remove();
-    assertEquals(2, ix.getItemIdentifiers().size());
+    Assert.assertEquals(2, ix.getItemIdentifiers().size());
     
     topic1.remove();
-    assertEquals(1, ix.getItemIdentifiers().size());
+    Assert.assertEquals(1, ix.getItemIdentifiers().size());
   }
   
+  @Test
   public void testItemIdentifiersByPrefix() {
-    assertEquals(0, ix.getItemIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(0, ix.getItemIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
     
     TopicIF topic1 = builder.makeTopic();
     TopicIF topic2 = builder.makeTopic();
     
     topic1.addItemIdentifier(loc1);
     topic2.addItemIdentifier(loc2);
-    assertEquals(2, ix.getItemIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(2, ix.getItemIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
     
     OccurrenceIF o = builder.makeOccurrence(topic1, topic1, "foo");
     o.addItemIdentifier(loc3);
-    assertEquals(3, ix.getItemIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(3, ix.getItemIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
     
-    assertTrue(ix.getItemIdentifiers().contains(loc1));
-    assertTrue(ix.getItemIdentifiers().contains(loc2));
-    assertTrue(ix.getItemIdentifiers().contains(loc3));
+    Assert.assertTrue(ix.getItemIdentifiers().contains(loc1));
+    Assert.assertTrue(ix.getItemIdentifiers().contains(loc2));
+    Assert.assertTrue(ix.getItemIdentifiers().contains(loc3));
     
     o.remove();
-    assertEquals(2, ix.getItemIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(2, ix.getItemIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
     
     topic1.remove();
-    assertEquals(1, ix.getItemIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(1, ix.getItemIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getItemIdentifiersByPrefix("bar").size());
     
     topic1 = builder.makeTopic();
     topic1.addItemIdentifier(loc4);
-    assertEquals(1, ix.getItemIdentifiersByPrefix("foo").size());
-    assertEquals(1, ix.getItemIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(1, ix.getItemIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(1, ix.getItemIdentifiersByPrefix("bar").size());
   }
   
+  @Test
   public void testSubjectIdentifiers() {
-    assertEquals(0, ix.getSubjectIdentifiers().size());
+    Assert.assertEquals(0, ix.getSubjectIdentifiers().size());
     
     TopicIF topic1 = builder.makeTopic();
     TopicIF topic2 = builder.makeTopic();
     
     topic1.addSubjectIdentifier(loc1);
     topic2.addSubjectIdentifier(loc2);
-    assertEquals(2, ix.getSubjectIdentifiers().size());
+    Assert.assertEquals(2, ix.getSubjectIdentifiers().size());
     
     
-    assertTrue(ix.getSubjectIdentifiers().contains(loc1));
-    assertTrue(ix.getSubjectIdentifiers().contains(loc2));
+    Assert.assertTrue(ix.getSubjectIdentifiers().contains(loc1));
+    Assert.assertTrue(ix.getSubjectIdentifiers().contains(loc2));
     
     topic1.getSubjectIdentifiers();
 
 
     topic1.remove();
-    assertEquals(1, ix.getSubjectIdentifiers().size());
+    Assert.assertEquals(1, ix.getSubjectIdentifiers().size());
   }
   
+  @Test
   public void testSubjectIdentifiersByPrefix() {
-    assertEquals(0, ix.getSubjectIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getSubjectIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(0, ix.getSubjectIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getSubjectIdentifiersByPrefix("bar").size());
     
     TopicIF topic1 = builder.makeTopic();
     TopicIF topic2 = builder.makeTopic();
     
     topic1.addSubjectIdentifier(loc1);
     topic2.addSubjectIdentifier(loc2);
-    assertEquals(2, ix.getSubjectIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getSubjectIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(2, ix.getSubjectIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getSubjectIdentifiersByPrefix("bar").size());
     
-    assertTrue(ix.getSubjectIdentifiers().contains(loc1));
-    assertTrue(ix.getSubjectIdentifiers().contains(loc2));
+    Assert.assertTrue(ix.getSubjectIdentifiers().contains(loc1));
+    Assert.assertTrue(ix.getSubjectIdentifiers().contains(loc2));
     
     topic1.remove();
-    assertEquals(1, ix.getSubjectIdentifiersByPrefix("foo").size());
-    assertEquals(0, ix.getSubjectIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(1, ix.getSubjectIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(0, ix.getSubjectIdentifiersByPrefix("bar").size());
     
     topic1 = builder.makeTopic();
     topic1.addSubjectIdentifier(loc4);
-    assertEquals(1, ix.getSubjectIdentifiersByPrefix("foo").size());
-    assertEquals(1, ix.getSubjectIdentifiersByPrefix("bar").size());
+    Assert.assertEquals(1, ix.getSubjectIdentifiersByPrefix("foo").size());
+    Assert.assertEquals(1, ix.getSubjectIdentifiersByPrefix("bar").size());
   }
 }

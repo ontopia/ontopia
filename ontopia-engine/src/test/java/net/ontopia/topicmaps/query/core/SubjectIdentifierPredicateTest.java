@@ -25,18 +25,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import org.junit.Test;
 
 public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
   
-  public SubjectIdentifierPredicateTest(String name) {
-    super(name);
-  }
-
   /// tests
 
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
@@ -50,47 +47,51 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
                  "LOCATOR", ((LocatorIF) it2.next()).getAddress());
     }
     
-    verifyQuery(matches, "subject-identifier($TOPIC, $LOCATOR)?");
+    assertQueryMatches(matches, "subject-identifier($TOPIC, $LOCATOR)?");
     
     closeStore();    
   }
   
+  @Test
   public void testTopicToLocator() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", "http://www.topicmaps.org/xtm/1.0/language.xtm#en");
     
-    verifyQuery(matches, "subject-identifier(english, $LOCATOR)?");
+    assertQueryMatches(matches, "subject-identifier(english, $LOCATOR)?");
     closeStore();
   }
 
+  @Test
   public void testLocatorToTopic() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("english"));
     
-    verifyQuery(matches, "subject-identifier($TOPIC, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
+    assertQueryMatches(matches, "subject-identifier($TOPIC, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
     closeStore();
   }
 
+  @Test
   public void testBothBoundFalse() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
     List matches = new ArrayList();
     
-    verifyQuery(matches, "subject-identifier(user, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
+    assertQueryMatches(matches, "subject-identifier(user, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
     closeStore();
   }
 
+  @Test
   public void testBothBoundTrue() throws InvalidQueryException, IOException {
     load("bb-ontologi.ltm");
 
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "subject-identifier(english, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
+    assertQueryMatches(matches, "subject-identifier(english, \"http://www.topicmaps.org/xtm/1.0/language.xtm#en\")?");
     closeStore();
   }
   

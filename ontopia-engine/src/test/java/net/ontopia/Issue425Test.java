@@ -21,12 +21,12 @@
 package net.ontopia;
 
 import java.net.URISyntaxException;
-import junit.framework.Assert;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
 import net.ontopia.topicmaps.core.TestFactoryIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTestFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -34,10 +34,6 @@ import org.junit.Test;
  * This seems to only happen in MySQL, due to case insensitive collation.
  */
 public class Issue425Test extends AbstractTopicMapTest {
-
-  public Issue425Test(String name) {
-    super(name);
-  }
 
   @Test
   public void testURN() throws URISyntaxException {

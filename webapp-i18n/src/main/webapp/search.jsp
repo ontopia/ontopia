@@ -4,7 +4,6 @@
   net.ontopia.topicmaps.query.core.QueryResultIF,
   net.ontopia.topicmaps.core.*,
   net.ontopia.infoset.core.LocatorIF,
-  net.ontopia.utils.StringifierIF,
   net.ontopia.topicmaps.entry.*,
   net.ontopia.topicmaps.nav2.core.*,
   net.ontopia.topicmaps.utils.TopicStringifiers
@@ -86,12 +85,11 @@ Your query matched the following scripts:
 <%
   QueryProcessor proc = new QueryProcessor(topicmap);
   QueryResultIF result = proc.execute(tolog);
-  StringifierIF str = TopicStringifiers.getDefaultStringifier();
 
   while (result.next()) {
     TopicIF script = (TopicIF) result.getValue("SCRIPT");
 %>
-  <li><a href="script.jsp?id=<%= script.getObjectId() %>"><%= str.toString(script) %></a></li>
+  <li><a href="script.jsp?id=<%= script.getObjectId() %>"><%= TopicStringifiers.toString(script) %></a></li>
 <%
   }
 %>

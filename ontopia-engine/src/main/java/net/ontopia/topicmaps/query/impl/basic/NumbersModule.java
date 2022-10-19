@@ -78,14 +78,6 @@ public class NumbersModule implements ModuleIF {
       this.precisionRanking = precisionRanking;
     }
 
-    private Class toClass() {
-      switch (this) {
-        case INTEGER: return Integer.class;
-        case FLOAT:   return Float.class;
-        default:      return null;
-      }
-    }
-
     private static NumberSupport fromClass(Class klass) {
       if (Integer.class.isAssignableFrom(klass)) return INTEGER;
       if (Float.class.isAssignableFrom(klass)) return FLOAT;

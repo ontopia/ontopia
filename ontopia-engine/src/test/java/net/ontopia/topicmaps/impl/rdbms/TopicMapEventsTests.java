@@ -26,6 +26,8 @@ import net.ontopia.topicmaps.core.TestFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.events.AbstractTopicMapListener;
 import net.ontopia.topicmaps.core.events.TopicMapEvents;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests if the modifications to the TopicEvents class result in correct behavior of the
@@ -35,21 +37,18 @@ public class TopicMapEventsTests extends AbstractTopicMapTest {
 
   private int added = 0;
 
-  public TopicMapEventsTests(String name) {
-    super(name);
-  }
-
   @Override
   protected TestFactoryIF getFactory() throws Exception {
     return new RDBMSTestFactory();
   }
 
   @Override
-  protected void setUp() throws Exception {
+  public void setUp() throws Exception {
     super.setUp();
     added = 0;
   }
 
+  @Test
   public void testTransactionCommit() throws IOException {
     TopicMapEvents.addTopicListener(topicmapRef, new AbstractTopicMapListener() {
 
@@ -66,18 +65,19 @@ public class TopicMapEventsTests extends AbstractTopicMapTest {
       store.getTopicMap().getBuilder().makeTopic();
 
       // before commit: 0 calls should have been made to objectAdded
-      assertEquals(0, added);
+      Assert.assertEquals(0, added);
 
       store.commit();
       
       // after commit: 1 call should have been made to objectAdded
-      assertEquals(1, added);
+      Assert.assertEquals(1, added);
       
     } finally {
       store.close();
     }
   }
   
+  @Test
   public void testTransactionAbort() throws IOException {
     TopicMapEvents.addTopicListener(topicmapRef, new AbstractTopicMapListener() {
 
@@ -94,12 +94,12 @@ public class TopicMapEventsTests extends AbstractTopicMapTest {
       store.getTopicMap().getBuilder().makeTopic();
       
       // before commit: 0 calls should have been made to objectAdded
-      assertEquals(0, added);
+      Assert.assertEquals(0, added);
 
       store.abort();
       
       // after abort: 0 calls should have been made to objectAdded
-      assertEquals(0, added);
+      Assert.assertEquals(0, added);
       
     } finally {
       store.close();

@@ -61,7 +61,6 @@ public class TopicMapPreferencesTest {
 		TestFileUtils.verifyDirectory(base, "out");
 		TestFileUtils.verifyDirectory(base, "ltm");
 		String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
-		String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename + ".cxtm");
 		File out = new File(base + File.separator + "out" + File.separator + filename + ".cxtm");
 		File ltm = new File(base + File.separator + "ltm" + File.separator + filename + ".ltm");
 		TestTMPrefsFactory.setFixedReference(in);

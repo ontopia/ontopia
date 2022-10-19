@@ -70,8 +70,7 @@ public class TopicPages {
     currentPages.add(page);
     
     if (name == null)
-      name = TopicStringifiers.getDefaultStringifier()
-          .toString(page.getTopic());
+      name = TopicStringifiers.toString(page.getTopic());
     sourceLocators.addAll(page.getTopic().getItemIdentifiers());
     subjectIndicators.addAll(page.getTopic().getSubjectIdentifiers());
     subjectLocators.addAll(page.getTopic().getSubjectLocators());

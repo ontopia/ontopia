@@ -23,6 +23,7 @@ package ontopoly.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
@@ -48,8 +49,7 @@ public class FieldInstanceModel extends LoadableDetachableModel<FieldInstance> {
 
   public FieldInstanceModel(FieldInstance fieldInstance) {
     super(fieldInstance);
-    if (fieldInstance == null)
-      throw new NullPointerException("fieldInstance parameter cannot be null.");
+    Objects.requireNonNull(fieldInstance, "fieldInstance parameter cannot be null.");
     Topic topic = fieldInstance.getInstance();
     this.topicId = topic.getId();
     TopicMap topicMap = topic.getTopicMap();

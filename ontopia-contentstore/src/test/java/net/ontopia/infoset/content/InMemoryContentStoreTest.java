@@ -20,13 +20,11 @@
 
 package net.ontopia.infoset.content;
 
+import org.junit.Before;
+
 public class InMemoryContentStoreTest extends AbstractContentStoreTest {
   
-  public InMemoryContentStoreTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() {
     store = new InMemoryContentStore();
   }

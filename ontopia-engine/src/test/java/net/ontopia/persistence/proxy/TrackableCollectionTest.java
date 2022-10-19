@@ -20,67 +20,67 @@
 
 package net.ontopia.persistence.proxy;
 
-import junit.framework.TestCase;
+import net.ontopia.topicmaps.impl.rdbms.Topic;
+import org.junit.Assert;
+import org.junit.Test;
 
-public abstract class TrackableCollectionTest extends TestCase {
+public abstract class TrackableCollectionTest {
   
-  public TrackableCollectionTest(String name) {
-    super(name);
-  }
-
-  protected abstract TrackableCollectionIF createTrackableCollection();
+  protected abstract TrackableCollectionIF<Object> createTrackableCollection();
     
   // --- Test cases
   
+  @Test
   public void testAddRemove() {
     // Bug#627: adding and removing the same object before the
     // added/removed member(s) was initialized led to the object being
     // registered as either added or removed when it should be
     // neither.
-    TrackableCollectionIF set = createTrackableCollection();
+    TrackableCollectionIF<Object> set = createTrackableCollection();
     Object obj1 = new Object();
     Object obj2 = new Object();
 
-    assertTrue("size of trackable set is not 0", set.size() == 0);
+    Assert.assertTrue("size of trackable set is not 0", set.size() == 0);
     set.addWithTracking(obj1);
-    assertTrue("size of trackable set is not 1", set.size() == 1);
+    Assert.assertTrue("size of trackable set is not 1", set.size() == 1);
     set.addWithTracking(obj1);
-    assertTrue("size of trackable set is not 1", set.size() == 1);
+    Assert.assertTrue("size of trackable set is not 1", set.size() == 1);
     set.addWithTracking(obj2);
-    assertTrue("size of trackable set is not 2", set.size() == 2);
+    Assert.assertTrue("size of trackable set is not 2", set.size() == 2);
     set.addWithTracking(obj2);
-    assertTrue("size of trackable set is not 2", set.size() == 2);
+    Assert.assertTrue("size of trackable set is not 2", set.size() == 2);
 
-    assertTrue("size of trackable set added is not 2", set.getAdded().size() == 2);
+    Assert.assertTrue("size of trackable set added is not 2", set.getAdded().size() == 2);
 
     set.removeWithTracking(obj1);
-    assertTrue("size of trackable set is not 1", set.size() == 1);
+    Assert.assertTrue("size of trackable set is not 1", set.size() == 1);
     set.removeWithTracking(obj1);
-    assertTrue("size of trackable set is not 1", set.size() == 1);
+    Assert.assertTrue("size of trackable set is not 1", set.size() == 1);
     set.removeWithTracking(obj2);
-    assertTrue("size of trackable set is not 0", set.size() == 0);
+    Assert.assertTrue("size of trackable set is not 0", set.size() == 0);
     set.removeWithTracking(obj2);
-    assertTrue("size of trackable set is not 0", set.size() == 0);
+    Assert.assertTrue("size of trackable set is not 0", set.size() == 0);
 
-    assertTrue("size of trackable set added is not 0 (" + set.getAdded() + ")",
+    Assert.assertTrue("size of trackable set added is not 0 (" + set.getAdded() + ")",
                set.getAdded() == null || set.getAdded().isEmpty());
-    assertTrue("size of trackable set removed is not 0 (" + set.getRemoved() + ")",
+    Assert.assertTrue("size of trackable set removed is not 0 (" + set.getRemoved() + ")",
                set.getRemoved() == null || set.getRemoved().isEmpty());
     
     set.addWithTracking(obj2);
     set.clearWithTracking();
-    assertTrue("size of trackable set is not 0", set.size() == 0);
+    Assert.assertTrue("size of trackable set is not 0", set.size() == 0);
   }
   
+  @Test
   public void testClear() {
     // Test clear() method
-    TrackableCollectionIF set = createTrackableCollection();
+    TrackableCollectionIF<Object> set = createTrackableCollection();
 
-    Object obj1 = new String("1");
-    Object obj2 = new String("2");
-    Object obj3 = new String("3");
-    Object obj4 = new String("4");
-    Object obj5 = new String("5");
+    Object obj1 = "1";
+    Object obj2 = "2";
+    Object obj3 = "3";
+    Object obj4 = "4";
+    Object obj5 = "5";
     
     set.addWithTracking(obj1);
     set.addWithTracking(obj2);
@@ -92,16 +92,17 @@ public abstract class TrackableCollectionTest extends TestCase {
 
     set.clearWithTracking(); // [[], [] []]
     
-    assertTrue("size of trackable set added is not 0", set.getAdded() == null || set.getAdded().isEmpty());
-    assertTrue("size of trackable set removed is not 0", set.getRemoved() == null || set.getRemoved().isEmpty());
+    Assert.assertTrue("size of trackable set added is not 0", set.getAdded() == null || set.getAdded().isEmpty());
+    Assert.assertTrue("size of trackable set removed is not 0", set.getRemoved() == null || set.getRemoved().isEmpty());
   }
   
+  @Test
   public void testBug627() {
     // BUG: adding and removing the same object before the
     // added/removed member(s) was initialized led to the object being
     // registered as either added or removed when it should be
     // neither.
-    TrackableCollectionIF set = createTrackableCollection();
+    TrackableCollectionIF<Object> set = createTrackableCollection();
     Object obj1 = new Object();
     Object obj2 = new Object();
     Object obj3 = new Object();
@@ -110,22 +111,33 @@ public abstract class TrackableCollectionTest extends TestCase {
     set.addWithTracking(obj2);
     set.addWithTracking(obj3);
     
-    assertTrue("size of trackable set is not 3", set.size() == 3);
+    Assert.assertTrue("size of trackable set is not 3", set.size() == 3);
     set.removeWithTracking(obj1);
     set.removeWithTracking(obj2);
-    assertTrue("size of trackable set is not 1", set.size() == 1);
+    Assert.assertTrue("size of trackable set is not 1", set.size() == 1);
     set.addWithTracking(obj2);
-    assertTrue("size of trackable set removed is not 0", set.getRemoved() == null);
+    Assert.assertTrue("size of trackable set removed is not 0", set.getRemoved() == null);
 
     set.resetTracking();
     set.removeWithTracking(obj3);
     
-    assertTrue("size of trackable set added is not 0", set.getAdded() == null);
-    assertTrue("size of trackable set removed is not 1", set.getRemoved().size() == 1);
+    Assert.assertTrue("size of trackable set added is not 0", set.getAdded() == null);
+    Assert.assertTrue("size of trackable set removed is not 1", set.getRemoved().size() == 1);
 
     set.clearWithTracking();
-    assertTrue("size of trackable set is not 0", set.size() == 0);    
-    assertTrue("size of trackable set removed is not 2", set.getRemoved().size() == 2);
+    Assert.assertTrue("size of trackable set is not 0", set.size() == 0);    
+    Assert.assertTrue("size of trackable set removed is not 2", set.getRemoved().size() == 2);
   }
   
+  @Test
+  public void testStreamingIssue555() {
+    TrackableCollectionIF<Object> set = createTrackableCollection();
+    Topic topic = new Topic();
+    topic._p_setIdentity(new LongIdentity(Topic.class, 41));
+    set.addWithTracking(topic);
+
+    set.stream().forEach((t) -> {
+      Assert.assertTrue("Expected Topic, found " + t.getClass(), t instanceof Topic);
+    });
+  }
 }

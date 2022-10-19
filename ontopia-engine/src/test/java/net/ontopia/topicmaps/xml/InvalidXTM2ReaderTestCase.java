@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
 public class InvalidXTM2ReaderTestCase extends AbstractCanonicalTests {
@@ -66,7 +67,8 @@ public class InvalidXTM2ReaderTestCase extends AbstractCanonicalTests {
       this._testdataDirectory = testdataDirectory;
     }
 
-  @Override
+    @Override
+    @Test
     public void testFile() throws IOException {
       XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(true);

@@ -25,11 +25,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.TopicComparators;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: A comparator for ordering AssociationRoleIFs alphabetically
@@ -38,7 +38,7 @@ import net.ontopia.utils.StringifierIF;
 public class AssociationRoleTypeComparator implements Comparator<AssociationRoleIF> {
 
   // constants
-  private static final StringifierIF<TopicIF> DEF_TOPIC_STRINGIFIER = TopicStringifiers
+  private static final Function<TopicIF, String> DEF_TOPIC_STRINGIFIER = TopicStringifiers
     .getSortNameStringifier();
   private static final Comparator<TopicIF> DEF_TOPIC_COMPARATOR = TopicComparators
     .getCaseInsensitiveComparator(DEF_TOPIC_STRINGIFIER);

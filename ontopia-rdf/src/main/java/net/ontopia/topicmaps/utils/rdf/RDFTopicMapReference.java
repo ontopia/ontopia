@@ -27,7 +27,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: An RDF file topic map reference.

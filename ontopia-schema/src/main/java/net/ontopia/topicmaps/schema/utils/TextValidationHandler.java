@@ -30,7 +30,6 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.schema.core.ValidationHandlerIF;
 import net.ontopia.topicmaps.schema.core.ConstraintIF;
@@ -43,7 +42,6 @@ import net.ontopia.topicmaps.schema.impl.osl.TypedConstraintIF;
  */
 public class TextValidationHandler implements ValidationHandlerIF {
   protected PrintStream err;
-  protected StringifierIF stringifier;
   protected int errors;
 
   // --- TextValidationHandler methods
@@ -61,24 +59,7 @@ public class TextValidationHandler implements ValidationHandlerIF {
    */
   public TextValidationHandler(PrintStream err) {
     this.err = err;
-    this.stringifier = TopicStringifiers.getDefaultStringifier();
     this.errors = 0;
-  }
-
-  /**
-   * PUBLIC: Gets the stringifier implementation used to write out
-   * topics related to errors.
-   */
-  public StringifierIF getStringifier() {
-    return stringifier;
-  }
-
-  /**
-   * PUBLIC: Sets the stringifier implementation used to write out
-   * topics related to errors.
-   */
-  public void setStringifier(StringifierIF stringifier) {
-    this.stringifier = stringifier;
   }
 
   // --- ValidationHandlerIF methods
@@ -158,9 +139,9 @@ public class TextValidationHandler implements ValidationHandlerIF {
 
   protected void printScope(Collection scope) {
     err.print("  Scope: ");
-    Iterator it = scope.iterator();
+    Iterator<TopicIF> it = scope.iterator();
     while(it.hasNext()) {
-      err.print(stringifier.toString(it.next()));
+      err.print(TopicStringifiers.toString(it.next()));
       if (it.hasNext()) err.print(", ");
     }
     err.println();
@@ -170,7 +151,7 @@ public class TextValidationHandler implements ValidationHandlerIF {
     if (topic == null)
       return "<null>";
       
-    String name = stringifier.toString(topic);
+    String name = TopicStringifiers.toString(topic);
     if ("[No name]".equals(name))
       return topic.toString();
     else

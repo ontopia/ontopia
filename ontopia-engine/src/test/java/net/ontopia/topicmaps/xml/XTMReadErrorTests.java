@@ -26,8 +26,12 @@ import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class XTMReadErrorTests {
 
   private final static String testdataDirectory = "canonical";
@@ -45,6 +49,7 @@ public class XTMReadErrorTests {
     this.inputFile = inputFile;
   }
 
+  @Test
   public void testFile() throws IOException {
     XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
 
@@ -57,9 +62,9 @@ public class XTMReadErrorTests {
     } catch (ConstraintViolationException e) {
       // ok
     } catch (OntopiaRuntimeException e) {
-      if (!(e.getCause() instanceof org.xml.sax.SAXParseException)) {
-        throw e;
-      }
+      if (e.getCause() instanceof org.xml.sax.SAXParseException) { return; }
+      if (e.getCause() instanceof ConstraintViolationException) { return; }
+      throw e;
     }
   }
 }

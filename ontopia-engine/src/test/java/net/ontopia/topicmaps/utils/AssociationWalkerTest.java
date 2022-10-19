@@ -27,15 +27,15 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AssociationWalkerTest extends AbstractUtilsTestCase {
   protected TopicIF bart, homer, marge, gramps, lisa, maggie;
   protected TopicIF at_descendant_of, rt_ancestor, rt_descendant;
 
-  public AssociationWalkerTest(String name) {
-    super(name);
-  }
-    
+  @Test
   public void testSimpleWalker() {
     readFile("transitive2.xtm");
 
@@ -49,17 +49,17 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     Set topics = twalker.walkTopics(one);
     Collection paths = twalker.walkPaths(one);
             
-    assertTrue(topics.size() == 2);
-    assertTrue(paths.size() == 1);
+    Assert.assertTrue(topics.size() == 2);
+    Assert.assertTrue(paths.size() == 1);
             
     topics = twalker.walkTopics(two);
-    assertTrue(topics.size() == 1);
+    Assert.assertTrue(topics.size() == 1);
 
     topics = twalker.walkTopics(three);
-    assertTrue(topics.isEmpty());
+    Assert.assertTrue(topics.isEmpty());
   }
 
-  @Override
+  @Before
   public void setUp() {
     TopicMapStoreIF store = new InMemoryTopicMapStore();
     tm = store.getTopicMap();
@@ -83,13 +83,15 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     builder.makeAssociationRole(relation, rt_descendant, homer);
   }
     
+  @Test
   public void testWalker() {
     AssociationWalker twalker = new AssociationWalker(at_descendant_of, rt_descendant, rt_ancestor);
     Set ancestors = twalker.walkTopics(bart);
-    assertTrue("Expecting 2 members of association set. Got: " + String.valueOf(ancestors.size()),
+    Assert.assertTrue("Expecting 2 members of association set. Got: " + String.valueOf(ancestors.size()),
            ancestors.size() == 2);
   }
 
+  @Test
   public void testSimpsons() {
     readFile("transitive3.xtm");
     TopicIF descendant_of = getTopic("descendant-of");
@@ -97,7 +99,7 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
     TopicIF descendant = getTopic("descendant");
 
     AssociationWalker ancestorsWalker = new AssociationWalker(descendant_of, descendant, ancestor);
-    AssociationWalker descendantsWalker = new AssociationWalker(descendant_of, ancestor, descendant);
+    new AssociationWalker(descendant_of, ancestor, descendant);
 
     TopicIF bart = getTopic("bart");
     TopicIF lisa = getTopic("lisa");
@@ -107,18 +109,18 @@ public class AssociationWalkerTest extends AbstractUtilsTestCase {
         
     Set topics = ancestorsWalker.walkTopics(getTopic("bart"));
     // System.out.println("Topics: " + topics);
-    assertTrue(topics.size() == 4);
-    assertTrue("Contains Homer", topics.contains(getTopic("homer")));
-    assertTrue("Contains Marge", topics.contains(getTopic("marge")));
-    assertTrue("Contains Gramps", topics.contains(getTopic("gramps")));
-    assertTrue("Contains Great Granddaddy", topics.contains(getTopic("great-grandaddy-simpson")));
+    Assert.assertTrue(topics.size() == 4);
+    Assert.assertTrue("Contains Homer", topics.contains(getTopic("homer")));
+    Assert.assertTrue("Contains Marge", topics.contains(getTopic("marge")));
+    Assert.assertTrue("Contains Gramps", topics.contains(getTopic("gramps")));
+    Assert.assertTrue("Contains Great Granddaddy", topics.contains(getTopic("great-grandaddy-simpson")));
         
     Collection paths = ancestorsWalker.walkPaths(getTopic("bart"));
     // System.out.println("Paths: " + paths);
-    assertTrue(paths.size() == 2);
-    assertTrue(!ancestorsWalker.isAssociated(bart, lisa));
-    assertTrue(ancestorsWalker.isAssociated(bart, homer));
-    assertTrue(ancestorsWalker.isAssociated(bart, gramps));
-    assertTrue(ancestorsWalker.isAssociated(bart, great_grandaddy));
+    Assert.assertTrue(paths.size() == 2);
+    Assert.assertTrue(!ancestorsWalker.isAssociated(bart, lisa));
+    Assert.assertTrue(ancestorsWalker.isAssociated(bart, homer));
+    Assert.assertTrue(ancestorsWalker.isAssociated(bart, gramps));
+    Assert.assertTrue(ancestorsWalker.isAssociated(bart, great_grandaddy));
   }
 }

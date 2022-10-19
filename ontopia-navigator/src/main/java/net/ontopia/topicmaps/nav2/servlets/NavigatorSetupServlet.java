@@ -73,7 +73,7 @@ public class NavigatorSetupServlet extends HttpServlet {
       log("Initializing navigator setup servlet.");
 
     // Make sure that the navigator application is initialized on startup
-    NavigatorApplicationIF navApp = NavigatorUtils.getNavigatorApplication(getServletContext());
+    NavigatorUtils.getNavigatorApplication(getServletContext());
   }
 
   /**

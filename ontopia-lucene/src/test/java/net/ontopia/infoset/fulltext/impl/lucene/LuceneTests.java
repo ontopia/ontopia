@@ -23,7 +23,7 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import junit.framework.TestCase;
+import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
@@ -41,8 +41,12 @@ import net.ontopia.topicmaps.entry.StoreFactoryReference;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class LuceneTests extends TestCase {
+public class LuceneTests {
   
   protected TopicMapIF topicmap;       // topic map of object being tested
   protected TopicMapBuilderIF builder; // builder used for creating new objects
@@ -51,11 +55,7 @@ public class LuceneTests extends TestCase {
   protected SearcherIF searcher;
   private LuceneFulltextImplementation implementation;
   
-  public LuceneTests(String name) {
-    super(name);
-  }
-  
-  @Override
+  @Before
   public void setUp() throws IOException {
     TopicMapStoreIF store = new InMemoryTopicMapStore();
     StoreFactoryReference reference = new StoreFactoryReference("test", "test", new SameStoreFactory(store));
@@ -77,8 +77,8 @@ public class LuceneTests extends TestCase {
     searcher = implementation.getSearcher();
   }
 
-  @Override
-  protected void tearDown() throws IOException {
+  @After
+  public void tearDown() throws IOException {
     if (implementation != null) {
       implementation.close();
     }
@@ -86,18 +86,20 @@ public class LuceneTests extends TestCase {
   
   // ---- test cases
 
+  @Test
   public void testEmpty() throws IOException {
     index();
-    assertTrue("hits found in empty topic map",
+    Assert.assertTrue("hits found in empty topic map",
 	   findNothing(topicmap, "stuff"));
   }
 
+  @Test
   public void testTopicName() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
     index();
 
-    assertTrue("found non-existent base names in topic map",
+    Assert.assertTrue("found non-existent base names in topic map",
 	   findNothing(topicmap, "foo"));
 
     SearchResultIF result = searcher.search("bar");
@@ -106,15 +108,16 @@ public class LuceneTests extends TestCase {
     result = searcher.search("bar AND class:B");
     findSingle(result, bn, " in class:B");
     
-    assertTrue("found base names when searching for variant name",
+    Assert.assertTrue("found base names when searching for variant name",
 	   findNothing(topicmap, "bar AND class:V"));
 
     remove(bn);
     
-    assertTrue("found removed base name",
+    Assert.assertTrue("found removed base name",
 	   findNothing(topicmap, "bar"));
   }
 
+  @Test
    public void testTopicNameUnicode() throws IOException {
     TopicIF topic = builder.makeTopic();
     
@@ -126,7 +129,7 @@ public class LuceneTests extends TestCase {
     
     index();
 
-    assertTrue("found non-existent base names in topic map",
+    Assert.assertTrue("found non-existent base names in topic map",
 	   findNothing(topicmap, "foo"));
 
     SearchResultIF result = searcher.search(katakana);
@@ -138,23 +141,24 @@ public class LuceneTests extends TestCase {
     result = searcher.search(norsk + " AND class:B");
     findSingle(result, bn2, " in class:B using Unicode characters (norsk)");
     
-    assertTrue("found base names when searching for variant name",
+    Assert.assertTrue("found base names when searching for variant name",
 	   findNothing(topicmap, "bar AND class:V"));
 
     remove(bn1);
     remove(bn2);
     
-    assertTrue("found removed base name",
+    Assert.assertTrue("found removed base name",
 	   findNothing(topicmap, "bar"));
   }
 
+  @Test
   public void testVariantName() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
-    VariantNameIF vn = builder.makeVariantName(bn, "baz");
+    VariantNameIF vn = builder.makeVariantName(bn, "baz", Collections.emptySet());
     index();
 
-    assertTrue("found non-existent objects in topic map",
+    Assert.assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
 
     SearchResultIF result = searcher.search("baz");
@@ -163,22 +167,23 @@ public class LuceneTests extends TestCase {
     result = searcher.search("baz AND class:N");
     findSingle(result, vn, " in class:N");
     
-    assertTrue("found variant names when searching for base name",
+    Assert.assertTrue("found variant names when searching for base name",
 	   findNothing(topicmap, "baz AND class:B"));
 
     remove(vn);
     
-    assertTrue("found removed variant name",
+    Assert.assertTrue("found removed variant name",
 	   findNothing(topicmap, "baz"));
   }
 
+  @Test
   public void testVariantLocator() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "bar");
-    VariantNameIF vn = builder.makeVariantName(bn, makeLocator("http://www.ontopia.net"));
+    VariantNameIF vn = builder.makeVariantName(bn, makeLocator("http://www.ontopia.net"), Collections.emptySet());
     index();
 
-    assertTrue("found non-existent objects in topic map",
+    Assert.assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
 
     SearchResultIF result = searcher.search("address:ontopia");
@@ -188,22 +193,23 @@ public class LuceneTests extends TestCase {
     result = searcher.search("address:ontopia AND class:N");
     findSingle(result, vn, " in class:N");
     
-    assertTrue("found variant names when searching for base name",
+    Assert.assertTrue("found variant names when searching for base name",
 	   findNothing(topicmap, "address:ontopia AND class:B"));
 
     remove(vn);
     
-    assertTrue("found removed variant name",
+    Assert.assertTrue("found removed variant name",
 	   findNothing(topicmap, "address:ontopia"));
   }
 
+  @Test
   public void testOccurrence() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, "value");
     index();
 
-    assertTrue("found non-existent objects in topic map",
+    Assert.assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
 
     SearchResultIF result = searcher.search("value");
@@ -212,22 +218,23 @@ public class LuceneTests extends TestCase {
     result = searcher.search("value AND class:O");
     findSingle(result, occ, " in class:O");
     
-    assertTrue("found occurrences when searching for variant names",
+    Assert.assertTrue("found occurrences when searching for variant names",
 	   findNothing(topicmap, "value AND class:V"));
 
     remove(occ);
     
-    assertTrue("found removed occurrence",
+    Assert.assertTrue("found removed occurrence",
 	   findNothing(topicmap, "value"));
   }
 
+  @Test
   public void testOccurrenceLocator() throws IOException {
     TopicIF topic = builder.makeTopic();
     TopicIF otype = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, otype, makeLocator("http://www.ontopia.net"));
     index();
 
-    assertTrue("found non-existent objects in topic map",
+    Assert.assertTrue("found non-existent objects in topic map",
 	   findNothing(topicmap, "foo"));
 
     SearchResultIF result = searcher.search("address:ontopia");
@@ -236,15 +243,16 @@ public class LuceneTests extends TestCase {
     result = searcher.search("address:ontopia AND class:O");
     findSingle(result, occ, " in class:O");
     
-    assertTrue("found occurrences when searching for variant names",
+    Assert.assertTrue("found occurrences when searching for variant names",
 	   findNothing(topicmap, "address:ontopia AND class:V"));
 
     remove(occ);
     
-    assertTrue("found removed occurrence",
+    Assert.assertTrue("found removed occurrence",
 	   findNothing(topicmap, "address:ontopia"));
   }
   
+  @Test
   public void testDeleteIndex() throws IOException {
     // Create a topic and an occurrence
     TopicIF topic = builder.makeTopic();
@@ -257,7 +265,7 @@ public class LuceneTests extends TestCase {
     
     // Verify that index was deleted
     File idir = new File(indexDir);
-    assertFalse("Index directory exists after LuceneIndexer.delete() was called.", idir.exists());
+    Assert.assertFalse("Index directory exists after LuceneIndexer.delete() was called.", idir.exists());
   }
   
   // ---- utilities
@@ -273,10 +281,10 @@ public class LuceneTests extends TestCase {
 
   protected void findSingle(SearchResultIF result, TMObjectIF object, String m)
     throws IOException {
-    assertTrue("wrong number of hits: " + result.hits() + m, result.hits() == 1);
+    Assert.assertTrue("wrong number of hits: " + result.hits() + m, result.hits() == 1);
 
     DocumentIF doc = result.getDocument(0);
-    assertTrue("didn't find object" + m,
+    Assert.assertTrue("didn't find object" + m,
 	   doc.getField("object_id").getValue().equals(object.getObjectId()));
   }
   
@@ -290,7 +298,7 @@ public class LuceneTests extends TestCase {
       return new URILocator(uri);
     }
     catch (MalformedURLException e) {
-      fail(e.toString());
+      Assert.fail(e.toString());
       return null;
     }
   }

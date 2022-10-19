@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.utils.ContextUtils;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.apache.commons.collections4.IteratorUtils;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
@@ -123,9 +122,9 @@ public class AbstractPagedResource extends AbstractOntopiaResource {
 	}
 
 	protected void addPagingHeaders(int size, int offset, int limit) {
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging-Count", Integer.toString(size));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging-Limit", Integer.toString(limit));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging-Offset", Integer.toString(offset));
-		HeaderUtils.addResponseHeader(getResponse(), "X-Paging", offset + "-" + (Math.min(offset + limit, size) - 1) + "/" + size);
+		addResponseHeader(Constants.HEADER_PAGING_COUNT, Integer.toString(size));
+		addResponseHeader(Constants.HEADER_PAGING_LIMIT, Integer.toString(limit));
+		addResponseHeader(Constants.HEADER_PAGING_OFFSET, Integer.toString(offset));
+		addResponseHeader(Constants.HEADER_PAGING, offset + "-" + (Math.min(offset + limit, size) - 1) + "/" + size);
 	}
 }

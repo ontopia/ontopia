@@ -1,0 +1,19 @@
+#VERSION "1.3"
+#PREFIX k @"http://psi.mssm.nl/kamala/"
+#PREFIX cloud @"http://psi.mssm.nl/kamala/cloud/"
+#PREFIX um @"http://psi.ontopia.net/userman/"
+#PREFIX c @"http://www.topicmaps.org/xtm/1.0/core.xtm#"
+
+#PREFIX r @"http://psi.mssm.nl/kamala/cloud/role/"
+[cloud:tentativesharingrequest-role : k:association-role = "tentativesharingrequest-role"]
+
+k:association-role(
+	cloud:tentative-sharing-request : k:association-type,
+	um:role : k:association-role-type,
+	k:zero-or-one : k:cardinality)
+	~ cloud:tentativesharingrequest-role
+
+k:association-role-player(
+	cloud:tentativesharingrequest-role : k:association-role,
+	um:role : k:topic-type,
+	k:zero-or-more : k:cardinality)

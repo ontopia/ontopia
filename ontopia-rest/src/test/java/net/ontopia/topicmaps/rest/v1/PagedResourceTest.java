@@ -24,9 +24,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Collection;
+import net.ontopia.topicmaps.rest.Constants;
 import net.ontopia.topicmaps.rest.OntopiaTestResource;
 import net.ontopia.topicmaps.rest.model.Topic;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -74,57 +74,77 @@ public class PagedResourceTest extends AbstractV1ResourceTest {
 	public void testPaged() throws IOException {
 		request(null, null);
 		Assert.assertEquals(100, topics.size());
-		int count = HeaderUtils.getCount(response);
+		int count = getCount(response);
 		Assert.assertEquals(300, count);
-		Assert.assertEquals(100, HeaderUtils.getLimit(response));
-		Assert.assertEquals(0, HeaderUtils.getOffset(response));
+		Assert.assertEquals(100, getLimit(response));
+		Assert.assertEquals(0, getOffset(response));
 	}
 
 	@Test
 	public void testOffsetToLarge() throws IOException {
 		request(null, null);
-		int count = HeaderUtils.getCount(response);
+		int count = getCount(response);
 
 		request(null, count + 10);
 		Assert.assertEquals(0, topics.size());
-		Assert.assertEquals(count, HeaderUtils.getCount(response));
-		Assert.assertEquals(100, HeaderUtils.getLimit(response));
-		Assert.assertEquals(count + 10, HeaderUtils.getOffset(response));
+		Assert.assertEquals(count, getCount(response));
+		Assert.assertEquals(100, getLimit(response));
+		Assert.assertEquals(count + 10, getOffset(response));
 	}
 
 	@Test
 	public void testOffset() throws IOException {
 		request(null, 50);
 		Assert.assertEquals(100, topics.size());
-		Assert.assertEquals(300, HeaderUtils.getCount(response));
-		Assert.assertEquals(100, HeaderUtils.getLimit(response));
-		Assert.assertEquals(50, HeaderUtils.getOffset(response));
+		Assert.assertEquals(300, getCount(response));
+		Assert.assertEquals(100, getLimit(response));
+		Assert.assertEquals(50, getOffset(response));
 	}
 
 	@Test
 	public void testLimit() throws IOException {
 		request(10, null);
 		Assert.assertEquals(10, topics.size());
-		Assert.assertEquals(300, HeaderUtils.getCount(response));
-		Assert.assertEquals(10, HeaderUtils.getLimit(response));
-		Assert.assertEquals(0, HeaderUtils.getOffset(response));
+		Assert.assertEquals(300, getCount(response));
+		Assert.assertEquals(10, getLimit(response));
+		Assert.assertEquals(0, getOffset(response));
 	}
 
 	@Test
 	public void testNegativeLimit() throws IOException {
 		request(-10, null);
 		Assert.assertEquals(0, topics.size());
-		Assert.assertEquals(300, HeaderUtils.getCount(response));
-		Assert.assertEquals(-10, HeaderUtils.getLimit(response));
-		Assert.assertEquals(0, HeaderUtils.getOffset(response));
+		Assert.assertEquals(300, getCount(response));
+		Assert.assertEquals(-10, getLimit(response));
+		Assert.assertEquals(0, getOffset(response));
 	}
 
 	@Test
 	public void testNegativeOffset() throws IOException {
 		request(null, -10);
 		Assert.assertEquals(0, topics.size());
-		Assert.assertEquals(300, HeaderUtils.getCount(response));
-		Assert.assertEquals(100, HeaderUtils.getLimit(response));
-		Assert.assertEquals(-10, HeaderUtils.getOffset(response));
+		Assert.assertEquals(300, getCount(response));
+		Assert.assertEquals(100, getLimit(response));
+		Assert.assertEquals(-10, getOffset(response));
 	}
+	
+	private int getCount(Response response) {
+		return getIntHeader(response, Constants.HEADER_PAGING_COUNT);
+	}
+
+	private int getLimit(Response response) {
+		return getIntHeader(response, Constants.HEADER_PAGING_LIMIT);
+	}
+
+	private int getOffset(Response response) {
+		return getIntHeader(response, Constants.HEADER_PAGING_OFFSET);
+	}
+
+	private int getIntHeader(Response response, String header) {
+		try {
+			return Integer.parseInt(response.getHeaders().getFirstValue(header));
+		} catch (NumberFormatException nfe) {
+			return -1;
+		}
+	}	
 }

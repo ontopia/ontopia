@@ -24,34 +24,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.junit.Test;
 
 public class NotEqualsPredicateTest extends AbstractPredicateTest {
   
-  public NotEqualsPredicateTest(String name) {
-    super(name);
-  }
-
-  /// setup
-
-  @Override
-  public void tearDown() {    
-    closeStore();
-  }
-  
   /// tests
 
+  @Test
   public void testNotEqualsFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    findNothing("topic1 /= topic1?");
+    assertFindNothing("topic1 /= topic1?");
   }
 
+  @Test
   public void testNotEqualsTrue() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     List matches = new ArrayList();
     matches.add(new HashMap());
-    verifyQuery(matches, "topic1 /= topic2?");
+    assertQueryMatches(matches, "topic1 /= topic2?");
   }
 
+  @Test
   public void testNotEqualsString() throws InvalidQueryException, IOException {
     load("int-occs.ltm");
     
@@ -60,13 +53,14 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "TOPIC", getTopicById("topic3"));
     addMatch(matches, "TOPIC", getTopicById("topic4"));
 
-    verifyQuery(matches, 
+    assertQueryMatches(matches, 
 		"select $TOPIC from occurrence($TOPIC, $O), " + 
 		"type($O, description), value($O, $DESC), " +
 		"$DESC /= \"topic2\"?");
   }
 
   // bug caused by optimizer doing /= before all arguments bound (no number)
+  @Test
   public void testNotEqualsReordering() throws InvalidQueryException, IOException {
     load("factbook.ltm");
 
@@ -74,7 +68,7 @@ public class NotEqualsPredicateTest extends AbstractPredicateTest {
     addMatch(matches, "B", getTopicById("type1"));
 
     // if the bug is here we get a QueryException
-    processor.execute("borders-with($A : country, $B : country), " +
+    assertFindAny("borders-with($A : country, $B : country), " +
                       "borders-with($C : country, $D : country), " +
                       "$A /= $C?");
   }

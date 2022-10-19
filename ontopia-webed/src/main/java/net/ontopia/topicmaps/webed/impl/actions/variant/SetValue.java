@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.webed.impl.actions.variant;
 
+import java.util.Collections;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
@@ -50,7 +51,7 @@ public class SetValue implements ActionIF {
       
       // create new occurrence
       TopicMapBuilderIF builder = basename.getTopicMap().getBuilder();
-      variant = builder.makeVariantName(basename, "");
+      variant = builder.makeVariantName(basename, "", Collections.emptySet());
     }
     
     variant.setValue(value);

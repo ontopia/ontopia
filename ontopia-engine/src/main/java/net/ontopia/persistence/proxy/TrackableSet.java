@@ -22,10 +22,11 @@ package net.ontopia.persistence.proxy;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
-
+import java.util.Spliterator;
+import java.util.Spliterators;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -239,6 +240,13 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
       a[i+1] = null;
     
     return a;
+  }
+
+  // return a spliterator based on the iterator of this set, to avoid issues with the lazy-loading iterator
+  // See issue 555
+  @Override
+  public Spliterator<E> spliterator() {
+    return Spliterators.spliterator(this, Spliterator.DISTINCT & Spliterator.SIZED);
   }
   
 }

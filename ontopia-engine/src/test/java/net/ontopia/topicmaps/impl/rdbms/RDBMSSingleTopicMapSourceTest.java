@@ -21,21 +21,19 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import net.ontopia.topicmaps.entry.AbstractTopicMapSourceTest;
+import org.junit.Before;
+import org.junit.Test;
 
 public class RDBMSSingleTopicMapSourceTest extends AbstractTopicMapSourceTest {
 
-  public RDBMSSingleTopicMapSourceTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
-    super.setUp();
   }
 
   // --- Test cases
 
+  @Test
   public void testSource() {
     RDBMSSingleTopicMapSource source = new RDBMSSingleTopicMapSource();
     source.setId("fooid");
@@ -43,7 +41,7 @@ public class RDBMSSingleTopicMapSourceTest extends AbstractTopicMapSourceTest {
     source.setPropertyFile(System.getProperty("net.ontopia.topicmaps.impl.rdbms.PropertyFile"));
 
     // run abstract topic map source tests
-    doAbstractTopicMapSourceTests(source);
+    assertCompliesToAbstractTopicMapSource(source);
   }
   
 }

@@ -21,16 +21,14 @@
 package net.ontopia.infoset.impl.basic;
 
 import net.ontopia.infoset.core.LocatorIF;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class GenericLocatorTest extends AbstractLocatorTest {
 
   protected static final String NOTATION = "GENERIC";
   protected static final String ADDRESS = "Some obscure address";
   
-  public GenericLocatorTest(String name) {
-    super(name);
-  }
-
   @Override
   protected LocatorIF createLocator() {
     return createLocator(NOTATION, ADDRESS);
@@ -43,20 +41,22 @@ public class GenericLocatorTest extends AbstractLocatorTest {
     
   // --- tests
 
+  @Test
   public void testProperties() {
     LocatorIF locator = createLocator(NOTATION, ADDRESS);
-    assertTrue("notation property not correctly set",
+    Assert.assertTrue("notation property not correctly set",
 	   NOTATION.equals(locator.getNotation()));
-    assertTrue("address property not correctly set",
+    Assert.assertTrue("address property not correctly set",
 	   ADDRESS.equals(locator.getAddress()));
   }
 
+  @Test
   public void testEquals() {
     LocatorIF locator = createLocator(NOTATION, ADDRESS);
-    assertEquals("locator does not equal itself", locator, locator);
-    assertFalse("locator equals null", locator.equals(null));
+    Assert.assertEquals("locator does not equal itself", locator, locator);
+    Assert.assertFalse("locator equals null", locator.equals(null));
     
     LocatorIF locator2 = createLocator("generic", ADDRESS);
-    assertEquals("comparison of notation name not case-insensitive", locator2, locator);
+    Assert.assertEquals("comparison of notation name not case-insensitive", locator2, locator);
   }
 }

@@ -20,7 +20,6 @@
 package net.ontopia.topicmaps.rest;
 
 import net.ontopia.Ontopia;
-import net.ontopia.topicmaps.rest.utils.HeaderUtils;
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -41,7 +40,7 @@ class OntopiaAPIVersionFilter extends Filter {
 
 	@Override
 	protected int beforeHandle(Request request, Response response) {
-		HeaderUtils.addResponseHeader(response, "X-Ontopia-API-Version", version.getName());
+		response.getHeaders().add(Constants.HEADER_ONTOPIA_API_VERSION, version.getName());
 		response.getServerInfo().setAgent(Ontopia.getInfo() + " rest API " + version.getName());
 		return super.beforeHandle(request, response);
 	}

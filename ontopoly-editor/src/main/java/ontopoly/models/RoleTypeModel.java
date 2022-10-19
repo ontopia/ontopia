@@ -20,6 +20,7 @@
 package ontopoly.models;
 
 
+import java.util.Objects;
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
 import ontopoly.model.RoleType;
@@ -37,8 +38,7 @@ public class RoleTypeModel extends LoadableDetachableModel<RoleType> {
   
   public RoleTypeModel(RoleType roleType) {
     super(roleType);
-    if (roleType == null)
-      throw new NullPointerException("roleType parameter cannot be null.");
+    Objects.requireNonNull(roleType, "roleType parameter cannot be null.");
        
     TopicMap topicMap = roleType.getTopicMap();
     this.topicMapId = topicMap.getId();    
@@ -46,10 +46,8 @@ public class RoleTypeModel extends LoadableDetachableModel<RoleType> {
   }
 
   public RoleTypeModel(String topicMapId, String topicId) {
-    if (topicMapId == null)
-      throw new NullPointerException("topicMapId parameter cannot be null.");
-    if (topicId == null)
-      throw new NullPointerException("topicId parameter cannot be null.");
+    Objects.requireNonNull(topicMapId, "topicMapId parameter cannot be null.");
+    Objects.requireNonNull(topicId, "topicId parameter cannot be null.");
     this.topicMapId = topicMapId;
     this.topicId = topicId;
   }

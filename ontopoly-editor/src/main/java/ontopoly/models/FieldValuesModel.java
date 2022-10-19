@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -43,8 +44,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   }
   
   public FieldValuesModel(FieldInstanceModel fieldInstanceModel, Comparator<Object> comparator) {
-    if (fieldInstanceModel == null)
-      throw new NullPointerException("fieldInstanceModel parameter cannot be null.");
+    Objects.requireNonNull(fieldInstanceModel, "fieldInstanceModel parameter cannot be null.");
     this.fieldInstanceModel = fieldInstanceModel;
     this.comparator = comparator;
   }

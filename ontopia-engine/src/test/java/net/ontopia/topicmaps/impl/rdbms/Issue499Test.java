@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
 import java.util.Collections;
-import junit.framework.Assert;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -39,6 +38,7 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.utils.StreamUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,9 +97,9 @@ public class Issue499Test {
 
     // verify no inconsistenties were created
     occ = (OccurrenceIF) tm1.getObjectById(occ.getObjectId());
-    check(tm1, occ.getType(), "Occurrence", "type");
-    check(tm1, occ.getTopic(), "Occurrence", "topic");
-    check(tm1, occ.getReifier(), "Occurrence", "reifier");
+    assertNotNull(tm1, occ.getType(), "Occurrence", "type");
+    assertNotNull(tm1, occ.getTopic(), "Occurrence", "topic");
+    assertNotNull(tm1, occ.getReifier(), "Occurrence", "reifier");
     // todo check(tm1, occ.getScope().iterator().next().getObjectId(), "Occurrence", "scope"); pending #265
   }
 
@@ -113,8 +113,8 @@ public class Issue499Test {
     concurrentCommit();
 
     // verify no inconsistenties were created
-    check(tm1, assoc.getType(), "Association", "type");
-    check(tm1, assoc.getReifier(), "Association", "reifier");
+    assertNotNull(tm1, assoc.getType(), "Association", "type");
+    assertNotNull(tm1, assoc.getReifier(), "Association", "reifier");
     // todo: check(tm1, assoc.getScope().iterator().next().getObjectId(), "Association", "scope"); pending #265
   }
  
@@ -127,9 +127,9 @@ public class Issue499Test {
     concurrentCommit();
 
     // verify no inconsistenties were created
-    check(tm1, role.getType(), "Association role", "type");
-    check(tm1, role.getPlayer(), "Association role", "player");
-    check(tm1, role.getReifier(), "Association role", "reifier");
+    assertNotNull(tm1, role.getType(), "Association role", "type");
+    assertNotNull(tm1, role.getPlayer(), "Association role", "player");
+    assertNotNull(tm1, role.getReifier(), "Association role", "reifier");
   }
 
   @Test
@@ -141,9 +141,9 @@ public class Issue499Test {
     concurrentCommit();
 
     // verify no inconsistenties were created
-    check(tm1, name.getType(), "Topic name", "type");
-    check(tm1, name.getTopic(), "Topic name", "topic");
-    check(tm1, name.getReifier(), "Topic name", "reifier");
+    assertNotNull(tm1, name.getType(), "Topic name", "type");
+    assertNotNull(tm1, name.getTopic(), "Topic name", "topic");
+    assertNotNull(tm1, name.getReifier(), "Topic name", "reifier");
   }
 
   @Test
@@ -155,8 +155,8 @@ public class Issue499Test {
     concurrentCommit();
 
     // verify no inconsistenties were created
-    check(tm1, variant.getTopicName(), "Variant", "name");
-    check(tm1, variant.getReifier(), "Variant", "reifier");
+    assertNotNull(tm1, variant.getTopicName(), "Variant", "name");
+    assertNotNull(tm1, variant.getReifier(), "Variant", "reifier");
     // todo: scope, pending #265
   }
 
@@ -167,7 +167,7 @@ public class Issue499Test {
     concurrentCommit();
 
     // verify no inconsistenties were created
-    check(tm1, tm1.getReifier(), "Topicmap", "reifier");
+    assertNotNull(tm1, tm1.getReifier(), "Topicmap", "reifier");
   }
 
   @Test
@@ -185,8 +185,8 @@ public class Issue499Test {
     store1.commit();
 
     occ = (OccurrenceIF) tm1.getObjectById(occ.getObjectId());
-    check(tm1, occ.getType(), "Occurrence", "type");
-    check(tm1, occ.getTopic(), "Occurrence", "topic");
+    assertNotNull(tm1, occ.getType(), "Occurrence", "type");
+    assertNotNull(tm1, occ.getTopic(), "Occurrence", "topic");
 //    check(tm1, occ.getReifier(), "Occurrence", "reifier");
   }
 
@@ -199,10 +199,10 @@ public class Issue499Test {
 
     // verify no inconsistenties were created
     // todo: check(tm1, topic.getTypes().iterator().next().getObjectId(), "Topicmap", "type"); // peding #265
-    check(tm1, topic.getReified(), "Topicmap", "reified");
+    assertNotNull(tm1, topic.getReified(), "Topicmap", "reified");
   }
 
-  private void check(TopicMapIF tm, TMObjectIF object, String construct, String property) {
+  private void assertNotNull(TopicMapIF tm, TMObjectIF object, String construct, String property) {
     Assert.assertNotNull(construct + " has null as " + property + ": data inconsistency!", object);
     TMObjectIF objectById = tm.getObjectById(object.getObjectId());
     Assert.assertNotNull(construct + " " + property + "'s actual object is missing: data inconsistency!", objectById);

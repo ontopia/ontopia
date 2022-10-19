@@ -21,14 +21,14 @@
 package net.ontopia.topicmaps.utils;
 
 import java.io.IOException;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
 
-public abstract class AbstractUtilsTestCase extends TestCase {
+public abstract class AbstractUtilsTestCase {
 
   private final static String testdataDirectory = "various";
 
@@ -36,11 +36,6 @@ public abstract class AbstractUtilsTestCase extends TestCase {
 
   protected LocatorIF baseAddress;
   protected TopicMapIF tm;
-
-
-  public AbstractUtilsTestCase(String name) {
-    super(name);
-  }
 
   protected TopicMapIF getTopicMap() {
     return tm;
@@ -57,7 +52,7 @@ public abstract class AbstractUtilsTestCase extends TestCase {
       tm = reader.read();
       baseAddress = tm.getStore().getBaseAddress();
     } catch(IOException ex) {
-      assertTrue("Topic map read failed!\n" + ex.getMessage(), false);
+      Assert.assertTrue("Topic map read failed!\n" + ex.getMessage(), false);
     }
   }
    

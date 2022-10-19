@@ -8,6 +8,7 @@ header { package net.ontopia.topicmaps.utils.ltm; }
   import java.net.URI;
   import java.net.URISyntaxException;
   import java.net.URL;
+  import java.util.Arrays;
   import java.util.ArrayList;
   import java.util.Collection;
   import java.util.Collections;
@@ -536,15 +537,15 @@ topname :
   STRING 
     { TopicNameIF bname = builder.makeTopicName(topic, LT(0).getText()); }
   (SEMICOL (STRING
-    { VariantNameIF vn = builder.makeVariantName(bname, LT(0).getText());
-      vn.addTheme(getSortTopic()); } )?
+    { VariantNameIF vn = builder.makeVariantName(bname, LT(0).getText(), Arrays.asList(getSortTopic()));
+      } )?
     (SEMICOL STRING
-      { VariantNameIF vn = builder.makeVariantName(bname, LT(0).getText());
-        vn.addTheme(getDisplayTopic()); } )?
+      { VariantNameIF vn = builder.makeVariantName(bname, LT(0).getText(), Arrays.asList(getDisplayTopic()));
+         } )?
   )?
   (SLASH (NAME { bname.addTheme(getTopicByName(LT(0).getText())); } )+ )?
   (TILDE NAME { reify(bname, LT(0).getText()); } )?
-  ((LPAREN STRING { VariantNameIF vname = builder.makeVariantName(bname, LT(0).getText()); }
+  ((LPAREN STRING { VariantNameIF vname = builder.makeVariantName(bname, LT(0).getText(), Arrays.asList()); }
     SLASH (NAME { vname.addTheme(getTopicByName(LT(0).getText())); } )+
     (TILDE NAME { reify(vname, LT(0).getText()); } )?
     RPAREN)+ )?

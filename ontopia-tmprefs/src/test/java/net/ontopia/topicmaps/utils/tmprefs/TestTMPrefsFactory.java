@@ -20,12 +20,12 @@
 
 package net.ontopia.topicmaps.utils.tmprefs;
 
+import java.io.IOException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
 import net.ontopia.utils.StreamUtils;
-import java.io.IOException;
 
 public class TestTMPrefsFactory extends TopicMapPreferencesFactory {
 

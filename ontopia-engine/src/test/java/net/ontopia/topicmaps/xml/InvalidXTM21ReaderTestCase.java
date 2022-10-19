@@ -66,7 +66,8 @@ public class InvalidXTM21ReaderTestCase extends AbstractCanonicalTests {
       this._testdataDirectory = testdataDirectory;
     }
 
-  @Override
+    @Override
+    @Test
     public void testFile() throws IOException {
       XTMTopicMapReader reader = new XTMTopicMapReader(inputFile);
       reader.setValidation(false);

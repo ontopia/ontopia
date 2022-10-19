@@ -42,7 +42,6 @@ import javax.servlet.ServletRegistration;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
-import net.ontopia.utils.NullObject;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.URIUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -100,11 +99,7 @@ public class FakeServletContext implements ServletContext {
 
   @Override
   public Object getAttribute(String name) {
-    Object result = attrs.get(name);
-    if (result == NullObject.INSTANCE) 
-      return null;
-    else
-      return result;
+    return attrs.get(name);
   }
 
   @Override
@@ -120,7 +115,7 @@ public class FakeServletContext implements ServletContext {
   @Override
   public void setAttribute(String name, Object value) {
     if (value == null) 
-      attrs.put(name, NullObject.INSTANCE);
+      attrs.remove(name);
     else 
       attrs.put(name, value);
   }

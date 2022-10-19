@@ -30,7 +30,7 @@ import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
 import net.ontopia.topicmaps.rest.resources.AbstractTransactionalResource;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.restlet.resource.Post;
 
 public class SearcherResource extends AbstractTransactionalResource {

@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs
@@ -34,7 +34,7 @@ import net.ontopia.utils.StringifierIF;
  *  <li>the value is empty (empty string base name/variant name)</li>
  * </ul> 
  */
-public class CustomNameStringifier implements StringifierIF {
+public class CustomNameStringifier implements Function<Object, String> {
 
   // define fallback values
   protected String stringNonExistent = "[No name]";
@@ -49,7 +49,7 @@ public class CustomNameStringifier implements StringifierIF {
    * @return string containing name value or "[No name]"
    */
   @Override
-  public String toString(Object name) {
+  public String apply(Object name) {
     String stringName = null;
     if (name == null)
       return stringNonExistent;

@@ -35,7 +35,6 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateSignature;
 import net.ontopia.topicmaps.query.spi.SearchResultIF;
 import net.ontopia.topicmaps.query.spi.SearcherIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 
 /**
  * EXPERIMENTAL: Java searcher predicate.<p>
@@ -101,7 +100,6 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
       throw new InvalidQueryException("Third argument to " + getName() + " must " +
                                       "be unbound");
     
-    String previous = StringUtils.VERY_UNLIKELY_STRING;
     int valtype = searcher.getValueType();
 
     // find all distinct queries and initialize result maps

@@ -29,7 +29,6 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * Topic map sanity controller.
@@ -37,9 +36,6 @@ import net.ontopia.utils.StringifierIF;
 
 
 public class AssociationSanity {
-
-  private StringifierIF ts = TopicStringifiers.getDefaultStringifier();
-
 
   /**
    * This class finds all duplicate associations.
@@ -142,7 +138,7 @@ public class AssociationSanity {
       AssociationRoleIF arif = (AssociationRoleIF)it.next();
 
       //rolenames[i] = getTopicId(arif.getPlayer());
-      rolenames[i] = ts.toString(arif.getPlayer());
+      rolenames[i] = TopicStringifiers.toString(arif.getPlayer());
       types.put(rolenames[i], arif.getType());
       i++;
     }

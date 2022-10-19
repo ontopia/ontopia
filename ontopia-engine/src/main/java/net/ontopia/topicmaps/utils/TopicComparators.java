@@ -23,10 +23,9 @@ package net.ontopia.topicmaps.utils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.Function;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TypedIF;
-import net.ontopia.utils.StringifierComparator;
-import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: A collection of topic related comparators.
@@ -41,7 +40,7 @@ public class TopicComparators {
   }
   
   public static Comparator<TopicIF> getTopicNameComparator(Collection<TopicIF> scope) {
-    return new StringifierComparator<TopicIF>(TopicStringifiers.getTopicNameStringifier(scope));
+    return Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scope));
   }
   
   public static Comparator<TypedIF> getTypedIFComparator() {
@@ -49,36 +48,10 @@ public class TopicComparators {
   }
 
   public static Comparator<TypedIF> getTypedIFComparator(Collection<TopicIF> scope) {
-    return new TypedIFComparator(new StringifierComparator<TopicIF>(TopicStringifiers.getTopicNameStringifier(scope)));
+    return new TypedIFComparator(Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scope)));
   }
 
-  public static <E> Comparator<E> getCaseInsensitiveComparator(StringifierIF<E> stringifier) {
-    //! return new StringifierComparator(new GrabberStringifier(new GrabberGrabber(new StringifierGrabber(stringifier), new UpperCaseGrabber())));
-    // NOTE: 1.3.4 - Replaced above with new and faster comparator:
-    return new CaseInsensitiveStringifierComparator<E>(stringifier);
-  }
-
-  /**
-   * INTERNAL: Case in-sensitive string comparator that is able to
-   * handle null values.
-   */ 
-  public static class CaseInsensitiveStringifierComparator<E> implements Comparator<E> {
-    protected StringifierIF<E> stringifier;
-    public CaseInsensitiveStringifierComparator(StringifierIF<E> stringifier) {
-      this.stringifier = stringifier;
-    }
-    @Override
-    public int compare(E obj1, E obj2) {
-      String str1 = stringifier.toString(obj1);
-      String str2 = stringifier.toString(obj2);      
-
-      if (str1 == null)
-        return (str2 == null ? 0 : 1);
-      else
-        if (str2 == null)
-          return -1;
-        else
-          return str1.compareToIgnoreCase(str2);
-    }
+  public static <E> Comparator<E> getCaseInsensitiveComparator(Function<E, String> stringifier) {
+    return Comparator.comparing(stringifier.andThen(String::toLowerCase));
   }
 }

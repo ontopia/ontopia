@@ -20,6 +20,7 @@
 
 package net.ontopia.topicmaps.core.events;
 
+import java.util.Collections;
 import java.util.Iterator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AbstractTopicMapTest;
@@ -28,15 +29,13 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import org.junit.Assert;
+import org.junit.Test;
 
 public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
 
   protected TesterListener listener;
   
-  public TopicMapListenerTests(String name) {
-    super(name);
-  }
-
   protected TMObjectIF makeObject() {
     throw new UnsupportedOperationException();
   }
@@ -89,17 +88,18 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
     }
   }
   
+  @Test
   public void testTopicLifecycle() {
     // register listener
-    assertTrue("topic should not be registered as added (1)",
+    Assert.assertTrue("topic should not be registered as added (1)",
                listener.topicAdded == false);
       
     // add topic
     TopicIF topic = builder.makeTopic();
     topicmap.getStore().commit();
-    assertTrue("topic should be registered as added ",
+    Assert.assertTrue("topic should be registered as added ",
                listener.topicAdded == true);
-    assertTrue("wrong topic registered as added ",
+    Assert.assertTrue("wrong topic registered as added ",
                listener.snapshot.getObjectId().equals(topic.getObjectId()));
       
     // make theme
@@ -141,87 +141,88 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
     TopicNameIF bn = builder.makeTopicName(topic, type, bnval);
     bn.addTheme(theme);
     String bn_oid = bn.getObjectId();
-    VariantNameIF ivn = builder.makeVariantName(bn, vnval);
+    VariantNameIF ivn = builder.makeVariantName(bn, vnval, Collections.emptySet());
     ivn.addTheme(theme);
-    VariantNameIF evn = builder.makeVariantName(bn, vnloc);
+    VariantNameIF evn = builder.makeVariantName(bn, vnloc, Collections.emptySet());
     String ivn_oid = ivn.getObjectId();
     String evn_oid = evn.getObjectId();
       
     // remove topic
     topic.remove();
     topicmap.getStore().commit();
-    assertTrue("topic should not be registered as added (2) ",
+    Assert.assertTrue("topic should not be registered as added (2) ",
                listener.topicAdded == false);
       
     // check identities in snapshot
-    assertTrue("remove snapshot topic does not include source locator ",
+    Assert.assertTrue("remove snapshot topic does not include source locator ",
                listener.snapshot.getItemIdentifiers().size() == 1 &&
                listener.snapshot.getItemIdentifiers().contains(srcloc));
-    assertTrue("remove snapshot topic does not include subject indicator ",
+    Assert.assertTrue("remove snapshot topic does not include subject indicator ",
                listener.snapshot.getSubjectIdentifiers().size() == 1 &&
                listener.snapshot.getSubjectIdentifiers().contains(subind));
-    assertTrue("remove snapshot topic does not include subject locator ",
+    Assert.assertTrue("remove snapshot topic does not include subject locator ",
 							 listener.snapshot.getSubjectLocators().size() == 1 &&
                listener.snapshot.getSubjectLocators().contains(subloc));
       
     // check toic type in snapshot
-    assertTrue("remove snapshot topic does not include source locator ",
+    Assert.assertTrue("remove snapshot topic does not include source locator ",
                listener.snapshot.getTypes().size() == 1 &&
                ((TopicIF)listener.snapshot.getTypes().iterator().next()).getObjectId().equals(type_oid));
       
     // check occurrences in snapshot
-    assertTrue("remove snapshot topic does not include all occurrences",
+    Assert.assertTrue("remove snapshot topic does not include all occurrences",
                listener.snapshot.getOccurrences().size() == 2);
     Iterator oiter = listener.snapshot.getOccurrences().iterator();
     while (oiter.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF)oiter.next();
-      assertTrue("occurrence type not equals",
+      Assert.assertTrue("occurrence type not equals",
                  occ.getType().getObjectId().equals(type_oid));
-      assertTrue("occurrence value not equal",
+      Assert.assertTrue("occurrence value not equal",
                  occ.getValue().equals(occval) || occ.getLocator().equals(occloc));        
-      assertTrue("occurrence scope size not equal 1",
+      Assert.assertTrue("occurrence scope size not equal 1",
                  occ.getScope().size() == 1);
-      assertTrue("occurrence theme not equal",
+      Assert.assertTrue("occurrence theme not equal",
                  ((TopicIF)occ.getScope().iterator().next()).getObjectId().equals(theme_oid));
     }
       
     // check basename in snapshot
-    assertTrue("remove snapshot topic does not include all base names",
+    Assert.assertTrue("remove snapshot topic does not include all base names",
                listener.snapshot.getTopicNames().size() == 1);
     TopicNameIF _bn = (TopicNameIF)listener.snapshot.getTopicNames().iterator().next();
-    assertTrue("remove snapshot topic does not include the right base name",
+    Assert.assertTrue("remove snapshot topic does not include the right base name",
                _bn.getObjectId().equals(bn_oid));
-    assertTrue("basename type not equals",
+    Assert.assertTrue("basename type not equals",
                _bn.getType().getObjectId().equals(type_oid));
-    assertTrue("basename scope size not equal 1",
+    Assert.assertTrue("basename scope size not equal 1",
                _bn.getScope().size() == 1);
-    assertTrue("basename theme not equal",
+    Assert.assertTrue("basename theme not equal",
                ((TopicIF)_bn.getScope().iterator().next()).getObjectId().equals(theme_oid));
       
     // check variant in snapshot
-    assertTrue("remove snapshot basename does not include all variant names",
+    Assert.assertTrue("remove snapshot basename does not include all variant names",
                _bn.getVariants().size() == 2);
     Iterator viter = _bn.getVariants().iterator();
     while (viter.hasNext()) {
       VariantNameIF _vn = (VariantNameIF)viter.next();
       if (_vn.getObjectId().equals(ivn_oid)) {
-        assertTrue("variant name scope size not equal 1",
+        Assert.assertTrue("variant name scope size not equal 1",
                    _vn.getScope().size() == 1);
-        assertTrue("variant name theme not equal",
+        Assert.assertTrue("variant name theme not equal",
                    ((TopicIF)_vn.getScope().iterator().next()).getObjectId().equals(theme_oid));
-        assertTrue("variant value not equal",
+        Assert.assertTrue("variant value not equal",
                    _vn.getValue().equals(vnval));        
       } else {
-        assertTrue("remove snapshot base name does not include the right variant name",
+        Assert.assertTrue("remove snapshot base name does not include the right variant name",
                    _vn.getObjectId().equals(evn_oid));
-        assertTrue("variant name locator not equal",
+        Assert.assertTrue("variant name locator not equal",
                    _vn.getLocator().equals(vnloc));
-        assertTrue("variant name theme not equal",
+        Assert.assertTrue("variant name theme not equal",
                ((TopicIF)_vn.getScope().iterator().next()).getObjectId().equals(theme_oid));
       }
     }
   }
 
+  @Test
   public void testTypelessTopicName() {
     // first build test topic
     TopicIF topic = builder.makeTopic();

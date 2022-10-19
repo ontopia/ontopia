@@ -26,17 +26,11 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * INTERNAL: Tolog Tag for evaluating a sequence of child WhenTags.
  */
 public class ChooseTag extends BodyTagSupport {
 
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(ChooseTag.class.getName());
-  
   // members
   private boolean foundMatchingWhen;
   private boolean foundWhen;

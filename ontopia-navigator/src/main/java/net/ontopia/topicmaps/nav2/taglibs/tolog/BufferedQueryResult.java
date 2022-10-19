@@ -26,16 +26,9 @@ import java.util.ArrayList;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class BufferedQueryResult 
         implements BufferedQueryResultIF {
   
-  // initialization of logging facility
-  private static final Logger log = LoggerFactory.getLogger(BufferedQueryResult.class
-          .getName());
-
   protected QueryResultIF queryResult;      
   protected Collection buffer;
   protected Object bufferedRow[];

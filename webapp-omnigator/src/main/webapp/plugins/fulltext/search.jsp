@@ -2,6 +2,7 @@
     import="
     java.io.*,
     java.util.*,
+    java.util.function.Function,
 	org.apache.commons.lang3.StringUtils,
     net.ontopia.utils.*,
     net.ontopia.topicmaps.core.*,
@@ -42,7 +43,7 @@
      }
      String tmid = request.getParameter("tm");
      TopicMapIF topicmap = (TopicMapIF)ContextUtils.getSingleValue("topicmap", pageContext);
-     StringifierIF topic_stringifier = TopicStringifiers.getTopicNameStringifier(Collections.EMPTY_SET);
+     Function<TopicIF, String> topic_stringifier = TopicStringifiers.getTopicNameStringifier(Collections.EMPTY_SET);
     %>
 
   <template:put name="navigation" body="true">
@@ -182,7 +183,7 @@ ranked by relevance.</p>
 
               if (tmobject instanceof OccurrenceIF) {
                 if (((OccurrenceIF)tmobject).getType() != null)
-                  _title = topic_stringifier.toString(((OccurrenceIF)tmobject).getType());
+                  _title = topic_stringifier.apply(((OccurrenceIF)tmobject).getType());
               }
               content = "<a href='" + address + "'>" + _title + "</a>";
             }

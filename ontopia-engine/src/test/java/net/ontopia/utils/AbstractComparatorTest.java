@@ -20,23 +20,15 @@
 
 package net.ontopia.utils;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
-public abstract class AbstractComparatorTest extends TestCase {
+public abstract class AbstractComparatorTest {
 
   protected int intended_size = 8;
   
-  public AbstractComparatorTest(String name) {
-    super(name);
-  }
-
-  protected void testComparator(int comp, int identical, int different) {
-    assertTrue("comparator is not equal", comp == identical);
-    assertTrue("comparator is equal", comp != different);
+  protected void assertComparator(int comp, int identical, int different) {
+    Assert.assertTrue("comparator is not equal", comp == identical);
+    Assert.assertTrue("comparator is equal", comp != different);
   }
   
 }
-
-
-
-

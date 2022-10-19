@@ -48,10 +48,6 @@ public class IncludeTag extends TagSupport {
   // initialization of logging facility
   private static final Logger log = LoggerFactory.getLogger(IncludeTag.class.getName());
 
-  // file separator character
-  private final static String FILE_SEPARATOR =
-    System.getProperty("file.separator");
-  
   // tag attributes
   private String fileName;
   
@@ -85,7 +81,6 @@ public class IncludeTag extends TagSupport {
       // NOTE: This sucks because all requests are not HttpServletRequests.
       ServletRequest request = pageContext.getRequest();
       if (request instanceof HttpServletRequest) {
-        String context_path = ((HttpServletRequest)request).getContextPath();
         String realpath = ctxt.getRealPath(fileName);
         if (realpath == null)
           throw new NavigatorRuntimeException("Could not resolve file attribute '" + fileName + "' in <logic:include> tag. Make sure that the web application is deployed in exploded mode.");

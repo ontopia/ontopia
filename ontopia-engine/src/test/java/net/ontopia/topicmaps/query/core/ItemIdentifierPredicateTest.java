@@ -27,28 +27,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import org.junit.Test;
 
 public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
   
-  public ItemIdentifierPredicateTest(String name) {
-    super(name);
-  }
-
-  /// setup
-
-  @Override
-  public void tearDown() {    
-    closeStore();
-  }
-
   /// tests
 
+  @Test
   public void testCompletelyOpen() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -75,7 +65,7 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
       addSrclocsOf(matches, assoc.getRoles());
     }
     
-    verifyQuery(matches, "item-identifier($OBJ, $LOCATOR)?");  
+    assertQueryMatches(matches, "item-identifier($OBJ, $LOCATOR)?");  
   }
 
   private void addSrclocsOf(List matches, Collection objects) {
@@ -89,6 +79,7 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
     }
   }
   
+  @Test
   public void testTopicToLocator() throws InvalidQueryException, IOException {
     load("jill.xtm");
 
@@ -96,9 +87,10 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "LOCATOR", base.resolveAbsolute("#ontopia").getAddress());
     
-    verifyQuery(matches, "item-identifier(ontopia, $LOCATOR)?");
+    assertQueryMatches(matches, "item-identifier(ontopia, $LOCATOR)?");
   }
 
+  @Test
   public void testLocatorToTopic() throws InvalidQueryException, IOException {
     load("jill.xtm");
     LocatorIF base = topicmap.getStore().getBaseAddress();
@@ -106,17 +98,19 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("ontopia"));
     
-    verifyQuery(matches, "item-identifier($TOPIC, \"" + base.resolveAbsolute("#ontopia").getAddress() + "\")?");
+    assertQueryMatches(matches, "item-identifier($TOPIC, \"" + base.resolveAbsolute("#ontopia").getAddress() + "\")?");
   }
 
+  @Test
   public void testBothBoundFalse() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     LocatorIF base = topicmap.getStore().getBaseAddress();
 
     List matches = new ArrayList();    
-    verifyQuery(matches, "item-identifier(type2, \"" + base.resolveAbsolute("#type1").getAddress() + "\")?");
+    assertQueryMatches(matches, "item-identifier(type2, \"" + base.resolveAbsolute("#type1").getAddress() + "\")?");
   }
 
+  @Test
   public void testBothBoundTrue() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     LocatorIF base = topicmap.getStore().getBaseAddress();
@@ -124,7 +118,7 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     matches.add(new HashMap());
     
-    verifyQuery(matches, "item-identifier(type1, \"" + base.resolveAbsolute("#type1").getAddress() + "\")?");
+    assertQueryMatches(matches, "item-identifier(type1, \"" + base.resolveAbsolute("#type1").getAddress() + "\")?");
   }
   
 }

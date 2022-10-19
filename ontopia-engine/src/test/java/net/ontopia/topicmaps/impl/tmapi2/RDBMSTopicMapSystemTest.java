@@ -20,30 +20,26 @@
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import java.util.Set;
-import junit.framework.TestCase;
-
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.tmapi.core.Locator;
 import org.tmapi.core.TopicMap;
 import org.tmapi.core.TopicMapExistsException;
 import org.tmapi.core.TopicMapSystem;
 import org.tmapi.core.TopicMapSystemFactory;
 
-import org.junit.Ignore;
-
 @Ignore
-public class RDBMSTopicMapSystemTest 
-  extends TestCase {
+public class RDBMSTopicMapSystemTest {
 
   private TopicMapSystemFactory tmsf;
   private TopicMapSystem tms;
 
   private Locator locFirst; 
 
-  public RDBMSTopicMapSystemTest(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   protected void setUp() throws Exception {
     tmsf = TopicMapSystemFactory.newInstance();
     
@@ -60,11 +56,12 @@ public class RDBMSTopicMapSystemTest
     locFirst = tms.createLocator("http://ontopia.net/first");
   }
 
-  @Override
+  @After
   protected void tearDown() throws Exception {
     tms.close();
   }
 
+  @Test
   public void testAll() {
     
     // first clean all existing topic maps
@@ -78,18 +75,18 @@ public class RDBMSTopicMapSystemTest
 
     try {
       tm = tms.createTopicMap(locFirst);
-      assertNotNull("could not create new TopicMap", tm);
+      Assert.assertNotNull("could not create new TopicMap", tm);
 
     } catch (TopicMapExistsException e) {
-      fail("failed to create new TopicMap in empty TopicMapSystem");
+      Assert.fail("failed to create new TopicMap in empty TopicMapSystem");
     }
 
     TopicMap tm2 = tms.getTopicMap(locFirst);
-    assertNotNull("could not get newly created TopicMap", tm2);
+    Assert.assertNotNull("could not get newly created TopicMap", tm2);
 
     tm2.remove();
 
     tm = tms.getTopicMap(locFirst);
-    assertNull("TopicMap has not been removed from TopicMapSystem after remove operation", tm);
+    Assert.assertNull("TopicMap has not been removed from TopicMapSystem after remove operation", tm);
   }
 }

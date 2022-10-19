@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.nav2.core;
 
 import java.net.URL;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
-import net.ontopia.topicmaps.entry.UserStoreRegistry;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 
@@ -205,16 +204,6 @@ public interface NavigatorApplicationIF {
   TopicMapRepositoryIF getTopicMapRepository();
 
   /**
-   * INTERNAL: Refresh topic map registry.
-   */
-  void refreshTopicMapRegistry();
-
-  /**
-   * INTERNAL: Refresh application configuration.
-   */
-  void refreshAppConfig();
-
-  /**
    * INTERNAL: Get <code>TopicMapIF</code> object for specified TopicMap
    * String Identifier which is in accordance to the identifiers used
    * by the TopicMapRepositoryIF.
@@ -242,19 +231,6 @@ public interface NavigatorApplicationIF {
    */
   void returnTopicMap(TopicMapIF topicmap);
   
-  /**
-   * INTERNAL: Get <code>UserStoreRegistry</code> object which allows
-   * access to all available topicmap sources, whether they are
-   * already loaded or have to be loaded (managed automatically). The
-   * transaction user is bound internally by the navigator
-   * application.<p>
-   *
-   * @since 1.3.4
-   * @deprecated
-   */
-  @Deprecated
-  UserStoreRegistry getUserStoreRegistry();
-
   /**
    * INTERNAL: Get the reference ID of the topic map within the
    * application's store registry.<p>

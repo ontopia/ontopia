@@ -53,13 +53,9 @@ import org.restlet.data.MediaType;
 import org.restlet.data.Parameter;
 import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class JacksonRepresentationImpl<T> extends JacksonRepresentation<T> {
 	public static final String ADDITIONAL_MIXINS_ATTRIBUTE = JacksonConverterImpl.class.getName() + ".mixins";
-
-	private static final Logger logger = LoggerFactory.getLogger(JacksonRepresentationImpl.class);
 
 	private static final String JSONPARSER_FEATURE = JsonParser.class.getName() + ".Feature.";
 	private static final String SERIALIZATION_FEATURE = SerializationFeature.class.getName() + ".";

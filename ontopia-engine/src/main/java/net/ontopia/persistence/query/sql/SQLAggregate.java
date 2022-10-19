@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.query.sql;
 
+import java.util.Objects;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -33,8 +34,7 @@ public class SQLAggregate implements SQLAggregateIF {
   protected String alias;
   
   public SQLAggregate(SQLValueIF value, int type) {
-    if (value == null)
-      throw new NullPointerException("Aggregate function variable cannot not be null.");
+    Objects.requireNonNull(value, "Aggregate function variable cannot not be null.");
     this.value = value;
     this.type = type;
   }

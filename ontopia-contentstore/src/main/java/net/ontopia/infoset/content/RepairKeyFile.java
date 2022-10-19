@@ -44,7 +44,7 @@ public class RepairKeyFile {
 	  if (file.isDirectory()) {
 	    String name = file.getName();
 	    try {
-	      int num = Integer.parseInt(name);
+	      Integer.parseInt(name);
 	      return true;
 	    } catch (NumberFormatException e) {
 	      return false;

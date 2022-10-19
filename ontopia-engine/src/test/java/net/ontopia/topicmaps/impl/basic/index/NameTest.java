@@ -24,30 +24,27 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.util.Collections;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class NameTest extends TestCase {
+public class NameTest {
   protected NameIndexIF index;
   protected TopicMapBuilderIF builder;
   protected TopicMapIF topicmap;
     
-  public NameTest(String name) {
-    super(name);
-  }
-
-  @Override
-  protected void setUp() {
+  @Before
+  public void setUp() {
     topicmap = makeTopicMap();
     index = (NameIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.NameIndexIF");
   }
@@ -61,12 +58,13 @@ public class NameTest extends TestCase {
     
   // --- Test cases
 
+  @Test
   public void testTopicNames() {
     // STATE 1: empty topic map
-    // assertTrue("index finds spurious base names",
+    // Assert.assertTrue("index finds spurious base names",
     //        index.getTopicNameValues().size() == 0);
 
-    assertTrue("index finds base names it shouldn't",
+    Assert.assertTrue("index finds base names it shouldn't",
                index.getTopicNames("akka bakka").size() == 0);
 
         
@@ -75,29 +73,29 @@ public class NameTest extends TestCase {
     TopicNameIF bn1 = builder.makeTopicName(t1, "bonka rakka");
     TopicNameIF bn2 = builder.makeTopicName(t1, "");
 
-    assertTrue("couldn't find base name via string",
+    Assert.assertTrue("couldn't find base name via string",
                index.getTopicNames("bonka rakka").size() == 1);
-    assertTrue("wrong base name found via string",
+    Assert.assertTrue("wrong base name found via string",
                index.getTopicNames("bonka rakka").iterator().next().equals(bn1));
 
-    // assertTrue("value string missing from value string collection",
+    // Assert.assertTrue("value string missing from value string collection",
     //        index.getTopicNameValues().size() == 2);
-    // assertTrue("value string missing from value string collection",
+    // Assert.assertTrue("value string missing from value string collection",
     //        index.getTopicNameValues().contains("bonka rakka"));
-    // assertTrue("null missing from value string collection",
+    // Assert.assertTrue("null missing from value string collection",
     //        index.getTopicNameValues().contains(null));
 
-    assertTrue("couldn't find base name via \"\"",
+    Assert.assertTrue("couldn't find base name via \"\"",
                index.getTopicNames("").size() == 1);
-    assertTrue("wrong base name found via \"\"",
+    Assert.assertTrue("wrong base name found via \"\"",
                index.getTopicNames("").iterator().next().equals(bn2));
         
     // STATE 3: topic map with duplicates
-    TopicNameIF bn3 = builder.makeTopicName(t1, "bonka rakka");
+    builder.makeTopicName(t1, "bonka rakka");
         
-    // assertTrue("duplicate base name string not filtered out",
+    // Assert.assertTrue("duplicate base name string not filtered out",
     //        index.getTopicNameValues().size() == 2);
-    assertTrue("second base name not found via string",
+    Assert.assertTrue("second base name not found via string",
                index.getTopicNames("bonka rakka").size() == 2);
 
 
@@ -105,24 +103,25 @@ public class NameTest extends TestCase {
     TopicNameIF bn4 = builder.makeTopicName(t1, "Erlend \u00d8verby");
     TopicNameIF bn5 = builder.makeTopicName(t1, "Kana: \uFF76\uFF85"); // half-width katakana
 
-    assertTrue("couldn't find base name via latin1 string",
+    Assert.assertTrue("couldn't find base name via latin1 string",
                index.getTopicNames("Erlend \u00d8verby").size() == 1);
-    assertTrue("wrong base name found via latin1 string",
+    Assert.assertTrue("wrong base name found via latin1 string",
                index.getTopicNames("Erlend \u00d8verby").iterator().next().equals(bn4));
 
-    assertTrue("couldn't find base name via hw-kana string",
+    Assert.assertTrue("couldn't find base name via hw-kana string",
                index.getTopicNames("Kana: \uFF76\uFF85").size() == 1);
-    assertTrue("wrong base name found via hw-kana string",
+    Assert.assertTrue("wrong base name found via hw-kana string",
                index.getTopicNames("Kana: \uFF76\uFF85").iterator().next().equals(bn5));
         
   }
 
+  @Test
   public void testVariants() {
     // STATE 1: empty topic map
-    assertTrue("index finds spurious variant names",
+    Assert.assertTrue("index finds spurious variant names",
                index.getVariants("akka bakka").size() == 0);
 
-    // assertTrue("index finds variant vakyes it shouldn't",
+    // Assert.assertTrue("index finds variant vakyes it shouldn't",
     //        index.getVariantValues().size() == 0);
 
         
@@ -132,29 +131,29 @@ public class NameTest extends TestCase {
     VariantNameIF v1 = builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
     VariantNameIF v2 = builder.makeVariantName(bn1, "", Collections.<TopicIF>emptySet());
 
-    assertTrue("couldn't find variant name via string",
+    Assert.assertTrue("couldn't find variant name via string",
                index.getVariants("bonka rakka").size() == 1);
-    assertTrue("wrong variant name found via string",
+    Assert.assertTrue("wrong variant name found via string",
                index.getVariants("bonka rakka").iterator().next().equals(v1));
 
-    // assertTrue("value string missing from value string collection",
+    // Assert.assertTrue("value string missing from value string collection",
     //        index.getVariantValues().size() == 2);
-    // assertTrue("value string missing from value string collection",
+    // Assert.assertTrue("value string missing from value string collection",
     //        index.getVariantValues().contains("bonka rakka"));
-    // assertTrue("null missing from value string collection",
+    // Assert.assertTrue("null missing from value string collection",
     //        index.getVariantValues().contains(null));
 
-    assertTrue("couldn't find variant name via \"\"",
+    Assert.assertTrue("couldn't find variant name via \"\"",
                index.getVariants("").size() == 1);
-    assertTrue("wrong base name found via \"\"",
+    Assert.assertTrue("wrong base name found via \"\"",
                index.getVariants("").iterator().next().equals(v2));
         
     // STATE 3: topic map with duplicates
-    VariantNameIF v3 = builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
+    builder.makeVariantName(bn1, "bonka rakka", Collections.<TopicIF>emptySet());
         
-    assertTrue("duplicate variant name string not filtered out",
+    Assert.assertTrue("duplicate variant name string not filtered out",
                index.getVariants("bonka rakka").size() == 2);
-    // assertTrue("second variant name not found via string",
+    // Assert.assertTrue("second variant name not found via string",
     //        index.getVariantValues().size() == 2);
 
 
@@ -162,18 +161,19 @@ public class NameTest extends TestCase {
     VariantNameIF v4 = builder.makeVariantName(bn1, "Erlend \u00d8verby", Collections.<TopicIF>emptySet());
     VariantNameIF v5 = builder.makeVariantName(bn1, "Kana: \uFF76\uFF85", Collections.<TopicIF>emptySet()); // half-width katakana
 
-    assertTrue("couldn't find variant name via latin1 string",
+    Assert.assertTrue("couldn't find variant name via latin1 string",
                index.getVariants("Erlend \u00d8verby").size() == 1);
-    assertTrue("wrong variant name found via latin1 string",
+    Assert.assertTrue("wrong variant name found via latin1 string",
                index.getVariants("Erlend \u00d8verby").iterator().next().equals(v4));
 
-    assertTrue("couldn't find variant name via hw-kana string",
+    Assert.assertTrue("couldn't find variant name via hw-kana string",
                index.getVariants("Kana: \uFF76\uFF85").size() == 1);
-    assertTrue("wrong variant name found via hw-kana string",
+    Assert.assertTrue("wrong variant name found via hw-kana string",
                index.getVariants("Kana: \uFF76\uFF85").iterator().next().equals(v5));
         
   }
 
+  @Test
   public void testLTMImport() throws IOException, MalformedURLException {
     String ltm = "    [random-id : user = \"Karl Popper\" = \"popper\" / username] " +
     "ansatt-ved(ontopia-uni : arbeidsgiver, random-id : ansatt)";
@@ -183,7 +183,7 @@ public class NameTest extends TestCase {
     reader.importInto(topicmap);
     topicmap.getStore().commit();
 
-    assertTrue("couldn't find base name via string value",
+    Assert.assertTrue("couldn't find base name via string value",
                index.getTopicNames("popper").size() == 1);
 
     TopicNameIF bn = (TopicNameIF) index.getTopicNames("popper").iterator().next();
@@ -191,7 +191,7 @@ public class NameTest extends TestCase {
 
     topicmap.getStore().commit();
     
-    assertTrue("couldn't find base name via string value after modification",
+    Assert.assertTrue("couldn't find base name via string value after modification",
                index.getTopicNames("popper").size() == 1);
   }
   

@@ -20,6 +20,8 @@
 
 package net.ontopia.persistence.query.sql;
 
+import java.util.Objects;
+
 /**
  * INTERNAL: SQL condition: in. Evaluates to true if the left
  * value contains the right value.<p>
@@ -41,10 +43,8 @@ public class SQLIn implements SQLExpressionIF {
   }
   
   protected SQLIn(SQLValueIF left, SQLValueIF right) {
-    if (left == null)
-      throw new NullPointerException("Left value must not be null.");
-    if (right == null)
-      throw new NullPointerException("Right value must not be null.");
+    Objects.requireNonNull(left, "Left value must not be null.");
+    Objects.requireNonNull(right, "Right value must not be null.");
     
     this.left = left;
     this.right = right;

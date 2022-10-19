@@ -22,13 +22,11 @@ package net.ontopia.topicmaps.entry;
 
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
+import org.junit.Test;
 
 public class StoreFactoryReferenceTest extends AbstractTopicMapReferenceTest {
 
-  public StoreFactoryReferenceTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testStoreFactoryRef() throws java.io.IOException {
     String id = "sfr.xtm";
     String title = "SFRM";
@@ -38,7 +36,7 @@ public class StoreFactoryReferenceTest extends AbstractTopicMapReferenceTest {
 
     // run abstract url topic map reference tests
     boolean checkOpenAfterClose = false;
-    doAbstractTopicMapReferenceTests(ref, checkOpenAfterClose);
+    assertCompliesToAbstractTopicMapReference(ref, checkOpenAfterClose);
   }
   
 }

@@ -24,14 +24,9 @@ import net.ontopia.topicmaps.entry.AbstractTopicMapSourceTest;
 import net.ontopia.utils.TestFileUtils;
 import org.junit.Test;
 
-
 public class XTMPathTopicMapSourceTest extends AbstractTopicMapSourceTest {
 
   private final static String testdataDirectory = "canonical";
-
-  public XTMPathTopicMapSourceTest(String name) {
-    super(name);
-  }
 
   // --- Test cases
 
@@ -44,7 +39,7 @@ public class XTMPathTopicMapSourceTest extends AbstractTopicMapSourceTest {
     source.setSuffix(".xtm");
     
     // run abstract topic map source tests
-    doAbstractTopicMapSourceTests(source);
+    assertCompliesToAbstractTopicMapSource(source);
   }
   
 }

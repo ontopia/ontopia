@@ -161,6 +161,10 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
     // reset members
     columnNames = null;
     contextManager = null;
+
+    if (queryResult != null) {
+      queryResult.close();
+    }
     queryResult = null;
 
     // do *not* reset tag attributes

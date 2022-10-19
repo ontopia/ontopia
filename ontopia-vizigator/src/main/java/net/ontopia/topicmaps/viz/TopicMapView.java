@@ -67,6 +67,7 @@ import com.touchgraph.graphlayout.TGPanel;
 import com.touchgraph.graphlayout.graphelements.GESUtils;
 import com.touchgraph.graphlayout.graphelements.GraphEltSet;
 import com.touchgraph.graphlayout.graphelements.Locality;
+import java.util.function.Function;
 
 /**
  * INTERNAL: Maintains the TouchGraph view of the topic map.
@@ -566,8 +567,8 @@ public class TopicMapView {
         VizDebugUtils.debug("---- (edge id: " + ((Edge)object).getID()
             + " ---)");
       else
-        VizDebugUtils.debug(" ---- (Object stringified: " + controller.getStringifier()
-            .toString(object) + " ---)");
+        VizDebugUtils.debug(" ---- (Object stringified: " + ((Function) controller.getStringifier())
+            .apply(object) + " ---)");
     }
     
     outputDebugInfo("count");
@@ -2659,7 +2660,6 @@ public class TopicMapView {
       Collection hiddenEdgesTG = getTGEdgesOfType(Edge.class, true, false);
       
       // Topics in Viz
-      Collection topicsViz = getNodesOfType(TMTopicNode.class, false);
       Collection topicsViz_distinct = getNodesOfType(TMTopicNode.class,
                                                            true);
 

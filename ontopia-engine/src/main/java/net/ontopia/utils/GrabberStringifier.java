@@ -20,22 +20,25 @@
 
 package net.ontopia.utils;
 
+import java.util.Objects;
+import java.util.function.Function;
+
 /**
  * INTERNAL: Stringifies the object that the grabber
  * grabs. DefaultStringifier will be used if no nested stringifier is
  * specified.</p>
  */
 
-public class GrabberStringifier<T, G> implements StringifierIF<T> {
+public class GrabberStringifier<T, G> implements Function<T, String> {
 
-  protected GrabberIF<T, G> grabber;
-  protected StringifierIF<? super G> stringifier;
+  protected Function<T, G> grabber;
+  protected Function<? super G, String> stringifier;
   
-  public GrabberStringifier(GrabberIF<T, G> grabber) {
-    this(grabber, new DefaultStringifier<G>());
+  public GrabberStringifier(Function<T, G> grabber) {
+    this(grabber, Objects::toString);
   }
   
-  public GrabberStringifier(GrabberIF<T, G> grabber, StringifierIF<? super G> stringifier) {
+  public GrabberStringifier(Function<T, G> grabber, Function<? super G, String> stringifier) {
     setGrabber(grabber);
     setStringifier(stringifier);
   }
@@ -43,20 +46,20 @@ public class GrabberStringifier<T, G> implements StringifierIF<T> {
   /**
    * Set the grabber which is to be used.
    */
-  public void setGrabber(GrabberIF<T, G> grabber) {
+  public void setGrabber(Function<T, G> grabber) {
     this.grabber = grabber;
   }
 
   /**
    * Set the stringifier which is to be used.
    */
-  public void setStringifier(StringifierIF<? super G> stringifier) {
+  public void setStringifier(Function<? super G, String> stringifier) {
     this.stringifier = stringifier;
   }
   
   @Override
-  public String toString(T object) {
-    return stringifier.toString(grabber.grab(object));
+  public String apply(T object) {
+    return stringifier.apply(grabber.apply(object));
   }
   
 }

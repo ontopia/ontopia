@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
 import java.net.URL;
-import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -31,26 +30,25 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.TestFileUtils;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * INTERNAL: Tests that verify that LocatorIF lookups work correctly
  * in a committed and reopened topic map store.
  */
 
-public class ObjectLookupTests extends TestCase {
+public class ObjectLookupTests {
   
   private final static String testdataDirectory = "various";
 
-  public ObjectLookupTests(String name) {
-    super(name);
-  }
-
-  @Override
+  @Before
   public void setUp() throws Exception {
     RDBMSTestFactory.checkDatabasePresence();
-    super.setUp();
   }
 
+  @Test
   public void testLookups() throws IOException {
     
     URL file = TestFileUtils.getTestInputURL(testdataDirectory, "topicmap-object-lookup.xtm");
@@ -71,29 +69,24 @@ public class ObjectLookupTests extends TestCase {
 
     // Test TopicMapIF.getTopicBySubjectIdentifier
     TopicIF topic = tm.getTopicBySubjectIdentifier(new URILocator("http://test.ontopia.net/indicator1"));
-    assertTrue("topic not found by indicator [1]", topic != null);
+    Assert.assertTrue("topic not found by indicator [1]", topic != null);
     topic = tm.getTopicBySubjectIdentifier(new URILocator("http://test.ontopia.net/indicator2"));
-    assertTrue("topic not found by indicator [2]", topic != null);
+    Assert.assertTrue("topic not found by indicator [2]", topic != null);
     
     // Test TopicMapIF.getObjectByItemIdentifier
     TMObjectIF tmobject = tm.getObjectByItemIdentifier(base.resolveAbsolute("#topicA"));
-    assertTrue("tmobject not found by source locator [A]", tmobject != null);
+    Assert.assertTrue("tmobject not found by source locator [A]", tmobject != null);
     tmobject = tm.getObjectByItemIdentifier(base.resolveAbsolute("#topicB"));
-    assertTrue("tmobject not found by source locator [B]", tmobject != null);
+    Assert.assertTrue("tmobject not found by source locator [B]", tmobject != null);
     tmobject = tm.getObjectByItemIdentifier(base.resolveAbsolute("#topicC"));
-    assertTrue("tmobject not found by source locator [C]", tmobject != null);
+    Assert.assertTrue("tmobject not found by source locator [C]", tmobject != null);
 
     // Test TopicMapIF.getTopicBySubject
     topic = tm.getTopicBySubjectLocator(new URILocator("http://test.ontopia.net/subject"));
-    assertTrue("topic not found by subject", topic != null);
+    Assert.assertTrue("topic not found by subject", topic != null);
 
     store.delete(true);
     //! store.close();    
   }
   
 }
-
-
-
-
-
