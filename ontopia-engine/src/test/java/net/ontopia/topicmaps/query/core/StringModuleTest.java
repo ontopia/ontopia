@@ -444,7 +444,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "POS", new Integer(25));
+    addMatch(matches, "POS", 25);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -513,7 +513,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(0));
+    addMatch(matches, "N", 0);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -525,7 +525,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(5));
+    addMatch(matches, "N", 5);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -537,7 +537,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(8));
+    addMatch(matches, "N", 8);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -549,7 +549,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(2));
+    addMatch(matches, "N", 2);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -561,7 +561,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(2));
+    addMatch(matches, "N", 2);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -573,7 +573,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(1));
+    addMatch(matches, "N", 1);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -585,7 +585,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(1));
+    addMatch(matches, "N", 1);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -738,7 +738,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(0));
+    addMatch(matches, "N", 0);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -750,7 +750,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(5));
+    addMatch(matches, "N", 5);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -762,7 +762,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(8));
+    addMatch(matches, "N", 8);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -774,7 +774,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(5));
+    addMatch(matches, "N", 5);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -786,7 +786,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(15));
+    addMatch(matches, "N", 15);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -799,7 +799,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(4));
+    addMatch(matches, "N", 4);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -812,7 +812,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "N", new Integer(4));
+    addMatch(matches, "N", 4);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -916,16 +916,11 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "USER", getTopicById("gdm"),    "LENGTH", 
-        new Integer(12));
-    addMatch(matches, "USER", getTopicById("larsga"), "LENGTH", 
-        new Integer(19));
-    addMatch(matches, "USER", getTopicById("grove"),  "LENGTH", 
-        new Integer(15));
-    addMatch(matches, "USER", getTopicById("steve"),  "LENGTH", 
-        new Integer(12));
-    addMatch(matches, "USER", getTopicById("sylvia"), "LENGTH", 
-        new Integer(13));
+    addMatch(matches, "USER", getTopicById("gdm"),    "LENGTH", 12);
+    addMatch(matches, "USER", getTopicById("larsga"), "LENGTH", 19);
+    addMatch(matches, "USER", getTopicById("grove"),  "LENGTH", 15);
+    addMatch(matches, "USER", getTopicById("steve"),  "LENGTH", 12);
+    addMatch(matches, "USER", getTopicById("sylvia"), "LENGTH", 13);
     
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -1001,7 +996,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "L", new Integer(0));
+    addMatch(matches, "L", 0);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -1013,7 +1008,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "L", new Integer(1));
+    addMatch(matches, "L", 1);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -1025,7 +1020,7 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("bb-test.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "L", new Integer(7));
+    addMatch(matches, "L", 7);
 
     assertQueryMatches(matches,
                 "import \"http://psi.ontopia.net/tolog/string/\" as str " +
@@ -1065,10 +1060,10 @@ public class StringModuleTest extends AbstractPredicateTest {
     load("int-occs.ltm");
     try {
       List matches = new ArrayList();
-      addMatch(matches, "VAL", "topic1", "LEN", new Integer(6));
-      addMatch(matches, "VAL", "topic2", "LEN", new Integer(6));
-      addMatch(matches, "VAL", "topic3", "LEN", new Integer(6));
-      addMatch(matches, "VAL", "topic4", "LEN", new Integer(6));
+      addMatch(matches, "VAL", "topic1", "LEN", 6);
+      addMatch(matches, "VAL", "topic2", "LEN", 6);
+      addMatch(matches, "VAL", "topic3", "LEN", 6);
+      addMatch(matches, "VAL", "topic4", "LEN", 6);
       assertQueryMatches(matches,
                   "import \"http://psi.ontopia.net/tolog/string/\" as str " +
                   "select $VAL, $LEN from " +

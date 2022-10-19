@@ -215,7 +215,7 @@ public class PredicateUtils {
         break;
       case STR_TO_LENGTH:
         String str = (String) newRow[fromix];
-        newRow[toix] = new Integer(str.length());
+        newRow[toix] = str.length();
         break;
       case OBJECT_TO_ID:
         TMObjectIF obj = (TMObjectIF) newRow[fromix];

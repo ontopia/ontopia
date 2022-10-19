@@ -40,7 +40,7 @@ public class ForwardPageResponseComposite implements Serializable {
   public ForwardPageResponseComposite(ActionForwardPageIF forwardPage,
                                       int responseType) {
     this.forwardPage = forwardPage;
-    this.responseType = new Integer(responseType);
+    this.responseType = responseType;
   }
 
   public ActionForwardPageIF getForwardPage() {
@@ -56,7 +56,7 @@ public class ForwardPageResponseComposite implements Serializable {
   }
 
   public void setResponseType(int responseType) {
-    this.responseType = new Integer(responseType);
+    this.responseType = responseType;
   }
 
   // --- overwrite methods from Object implementation

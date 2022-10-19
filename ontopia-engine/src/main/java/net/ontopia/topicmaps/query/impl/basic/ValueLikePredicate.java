@@ -117,7 +117,7 @@ public class ValueLikePredicate implements BasicPredicateIF {
         Object[] newRow = (Object[]) matches.data[ix].clone();
         newRow[topicix] = ftresult.get(i);
         if (scoreix >= 0)
-          newRow[scoreix] = new Float(ftresult.getScore(i));
+          newRow[scoreix] = ftresult.getScore(i);
         result.data[result.last] = newRow;
       }
     }

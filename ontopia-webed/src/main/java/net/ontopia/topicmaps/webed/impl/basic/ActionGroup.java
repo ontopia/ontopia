@@ -106,16 +106,16 @@ public class ActionGroup implements ActionGroupIF {
   @Override
   public void setDefaultForwardPage(int responseType,
                                     ActionForwardPageIF forwardPage) {
-    defaultForwardPages.put(new Integer(responseType), forwardPage);
+    defaultForwardPages.put(responseType, forwardPage);
   }
   
   @Override
   public ActionForwardPageIF getDefaultForwardPage(int responseType) {
     ActionForwardPageIF fw = (ActionForwardPageIF)
-      defaultForwardPages.get(new Integer(responseType));
+      defaultForwardPages.get(responseType);
     if (fw == null)
       fw = (ActionForwardPageIF)
-        defaultForwardPages.get(new Integer(Constants.FORWARD_GENERIC));
+        defaultForwardPages.get(Constants.FORWARD_GENERIC);
     return fw;
   }
 

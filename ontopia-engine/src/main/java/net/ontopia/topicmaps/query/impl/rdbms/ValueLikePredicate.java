@@ -102,7 +102,7 @@ public class ValueLikePredicate extends
           .getProperty("net.ontopia.topicmaps.query.impl.rdbms.ValueLikePredicate.function.type");
       if (ftype == null || !ftype.equals("boolean"))
         ftfunc = new JDOFunction(">", Boolean.class, ftfunc, new JDOPrimitive(
-            JDOPrimitive.INTEGER, new Integer(0)));
+            JDOPrimitive.INTEGER, 0));
       expressions.add(new JDOValueExpression(ftfunc));
 
       // JDOQL: B.topicmap = TOPICMAP

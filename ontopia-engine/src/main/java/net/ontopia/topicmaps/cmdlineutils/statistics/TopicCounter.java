@@ -129,7 +129,7 @@ public class TopicCounter {
     while (itt.hasNext()) {
       TopicIF t_temp = (TopicIF)itt.next();
       Collection c_temp = tindex.getTopics(t_temp);
-      retur.put(TopicStringifiers.toString(t_temp), new Integer(c_temp.size()));
+      retur.put(TopicStringifiers.toString(t_temp), c_temp.size());
       topicDetails.put(TopicStringifiers.toString(t_temp), t_temp);
     }
     return retur;
@@ -154,7 +154,7 @@ public class TopicCounter {
     while (ita.hasNext()) {
       TopicIF t_temp = (TopicIF)ita.next();
       Collection c_temp = tindex.getAssociations(t_temp);
-      retur.put(TopicStringifiers.toString(t_temp), new Integer(c_temp.size()));
+      retur.put(TopicStringifiers.toString(t_temp), c_temp.size());
       assocDetails.put(TopicStringifiers.toString(t_temp), t_temp);
     }
     return retur;
@@ -180,7 +180,7 @@ public class TopicCounter {
       TopicIF t_temp = (TopicIF)ito.next();
       Collection c_temp = tindex.getOccurrences(t_temp);
       if (!c_temp.isEmpty() && t_temp != null) {
-        retur.put(TopicStringifiers.toString(t_temp), new Integer(c_temp.size()));
+        retur.put(TopicStringifiers.toString(t_temp), c_temp.size());
         occurDetails.put(TopicStringifiers.toString(t_temp), t_temp);
       }
     }

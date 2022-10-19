@@ -367,7 +367,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
         matches.last == -1 && matches.size == 1) {
       Object[] row = matches.data[matches.size - 1];
       for (int i = 0; i < matches.colcount; i++)
-        row[i] = new Integer(0);
+        row[i] = 0;
       matches.last = 0;
       return matches;
     }
@@ -407,7 +407,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       Counter count = (Counter) counters.get(wrapper);
 
       for (int i = 0; i < countcols.length; i++)
-        row[countcols[i]] = new Integer(count.counter);
+        row[countcols[i]] = count.counter;
 
       matches.data[next++] = row; // no need to expand...
     }

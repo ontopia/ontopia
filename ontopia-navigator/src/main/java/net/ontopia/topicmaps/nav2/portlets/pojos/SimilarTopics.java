@@ -62,7 +62,6 @@ public class SimilarTopics {
     List<TopicIF> relateds = getRelated(topic);
 
     // go through the associated topics to find those another step out
-    Float zero = new Float(0);
     for (TopicIF related : relateds) {
       // say we have 100 points available for this topic. all the other
       // topics related to this one should have an equal share of those
@@ -74,8 +73,8 @@ public class SimilarTopics {
           continue;
         Float prev = points.get(similar);
         if (prev == null)
-          prev = zero;
-        points.put(similar, new Float(score + prev.floatValue()));
+          prev = 0F;
+        points.put(similar, score + prev.floatValue());
       }
     }
 

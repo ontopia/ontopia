@@ -43,7 +43,7 @@ public class ProbabilityManager {
 
   public ProbabilityManager(Object key) {
     probabilities = new TreeMap();
-    probabilities.put(key, new Double(1));
+    probabilities.put(key, 1.0);
     random = new Random();
   }
   
@@ -79,15 +79,14 @@ public class ProbabilityManager {
     double factor = 1 / sum;
 
     // Set this probability.
-    probabilities.put(key, new Double(newVal));
+    probabilities.put(key, newVal);
     
     // Update all other probability values so they add up to 1.
     Iterator keysIt = probabilities.keySet().iterator();
     while (keysIt.hasNext()) {
       Object currentKey = keysIt.next();
       Double currentValue = (Double)probabilities.get(currentKey);
-      probabilities.put(currentKey, 
-                        new Double(currentValue.doubleValue() * factor));
+      probabilities.put(currentKey, currentValue.doubleValue() * factor);
     }
   }
   

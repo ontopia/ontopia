@@ -98,7 +98,7 @@ public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
    */
   public void setLevel(String levelString) {
     try {
-      levelNumber = new Integer(levelString);        
+      levelNumber = Integer.valueOf(levelString);        
     } catch (NumberFormatException e) {
       log.warn("Reset invalid level value to null; was '" + levelString + "'.");
       levelNumber = null;

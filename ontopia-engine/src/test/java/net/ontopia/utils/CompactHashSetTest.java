@@ -581,7 +581,7 @@ public class CompactHashSetTest {
     Set hashset = new HashSet();
     
     for (int ix = 0; ix < 10000; ix++) {
-      Integer value = new Integer(random.nextInt(100));
+      int value = random.nextInt(100);
 
       if (random.nextBoolean()) {
         // we're adding

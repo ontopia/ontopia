@@ -213,7 +213,7 @@ public class QueryTracer {
         ti.set(info);
 
         output("<query>");
-        info.entered.push(new Long(System.currentTimeMillis()));
+        info.entered.push(System.currentTimeMillis());
 
         Runtime rt = Runtime.getRuntime();
         info.totalMemory = rt.totalMemory();
@@ -252,7 +252,7 @@ public class QueryTracer {
       if (isEnabled()) {
         Info info = (Info)ti.get();
         output(getIndent(info) + "ENTER (" + (input.last + 1) + "): " + clauseToString(clause));
-        info.entered.push(new Long(System.currentTimeMillis()));
+        info.entered.push(System.currentTimeMillis());
       }
     }
 
@@ -286,7 +286,7 @@ public class QueryTracer {
       if (isEnabled()) {
         Info info = (Info)ti.get();
         output(getIndent(info) + "ENTER (" + (input.last + 1) + "): " + clauseToString(clause));
-        info.entered.push(new Long(System.currentTimeMillis()));
+        info.entered.push(System.currentTimeMillis());
       }
     }
 
@@ -307,7 +307,7 @@ public class QueryTracer {
       if (isEnabled()) {
         Info info = (Info)ti.get();
         output(getIndent(info) + "ENTER order by");
-        info.entered.push(new Long(System.currentTimeMillis()));
+        info.entered.push(System.currentTimeMillis());
       }
     }
 
@@ -325,7 +325,7 @@ public class QueryTracer {
       if (isEnabled()) {
         Info info = (Info)ti.get();
         output(getIndent(info) + "ENTER select (" + (result.last + 1) + ")");
-        info.entered.push(new Long(System.currentTimeMillis()));
+        info.entered.push(System.currentTimeMillis());
       }
     }
 

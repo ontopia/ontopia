@@ -143,7 +143,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       pnames.add(param.getName());
       ptypes.add(param.getValueType());
       pfhandlers.add(param.getFieldHandler());
-      poffsets.add(new Integer(offset));
+      poffsets.add(offset);
       // FIXME: If ptype is instance of Collection, we know it is of
       // variable length.
     }
@@ -160,7 +160,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
         Iterator iter = info.poffsets.iterator();
         while (iter.hasNext()) {
           Integer old_po = (Integer)iter.next();
-          Integer new_po = new Integer(old_po.intValue() + sql_offset);
+          Integer new_po = old_po + sql_offset;
           poffsets.add(new_po);
         }
       }
@@ -348,7 +348,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // Analyze query by tracking the topmost level at which a table is
     // referenced. This information is later being used to figure out
     // in which from clause the table should be referenced.
-    analyzeQuery(query, info.tlevels, new Integer(1));
+    analyzeQuery(query, info.tlevels, 1);
     //! System.out.println("MAP: " + info.tlevels);
     
     return createStatement(query.getFilter(), query.getSelect(),
@@ -576,7 +576,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       analyzeValue(((SQLValueExpression)expr).getValue(), tlevels, level);
       return;
     case SQLExpressionIF.EXISTS:
-      analyzeExpression(((SQLExists)expr).getExpression(), tlevels, new Integer(level.intValue() + 1));
+      analyzeExpression(((SQLExists)expr).getExpression(), tlevels, level + 1);
       return;
     case SQLExpressionIF.IN: {
       SQLIn exp = (SQLIn)expr;

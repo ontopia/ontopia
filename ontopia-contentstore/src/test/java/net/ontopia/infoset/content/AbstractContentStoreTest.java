@@ -112,22 +112,22 @@ public abstract class AbstractContentStoreTest {
       case ADD_NEW:
         byte[] content = StringUtils.makeRandomId(50).getBytes();
         int key = store.add(new ByteArrayInputStream(content), 50);
-        entries.put(new Integer(key), content);
+        entries.put(key, content);
         break;
       case CHECK_CONTENT:
         key = chooseRandomKey(entries);
-        compare(key, (byte[]) entries.get(new Integer(key)));
+        compare(key, (byte[]) entries.get(key));
         break;
       case DELETE:
         key = chooseRandomKey(entries);
         Assert.assertTrue("Existing entry could not be deleted " + key,
                    store.remove(key));
-        entries.remove(new Integer(key));
+        entries.remove(key);
         break;
       case CHECK_PRESENCE:
         key = chooseRandomKey(entries) + 1;
         Assert.assertTrue("Key presence does not match double-checking",
-                   entries.containsKey(new Integer(key)) == store.containsKey(key));
+                   entries.containsKey(key) == store.containsKey(key));
       }
     }
   }

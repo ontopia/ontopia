@@ -1015,7 +1015,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       String key = lazyTypeElementId(association) + COLON
           + lazyTypeElementId(role);
 
-      roleCounter.put(key, new Integer(value.intValue() + 1));
+      roleCounter.put(key, value + 1);
       rolesCounted.put(longkey, Boolean.FALSE);
     }
   }
@@ -1024,7 +1024,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     int newCount = association.getRoles().size();
     int oldCount = maxRolesOf(association);
     if (oldCount < newCount)
-      roleCounter.put(lazyTypeElementId(association), new Integer(newCount));
+      roleCounter.put(lazyTypeElementId(association), newCount);
   }
 
   private int maxRolesOf(AssociationIF association) {
@@ -1100,7 +1100,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         + lazyTypeElementId(role);
     Integer retVal = roleCounter.get(key);
     if (retVal == null)
-      return new Integer(0);
+      return 0;
     return retVal;
   }
 
@@ -1381,14 +1381,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       if (suffix == null) {
         if (forceSuffix) {
           retVal = baseId + "1";
-          suffix = new Integer(2);
+          suffix = 2;
         } else {
           retVal = baseId;
-          suffix = new Integer(2);
+          suffix = 2;
         }
       } else {
         retVal = baseId + suffix;
-        suffix = new Integer(suffix.intValue() + 1);
+        suffix = suffix + 1;
       }
 
       counters.put(baseId, suffix);

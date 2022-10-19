@@ -55,7 +55,7 @@ public class ConfirmDeletePanel extends Panel {
       public Integer getObject() {
         Topic topic = topicModel.getTopic();
         int size = topic == null ? 0 : topic.getDependentObjects().size();
-        return new Integer(size);
+        return size;
       }
     }));
     

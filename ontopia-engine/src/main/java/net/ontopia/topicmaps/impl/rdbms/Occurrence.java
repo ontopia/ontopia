@@ -200,8 +200,8 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   
   private void setValue(Object value, LocatorIF datatype, long length, long hashcode) {
     setDataType(datatype);
-    valueChanged(LF_length, new Long(length), true);
-    valueChanged(LF_hashcode, new Long(hashcode), true);
+    valueChanged(LF_length, length, true);
+    valueChanged(LF_hashcode, hashcode, true);
     // Notify listeners
     fireEvent(OccurrenceIF.EVENT_SET_VALUE, value, getValue());
     // Notify transaction

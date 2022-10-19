@@ -109,7 +109,7 @@ public class Stats {
       pstm.setLong(1, store.getLongId());
       ResultSet rs = pstm.executeQuery();
       rs.next();
-      return  new Integer(rs.getInt(1));
+      return  rs.getInt(1);
     } finally {
       pstm.close();
     }

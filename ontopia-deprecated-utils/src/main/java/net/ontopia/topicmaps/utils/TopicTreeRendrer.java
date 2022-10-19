@@ -118,10 +118,10 @@ public class TopicTreeRendrer {
     if (current != null && current.equals(node.getTopic()))
       g2d.setPaint(Color.red);
 
-    node.setAttribute("x1", new Integer(getLeft(x)));
-    node.setAttribute("x2", new Integer(getLeft(x) + getWidth(title)));
-    node.setAttribute("y1", new Integer(getTop(y)));
-    node.setAttribute("y2", new Integer(getTop(y) + height));
+    node.setAttribute("x1", getLeft(x));
+    node.setAttribute("x2", getLeft(x) + getWidth(title));
+    node.setAttribute("y1", getTop(y));
+    node.setAttribute("y2", getTop(y) + height);
     g2d.drawString(title, getTextStart(x), getTextTop(y));
     g2d.draw(new Rectangle(getLeft(x), getTop(y), getWidth(title), height));
     g2d.setPaint(Color.black);

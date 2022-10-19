@@ -52,7 +52,7 @@ public class CmdlineOptions {
     // No argument
     sargs.append("" + c);
     // Register listener
-    listeners.put(new Integer(c), listener);
+    listeners.put((int) c, listener);
   }
   
   /**
@@ -66,7 +66,7 @@ public class CmdlineOptions {
       // Optional argument
       sargs.append("" + c + "::");
     // Register listener
-    listeners.put(new Integer(c), listener);
+    listeners.put((int) c, listener);
   }
   /**
    * Add a long argumentless option with the specified listener.
@@ -75,7 +75,7 @@ public class CmdlineOptions {
     // No argument
     largs.add(new LongOpt(name, LongOpt.NO_ARGUMENT, null, c));
     // Register listener
-    listeners.put(new Integer(c), listener);    
+    listeners.put((int) c, listener);    
   }
 
   /**
@@ -89,7 +89,7 @@ public class CmdlineOptions {
       // Optional argument
       largs.add(new LongOpt(name, LongOpt.OPTIONAL_ARGUMENT, null, c));
     // Register listener
-    listeners.put(new Integer(c), listener);    
+    listeners.put((int) c, listener);    
   }
 
   /**
@@ -108,7 +108,7 @@ public class CmdlineOptions {
         String option = argv[(ix == 0 ? 0 : ix-1)];
         throw new OptionsException(option, g.getOptarg());
       default:
-        ListenerIF listener = listeners.get(new Integer(c));
+        ListenerIF listener = listeners.get(c);
         if (listener != null)
           listener.processOption((char)c, g.getOptarg());
         else

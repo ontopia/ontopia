@@ -63,7 +63,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     load("fulltext.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "O", "c", "S", new Float(0.8f));
+    addMatch(matches, "O", "c", "S", 0.8f);
     
     assertQueryMatches(matches,
                 DECL + "fulltext:exact($O, \"c\", $S)?");
@@ -85,8 +85,8 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     load("fulltext.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "O", "d", "S", new Float(0.5f));
-    addMatch(matches, "O", "d", "S", new Float(0.7f));
+    addMatch(matches, "O", "d", "S", 0.5f);
+    addMatch(matches, "O", "d", "S", 0.7f);
     
     assertQueryMatches(matches,
                 DECL + "fulltext:exact($O, \"d\", $S)?");
@@ -109,9 +109,9 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     load("fulltext.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "O", "d", "S", new Float(0.5f));
-    addMatch(matches, "O", "d", "S", new Float(0.7f));
-    addMatch(matches, "O", "f", "S", new Float(0.4f));
+    addMatch(matches, "O", "d", "S", 0.5f);
+    addMatch(matches, "O", "d", "S", 0.7f);
+    addMatch(matches, "O", "f", "S", 0.4f);
     
     assertQueryMatches(matches,
                 DECL + "{ fulltext:exact($O, \"d\", $S) | fulltext:exact($O, \"f\", $S) }?");
@@ -122,11 +122,11 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     load("fulltext.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "T", getTopicById("d1"), "O", "d", "S", new Float(0.5f));
-    addMatch(matches, "T", getTopicById("d1"), "O", "d", "S", new Float(0.7f));
-    addMatch(matches, "T", getTopicById("d2"), "O", "d", "S", new Float(0.5f));
-    addMatch(matches, "T", getTopicById("d2"), "O", "d", "S", new Float(0.7f));
-    addMatch(matches, "T", getTopicById("f2"), "O", "f", "S", new Float(0.4f));
+    addMatch(matches, "T", getTopicById("d1"), "O", "d", "S", 0.5f);
+    addMatch(matches, "T", getTopicById("d1"), "O", "d", "S", 0.7f);
+    addMatch(matches, "T", getTopicById("d2"), "O", "d", "S", 0.5f);
+    addMatch(matches, "T", getTopicById("d2"), "O", "d", "S", 0.7f);
+    addMatch(matches, "T", getTopicById("f2"), "O", "f", "S", 0.4f);
     
     assertQueryMatches(matches,
                 DECL + "select $T, $O, $S from { fulltext:exact($O, \"d\", $S) | fulltext:exact($O, \"f\", $S) }, topic-name($T, $N), value($N, $O)?");
@@ -137,7 +137,7 @@ public class DynamicSearcherPredicateTest extends AbstractPredicateTest {
     load("fulltext.ltm");
     
     List matches = new ArrayList();
-    addMatch(matches, "T", getTopicById("c1"), "O", "c", "S", new Float(0.8f));
+    addMatch(matches, "T", getTopicById("c1"), "O", "c", "S", 0.8f);
     
     assertQueryMatches(matches, DECL +
                 "select $T, $O, $S from instance-of($T, t1), topic-name($T, $N), value($N, $O), fulltext:unknown($O, \"c\", $S)?");

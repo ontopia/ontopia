@@ -189,7 +189,7 @@ public abstract class VizConfigurationManager {
    * Sets the Shape setting for this association or topic type in the topic map.
    */
   protected void setOccurrenceValue(TopicIF type, TopicIF occtype, int integer) {
-    setOccurenceValue(type, occtype, (new Integer(integer)).toString());
+    setOccurenceValue(type, occtype, Integer.toString(integer));
   }
 
   /**

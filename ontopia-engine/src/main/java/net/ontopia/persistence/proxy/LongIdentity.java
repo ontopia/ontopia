@@ -64,7 +64,7 @@ public final class LongIdentity implements IdentityIF, Externalizable {
 
   @Override
   public Object getKey(int index) {
-    return new Long(key);
+    return key;
   }
 
   public long getLongKey() {

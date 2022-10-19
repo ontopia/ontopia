@@ -37,7 +37,7 @@ public class RegionBooster extends AbstractDocumentAnalyzer {
   }
 
   public void addBoost(String rname, double boost) {
-    regions.put(rname, new Double(boost));
+    regions.put(rname, boost);
   }
   
   @Override

@@ -829,7 +829,7 @@ public class StringModule implements ModuleIF {
         if (index == -1)
           continue;
         
-        newRow[ix1] = new Integer(index);
+        newRow[ix1] = index;
 
         if (result.last + 1 == result.size) 
           result.increaseCapacity();
@@ -924,7 +924,7 @@ public class StringModule implements ModuleIF {
         if (index == -1)
           continue;
         
-        newRow[ix1] = new Integer(index);
+        newRow[ix1] = index;
 
         if (result.last + 1 == result.size) 
           result.increaseCapacity();

@@ -200,7 +200,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     
     // Map each topic to its canonical position within the topic map.
     for (int i = 0; i < topics.length; i++)
-      tmIndex.put(topics[i], new Integer(i + 1));
+      tmIndex.put(topics[i], i + 1);
 
     // Sort associations in canonical order
     Arrays.sort(associations, associationComparator);
@@ -209,7 +209,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     for (int i = 0; i < associations.length; i++) {
       AssociationIF assoc = (AssociationIF) associations[i];
       // Map the association to it's position within the topic map.
-      tmIndex.put(assoc, new Integer(i + 1));
+      tmIndex.put(assoc, i + 1);
       
       Object roles[] = assoc.getRoles().toArray();
       Arrays.sort(roles, associationRoleComparator);
@@ -217,7 +217,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       // For each association role (in canonical order) of the association
       for (int j = 0; j < roles.length; j++)
         // Map the role to it's position within the association.
-        tmIndex.put(roles[j], new Integer(j + 1));
+        tmIndex.put(roles[j], j + 1);
     }    
   }
 

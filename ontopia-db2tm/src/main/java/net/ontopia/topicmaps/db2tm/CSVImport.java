@@ -110,7 +110,7 @@ public class CSVImport {
           String colname = rs.getString(4);
           int coltype = rs.getInt(5);
           colnames.add(colname);
-          coltypes_.add(new Integer(coltype));
+          coltypes_.add(coltype);
         }
       } finally {
         rs.close();

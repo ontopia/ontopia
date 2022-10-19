@@ -304,8 +304,8 @@ public class RulePredicate extends AbstractQueryProcessor
         if (extarguments[ix] instanceof Variable &&
             extarguments[i] instanceof Variable &&
             extarguments[ix].equals(extarguments[i])) {
-          l.add(new Integer(ix));
-          l.add(new Integer(i));
+          l.add(ix);
+          l.add(i);
         }
 
     int[] pairs = new int[l.size()];

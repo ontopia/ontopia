@@ -27,10 +27,10 @@ public class StringifierGrabberTest extends AbstractGrabberTest {
 
   @Test
   public void testStringifierGrabber() {
-    assertGrabberResult(new StringifierGrabber().grab(new Float(1234.56)), new Float(1234.56).toString(), new Float(1234).toString()); 
-    assertGrabberResult(new StringifierGrabber().grab(new Double(4321.56)), new Double(4321.56).toString(), new Double(4321.57).toString()); 
-    assertGrabberResult(new StringifierGrabber().grab(new Integer(2987)), new Integer(2987).toString(), new Integer(2986).toString()); 
-    assertGrabberResult(new StringifierGrabber().grab(new Integer(2987)), new Integer(2987).toString(), new Float(2987).toString()); 
+    assertGrabberResult(new StringifierGrabber().grab(1234.56f), Float.toString(1234.56f), Float.toString(1234)); 
+    assertGrabberResult(new StringifierGrabber().grab(4321.56), Double.toString(4321.56), Double.toString(4321.57)); 
+    assertGrabberResult(new StringifierGrabber().grab(2987), Integer.toString(2987), Integer.toString(2986)); 
+    assertGrabberResult(new StringifierGrabber().grab(2987), Integer.toString(2987), Float.toString(2987)); 
     assertGrabberResult(new StringifierGrabber().grab(Boolean.TRUE), Boolean.TRUE.toString(), Boolean.FALSE.toString()); 
   }
 

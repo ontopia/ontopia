@@ -134,7 +134,7 @@ public class SQLTypes {
     switch (sql_type) {
     case Types.BIGINT:
       longVal = rs.getLong(index);
-      return (rs.wasNull() ? null : new Long(longVal));
+      return (rs.wasNull() ? null : longVal);
     case Types.VARCHAR:
     case Types.LONGVARCHAR:
     case Types.CHAR:
@@ -144,7 +144,7 @@ public class SQLTypes {
       return rs.getBigDecimal(index);
     case Types.INTEGER:
       intVal = rs.getInt(index);
-      return (rs.wasNull() ? null : new Integer(intVal));
+      return (rs.wasNull() ? null : intVal);
     case Types.TIME:
       return rs.getTime(index);
     case Types.DATE:
@@ -153,17 +153,17 @@ public class SQLTypes {
       return rs.getTimestamp(index);
     case Types.DOUBLE:
       doubleVal = rs.getDouble(index);
-      return (rs.wasNull() ? null : new Double(doubleVal));
+      return (rs.wasNull() ? null : doubleVal);
     case Types.FLOAT:
     case Types.REAL:
       floatVal = rs.getFloat(index);
-      return (rs.wasNull() ? null : new Float(floatVal));
+      return (rs.wasNull() ? null : floatVal);
     case Types.SMALLINT:
       shortVal = rs.getShort(index);
-      return (rs.wasNull() ? null : new Short(shortVal));
+      return (rs.wasNull() ? null : shortVal);
     case Types.TINYINT:
       byteVal = rs.getByte(index);
-      return (rs.wasNull() ? null : new Byte(byteVal));
+      return (rs.wasNull() ? null : byteVal);
     case Types.LONGVARBINARY:
     case Types.VARBINARY:
     case Types.BINARY:

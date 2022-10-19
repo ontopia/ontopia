@@ -77,10 +77,10 @@ public class HistoryMap<T> extends HashMap<Integer, T> {
     if (suppressDuplicates && containsValue(obj))
       return;
     counter++;
-    put(new Integer(counter), obj);
+    put(counter, obj);
     if (size() >= maxEntries)
       try {
-        remove(new Integer(counter - maxEntries));
+        remove(counter - maxEntries);
       } catch (Exception e) {
         log.error("Remove of entry from historymap without success." +
                   e.getMessage());
@@ -102,7 +102,7 @@ public class HistoryMap<T> extends HashMap<Integer, T> {
   }
   
   public T getEntry(int index) {
-    return get(new Integer(counter - size() + index));
+    return get(counter - size() + index);
   }
 
   public Collection<T> getEntries() {

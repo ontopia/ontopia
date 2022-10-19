@@ -337,8 +337,7 @@ public class ForEachTag extends BodyTagSupport {
 
     // set variables in current lexical scope
     // NB: make it 1-based!
-    ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_INDEX_KEY,
-                     new Integer(index+1));
+    ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_INDEX_KEY, index+1);
 
     // figure out if this is the first item in the iteration
     if (index == startNumber)

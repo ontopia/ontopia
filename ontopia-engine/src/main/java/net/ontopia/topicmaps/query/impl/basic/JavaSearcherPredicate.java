@@ -120,7 +120,7 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
       SearchResultIF sr = searcher.getResult(query);
       try {
         while (sr.next()) {
-          Float score = new Float(sr.getScore());
+          float score = sr.getScore();
           // need special logic for occurrence uris as there might be
           // multiple occurrences with the same uri.
           if (valtype == SearcherIF.OCCURRENCE_URI) {

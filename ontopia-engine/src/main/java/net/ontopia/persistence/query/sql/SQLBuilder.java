@@ -890,7 +890,7 @@ public class SQLBuilder {
   }
 
   protected void produceBoolean(JDOBoolean boolean_expr, List<SQLExpressionIF> expressions, BuildInfo info) {
-    SQLValueIF value = new SQLPrimitive(new Integer(0), Types.INTEGER);
+    SQLValueIF value = new SQLPrimitive(0, Types.INTEGER);
     if (boolean_expr.getValue())
       expressions.add(new SQLEquals(value, value));
     else

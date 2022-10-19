@@ -216,7 +216,7 @@ public class JDBCDataSource implements DataSourceIF {
       while(rs.next())
         // 4: COLUMN_NAME
         // 5: DATA_TYPE
-        datatypes.put(rs.getString(4), new Integer(rs.getInt(5)));
+        datatypes.put(rs.getString(4), rs.getInt(5));
     } finally {
       rs.close();
     }
@@ -228,7 +228,7 @@ public class JDBCDataSource implements DataSourceIF {
       rs = conn.getMetaData().getColumns(null, null, table.toUpperCase(), null);
       try {
         while(rs.next()) {
-          datatypes.put(rs.getString(4), new Integer(rs.getInt(5)));
+          datatypes.put(rs.getString(4), rs.getInt(5));
         }
       } finally {
         rs.close();

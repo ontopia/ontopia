@@ -162,7 +162,7 @@ public class ContextManager implements ContextManagerIF {
 
   @Override
   public Object getCurrentScope() {
-    return new Integer(scopes.size()-1);
+    return scopes.size()-1;
   }
   
   @Override

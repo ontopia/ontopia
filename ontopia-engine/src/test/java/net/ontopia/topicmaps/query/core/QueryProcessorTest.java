@@ -146,9 +146,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
     addMatch(matches, "CLASS", getTopicById("type1"),
-                      "INST", new Integer(2));
+                      "INST", 2);
     addMatch(matches, "CLASS", getTopicById("type2"),
-                      "INST", new Integer(2));
+                      "INST", 2);
     
     assertQueryMatches(matches,
                 "select $CLASS, count($INST) from " +
@@ -160,7 +160,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("instance-of.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "INST", new Integer(0));
+    addMatch(matches, "INST", 0);
     
     // there should be no instance of topic4
     assertQueryMatches(matches,
@@ -175,7 +175,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     List matches = new ArrayList();
     addMatch(matches,
              "TOPIC", getTopicById("type1"),
-             "TYPE", new Integer(0));
+             "TYPE", 0);
     
     // there should be no types for type1
     assertQueryMatches(matches,
@@ -512,18 +512,18 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("family.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "P", getTopicById("petter"),   "C", new Integer(3));
-    addMatch(matches, "P", getTopicById("may"),      "C", new Integer(3));
-    addMatch(matches, "P", getTopicById("kfg"),      "C", new Integer(3));
-    addMatch(matches, "P", getTopicById("bjorg"),    "C", new Integer(3));
-    addMatch(matches, "P", getTopicById("kjellaug"), "C", new Integer(2));
-    addMatch(matches, "P", getTopicById("edvin"),    "C", new Integer(2));
-    addMatch(matches, "P", getTopicById("bertha"),   "C", new Integer(2));
-    addMatch(matches, "P", getTopicById("magnus"),   "C", new Integer(2));
-    addMatch(matches, "P", getTopicById("gerd"),     "C", new Integer(1));
-    addMatch(matches, "P", getTopicById("asle"),     "C", new Integer(1));
-    addMatch(matches, "P", getTopicById("unknown1"), "C", new Integer(1));
-    addMatch(matches, "P", getTopicById("unknown2"), "C", new Integer(1));
+    addMatch(matches, "P", getTopicById("petter"),   "C", 3);
+    addMatch(matches, "P", getTopicById("may"),      "C", 3);
+    addMatch(matches, "P", getTopicById("kfg"),      "C", 3);
+    addMatch(matches, "P", getTopicById("bjorg"),    "C", 3);
+    addMatch(matches, "P", getTopicById("kjellaug"), "C", 2);
+    addMatch(matches, "P", getTopicById("edvin"),    "C", 2);
+    addMatch(matches, "P", getTopicById("bertha"),   "C", 2);
+    addMatch(matches, "P", getTopicById("magnus"),   "C", 2);
+    addMatch(matches, "P", getTopicById("gerd"),     "C", 1);
+    addMatch(matches, "P", getTopicById("asle"),     "C", 1);
+    addMatch(matches, "P", getTopicById("unknown1"), "C", 1);
+    addMatch(matches, "P", getTopicById("unknown2"), "C", 1);
     
     assertQueryMatches(matches, "select $P, count($C) from parent($P, $C)?",
                 "parent($P, $C) :- " +
@@ -650,10 +650,10 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("opera.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "COUNTRY", getTopicById("italy"), "OPERA", new Integer(30));
-    addMatch(matches, "COUNTRY", getTopicById("france"), "OPERA", new Integer(24));
-    addMatch(matches, "COUNTRY", getTopicById("germany"), "OPERA", new Integer(8));
-    addMatch(matches, "COUNTRY", getTopicById("spain"), "OPERA", new Integer(5));
+    addMatch(matches, "COUNTRY", getTopicById("italy"), "OPERA", 30);
+    addMatch(matches, "COUNTRY", getTopicById("france"), "OPERA", 24);
+    addMatch(matches, "COUNTRY", getTopicById("germany"), "OPERA", 8);
+    addMatch(matches, "COUNTRY", getTopicById("spain"), "OPERA", 5);
 
     // deliberately *not* using hierarchy walker, as that would obscure problem
     assertQueryMatches(matches, HIERARCHY_WALKER_OFF + 
@@ -917,13 +917,13 @@ public class QueryProcessorTest extends AbstractQueryTest {
     if (isRDBMSTolog()) return;
 
     List matches = new ArrayList();
-    addMatch(matches, "F", getTopicById("unknown2"), "C", new Integer(1));
-    addMatch(matches, "F", getTopicById("asle"), "C", new Integer(1));
-    addMatch(matches, "F", getTopicById("lmg"), "C", new Integer(1));
-    addMatch(matches, "F", getTopicById("magnus"), "C", new Integer(2));
-    addMatch(matches, "F", getTopicById("edvin"), "C", new Integer(2));
-    addMatch(matches, "F", getTopicById("petter"), "C", new Integer(3));
-    addMatch(matches, "F", getTopicById("kfg"), "C", new Integer(3));
+    addMatch(matches, "F", getTopicById("unknown2"), "C", 1);
+    addMatch(matches, "F", getTopicById("asle"), "C", 1);
+    addMatch(matches, "F", getTopicById("lmg"), "C", 1);
+    addMatch(matches, "F", getTopicById("magnus"), "C", 2);
+    addMatch(matches, "F", getTopicById("edvin"), "C", 2);
+    addMatch(matches, "F", getTopicById("petter"), "C", 3);
+    addMatch(matches, "F", getTopicById("kfg"), "C", 3);
 
     assertQueryOrder(matches,
                      "select $F, count($C) from topic($F), " +
@@ -1029,7 +1029,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     try {
       Map params = new HashMap();
-      params.put("str", new Integer(5));
+      params.put("str", 5);
       processor.execute("resource($R, %str%)?", params);      
       Assert.fail("Successfully passed integer parameter to predicate requiring string");
     } catch (InvalidQueryException e) {
@@ -1159,7 +1159,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("synonyms.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "T2", new Integer(7));
+    addMatch(matches, "T2", 7);
 
     assertQueryMatches(matches,
                 "select count($T2) from synonym2(drug-abuse, $T2)?",
@@ -1175,13 +1175,13 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("synonyms.ltm");
 
     List matches = new ArrayList();
-    addMatch(matches, "T1", getTopicById("daat"), "T2", new Integer(5));
-    addMatch(matches, "T1", getTopicById("daau"), "T2", new Integer(5));
-    addMatch(matches, "T1", getTopicById("alcohol-testing"), "T2", new Integer(4));
-    addMatch(matches, "T1", getTopicById("drug-abuse"), "T2", new Integer(7));
-    addMatch(matches, "T1", getTopicById("drug-testing"), "T2", new Integer(4));
-    addMatch(matches, "T1", getTopicById("alcohol-abuse"), "T2", new Integer(4));
-    addMatch(matches, "T1", getTopicById("addiction"), "T2", new Integer(4));
+    addMatch(matches, "T1", getTopicById("daat"), "T2", 5);
+    addMatch(matches, "T1", getTopicById("daau"), "T2", 5);
+    addMatch(matches, "T1", getTopicById("alcohol-testing"), "T2", 4);
+    addMatch(matches, "T1", getTopicById("drug-abuse"), "T2", 7);
+    addMatch(matches, "T1", getTopicById("drug-testing"), "T2", 4);
+    addMatch(matches, "T1", getTopicById("alcohol-abuse"), "T2", 4);
+    addMatch(matches, "T1", getTopicById("addiction"), "T2", 4);
 
     assertQueryMatches(matches,
                 "select $T1, count($T2) from synonym2($T1, $T2)?",
@@ -1293,9 +1293,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
     addMatch(matches, "CLASS", getTopicById("type1"),
-                      "INST", new Integer(4));
+                      "INST", 4);
     addMatch(matches, "CLASS", getTopicById("type2"),
-                      "INST", new Integer(2));
+                      "INST", 2);
     
     assertQueryOrder(matches,
                      "select $CLASS, count($INST) from " +
@@ -1309,9 +1309,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
     addMatch(matches, "CLASS", getTopicById("type2"),
-                      "INST", new Integer(2));
+                      "INST", 2);
     addMatch(matches, "CLASS", getTopicById("type1"),
-                      "INST", new Integer(4));
+                      "INST", 4);
     
     assertQueryOrder(matches,
                      "select $CLASS, count($INST) from " +
@@ -1448,32 +1448,32 @@ public class QueryProcessorTest extends AbstractQueryTest {
     if (isRDBMSTolog()) return;
 
     List matches = new ArrayList();
-    addMatch(matches, "CITY", getTopicById("milano"),       "OPERA", new Integer(49));
-    addMatch(matches, "CITY", getTopicById("roma"),         "OPERA", new Integer(18));
-    addMatch(matches, "CITY", getTopicById("venezia"),       "OPERA", new Integer(7));
-    addMatch(matches, "CITY", getTopicById("new-york"),      "OPERA", new Integer(6));
-    addMatch(matches, "CITY", getTopicById("napoli"),        "OPERA", new Integer(6));
-    addMatch(matches, "CITY", getTopicById("cremona"),       "OPERA", new Integer(3));
-    addMatch(matches, "CITY", getTopicById("firenze"),       "OPERA", new Integer(3));
-    addMatch(matches, "CITY", getTopicById("monte-carlo"),   "OPERA", new Integer(3));
-    addMatch(matches, "CITY", getTopicById("paris"),         "OPERA", new Integer(3));
-    addMatch(matches, "CITY", getTopicById("london"),        "OPERA", new Integer(2));
-    addMatch(matches, "CITY", getTopicById("genova"),        "OPERA", new Integer(2));
-    addMatch(matches, "CITY", getTopicById("trieste"),       "OPERA", new Integer(2));
-    addMatch(matches, "CITY", getTopicById("pesaro"),        "OPERA", new Integer(2));
-    addMatch(matches, "CITY", getTopicById("rimini"),        "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("st-petersburg"), "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("chicago"),       "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("buenos-aires"),  "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("rovereto"),      "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("verona"),        "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("san-remo"),      "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("piacenza"),      "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("palermo"),       "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("berlin"),        "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("lecco"),         "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("cairo"),         "OPERA", new Integer(1));
-    addMatch(matches, "CITY", getTopicById("torino"),        "OPERA", new Integer(1));
+    addMatch(matches, "CITY", getTopicById("milano"),       "OPERA", 49);
+    addMatch(matches, "CITY", getTopicById("roma"),         "OPERA", 18);
+    addMatch(matches, "CITY", getTopicById("venezia"),       "OPERA", 7);
+    addMatch(matches, "CITY", getTopicById("new-york"),      "OPERA", 6);
+    addMatch(matches, "CITY", getTopicById("napoli"),        "OPERA", 6);
+    addMatch(matches, "CITY", getTopicById("cremona"),       "OPERA", 3);
+    addMatch(matches, "CITY", getTopicById("firenze"),       "OPERA", 3);
+    addMatch(matches, "CITY", getTopicById("monte-carlo"),   "OPERA", 3);
+    addMatch(matches, "CITY", getTopicById("paris"),         "OPERA", 3);
+    addMatch(matches, "CITY", getTopicById("london"),        "OPERA", 2);
+    addMatch(matches, "CITY", getTopicById("genova"),        "OPERA", 2);
+    addMatch(matches, "CITY", getTopicById("trieste"),       "OPERA", 2);
+    addMatch(matches, "CITY", getTopicById("pesaro"),        "OPERA", 2);
+    addMatch(matches, "CITY", getTopicById("rimini"),        "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("st-petersburg"), "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("chicago"),       "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("buenos-aires"),  "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("rovereto"),      "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("verona"),        "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("san-remo"),      "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("piacenza"),      "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("palermo"),       "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("berlin"),        "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("lecco"),         "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("cairo"),         "OPERA", 1);
+    addMatch(matches, "CITY", getTopicById("torino"),        "OPERA", 1);
   
     //! verifyQuery(matches,
     //!             "select $CITY, count($OPERA) from " +
@@ -1751,13 +1751,13 @@ public class QueryProcessorTest extends AbstractQueryTest {
     makeEmpty();
 
     List matches = new ArrayList();
-    addMatch(matches, "A", new Integer(5), "B", new Integer(2));
+    addMatch(matches, "A", 5, "B", 2);
 
     assertQueryMatches(matches, "select $A, $B from $A = 5, { $A = 5, $B = 2 || $A < 4, $B = 1 || $B = 3 }?");
     assertQueryMatches(matches, "select $A, $B from $A = 5, { $A < 4, $B = 1 || $A = 5, $B = 2 || $B = 3 }?");
 
     matches = new ArrayList();
-    addMatch(matches, "A", new Integer(5), "B", new Integer(3));
+    addMatch(matches, "A", 5, "B", 3);
 
     assertQueryMatches(matches, "select $A, $B from $A = 5, { $A < 4, $B = 1 || $B = 3 || $A = 5, $B = 2 }?");
     assertQueryMatches(matches, "select $A, $B from $A = 5, { $B = 3 || $A < 4, $B = 1 || $A = 5, $B = 2 }?");
@@ -1768,7 +1768,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     makeEmpty();
 
     List matches = new ArrayList();
-    addMatch(matches, "X", new Integer(1));
+    addMatch(matches, "X", 1);
     addMatch(matches, "X", "2");
 
     assertQueryMatches(matches, "select $X from { $X = 1 | $X = \"2\" } order by $X?");
@@ -1779,7 +1779,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     makeEmpty();
 
     List matches = new ArrayList();
-    addMatch(matches, "X", new Integer(1));
+    addMatch(matches, "X", 1);
 
     assertQueryMatches(matches, "select $X from { $X = 1 || $X = 2 }?");
 	}
@@ -1789,7 +1789,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     makeEmpty();
 
     List matches = new ArrayList();
-    addMatch(matches, "X", new Integer(4), "Y", new Integer(2));
+    addMatch(matches, "X", 4, "Y", 2);
 
     assertQueryMatches(matches, "select $X, $Y from $X = 4, { $X < 1, $Y = 1 || $X > 2, $Y = 2 || $X > 3, $Y = 3 }?");
 	}

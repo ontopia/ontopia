@@ -354,7 +354,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       // The field counts is a map between Class and the number of
       // fields that they have. This number is used to allocate room for
       // field metata and field values in the data cache entries.
-      field_counts.put(type, new Integer(field_count));
+      field_counts.put(type, field_count);
       return field_count;
     }
   }
@@ -382,10 +382,10 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
           if (key == null) continue;
           size++;
           if (!stats.containsKey(key.getType())) {
-            stats.put(key.getType(), new Integer(1));
+            stats.put(key.getType(), 1);
           } else {
             Integer cnt = stats.get(key.getType());
-            stats.put(key.getType(), new Integer(cnt.intValue() + 1));
+            stats.put(key.getType(), cnt.intValue() + 1);
           }
         }
       }

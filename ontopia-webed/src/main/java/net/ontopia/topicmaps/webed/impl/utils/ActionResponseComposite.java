@@ -39,7 +39,7 @@ public class ActionResponseComposite implements Serializable {
   
   public ActionResponseComposite(ActionInGroup action, int responseType) {
     this.action = action;
-    this.responseType = new Integer(responseType);
+    this.responseType = responseType;
   }
 
   public ActionInGroup getAction() {
@@ -55,7 +55,7 @@ public class ActionResponseComposite implements Serializable {
   }
 
   public void setResponseType(int responseType) {
-    this.responseType = new Integer(responseType);
+    this.responseType = responseType;
   }
 
   // --- overwrite methods from Object implementation
