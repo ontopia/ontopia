@@ -26,6 +26,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-lucene</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>ontopia-rdf</artifactId>
 			<version>${project.version}</version>
 		</dependency>
