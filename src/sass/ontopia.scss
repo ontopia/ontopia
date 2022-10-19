@@ -35,20 +35,29 @@ html {
 body {
 	background-color: #fff;
 	font-family: 'Noto Sans';
+	font-size: 15px;
+}
+
+code, kbd, pre, samp {
+	font-family: "Fira Code",Menlo,Monaco,Consolas,"Courier New",monospace; 
+}
+
+pre {
+	font-size: 14px;
 }
 
 section {
-	line-height: 1.8em;
-	
+	line-height: 1.7em;
+
 	@media (min-width: $screen-sm-min) {
 		width: 800px;
 		margin: 0 auto 0 10em;
 	}
-	
+
 	p {
 		text-align: justify;
 		margin: 0 0 1em;
-		
+
 		.introduction {
 			margin: 2em 0;
 			font-style: italic;
@@ -57,25 +66,31 @@ section {
 	}
 
 	h1 {
-		margin: 1em 0;
+		margin: 1.5em 0;
 	}
-	
+
+	h2 {
+		margin: 2em 0 .5em 0;
+	}
+
 	h3, h4, h5, h6 {
 		color: $brand-primary;
 	}
-	
+
 	h3, h4 {
 		border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-		margin-top: 2em;
+		margin-top: 4em;
 		padding-bottom: .5em;
+		margin-bottom: 1em;
 	}
 
 	h5, h6 {
-		margin: 1em 0 .25em 0;
+		margin: 2em 0 1em 0;
+		font-size: 16px;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		
+
 		a[id] {
 			color: inherit;
 			text-decoration: none;
@@ -86,16 +101,16 @@ section {
 				display: inline-block;
 				opacity: .5;
 				font-family: 'Glyphicons Halflings';
-				font-size: 60%;
+				font-size: 14px;
 				color: black;
 			}
 		}
-		
+
 		&:hover a[id]:before {
 			content: "\e144";
 		}
 	}
-	
+
 	img {
 		max-width: 100%;
 		padding: .5em;
@@ -104,20 +119,20 @@ section {
 		display: block;
 		margin: 1em auto;
 	}
-	
+
 	blockquote {
 		font-size: 100%;
 		margin-left: -20px;
 		border-color: lighten($brand-primary, 50%);
 	}
-	
+
 	.version {
 		position: absolute;
 		top: 1em;
 		right: 1em;
 		font-size: 90%;
 		color: #999;
-		
+
 		&:before {
 			display: inline-block;
 			font: normal normal normal 14px/1 FontAwesome;
@@ -128,11 +143,23 @@ section {
 			content: "\f073";
 		}
 	}
+
+	dl {
+		margin: 0 0 1em;
+		dt {
+			color: #666;
+		}
+
+		dd {
+			margin: 0 0 1em 2em;
+			text-align: justify;
+		}
+	}
 }
 
 #wrapper {
 	width: 100%;
-	
+
 	.navbar-toggle {
 		border-color: #ddd;
 		position: absolute;
@@ -147,7 +174,7 @@ section {
 		padding: 0px 15px;
 		min-height: 568px;
 		background-color: white;
-		
+
 		@media (min-width: $screen-sm-min) {
 			position: relative;
 			margin: 0 0 0 $sidebar-width;
@@ -155,12 +182,12 @@ section {
 			padding: 1em 0 4em 0;
 			border-left: 1px solid #e7e7e7;
 		}
-		
+
 		@media (max-width: $screen-sm-max) {
 			> #page {
 				padding: 0;
 				> .container {
-					padding: 0;	
+					padding: 0;
 				}
 			}
 		}
@@ -180,7 +207,7 @@ section {
 }
 
 .sidebar {
-	
+
 	img {
 		display: block;
 		width: 200px;
@@ -190,17 +217,17 @@ section {
 			margin: 1em auto 2em auto;
 		}
 	}
-	
+
 	h3 {
 		margin-top: 0;
 	}
-	
+
 	li .fa-fw {
 		margin-right: .5em;
 	}
-	
+
 	.sidebar-nav {
-		
+
 		&.navbar-collapse {
 			max-height: initial;
 			padding-left: 0;
@@ -208,25 +235,27 @@ section {
 			padding-bottom: 2em;
 		}
 	}
-	
+
 	.active {
 		color: $brand-primary;
 	}
-	
+
 	ul li {
 		a {
+			border-left-color: #fff;
 			transition: all .3s ease-out;
+			transition-property: background-color, border-left-color;
 
 			&.active {
 				background-color: #eef0ee;
 			}
 		}
-		
+
 		ul li a {
 			padding-left: 4em;
 		}
 	}
-	
+
 	@media (min-width: $screen-sm-min) {
 		ul.nav > li a {
 			border-left: 5px solid #fff;
