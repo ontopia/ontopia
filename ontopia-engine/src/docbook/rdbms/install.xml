@@ -597,27 +597,49 @@ alter database topicmaps set read_committed_snapshot on;
        <varlistentry>
          <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize</term>
          <listitem>
-                <para>Type: integer (# connections), Default: 20</para>
+                <para>Type: integer (# connections), Default: 0</para>
 
-                 <para>The minimum number of connections in the
+                 <para>The minimum number of idle connections in the
                  pool. The number of connections in the pool will
                  never shrink below this size.</para> </listitem>
        </varlistentry>
        <varlistentry>
          <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize</term>
          <listitem>
-                <para>Type: integer (# connections), Default: Integer.MAX_VALUE</para>
+                <para>Type: integer (# connections), Default: 50</para>
 
-                 <para>The maximum number of connections in the
+                 <para>The maximum number of active connections in the
                  pool. The number of connections will never grow
                  larger than this number, unless the soft maximum is
                  enabled.</para>
                  </listitem>
        </varlistentry>
        <varlistentry>
+         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumIdle</term>
+         <listitem>
+                <para>Type: integer (# connections), Default: 20</para>
+
+                 <para>The maximum number of idle connections in the
+                 pool. When there are more idle connections in the pool,
+                 the pool will start closing them.</para>
+                 </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.IdleTimeout</term>
+         <listitem>
+                <para>Type: integer (# miliseconds), Default: 300000 (5m)</para>
+
+                 <para>The maximum time an idle connection stays in the
+                 pool. If exceeded and there are more than 'MaximumIdle'
+                 connections in the pool, the connection is closed.
+                 Setting the timeout to -1 means idle connections are
+                 never closed.</para>
+		 </listitem>
+       </varlistentry>
+       <varlistentry>
          <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum</term>
          <listitem>
-                <para>Type: boolean, Default: true</para>
+                <para>Type: boolean, Default: false</para>
 
                  <para>If the maximum pool size is reached but there
                  are outstanding requests for connections emergency
@@ -626,7 +648,35 @@ alter database topicmaps set read_committed_snapshot on;
                  pool, but the pool will shrink back to an acceptable
                  size when the activity is lower. If this setting is
                  false, requests will block until a connection is
-                 available.</para> </listitem>
+                 available. Using this option can lead the exceeding
+                 the maximum number of connections the database supports.</para> 
+		 </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.WhenExhaustedAction</term>
+         <listitem>
+                <para>Type: String (grow, block, fail), Default: block</para>
+
+                 <para>What to do when the pool is exhausted but a new
+                 connection is request. When set to 'grow': the pool will
+                 temporarly grow (see 'SoftMaximum'). When set to 'fail':
+                 requesting a connection when the pool is exhausted will
+                 lead to an exception. When set to 'block': the request
+                 for a connection will block until a connection is available.
+                 Note: overrides the 'SoftMaximum' setting.</para>
+		 </listitem>
+       </varlistentry>
+       <varlistentry>
+         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout</term>
+         <listitem>
+                <para>Type: integer (# miliseconds), Default: 10000</para>
+
+                 <para>When 'SoftMaximum' is set to false, or 
+                 'WhenExhaustedAction' is set to block, this is the maximum
+                 time that the connection request will block. If
+                 exceeded an exception is thrown. If set to -1, the
+                 request will block indefinitely.</para>
+		 </listitem>
        </varlistentry>
        <varlistentry>
          <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements</term>
@@ -644,43 +694,6 @@ alter database topicmaps set read_committed_snapshot on;
                  so.</para>
           </listitem>
        </varlistentry>
-       <!--varlistentry>
-         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.Timeout</term>
-         <listitem>
-                <para>Type: integer (# seconds), Default: 1200</para>
-           <para>Connections will be removed after living for a duration
-           longer than this value.</para>
-         </listitem>              
-       </varlistentry-->
-       <!--varlistentry>
-         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout</term>
-         <listitem>
-                <para>Type: integer (# seconds), Default: 0 (never)</para>
-
-                 <para>A user will lose a connection and it will be
-                 returned to the pool after the duration greater than
-                 or equal to this value. Be careful when using this
-                 setting. If the value is 0 there will be no
-                 timeout.</para> </listitem>
-       </varlistentry-->
-       <!--varlistentry>
-         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SkimmerFrequency</term>
-         <listitem>
-                <para>Type: integer (# seconds), Default: 420</para>
-
-                  <para>Specifies how often each object's connection
-                  timeout and user timeout values will be examined for
-                  collection.</para> </listitem>
-       </varlistentry-->
-       <!--varlistentry>
-         <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ShrinkBy</term>
-         <listitem>
-                <para>Type: integer (# objects), Default: 5</para>
-
-                 <para>Specifies the maximum number of connections
-                 that should be allowed to be removed from the pool
-                 every time it is shrunk.</para> </listitem>
-       </varlistentry-->
        <varlistentry>
          <term>net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource</term>
          <listitem>
