@@ -9,7 +9,145 @@ This document describes what has changed in Ontopia between releases, both at a 
 more detail.
 </p>
 
-<span class="version">5.3.0 2013-08-01</p>
+<span class="version">5.4.0 2022-10-20</p>
+
+### Ontopia 5.4.0 release notes ###
+
+The following changes have been made:
+
+*  Migrated from GoogleCode to [GitHub](https://github.com/ontopia/ontopia)
+*  Upgraded to Java 8
+*  The distribution is now based on Tomcat 9
+*  Enabled [Codacy integration](https://app.codacy.com/gh/ontopia/ontopia/) to improve the code quality
+*  Made Ontopia packages available in the [Maven Central repository](https://search.maven.org/search?q=net.ontopia)
+*  Remade the documentation
+*  Removed antiquated XML parsers
+*  Removed the use of `LocatorIF` as file and classpath resource reference.
+   Many IO related interfaces have changed to use `File`, `URL` or `InputStream` as data sources.
+*  Aligned reification handling by merging all logic into `DuplicateReificationException`
+*  Added `RDBMSTopicMapSource.setQueryfile` to allow additional SQL queries to be provided for expert use
+*  Added `ImportExportServiceIF` that allows extension to provide alternative topicmap readers and writers
+*  Moved RDF related code into `ontopia-rdf` module
+*  Added `FulltextImplementationIF` that allows extensions to provide alternative full-text indexing methods
+*  Deprecated and moved OSL Schema files into separate module
+*  Moved JDBC Spy files into separate module
+*  Improved cross-transaction merge handling
+*  `&lt;template:get&gt;` tag now supports fallback value
+*  Applied `AutoClosable` interface on `TopicmapStoreIF`, `TopicMapReferenceIF`, `TopicMapSourceIF` and `QueryResultIF` 
+*  Added `OccurrenceIndexIF.getOccurrences` methods based on value and type
+*  Added `NameIndexIF.getTopicNames` methods based on value and type
+*  A lot of code quality improvements
+*  Added Ontopia REST module
+*  Added `ClassInstanceIndexIF.getRolesByType` based on roletype and associationtype
+*  Removed `TopicMapImporterIF`
+*  Removed `Locators`
+*  Removed antiquated concurrency dependency
+*  Added `ClassInstanceIndexIF.getAllTopicNames`, `ClassInstanceIndexIF.getAllVariantNames` and `ClassInstanceIndexIF.getAllOccurrences`
+*  Added `IdentifierIndexIF`
+*  Replaced Ontopia specific utility classes with java functional classes where possible. Moved the replaced files into 
+   a separate [ontopia-deprecated-utils module](https://github.com/ontopia/ontopia/tree/master/ontopia-deprecated-utils). The following replacements have been performed:
+    *  `DeciderIF` &rarr; `Predicate`
+    *  `GrabberIF` &rarr; `Function`
+    *  `StringifierIF` &rarr; `Function`, with `String` result
+*  Switched from log4j1 to reload4j to fix log4shell vulnerabilities
+*  Improved default RDBMS connection pooling settings and added automatic returning of abandoned connections
+*  Disabled autoCommit on read only connections
+*  Refactored how non-transactional reading works and added cleaning of connections used for this
+*  Switched to TMAPI tests 2.1.1
+
+
+#### The following bugs have been fixed:
+*  [Issue 7: Avoid duplicating test data](https://github.com/ontopia/ontopia/issues/7)
+*  [Issue 50: Making ontopia.jar available in public Maven repositories](https://github.com/ontopia/ontopia/issues/50)
+*  [Issue 94: Document how to log into user administration](https://github.com/ontopia/ontopia/issues/94)
+*  [Issue 112: XTM 1.0 importer: Wrong handling of xml:base](https://github.com/ontopia/ontopia/issues/112)
+*  [Issue 161: Omnigator full-text uses hard-wired path to indexes](https://github.com/ontopia/ontopia/issues/161)
+*  [Issue 206: Omnigator does not load sources with German umlauts](https://github.com/ontopia/ontopia/issues/206)
+*  [Issue 225: net.ontopia.topicmaps.impl.tmapi2.LocatorImpl.toExternalForm NullPointerException](https://github.com/ontopia/ontopia/issues/225)
+*  [Issue 235: maven pom.xml log4j](https://github.com/ontopia/ontopia/issues/235)
+*  [Issue 273: Crimson dependency should be removed](https://github.com/ontopia/ontopia/issues/273)
+*  [Issue 317: Cannot load topic maps if Ontopia directory contains non-ascii characters](https://github.com/ontopia/ontopia/issues/317)
+*  [Issue 347: Topic delete fails with StackOverflowError](https://github.com/ontopia/ontopia/issues/347)
+*  [Issue 348: NPE in DB2TM for topic maps without base locator](https://github.com/ontopia/ontopia/issues/348)
+*  [Issue 382: Tolog:out using JSP attributes has an incorrect test](https://github.com/ontopia/ontopia/issues/382)
+*  [Issue 410: Ontopoly editor code does not conform to maven standards](https://github.com/ontopia/ontopia/issues/410)
+*  [Issue 424: Tolog does not allow 'ë' in a subject identifier](https://github.com/ontopia/ontopia/issues/424)
+*  [Issue 484: Checksum mismatches for 5.3.0 artifacts](https://github.com/ontopia/ontopia/issues/484)
+*  [Issue 485: Release 5.3.0 is missing javadoc jars in maven repository](https://github.com/ontopia/ontopia/issues/485)
+*  [Issue 486: Review if jstl and standard taglibs are needed as compile dependencies for navigator](https://github.com/ontopia/ontopia/issues/486)
+*  [Issue 489: Review the use of backport concurrent dependency](https://github.com/ontopia/ontopia/issues/489)
+*  [Issue 492: The value-like predicate causes are memory based lucene index if a SearcherIF is not present](https://github.com/ontopia/ontopia/issues/492)
+*  [Issue 493: LTMPathTopicMapSource.createTopicMap creates an XTM file with LTM content](https://github.com/ontopia/ontopia/issues/493)
+*  [Issue 494: LTMTopicMapWriter fails to write RMDBS topicmap with empty valued occurrences](https://github.com/ontopia/ontopia/issues/494)
+*  [Issue 495: XTMTopicMapReader fails with NPE on validation error, hiding the real error](https://github.com/ontopia/ontopia/issues/495)
+*  [Issue 498: Outdated docs published on ontopia.net](https://github.com/ontopia/ontopia/issues/498)
+*  [Issue 499: Merging causes database inconsistenties](https://github.com/ontopia/ontopia/issues/499)
+*  [Issue 500: Incorrect query for RDBMSSearcher when using Oracle](https://github.com/ontopia/ontopia/issues/500)
+*  [Issue 503: DeletionUtils.removeDependencies(TopicIF): docs vs implementation](https://github.com/ontopia/ontopia/issues/503)
+*  [Issue 504: tolog DynAssocPred: Useless check for assoc type](https://github.com/ontopia/ontopia/issues/504)
+*  [Issue 505: tolog: Bug in Pair.equals implementation](https://github.com/ontopia/ontopia/issues/505)
+*  [Issue 508: tolog: Typo in RolePlayerPredicateTest](https://github.com/ontopia/ontopia/issues/508)
+*  [Issue 509: tolog: basic.TopicPredicate holds reference to an unused index](https://github.com/ontopia/ontopia/issues/509)
+*  [Issue 510: ClassInstanceIndex implementations differ](https://github.com/ontopia/ontopia/issues/510)
+*  [Issue 511: tolog: value-like impl.: Variable is never used](https://github.com/ontopia/ontopia/issues/511)
+*  [Issue 515: IteratorIterator fails on empty iterator](https://github.com/ontopia/ontopia/issues/515)
+*  [Issue 516: Commit 2d931be385cced9458a615f04283894d1fc4aab3 breaks omnigator](https://github.com/ontopia/ontopia/issues/516)
+*  [Issue 517: Xml parser removal, fixing #273](https://github.com/ontopia/ontopia/issues/517)
+*  [Issue 519: All collections returned by basic.ClassInstanceIndex should be unmodifiable](https://github.com/ontopia/ontopia/issues/519)
+*  [Issue 522: Omnigator fulltext indexes not working](https://github.com/ontopia/ontopia/issues/522)
+*  [Issue 525: OnDemandValue is never unreleased, could trigger exception](https://github.com/ontopia/ontopia/issues/525)
+*  [Issue 526: Read only topicmap stores cause leaking connections in combination with concurrency](https://github.com/ontopia/ontopia/issues/526)
+*  [Issue 535: JDBC Connections not returned to pool on store close](https://github.com/ontopia/ontopia/issues/535)
+*  [Issue 536: ClassInstanceIndexIF.usedAs* methods return true for a null value](https://github.com/ontopia/ontopia/issues/536)
+*  [Issue 539: OccurrenceIndexIF.getOccurrencesLessThanOrEqual RDBMS query misses equals](https://github.com/ontopia/ontopia/issues/539)
+*  [Issue 551: Ontopia gives error on build](https://github.com/ontopia/ontopia/issues/551)
+*  [Issue 554: DB2TM test case FullRescanEventTest depends on previous test data](https://github.com/ontopia/ontopia/issues/554)
+*  [Issue 557: Topicmaps.org is using https, causing DTD resolving to fail](https://github.com/ontopia/ontopia/issues/557)
+
+#### The following new features have been added:
+*  [Issue 45: Use Findbugs in build process](https://github.com/ontopia/ontopia/issues/45)
+*  [Issue 175: Write a Selenium test suite for Ontopoly](https://github.com/ontopia/ontopia/issues/175)
+*  [Issue 319: tolog:set request parameter does not resolve PSI's ](https://github.com/ontopia/ontopia/issues/319)
+*  [Issue 491: Ontopia should upgrade to support java 7](https://github.com/ontopia/ontopia/issues/491)
+*  [Issue 512: The &lt;template:get&gt; tag could use a fallback value.](https://github.com/ontopia/ontopia/issues/512)
+*  [Issue 513: Ontopia on Github?](https://github.com/ontopia/ontopia/issues/513)
+*  [Issue 514: Transform docbook documentation into markdown](https://github.com/ontopia/ontopia/issues/514)
+*  [Issue 523: Ontopia should upgrade to Java 8](https://github.com/ontopia/ontopia/issues/523)
+*  [Issue 524: Make it compile on JDK 1.8 (generics fixes)](https://github.com/ontopia/ontopia/issues/524)
+*  [Issue 527: Make ontopia compilable in java 8](https://github.com/ontopia/ontopia/issues/527)
+*  [Issue 528: Add Travis-CI for Ontopia](https://github.com/ontopia/ontopia/issues/528)
+*  [Issue 529: Add ClassInstanceIndexIF.getRolesByType(rt, at)](https://github.com/ontopia/ontopia/issues/529)
+*  [Issue 533: Refactor IO to avoid using LocatorIF as resource](https://github.com/ontopia/ontopia/issues/533)
+*  [Issue 534: Apply apache commons where possible](https://github.com/ontopia/ontopia/issues/534)
+*  [Issue 549: Switch from Github Services to webhooks](https://github.com/ontopia/ontopia/issues/549)
+*  [Issue 553: Test GitHub actions](https://github.com/ontopia/ontopia/issues/553)
+
+
+#### The following dependencies have been upgraded:
+*  [Issue 502: Upgrade JGroups dependency](https://github.com/ontopia/ontopia/issues/502)
+*  [Issue 501: Upgrade commons-collections dependency](https://github.com/ontopia/ontopia/issues/501)
+*  [Issue 496: Ontopia should upgrade to support servlet specifications 3.0](https://github.com/ontopia/ontopia/issues/496)
+*  [Issue 497: Ontopia should upgrade to Tomcat 7](https://github.com/ontopia/ontopia/issues/497)
+*  [Issue 518: Upgraded to Tomcat 7, fixes 497.](https://github.com/ontopia/ontopia/issues/518)
+*  [Issue 530: Modularize Lucene and upgrade to newer version](https://github.com/ontopia/ontopia/issues/530)
+*  [Issue 531: Upgrade to Lucene 6.5.0](https://github.com/ontopia/ontopia/issues/531)
+*  [Issue 532: Upgrade to Jena 3.2.0](https://github.com/ontopia/ontopia/issues/532)
+*  [Issue 548: [Security] Upgrade PDFBox to 1.8.16](https://github.com/ontopia/ontopia/issues/548)
+*  [Issue 547: [Security] Upgrade PDFBox to 1.8.12](https://github.com/ontopia/ontopia/issues/547)
+*  [Issue 546: [Security] Upgrade to Lucene 7.1.0](https://github.com/ontopia/ontopia/issues/546)
+*  [Issue 550: [Security] Upgrade to commons-fileupload 1.3.3](https://github.com/ontopia/ontopia/issues/550)
+*  [Issue 552: Bump pdfbox from 1.8.16 to 2.0.15](https://github.com/ontopia/ontopia/issues/552)
+*  [Issue 559: Bump junit from 4.12 to 4.13.1](https://github.com/ontopia/ontopia/issues/559)
+*  [Issue 560: Bump poi from 3.12 to 3.17](https://github.com/ontopia/ontopia/issues/560)
+*  [Issue 561: Bump commons-io from 2.5 to 2.7](https://github.com/ontopia/ontopia/issues/561)
+*  [Issue 562: Bump pdfbox from 2.0.15 to 2.0.24](https://github.com/ontopia/ontopia/issues/562)
+*  [Issue 567: Bump poi-scratchpad from 3.12 to 5.2.1](https://github.com/ontopia/ontopia/issues/567)
+*  [Issue 568: Bump poi from 3.17 to 4.1.1](https://github.com/ontopia/ontopia/issues/568)
+*  [Issue 569: Bump jgroups from 3.4.4.Final to 4.0.0.Final](https://github.com/ontopia/ontopia/issues/569)
+*  [Issue 570: Bump axis2 from 1.6.2 to 1.6.3](https://github.com/ontopia/ontopia/issues/570)
+*  [Issue 571: Add a Codacy badge to README.md](https://github.com/ontopia/ontopia/issues/571)
+*  [Issue 572: Bump axis2.version from 1.6.2 to 1.6.3](https://github.com/ontopia/ontopia/issues/572)
+
 
 ### Ontopia 5.3.0 release notes ###
 
