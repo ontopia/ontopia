@@ -22,12 +22,42 @@ package net.ontopia.topicmaps.core.index;
 import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 
+/**
+ * PUBLIC: Index that holds information about identifiers in the
+ * topic map. The intention is to provide quick lookup of identifiers
+ * by prefix and topicmap.
+ * @since %NEXT%
+ */
 public interface IdentifierIndexIF extends IndexIF {
   
+  /**
+   * PUBLIC: Returns all the item identifiers of all the objects in the topicmap.
+   * @return all the item identifiers of all the objects in the topicmap.
+   * @since %NEXT%
+   */
   Collection<LocatorIF> getItemIdentifiers();
+
+  /**
+   * PUBLIC: Returns all the item identifiers of all the objects in the topicmap that start with
+   * the provided prefix.
+   * @return all the matched item identifiers
+   * @since %NEXT%
+   */
   Collection<LocatorIF> getItemIdentifiersByPrefix(String prefix);
   
+  /**
+   * PUBLIC: Returns all the subject identifiers of all the topics in the topicmap.
+   * @return all the subject identifiers of all the topics in the topicmap.
+   * @since %NEXT%
+   */
   Collection<LocatorIF> getSubjectIdentifiers();
+
+  /**
+   * PUBLIC: Returns all the subject identifiers of all the topics in the topicmap that start with
+   * the provided prefix.
+   * @return all the matched subject identifiers
+   * @since %NEXT%
+   */
   Collection<LocatorIF> getSubjectIdentifiersByPrefix(String prefix);
   
 }
