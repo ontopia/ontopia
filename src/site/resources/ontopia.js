@@ -4,20 +4,12 @@
 	"use strict";
 	
 	function menu() {
+		$('ul.nav a').filter((_,e) => e.href === window.location.href.replace(window.location.hash,""))
+			.addClass('active') // direct li
+			.parents('li').addClass('mm-active') // li's
+			.children('a').attr('aria-expanded', true) // links
+			.siblings('ul').addClass('mm-show'); // ul's
 		$('#sidebar').metisMenu();
-
-		var url = window.location.href.replace(window.location.hash,"");
-		var element = $('ul.nav a').filter(function() {
-			return this.href === url;
-		}).addClass('active').parent();
-
-		while (true) {
-			if (element.is('li')) {
-				element = element.parent().addClass('in').parent();
-			} else {
-				break;
-			}
-		}
 	}
 	
 	function highlight() {
