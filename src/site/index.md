@@ -42,6 +42,10 @@ Documentation
 * [The Ontopia RDBMS Backend Connector, Installation Guide](rdbms/install.html)
 * [The Ontopia RDBMS Backend Connector, Developer's Guide](rdbms/devguide.html)
 
+### REST API ###
+
+* [Ontopia REST API](rest/index.html)
+
 ### Query language ###
 
 * [tolog - Tutorial](query/tutorial.html)
