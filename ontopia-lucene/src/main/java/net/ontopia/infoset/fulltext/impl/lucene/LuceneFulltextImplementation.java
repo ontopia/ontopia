@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * FulltextImplementationIF implementation that is based on Lucene indexing.
- * @since %NEXT%
+ * @since 5.4.0
  */
 public class LuceneFulltextImplementation implements FulltextImplementationIF {
 

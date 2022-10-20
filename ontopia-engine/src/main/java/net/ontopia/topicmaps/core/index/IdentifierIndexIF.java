@@ -26,14 +26,14 @@ import net.ontopia.infoset.core.LocatorIF;
  * PUBLIC: Index that holds information about identifiers in the
  * topic map. The intention is to provide quick lookup of identifiers
  * by prefix and topicmap.
- * @since %NEXT%
+ * @since 5.4.0
  */
 public interface IdentifierIndexIF extends IndexIF {
   
   /**
    * PUBLIC: Returns all the item identifiers of all the objects in the topicmap.
    * @return all the item identifiers of all the objects in the topicmap.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   Collection<LocatorIF> getItemIdentifiers();
 
@@ -41,14 +41,14 @@ public interface IdentifierIndexIF extends IndexIF {
    * PUBLIC: Returns all the item identifiers of all the objects in the topicmap that start with
    * the provided prefix.
    * @return all the matched item identifiers
-   * @since %NEXT%
+   * @since 5.4.0
    */
   Collection<LocatorIF> getItemIdentifiersByPrefix(String prefix);
   
   /**
    * PUBLIC: Returns all the subject identifiers of all the topics in the topicmap.
    * @return all the subject identifiers of all the topics in the topicmap.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   Collection<LocatorIF> getSubjectIdentifiers();
 
@@ -56,7 +56,7 @@ public interface IdentifierIndexIF extends IndexIF {
    * PUBLIC: Returns all the subject identifiers of all the topics in the topicmap that start with
    * the provided prefix.
    * @return all the matched subject identifiers
-   * @since %NEXT%
+   * @since 5.4.0
    */
   Collection<LocatorIF> getSubjectIdentifiersByPrefix(String prefix);
   

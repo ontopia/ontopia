@@ -160,7 +160,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
    * Warning: overriding queries should only be done by experts.
    * @param queryfile The file to load. Will be passed to 
    * {@link StreamUtils#getInputStream(java.lang.String)}
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public void setQueryfile(String queryfile) {
     this.queryfile = queryfile;
@@ -170,7 +170,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
    * PUBLIC: returns the additional SQL query file set by 
    * {@link #setQueryfile(java.lang.String)}.
    * @return The query file set.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public String getQueryfile() {
     return queryfile;

@@ -30,7 +30,7 @@ import net.ontopia.topicmaps.utils.ImportExportServiceIF;
 
 /**
  * ImportExportServiceIF service providing RDF import and export functionality. 
- * @since %NEXT%
+ * @since 5.4.0
  */
 public class RDFImporterExporterService implements ImportExportServiceIF {
 

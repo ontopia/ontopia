@@ -64,7 +64,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * PUBLIC: Gets all topic names that are in the topic map.
    *
    * @return A collection of TopicNameIF objects
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Collection<TopicNameIF> getAllTopicNames();
 
@@ -72,7 +72,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * PUBLIC: Gets all variant names that are in the topic map.
    *
    * @return A collection of VariantNameIF objects
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Collection<VariantNameIF> getAllVariantNames();
 
@@ -90,7 +90,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * PUBLIC: Gets all occurrences that are in the topic map.
    *
    * @return A collection of OccurrenceIF objects
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Collection<OccurrenceIF> getAllOccurrences();
 

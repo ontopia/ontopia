@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility to load dynamic services from classpath.
- * @since %NEXT%
+ * @since 5.4.0
  */
 public class ServiceUtils {
 

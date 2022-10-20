@@ -27,7 +27,7 @@ import java.util.TreeMap;
 
 /**
  * PUBLIC: Utilities for treating objects as beans.
- * @since %NEXT%
+ * @since 5.4.0
  */
 public class BeanUtils {
 
@@ -37,7 +37,7 @@ public class BeanUtils {
   /**
    * Maps all get* methods results to a map.
    * Replacement for BeanMap to avoid big dependency.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public static Map<String, String> beanMap(Object bean, boolean sorted) {
     Map<String, String> map =

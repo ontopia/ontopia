@@ -29,7 +29,7 @@ import net.ontopia.topicmaps.entry.AbstractURLTopicMapReference;
 
 /**
  * Service definition for services that provide format reader and writers.
- * @since %NEXT%
+ * @since 5.4.0
  */
 public interface ImportExportServiceIF {
 

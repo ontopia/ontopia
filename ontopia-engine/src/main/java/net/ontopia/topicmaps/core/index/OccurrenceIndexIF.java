@@ -49,7 +49,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    * and occurrenceType independent of datatype.
    *
    * @return A collection of OccurrenceIF objects.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Collection<OccurrenceIF> getOccurrences(String value, TopicIF occurrenceType);
 
@@ -67,7 +67,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    * datatype and occurrenceType.
    *
    * @return A collection of OccurrenceIF objects.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype, TopicIF occurrenceType);
 

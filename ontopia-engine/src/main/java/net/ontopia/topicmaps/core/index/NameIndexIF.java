@@ -51,7 +51,7 @@ public interface NameIndexIF extends IndexIF {
    * @param topicNameType A TopicIF; the type of a topic name
    *
    * @return A collection of TopicNameIF objects with the given name value and type.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Collection<TopicNameIF> getTopicNames(String value, TopicIF topicNameType);
 

@@ -803,7 +803,7 @@ public class RDBMSStorage implements StorageIF {
    * @param source Identity of the merge source object
    * @param target Identity of the merge target object
    * @param cause The transaction that committed the merge
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public synchronized void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
     // block other transactons until we have processed the merge
@@ -824,7 +824,7 @@ public class RDBMSStorage implements StorageIF {
 
   /**
    * INTERNAL: exposes the set of active transactions.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public Set<AbstractTransaction> getTransactions() {
     return transactions;

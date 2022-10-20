@@ -73,7 +73,7 @@ public class ImportExportUtils {
   /**
    * Returns the loaded ImportExportServiceIF services.
    * @return the loaded ImportExportServiceIF services.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   @SuppressWarnings("unchecked")
   public static Set<ImportExportServiceIF> getServices() {

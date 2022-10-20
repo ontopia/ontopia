@@ -60,7 +60,7 @@ public class GetTag extends AbstractTemplateTag {
   /**
    * Sets the flag that defines whether the tag content should be used
    * as fallback if no corresponding PutTag was found.
-   * @since %NEXT%
+   * @since 5.4.0
    */
   public void setFallback(boolean fallback) {
     this.fallback = fallback;

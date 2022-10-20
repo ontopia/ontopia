@@ -33,7 +33,7 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
  * methods; this is because the purpose is just to provide a different
  * exception, to allow API users to handle them differently.</p>
  *
- * @since %NEXT%
+ * @since 5.4.0
  */
 
 public class DuplicateReificationException extends ConstraintViolationException {
