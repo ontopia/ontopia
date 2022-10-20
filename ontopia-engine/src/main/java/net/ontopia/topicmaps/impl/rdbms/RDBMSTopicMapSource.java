@@ -154,10 +154,24 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     this.propfile = propfile;
   }
   
+  /**
+   * PUBLIC: Sets an additional SQL queries file to be loaded. Can be
+   * used to override or extend the SQL query set used by Ontopia.
+   * Warning: overriding queries should only be done by experts.
+   * @param queryfile The file to load. Will be passed to 
+   * {@link StreamUtils#getInputStream(java.lang.String)}
+   * @since %NEXT%
+   */
   public void setQueryfile(String queryfile) {
     this.queryfile = queryfile;
   }
 
+  /**
+   * PUBLIC: returns the additional SQL query file set by 
+   * {@link #setQueryfile(java.lang.String)}.
+   * @return The query file set.
+   * @since %NEXT%
+   */
   public String getQueryfile() {
     return queryfile;
   }
