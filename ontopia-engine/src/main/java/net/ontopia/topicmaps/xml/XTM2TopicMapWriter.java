@@ -52,7 +52,7 @@ public final class XTM2TopicMapWriter extends AbstractXTM2TopicMapWriter {
   }
 
   @Override
-  protected final XTMVersion getVersion() {
+  protected XTMVersion getVersion() {
     return XTMVersion.XTM_2_0;
   }
 
