@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.core.index;
 import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 
-public interface IdentifierIndexIF {
+public interface IdentifierIndexIF extends IndexIF {
   
   Collection<LocatorIF> getItemIdentifiers();
   Collection<LocatorIF> getItemIdentifiersByPrefix(String prefix);
