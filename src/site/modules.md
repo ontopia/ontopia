@@ -34,6 +34,9 @@ your POM:
 `ontopia-db2tm`
 :    Contains the [Database to Topic Maps](db2tm/user-guide.html) tools.
 
+`ontopia-deprecated-utils`
+:    Contains deprecated code until it is removed in a future release, **Deprecated**
+
 `ontopia-distribution-tomcat`
 :    Contains the resource and build logic to create the distribution package.
 
@@ -44,6 +47,9 @@ your POM:
 `ontopia-jdbcspy7`
 :    Contains the JDBC Spy Driver that allows debugging of Ontopia RDBMS queries for Java 7.
 
+`ontopia-lucene`
+:    Contains the full text implementation based on Apache Lucene.
+
 `ontopia-navigator`
 :    Contains Navigator Framework code that allows Topic Map JSP tags to be used.
 
@@ -53,8 +59,11 @@ your POM:
 `ontopia-realm`
 :    Contains required classes for using Ontopia as authenticator in a JAAS realm.
 
+`ontopia-rest`
+:    Contains the Ontopia REST API implementation.
+
 `ontopia-schema`
-:    Contains code to apply schema constraints to a Topic Map, **Deprecated by TMCL!**
+:    Contains code to apply schema constraints to a Topic Map, **Deprecated**
 
 `ontopia-tmprefs`
 :    Contains code that allows a Topic Map to serve as Java Preferences API store.
@@ -69,7 +78,7 @@ your POM:
 :    Contains the core code of the [Vizigator](vizigator/userguide.html) and Vizlet.
 
 `ontopia-webed`
-:    Contains the [Web Editor Framework](webed/devguide.html) code, **Deprecated!**
+:    Contains the [Web Editor Framework](webed/devguide.html) code, **Deprecated**
 
 `ontopoly-editor`
 :    Contains the core code of the [Ontopoly Topic Maps editor](ontopoly/user-guide.html).

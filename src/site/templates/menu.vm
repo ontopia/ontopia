@@ -17,7 +17,7 @@
 	#end
 
 	#if ($id == "ontopia-distribution-tomcat")
-	<li><a href="${root}modules.html"><i class="fa fa-fw fa-plug"></i>Modules</a></li>
+	<li><a href="${root}modules.html"><i class="fa fa-fw fa-puzzle-piece"></i>Modules</a></li>
 	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-rocket"></i>Applications </i></a>
 		<ul class="nav">
 			<li><a href="${root}applications.html">Overview</a></li>
@@ -33,7 +33,7 @@
 	#end
 
 	#if ($id == "ontopia-navigator" || $id == "ontopia-distribution-tomcat")
-	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-code"></i>Navigator </i></a>
+	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-compass"></i>Navigator </i></a>
 		<ul class="nav">
 			<li><a href="${root}navigator/config.html">Configuration</a></li>
 			<li><a href="${root}navigator/navguide.html">Developer guide</a></li>
@@ -54,6 +54,10 @@
 
 	#if ($id == "webapp-omnigator")
 		<li><a href="${root}omnigator/userguide.html"><i class="fa fa-fw fa-rocket"></i>Omnigator user guide</a></li>
+	#end
+
+	#if ($id == "ontopia-rest" || $id == "ontopia-distribution-tomcat")
+		<li><a href="${root}rest/index.html"><i class="fa fa-fw fa-globe"></i>REST API</a></li>
 	#end
 
 	#if ($id == "ontopia-engine" || $id == "ontopia-distribution-tomcat" || $id == "webapp-omnigator")
