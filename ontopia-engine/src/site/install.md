@@ -10,7 +10,7 @@ is familiar with the basics of the host platform and of Java development. See th
 this release?* document for information about this release.
 </p>
 
-<span class="version">5.1 2010-06-09</p>
+<span class="version">5.4.0 2022-10-20</p>
 
 ### Requirements ###
 
@@ -18,10 +18,8 @@ The most important requirement is that you must have the Java Software Developme
 version 1.8 or newer. There should be no platform dependencies in the code, so the software should
 run on all operating systems for which there is a supported JDK available.
 
-We have verified that the Navigator Framework runs in Tomcat versions 3, 4, 5, 6, and 7, 
-Oracle9i AS 9.0.3, WebLogic 7.0, and WebSphere versions 4.0 and 5.0. It is quite likely that the
-framework also works in other application servers than these, but this has not been
-verified.
+We have verified that the Navigator Framework runs in Tomcat versions 7, 8 and 9. It is quite likely 
+that the framework also works in other application servers than these, but this has not been verified.
 
 The RDBMS backend has been verified to work with Oracle 8.1.7, 9i, and 10g, PostgreSQL 8.1, 8.2 and
 8.3, MySQL 5.0, H2 Database 1.0.74 and Microsoft SQL Server 2005.
