@@ -49,6 +49,10 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * FulltextImplementationIF implementation that is based on Lucene indexing.
+ * @since %NEXT%
+ */
 public class LuceneFulltextImplementation implements FulltextImplementationIF {
 
   private static Logger logger = LoggerFactory.getLogger(LuceneFulltextImplementation.class);

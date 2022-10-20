@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 /**
  * Interface that describes a fulltext indexation service for use in {@link InMemoryTopicMapStore}.
+ * @since %NEXT%
  */
 public interface FulltextImplementationIF {
 

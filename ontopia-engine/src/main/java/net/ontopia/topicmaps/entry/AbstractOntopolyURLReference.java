@@ -151,6 +151,7 @@ public abstract class AbstractOntopolyURLReference
   /**
    * INTERNAL: Synchronizes the underlying fulltext index with the latest
    * changes in the topic map.
+   * @since %NEXT%
    */
   public void synchronizeFulltextIndex(TopicMapStoreIF store) {
     if (maintainFulltextIndexes) {
@@ -160,6 +161,10 @@ public abstract class AbstractOntopolyURLReference
     }
   }
   
+  /**
+   * PUBLIC: Triggers a full reindexing of the topicmap if full-text indexing is enabled.
+   * @since %NEXT%
+   */
   public void reindexFulltextIndex() {
     if (maintainFulltextIndexes) {
       if (!isopen) {
@@ -171,6 +176,10 @@ public abstract class AbstractOntopolyURLReference
     }
   }
 
+  /**
+   * PUBLIC: Removes the full-text index of the topicmap if full-text indexing is enabled.
+   * @since %NEXT%
+   */
   public void deleteFullTextIndex() {
     if (maintainFulltextIndexes) {
       if (!isopen) {
