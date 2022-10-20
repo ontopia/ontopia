@@ -180,16 +180,16 @@ public class ObjectRelationalMapping {
 
         // FIXME: should add more primitive types
         if ("string".equals(klass)) {
-          fdesc.setValueClass(java.lang.String.class);
+          fdesc.setValueClass(String.class);
         }
         else if ("integer".equals(klass)) {
-          fdesc.setValueClass(java.lang.Integer.class);
+          fdesc.setValueClass(Integer.class);
         }
         else if ("long".equals(klass)) {
-          fdesc.setValueClass(java.lang.Long.class);
+          fdesc.setValueClass(Long.class);
         }
         else if ("float".equals(klass)) {
-          fdesc.setValueClass(java.lang.Float.class);
+          fdesc.setValueClass(Float.class);
         }
         else if ("clob".equals(klass)) {
           fdesc.setValueClass(java.io.Reader.class);

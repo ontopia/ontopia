@@ -321,7 +321,7 @@ public class FakeServletRequest implements HttpServletRequest {
   }
 
   @Override
-  public java.lang.String getAuthType() {
+  public String getAuthType() {
     throw new UnsupportedOperationException();
   }
   @Override
@@ -333,7 +333,7 @@ public class FakeServletRequest implements HttpServletRequest {
     throw new UnsupportedOperationException();
   }
   @Override
-  public java.lang.String getMethod() {
+  public String getMethod() {
     throw new UnsupportedOperationException();
   }
   @Override
@@ -345,11 +345,11 @@ public class FakeServletRequest implements HttpServletRequest {
     throw new UnsupportedOperationException();
   }
   @Override
-  public java.lang.String getRequestedSessionId() {
+  public String getRequestedSessionId() {
     throw new UnsupportedOperationException();
   }
   @Override
-  public java.lang.StringBuffer getRequestURL() {
+  public StringBuffer getRequestURL() {
     throw new UnsupportedOperationException();
   }
 

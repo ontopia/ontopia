@@ -136,14 +136,14 @@ public class XTMValidatingContentHandler implements ContentHandler {
   }
   
   @Override
-  public void startPrefixMapping(java.lang.String prefix, java.lang.String uri)  throws SAXException {
+  public void startPrefixMapping(String prefix, String uri)  throws SAXException {
     if (validator != null) {
       validator.startPrefixMapping(prefix, uri);
     }
   }
   
   @Override
-  public void endPrefixMapping(java.lang.String prefix) throws SAXException {
+  public void endPrefixMapping(String prefix) throws SAXException {
     if (validator != null) {
       validator.endPrefixMapping(prefix);
     }

@@ -911,7 +911,7 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       // instead a field of the aggregate result type is used.
       if (register) {
         // Register select type+info
-        info.addSelect(java.lang.Integer.class, new DefaultFieldHandler(SQLTypes.getType(java.lang.Integer.class)));
+        info.addSelect(Integer.class, new DefaultFieldHandler(SQLTypes.getType(Integer.class)));
         info.hasaggs = true;
       }
       sql.append("count(");

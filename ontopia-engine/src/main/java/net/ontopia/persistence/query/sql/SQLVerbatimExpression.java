@@ -29,7 +29,7 @@ import net.ontopia.persistence.proxy.FieldHandlerIF;
 
 public class SQLVerbatimExpression implements SQLExpressionIF {
 
-  protected static final Class DEFAULT_VALUE_TYPE = java.lang.String.class;  
+  protected static final Class DEFAULT_VALUE_TYPE = String.class;  
   protected static final FieldHandlerIF DEFAULT_FIELD_HANDLER = new DefaultFieldHandler(java.sql.Types.VARCHAR);
     
   protected Object value;

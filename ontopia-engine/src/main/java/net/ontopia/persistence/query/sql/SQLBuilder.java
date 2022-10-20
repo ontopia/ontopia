@@ -1954,7 +1954,7 @@ public class SQLBuilder {
     case JDOValueIF.OBJECT:
       return ((JDOObject)value).getValueType();
     case JDOValueIF.STRING:
-      return java.lang.String.class;
+      return String.class;
     case JDOValueIF.COLLECTION:
       return ((JDOCollection)value).getValueType();
     case JDOValueIF.NATIVE_VALUE:
@@ -2112,11 +2112,11 @@ public class SQLBuilder {
   protected boolean isPrimitiveType(Class type) {
     // TODO: Fix this code!
     // Should probably delegate to JDOPrimitive or ObjectRelationalMappingIF?
-    if (type == java.lang.String.class ||
+    if (type == String.class ||
         type == java.io.Reader.class ||
-        type == java.lang.Integer.class ||
-        type == java.lang.Float.class ||
-        type == java.lang.Long.class) {
+        type == Integer.class ||
+        type == Float.class ||
+        type == Long.class) {
       return true;
     }
     return false;

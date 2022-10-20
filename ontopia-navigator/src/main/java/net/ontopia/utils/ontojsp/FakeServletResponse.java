@@ -105,7 +105,7 @@ public class FakeServletResponse implements HttpServletResponse {
   }
 
   @Override
-  public void setContentType(java.lang.String type) {
+  public void setContentType(String type) {
     // no-op
   }
 

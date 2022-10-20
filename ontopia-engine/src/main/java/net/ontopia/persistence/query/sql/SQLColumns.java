@@ -33,7 +33,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class SQLColumns implements SQLValueIF {
 
-  protected static final Class DEFAULT_VALUE_TYPE = java.lang.String.class;  
+  protected static final Class DEFAULT_VALUE_TYPE = String.class;  
   protected static final FieldHandlerIF DEFAULT_FIELD_HANDLER = new DefaultFieldHandler(java.sql.Types.VARCHAR);
     
   protected SQLTable table;
