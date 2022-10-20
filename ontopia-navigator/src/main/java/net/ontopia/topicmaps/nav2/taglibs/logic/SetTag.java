@@ -149,8 +149,9 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
       sortItems = true;
 
       // NOTE: we're looking up the context tag here because the doStartTag will not have been called yet.
-      if (contextTag == null)
+      if (contextTag == null) {
         this.contextTag = FrameworkUtils.getContextTag(pageContext);
+      }
 
       listComparator = getComparatorInstance(classname);
     }
@@ -173,8 +174,9 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
       return Collections.EMPTY_LIST;
     } else{
       TopicMapIF topicmap = contextTag.getTopicMap();
-      if (topicmap == null)
+      if (topicmap == null) {
         throw new NavigatorRuntimeException("SetTag found no topic map.");
+      }
 
       return new ArrayList(filterContext.getScopeTopicNames(topicmap));
     }
@@ -184,8 +186,9 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
 
   protected Comparator getComparator() throws Exception {
     // use default comparator if setting not overwritten by attribute
-    if (listComparator != null)
+    if (listComparator != null) {
       return listComparator;
+    }
     
     String defaultComparatorClassName = contextTag.getNavigatorConfiguration()
       .getProperty(NavigatorConfigurationIF.DEF_COMPARATOR,
@@ -195,18 +198,20 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
     if (defaultComparatorClassName
         .equals(NavigatorConfigurationIF.DEFVAL_COMPARATOR)) {
       TopicMapIF topicmap = contextTag.getTopicMap();
-      if (topicmap == null)
+      if (topicmap == null) {
         throw new NavigatorRuntimeException("SetTag found no topic map.");
+      }
       TopicIF sortTopic = topicmap.getTopicBySubjectIdentifier( SORT_LOCATOR );
       if (sortTopic != null) {
         // add base name themes that are in user context filter
         listComparator = new TopicComparator(getTopicNameContext(), Collections.singleton(sortTopic));
       } else {
         List bc = getTopicNameContext();
-        if (bc.isEmpty())
+        if (bc.isEmpty()) {
           listComparator = DEF_TOPIC_COMPARATOR;
-        else
+        } else {
           listComparator = new TopicComparator(bc, Collections.EMPTY_LIST);
+        }
       }
     } else {
       listComparator = getComparatorInstance(defaultComparatorClassName);
@@ -218,13 +223,15 @@ public class SetTag extends TagSupport implements ValueAcceptingTagIF {
   protected Comparator getComparatorInstance(String classname)
     throws NavigatorRuntimeException {
     
-    if (contextTag == null)
+    if (contextTag == null) {
       return null;
+    }
     Object obj = contextTag.getNavigatorApplication().getInstanceOf(classname);
-    if (obj != null && obj instanceof Comparator)
+    if (obj != null && obj instanceof Comparator) {
       return (Comparator) obj;
-    else
+    } else {
       return null;
+    }
   }
   
 }

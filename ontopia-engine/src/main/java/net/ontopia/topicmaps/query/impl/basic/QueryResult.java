@@ -44,14 +44,16 @@ public class QueryResult implements QueryResultIF {
       this.current = -1;
       this.last = -1;
     } else {
-      if (offset == -1)
+      if (offset == -1) {
         offset = 0;
+      }
       this.current = offset - 1;
 
-      if (limit == -1)
+      if (limit == -1) {
         this.last = matches.last + 1;
-      else
+      } else {
         this.last = Math.min(offset + limit, matches.last + 1);
+      }
     }
   }
 
@@ -71,8 +73,9 @@ public class QueryResult implements QueryResultIF {
   @Override
   public Object getValue(String colname) {
     int index = matches.getVariableIndex(colname);
-    if (index < 0)
+    if (index < 0) {
       throw new IndexOutOfBoundsException("No query result column named '" + colname + "'");
+    }
     return matches.data[current][index];
   }
 
@@ -89,8 +92,9 @@ public class QueryResult implements QueryResultIF {
   @Override
   public String[] getColumnNames() {
     String[] names = new String[matches.colcount];
-    for (int ix = 0; ix < matches.colcount; ix++)
+    for (int ix = 0; ix < matches.colcount; ix++) {
       names[ix] = ((Variable)matches.columnDefinitions[ix]).getName();
+    }
     return names;
   }
 

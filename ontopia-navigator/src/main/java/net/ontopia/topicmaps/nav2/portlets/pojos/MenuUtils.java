@@ -71,7 +71,9 @@ public class MenuUtils {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     return null;
   }
@@ -93,7 +95,9 @@ public class MenuUtils {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     return topics;
   }
@@ -115,8 +119,9 @@ public class MenuUtils {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (qr != null)
+      if (qr != null) {
         qr.close();
+      }
     }
   }
   
@@ -169,8 +174,9 @@ public class MenuUtils {
                                   : getFirstOfQuery(topic, neighbourQuery);
     
     // Can't move beyond the extremes of the list.
-    if (neighbourKey == null)
+    if (neighbourKey == null) {
       return;
+    }
     
     // Swap sort keys
     String swap = sortKey.getValue();
@@ -322,8 +328,9 @@ public class MenuUtils {
   private static String getLastValue(TopicIF topic,
       ParsedQueryIF query) {
     List resultValues = getResultValues(topic, query);
-    if (resultValues.isEmpty())
+    if (resultValues.isEmpty()) {
       return null;
+    }
     return (String)resultValues.get(resultValues.size() - 1);
   }
 
@@ -352,25 +359,30 @@ public class MenuUtils {
       DeclarationContextIF dc = QueryUtils.parseDeclarations(tm, 
           "using menu for i\"http://psi.ontopia.net/portal/menu/\"");
       qr = qp.execute("topic($T), $T = " + id + "?", dc);
-      if (!qr.next())
-        throw new OntopiaRuntimeException("Getting topic '" + id + 
+      if (!qr.next()) {
+        throw new OntopiaRuntimeException("Getting topic '" + id +
                                           "' gave no results.");
+      }
       Object retObject = qr.getValue(0);
-      if (!(retObject instanceof TopicIF))
+      if (!(retObject instanceof TopicIF)) {
         throw new OntopiaRuntimeException("Getting topic '" + id + "' should " +
                                           "give a result of type TopicIF, but" +
                                           " gave a result of type " + 
                                           retObject.getClass().getName());
+      }
       TopicIF retTopic = (TopicIF)retObject;
-      if (qr.next())
-        throw new OntopiaRuntimeException("Getting topic '" + id + 
+      if (qr.next()) {
+        throw new OntopiaRuntimeException("Getting topic '" + id +
                                           "' should give a unique result, but" +
                                           " gives more than one result.");
+      }
       return retTopic;
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
   }
 
@@ -384,10 +396,11 @@ public class MenuUtils {
       ParsedQueryIF query) {
     List resultValues =
         (List)getResultValues(topic, query);
-    if (resultValues.isEmpty())
+    if (resultValues.isEmpty()) {
       return null;
-    else
+    } else {
       return (OccurrenceIF)resultValues.get(resultValues.size() - 1);
+    }
   }
   
   /**
@@ -400,10 +413,11 @@ public class MenuUtils {
       ParsedQueryIF query) {
     List resultValues =
         (List)getResultValues(topic, query);
-    if (resultValues.isEmpty())
+    if (resultValues.isEmpty()) {
       return null;
-    else
+    } else {
       return (OccurrenceIF)resultValues.get(0);
+    }
   }
 
   /**
@@ -448,10 +462,11 @@ public class MenuUtils {
     builder.makeOccurrence(itemIFTopic, sortOccurrenceType, newSortKey);
     
     Menu.ChildIF itemIF;
-    if (isHeading) 
+    if (isHeading) { 
       itemIF = new Heading(itemIFTopic);
-    else
+    } else {
       itemIF = new Item(itemIFTopic);
+    }
     itemIF.setTitle(title);
     return itemIF;
   }
@@ -511,10 +526,11 @@ public class MenuUtils {
     List children = new ArrayList(childrenTopics.size());
     for (int i=0; i < childrenTopics.size(); i++) {
       TopicIF child = (TopicIF)childrenTopics.get(i);
-      if (headingsTopics.contains(child))
+      if (headingsTopics.contains(child)) {
         children.add(buildHeading(child));
-      else
+      } else {
         children.add(buildItem(child));
+      }
     }
     return children;    
   }

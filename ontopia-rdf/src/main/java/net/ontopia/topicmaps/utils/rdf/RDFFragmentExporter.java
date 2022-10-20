@@ -86,8 +86,9 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
       }
       
       serializer.write(topic);
-      for (AssociationRoleIF role : topic.getRoles())
+      for (AssociationRoleIF role : topic.getRoles()) {
         serializer.write(role.getAssociation());
+      }
     }
   }
 

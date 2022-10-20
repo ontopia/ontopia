@@ -45,9 +45,10 @@ public abstract class FilterPredicate extends JavaPredicate {
     int[] argindexes = new int[arguments.length];
     for (int i=0; i < arguments.length; i++) {
       argindexes[i] = matches.getIndex(arguments[i]); 
-      if (!matches.bound(argindexes[i]))
+      if (!matches.bound(argindexes[i])) {
         throw new InvalidQueryException("Argument " + arguments[i] + " to " + getName() + " must " +
                                         "be bound");
+      }
     }
     
     // filter query matches
@@ -61,8 +62,9 @@ public abstract class FilterPredicate extends JavaPredicate {
       }
       
       if (filter(row)) {
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         
         Object[] newRow = (Object[]) matches.data[ix].clone();

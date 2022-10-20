@@ -72,7 +72,9 @@ public final class DefaultCache<K, V> implements CacheIF<K, V> {
       if (dumpCache) {
         out.write("<table>\n");
         for (K key : cache.keySet()) {
-          if (key == null) continue;
+          if (key == null) {
+            continue;
+          }
           Object val = cache.get(key);
           out.write("<tr><td>");
           out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));

@@ -116,8 +116,9 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
       Object right = eq.getRight();
       
       if (left.equals(cols)) {
-	if (!right.equals(cols) && right instanceof SQLColumns)
-	  addEntry(cemap, cols, right);
+	if (!right.equals(cols) && right instanceof SQLColumns) {
+    addEntry(cemap, cols, right);
+  }
       } else if (left instanceof SQLColumns) {
 	addEntry(cemap, cols, left);
       }
@@ -185,7 +186,9 @@ public class RedundantTablesSQLOptimizer extends FilterSQLOptimizer {
 	  return coln;
 	} else {
 	  // keep alias
-	  if (col2.getAlias() == null) col2.setAlias(col1.getAlias());
+	  if (col2.getAlias() == null) {
+      col2.setAlias(col1.getAlias());
+    }
 	  return col2;
 	}
       }

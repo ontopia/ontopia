@@ -64,16 +64,18 @@ public class DeclareTag extends BodyTagSupport {
   public int doEndTag() throws JspException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:declare> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found.");
+    }
     
     // get topicmap object on which we should compute 
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("DeclareTag found no "
               + "topic map.");
+    }
 
     DeclarationContextIF declarationContext = contextTag
             .getDeclarationContext();

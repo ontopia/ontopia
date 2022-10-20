@@ -63,8 +63,9 @@ public class NameField extends FieldDefinition {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof NameField))
+    if (!(obj instanceof NameField)) {
       return false;
+    }
 		
     NameField other = (NameField)obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -95,7 +96,9 @@ public class NameField extends FieldDefinition {
   public List<TopicNameIF> getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     NameType ntype = getNameType();
-    if (ntype == null) return Collections.emptyList();
+    if (ntype == null) {
+      return Collections.emptyList();
+    }
     TopicIF typeIf = ntype.getTopicIF();
 		
 //    Collection<TopicIF> scope = Collections.emptySet();
@@ -115,7 +118,9 @@ public class NameField extends FieldDefinition {
     TopicIF topicIf = topic.getTopicIF();
     String value = (String) _value;
     NameType ntype = getNameType();
-    if (ntype == null) return;
+    if (ntype == null) {
+      return;
+    }
     TopicIF typeIf = ntype.getTopicIF();
    
     Collection<TopicIF> scope = Collections.emptySet();
@@ -133,7 +138,9 @@ public class NameField extends FieldDefinition {
       }
     }
     
-    if (listener != null) listener.onAfterAdd(topic, this, value);
+    if (listener != null) {
+      listener.onAfterAdd(topic, this, value);
+    }
   }
 
   /**
@@ -150,10 +157,14 @@ public class NameField extends FieldDefinition {
     String value = (_value instanceof TopicNameIF ? ((TopicNameIF) _value)
         .getValue() : (String) _value);
     NameType ntype = getNameType();
-    if (ntype == null) return;
+    if (ntype == null) {
+      return;
+    }
     TopicIF typeIf = ntype.getTopicIF();
 
-    if (listener != null) listener.onBeforeRemove(topic, this, value);
+    if (listener != null) {
+      listener.onBeforeRemove(topic, this, value);
+    }
 		
 //    Collection<TopicIF> scope = Collections.emptySet();
     Collection<TopicNameIF> names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);

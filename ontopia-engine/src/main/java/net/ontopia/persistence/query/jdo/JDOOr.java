@@ -89,8 +89,9 @@ public class JDOOr implements JDOExpressionIF {
   public int hashCode() {
     int hashCode = 0;
     for (int ix = 0; ix < expressions.length; ix++) {
-      if (expressions[ix] != null)
+      if (expressions[ix] != null) {
         hashCode = (hashCode + expressions[ix].hashCode()) & 0x7FFFFFFF;
+      }
     }
     return hashCode;
   }
@@ -99,8 +100,9 @@ public class JDOOr implements JDOExpressionIF {
   public boolean equals(Object obj) {
     if (obj instanceof JDOOr) {
       JDOOr other = (JDOOr)obj;
-      if (Arrays.equals(expressions, other.getExpressions()))
+      if (Arrays.equals(expressions, other.getExpressions())) {
         return true;
+      }
     }
     return false;
   }
@@ -110,7 +112,9 @@ public class JDOOr implements JDOExpressionIF {
     StringBuilder sb = new StringBuilder();
     sb.append('(');
     for (int i=0; i < expressions.length; i++) {
-      if (i != 0) sb.append(" || ");
+      if (i != 0) {
+        sb.append(" || ");
+      }
       sb.append(expressions[i]);
     }
     sb.append(')');

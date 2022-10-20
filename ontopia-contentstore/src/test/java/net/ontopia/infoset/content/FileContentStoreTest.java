@@ -36,10 +36,12 @@ public class FileContentStoreTest extends AbstractContentStoreTest {
 
     if (tstdir.exists()) {
       File[] files = tstdir.listFiles();
-      for (int ix = 0; ix < files.length; ix++)
+      for (int ix = 0; ix < files.length; ix++) {
         FileUtils.forceDelete(files[ix]);
-    } else
+      }
+    } else {
       tstdir.mkdir();
+    }
 
     store = new FileContentStore(tstdir);
   }

@@ -35,9 +35,13 @@ public class DefaultPlugin implements ClassifyPluginIF {
 
   @Override
   public boolean isClassifiable(TopicIF topic) {
-    if (topic == null) return false;
+    if (topic == null) {
+      return false;
+    }
     TopicMapIF tm = topic.getTopicMap();
-    if (tm == null) return false;
+    if (tm == null) {
+      return false;
+    }
     QueryProcessorIF qp = QueryUtils.getQueryProcessor(tm);
     try {
       QueryResultIF qr = qp.execute("using cl for i\"http://psi.ontopia.net/classify/\" " +

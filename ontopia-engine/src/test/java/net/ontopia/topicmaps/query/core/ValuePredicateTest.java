@@ -48,22 +48,25 @@ public class ValuePredicateTest extends AbstractPredicateTest {
       Iterator it2 = topic.getTopicNames().iterator();
       while (it2.hasNext()) {
         TopicNameIF bn = (TopicNameIF) it2.next();
-        if (bn.getValue() != null)
+        if (bn.getValue() != null) {
           addMatch(matches, "OBJ", bn, "VALUE", bn.getValue());
+        }
 
         Iterator it3 = bn.getVariants().iterator();
         while (it3.hasNext()) {
           VariantNameIF vn = (VariantNameIF) it3.next();
-          if (vn.getValue() != null && !Objects.equals(vn.getDataType(), DataTypes.TYPE_URI))
+          if (vn.getValue() != null && !Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) {
             addMatch(matches, "OBJ", vn, "VALUE", vn.getValue());
+          }
         }
       }
 
       it2 = topic.getOccurrences().iterator();
       while (it2.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it2.next();
-        if (occ.getValue() != null && !Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
+        if (occ.getValue() != null && !Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) {
           addMatch(matches, "OBJ", occ, "VALUE", occ.getValue());
+        }
       }
     }
     assertQueryMatches(matches, "value($OBJ, $VALUE)?");

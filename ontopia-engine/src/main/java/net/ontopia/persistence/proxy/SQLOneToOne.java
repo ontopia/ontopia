@@ -69,11 +69,13 @@ public class SQLOneToOne implements FieldAccessIF {
     // Figure out the index of the value field in the select fields
     // list. We need this index later to figure out the return value.
     for (int i=0; i < select_fields.length; i++) {
-      if (field == select_fields[i])
+      if (field == select_fields[i]) {
         select_value_index = i;
+      }
     }
-    if (select_value_index == -1)
+    if (select_value_index == -1) {
       throw new OntopiaRuntimeException("Could not find value field among 1:1 fields.");
+    }
     
     // -----------------------------------------------------------------------------
     // Load
@@ -83,8 +85,9 @@ public class SQLOneToOne implements FieldAccessIF {
     FieldInfoIF[] fields = FieldUtils.joinFieldInfos(new FieldInfoIF[] { identity_field }, select_fields);
     sql_load = SQLGenerator.getSelectStatement(field.getParentClassInfo().getMasterTable(),
                                                fields, new FieldInfoIF[] { identity_field }, 0);
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load 1:1) : " + sql_load);
+    }
 
     if (field.isReferenceField()) {
 
@@ -109,8 +112,9 @@ public class SQLOneToOne implements FieldAccessIF {
                                                           fields, new FieldInfoIF[] { identity_field }, batchSize);
     }
 
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load 1:1*) : " + sql_load_multiple);
+    }
 
     // Selecting all 1:1 fields
     // SELECT id, topicmap_id, subject_notation, subject_address FROM TM_TOPIC WHERE id = ?
@@ -129,8 +133,9 @@ public class SQLOneToOne implements FieldAccessIF {
     sql_set = SQLGenerator.getUpdateStatement(field.getTable(),
                                               select_fields,
                                               new FieldInfoIF[] { identity_field });
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (set 1:1) " + field.getName() + ": " + sql_set);
+    }
 
     // UPDATE TM_TOPIC set subject_notation = ? where id = ?
   }
@@ -149,13 +154,15 @@ public class SQLOneToOne implements FieldAccessIF {
     try {
       
       // Bind identity columns
-      if (debug)
+      if (debug) {
         log.debug("Binding object identity: " + identity);
+      }
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load);
+      }
       ResultSet rs = stm.executeQuery();
       try {
         // Exactly one row expected
@@ -171,8 +178,9 @@ public class SQLOneToOne implements FieldAccessIF {
             FieldInfoIF finfo = select_fields[i];
             // Load field value
             Object value = finfo.load(registrar, ticket, rs, rsindex, false);
-            if (i == select_value_index)
+            if (i == select_value_index) {
               result = value;
+            }
 
             if (value instanceof OnDemandValue) {
               OnDemandValue odv = (OnDemandValue)value;
@@ -183,8 +191,9 @@ public class SQLOneToOne implements FieldAccessIF {
             registrar.registerField(ticket, identity, finfo.getIndex(), value);
 
             // Register value identity with registrar
-            if (value != null && finfo.isReferenceField())
+            if (value != null && finfo.isReferenceField()) {
               registrar.registerIdentity(ticket, (IdentityIF)value);
+            }
     
             // Increment column index
             rsindex += finfo.getColumnCount();    
@@ -201,11 +210,15 @@ public class SQLOneToOne implements FieldAccessIF {
       exception = e;
     } finally {
       //! if (close_stm && stm != null) stm.close();
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
 
     // Return loaded value
-    if (exception != null) throw exception;
+    if (exception != null) {
+      throw exception;
+    }
     return result;
   }
 
@@ -232,8 +245,9 @@ public class SQLOneToOne implements FieldAccessIF {
     try {
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load_multiple);
+      }
       //! ResultSet rs = stm.executeQuery(sql);
       ResultSet rs = stm.executeQuery();
       try {
@@ -243,15 +257,18 @@ public class SQLOneToOne implements FieldAccessIF {
             // Load object identity
             IdentityIF identity = (IdentityIF)identity_field.load(registrar, ticket, rs, 1, false);
 
-            if (identity.equals(current)) found_current = true;
+            if (identity.equals(current)) {
+              found_current = true;
+            }
     
             // Set column count to identity field width
             int rsindex = 1 + identity_field.getColumnCount();
     
             // Load object identity
             IdentityIF value_id = (IdentityIF)value_field.load(registrar, ticket, rs, rsindex, false);
-            if (identity.equals(current))
+            if (identity.equals(current)) {
               result = value_id;
+            }
 
             // Set column count to identity field width
             rsindex += value_field.getColumnCount();
@@ -277,8 +294,9 @@ public class SQLOneToOne implements FieldAccessIF {
               registrar.registerField(ticket, value_id, finfo.getIndex(), value);
 
               // Register value identity with registrar
-              if (value != null && finfo.isReferenceField())
+              if (value != null && finfo.isReferenceField()) {
                 registrar.registerIdentity(ticket, (IdentityIF)value);
+              }
     
               // Increment column index
               rsindex += finfo.getColumnCount();    
@@ -293,7 +311,9 @@ public class SQLOneToOne implements FieldAccessIF {
             // Register object identity with registrar
             registrar.registerIdentity(ticket, identity);
 
-            if (identity.equals(current)) found_current = true;
+            if (identity.equals(current)) {
+              found_current = true;
+            }
 
             // Load row data (skip identity column)
             int rsindex = 1 + identity_field.getColumnCount();
@@ -302,15 +322,17 @@ public class SQLOneToOne implements FieldAccessIF {
               FieldInfoIF finfo = select_fields[i];
               // Load field value
               Object value = finfo.load(registrar, ticket, rs, rsindex, false);
-              if (i == select_value_index && identity.equals(current))
+              if (i == select_value_index && identity.equals(current)) {
                 result = value;
+              }
           
               // Update persistence cache
               registrar.registerField(ticket, identity, finfo.getIndex(), value);
 
               // Register value identity with registrar
-              if (value != null && finfo.isReferenceField())
+              if (value != null && finfo.isReferenceField()) {
                 registrar.registerIdentity(ticket, (IdentityIF)value);
+              }
     
               // Increment column index
               rsindex += finfo.getColumnCount();    
@@ -319,8 +341,9 @@ public class SQLOneToOne implements FieldAccessIF {
         }
 
         // current identity was not found
-        if (current != null && !found_current)
+        if (current != null && !found_current) {
           exception = new IdentityNotFoundException(current);
+        }
       } finally {     
         // close result set
         rs.close();
@@ -332,7 +355,9 @@ public class SQLOneToOne implements FieldAccessIF {
     }
     
     // return loaded value
-    if (exception != null) throw exception;
+    if (exception != null) {
+      throw exception;
+    }
     return result;
   }
 
@@ -358,22 +383,26 @@ public class SQLOneToOne implements FieldAccessIF {
       for (int i=0; i < select_fields.length; i++) {
         // Have to load field here if it is not already loaded.        
         Object value = oaccess.getValue(object, select_fields[i]);
-        if (debug)
+        if (debug) {
           log.debug("Binding value: " + value);
+        }
         select_fields[i].bind(value, stm, offset);
         
         offset += select_fields[i].getColumnCount();   
       }
       
       // Bind identity columns
-      if (debug)
+      if (debug) {
         log.debug("Binding object identity: " + identity);
+      }
       identity_field.bind(identity, stm, offset);
       
       // Execute statement
       executeUpdate(stm, sql_set);
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
     
     // Mark fields as not dirty when all fields have been stored.
@@ -388,7 +417,9 @@ public class SQLOneToOne implements FieldAccessIF {
   }
 
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
-    if (debug) log.debug("Executing: " + sql);
+    if (debug) {
+      log.debug("Executing: " + sql);
+    }
     stm.executeUpdate();
   }
   

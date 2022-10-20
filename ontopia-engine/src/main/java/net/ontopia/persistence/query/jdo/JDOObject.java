@@ -32,8 +32,9 @@ public class JDOObject implements JDOValueIF {
   protected Object value;
   
   public JDOObject(Object value) {
-    if (value == null)
+    if (value == null) {
       throw new IllegalArgumentException("Object value cannot be null.");
+    }
     
     this.value = value;
   }
@@ -44,10 +45,11 @@ public class JDOObject implements JDOValueIF {
   }
 
   public Class getValueType() {
-    if (value instanceof PersistentIF)
+    if (value instanceof PersistentIF) {
       return (Class)((PersistentIF)value)._p_getIdentity().getType();
-    else
+    } else {
       return value.getClass();
+    }
   }
 
   public Object getValue() {
@@ -61,7 +63,9 @@ public class JDOObject implements JDOValueIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOObject) {
       JDOObject other = (JDOObject)obj;    
       return value.equals(other.value);

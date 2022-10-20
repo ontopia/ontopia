@@ -105,7 +105,9 @@ public class Project {
     for (int i=0; i < platforms.length; i++) {
       Map<String, DataType> types = datatypes.get(platforms[i]);
       if (types == null ||
-          !types.containsKey(name)) continue;
+          !types.containsKey(name)) {
+        continue;
+      }
       return types.get(name);
     }
     return null;
@@ -122,8 +124,9 @@ public class Project {
     Map<String, DataType> types = new HashMap<String, DataType>();
     for (int i=platforms.length-1; i >= 0; i--) {
       Map<String, DataType> _types = datatypes.get(platforms[i]);
-      if (_types != null)
+      if (_types != null) {
         types.putAll(_types);
+      }
     }
     return types.values();
   }
@@ -149,8 +152,9 @@ public class Project {
     if (datatypes.containsKey(platform)) {
       Map<String, DataType> types = datatypes.get(platform);      
       types.remove(datatype.getName());
-      if (types.isEmpty())
+      if (types.isEmpty()) {
         datatypes.remove(platform);
+      }
     }
   }
 
@@ -162,8 +166,9 @@ public class Project {
   public List<String> getCreateActions(String[] platforms) {
 		List<String> actions = new ArrayList<String>();
     for (int i=platforms.length-1; i >= 0; i--) {
-      if (c_actions.containsKey(platforms[i]))
-				actions.addAll(c_actions.get(platforms[i]));
+      if (c_actions.containsKey(platforms[i])) {
+        actions.addAll(c_actions.get(platforms[i]));
+      }
     }
     return actions;
   }
@@ -189,8 +194,9 @@ public class Project {
   public List<String> getDropActions(String[] platforms) {
 		List<String> actions = new ArrayList<String>();
     for (int i=platforms.length-1; i >= 0; i--) {
-      if (d_actions.containsKey(platforms[i]))
+      if (d_actions.containsKey(platforms[i])) {
         actions.addAll(d_actions.get(platforms[i]));
+      }
     }
     return actions;
   }

@@ -86,8 +86,9 @@ public class FulltextIndexManager extends BasicIndex {
 
     // Register dynamic index as event listener
     Iterator<String> iter = handlers.keySet().iterator();
-    while (iter.hasNext())
+    while (iter.hasNext()) {
       emanager.addListener(this, iter.next());
+    }
   }
 
   /**
@@ -144,14 +145,15 @@ public class FulltextIndexManager extends BasicIndex {
       Iterator<TMObjectIF> iter = added.iterator();
       while (iter.hasNext()) {
         TMObjectIF o = iter.next();
-        if (o instanceof OccurrenceIF)
+        if (o instanceof OccurrenceIF) {
           indexer.index(docgen.generate((OccurrenceIF) o));
-        else if (o instanceof TopicNameIF)
+        } else if (o instanceof TopicNameIF) {
           indexer.index(docgen.generate((TopicNameIF) o));
-        else if (o instanceof VariantNameIF)
+        } else if (o instanceof VariantNameIF) {
           indexer.index(docgen.generate((VariantNameIF) o));
-        else
+        } else {
           throw new OntopiaRuntimeException("Unknown type: " + o);
+        }
       }
       added.clear();
       changes = true;
@@ -162,14 +164,15 @@ public class FulltextIndexManager extends BasicIndex {
       Iterator<TMObjectIF> iter = changed.iterator();
       while (iter.hasNext()) {
         TMObjectIF o = iter.next();
-        if (o instanceof OccurrenceIF)
+        if (o instanceof OccurrenceIF) {
           indexer.index(docgen.generate((OccurrenceIF) o));
-        else if (o instanceof TopicNameIF)
+        } else if (o instanceof TopicNameIF) {
           indexer.index(docgen.generate((TopicNameIF) o));
-        else if (o instanceof VariantNameIF)
+        } else if (o instanceof VariantNameIF) {
           indexer.index(docgen.generate((VariantNameIF) o));
-        else
+        } else {
           throw new OntopiaRuntimeException("Unknown type: " + o);
+        }
       }
       changed.clear();
       changes = true;
@@ -197,8 +200,9 @@ public class FulltextIndexManager extends BasicIndex {
 
   protected synchronized void objectChanged(Object object) {
     TMObjectIF tmo = (TMObjectIF) object;
-    if (!added.contains(tmo) && !removed.contains(tmo.getObjectId()))
+    if (!added.contains(tmo) && !removed.contains(tmo.getObjectId())) {
       changed.add(tmo);
+    }
   }
 
   // -----------------------------------------------------------------------------

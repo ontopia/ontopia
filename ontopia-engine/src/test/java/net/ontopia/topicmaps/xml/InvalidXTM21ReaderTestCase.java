@@ -81,9 +81,12 @@ public class InvalidXTM21ReaderTestCase extends AbstractCanonicalTests {
       } catch (IOException e) {
         // ok
       } catch (OntopiaRuntimeException e) {
-        if (e.getCause() instanceof InvalidTopicMapException) return;
-        if (!(e.getCause() instanceof org.xml.sax.SAXParseException))
+        if (e.getCause() instanceof InvalidTopicMapException) {
+          return;
+        }
+        if (!(e.getCause() instanceof org.xml.sax.SAXParseException)) {
           throw e;
+        }
       }
     }
 }

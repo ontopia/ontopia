@@ -96,9 +96,9 @@ public class LuceneIndexer implements IndexerIF {
   protected Field getField(FieldIF field) throws IOException {
     Field lucene_field;
     if (field.getReader() != null) {
-      if (!field.isStored() && field.isIndexed() && field.isTokenized())
+      if (!field.isStored() && field.isIndexed() && field.isTokenized()) {
         lucene_field = new Field(field.getName(), field.getReader(), getFieldType(field)); // Reader based field
-      else {
+      } else {
         lucene_field = new Field(field.getName(), getStringValue(field.getReader()),
             getFieldType(field));
       }
@@ -120,8 +120,9 @@ public class LuceneIndexer implements IndexerIF {
     // Read the reader contents into a string
     StringWriter swriter = new StringWriter();
     int c;
-    while ((c = reader.read()) != -1)
+    while ((c = reader.read()) != -1) {
       swriter.write(c);
+    }
     return swriter.getBuffer().toString();
   }
 }

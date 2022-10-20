@@ -109,16 +109,18 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
       String resourceName = name.substring("classpath:".length());
       istream = cl.getResourceAsStream(resourceName);
-      if (istream == null)
+      if (istream == null) {
         throw new IOException("Resource '" + resourceName + "' not found through class loader.");
+      }
       log.debug("File loaded through class loader: " + name);
     } else if (name.startsWith("file:")) {
       File f =  new File(name.substring("file:".length()));
       if (f.exists()) {
         log.debug("File loaded from file system: " + name);
         istream = new FileInputStream(f);
-      } else
+      } else {
         throw new IOException("File '" + f + "' not found.");
+      }
     } else {
       String absname = makeAbsolute(name);
       File f = new File(absname);
@@ -128,19 +130,21 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         istream = cl.getResourceAsStream(name);
-        if (istream != null)
+        if (istream != null) {
           log.debug("File loaded through class loader: " + name);
+        }
       }
     }
     return istream;    
   }
   
   private String makeAbsolute(String filename) {
-    if (filename != null && filename.length() > 0 && !(new java.io.File(filename).isAbsolute()))
+    if (filename != null && filename.length() > 0 && !(new java.io.File(filename).isAbsolute())) {
       // Filename is relative to the webapp root directory
       return servlet_context.getRealPath("") + "/" + filename;
-    else
+    } else {
       return filename;
+    }
   }
 
   // ------------------------------------------------------------
@@ -178,9 +182,10 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     
     // use local or jndi repository (for backwards compatibility);
     TopicMapReferenceIF ref = repository.getReferenceByKey(topicmapId);
-    if (ref == null) 
+    if (ref == null) { 
       throw new NavigatorRuntimeException("Topic map with id '" + topicmapId +
                                           "' not found.");      
+    }      
     TopicMapStoreIF store;
     try {
       store = ref.createStore(readonly);
@@ -189,10 +194,11 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
                                           topicmapId + "'", e);
     }
     
-    if (readonly)
+    if (readonly) {
       log.debug("Got RO store: " + store);
-    else
+    } else {
       log.debug("Got RW store: " + store);
+    }
 
     return store.getTopicMap();
   }
@@ -220,8 +226,9 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     // First try if this is an shortcut for a classname
     fqcn = navConfig.getClass(classname);
     // ...otherwise fallback to interpret parameter as full-qualified
-    if (fqcn == null || fqcn.equals(""))
+    if (fqcn == null || fqcn.equals("")) {
       fqcn = classname;
+    }
 
     // lookup if we have an instance available for this class
     Object instance = instances.get(fqcn);
@@ -370,8 +377,9 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   private synchronized void readInAppConfig() {
     try {
       String filePathAppConfig = servlet_context.getInitParameter(APP_CONFIG_KEY);
-      if (filePathAppConfig == null)
+      if (filePathAppConfig == null) {
         filePathAppConfig = APP_CONFIG_DEFAULT_VALUE;
+      }
       log.info("Start to load application configuration from " + filePathAppConfig);
       InputStream istream = getInputStream(filePathAppConfig);
       if (istream != null) {
@@ -451,13 +459,15 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     // lookup in jndi using Tomcat approach
     SharedStoreRegistry ssr = (SharedStoreRegistry)lookupJNDI("java:comp/env/" + jndi_name);
     
-    if (ssr == null)
+    if (ssr == null) {
       // lookup in jndi using oc4j approach
       ssr = (SharedStoreRegistry)lookupJNDI("java:comp/resource/" +  jndi_name + "/");
+    }
     
-    if (ssr == null)
+    if (ssr == null) {
       throw new OntopiaRuntimeException("Couldn't find shared repository " +
                                         jndi_name);
+    }
     return ssr;
   }
   
@@ -466,9 +476,10 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       log.info("Looking up JNDI name: " + name);
       Context ctx = new InitialContext();
       SharedStoreRegistry ssr = (SharedStoreRegistry) ctx.lookup(name);
-      if (ssr == null)
+      if (ssr == null) {
         throw new OntopiaRuntimeException("No JNDI shared repository named " +
                                           name + " found");
+      }
         
       return ssr;
     } catch (NamingException e) {
@@ -484,7 +495,9 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   private synchronized void readAndSetPlugins() {
     String pluginsRootURI = servlet_context.getInitParameter(PLUGINS_ROOTDIR_KEY);
     // it is allowed to specify no plug-in directory
-    if (pluginsRootURI == null) return;
+    if (pluginsRootURI == null) {
+      return;
+    }
     
     Collection pluginspecs = getPluginSpecifications(makeAbsolute(pluginsRootURI));
     Iterator it = pluginspecs.iterator();

@@ -101,8 +101,9 @@ public abstract class VizConfigurationManager {
         // init() will make a blank TM for us
       }
     }
-    if (topicmap == null)
+    if (topicmap == null) {
       topicmap = new InMemoryTopicMapStore().getTopicMap();
+    }
     init();
   }
   
@@ -119,14 +120,16 @@ public abstract class VizConfigurationManager {
    * Returns true iff the occurrence was found and removed.
    */
   protected boolean removeOccurrence(TopicIF topic, TopicIF type) {
-    if (topic == null)
+    if (topic == null) {
       return false;
+    }
     
     OccurrenceIF occurrence = CharacteristicUtils
         .getByType(topic.getOccurrences(), type);
     
-    if (occurrence == null)
+    if (occurrence == null) {
       return false;
+    }
     
     occurrence.remove();
     return true;
@@ -170,19 +173,22 @@ public abstract class VizConfigurationManager {
   protected void removeOccurence(TopicIF type, TopicIF occtype) {
     TopicIF target = getConfigTopic(type);
     OccurrenceIF occ = getOccurrence(target, occtype);
-    if (occ != null)
+    if (occ != null) {
       getOccurrence(target, occtype).remove();
+    }
   }
 
   protected void setOccurenceValue(TopicIF type, TopicIF occtype, String value) {
     TopicIF cfgtopic = getConfigTopic(type);
     OccurrenceIF occ = getOccurrence(cfgtopic, occtype);
-    if (value == null)
+    if (value == null) {
       return; // don't make the occ if there is no value to give it
-    if (occ == null)
+    }
+    if (occ == null) {
       occ = builder.makeOccurrence(cfgtopic, occtype, value);
-    else
+    } else {
       occ.setValue(value);
+    }
   }
 
   /**
@@ -202,12 +208,14 @@ public abstract class VizConfigurationManager {
 
   public String getOccurrenceValue(TopicIF type, TopicIF occtype) {
     TopicIF cfgtopic = getConfigTopic(type);
-    if (cfgtopic == null)
+    if (cfgtopic == null) {
       return null;
+    }
 
     OccurrenceIF occ = getOccurrence(cfgtopic, occtype);
-    if (occ == null)
+    if (occ == null) {
       return null;
+    }
 
     return occ.getValue();
   }
@@ -215,15 +223,17 @@ public abstract class VizConfigurationManager {
   protected boolean getOccurrenceValue(TopicIF type, TopicIF occtype,
       boolean defaultBoolean) {
     String value = getOccurrenceValue(type, occtype);
-    if (value == null)
+    if (value == null) {
       return defaultBoolean;
+    }
     return "true".equalsIgnoreCase(value);
   }
 
   protected int getOccurrenceValue(TopicIF type, TopicIF occtype, int defaultInt) {
     String value = getOccurrenceValue(type, occtype);
-    if (value == null)
+    if (value == null) {
       return defaultInt;
+    }
     return Integer.parseInt(value);
   }
 
@@ -261,10 +271,13 @@ public abstract class VizConfigurationManager {
    * the end.)
    */
   private String relativize(String base, LocatorIF locator) {
-    if (base == null) return null;
+    if (base == null) {
+      return null;
+    }
     String uri = locator.getAddress();
-    if (uri.startsWith(base))
+    if (uri.startsWith(base)) {
       return uri.substring(base.length());
+    }
     return null;
   }
 
@@ -273,8 +286,9 @@ public abstract class VizConfigurationManager {
    * configuration topic map, creating one if it doesn't exist.
    */
   protected TopicIF getConfigTopic(TopicIF real) {
-    if (real == null)
+    if (real == null) {
       return untypedTopic;
+    }
     
     // setting up some variables for use later
     LocatorIF cfgloc = topicmap.getStore().getBaseAddress();
@@ -291,13 +305,15 @@ public abstract class VizConfigurationManager {
       if (cfg == null) {
         // is this branch ever used?
         TMObjectIF obj = topicmap.getObjectByItemIdentifier(loc);
-        if (obj instanceof TopicIF)
+        if (obj instanceof TopicIF) {
           cfg = (TopicIF) obj;
+        }
       }
 
       String id = relativize(realbase, loc);
-      if (cfg == null && id != null)
+      if (cfg == null && id != null) {
         cfg = topicmap.getTopicBySubjectIdentifier(cfgloc.resolveAbsolute('#' + id));
+      }
     }
 
     it = real.getSubjectIdentifiers().iterator();
@@ -307,26 +323,30 @@ public abstract class VizConfigurationManager {
       if (cfg == null) {
         // is this branch ever used?
         TMObjectIF obj = topicmap.getObjectByItemIdentifier(loc);
-        if (obj instanceof TopicIF)
+        if (obj instanceof TopicIF) {
           cfg = (TopicIF) obj;
+        }
       }
 
       String id = relativize(realbase, loc);
-      if (cfg == null && id != null)
+      if (cfg == null && id != null) {
         cfg = topicmap.getTopicBySubjectIdentifier(cfgloc.resolveAbsolute('#' + id));
+      }
     }
 
     it = real.getItemIdentifiers().iterator();
     while (cfg == null && it.hasNext()) {
       LocatorIF loc = it.next();
       cfg = (TopicIF) topicmap.getObjectByItemIdentifier(loc);
-      if (cfg == null)
+      if (cfg == null) {
         cfg = topicmap.getTopicBySubjectIdentifier(loc);
+      }
 
       String id = relativize(realbase, loc);
-      if (cfg == null && id != null)
+      if (cfg == null && id != null) {
         cfg = (TopicIF) topicmap.getObjectByItemIdentifier(cfgloc
             .resolveAbsolute('#' + id));
+      }
     }
     
     // if topic doesn't exist, create it
@@ -337,8 +357,9 @@ public abstract class VizConfigurationManager {
       while (it.hasNext()) {
         LocatorIF loc = it.next();
         String id = relativize(realbase, loc);
-        if (id != null)
+        if (id != null) {
           loc = cfgloc.resolveAbsolute('#' + id);
+        }
         cfg.addSubjectLocator(loc);
       }
   
@@ -346,8 +367,9 @@ public abstract class VizConfigurationManager {
       while (it.hasNext()) {
         LocatorIF loc = it.next();
         String id = relativize(realbase, loc);
-        if (id != null)
+        if (id != null) {
           loc = cfgloc.resolveAbsolute('#' + id);
+        }
         cfg.addSubjectIdentifier(loc);
       }
   
@@ -355,8 +377,9 @@ public abstract class VizConfigurationManager {
       while (it.hasNext()) {
         LocatorIF loc = it.next();
         String id = relativize(realbase, loc);
-        if (id != null)
+        if (id != null) {
           loc = cfgloc.resolveAbsolute('#' + id);
+        }
         cfg.addItemIdentifier(loc);
       }
     }

@@ -55,8 +55,9 @@ public class RDBMSTestUtils {
     store.setBaseAddress(test.base);
 
     TopicMapReaderIF importer = ImportExportUtils.getReader(file.toString());
-    if (importer instanceof XTMTopicMapReader)
+    if (importer instanceof XTMTopicMapReader) {
       ((XTMTopicMapReader) importer).setValidation(false);
+    }
     importer.importInto(test.topicmap);
 
     // NOTE: Query processor must have base set, because of the way

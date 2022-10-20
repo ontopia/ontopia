@@ -236,7 +236,9 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     fieldInstanceModel.detach();
     fieldsViewModel.detach();
     roleFieldModel.detach();
-    if (topicTypeModel != null) topicTypeModel.detach();
+    if (topicTypeModel != null) {
+      topicTypeModel.detach();
+    }
     super.onDetach();
   }
 

@@ -53,8 +53,9 @@ public class TopicsTag extends BaseValueProducingAndAcceptingTag {
         Object obj = iter.next();
         if (obj instanceof AssociationRoleIF) {
           AssociationRoleIF role = (AssociationRoleIF) obj;
-          if (role.getPlayer() != null)
+          if (role.getPlayer() != null) {
             topics.add( role.getPlayer() );
+          }
         } else if (obj instanceof AssociationIF) {
           Collection roles = ((AssociationIF) obj).getRoles();
           Iterator it = roles.iterator();

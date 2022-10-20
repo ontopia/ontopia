@@ -96,7 +96,9 @@ public class CrossProduct {
   }
   
   public boolean nextTuple() {
-    if (finished) return false;
+    if (finished) {
+      return false;
+    }
     
     // Loop over indexes and use current index pointer
     for (int i=0; i < tuple.length; i++) {
@@ -105,9 +107,9 @@ public class CrossProduct {
     }
         
     // Increment index pointer (search backwards)
-    if (tuple.length == 0 )
+    if (tuple.length == 0 ) {
       finished = true;
-    else {    
+    } else {    
       for (int i=tuple.length-1; i >= 0; i--) {
         int index = indexes[i];
         //! System.out.println(": " + index + " " + ((Object[])values[index]).length);
@@ -117,7 +119,9 @@ public class CrossProduct {
           return true;
         } else {
           indexes[i] = 0;
-          if (i == 0) finished = true;
+          if (i == 0) {
+            finished = true;
+          }
           //! System.out.println("RES: " + i + "=" + indexes[i] + " [" + ((Object[])values[i]).length + "]");
         }
       }

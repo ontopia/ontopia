@@ -62,8 +62,9 @@ public class OccurrenceField extends FieldDefinition {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof OccurrenceField))
+    if (!(obj instanceof OccurrenceField)) {
       return false;
+    }
 		
     OccurrenceField other = (OccurrenceField)obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -114,7 +115,9 @@ public class OccurrenceField extends FieldDefinition {
   public List<OccurrenceIF> getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     OccurrenceType otype = getOccurrenceType();
-    if (otype == null) return Collections.emptyList();
+    if (otype == null) {
+      return Collections.emptyList();
+    }
 		TopicIF typeIf = otype.getTopicIF();
     // FIXME: need to figure out how to do datatypes properly
     //! LocatorIF datatype = getDataType().getLocator();
@@ -131,7 +134,9 @@ public class OccurrenceField extends FieldDefinition {
     String value = (String) _value;
     LocatorIF datatype = getDataType().getLocator();
     OccurrenceType otype = getOccurrenceType();
-    if (otype == null) return;
+    if (otype == null) {
+      return;
+    }
 		TopicIF typeIf = otype.getTopicIF();
 		
     // HACK: we're ignoring the datatype when looking up existing ones
@@ -152,7 +157,9 @@ public class OccurrenceField extends FieldDefinition {
       }
     }
     
-    if (listener != null) listener.onAfterAdd(topic, this, value);
+    if (listener != null) {
+      listener.onAfterAdd(topic, this, value);
+    }
   }
 
   @Override
@@ -162,10 +169,14 @@ public class OccurrenceField extends FieldDefinition {
         .getValue() : (String) _value);
 //    LocatorIF datatype = getDataType().getLocator();
     OccurrenceType otype = getOccurrenceType();
-    if (otype == null) return;
+    if (otype == null) {
+      return;
+    }
 		TopicIF typeIf = otype.getTopicIF();
 
-		if (listener != null) listener.onBeforeRemove(topic, this, value);
+		if (listener != null) {
+      listener.onBeforeRemove(topic, this, value);
+    }
 		
     // HACK: we're ignoring the datatype when looking up existing ones
     // Collection occs = OntopolyModelUtils.findOccurrences(typeIf,

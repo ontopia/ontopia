@@ -61,8 +61,9 @@ public class TMRAPTestUtils {
           throw new OntopiaRuntimeException(e); // not bloody likely
         }
       
-      if (key != null)
+      if (key != null) {
         addParam(retVal, key, value);
+      }
     }
 
     return retVal;
@@ -81,8 +82,9 @@ public class TMRAPTestUtils {
     if (map.containsKey(key)) {
       String oldValue = (String)map.get(key);
       map.put(key, oldValue + SEPARATOR + value);
-    } else
+    } else {
       map.put(key, value);
+    }
   }
 
   /**

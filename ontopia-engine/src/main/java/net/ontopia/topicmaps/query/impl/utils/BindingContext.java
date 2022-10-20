@@ -89,13 +89,15 @@ public class BindingContext {
   public void addArgumentTypes(Object argument, Class[] types, PredicateIF predicate)
     throws InvalidQueryException {
 
-    if (argument instanceof Pair)
+    if (argument instanceof Pair) {
       argument = ((Pair) argument).getFirst();
+    }
 
-    if (argument instanceof Variable)
+    if (argument instanceof Variable) {
       _addVariableTypes(((Variable) argument).getName(), types, predicate);
-    else if (argument instanceof Parameter)
+    } else if (argument instanceof Parameter) {
       _addParameterTypes(((Parameter) argument).getName(), types, predicate);
+    }
     // else literal, so we don't care
   }
 
@@ -137,13 +139,14 @@ public class BindingContext {
                                     Object[] newtypes, PredicateIF predicate)
     throws InvalidQueryException {
 
-    if (newtypes.length == 0 && typecheck)
+    if (newtypes.length == 0 && typecheck) {
       throw new InvalidQueryException("Type conflict on " + name + ": cannot " +
                                       "be both " +
                                       PredicateSignature.getClassList(types1) +
                                       " and, as required by " +
                                       "predicate '" + predicate.getName() + "', " +
                                       PredicateSignature.getClassList(types2));
+    }
   }
 
   // --- Modifiers
@@ -172,8 +175,9 @@ public class BindingContext {
         Object[] newtypes = intersect(types1, types2);
         if (newtypes.length == 0 && typecheck) {
           String name = "$" + key;
-          if (!variables)
+          if (!variables) {
             name = "%" + key + "%";
+          }
           
           throw new InvalidQueryException("Type conflict on " + name + ": cannot " +
                                           "be both " +
@@ -182,8 +186,9 @@ public class BindingContext {
                                           PredicateSignature.getClassList(types2));
         }
         result.put(key, newtypes);
-      } else
+      } else {
         result.put(key, (Object[]) map2.get(key));
+      }
     }
     return result;
   }
@@ -207,8 +212,9 @@ public class BindingContext {
         Object[] types1 = (Object[]) map1.get(key);
         Object[] types2 = (Object[]) map2.get(key);
         result.put(key, union(types1, types2));          
-      } else
+      } else {
         result.put(key, (Object[])map2.get(key));
+      }
     }
     return result;
   }
@@ -234,8 +240,9 @@ public class BindingContext {
       Object[] types2 = (Object[]) map2.get(key);
       if (!map1.containsKey(key)) {
         Object[] existing = (Object[]) theory1.get(key);
-        if (existing != null)
+        if (existing != null) {
           types2 = union(existing, types2);
+        }
         theory1.put(key, types2);
       }
     }
@@ -245,8 +252,9 @@ public class BindingContext {
     while (iter.hasNext()) {
       Object key = iter.next();
       // if nothing's known about this variable, record it as a theory
-      if (!map1.containsKey(key) && !theory1.containsKey(key))
+      if (!map1.containsKey(key) && !theory1.containsKey(key)) {
         theory1.put(key, theory2.get(key));
+      }
     }
   }
 
@@ -257,10 +265,12 @@ public class BindingContext {
   //  - Object will only ever appear alone
   
   protected static Object[] intersect(Object[] array1, Object[] array2) {
-    if (array1.length == 1 && array1[0].equals(Object.class))
+    if (array1.length == 1 && array1[0].equals(Object.class)) {
       return array2;
-    if (array2.length == 1 && array2[0].equals(Object.class))
+    }
+    if (array2.length == 1 && array2[0].equals(Object.class)) {
       return array1;
+    }
     
     int matches = 0;
     // Result array cannot be bigger than the shortest input array
@@ -269,8 +279,9 @@ public class BindingContext {
     // Look up array2 objects
     for (int i = 0; i < array2.length; i++) {
       boolean found = false;
-      for (int ix = 0; !found && ix < array1.length; ix++)
+      for (int ix = 0; !found && ix < array1.length; ix++) {
         found = array2[i].equals(array1[ix]);
+      }
         
       if (found) {
         tresult[matches] = array2[i];
@@ -295,8 +306,9 @@ public class BindingContext {
       result.add(array2[i]);
     }
 
-    if (seenobject)
+    if (seenobject) {
       result = Collections.singleton(Object.class); // least specific info wins
+    }
 
     return result.toArray();
   }
@@ -316,10 +328,11 @@ public class BindingContext {
         sb.append(entry.getKey());
         sb.append('=');
         Object value = entry.getValue();
-        if (value != null && value.getClass().isArray())
+        if (value != null && value.getClass().isArray()) {
           sb.append(Arrays.asList((Object[])value));
-        else
+        } else {
           sb.append(value);
+        }
       }
       sb.append(']');
     }
@@ -332,10 +345,11 @@ public class BindingContext {
         sb.append(entry.getKey());
         sb.append('=');
         Object value = entry.getValue();
-        if (value != null && value.getClass().isArray())
+        if (value != null && value.getClass().isArray()) {
           sb.append(Arrays.asList((Object[])value));
-        else
+        } else {
           sb.append(value);
+        }
       }
       sb.append(']');
     }

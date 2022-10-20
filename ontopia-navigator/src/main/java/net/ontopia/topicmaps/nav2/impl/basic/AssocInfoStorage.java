@@ -91,8 +91,9 @@ public class AssocInfoStorage {
 
   @Override
   public boolean equals(Object object) {
-    if (!(object instanceof AssocInfoStorage))
+    if (!(object instanceof AssocInfoStorage)) {
       return false;
+    }
     AssocInfoStorage cmp = (AssocInfoStorage) object;
     return compare(cmp.getRoleType(), roleType) &&
       compare(cmp.getType(), type);
@@ -112,7 +113,7 @@ public class AssocInfoStorage {
 
   // --- Internal methods
 
-  private static final boolean compare(Object o1, Object o2) {
+  private static boolean compare(Object o1, Object o2) {
     return o1 == o2 ||
       (o1 != null && o1.equals(o2));
   }

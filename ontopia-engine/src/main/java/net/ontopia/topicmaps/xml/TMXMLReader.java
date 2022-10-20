@@ -156,8 +156,9 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
-    if (store == null)
+    if (store == null) {
       throw new IOException("Topic map not connected to a store.");
+    }
     
     XMLReader parser;
     try {
@@ -169,16 +170,18 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     
     // Register content handlers
     ContentHandler handler = new TMXMLContentHandler(topicmap, base_address);
-    if (validate)
+    if (validate) {
       handler = new ValidatingContentHandler(handler, getTMXMLSchema(), true);
+    }
     parser.setContentHandler(handler);
     
     // Parse input source
     try {
       parser.parse(source);
     } catch (SAXException e) {
-      if (e.getException() instanceof IOException)
+      if (e.getException() instanceof IOException) {
         throw (IOException) e.getException();
+      }
       throw new OntopiaRuntimeException(e);
       //throw new IOException("XML related problem: " + e.toString());
     }
@@ -234,16 +237,17 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         // this has to be the start element of a topic
         topic = getTopicById(atts.getValue("", "id"));
         TopicIF ttype = getType(uri, name);
-        if (ttype != null)
+        if (ttype != null) {
           topic.addType(ttype);
+      }
         state = TOPIC;
         break;
       case TOPIC:
         // this has to be some property of the topic
         if (TMXMLWriter.NS_TM.equals(uri) &&
-            ("identifier".equals(name) || "locator".equals(name)))
+            ("identifier".equals(name) || "locator".equals(name))) {
           state = IDENTIFIER;
-        else if (atts.getValue("", "role") != null) {
+      } else if (atts.getValue("", "role") != null) {
           // it's an association, of some kind
           // let's make association and role played by this topic
           association = builder.makeAssociation(getType(uri, name));
@@ -310,8 +314,9 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
       if (state == IDENTIFIER ||
           state == BASENAME ||
           state == VARIANT ||
-          state == MAYBETOPICNAME)
+          state == MAYBETOPICNAME) {
         buffer.append(ch, start, length);
+      }
     }
 
     @Override
@@ -333,10 +338,11 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         LocatorIF loc = createLocator(buffer.toString());
         buffer.setLength(0);
 
-        if ("identifier".equals(name))
+        if ("identifier".equals(name)) {
           registerSubjectIndicator(topic, loc);
-        else if ("locator".equals(name))
-          registerSubjectLocator(topic, loc);
+      } else if ("locator".equals(name)) {
+        registerSubjectLocator(topic, loc);
+      }
         break;
       case BASENAME:
         state = TOPICNAME;        
@@ -370,8 +376,9 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         // it turned out to be an occurrence (because we're seeing the end of
         // the element and haven't seen <value>)
         state = TOPIC;
-        if (datatype == null)
+        if (datatype == null) {
           datatype = TMXMLWriter.XSD_STRING;
+      }
         OccurrenceIF occ = builder.makeOccurrence(topic, 
                                                   getType(uri, name),
                                                   buffer.toString(),
@@ -405,10 +412,12 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     }
 
     private TopicIF getType(String uri, String name) throws SAXException {
-      if (uri == null || uri.isEmpty())
+      if (uri == null || uri.isEmpty()) {
         return getTopicById(name);
-      if (TMXMLWriter.NS_TM.equals(uri) && "topic".equals(name))
+      }
+      if (TMXMLWriter.NS_TM.equals(uri) && "topic".equals(name)) {
         return null; // element for typeless construct
+      }
       
       try {
         return getTopicBySubjectIdentifier(new URILocator(uri + name));
@@ -419,20 +428,23 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
 
     private Collection getScope(Attributes atts) {
       String value = atts.getValue("", "scope");
-      if (value == null)
+      if (value == null) {
         return Collections.EMPTY_SET;
+      }
       
       String[] tokens = StringUtils.split(value);
       Collection scope = new HashSet(tokens.length);      
-      for (int ix = 0; ix < tokens.length; ix++) 
+      for (int ix = 0; ix < tokens.length; ix++) {
         scope.add(getTopicByAttRef(tokens[ix]));
+      }
       return scope;
     }
 
     private void addScope(ScopedIF scoped) {
       Iterator it = scope.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         scoped.addTheme((TopicIF) it.next());
+      }
       scope = null;
     }
 
@@ -441,10 +453,11 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     }
 
     private TopicIF getTopicByAttRef(String attref) {
-      if (attref.indexOf(':') == -1)
+      if (attref.indexOf(':') == -1) {
         return getTopicById(attref);
-      else
+      } else {
         return getTopicByQName(attref);
+      }
     }
     
     private TopicIF getTopicById(String id) {
@@ -471,9 +484,10 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
       int pos = qname.indexOf(':');
       String prefix = qname.substring(0, pos);
       String local = qname.substring(pos + 1);
-      if (!nsprefixes.containsKey(prefix))
+      if (!nsprefixes.containsKey(prefix)) {
         throw new OntopiaRuntimeException("Undeclared namespace prefix " +
                                           prefix + " in " + qname);
+      }
 
       try {
         LocatorIF psi = new URILocator(nsprefixes.get(prefix) + local);
@@ -491,14 +505,17 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         return;
       }
 
-      if (!other.equals(topic))
+      if (!other.equals(topic)) {
         MergeUtils.mergeInto(topic, other);
+      }
     }
     
     // stolen from XTMContentHandler
     protected void registerSourceLocator(TMObjectIF tmobject, String id) {
       // No need to register source locator if id is null
-      if (id == null) return;
+      if (id == null) {
+        return;
+      }
       tmobject.addItemIdentifier(createLocator('#' + id));
     }
 
@@ -509,16 +526,18 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         return;
       }
 
-      if (other != topic)
+      if (other != topic) {
         MergeUtils.mergeInto(topic, other);
+      }
     }
   
     // stolen from XTMContentHandler
     protected LocatorIF createLocator(String address) {
-      if (address.length() == 0)
+      if (address.length() == 0) {
         return doc_address;
-      else
+      } else {
         return doc_address.resolveAbsolute(address);
+      }
     }
 
     private void handleReifier(ReifiableIF reifiable, Attributes atts) {
@@ -526,7 +545,9 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
     }
 
     private void handleReifier(ReifiableIF reifiable, String ref) {
-      if (ref == null) return;      
+      if (ref == null) {
+        return;
+      }      
       TopicIF reifier = getTopicByAttRef(ref);
 			reify(reifiable, reifier);
     }    

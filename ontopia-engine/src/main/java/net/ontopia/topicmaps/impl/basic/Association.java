@@ -65,10 +65,11 @@ public class Association extends TMObject implements AssociationIF {
   protected void setTopicMap(TopicMap parent) {
     // (De)reference pooled sets
     if (scope != null) {
-      if (parent == null)
+      if (parent == null) {
         topicmap.setpool.dereference(scope);
-      else
+      } else {
         scope = topicmap.setpool.get(scope);
+      }
     }
 
     // Set parent
@@ -83,8 +84,9 @@ public class Association extends TMObject implements AssociationIF {
       while (iter.hasNext()) {
         AssociationRoleIF role = iter.next();
         TopicIF type = role.getType();
-        if (type != null)
+        if (type != null) {
           result.add(role.getType());
+        }
       }
     }
     return result;
@@ -99,8 +101,9 @@ public class Association extends TMObject implements AssociationIF {
       Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
         AssociationRoleIF role = iter.next();
-        if (role.getType() == roletype)
+        if (role.getType() == roletype) {
           result.add(role);
+        }
       }
     }
     return result;
@@ -115,11 +118,13 @@ public class Association extends TMObject implements AssociationIF {
     AssociationRole assoc_role = (AssociationRole)_assoc_role;
     Objects.requireNonNull(assoc_role, MSG_NULL_ARGUMENT);
     // Check to see if association role is already a member of this association
-    if (assoc_role.parent == this)
+    if (assoc_role.parent == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (assoc_role.parent != null)
+    if (assoc_role.parent != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(AssociationIF.EVENT_ADD_ROLE, assoc_role, null);    
     // Set association property
@@ -128,24 +133,27 @@ public class Association extends TMObject implements AssociationIF {
     roles.add(assoc_role);
     // Make sure role is added to player's list
     Topic player = (Topic) assoc_role.getPlayer();
-    if (player != null && parent != null)
+    if (player != null && parent != null) {
       player.addRole(assoc_role);
+    }
   }
 
   protected void removeRole(AssociationRoleIF _assoc_role) {
     AssociationRole assoc_role = (AssociationRole)_assoc_role;
     Objects.requireNonNull(assoc_role, MSG_NULL_ARGUMENT);
     // Check to see if association role is not a member of this association
-    if (assoc_role.parent != this)
+    if (assoc_role.parent != this) {
       return;
+    }
     // Notify listeners
     fireEvent(AssociationIF.EVENT_REMOVE_ROLE, null, assoc_role);
     // Remove role from list of roles
     roles.remove(assoc_role);
     // Removing role from player's list of roles
     Topic player = (Topic) assoc_role.getPlayer();
-    if (player != null && parent != null)
+    if (player != null && parent != null) {
       player.removeRole(assoc_role);
+    }
     // Unset association property
     assoc_role.setAssociation(null);
   }
@@ -188,8 +196,9 @@ public class Association extends TMObject implements AssociationIF {
     // Notify listeners
     fireEvent(AssociationIF.EVENT_REMOVE_THEME, null, theme);
     // Remove theme from scope
-    if (scope == null)
+    if (scope == null) {
       return;
+    }
     scope = topicmap.setpool.remove(scope, theme, true);
   }
 
@@ -222,15 +231,21 @@ public class Association extends TMObject implements AssociationIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) {
+      CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
-    if (oldReifier != null) oldReifier.setReified(null);
-    if (reifier != null) reifier.setReified(this);
+    if (oldReifier != null) {
+      oldReifier.setReified(null);
+    }
+    if (reifier != null) {
+      reifier.setReified(this);
+    }
   }
 
   // -----------------------------------------------------------------------------

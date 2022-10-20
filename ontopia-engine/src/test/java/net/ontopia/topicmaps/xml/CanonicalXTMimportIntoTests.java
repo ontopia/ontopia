@@ -49,7 +49,9 @@ public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
       @Override
       public boolean ok(String resourcePath) {
         // Ignore importInto-specific file.
-        if (resourcePath.endsWith("multiple-tms-read.xtm")) return false;
+        if (resourcePath.endsWith("multiple-tms-read.xtm")) {
+          return false;
+        }
 
         return resourcePath.endsWith(".xtm");
       }

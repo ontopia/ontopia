@@ -29,9 +29,9 @@ public class QName {
   
   public QName(String qname) {
     int pos = qname.indexOf(':');
-    if (pos == -1)
+    if (pos == -1) {
       localname = qname;
-    else {
+    } else {
       prefix = qname.substring(0, pos);
       localname = qname.substring(pos+1);
     }
@@ -49,10 +49,11 @@ public class QName {
 
   @Override
   public String toString() {
-    if (prefix == null)
+    if (prefix == null) {
       return localname;
-    else
+    } else {
       return prefix + ':' + localname;
+    }
   }
   
 }

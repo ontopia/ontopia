@@ -89,15 +89,21 @@ public class TopicMapClassification {
 
     // FIXME: wrap and hand over to compound analyzer instead?
     dc.addTermAnalyzer(language.getStopListAnalyzer());
-    if (customTermAnalyzer != null) dc.addTermAnalyzer(customTermAnalyzer); // blacklist
+    if (customTermAnalyzer != null) {
+      dc.addTermAnalyzer(customTermAnalyzer); // blacklist
+    }
 
     dc.addTermAnalyzer(ca);
 
     // run stop list analyzer after compounds have been made    
     dc.addTermAnalyzer(language.getStopListAnalyzer());
-    if (customTermAnalyzer != null) dc.addTermAnalyzer(customTermAnalyzer); // blacklist
+    if (customTermAnalyzer != null) {
+      dc.addTermAnalyzer(customTermAnalyzer); // blacklist
+    }
     
-    if (ta != null) dc.addTermAnalyzer(ta);
+    if (ta != null) {
+      dc.addTermAnalyzer(ta);
+    }
     dc.addTermAnalyzer(new RelativeScore());
     
     // analyze document

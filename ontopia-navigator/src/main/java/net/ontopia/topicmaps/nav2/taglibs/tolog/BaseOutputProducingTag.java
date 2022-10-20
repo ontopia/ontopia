@@ -106,13 +106,15 @@ public abstract class BaseOutputProducingTag extends TagSupport {
    * Get the object to write out (either through a variable or query).
    */
   public Object generateOutputObject() throws JspTagException {
-    if (query == null && variableName == null)
+    if (query == null && variableName == null) {
       throw new NavigatorRuntimeException(getName() + " : requires"
               + " either a 'query' - or a 'var' parameter, but got"
               + " neither.\n");
-    if (variableName != null && query != null)
+    }
+    if (variableName != null && query != null) {
       throw new NavigatorRuntimeException(getName() + " : requires"
               + " either a 'query' - or a 'var' parameter, but got both.\n");
+    }
 
     Object outObject;
     if (variableName != null) {
@@ -122,20 +124,22 @@ public abstract class BaseOutputProducingTag extends TagSupport {
       try {
         ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
-        if (contextTag == null)
+        if (contextTag == null) {
           throw new JspTagException("<tolog:*> tags must be nested directly or"
                   + " indirectly within a <tolog:context> tag, but no"
                   + " <tolog:context> was found.");
+        }
 
         coll = contextTag.getContextManager().getValue(variableName);
       } catch (VariableNotSetException e) {
         log.debug("didn't find " + variableName + ". Lookup in pageContext.");
         Object pageContextValue = InteractionELSupport
             .getValue(variableName, pageContext);
-        if (pageContextValue == null)
+        if (pageContextValue == null) {
           throw new NavigatorRuntimeException(getName() + " :"
               + " The variable '" + variableName
               + "' is not set, and hence cannot be referenced.\n");
+        }
         coll = Collections.singleton(pageContextValue);
       }
 
@@ -170,10 +174,11 @@ public abstract class BaseOutputProducingTag extends TagSupport {
       queryWrapper.next();
       Object firstRow[] = queryWrapper.getCurrentRow();
 
-      if (firstRow.length != 1)
+      if (firstRow.length != 1) {
         throw new NavigatorRuntimeException(getName() + " :"
                 + " requires a query result of 1 column, but got "
                 + firstRow.length + " columns.\n");
+      }
 
       outObject = firstRow[0];
       // outObject contains the first (and only) column of the first row
@@ -210,10 +215,11 @@ public abstract class BaseOutputProducingTag extends TagSupport {
   protected final void print2Writer(JspWriter out, String string)
     throws IOException {
 
-    if (escapeEntities)
+    if (escapeEntities) {
       StringUtils.escapeHTMLEntities(string, out);
-    else
+    } else {
       out.print( string );
+    }
   }
 
 }

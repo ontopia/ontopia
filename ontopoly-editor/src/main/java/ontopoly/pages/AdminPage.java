@@ -107,8 +107,9 @@ public class AdminPage extends OntopolyAbstractPage {
     syntaxRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        if (target != null)
+        if (target != null) {
           target.addComponent(form);
+        }
       }
     });
     form.add(syntaxRadioChoice);
@@ -140,10 +141,11 @@ public class AdminPage extends OntopolyAbstractPage {
           public void write(OutputStream output) {
             ExportUtils.Content contentchoice =
               ExportUtils.Content.ENTIRE_TOPIC_MAP;
-            if (content.equals((String) contentCategories.get(1)))
+            if (content.equals((String) contentCategories.get(1))) {
               contentchoice = ExportUtils.Content.INSTANCES_ONLY;
-            else if (content.equals((String) contentCategories.get(2)))
+            } else if (content.equals((String) contentCategories.get(2))) {
               contentchoice = ExportUtils.Content.SCHEMA_ONLY;
+            }
             try {
               ExportUtils.export(getTopicMap(), syntax, contentchoice, new OutputStreamWriter(output, "utf-8"));
             } catch (UnsupportedEncodingException e) {

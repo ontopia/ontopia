@@ -82,15 +82,21 @@ public class SQLExecuter {
       while (rs.next()) {
         for (int i=1; i <= cols; i++) {
           System.out.print(rs.getString(i));
-          if (i != cols) System.out.print(" | ");
+          if (i != cols) {
+            System.out.print(" | ");
+          }
         }
         System.out.println();
       }
       rs.close();
       
     } finally {
-      if (stm != null) stm.close();
-      if (conn != null) conn.close();
+      if (stm != null) {
+        stm.close();
+      }
+      if (conn != null) {
+        conn.close();
+      }
     }
   }
   

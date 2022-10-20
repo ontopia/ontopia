@@ -55,14 +55,17 @@ public class StoreFactoryReference extends AbstractTopicMapReference {
   @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly)
     throws IOException {
-    if (!isOpen()) open();
+    if (!isOpen()) {
+      open();
+    }
 
     // create new store
     TopicMapStoreIF store;
-    if (readonly)
+    if (readonly) {
       store = sfactory_ro.createStore();
-    else
+    } else {
       store = sfactory_rw.createStore();
+    }
     // register store
     store.setReference(this);
     // register listeners

@@ -85,8 +85,9 @@ public abstract class AbstractContentStoreTest {
   @Test
   public void testUnusualBytes() throws ContentStoreException, IOException {
     byte[] CONTENT = new byte[256];
-    for (int ix = 0; ix < CONTENT.length; ix++)
+    for (int ix = 0; ix < CONTENT.length; ix++) {
       CONTENT[ix] = (byte) ix;
+    }
     
     int key = store.add(getStream(CONTENT));
     compare(key, CONTENT);
@@ -105,8 +106,9 @@ public abstract class AbstractContentStoreTest {
     
     for (int ix = 0; ix < 1000; ix++) {
       int operation = random.nextInt(4);
-      if (entries.isEmpty())
+      if (entries.isEmpty()) {
         operation = ADD_NEW;
+      }
 
       switch (operation) {
       case ADD_NEW:
@@ -152,8 +154,9 @@ public abstract class AbstractContentStoreTest {
     Assert.assertTrue("Returned content of wrong length",
                content.length == CONTENT.length);
     
-    for (int ix = 0; ix < CONTENT.length; ix++)
+    for (int ix = 0; ix < CONTENT.length; ix++) {
       Assert.assertTrue("Returned content differs from original in byte " + ix,
                  CONTENT[ix] == content[ix]);
+    }
   }
 }

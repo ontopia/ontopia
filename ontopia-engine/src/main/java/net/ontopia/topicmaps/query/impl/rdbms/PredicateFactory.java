@@ -94,24 +94,26 @@ public class PredicateFactory implements PredicateFactoryIF {
 
   @Override
   public PredicateIF createPredicate(TopicIF type, boolean assoc) {
-    if (assoc) 
+    if (assoc) { 
       return new DynamicAssociationPredicate(topicmap, base, type);
-    else
+    } else {
       return new DynamicOccurrencePredicate(topicmap, base, type);
+    }
   }
   
   @Override
   public ModuleIF createModule(String uri) {
-    if (ExperimentalModule.MODULE_URI.equals(uri))
+    if (ExperimentalModule.MODULE_URI.equals(uri)) {
       return new ExperimentalModule();
-    else if (StringModule.MODULE_URI.equals(uri))
+    } else if (StringModule.MODULE_URI.equals(uri)) {
       return new JDOBasicModule(new StringModule());
-    else if (uri.startsWith(JavaModule.MODULE_PREFIX))
+    } else if (uri.startsWith(JavaModule.MODULE_PREFIX)) {
       return new JDOBasicModule(new JavaModule(topicmap, uri));
-    else if (NumbersModule.MODULE_URI.equals(uri))
+    } else if (NumbersModule.MODULE_URI.equals(uri)) {
       return new NumbersModule();
-    else
+    } else {
       return null;
+    }
   }
 
   @Override

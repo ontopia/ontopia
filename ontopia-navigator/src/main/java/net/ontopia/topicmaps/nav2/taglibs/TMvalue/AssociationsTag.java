@@ -45,9 +45,9 @@ public class AssociationsTag extends BaseScopedTag {
   public Collection process(Collection topics) throws JspTagException {
     // find all associations (TopicIF objects) of all topics in collection
     // avoid duplicate entries therefore use a HashSet
-    if (topics == null || topics.isEmpty())
+    if (topics == null || topics.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       HashSet associations = new HashSet();
       Iterator iter = topics.iterator();
       TopicIF topic = null;
@@ -58,8 +58,9 @@ public class AssociationsTag extends BaseScopedTag {
       Predicate<ScopedIF> scopeDecider = null;
 
       // setup scope filter for user context filtering
-      if (useUserContextFilter)
+      if (useUserContextFilter) {
         scopeDecider = getScopeDecider(SCOPE_ASSOCIATIONS);
+      }
       
       while (iter.hasNext()) {
         obj = iter.next();
@@ -73,8 +74,9 @@ public class AssociationsTag extends BaseScopedTag {
               assocRole = (AssociationRoleIF) iterRoles.next();
               currentAssoc = assocRole.getAssociation();
               // add current assoc if within user context if specified
-              if (scopeDecider == null || scopeDecider.test(currentAssoc))
+              if (scopeDecider == null || scopeDecider.test(currentAssoc)) {
                 associations.add( currentAssoc );
+              }
             } // while iterRoles
           }
         } catch (ClassCastException e) {
@@ -84,10 +86,12 @@ public class AssociationsTag extends BaseScopedTag {
             currentAssoc = assocRole.getAssociation();
             // add current assoc if within user context if specified
             if (scopeDecider != null) {
-              if (scopeDecider.test(currentAssoc))
+              if (scopeDecider.test(currentAssoc)) {
                 associations.add(currentAssoc);
-            } else
+              }
+            } else {
               associations.add(currentAssoc);
+            }
           }
           // --- otherwise
           else {

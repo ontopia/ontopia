@@ -76,8 +76,9 @@ public class SyncTest {
   public void tearDown() throws SQLException, IOException {
     // must close DB2TM's connection to the database, otherwise the drop
     // table statements below will hang indefinitely
-    if (mapping != null)
+    if (mapping != null) {
       mapping.close();
+    }
 
     // sometimes connnections get into an error state. reopening to avoid
     // this problem.

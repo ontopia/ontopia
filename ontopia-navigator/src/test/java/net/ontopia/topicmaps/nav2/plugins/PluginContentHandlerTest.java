@@ -99,8 +99,9 @@ public class PluginContentHandlerTest {
     Iterator it = plugins.iterator();
     while (it.hasNext()) {
       PluginIF plugin = (PluginIF) it.next();
-      if (plugin.getId().equals(id))
+      if (plugin.getId().equals(id)) {
         return plugin;
+      }
     }
     return null;
   }

@@ -57,7 +57,9 @@ public class JDOStartsWith implements JDOExpressionIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOStartsWith) {
       JDOStartsWith other = (JDOStartsWith)obj;
       return (left.equals(other.left) &&

@@ -126,7 +126,9 @@ public class SQLBatchOneToManyAggregate extends SQLOneToManyAggregate implements
   @Override
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
     // Add batch update
-    if (debug) log.debug("Adding batch: " + sql);
+    if (debug) {
+      log.debug("Adding batch: " + sql);
+    }
     stm.addBatch();
   }
   

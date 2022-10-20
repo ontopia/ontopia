@@ -67,17 +67,20 @@ public class CoalescePredicate implements BasicPredicateIF {
         Object coalescedValue = matches.data[ix][colindexes[i]];
         if (coalescedValue != null) {
           // if bound then compare and filter
-          if (isBound && !Objects.equals(matches.data[ix][colindexes[0]], coalescedValue))
+          if (isBound && !Objects.equals(matches.data[ix][colindexes[0]], coalescedValue)) {
             break;
+          }
         
           Object[] newRow = (Object[]) matches.data[ix].clone();
           
           // if not bound then set first argument
-          if (!isBound)
+          if (!isBound) {
             newRow[colindexes[0]] = matches.data[ix][colindexes[i]];
+          }
         
-          if (result.last+1 == result.size) 
+          if (result.last+1 == result.size) {
             result.increaseCapacity();
+          }
           result.last++;
           result.data[result.last] = newRow;
           break;

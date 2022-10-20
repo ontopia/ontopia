@@ -46,11 +46,13 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
    */ 
   public FrequencyAnalyzer(String filename) {
     ClassLoader cloader = FrequencyAnalyzer.class.getClassLoader();
-    if (cloader == null)
+    if (cloader == null) {
       throw new OntopiaRuntimeException("Cannot find class loader.");
+    }
     InputStream istream = cloader.getResourceAsStream(filename);
-    if (istream == null)
+    if (istream == null) {
       throw new OntopiaRuntimeException("Cannot find resource: " + filename);
+    }
 
     this.freqs = load(istream);
     // istream is closed inside load
@@ -110,14 +112,16 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
     for (int i=0; i < variants.length; i++) {
       Variant variant = variants[i];
       double freq = freqs.get(variant.getValue().toLowerCase());
-      if (freq > 0d)
+      if (freq > 0d) {
         total += freq;
-      else
+      } else {
         total += 1d;
+      }
     }
     double average = (total / variants.length);
-    if (average > 0d)
+    if (average > 0d) {
       term.multiplyScore(average, "frequency adjustment");
+    }
   }
   
   @Override

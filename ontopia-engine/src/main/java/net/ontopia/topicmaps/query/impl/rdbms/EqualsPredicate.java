@@ -56,11 +56,15 @@ public class EqualsPredicate
     // Cannot execute if arguments are variables of type java.lang.Object
     if (args[0] instanceof Variable) {
       Class vt1 = builder.getVariableType(((Variable)args[0]).getName());
-      if (Object.class.equals(vt1)) return false;
+      if (Object.class.equals(vt1)) {
+        return false;
+      }
     }    
     if (args[1] instanceof Variable) {
       Class vt2 = builder.getVariableType(((Variable)args[1]).getName());
-      if (Object.class.equals(vt2)) return false;
+      if (Object.class.equals(vt2)) {
+        return false;
+      }
     }
       
     // TOLOG: $LEFT == $RIGHT

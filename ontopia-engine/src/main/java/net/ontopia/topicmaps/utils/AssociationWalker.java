@@ -197,7 +197,9 @@ public class AssociationWalker {
    */
   private void doWalk(TopicIF fromTopic, WalkerState state) {
     // ignore if from topic is null
-    if (fromTopic == null) return;
+    if (fromTopic == null) {
+      return;
+    }
 
     Collection<AssociationRoleIF> fromRoles = fromTopic.getRoles();
     if (fromRoles.isEmpty()) {
@@ -373,7 +375,9 @@ class WalkerState {
   protected WalkerState(TopicIF start, boolean storePaths) {
     startTopic = start;
     this.storePaths = storePaths;
-    if (storePaths) paths = new ArrayList<List<TMObjectIF>>();
+    if (storePaths) {
+      paths = new ArrayList<List<TMObjectIF>>();
+    }
     currPath = new Stack<TMObjectIF>();
     currPath.push(start);
     foundTopic = false;
@@ -386,11 +390,15 @@ class WalkerState {
   }
     
   protected void pushPath(TMObjectIF lastElement) {
-    if (storePaths) currPath.push(lastElement);
+    if (storePaths) {
+      currPath.push(lastElement);
+    }
   }
 
   protected void popPath() {
-    if (storePaths) currPath.pop();
+    if (storePaths) {
+      currPath.pop();
+    }
   }
     
 }

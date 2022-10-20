@@ -54,7 +54,9 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
 
   public LocatorIF getBaseAddress() {
     String base_address = this.<String>loadField(TopicMap.LF_base_address);
-    if (base_address == null) return null;
+    if (base_address == null) {
+      return null;
+    }
     try {
       return new URILocator(base_address);
     } catch (MalformedURLException e) {
@@ -127,8 +129,9 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
 
   public void setTransaction(RDBMSTopicMapTransaction transaction) {
     // The transaction property can only be set once
-    if (this.transaction != null)
+    if (this.transaction != null) {
       throw new OntopiaRuntimeException("Transaction can only be set once.");
+    }
     
     this.transaction = transaction;
   }
@@ -222,8 +225,9 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
       }
       case 'M': {
         // Lookup topic map (only this one can match)
-        if (object_id.equals(getObjectId()))
+        if (object_id.equals(getObjectId())) {
           return this;
+        }
       }
       default:
         // No object was found

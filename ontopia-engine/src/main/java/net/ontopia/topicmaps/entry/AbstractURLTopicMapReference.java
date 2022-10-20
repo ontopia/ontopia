@@ -138,9 +138,12 @@ public abstract class AbstractURLTopicMapReference
   @Override
   public synchronized void open() {
     // ignore if already open
-    if (isOpen()) return;
-    if (isDeleted()) 
+    if (isOpen()) {
+      return;
+    }
+    if (isDeleted()) {
       throw new StoreDeletedException("Topic map has been deleted through this reference.");
+    }
     // make sure store is loaded
     if (reuse_store && store == null) {
 
@@ -166,7 +169,9 @@ public abstract class AbstractURLTopicMapReference
   public synchronized void close() {    
     // close and dereference store
     if (store != null) {
-      if (store.isOpen()) store.close();
+      if (store.isOpen()) {
+        store.close();
+      }
       store = null;
     }
     this.isopen = false;
@@ -181,13 +186,17 @@ public abstract class AbstractURLTopicMapReference
    */
   @Override
   public synchronized void delete() {
-    if (source == null)
+    if (source == null) {
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
-    if (!source.supportsDelete())
+    }
+    if (!source.supportsDelete()) {
       throw new UnsupportedOperationException("This reference cannot be deleted as the source does not allow deleting.");
+    }
     
     // ignore if store already deleted
-    if (isDeleted()) return;
+    if (isDeleted()) {
+      return;
+    }
 
     // close reference
     close();
@@ -202,9 +211,13 @@ public abstract class AbstractURLTopicMapReference
   
   @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly) throws IOException {
-    if (!isOpen()) open();
+    if (!isOpen()) {
+      open();
+    }
 
-    if (reuse_store && store != null) return store;
+    if (reuse_store && store != null) {
+      return store;
+    }
 
     // load topic map store
     TopicMapStoreIF store = loadTopicMap(readonly).getStore();
@@ -213,7 +226,9 @@ public abstract class AbstractURLTopicMapReference
     // register listeners
     ((AbstractTopicMapStore)store).setTopicListeners(getTopicListeners());
     
-    if (reuse_store) this.store = store;
+    if (reuse_store) {
+      this.store = store;
+    }
     return store;
   }
 

@@ -99,7 +99,9 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
           identityField = new FieldInstanceURIField("fieldValue", fieldValueModel) {
             @Override
             public boolean isEnabled() {
-              if (readonly) return false;
+              if (readonly) {
+                return false;
+              }
               // make sure that internal psis are always protected
               return !isProtectedIdentity(oldValue);
             }		      
@@ -115,12 +117,15 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
           new FieldInstanceRemoveButton("remove", "remove-value.gif", fieldValueModel) { 
           @Override
           public boolean isVisible() {
-            if (identityField == null || ! identityField.isEnabled()) return false;
-            Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
-            if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
+            if (identityField == null || ! identityField.isEnabled()) {
               return false;
-            else
+            }
+            Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+            if (fieldValuesModel.size() == 1 && cardinality.isMinOne()) {
+              return false;
+            } else {
               return !readonly && fieldValueModel.isExistingValue();
+            }
           }
             @Override
             public void onClick(AjaxRequestTarget target) {
@@ -151,7 +156,9 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
       }
       @Override
       public boolean isVisible() {
-        if (readonly) return false;
+        if (readonly) {
+          return false;
+        }
         Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
         return !cardinality.isMaxOne() && fieldValuesModel.containsExisting();
       }      
@@ -165,8 +172,9 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
     fieldInstanceButtons.add(addButton);
     
     Cardinality cardinality = fieldAssignment.getCardinality();
-    if (cardinality.isMaxOne())
+    if (cardinality.isMaxOne()) {
       addButton.setVisible(false);
+    }
 	}
 
   protected boolean isProtectedIdentity(String identity) {

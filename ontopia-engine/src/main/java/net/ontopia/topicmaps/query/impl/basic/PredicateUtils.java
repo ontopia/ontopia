@@ -132,15 +132,17 @@ public class PredicateUtils {
     
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!fromclass.isInstance(matches.data[ix][fromix]))
+      if (!fromclass.isInstance(matches.data[ix][fromix])) {
         continue;
+      }
       
       Object[] newRow = (Object[]) matches.data[ix].clone();
       switch(operation) {
       case ROLE_TO_PLAYER:
         newRow[toix] = ((AssociationRoleIF) newRow[fromix]).getPlayer();
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+      }
         break;
       case NAME_TO_TOPIC:
         newRow[toix] = ((TopicNameIF) newRow[fromix]).getTopic(); break;
@@ -150,46 +152,54 @@ public class PredicateUtils {
         newRow[toix] = ((AssociationRoleIF) newRow[fromix]).getAssociation(); break;
       case REIFIER_TO_REIFIED:
         newRow[toix] = ((TopicIF) newRow[fromix]).getReified();
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+      }
         break;
       case REIFIED_TO_REIFIER:
         newRow[toix] = ((ReifiableIF) newRow[fromix]).getReifier();
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+      }
         break;
       case INSTANCE_TO_TYPE:
         newRow[toix] = ((TypedIF) newRow[fromix]).getType();
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+      }
         break;
       case OBJECT_TO_VALUE:
-        if (newRow[fromix] instanceof TopicNameIF)
+        if (newRow[fromix] instanceof TopicNameIF) {
           newRow[toix] = ((TopicNameIF) newRow[fromix]).getValue();
-        else if (newRow[fromix] instanceof VariantNameIF) {
+        } else if (newRow[fromix] instanceof VariantNameIF) {
 					VariantNameIF vn = (VariantNameIF) newRow[fromix];
-					if (Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
-						continue;
+					if (Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) { // exclude xsd:anyURI
+            continue;
+          }
 					newRow[toix] = vn.getValue();
-				} else if (newRow[fromix] instanceof OccurrenceIF) {
+			  } else if (newRow[fromix] instanceof OccurrenceIF) {
 					OccurrenceIF occ = (OccurrenceIF) newRow[fromix];
-					if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
-						continue;
+					if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) { // exclude xsd:anyURI
+            continue;
+          }
 					newRow[toix] = occ.getValue();
 				}
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+        }
         break;
       case OBJECT_TO_RESOURCE:
-        if (newRow[fromix] instanceof VariantNameIF)
+        if (newRow[fromix] instanceof VariantNameIF) {
           newRow[toix] = ((VariantNameIF) newRow[fromix]).getLocator();
-        else if (newRow[fromix] instanceof OccurrenceIF)
+        } else if (newRow[fromix] instanceof OccurrenceIF) {
           newRow[toix] = ((OccurrenceIF) newRow[fromix]).getLocator();
+        }
         
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
-        else
+        } else {
           newRow[toix] = ((LocatorIF) newRow[toix]).getAddress();
+        }
         
         break;
       case VNAME_TO_TNAME:
@@ -198,20 +208,23 @@ public class PredicateUtils {
       case SUBJLOC_TO_TOPIC:
         LocatorIF loc = getLocator(newRow[fromix]);
         newRow[toix] = matches.getQueryContext().getTopicMap().getTopicBySubjectLocator(loc);
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+        }
         break;
       case SUBJID_TO_TOPIC:
         loc = getLocator(newRow[fromix]);
         newRow[toix] = matches.getQueryContext().getTopicMap().getTopicBySubjectIdentifier(loc);
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+        }
         break;
       case SRCLOC_TO_OBJECT:
         loc = getLocator(newRow[fromix]);
         newRow[toix] = matches.getQueryContext().getTopicMap().getObjectByItemIdentifier(loc);
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
+        }
         break;
       case STR_TO_LENGTH:
         String str = (String) newRow[fromix];
@@ -228,23 +241,26 @@ public class PredicateUtils {
         newRow[toix] = newRow[fromix];
         break;
       case OBJECT_TO_DATATYPE:
-        if (newRow[fromix] instanceof VariantNameIF)
+        if (newRow[fromix] instanceof VariantNameIF) {
           newRow[toix] = ((VariantNameIF) newRow[fromix]).getDataType();
-        else if (newRow[fromix] instanceof OccurrenceIF)
+        } else if (newRow[fromix] instanceof OccurrenceIF) {
           newRow[toix] = ((OccurrenceIF) newRow[fromix]).getDataType();
+        }
         
-        if (newRow[toix] == null)
+        if (newRow[toix] == null) {
           continue;
-        else
+        } else {
           newRow[toix] = ((LocatorIF) newRow[toix]).getAddress();
+        }
         break;
       default:
         throw new OntopiaRuntimeException("INTERNAL ERROR: Unknown operation code " +
                                           operation);
       }
 
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
       result.data[result.last] = newRow;
     }
@@ -268,8 +284,9 @@ public class PredicateUtils {
     
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!fromclass.isInstance(matches.data[ix][fromix]))
+      if (!fromclass.isInstance(matches.data[ix][fromix])) {
         continue;
+      }
 
       Collection objects = null;
       switch(operation) {
@@ -290,20 +307,23 @@ public class PredicateUtils {
       case TOPIC_TO_SUBJLOC:
         objects = new ArrayList();
         Iterator it = ((TopicIF) matches.data[ix][fromix]).getSubjectLocators().iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
           objects.add(((LocatorIF) it.next()).getAddress());
+        }
         break;
       case TOPIC_TO_SUBJID:
         objects = new ArrayList();
         it = ((TopicIF) matches.data[ix][fromix]).getSubjectIdentifiers().iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
           objects.add(((LocatorIF) it.next()).getAddress());
+        }
         break;
       case OBJECT_TO_SRCLOC:
         objects = new ArrayList();
         it = ((TMObjectIF) matches.data[ix][fromix]).getItemIdentifiers().iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
           objects.add(((LocatorIF) it.next()).getAddress());
+        }
         break;
       case THEME_TO_SCOPED:
         TopicIF theme = (TopicIF) matches.data[ix][fromix];
@@ -322,11 +342,13 @@ public class PredicateUtils {
         objects = topic.getTopicNames();
       }
       
-      if (objects.isEmpty())
+      if (objects.isEmpty()) {
         continue;
+      }
       
-      while (result.last + objects.size() >= result.size) 
+      while (result.last + objects.size() >= result.size) {
         result.increaseCapacity();
+      }
 
       Object[] values = objects.toArray();
 
@@ -349,8 +371,9 @@ public class PredicateUtils {
     for (int ix = 0; ix <= matches.last; ix++) {
       // verify types of objects
       if (!class1.isInstance(matches.data[ix][ix1]) ||
-          !class2.isInstance(matches.data[ix][ix2]))
+          !class2.isInstance(matches.data[ix][ix2])) {
         continue;
+      }
 
       // find correct value
       Object object = null;
@@ -360,8 +383,9 @@ public class PredicateUtils {
         break;
       case FILTER_SCOPE:
         Object theme = matches.data[ix][ix2];
-        if (((ScopedIF) matches.data[ix][ix1]).getScope().contains(theme))
+        if (((ScopedIF) matches.data[ix][ix1]).getScope().contains(theme)) {
           object = theme;
+        }
         break;
       case FILTER_ROLE_PLAYER:
         AssociationRoleIF role = (AssociationRoleIF) matches.data[ix][ix1];
@@ -380,16 +404,18 @@ public class PredicateUtils {
         object = occ.getTopic();
         break;
       case FILTER_VALUE:
-        if (matches.data[ix][ix1] instanceof TopicNameIF)
+        if (matches.data[ix][ix1] instanceof TopicNameIF) {
           object = ((TopicNameIF) matches.data[ix][ix1]).getValue();
-        else if (matches.data[ix][ix1] instanceof VariantNameIF) {
+        } else if (matches.data[ix][ix1] instanceof VariantNameIF) {
 					VariantNameIF vn = (VariantNameIF) matches.data[ix][ix1];
-					if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
-						object = vn.getValue();
+					if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) { // exclude xsd:anyURI
+            object = vn.getValue();
+          }
         } else if (matches.data[ix][ix1] instanceof OccurrenceIF) {
 					OccurrenceIF occ2 = (OccurrenceIF) matches.data[ix][ix1];
-					if (!Objects.equals(occ2.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI
-						object = occ2.getValue();
+					if (!Objects.equals(occ2.getDataType(), DataTypes.TYPE_URI)) { // exclude xsd:anyURI
+            object = occ2.getValue();
+          }
 				}
         break;
       case FILTER_VARIANT:
@@ -399,27 +425,32 @@ public class PredicateUtils {
         object = ((AssociationRoleIF) matches.data[ix][ix1]).getAssociation();
         break;
       case FILTER_RESOURCE:
-        if (matches.data[ix][ix1] instanceof OccurrenceIF)
+        if (matches.data[ix][ix1] instanceof OccurrenceIF) {
           object = ((OccurrenceIF) matches.data[ix][ix1]).getLocator();
-        else if (matches.data[ix][ix1] instanceof VariantNameIF)
+        } else if (matches.data[ix][ix1] instanceof VariantNameIF) {
           object = ((VariantNameIF) matches.data[ix][ix1]).getLocator();
-        if (object != null)
+        }
+        if (object != null) {
           object = ((LocatorIF) object).getAddress();
+        }
         break;
       case FILTER_SUBJLOC:
         LocatorIF loc = getLocator(matches.data[ix][ix2]);
-        if (((TopicIF) matches.data[ix][ix1]).getSubjectLocators().contains(loc))
+        if (((TopicIF) matches.data[ix][ix1]).getSubjectLocators().contains(loc)) {
           object = matches.data[ix][ix2];
+        }
         break;
       case FILTER_SUBJID:
         loc = getLocator(matches.data[ix][ix2]);
-        if (((TopicIF) matches.data[ix][ix1]).getSubjectIdentifiers().contains(loc))
+        if (((TopicIF) matches.data[ix][ix1]).getSubjectIdentifiers().contains(loc)) {
           object = matches.data[ix][ix2];
+        }
         break;
       case FILTER_SRCLOC:
         loc = getLocator(matches.data[ix][ix2]);
-        if (((TMObjectIF) matches.data[ix][ix1]).getItemIdentifiers().contains(loc))
+        if (((TMObjectIF) matches.data[ix][ix1]).getItemIdentifiers().contains(loc)) {
           object = matches.data[ix][ix2];
+        }
         break;
       case FILTER_ID:
         object = ((TMObjectIF) matches.data[ix][ix1]).getObjectId();
@@ -427,38 +458,43 @@ public class PredicateUtils {
       case FILTER_STR_STARTS_WITH:
         String str1 = (String) matches.data[ix][ix1];
         String str2 = (String) matches.data[ix][ix2];
-        if (str1.startsWith(str2))
+        if (str1.startsWith(str2)) {
           object = str2;
+        }
         break;
       case FILTER_STR_ENDS_WITH:
         String string1 = (String) matches.data[ix][ix1];
         String string2 = (String) matches.data[ix][ix2];
-        if (string1.endsWith(string2))
+        if (string1.endsWith(string2)) {
           object = string2;
+        }
         break;
       case FILTER_STR_CONTAINS:
         str1 = (String) matches.data[ix][ix1];
         str2 = (String) matches.data[ix][ix2];
-        if (str1.indexOf(str2) != -1)
+        if (str1.indexOf(str2) != -1) {
           object = str2;
+        }
         break;
       case FILTER_STR_LENGTH:
         str1 = (String) matches.data[ix][ix1];
         Number num = (Number) matches.data[ix][ix2];
-        if (str1.length() == num.intValue())
+        if (str1.length() == num.intValue()) {
           object = num;
+        }
         break;
       case FILTER_EQUALS:
         object = matches.data[ix][ix1];
         break;
       case FILTER_DATATYPE:
         LocatorIF dt;
-        if (matches.data[ix][ix1] instanceof VariantNameIF)
+        if (matches.data[ix][ix1] instanceof VariantNameIF) {
           dt = ((VariantNameIF) matches.data[ix][ix1]).getDataType();
-        else if (matches.data[ix][ix1] instanceof OccurrenceIF)
+        } else if (matches.data[ix][ix1] instanceof OccurrenceIF) {
           dt = ((OccurrenceIF) matches.data[ix][ix1]).getDataType();
-        else
+        } else {
           throw new InvalidQueryException("Internal error!");
+        }
         object = dt.getAddress();
         break;
       case NO_OPERATION:
@@ -466,12 +502,14 @@ public class PredicateUtils {
       }
 
       // check value found against value given
-      if (object == null || !object.equals(matches.data[ix][ix2]))
+      if (object == null || !object.equals(matches.data[ix][ix2])) {
         continue;
+      }
 
       // ok, add match
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
       result.data[result.last] = matches.data[ix];
     }
@@ -503,45 +541,51 @@ public class PredicateUtils {
         other = ((TopicIF) objects[oix]).getReified();
         break;
       case GENERATE_VALUE:
-        if (objects[oix] instanceof TopicNameIF)
+        if (objects[oix] instanceof TopicNameIF) {
           other = ((TopicNameIF) objects[oix]).getValue();
-        else if (objects[oix] instanceof VariantNameIF) {
+        } else if (objects[oix] instanceof VariantNameIF) {
 					VariantNameIF vn = (VariantNameIF) objects[oix];
-					if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI						
-						other = vn.getValue();
+					if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) { // exclude xsd:anyURI
+            other = vn.getValue();
+          }
         } else {
 					OccurrenceIF occ = (OccurrenceIF) objects[oix];
-					if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) // exclude xsd:anyURI						
-						other = occ.getValue();
+					if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) { // exclude xsd:anyURI
+            other = occ.getValue();
+          }
 				}
         break;
       case GENERATE_TYPE:
         other = ((TypedIF) objects[oix]).getType();
         break;
       case GENERATE_RESOURCES:
-        if (objects[oix] instanceof OccurrenceIF)
+        if (objects[oix] instanceof OccurrenceIF) {
           other = ((OccurrenceIF) objects[oix]).getLocator();
-        else
+        } else {
           other = ((VariantNameIF) objects[oix]).getLocator();
-        if (other != null)
+        }
+        if (other != null) {
           other = ((LocatorIF) other).getAddress();
+        }
         break;
       case GENERATE_ID:
         other = ((TMObjectIF) objects[oix]).getObjectId();
         break;
       case GENERATE_DATATYPE:
-        if (objects[oix] instanceof VariantNameIF)
+        if (objects[oix] instanceof VariantNameIF) {
           other = ((VariantNameIF) objects[oix]).getDataType().getAddress();
-        else if (objects[oix] instanceof OccurrenceIF)
+        } else if (objects[oix] instanceof OccurrenceIF) {
           other = ((OccurrenceIF) objects[oix]).getDataType().getAddress();
+        }
         break;
       case NO_OPERATION:
         other = objects[oix];
       }
 
       // does this one generate matches?
-      if (other == null)
+      if (other == null) {
         continue;
+      }
 
       // duplicate match set
       for (int ix = 0; ix <= matches.last; ix++) {
@@ -549,8 +593,9 @@ public class PredicateUtils {
         newRow[fromix] = objects[oix];
         newRow[toix] = other;
 
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         
         result.data[result.last] = newRow;
@@ -601,26 +646,30 @@ public class PredicateUtils {
       case GENERATE_SUBJLOC:
         contained = new ArrayList();
         Iterator it2 = ((TopicIF) next).getSubjectLocators().iterator();
-        while (it2.hasNext())
+        while (it2.hasNext()) {
           contained.add(((LocatorIF) it2.next()).getAddress());
+        }
         break;
       case GENERATE_SUBJID:
         contained = new ArrayList();
         it2 = ((TopicIF) next).getSubjectIdentifiers().iterator();
-        while (it2.hasNext())
+        while (it2.hasNext()) {
           contained.add(((LocatorIF) it2.next()).getAddress());
+        }
         break;
       case GENERATE_SRCLOC:
         contained = new ArrayList();
         it2 = ((TMObjectIF) next).getItemIdentifiers().iterator();
-        while (it2.hasNext())
+        while (it2.hasNext()) {
           contained.add(((LocatorIF) it2.next()).getAddress());
+        }
         break;
       }
 
       // does this one generate matches?
-      if (contained.isEmpty())
+      if (contained.isEmpty()) {
         continue;
+      }
 
       // for each contained object...
       Iterator it2 = contained.iterator();
@@ -633,8 +682,9 @@ public class PredicateUtils {
           newRow[fromix] = next;
           newRow[toix] = object;
           
-          if (result.last+1 == result.size) 
+          if (result.last+1 == result.size) {
             result.increaseCapacity();
+          }
           result.last++;
         
           result.data[result.last] = newRow;
@@ -655,11 +705,13 @@ public class PredicateUtils {
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
       // verify type of object
-      if (!klass.isInstance(matches.data[ix][ix1]))
+      if (!klass.isInstance(matches.data[ix][ix1])) {
         continue;
+      }
 
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
       result.data[result.last] = matches.data[ix];
     }

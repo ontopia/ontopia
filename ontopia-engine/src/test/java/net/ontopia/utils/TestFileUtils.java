@@ -43,21 +43,24 @@ public class TestFileUtils {
 
   public static void verifyDirectory(String dir) {
     File thedir = new File(dir);
-    if (!thedir.exists())
+    if (!thedir.exists()) {
       thedir.mkdirs();
+    }
   }
 
   public static void verifyDirectory(String base, String dir) {
     File thedir = new File(base + File.separator + dir);
-    if (!thedir.exists())
+    if (!thedir.exists()) {
       thedir.mkdirs();
+    }
   }
 
   public static void verifyDirectory(String base, String sub1, String sub2) {
     File thedir = new File(base + File.separator + sub1 + File.separator +
                            sub2);
-    if (!thedir.exists())
+    if (!thedir.exists()) {
       thedir.mkdirs();
+    }
   }
   
   public static File getOutputDirectory(String... path) {
@@ -120,9 +123,10 @@ public class TestFileUtils {
   public static List<String[]> getTestInputFiles(ResourcesDirectoryReader directoryReader,
                                        String resourcesDirectory) {
     Collection<String> resources = directoryReader.getResourcesAsStrings();
-    if (resources.isEmpty())
+    if (resources.isEmpty()) {
       throw new RuntimeException("No resources found in directory " +
                                  resourcesDirectory);
+    }
     List<String[]> tests = new ArrayList<String[]>();
     for (String resource : resources) {
       int slashPos = resource.lastIndexOf('/') + 1;
@@ -143,7 +147,9 @@ public class TestFileUtils {
 
   public static URL getTestInputURL(String resource) throws FileNotFoundException {
     URL url = Thread.currentThread().getContextClassLoader().getResource(resource.startsWith("classpath:") ? resource.substring("classpath:".length()) : resource);
-    if (url == null) throw new FileNotFoundException("Test resource " + resource + " not found");
+    if (url == null) {
+      throw new FileNotFoundException("Test resource " + resource + " not found");
+    }
     return url;
   }
 

@@ -55,7 +55,9 @@ public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
   
   @Override
   protected TMObjectIF load() {
-    if (topicMapId == null) return null;
+    if (topicMapId == null) {
+      return null;
+    }
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     // FIXME: should probably complain if object not found
     return (TMObjectIF) tm.getTopicMapIF().getObjectById(objectId);
@@ -63,11 +65,12 @@ public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof TMObjectModel)
+    if (obj instanceof TMObjectModel) {
       return Objects.equals(topicMapId, ((TMObjectModel)obj).topicMapId) &&
         Objects.equals(objectId, ((TMObjectModel)obj).objectId);
-    else
+    } else {
       return false;
+    }
   }
 
   @Override

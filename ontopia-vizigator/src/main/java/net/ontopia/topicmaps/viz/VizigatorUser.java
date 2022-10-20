@@ -82,8 +82,9 @@ public class VizigatorUser extends TimerTask {
    */
   @Override
   public void run() {
-    if (!enabled)
+    if (!enabled) {
       return;
+    }
     useVizigator();
     runCount++;
   }
@@ -173,25 +174,27 @@ public class VizigatorUser extends TimerTask {
     int choice = random.nextInt(totalWeight);
 
     int opcode;    
-    if (choice < expandNodeWeight)
+    if (choice < expandNodeWeight) {
       opcode = EXPAND_NODE;
-    else if (choice < expandNodeWeight + focusNodeWeight)
+    } else if (choice < expandNodeWeight + focusNodeWeight) {
       opcode = FOCUS_NODE;
-    else if (choice < expandNodeWeight + focusNodeWeight + hideNodeWeight)
+    } else if (choice < expandNodeWeight + focusNodeWeight + hideNodeWeight) {
       opcode = HIDE_NODE;
-    else if (choice < expandNodeWeight + focusNodeWeight + hideNodeWeight
-        + hideEdgeWeight)
+    } else if (choice < expandNodeWeight + focusNodeWeight + hideNodeWeight
+        + hideEdgeWeight) {
       opcode = HIDE_EDGE;
-    else if (choice < expandNodeWeight + focusNodeWeight + hideNodeWeight
-        + hideEdgeWeight + undoWeight)
+    } else if (choice < expandNodeWeight + focusNodeWeight + hideNodeWeight
+        + hideEdgeWeight + undoWeight) {
       opcode = UNDO;
-    else
+    } else {
       opcode = REDO;
+    }
 
     if (opcode == EXPAND_NODE || opcode == FOCUS_NODE || opcode == HIDE_NODE) {
       TMAbstractNode node = (TMAbstractNode)ges.getRandomNode();
-      if (node == null)
+      if (node == null) {
         return;
+      }
       
       if (opcode == EXPAND_NODE) {
         controller.expandNode(node);
@@ -216,8 +219,9 @@ public class VizigatorUser extends TimerTask {
       Collection edges = controller.getView().debug
           .getObjectsOfType(TMAbstractEdge.class, false);
       TMAbstractEdge edge = (TMAbstractEdge)pickRandom(edges);
-      if (edge == null)
+      if (edge == null) {
         return;
+      }
       
       if (opcode == HIDE_EDGE) {
         controller.hideEdge(edge);
@@ -248,8 +252,9 @@ public class VizigatorUser extends TimerTask {
   
   protected Object pickRandom(Collection items) {
     int size = items.size();
-    if (size == 0)
+    if (size == 0) {
       return null;
+    }
     
     int index = random.nextInt(size);
     if (items instanceof List) {
@@ -258,8 +263,9 @@ public class VizigatorUser extends TimerTask {
     }
     
     Iterator itemsIt = items.iterator();
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < index; i++) {
       itemsIt.next();
+    }
     return itemsIt.next();
   }
   
@@ -268,8 +274,9 @@ public class VizigatorUser extends TimerTask {
   }
   
   protected TMAbstractNode pickRandomNode(TopicIF type) {
-    if (type == null)
+    if (type == null) {
       return null;
+    }
     
     return (TMAbstractNode)pickRandom(controller.getView()
         .getTopicNodesFor(type));

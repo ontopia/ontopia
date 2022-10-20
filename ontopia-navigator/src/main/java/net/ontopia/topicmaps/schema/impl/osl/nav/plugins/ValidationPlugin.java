@@ -36,10 +36,11 @@ public class ValidationPlugin extends DefaultPlugin {
 
     // Does the schme exist?
     String path = ctxt.getRealPath("/WEB-INF/schemas/" + tm + ".osl");
-    if (!new File(path).exists())
+    if (!new File(path).exists()) {
       return "<span title=\"No OSL schema found at: " + path + "\">No schema</span>";
-    else 
+    } else {
       return super.generateHTML(context);
+    }
   }
   
 }

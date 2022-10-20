@@ -69,8 +69,9 @@ public class NavigatorSetupServlet extends HttpServlet {
     } catch (Throwable t) {
       debug = 0;
     }
-    if (debug >= 1)
+    if (debug >= 1) {
       log("Initializing navigator setup servlet.");
+    }
 
     // Make sure that the navigator application is initialized on startup
     NavigatorUtils.getNavigatorApplication(getServletContext());
@@ -82,8 +83,9 @@ public class NavigatorSetupServlet extends HttpServlet {
    */
   @Override
   public void destroy() {
-    if (debug >= 1)
+    if (debug >= 1) {
       log("Finalizing navigator setup servlet.");
+    }
 
     // get navigator application
     NavigatorApplicationIF navApp =

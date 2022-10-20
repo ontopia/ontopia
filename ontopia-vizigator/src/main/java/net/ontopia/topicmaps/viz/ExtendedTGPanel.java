@@ -302,8 +302,9 @@ public class ExtendedTGPanel extends TGPanel {
    */
   @Override
   public Node findNode(String id) {
-    if (id == null)
+    if (id == null) {
       return null; // ignore
+    }
     return completeEltSet.findNode(id);
   }
 
@@ -313,8 +314,9 @@ public class ExtendedTGPanel extends TGPanel {
    */
   @Override
   public Collection findNodesByLabel(String label) {
-    if (label == null)
+    if (label == null) {
       return null; // ignore
+    }
     return completeEltSet.findNodesByLabel(label);
   }
 
@@ -326,8 +328,9 @@ public class ExtendedTGPanel extends TGPanel {
    */
   @Override
   public Node findNodeLabelContaining(String substring) {
-    if (substring == null)
+    if (substring == null) {
       return null; // ignore
+    }
     return completeEltSet.findNodeLabelContaining(substring);
   }
 
@@ -357,10 +360,11 @@ public class ExtendedTGPanel extends TGPanel {
   @Override
   public Node addNode(String id, String label) throws TGException {
     Node node;
-    if (label == null)
+    if (label == null) {
       node = new Node(id);
-    else
+    } else {
       node = new Node(id, label);
+    }
 
     // The addNode() call should probably take a position, this just sets it
     // at 0,0
@@ -391,15 +395,17 @@ public class ExtendedTGPanel extends TGPanel {
    */
   @Override
   public boolean deleteNodeById(String id) {
-    if (id == null)
+    if (id == null) {
       return false; // ignore
+    }
 
     Node node = findNode(id);
 
-    if (node == null)
+    if (node == null) {
       return false;
-    else
+    } else {
       return deleteNode(node);
+    }
   }
 
   @Override
@@ -407,8 +413,9 @@ public class ExtendedTGPanel extends TGPanel {
     synchronized (localityUtils) {
       if (visibleLocality.deleteNode(node)) {
         // delete from visibleLocality, *AND completeEltSet
-        if (node.equals(select))
+        if (node.equals(select)) {
           clearSelect();
+        }
         resetDamper();
         return true;
       }
@@ -435,8 +442,9 @@ public class ExtendedTGPanel extends TGPanel {
 
   @Override
   public synchronized void setMouseOverN(Node node) {
-    if (dragNode != null || maintainMouseOver)
+    if (dragNode != null || maintainMouseOver) {
       return; // So you don't accidentally switch nodes while dragging
+    }
 
     if (!mouseOverN.equals(node)) {
       mouseOverN = node;
@@ -520,8 +528,9 @@ public class ExtendedTGPanel extends TGPanel {
 
   @Override
   public synchronized void setMouseOverE(Edge edge) {
-    if (dragNode != null || maintainMouseOver)
+    if (dragNode != null || maintainMouseOver) {
       return; // No funny business while dragging
+    }
     if (!mouseOverE.equals(edge)) {
       mouseOverE = edge;
     }
@@ -547,10 +556,11 @@ public class ExtendedTGPanel extends TGPanel {
     @Override
     public void mouseClicked(MouseEvent e) {
       if (mouseOverN != null) {
-        if (!mouseOverN.equals(select))
+        if (!mouseOverN.equals(select)) {
           setSelect(mouseOverN);
-        else
+        } else {
           clearSelect();
+        }
       }
     }
   }
@@ -634,8 +644,9 @@ public class ExtendedTGPanel extends TGPanel {
     if (node != null) {
       select = node;
       repaint();
-    } else if (node == null)
+    } else if (node == null) {
       clearSelect();
+    }
   }
 
   @Override
@@ -721,8 +732,9 @@ public class ExtendedTGPanel extends TGPanel {
   @Override
   public void hideEdge(Edge hideEdge) {
     visibleLocality.removeEdge(hideEdge);
-    if (mouseOverE.equals(hideEdge))
+    if (mouseOverE.equals(hideEdge)) {
       setMouseOverE(null);
+    }
     resetDamper();
   }
 
@@ -745,28 +757,32 @@ public class ExtendedTGPanel extends TGPanel {
   /** Start and stop the damper. Should be placed in the TGPanel too. */
   @Override
   public void startDamper() {
-    if (tgLayout != null)
+    if (tgLayout != null) {
       tgLayout.startDamper();
+    }
   }
 
   @Override
   public void stopDamper() {
-    if (tgLayout != null)
+    if (tgLayout != null) {
       tgLayout.stopDamper();
+    }
   }
 
   /** Makes the graph mobile, and slowly slows it down. */
   @Override
   public void resetDamper() {
-    if (tgLayout != null)
+    if (tgLayout != null) {
       tgLayout.resetDamper();
+    }
   }
 
   /** Gently stops the graph from moving */
   @Override
   public void stopMotion() {
-    if (tgLayout != null)
+    if (tgLayout != null) {
       tgLayout.stopMotion();
+    }
   }
 
   class BasicMouseListener extends MouseAdapter {
@@ -881,10 +897,11 @@ public class ExtendedTGPanel extends TGPanel {
     visibleLocality.forAllEdges(fee);
 
     setMouseOverN(monA[0]);
-    if (monA[0] == null)
+    if (monA[0] == null) {
       setMouseOverE(moeA[0]);
-    else
+    } else {
       setMouseOverE(null);
+    }
   }
 
   @Override
@@ -909,10 +926,12 @@ public class ExtendedTGPanel extends TGPanel {
 
   @Override
   public void updateGraphSize() {
-    if (topLeftDraw == null)
+    if (topLeftDraw == null) {
       topLeftDraw = new TGPoint2D(0, 0);
-    if (bottomRightDraw == null)
+    }
+    if (bottomRightDraw == null) {
       bottomRightDraw = new TGPoint2D(0, 0);
+    }
 
     TGForEachNode fen = new TGForEachNode() {
       boolean firstNode = true;

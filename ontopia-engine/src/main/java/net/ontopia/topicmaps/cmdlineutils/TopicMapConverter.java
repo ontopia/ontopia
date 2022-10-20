@@ -90,10 +90,12 @@ public class TopicMapConverter {
                              ex.getLineNumber() + ":" +
                              ex.getColumnNumber());
           System.exit(2);
-        } else
+        } else {
           throw e.getCause();
-      } else
-        throw e;        
+        }
+      } else {
+        throw e;
+      }        
     }
     catch (java.net.MalformedURLException e) {
       System.err.println(e);
@@ -133,29 +135,33 @@ public class TopicMapConverter {
       reader.setAdditionalProperties(config);
     }
     
-    if (reader instanceof XTMTopicMapReader)
+    if (reader instanceof XTMTopicMapReader) {
       ((XTMTopicMapReader) reader).setValidation(options.validate);
+    }
     
     TopicMapIF tm = reader.read();
     DuplicateSuppressionUtils.removeDuplicates(tm);
 
-     if (options.xtm) {
-      if (options.encoding != null)
+    if (options.xtm) {
+      if (options.encoding != null) {
         new XTMTopicMapWriter(new File(outfile), options.encoding).write(tm);
-      else
+      } else {
         new XTMTopicMapWriter(new File(outfile)).write(tm);
-    } else
-      ImportExportUtils.getWriter(new File(outfile), options.encoding).write(tm);
+      }
+    } else {
+       ImportExportUtils.getWriter(new File(outfile), options.encoding).write(tm);
+    }
 
   }
 
   private static String getSyntax(String filename) {
-    if (filename.endsWith(".n3"))
+    if (filename.endsWith(".n3")) {
       return "N3";
-    else if (filename.endsWith(".ntriple"))
+    } else if (filename.endsWith(".ntriple")) {
       return "N-TRIPLE";
-    else
+    } else {
       return "RDF/XML";
+    }
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
@@ -167,10 +173,18 @@ public class TopicMapConverter {
     @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
-      if (option == 'x') xtm = true;
-      if (option == 'e') encoding = value;
-      if (option == 'r') rdfmap = value;
-      if (option == 'w') validate = false;
+      if (option == 'x') {
+        xtm = true;
+      }
+      if (option == 'e') {
+        encoding = value;
+      }
+      if (option == 'r') {
+        rdfmap = value;
+      }
+      if (option == 'w') {
+        validate = false;
+      }
     }
   }
 }

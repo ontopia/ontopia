@@ -114,8 +114,9 @@ public class LTMTemplateImporter {
       } else {
         // reference to a parameter value
         Object value = wrapped.get(key);
-        if (value == null)
+        if (value == null) {
           throw new OntopiaRuntimeException("No LTM parameter '" + key + "'");
+        }
 
         if (value instanceof String) {
           // we need to escape the string so it'll fit nicely into the LTM
@@ -126,9 +127,10 @@ public class LTMTemplateImporter {
           TopicIF topic = (TopicIF) value;
           return getId(topic);
 
-        } else
+        } else {
           throw new OntopiaRuntimeException("Bad LTM parameter value: " +
                                             value);
+        }
       }
     }
 
@@ -154,8 +156,9 @@ public class LTMTemplateImporter {
         LocatorIF loc = it.next();
         String address = loc.getAddress();
         int pos = address.indexOf('#');
-        if (pos != -1)
+        if (pos != -1) {
           return address.substring(pos + 1);
+        }
       }
 
       // for the case where the object has no source locator at all, or

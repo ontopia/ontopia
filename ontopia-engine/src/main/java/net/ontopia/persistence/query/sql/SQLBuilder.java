@@ -129,7 +129,9 @@ public class SQLBuilder {
       if (alias == null) {
         while (true) { 
           alias = prefix + (tblcount++);
-          if (tables.containsKey(alias)) continue;
+          if (tables.containsKey(alias)) {
+            continue;
+          }
           valiases.put(value, alias);
           break;
         }
@@ -153,10 +155,12 @@ public class SQLBuilder {
           // aggregate. Need to propagate the table all the way down.
 
           String tblname = finfo.getTable();
-          if (tblname == null)
+          if (tblname == null) {
             tblname = ntvals.get(value);
-          if (tblname == null)
+          }
+          if (tblname == null) {
             throw new OntopiaRuntimeException("Not able to figure out table for value: '" + value + "'");
+          }
           
           SQLTable table = new SQLTable(tblname, alias);
           tables.put(table.getAlias(), table);
@@ -197,17 +201,20 @@ public class SQLBuilder {
     }
     
     private String createTableAlias(String prefix) {
-      if (!debug) return prefix + (tblcount++);
+      if (!debug) {
+        return prefix + (tblcount++);
+      }
       
       // Create new alias
       String alias = prefix + (tblcount++);
       // Check if alias collides with variable name or existing table.
       if (jdoquery.hasVariableName(alias) ||
-          tables.containsKey(alias))
+          tables.containsKey(alias)) {
         // FIXME: May not be necessary to do this when not in debug mode.
         return createTableAlias(prefix);
-      else
+      } else {
         return alias;
+      }
     }
     
     // -----------------------------------------------------------------------------
@@ -215,8 +222,9 @@ public class SQLBuilder {
     // -----------------------------------------------------------------------------
 
     private void analyze() {
-      if (jdoquery == null)
+      if (jdoquery == null) {
         throw new OntopiaRuntimeException("JDO query not registered with SQLbuilder build info.");
+      }
       
       // TASK: We're trying to collect field info for variables of
       // non-identifiable type (aggregate or primitive). We do this by
@@ -225,8 +233,9 @@ public class SQLBuilder {
 
       // Start analysis with JDO filter
       JDOExpressionIF filter = jdoquery.getFilter();
-      if (filter != null)
+      if (filter != null) {
         analyzeExpression(filter);
+      }
     }
 
     protected void analyzeExpression(JDOExpressionIF jdoexpr) {
@@ -383,7 +392,9 @@ public class SQLBuilder {
       
       // Return if a value does not reference a root value or they're
       // referencing the same value.
-      if (rvalue1 == null || rvalue2 == null || rvalue1.equals(rvalue2)) return;
+      if (rvalue1 == null || rvalue2 == null || rvalue1.equals(rvalue2)) {
+        return;
+      }
 
       // Figure out if value types are identifiable
       boolean identifiable1 = isIdentifiableValueType(rvalue1, this);
@@ -400,24 +411,26 @@ public class SQLBuilder {
 
       if (identifiable1 && !identifiable2 &&
           (rvtype2 == JDOValueIF.VARIABLE ||
-           rvtype2 == JDOValueIF.PARAMETER))
+           rvtype2 == JDOValueIF.PARAMETER)) {
         analyzeMatchingNonIdentifiableValue(rvalue2, value1);
-
-      else if (identifiable2 && !identifiable1 &&
+      } else if (identifiable2 && !identifiable1 &&
                (rvtype1 == JDOValueIF.VARIABLE ||
-                rvtype1 == JDOValueIF.PARAMETER))
+                rvtype1 == JDOValueIF.PARAMETER)) {
         analyzeMatchingNonIdentifiableValue(rvalue1, value2);
-      
-      else if (!identifiable1 && !identifiable2) {
+      } else if (!identifiable1 && !identifiable2) {
 
         // figure out table if value 1
         FieldInfoIF finfo1 = getFieldInfo(value1, this);
-        if (finfo1 == null) finfo1 = nfvals.get(value1);
+        if (finfo1 == null) {
+          finfo1 = nfvals.get(value1);
+        }
         String table1 = (finfo1 != null && finfo1.getTable() != null ? finfo1.getTable() : null);
         
         // figure out table if value 2
         FieldInfoIF finfo2 = getFieldInfo(value2, this);
-        if (finfo2 == null) finfo2 = nfvals.get(value2);
+        if (finfo2 == null) {
+          finfo2 = nfvals.get(value2);
+        }
         String table2 = (finfo2 != null && finfo2.getTable() != null ? finfo2.getTable() : null);
 
         // Analyze left value
@@ -438,13 +451,15 @@ public class SQLBuilder {
           } else {
             if (nfvals.containsKey(rvalue1)) {
               FieldInfoIF finfo = nfvals.get(rvalue1);
-              if (finfo.getTable() != null)
+              if (finfo.getTable() != null) {
                 ntvals.put(value1, finfo.getTable());
+              }
             }
             if (!ntvals.containsKey(value1) && nfvals.containsKey(rvalue2)) {
               FieldInfoIF finfo = nfvals.get(rvalue2);
-              if (finfo.getTable() != null)
+              if (finfo.getTable() != null) {
                 ntvals.put(value1, finfo.getTable());
+              }
             }
           }
         }
@@ -467,13 +482,15 @@ public class SQLBuilder {
           } else {
             if (nfvals.containsKey(rvalue2)) {
               FieldInfoIF finfo = nfvals.get(rvalue2);
-              if (finfo.getTable() != null)
+              if (finfo.getTable() != null) {
                 ntvals.put(value2, finfo.getTable());
+              }
             }
             if (!ntvals.containsKey(value2) && nfvals.containsKey(rvalue1)) {
               FieldInfoIF finfo = nfvals.get(rvalue1);
-              if (finfo.getTable() != null)
+              if (finfo.getTable() != null) {
                 ntvals.put(value2, finfo.getTable());
+              }
             }
           }
         }
@@ -493,7 +510,9 @@ public class SQLBuilder {
       }
 
       // Ignore when entry already exists
-      if (nfvals.containsKey(value1)) return;
+      if (nfvals.containsKey(value1)) {
+        return;
+      }
       // Get field info of secondary value
       FieldInfoIF finfo = getFieldInfo(value2, this);
 
@@ -544,8 +563,9 @@ public class SQLBuilder {
       // Get JDO filter
       List<SQLExpressionIF> expressions = new ArrayList<SQLExpressionIF>();
       JDOExpressionIF filter = jdoquery.getFilter();
-      if (filter != null)
+      if (filter != null) {
         produceExpression(filter, expressions, info);
+      }
       
       // Add select clauses
       List<Object> select = jdoquery.getSelect();
@@ -575,8 +595,9 @@ public class SQLBuilder {
       }        
       
       // Make sql expressions and register filter
-      if (!expressions.isEmpty())
+      if (!expressions.isEmpty()) {
         sqlquery.setFilter(makeAndExpression(expressions));
+      }
       
       // Return produced SQL query
       return sqlquery;
@@ -623,14 +644,16 @@ public class SQLBuilder {
         if (jdoob.isAggregate()) {
           JDOAggregateIF jdoagg = jdoob.getAggregate();
           SQLAggregateIF sqlagg = (SQLAggregateIF)valuemap.get(jdoagg);
-          if (sqlagg == null)
+          if (sqlagg == null) {
             throw new OntopiaRuntimeException("SQL aggregate for JDO aggregate not found: " + jdoagg);
+          }
           sqlquery.addOrderBy(new SQLOrderBy(sqlagg, sqlorder));
         } else {
           JDOValueIF jdoval = jdoob.getValue();
           SQLValueIF sqlval = (SQLValueIF)valuemap.get(jdoval);
-          if (sqlval == null)
+          if (sqlval == null) {
             throw new OntopiaRuntimeException("SQL value for JDO value not found: " + jdoval);
+          }
           sqlquery.addOrderBy(new SQLOrderBy(sqlval, sqlorder));
         }
       }        
@@ -640,26 +663,29 @@ public class SQLBuilder {
   
   protected SQLQuery getFirstSQLQuery(SQLSetOperation sqlset) {
     Object first = sqlset.getSets().get(0);
-    if (first instanceof SQLQuery)
+    if (first instanceof SQLQuery) {
       return (SQLQuery)first;
-    else
+    } else {
       return getFirstSQLQuery((SQLSetOperation)first);
+    }
   }
   
   protected SQLOrderBy produceSQLOrderBy(JDOOrderBy orderby, List<SQLExpressionIF> expressions, BuildInfo info) {
     int order = getSQLOrder(orderby);
       
-    if (orderby.isAggregate())
+    if (orderby.isAggregate()) {
       return new SQLOrderBy(produceSelectSQLAggregateIF(orderby.getAggregate(), expressions, info), order);
-    else
+    } else {
       return new SQLOrderBy(produceSelectSQLValueIF(orderby.getValue(), expressions, info), order);
+    }
   }
 
   protected int getSQLOrder(JDOOrderBy orderby) {
-    if (orderby.getOrder() == JDOOrderBy.ASCENDING)
+    if (orderby.getOrder() == JDOOrderBy.ASCENDING) {
       return SQLOrderBy.ASCENDING;
-    else
+    } else {
       return SQLOrderBy.DESCENDING;
+    }
   }
   
   protected SQLValueIF produceSelectSQLValueIF(JDOValueIF value, List<SQLExpressionIF> expressions, BuildInfo info) {
@@ -673,12 +699,13 @@ public class SQLBuilder {
       // Note: aggregate values use special field infos
       FieldInfoIF finfo;
       
-      if (isAggregateType(valtype) || isPrimitiveType(valtype))
+      if (isAggregateType(valtype) || isPrimitiveType(valtype)) {
         // Non-identifiable value type
         finfo = (FieldInfoIF)info.nfvals.get(value);
-      else
+      } else {
         // Identifiable or primitive value type
         finfo = getFieldInfo(value, info);
+      }
       
       // Register selected tuple
       SQLTable table = info.createNamedValueTable(value, expressions);
@@ -760,20 +787,22 @@ public class SQLBuilder {
       expressions.toArray(exprlist);
       return new SQLAnd(exprlist);
     }
-    else if (expressions.size() == 1)
+    else if (expressions.size() == 1) {
       return expressions.get(0);
-    else
+    } else {
       throw new OntopiaRuntimeException("No expressions were found.");
+    }
   }
   
   protected SQLExpressionIF makeOrExpression(SQLExpressionIF[] expressions) {
     if (expressions.length > 1) {
       return new SQLOr(expressions);
     }
-    else if (expressions.length == 1)
+    else if (expressions.length == 1) {
       return expressions[0];
-    else
+    } else {
       throw new OntopiaRuntimeException("No expressions were found.");
+    }
   }
   
   protected void produceExpression(JDOExpressionIF jdoexpr, List<SQLExpressionIF> expressions, BuildInfo info) {
@@ -863,10 +892,11 @@ public class SQLBuilder {
     int length = jdosets.size();
     for (int i=0; i < length; i++) {
       Object set = jdosets.get(i);
-      if (set instanceof JDOQuery)
+      if (set instanceof JDOQuery) {
         sqlsets.add(makeQuery((JDOQuery)set, info.oaccess));
-      else
+      } else {
         sqlsets.add(produceSetOperation((JDOSetOperation)set, info));
+      }
     }
 
     int optype;
@@ -891,10 +921,11 @@ public class SQLBuilder {
 
   protected void produceBoolean(JDOBoolean boolean_expr, List<SQLExpressionIF> expressions, BuildInfo info) {
     SQLValueIF value = new SQLPrimitive(0, Types.INTEGER);
-    if (boolean_expr.getValue())
+    if (boolean_expr.getValue()) {
       expressions.add(new SQLEquals(value, value));
-    else
+    } else {
       expressions.add(new SQLNotEquals(value, value));
+    }
   }
 
   protected void produceValueExpression(JDOValueExpression jdoexpr, List<SQLExpressionIF> expressions, BuildInfo info) {
@@ -1005,8 +1036,9 @@ public class SQLBuilder {
       FieldInfoIF finfo = getFieldInfo(field, info);
       if (!finfo.isCollectionField() &&
           (finfo.getValueClassInfo() != null &&
-           finfo.getValueClassInfo().getStructure() != ClassInfoIF.STRUCTURE_COLLECTION))
+           finfo.getValueClassInfo().getStructure() != ClassInfoIF.STRUCTURE_COLLECTION)) {
         throw new OntopiaRuntimeException("contains's left field must be a collection field: '" + left + "'");
+      }
       
       // Check right value type
       SQLTable endtable = null;
@@ -1079,8 +1111,9 @@ public class SQLBuilder {
         Values lvalues = produceObjectFieldValues((JDOObject)root, field.getPath(), info);        
         if (!(lvalues.finfo.isCollectionField() ||
               (finfo.getValueClassInfo() != null &&
-               finfo.getValueClassInfo().getStructure() == ClassInfoIF.STRUCTURE_COLLECTION)))
+               finfo.getValueClassInfo().getStructure() == ClassInfoIF.STRUCTURE_COLLECTION))) {
           throw new OntopiaRuntimeException("contains's left field is not of collection type: '" + left + "'");
+        }
         //! System.out.println("L=> " + lvalues.vcols);
         
         // Expression is false when left field value is empty or null
@@ -1131,8 +1164,9 @@ public class SQLBuilder {
         SQLValueIF rvalue = produceValue(right, expressions, info);
         expressions.add(new SQLEquals(lvalue, rvalue));
         return;
-      } else
+      } else {
         throw new OntopiaRuntimeException("variable.contains(...) expression must be of type with collection structure: " + var);
+      }
     }
     case JDOValueIF.PARAMETER: { // -- left
 
@@ -1158,8 +1192,9 @@ public class SQLBuilder {
         // so get identity field of variable
         FieldInfoIF finfo = getFieldInfo(var, info); // Note: identity field
         int arity = finfo.getColumnCount();
-        if (arity != 1)
+        if (arity != 1) {
           throw new OntopiaRuntimeException("parameter<collection>.contains(variable) requires a value arity of exactly 1: " + var);
+        }
         
         // Create parameter
         SQLParameter sqlparam = new SQLParameter(parname, arity);
@@ -1194,8 +1229,9 @@ public class SQLBuilder {
       FieldInfoIF finfo = getFieldInfo(field, info);
       if (!finfo.isCollectionField() &&
           (finfo.getValueClassInfo() != null &&
-           finfo.getValueClassInfo().getStructure() != ClassInfoIF.STRUCTURE_COLLECTION))
+           finfo.getValueClassInfo().getStructure() != ClassInfoIF.STRUCTURE_COLLECTION)) {
         throw new OntopiaRuntimeException("isEmpty's field must be a collection field: '" + field + "'");
+      }
 
       // -----------------------------------------------------------------------------
       // EXPRESSION: variable.field[OM].isEmpty()
@@ -1267,23 +1303,26 @@ public class SQLBuilder {
     
     // Check left value arity:
     int arity = lvalue.getArity();
-    if (arity != 1)
-      if (starts_not_ends)
+    if (arity != 1) {
+      if (starts_not_ends) {
         throw new OntopiaRuntimeException("Arity of left String.startsWith value is not 1: " + arity);
-      else
+      } else {
         throw new OntopiaRuntimeException("Arity of left String.endsWith value is not 1: " + arity);
+      }
+    }
 
     // Create SQL like expression
     switch (right.getType()) {
     case JDOValueIF.STRING:
     case JDOValueIF.PRIMITIVE:
       String value = ((JDOString)right).getValue();
-      if (starts_not_ends)
+      if (starts_not_ends) {
         expressions.add(new SQLLike(lvalue, 
                                     new SQLPrimitive(value + "%", Types.VARCHAR), caseSensitive));
-      else
+      } else {
         expressions.add(new SQLLike(lvalue, 
                                     new SQLPrimitive("%" + value, Types.VARCHAR), caseSensitive));
+      }
       return;
     default:
       // FIXME: this doesn't work if value is parameter
@@ -1358,10 +1397,11 @@ public class SQLBuilder {
     private Class vtype;
     private FieldInfoIF finfo;
     public Values getFirst() {
-      if (prev != null)
+      if (prev != null) {
         return prev.getFirst();
-      else
+      } else {
         return this;
+      }
     }
     @Override
     public String toString() {
@@ -1426,14 +1466,16 @@ public class SQLBuilder {
 
       // Complain if field does not have cardinality of 1:1
       // Note: this will only occur when 1:M and M:M fields are followed by another field.
-      if (pvalues.finfo != null && pvalues.finfo.getCardinality() != FieldInfoIF.ONE_TO_ONE)
+      if (pvalues.finfo != null && pvalues.finfo.getCardinality() != FieldInfoIF.ONE_TO_ONE) {
         throw new OntopiaRuntimeException("Field navigation can only be used with single value fields.");
+      }
         
       // Get field info
       ClassInfoIF pcinfo = mapping.getClassInfo(pvalues.vtype);
       FieldInfoIF finfo = pcinfo.getFieldInfoByName(fname);
-      if (finfo == null)
+      if (finfo == null) {
         throw new OntopiaRuntimeException("'" + pvalues.vtype + "' does not have a field called '" + fname + "'.");
+      }
           
       // Only set cvalues if not set (applies on first iteration only)
       cvalues = new Values();
@@ -1509,22 +1551,25 @@ public class SQLBuilder {
         // The table is guaranteed to always be the last.
         if (endtable != null) {
           table = endtable;
-          if (!tblname.equals(endtable.getName()))
+          if (!tblname.equals(endtable.getName())) {
             throw new OntopiaRuntimeException("Incompatible tables: '" +
                                               tblname + "' <-> '" + endtable.getName() + "'.");
+          }
                 
-        } else
+        } else {
           table = new SQLTable(tblname, info.createTableAlias("O"));
+        }
 
         // join and value columns
         ClassInfoIF _cinfo = finfo.getValueClassInfo();
         cvalues.jcols = new SQLColumns(table, finfo.getJoinKeys());
-        if (_cinfo.isAggregate())
+        if (_cinfo.isAggregate()) {
           // Aggregate
           cvalues.vcols = new SQLColumns(table, getInlineColumns(finfo));
-        else
+        } else {
           // Identifiable
           cvalues.vcols = new SQLColumns(table, _cinfo.getIdentityFieldInfo().getValueColumns());
+        }
           
         // Join 1:M PARENT-TABLE and JOIN-TABLE
         //! System.out.println("Joining: OM " + pvalues_vcols + " <-> " + cvalues.jcols);
@@ -1539,9 +1584,10 @@ public class SQLBuilder {
         String tblname = _cinfo.getMasterTable();
         // The table is guaranteed to always be the last.
         if (endtable != null) {
-          if (!tblname.equals(endtable.getName()))
+          if (!tblname.equals(endtable.getName())) {
             throw new OntopiaRuntimeException("Incompatible tables: '" +
                                               tblname + "' <-> '" + endtable.getName() + "'.");
+          }
         }
         // Join and value columns
         SQLTable j_table = new SQLTable(finfo.getJoinTable(), info.createTableAlias("M"));          
@@ -1580,9 +1626,10 @@ public class SQLBuilder {
       if (mapping.isDeclared(ctype)) {
         ClassInfoIF cinfo = mapping.getClassInfo(ctype);
         finfo = cinfo.getFieldInfoByName(path[i]);
-        if (finfo == null)
+        if (finfo == null) {
           throw new OntopiaRuntimeException("Parent '" + ctype + "' do not have field called '" +
                                             path[i] + "'");
+        }
 
         if (cinfo.isIdentifiable()) {
           value = info.oaccess.getValue(value, finfo);
@@ -1595,9 +1642,10 @@ public class SQLBuilder {
         }
         ctype = finfo.getValueClass();
       }
-      else
+      else {
         throw new OntopiaRuntimeException("Parent of field  '" + path[i] +
                                           "' of undeclared type: '" + ctype + "'");
+      }
     }
 
     Values values = new Values();
@@ -1729,10 +1777,11 @@ public class SQLBuilder {
     List<SQLValueIF> values = new ArrayList<SQLValueIF>();    
     FieldInfoIF id_finfo = getFieldInfo(object, info);
     id_finfo.retrieveSQLValues(object.getValue(), values);
-    if (values.size() == 1)
+    if (values.size() == 1) {
       return values.get(0);
-    else
+    } else {
       return new SQLTuple(values);
+    }
   }
 
   protected SQLValueIF produceCollection(JDOCollection coll, BuildInfo info) {
@@ -1744,10 +1793,11 @@ public class SQLBuilder {
     while (iter.hasNext()) {
       id_finfo.retrieveSQLValues(iter.next(), values);
     }
-    if (values.size() == 1)
+    if (values.size() == 1) {
       return values.get(0);
-    else
+    } else {
       return new SQLTuple(values);
+    }
     
   }
   
@@ -1781,8 +1831,9 @@ public class SQLBuilder {
     if (mapping.isDeclared(vtype)) {
       ClassInfoIF cinfo = mapping.getClassInfo(vtype);
       return cinfo.getIdentityFieldInfo();
-    } else
+    } else {
       return null;
+    }
     //! }
   }
   
@@ -1800,7 +1851,9 @@ public class SQLBuilder {
     
   protected FieldInfoIF getFieldInfo(JDOCollection coll, BuildInfo info) {
     Class eltype = coll.getElementType();
-    if (isPrimitiveType(eltype)) return null;
+    if (isPrimitiveType(eltype)) {
+      return null;
+    }
     ClassInfoIF cinfo = mapping.getClassInfo(eltype);
     return cinfo.getIdentityFieldInfo();
   }
@@ -1821,12 +1874,14 @@ public class SQLBuilder {
       if (mapping.isDeclared(ctype)) {
         ClassInfoIF cinfo = mapping.getClassInfo(ctype);
         finfo = cinfo.getFieldInfoByName(path[i]);
-        if (finfo == null)
+        if (finfo == null) {
           throw new OntopiaRuntimeException("Parent '" + ctype + "' do not have field called '" + path[i] + "'");
+        }
         ctype = finfo.getValueClass();
       }
-      else
+      else {
         throw new OntopiaRuntimeException("Parent of field  '" + path[i] + "' of undeclared type: '" + ctype + "'");
+      }
     }
     return finfo;
   }
@@ -1846,21 +1901,26 @@ public class SQLBuilder {
     // FIXME: Complain if one is primitive and the other is null?
     
     // FIXME: If one is null they're compatible
-    if (type1 == null) return type2;
-    if (type2 == null) return type1;
+    if (type1 == null) {
+      return type2;
+    }
+    if (type2 == null) {
+      return type1;
+    }
     
     // Check that types are compatible
     //! if (!(type1.isAssignableFrom(type2) || type2.isAssignableFrom(type1)))
     if (!type1.equals(type2)) {
 			// HACK: string/reader compatibility hack
-			if (type1 == String.class && type2 == java.io.Reader.class)
-				return String.class;
-			else if (type1 == java.io.Reader.class && type2 == String.class)
-				return String.class;
-			else
+			if (type1 == String.class && type2 == java.io.Reader.class) {
+        return String.class;
+      } else if (type1 == java.io.Reader.class && type2 == String.class) {
+        return String.class;
+      } else {
 				throw new OntopiaRuntimeException("Values '" +
 																					value1 + "' (" + type1 + ") and '" +
 																					value2 + "' (" + type2 + ") are not compatible.");
+      }
 		}
 
     // Return the [first [matching]] value type
@@ -1869,9 +1929,10 @@ public class SQLBuilder {
 
   protected Class checkCompatibility(JDOValueIF value, Class type, BuildInfo info) {
     Class vtype = getValueType(value, info);
-    if (!type.isAssignableFrom(vtype))
+    if (!type.isAssignableFrom(vtype)) {
       throw new OntopiaRuntimeException("Value '" + value + "' (" + vtype +
                                         ") is not compatible with type " + type + ".");
+    }
     return vtype;
   }
   
@@ -1911,13 +1972,14 @@ public class SQLBuilder {
     FieldInfoIF finfo = getFieldInfo(field, info);
 
     // Check to see if field exists
-    if (finfo == null)
+    if (finfo == null) {
       throw new OntopiaRuntimeException("Unknown field: '" + field + "'");
+    }
 
     // Return the field value class
-    if (finfo.isCollectionField())
+    if (finfo.isCollectionField()) {
       return Collection.class;
-    else {       
+    } else {       
       Class klass = finfo.getValueClass();
 			// HACK: string/reader compatibility hack
 			return (klass == java.io.Reader.class ? String.class : klass);
@@ -1970,18 +2032,21 @@ public class SQLBuilder {
       if (mapping.isDeclared(ctype)) {
         ClassInfoIF cinfo = mapping.getClassInfo(ctype);
         finfo = cinfo.getFieldInfoByName(path[i]);
-        if (finfo == null)
+        if (finfo == null) {
           throw new OntopiaRuntimeException("Parent '" + ctype + "' do not have field called '" + path[i] + "'");
+        }
         Class _ctype = finfo.getValueClass();
         // Stop when next path item is non-identifiable
         //! System.out.println("ID: " + path[i] + " " + isIdentifiableType(_ctype) + " " + _ctype);
-        if (isIdentifiableType(_ctype))
+        if (isIdentifiableType(_ctype)) {
           ctype = _ctype;
-        else
+        } else {
           break;
+        }
       }
-      else
+      else {
         throw new OntopiaRuntimeException("Parent of field  '" + path[i] + "' of undeclared type: '" + ctype + "'");
+      }
     }
     return (isIdentifiableType(ctype) ? ctype : null);
   }
@@ -2007,8 +2072,9 @@ public class SQLBuilder {
     if (mapping.isDeclared(type)) {
       ClassInfoIF cinfo = mapping.getClassInfo(type);
       return cinfo.isIdentifiable();
-    } else
-      return false;        
+    } else {
+      return false;
+    }        
   }
   
   protected boolean isAggregateVariable(String var, JDOQuery jdoquery) {
@@ -2028,8 +2094,9 @@ public class SQLBuilder {
       //if (cinfo == null) return false;
       // Type is aggregate if class descriptor is aggregate
       return cinfo.isAggregate();
-    } else
+    } else {
       return false;
+    }
   }
   
   protected boolean isPrimitiveVariable(String var, JDOQuery jdoquery) {

@@ -65,8 +65,9 @@ public class ModelLinkGenerator implements LinkGeneratorIF {
     }
 
     // replace topicmap id placeholder with real value
-    if (topicmapId != null)
+    if (topicmapId != null) {
       link = StringUtils.replace(link, LINK_TOPICMAP_KEY, topicmapId);
+    }
 
     // replace model placeholder with real value
     UserIF user = FrameworkUtils.getUser(contextTag.getPageContext());

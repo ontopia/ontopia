@@ -37,10 +37,11 @@ public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> 
   @Override
   public Object getDisplayValue(Topic object) {
     String name = object.getName();
-    if (name == null || name.equals(""))
+    if (name == null || name.equals("")) {
       return "[No name]";
-    else
+    } else {
       return name;
+    }
   }
 
   @Override

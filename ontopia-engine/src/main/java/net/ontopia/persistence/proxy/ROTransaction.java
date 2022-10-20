@@ -76,19 +76,25 @@ public class ROTransaction extends AbstractTransaction {
   
   @Override
   public void assignIdentity(PersistentIF object) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     throw new ReadOnlyTransactionException();
   }
   
   @Override
   public void create(PersistentIF object) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     throw new ReadOnlyTransactionException();
   }
   
   @Override
   public void delete(PersistentIF object) {    
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     throw new ReadOnlyTransactionException();
   }
   

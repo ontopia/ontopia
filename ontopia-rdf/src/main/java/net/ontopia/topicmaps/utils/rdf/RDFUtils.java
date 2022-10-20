@@ -47,16 +47,18 @@ public class RDFUtils {
     InputStream in = null;
     try {
       in = conn.getInputStream();
-      if (encoding == null)
+      if (encoding == null) {
         parser.load(in, url.toString());
-      else
+      } else {
         parser.load(new InputStreamReader(in, encoding), url.toString());
+      }
       in.close();
     } catch (org.xml.sax.SAXException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (in != null)
+      if (in != null) {
         in.close();
+      }
     }
   }
 
@@ -73,8 +75,9 @@ public class RDFUtils {
     } catch (org.xml.sax.SAXException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (in != null)
+      if (in != null) {
         in.close();
+      }
     }
   }
 }

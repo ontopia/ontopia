@@ -57,15 +57,17 @@ public class PutTag extends AbstractTemplateTag {
   @Override
   public int doStartTag() throws JspException {
     if (content != null) {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("doStartTag: register variable '"+name+"'.");
+      }
 
       putParameter(content, direct);
       
       return SKIP_BODY;
     } else {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("doStartTag: evaluate body");
+      }
       return EVAL_BODY_BUFFERED;
     }
   }
@@ -76,8 +78,9 @@ public class PutTag extends AbstractTemplateTag {
     String content = bodyContent.getString();
 
     // save body content into params after evaluation
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("doAfterBody: register variable '"+name+"'.");
+    }
 
     putParameter(content, true);
 

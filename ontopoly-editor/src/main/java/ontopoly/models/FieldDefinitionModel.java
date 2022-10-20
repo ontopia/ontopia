@@ -68,8 +68,9 @@ public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinitio
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof FieldDefinitionModel))
+    if (!(other instanceof FieldDefinitionModel)) {
       return false;
+    }
     
     FieldDefinitionModel fam = (FieldDefinitionModel)other;
     return Objects.equals(getFieldDefinition(), fam.getFieldDefinition());

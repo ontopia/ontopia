@@ -35,8 +35,9 @@ public class FulltextPlugin extends DefaultPlugin {
 
   @Override
   public String generateHTML(ContextTag context) {
-    if (context == null)
+    if (context == null) {
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");
+    }
     
     ServletContext ctxt = context.getPageContext().getServletContext();
     HttpServletRequest request =
@@ -69,11 +70,12 @@ public class FulltextPlugin extends DefaultPlugin {
     if (!exists) {
       // resource is not available, so display ft-admin instead
       PluginIF admin_plugin = context.getNavigatorConfiguration().getPlugin("fulltext-admin");
-      if (admin_plugin == null || admin_plugin.getState() != PluginIF.ACTIVATED)
+      if (admin_plugin == null || admin_plugin.getState() != PluginIF.ACTIVATED) {
         return "<span title=\"No index found at: " + path + "\">Not indexed</span>";
-      else
+      } else {
         return "<span title=\"No index found at: " + path + "\"><a href='" +
           request.getContextPath() + "/" + admin_plugin.getURI() + "'>Not indexed</a></span>";
+      }
     }
 
     // action URI is relative to context path (for example: '/omnigator')
@@ -81,18 +83,23 @@ public class FulltextPlugin extends DefaultPlugin {
     
     // create the form
     String query = getParameter("query");
-    if (query == null) query = "";
+    if (query == null) {
+      query = "";
+    }
 
     String query_size = getParameter("query-size");
-    if (query_size == null) query_size = "10";
+    if (query_size == null) {
+      query_size = "10";
+    }
 
     String type = getParameter("type");
     if (type == null || type.equals("form")) {
       StringBuilder sb = new StringBuilder();
       sb.append("<form action='").append(action)
         .append("' method='get' style='display: inline'");
-      if (description != null)
+      if (description != null) {
         sb.append(" title=\"").append(description).append('\"');
+      }
       sb.append('>')
         .append("<input type='hidden' value='").append(tm).append("' name='tm'>")
         .append("<input type='text' name='query' size='").append(query_size)

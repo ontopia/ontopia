@@ -97,8 +97,9 @@ public class Topic {
    * @return the unscoped name of the topic or null if no name has been set.
    */
   public String getName() {
-    if (cachedName == null) 
+    if (cachedName == null) {
       cachedName = tm.getTopicName(getTopicIF(), null);
+    }
     return cachedName;
   }
 
@@ -194,9 +195,13 @@ public class Topic {
   public boolean isSystemTopic() {
     Collection<TopicIF> types = topicIF.getTypes();
     TopicIF systemType = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_SYSTEM_TOPIC);
-    if (types.contains(systemType)) return true;
+    if (types.contains(systemType)) {
+      return true;
+    }
     TopicIF publicSystemType = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_PUBLIC_SYSTEM_TOPIC);
-    if (types.contains(publicSystemType)) return true;
+    if (types.contains(publicSystemType)) {
+      return true;
+    }
     return false;
   }
 
@@ -267,15 +272,17 @@ public class Topic {
     TopicIF topicIF = getTopicIF();
     Collection<TopicIF> topicTypes = topicIF.getTypes();
     int size = topicTypes.size();
-    if (size == 0)
+    if (size == 0) {
       return Collections.emptyList();
+    }
     List<TopicType> result = new ArrayList<TopicType>(size);
     TopicIF topicTypeTopic = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_TOPIC_TYPE);
     Iterator<TopicIF> iter = topicTypes.iterator();
     while (iter.hasNext()) {
       TopicIF topicType = iter.next();
-      if (topicType.getTypes().contains(topicTypeTopic))
+      if (topicType.getTypes().contains(topicTypeTopic)) {
         result.add(new TopicType(topicType, getTopicMap()));
+      }
     }
     Collections.sort(result, TopicComparator.INSTANCE);
     
@@ -287,8 +294,9 @@ public class Topic {
    * direct instance of.
    */
   public void addTopicType(TopicType type) {
-    if (type == null)
+    if (type == null) {
       throw new OntopiaRuntimeException("The input parameter is null");
+    }
     getTopicIF().addType(type.getTopicIF());
   }
 
@@ -297,8 +305,9 @@ public class Topic {
    * a direct instance of.
    */
   public void removeTopicType(TopicType type) {
-    if (type == null)
+    if (type == null) {
       throw new OntopiaRuntimeException("The input parameter is null");
+    }
     getTopicIF().removeType(type.getTopicIF());
   }
 
@@ -325,7 +334,9 @@ public class Topic {
    * @param listener listener that gets call back from the deleting this topic, and any dependencies.p
    */
   public void remove(LifeCycleListener listener) {
-    if (listener != null) listener.onBeforeDelete(this);
+    if (listener != null) {
+      listener.onBeforeDelete(this);
+    }
     topicIF.remove();
   }
 
@@ -352,13 +363,16 @@ public class Topic {
       while (fiter.hasNext()) {
         FieldAssignment fieldAssignment = fiter.next();
         FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
-        if (fieldDefinition.getFieldType() != FieldDefinition.FIELD_TYPE_ROLE)
+        if (fieldDefinition.getFieldType() != FieldDefinition.FIELD_TYPE_ROLE) {
           continue;
+        }
         RoleField roleField = (RoleField)fieldDefinition;
         if (roleField.getEditMode().isOwnedValues()) {
           // field contains dependent objects
           Collection<RoleField> otherFields = roleField.getFieldsForOtherRoles();
-          if (otherFields.size() != 1) continue;
+          if (otherFields.size() != 1) {
+            continue;
+          }
           RoleField ofield = otherFields.iterator().next();
           Collection<RoleField.ValueIF> values = roleField.getValues(this);
           Iterator<RoleField.ValueIF> viter = values.iterator();
@@ -366,8 +380,9 @@ public class Topic {
             RoleField.ValueIF value = viter.next();
             Topic oplayer = value.getPlayer(ofield, this);
             // track newly found objects
-            if (!alreadyKnownDependentObjects.contains(oplayer))
+            if (!alreadyKnownDependentObjects.contains(oplayer)) {
               newPlayers.add(oplayer);
+            }
           }
         }
       }

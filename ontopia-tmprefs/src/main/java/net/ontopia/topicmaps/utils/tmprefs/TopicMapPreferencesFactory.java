@@ -41,7 +41,9 @@ public abstract class TopicMapPreferencesFactory implements PreferencesFactory {
 		String key = getSystemKey();
 		if (systemRoots.get(key) == null) {
 			TopicMapReferenceIF topicMapReference = getSystemTopicMapReference(key);
-			if (topicMapReference == null) throw new RuntimeException(new BackingStoreException("System: Topicmap with key '" + key + "' was not resolved!"));
+			if (topicMapReference == null) {
+        throw new RuntimeException(new BackingStoreException("System: Topicmap with key '" + key + "' was not resolved!"));
+      }
 			Preferences systemPreferences = TopicMapPreferences.createSystemRoot(topicMapReference, this);
 			systemRoots.put(key, systemPreferences);
 		}
@@ -53,7 +55,9 @@ public abstract class TopicMapPreferencesFactory implements PreferencesFactory {
 		String key = getUserKey();
 		if (userRoots.get(key) == null) {
 			TopicMapReferenceIF topicMapReference = getUserTopicMapReference(key);
-			if (topicMapReference == null) throw new RuntimeException(new BackingStoreException("User: Topicmap with key '" + key + "' was not resolved!"));
+			if (topicMapReference == null) {
+        throw new RuntimeException(new BackingStoreException("User: Topicmap with key '" + key + "' was not resolved!"));
+      }
 			Preferences userPreferences = TopicMapPreferences.createUserRoot(topicMapReference, this); 
 			userRoots.put(key, userPreferences);
 		}

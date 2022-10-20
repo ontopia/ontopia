@@ -71,7 +71,9 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         TopicType topicType = (TopicType)selectedModel.getObject();
-        if (topicType == null) return;
+        if (topicType == null) {
+          return;
+        }
         Topic instance = topicModel.getTopic();
         instance.addTopicType(topicType);
         Map<String,String> pageParametersMap = new HashMap<String,String>();
@@ -87,12 +89,15 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         TopicType topicType = (TopicType)selectedModel.getObject();
-        if (topicType == null) return;
+        if (topicType == null) {
+          return;
+        }
         Topic instance = topicModel.getTopic();
         Collection<TopicType> topicTypes = instance.getTopicTypes();
-        if (!(topicTypes.size() == 1 && topicTypes.contains(topicType)))
+        if (!(topicTypes.size() == 1 && topicTypes.contains(topicType))) {
           // only remove topic type if it won't end up without a type at all
           instance.removeTopicType(topicType);
+        }
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
         pageParametersMap.put("topicId", instance.getId());

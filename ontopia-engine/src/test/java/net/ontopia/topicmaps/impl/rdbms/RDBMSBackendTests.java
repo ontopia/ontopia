@@ -452,8 +452,12 @@ public class RDBMSBackendTests {
       Assert.assertTrue("Possible to look up topic from second topic map.", tm1.getObjectById(oid2) == null);
 
     } finally {
-      if (store1 != null) store1.delete(true);
-      if (store2 != null) store2.delete(true);
+      if (store1 != null) {
+        store1.delete(true);
+      }
+      if (store2 != null) {
+        store2.delete(true);
+      }
     }
   }
 
@@ -598,7 +602,9 @@ public class RDBMSBackendTests {
       store1.commit();
 
     } finally {
-      if (store1 != null) store1.close();
+      if (store1 != null) {
+        store1.close();
+      }
     }
 
     TopicMapStoreIF store2 = null;
@@ -617,7 +623,9 @@ public class RDBMSBackendTests {
       store2.commit();
 
     } finally {
-      if (store2 != null) store2.delete(true);
+      if (store2 != null) {
+        store2.delete(true);
+      }
     }
   }
   
@@ -646,7 +654,9 @@ public class RDBMSBackendTests {
       tmid = store1.getLongId();
       store1.commit();
     } finally {
-      if (store1 != null) store1.close();
+      if (store1 != null) {
+        store1.close();
+      }
     }
 
     RDBMSTopicMapStore store2 = null;
@@ -662,14 +672,18 @@ public class RDBMSBackendTests {
       Assert.assertTrue("Wrong reified (ro)", Objects.equals(occurrence, oreifier.getReified()));
 
     } finally {
-      if (store2 != null) store2.close();
+      if (store2 != null) {
+        store2.close();
+      }
     }
 
     RDBMSTopicMapStore store3 = null;
     try {
       store3 = new RDBMSTopicMapStore(tmid);
     } finally {
-      if (store3 != null) store3.delete(true);
+      if (store3 != null) {
+        store3.delete(true);
+      }
     }
 
   }
@@ -714,7 +728,9 @@ public class RDBMSBackendTests {
       occid = occurrence.getObjectId();
       store1.commit();
     } finally {
-      if (store1 != null) store1.close();
+      if (store1 != null) {
+        store1.close();
+      }
     }
 
     RDBMSTopicMapStore store2 = null;
@@ -730,7 +746,9 @@ public class RDBMSBackendTests {
       Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
-      if (store2 != null) store2.close();
+      if (store2 != null) {
+        store2.close();
+      }
     }
 
   }
@@ -776,7 +794,9 @@ public class RDBMSBackendTests {
       occurrence.getObjectId();
       store1.commit();
     } finally {
-      if (store1 != null) store1.close();
+      if (store1 != null) {
+        store1.close();
+      }
     }
 
     RDBMSTopicMapStore store2 = null;
@@ -792,7 +812,9 @@ public class RDBMSBackendTests {
       Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
-      if (store2 != null) store2.close();
+      if (store2 != null) {
+        store2.close();
+      }
     }
 
   }
@@ -846,7 +868,9 @@ public class RDBMSBackendTests {
       occurrence.getObjectId();
       store1.commit();
     } finally {
-      if (store1 != null) store1.close();
+      if (store1 != null) {
+        store1.close();
+      }
     }
 
     RDBMSTopicMapStore store2 = null;
@@ -862,7 +886,9 @@ public class RDBMSBackendTests {
       Assert.assertTrue("Wrong occurrence type", Objects.equals(occurrence.getType(), otype2));
 
     } finally {
-      if (store2 != null) store2.close();
+      if (store2 != null) {
+        store2.close();
+      }
     }
 
   }
@@ -917,7 +943,9 @@ public class RDBMSBackendTests {
       occurrence.getObjectId();
       store1.commit();
     } finally {
-      if (store1 != null) store1.close();
+      if (store1 != null) {
+        store1.close();
+      }
     }
 
     RDBMSTopicMapStore store2 = null;
@@ -944,7 +972,9 @@ public class RDBMSBackendTests {
       }
 
     } finally {
-      if (store2 != null) store2.close();
+      if (store2 != null) {
+        store2.close();
+      }
     }
 
   }

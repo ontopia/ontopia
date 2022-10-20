@@ -108,9 +108,13 @@ public class SQLStatement implements SQLStatementIF {
   
   @Override
   public ResultSet executeQuery(Connection conn) throws Exception {
-    if (log.isDebugEnabled()) log.debug("Executing: " + sql);
+    if (log.isDebugEnabled()) {
+      log.debug("Executing: " + sql);
+    }
     PreparedStatement stm = conn.prepareStatement(sql);
-    if (fetchSize > 0) stm.setFetchSize(fetchSize);
+    if (fetchSize > 0) {
+      stm.setFetchSize(fetchSize);
+    }
     return stm.executeQuery();
   }
   
@@ -143,21 +147,26 @@ public class SQLStatement implements SQLStatementIF {
       IdentityIF identity = (IdentityIF)fhandler.load(registrar, ticket, rs, select_offsets[index], false);
 
       // If value was null return immediately
-      if (identity == null) return null;
+      if (identity == null) {
+        return null;
+      }
 
       // Register identity with access registrar, since field handler
       // don't do this themselves.
-      if (registrar != null) registrar.registerIdentity(ticket, identity);
+      if (registrar != null) {
+        registrar.registerIdentity(ticket, identity);
+      }
       
       // Note: an exception will be thrown if the object doesn't exist
       // in the database, fortunately it should always exist since we're
       // always going through the local transaction cache.
     
       // Get object with the identity from transaction.
-      if (lookup_identity)
+      if (lookup_identity) {
         return oaccess.getObject(identity);
-      else
+      } else {
         return identity;
+      }
       
     } else {
       // Return loaded value as-is.

@@ -149,7 +149,9 @@ public class TMLoginModuleTest {
 	  break;
 	}
       }
-      if (!ok) Assert.fail("User did not have proper principals: " + java.util.Arrays.asList(pnames));	
+      if (!ok) {
+        Assert.fail("User did not have proper principals: " + java.util.Arrays.asList(pnames));
+      }	
     }
   }
   

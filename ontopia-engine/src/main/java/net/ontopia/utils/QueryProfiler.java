@@ -91,8 +91,9 @@ public class QueryProfiler {
     out.write("<table>\n");
     out.write("<tr><th> <th>Query <th colspan=\"2\">Total time <th>Avg <th>Min <th>Max");
     out.write("<th>Times run\n");
-    if (traverse)
+    if (traverse) {
       out.write("<th>Traverse time <th>Rows\n");
+    }
 
     Object[] events = eStats.values().toArray();
     Arrays.sort(events, new EventComparator());
@@ -178,10 +179,12 @@ public class QueryProfiler {
 
     private void addExecute(long startTime, long endTime) {
       int time = (int)(endTime - startTime);
-      if (executeTimeMax == -1.0f || time > executeTimeMax)
+      if (executeTimeMax == -1.0f || time > executeTimeMax) {
         executeTimeMax = (float)time;
-      if (executeTimeMin == -1.0f || time < executeTimeMin)
+      }
+      if (executeTimeMin == -1.0f || time < executeTimeMin) {
         executeTimeMin = (float)time;
+      }
 
       executeTime = executeTime + time;
       executeNum++;
@@ -191,15 +194,18 @@ public class QueryProfiler {
       int time = (int)(endTime - startTime);
       executeTime = executeTime + time;
       traverseTime = traverseTime + time;
-      if (hasNext) traverseNum++;
+      if (hasNext) {
+        traverseNum++;
+      }
     }
 
     @Override
     public String toString() {
-      if (name == null)
+      if (name == null) {
         return null;
-      else
+      } else {
         return StringUtils.escapeHTMLEntities(name);
+      }
     }
   }
 
@@ -209,8 +215,12 @@ public class QueryProfiler {
     public int compare(Object o1, Object o2) {
       Event e1 = (Event)o1;
       Event e2 = (Event)o2;
-      if (e1 == null) return -1;
-      if (e2 == null) return 1;
+      if (e1 == null) {
+        return -1;
+      }
+      if (e2 == null) {
+        return 1;
+      }
       long e1time = e1.executeTime;
       long e2time = e2.executeTime;
       return (e1time > e2time ? -1 : (e1time < e2time ? 1 : 0));

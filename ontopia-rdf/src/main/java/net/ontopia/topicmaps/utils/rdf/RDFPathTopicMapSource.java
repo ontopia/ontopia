@@ -90,8 +90,9 @@ public class RDFPathTopicMapSource extends AbstractPathTopicMapSource {
     RDFTopicMapReference ref = new RDFTopicMapReference(url, id, title, base_address, syntax);
     ref.setSource(this);
     ref.setDuplicateSuppression(duplicate_suppression);
-    if (mapfile != null)
+    if (mapfile != null) {
       ref.setMappingFile(mapfile);
+    }
     ref.setGenerateNames(generateNames);
     ref.setLenient(lenient);
     return ref;

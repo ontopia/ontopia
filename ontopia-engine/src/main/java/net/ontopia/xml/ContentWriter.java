@@ -49,9 +49,10 @@ public class ContentWriter extends DefaultHandler {
     try {
       out.write("<" + localName);
       if (atts != null) {
-        for (int i = 0; i < atts.getLength(); i++) 
+        for (int i = 0; i < atts.getLength(); i++) { 
           out.write(" " + atts.getQName(i) + "=\"" + escape(atts.getValue(i)) +
                     "\"");
+        }
       }
       out.write('>');
     } catch (IOException e) {

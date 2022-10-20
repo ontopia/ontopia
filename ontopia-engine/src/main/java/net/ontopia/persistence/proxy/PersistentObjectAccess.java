@@ -41,10 +41,11 @@ public class PersistentObjectAccess implements ObjectAccessIF {
   
   @Override
   public IdentityIF getIdentity(Object object) {
-    if (object == null)
+    if (object == null) {
       return null;
-    else
+    } else {
       return ((PersistentIF)object)._p_getIdentity();
+    }
   }
 
   @Override

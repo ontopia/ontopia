@@ -51,8 +51,9 @@ public class CanonicalExporterTMXMLTests
             resourcePath.endsWith("bug750.xtm") ||
             resourcePath.endsWith("empty-member.xtm") ||
             resourcePath.endsWith("empty.xtm") ||
-            resourcePath.endsWith("whitespace.xtm"))
+            resourcePath.endsWith("whitespace.xtm")) {
           return false;
+        }
 
         return resourcePath.endsWith(".xtm");
       }

@@ -1539,8 +1539,9 @@ public class StringModuleTest extends AbstractPredicateTest {
         "str:substring($OUT, \"2007-03-12\", 4, 3)?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith("The 3rd and 4th parameters to"))
+      if (!e.getMessage().startsWith("The 3rd and 4th parameters to")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1554,8 +1555,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                   "str:substring(\"-03-12\", \"2007-03-12\", 4, 3)?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith("The 3rd and 4th parameters to"))
+      if (!e.getMessage().startsWith("The 3rd and 4th parameters to")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1572,8 +1574,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                   "str:substring(\"-03-12\", $ARG2, 4)?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith("Variable $ARG2 not bound in predicate"))
+      if (!e.getMessage().startsWith("Variable $ARG2 not bound in predicate")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1587,8 +1590,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                   "str:substring(\"-03-12\", \"2007-03-12\", $ARG3)?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith("Variable $ARG3 not bound in predicate"))
+      if (!e.getMessage().startsWith("Variable $ARG3 not bound in predicate")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
   
@@ -1602,8 +1606,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                     "str:substring(\"-03-12\", \"2007-03-12\", 4, $ARG4)?");
         Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
       } catch (InvalidQueryException e) {
-        if (!e.getMessage().startsWith("Variable $ARG4 not bound in predicate"))
+        if (!e.getMessage().startsWith("Variable $ARG4 not bound in predicate")) {
           Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+        }
       }
   }
   
@@ -1619,8 +1624,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring received class " +
                                      "java.lang.Integer as argument 1, " +
-                                     "but requires a string"))
+                                     "but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
   
@@ -1636,8 +1642,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring received class " +
                                      "java.lang.Integer as argument 2, but " +
-                                     "requires a string"))
+                                     "requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1653,8 +1660,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring received a string " +
                                      "as argument 3, but requires class " +
-                                     "java.lang.Integer"))
+                                     "java.lang.Integer")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1670,8 +1678,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring received a string " +
                                      "as argument 4, but requires class " +
-                                     "java.lang.Integer"))
+                                     "java.lang.Integer")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1777,8 +1786,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring-after received " +
                                      "class java.lang.Integer as argument " +
-                                     "1, but requires a string"))
+                                     "1, but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1794,8 +1804,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring-after received " +
                                      "class java.lang.Integer as argument " +
-                                     "2, but requires a string"))
+                                     "2, but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1811,8 +1822,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring-after received " +
                                      "class java.lang.Integer as argument " +
-                                     "3, but requires a string"))
+                                     "3, but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1829,8 +1841,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                   "str:substring-after(\"07-03-12\", $ARG2, \"2007-03-12\")?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith(""))
+      if (!e.getMessage().startsWith("")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
     
@@ -1847,8 +1860,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                   "str:substring-after(\"2007-03-12\", \"20\", $ARG3)?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith(""))
+      if (!e.getMessage().startsWith("")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 
@@ -1954,8 +1968,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring-before received " +
                                      "class java.lang.Integer as argument " +
-                                     "1, but requires a string"))
+                                     "1, but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
   
@@ -1971,8 +1986,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring-before received " +
                                      "class java.lang.Integer as argument " +
-                                     "2, but requires a string"))
+                                     "2, but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
   
@@ -1988,8 +2004,9 @@ public class StringModuleTest extends AbstractPredicateTest {
     } catch (InvalidQueryException e) {
       if (!e.getMessage().startsWith("Predicate substring-before " +
                                      "received class java.lang.Integer as " +
-                                     "argument 3, but requires a string"))
+                                     "argument 3, but requires a string")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
   
@@ -2006,8 +2023,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                 "str:substring-before(\"07-03-12\", $ARG2, \"2007-03-12\")?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith(""))
+      if (!e.getMessage().startsWith("")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
   
@@ -2024,8 +2042,9 @@ public class StringModuleTest extends AbstractPredicateTest {
                 "str:substring-before(\"2007-03-12\", \"20\", $ARG3)?");
       Assert.fail("Expected InvalidQueryException, but got no Exception at all.");
     } catch (InvalidQueryException e) {
-      if (!e.getMessage().startsWith(""))
+      if (!e.getMessage().startsWith("")) {
         Assert.fail("Wrong error message: \"" + e.getMessage() + "\"");
+      }
     }
   }
 

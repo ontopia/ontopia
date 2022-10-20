@@ -81,8 +81,9 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
 
   public void updateRecentFiles(File f) {
     TopicIF recentFile = this.getRecentFile(f);
-    if (recentFile == null)
+    if (recentFile == null) {
       recentFile = this.createRecentFile(f);
+    }
 
     // Update timestamp
     OccurrenceIF lastVisited = this.getOccurrence(recentFile, timestamp);
@@ -90,8 +91,9 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
 
     // Limit recent files list to 10 items
     List recentFiles = this.getRecentFiles();
-    if (recentFiles.size() == 10)
+    if (recentFiles.size() == 10) {
       this.getRecentFile((File) recentFiles.get(9)).remove();
+    }
   }
 
   public List getRecentFiles() {
@@ -123,8 +125,9 @@ public class VizGeneralConfigurationManager extends VizConfigurationManager {
         // For 2.1 compatability
         file = new File(locator.getAddress());
       }
-      if (file != null)
+      if (file != null) {
         result.add(file);
+      }
     }
 
     return result;

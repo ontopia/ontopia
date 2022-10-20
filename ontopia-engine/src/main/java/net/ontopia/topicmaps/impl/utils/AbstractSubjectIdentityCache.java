@@ -202,16 +202,19 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       registerObject(added);
       // Add subject locators
       Object[] subjects = added.getSubjectLocators().toArray();
-      for (int i = 0; i < subjects.length; i++)
+      for (int i = 0; i < subjects.length; i++) {
         addEvent(added, TopicIF.EVENT_ADD_SUBJECTLOCATOR, subjects[i]);
+      }
       // Add indicators
       Object[] indicators = added.getSubjectIdentifiers().toArray();
-      for (int i = 0; i < indicators.length; i++)
+      for (int i = 0; i < indicators.length; i++) {
         addEvent(added, TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, indicators[i]);
+      }
       // Add source locators
       Object[] sources = added.getItemIdentifiers().toArray();
-      for (int i = 0; i < sources.length; i++)
+      for (int i = 0; i < sources.length; i++) {
         addEvent(added, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, sources[i]);
+      }
     }
   }
 
@@ -225,16 +228,19 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       TopicIF removed = (TopicIF) old_value;
       // Remove subject locators
       Object[] subjects = removed.getSubjectLocators().toArray();
-      for (int i = 0; i < subjects.length; i++)
+      for (int i = 0; i < subjects.length; i++) {
         removeEvent(removed, TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, subjects[i]);
+      }
       // Remove indicators
       Object[] indicators = removed.getSubjectIdentifiers().toArray();
-      for (int i = 0; i < indicators.length; i++)
+      for (int i = 0; i < indicators.length; i++) {
         removeEvent(removed, TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, indicators[i]);
+      }
       // Remove source locators
       Object[] sources = removed.getItemIdentifiers().toArray();
-      for (int i = 0; i < sources.length; i++)
+      for (int i = 0; i < sources.length; i++) {
         removeEvent(removed, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, sources[i]);
+      }
       // Unregister object
       unregisterObject(removed);
     }
@@ -252,8 +258,9 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       registerObject(added);
       // Add source locators
       Object[] sources = added.getItemIdentifiers().toArray();
-      for (int i = 0; i < sources.length; i++)
+      for (int i = 0; i < sources.length; i++) {
         addEvent(added, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, sources[i]);
+      }
     }
   }
 
@@ -267,8 +274,9 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       TMObjectIF removed = (TMObjectIF) old_value;
       // Remove source locators
       Object[] sources = removed.getItemIdentifiers().toArray();
-      for (int i = 0; i < sources.length; i++)
+      for (int i = 0; i < sources.length; i++) {
         removeEvent(removed, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, sources[i]);
+      }
       // Unregister object
       unregisterObject(removed);
     }
@@ -284,10 +292,11 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
 
       // Check subject locator uniqueness
       TopicIF existing = _getTopicBySubjectLocator((LocatorIF)new_value);
-      if (existing != null && !existing.equals(object))
+      if (existing != null && !existing.equals(object)) {
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this subject locator: " + new_value + " ("
             + object + ")");
+      }
 
       // Register new subject locator
       registerSubject((LocatorIF)new_value, (TopicIF)object);
@@ -316,17 +325,19 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
 
       // Check indicator uniqueness
       TopicIF existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
-      if (existing != null && existing != object)
+      if (existing != null && existing != object) {
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this subject identifier: " + new_value + " ("
             + object + ")");
+      }
       // Check for source locator clash
       TMObjectIF existing_tmo = _getObjectByItemIdentifier((LocatorIF)new_value);
       if (existing_tmo != null && !existing_tmo.equals(object)
-          && (existing_tmo instanceof TopicIF))
+          && (existing_tmo instanceof TopicIF)) {
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing_tmo
             + " already has this subject identifier as its item identifier: "
             + new_value + " (" + object + ")");
+      }
 
       // Register new subject indicator
       registerSubjectIndicator((LocatorIF)new_value, (TopicIF)object);
@@ -360,17 +371,19 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       // TMObject.addItemIdentifier(). If we get here it is often an
       // indication of the database using case insensitive =
       // comparisions.
-      if (existing != null && existing != object)
+      if (existing != null && existing != object) {
         throw new UniquenessViolationException("Another object " + existing
             + " already has this item identifier: " + new_value + " (" + object
             + ") " + existing.equals(object));
+      }
       
       // Check for subject identifier clash
       existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
-      if (existing != null && !existing.equals(object) && (object instanceof TopicIF))
+      if (existing != null && !existing.equals(object) && (object instanceof TopicIF)) {
         throw new UniquenessViolationException(ANOTHER_TOPIC + existing
             + " already has this item identifier as its subject identifier: "
             + new_value + " (" + object + ")");
+      }
 
       // Register new source locator
       registerSourceLocator((LocatorIF)new_value, (TMObjectIF)object);

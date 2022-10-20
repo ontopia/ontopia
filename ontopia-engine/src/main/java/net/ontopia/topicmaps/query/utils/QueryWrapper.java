@@ -73,10 +73,11 @@ public class QueryWrapper {
    */
   public void setDeclarations(String declarations) {
     try {
-      if (context == null)
+      if (context == null) {
         context = QueryUtils.parseDeclarations(topicmap, declarations);
-      else
+      } else {
         context = QueryUtils.parseDeclarations(topicmap, declarations, context);
+      }
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -127,13 +128,15 @@ public class QueryWrapper {
     try {
       result = processor.execute(query, params, context);
       int ix = 0;
-      while (result.next())
+      while (result.next()) {
         list.add(mapper.mapRow(result, ix++));
+      }
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
     return list;
   }
@@ -160,12 +163,13 @@ public class QueryWrapper {
     MapMapper mapper = new MapMapper();
     List list = queryForList(query, mapper, params);
     int size = list.size();
-    if (size == 0)
+    if (size == 0) {
       return null;
-    else if (size == 1)
+    } else if (size == 1) {
       return (Map) list.get(0);
-    else
+    } else {
       throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
+    }
   }
 
   /**
@@ -197,11 +201,13 @@ public class QueryWrapper {
     
     @Override
     public Object mapRow(QueryResultIF result, int rowno) {
-      if (maxone && rowno == 1)
+      if (maxone && rowno == 1) {
         throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
+      }
       Map row = new HashMap(result.getWidth());
-      for (int ix = 0; ix < result.getWidth(); ix++)
+      for (int ix = 0; ix < result.getWidth(); ix++) {
         row.put(result.getColumnName(ix), result.getValue(ix));
+      }
       return row;
     }
   }
@@ -224,8 +230,9 @@ public class QueryWrapper {
     List list = queryForList(query, new RowMapperIF(){
       @Override
       public Object mapRow(QueryResultIF result, int rowno) {
-        if (rowno == 1)
+        if (rowno == 1) {
           throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
+        }
         return new Object();
       }
     }, params);
@@ -311,10 +318,11 @@ public class QueryWrapper {
    */
   public Object queryForObject(String query, RowMapperIF mapper, Map params) {
     List list = queryForList(query, mapper, params);
-    if (list.isEmpty())
+    if (list.isEmpty()) {
       return null;
-    else
+    } else {
       return list.iterator().next();
+    }
   }
   
   class ObjectMapper implements RowMapperIF {
@@ -330,8 +338,9 @@ public class QueryWrapper {
     
     @Override
     public Object mapRow(QueryResultIF result, int rowno) {
-      if (maxone && rowno == 1)
+      if (maxone && rowno == 1) {
         throw new OntopiaRuntimeException(MSG_QUERY_PRODUCED_MORE_THAN_ONE_ROW);
+      }
       return result.getValue(0);
     }
   }

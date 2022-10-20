@@ -74,8 +74,9 @@ public class HistoryMap<T> extends HashMap<Integer, T> {
   
   public void add(T obj) {
     // do not add if object already exists
-    if (suppressDuplicates && containsValue(obj))
+    if (suppressDuplicates && containsValue(obj)) {
       return;
+    }
     counter++;
     put(counter, obj);
     if (size() >= maxEntries)
@@ -108,8 +109,9 @@ public class HistoryMap<T> extends HashMap<Integer, T> {
   public Collection<T> getEntries() {
     Collection<T> result = new ArrayList<T>();
     for (int i=1; i <= size(); i++) {
-      if (getEntry(i) != null)
+      if (getEntry(i) != null) {
         result.add(getEntry(i));
+      }
     }
 
     return result;
@@ -118,8 +120,9 @@ public class HistoryMap<T> extends HashMap<Integer, T> {
   public Collection getEntriesReverse() {
     Collection result = new ArrayList();
     for (int i=size(); i >= 1; i--) {
-      if (getEntry(i) != null)
+      if (getEntry(i) != null) {
         result.add(getEntry(i));
+      }
     }
 
     return result;

@@ -80,12 +80,13 @@ public class TologQueryProcessorFactory implements QueryProcessorFactoryIF {
     // Otherwise use basic query processor
     if (propval == null || propval.equals("in-memory")) {
       log.debug("Creating basic query processor for: " + topicmap);
-      if (base == null)
+      if (base == null) {
         return new net.ontopia.topicmaps.query.impl.basic.QueryProcessor(
             topicmap);
-      else
+      } else {
         return new net.ontopia.topicmaps.query.impl.basic.QueryProcessor(
             topicmap, base);
+      }
     } else {
       throw new OntopiaRuntimeException("Property '" + PROP_IMPLEMENTATION
           + "' contains invalid value: '" + propval + "'");

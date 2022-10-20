@@ -43,7 +43,9 @@ public class ObjectStrings {
   public static String toString(String impl, AssociationIF assoc) {
     String id = UNASSIGNED;
     try {
-      if (assoc.getTopicMap() != null) id = assoc.getObjectId();
+      if (assoc.getTopicMap() != null) {
+        id = assoc.getObjectId();
+      }
       return "[" + impl + ", " + id + ", type: " + assoc.getType() + "]";
     } catch (Throwable t) {
       return "[" + impl + ", " + id + "]";
@@ -53,7 +55,9 @@ public class ObjectStrings {
   public static String toString(String impl, AssociationRoleIF role) {
     String id = UNASSIGNED;
     try {
-      if (role.getTopicMap() != null) id = role.getObjectId();
+      if (role.getTopicMap() != null) {
+        id = role.getObjectId();
+      }
       return "[" + impl + ", " + id + ", type: " + role.getType() + "]";
     } catch (Throwable t) {
       return "[" + impl + ", " + role.getObjectId() + "!]";
@@ -63,11 +67,14 @@ public class ObjectStrings {
   public static String toString(String impl, TopicNameIF basename) {
     String id = UNASSIGNED;
     try {
-      if (basename.getTopicMap() != null) id = basename.getObjectId();      
-      if (basename.getValue() != null)
+      if (basename.getTopicMap() != null) {
+        id = basename.getObjectId();
+      }      
+      if (basename.getValue() != null) {
         return "[" + impl + ", " + id + ", '" + basename.getValue() + "']";
-      else
+      } else {
         return "[" + impl + ", " + id + "]";
+      }
     } catch (Throwable t) {
       return "[" + impl + ", " + basename.getObjectId() + "!]";
     }
@@ -77,18 +84,21 @@ public class ObjectStrings {
   public static String toString(String impl, OccurrenceIF occurs) {
     String id = UNASSIGNED;
     try {
-      if (occurs.getTopicMap() != null) id = occurs.getObjectId();
+      if (occurs.getTopicMap() != null) {
+        id = occurs.getObjectId();
+      }
       if (Objects.equals(occurs.getDataType(), DataTypes.TYPE_URI)) {
         return "[" + impl + ", " + id + " (" + occurs.getValue() + ")]";
       } else {
         String value = occurs.getValue();
-        if (value == null)
+        if (value == null) {
           return "[" + impl + ", " + id + " null]";
-        else if (value.length() > MAX_STRING)
+        } else if (value.length() > MAX_STRING) {
           return "[" + impl + ", " + id + " <" + value.substring(0, MAX_STRING) +
           "...>]";
-        else
+        } else {
           return "[" + impl + ", " + id + " <" + value + ">]";
+        }
       }
     } catch (Throwable t) {
       return "[" + impl + ", " + occurs.getObjectId() + "!]";
@@ -98,24 +108,27 @@ public class ObjectStrings {
   public static String toString(String impl, TopicIF topic) {
     String id = UNASSIGNED;
     try {
-      if (topic.getTopicMap() != null) id = topic.getObjectId();
+      if (topic.getTopicMap() != null) {
+        id = topic.getObjectId();
+      }
       
       // Subject
-      if (topic.getSubjectLocators().size() > 0)
+      if (topic.getSubjectLocators().size() > 0) {
         return "[" + impl + ", " + id + " (" +
 					CollectionUtils.getFirstElement(topic.getSubjectLocators()) + ")]";
       
       // Subject indicators
-      else if (topic.getSubjectIdentifiers().size() > 0)
+      } else if (topic.getSubjectIdentifiers().size() > 0) {
         return "[" + impl + ", " + id + " {" +
 					CollectionUtils.getFirstElement(topic.getSubjectIdentifiers()) + "}]";
       
       // Source locators
-      else if (topic.getItemIdentifiers().size() > 0)
+      } else if (topic.getItemIdentifiers().size() > 0) {
         return "[" + impl + ", " + id + " <" +
 					CollectionUtils.getFirstElement(topic.getItemIdentifiers()) + ">]";
-      else
+      } else {
         return "[" + impl + ", " + id + "]";
+      }
     } catch (Throwable t) {
       return "[" + impl + ", " + topic.getObjectId() + "!]";
     }
@@ -124,7 +137,9 @@ public class ObjectStrings {
   public static String toString(String impl, TopicMapIF topicmap) {
     String id = UNASSIGNED;
     try {
-      if (topicmap.getTopicMap() != null) id = topicmap.getObjectId();
+      if (topicmap.getTopicMap() != null) {
+        id = topicmap.getObjectId();
+      }
       return "[" + impl + ", " + id + "]";
     } catch (Throwable t) {
       return "[" + impl + ", " + topicmap.getObjectId() + "!]";
@@ -134,18 +149,21 @@ public class ObjectStrings {
   public static String toString(String impl, VariantNameIF variant) {
     String id = UNASSIGNED;
     try {
-      if (variant.getTopicMap() != null) id = variant.getObjectId();
+      if (variant.getTopicMap() != null) {
+        id = variant.getObjectId();
+      }
       if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
         return "[" + impl + ", " + id + " (" + variant.getValue() + ")]";
       } else {
         String value = variant.getValue();
-        if (value == null)
+        if (value == null) {
           return "[" + impl + ", " + id + " null]";
-        else if (value.length() > MAX_STRING)
+        } else if (value.length() > MAX_STRING) {
           return "[" + impl + ", " + id + " <" + value.substring(0, MAX_STRING) +
           "...>]";
-        else
+        } else {
           return "[" + impl + ", " + id + " <" + value + ">]";
+        }
       }
     } catch (Throwable t) {
       return "[" + impl + ", " + variant.getObjectId() + "!]";

@@ -40,22 +40,26 @@ public class TMDecider implements Predicate<Object> {
     // a typed object can be disallowed by being typed with a topic named
     //   "Disallowed Type", but the typing topic itself will be accepted
 
-    if (object instanceof TopicIF)
+    if (object instanceof TopicIF) {
       return !isTopicName((TopicIF) object, "Disallowed Topic");
+    }
 
     if (object instanceof TypedIF) {
       TypedIF typed = (TypedIF) object;
       boolean filtered = typed == null ||
                          !isTopicName(typed.getType(), "Disallowed Type");
-      if (!filtered)
+      if (!filtered) {
         return false;
+      }
     }
 
-    if (object instanceof VariantNameIF) 
+    if (object instanceof VariantNameIF) {
       return !((VariantNameIF) object).getValue().equals("Disallowed Variant");
+    }
 
-    if (object instanceof TopicNameIF) 
+    if (object instanceof TopicNameIF) {
       return !((TopicNameIF) object).getValue().equals("Disallowed Name");
+    }
     
     return true;
   }
@@ -66,8 +70,9 @@ public class TMDecider implements Predicate<Object> {
   }
   
   private static String getTopicName(TopicIF topic) {
-    if (topic == null)
+    if (topic == null) {
       return null;
+    }
     
     Iterator<TopicNameIF> it = topic.getTopicNames().iterator();
     if (it.hasNext()) {

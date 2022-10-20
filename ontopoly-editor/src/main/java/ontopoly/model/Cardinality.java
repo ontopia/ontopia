@@ -41,8 +41,9 @@ public class Cardinality extends Topic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof Cardinality))
+    if (!(obj instanceof Cardinality)) {
       return false;
+    }
 
     Cardinality cardinality = (Cardinality) obj;
     return (getTopicIF().equals(cardinality.getTopicIF()));
@@ -116,10 +117,11 @@ public class Cardinality extends Topic {
     switch (fieldDefinition.getFieldType()) {
       case FieldDefinition.FIELD_TYPE_IDENTITY: {
         IdentityField identityField = (IdentityField)fieldDefinition;
-        if (identityField.isSubjectLocator())
+        if (identityField.isSubjectLocator()) {
           cardPSI = PSI.ON_CARDINALITY_1_1;
-        else
+        } else {
           cardPSI = PSI.ON_CARDINALITY_0_M;
+        }
         break;
       }
       case FieldDefinition.FIELD_TYPE_NAME: {

@@ -60,8 +60,9 @@ public class AssociationScopeFilterMenu extends JMenu {
    */
   public void configure(TopicMapIF currentTopicMap, ActionListener parentListener,
       VizController controller) {
-    if (currentTopicMap == null)
+    if (currentTopicMap == null) {
       return;
+    }
 
     ScopeIndexIF scopeix = (ScopeIndexIF) currentTopicMap.getIndex(
             "net.ontopia.topicmaps.core.index.ScopeIndexIF");
@@ -175,8 +176,9 @@ public class AssociationScopeFilterMenu extends JMenu {
     public void actionPerformed(ActionEvent aE) {
       boolean setPreviously = controller.isInAssociationScopeFilter(scope);
       controller.setInAssociationScopeFilter(scope, !setPreviously);
-      if (parentListener != null) 
+      if (parentListener != null) {
         parentListener.actionPerformed(aE);
+      }
     }
   }
   
@@ -184,8 +186,9 @@ public class AssociationScopeFilterMenu extends JMenu {
     radioButtons.setSelected(strictnessMap[strictness].getModel(), true);
 
     Enumeration elements = radioButtons.getElements();
-    while(elements.hasMoreElements())
+    while(elements.hasMoreElements()) {
       ((AbstractButton)elements.nextElement()).repaint();
+    }
   }
 
   public void setInAssociationScopeFilter(TopicIF scope, boolean useInFilter) {
@@ -201,13 +204,15 @@ public class AssociationScopeFilterMenu extends JMenu {
       
       if (currentScope.equals(scope)) {
         checkBox = (JCheckBoxMenuItem)checkBoxesIt.next();
-      } else
+      } else {
         checkBoxesIt.next();
+      }
     }
     
-    if (checkBox == null)
+    if (checkBox == null) {
       throw new OntopiaRuntimeException("Internal error. There should be a " +
           "scoping topic menu item for every scoping topic.");
+    }
     
     checkBox.setState(useInFilter);
   }

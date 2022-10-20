@@ -54,18 +54,21 @@ public class TMAssociationEdge extends TMAbstractEdge
   }
 
   private void paintRolesToolTips(Graphics g) {
-    if (!shouldDisplayRoleHoverHelp)
+    if (!shouldDisplayRoleHoverHelp) {
       return;
+    }
 
     Iterator iterator = association.getRoles().iterator();
     while (iterator.hasNext()) {
       AssociationRoleIF element = (AssociationRoleIF) iterator.next();
-      if (element.getPlayer().equals(((TMTopicNode) this.from).getTopic()))
+      if (element.getPlayer().equals(((TMTopicNode) this.from).getTopic())) {
         this.paintToolTipText(g, this.getStringifier().apply(
             element.getType()), getFromRolePosition());
-      if (element.getPlayer().equals(((TMTopicNode) this.to).getTopic()))
+      }
+      if (element.getPlayer().equals(((TMTopicNode) this.to).getTopic())) {
         this.paintToolTipText(g, this.getStringifier().apply(
             element.getType()), getToRolePosition());
+      }
     }
 
   }

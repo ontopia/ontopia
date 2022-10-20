@@ -54,9 +54,9 @@ public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all superclasses of all topics in collection
-    if (topics == null || topics.isEmpty())
+    if (topics == null || topics.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       HashSet superclasses = new HashSet();
       Iterator iter = topics.iterator();
       TopicIF topic = null;
@@ -74,11 +74,12 @@ public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
         }
 
         // ok, the topic cast succeeded, now continue
-        if (levelNumber == null)
+        if (levelNumber == null) {
           // if no level is specified get all of them.
           superclasses.addAll(hierUtils.getSuperclasses(topic));
-        else 
+        } else { 
           superclasses.addAll(hierUtils.getSuperclasses(topic, levelNumber.intValue()));
+        }
 
       } // while
       return superclasses;
@@ -104,8 +105,9 @@ public class SuperclassesTag extends BaseValueProducingAndAcceptingTag {
       levelNumber = null;
     }
 
-    if (levelNumber.intValue() < 1)
+    if (levelNumber.intValue() < 1) {
       throw new OntopiaRuntimeException("Only positive levels are allowed.");
+    }
   }
   
 }

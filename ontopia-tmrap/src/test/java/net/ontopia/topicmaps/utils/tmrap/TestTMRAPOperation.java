@@ -103,8 +103,9 @@ public abstract class TestTMRAPOperation {
       String value = keyValueTokenizer.hasMoreTokens() ?
           keyValueTokenizer.nextToken("=") : null;
       
-      if (key != null)
+      if (key != null) {
         addParam(retVal, key, value);
+      }
     }
 
     return retVal;
@@ -124,16 +125,17 @@ public abstract class TestTMRAPOperation {
       Object oldValue = map.get(key);
       
       Collection newValue;      
-      if (oldValue instanceof Collection)
+      if (oldValue instanceof Collection) {
         newValue = (Collection)oldValue;
-      else {
+      } else {
         newValue = new ArrayList();
         newValue.add(oldValue);
       }
         
       newValue.add(value);
-    } else
+    } else {
       map.put(key, value);
+    }
   }
   
   protected int doGet(String operationURI, String parameters,
@@ -157,9 +159,10 @@ public abstract class TestTMRAPOperation {
     FakeServletResponse response = new FakeServletResponse(writer);
     rapServlet.doGet(request, response, operationURI);
 
-    if (httpcode != -1 && response.getStatus() != httpcode)
+    if (httpcode != -1 && response.getStatus() != httpcode) {
       throw new ServletException("Error in HTTP operation: " + 
                                  response.getMessage());
+    }
     
     return response.getStatus();
   }

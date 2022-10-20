@@ -338,7 +338,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         afields.add(new TopicIF[] { (TopicIF)qr.getValue(0), (TopicIF)qr.getValue(1), (TopicIF)qr.getValue(2) });              
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     removeAssociations("on:has-field", new String[] { "on:topic-type", "on:field", "on:role-type" }, qp, dc);
     
@@ -367,7 +369,9 @@ public class Upgrade_1_9 extends UpgradeBase {
           associationField = builder.makeTopic(tt_association_field);
         }
       } finally {
-        if (qr != null) qr.close();
+        if (qr != null) {
+          qr.close();
+        }
       }
 
       if (!existingAField) {
@@ -395,7 +399,9 @@ public class Upgrade_1_9 extends UpgradeBase {
           roleField = builder.makeTopic(tt_role_field);
         }
       } finally {
-        if (qr != null) qr.close();
+        if (qr != null) {
+          qr.close();
+        }
       }
       
       if (!existingRField) {
@@ -423,7 +429,9 @@ public class Upgrade_1_9 extends UpgradeBase {
             // builder.makeTopicName(newRoleField, TopicStringifiers.toString(at));                
           }
         } finally {
-          if (qr != null) qr.close();
+          if (qr != null) {
+            qr.close();
+          }
         }
         
         // on:use-control($AT : on:association-type, $RT : on:role-type, $IC : on:interface-control)
@@ -440,7 +448,9 @@ public class Upgrade_1_9 extends UpgradeBase {
             builder.makeAssociationRole(a5, getTopic(topicmap, base_on, "interface-control"), ic);
           }              
         } finally {
-          if (qr != null) qr.close();
+          if (qr != null) {
+            qr.close();
+          }
         }
         
       }
@@ -465,7 +475,9 @@ public class Upgrade_1_9 extends UpgradeBase {
             assignedCardinality.add(roleField);
           }
         } finally {
-          if (qr != null) qr.close();
+          if (qr != null) {
+            qr.close();
+          }
         }
       }
       
@@ -489,7 +501,9 @@ public class Upgrade_1_9 extends UpgradeBase {
           oc.addTheme(roleField);
         }              
       } finally {
-        if (qr != null) qr.close();
+        if (qr != null) {
+          qr.close();
+        }
       }
     }
       
@@ -501,7 +515,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         ofields.add(new TopicIF[] { (TopicIF)qr.getValue(0), (TopicIF)qr.getValue(1) });              
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     removeAssociations("on:has-field", new String[] { "on:topic-type", "on:field" }, qp, dc);
 
@@ -558,7 +574,9 @@ public class Upgrade_1_9 extends UpgradeBase {
       qr =  qp.execute("select $XT, $DT from instance-of($XT, on:occurrence-type), { on:has-datatype($XT : on:field, $DT : on:datatype) }?", dc);
       while (qr.next()) {
         TopicIF xtType = (TopicIF)qr.getValue(0);
-        if (nonFieldOccurrenceTypes.contains(xtType)) continue;
+        if (nonFieldOccurrenceTypes.contains(xtType)) {
+          continue;
+        }
         
         TopicIF xtField = builder.makeTopic(getTopic(topicmap, base_on, "occurrence-field"));
         xtfields.put(xtType, xtField);
@@ -577,7 +595,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         }
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     
     // name types
@@ -594,7 +614,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         builder.makeAssociationRole(a3, getTopic(topicmap, base_on, "name-type"), xtType);
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
       
     // loop over the fields so that we can execute other queries as we go
@@ -606,8 +628,9 @@ public class Upgrade_1_9 extends UpgradeBase {
       TopicIF xt = fen[1];
       
       TopicIF xtField = xtfields.get(xt);
-      if (xtField == null)
+      if (xtField == null) {
         throw new OntopiaRuntimeException("Could not find field for " + xt);
+      }
       // builder.makeTopicName(newField, TopicStringifiers.toString(xt));
       
       assignField(topicmap, base_on, xtField, tt);
@@ -630,7 +653,9 @@ public class Upgrade_1_9 extends UpgradeBase {
           oc.addTheme(xtField);
         }
       } finally {
-        if (qr != null) qr.close();
+        if (qr != null) {
+          qr.close();
+        }
       }
       
       // on:has-cardinality($XT : on:field-definition,  $C : on:cardinality)
@@ -649,7 +674,9 @@ public class Upgrade_1_9 extends UpgradeBase {
             assignedCardinality.add(xtField);
           }
         } finally {
-          if (qr != null) qr.close();
+          if (qr != null) {
+            qr.close();
+          }
         }
       }
     }
@@ -1127,10 +1154,13 @@ public class Upgrade_1_9 extends UpgradeBase {
     try {
       qr =  qp.execute("select $NF from direct-instance-of($NF, on:name-field), " + 
           "on:has-name-type($NF : on:name-field, on:untyped-name : on:name-type)?", dc);
-      if (qr.next())
+      if (qr.next()) {
         nField = (TopicIF)qr.getValue(0);
+      }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     if (nField == null) {
       nField = builder.makeTopic(getTopic(topicmap, base_on, "name-field"));            
@@ -1175,7 +1205,9 @@ public class Upgrade_1_9 extends UpgradeBase {
 //        builder.makeAssociationRole(a2, getTopic(topicmap, base_on, "field-definition"), nField);
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     
 //    try {
@@ -1221,7 +1253,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         }
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
   
   //  makePublicSystemTopic(topicmap, base_on, base_xtm, "#superclass-subclass");
@@ -1344,8 +1378,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         TopicIF at = (TopicIF)qr.getValue(2);
         String rtid = getSymbolicId(rt);
         String atid = getSymbolicId(at);
-        if (rtid != null & atid != null)
+        if (rtid != null & atid != null) {
           rf.addSubjectIdentifier(base_on.resolveAbsolute("rf-" + rtid + "_" + atid));
+        }
       }
       // association fields
       qr =  qp.execute("select $XF, $XT from " + // 91
@@ -1354,8 +1389,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         TopicIF xf = (TopicIF)qr.getValue(0);
         TopicIF xt = (TopicIF)qr.getValue(1);
         String xtid = getSymbolicId(xt);
-        if (xtid != null)
+        if (xtid != null) {
           xf.addSubjectIdentifier(base_on.resolveAbsolute("af-" + xtid));
+        }
       }
       // identity fields
       qr =  qp.execute("select $XF, $XT from " +
@@ -1364,8 +1400,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         TopicIF xf = (TopicIF)qr.getValue(0);
         TopicIF xt = (TopicIF)qr.getValue(1);
         String xtid = getSymbolicId(xt);
-        if (xtid != null)
+        if (xtid != null) {
           xf.addSubjectIdentifier(base_on.resolveAbsolute("if-" + xtid));
+        }
       }
       // name fields
       qr =  qp.execute("select $XF, $XT from " +
@@ -1374,8 +1411,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         TopicIF xf = (TopicIF)qr.getValue(0);
         TopicIF xt = (TopicIF)qr.getValue(1);
         String xtid = getSymbolicId(xt);
-        if (xtid != null)
+        if (xtid != null) {
           xf.addSubjectIdentifier(base_on.resolveAbsolute("nf-" + xtid));
+        }
       }
       // occurrence fields
       qr =  qp.execute("select $XF, $XT from " +
@@ -1384,12 +1422,15 @@ public class Upgrade_1_9 extends UpgradeBase {
         TopicIF xf = (TopicIF)qr.getValue(0);
         TopicIF xt = (TopicIF)qr.getValue(1);
         String xtid = getSymbolicId(xt);
-        if (xtid != null)
+        if (xtid != null) {
           xf.addSubjectIdentifier(base_on.resolveAbsolute("of-" + xtid));
+        }
       }
       
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
 
     // remove duplicate fields
@@ -1443,7 +1484,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         }
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     
     // order fields
@@ -1571,7 +1614,9 @@ public class Upgrade_1_9 extends UpgradeBase {
         }
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
 
     // remove duplicate field orders (keep lowest sortkey) // 91
@@ -1586,10 +1631,11 @@ public class Upgrade_1_9 extends UpgradeBase {
       TopicIF fd = (TopicIF)qr.getValue(1);
       OccurrenceIF fieldOrderOcc = (OccurrenceIF)qr.getValue(2);
       String key = tt.getObjectId() + ":" + fd.getObjectId();
-      if (fieldOrders.containsKey(key))
+      if (fieldOrders.containsKey(key)) {
         fieldOrderOcc.remove();
-      else
+      } else {
         fieldOrders.put(key, fieldOrderOcc);
+      }
     }
     
   }

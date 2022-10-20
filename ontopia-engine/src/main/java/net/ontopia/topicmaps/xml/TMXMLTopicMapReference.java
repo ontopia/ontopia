@@ -87,10 +87,11 @@ public class TMXMLTopicMapReference extends AbstractOntopolyURLReference {
   protected TopicMapReaderIF getImporter() throws IOException {
     // create topic map importer
     TMXMLReader reader;
-    if (base_address == null)
+    if (base_address == null) {
       reader = new TMXMLReader(url);
-    else
+    } else {
       reader = new TMXMLReader(url, base_address);
+    }
     reader.setValidate(validate);
     return reader;
   }

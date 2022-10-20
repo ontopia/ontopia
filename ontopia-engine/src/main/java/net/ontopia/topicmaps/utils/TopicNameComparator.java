@@ -50,15 +50,23 @@ public class TopicNameComparator extends ScopedIFComparator<TopicNameIF> {
       t1 = null;
       t2 = null;
     } else {
-      if (untypedname.equals(t1)) t1 = null;
-      if (untypedname.equals(t2)) t2 = null;
+      if (untypedname.equals(t1)) {
+        t1 = null;
+      }
+      if (untypedname.equals(t2)) {
+        t2 = null;
+      }
     }
 
     // untyped should sort before typed
     if (t1 == null) {
-      if (t2 != null) return -1;
+      if (t2 != null) {
+        return -1;
+      }
     } else {
-      if (t2 == null) return 1;
+      if (t2 == null) {
+        return 1;
+      }
     }
     
     return super.compare(o1, o2);

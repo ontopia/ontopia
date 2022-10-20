@@ -90,10 +90,11 @@ public class OSpinner extends JPanel {
     input.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent evt) {
-        if (evt.getKeyCode() == (KeyEvent.VK_UP))
+        if (evt.getKeyCode() == (KeyEvent.VK_UP)) {
           incrementValue();
-        else if (evt.getKeyCode() == KeyEvent.VK_DOWN)
+        } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
           decrementValue();
+        }
       }
     });
 

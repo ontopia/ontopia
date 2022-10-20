@@ -52,9 +52,10 @@ public abstract class BaseValueProducingTag extends TagSupport
     // retrieve parent tag which accepts the produced collection by this tag 
     ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)
       findAncestorWithClass(this, ValueAcceptingTagIF.class);
-    if (acceptingTag == null)
+    if (acceptingTag == null) {
       throw new NavigatorRuntimeException(getClass().getName() +
                                           "couldn't find value-accepting ancestor tag to pass value to!");
+    }
 
     // try to retrieve default value from ContextManager
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -70,10 +71,11 @@ public abstract class BaseValueProducingTag extends TagSupport
     acceptingTag.accept( resultCollection );
 
     // ignore body if variable name is set
-    if (variableName != null)
+    if (variableName != null) {
       return SKIP_BODY;
-    else
+    } else {
       return EVAL_BODY_INCLUDE;
+    }
   }
 
   /**
@@ -99,10 +101,11 @@ public abstract class BaseValueProducingTag extends TagSupport
    */
   protected Collection getInputCollection(ContextManagerIF ctxtMgr)
     throws NavigatorRuntimeException {
-    if (variableName == null)
+    if (variableName == null) {
       return ctxtMgr.getDefaultValue();
-    else
+    } else {
       return ctxtMgr.getValue(variableName);
+    }
   }
   
   // -----------------------------------------------------------------

@@ -59,15 +59,16 @@ public class DatatypePredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       // FIXME: can do better based on knowledge of datatypes here?
       return PredicateDrivenCostEstimator.BIG_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -92,8 +93,9 @@ public class DatatypePredicate implements BasicPredicateIF {
                                             objix, typeix,
                                             PredicateUtils.GENERATE_DATATYPE);
 
-    } else 
+    } else {
       return lookupObjects(matches, objix, typeix, makeTypeIndex());
+    }
   }
 
   private Object[] getObjects() {
@@ -154,16 +156,19 @@ public class DatatypePredicate implements BasicPredicateIF {
                                      Map index) {
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!(matches.data[ix][typeix] instanceof String))
+      if (!(matches.data[ix][typeix] instanceof String)) {
         continue;
+      }
 
       String typeuri = (String) matches.data[ix][typeix];
       List objects = (List) index.get(typeuri);
-      if (objects == null || objects.isEmpty())
+      if (objects == null || objects.isEmpty()) {
         continue;
+      }
       
-      while (result.last + objects.size() >= result.size) 
+      while (result.last + objects.size() >= result.size) {
         result.increaseCapacity();
+      }
 
       Object[] values = objects.toArray();
       for (int pos = 0; pos < values.length; pos++) {

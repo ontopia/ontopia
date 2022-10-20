@@ -92,8 +92,9 @@ public abstract class AbstractTopicMapReference
 
   @Override
   public synchronized void open() {
-    if (isDeleted()) 
+    if (isDeleted()) {
       throw new StoreDeletedException("Topic map has been deleted through this reference.");
+    }
     this.isopen = true;
   }
 
@@ -109,13 +110,17 @@ public abstract class AbstractTopicMapReference
 
   @Override
   public synchronized void delete() {
-    if (source == null)
+    if (source == null) {
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
-    if (!source.supportsDelete())
+    }
+    if (!source.supportsDelete()) {
       throw new UnsupportedOperationException("This reference cannot be deleted as the source does not allow deleting.");
+    }
 
     // ignore if store already deleted
-    if (isDeleted()) return;
+    if (isDeleted()) {
+      return;
+    }
 
     // close the reference
     close();
@@ -130,7 +135,9 @@ public abstract class AbstractTopicMapReference
       store = createStore(false);
       store.getTopicMap().clear();    
     } finally {
-      if (store != null && store.isOpen()) store.close();
+      if (store != null && store.isOpen()) {
+        store.close();
+      }
     }
   }
 
@@ -162,25 +169,30 @@ public abstract class AbstractTopicMapReference
    * INTERNAL: Add topic listener to reference.
    */
   public synchronized void addTopicListener(TopicMapListenerIF listener) {
-    if (topic_listeners == null)
+    if (topic_listeners == null) {
       listeners = new ArrayList<TopicMapListenerIF>(3);
+    }
     listeners.add(listener);
     makeListenerArray();
     // register self with listener
-    if (listener instanceof AbstractTopicMapListener)
+    if (listener instanceof AbstractTopicMapListener) {
       ((AbstractTopicMapListener)listener).setReference(this);
+    }
   }
 
   /**
    * INTERNAL: Remove topic listener from reference.
    */
   public synchronized void removeTopicListener(TopicMapListenerIF listener) {
-    if (topic_listeners == null) return;
+    if (topic_listeners == null) {
+      return;
+    }
     listeners.remove(listener);
     makeListenerArray();
     // unregister self with listener
-    if (listener instanceof AbstractTopicMapListener)
+    if (listener instanceof AbstractTopicMapListener) {
       ((AbstractTopicMapListener)listener).setReference(null);
+    }
   }
   
   /**
@@ -190,10 +202,11 @@ public abstract class AbstractTopicMapReference
     StringTokenizer st = new StringTokenizer(listenerList, ", ");
     while (st.hasMoreTokens()) {
       Object object = ObjectUtils.newInstance(st.nextToken());
-      if (object instanceof TopicMapListenerIF)
+      if (object instanceof TopicMapListenerIF) {
         addTopicListener((TopicMapListenerIF)object);
-      else
+      } else {
         throw new OntopiaRuntimeException("Listener " + object + " is not a TopicMapListenerIF and cannot be added to reference with id " + getId());
+      }
     }
   }
   

@@ -94,8 +94,9 @@ public class Term {
    * of the term which actually occurred in the classified content.
    */
   public String getPreferredName() {
-    if (variants.isEmpty())
+    if (variants.isEmpty()) {
       return getStem();
+    }
     Variant maxKey = null;
     int maxValue = -1;
     TObjectIntIterator<Variant> iter = variants.iterator();
@@ -122,8 +123,9 @@ public class Term {
   }
   
   protected void setScore(double score, String reason) {
-    if (score <= 0.0d)
+    if (score <= 0.0d) {
       throw new RuntimeException("Score is not nillable: " + score + " term: " + this);
+    }
     log.debug(">" + stem + "< =" + score + ", " + reason);
     this.score = score;    
   }
@@ -148,15 +150,18 @@ public class Term {
   }
   
   protected void addVariant(Variant variant, int occurrences) {
-    if (variants.get(variant) > 0)
+    if (variants.get(variant) > 0) {
       variants.increment(variant);
-    else
+    } else {
       variants.put(variant, occurrences);
+    }
     totalOccurrences += occurrences;
   }
   
   protected void merge(Term other) {
-    if (other == this) return;
+    if (other == this) {
+      return;
+    }
     
     this.score = this.score + other.score;    
     this.totalOccurrences = this.totalOccurrences + other.totalOccurrences;
@@ -166,10 +171,11 @@ public class Term {
       iter.advance();
       Variant key = iter.key();
       int value = iter.value();
-      if (this.variants.containsKey(key))
+      if (this.variants.containsKey(key)) {
         this.variants.adjustValue(key, value);
-      else
+      } else {
         this.variants.put(key, value);
+      }
       key.replaceTerm(this);
     }
   }
@@ -191,7 +197,9 @@ public class Term {
     @Override
     public int compare(Variant v1, Variant v2) {
       int c = Integer.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
-      if (c != 0) return c;
+      if (c != 0) {
+        return c;
+      }
       return v1.getValue().compareTo(v2.getValue());
     }
   };

@@ -54,7 +54,9 @@ public class JDOIsEmpty implements JDOExpressionIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOIsEmpty) {
       JDOIsEmpty other = (JDOIsEmpty)obj;
       return (value.equals(other.value));

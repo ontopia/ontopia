@@ -72,14 +72,15 @@ public class ValuePredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -142,8 +143,9 @@ public class ValuePredicate implements BasicPredicateIF {
     
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!(matches.data[ix][valueix] instanceof String))
+      if (!(matches.data[ix][valueix] instanceof String)) {
         continue;
+      }
 
       String value = (String) matches.data[ix][valueix];
       Collection objects = new ArrayList();
@@ -151,14 +153,17 @@ public class ValuePredicate implements BasicPredicateIF {
         objects.addAll(nameindex.getTopicNames(value));
         objects.addAll(filterVariants(nameindex.getVariants(value)));
       }
-      if ((objtypes & OCC_TYPE) != 0)
+      if ((objtypes & OCC_TYPE) != 0) {
         objects.addAll(filterOccurrences(occindex.getOccurrences(value)));
+      }
 
-      if (objects.isEmpty())
+      if (objects.isEmpty()) {
         continue;
+      }
       
-      while (result.last + objects.size() >= result.size) 
+      while (result.last + objects.size() >= result.size) {
         result.increaseCapacity();
+      }
 
       Object[] values = objects.toArray();
       for (int pos = 0; pos < values.length; pos++) {
@@ -177,16 +182,18 @@ public class ValuePredicate implements BasicPredicateIF {
     QueryContext context = matches.getQueryContext();
     String varname = ((Variable) matches.getColumnDefinition(objix)).getName();
     Object[] vartypes = context.getVariableTypes(varname);
-    if (vartypes == null)
+    if (vartypes == null) {
       return ALL_TYPES;
+    }
 
     int types = NO_TYPES;
     for (int ix = 0; ix < vartypes.length; ix++) {
       if (vartypes[ix].equals(TopicNameIF.class) ||
-          vartypes[ix].equals(VariantNameIF.class))
+          vartypes[ix].equals(VariantNameIF.class)) {
         types |= NAME_TYPE;
-      else if (vartypes[ix].equals(OccurrenceIF.class))
+      } else if (vartypes[ix].equals(OccurrenceIF.class)) {
         types |= OCC_TYPE;
+      }
     }
 
     return types;
@@ -216,8 +223,9 @@ public class ValuePredicate implements BasicPredicateIF {
     Iterator iter = occs.iterator();
     while (iter.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) iter.next();
-      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
+      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) {
         result.add(occ);
+      }
     }
     return result;
   }
@@ -227,8 +235,9 @@ public class ValuePredicate implements BasicPredicateIF {
     Iterator iter = vns.iterator();
     while (iter.hasNext()) {
       VariantNameIF vn = (VariantNameIF) iter.next();
-      if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI))
+      if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_URI)) {
         result.add(vn);
+      }
     }
     return result;
   }

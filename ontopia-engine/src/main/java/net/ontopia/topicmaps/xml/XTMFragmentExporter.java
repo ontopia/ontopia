@@ -126,8 +126,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   public void exportTopics(Iterator it, ContentHandler dh) throws SAXException {
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
-      if (filterOk(topic))
+      if (filterOk(topic)) {
         writeTopic(topic, dh);
+      }
     }
   }
 
@@ -136,8 +137,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
    * element.
    */
   public void exportTopicNames(Iterator it, ContentHandler dh) throws SAXException {
-    while (it.hasNext())
+    while (it.hasNext()) {
       writeTopicNames((TopicIF) it.next(), dh);
+    }
   }
 
   /**
@@ -187,8 +189,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     throws SAXException {
 
     String objid = topic.getObjectId();
-    if (alreadyExported.contains(objid))
+    if (alreadyExported.contains(objid)) {
       return;
+    }
     alreadyExported.add(objid);
     
     super.writeTopic(topic, dh);    
@@ -196,8 +199,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     Iterator it = topic.getRoles().iterator();
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
-      if (filterOk(role.getAssociation()))
+      if (filterOk(role.getAssociation())) {
         writeAssociation(role.getAssociation(), dh);
+      }
     }
   }
 
@@ -205,8 +209,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
     throws SAXException {
 
     String objid = topic.getObjectId();
-    if (alreadyExported.contains(objid))
+    if (alreadyExported.contains(objid)) {
       return;
+    }
     alreadyExported.add(objid);
     
     atts.clear();    
@@ -216,11 +221,13 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
 
     if (topic.getSubjectLocators().size() > 0 ||
         topic.getSubjectIdentifiers().size() > 0 ||
-        (topic.getItemIdentifiers().size() > 0 && export_srclocs)) 
+        (topic.getItemIdentifiers().size() > 0 && export_srclocs)) {
       writeSubjectIdentity(topic, dh);
+    }
    
-    if ((topic.getTopicNames()).size() > 0)
+    if ((topic.getTopicNames()).size() > 0) {
       writeTopicNames(topic.getTopicNames(),dh);
+    }
     
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "topic");
     
@@ -235,8 +242,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       TopicNameIF basename = (TopicNameIF)iter.next();
       
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "baseName", EMPTY_ATTR_LIST);
-      if ((basename.getScope()).size() > 0)
+      if ((basename.getScope()).size() > 0) {
         writeScope(basename.getScope(), dh);
+      }
       
       //Write baseNameString
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "baseNameString", EMPTY_ATTR_LIST);
@@ -247,8 +255,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "baseNameString");
 
       //Write variant
-      if ((basename.getVariants()).size() > 0)
+      if ((basename.getVariants()).size() > 0) {
         writeVariants(basename.getVariants(), dh);
+      }
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "baseName");
     }
   }
@@ -287,8 +296,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       while (it.hasNext()) {
         LocatorIF loc = (LocatorIF) it.next();
         reference = loc.getExternalForm();
-        if (!use_local_ids)
+        if (!use_local_ids) {
           break;
+        }
         
         if (reference.startsWith(baseaddr)) {
           reference = reference.substring(baseaddr.length()); // gives "#id"
@@ -299,8 +309,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
 
     // if no ID or source locator found, create a virtual one,
     // but do not assign it to the object
-    if (reference == null)
+    if (reference == null) {
       reference = makeVirtualReference(topic);
+    }
 
     // now we can output
     atts.clear();
@@ -328,8 +339,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
         dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF, atts);
         dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF);
         identityFound = true;
-      } else
+      } else {
         reportInvalidLocator(subject);
+      }
     }
 
     // Subject indicators
@@ -351,8 +363,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
           dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  SUBJECTINDICATORREF);
         }
         identityFound = true;
-      } else
+      } else {
         reportInvalidLocator(indicator);
+      }
     }
 
     // Source locators (only if configured)
@@ -369,8 +382,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
             dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF, atts);
             dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  TOPICREF);
             identityFound = true;
-          } else
+          } else {
             reportInvalidLocator(srcloc);
+          }
         }
       }     
     }
@@ -401,9 +415,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "variant", EMPTY_ATTR_LIST);
 
       // write parameters      
-      if (var.getScope().size() > 0)
+      if (var.getScope().size() > 0) {
         writeParameters(var, dh);
-      else {
+      } else {
         // FIXME : XTM violation!
       }
       
@@ -431,24 +445,28 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       addId(atts, occr);
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "occurrence", atts);
 
-      if (occr.getType() != null)
+      if (occr.getType() != null) {
         writeInstanceOf(occr, dh);
-      if (occr.getScope().size() > 0)
+      }
+      if (occr.getScope().size() > 0) {
         writeScope(occr.getScope(), dh);
+      }
 
       // write resourceRef
       LocatorIF occloc = occr.getLocator();
       if (occloc != null) {
-        if (locator_handler != null)
+        if (locator_handler != null) {
           occloc = locator_handler.process(occloc);
+        }
         String notation = occloc.getNotation();
         if (notation != null && notation.equals(URI)) {
           atts.clear();
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, XLINK_HREF, CDATA, occloc.getAddress());
           dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF, atts);
           dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  RESOURCEREF);
-        } else
+        } else {
           reportInvalidLocator(occloc);
+        }
       }
 
       // write resourceData
@@ -473,20 +491,24 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   protected void writeAssociation(AssociationIF assoc, ContentHandler dh) throws SAXException {
 
     String objid = assoc.getObjectId();
-    if (alreadyExported.contains(objid))
+    if (alreadyExported.contains(objid)) {
       return;
+    }
     alreadyExported.add(objid);
     
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "association", EMPTY_ATTR_LIST);
 
-    if (assoc.getType() != null)
+    if (assoc.getType() != null) {
       writeInstanceOf(assoc, dh);
+    }
 
-    if (assoc.getScope().size() > 0)
+    if (assoc.getScope().size() > 0) {
       writeScope(assoc.getScope(), dh);
+    }
 
-    if (assoc.getRoles().size() > 0 )
+    if (assoc.getRoles().size() > 0 ) {
       writeMembers(assoc, dh);
+    }
     
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "association");
   }
@@ -499,8 +521,12 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
             
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "member", EMPTY_ATTR_LIST);
       
-      if (role.getType() != null) writeRoleSpec(role.getType(), dh);
-      if (role.getPlayer() != null) writeTopicRef(role.getPlayer(), dh);
+      if (role.getType() != null) {
+        writeRoleSpec(role.getType(), dh);
+      }
+      if (role.getPlayer() != null) {
+        writeTopicRef(role.getPlayer(), dh);
+      }
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "member");
     }
   }
@@ -516,9 +542,10 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   
   public static String resolveVirtualReference(String address, String tmid) {
     String topicMapIndex = XTMFragmentExporter.sourceTopicMapFromVirtualReference(address);
-    if (!topicMapIndex.equals(tmid))
+    if (!topicMapIndex.equals(tmid)) {
       throw new OntopiaRuntimeException("Topic map IDs do not match, requested=" + topicMapIndex +
                                         ", current=" + tmid);
+    }
     
     return address.substring(address.indexOf('#') + 1);
   }
@@ -541,8 +568,9 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
         //!   throw new OntopiaRuntimeException("Not able to get the topic map reference from topic: " + topic);
       }
     }
-    if (topicmap_id == null)
+    if (topicmap_id == null) {
       topicmap_id = "";
+    }
     return makeVirtualReference(topic, topicmap_id);
   }
 

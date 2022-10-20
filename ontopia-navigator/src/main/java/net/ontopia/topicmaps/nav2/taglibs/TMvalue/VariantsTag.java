@@ -83,11 +83,11 @@ public class VariantsTag extends BaseScopedTag {
   // internal helper methods
   // -----------------------------------------------------------------
 
-  private final void accumulateVariantsOfBasename(TopicNameIF basename, Collection variants) {
+  private void accumulateVariantsOfBasename(TopicNameIF basename, Collection variants) {
     variants.addAll(basename.getVariants());
   }
 
-  private final void accumulateVariantsOfTopic(TopicIF topic, Collection variants) {
+  private void accumulateVariantsOfTopic(TopicIF topic, Collection variants) {
     if (topic != null) {
       Iterator iterBase = topic.getTopicNames().iterator();
       while (iterBase.hasNext()) {
@@ -97,7 +97,7 @@ public class VariantsTag extends BaseScopedTag {
     }
   }
 
-  private final void accumulateVariantsOfTopicmap(TopicMapIF topicmap, Collection variants) {
+  private void accumulateVariantsOfTopicmap(TopicMapIF topicmap, Collection variants) {
     if (topicmap != null) {
       Iterator iterTopic = topicmap.getTopics().iterator();
       while (iterTopic.hasNext()) {

@@ -82,7 +82,9 @@ public class JDOFunction implements JDOValueIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOFunction) {
       JDOFunction other = (JDOFunction)obj;
       return (name.equals(other.name) &&
@@ -97,7 +99,9 @@ public class JDOFunction implements JDOValueIF {
     StringBuilder sb = new StringBuilder();
     sb.append(name).append('(');
     for (int i=0; i < args.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append(args[i]);
     }
     sb.append(')');

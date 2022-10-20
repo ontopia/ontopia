@@ -51,8 +51,9 @@ public class QueryResultIterator implements Iterator<Map<String, Object>>  {
   
   @Override
   public Map<String, Object> next() {
-    if (!has_next)
+    if (!has_next) {
       throw new NoSuchElementException();
+    }
     ArrayMap<String, Object> rowmap = new ArrayMap<String, Object>(keys, result.getValues());
     has_next = result.next();
     return rowmap;

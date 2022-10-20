@@ -40,9 +40,9 @@ public class ReifierTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection tmObjects) throws JspTagException {
     // Find all reifying topics of all topic map objects in collection
-    if (tmObjects == null || tmObjects.isEmpty())
+    if (tmObjects == null || tmObjects.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       ArrayList reifyingTopics = new ArrayList();
       Iterator iter = tmObjects.iterator();
       TopicIF reifyingTopic;
@@ -51,8 +51,9 @@ public class ReifierTag extends BaseValueProducingAndAcceptingTag {
         // Get the topic that reifies the given topic map object
         reifyingTopic = ((ReifiableIF)iter.next()).getReifier();
         // If a topic was found add it to the result list.
-        if (reifyingTopic != null)
+        if (reifyingTopic != null) {
           reifyingTopics.add(reifyingTopic);    
+        }    
       }
       // Return all reifiying topics found.
       return reifyingTopics;

@@ -33,7 +33,9 @@ public class SQLAggregateReference implements SQLAggregateIF {
   protected SQLAggregateIF refagg;
  
   public SQLAggregateReference(SQLAggregateIF refagg) {
-    if (refagg == null) throw new IllegalArgumentException("Aggregate cannot be null.");
+    if (refagg == null) {
+      throw new IllegalArgumentException("Aggregate cannot be null.");
+    }
     this.refagg = refagg;
   }
   
@@ -81,8 +83,9 @@ public class SQLAggregateReference implements SQLAggregateIF {
   public boolean equals(Object obj) {
     if (obj instanceof SQLAggregateReference) {
       SQLAggregateReference other = (SQLAggregateReference)obj;
-      if (refagg.equals(other.getReference()))
+      if (refagg.equals(other.getReference())) {
         return true;
+      }
     }
     return false;
   }

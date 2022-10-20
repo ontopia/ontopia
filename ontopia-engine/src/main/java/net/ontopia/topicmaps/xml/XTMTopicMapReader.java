@@ -171,10 +171,11 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
    * @since 3.0
    */
   public void setFollowTopicRefs(boolean followTopicRefs) {
-    if (followTopicRefs)
+    if (followTopicRefs) {
       this.ref_handler = null;
-    else
+    } else {
       this.ref_handler = new NoFollowTopicRefExternalReferenceHandler();
+    }
   }
 
   /**
@@ -204,10 +205,11 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
   protected TopicMapIF read(TopicMapStoreFactoryIF store_factory) throws IOException {
     // If source has been read, return next available topic map.
     if (topicmaps != null) {
-      if (topicmaps.hasNext())
+      if (topicmaps.hasNext()) {
         return (TopicMapIF)topicmaps.next();
-      else
+      } else {
         return null;
+      }
     }
     
     // Create new parser object
@@ -244,8 +246,9 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
     try {
       if (log.isDebugEnabled()) {
         log.debug("Parsing source " + source.getSystemId());
-        if (source.getEncoding() != null)
+        if (source.getEncoding() != null) {
           log.debug("Encoding: " + source.getEncoding());
+        }
         log.debug("Parser: " + parser + " (namespace support: " + parser.getFeature("http://xml.org/sax/features/namespaces") + ")");
       }
       parser.parse(source);
@@ -258,8 +261,9 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
                                         e.getSystemId() + ":" + e.getLineNumber() + ":" +
                                         e.getColumnNumber(), e);
     } catch (SAXException e) {
-      if (e.getException() instanceof IOException)
+      if (e.getException() instanceof IOException) {
         throw (IOException) e.getException();
+      }
       throw new IOException("XML related problem: " + e.toString());
     }
 
@@ -271,18 +275,20 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
     // Process class-instance associations
     Iterator it = tms.iterator();
     while (it.hasNext()) {
-      if (handler.getXTMVersion() == XTMVersion.XTM_1_0)
+      if (handler.getXTMVersion() == XTMVersion.XTM_1_0) {
         ClassInstanceUtils.resolveAssociations1((TopicMapIF) it.next());
-      else if (handler.getXTMVersion() == XTMVersion.XTM_2_0)
+      } else if (handler.getXTMVersion() == XTMVersion.XTM_2_0) {
         ClassInstanceUtils.resolveAssociations2((TopicMapIF) it.next());
-      else
+      } else {
         throw new OntopiaRuntimeException("Unknown XTM version!");
+      }
     }
 
     // Were there any topic maps?
-    if (!topicmaps.hasNext())
+    if (!topicmaps.hasNext()) {
       throw new InvalidTopicMapException("No topic maps in document " +
                                          source.getSystemId());
+    }
 
     // If so, return the first
     return (TopicMapIF)topicmaps.next();
@@ -307,8 +313,9 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader implements TopicM
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
-    if (store == null)
+    if (store == null) {
       throw new IOException("Topic map not connected to a store.");
+    }
 
     // Use a store factory that always returns the same topic
     // map. This makes sure that all topic maps found inside the

@@ -55,8 +55,9 @@ public class QueryResultIterator<E> implements Iterator<E> {
   
   @Override
   public E next() {
-    if (!has_next)
+    if (!has_next) {
       throw new NoSuchElementException();
+    }
     synchronized (this) {
       // return value at given index
       E value = (E) result.getValue(index);

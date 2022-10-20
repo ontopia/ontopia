@@ -47,14 +47,17 @@ public class RolePrincipal implements Principal, Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null)
+    if (o == null) {
       return false;
+    }
     
-    if (this == o)
+    if (this == o) {
       return true;
+    }
     
-    if (!(o instanceof RolePrincipal))
+    if (!(o instanceof RolePrincipal)) {
       return false;
+    }
     
     RolePrincipal that = (RolePrincipal) o;
     return getName().equals(that.getName());

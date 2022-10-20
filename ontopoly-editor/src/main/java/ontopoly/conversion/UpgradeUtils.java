@@ -46,7 +46,9 @@ public class UpgradeUtils {
         // check to see if we actually need to do an upgrade
         OccurrenceIF version_occ = getVersionOccurrence(topicmap);
         float version_number = getVersionNumber(version_occ);
-        if (!needsUpgrade(version_number)) return;
+        if (!needsUpgrade(version_number)) {
+          return;
+        }
 
         log.info("Topic map " + topicMap.getId() + " needs upgrade: " + version_number);
         
@@ -125,18 +127,22 @@ public class UpgradeUtils {
       return latest;
       
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
   }
   
   private static float getVersionNumber(OccurrenceIF versionOcc) {
-    if (versionOcc == null)
+    if (versionOcc == null) {
       return 0;
+    }
     String versionNumber = versionOcc.getValue();
-    if (versionNumber == null)
+    if (versionNumber == null) {
       return 0;
-    else if ("[1.0]".equals(versionNumber))
+    } else if ("[1.0]".equals(versionNumber)) {
       return 1.0f;
+    }
     
     try {
       return Float.parseFloat(versionNumber);

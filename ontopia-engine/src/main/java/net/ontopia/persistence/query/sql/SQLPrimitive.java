@@ -46,8 +46,9 @@ public class SQLPrimitive implements SQLValueIF {
   protected FieldHandlerIF fhandler;
 
   public SQLPrimitive(Object value, int sql_type) {
-    if (value == null)
+    if (value == null) {
       throw new IllegalArgumentException("Primitive value cannot be null (SQL type: " + sql_type  + ").");
+    }
     
     this.sql_type = sql_type;
     this.value = value;

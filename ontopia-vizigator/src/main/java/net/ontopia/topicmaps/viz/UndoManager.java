@@ -59,17 +59,20 @@ public class UndoManager {
   }
 
   public void startOperation(RecoveryObjectIF operation) {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return;
-    if (operationInProgress)
+    }
+    if (operationInProgress) {
       throw new OntopiaRuntimeException("Cannot start undoable operation. " +
           "Undoable operation already in progress.");
+    }
     
     // Whenever the user performs an operation other than the redo operation,
     // the stack of redoable operations is emptied, since all such operations
     // start a new branch of operations, leaving other branches inaccessible.
-    if (!redoInProgress)
+    if (!redoInProgress) {
       redoStack = new ArrayList();
+    }
     operationStack.add(operation);
     
     currentUndo = new ArrayList();
@@ -78,11 +81,13 @@ public class UndoManager {
   }
 
   public void completeOperation() {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return;
-    if (!operationInProgress)
+    }
+    if (!operationInProgress) {
       throw new OntopiaRuntimeException("Cannot complete undoable operation. " +
           "No undoable operation is currently in progress.");
+    }
 
     // After an operation has been completed, any recoveries are ignored.
     operationInProgress = false;
@@ -91,21 +96,25 @@ public class UndoManager {
   }
 
   public void addRecovery(RecoveryObjectIF recovery) {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return;
+    }
     // Only receive recoveries during 
-    if (operationInProgress)
+    if (operationInProgress) {
       currentUndo.add(recovery);
-    else
+    } else {
       VizDebugUtils.debug("No undoable operation in progress. Ignored: " +
                           recovery);
+    }
   }
   
   public void undo() {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return;
-    if (!canUndo())
+    }
+    if (!canUndo()) {
       return;
+    }
     int lastIndex = undoStack.size() - 1;
     ArrayList currentUndo = (ArrayList)undoStack.remove(lastIndex);
     currentUndo = new ArrayList(currentUndo);
@@ -123,10 +132,12 @@ public class UndoManager {
   }
 
   public void redo() {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return;
-    if (!canRedo())
+    }
+    if (!canRedo()) {
       return;
+    }
     redoInProgress = true;
     RecoveryObjectIF operation = (RecoveryObjectIF)redoStack
         .remove(redoStack.size() - 1);
@@ -137,20 +148,23 @@ public class UndoManager {
   }
   
   public boolean canUndo() {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return false;
+    }
     return !undoStack.isEmpty();
   }
   
   public boolean canRedo() {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return false;
+    }
     return !redoStack.isEmpty();
   }
 
   private void updateUndoRedoState() {
-    if (!ENABLE_UNDO_MANAGER)
+    if (!ENABLE_UNDO_MANAGER) {
       return;
+    }
     controller.getVizPanel().setUndoEnabled(canUndo());
     controller.getVizPanel().setRedoEnabled(canRedo());
   }

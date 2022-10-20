@@ -49,8 +49,9 @@ public class TopicMapDTDEntityResolver implements EntityResolver {
 
   @Override
   public InputSource resolveEntity (String public_id, String system_id) {
-    if (referencesDTD(public_id, system_id))
+    if (referencesDTD(public_id, system_id)) {
       return attemptResolution(public_id, system_id);
+    }
 
     InputSource src = new InputSource(system_id);
     src.setPublicId(public_id);

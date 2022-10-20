@@ -104,9 +104,11 @@ public class ReadOnlySet<E> implements Set<E> {
   @Override
   public boolean containsAll(Collection<?> c) {
     Iterator<?> e = c.iterator();
-    while (e.hasNext())
-      if(!contains(e.next()))
+    while (e.hasNext()) {
+      if (!contains(e.next())) {
         return false;
+      }
+    }
     
     return true;
   }
@@ -115,8 +117,9 @@ public class ReadOnlySet<E> implements Set<E> {
   public Object[] toArray() {
     Object[] result = new Object[size()];
     Iterator<E> e = iterator();
-    for (int i=0; e.hasNext(); i++)
+    for (int i=0; e.hasNext(); i++) {
       result[i] = e.next();
+    }
     return result;
   }
 
@@ -124,15 +127,18 @@ public class ReadOnlySet<E> implements Set<E> {
   @Override
   public <T> T[] toArray(T[] a) {
     int size = size();
-    if (a.length < size)
+    if (a.length < size) {
       a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    }
     
     Iterator<E> it=iterator();
-    for (int i=0; i<size; i++)
+    for (int i=0; i<size; i++) {
       a[i] = (T) it.next();
+    }
     
-    if (a.length > size)
+    if (a.length > size) {
       a[size] = null;
+    }
     
     return a;
   }

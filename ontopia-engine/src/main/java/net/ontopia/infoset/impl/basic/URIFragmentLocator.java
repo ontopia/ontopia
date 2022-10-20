@@ -61,8 +61,9 @@ public class URIFragmentLocator extends AbstractLocator {
   @Override
   public LocatorIF resolveAbsolute(String rel) {
     int length = rel.length();
-    if (length == 0)
+    if (length == 0) {
       return this;
+    }
 
     switch (rel.charAt(0)) {
     case '#':
@@ -71,23 +72,26 @@ public class URIFragmentLocator extends AbstractLocator {
 
     case '/':
       if (length != 1 && rel.charAt(1) == '/') { // begins with "//"
-        if (authorityEnd == -1)
+        if (authorityEnd == -1) {
           throw new OntopiaRuntimeException(new MalformedURLException(
               "Base URI is not hierarchical"));
+        }
         return new URILocator(address.substring(0, schemeEnd + 1) + rel,
             schemeEnd, authorityEnd, lastSlash, (short) address.length());
-      } else
+      } else {
         // FIXME: should normalize absolute path
         return new URILocator(address.substring(0, authorityEnd) + rel,
             schemeEnd, authorityEnd, lastSlash, (short) address.length());
+    }
     } // no default needed; the rest of the method _is_ the default
 
     try {
       char[] relative = rel.toCharArray();
 
       // does the URI have a scheme?
-      if (getScheme(relative) != -1)
+      if (getScheme(relative) != -1) {
         return new URILocator(rel);
+      }
 
       // scan for slashes in URI
       int ix;
@@ -98,19 +102,21 @@ public class URIFragmentLocator extends AbstractLocator {
       // so that the normalizer resolves the directory for us
       // (also do this if rel is "." or "..")
       if (ix < length || ".".equals(rel) || "..".equals(rel)) {
-        if (lastSlash == -1) // no directory part
+        if (lastSlash == -1) { // no directory part
           return new URILocator(address.substring(0, authorityEnd + 1) + rel);
-        else
+        } else {
           return new URILocator(address.substring(0, lastSlash + 1) + rel);
+        }
       }
 
       // there were no slashes, so this is a pure file name
-      if (lastSlash == -1) // base has no directory part
+      if (lastSlash == -1) { // base has no directory part
         return new URILocator(address.substring(0, authorityEnd + 1) + rel,
             schemeEnd, authorityEnd, lastSlash, (short) address.length());
-      else
+      } else {
         return new URILocator(address.substring(0, lastSlash + 1) + rel,
             schemeEnd, authorityEnd, lastSlash, (short) address.length());
+      }
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -134,11 +140,13 @@ public class URIFragmentLocator extends AbstractLocator {
   private int getScheme(char[] uri) {
     int index = 0;
     while ((index < uri.length) && (uri[index] != '/') && (uri[index] != '?')
-        && (uri[index] != ':') && (uri[index] != '#'))
+        && (uri[index] != ':') && (uri[index] != '#')) {
       index++;
+    }
 
-    if (index == 0 || index >= uri.length || uri[index] != ':')
+    if (index == 0 || index >= uri.length || uri[index] != ':') {
       return -1;
+    }
 
     return index;
   }
@@ -159,8 +167,9 @@ public class URIFragmentLocator extends AbstractLocator {
 
     String frag = fragment;
     int len = frag.length();
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++) {
       hash = 31 * hash + frag.charAt(i);
+    }
 
     return hash;
   }

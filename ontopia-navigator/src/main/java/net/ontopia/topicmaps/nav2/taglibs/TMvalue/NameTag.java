@@ -48,9 +48,9 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
 
   @Override
   public Collection process(Collection topics) throws JspTagException {
-    if (topics == null || topics.isEmpty())
+    if (topics == null || topics.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {      
+    } else {      
       // find the most appropiate name for each of the topics in the collection
       ArrayList names = new ArrayList();
       
@@ -58,11 +58,13 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
       if (nameGrabber == null && basenameScopeVarName != null) {
         Collection scope = contextTag.getContextManager().getValue(basenameScopeVarName);
         // if name should be grabbed in accordance with scope  
-        if (scope != null) 
+        if (scope != null) { 
           nameGrabber = new NameGrabber(scope);
+        }
       }
-      if (nameGrabber == null)
+      if (nameGrabber == null) {
         nameGrabber = TopicCharacteristicGrabbers.getDisplayNameGrabber();
+      }
 
       // iterate through topics
       Iterator iter = topics.iterator();
@@ -71,8 +73,9 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
         obj = iter.next();
         if (obj instanceof TopicIF) {
           Object name = nameGrabber.apply(obj);
-          if (name != null)
+          if (name != null) {
             names.add(name);
+          }
         }
       } // while
       return names;
@@ -86,10 +89,11 @@ public class NameTag extends BaseValueProducingAndAcceptingTag {
   public void setGrabber(String classname) throws NavigatorRuntimeException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     Object obj = contextTag.getNavigatorApplication().getInstanceOf(classname);
-    if (obj != null && obj instanceof Function)
+    if (obj != null && obj instanceof Function) {
       this.nameGrabber = (Function) obj;
-    else
+    } else {
       this.nameGrabber = null;
+    }
   }
 
   public final void setBasenameScope(String scopeVarName) {

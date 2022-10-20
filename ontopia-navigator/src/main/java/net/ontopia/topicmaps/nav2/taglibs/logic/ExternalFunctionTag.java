@@ -59,8 +59,9 @@ public class ExternalFunctionTag extends TagSupport {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         function = (FunctionIF) Class.forName(functionFQCN, true, classLoader).newInstance();
         contextTag.registerFunction(functionName, function);
-        if (log.isInfoEnabled())
-          log.info("registered external function: " + function.toString());       
+        if (log.isInfoEnabled()) {
+          log.info("registered external function: " + function.toString());
+        }       
       } catch (InstantiationException e) {
         String msg = "ExternalFunctionTag: could not instantiate external" +
           " function " + functionFQCN + " with name '" + functionName +
@@ -77,9 +78,10 @@ public class ExternalFunctionTag extends TagSupport {
       }
     }
     // if still no function avail then throw exception
-    if (function == null)
+    if (function == null) {
       throw new NavigatorRuntimeException("ExternalFunctionTag: function with name '" +
                                           functionName + "' not found.");
+    }
 
     // empty tag
     return SKIP_BODY;

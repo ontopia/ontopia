@@ -34,11 +34,13 @@ public class TopicComparator implements Comparator<Topic>, Serializable {
   
   @Override
   public int compare(Topic t1, Topic t2) {
-    if (t1 == null && t2 == null) return 0;
-    else if (t1 == null)
+    if (t1 == null && t2 == null) {
+      return 0;
+    } else if (t1 == null) {
       return 1;
-    else if (t2 == null)
+    } else if (t2 == null) {
       return -1;
+    }
     return StringUtils.compareIgnoreCase(t1.getName(), t2.getName());
   }
 

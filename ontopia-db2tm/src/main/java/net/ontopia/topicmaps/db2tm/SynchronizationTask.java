@@ -88,10 +88,11 @@ public class SynchronizationTask extends TimerTask {
     try {
       File cfgfile = new File(rmappingfile);
       RelationMapping rmapping;            
-      if (cfgfile.exists())
+      if (cfgfile.exists()) {
         rmapping = RelationMapping.read(cfgfile);
-      else
+      } else {
         rmapping = RelationMapping.readFromClasspath(rmappingfile);
+      }
       try {
         // perform synchronization
         TopicMapStoreIF store = ref.createStore(false);
@@ -106,7 +107,9 @@ public class SynchronizationTask extends TimerTask {
           store.abort();
           throw e;
         } finally {
-          if (store.isOpen()) store.close();
+          if (store.isOpen()) {
+            store.close();
+          }
         }
       } finally {
         rmapping.close();

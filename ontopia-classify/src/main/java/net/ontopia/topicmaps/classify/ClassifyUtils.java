@@ -81,10 +81,11 @@ public class ClassifyUtils {
             byte[] content = item.get();
             ClassifiableContent cc = new ClassifiableContent();
             String name = item.getName();
-            if (name != null)
+            if (name != null) {
               cc.setIdentifier("fileupload:name:" + name);
-            else
-              cc.setIdentifier("fileupload:field:" + item.getFieldName());              
+            } else {
+              cc.setIdentifier("fileupload:field:" + item.getFieldName());
+            }              
             cc.setContent(content);
             return cc;
           }      

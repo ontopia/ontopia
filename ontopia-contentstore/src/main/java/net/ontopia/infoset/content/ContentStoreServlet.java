@@ -68,29 +68,34 @@ public class ContentStoreServlet extends HttpServlet {
 
     // get values from request
     String uri = request.getParameter("uri");
-    if (uri == null)
+    if (uri == null) {
       throw new ServletException("Request parameter 'uri' required");
+    }
     
     String tmid = request.getParameter("tmid");
-    if (tmid == null)
+    if (tmid == null) {
       throw new ServletException("Request parameter 'tmid' required");
+    }
     
     String filename = request.getParameter("filename");
 
-    if (request.getParameter("ctype") != null)
+    if (request.getParameter("ctype") != null) {
       ctype = request.getParameter("ctype");
+    }
 
     if (request.getParameter("view") != null) {
       String value = request.getParameter("ctype").trim().toLowerCase();
-      if ("true".equals(value))
+      if ("true".equals(value)) {
         view = true;
-      else if (!"false".equals(value))
+      } else if (!"false".equals(value)) {
         throw new ServletException("Request parameter 'view' must hold 'true' or 'false'");
+      }
     }
     
     // find the key
-    if (!uri.startsWith("x-ontopia:cms:"))
+    if (!uri.startsWith("x-ontopia:cms:")) {
       throw new ServletException("URI must begin with 'x-ontopia:cms:'");
+    }
     int key;
     try {
       key = Integer.parseInt(uri.substring(14));
@@ -102,10 +107,12 @@ public class ContentStoreServlet extends HttpServlet {
     // set response headers (content-disposition defined in RFC 2183)
     response.setContentType(ctype);
     String disposition = "attachment";
-    if (view)
+    if (view) {
       disposition = "inline";
-    if (filename != null)
+    }
+    if (filename != null) {
       disposition = disposition + "; filename=" + filename;
+    }
     response.setHeader("Content-disposition", disposition);
 
     // get the content store
@@ -139,8 +146,9 @@ public class ContentStoreServlet extends HttpServlet {
     } catch (ContentStoreException e) {
       throw new ServletException(e);
     } finally {
-      if (navApp != null && tm != null)
-	navApp.returnTopicMap(tm);
+      if (navApp != null && tm != null) {
+        navApp.returnTopicMap(tm);
+      }
     }
   }
 

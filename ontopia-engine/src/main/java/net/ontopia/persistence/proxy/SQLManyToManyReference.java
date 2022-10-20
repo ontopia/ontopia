@@ -91,11 +91,13 @@ public class SQLManyToManyReference implements FieldAccessIF {
         jointable_keys, datatable_keys,
         datatable_select_columns, jointable_where_columns, batchSize);
     
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load M:M reference) " + field.getName() + ": " + sql_load);
+    }
     
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load M:M reference*) " + field.getName() + ": " + sql_load_multiple);
+    }
     
     // -----------------------------------------------------------------------------
     // Add
@@ -106,8 +108,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
     
     sql_add = SQLGenerator.getInsertStatement(field.getTable(), cols);
     
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (add M:M reference) " + field.getName() + ": " + sql_add);
+    }
     
     // insert into TM_TOPIC_SCOPE (scoped_id, theme_id) values (?, ?)
     
@@ -118,8 +121,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
     // Generate SQL statement
     sql_remove = SQLGenerator.getDeleteStatement(field.getTable(), cols);
     
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (remove M:M reference) " + field.getName() + ": " + sql_remove);
+    }
     
     // delete from TM_TOPIC_SCOPE where scoped_id = ? and theme_id = ?
     
@@ -130,9 +134,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
     // Generate SQL statement
     sql_clear = SQLGenerator.getDeleteStatement(field.getTable(), field.getJoinKeys());
     
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (clear M:M reference) " + field.getName() + ": " + sql_clear);
-    
+    }
     // delete from TM_TOPIC_SCOPE where scoped_id = ?
     
   }
@@ -150,13 +154,15 @@ public class SQLManyToManyReference implements FieldAccessIF {
     try {
       
       // Bind identity columns
-      if (debug)
+      if (debug) {
         log.debug(BINDING_OBJECT_MESSAGE + identity);
+      }
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load);
+      }
       ResultSet rs = stm.executeQuery();
       
       // Zero or more rows expected
@@ -182,8 +188,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
           registrar.registerField(ticket, value_id, finfo.getIndex(), value);
           
           // Register value identity with registrar
-          if (value != null && finfo.isReferenceField())
+          if (value != null && finfo.isReferenceField()) {
             registrar.registerIdentity(ticket, (IdentityIF)value);
+          }
           
           // Increment column index
           rsindex += finfo.getColumnCount();    
@@ -199,7 +206,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
       
     } finally {
       //! if (close_stm && stm != null) stm.close();
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
     
     // Update persistence cache
@@ -232,8 +241,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
     try {
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load_multiple);
+      }
       //! ResultSet rs = stm.executeQuery(sql);
       ResultSet rs = stm.executeQuery();
       
@@ -265,8 +275,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
           registrar.registerField(ticket, value_id, finfo.getIndex(), value);
           
           // Register value identity with registrar
-          if (value != null && finfo.isReferenceField())
+          if (value != null && finfo.isReferenceField()) {
             registrar.registerIdentity(ticket, (IdentityIF)value);
+          }
           
           // Increment column index
           rsindex += finfo.getColumnCount();    
@@ -280,7 +291,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
       
     } finally {
       //! if (close_stm && stm != null) stm.close();
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
     
     // Update persistence cache
@@ -308,7 +321,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
         executeUpdate(stm, sql_add);
       }
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -318,13 +333,15 @@ public class SQLManyToManyReference implements FieldAccessIF {
   
   protected void add_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug(BINDING_OBJECT_MESSAGE + identity);
+    }
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
-    if (debug)
+    if (debug) {
       log.debug("Binding reference: " + value);
+    }
     value_field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
@@ -344,7 +361,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
         executeUpdate(stm, sql_remove);
       }
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -354,13 +373,15 @@ public class SQLManyToManyReference implements FieldAccessIF {
   
   protected void remove_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug(BINDING_OBJECT_MESSAGE + identity);
+    }
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
-    if (debug)
+    if (debug) {
       log.debug("Binding reference: " + value);
+    }
     value_field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
@@ -376,7 +397,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
       // Execute statement
       executeUpdate(stm, sql_clear);
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -386,8 +409,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
   
   protected void clear_bindParameters(PreparedStatement stm, IdentityIF identity) throws Exception {            
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug(BINDING_OBJECT_MESSAGE + identity);
+    }
     identity_field.bind(identity, stm, 1);
   }
   
@@ -404,12 +428,14 @@ public class SQLManyToManyReference implements FieldAccessIF {
     Collection<?> removed = value.getRemoved();
     
     // Add added values
-    if (added != null && !added.isEmpty())
+    if (added != null && !added.isEmpty()) {
       add(oaccess.getIdentity(object), added);
+    }
     
     // Remove removed values
-    if (removed != null && !removed.isEmpty())
+    if (removed != null && !removed.isEmpty()) {
       remove(oaccess.getIdentity(object), removed);
+    }
     
     // Reset trackable set
     value.resetTracking();    
@@ -419,7 +445,9 @@ public class SQLManyToManyReference implements FieldAccessIF {
   }
   
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
-    if (debug) log.debug("Executing: " + sql);
+    if (debug) {
+      log.debug("Executing: " + sql);
+    }
     stm.executeUpdate();
   }
   

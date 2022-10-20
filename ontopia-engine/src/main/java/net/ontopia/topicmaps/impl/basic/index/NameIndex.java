@@ -76,7 +76,9 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   @Override
   public Collection<TopicNameIF> getTopicNames(String value) {
     Collection<TopicNameIF> result = basenames.get(value);
-    if (result == null) return new ArrayList<TopicNameIF>();
+    if (result == null) {
+      return new ArrayList<TopicNameIF>();
+    }
     // Create new collection
     return new ArrayList<TopicNameIF>(result);
   }

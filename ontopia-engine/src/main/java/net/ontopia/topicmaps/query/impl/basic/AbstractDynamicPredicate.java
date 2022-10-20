@@ -45,19 +45,22 @@ public abstract class AbstractDynamicPredicate implements BasicPredicateIF {
 
   @Override
   public String getName() {
-    if (name != null)
+    if (name != null) {
       return name;
+    }
     
-    if (base == null)
+    if (base == null) {
       return "@" + type.getObjectId();
+    }
     
     Iterator it = type.getItemIdentifiers().iterator();
     String baseadr = base.getAddress();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
       String address = loc.getAddress();
-      if (address.startsWith(baseadr))
+      if (address.startsWith(baseadr)) {
         return address.substring(baseadr.length() + 1);
+      }
     }
     return "@" + type.getObjectId();
   }

@@ -136,8 +136,9 @@ public abstract class FieldDefinition extends Topic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof FieldDefinition))
+    if (!(obj instanceof FieldDefinition)) {
       return false;
+    }
 
     FieldDefinition other = (FieldDefinition)obj;
     return getTopicIF().equals(other.getTopicIF());
@@ -151,32 +152,35 @@ public abstract class FieldDefinition extends Topic {
   private static int getFieldType(TopicIF fieldTopic) {
     for (TopicIF topicType : fieldTopic.getTypes()) {
       Collection<LocatorIF> psis = topicType.getSubjectIdentifiers();
-      if (psis.contains(PSI.ON_NAME_FIELD))
+      if (psis.contains(PSI.ON_NAME_FIELD)) {
         return FieldDefinition.FIELD_TYPE_NAME;
-      else if (psis.contains(PSI.ON_IDENTITY_FIELD))
+      } else if (psis.contains(PSI.ON_IDENTITY_FIELD)) {
         return FieldDefinition.FIELD_TYPE_IDENTITY;
-      else if (psis.contains(PSI.ON_OCCURRENCE_FIELD))
+      } else if (psis.contains(PSI.ON_OCCURRENCE_FIELD)) {
         return FieldDefinition.FIELD_TYPE_OCCURRENCE;
-      else if (psis.contains(PSI.ON_ROLE_FIELD))
+      } else if (psis.contains(PSI.ON_ROLE_FIELD)) {
         return FieldDefinition.FIELD_TYPE_ROLE;
-      else if (psis.contains(PSI.ON_QUERY_FIELD))
+      } else if (psis.contains(PSI.ON_QUERY_FIELD)) {
         return FieldDefinition.FIELD_TYPE_QUERY;
+      }
     }
     throw new RuntimeException("Not a field definition: " + fieldTopic);
   }
   
   public static FieldDefinition getFieldDefinition(String fieldId, TopicMap tm) {
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
-    if (fieldTopic == null) 
+    if (fieldTopic == null) {
       throw new RuntimeException("Could not find field with id '" + fieldId + "'");
+    }
     int fieldType = getFieldType(fieldTopic);
     return getFieldDefinition(fieldId, fieldType, tm);
   }
 
   public static FieldDefinition getFieldDefinition(String fieldId, int fieldType, TopicMap tm) {    
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
-    if (fieldTopic == null) 
+    if (fieldTopic == null) {
       throw new RuntimeException("Could not find field with id '" + fieldId + "'");
+    }
     return getFieldDefinition(fieldTopic, fieldType, tm);
   }
   

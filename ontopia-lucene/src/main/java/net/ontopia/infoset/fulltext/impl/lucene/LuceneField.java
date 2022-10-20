@@ -69,9 +69,10 @@ public class LuceneField implements FieldIF {
 
   @Override
   public String toString() {
-    if (getReader() == null)
+    if (getReader() == null) {
       return getName() + "=" + getValue() + " ";
-    else
+    } else {
       return getName() + "=" + getReader() + " ";
+    }
   }
 }

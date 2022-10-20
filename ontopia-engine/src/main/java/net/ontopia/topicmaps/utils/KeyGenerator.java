@@ -117,8 +117,9 @@ public class KeyGenerator {
     
     List<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     String[] rolekeys = new String[roles.size()];
-    for (int i = 0; i < rolekeys.length; i++) 
+    for (int i = 0; i < rolekeys.length; i++) {
       rolekeys[i] = makeAssociationRoleKey(roles.get(i));
+    }
 
     Arrays.sort(rolekeys);
     sb.append(StringUtils.join(rolekeys, SPACER));
@@ -149,8 +150,9 @@ public class KeyGenerator {
     List<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     roles.remove(role);
     String[] rolekeys = new String[roles.size()];
-    for (int i = 0; i < rolekeys.length; i++) 
+    for (int i = 0; i < rolekeys.length; i++) {
       rolekeys[i] = makeAssociationRoleKey(roles.get(i));
+    }
     
     sb.append(makeTypedKey(role)).append(SPACER);
     Arrays.sort(rolekeys);
@@ -174,8 +176,9 @@ public class KeyGenerator {
     Collection<AssociationRoleIF> roles = new ArrayList<AssociationRoleIF>(assoc.getRoles());
     String[] rolekeys = new String[roles.size()];
     int i = 0;
-    for (AssociationRoleIF role : roles)
+    for (AssociationRoleIF role : roles) {
       rolekeys[i++] = makeAssociationRoleKey(role, othertm);
+    }
     
     Arrays.sort(rolekeys);
     sb.append(StringUtils.join(rolekeys, SPACER));
@@ -210,18 +213,19 @@ public class KeyGenerator {
    * @since 5.1.0
    */
   public static String makeKey(ReifiableIF object) {
-    if (object instanceof TopicNameIF)
+    if (object instanceof TopicNameIF) {
       return makeTopicNameKey((TopicNameIF) object);
-    else if (object instanceof OccurrenceIF)
+    } else if (object instanceof OccurrenceIF) {
       return makeOccurrenceKey((OccurrenceIF) object);
-    else if (object instanceof AssociationIF)
+    } else if (object instanceof AssociationIF) {
       return makeAssociationKey((AssociationIF) object);
-    else if (object instanceof AssociationRoleIF)
+    } else if (object instanceof AssociationRoleIF) {
       return makeAssociationRoleKey((AssociationRoleIF) object);
-    else if (object instanceof VariantNameIF)
+    } else if (object instanceof VariantNameIF) {
       return makeVariantKey((VariantNameIF) object);
-    else
+    } else {
       throw new OntopiaRuntimeException("Cannot make key for: " + object);
+    }
   }
 
   /**
@@ -235,26 +239,28 @@ public class KeyGenerator {
    * @since 5.1.3
    */
   public static String makeKey(ReifiableIF object, TopicMapIF topicmap) {
-    if (object instanceof TopicNameIF)
+    if (object instanceof TopicNameIF) {
       return makeTopicNameKey((TopicNameIF) object, topicmap);
-    else if (object instanceof OccurrenceIF)
+    } else if (object instanceof OccurrenceIF) {
       return makeOccurrenceKey((OccurrenceIF) object, topicmap);
-    else if (object instanceof AssociationIF)
+    } else if (object instanceof AssociationIF) {
       return makeAssociationKey((AssociationIF) object, topicmap);
-    else if (object instanceof AssociationRoleIF)
+    } else if (object instanceof AssociationRoleIF) {
       return makeAssociationRoleKey((AssociationRoleIF) object, topicmap);
-    else
+    } else {
       throw new OntopiaRuntimeException("Cannot make key for: " + object);
+    }
   }
   
   // --- Helper methods
 
   // used by TopicMapSynchronizer
   protected static String makeTopicKey(TopicIF topic) {
-    if (topic == null)
+    if (topic == null) {
       return "";
-    else
+    } else {
       return topic.getObjectId();
+    }
   }  
   
   protected static String makeTypedKey(TypedIF typed) {
@@ -295,9 +301,10 @@ public class KeyGenerator {
     while (it.hasNext()) {
       TopicIF theme = it.next();
       TopicIF othertheme = MergeUtils.findTopic(othertm, theme);
-      if (othertheme == null)
+      if (othertheme == null) {
         throw new OntopiaRuntimeException("No topic corresponding to: " +
                                           theme);
+      }
       ids[ix++] = othertheme.getObjectId();
     }
 

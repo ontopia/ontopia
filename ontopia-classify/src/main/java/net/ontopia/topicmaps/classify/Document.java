@@ -69,7 +69,9 @@ public class Document implements TextHandlerIF {
   }
 
   public void setTokenized(boolean tokenized) {
-    if (this.tokenized) throw new OntopiaRuntimeException("Cannot tokenize document more than once.");
+    if (this.tokenized) {
+      throw new OntopiaRuntimeException("Cannot tokenize document more than once.");
+    }
     this.tokenized = tokenized;
   }
   

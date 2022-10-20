@@ -59,18 +59,21 @@ public class RelatedTag extends TagSupport {
   @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
-    if (related == null)
+    if (related == null) {
       buildModel(contextTag);
+    }
 
     TopicIF topic = (TopicIF) getVariableValue(this.topic);
-    if (topic == null)
+    if (topic == null) {
       throw new JspTagException("Couldn't find topic '" + topic + "'");
+    }
     List headings = related.makeModel(topic);
     pageContext.setAttribute(var, headings, PageContext.REQUEST_SCOPE);
 
     // FIXME: make new scope here
-    if (contextTag != null)
+    if (contextTag != null) {
       contextTag.getContextManager().setValue(var, headings);
+    }
     
     return EVAL_BODY_INCLUDE;
   }
@@ -111,66 +114,75 @@ public class RelatedTag extends TagSupport {
   // --- Setters
 
   public void setVar(String var) {
-    if (isEmpty(var))
+    if (isEmpty(var)) {
       this.var = null;
-    else
+    } else {
       this.var = var;
+    }
   }
 
   public void setTopic(String topic) {
-    if (isEmpty(topic))
+    if (isEmpty(topic)) {
       this.topic = null;
-    else
+    } else {
       this.topic = topic;
+    }
   }
 
   public void setHideAssociations(String hideassocs) {
-    if (isEmpty(hideassocs))
+    if (isEmpty(hideassocs)) {
       this.hideassocs = null;
-    else
+    } else {
       this.hideassocs = hideassocs;
+    }
   }
 
   public void setExcludeAssociations(String exclassocs) {
-    if (isEmpty(exclassocs))
+    if (isEmpty(exclassocs)) {
       this.exclassocs = null;
-    else
+    } else {
       this.exclassocs = exclassocs;
+    }
   }
 
   public void setExcludeRoles(String exclroles) {
-    if (isEmpty(exclroles))
+    if (isEmpty(exclroles)) {
       this.exclroles = null;
-    else
+    } else {
       this.exclroles = exclroles;
+    }
   }
 
   public void setExcludeTopics(String excltopics) {
-    if (isEmpty(excltopics))
+    if (isEmpty(excltopics)) {
       this.excltopics = null;
-    else
+    } else {
       this.excltopics = excltopics;
+    }
   }
 
   public void setIncludeAssociations(String inclassocs) {
-    if (isEmpty(inclassocs))
+    if (isEmpty(inclassocs)) {
       this.inclassocs = null;
-    else
+    } else {
       this.inclassocs = inclassocs;
+    }
   }
 
   public void setIncludeTopics(String incltopics) {
-    if (isEmpty(incltopics))
+    if (isEmpty(incltopics)) {
       this.incltopics = null;
-    else
+    } else {
       this.incltopics = incltopics;
+    }
   }
 
   public void setFilterQuery(String filterQuery) {
-    if (isEmpty(filterQuery))
+    if (isEmpty(filterQuery)) {
       this.filterQuery = null;
-    else
+    } else {
       this.filterQuery = filterQuery;
+    }
   }
 
   public void setMaxChildren(int maxChildren) {
@@ -178,31 +190,35 @@ public class RelatedTag extends TagSupport {
   }
 
   public void setHeadingOrderQuery(String headingOrderQuery) {
-    if (isEmpty(headingOrderQuery))
+    if (isEmpty(headingOrderQuery)) {
       this.headingOrderQuery = null;
-    else
+    } else {
       this.headingOrderQuery = headingOrderQuery;
+    }
   }
 
   public void setHeadingOrdering(String headingOrdering) {
-    if (headingOrdering != null && headingOrdering.equalsIgnoreCase("desc"))
+    if (headingOrdering != null && headingOrdering.equalsIgnoreCase("desc")) {
       this.headingOrdering = RelatedTopics.ORDERING_DESC;
-    else
+    } else {
       this.headingOrdering = RelatedTopics.ORDERING_ASC;
+    }
   }
 
   public void setChildOrderQuery(String childOrderQuery) {
-    if (isEmpty(childOrderQuery))
+    if (isEmpty(childOrderQuery)) {
       this.childOrderQuery = null;
-    else
+    } else {
       this.childOrderQuery = childOrderQuery;
+    }
   }
 
   public void setChildOrdering(String childOrdering) {
-    if (childOrdering != null && childOrdering.equalsIgnoreCase("desc"))
+    if (childOrdering != null && childOrdering.equalsIgnoreCase("desc")) {
       this.childOrdering = RelatedTopics.ORDERING_DESC;
-    else
+    } else {
       this.childOrdering = RelatedTopics.ORDERING_ASC;
+    }
   }
 
   public void setAggregateHierarchy(boolean aggregateHierarchy) {
@@ -210,10 +226,11 @@ public class RelatedTag extends TagSupport {
   }
 
   public void setAggregateAssociations(String aggregateAssociations) {
-    if (isEmpty(aggregateAssociations))
+    if (isEmpty(aggregateAssociations)) {
       this.aggregateAssociations = null;
-    else
+    } else {
       this.aggregateAssociations = aggregateAssociations;
+    }
   }
   
   // --- Internal
@@ -238,8 +255,9 @@ public class RelatedTag extends TagSupport {
   
   private void buildModel(ContextTag context) {
     related = new RelatedTopics();
-    if (context != null)
+    if (context != null) {
       related.setTologContext(context.getDeclarationContext());
+    }
     related.setWeakAssociationTypes(getUnionOfVariables(hideassocs));
     related.setExcludeAssociationTypes(getUnionOfVariables(exclassocs));
     related.setExcludeRoleTypes(getUnionOfVariables(exclroles));
@@ -257,15 +275,20 @@ public class RelatedTag extends TagSupport {
   }
 
   private Set getUnionOfVariables(String config) {
-    if (config == null) return null;
+    if (config == null) {
+      return null;
+    }
     try {
       List values = FrameworkUtils.evaluateParameterList(pageContext, config);
-      if (values.isEmpty()) return null;
+      if (values.isEmpty()) {
+        return null;
+      }
       Set result = new CompactHashSet();
       for (int i=0; i < values.size(); i++) {
         Collection v = (Collection)values.get(i);
-        if (v != null)
+        if (v != null) {
           result.addAll(v);
+        }
       }    
       return result;
     } catch (Throwable t) {

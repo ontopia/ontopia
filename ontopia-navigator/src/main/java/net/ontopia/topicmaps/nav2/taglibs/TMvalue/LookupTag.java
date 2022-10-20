@@ -78,17 +78,19 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
       + ((parameter!=null) ? 1 : 0)
       + ((basenameValue!=null) ? 1 : 0)
       + ((variantValue!=null) ? 1 : 0);
-    if (setParams != 1)
+    if (setParams != 1) {
       throw new NavigatorCompileException("LookupTag: Ambiguous attribute " +
                                           "settings (need 1, got " + setParams + ").");
+    }
 
     // try to retrieve default value from ContextManager
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
     // get topicmap object on which we should compute 
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("LookupTag found no topic map.");
+    }
                                             
     // result collection which contains as first entry one topic map object
     Collection resColl = new ArrayList();
@@ -125,8 +127,9 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
         } else if (parameter != null) {
           String id = pageContext.getRequest().getParameter(parameter);
           TMObjectIF object = NavigatorUtils.stringID2Object(topicmap, id);
-          if (object != null)
+          if (object != null) {
             resColl.add(object);
+          }
         } else if (basenameValue != null) {
           NameIndexIF nameIndex = getNameIndex(topicmap);
           // add Collection of TopicNameIF objects
@@ -145,8 +148,9 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
     resColl.remove(null);
 
     // complain if a result was expected
-    if (expect && resColl.isEmpty())
+    if (expect && resColl.isEmpty()) {
       throw new NavigatorRuntimeException("LookupTag expected to find an object, but none was found.");
+    }
     
     return resColl;
   }
@@ -185,18 +189,20 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
   
   public void setExpect(String expect) {
     if (expect.equalsIgnoreCase("true") ||
-        expect.equalsIgnoreCase("yes") )
+        expect.equalsIgnoreCase("yes") ) {
       this.expect = true;
-    else
+    } else {
       this.expect = false;
+    }
   }
 
   public void setAs(String as) throws NavigatorRuntimeException {
     if (!as.equals(KIND_SUBJECT)
         && !as.equals(KIND_INDICATOR)
-        && !as.equals(KIND_SOURCE))
+        && !as.equals(KIND_SOURCE)) {
       throw new NavigatorRuntimeException("Non-supported value ('" + as +
                                           "') given for attribute 'as' in element 'lookup'.");
+    }
 
     this.lookupAs = as;
   }
@@ -218,10 +224,11 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
     throws MalformedURLException {
 
     LocatorIF base = topicmap.getStore().getBaseAddress();
-    if (base != null)
+    if (base != null) {
       return base.resolveAbsolute(locString);
-    else
+    } else {
       return new URILocator(locString);
+    }
   }
   
 }

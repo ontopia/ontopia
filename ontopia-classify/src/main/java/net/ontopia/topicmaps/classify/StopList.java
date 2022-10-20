@@ -45,11 +45,13 @@ public class StopList implements TermAnalyzerIF {
    */
   public StopList(String filename) {
     ClassLoader cloader = StopList.class.getClassLoader();
-    if (cloader == null)
+    if (cloader == null) {
       throw new OntopiaRuntimeException("Cannot find class loader.");
+    }
     InputStream istream = cloader.getResourceAsStream(filename);
-    if (istream == null)
+    if (istream == null) {
       throw new OntopiaRuntimeException("Cannot find resource: " + filename);
+    }
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(istream));
       try {
@@ -99,8 +101,9 @@ public class StopList implements TermAnalyzerIF {
   
   @Override
   public void analyzeTerm(Term term) {
-    if (isStopWord(term.getStem()))
+    if (isStopWord(term.getStem())) {
       term.multiplyScore(stopFactor, "stoplist adjustment");
+    }
   }
   
   @Override

@@ -120,8 +120,9 @@ public class JSPPageExecuter {
       runTag(tag, curNode);
       token = tag.doAfterBody();
     } while (token == BodyTagSupport.EVAL_BODY_AGAIN);
-    if (token != BodyTagSupport.SKIP_BODY)
+    if (token != BodyTagSupport.SKIP_BODY) {
       throw new OntopiaRuntimeException("Internal error: unknown doAfterBody token: " + token);
+    }
   }
 
   /**

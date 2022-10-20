@@ -35,23 +35,27 @@ public class DistanceAnalyzer extends AbstractDocumentAnalyzer {
   @Override
   public void startDocument(Document doc) {
     super.startDocument(doc);
-    if (this.iteration == 1)
+    if (this.iteration == 1) {
       this.high = 0d;
-    else
+    } else {
       this.termCount = 0;
+    }
   }
   
   @Override
   public void endDocument(Document doc) {
     // calculate high
-    if (this.iteration == 1)
+    if (this.iteration == 1) {
       this.high = Math.log(termCount);
+    }
   }
 
   @Override
   public void analyzeToken(TextBlock parent, Token token, int index) {
     // ignore non variant tokens
-    if (token.getType() != Token.TYPE_VARIANT) return;
+    if (token.getType() != Token.TYPE_VARIANT) {
+      return;
+    }
     
     // count term
     this.termCount++;
@@ -61,8 +65,9 @@ public class DistanceAnalyzer extends AbstractDocumentAnalyzer {
       Term term = ((Variant)token).getTerm();
       double score = term.getScore();
       // if no existing score add distance score
-      if (score > 0d)
+      if (score > 0d) {
         term.addScore(high - Math.log(termCount), "distance adjustment");
+      }
     }
   }
   

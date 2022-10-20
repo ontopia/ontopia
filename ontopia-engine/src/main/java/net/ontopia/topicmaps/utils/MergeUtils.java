@@ -70,22 +70,26 @@ public class MergeUtils {
    */
   public static boolean shouldMerge(TopicIF t1, TopicIF t2) {
     // check subject locators
-    if (CollectionUtils.containsAny(t1.getSubjectLocators(), t2.getSubjectLocators()))
+    if (CollectionUtils.containsAny(t1.getSubjectLocators(), t2.getSubjectLocators())) {
       return true;
+    }
     
     // check subject indicators and source locators
     if (CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getSubjectIdentifiers()) ||
-        CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getSubjectIdentifiers()))
+        CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getSubjectIdentifiers())) {
       return true;
+    }
     if (CollectionUtils.containsAny(t1.getItemIdentifiers(), t2.getItemIdentifiers()) ||
-        CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getItemIdentifiers()))
+        CollectionUtils.containsAny(t1.getSubjectIdentifiers(), t2.getItemIdentifiers())) {
       return true;
+    }
 
     // should merge if they reify the same object
     ReifiableIF r1 = t1.getReified();
     ReifiableIF r2 = t2.getReified();
-    if (r1 != null && Objects.equals(r1, r2))
+    if (r1 != null && Objects.equals(r1, r2)) {
       return true;
+    }
 
     return false;
   }
@@ -108,14 +112,18 @@ public class MergeUtils {
   public static void mergeInto(TopicIF target, TopicIF source)
     throws ConstraintViolationException {
 
-    if (target.getTopicMap() == null)
+    if (target.getTopicMap() == null) {
       throw new IllegalArgumentException("Target topic has no topic map");
-    if (source.getTopicMap() == null)
+    }
+    if (source.getTopicMap() == null) {
       throw new IllegalArgumentException("Source topic has no topic map");
-    if (!target.getTopicMap().equals(source.getTopicMap()))
+    }
+    if (!target.getTopicMap().equals(source.getTopicMap())) {
       throw new IllegalArgumentException("Topics not in same topic map");
-    if (target.equals(source))
+    }
+    if (target.equals(source)) {
       throw new IllegalArgumentException("Cannot merge topic with itself!");
+    }
 
     // move reified
     moveReified(target, source);
@@ -171,8 +179,9 @@ public class MergeUtils {
         targetbn = CopyUtils.copyTopicName(target, sourcebn);
         moveReifier(targetbn, sourcebn);
         sourcebn.remove();
-      } else
+      } else {
         mergeInto(targetbn, sourcebn);
+      }
     }
 
     // copying occurrences
@@ -183,8 +192,9 @@ public class MergeUtils {
         targetoc = CopyUtils.copyOccurrence(target, sourceoc);
         moveReifier(targetoc, sourceoc);
         sourceoc.remove();
-      } else
+      } else {
         mergeInto(targetoc, sourceoc);
+      }
     }
 
     // copying roles
@@ -346,8 +356,9 @@ public class MergeUtils {
     while (it.hasNext()) {
       AssociationRoleIF srole = it.next();
       AssociationRoleIF trole = keys.get(KeyGenerator.makeAssociationRoleKey(srole));
-      if (trole == null)
+      if (trole == null) {
         throw new ConstraintViolationException("Cannot merge unequal associations");
+      }
       mergeIntoChecked(trole, srole);
     }    
     source.remove();
@@ -366,9 +377,10 @@ public class MergeUtils {
     if (target.getAssociation() != source.getAssociation()) {
       String key1 = KeyGenerator.makeAssociationKey(target.getAssociation());
       String key2 = KeyGenerator.makeAssociationKey(source.getAssociation());
-      if (!key1.equals(key2))
+      if (!key1.equals(key2)) {
         throw new ConstraintViolationException("Cannot merge roles in different "
                                                + " associations");
+      }
       mergeInto(target.getAssociation(), source.getAssociation());
     } else {
       mergeIntoChecked(target, source);
@@ -403,19 +415,20 @@ public class MergeUtils {
    * @since 5.1.0
    */
   public static void mergeInto(ReifiableIF target, ReifiableIF source) {
-    if (target instanceof TopicNameIF)
+    if (target instanceof TopicNameIF) {
       mergeInto((TopicNameIF) target, (TopicNameIF) source);
-    else if (target instanceof OccurrenceIF)
+    } else if (target instanceof OccurrenceIF) {
       mergeInto((OccurrenceIF) target, (OccurrenceIF) source);
-    else if (target instanceof AssociationIF)
+    } else if (target instanceof AssociationIF) {
       mergeInto((AssociationIF) target, (AssociationIF) source);
-    else if (target instanceof AssociationRoleIF)
+    } else if (target instanceof AssociationRoleIF) {
       mergeInto((AssociationRoleIF) target, (AssociationRoleIF) source);
-    else if (target instanceof VariantNameIF)
+    } else if (target instanceof VariantNameIF) {
       mergeInto((VariantNameIF) target, (VariantNameIF) source);
-    else
+    } else {
       throw new UnsupportedOperationException("Cannot merge objects of this type: "
                                               + target);
+    }
   }
 
   /**
@@ -425,15 +438,16 @@ public class MergeUtils {
    * @since 5.1.3
    */
   public static ReifiableIF mergeInto(TopicIF target, ReifiableIF source) {
-    if (source instanceof TopicNameIF)
+    if (source instanceof TopicNameIF) {
       return mergeInto(target, (TopicNameIF) source);
-    else if (source instanceof OccurrenceIF)
+    } else if (source instanceof OccurrenceIF) {
       return mergeInto(target, (OccurrenceIF) source);
-    else if (source instanceof AssociationIF)
+    } else if (source instanceof AssociationIF) {
       return mergeInto(target.getTopicMap(), (AssociationIF) source);
-    else
+    } else {
       throw new UnsupportedOperationException("Cannot merge objects of this type: "
                                               + source);
+    }
   }
 
   /**
@@ -448,8 +462,9 @@ public class MergeUtils {
     TopicMapBuilderIF builder = tm.getBuilder();
     TopicIF type = findTopic(tm, source.getType());
     TopicNameIF newtn = builder.makeTopicName(target, type, source.getValue());
-    for (TopicIF theme : source.getScope())
+    for (TopicIF theme : source.getScope()) {
       newtn.addTheme(findTopic(tm, theme));
+    }
     return newtn;
   }
 
@@ -467,8 +482,9 @@ public class MergeUtils {
     OccurrenceIF newocc = builder.makeOccurrence(target, type,
                                                  source.getValue(),
                                                  source.getDataType());
-    for (TopicIF theme : source.getScope())
+    for (TopicIF theme : source.getScope()) {
       newocc.addTheme(findTopic(tm, theme));
+    }
     return newocc;
   }
 
@@ -484,8 +500,9 @@ public class MergeUtils {
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF type = findTopic(topicmap, source.getType());
     AssociationIF newa = builder.makeAssociation(type);
-    for (TopicIF theme : source.getScope())
+    for (TopicIF theme : source.getScope()) {
       newa.addTheme(findTopic(topicmap, theme));
+    }
 
     for (AssociationRoleIF role : source.getRoles()) {
       type = findTopic(topicmap, role.getType());
@@ -521,23 +538,26 @@ public class MergeUtils {
    */
   public static TopicIF mergeInto(TopicMapIF targettm, TopicIF source,
                                   Predicate<TMObjectIF> decider) {
-    if (source.getTopicMap() == targettm)
+    if (source.getTopicMap() == targettm) {
       return source;
+    }
 
     TopicMapBuilderIF builder = targettm.getBuilder();
     TopicIF target = copyTopic(targettm, source);
 
     // copying types
     Iterator<TopicIF> typeIterator = source.getTypes().iterator();
-    while (typeIterator.hasNext()) 
+    while (typeIterator.hasNext()) {
       target.addType(copyTopic(targettm, typeIterator.next()));
+    }
 
     // copying base names
     Iterator<TopicNameIF> topicnameIterator = source.getTopicNames().iterator();
     while (topicnameIterator.hasNext()) {
       TopicNameIF bnsource = topicnameIterator.next();
-      if (!decider.test(bnsource))
+      if (!decider.test(bnsource)) {
         continue;
+      }
       TopicNameIF bntarget = builder.makeTopicName(target, 
                                                  resolveTopic(builder.getTopicMap(), bnsource.getType()), 
                                                  bnsource.getValue());
@@ -546,8 +566,9 @@ public class MergeUtils {
       Iterator<VariantNameIF> it2 = bnsource.getVariants().iterator();
       while (it2.hasNext()) {
         VariantNameIF vnsource = it2.next();
-        if (!decider.test(vnsource))
+        if (!decider.test(vnsource)) {
           continue;
+        }
         
         VariantNameIF vntarget = builder.makeVariantName(bntarget, vnsource.getValue(), vnsource.getDataType(), Collections.emptySet());
         copyScope(vntarget, vnsource);
@@ -563,8 +584,9 @@ public class MergeUtils {
     Iterator<OccurrenceIF> occurrenceIterator = source.getOccurrences().iterator();
     while (occurrenceIterator.hasNext()) {
       OccurrenceIF osource = occurrenceIterator.next();
-      if (!decider.test(osource))
+      if (!decider.test(osource)) {
         continue;
+      }
       OccurrenceIF otarget = builder.makeOccurrence(target, 
                                                     resolveTopic(builder.getTopicMap(), osource.getType()), 
                                                     "");
@@ -578,8 +600,9 @@ public class MergeUtils {
     Iterator<AssociationRoleIF> roleIterator = source.getRoles().iterator();
     while (roleIterator.hasNext()) {
       AssociationRoleIF rstart = roleIterator.next();
-      if (!decider.test(rstart))
+      if (!decider.test(rstart)) {
         continue;
+      }
       AssociationIF asource = rstart.getAssociation();
 
       AssociationIF atarget = builder.makeAssociation(resolveTopic(builder.getTopicMap(), asource.getType()));
@@ -604,16 +627,18 @@ public class MergeUtils {
 
   private static void copyScope(ScopedIF target, ScopedIF source) {
     Iterator<TopicIF> it = source.getScope().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       target.addTheme(copyTopic(target.getTopicMap(), it.next()));
+    }
   }
   
   private static TopicIF resolveTopic(TopicMapIF targetTopicMap,
                                       TopicIF sourceTopic) {
-    if (sourceTopic == null) 
+    if (sourceTopic == null) { 
       return null;
-    else
+    } else {
       return copyTopic(targetTopicMap, sourceTopic);
+    }
   }
   
   // returns false if object is a duplicate, true if it is not
@@ -635,8 +660,9 @@ public class MergeUtils {
           target.remove();
           return (O) object; // this is a duplicate
         }
-      } else
+      } else {
         target.addItemIdentifier(loc);
+      }
     }
 
     return target;
@@ -664,14 +690,17 @@ public class MergeUtils {
           }
         }
       } else if (sourceReifier != null) {
-        if (!targetReifier.equals(sourceReifier))
+        if (!targetReifier.equals(sourceReifier)) {
           mergeInto(targetReifier, sourceReifier);
+        }
       }
     }
   }
 
   private static TopicIF copyTopic(TopicMapIF targettm, TopicIF source) {
-    if (source == null) return null;
+    if (source == null) {
+      return null;
+    }
     TopicMapBuilderIF builder = targettm.getBuilder();
     TopicIF target = builder.makeTopic();
     return copyIdentifiers(target, source);
@@ -696,8 +725,9 @@ public class MergeUtils {
           mergeInto(found, target);
           target = found;
         }
-      } else
+      } else {
         target.addSubjectLocator(loc);
+      }
     }
 
     // merging on subject identifiers
@@ -708,8 +738,9 @@ public class MergeUtils {
 
       if (found == null) {
         TMObjectIF f = targettm.getObjectByItemIdentifier(loc);
-        if (f instanceof TopicIF)
+        if (f instanceof TopicIF) {
           found = (TopicIF) f;
+        }
       }
       
       if (found != null) {
@@ -729,14 +760,16 @@ public class MergeUtils {
     while (it.hasNext()) {
       LocatorIF loc = it.next();
       TMObjectIF f = targettm.getObjectByItemIdentifier(loc);
-      if (f != null && !(f instanceof TopicIF))
+      if (f != null && !(f instanceof TopicIF)) {
         throw new ConstraintViolationException("Item identifier " + loc +
                                                " of source topic clashed with"+
                                                " " + f);
+      }
       
       TopicIF found = (TopicIF) f;
-      if (found == null)
+      if (found == null) {
         found = targettm.getTopicBySubjectIdentifier(loc);
+      }
       
       if (found != null) {
         if (found != target) {
@@ -793,10 +826,11 @@ public class MergeUtils {
     while (it.hasNext()) {
       LocatorIF loc = it.next();
       TMObjectIF f = targettm.getObjectByItemIdentifier(loc);
-      if (f != null && !(f instanceof TopicIF))
+      if (f != null && !(f instanceof TopicIF)) {
         throw new ConstraintViolationException("Source locator " + loc +
                                                " of source topic clashed with"+
                                                " " + f);
+      }
       
       TopicIF found = (TopicIF) f;
       if (found != null) {
@@ -852,8 +886,9 @@ public class MergeUtils {
       while (it2.hasNext()) {
         LocatorIF loc = it2.next();
         targetT = target.getTopicBySubjectLocator(loc);
-        if (targetT != null)
+        if (targetT != null) {
           registerMerge(targetT, sourceT, mergemap, mergemapRev);
+        }
       }
 
       // subject identifiers
@@ -867,8 +902,9 @@ public class MergeUtils {
             targetT = (TopicIF) object;
           }
         }
-        if (targetT != null)
+        if (targetT != null) {
           registerMerge(targetT, sourceT, mergemap, mergemapRev);
+        }
       }
 
       // item identifiers
@@ -876,13 +912,15 @@ public class MergeUtils {
       while (it2.hasNext()) {
         LocatorIF loc = it2.next();
         TMObjectIF object = target.getObjectByItemIdentifier(loc);
-        if (object != null && object instanceof TopicIF) 
+        if (object != null && object instanceof TopicIF) { 
           targetT = (TopicIF) object;
-        else
+        } else {
           targetT = target.getTopicBySubjectIdentifier(loc);
+        }
 
-        if (targetT != null)
+        if (targetT != null) {
           registerMerge(targetT, sourceT, mergemap, mergemapRev);
+        }
       }
     }
     
@@ -900,8 +938,9 @@ public class MergeUtils {
     it = source.getTopics().iterator();
     while (it.hasNext()) {
       TopicIF t2 = it.next();
-      if (!mergemap.containsKey(t2)) 
+      if (!mergemap.containsKey(t2)) {
         copyTopic(target, t2, mergemap);
+      }
     }
         
     // b) copy characteristics of merged topics (except roles)
@@ -915,9 +954,9 @@ public class MergeUtils {
     // c) copy associations
     Set<String> assocs = getAssociationKeySet(target.getAssociations());
     Iterator<AssociationIF> associationIterator = source.getAssociations().iterator();
-    while (associationIterator.hasNext())
+    while (associationIterator.hasNext()) {
       copyAssociation(target, associationIterator.next(), mergemap, assocs);
-
+    }
     // d) reifier
     // NOTE: the reifier is *not* to be copied, because if a topic is
     // reifying the source topic map that's a different subject from
@@ -927,8 +966,9 @@ public class MergeUtils {
 
   private static void registerMerge(TopicIF target, TopicIF source,
                                     Map<TopicIF, TopicIF> mergemap, Map<TopicIF, Set<TopicIF>> mergemapRev) {
-    if (target.getTopicMap() == null) 
+    if (target.getTopicMap() == null) {
       throw new IllegalArgumentException("Target " + target + " has no topic map");
+    }
 
     // do the merge
     Set<TopicIF> sources = mergemapRev.get(target);
@@ -970,9 +1010,9 @@ public class MergeUtils {
                                     resolveTopic(builder.getTopicMap(), sourceRole.getPlayer(), mergemap));
     }
 
-    if (assocs.contains(KeyGenerator.makeAssociationKey(target)))
+    if (assocs.contains(KeyGenerator.makeAssociationKey(target))) {
       target.remove();
-    else {
+    } else {
       copyReifier(target, source, mergemap);
       copySourceLocators(target, source);
     }
@@ -997,10 +1037,11 @@ public class MergeUtils {
     mergemap.put(source, target);
     copyCharacteristics(target, source, mergemap);
     
-    if (target.getTopicMap() == null) // got merged away (bug #2168)
+    if (target.getTopicMap() == null) { // got merged away (bug #2168)
       return (TopicIF) mergemap.get(source);
-    else
+    } else {
       return target;
+    }
   }
 
   // assumes the objects are in different topic maps
@@ -1013,9 +1054,9 @@ public class MergeUtils {
       } catch (UniquenessViolationException e) {
         TopicMapIF tm = target.getTopicMap();
         TMObjectIF other = tm.getObjectByItemIdentifier(srcloc);
-        if (!equals(target, other))
+        if (!equals(target, other)) {
           throw e;
-
+        }
         // so, they were equal. that means they should merge. so what
         // do we do now? is it enough to transfer the source locators?
         // and what happens if we lose 'target'? surely it's needed
@@ -1077,8 +1118,9 @@ public class MergeUtils {
     // copying occurrences
     Set<String> keys = new CompactHashSet<String>();
     Iterator<OccurrenceIF> occurrenceIterator = target.getOccurrences().iterator();
-    while (occurrenceIterator.hasNext())
+    while (occurrenceIterator.hasNext()) {
       keys.add(KeyGenerator.makeOccurrenceKey(occurrenceIterator.next()));
+    }
         
     occurrenceIterator = source.getOccurrences().iterator();
     while (occurrenceIterator.hasNext()) {
@@ -1096,10 +1138,11 @@ public class MergeUtils {
       copyScope(occ1, occ2, mergemap);
       copyReifier(occ1, occ2, mergemap);
 
-      if (keys.contains(KeyGenerator.makeOccurrenceKey(occ1))) 
+      if (keys.contains(KeyGenerator.makeOccurrenceKey(occ1))) { 
         occ1.remove();
-      else
+      } else {
         copySourceLocators(occ1, occ2);
+      }
     }
         
     // note: roles are not copied; they are left for the
@@ -1119,12 +1162,14 @@ public class MergeUtils {
   private static TopicIF resolveTopic(TopicMapIF targetTopicMap,
                                       TopicIF sourceTopic,
                                       Map<TopicIF, TopicIF> mergemap) {
-    if (sourceTopic == null)
+    if (sourceTopic == null) {
       return null;
-    if (mergemap.containsKey(sourceTopic))
+    }
+    if (mergemap.containsKey(sourceTopic)) {
       return mergemap.get(sourceTopic);
-    else
+    } else {
       return copyTopic(targetTopicMap, sourceTopic, mergemap);
+    }
   }
 
   private static void copyVariants(TopicNameIF target, TopicNameIF source,
@@ -1156,18 +1201,21 @@ public class MergeUtils {
     TopicIF other;
     for (LocatorIF si : topic.getSubjectIdentifiers()) {
       other = othertm.getTopicBySubjectIdentifier(si);
-      if (other != null)
+      if (other != null) {
         return other;
+      }
     }
     for (LocatorIF sl : topic.getSubjectLocators()) {
       other = othertm.getTopicBySubjectLocator(sl);
-      if (other != null)
+      if (other != null) {
         return other;
+      }
     }
     for (LocatorIF ii : topic.getItemIdentifiers()) {
       other = (TopicIF) othertm.getObjectByItemIdentifier(ii);
-      if (other != null)
+      if (other != null) {
         return other;
+      }
     }
     return null;
   }
@@ -1200,8 +1248,9 @@ public class MergeUtils {
               break;
             }
           }
-          if (!found)
+          if (!found) {
             break;
+          }
         }
 
         return roles2.isEmpty();
@@ -1242,9 +1291,10 @@ public class MergeUtils {
     if (sreified != null) {
       ReifiableIF treified = target.getReified();
       if (treified != null) {
-        if (!KeyGenerator.makeKey(sreified).equals(KeyGenerator.makeKey(treified)))
+        if (!KeyGenerator.makeKey(sreified).equals(KeyGenerator.makeKey(treified))) {
           throw new ConstraintViolationException("Cannot merge topics which " +
                                                  "reify different objects");
+        }
 
         // FIXME: must verify that parents are equal
         

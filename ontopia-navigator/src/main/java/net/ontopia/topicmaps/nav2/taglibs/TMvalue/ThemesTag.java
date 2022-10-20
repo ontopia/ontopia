@@ -61,8 +61,9 @@ public class ThemesTag extends TagSupport {
 
     // get topicmap object on which we should compute 
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("ThemesTag found no topic map.");
+    }
     
     // get class instance index
     ScopeIndexIF index = (ScopeIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
@@ -76,14 +77,15 @@ public class ThemesTag extends TagSupport {
       resColl.addAll(index.getOccurrenceThemes());
       resColl.addAll(index.getVariantThemes());
     }
-    else if (themeName.equals(THEME_ASSOC))
+    else if (themeName.equals(THEME_ASSOC)) {
       resColl = index.getAssociationThemes();
-    else if (themeName.equals(THEME_BASENAME))
+    } else if (themeName.equals(THEME_BASENAME)) {
       resColl = index.getTopicNameThemes();
-    else if (themeName.equals(THEME_OCC))
+    } else if (themeName.equals(THEME_OCC)) {
       resColl = index.getOccurrenceThemes();
-    else if (themeName.equals(THEME_VARIANT))
+    } else if (themeName.equals(THEME_VARIANT)) {
       resColl = index.getVariantThemes();
+    }
     
     // kick it over to the accepting tag
     acceptingTag.accept(resColl);
@@ -115,12 +117,13 @@ public class ThemesTag extends TagSupport {
     if (themeName.equals(THEME_ASSOC)
         || themeName.equals(THEME_BASENAME)
         || themeName.equals(THEME_VARIANT)
-        || themeName.equals(THEME_OCC))
+        || themeName.equals(THEME_OCC)) {
         this.themeName = themeName;
-    else
+    } else {
       throw new IllegalArgumentException("Invalid theme name '" + themeName +
                                          "' in attribute 'of' " +
                                          " of element 'scopes'.");
+    }
   }
 
 }

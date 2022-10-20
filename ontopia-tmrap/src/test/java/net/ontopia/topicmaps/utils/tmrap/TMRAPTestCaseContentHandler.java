@@ -71,8 +71,9 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
   public void register(XMLReader parser) {
     parser.setContentHandler(this);
     ErrorHandler _ehandler = parser.getErrorHandler();
-    if (_ehandler == null || (_ehandler instanceof DefaultHandler))
+    if (_ehandler == null || (_ehandler instanceof DefaultHandler)) {
       parser.setErrorHandler(getDefaultErrorHandler());
+    }
     ehandler = parser.getErrorHandler();
   }
 
@@ -89,8 +90,9 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
   @Override
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) {
-    if ("tests".equals(qname))
+    if ("tests".equals(qname)) {
       tests = new ArrayList();
+    }
     if ("test".equals(qname)) {    
       String id = attrs.getValue("id");
       String edit = attrs.getValue("edit");

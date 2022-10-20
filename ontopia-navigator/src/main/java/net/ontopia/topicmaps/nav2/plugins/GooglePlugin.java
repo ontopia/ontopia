@@ -37,20 +37,23 @@ public class GooglePlugin extends DefaultPlugin {
   
   @Override
   public String generateHTML(ContextTag context) {
-    if (context == null)
+    if (context == null) {
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");
+    }
     
     // Deactivate plugin if there is no current topic(s)
     Collection topics = context.getObjects();
-    if (topics == null || topics.isEmpty())
+    if (topics == null || topics.isEmpty()) {
       return "Google it!";
+    }
     
     StringBuilder sb = new StringBuilder();
 
     // --- Title
     String title = getParameter("title");
-    if (title == null)
+    if (title == null) {
       title = "Google it!";
+    }
 
     // Stringify the topic, get most appropiate name
     StringBuilder query = new StringBuilder();
@@ -73,8 +76,9 @@ public class GooglePlugin extends DefaultPlugin {
     if (style == null || style.equals("image")) {
       sb.append("<form method='get' action='http://www.google.com/search' ")
         .append("      target='_blank' style='display: inline'");
-      if (description != null)
+      if (description != null) {
         sb.append(" title=\"").append(description).append('\"');
+      }
       sb.append('>')
         .append("<input type='hidden' name='safe' value='vss'>")
         .append("<input type='hidden' name='vss' value='1'>")

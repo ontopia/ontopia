@@ -90,8 +90,9 @@ public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignmen
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof FieldAssignmentModel))
+    if (!(other instanceof FieldAssignmentModel)) {
       return false;
+    }
     
     FieldAssignmentModel fam = (FieldAssignmentModel)other;
     return Objects.equals(getFieldAssignment(), fam.getFieldAssignment());

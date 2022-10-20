@@ -101,12 +101,16 @@ public final class Identity implements IdentityIF, Externalizable {
       
       // Compare array length
       int width = keys.length;
-      if (width != other.getWidth()) return false;
+      if (width != other.getWidth()) {
+        return false;
+      }
       
       // Compare array elements
       for (int i=0; i < width; i++) {
 	Object okey = other.getKey(i);
-	if (!keys[i].equals(okey)) return false;
+	if (!keys[i].equals(okey)) {
+    return false;
+  }
       }
       // Compare type
       return type.equals(other.getType());

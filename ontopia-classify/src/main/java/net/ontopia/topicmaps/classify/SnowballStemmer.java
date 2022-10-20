@@ -56,8 +56,9 @@ public class SnowballStemmer implements TermStemmerIF {
   
   public SnowballStemmer(String lang) {
     String stemClassName = languages.get(lang);
-    if (stemClassName == null)
+    if (stemClassName == null) {
       throw new OntopiaRuntimeException("Unknown language: '" + lang + "'");
+    }
     try {
       @SuppressWarnings("unchecked")
       Class<SnowballProgram> stemClass = (Class<SnowballProgram>) Class.forName(stemClassName);

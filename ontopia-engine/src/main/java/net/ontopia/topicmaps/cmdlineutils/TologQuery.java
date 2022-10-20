@@ -76,8 +76,9 @@ public class TologQuery {
     }
 
     // Set up tracing
-    if (ohandler.trace)
+    if (ohandler.trace) {
       QueryTracer.addListener(new OutQueryTracer());
+    }
     
     try {
       // Run the query
@@ -119,14 +120,16 @@ public class TologQuery {
     TopicMapIF tm = ImportExportUtils.getReader(tmfile).read();
     // run duplicate suppression only on in-memory topic maps. too expensive on
     // rdbms topic maps.
-    if (tm instanceof net.ontopia.topicmaps.impl.basic.TopicMap)
+    if (tm instanceof net.ontopia.topicmaps.impl.basic.TopicMap) {
       DuplicateSuppressionUtils.removeDuplicates(tm);
+    }
 
     String query;
-    if (qryfile.trim().endsWith("?"))
+    if (qryfile.trim().endsWith("?")) {
       query = qryfile;
-    else
+    } else {
       query = IOUtils.toString(new java.io.FileReader(qryfile));
+    }
 
     QueryProcessorIF processor = QueryUtils.getQueryProcessor(tm);
     ParsedQueryIF pquery = processor.parse(query);
@@ -151,8 +154,9 @@ public class TologQuery {
     int rows = 0;
                                           
     while (result.next()) {
-      for (int ix = 0; ix < result.getWidth(); ix++)
+      for (int ix = 0; ix < result.getWidth(); ix++) {
         System.out.print(result.getValue(ix) + "\t");
+      }
       System.out.println("");
       rows++;
     }
@@ -183,9 +187,15 @@ public class TologQuery {
     @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
-      if (option == 't') trace = true;
-      if (option == 'd') debug = true;
-      if (option == 'i') timeit = true;
+      if (option == 't') {
+        trace = true;
+      }
+      if (option == 'd') {
+        debug = true;
+      }
+      if (option == 'i') {
+        timeit = true;
+      }
     }
   }
 

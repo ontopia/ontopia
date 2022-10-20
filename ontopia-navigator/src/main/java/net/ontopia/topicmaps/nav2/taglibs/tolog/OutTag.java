@@ -69,36 +69,39 @@ public class OutTag extends BaseOutputProducingTag {
   public String taoToString(Object tao, ServletRequest request,
       String scope) throws NavigatorRuntimeException {
     // If tao is a String - output as is, ...
-    if (tao == null)
+    if (tao == null) {
       return "null";
-    else if (tao instanceof String)
+    } else if (tao instanceof String) {
       return (String) tao;
-    // ... LocatorIF - output the external form ...
-    else if (tao instanceof LocatorIF)
+      // ... LocatorIF - output the external form ...
+    } else if (tao instanceof LocatorIF) {
       return ((LocatorIF) tao).getExternalForm();
-    // ... topic - output like the old tag <output:name/> ...
-    else if (tao instanceof TopicIF) {
+      // ... topic - output like the old tag <output:name/> ...
+    } else if (tao instanceof TopicIF) {
       ContextTag contextTag = FrameworkUtils.getContextTag(request);
       return (scope == null) ? Stringificator.toString(contextTag, tao)
           : Stringificator.toString(contextTag, tao, null, null, scope, null);
       // ... basename - output the name string ...
-    } else if (tao instanceof TopicNameIF)
+    } else if (tao instanceof TopicNameIF) {
       return ((TopicNameIF) tao).getValue();
-    // ... variant name - output name string or locator output ...
-    else if (tao instanceof VariantNameIF) {
+      // ... variant name - output name string or locator output ...
+    } else if (tao instanceof VariantNameIF) {
       LocatorIF loc = ((VariantNameIF) tao).getLocator();
-      if (loc == null)
+      if (loc == null) {
         return ((VariantNameIF) tao).getValue();
+      }
       return loc.getExternalForm();
       // ... OccurrenceIF - output the value or locator output ...
     } else if (tao instanceof OccurrenceIF) {
       LocatorIF loc = ((OccurrenceIF) tao).getLocator();
-      if (loc == null)
+      if (loc == null) {
         return ((OccurrenceIF) tao).getValue();
+      }
       return loc.getExternalForm();
       // By DEFAULT use the .toString() method.
-    } else
+    } else {
       return tao.toString();
+    }
   }
 
   /**

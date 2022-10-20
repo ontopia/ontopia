@@ -139,8 +139,9 @@ public class VizController {
     }
     highlightNode = new HighlightNode(this);
     keyMan = new KeyInputManager(this);
-    if (vizFrontEnd.mapPreLoaded())
+    if (vizFrontEnd.mapPreLoaded()) {
       focusStartTopicInternal();
+    }
   }
 
   
@@ -160,9 +161,10 @@ public class VizController {
 
   public TopicIF getDefaultScopingTopic(TopicMapIF topicmap) {
     TopicIF scope = appContext.getDefaultScopingTopic(topicmap);
-    if (scope == null)
+    if (scope == null) {
       scope = appContext.getTopicForLocator(VizUtils.makeLocator(SHORT_NAME),
           topicmap);
+    }
 
     return scope;
   }
@@ -239,8 +241,9 @@ public class VizController {
     // another way, such as disabling the spinner when there is no
     // TopicMap loaded ?
 
-    if (view == null)
+    if (view == null) {
       return;
+    }
 
     view.setLocality(locality);
     updateDisplayLazily();
@@ -354,15 +357,17 @@ public class VizController {
   }
 
   public void setStartTopic(TopicIF topic) {
-    if (view == null)
+    if (view == null) {
       return;
+    }
 
     appContext.setStartTopic(topic);
   }
 
   public void clearStartTopic() {
-    if (view != null)
+    if (view != null) {
       tmConfig.clearStartTopic();
+    }
   }
 
   // --- environment actions -----------------------------------------------
@@ -421,10 +426,11 @@ public class VizController {
 
       topicmap = importTopicMap(reader, tmfile.getName());
       if (topicmap != null) {
-        if (cfgfile == null)
+        if (cfgfile == null) {
           tmConfig = new VizTopicMapConfigurationManager();
-        else
+        } else {
           tmConfig = new VizTopicMapConfigurationManager(cfgfile);
+        }
 
         // Remove all paintListeners
         hoverHelpManager.resetPainters();
@@ -462,10 +468,11 @@ public class VizController {
       vpanel.setCursor(new Cursor(Cursor.WAIT_CURSOR));
       vpanel.clearSearchResults();
       if (topicmap != null) {
-        if (cfgfile == null)
+        if (cfgfile == null) {
           tmConfig = new VizTopicMapConfigurationManager();
-        else
+        } else {
           tmConfig = new VizTopicMapConfigurationManager(cfgfile);
+        }
 
         // Remove all paintListeners
         hoverHelpManager.resetPainters();
@@ -496,8 +503,9 @@ public class VizController {
   }
 
   protected void setHighlightNode(TMAbstractNode node, Graphics g) {
-    if (highlightNode != null)
+    if (highlightNode != null) {
       highlightNode.setNode(node, g);
+    }
   }
 
   private TopicMapIF importTopicMap(TopicMapReaderIF reader, String name) {
@@ -614,8 +622,9 @@ public class VizController {
         + visible, type);
 
     tmConfig.setAssociationTypeVisible(type, visible, view);    
-    if (visible)
+    if (visible) {
       view.loadNodesInLocality(view.getFocusNode(), true, false);
+    }
     repaint();
     
     updateDisplay();
@@ -777,8 +786,9 @@ public class VizController {
   }
 
   public List performSearch(String searchString) {
-    if (view != null)
+    if (view != null) {
       return view.performSearch(searchString);
+    }
     return Collections.EMPTY_LIST;
   }
 
@@ -789,8 +799,9 @@ public class VizController {
   }
 
   public void outputDebugInfo(String operation) {
-    if (view == null)
+    if (view == null) {
       return;
+    }
     view.outputDebugInfo(operation);
   }
 
@@ -888,12 +899,12 @@ public class VizController {
 
     TMAbstractNode target = (TMAbstractNode) panel.getSelect();
     
-    if (node.equals(target))
+    if (node.equals(target)) {
       view.hideNode(node);
-    else if (target == null)
+    } else if (target == null) {
       // If we are in Map view, use default behaviour
       panel.collapseNode(node);
-    else {
+    } else {
       // If there is a focus node, collapse all links that are not
       // connected to the focus node.
       Vector hidden = getOrphanedNodes(node, target);
@@ -911,34 +922,39 @@ public class VizController {
       TMAbstractNode neighbour = (TMAbstractNode) edge.getOtherEndpt(node);
       HashSet visited = new HashSet();
       visited.add(node);
-      if (!neighbour.hasPathTo(target, visited))
+      if (!neighbour.hasPathTo(target, visited)) {
         addToHidden(neighbour, node, hidden);
+      }
     }
     return hidden;
   }
   
   protected void addToHidden(TMAbstractNode target, Node source, Vector hidden) {
-    if (hidden.contains(target))
+    if (hidden.contains(target)) {
       return;
+    }
     hidden.add(target);
 
     for (Iterator edges = target.getVisibleEdges(); edges.hasNext();) {
       TMAbstractEdge edge = (TMAbstractEdge) edges.next();
       TMAbstractNode neighbour = (TMAbstractNode) edge.getOtherEndpt(target);
-      if (!neighbour.equals(source))
+      if (!neighbour.equals(source)) {
         addToHidden(neighbour, source, hidden);
+      }
     }
   }
 
   public void focusStartTopic() {
-    if (view == null)
+    if (view == null) {
       return;
+    }
     focusNode(view.getStartNode());
   }
 
   public void focusStartTopicInternal() {
-    if (view == null)
+    if (view == null) {
       return;
+    }
     focusNodeInternal(view.getStartNode());
   }
 
@@ -977,8 +993,9 @@ public class VizController {
     tmConfig.setInAssociationScopeFilter(scope, useInFilter);
     if (useInFilter) {
       view.addAssociationScopeFilterTopic(scope);
-    } else
+    } else {
       view.removeAssociationScopeFilterTopic(scope);
+    }
     updateDisplay();
     repaint();
     
@@ -992,8 +1009,9 @@ public class VizController {
    *  Output debug info with a header for the method, provided debug is enabled.
    */
   private void headedDebug(String header, Object o) {
-    if (view == null)
+    if (view == null) {
       return;
+    }
     view.headedDebug(header, o);
     view.debug.integrityCheck();
   }
@@ -1152,11 +1170,13 @@ public class VizController {
   }
 
   public void loadAssociationTypes() {
-    if (!appContext.isApplet())
+    if (!appContext.isApplet()) {
       return; // no loading to do on desktop
+    }
 
-    if (assocTypesLoaded)
+    if (assocTypesLoaded) {
       return;
+    }
 
     try {
       TopicMapIF topicmap = view.getTopicMap();
@@ -1171,11 +1191,13 @@ public class VizController {
   }
 
   public void loadTopicTypes() {
-    if (!appContext.isApplet())
+    if (!appContext.isApplet()) {
       return; // no loading to do on desktop
+    }
     
-    if (topicTypesLoaded)
+    if (topicTypesLoaded) {
       return;
+    }
 
     try {
       TopicMapIF topicmap = view.getTopicMap();
@@ -1212,8 +1234,9 @@ public class VizController {
     public void paintFirst(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
-      for (int i = 0; i < painters.size(); i++)
+      for (int i = 0; i < painters.size(); i++) {
         ((TGPaintListener) painters.get(i)).paintFirst(g);
+      }
     }
 
     public void addPaintListener(TGPaintListener aListener) {
@@ -1224,16 +1247,18 @@ public class VizController {
     public void paintAfterEdges(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
-      for (int i = 0; i < painters.size(); i++)
+      for (int i = 0; i < painters.size(); i++) {
         ((TGPaintListener) painters.get(i)).paintAfterEdges(g);
+      }
     }
 
     @Override
     public void paintLast(Graphics g) {
       // Do it this way so that we do not get concurrent modification
       // errors when loading large topic maps
-      for (int i = 0; i < painters.size(); i++)
+      for (int i = 0; i < painters.size(); i++) {
         ((TGPaintListener) painters.get(i)).paintLast(g);
+      }
     }
 
     public void removePaintListener(TGPaintListener aListener) {

@@ -56,17 +56,21 @@ public class TreeModels {
     sb.append("using on for i\"http://psi.ontopia.net/ontology/\" ");
     sb.append("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" ");
     sb.append("select $P, $C from ");
-    if (isAnnotationEnabled)
+    if (isAnnotationEnabled) {
       sb.append("{ instance-of($C, on:ontology-type) | $C = on:topic-map, topic($C) | ");
+    }
     sb.append("instance-of($C, on:topic-type), ");
-    if (!isAdminEnabled)
+    if (!isAdminEnabled) {
       sb.append("not(direct-instance-of($C, on:system-topic)), ");
+    }
     sb.append("{ xtm:superclass-subclass($C : xtm:subclass, $P : xtm:superclass), instance-of($P, on:topic-type)");
-    if (!isAdminEnabled)
+    if (!isAdminEnabled) {
       sb.append(", not(direct-instance-of($P, on:system-topic))");
+    }
     sb.append(" }");    
-    if (isAnnotationEnabled)
+    if (isAnnotationEnabled) {
       sb.append("}");
+    }
     sb.append(" order by $P, $C?");
     
     final String topicMapId = tm.getId();
@@ -101,11 +105,13 @@ public class TreeModels {
     sb.append("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" ");
     sb.append("select $P, $C from ");
     sb.append("instance-of($C, ").append(typePSI).append("), ");
-    if (!isAdminEnabled)
+    if (!isAdminEnabled) {
       sb.append("not(direct-instance-of($C, on:system-topic)), ");
+    }
     sb.append("{ xtm:superclass-subclass($C : xtm:subclass, $P : xtm:superclass), instance-of($P, ").append(typePSI).append(")");
-    if (!isAdminEnabled)
+    if (!isAdminEnabled) {
       sb.append(", not(direct-instance-of($P, on:system-topic))");
+    }
     sb.append(" }");    
     sb.append(" order by $P, $C?");
     
@@ -183,16 +189,18 @@ public class TreeModels {
             TopicIF crtype = (TopicIF)qr.getValue(1);
             TopicIF prtype = (TopicIF)qr.getValue(3);
             HierarchyDefinition hd = new HierarchyDefinition(atype, prtype, crtype);
-            if (hds.containsKey(hd))
+            if (hds.containsKey(hd)) {
               hd = hds.get(hd);
-            else
+            } else {
               hds.put(hd, hd);
+            }
             TopicIF crpt = (TopicIF)qr.getValue(2);
             TopicIF prpt = (TopicIF)qr.getValue(4);
             hd.ctypes.add(crpt);
             hd.ptypes.add(prpt);
-            if (!hd_ctypes.containsKey(crpt))
+            if (!hd_ctypes.containsKey(crpt)) {
               hd_ctypes.put(crpt, new HashSet<HierarchyDefinition>());
+            }
             hd_ctypes.get(crpt).add(hd);
           }        
         } finally {
@@ -224,16 +232,22 @@ public class TreeModels {
         return new QueryTreeModel(topicType.getTopicMap(), hquery, hqparams) {
           @Override
           protected boolean filter(Object p, Object c) {
-            if (isAdminEnabled) return true;
+            if (isAdminEnabled) {
+              return true;
+            }
             // filter out system topics
             TopicIF systemTopic = topicMapModel.getTopicMap().getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_SYSTEM_TOPIC);
             if (p != null) {
               TopicIF pt = (TopicIF)p;
-              if (pt.getTypes().contains(systemTopic)) return false;
+              if (pt.getTypes().contains(systemTopic)) {
+                return false;
+              }
             }
             if (c != null) {
               TopicIF ct = (TopicIF)c;
-              if (ct.getTypes().contains(systemTopic)) return false;
+              if (ct.getTypes().contains(systemTopic)) {
+                return false;
+              }
             }
             return true;
           }
@@ -285,7 +299,9 @@ public class TreeModels {
       .append("($B").append(" : @").append(hd.crtype.getObjectId())
       .append(", $X").append(" : @").append(hd.prtype.getObjectId()).append("), ");
       sb.append(createStepPredicates(hd, "P", "C", "X", existingRules, hd_ctypes));
-      if (hiter.hasNext()) sb.append(" |\n");
+      if (hiter.hasNext()) {
+        sb.append(" |\n");
+      }
     }
     sb.append(" }\n");
     return sb;
@@ -294,20 +310,27 @@ public class TreeModels {
   private static StringBuilder createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map<TopicIF,StringBuilder> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
     StringBuilder sb = new StringBuilder();
     
-    if (hd.ptypes.size() > 1) sb.append("{");
+    if (hd.ptypes.size() > 1) {
+      sb.append("{");
+    }
     Iterator<TopicIF> piter = hd.ptypes.iterator();
     while (piter.hasNext()) {
       TopicIF ptype = piter.next();
       sb.append(createHierarchyRuleFor(ptype, pVar, cVar, bVar, existingRules, hd_ctypes));
-      if (piter.hasNext()) sb.append(" | \n");            
+      if (piter.hasNext()) {
+        sb.append(" | \n");
+      }            
     }
-    if (hd.ptypes.size() > 1) sb.append("}");
+    if (hd.ptypes.size() > 1) {
+      sb.append("}");
+    }
     return sb;    
   }
   
   public static TreeModel createInstancesTreeModel2(TopicType topicType, boolean isAdminEnabled) {
-    if (topicType == null)
-      return new DefaultTreeModel(new DefaultMutableTreeNode("<root>"));      
+    if (topicType == null) {
+      return new DefaultTreeModel(new DefaultMutableTreeNode("<root>"));
+    }      
 
     TopicIF tt = topicType.getTopicIF();
 

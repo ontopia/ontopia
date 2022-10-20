@@ -37,8 +37,9 @@ public class CreateTMRoleEdge implements EdgeRecoveryObjectIF {
   @Override
   public void execute(TopicMapView view) {
     lastEdge = view.getEdge(role);
-    if (lastEdge != null)
+    if (lastEdge != null) {
       return;
+    }
     
     AssociationIF association = role.getAssociation();
     TMAssociationNode assocNode = (TMAssociationNode)view

@@ -141,8 +141,9 @@ public final class ParsedQuery implements ParsedQueryIF {
       throws InvalidQueryException {
     // ! System.out.println("TOLOG: " + query);
 
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("TOLOG: " + query);
+    }
 
     // TODO:
     //
@@ -175,8 +176,9 @@ public final class ParsedQuery implements ParsedQueryIF {
           this.bprocessor));
       bccount++;
       this.has_bclauses = true;
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("BASIC clauses: " + qcontext.clauses);
+      }
     }
 
     // Add JDO components when there are JDO expressions
@@ -230,15 +232,17 @@ public final class ParsedQuery implements ParsedQueryIF {
 
       // Compile JDO query
       jdoquery = makeJDOQuery(builder, qcontext, aggfunc, orderby);
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("JDO: " + jdoquery + " [vars: " + jdoquery.getVariableCount()
             + "]");
+      }
 
       // Evaluate JDO query and reduce query filter
       this.qresult = JDOEvaluator.evaluateExpression(jdoquery.getFilter(),
           this.rprocessor.getMapping(), true);
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("JDO: evaluation result is " + this.qresult);
+      }
     }
 
     // RDBMS tolog only
@@ -335,9 +339,10 @@ public final class ParsedQuery implements ParsedQueryIF {
       while (iter2.hasNext()) {
         String varname = (String) iter2.next();
         Class vartype = builder.getVariableType(varname);
-        if (vartype == null)
+        if (vartype == null) {
           throw new InvalidQueryException(
               "Not able to figure out type of variable: $" + varname);
+        }
         jdoquery.addVariable(varname, vartype);
       }
 
@@ -346,9 +351,10 @@ public final class ParsedQuery implements ParsedQueryIF {
       while (iter3.hasNext()) {
         String parname = (String) iter3.next();
         Class partype = builder.getParameterType(parname);
-        if (partype == null)
+        if (partype == null) {
           throw new InvalidQueryException(
               "Not able to figure out type of parameter: %" + parname + '%');
+        }
         jdoquery.addParameter(parname, partype);
       }
 
@@ -367,19 +373,22 @@ public final class ParsedQuery implements ParsedQueryIF {
       // this.has_bclauses + " " + orderby);
 
       // Register select
-      if (qcontext.hasClauses())
+      if (qcontext.hasClauses()) {
         builder.registerJDOSelectDependent(jdoquery, visitor.varnames);
-      else
+      } else {
         builder.registerJDOSelect(jdoquery, visitor.varnames, aggfunc);
+      }
 
       // Register order by
-      if (orderby)
+      if (orderby) {
         builder.registerJDOOrderBy(jdoquery, aggfunc);
+      }
 
       jdoquery.setFilter(new JDOAnd(qcontext.expressions));
       return jdoquery;
-    } else
+    } else {
       return null;
+    }
   }
 
   public List getClauses() {
@@ -460,23 +469,26 @@ public final class ParsedQuery implements ParsedQueryIF {
       }
     } else {
       // if query succeed its pre-evaluation return a boolean result.
-      if (this.qresult == 1)
+      if (this.qresult == 1) {
         return new BooleanQueryResult(query.getSelectedVariableNames(), true);
-      else if (this.qresult == -1)
+      } else if (this.qresult == -1) {
         return new BooleanQueryResult(query.getSelectedVariableNames(), false);
+      }
 
       // ISSUE: Do we need to do anything with the arguments here?
       // TODO: This is _not_ thread safe
 
       // set query arguments
-      if (arguments != null)
+      if (arguments != null) {
         query.setArguments(arguments);
+      }
 
       // prepare query matches instance
       QueryMatches matches = prepareQueryMatches(arguments);
 
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("Components: " + Arrays.asList(components));
+      }
 
       // loop over query components and let them process the query matches.
       if (this.components != null) {
@@ -486,8 +498,9 @@ public final class ParsedQuery implements ParsedQueryIF {
       }
 
       // clear query arguments
-      if (arguments != null)
+      if (arguments != null) {
         query.setArguments(null);
+      }
 
       // wrap QueryMatches in a QueryResultIF.
       return new net.ontopia.topicmaps.query.impl.basic.QueryResult(matches,
@@ -496,11 +509,12 @@ public final class ParsedQuery implements ParsedQueryIF {
   }
 
   protected QueryMatches prepareQueryMatches(Map arguments) {
-    if (this.has_bclauses)
+    if (this.has_bclauses) {
       return bprocessor.createInitialMatches(query, arguments);
-    else
+    } else {
       return bprocessor.createInitialMatches(query, query
           .getSelectedVariables(), arguments);
+    }
   }
 
   class QueryContext {
@@ -543,8 +557,9 @@ public final class ParsedQuery implements ParsedQueryIF {
         NotClause clause = (NotClause) theClause;
         prescan(builder, clause.getClauses());
 
-      } else
+      } else {
         throw new OntopiaRuntimeException("Unknown clause type:" + theClause.getClass());
+      }
     }
   }
 
@@ -553,16 +568,18 @@ public final class ParsedQuery implements ParsedQueryIF {
     for (int i=0; i < len; i++) {
       Object arg = arguments.get(i);
       if (arg instanceof Variable
-          && !builder.isSupportedVariable((Variable)arg))
+          && !builder.isSupportedVariable((Variable)arg)) {
         return false;
-      else if (arg instanceof Pair) {
+      } else if (arg instanceof Pair) {
         Pair pair = (Pair)arg;
         if (pair.getFirst() instanceof Variable
-            && !builder.isSupportedVariable((Variable)pair.getFirst()))
+            && !builder.isSupportedVariable((Variable)pair.getFirst())) {
           return false;
+        }
         if (pair.getSecond() instanceof Variable
-            && !builder.isSupportedVariable((Variable)pair.getSecond()))
+            && !builder.isSupportedVariable((Variable)pair.getSecond())) {
           return false;
+        }
       }
     }
     return true;
@@ -586,8 +603,9 @@ public final class ParsedQuery implements ParsedQueryIF {
           List args = pclause.getArguments();
           boolean hadexpr = (isSupportedArguments(builder, args) &&
                              pred.buildQuery(builder, qcontext.expressions, args));
-          if (!hadexpr) 
+          if (!hadexpr) {
             qcontext.clauses.add(pclause);
+          }
         } else {
           // Predicate not an rdbms-tolog predicate, so we'll evaluate it with
           // basic-tolog instead.
@@ -601,27 +619,29 @@ public final class ParsedQuery implements ParsedQueryIF {
         List exprs = new ArrayList();
         List alternatives = clause.getAlternatives();
         int len = alternatives.size();
-        if (len == 1 || clause.getShortCircuit())
+        if (len == 1 || clause.getShortCircuit()) {
           // optional clause
           broken = true;
-        else {
+        } else {
           // ordinary OR
           for (int i = 0; !broken && i < len; i++) {
             QueryContext _qcontext = compile(builder, (List) alternatives
                 .get(i));
 
-            if (_qcontext.hasClauses())
+            if (_qcontext.hasClauses()) {
               broken = true;
-            else
+            } else {
               exprs.add(new JDOAnd(_qcontext.expressions));
+            }
           }
         }
 
         // Map expression
-        if (broken)
+        if (broken) {
           qcontext.clauses.add(clause);
-        else
+        } else {
           qcontext.expressions.add(new JDOOr(exprs));
+        }
 
       } else if (theClause instanceof NotClause) {
         NotClause clause = (NotClause) theClause;
@@ -637,15 +657,17 @@ public final class ParsedQuery implements ParsedQueryIF {
         QueryContext _qcontext = compile(builder, clause.getClauses());
 
         // Map expression
-        if (!_qcontext.hasClauses() && _qcontext.hasExpressions())
+        if (!_qcontext.hasClauses() && _qcontext.hasExpressions()) {
           qcontext.expressions
-              .add(new JDONot(new JDOAnd(_qcontext.expressions)));
-        else
+                  .add(new JDONot(new JDOAnd(_qcontext.expressions)));
+        } else {
           qcontext.clauses.add(clause);
+        }
 
-      } else
+      } else {
         throw new OntopiaRuntimeException("Unknown clause type:"
             + theClause.getClass());
+      }
 
     }
 
@@ -679,16 +701,18 @@ public final class ParsedQuery implements ParsedQueryIF {
     case JDOExpressionIF.AND: {
       JDOExpressionIF[] exprs = ((JDOAnd) expr).getExpressions();
       for (int i = 0; i < exprs.length; i++) {
-        if (isIndependent(exprs[i]))
+        if (isIndependent(exprs[i])) {
           return true;
+        }
       }
       return false;
     }
     case JDOExpressionIF.OR: {
       JDOExpressionIF[] exprs = ((JDOOr) expr).getExpressions();
       for (int i = 0; i < exprs.length; i++) {
-        if (isIndependent(exprs[i]))
+        if (isIndependent(exprs[i])) {
           return true;
+        }
       }
     }
     // case JDOExpressionIF.NOT_EQUAL:
@@ -710,8 +734,9 @@ public final class ParsedQuery implements ParsedQueryIF {
       Object[] vartypes = (Object[]) query.getVariableTypes().get(varname);
       for (int x = 0; x < vartypes.length; x++) {
         if (net.ontopia.topicmaps.core.TopicIF.class.equals(vartypes[x])
-            && !query.getCountedVariables().contains(var))
+            && !query.getCountedVariables().contains(var)) {
           return false;
+        }
       }
     }
     return true;

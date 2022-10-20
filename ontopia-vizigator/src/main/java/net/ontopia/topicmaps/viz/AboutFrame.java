@@ -61,8 +61,11 @@ public class AboutFrame extends JDialog {
     Box main = new Box(BoxLayout.X_AXIS);
     Icon aboutImage = this.getAboutImage();
     JLabel imageLabel;
-    if(aboutImage == null) imageLabel = new JLabel("Ontopia AS - The TopicMap People");
-    else imageLabel = new JLabel(aboutImage);
+    if(aboutImage == null) {
+      imageLabel = new JLabel("Ontopia AS - The TopicMap People");
+    } else {
+      imageLabel = new JLabel(aboutImage);
+    }
     main.add(imageLabel);
     return main;
   }
@@ -72,7 +75,9 @@ public class AboutFrame extends JDialog {
     InputStream input = ClassLoader
         .getSystemResourceAsStream("net/ontopia/topicmaps/viz/logo.gif");
 
-    if (input == null) return null;
+    if (input == null) {
+      return null;
+    }
     
     try {
       IOUtils.copy(input, output);

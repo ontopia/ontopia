@@ -78,7 +78,9 @@ public abstract class FilterSQLOptimizer {
   }
 
   protected SQLExpressionIF filterExpression(SQLExpressionIF sqlexpr) {
-    if (sqlexpr == null) return null;
+    if (sqlexpr == null) {
+      return null;
+    }
     switch (sqlexpr.getType()) {
     case SQLExpressionIF.AND:
       return filterAnd((SQLAnd)sqlexpr);
@@ -200,7 +202,9 @@ public abstract class FilterSQLOptimizer {
   }
 
   protected SQLValueIF filterValue(SQLValueIF sqlvalue) {
-    if (sqlvalue == null) return null;
+    if (sqlvalue == null) {
+      return null;
+    }
     switch (sqlvalue.getType()) {
     case SQLValueIF.COLUMNS:
       return filterColumns((SQLColumns)sqlvalue);

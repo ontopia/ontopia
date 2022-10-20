@@ -60,8 +60,9 @@ public class MySqlSQLProducer extends GenericSQLProducer {
             .append((type.isVariable() ? "(" + type.getSize() + ")" : ""));
       }
       sb.append((!col.isNullable() ? " not null" : ""));
-      if (pkeys != null || iter.hasNext())
+      if (pkeys != null || iter.hasNext()) {
         sb.append(',');
+      }
       sb.append('\n');
       
     }
@@ -94,11 +95,14 @@ public class MySqlSQLProducer extends GenericSQLProducer {
           .append('(');      
       String[] cols = index.getColumns();
       for (int x=0; x < cols.length; x++) {
-        if (x > 0) sb.append(", ");
+        if (x > 0) {
+          sb.append(", ");
+        }
         sb.append(cols[x]);
         Column col = table.getColumnByName(cols[x]);
-        if ("blob".equalsIgnoreCase(col.getType()) || "clob".equalsIgnoreCase(col.getType()) || "text".equalsIgnoreCase(col.getType()))
+        if ("blob".equalsIgnoreCase(col.getType()) || "clob".equalsIgnoreCase(col.getType()) || "text".equalsIgnoreCase(col.getType())) {
           sb.append("(255)");
+        }
       }
       sb.append(')');
       statements.add(sb.toString());

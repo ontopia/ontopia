@@ -60,20 +60,22 @@ public class ValueGenerator implements ValueGeneratorIF {
   
   @Override
   public String getLiteral() {
-    if (literal == null && locator != null)
+    if (literal == null && locator != null) {
       return locator.getAddress();
-    else
+    } else {
       return literal;
+    }
   }
   
   @Override
   public LocatorIF getDatatype() {
-    if (literal == null)
+    if (literal == null) {
       return PSI.getXSDURI(); // assuming we are a locator
-    else if (datatype == null && literal != null)
+    } else if (datatype == null && literal != null) {
       return PSI.getXSDString();
-    else
+    } else {
       return datatype;
+    }
   }
 
   @Override
@@ -101,11 +103,12 @@ public class ValueGenerator implements ValueGeneratorIF {
   @Override
   public TopicIF getTopic() {
     if (topic == null) {
-      if (literal == null && locator == null)
+      if (literal == null && locator == null) {
         throw new InvalidTopicMapException("Parameter not specified!");
-      else
+      } else {
         throw new InvalidTopicMapException("Parameter used as topic, but was '" +
                                            literal + "'");
+      }
     }
     return topic;
   }

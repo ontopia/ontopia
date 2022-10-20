@@ -66,8 +66,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
   @Override
   public Collection<Association> getAssociations(Topic theme) {
     TopicIF oTopic = null;
-    if (theme != null)
+    if (theme != null) {
       oTopic = topicMap.unwrapTopic(theme);
+    }
 
     return new LazySet<Association>(topicMap, wrapped.getAssociations(oTopic));
   }
@@ -96,8 +97,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
       }
     }
 
-    if (resultSet.isEmpty())
+    if (resultSet.isEmpty()) {
       return Collections.emptySet();
+    }
 
     return new LazySet<Association>(topicMap, resultSet);
   }
@@ -120,8 +122,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
   @Override
   public Collection<Name> getNames(Topic theme) {
     TopicIF oTopic = null;
-    if (theme != null)
+    if (theme != null) {
       oTopic = topicMap.unwrapTopic(theme);
+    }
 
     return new LazySet<Name>(topicMap, wrapped.getTopicNames(oTopic));
   }
@@ -147,8 +150,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
       }
     }
 
-    if (resultSet.isEmpty())
+    if (resultSet.isEmpty()) {
       return Collections.emptySet();
+    }
 
     return new LazySet<Name>(topicMap, resultSet);
   }
@@ -171,8 +175,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
   @Override
   public Collection<Occurrence> getOccurrences(Topic theme) {
     TopicIF oTopic = null;
-    if (theme != null)
+    if (theme != null) {
       oTopic = topicMap.unwrapTopic(theme);
+    }
 
     return new LazySet<Occurrence>(topicMap, wrapped.getOccurrences(oTopic));
   }
@@ -199,8 +204,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
       }
     }
 
-    if (resultSet.isEmpty())
+    if (resultSet.isEmpty()) {
       return Collections.emptySet();
+    }
 
     return new LazySet<Occurrence>(topicMap, resultSet);
   }
@@ -222,8 +228,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    */
   @Override
   public Collection<Variant> getVariants(Topic theme) {
-    if (theme == null)
+    if (theme == null) {
       throw new IllegalArgumentException("Theme for variants may not be null!!");
+    }
 
     return new LazySet<Variant>(topicMap, wrapped.getVariants(topicMap
         .unwrapTopic(theme)));
@@ -252,8 +259,9 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
       }
     }
 
-    if (resultSet.isEmpty())
+    if (resultSet.isEmpty()) {
       return Collections.emptySet();
+    }
 
     return new LazySet<Variant>(topicMap, resultSet);
   }

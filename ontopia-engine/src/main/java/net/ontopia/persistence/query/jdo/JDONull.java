@@ -40,11 +40,14 @@ public class JDONull implements JDOValueIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj instanceof JDONull)
+    if (this == obj) {
       return true;
-    else
+    }
+    if (obj instanceof JDONull) {
+      return true;
+    } else {
       return false;
+    }
   }
 
   @Override

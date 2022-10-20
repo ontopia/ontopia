@@ -34,10 +34,11 @@ public class NoEscapeStringifier implements Function<Object, String> {
   
   @Override
   public String apply(Object object) {
-    if (object instanceof OccurrenceIF) 
+    if (object instanceof OccurrenceIF) { 
       return ((OccurrenceIF) object).getValue();
-    else 
+    } else {
       return (object == null ? null : object.toString());
+    }
   }
   
 }

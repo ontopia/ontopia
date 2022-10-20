@@ -36,7 +36,7 @@ public class EnterTopicPage extends AbstractProtectedOntopolyPage {
     Topic topic = new TopicModel<Topic>(parameters.getString("topicMapId"), parameters.getString("topicId")).getTopic();
     
     Class<? extends Page> pageClass;
-    if (topic.isTopicType())
+    if (topic.isTopicType()) {
       pageClass = InstancesPage.class;
 //    else if (topic.isAssociationType())
 //      pageClass = InstancePage.class;
@@ -46,8 +46,9 @@ public class EnterTopicPage extends AbstractProtectedOntopolyPage {
 //      pageClass = InstancePage.class;
 //    else if (topic.isRoleType())
 //      pageClass = InstancePage.class;
-    else
+  } else {
       pageClass = InstancePage.class;
+  }
     
     // redirect page
     PageParameters params = new PageParameters();

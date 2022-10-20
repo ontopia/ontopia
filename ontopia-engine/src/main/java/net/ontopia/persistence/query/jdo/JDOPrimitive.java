@@ -51,8 +51,9 @@ public class JDOPrimitive implements JDOValueIF {
   protected Object value;
 
   public JDOPrimitive(int value_type, Object value) {
-    if (value == null)
+    if (value == null) {
       throw new IllegalArgumentException("Primitive value cannot be null (value type: " + value_type  + ").");
+    }
 
     // Validate value type
     switch (value_type) {
@@ -119,7 +120,9 @@ public class JDOPrimitive implements JDOValueIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOPrimitive) {
       JDOPrimitive other = (JDOPrimitive)obj;    
       return (value.equals(other.value) && value_type == other.value_type);

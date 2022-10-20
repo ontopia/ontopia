@@ -172,11 +172,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     startElement(EL_TOPICMAP, reifier(topicmap));
     writeLocators(topicmap.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
     
-    for (int ix = 0; ix < topics.length; ix++)
+    for (int ix = 0; ix < topics.length; ix++) {
       write((TopicIF) topics[ix]);
+    }
 
-    for (int ix = 0; ix < associations.length; ix++)
+    for (int ix = 0; ix < associations.length; ix++) {
       write((AssociationIF) associations[ix], ix + 1);
+    }
 
     endElement(EL_TOPICMAP);
     out.endDocument();
@@ -199,8 +201,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     Arrays.sort(topics, topicComparator);
     
     // Map each topic to its canonical position within the topic map.
-    for (int i = 0; i < topics.length; i++)
+    for (int i = 0; i < topics.length; i++) {
       tmIndex.put(topics[i], i + 1);
+    }
 
     // Sort associations in canonical order
     Arrays.sort(associations, associationComparator);
@@ -215,9 +218,10 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       Arrays.sort(roles, associationRoleComparator);
       
       // For each association role (in canonical order) of the association
-      for (int j = 0; j < roles.length; j++)
+      for (int j = 0; j < roles.length; j++) {
         // Map the role to it's position within the association.
         tmIndex.put(roles[j], j + 1);
+      }
     }    
   }
 
@@ -233,18 +237,21 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
     Object[] names = topic.getTopicNames().toArray();
     Arrays.sort(names, nameComparator);
-    for (int ix = 0; ix < names.length; ix++)
+    for (int ix = 0; ix < names.length; ix++) {
       write((TopicNameIF) names[ix], ix + 1);
+    }
 
     Object[] occurrences = makeFakes(topic.getOccurrences().toArray());
     Arrays.sort(occurrences, occurrenceComparator);
-    for (int ix = 0; ix < occurrences.length; ix++)
+    for (int ix = 0; ix < occurrences.length; ix++) {
       write((OccurrenceIF) occurrences[ix], ix + 1);
+    }
 
     Collection r = new ArrayList(topic.getRoles());
     Collection extras = (Collection) extraRoles.get(topic);
-    if (extras != null)
+    if (extras != null) {
       r.addAll(extras);
+    }
     Object[] roles = r.toArray();
     Arrays.sort(roles, associationRoleComparator);
     for (int ix = 0; ix < roles.length; ix++) {
@@ -275,8 +282,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
     Object[] variants = basename.getVariants().toArray();
     Arrays.sort(variants, variantComparator);
-    for (int ix = 0; ix < variants.length; ix++)
+    for (int ix = 0; ix < variants.length; ix++) {
       write((VariantNameIF) variants[ix], ix + 1);
+    }
 
     writeLocators(basename.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
 
@@ -292,12 +300,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
     if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
       LocatorIF locator = variant.getLocator();
-      if (locator != null)
+      if (locator != null) {
         write(normaliseLocatorReference(locator.getAddress()));
+      }
     } else {
       String value = variant.getValue();
-      if (value != null)
+      if (value != null) {
         write(value);
+      }
     }
     write(variant.getDataType(), "datatype");
     write(variant.getScope());
@@ -340,8 +350,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     
     Object[] roles = association.getRoles().toArray();
     Arrays.sort(roles, associationRoleComparator);
-    for (int ix = 0; ix < roles.length; ix++)
+    for (int ix = 0; ix < roles.length; ix++) {
       write((AssociationRoleIF) roles[ix], ix + 1);
+    }
 
     write(association.getScope());
     writeLocators(association.getItemIdentifiers(), EL_ITEMIDENTIFIERS);
@@ -366,8 +377,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   private void write(Collection scope) {
-    if (scope.isEmpty())
+    if (scope.isEmpty()) {
       return;
+    }
 
     startElement(EL_SCOPE, EMPTY);
     Object[] topics = scope.toArray();
@@ -390,8 +402,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   private void write(String value) {
-    if (value == null)
+    if (value == null) {
       throw new OntopiaRuntimeException("Object had null value");
+    }
     startElement("value", EMPTY);
     out.characters(value.toCharArray(), 0, value.length());
     endElement("value");
@@ -431,8 +444,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
    
   private void startElement(String element, Attributes atts) {
     out.startElement("", "", element, atts);
-    if (startNewlineElem.contains(element))
+    if (startNewlineElem.contains(element)) {
       writeln();
+    }
   }
 
   private void endElement(String element) {
@@ -448,8 +462,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
   private AttributesImpl reifier(ReifiableIF reified) {
     TopicIF reifier = reified.getReifier();
-    if (reifier == null)
+    if (reifier == null) {
       return EMPTY;
+    }
 
     AttributesImpl atts = new AttributesImpl();
     atts.addAttribute("", "", "reifier", null,
@@ -491,8 +506,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private Object[] getAssociations(TopicMapIF topicmap) {
     ClassInstanceIndexIF index = (ClassInstanceIndexIF) topicmap
             .getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-    if (index.getTopicTypes().isEmpty())
+    if (index.getTopicTypes().isEmpty()) {
       return topicmap.getAssociations().toArray();
+    }
 
     Collection assocs = new ArrayList(topicmap.getAssociations());
     Iterator it = index.getTopicTypes().iterator();
@@ -537,10 +553,11 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   // --- Datatype normalisation
 
   private String normalizeNumber(String number) {
-    if (number.indexOf('.') > -1)
+    if (number.indexOf('.') > -1) {
       return normalizeDecimal(number);
-    else
+    } else {
       return normalizeInteger(number);
+    }
    }
   
   // NOTE: The following two methods are copied from tinyTiM, donated
@@ -548,8 +565,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private static String normalizeInteger(final String value) {
     final String val = value.trim();
     int len = val.length();
-    if (len == 0)
+    if (len == 0) {
       throw new IllegalArgumentException("Illegal integer value: " + value);
+    }
 
     int idx = 0;
     boolean negative = false;
@@ -583,8 +601,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private static String normalizeDecimal(final String value) {
     final String val = value.trim();
     int len = val.length();
-    if (len == 0)
+    if (len == 0) {
       throw new IllegalArgumentException("Illegal decimal value: " + value);
+    }
 
     int idx = 0;
     boolean negative = false;
@@ -650,8 +669,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private String normaliseLocatorReference(String reference) {
     String retVal = reference.substring(longestCommonPath(reference,
             strippedBase).length());
-    if (retVal.startsWith("/"))
+    if (retVal.startsWith("/")) {
       retVal = retVal.substring(1);
+    }
     
     return retVal;
   }
@@ -665,27 +685,27 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private String longestCommonPath(String source1, String source2) {
     String retVal = "";    
 
-    if (source1.startsWith(source2))
+    if (source1.startsWith(source2)) {
       retVal = source2;
-      
-    else if (source2.startsWith(source1))
+    } else if (source2.startsWith(source1)) {
       retVal = source1;
-    
-    else {
+    } else {
       int i = 0;
       int lastSlashIndex = 0;
       
       while (i < source1.length() && i < source2.length() 
               && source1.charAt(i) == source2.charAt(i)) {
-        if (source1.charAt(i) == '/')
+        if (source1.charAt(i) == '/') {
           lastSlashIndex = i;
+        }
         i++;
       }
   
-      if (lastSlashIndex == -1)
+      if (lastSlashIndex == -1) {
         retVal = "";
-      else 
+      } else { 
         retVal = source1.substring(0, lastSlashIndex);
+      }
     }
        
     return retVal;
@@ -700,13 +720,15 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     String retVal = locatorString;
     int queryIndex = retVal.indexOf('?');
     
-    if (queryIndex > 0)
+    if (queryIndex > 0) {
       retVal = retVal.substring(0, queryIndex);
+    }
     
     int hashIndex = retVal.indexOf('#');
     
-    if (hashIndex > 0)
+    if (hashIndex > 0) {
       retVal = retVal.substring(0, hashIndex);
+    }
       
     return retVal;
   }
@@ -725,11 +747,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   abstract class AbstractComparator implements Comparator {
     protected int compareLocatorSet(Collection c1, Collection c2) {
 
-      if (c1.size() < c2.size())
+      if (c1.size() < c2.size()) {
         return -1;
+      }
         
-      if (c1.size() > c2.size())
+      if (c1.size() > c2.size()) {
         return 1;
+      }
       
       // INV: locator sets must now be of equal size.
         
@@ -741,8 +765,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       for (int i = 0; i < locators1.length; i++) {
         int currentCmp = compareLocator((LocatorIF) locators1[i],
                 (LocatorIF) locators2[i]);  
-        if (currentCmp != 0)
+        if (currentCmp != 0) {
           return currentCmp;
+        }
       }
       
       return 0;
@@ -775,30 +800,49 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
 
     protected int compareString(String s1, String s2) {
-      if ((s1 == null) && (s2 == null)) return 0;
+      if ((s1 == null) && (s2 == null)) {
+        return 0;
+      }
 
-      if (s1 == null) return -1;
-      if (s2 == null) return 1;
+      if (s1 == null) {
+        return -1;
+      }
+      if (s2 == null) {
+        return 1;
+      }
 
       return s1.compareTo(s2);
     }
 
     protected int compareLocator(LocatorIF l1, LocatorIF l2) {
-      if (Objects.equals(l1, l2)) return 0;
-      if (l1 == null) return -1;
-      if (l2 == null) return 1;
+      if (Objects.equals(l1, l2)) {
+        return 0;
+      }
+      if (l1 == null) {
+        return -1;
+      }
+      if (l2 == null) {
+        return 1;
+      }
 
       int cmp = normaliseLocatorReference(l1.getAddress())
               .compareTo(normaliseLocatorReference(l2.getAddress()));
-      if (cmp == 0)
+      if (cmp == 0) {
         cmp = l1.getNotation().compareTo(l2.getNotation());
+      }
       return cmp;
     }
 
     protected int compareTopic(TopicIF t1, TopicIF t2) {
-      if (Objects.equals(t1, t2)) return 0;
-      if (t1 == null) return -1;
-      if (t2 == null) return 1;
+      if (Objects.equals(t1, t2)) {
+        return 0;
+      }
+      if (t1 == null) {
+        return -1;
+      }
+      if (t2 == null) {
+        return 1;
+      }
       
       int pos1 = ((Integer)tmIndex.get(t1)).intValue();
       int pos2 = ((Integer)tmIndex.get(t2)).intValue();
@@ -806,9 +850,15 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     }
     
     protected int compareAssociation(AssociationIF a1, AssociationIF a2) {
-      if (Objects.equals(a1, a2)) return 0;
-      if (a1 == null) return -1;
-      if (a2 == null) return 1;
+      if (Objects.equals(a1, a2)) {
+        return 0;
+      }
+      if (a1 == null) {
+        return -1;
+      }
+      if (a2 == null) {
+        return 1;
+      }
 
       int pos1 = ((Integer)tmIndex.get(a1)).intValue();
       int pos2 = ((Integer)tmIndex.get(a2)).intValue();
@@ -830,12 +880,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       Integer index2 = (Integer)indexMap.get(o2);
       
       if (index1 == null) {
-        if (index2 == null)
+        if (index2 == null) {
           return 0;
+        }
         return -1;
       }
-      if (index2 == null)
+      if (index2 == null) {
         return 1;
+      }
       return index1.intValue() - index2.intValue();
         
     }
@@ -858,12 +910,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
       int cmp = compareLocatorSet(t1.getSubjectIdentifiers(),
                                   t2.getSubjectIdentifiers());
-      if (cmp == 0)
-        cmp = compareLocatorSet(t1.getSubjectLocators(), 
-                                t2.getSubjectLocators());
-      if (cmp == 0)
+      if (cmp == 0) {
+        cmp = compareLocatorSet(t1.getSubjectLocators(),
+                t2.getSubjectLocators());
+      }
+      if (cmp == 0) {
         cmp = compareLocatorSet(t1.getItemIdentifiers(),
-                                t2.getItemIdentifiers());
+                t2.getItemIdentifiers());
+      }
       return cmp;
     }
 
@@ -878,8 +932,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
       int cmp = compareString(bn1.getValue(), bn2.getValue());
       // FIXME: Compare by type here when we can!
-      if (cmp == 0)
+      if (cmp == 0) {
         cmp = compareTopicSet(bn1.getScope(), bn2.getScope());
+      }
       return cmp;
     }
 
@@ -893,10 +948,12 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       VariantNameIF vn2 = (VariantNameIF) o2;
 
       int cmp = compareString(vn1.getValue(), vn2.getValue());
-      if (cmp == 0)
+      if (cmp == 0) {
         cmp = compareLocator(vn1.getLocator(), vn2.getLocator());
-      if (cmp == 0)
+      }
+      if (cmp == 0) {
         cmp = compareTopicSet(vn1.getScope(), vn2.getScope());
+      }
       return cmp;
     }
 
@@ -910,12 +967,15 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       OccurrenceIF occ2 = (OccurrenceIF) o2;
 
       int cmp = compareString(occ1.getValue(), occ2.getValue());
-      if (cmp == 0)
+      if (cmp == 0) {
         cmp = compareLocator(occ1.getDataType(), occ2.getDataType());
-      if (cmp == 0)
+      }
+      if (cmp == 0) {
         cmp = compareTopic(occ1.getType(), occ2.getType());
-      if (cmp == 0)
+      }
+      if (cmp == 0) {
         cmp = compareTopicSet(occ1.getScope(), occ2.getScope());
+      }
       return cmp;
     }
 
@@ -935,11 +995,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       AssociationIF assoc2 = (AssociationIF) o2;
 
       int cmp = compareTopic(assoc1.getType(), assoc2.getType());
-      if (cmp == 0)
-        cmp = collectionComparator.compare(assoc1.getRoles(), 
-            assoc2.getRoles());
-      if (cmp == 0)
+      if (cmp == 0) {
+        cmp = collectionComparator.compare(assoc1.getRoles(),
+                assoc2.getRoles());
+      }
+      if (cmp == 0) {
         cmp = compareTopicSet(assoc1.getScope(), assoc2.getScope());
+      }
       return cmp;
     }
   }
@@ -952,8 +1014,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       AssociationRoleIF role2 = (AssociationRoleIF) o2;
       
       int cmp = compareTopic(role1.getPlayer(), role2.getPlayer());
-      if (cmp == 0)
+      if (cmp == 0) {
         cmp = compareTopic(role1.getType(), role2.getType());
+      }
       // No need to compare the parent assocaitions since this comparator only
       // compares roles within one assocaition.
       return cmp;
@@ -968,11 +1031,13 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       AssociationRoleIF role2 = (AssociationRoleIF) o2;
     
       int cmp = compareTopic(role1.getPlayer(), role2.getPlayer());
-      if (cmp == 0)
+      if (cmp == 0) {
         cmp = compareTopic(role1.getType(), role2.getType());
-      if (cmp == 0)
-        cmp = compareAssociation(role1.getAssociation(), 
+      }
+      if (cmp == 0) {
+        cmp = compareAssociation(role1.getAssociation(),
                 role2.getAssociation());
+      }
       return cmp;
     }
   }
@@ -995,16 +1060,20 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(Object o1, Object o2) {
-      if (Objects.equals(o1, o2)) return 0;
+      if (Objects.equals(o1, o2)) {
+        return 0;
+      }
 
       Collection c1 = (Collection)o1;
       Collection c2 = (Collection)o2;
       
       // Order Collection in increasing order by size.
-      if (c1.size() > c2.size())
+      if (c1.size() > c2.size()) {
         return 1;
-      if (c1.size() < c2.size())
+      }
+      if (c1.size() < c2.size()) {
         return -1;
+      }
       
       return super.compare(c1, c2);
     }
@@ -1053,7 +1122,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(Object o1, Object o2) {
-      if (o1 == o2) return 0;
+      if (o1 == o2) {
+        return 0;
+      }
 
       Collection c1 = (Collection)o1;
       Collection c2 = (Collection)o2;
@@ -1236,8 +1307,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       Iterator it = roles.iterator();
       while (it.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF) it.next();
-        if (roletype.equals(role.getType()))
+        if (roletype.equals(role.getType())) {
           rolesoftype.add(role);
+        }
       }
       return rolesoftype;
     }
@@ -1315,10 +1387,11 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
         LocatorIF locator = occ.getLocator();
         this.value = normaliseLocatorReference(locator.getAddress());
       } else if (datatype.equals(DataTypes.TYPE_INTEGER) ||
-                 datatype.equals(DataTypes.TYPE_DECIMAL))
+                 datatype.equals(DataTypes.TYPE_DECIMAL)) {
         this.value = normalizeNumber(occ.getValue());
-      else
+      } else {
         this.value = occ.getValue();
+      }
     }
     
     @Override

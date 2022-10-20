@@ -52,12 +52,14 @@ public class VisibleIndicator {
   }
 
   public void setDefault(byte state) {
-    if (this.state == UNCHECKED || this.state == CHECKED)
+    if (this.state == UNCHECKED || this.state == CHECKED) {
       return;
-    if (state == CHECKED || state == DEFAULT_CHECKED)
+    }
+    if (state == CHECKED || state == DEFAULT_CHECKED) {
       setSelected(DEFAULT_CHECKED);
-    else
+    } else {
       setSelected(DEFAULT_UNCHECKED);
+    }
   }
 
   public void setSelected(byte state) {
@@ -74,14 +76,15 @@ public class VisibleIndicator {
     float centerx = 7.0f;
     float centery = 9.0f;
 
-    if (state == DEFAULT_UNCHECKED)
+    if (state == DEFAULT_UNCHECKED) {
       drawCross(g2, Color.lightGray, centerx, centery, 3);
-    else if (state == DEFAULT_CHECKED)
+    } else if (state == DEFAULT_CHECKED) {
       drawTick(g2, Color.lightGray, centerx, centery, 3);
-    else if (state == UNCHECKED)
+    } else if (state == UNCHECKED) {
       drawCross(g2, Color.red, centerx, centery, 3);
-    else if (state == CHECKED)
+    } else if (state == CHECKED) {
       drawTick(g2, Color.green, centerx, centery, 3);
+    }
   }  
   
   protected void drawTick(Graphics2D g2, Color color,

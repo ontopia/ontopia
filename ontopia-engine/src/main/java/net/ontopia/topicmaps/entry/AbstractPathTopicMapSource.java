@@ -198,7 +198,9 @@ public abstract class AbstractPathTopicMapSource
   
   @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
-    if (refmap == null) refresh();
+    if (refmap == null) {
+      refresh();
+    }
     return refmap.values();
   }
 
@@ -219,11 +221,13 @@ public abstract class AbstractPathTopicMapSource
 
   @Override
   public synchronized void refresh() {
-    if (path == null)
+    if (path == null) {
       throw new OntopiaRuntimeException("'path' property has not been set.");
-    if ((suffix == null) && (filter==this))
+    }
+    if ((suffix == null) && (filter==this)) {
       throw new OntopiaRuntimeException("'suffix' property for filter has not "+
                                         "been set");
+    }
     refmap = (path.startsWith("classpath:")) ? refreshFromClasspath() : refreshFromFilesystem();
   }
   
@@ -236,17 +240,20 @@ public abstract class AbstractPathTopicMapSource
     Map<String, TopicMapReferenceIF> newmap = new HashMap<String, TopicMapReferenceIF>();
     // Initialize filter
     File directory = new File(path);
-    if (!directory.exists())
+    if (!directory.exists()) {
       throw new OntopiaRuntimeException("Directory " + directory +
                                         " does not exist!");
-    if (!directory.isDirectory())
+    }
+    if (!directory.isDirectory()) {
       throw new OntopiaRuntimeException(directory + " is a file, not a directory");
+    }
     // Filter filenames
     File[] files;
-    if (filter != null)
+    if (filter != null) {
       files = directory.listFiles(filter);
-    else
+    } else {
       files = directory.listFiles();
+    }
 
     // Loop over matched files.
     for (int i=0; i < files.length; i++) {
@@ -254,8 +261,9 @@ public abstract class AbstractPathTopicMapSource
       String id = filename;
       URL url = URIUtils.toURL(files[i]);
       TopicMapReferenceIF ref = createReference(url, id, filename);
-      if (ref != null)
+      if (ref != null) {
         newmap.put(id, ref);
+      }
     }
     return newmap;
   }

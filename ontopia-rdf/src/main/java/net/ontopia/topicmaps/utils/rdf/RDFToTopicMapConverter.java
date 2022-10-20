@@ -203,11 +203,12 @@ public class RDFToTopicMapConverter {
       int hash = indicator.indexOf('#');
       int slash = indicator.lastIndexOf('/');
       String name;
-      if (hash != -1)
+      if (hash != -1) {
         name = indicator.substring(slash + 1, hash) + ":" +
-               indicator.substring(hash + 1);
-      else
+                indicator.substring(hash + 1);
+      } else {
         name = indicator.substring(slash + 1);
+      }
 
       if (name.length() > 0) {
         TopicNameIF bn = builder.makeTopicName(topic, name);
@@ -249,14 +250,14 @@ public class RDFToTopicMapConverter {
   private void doConversion(URL url, String syntax)
     throws JenaException, IOException {
 
-    if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
+    if (mappings != null && (syntax == null || syntax.equals("RDF/XML"))) {
       RDFUtils.parseRDFXML(url, new ToTMStatementHandler());
-
-    else {
+    } else {
       Model model = ModelFactory.createDefaultModel();
       model.read(url.openStream(), url.toString(), syntax);
-      if (mappings == null)
+      if (mappings == null) {
         buildMappings(model);
+      }
 
       doConversion(model);
     }
@@ -265,14 +266,14 @@ public class RDFToTopicMapConverter {
   private void doConversion(InputStream input, String syntax)
     throws JenaException, IOException {
 
-    if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
+    if (mappings != null && (syntax == null || syntax.equals("RDF/XML"))) {
       RDFUtils.parseRDFXML(input, new ToTMStatementHandler());
-
-    else {
+    } else {
       Model model = ModelFactory.createDefaultModel();
       model.read(input, input.toString(), syntax);
-      if (mappings == null)
+      if (mappings == null) {
         buildMappings(model);
+      }
 
       doConversion(model);
     }
@@ -327,33 +328,37 @@ public class RDFToTopicMapConverter {
   private StatementHandler getMapper(Resource subject, RDFNode node, Model model)
     throws JenaException, MalformedURLException {
     String uri = node.toString();
-    if (RTM_BASENAME.equals(uri))
+    if (RTM_BASENAME.equals(uri)) {
       return new TopicNameMapper(getScope(subject, model));
-    else if (RTM_INSTANCE_OF.equals(uri)) {
+    } else if (RTM_INSTANCE_OF.equals(uri)) {
       Collection scope = getScope(subject, model);
-      if (scope.isEmpty())
+      if (scope.isEmpty()) {
         return new InstanceMapper();
-      else
+      } else {
         return new ScopedInstanceMapper(scope);
-    } else if (RTM_SUBJECT_IDENTIFIER.equals(uri))
+      }
+    } else if (RTM_SUBJECT_IDENTIFIER.equals(uri)) {
       return new SubjectIdentifierMapper();
-    else if (RTM_SOURCE_LOCATOR.equals(uri))
+    } else if (RTM_SOURCE_LOCATOR.equals(uri)) {
       return new SourceLocatorMapper();
-    else if (RTM_SUBJECT_LOCATOR.equals(uri))
+    } else if (RTM_SUBJECT_LOCATOR.equals(uri)) {
       return new SubjectLocatorMapper();
-    else if (RTM_OCCURRENCE.equals(uri))
+    } else if (RTM_OCCURRENCE.equals(uri)) {
       return new OccurrenceMapper(getType(subject, model), getScope(subject, model));
-    else if (RTM_ASSOCIATION.equals(uri)) {
+    } else if (RTM_ASSOCIATION.equals(uri)) {
       LocatorIF srole = getTopicIndicator(subject, RTM_SUBJECT_ROLE, model);
-      if (srole == null)
+      if (srole == null) {
         throw new RDFMappingException("No rtm:subject-role for " + subject);
+      }
       LocatorIF orole = getTopicIndicator(subject, RTM_OBJECT_ROLE, model);
-      if (orole == null)
+      if (orole == null) {
         throw new RDFMappingException("No rtm:object-role for " + subject);
+      }
       return new AssociationMapper(srole, orole, getType(subject, model),
                                    getScope(subject, model));
-    } else
+    } else {
       throw new RDFMappingException("Unknown value for rtm:maps-to: " + uri);
+    }
   }
 
   /**
@@ -371,8 +376,9 @@ public class RDFToTopicMapConverter {
     while (it.hasNext()) {
       Object o = it.next();
 
-      if (!(o instanceof Resource))
+      if (!(o instanceof Resource)) {
         throw new RDFMappingException("Scoping topic must be specified by a resource, not by " + o);
+      }
 
       Resource obj = (Resource) o;
       LocatorIF loc = new URILocator(obj.getURI());
@@ -417,8 +423,9 @@ public class RDFToTopicMapConverter {
     NodeIterator it = model.listObjectsOfProperty(subject, prop);
     while (it.hasNext()) {
       Resource obj = (Resource) it.next();
-      if (obj.isAnon())
+      if (obj.isAnon()) {
         continue; // FIXME: is this really ok?
+      }
       return new URILocator(obj.getURI());
     }
     return null;
@@ -455,10 +462,11 @@ public class RDFToTopicMapConverter {
           // next 5 lines solve bug #1339 by working around
           // http://sourceforge.net/tracker/index.php?func=detail&aid=1082269&group_id=40417&atid=430288
           String id;
-          if (sub.hasNodeID())
+          if (sub.hasNodeID()) {
             id = sub.getAnonymousID();
-          else
+          } else {
             id = sub.toString();
+          }
           
           // we don't want the pseudo-URIs of anonymous nodes as
           // subject identifiers
@@ -491,12 +499,14 @@ public class RDFToTopicMapConverter {
     }
 
     public void addScope(ScopedIF scoped) {
-      if (!translated)
+      if (!translated) {
         resolveScope();
+      }
 
       Iterator it = scope.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         scoped.addTheme((TopicIF) it.next());
+      }
     }
 
     @Override
@@ -504,8 +514,9 @@ public class RDFToTopicMapConverter {
       String msg = "Statements mapped to " + construct + " cannot have literal " +
                    "objects. Found (" + sub + ", " + pred + ", " + lit + ")";
       logger.warn(msg);
-      if (!lenient)
+      if (!lenient) {
         throw new RDFMappingException(msg);
+      }
     }
 
     @Override
@@ -513,8 +524,9 @@ public class RDFToTopicMapConverter {
       String msg = "Statements mapped to " + construct + " cannot have URI " +
         "reference objects. Found (" + sub + ", " + pred + ", " + obj + ")";
       logger.warn(msg);
-      if (!lenient)
+      if (!lenient) {
         throw new RDFMappingException(msg);
+      }
     }
 
     // Internal methods
@@ -606,10 +618,11 @@ public class RDFToTopicMapConverter {
       }
 
       TopicIF other = topicmap.getTopicBySubjectIdentifier(loc);
-      if (other != null && !other.equals(topic))
+      if (other != null && !other.equals(topic)) {
         MergeUtils.mergeInto(other, topic);
-      else
+      } else {
         topic.addSubjectIdentifier(loc);
+      }
     }
   }
 
@@ -624,9 +637,10 @@ public class RDFToTopicMapConverter {
         logger.warn("Blank nodes cannot be source locators; " +
                      "subject: " + sub.getURI() + "; " +
                      "property: " + pred.getURI());
-        if (!lenient)
+        if (!lenient) {
           throw new RDFMappingException("Blank nodes cannot be source locators",
                                         sub.getURI(), pred.getURI());
+        }
       }
 
       TopicIF topic = getSubject(sub);
@@ -640,10 +654,11 @@ public class RDFToTopicMapConverter {
       TMObjectIF other = topicmap.getObjectByItemIdentifier(loc);
       if (other instanceof TopicIF) {
         TopicIF othert = (TopicIF) other;
-        if (othert != null && !othert.equals(topic))
+        if (othert != null && !othert.equals(topic)) {
           MergeUtils.mergeInto(othert, topic);
-        else
+        } else {
           topic.addItemIdentifier(loc);
+        }
       } // else FIXME: what to do?
     }
   }
@@ -672,10 +687,11 @@ public class RDFToTopicMapConverter {
       }
 
       TopicIF other = topicmap.getTopicBySubjectLocator(loc);
-      if (other != null && other != topic)
+      if (other != null && other != topic) {
         MergeUtils.mergeInto(other, topic);
-      else
+      } else {
         topic.addSubjectLocator(loc);
+      }
     }
   }
 
@@ -707,20 +723,23 @@ public class RDFToTopicMapConverter {
         logger.warn("Blank node cannot be occurrence value; " +
                      "subject: " + sub.getURI() + "; " +
                      "predicate: " + pred.getURI());
-        if (!lenient)
+        if (!lenient) {
           throw new RDFMappingException("Blank node cannot be occurrence value",
                                         sub.getURI(), pred.getURI());
+        }
       }
 
       String uri = obj.getURI();
-      if (uri == null)
+      if (uri == null) {
         return; // this happens; not sure why, but it does, so we work around it
+      }
 
       try {
         TopicIF topic = getSubject(sub);
         TopicIF ourtype = type;
-        if (ourtype == null)
+        if (ourtype == null) {
           ourtype = getPredicate(pred);
+        }
         OccurrenceIF occ = builder.makeOccurrence(topic, ourtype, new URILocator(uri));
         addScope(occ);
       } catch (MalformedURLException e) {
@@ -732,8 +751,9 @@ public class RDFToTopicMapConverter {
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       TopicIF topic = getSubject(sub);
       TopicIF ourtype = type;
-      if (ourtype == null)
+      if (ourtype == null) {
         ourtype = getPredicate(pred);
+      }
       OccurrenceIF occ = builder.makeOccurrence(topic, ourtype, lit.toString());
       addScope(occ);
     }
@@ -760,8 +780,9 @@ public class RDFToTopicMapConverter {
       TopicIF object = getObject(obj);
 
       TopicIF ourtype = type;
-      if (ourtype == null)
+      if (ourtype == null) {
         ourtype = getPredicate(pred);
+      }
       if (srole == null) {
         srole = getTopic(sroleloc);
         orole = getTopic(oroleloc);
@@ -781,15 +802,17 @@ public class RDFToTopicMapConverter {
     @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       StatementHandler handler = (StatementHandler) mappings.get(pred.getURI());
-      if (handler != null)
+      if (handler != null) {
         handler.statement(sub, pred, lit);
+      }
     }
 
     @Override
     public void statement(AResource sub, AResource pred, AResource obj) {
       StatementHandler handler = (StatementHandler) mappings.get(pred.getURI());
-      if (handler != null)
+      if (handler != null) {
         handler.statement(sub, pred, obj);
+      }
     }
 
   }

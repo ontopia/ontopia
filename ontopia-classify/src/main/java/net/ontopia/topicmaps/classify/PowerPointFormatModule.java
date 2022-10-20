@@ -41,7 +41,9 @@ public class PowerPointFormatModule implements FormatModuleIF {
   @Override
   public boolean matchesIdentifier(ClassifiableContentIF cc) {
     boolean matches = FormatModule.matchesExtension(cc.getIdentifier(), extensions);
-    if (!matches) return false;
+    if (!matches) {
+      return false;
+    }
     // name matches, then check office magic bytes
     return FormatModule.startsWith(cc.getContent(), magicBytes);
   }

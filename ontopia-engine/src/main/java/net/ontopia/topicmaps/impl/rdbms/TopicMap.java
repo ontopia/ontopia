@@ -88,7 +88,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
 
   public LocatorIF getBaseAddress() {
     String base_address = this.<String>loadField(LF_base_address);
-    if (base_address == null) return null;
+    if (base_address == null) {
+      return null;
+    }
     try {
       return new URILocator(base_address);
     } catch (MalformedURLException e) {
@@ -181,8 +183,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
 
   public void setTransaction(RDBMSTopicMapTransaction transaction) {
     // The transaction property can only be set once
-    if (this.transaction != null)
+    if (this.transaction != null) {
       throw new OntopiaRuntimeException("Transaction can only be set once.");
+    }
     
     this.transaction = transaction;
   }
@@ -199,11 +202,13 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   protected void addTopic(TopicIF topic) {
     // Check to see if topic is already a member of this topic map
-    if (topic.getTopicMap() == this)
+    if (topic.getTopicMap() == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (topic.getTopicMap() != null)
+    if (topic.getTopicMap() != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicMapIF.EVENT_ADD_TOPIC, topic, null);
     // Set topic map property
@@ -217,8 +222,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   protected void removeTopic(TopicIF topic) {
     // Check to see if topic is not a member of this topic map
-    if (topic.getTopicMap() != this)
+    if (topic.getTopicMap() != this) {
       return;
+    }
 
     // Remove dependencies
     DeletionUtils.removeDependencies(topic);    
@@ -245,11 +251,13 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   protected void addAssociation(AssociationIF association) {
     // Check to see if association is already a member of this topic map
-    if (association.getTopicMap() == this)
+    if (association.getTopicMap() == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (association.getTopicMap() != null)
+    if (association.getTopicMap() != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicMapIF.EVENT_ADD_ASSOCIATION, association, null);    
     // Set topic map property
@@ -261,8 +269,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   protected void removeAssociation(AssociationIF association) {
     // Check to see if association is not a member of this topic map
-    if (association.getTopicMap() != this)
+    if (association.getTopicMap() != this) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicMapIF.EVENT_REMOVE_ASSOCIATION, null, association);
     // Unset topic map property
@@ -316,8 +325,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
       }
       case 'M': {
         // Lookup topic map (only this one can match)
-        if (object_id.equals(getObjectId()))
+        if (object_id.equals(getObjectId())) {
           return this;
+        }
       }
       default:
         // No object was found
@@ -411,15 +421,21 @@ public class TopicMap extends TMObject implements TopicMapIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) {
+      CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-    if (oldReifier != null) oldReifier.setReified(null);
-    if (reifier != null) reifier.setReified(this);
+    if (oldReifier != null) {
+      oldReifier.setReified(null);
+    }
+    if (reifier != null) {
+      reifier.setReified(this);
+    }
   }
   
   // ---------------------------------------------------------------------------

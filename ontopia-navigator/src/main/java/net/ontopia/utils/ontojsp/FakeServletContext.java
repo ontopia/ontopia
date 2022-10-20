@@ -114,10 +114,11 @@ public class FakeServletContext implements ServletContext {
 
   @Override
   public void setAttribute(String name, Object value) {
-    if (value == null) 
+    if (value == null) { 
       attrs.remove(name);
-    else 
+    } else {
       attrs.put(name, value);
+    }
   }
     
   @Override

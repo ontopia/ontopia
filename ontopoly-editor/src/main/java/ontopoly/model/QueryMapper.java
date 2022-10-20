@@ -72,8 +72,9 @@ public class QueryMapper<T> {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
   }
  
@@ -114,15 +115,17 @@ public class QueryMapper<T> {
     try {
       result = execute(query, params);
       int ix=0;
-      if (result.next())
+      if (result.next()) {
         return mapper.mapRow(result, ix++);
-      else
+      } else {
         return null;
+      }
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
   }
 
@@ -162,13 +165,15 @@ public class QueryMapper<T> {
     try {
       result = execute(query, params);
       int ix = 0;
-      while (result.next())
+      while (result.next()) {
         list.add(mapper.mapRow(result, ix++));
+      }
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
     return list;
   }
@@ -196,8 +201,9 @@ public class QueryMapper<T> {
       result = execute(query, params);
       if (result.next()) {
         Map<String,T> row = new HashMap<String,T>(result.getWidth());
-        for (int ix = 0; ix < result.getWidth(); ix++)
+        for (int ix = 0; ix < result.getWidth(); ix++) {
           row.put(result.getColumnName(ix), wrapValue(result.getValue(ix)));
+        }
         return row;
 
       } else {
@@ -206,8 +212,9 @@ public class QueryMapper<T> {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
   }
 

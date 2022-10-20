@@ -96,10 +96,11 @@ public class SQLNull implements SQLValueIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof SQLNull)
+    if (obj instanceof SQLNull) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
   
   @Override

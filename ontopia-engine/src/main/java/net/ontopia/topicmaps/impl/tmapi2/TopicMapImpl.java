@@ -316,22 +316,25 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   @Override
   public <I extends Index> I getIndex(Class<I> idx) {
     if (idx == org.tmapi.index.ScopedIndex.class) {
-      if (scopedIndex == null)
+      if (scopedIndex == null) {
         scopedIndex = new ScopedIndexImpl(this);
+      }
 
       return (I) scopedIndex;
     }
 
     if (idx == org.tmapi.index.TypeInstanceIndex.class) {
-      if (typeInstanceIndex == null)
+      if (typeInstanceIndex == null) {
         typeInstanceIndex = new TypeInstanceIndexImpl(this);
+      }
 
       return (I) typeInstanceIndex;
     }
 
     if (idx == org.tmapi.index.LiteralIndex.class) {
-      if (literalIndex == null)
+      if (literalIndex == null) {
         literalIndex = new LiteralIndexImpl(this);
+      }
 
       return (I) literalIndex;
     }
@@ -473,8 +476,9 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   }
 
   public NameImpl wrapName(TopicNameIF name) {
-    if (name == null)
+    if (name == null) {
       return null;
+    }
 
     NameImpl wrapper = nameIndex.getName(name);
     if (wrapper == null) {
@@ -500,8 +504,9 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   }
 
   public VariantImpl wrapVariant(VariantNameIF variant) {
-    if (variant == null)
+    if (variant == null) {
       return null;
+    }
 
     NameImpl name = nameIndex.getName(variant.getTopicName());
     // if we don't have a wrapped name, we create one

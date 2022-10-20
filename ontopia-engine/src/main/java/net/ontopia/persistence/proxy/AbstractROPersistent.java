@@ -68,8 +68,9 @@ public abstract class AbstractROPersistent implements PersistentIF {
 
   @Override
   public void _p_setTransaction(TransactionIF txn) {
-    if (this.txn != null)
+    if (this.txn != null) {
       throw new OntopiaRuntimeException("Cannot change the transaction of a persistent object.");
+    }
     this.txn = txn;
   }
   
@@ -85,7 +86,9 @@ public abstract class AbstractROPersistent implements PersistentIF {
   protected <F> F loadField(int field) {
     // get identity
     IdentityIF identity = _p_getIdentity();
-    if (identity == null) return null;
+    if (identity == null) {
+      return null;
+    }
     // load from storage
     try { 
       return txn.<F>loadField(identity, field);
@@ -99,7 +102,9 @@ public abstract class AbstractROPersistent implements PersistentIF {
   protected <F> F loadFieldNoCheck(int field) throws IdentityNotFoundException {
     // get identity
     IdentityIF identity = _p_getIdentity();
-    if (identity == null) return null;
+    if (identity == null) {
+      return null;
+    }
     // load from storage
     return txn.<F>loadField(identity, field);
   }
@@ -107,7 +112,9 @@ public abstract class AbstractROPersistent implements PersistentIF {
   protected <F> Collection<F> loadCollectionField(int field) {
     // get identity
     IdentityIF identity = _p_getIdentity();
-    if (identity == null) return Collections.EMPTY_SET;
+    if (identity == null) {
+      return Collections.EMPTY_SET;
+    }
     // load from storage
     Collection<F> coll = null; 
     try {
@@ -198,10 +205,11 @@ public abstract class AbstractROPersistent implements PersistentIF {
 
   @Override
   public Object loadValue(FieldInfoIF finfo) {
-    if (finfo.isCollectionField()) 
+    if (finfo.isCollectionField()) { 
       return loadCollectionField(finfo.getIndex());
-    else
+    } else {
       return loadField(finfo.getIndex());
+    }
   }
 
   // -- dirty (unflushed)

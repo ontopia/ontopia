@@ -57,13 +57,14 @@ public class ValueLikePredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (!boundparams[1])
+    if (!boundparams[1]) {
       // cannot run predicate before we have the query
       return PredicateDrivenCostEstimator.INFINITE_RESULT;
-    else
+    } else {
       // this is not true, but we want to run the full-text as early as
       // possible, to avoid running it many times. 
       return PredicateDrivenCostEstimator.FILTER_RESULT;
+    }
   }
 
   @Override
@@ -78,14 +79,15 @@ public class ValueLikePredicate implements BasicPredicateIF {
     PredicateSignature sign = PredicateSignature.getSignature(this);
     sign.verifyBound(matches, arguments, this);
     
-    if (matches.bound(topicix))
+    if (matches.bound(topicix)) {
       throw new InvalidQueryException("First argument to " + getName() + " must " +
                                       "be unbound");
-    else if (scoreix >= 0 && matches.bound(scoreix))
+    } else if (scoreix >= 0 && matches.bound(scoreix)) {
       throw new InvalidQueryException("Third argument to " + getName() + " must " +
                                       "be unbound");
-    else
+    } else {
       satisfyWithAllUnbound(matches, result, topicix, valueix, scoreix);
+    }
     
     return result;
   }
@@ -100,9 +102,9 @@ public class ValueLikePredicate implements BasicPredicateIF {
 
       // loop over all matches for this value
       String value = (String) matches.data[ix][valueix];
-      if ("".equals(value))
+      if ("".equals(value)) {
         continue;
-      else if (!previous.equals(value)) {
+      } else if (!previous.equals(value)) {
         ftresult = search(value);
         previous = value;
       }
@@ -110,14 +112,16 @@ public class ValueLikePredicate implements BasicPredicateIF {
       int length = ftresult.size();
       for (int i=0; i < length; i++) {
         
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         
         Object[] newRow = (Object[]) matches.data[ix].clone();
         newRow[topicix] = ftresult.get(i);
-        if (scoreix >= 0)
+        if (scoreix >= 0) {
           newRow[scoreix] = ftresult.getScore(i);
+        }
         result.data[result.last] = newRow;
       }
     }
@@ -127,8 +131,9 @@ public class ValueLikePredicate implements BasicPredicateIF {
   private TopicMapSearchResult search(String value) {
     try {
       // Get hold of fulltext index.
-      if (this.searcher == null)
+      if (this.searcher == null) {
         this.searcher = getSearcher(topicmap);
+      }
 
       // search
       SearchResultIF result = this.searcher.search(value);

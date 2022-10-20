@@ -108,16 +108,18 @@ public class ArgumentValidator {
   public ArgumentValidator(String signature) {
     arguments = new ArrayList<Argument>();
 
-    if (signature.length() == 0)
+    if (signature.length() == 0) {
       return; // otherwise we'll add an empty argument...
+    }
       
     Argument curarg = new Argument();
     for (int ix = 0; ix < signature.length(); ix++) {
       if (signature.charAt(ix) == ' ') {
         arguments.add(curarg);
         curarg = new Argument();
-      } else
+      } else {
         interpretCharacter(signature.charAt(ix), curarg);
+      }
     }
     arguments.add(curarg);
   }
@@ -209,8 +211,9 @@ public class ArgumentValidator {
   }
 
   public Class[] getTypes(int ix) {
-    if (ix >= arguments.size())
+    if (ix >= arguments.size()) {
       ix = arguments.size() - 1;
+    }
     Argument arg = arguments.get(ix);
     return arg.getTypes();
   }
@@ -220,10 +223,11 @@ public class ArgumentValidator {
    * this position in the signature.
    */
   public Argument getArgument(int ix) {
-    if (ix >= arguments.size())
+    if (ix >= arguments.size()) {
       return null;
-    else
+    } else {
       return arguments.get(ix);
+    }
   }
 
   /**
@@ -236,37 +240,38 @@ public class ArgumentValidator {
     for (int ix = 0; ix < types.length; ix++) {
       Class type = (Class) types[ix];
       
-      if (type.equals(TopicMapIF.class))
+      if (type.equals(TopicMapIF.class)) {
         sign[ix] = 'm';
-      else if (type.equals(TopicIF.class))
+      } else if (type.equals(TopicIF.class)) {
         sign[ix] = 't';
-      else if (type.equals(TopicNameIF.class))
+      } else if (type.equals(TopicNameIF.class)) {
         sign[ix] = 'b';
-      else if (type.equals(VariantNameIF.class))
+      } else if (type.equals(VariantNameIF.class)) {
         sign[ix] = 'v';
-      else if (type.equals(OccurrenceIF.class))
+      } else if (type.equals(OccurrenceIF.class)) {
         sign[ix] = 'o';
-      else if (type.equals(AssociationIF.class))
+      } else if (type.equals(AssociationIF.class)) {
         sign[ix] = 'a';
-      else if (type.equals(AssociationRoleIF.class))
+      } else if (type.equals(AssociationRoleIF.class)) {
         sign[ix] = 'r';
-      else if (type.equals(LocatorIF.class))
+      } else if (type.equals(LocatorIF.class)) {
         sign[ix] = 'l';
-      else if (type.equals(String.class))
+      } else if (type.equals(String.class)) {
         sign[ix] = 's';
-      else if (type.equals(Number.class))
+      } else if (type.equals(Number.class)) {
         sign[ix] = 'n';
-      else if (type.equals(Integer.class))
+      } else if (type.equals(Integer.class)) {
         sign[ix] = 'i';
-      else if (type.equals(Float.class))
+      } else if (type.equals(Float.class)) {
         sign[ix] = 'f';
-      else if (type.equals(Object.class))
+      } else if (type.equals(Object.class)) {
         sign[ix] = '.';
-      else if (type.equals(Pair.class))
+      } else if (type.equals(Pair.class)) {
         sign[ix] = 'p';
-      else
+      } else {
         throw new OntopiaRuntimeException("INTERNAL ERROR: Unknown type " +
                                           type);      
+      }      
     }
   
     return new String(sign);
@@ -279,8 +284,9 @@ public class ArgumentValidator {
    */
   public static String getClassName(Class klass) {
     String classname = typenames.get(klass);
-    if (classname == null)
+    if (classname == null) {
       classname = klass.toString();
+    }
     return classname;
   }
 
@@ -298,10 +304,11 @@ public class ArgumentValidator {
     StringBuilder buf = new StringBuilder();
     for (int ix = 0; ix < classes.length; ix++) {
       buf.append(getClassName((Class) classes[ix]));
-      if (ix + 2 < classes.length)
+      if (ix + 2 < classes.length) {
         buf.append(", ");
-      else if (ix + 1 < classes.length)
+      } else if (ix + 1 < classes.length) {
         buf.append(", or ");
+      }
     }
 
     return buf.toString();

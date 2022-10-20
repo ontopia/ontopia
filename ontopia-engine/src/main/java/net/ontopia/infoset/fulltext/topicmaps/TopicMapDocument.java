@@ -33,14 +33,15 @@ public class TopicMapDocument extends GenericDocument {
 
   protected String _toString() {
     final String OBJECT_ID = "object_id";
-    if (fields.containsKey(OBJECT_ID) && !fields.containsKey("address") && fields.containsKey("content"))
+    if (fields.containsKey(OBJECT_ID) && !fields.containsKey("address") && fields.containsKey("content")) {
       return "Document ["  + (fields.get(OBJECT_ID)).getValue() + "] \"" + (fields.get("content")).getValue()  + "\"";
-    else if (fields.containsKey(OBJECT_ID) && fields.containsKey("address"))
+    } else if (fields.containsKey(OBJECT_ID) && fields.containsKey("address")) {
       return "Document ["  + (fields.get(OBJECT_ID)).getValue() + "] <" + (fields.get("address")).getValue()  + ">";
-    else if (fields.containsKey(OBJECT_ID))
+    } else if (fields.containsKey(OBJECT_ID)) {
       return "Document ["  + (fields.get(OBJECT_ID)).getValue() + "]";
-    else
-      return super.toString();    
+    } else {
+      return super.toString();
+    }    
   }
   
 }

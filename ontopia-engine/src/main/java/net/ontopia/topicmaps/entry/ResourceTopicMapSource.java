@@ -246,21 +246,25 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
 
   @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
-    if (reflist == null)
+    if (reflist == null) {
       refresh();
+    }
     return reflist;
   }
 
   @Override
   public synchronized void refresh() {
-    if (resourceName == null)
+    if (resourceName == null) {
       throw new OntopiaRuntimeException(
           "'resourceName' property has not been set.");
-    if (refid == null)
+    }
+    if (refid == null) {
       refid = id;
-    if (refid == null)
+    }
+    if (refid == null) {
       throw new OntopiaRuntimeException(
           "Neither 'id' nor 'referenceId' properties has been set.");
+    }
 
     // Look at file suffix and guess file syntax.
     if (syntax == null) {
@@ -298,8 +302,9 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
     }
 
     // Use id if title not set.
-    if (title == null)
+    if (title == null) {
       title = id;
+    }
 
     switch (ref_type) {
     case XTM: {
@@ -309,8 +314,9 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
       ref.setSource(this);
       ref.setDuplicateSuppression(duplicate_suppression);
       ref.setValidation(validate);
-      if (ref_handler != null)
+      if (ref_handler != null) {
         ref.setExternalReferenceHandler(ref_handler);
+      }
       reflist = Collections.singleton((TopicMapReferenceIF)ref);
     }
       break;

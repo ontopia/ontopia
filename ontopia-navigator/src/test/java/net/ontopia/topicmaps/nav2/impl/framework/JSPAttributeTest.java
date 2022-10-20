@@ -194,8 +194,9 @@ public class JSPAttributeTest {
     Writer out = new OutputStreamWriter(new FileOutputStream(jspout),
                                         "iso-8859-1");
     FakePageContext pageContext = new FakePageContext(out);
-    if (attributes != null)
+    if (attributes != null) {
       pageContext.setAttributes(attributes);
+    }
     FakeServletRequest servletRequest = new FakeServletRequest();
     servletRequest.setContextPath("jsp/" + file);
     

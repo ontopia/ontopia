@@ -914,7 +914,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("family.ltm");
 
     // NOTE: do not run in rdbms tolog, because query is slow
-    if (isRDBMSTolog()) return;
+    if (isRDBMSTolog()) {
+      return;
+    }
 
     List matches = new ArrayList();
     addMatch(matches, "F", getTopicById("unknown2"), "C", 1);
@@ -1227,11 +1229,12 @@ public class QueryProcessorTest extends AbstractQueryTest {
     List matches = new ArrayList();
     QueryResultIF result = processor.execute("{ premiere-date($OPERA, $DATE) }, " +
                                              "date-of-birth($PERSON, $DATE)?");
-    while (result.next())
+    while (result.next()) {
       addMatch(matches,
                "OPERA",  result.getValue("OPERA"),
                "DATE",   result.getValue("DATE"),
                "PERSON", result.getValue("PERSON"));
+    }
     result.close();
 
     assertQueryMatches(matches, "date-of-birth($PERSON, $DATE), " +
@@ -1445,7 +1448,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("opera.ltm");
 
     // NOTE: do not run in rdbms tolog, because query is slow
-    if (isRDBMSTolog()) return;
+    if (isRDBMSTolog()) {
+      return;
+    }
 
     List matches = new ArrayList();
     addMatch(matches, "CITY", getTopicById("milano"),       "OPERA", 49);
@@ -1537,8 +1542,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
     Iterator it = topicmap.getTopics().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       addMatch(matches, "A", it.next());
+    }
 
     assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "topic($A), { association($A) }?");
@@ -1551,8 +1557,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
     Iterator it = topicmap.getTopics().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       addMatch(matches, "A", it.next(), "B", null);
+    }
 
     assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "{ topic-name($B, $A) }, topic($A)?");    
@@ -1571,8 +1578,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
       TMObjectIF obj = topic.getReified();
-      if (obj != null)
+      if (obj != null) {
         addMatch(matches, "A", topic, "C", obj, "B", null);
+      }
     }
 
     assertQueryMatches(matches, OPT_TYPECHECK_OFF +
@@ -1586,8 +1594,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
     List matches = new ArrayList();
     Iterator it = topicmap.getTopics().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       addMatch(matches, "A", it.next(), "B", null);
+    }
 
     assertQueryMatches(matches, OPT_TYPECHECK_OFF +
                 "not(topic-name($B, $A)), topic($A)?");
@@ -1682,8 +1691,9 @@ public class QueryProcessorTest extends AbstractQueryTest {
     
     List matches = new ArrayList();
     Iterator it = lmg.getTopicNames().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       addMatch(matches, "N", it.next());
+    }
     
     assertQueryMatches(matches,
                 "has-name($T, $N) :- topic-name($T, $N) . " +

@@ -97,10 +97,11 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
           @Override
           public boolean isVisible() {
             Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
-            if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
+            if (fieldValuesModel.size() == 1 && cardinality.isMinOne()) {
               return false;
-            else
+            } else {
               return !readonly && fieldValueModel.isExistingValue();
+            }
           }
           @Override
           public void onClick(AjaxRequestTarget target) {
@@ -203,7 +204,9 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       }      
       @Override
       public boolean isVisible() {
-        if (readonly) return false;
+        if (readonly) {
+          return false;
+        }
         Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
         return !cardinality.isMaxOne() && fieldValuesModel.containsExisting();
       }      
@@ -229,12 +232,14 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
     boolean haspsi =
       ot.getTopicIF().getSubjectIdentifiers().contains(PSI.ON_LATITUDE);
     fieldInstanceButtons.add(new GeoPickerButton(!readonly && haspsi, geoPicker));
-    if (!readonly && haspsi)
+    if (!readonly && haspsi) {
       add(JavascriptPackageResource.getHeaderContribution("http://maps.google.com/maps/api/js?sensor=false"));
+    }
     
     Cardinality cardinality = fieldAssignment.getCardinality();
-    if (cardinality.isMaxOne())
+    if (cardinality.isMaxOne()) {
       addButton.setVisible(false);
+    }
   }
   
   /**

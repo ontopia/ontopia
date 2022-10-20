@@ -236,10 +236,11 @@ public class DynamicTreeWidget {
     this.childrenComparator = childrenComparator;
   }
   public void setTopQuery(String topquery) {
-    if (topquery != null && "".equals(topquery.trim()))
+    if (topquery != null && "".equals(topquery.trim())) {
       this.topquery = null;
-    else
+    } else {
       this.topquery = topquery;
+    }
   }
 
   /**
@@ -256,8 +257,9 @@ public class DynamicTreeWidget {
     this.request = request;
 
     // check that query has been parsed
-    if (query == null && querystr != null)
+    if (query == null && querystr != null) {
       query = processor.parse(querystr, context.getDeclarationContext());
+    }
 
     int topline = 0;
     if (parameters.containsKey("topline")) {
@@ -277,8 +279,9 @@ public class DynamicTreeWidget {
 
   protected void initializeContext(HttpServletRequest request) {
 
-    if (context == null)
+    if (context == null) {
       context = FrameworkUtils.getContextTag(request);
+    }
   }
 
   private void doQuery(int topline, Writer writer) throws IOException,
@@ -313,10 +316,11 @@ public class DynamicTreeWidget {
           }
         }
         // use parentless node as top node if no top query given
-        if (topquery == null && parent == null)
+        if (topquery == null && parent == null) {
           registerNodes(root, child, data, pmap, cmap);
-        else
+        } else {
           registerNodes(parent, child, data, pmap, cmap);
+        }
       }
 
       // execute top query
@@ -356,19 +360,21 @@ public class DynamicTreeWidget {
           //!   }
           //! }
         }
-        if (node.getChildren().isEmpty())
+        if (node.getChildren().isEmpty()) {
           node.setAttribute("action", null);
-        else {
+        } else {
           node.setAttribute("action", "close");
           // sort children
-          if (childrenComparator != null)
+          if (childrenComparator != null) {
             java.util.Collections.sort(node.getChildren(), childrenComparator);
+          }
         }
       }
 
       // sort children of root node
-      if (childrenComparator != null)
-       java.util.Collections.sort(root.getChildren(), childrenComparator);
+      if (childrenComparator != null) {
+        java.util.Collections.sort(root.getChildren(), childrenComparator);
+      }
 
     } else {
 
@@ -381,10 +387,11 @@ public class DynamicTreeWidget {
        group.setAttribute("id", getId(topic));
        
        process(group);
-       if (group.getChildren().isEmpty())
+       if (group.getChildren().isEmpty()) {
          group.setAttribute("action", null);
-       else
+       } else {
          group.setAttribute("action", "close");
+       }
       }
     }
     return root;
@@ -443,11 +450,13 @@ public class DynamicTreeWidget {
       }
          
       // other columns retrieved as data array
-      if (cndata != null)
+      if (cndata != null) {
         cn.setAttribute("data", cndata);
+      }
 
-      if (pn != null)
+      if (pn != null) {
         cn.setParent(pn);
+      }
     }
   }
 
@@ -469,8 +478,9 @@ public class DynamicTreeWidget {
       child.setParent(parent);
 
       process(child);
-      if (!child.getChildren().isEmpty())
+      if (!child.getChildren().isEmpty()) {
         child.setAttribute("action", "close");
+      }
     }
   }
 
@@ -580,27 +590,32 @@ public class DynamicTreeWidget {
     staticurl = ownpage + "topline=";
     startRender(writer);
 
-    if (topline > 1)
+    if (topline > 1) {
       renderBackButton(writer, topline);
+    }
     renderExpandAllButton(writer, topline);
     renderCloseAllButton(writer, topline);
-    if (topline + windowSize < nodes)
+    if (topline + windowSize < nodes) {
       renderForwardButton(writer, topline);
+    }
     writer.write("<br><br>\n");
     writer.write("<span id='" + name + "'>\n");
     List children = node.getChildren();
     int lineno = 0;
-    for (int ix = 0; ix < children.size(); ix++)
+    for (int ix = 0; ix < children.size(); ix++) {
       lineno = writeNode((TopicTreeNode) children.get(ix), topline, writer, 0,
                          lineno, false);
+    }
     writer.write("</span>");
     writer.write("<br>");
-    if (topline > 1)
+    if (topline > 1) {
       renderBackButton(writer, topline);
+    }
     renderExpandAllButton(writer, topline);
     renderCloseAllButton(writer, topline);
-    if (topline + windowSize < nodes)
+    if (topline + windowSize < nodes) {
       renderForwardButton(writer, topline);
+    }
 
     endRender(writer);
 
@@ -613,7 +628,9 @@ public class DynamicTreeWidget {
       String v = (String)iter.next();
       writer.write(v);
       writer.write('"');
-      if (iter.hasNext()) writer.write(',');
+      if (iter.hasNext()) {
+        writer.write(',');
+      }
     }
     writer.write(");\n");
     writer.write("</script>\n");
@@ -625,18 +642,20 @@ public class DynamicTreeWidget {
     boolean nextIndoc = indoc;
     String id = (String) node.getAttribute("id");
     String action = (String) node.getAttribute("action");
-    if (action != null && action.equals("close"))
+    if (action != null && action.equals("close")) {
       action = "open";
+    }
     boolean isopen = action != null && action.equals("open");
 
     lineno++;
     if (lineno >= topline && lineno <= topline + windowSize) {
-      if (action == null)
+      if (action == null) {
         writer.write("<img border=0 src=" + imageurl + "spacer.gif width="
             + (level * 30) + " height=5>" + "<img border=0 src=" + imageurl
             + "boxed.gif>");
-      else
+      } else {
         renderNodeButton(topline, level, isopen ? OPEN : CLOSE, id, writer);
+      }
 
       writer.write("<a name=" + id + "></a>");
 
@@ -652,12 +671,14 @@ public class DynamicTreeWidget {
         writer.write("<span class=pnode id=" + getQualifiedId(id) + "span style=\"display: " +
                      (isopen ? "none" : "inline") + "\">");
       }
-      for (int ix = 0; ix < children.size(); ix++)
+      for (int ix = 0; ix < children.size(); ix++) {
         lineno = writeNode((TopicTreeNode) children.get(ix), topline, writer,
                            level + 1, lineno, nextIndoc);
+      }
 
-      if (!children.isEmpty())
+      if (!children.isEmpty()) {
         writer.write("</span>");
+      }
     }
 
     return lineno;
@@ -680,8 +701,9 @@ public class DynamicTreeWidget {
   protected String list(Set nodes) {
     StringBuilder buf = new StringBuilder();
     Iterator it = nodes.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       buf.append("," + getId((TopicIF) it.next()));
+    }
     return buf.toString();
   }
 
@@ -693,13 +715,15 @@ public class DynamicTreeWidget {
 
     Object value = parameters.get(name);
 
-    if (value instanceof String) // then your app server is broken
+    if (value instanceof String) { // then your app server is broken
       return (String) value;
+    }
 
     // else, we continue like normal
     String[] values = (String[]) value;
-    if (values == null)
+    if (values == null) {
       return null;
+    }
     return values[0];
   }
 
@@ -708,17 +732,19 @@ public class DynamicTreeWidget {
     List children = node.getChildren();
     int size = children.size();
     int count = 0;
-    for (int ix = 0; ix < size; ix++)
+    for (int ix = 0; ix < size; ix++) {
       count += countNodes((TopicTreeNode) children.get(ix));
+    }
     return count + size;
   }
 
   public String toString(TopicIF topic) {
     try {
-      if (topic == null)
-       return "null";
-      else
-       return Stringificator.toString(context, topic);
+      if (topic == null) {
+        return "null";
+      } else {
+        return Stringificator.toString(context, topic);
+      }
     } catch (NavigatorRuntimeException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -735,24 +761,27 @@ public class DynamicTreeWidget {
     TopicIF topic = node.getTopic();    
     if (topic != null) {
       out.write("<a href=\"" + makeNodeUrl(node) + "\"");
-      if (nodeFrame != null)
+      if (nodeFrame != null) {
         out.write(" target=\"" + nodeFrame + "\"");
+      }
       if (debug) {
         Object[] data = (Object[])node.getAttribute("data");
-        if (data == null)
+        if (data == null) {
           out.write(" title=\"*No data*\"");
-        else if (data.length == 1)
+        } else if (data.length == 1) {
           out.write(" title=\"" + data[0] + "\"");
-        else
+        } else {
           out.write(" title=\"" + java.util.Arrays.asList(data) + "\"");
+        }
       }
       out.write(">");
     }
 
     out.write(toString(topic));
 
-    if (topic != null)
+    if (topic != null) {
       out.write("</a>");
+    }
   }
 
   /**
@@ -763,8 +792,9 @@ public class DynamicTreeWidget {
                                   String id, Writer out) throws IOException {
 
     String image = "expand";
-    if (action == CLOSE)
+    if (action == CLOSE) {
       image = "collapse";
+    }
 
     out.write("<a onclick=\"open_close_" + name + "('" + id + "')\">" + "<img border=0 src="
         + imageurl + "spacer.gif width=" + (level * 30) + " height=5>"

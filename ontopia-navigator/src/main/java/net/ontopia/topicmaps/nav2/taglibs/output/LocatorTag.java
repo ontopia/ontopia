@@ -59,8 +59,9 @@ public class LocatorTag extends BaseOutputProducingTag
     try {
       OccurrenceIF occ = (OccurrenceIF) elem;
       // could be also an internal occurrence
-      if (Objects.equals(DataTypes.TYPE_URI, occ.getDataType()))
+      if (Objects.equals(DataTypes.TYPE_URI, occ.getDataType())) {
         locator = occ.getLocator();
+      }
     }
     // --- otherwise try other instances 
     catch (ClassCastException e) {
@@ -84,9 +85,10 @@ public class LocatorTag extends BaseOutputProducingTag
 
     // Get and write address belonging to locator
     Function<LocatorIF, String> strify = this;
-    if (strifyCN != null) 
+    if (strifyCN != null) { 
       strify = (Function<LocatorIF, String>)
         contextTag.getNavigatorApplication().getInstanceOf(strifyCN);
+    }
     out.print(strify.apply(locator));
   }
 
@@ -121,8 +123,9 @@ public class LocatorTag extends BaseOutputProducingTag
   public String apply(LocatorIF locator) {
     
     String address = null;
-    if (locator != null)
+    if (locator != null) {
       address = locator.getExternalForm();
+    }
 
     if (relativeToTopicmap) {
       // TODO: implement when clear how to access base locator.
@@ -133,12 +136,13 @@ public class LocatorTag extends BaseOutputProducingTag
     if (locator == null || address == null || address.equals("")) {
       NavigatorConfigurationIF navConf = contextTag.getNavigatorConfiguration();
       if (navConf != null) {
-        if (locator == null)
+        if (locator == null) {
           address = navConf.getProperty(NavigatorConfigurationIF.OCCURRENCE_NULLLOCATOR,
-                                        NavigatorConfigurationIF.DEFVAL_OCC_NULLLOC);
-        else
+                  NavigatorConfigurationIF.DEFVAL_OCC_NULLLOC);
+        } else {
           address = navConf.getProperty(NavigatorConfigurationIF.OCCURRENCE_EMPTYLOCATOR,
                                         NavigatorConfigurationIF.DEFVAL_OCC_EMPTYLOC);
+        }
       }
     }
 

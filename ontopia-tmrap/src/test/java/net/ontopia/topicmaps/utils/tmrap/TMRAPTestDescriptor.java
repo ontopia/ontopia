@@ -40,24 +40,28 @@ public class TMRAPTestDescriptor {
    */
   public TMRAPTestDescriptor(String id, String uri, String expectedException,
       String editString, String viewString) {
-    if (uri == null)
+    if (uri == null) {
       throw new OntopiaRuntimeException("Missing parameter 'uri'");
+    }
     
-    if (id == null && expectedException == null)
+    if (id == null && expectedException == null) {
       throw new OntopiaRuntimeException("Invalid test parameters: id=\"" +
           id + "\" uri=\"" + uri + "\" exception=\"" + expectedException 
           + "\". Either the id or the exception parameter must be given.");
+    }
 
-    if (id != null && expectedException != null)  
+    if (id != null && expectedException != null) {  
       throw new OntopiaRuntimeException("Invalid test parameters: id=\"" +
           id + "\" uri=\"" + uri + "\" exception=\"" + expectedException 
           + "\". Either the id or exception parameter must be given, "
           + "but not both.");
+    }
 
     edit = (editString != null) && (editString.equalsIgnoreCase("true"));
     view = (viewString != null) && (viewString.equalsIgnoreCase("true"));
-    if (!(this.edit || this.view))
+    if (!(this.edit || this.view)) {
       this.view = true; // One of edit or view must be true. Use view by defualt
+    }
     this.id = id;
     this.uri = uri;
     this.expectedException = expectedException;

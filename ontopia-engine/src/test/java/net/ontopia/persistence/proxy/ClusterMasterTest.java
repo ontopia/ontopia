@@ -765,8 +765,9 @@ public class ClusterMasterTest extends AbstractClusterTest {
     // leave cluster
     leaveCluster();
 
-    if (store != null)
+    if (store != null) {
       store.close();
+    }
   }
 
   @Override

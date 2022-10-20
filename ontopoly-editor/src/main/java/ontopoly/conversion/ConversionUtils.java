@@ -141,8 +141,9 @@ public class ConversionUtils {
       } else {
         // import TED ontology
         TopicMapReferenceIF ontologyTopicMapReference = repository.getReferenceByKey(OntopolyRepository.ONTOLOGY_TOPIC_MAP_ID);
-        if (ontologyTopicMapReference == null)
+        if (ontologyTopicMapReference == null) {
           throw new OntopiaRuntimeException("Could not find ontology topic map '" + OntopolyRepository.ONTOLOGY_TOPIC_MAP_ID + "'");
+        }
         TopicMapStoreIF ontologyTopicMapStore = ontologyTopicMapReference.createStore(true);
         try {
           MergeUtils.mergeInto(tm, ontologyTopicMapStore.getTopicMap());
@@ -169,7 +170,9 @@ public class ConversionUtils {
       while (iiter.hasNext()) {
         LocatorIF reifier_subind = iiter.next();
         oreifier = tm.getTopicBySubjectIdentifier(reifier_subind);
-        if (oreifier != null) break;
+        if (oreifier != null) {
+          break;
+        }
       }
       TopicMapBuilderIF tmbuilder = tm.getBuilder();
       if (nreifier == null) {
@@ -181,8 +184,9 @@ public class ConversionUtils {
         }
           
       } else {
-        if (oreifier != null && !Objects.equals(oreifier, nreifier))
+        if (oreifier != null && !Objects.equals(oreifier, nreifier)) {
           MergeUtils.mergeInto(nreifier, oreifier);
+        }
       }
       // make topic map reifier and instance of on:topic-map
       nreifier.addType(topicByPSI(psibase.resolveAbsolute("topic-map"), tm));
@@ -201,12 +205,13 @@ public class ConversionUtils {
       TopicIF versionTopic  = tm.getTopicBySubjectIdentifier(versionTopicPSI);
       String versionNumber = Float.toString(OntopolyApplication.CURRENT_VERSION_NUMBER); 
       OccurrenceIF versionOcc = getOccurrenceOfType(nreifier, versionTopic);
-      if (versionOcc == null)
+      if (versionOcc == null) {
         // create new ontology version occurrence
         tmbuilder.makeOccurrence(nreifier, versionTopic, versionNumber);
-      else
+      } else {
         // Update ontology version value
         versionOcc.setValue(versionNumber);
+      }
       
       // infer TED schema
       inferAndCreateSchema(tm, nreifier);
@@ -218,15 +223,17 @@ public class ConversionUtils {
       if (ref instanceof XTMTopicMapReference) {
         // use old base address
         LocatorIF newbaseloc = store.getBaseAddress();
-        if (oldbaseloc != null)
+        if (oldbaseloc != null) {
           ((AbstractTopicMapStore)store).setBaseAddress(oldbaseloc);
+        }
         
         // save topic map with TED ontology
         ((XTMTopicMapReference)ref).save();  
         
         // revert to new base address
-        if (oldbaseloc != null)
+        if (oldbaseloc != null) {
           ((AbstractTopicMapStore)store).setBaseAddress(newbaseloc);
+        }
         
         // close reference
         ref.close();
@@ -236,10 +243,14 @@ public class ConversionUtils {
       store.commit();
       
     } catch (Throwable e) {
-      if (store != null) store.abort();
+      if (store != null) {
+        store.abort();
+      }
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (store != null) store.close();
+      if (store != null) {
+        store.close();
+      }
     }
     
     // refresh repository, so that new reference is visible
@@ -310,7 +321,9 @@ public class ConversionUtils {
     Iterator<TopicIF> nsiter = tracker.getSuspectNameScopes().iterator();
     while (nsiter.hasNext()) {
       TopicIF ntheme = nsiter.next();
-      if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme.equals(reifier)) continue;
+      if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme.equals(reifier)) {
+        continue;
+      }
       nstypes.add(ntheme);
       
       // translate name scope into name type
@@ -326,7 +339,9 @@ public class ConversionUtils {
       Iterator<TopicIF> nstiter = tracker.getNameScopeTopicTypes(ntheme).iterator();
       while (nstiter.hasNext()) {
         TopicIF ttype = nstiter.next();
-        if (ttype == null) continue; // HACK: don't know what to do here.
+        if (ttype == null) {
+          continue; // HACK: don't know what to do here.
+        }
         TopicIF nfield = registerNameType(ntheme, tm);
         registerNameField(ttype, nfield, 
                       topicByPSI(psibase.resolveAbsolute("cardinality-0-M"), tm), tm);            
@@ -343,7 +358,9 @@ public class ConversionUtils {
           untyped == reifier ||
           nstypes.contains(untyped) ||
           supsub.containsKey(untyped) || 
-          subsup.containsKey(untyped)) continue;
+          subsup.containsKey(untyped)) {
+        continue;
+      }
       registerUntypedTopic(untyped, tm); 
     }
   
@@ -358,14 +375,17 @@ public class ConversionUtils {
     Iterator<TopicIF> ttypes = all_topic_types.iterator();
     while (ttypes.hasNext()) {
       TopicIF ttype = ttypes.next();
-      if (ttype == null || isTEDTopic(ttype)) continue;
+      if (ttype == null || isTEDTopic(ttype)) {
+        continue;
+      }
   
       // topic type      
       registerTopicType(ttype, tm);
   
       // register default name
-      if (topmost_types.contains(ttype))
+      if (topmost_types.contains(ttype)) {
         registerDefaultNameField(ttype, tm);
+      }
   
       // subject locator
       if (!isSubjectLocatorDeclaredOnSuperType(ttype, tracker, subsup)) {
@@ -392,7 +412,9 @@ public class ConversionUtils {
       Iterator<TopicIF> ntypes = tracker.getNameTypes(ttype).iterator();
       while (ntypes.hasNext()) {
         TopicIF ntype = ntypes.next();
-        if (ntype == null || isTEDTopic(ntype) || n_decl_on_supertype.contains(ntype)) continue;        
+        if (ntype == null || isTEDTopic(ntype) || n_decl_on_supertype.contains(ntype)) {
+          continue;
+        }        
         TopicIF cardinality = getCardinalityTopic(getBroadestNameTypeMinCardinality(ttype, ntype, tracker, supsub),
                                                   getBroadestNameTypeMaxCardinality(ttype, ntype, tracker, supsub), tm);
         TopicIF nfield = registerNameType(ntype, tm);
@@ -405,7 +427,9 @@ public class ConversionUtils {
       Iterator<TopicIF> oetypes = tracker.getExternalOccurrenceTypes(ttype).iterator();
       while (oetypes.hasNext()) {
         TopicIF oetype = oetypes.next();
-        if (oetype == null || isTEDTopic(oetype) || oe_decl_on_supertype.contains(oetype)) continue;
+        if (oetype == null || isTEDTopic(oetype) || oe_decl_on_supertype.contains(oetype)) {
+          continue;
+        }
         TopicIF cardinality = getCardinalityTopic(getBroadestExternalOccurrenceTypeMinCardinality(ttype, oetype, tracker, supsub),
                                                   getBroadestExternalOccurrenceTypeMaxCardinality(ttype, oetype, tracker, supsub), tm);
         oetype = registerOccurrenceType(oetype, datatype_uri, tm);
@@ -418,7 +442,9 @@ public class ConversionUtils {
       Iterator<TopicIF> oitypes = tracker.getInternalOccurrenceTypes(ttype).iterator();
       while (oitypes.hasNext()) {
         TopicIF oitype = oitypes.next();
-        if (oitype == null || isTEDTopic(oitype) || oi_decl_on_supertype.contains(oitype)) continue;
+        if (oitype == null || isTEDTopic(oitype) || oi_decl_on_supertype.contains(oitype)) {
+          continue;
+        }
         TopicIF cardinality = getCardinalityTopic(getBroadestInternalOccurrenceTypeMinCardinality(ttype, oitype, tracker, supsub),
                                                   getBroadestInternalOccurrenceTypeMaxCardinality(ttype, oitype, tracker, supsub), tm);
         oitype = registerOccurrenceType(oitype, datatype_string, tm);
@@ -434,21 +460,26 @@ public class ConversionUtils {
     Iterator<TopicIF> atypes = tracker.getAssociationTypes().iterator();
     while (atypes.hasNext()) {
       TopicIF atype = atypes.next();
-      if (atype == null || isTEDTopic(atype) || excluded_atypes.contains(atype)) continue;
+      if (atype == null || isTEDTopic(atype) || excluded_atypes.contains(atype)) {
+        continue;
+      }
   
       // association type
       atype = registerAssociationType(atype, tm);
   
       // symmetric association
-      if (tracker.isSymmetricAssociationType(atype))
+      if (tracker.isSymmetricAssociationType(atype)) {
         addAssociation1(psibase.resolveAbsolute("is-symmetric"), 
                         atype, psibase.resolveAbsolute("association-type"), tm);
+      }
       
       // role types
       Iterator<TopicIF> rtypes = tracker.getRoleTypes(atype).iterator();
       while (rtypes.hasNext()) {
         TopicIF rtype = rtypes.next();
-        if (rtype == null || isTEDTopic(rtype)) continue;
+        if (rtype == null || isTEDTopic(rtype)) {
+          continue;
+        }
   
         // role type
         rtype = registerRoleType(rtype, tm);
@@ -463,19 +494,21 @@ public class ConversionUtils {
   
         // use search-dialog if drop-down list too long (> 50 elements)
         TopicIF interfaceControl;
-        if (ptypes_count > 50)
+        if (ptypes_count > 50) {
           interfaceControl = topicByPSI(psibase.resolveAbsolute("search-dialog"), tm);
-        else
+        } else {
           interfaceControl = topicByPSI(psibase.resolveAbsolute("drop-down-list"), tm);
+        }
         TopicIF rfield = registerRoleField(atype, rtype, interfaceControl, tm);
         
         ptiter = ptypes.iterator();
         while (ptiter.hasNext()) {
           TopicIF ptype = ptiter.next();
-          if (ptype == null)
+          if (ptype == null) {
             ptype = getUntypedTopic(psibase, tm);
-          else if (isTEDTopic(ptype))
-            continue;          
+          } else if (isTEDTopic(ptype)) {
+            continue;
+          }          
   
           if (!isRoleDeclaredOnSuperType(ptype, ptypes, subsup)) {
             TopicIF cardinality = getCardinalityTopic(getBroadestPlayerTypeMinCardinality(atype, rtype, ptype, tracker, supsub),
@@ -575,58 +608,64 @@ public class ConversionUtils {
 
         // sort by topic type
         int tids = ((TopicIF)f1[0]).getObjectId().compareTo(((TopicIF)f2[0]).getObjectId());
-        if (tids != 0) return tids;
+        if (tids != 0) {
+          return tids;
+        }
 
         // sort by field class
         int fkey1 = 1000;
         int fkey2 = 1000;
 
         
-        if (ted_sl.equals(f1[2]))
+        if (ted_sl.equals(f1[2])) {
           fkey1 = 2;
-        else if (ted_si.equals(f1[2]))
+        } else if (ted_si.equals(f1[2])) {
           fkey1 = 3;
-        else {
+        } else {
           Iterator<TopicIF> fit = ((TopicIF)f1[2]).getTypes().iterator();
           while (fit.hasNext()) {
             TopicIF ft1 = fit.next();          
             if (ted_nt.equals(ft1)) {
-              if (ted_untyped_name.equals(f1[2]))
+              if (ted_untyped_name.equals(f1[2])) {
                 fkey1 = 0;
-              else
+              } else {
                 fkey1 = 1;
+              }
             } 
-            else if (ted_ot.equals(ft1))
+            else if (ted_ot.equals(ft1)) {
               fkey1 = 4;
-            else if (ted_at.equals(ft1))
+            } else if (ted_at.equals(ft1)) {
               fkey1 = 5;
-            else
+            } else {
               continue;
+            }
             break;
           }
         }
 
-        if (ted_sl.equals(f2[2]))
+        if (ted_sl.equals(f2[2])) {
           fkey2 = 2;
-        else if (ted_si.equals(f2[2]))
+        } else if (ted_si.equals(f2[2])) {
           fkey2 = 3;
-        else {
+        } else {
           Iterator<TopicIF> fit = ((TopicIF)f2[2]).getTypes().iterator();
           while (fit.hasNext()) {
             TopicIF ft2 = fit.next();          
           
             if (ted_nt.equals(ft2)) {
-              if (ted_untyped_name.equals(f2[2]))
+              if (ted_untyped_name.equals(f2[2])) {
                 fkey2 = 0;
-              else
+              } else {
                 fkey2 = 1;
+              }
             } 
-            else if (ted_ot.equals(ft2))
+            else if (ted_ot.equals(ft2)) {
               fkey2 = 4;
-            else if (ted_at.equals(ft2))
+            } else if (ted_at.equals(ft2)) {
               fkey2 = 5;
-            else
+            } else {
               continue;
+            }
             break;
           }          
         }
@@ -634,7 +673,9 @@ public class ConversionUtils {
         //! if (fkey1 == 1000) System.out.println("FT1 type unknown: " + f1[2]);
         //! if (fkey2 == 1000) System.out.println("FT2 type unknown: " + f2[2]);
 
-        if (fkey1 != fkey2) return (fkey1 > fkey2 ? 1 : -1);
+        if (fkey1 != fkey2) {
+          return (fkey1 > fkey2 ? 1 : -1);
+        }
 
         // sort by field type name
         String fn1 = TopicStringifiers.toString((TopicIF)(fkey1 == 5 ? f1[3] : f1[2]));
@@ -712,10 +753,13 @@ public class ConversionUtils {
       Map<String,TopicIF> params = Collections.singletonMap("itype", itype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $ifield from on:has-identity-type(%itype% : on:identity-type, $ofield : on:identity-field)?", params);
-      if (qr.next())
+      if (qr.next()) {
         ifield = (TopicIF)qr.getValue(0);
+      }
     } catch (Exception e) {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     if (ifield == null) {
       TopicIF fieldType = tm.getTopicBySubjectIdentifier(psibase.resolveAbsolute("identity-field"));
@@ -747,10 +791,13 @@ public class ConversionUtils {
       Map<String,TopicIF> params = Collections.singletonMap("ntype", ntype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $nfield from on:has-name-type(%ntype% : on:name-type, $nfield : on:name-field)?", params);
-      if (qr.next())
+      if (qr.next()) {
         nfield = (TopicIF)qr.getValue(0);
+      }
     } catch (Exception e) {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     if (nfield == null) {
       TopicIF fieldType = tm.getTopicBySubjectIdentifier(psibase.resolveAbsolute("name-field"));
@@ -788,10 +835,13 @@ public class ConversionUtils {
       Map<String,TopicIF> params = Collections.singletonMap("otype", otype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $ofield from on:has-occurrence-type(%otype% : on:occurrence-type, $ofield : on:occurrence-field)?", params);
-      if (qr.next())
+      if (qr.next()) {
         ofield = (TopicIF)qr.getValue(0);
+      }
     } catch (Exception e) {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     if (ofield == null) {
       TopicIF fieldType = tm.getTopicBySubjectIdentifier(psibase.resolveAbsolute("occurrence-field"));
@@ -820,10 +870,13 @@ public class ConversionUtils {
       Map<String,TopicIF> params = Collections.singletonMap("atype", atype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $afield from on:has-association-type(%atype% : on:association-type, $afield : on:association-field)?", params);
-      if (qr.next())
+      if (qr.next()) {
         afield = (TopicIF)qr.getValue(0);
+      }
     } catch (Exception e) {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     if (afield == null) {
       TopicIF fieldType = tm.getTopicBySubjectIdentifier(psibase.resolveAbsolute("association-field"));
@@ -846,10 +899,13 @@ public class ConversionUtils {
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $rfield from on:has-association-field(%afield% : on:association-field, $rfield : on:role-field), " + 
           "on:has-role-type($rfield : on:role-field, %rtype% : on:role-type)?", params);
-      if (qr.next())
+      if (qr.next()) {
         rfield = (TopicIF)qr.getValue(0);
+      }
     } catch (Exception e) {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }
     if (rfield == null) {
       TopicIF fieldType = tm.getTopicBySubjectIdentifier(psibase.resolveAbsolute("role-field"));
@@ -910,8 +966,9 @@ public class ConversionUtils {
 
   private static TopicIF topicByPSI(LocatorIF psiloc, TopicMapIF tm) throws MalformedURLException {
     TopicIF topic = tm.getTopicBySubjectIdentifier(psiloc);
-    if (topic == null)
+    if (topic == null) {
       throw new OntopiaRuntimeException("Could not find topic with PSI '" + psiloc + "'");
+    }
     return topic;
   }
   
@@ -921,8 +978,9 @@ public class ConversionUtils {
       LocatorIF loc = iter.next();
       String address = loc.getAddress();
       if (address.startsWith("http://psi.ontopia.net/ontology/") ||
-          address.startsWith("http://www.techquila.com/psi/hierarchy/"))
+          address.startsWith("http://www.techquila.com/psi/hierarchy/")) {
         return true;
+      }
     }
     return false;
   }
@@ -947,59 +1005,75 @@ public class ConversionUtils {
   protected static TopicIF getCardinalityTopic(int mincard, int maxcard, TopicMapIF tm) throws MalformedURLException {
     //! mincard = 0; // HACK! ignoring min cardinality for now as it is harder to compute
     if (maxcard == 1) {
-      if (mincard == 1)
+      if (mincard == 1) {
         return topicByPSI(psibase.resolveAbsolute("cardinality-1-1"), tm);
-      else
+      } else {
         return topicByPSI(psibase.resolveAbsolute("cardinality-0-1"), tm);
+      }
     } else if (maxcard > 1) {
-      if (mincard > 0)
+      if (mincard > 0) {
         return topicByPSI(psibase.resolveAbsolute("cardinality-1-M"), tm);
-      else
+      } else {
         return topicByPSI(psibase.resolveAbsolute("cardinality-0-M"), tm);
-    } else
+      }
+    } else {
       return topicByPSI(psibase.resolveAbsolute("cardinality-0-M"), tm);
+    }
   }
 
   protected TopicIF getCardinalityTopic(int cardinalityCount, TopicMapIF tm) throws MalformedURLException {
-    if (cardinalityCount <= 1)
+    if (cardinalityCount <= 1) {
       return topicByPSI(psibase.resolveAbsolute("cardinality-0-1"), tm);
-    else
+    } else {
       return topicByPSI(psibase.resolveAbsolute("cardinality-0-M"), tm);
+    }
   }
 
   protected static boolean isSubjectLocatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
-    if (supertypes == null) return false;
+    if (supertypes == null) {
+      return false;
+    }
     Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = iter.next();
-      if (tracker.getSubjectLocatorMaxCardinality(supertype) > 0)
+      if (tracker.getSubjectLocatorMaxCardinality(supertype) > 0) {
         return true;
+      }
 
       boolean onsup = isSubjectLocatorDeclaredOnSuperType(supertype, tracker, subsup);
-      if (onsup) return true;
+      if (onsup) {
+        return true;
+      }
     }
     return false;
   }
 
   protected static boolean isSubjectIndicatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
-    if (supertypes == null) return false;
+    if (supertypes == null) {
+      return false;
+    }
     Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = iter.next();
-      if (tracker.getSubjectIndicatorMaxCardinality(supertype) > 0)
+      if (tracker.getSubjectIndicatorMaxCardinality(supertype) > 0) {
         return true;
+      }
 
       boolean onsup = isSubjectIndicatorDeclaredOnSuperType(supertype, tracker, subsup);
-      if (onsup) return true;
+      if (onsup) {
+        return true;
+      }
     }
     return false;
   }
 
   protected static Collection<TopicIF> getNamesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
-    if (supertypes == null) return Collections.emptySet();
+    if (supertypes == null) {
+      return Collections.emptySet();
+    }
     Collection<TopicIF> result = new HashSet<TopicIF>();
     Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
@@ -1012,7 +1086,9 @@ public class ConversionUtils {
 
   protected static Collection<TopicIF> getInternalOccurrencesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
-    if (supertypes == null) return Collections.emptySet();
+    if (supertypes == null) {
+      return Collections.emptySet();
+    }
     Collection<TopicIF> result = new HashSet<TopicIF>();
     Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
@@ -1025,7 +1101,9 @@ public class ConversionUtils {
 
   protected static Collection<TopicIF> getExternalOccurrencesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
-    if (supertypes == null) return Collections.emptySet();
+    if (supertypes == null) {
+      return Collections.emptySet();
+    }
     Collection<TopicIF> result = new HashSet<TopicIF>();
     Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
@@ -1038,14 +1116,20 @@ public class ConversionUtils {
 
   protected static boolean isRoleDeclaredOnSuperType(TopicIF ttype, Collection<TopicIF> ptypes, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
-    if (supertypes == null) return false;
+    if (supertypes == null) {
+      return false;
+    }
     Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = (TopicIF)iter.next();
-      if (ptypes.contains(supertype)) return true;
+      if (ptypes.contains(supertype)) {
+        return true;
+      }
 
       boolean onsup = isRoleDeclaredOnSuperType(supertype, ptypes, subsup);
-      if (onsup) return true;      
+      if (onsup) {
+        return true;
+      }      
     }
     return false;
   }
@@ -1053,13 +1137,16 @@ public class ConversionUtils {
   protected static int getBroadestSubjectLocatorMinCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectLocatorMinCardinality(ttype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestSubjectLocatorMinCardinality(subtype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1067,13 +1154,16 @@ public class ConversionUtils {
   protected static int getBroadestSubjectLocatorMaxCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectLocatorMaxCardinality(ttype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestSubjectLocatorMaxCardinality(subtype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1081,13 +1171,16 @@ public class ConversionUtils {
   protected static int getBroadestSubjectIndicatorMinCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectIndicatorMinCardinality(ttype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestSubjectIndicatorMinCardinality(subtype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1095,13 +1188,16 @@ public class ConversionUtils {
   protected static int getBroadestSubjectIndicatorMaxCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectIndicatorMaxCardinality(ttype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestSubjectIndicatorMaxCardinality(subtype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1109,13 +1205,16 @@ public class ConversionUtils {
   protected static int getBroadestNameTypeMinCardinality(TopicIF ttype, TopicIF ntype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getNameTypeMinCardinality(ttype, ntype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestNameTypeMinCardinality(subtype, ntype, tracker, supsub);
-      if (card > cardinality)
+      if (card > cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1123,13 +1222,16 @@ public class ConversionUtils {
   protected static int getBroadestNameTypeMaxCardinality(TopicIF ttype, TopicIF ntype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getNameTypeMaxCardinality(ttype, ntype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestNameTypeMaxCardinality(subtype, ntype, tracker, supsub);
-      if (card > cardinality)
+      if (card > cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1137,13 +1239,16 @@ public class ConversionUtils {
   protected static int getBroadestExternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF oetype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getExternalOccurrenceTypeMinCardinality(ttype, oetype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestExternalOccurrenceTypeMinCardinality(subtype, oetype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1151,13 +1256,16 @@ public class ConversionUtils {
   protected static int getBroadestExternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF oetype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getExternalOccurrenceTypeMaxCardinality(ttype, oetype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestExternalOccurrenceTypeMaxCardinality(subtype, oetype, tracker, supsub);
-      if (card > cardinality)
+      if (card > cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1165,13 +1273,16 @@ public class ConversionUtils {
   protected static int getBroadestInternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF oitype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getInternalOccurrenceTypeMinCardinality(ttype, oitype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestInternalOccurrenceTypeMinCardinality(subtype, oitype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1179,13 +1290,16 @@ public class ConversionUtils {
   protected static int getBroadestInternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF oitype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getInternalOccurrenceTypeMaxCardinality(ttype, oitype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestInternalOccurrenceTypeMaxCardinality(subtype, oitype, tracker, supsub);
-      if (card > cardinality)
+      if (card > cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1193,13 +1307,16 @@ public class ConversionUtils {
   protected static int getBroadestPlayerTypeMinCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ptype);
     int cardinality = tracker.getPlayerTypeMinCardinality(atype, rtype, ptype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestPlayerTypeMinCardinality(atype, rtype, subtype, tracker, supsub);
-      if (card < cardinality)
+      if (card < cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1207,13 +1324,16 @@ public class ConversionUtils {
   protected static int getBroadestPlayerTypeMaxCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
     Collection<TopicIF> subtypes = supsub.get(ptype);
     int cardinality = tracker.getPlayerTypeMaxCardinality(atype, rtype, ptype);
-    if (subtypes == null) return cardinality;
+    if (subtypes == null) {
+      return cardinality;
+    }
     Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
       TopicIF subtype = iter.next();      
       int card = getBroadestPlayerTypeMaxCardinality(atype, rtype, subtype, tracker, supsub);
-      if (card > cardinality)
+      if (card > cardinality) {
         cardinality = card;
+      }
     }
     return cardinality;
   }
@@ -1223,17 +1343,18 @@ public class ConversionUtils {
     Iterator<TopicIF> iter = ttypes.iterator();
     while (iter.hasNext()) {
       TopicIF ttype = iter.next();
-      if (!subsup.containsKey(ttype))
+      if (!subsup.containsKey(ttype)) {
         result.add(ttype);
+      }
     }
     return result;    
   }
 
   public static TopicMapSourceIF getSource(TopicMapRepositoryIF rep, String tmsource) {
     TopicMapSourceIF source = null;
-    if (tmsource != null)
+    if (tmsource != null) {
       source = rep.getSourceById(tmsource);
-    else {
+    } else {
       // if tmsource is null, it means the list wasn't displayed,
       // because there's only one source which supports create. so we
       // have to find it.
@@ -1246,20 +1367,23 @@ public class ConversionUtils {
           break;
         }
       }
-      if (source == null)
+      if (source == null) {
         throw new OntopiaRuntimeException("No source supporting create was found!");
+      }
     }
-    if (!source.supportsCreate())
+    if (!source.supportsCreate()) {
       throw new OntopiaRuntimeException("Topic map source '" + tmsource
           + "' does not support creating new topic maps.");
+    }
     return source;
   }
 
   public static OccurrenceIF getOccurrenceOfType(TopicIF topic,
       TopicIF occType) {
     Collection<OccurrenceIF> result = getOccurrencesOfType(topic, occType);
-    if (result.isEmpty())
+    if (result.isEmpty()) {
       return null;
+    }
     return result.iterator().next();
   }
 
@@ -1269,8 +1393,9 @@ public class ConversionUtils {
     for (Iterator<OccurrenceIF> iter = topic.getOccurrences().iterator(); iter.hasNext();) {
       OccurrenceIF occurrence = iter.next();
       TopicIF otype = occurrence.getType();
-      if (otype != null && otype .equals(occType))
+      if (otype != null && otype .equals(occType)) {
         result.add(occurrence);
+      }
     }
     return result;
 

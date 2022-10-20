@@ -55,7 +55,9 @@ public class JDOEquals implements JDOExpressionIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOEquals) {
       JDOEquals other = (JDOEquals)obj;
       return (left.equals(other.left) &&

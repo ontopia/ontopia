@@ -99,23 +99,26 @@ public class ForEachTag extends BodyTagSupport {
 
     // get Collection to loop over
     Collection coll = null;
-    if (collVariableName != null)
+    if (collVariableName != null) {
       coll = ctxtMgr.getValue(collVariableName);
-    else
+    } else {
       coll = ctxtMgr.getDefaultValue();
+    }
 
     // if not maximum list length set by attribute get from configuration
-    if (maxNumber <= 0)
+    if (maxNumber <= 0) {
       maxNumber = contextTag.getNavigatorConfiguration()
         .getProperty(NavigatorConfigurationIF.MAX_LIST_LENGTH,
                      NavigatorConfigurationIF.DEF_VAL_MAX_LIST_LENGTH);
+    }
     
     // establish new lexical scope for this loop
     ctxtMgr.pushScope();
 
     // do not proceed if no elements in collection at all
-    if (coll.isEmpty())
+    if (coll.isEmpty()) {
       return SKIP_BODY;
+    }
 
     // WARN: This might be problematic when collection is of unknown size.
     this.items = coll.toArray();
@@ -125,11 +128,13 @@ public class ForEachTag extends BodyTagSupport {
         listComparator = getComparator();
         // TODO: enhance with more comparators?
         // TODO: Why fallback to another comparator if it is null?
-        if (listComparator == null)
+        if (listComparator == null) {
           listComparator = DEF_TOPIC_COMPARATOR;
+        }
         
-        if (sortOrder != null && sortOrder.equals(DEF_ORDER_DESCENDING))
+        if (sortOrder != null && sortOrder.equals(DEF_ORDER_DESCENDING)) {
           listComparator = new ReverseComparator(listComparator);
+        }
         
         Arrays.sort( items, listComparator);
       } catch (Throwable t) {
@@ -140,8 +145,9 @@ public class ForEachTag extends BodyTagSupport {
     }
 
     // set first element of collection in beginning
-    if (startNumber >= items.length)
+    if (startNumber >= items.length) {
       startNumber = items.length - 1;
+    }
     index = startNumber;
     setVariableValues(items[index]);
 
@@ -203,11 +209,12 @@ public class ForEachTag extends BodyTagSupport {
     if (index >= maxNumber) {
       // name of function to call when list is truncated
       String functionName = null;
-      if (functionOnTruncate != null)
+      if (functionOnTruncate != null) {
         functionName = functionOnTruncate;
-      else
+      } else {
         functionName = contextTag.getNavigatorConfiguration()
           .getProperty(NavigatorConfigurationIF.DEF_FUNC_ONTRUNCATE);
+      }
 
       // call specified function if list is truncated
       if (functionName != null && !functionName.equals("")) {
@@ -215,8 +222,9 @@ public class ForEachTag extends BodyTagSupport {
         FunctionIF function = contextTag.getFunction(functionName);
         if (function != null) {
           // execute function
-          if (log.isDebugEnabled())
+          if (log.isDebugEnabled()) {
             log.debug("execute function: " + function.toString());
+          }
           try {
             function.call(pageContext, this);
           } catch (IOException ioe) {
@@ -269,9 +277,10 @@ public class ForEachTag extends BodyTagSupport {
 
   public void setOrder(String order) throws NavigatorRuntimeException {
     if (!order.equals(DEF_ORDER_DESCENDING) &&
-        !order.equals(DEF_ORDER_ASCENDING))
+        !order.equals(DEF_ORDER_ASCENDING)) {
       throw new NavigatorRuntimeException("Non-supported value ('" + order +
                                           "') given for attribute 'order' in element 'foreach'.");
+    }
     
     this.sortOrder = order;
     this.sortItemsFlag = (order != null);
@@ -310,8 +319,9 @@ public class ForEachTag extends BodyTagSupport {
       log.warn("Reset invalid start value to '0' was '" + startString + "'.");
       this.startNumber = 0;
     }
-    if (this.startNumber < 0)
+    if (this.startNumber < 0) {
       this.startNumber = 0;
+    }
   }
 
   public void setSeparator(String separator) {
@@ -332,29 +342,32 @@ public class ForEachTag extends BodyTagSupport {
    */
   private void setVariableValues(Object elem) {
     ctxtMgr.setDefaultValue( elem );
-    if (itemVariableName != null)
+    if (itemVariableName != null) {
       ctxtMgr.setValue(itemVariableName, elem);
+    }
 
     // set variables in current lexical scope
     // NB: make it 1-based!
     ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_INDEX_KEY, index+1);
 
     // figure out if this is the first item in the iteration
-    if (index == startNumber)
+    if (index == startNumber) {
       ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_FIRST_KEY,
-                       Boolean.TRUE);
-    else
+              Boolean.TRUE);
+    } else {
       ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_FIRST_KEY,
                        Collections.EMPTY_LIST);
+    }
 
     // figure out if this is the last item in the iteration
     if (index < items.length-1
-        && index < maxNumber-1)
+        && index < maxNumber-1) {
       ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_LAST_KEY,
-                       Collections.EMPTY_LIST);
-    else
+              Collections.EMPTY_LIST);
+    } else {
       ctxtMgr.setValue(NavigatorApplicationIF.FOREACH_SEQ_LAST_KEY,
                        Boolean.TRUE);
+    }
   }
 
   /**
@@ -364,10 +377,11 @@ public class ForEachTag extends BodyTagSupport {
   private Comparator getComparator() throws NavigatorRuntimeException {
     Object obj = contextTag.getNavigatorApplication()
       .getInstanceOf(listComparatorClassName);
-    if (obj != null && obj instanceof Comparator)
+    if (obj != null && obj instanceof Comparator) {
       return (Comparator) obj;
-    else
+    } else {
       return null;
+    }
   }
 
   /**

@@ -59,15 +59,17 @@ public abstract class AbstractQueryProcessor {
       Iterator it2 = clause.getArguments().iterator();
       while (it2.hasNext()) {
         Object argument = it2.next();
-        if (argument instanceof Pair) 
+        if (argument instanceof Pair) { 
           // WARN: this means that second item cannot be bound.
           argument = ((Pair) argument).getFirst();
+        }
         if (argument instanceof Parameter) {
           String pname = ((Parameter) argument).getName();
           argument = parameters.get(pname);
         }
-        if (!items.contains(argument))
+        if (!items.contains(argument)) {
           items.add(argument);
+        }
       }
     }
 
@@ -87,12 +89,14 @@ public abstract class AbstractQueryProcessor {
       Iterator it2 = clause.getArguments().iterator();
       while (it2.hasNext()) {
         Object argument = it2.next();
-        if (argument instanceof Pair) 
+        if (argument instanceof Pair) { 
           // WARN: this means that second item cannot be bound.
           argument = ((Pair) argument).getFirst();
+        }
         
-        if (argument instanceof Variable && !items.contains(argument))
+        if (argument instanceof Variable && !items.contains(argument)) {
           items.add(argument);
+        }
       }
     }
 
@@ -115,8 +119,9 @@ public abstract class AbstractQueryProcessor {
       if (theClause instanceof PredicateClause) {
         
         // check to see if thread has been interrupted
-        if(Thread.currentThread().isInterrupted())
+        if(Thread.currentThread().isInterrupted()) {
           throw new OntopiaRuntimeException(new InterruptedException());
+        }
 
         // execute predicate
         PredicateClause clause = (PredicateClause) theClause;
@@ -179,13 +184,15 @@ public abstract class AbstractQueryProcessor {
         result = matches;
         QueryTracer.leave(result);
         
-      } else
+      } else {
         throw new OntopiaRuntimeException("Unknown clause type:" + theClause);
+      }
 
       // if there are no matches, there's no need to continue, as later
       // clauses can't generate any from nothing
-      if (result.last == -1)
+      if (result.last == -1) {
         return result;
+      }
     }
     
     return result;
@@ -193,9 +200,11 @@ public abstract class AbstractQueryProcessor {
 
   private static Object[] makeArgumentArray(AbstractClause clause, QueryContext context) {
     Object[] args = clause.getArguments().toArray();
-    for (int ix = 0; ix < args.length; ix++)
-      if (args[ix] instanceof Parameter)
+    for (int ix = 0; ix < args.length; ix++) {
+      if (args[ix] instanceof Parameter) {
         args[ix] = context.getParameterValue(((Parameter) args[ix]).getName());
+      }
+    }
     return args;
   }
 

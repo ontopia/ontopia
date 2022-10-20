@@ -72,21 +72,27 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
 
   @Override
   public synchronized Collection getReferences() {
-    if (reference == null) refresh();
-    if (reference == null)
+    if (reference == null) {
+      refresh();
+    }
+    if (reference == null) {
       return Collections.EMPTY_LIST;
-    else
+    } else {
       return Collections.singleton(reference);
+    }
   }
   
   @Override
   public synchronized void refresh() {
-    if (match == null)
+    if (match == null) {
       throw new OntopiaRuntimeException("match property must be specified on source with id '" + getId() + "'.");
-    if (pattern == null)
+    }
+    if (pattern == null) {
       throw new OntopiaRuntimeException("pattern property must be specified on source with id '" + getId() + "'.");
-    if (referenceId == null)
+    }
+    if (referenceId == null) {
       throw new OntopiaRuntimeException("referenceId property must be specified on source with id '" + getId() + "'.");
+    }
     
     boolean foundReference = false;
     long topicmap_id = -2;
@@ -101,12 +107,13 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       try {
 
         String sqlquery;
-        if ("title".equals(match))
+        if ("title".equals(match)) {
           sqlquery = "select max(M.id), M.title, M.base_address from TM_TOPIC_MAP M where M.title = ? group by M.title, M.base_address order by max(M.id) desc";
-        else if ("comments".equals(match))
+        } else if ("comments".equals(match)) {
           sqlquery = "select max(M.id), M.title, M.base_address from TM_TOPIC_MAP M where M.comments = ? group by M.title, M.base_address order by max(M.id) desc";
-        else
+        } else {
           throw new OntopiaRuntimeException("match property contains illegal value '" + match + "' on source with id '" + getId() + "'.");
+        }
         
         PreparedStatement stm = conn.prepareStatement(sqlquery);
         try {
@@ -115,12 +122,14 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
           if (rs.next()) {
             foundReference = true;
             topicmap_id = rs.getLong(1);
-            if (_title == null)
+            if (_title == null) {
               _title = rs.getString(2);
+            }
             if (_base_address == null) {
               String loc = rs.getString(3);
-              if (loc != null)
+              if (loc != null) {
                 _base_address = new URILocator(loc);
+              }
             }
           } else {
             log.warn("Source with id '" + getId() + "' could not find any matching topic maps with pattern '" + pattern + "'.");
@@ -238,8 +247,9 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
   
   protected RDBMSStorage createStorage() throws IOException {
     if (storage == null) {
-      if (propfile == null)
+      if (propfile == null) {
         throw new OntopiaRuntimeException("propertyFile property must be specified on source with id '" + getId() + "'.");
+      }
       storage = new RDBMSStorage(propfile);
     }
     return storage;

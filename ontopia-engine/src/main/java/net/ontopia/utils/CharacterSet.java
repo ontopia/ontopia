@@ -66,9 +66,11 @@ public class CharacterSet {
    * set.
    */
   public boolean contains(char ch) {
-    for (int ix = 0; ix < set.length; ix++)
-      if (ch >= set[ix].low && ch <= set[ix].high)
+    for (int ix = 0; ix < set.length; ix++) {
+      if (ch >= set[ix].low && ch <= set[ix].high) {
         return true;
+      }
+    }
 
     return false;
   }

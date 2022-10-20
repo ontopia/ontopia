@@ -128,8 +128,9 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   
   protected void setSubjectIdentityCache(SubjectIdentityCache sicache) {
     // Unregister topic map with old subject identity cache
-    if (this.sicache != null)
+    if (this.sicache != null) {
       this.sicache.unregisterObject(this);
+    }
     // Register topic map with new subject identity cache
     sicache.registerObject(this);
     this.sicache = sicache;
@@ -146,11 +147,13 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   public void addTopic(TopicIF _topic) {
     Topic topic = (Topic)_topic;
     // Check to see if topic is already a member of this topic map
-    if (topic.parent == this)
+    if (topic.parent == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (topic.parent != null)
+    if (topic.parent != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicMapIF.EVENT_ADD_TOPIC, topic, null);    
     // Set topic map property
@@ -172,8 +175,9 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   public void removeTopic(TopicIF _topic) {
     Topic topic = (Topic)_topic;
     // Check to see if topic is not a member of this topic map
-    if (topic.parent != this)
+    if (topic.parent != this) {
       return;
+    }
 
     // Remove dependencies
     DeletionUtils.removeDependencies(topic);    
@@ -200,11 +204,13 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
      
     Association association = (Association)_association;
     // Check to see if association is already a member of this topic map
-    if (association.parent == this)
+    if (association.parent == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (association.parent != null)
+    if (association.parent != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicMapIF.EVENT_ADD_ASSOCIATION, association, null);    
     // Set topic map property
@@ -219,8 +225,9 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
       while (iter.hasNext()) {
         AssociationRoleIF role = iter.next();
         Topic player = (Topic) role.getPlayer();
-        if (player != null)
-          player.addRole(role);      
+        if (player != null) {
+          player.addRole(role);
+        }      
       }
     }
   }
@@ -231,8 +238,9 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   public void removeAssociation(AssociationIF _association) {
     Association association = (Association)_association;
     // Check to see if association is not a member of this topic map
-    if (association.parent != this)
+    if (association.parent != this) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicMapIF.EVENT_REMOVE_ASSOCIATION, null, association);
 
@@ -243,8 +251,9 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
       while (iter.hasNext()) {
         AssociationRoleIF role = iter.next();
         Topic player = (Topic) role.getPlayer();
-        if (player != null)
-          player.removeRole(role);      
+        if (player != null) {
+          player.removeRole(role);
+        }      
       }
     }
     // Unset topic map property
@@ -298,15 +307,21 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) {
+      CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
-    if (oldReifier != null) oldReifier.setReified(null);
-    if (reifier != null) reifier.setReified(this);
+    if (oldReifier != null) {
+      oldReifier.setReified(null);
+    }
+    if (reifier != null) {
+      reifier.setReified(this);
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -330,14 +345,16 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
-    if (listener == this)
+    if (listener == this) {
       return;
+    }
     // Initialize event entry
     synchronized (listeners) {
       // Add listener to list of event entry listeners. This is not
       // very elegant, but it works.
-      if (!listeners.containsKey(event))
+      if (!listeners.containsKey(event)) {
         listeners.put(event, new EventListenerIF[0]);
+      }
       Collection<EventListenerIF> event_listeners = new ArrayList<EventListenerIF>(Arrays.asList(listeners.get(event)));
       event_listeners.add(listener);
       listeners.put(event, event_listeners.toArray(new EventListenerIF[0]));
@@ -352,10 +369,11 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
         // not very elegant, but it works.
         Collection<EventListenerIF> event_listeners = new ArrayList<EventListenerIF>(Arrays.asList(listeners.get(event)));
         event_listeners.remove(listener);
-        if (event_listeners.isEmpty())
+        if (event_listeners.isEmpty()) {
           listeners.remove(event);
-        else
+        } else {
           listeners.put(event, event_listeners.toArray(new EventListenerIF[1]));
+        }
       }
     }
   }
@@ -371,9 +389,10 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     if (event_listeners != null) {
       // Loop over event listeners
       int size = event_listeners.length;
-      for (int i=0; i < size; i++)
+      for (int i=0; i < size; i++) {
         // Notify listener
         (event_listeners[i]).processEvent(object, event, new_value, old_value);
+      }
     }
   }
   

@@ -58,11 +58,13 @@ public class GetContextTag extends TagSupport {
     UserIF user = FrameworkUtils.getUser(contextTag.getPageContext());
     UserFilterContextStore userContext = user.getFilterContext();
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("GetContextTag found no topic map.");
+    }
 
-    if (userContext == null)
+    if (userContext == null) {
       userContext = new UserFilterContextStore();
+    }
 
     Collection result = Collections.EMPTY_SET;
     if (context != null) {
@@ -103,10 +105,11 @@ public class GetContextTag extends TagSupport {
     if (!"basename".equals(context) &&
         !"variant".equals(context) &&
         !"occurrence".equals(context) &&
-        !"association".equals(context))
+        !"association".equals(context)) {
       throw new NavigatorRuntimeException("Incorrect value ('" + var + "')" +
                                           " given for attribute 'context' in" +
                                           " element 'getcontext'.");
+    }
   }
 
 }

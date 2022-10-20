@@ -37,8 +37,9 @@ public class EqualsFilter extends FilterPredicate {
     // return true if  all objects are equal.
     if (objects.length > 1) {
       for (int i=1; i < objects.length; i++) {
-        if (!Objects.equals(objects[i-1], objects[i]))
+        if (!Objects.equals(objects[i-1], objects[i])) {
           return false;
+        }
       }      
     }
     return true;

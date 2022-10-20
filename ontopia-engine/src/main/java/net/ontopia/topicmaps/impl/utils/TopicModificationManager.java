@@ -133,7 +133,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
-    if (listener == this) return;
+    if (listener == this) {
+      return;
+    }
     // Initialize event entry
     if (!listeners.containsKey(event)) {
       Set<EventListenerIF> newset = cfactory.makeSmallSet();
@@ -150,7 +152,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       Set<EventListenerIF> event_listeners  = listeners.get(event);
       event_listeners.remove(listener);
       // If there are no more listeners, remove event entry.
-      if (event_listeners.isEmpty()) listeners.remove(event);      
+      if (event_listeners.isEmpty()) {
+        listeners.remove(event);
+      }      
     }
   }
   
@@ -210,8 +214,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicNameIF bn = (TopicNameIF)object;
       TopicIF topic = bn.getTopic();
-      if (topic != null)
+      if (topic != null) {
         topicModified(topic);
+      }
     }
   }
 
@@ -225,8 +230,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       TopicNameIF bn = vn.getTopicName();
       if (bn != null) {
         TopicIF topic = bn.getTopic();
-        if (topic != null)
+        if (topic != null) {
           topicModified(topic);
+        }
       }
     }
   }
@@ -239,8 +245,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       OccurrenceIF occ = (OccurrenceIF)object;
       TopicIF topic = occ.getTopic();
-      if (topic != null)
+      if (topic != null) {
         topicModified(topic);
+      }
     }
   }
 
@@ -254,14 +261,17 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       AssociationIF assoc = role.getAssociation();
 
       if (event.equals(AssociationRoleIF.EVENT_SET_PLAYER)) {                 
-        if (old_value != null)
+        if (old_value != null) {
           topicModified((TopicIF)old_value);
-        if (new_value != null)
+        }
+        if (new_value != null) {
           topicModified((TopicIF)new_value);
+        }
       } else {
         TopicIF topic = role.getPlayer();
-        if (topic != null)
+        if (topic != null) {
           topicModified(topic);
+        }
       }
 
       if (assoc != null) {
@@ -270,8 +280,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
           AssociationRoleIF orole = iter.next();
           if (!orole.equals(role)) {
             TopicIF otopic = orole.getPlayer();
-            if (otopic != null)
+            if (otopic != null) {
               topicModified(otopic);
+            }
           }
         }
       }
@@ -289,8 +300,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       while (iter.hasNext()) {
         AssociationRoleIF role = iter.next();
         TopicIF topic = role.getPlayer();
-        if (topic != null)
-          topicModified(topic);          
+        if (topic != null) {
+          topicModified(topic);
+        }          
       }
     }
   }
@@ -307,8 +319,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
         while (iter.hasNext()) {
           AssociationRoleIF role = iter.next();
           TopicIF topic = role.getPlayer();
-          if (topic != null)
-            topicModified(topic);          
+          if (topic != null) {
+            topicModified(topic);
+          }          
         }
       }
     }
@@ -321,20 +334,21 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
 
     @Override
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      if (object instanceof TopicNameIF)
+      if (object instanceof TopicNameIF) {
         manager.bh.processEvent(object, event, new_value, old_value);
-      else if (object instanceof VariantNameIF)
+      } else if (object instanceof VariantNameIF) {
         manager.vh.processEvent(object, event, new_value, old_value);
-      else if (object instanceof OccurrenceIF)
+      } else if (object instanceof OccurrenceIF) {
         manager.oh.processEvent(object, event, new_value, old_value);
-      else if (object instanceof AssociationRoleIF)
+      } else if (object instanceof AssociationRoleIF) {
         manager.rh.processEvent(object, event, new_value, old_value);
-      else if (object instanceof AssociationIF)
+      } else if (object instanceof AssociationIF) {
         manager.ah.processEvent(object, event, new_value, old_value);
-      else if (object instanceof TopicIF)
+      } else if (object instanceof TopicIF) {
         manager.th.processEvent(object, event, new_value, old_value);
-      else if (object instanceof TopicMapIF)
+      } else if (object instanceof TopicMapIF) {
         manager.mh.processEvent(object, event, new_value, old_value);
+      }
     }
   }
     

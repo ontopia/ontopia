@@ -62,14 +62,17 @@ public class ModifyUserHistoryTag extends TagSupport {
       Object obj = pageContext.findAttribute(objectName);
       // log.debug("Found object " + obj );
       if (obj != null) {
-        if (opName.equals(OP_ADD))
+        if (opName.equals(OP_ADD)) {
           history.add(obj);
-        else
+        } else {
           history.removeEntry(obj);
-      } else
+        }
+      } else {
         log.info("Could not find object by name '" + objectName + "'.");
-    } else
+      }
+    } else {
       log.info("No history attached to user object");
+    }
     // empty tag has not to eval anything
     return SKIP_BODY;
   }
@@ -83,10 +86,11 @@ public class ModifyUserHistoryTag extends TagSupport {
   }
 
   public void setOperation(String opName) {
-    if (opName.equals(OP_ADD) || opName.equals(OP_REMOVE))
+    if (opName.equals(OP_ADD) || opName.equals(OP_REMOVE)) {
       this.opName = opName;
-    else
+    } else {
       throw new IllegalArgumentException("Only add and remove operation allowed.");
+    }
   }
   
 }

@@ -64,8 +64,9 @@ public class IncludeTag extends TagSupport {
     // try to get module from object pool otherwise load it
 
     try {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("Trying to resolve '" + fileName + "'.");
+      }
       //! URL location = ctxt.getResource(fileName);
 
       // TODO: This code should be refactored into a separate utility
@@ -82,16 +83,18 @@ public class IncludeTag extends TagSupport {
       ServletRequest request = pageContext.getRequest();
       if (request instanceof HttpServletRequest) {
         String realpath = ctxt.getRealPath(fileName);
-        if (realpath == null)
+        if (realpath == null) {
           throw new NavigatorRuntimeException("Could not resolve file attribute '" + fileName + "' in <logic:include> tag. Make sure that the web application is deployed in exploded mode.");
+        }
         url = "file:" + realpath;
       } else {
         throw new NavigatorRuntimeException("Unsupported ServletRequest type: " + request);
       }
       
       URL location = new URL(url);      
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("Including file: " + location);
+      }
       
       ModuleIF module = navApp.getModule(location);
       // register functions and set them up
@@ -102,8 +105,9 @@ public class IncludeTag extends TagSupport {
           // function.setParent() [only for root tag]
           // function.setPageContext()  [for all tags]
           contextTag.registerFunction(function);
-          if (log.isDebugEnabled())
+          if (log.isDebugEnabled()) {
             log.debug("registered function: " + function.toString());
+          }
         }
       }
       

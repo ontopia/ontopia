@@ -81,10 +81,11 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:set> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> was found.");
+    }
 
     // Get the TopicMap from the context.
     TopicMapIF topicmap = contextTag.getTopicMap();
@@ -100,49 +101,57 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
       if (reqparam != null) {
         String ids[] = pageContext.getRequest().getParameterValues(reqparam);
 
-        if (ids == null || ids.length == 0)
+        if (ids == null || ids.length == 0) {
           outValue = Collections.EMPTY_LIST;
-        else {
-          if (topicmap == null)
+        } else {
+          if (topicmap == null) {
             throw new JspTagException("<tolog:set> found no topic map");
+          }
           DeclarationContextIF declarationContext = contextTag.getDeclarationContext();
           for (int i= 0; i < ids.length; i++) {
             TMObjectIF tempOutValue =
                     NavigatorUtils.stringID2Object(topicmap, ids[i], declarationContext);
-            if (tempOutValue != null)
+            if (tempOutValue != null) {
               outValue.add(tempOutValue);
+            }
           }
         }
 
       } else if (value != null) {
-        if (value instanceof Collection)
+        if (value instanceof Collection) {
           outValue.addAll((Collection)value);
-        else
-          outValue.add(value); 
-      } else
+        } else {
+          outValue.add(value);
+        } 
+      } else {
         return EVAL_BODY_BUFFERED;
+      }
     } else {
       log.debug("Set found query");     
       // Create a QueryProcessorIF for the topicmap.
-      if (topicmap == null)
+      if (topicmap == null) {
         throw new JspTagException("<tolog:set> found no topic map");
+      }
       super.doStartTag();
 
-      if (queryResult.getWidth() == 0)
+      if (queryResult.getWidth() == 0) {
         throw new NavigatorRuntimeException("<tolog:set> : got a query result"
                 + " with zero columns, instead of the expected: one."
                 + "\nPlease check the query.");
+      }
 
-      if (queryResult.getWidth() >= 2)
+      if (queryResult.getWidth() >= 2) {
         throw new NavigatorRuntimeException("<tolog:set> : got a query result"
                 + " with more than one column, instead of the expected: one."
                 + " Please check the query.");
+      }
 
       // Get 'outValue' from the first column of 'queryResult'.
       outValue = getColumn(queryResult, 0);
       // If no variable name given, use the first (only) column from the query.
-      if (var == null)
+      if (var == null) {
         clonedVar = queryResult.getColumnName(0);
+      }
     }
 
     return SKIP_BODY;
@@ -153,20 +162,23 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
    */
   private void validateInputAttributes()  throws JspTagException {
     if (query == null) {
-      if (var == null)
+      if (var == null) {
         throw new JspTagException("<tolog:set> : requires a 'var'- or a"
                 + " 'query'-attribute (or both), but got neither.");
+      }
 
-      if (!(reqparam == null || value == null))
+      if (!(reqparam == null || value == null)) {
         throw new JspTagException("<tolog:set> : requires either a"
                 + " 'query'-, a 'reqparam'- or a 'value'-attribute,"
                 + " but got both.");
+      }
 
     } else {
-      if (reqparam != null || value != null)
+      if (reqparam != null || value != null) {
         throw new JspTagException("<tolog:set> : requires either a"
                 + " 'query'-, a 'reqparam'- or a 'value'-attribute,"
                 + " but got more than one of them.");
+      }
     }
   }
 
@@ -193,8 +205,9 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
       Collection ontopiaValue = ctxmgr.getValue(var);
 
       // Add the rest of the values in jstlArray to ontopiaValue.
-      for (int i = 1; i < jstlArray.length; i++)
+      for (int i = 1; i < jstlArray.length; i++) {
         ontopiaValue.add(jstlArray[i]);
+      }
     } else if (val instanceof Collection) {
       ctxmgr.setValue(var, (Collection)val);
     } else {
@@ -203,9 +216,11 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   }
 
   private static int mapScope(String scopeName) throws JspTagException {
-    for (int i = 0; i < scopeNames.length; i++)
-      if (scopeName.equals(scopeNames[i]))
+    for (int i = 0; i < scopeNames.length; i++) {
+      if (scopeName.equals(scopeNames[i])) {
         return scopes[i];
+      }
+    }
     throw new JspTagException("Unrecognised scope attribute in <tolog:set ..."
             + "scope=\"" + scopeName + "\"");
   }
@@ -233,8 +248,9 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
     // FIXME: It would be nice if the following if-test could be true only for
     // bodies that are actually empty (not the ones that just generate a 
     // zero-length string).
-    if (!getBodyContent().getString().equals(""))
+    if (!getBodyContent().getString().equals("")) {
       outValue.add(getBodyContent().getString());
+    }
     
     return SKIP_BODY;
   }
@@ -249,8 +265,9 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
       ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
       ContextManagerIF ctxmgr = contextTag.getContextManager();
       setOntopia(clonedVar, outValue, ctxmgr);
-    } else
+    } else {
       setJstl(clonedVar, outValue, mapScope(scope));
+    }
 
     return EVAL_PAGE;
   }

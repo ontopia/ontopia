@@ -38,8 +38,9 @@ public class NameStringifier implements Function<NameIF, String> {
    */
   @Override
   public String apply(NameIF name) {
-    if (name == null)
+    if (name == null) {
       return "[No name]";
+    }
     return name.getValue();
   }
   

@@ -233,9 +233,10 @@ public final class Ontopia {
     // Check to see if required classes get imported
     checkClasses();
 
-    if (System.getProperty("java.version").compareTo("1.7.0") < 0)
+    if (System.getProperty("java.version").compareTo("1.7.0") < 0) {
       throw new OntopiaRuntimeException("Java 1.7 or newer needed; running " +
 					System.getProperty("java.version"));
+    }
   }
 
   public static String getInfo() {  

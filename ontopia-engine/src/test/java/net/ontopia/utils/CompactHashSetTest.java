@@ -137,8 +137,9 @@ public class CompactHashSetTest {
 
     Set otherSet = new HashSet();
     Iterator it = set.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       otherSet.add(it.next());
+    }
 
     Assert.assertTrue("not all objects in set(3) iterated to",
 	   set.containsAll(otherSet) && otherSet.containsAll(set));
@@ -163,10 +164,11 @@ public class CompactHashSetTest {
 
     while (it.hasNext()) {
       Object x = it.next();
-      if ("hei2".equals(x))
-	it.remove();
-      else
-	otherSet.add(x);
+      if ("hei2".equals(x)) {
+        it.remove();
+      } else {
+        otherSet.add(x);
+      }
     }
 
     Assert.assertTrue("set(2).size() != 2", set.size() == 2);
@@ -517,9 +519,10 @@ public class CompactHashSetTest {
     set.add("$_bei4");
 
     Iterator it = new ArrayList(set).iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       Assert.assertTrue("object to be removed not found",
                  set.remove(it.next()));
+    }
 
     
     set.add("hei");
@@ -620,8 +623,9 @@ public class CompactHashSetTest {
 
     Iterator it = set.iterator();
     while (it.hasNext()) {
-      if (it.next().equals("2"))
+      if (it.next().equals("2")) {
         it.remove();
+      }
     }
 
     Assert.assertTrue("1 was lost!", set.contains("1"));
@@ -676,8 +680,9 @@ public class CompactHashSetTest {
   private void assertIterator() {
     List list = new ArrayList();
     Iterator it = set.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       list.add(it.next());
+    }
 
     Assert.assertTrue("wrong number of elements found",
                list.size() == set.size());
@@ -690,8 +695,9 @@ public class CompactHashSetTest {
     ints = set.toArray(ints);
 
     List list = new ArrayList();    
-    for (int ix = 0; ix < ints.length && ints[ix] != null; ix++)
+    for (int ix = 0; ix < ints.length && ints[ix] != null; ix++) {
       list.add(ints[ix]);
+    }
 
     Assert.assertTrue("wrong number of elements found",
                list.size() == set.size());

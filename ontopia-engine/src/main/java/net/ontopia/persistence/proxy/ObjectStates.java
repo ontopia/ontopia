@@ -91,8 +91,9 @@ public class ObjectStates {
 
   public synchronized void read(IdentityIF identity) {
     int s = map.get(identity);
-    if ((s & STATE_READ) != STATE_READ)
+    if ((s & STATE_READ) != STATE_READ) {
       map.put(identity, s | STATE_READ);
+    }
   }
 
   public synchronized int getState(IdentityIF identity) {

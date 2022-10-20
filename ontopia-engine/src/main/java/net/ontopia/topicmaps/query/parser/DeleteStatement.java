@@ -48,10 +48,11 @@ public class DeleteStatement extends ModificationFunctionStatement {
 
   @Override
   public int doUpdates(QueryMatches matches) throws InvalidQueryException {
-    if (funcname == null)
+    if (funcname == null) {
       return doNormalDeletes(matches);
-    else
+    } else {
       return doFunctionUpdates(matches);
+    }
   }
 
   // --- Internal methods
@@ -59,12 +60,14 @@ public class DeleteStatement extends ModificationFunctionStatement {
   @Override
   public String toString() {
     String str = "delete ";
-    if (funcname != null)
+    if (funcname != null) {
       str += toStringFunction();
-    else
+    } else {
       str += toStringLitlist();
-    if (query != null)
+    }
+    if (query != null) {
       str += "\nfrom " + query.toStringFromPart();
+    }
     return str;
   }
 
@@ -75,15 +78,17 @@ public class DeleteStatement extends ModificationFunctionStatement {
     for (int ix = 0; ix < litlist.size(); ix++) {
       Object lit = litlist.get(ix);
 
-      if (lit instanceof Parameter)
+      if (lit instanceof Parameter) {
         lit = arguments.get(((Parameter) lit).getName());
+      }
       
       if (lit instanceof TMObjectIF) {
         ((TMObjectIF) lit).remove();
         deletes++;
-      } else if (strict)
+      } else if (strict) {
         throw new InvalidQueryException("Invalid reference in litlist: " +
                                         lit);
+      }
     }
     return deletes;
   }
@@ -101,9 +106,10 @@ public class DeleteStatement extends ModificationFunctionStatement {
         if (o instanceof TMObjectIF) {
           ((TMObjectIF) o).remove();
           deletes++;
-        } else
+        } else {
           throw new InvalidQueryException("Deleting non-topic map object: " +
                                           o);
+        }
       }
     }
     
@@ -135,8 +141,9 @@ public class DeleteStatement extends ModificationFunctionStatement {
     }
     @Override
     public void modify(TMObjectIF object, Object v) {
-      if (!(object instanceof TopicIF))
+      if (!(object instanceof TopicIF)) {
         return;
+      }
 
       TopicIF topic = (TopicIF) object;
       String value = (String) v;
@@ -155,8 +162,9 @@ public class DeleteStatement extends ModificationFunctionStatement {
     }
     @Override
     public void modify(TMObjectIF object, Object v) {
-      if (!(object instanceof TopicIF))
+      if (!(object instanceof TopicIF)) {
         return;
+      }
 
       TopicIF topic = (TopicIF) object;
       String value = (String) v;
@@ -175,8 +183,9 @@ public class DeleteStatement extends ModificationFunctionStatement {
     }
     @Override
     public void modify(TMObjectIF object, Object v) {
-      if (!(object instanceof TopicIF))
+      if (!(object instanceof TopicIF)) {
         return;
+      }
 
       TopicIF topic = (TopicIF) object;
       TopicIF type = (TopicIF) v;
@@ -208,8 +217,9 @@ public class DeleteStatement extends ModificationFunctionStatement {
       ReifiableIF reified = (ReifiableIF) v;
 
       TopicIF realreifier = reified.getReifier();
-      if (realreifier != null && reifier.equals(realreifier))
+      if (realreifier != null && reifier.equals(realreifier)) {
         reified.setReifier(null);
+      }
     }
   }
 }

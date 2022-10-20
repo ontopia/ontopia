@@ -60,10 +60,11 @@ public class HTTPSearcher extends AbstractSearcher {
     HTTPSearchResult(String query) {
       // construct url
       String url = (String)parameters.get("url");
-      if (url.lastIndexOf('?') >= 0)
+      if (url.lastIndexOf('?') >= 0) {
         url += "&query=" + URLEncoder.encode(query);
-      else
+      } else {
         url += "?query=" + URLEncoder.encode(query);
+      }
 
       // Create new parser object
       XMLReader parser;
@@ -86,8 +87,9 @@ public class HTTPSearcher extends AbstractSearcher {
                                           e.getSystemId() + ":" + e.getLineNumber() + ":" +
                                           e.getColumnNumber(), e);
       } catch (SAXException e) {
-        if (e.getException() instanceof IOException)
+        if (e.getException() instanceof IOException) {
           throw new OntopiaRuntimeException(e.getException());
+        }
         throw new OntopiaRuntimeException(e);
       } catch (Exception e) {
         throw new OntopiaRuntimeException(e);

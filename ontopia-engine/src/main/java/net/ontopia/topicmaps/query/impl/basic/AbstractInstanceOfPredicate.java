@@ -49,14 +49,15 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
 
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.BIG_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
   
   @Override
@@ -68,19 +69,21 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
     int classix = result.getIndex(arguments[1]);
     
     if (result.data[0][instix] != null) {
-      if (result.data[0][classix] != null)
+      if (result.data[0][classix] != null) {
         // (instance, class)
         return verifyPairs(result, instix, classix);
-      else
+      } else {
         // (instance, $CLASS)
         return fillInClasses(result, instix, classix);
+      }
     } else {
-      if (result.data[0][classix] != null)
+      if (result.data[0][classix] != null) {
         // ($INSTANCE, class)
         return fillInInstances(result, instix, classix);
-      else
+      } else {
         // ($INSTANCE, $CLASS)
         return generateAllPairs(result, instix, classix);
+      }
     }
   }
 
@@ -167,8 +170,9 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
       for (int kix = 0; kix < supers_length; kix++) {
         for (int ix = 0; ix < instances_length; ix++) {
           for (int i = 0; i <= matches.last; i++) {
-            if (result.last+1 == result.size) 
+            if (result.last+1 == result.size) {
               result.increaseCapacity();
+            }
             result.last++;
 
             Object[] row = (Object[]) matches.data[i].clone();
@@ -192,17 +196,20 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
 
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!(matches.data[ix][instix] instanceof TopicIF))
+      if (!(matches.data[ix][instix] instanceof TopicIF)) {
         continue;
+      }
       
       TopicIF inst = (TopicIF) matches.data[ix][instix];
       Object klass = matches.data[ix][classix];
 
-      if (!getClasses(inst).contains(klass))
+      if (!getClasses(inst).contains(klass)) {
         continue; // not a match, so skip it
+      }
       
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
 
       // FIXME: is this really safe? or could row sharing give overwrites?
@@ -225,8 +232,9 @@ public abstract class AbstractInstanceOfPredicate implements BasicPredicateIF {
     Object[] values = theValues.toArray();
     int length = values.length;
     for (int ix = 0; ix < length; ix++) {
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
       
       Object[] newRow = (Object[]) row.clone();

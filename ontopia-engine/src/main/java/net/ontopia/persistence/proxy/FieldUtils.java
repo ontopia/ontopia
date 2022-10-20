@@ -119,8 +119,9 @@ public class FieldUtils {
   public static FieldDescriptor[] filterByCardinality(FieldDescriptor[] fdescs, int cardinality) {
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : fdescs) {
-      if (fdesc.getCardinality() == cardinality)
+      if (fdesc.getCardinality() == cardinality) {
         result.add(fdesc);
+      }
     }
     return toFieldDescriptorArray(result);
   }
@@ -131,8 +132,9 @@ public class FieldUtils {
   public static FieldInfoIF[] filterByCardinality(FieldInfoIF[] finfos, int cardinality) {
     Collection<FieldInfoIF> result = new ArrayList<FieldInfoIF>();
     for (FieldInfoIF finfo : finfos) {
-      if (finfo.getCardinality() == cardinality)
+      if (finfo.getCardinality() == cardinality) {
         result.add(finfo);
+      }
     }
     return toFieldInfoArray(result);
   }
@@ -143,8 +145,9 @@ public class FieldUtils {
   public static FieldInfoIF[] filterAggregate(FieldInfoIF[] finfos) {
     Collection<FieldInfoIF> result = new ArrayList<FieldInfoIF>();
     for (FieldInfoIF finfo : finfos) {
-      if (finfo.isAggregateField())
+      if (finfo.isAggregateField()) {
         result.add(finfo);
+      }
     }
     return toFieldInfoArray(result);
   }
@@ -156,8 +159,9 @@ public class FieldUtils {
   public static FieldDescriptor[] filterByTable(FieldDescriptor[] fdescs, String table) {
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : fdescs) {
-      if (table.equals(fdesc.getTable()))
+      if (table.equals(fdesc.getTable())) {
         result.add(fdesc);
+      }
     }
     return toFieldDescriptorArray(result);
   }
@@ -220,9 +224,10 @@ public class FieldUtils {
     }
     
     String setter_name = fdesc.getSetter();
-    if (setter_name == null)
+    if (setter_name == null) {
       throw new OntopiaRuntimeException("Setter method for " + object_class.getName() + "."
                                         + fdesc.getName() + " descriptor not specified.");
+    }
     //! if (log.isDebugEnabled())
     //!   log.debug("Looking up: " + object_class.getName() + "." + setter_name + "(" + value_class + ")");
 
@@ -284,16 +289,17 @@ public class FieldUtils {
    */
   public static Class<?> getPrimitiveClass(Class<?> klass) {
     // Note: Only primitive wrapper classes are expected as argument.
-    if (klass.equals(String.class))
+    if (klass.equals(String.class)) {
       return klass;
-    else if (klass.equals(Long.class))
+    } else if (klass.equals(Long.class)) {
       return Long.TYPE;
-    else if (klass.equals(Integer.class))
+    } else if (klass.equals(Integer.class)) {
       return Integer.TYPE;
-    else if (klass.equals(Float.class))
+    } else if (klass.equals(Float.class)) {
       return Float.TYPE;
-    else
+    } else {
       throw new OntopiaRuntimeException("Unsupported primitive wrapper class " + klass);
+    }
   }
 
   /**
@@ -324,8 +330,9 @@ public class FieldUtils {
     }
     // Superclasses
     Class<?> _superclass = klass.getSuperclass();
-    if (_superclass != null)
+    if (_superclass != null) {
       accumulateImplementedInterfaces(_superclass, result);
+    }
   }
   
   /**

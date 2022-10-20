@@ -93,7 +93,9 @@ public class TypeHierarchyUtils {
    */
   public boolean isInstanceOf(TopicIF typed, TopicIF klass) {
     Collection<TopicIF> _types = typed.getTypes();
-    if (_types.contains(klass)) return true;
+    if (_types.contains(klass)) {
+      return true;
+    }
     Iterator<TopicIF> it = _types.iterator();
     while (it.hasNext()) {
       if (supertypesWalker.isAssociated(it.next(), klass)) {
@@ -142,8 +144,9 @@ public class TypeHierarchyUtils {
         otherAssocRole = itAssocRoles.next();
         // stop further processing if found association
         TopicIF player = otherAssocRole.getPlayer();
-        if (player != null && player.equals(associated)) 
+        if (player != null && player.equals(associated)) {
           return true;
+        }
       }
     } // while itRoles
 
@@ -180,8 +183,9 @@ public class TypeHierarchyUtils {
     Iterator<List<TMObjectIF>> it = supertypesWalker.walkPaths(klass).iterator();
     while (it.hasNext()) {
       List<TMObjectIF> path = it.next();
-      for (int ix = 2; ix < path.size() && ix <= level*2; ix += 2) 
+      for (int ix = 2; ix < path.size() && ix <= level*2; ix += 2) {
         supers.add((TopicIF) path.get(ix));
+      }
     }
     return supers;
   }
@@ -214,8 +218,9 @@ public class TypeHierarchyUtils {
     Iterator<List<TMObjectIF>> it = subtypesWalker.walkPaths(klass).iterator();
     while (it.hasNext()) {
       List<TMObjectIF> path = it.next();
-      for (int ix = 2; ix < path.size() && ix <= level*2; ix += 2) 
+      for (int ix = 2; ix < path.size() && ix <= level*2; ix += 2) {
         subs.add((TopicIF) path.get(ix));
+      }
     }
     return subs;
   }
@@ -229,7 +234,9 @@ public class TypeHierarchyUtils {
    * supertypes of the given typedIF object.   
    */
   public Collection<TopicIF> getSupertypes(TypedIF typed) {
-    if (typed.getType() == null) return new ArrayList<TopicIF>();
+    if (typed.getType() == null) {
+      return new ArrayList<TopicIF>();
+    }
     return supertypesWalker.walkTopics(typed.getType());
   }
 
@@ -263,8 +270,9 @@ public class TypeHierarchyUtils {
     while (it.hasNext()) {
       TopicIF type = it.next();
       // add type (if wanted)
-      if (!excludeTypes)
+      if (!excludeTypes) {
         ret.add(type);
+      }
       // add supertypes of this type
       ret.addAll(supertypesWalker.walkTopics(type));
     }

@@ -119,10 +119,11 @@ public class ClassInfo implements ClassInfoIF {
   
   @Override
   public Object createInstance(boolean immutable) throws Exception {
-    if (immutable)
+    if (immutable) {
       return klass_immutable.newInstance();
-    else
+    } else {
       return klass.newInstance();
+    }
   }
 
   /**
@@ -242,8 +243,9 @@ public class ClassInfo implements ClassInfoIF {
       return new ReferenceFieldInfo(cinfo, fdesc, index);
     } else if (fdesc.isAggregateField()) {
       return new AggregateFieldInfo(cinfo, fdesc, index);
-    } else
+    } else {
       throw new OntopiaRuntimeException("Unknown field type: " + fdesc);
+    }
   }
   
   @Override

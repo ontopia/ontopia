@@ -80,11 +80,12 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
   public synchronized IdentityIF generateKey(Class<?> type) {
     
     // If we've used up the reserved interval fetch a new one from the database.
-    if (value >= max_value)
+    if (value >= max_value) {
       return new LongIdentity(type, incrementInDatabase(type));
-    else
+    } else {
       // Increment and return
       return new LongIdentity(type, ++value);
+    }
   }
   
   /**
@@ -99,11 +100,12 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
     long new_value;
     
     String entry;
-    if (global_entry != null)
+    if (global_entry != null) {
       entry = global_entry;
-    else
+    } else {
       //! entry = type.getName();
       throw new UnsupportedOperationException("Named key generators are not yet supported.");
+    }
     
     
     // Get key generator row locking keyword (e.g. 'for update')
@@ -118,16 +120,18 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
       
     } else {
       if (lkw == null) {      
-        if ("sapdb".equals(database))
+        if ("sapdb".equals(database)) {
           lkw = "with lock";
-        else 
+        } else {
           lkw = "for update";
+        }
       }
       sql_select = "select " + valcol + " from " + table + " where " + keycol + " = ? " + lkw;
     }
     
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("KeyGenerator: retrieving: " + sql_select);
+    }
     
     // Request new database connection
     Connection conn = null;
@@ -140,9 +144,10 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
         stm1.setString(1, entry);
         ResultSet rs = stm1.executeQuery();
         
-        if (!rs.next())
+        if (!rs.next()) {
           throw new OntopiaRuntimeException("HIGH/LOW key generator table '" + table + 
           "' not initialized (no rows).");
+        }
         
         // Get value from result set and close it.
         current_value = rs.getLong(1);
@@ -156,8 +161,9 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
       new_value = current_value + grabsize;
       
       String sql_update = "update " + table + " set " + valcol + " = ? where " + keycol + " = ?";
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("KeyGenerator: incrementing: " + sql_update);
+      }
 
       PreparedStatement stm2 = conn.prepareStatement(sql_update);
       try {
@@ -173,7 +179,9 @@ public final class HighLowKeyGenerator implements KeyGeneratorIF {
       
     } catch (SQLException e) {
       try {
-        if (conn != null) conn.rollback();
+        if (conn != null) {
+          conn.rollback();
+        }
       } catch (SQLException e2) {
         // Ignore, we're already in trouble.
       }

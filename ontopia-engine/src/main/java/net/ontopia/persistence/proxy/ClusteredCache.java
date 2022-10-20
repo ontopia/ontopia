@@ -58,8 +58,9 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
   public synchronized V remove(K key, boolean notifyCluster) {
     V o = cache.remove(key);
     // notify cluster
-    if (notifyCluster)
+    if (notifyCluster) {
       cluster.evictCache(namespace, cacheType, key);
+    }
     return o;
   }
   
@@ -69,16 +70,18 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
       cache.remove(key);
     }
     // notify cluster
-    if (notifyCluster)
+    if (notifyCluster) {
       cluster.evictCache(namespace, cacheType, keys);
+    }
   }
 
   @Override
   public synchronized void clear(boolean notifyCluster) {
     cache.clear();
     // notify cluster
-    if (notifyCluster)
+    if (notifyCluster) {
       cluster.clearCache(namespace, cacheType);
+    }
   }
   
   @Override
@@ -89,7 +92,9 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
       if (dumpCache) {
         out.write("<table>\n");
         for (K key : cache.keySet()) {
-          if (key == null) continue;
+          if (key == null) {
+            continue;
+          }
           V val = cache.get(key);
           out.write("<tr><td>");
           out.write((key == null ? "null" : StringUtils.escapeHTMLEntities(key.toString())));

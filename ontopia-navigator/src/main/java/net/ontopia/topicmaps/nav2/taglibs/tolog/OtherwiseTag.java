@@ -48,23 +48,26 @@ public class OtherwiseTag extends BodyTagSupport {
   @Override
   public int doStartTag() throws JspTagException {
     parentChooser = (ChooseTag) findAncestorWithClass(this, ChooseTag.class);
-    if (parentChooser == null)
+    if (parentChooser == null) {
       throw new JspTagException(
               "tolog:otherwise tag is not inside tolog:choose tag.");
+    }
 
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:otherwise> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found.");
+    }
     
     contextTag.getContextManager().pushScope();
     
     // If a matching when was already found within the parentChooser
-    if (parentChooser.foundMatchingWhen())
+    if (parentChooser.foundMatchingWhen()) {
       // No more WhenTags need to be executed (tested in each WhenTag).
       return SKIP_BODY;
+    }
     return EVAL_BODY_BUFFERED;
   }
 

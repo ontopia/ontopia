@@ -50,17 +50,19 @@ public abstract class AbstractCollectionTest {
 
   protected void assertCollection(Collection coll, Collection identical, Collection smaller) {
     // Size checks
-    if (coll.size() > 0)
+    if (coll.size() > 0) {
       Assert.assertTrue("coll is not empty[1]", coll.isEmpty() == false);
-    else
+    } else {
       Assert.assertTrue("coll is empty[1]", coll.isEmpty());
+    }
     
     Assert.assertTrue("coll size[1]", coll.size() == intended_size);
     
-    if (coll.size() > 0)
+    if (coll.size() > 0) {
       Assert.assertTrue("coll is not empty[2]", coll.isEmpty() == false);
-    else
+    } else {
       Assert.assertTrue("coll is empty[2]", coll.isEmpty());
+    }
     
     Assert.assertTrue("coll size[2]", coll.size() == intended_size);
 
@@ -73,21 +75,27 @@ public abstract class AbstractCollectionTest {
     Assert.assertTrue("coll contains all", coll.containsAll(identical));
 
     // Containment
-    if (coll.size() > 0) Assert.assertTrue("coll contains A", coll.contains("A"));
-    if (coll.size() > 1) Assert.assertTrue("coll contains B", coll.contains("B"));
+    if (coll.size() > 0) {
+      Assert.assertTrue("coll contains A", coll.contains("A"));
+    }
+    if (coll.size() > 1) {
+      Assert.assertTrue("coll contains B", coll.contains("B"));
+    }
 
     // Test with smaller collection
     Assert.assertTrue("coll contains all smaller", coll.containsAll(smaller));
 
-    if (coll.size() > 0)
+    if (coll.size() > 0) {
       Assert.assertTrue("smaller contains all coll", !smaller.containsAll(coll));
-    else
+    } else {
       Assert.assertTrue("smaller contains all coll", smaller.containsAll(coll));
+    }
     
-    if (coll.size() > 0)
+    if (coll.size() > 0) {
       Assert.assertTrue("coll equals smaller", !coll.equals(smaller));
-    else
+    } else {
       Assert.assertTrue("coll equals smaller", coll.equals(smaller));
+    }
       
     Assert.assertTrue("coll equals identical", coll.equals(identical));
     

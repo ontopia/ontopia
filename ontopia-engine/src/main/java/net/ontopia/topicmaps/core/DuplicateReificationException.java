@@ -50,8 +50,9 @@ public class DuplicateReificationException extends ConstraintViolationException 
    *         different object
    */
   public static boolean check(ReifiableIF reifiable, TopicIF reifier) {
-    if (reifier == null)
+    if (reifier == null) {
       return false;
+    }
     
     ReifiableIF existingReified = reifier.getReified();
     if (existingReified != null &&
@@ -63,10 +64,11 @@ public class DuplicateReificationException extends ConstraintViolationException 
       }
       String key1 = KeyGenerator.makeKey(reifiable);
       String key2 = KeyGenerator.makeKey(existingReified);
-      if (!key1.equals(key2))
+      if (!key1.equals(key2)) {
         throw new DuplicateReificationException("The topic " + reifier +
            " cannot reify more than one reifiable object. 1: " + existingReified +
            " 2: " + reifiable);
+      }
       MergeUtils.mergeInto(reifiable, existingReified);
     }
     

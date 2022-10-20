@@ -73,14 +73,16 @@ public class IndexManager extends AbstractIndexManager {
   @Override
   public IndexIF getIndex(String name) {
     // Check to see if transaction is active.
-    if (!transaction.isActive())
+    if (!transaction.isActive()) {
       throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
+    }
 
     // Create index
     IndexIF ix = indexes.get(name);
-    if (ix == null)
+    if (ix == null) {
       // Throw unsupported exception if index is unsupported.
       throw new OntopiaUnsupportedException("Unknown index: " + name);
+    }
     if (ix instanceof AbstractIndex) {
       return ((AbstractIndex) ix).getIndex();
     } else {

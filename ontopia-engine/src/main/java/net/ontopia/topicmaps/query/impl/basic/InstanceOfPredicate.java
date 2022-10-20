@@ -61,8 +61,9 @@ public class InstanceOfPredicate extends AbstractInstanceOfPredicate {
   protected Collection getClasses(TopicIF instance) {
     Set types = new CompactHashSet();
     Iterator it = instance.getTypes().iterator();
-    while (it.hasNext()) 
+    while (it.hasNext()) {
       types.addAll(getSupertypes((TopicIF) it.next()));
+    }
     return types;
   }
 
@@ -70,8 +71,9 @@ public class InstanceOfPredicate extends AbstractInstanceOfPredicate {
   protected Collection getInstances(TopicIF klass) {
     Set instances = new CompactHashSet();
     Iterator it = getSubtypes(klass).iterator();
-    while (it.hasNext()) 
+    while (it.hasNext()) {
       instances.addAll(index.getTopics((TopicIF) it.next()));
+    }
     return instances;
   }
 

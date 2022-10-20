@@ -57,7 +57,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public Collection<TopicIF> getRoleTypes() {
 
-    if (target == null) return super.getRoleTypes();
+    if (target == null) {
+      return super.getRoleTypes();
+    }
     return target.getRoleTypes();
   }
 
@@ -69,7 +71,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
 
-    if (target == null) return super.getRolesByType(roletype);
+    if (target == null) {
+      return super.getRolesByType(roletype);
+    }
     return target.getRolesByType(roletype);
   }
 
@@ -81,7 +85,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public Collection<AssociationRoleIF> getRoles() {
 
-    if (target == null) return super.getRoles();
+    if (target == null) {
+      return super.getRoles();
+    }
     return target.getRoles();
   }
 
@@ -93,7 +99,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public Collection<TopicIF> getScope() {
 
-    if (target == null) return super.getScope();
+    if (target == null) {
+      return super.getScope();
+    }
     return target.getScope();
   }
 
@@ -105,8 +113,11 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public void addTheme(TopicIF theme) {
 
-    if (target == null) super.addTheme(theme);
-    else target.addTheme(theme);
+    if (target == null) {
+      super.addTheme(theme);
+    } else {
+      target.addTheme(theme);
+    }
   }
 
   /*
@@ -117,8 +128,11 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public void removeTheme(TopicIF theme) {
 
-    if (target == null) super.removeTheme(theme);
-    else target.removeTheme(theme);
+    if (target == null) {
+      super.removeTheme(theme);
+    } else {
+      target.removeTheme(theme);
+    }
   }
 
   /*
@@ -129,7 +143,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public TopicIF getType() {
 
-    if (target == null) return super.getType();
+    if (target == null) {
+      return super.getType();
+    }
     return target.getType();
   }
 
@@ -141,14 +157,19 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public void setType(TopicIF type) {
 
-    if (target == null) super.setType(type);
-    else target.setType(type);
+    if (target == null) {
+      super.setType(type);
+    } else {
+      target.setType(type);
+    }
   }
 
   @Override
   public String toString() {
 
-    if (target == null) return super.toString();
+    if (target == null) {
+      return super.toString();
+    }
     return "{" + target.toString() + "}";
 
   }
@@ -161,7 +182,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public String getObjectId() {
 
-    if (target == null) return super.getObjectId();
+    if (target == null) {
+      return super.getObjectId();
+    }
     return target.getObjectId();
   }
 
@@ -173,7 +196,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public boolean isReadOnly() {
 
-    if (target == null) return super.isReadOnly();
+    if (target == null) {
+      return super.isReadOnly();
+    }
     return target.isReadOnly();
   }
 
@@ -185,7 +210,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public TopicMapIF getTopicMap() {
 
-    if (target == null) return super.getTopicMap();
+    if (target == null) {
+      return super.getTopicMap();
+    }
     return target.getTopicMap();
   }
 
@@ -197,7 +224,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public Collection<LocatorIF> getItemIdentifiers() {
 
-    if (target == null) return super.getItemIdentifiers();
+    if (target == null) {
+      return super.getItemIdentifiers();
+    }
     return target.getItemIdentifiers();
   }
 
@@ -210,8 +239,11 @@ public class DynamicAssociation extends Association implements AssociationIF {
   public void addItemIdentifier(LocatorIF source_locator)
       throws ConstraintViolationException {
 
-    if (target == null) super.addItemIdentifier(source_locator);
-    else target.addItemIdentifier(source_locator);
+    if (target == null) {
+      super.addItemIdentifier(source_locator);
+    } else {
+      target.addItemIdentifier(source_locator);
+    }
   }
 
   /*
@@ -222,13 +254,18 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
 
-    if (target == null) super.removeItemIdentifier(source_locator);
-    else target.removeItemIdentifier(source_locator);
+    if (target == null) {
+      super.removeItemIdentifier(source_locator);
+    } else {
+      target.removeItemIdentifier(source_locator);
+    }
   }
 
   @Override
   public void remove() {
-    if (target == null) super.remove();
+    if (target == null) {
+      super.remove();
+    }
     target.remove();
   }
   
@@ -236,18 +273,24 @@ public class DynamicAssociation extends Association implements AssociationIF {
   public boolean equals(Object obj) {
 
     if (obj instanceof DynamicAssociation) {
-      if (target == null) return ((DynamicAssociation) obj).equals(this);
+      if (target == null) {
+        return ((DynamicAssociation) obj).equals(this);
+      }
       return obj.equals(target);
     }
 
-    if (target == null) return super.equals(obj);
+    if (target == null) {
+      return super.equals(obj);
+    }
     return target.equals(obj);
 
   }
 
   public boolean equals(DynamicAssociation obj) {
 
-    if (target == null) return super.equals(obj);
+    if (target == null) {
+      return super.equals(obj);
+    }
     return target.equals(obj);
 
   }
@@ -255,7 +298,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   public int hashCode() {
 
-    if (target == null) return super.hashCode();
+    if (target == null) {
+      return super.hashCode();
+    }
     return target.hashCode();
   }
 
@@ -270,7 +315,9 @@ public class DynamicAssociation extends Association implements AssociationIF {
   @Override
   protected boolean isConnected() {
 
-    if (target == null) return super.isConnected();
+    if (target == null) {
+      return super.isConnected();
+    }
     
     // IDM this cast to DynamicAssociation should not be
     // necessary and is not strictly correct, but #isConnected() 

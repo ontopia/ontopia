@@ -85,10 +85,14 @@ public abstract class TMObject extends AbstractRWPersistent
       // Register with same transaction as topic map
       TransactionIF ptxn = topicmap._p_getTransaction();
       // FIXME: can the transaction ever be null in this case?
-      if (ptxn != null) ptxn.create(this);
+      if (ptxn != null) {
+        ptxn.create(this);
+      }
     } else {
       // Delete from repository
-      if (isPersistent()) txn.delete(this);
+      if (isPersistent()) {
+        txn.delete(this);
+      }
     }
   }
   
@@ -128,13 +132,16 @@ public abstract class TMObject extends AbstractRWPersistent
     throws ConstraintViolationException {
     Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
-    if (getTopicMap() == null)
+    if (getTopicMap() == null) {
       throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
+    }
 
     // Check to see if the item identifier is already a item identifier
     // of this topic.    
     Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
-    if (sources.contains(source_locator)) return;    
+    if (sources.contains(source_locator)) {
+      return;
+    }    
 
     // Note: Need to morph it into item identifier to ensure that it is
     // correctly handled by the mapping.
@@ -157,13 +164,16 @@ public abstract class TMObject extends AbstractRWPersistent
   public void removeItemIdentifier(LocatorIF source_locator) {
     Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
-    if (getTopicMap() == null)
+    if (getTopicMap() == null) {
       throw new ConstraintViolationException("Cannot modify item identifiers " +
                                  "when object isn't attached to a topic map.");
+    }
     
     // Check to see if item identifier is a item identifier of this topic.
     Collection<LocatorIF> sources = this.<LocatorIF>loadCollectionField(LF_sources);
-    if (!sources.contains(source_locator)) return;
+    if (!sources.contains(source_locator)) {
+      return;
+    }
 
     // Note: Need to morph it into item identifier to ensure that it is
     // correctly handled by the mapping.
@@ -191,8 +201,9 @@ public abstract class TMObject extends AbstractRWPersistent
     // Note: The object should already have been materialized at this
     // point, because it is about to be modified.
     TopicMapIF topicmap = getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       return;
+    }
     RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
     EventManagerIF emanager = (EventManagerIF)store.getTransaction();
     // System.out.println("->Object: " + this + " event: " + event + " new: " + new_value + " old:" + old_value);

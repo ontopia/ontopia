@@ -57,12 +57,14 @@ public class CSVDataSource implements DataSourceIF {
   protected void setPath(String _path) {
     File baseDirectory = mapping.getBaseDirectory();
     File path = new File(_path);
-    if (baseDirectory != null && !path.isAbsolute())
+    if (baseDirectory != null && !path.isAbsolute()) {
       this.path = new File(baseDirectory, _path);
-    else
+    } else {
       this.path = path;
-    if (!this.path.exists())
+    }
+    if (!this.path.exists()) {
       throw new DB2TMException("CSV data source path " + this.path + " does not exist.");
+    }
   }
   
   protected void setEncoding(String encoding) {
@@ -95,10 +97,11 @@ public class CSVDataSource implements DataSourceIF {
       Relation relation = mapping.getRelation(filename);
       //! if (relation == null && filename.endsWith(".csv"))
       //!   relation = mapping.getRelation(filename.substring(0, filename.length() - 4));
-      if (relation != null)
+      if (relation != null) {
         relations.add(relation);
-      else
+      } else {
         log.debug("No mapping found for file '{}'.", filename);
+      }
     }
     return relations;
   }
@@ -106,7 +109,9 @@ public class CSVDataSource implements DataSourceIF {
   @Override
   public TupleReaderIF getReader(String relation) {
     File file = new File(path, relation);
-    if (!file.exists()) throw new DB2TMException("Unknown relation: " + relation);
+    if (!file.exists()) {
+      throw new DB2TMException("Unknown relation: " + relation);
+    }
     return new TupleReader(file);
   }
 
@@ -161,8 +166,9 @@ public class CSVDataSource implements DataSourceIF {
     @Override
     public void close() {
       try {
-        if (in != null)
+        if (in != null) {
           in.close();
+        }
       } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }

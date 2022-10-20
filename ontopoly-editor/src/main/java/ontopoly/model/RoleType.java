@@ -46,8 +46,9 @@ public class RoleType extends AbstractTypingTopic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof RoleType))
+    if (!(obj instanceof RoleType)) {
       return false;
+    }
 
     RoleType other = (RoleType) obj;
     return (getTopicIF().equals(other.getTopicIF()));

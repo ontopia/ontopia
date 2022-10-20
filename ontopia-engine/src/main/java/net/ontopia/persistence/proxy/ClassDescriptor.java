@@ -104,8 +104,9 @@ public class ClassDescriptor {
     FieldDescriptor[] result = new FieldDescriptor[identity_fields.length];
     for (int i=0; i < identity_fields.length; i++) {
       result[i] = getFieldByName(identity_fields[i]);
-      if (result[i] == null)
+      if (result[i] == null) {
         throw new OntopiaRuntimeException("Unknown identity field: " + identity_fields[i]);
+      }
     }
     return result;
   }
@@ -118,8 +119,9 @@ public class ClassDescriptor {
     List<FieldDescriptor> id_fields = Arrays.asList(getIdentityFields());
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : getFieldDescriptors()) {
-      if (!id_fields.contains(fdesc))
+      if (!id_fields.contains(fdesc)) {
         result.add(fdesc);
+      }
     }
     return FieldUtils.toFieldDescriptorArray(result);
   }
@@ -131,8 +133,9 @@ public class ClassDescriptor {
   public FieldDescriptor[] getPrimitiveFields() {
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : getFieldDescriptors()) {
-      if (fdesc.isPrimitiveField())
+      if (fdesc.isPrimitiveField()) {
         result.add(fdesc);
+      }
     }
     return FieldUtils.toFieldDescriptorArray(result);
   }
@@ -144,8 +147,9 @@ public class ClassDescriptor {
   public FieldDescriptor[] getReferenceFields() {
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : getFieldDescriptors()) {
-      if (fdesc.isReferenceField())
+      if (fdesc.isReferenceField()) {
         result.add(fdesc);
+      }
     }
     return FieldUtils.toFieldDescriptorArray(result);
   }
@@ -156,11 +160,14 @@ public class ClassDescriptor {
    * don't have explicit identity.
    */
   public FieldDescriptor[] getAggregateFields() {
-    if (isAggregate()) return getFieldDescriptors();
+    if (isAggregate()) {
+      return getFieldDescriptors();
+    }
     Collection<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
     for (FieldDescriptor fdesc : getFieldDescriptors()) {
-      if (fdesc.isAggregateField())
+      if (fdesc.isAggregateField()) {
         result.add(fdesc);
+      }
     }
     return FieldUtils.toFieldDescriptorArray(result);
   }
@@ -193,8 +200,9 @@ public class ClassDescriptor {
   public void setType(int type) {
     // TODO: PRIMITIVE not yet supported.
     if (type != ClassInfoIF.TYPE_IDENTIFIABLE &&
-        type != ClassInfoIF.TYPE_AGGREGATE)
+        type != ClassInfoIF.TYPE_AGGREGATE) {
       throw new IllegalArgumentException("Invalid argument: " + type);
+    }
     this.type = type;
   }
 
@@ -216,8 +224,9 @@ public class ClassDescriptor {
   public void setStructure(int structure) {
     // TODO: MAP not yet supported.
     if (structure != ClassInfoIF.STRUCTURE_OBJECT &&
-        structure != ClassInfoIF.STRUCTURE_COLLECTION)
+        structure != ClassInfoIF.STRUCTURE_COLLECTION) {
       throw new IllegalArgumentException("Invalid argument: " + structure);
+    }
     this.structure = structure;
   }
 

@@ -40,10 +40,12 @@ public class URIUtils {
     throws java.net.MalformedURLException {
     
     String address = file.getAddress();
-    if (!file.getNotation().equals("URI"))
+    if (!file.getNotation().equals("URI")) {
       throw new java.net.MalformedURLException("Not a URI: " + file);
-    if (!address.substring(0, 5).equals("file:"))
+    }
+    if (!address.substring(0, 5).equals("file:")) {
       throw new java.net.MalformedURLException("Not a file URI: " + file);
+    }
 
     // FIXME: this method is not complete, since it does not support Windows!
     return new File(address.substring(5));

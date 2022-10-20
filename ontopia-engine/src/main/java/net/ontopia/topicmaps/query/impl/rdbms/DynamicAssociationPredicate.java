@@ -76,8 +76,9 @@ public class DynamicAssociationPredicate
     expressions.add(new JDOEquals(new JDOField(jv_assoc, "type"), jv_atype));
 
     // if variable: filter out nulls
-    if (jv_atype.getType() == JDOValueIF.VARIABLE)
+    if (jv_atype.getType() == JDOValueIF.VARIABLE) {
       expressions.add(new JDONotEquals(jv_atype, new JDONull()));
+    }
 
     // JDOQL: A.topicmap = TOPICMAP
     expressions.add(new JDOEquals(new JDOField(jv_assoc, "topicmap"),
@@ -104,11 +105,13 @@ public class DynamicAssociationPredicate
       expressions.add(new JDOEquals(new JDOField(jv_role, "type"), jv_rtype));
 
       // if variable: filter out nulls
-      if (jv_rtype.getType() == JDOValueIF.VARIABLE)
+      if (jv_rtype.getType() == JDOValueIF.VARIABLE) {
         expressions.add(new JDONotEquals(jv_rtype, new JDONull()));
+      }
       // if variable: filter out nulls
-      if (jv_player.getType() == JDOValueIF.VARIABLE)
+      if (jv_player.getType() == JDOValueIF.VARIABLE) {
         expressions.add(new JDONotEquals(jv_player, new JDONull()));
+      }
     }
 
     // TODO: Append expression that makes sure that there are no

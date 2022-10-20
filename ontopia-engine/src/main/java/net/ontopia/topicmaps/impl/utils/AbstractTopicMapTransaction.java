@@ -54,24 +54,32 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
 
   @Override
   public TopicMapBuilderIF getBuilder() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     return builder;
   }
 
   public CollectionFactoryIF getCollectionFactory() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     return cfactory;
   }
 
   @Override
   public IndexManagerIF getIndexManager() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     return imanager;
   }
 
   @Override
   public TopicMapIF getTopicMap() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     return topicmap;
   }
 
@@ -86,25 +94,31 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
   
   @Override
   public void commit() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     
     // notify topic map reference
     TopicMapReferenceIF ref = store.getReference();
-    if (ref instanceof TransactionEventListenerIF)
+    if (ref instanceof TransactionEventListenerIF) {
       ((TransactionEventListenerIF)ref).transactionCommit(this);
+    }
   }
   
   @Override
   public void abort() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     abort(true);
   }
 
   public void abort(boolean invalidate) {
     // notify topic map reference
     TopicMapReferenceIF ref = store.getReference();
-    if (ref instanceof TransactionEventListenerIF)
+    if (ref instanceof TransactionEventListenerIF) {
       ((TransactionEventListenerIF)ref).transactionAbort(this);
+    }
   }
 
   public abstract boolean validate();

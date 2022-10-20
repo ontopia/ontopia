@@ -94,7 +94,9 @@ public class BlackList implements TermAnalyzerIF {
           added.clear();
           writer.close();
         }
-        if (reload) load();
+        if (reload) {
+          load();
+        }
       } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }
@@ -111,8 +113,9 @@ public class BlackList implements TermAnalyzerIF {
   
   @Override
   public void analyzeTerm(Term term) {
-    if (isStopWord(term.getStem()))
+    if (isStopWord(term.getStem())) {
       term.multiplyScore(stopFactor, "blacklisted");
+    }
   }
   
   @Override

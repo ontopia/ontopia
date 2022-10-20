@@ -52,9 +52,10 @@ public class RegexpTermAnalyzer implements TermAnalyzerIF {
   public void analyzeTerm(Term term) {
     for (int ix = 0; ix < rules.size(); ix++) {
       Rule rule = rules.get(ix);
-      if (rule.matches(term))
+      if (rule.matches(term)) {
         term.multiplyScore(rule.getFactor(), 
                            "matched " + rule.getName() + " rule");
+      }
     }
   }
 

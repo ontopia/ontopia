@@ -49,9 +49,12 @@ public class SQLColumns implements SQLValueIF {
   }
   
   public SQLColumns(SQLTable table, String[] cols) {
-    if (table == null) throw new IllegalArgumentException("Table cannot be null.");
-    if (cols == null || cols.length == 0)
+    if (table == null) {
+      throw new IllegalArgumentException("Table cannot be null.");
+    }
+    if (cols == null || cols.length == 0) {
       throw new IllegalArgumentException("List of columns cannot be null or empty.");
+    }
     this.table = table;
     this.cols = cols;
   }
@@ -138,8 +141,9 @@ public class SQLColumns implements SQLValueIF {
   public int hashCode() {
     int hashCode = table.hashCode();
     for (int ix = 0; ix < cols.length; ix++) {
-      if (cols[ix] != null)
+      if (cols[ix] != null) {
         hashCode = (hashCode + cols[ix].hashCode()) & 0x7FFFFFFF;
+      }
     }
     return hashCode;
   }
@@ -149,8 +153,9 @@ public class SQLColumns implements SQLValueIF {
     if (obj instanceof SQLColumns) {
       SQLColumns other = (SQLColumns)obj;
       if (table.equals(other.getTable())) {
-        if (Arrays.equals(cols, other.getColumns()))
+        if (Arrays.equals(cols, other.getColumns())) {
           return true;
+        }
       }
     }
     return false;
@@ -158,9 +163,9 @@ public class SQLColumns implements SQLValueIF {
   
   @Override
   public String toString() {
-    if (getArity() == 1)
+    if (getArity() == 1) {
       return getTable().getAlias() + "." + cols[0];
-    else {
+    } else {
       return new StringBuilder("columns:")
           .append(getTable().getAlias())
           .append('(')

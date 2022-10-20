@@ -50,13 +50,15 @@ public class ViewsFunctionBoxPanel extends Panel {
     FieldsView fieldsView = fieldsViewModel.getFieldsView();
     
     Collection<FieldsView> views = topicType.getFieldViews(fieldsView);
-    if (views.isEmpty())
+    if (views.isEmpty()) {
       setVisible(false);
+    }
     
     FieldsView currentView = fieldsViewModel.getFieldsView();
     FieldsView defaultView = FieldsView.getDefaultFieldsView(topicType.getTopicMap());
-    if (currentView == null)
+    if (currentView == null) {
       currentView = defaultView;
+    }
     
     RepeatingView rv = new RepeatingView("rows");
     add(rv);
@@ -70,10 +72,12 @@ public class ViewsFunctionBoxPanel extends Panel {
       pageParametersMap.put("topicMapId", tm.getId());
       pageParametersMap.put("topicId", topic.getId());
       pageParametersMap.put("topicTypeId", topicType.getId());
-      if (!Objects.equals(view, defaultView))
+      if (!Objects.equals(view, defaultView)) {
         pageParametersMap.put("viewId", view.getId());
-      if (topic.isOntologyTopic())
+      }
+      if (topic.isOntologyTopic()) {
         pageParametersMap.put("ontology", "true");
+      }
       
       String viewName = view.getName();
       OntopolyBookmarkablePageLink link =

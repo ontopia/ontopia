@@ -60,10 +60,11 @@ public class TopicNode implements Serializable {
   }
   
   public String getName() {
-    if (name != null) 
+    if (name != null) { 
       return name;
-    else 
+    } else {
       return getTopic().getName();
+    }
   }
   
   public Topic getTopic() {
@@ -73,7 +74,9 @@ public class TopicNode implements Serializable {
   
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof TopicNode)) return false;
+    if (!(o instanceof TopicNode)) {
+      return false;
+    }
     TopicNode other = (TopicNode)o;
     return topicId.equals(other.topicId) && topicMapId.equals(other.topicMapId);
   }

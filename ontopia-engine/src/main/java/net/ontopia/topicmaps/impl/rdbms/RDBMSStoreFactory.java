@@ -77,23 +77,25 @@ public class RDBMSStoreFactory implements TopicMapStoreFactoryIF {
   public TopicMapStoreIF createStore() {
     try {
       if (topicmap_id < 0) {
-        if (storage != null)
+        if (storage != null) {
           return new RDBMSTopicMapStore(storage);
-        else if (propfile != null)
+        } else if (propfile != null) {
           return new RDBMSTopicMapStore(propfile);
-        else if (properties != null)
+        } else if (properties != null) {
           return new RDBMSTopicMapStore(properties);
-        else
+        } else {
           return new RDBMSTopicMapStore();
+        }
       } else {
-        if (storage != null)
+        if (storage != null) {
           return new RDBMSTopicMapStore(storage, topicmap_id);
-        else if (propfile != null)
+        } else if (propfile != null) {
           return new RDBMSTopicMapStore(propfile, topicmap_id);
-        else if (properties != null)
+        } else if (properties != null) {
           return new RDBMSTopicMapStore(properties, topicmap_id);
-        else
+        } else {
           return new RDBMSTopicMapStore(topicmap_id);
+        }
       }
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);

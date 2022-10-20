@@ -40,11 +40,13 @@ public class WithinScopeDecider implements Predicate<ScopedIF> {
 
   @Override
   public boolean test(ScopedIF scoped) { 
-    if (context == null || context.isEmpty())
+    if (context == null || context.isEmpty()) {
       return false;
+    }
     Collection<TopicIF> objscope = scoped.getScope();
-    if (objscope.containsAll(context))
+    if (objscope.containsAll(context)) {
       return true;
+    }
     return false;
   }
   

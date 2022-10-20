@@ -68,10 +68,11 @@ public class FakeHttpSession implements HttpSession {
   
   @Override
   public void setAttribute(String name, Object value) {
-    if (value == null) 
+    if (value == null) { 
       attrs.remove(name);
-    else 
+    } else {
       attrs.put(name, value);
+    }
   }
   
   @Override

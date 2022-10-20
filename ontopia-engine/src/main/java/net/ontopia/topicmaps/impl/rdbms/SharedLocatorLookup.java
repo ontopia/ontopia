@@ -59,10 +59,14 @@ public class SharedLocatorLookup<E> implements TransactionalLookupIndexIF<Locato
   public E get(LocatorIF key) {
     // if added return added
     E retval = txnadd.get(key);
-    if (retval != null) return retval;
+    if (retval != null) {
+      return retval;
+    }
 
     // if removed returned null
-    if (txnrem.contains(key)) return null;
+    if (txnrem.contains(key)) {
+      return null;
+    }
 
     // check cache
     return qcache.executeQuery(access, key, new Object[] { tmid, key.getAddress() });
@@ -114,8 +118,12 @@ public class SharedLocatorLookup<E> implements TransactionalLookupIndexIF<Locato
   @Override
   public void abort() {
     // reset tracking
-    if (!txnadd.isEmpty()) txnadd = new HashMap();
-    if (!txnrem.isEmpty()) txnrem = new HashSet();
+    if (!txnadd.isEmpty()) {
+      txnadd = new HashMap();
+    }
+    if (!txnrem.isEmpty()) {
+      txnrem = new HashSet();
+    }
   }
 
 }

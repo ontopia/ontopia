@@ -136,7 +136,9 @@ public class CSVImport {
       // Ignore first X lines
       for (int i=0; i < ignorelines; i++) {
         String[] tuple = csvreader.readNext();
-        if (tuple == null) break;
+        if (tuple == null) {
+          break;
+        }
       }
 
       // HACK: override date+datetime formats
@@ -188,12 +190,13 @@ public class CSVImport {
     private int ignorelines = 0;
     @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
-      if (option == 's')
+      if (option == 's') {
         separator = value.charAt(0);
-      else if (option == 'q')
+      } else if (option == 'q') {
         stripquotes = true;
-      else if (option == 'i')
+      } else if (option == 'i') {
         ignorelines = Integer.parseInt(value);
+      }
     }
   }
   
@@ -234,10 +237,11 @@ public class CSVImport {
     String csvfile = args[1];
     String table = (args.length >= 3 ? args[2] : null);
     if (table == null) {
-      if (csvfile.endsWith(".csv"))
+      if (csvfile.endsWith(".csv")) {
         table = csvfile.substring(0, csvfile.length() - 4);
-      else
+      } else {
         table = csvfile;
+      }
     }    
     String[] columns = (args.length >= 4 ? StringUtils.split(args[3], ",") : null);
     

@@ -65,13 +65,15 @@ public class VizDebugUtils {
   }
 
   public static void debug(String source) {
-    if (isDebugEnabled)
+    if (isDebugEnabled) {
       out.println(source);
+    }
   }
   
   public static void timeDebug(String label) {
-    if (isTimeDebugEnabled)
+    if (isTimeDebugEnabled) {
       out.println(getTimeDelta() + " - " + label);
+    }
   }
   
   public static void resetTimer() {
@@ -85,21 +87,26 @@ public class VizDebugUtils {
   private static String pad(long toPad, int length) {
     String retVal = Long.toString(toPad);
     
-    while (retVal.length() < length)
+    while (retVal.length() < length) {
       retVal = "0" + retVal;
+    }
     
     return retVal;
   }
   
   public static String formatTimeDeltaValue(long delta) {
-    if (delta >= 1000)
+    if (delta >= 1000) {
       return "" + (delta / 1000) + "." + pad(delta % 1000, 3) + " seconds";
-    if (delta >= 100)
+    }
+    if (delta >= 100) {
       return "0." + delta + " seconds";
-    if (delta >= 10)
+    }
+    if (delta >= 10) {
       return "0.0" + delta + " seconds";
-    if (delta >= 0)
+    }
+    if (delta >= 0) {
       return "0.00" + delta + "seconds";
+    }
     return "ERROR: Negative time!";
   }
   
@@ -108,8 +115,9 @@ public class VizDebugUtils {
   }
   
   public static void instrumentedDebug(String source) {
-    if (instrumentedDebugOn)
+    if (instrumentedDebugOn) {
       out.println(source);
+    }
   }
 
   public static class TimerManager {
@@ -120,15 +128,17 @@ public class VizDebugUtils {
     }
     
     public void recreate(String id) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       codeTimers.put(id, new CodeTimer(id));
     }
     
     public CodeTimer getOrCreate(String id) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return null;
+      }
       
       CodeTimer timer = (CodeTimer)codeTimers.get(id);
       if (timer == null) {
@@ -139,32 +149,36 @@ public class VizDebugUtils {
     }
     
     public void start(String id) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       CodeTimer timer = getOrCreate(id);
       timer.start();
     }
 
     public void stop(String id) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       CodeTimer timer = getOrCreate(id);
       timer.stop();
     }
 
     public void report(String id) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       CodeTimer timer = getOrCreate(id);
       timer.report();
     }
     
     public void reportAll(String subtitle) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       Iterator timersIt = codeTimers.values().iterator();
       while (timersIt.hasNext()) {
@@ -174,15 +188,17 @@ public class VizDebugUtils {
     }
     
     public void reportAll() {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       reportAll(null);
     }
 
     public void report(String id, String subtitle) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       CodeTimer timer = (CodeTimer)codeTimers.get(id);
       timer.report();
@@ -197,41 +213,47 @@ public class VizDebugUtils {
     private long totalTime;
     
     public CodeTimer(String title) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       this.title = title;
     }
     
     public void start() {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       startTime = System.currentTimeMillis();
       started = true;
     }
     
     public void stop() {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
-      if (!started)
+      if (!started) {
         return;
+      }
       
       totalTime += System.currentTimeMillis() - startTime;
       stopCount++;
     }
     
     public void report() {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       report(null);
     }
 
     public void report(String subtitle) {
-      if (!isDebugEnabled)
+      if (!isDebugEnabled) {
         return;
+      }
       
       String titleString = title + (subtitle == null ? "" : ":" + subtitle);
       out.println("CodeTimer(" + titleString
@@ -241,8 +263,9 @@ public class VizDebugUtils {
     }
     
     private long divide(long dividend, long divisor) {
-      if (divisor == 0l)
+      if (divisor == 0l) {
         return 0l;
+      }
       return dividend / divisor;
     }
   }

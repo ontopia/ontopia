@@ -70,7 +70,9 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
 
       // if this is a topic map we stop, since new object will be
       // another topic map
-      if (object instanceof TopicMapIF) return;
+      if (object instanceof TopicMapIF) {
+        return;
+      }
       TMObjectIF object2 = makeObject();
       if (object2 != null) {
         try {

@@ -161,7 +161,9 @@ public class VizDesktop implements VizFrontEndIF {
     private String lang = "en";
     @Override
     public void processOption(char option, String value) {
-      if (option == 'l') lang = value;
+      if (option == 'l') {
+        lang = value;
+      }
     }
   }
 
@@ -259,8 +261,9 @@ public class VizDesktop implements VizFrontEndIF {
 
       JMenuItem mItem = new JMenuItem(file.getAbsolutePath());
       mItem.addActionListener(new FileOpenMenuListener());
-      if (first)
+      if (first) {
         mItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+      }
       parent.add(mItem);
       first = false;
     }
@@ -294,8 +297,9 @@ public class VizDesktop implements VizFrontEndIF {
         KeyInputManager.KEY_MASK));
     men.add(mItem);
 
-    if (enableRDBMSImport)
+    if (enableRDBMSImport) {
       addRDBMSImportMenuItem(men);
+    }
     
     men.addSeparator();
 
@@ -547,8 +551,9 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   private void configureScopeMenu() {
-    if (currentTopicMap == null)
+    if (currentTopicMap == null) {
       return;
+    }
 
     ScopeIndexIF scopeix = (ScopeIndexIF) currentTopicMap.getIndex(
             "net.ontopia.topicmaps.core.index.ScopeIndexIF");
@@ -560,9 +565,9 @@ public class VizDesktop implements VizFrontEndIF {
     for (Iterator iter = filter.filterThemes(scopeix.getTopicNameThemes())
         .iterator(); iter.hasNext();) {
       TopicIF theme = (TopicIF) iter.next();
-      if (theme.getTypes().isEmpty())
+      if (theme.getTypes().isEmpty()) {
         untyped.add(theme);
-      else {
+      } else {
         for (Iterator iterator = theme.getTypes().iterator(); iterator
             .hasNext();) {
           TopicIF type = (TopicIF) iterator.next();
@@ -621,12 +626,15 @@ public class VizDesktop implements VizFrontEndIF {
     setScopingTopic(scope);
     controller.setScopingTopic(scope);
     configureDynamicMenus();
-    if (generalFrame != null)
+    if (generalFrame != null) {
       generalFrame.initializeTopicLists();
-    if (assocFrame != null)
+    }
+    if (assocFrame != null) {
       assocFrame.initializeTypeList();
-    if (topicFrame != null)
+    }
+    if (topicFrame != null) {
       topicFrame.initializeTypeList();
+    }
 
   }
 
@@ -657,8 +665,9 @@ public class VizDesktop implements VizFrontEndIF {
     while (ttypes.hasNext()) {
       TopicIF type = (TopicIF) ttypes.next();
 
-      if (type.equals(defaultAssociationType))
+      if (type.equals(defaultAssociationType)) {
         continue;
+      }
       
       ColouredSquareMenuItem mItem = setupAssociationMenuItem(type);
       mItem.addActionListener(new AssocActionListener(type));
@@ -690,8 +699,9 @@ public class VizDesktop implements VizFrontEndIF {
       TopicIF type = (TopicIF) ttypes.next();
       
       // Skip default type (treated separately.
-      if (type.equals(defaultType))
+      if (type.equals(defaultType)) {
         continue;
+      }
       
       ColouredSquareMenuItem mItem = setupTopicMenuItem(type);
       mItem.addActionListener(new TopicActionListener(type));
@@ -722,13 +732,14 @@ public class VizDesktop implements VizFrontEndIF {
   
   private ColouredSquareMenuItem setupTopicMenuItem(TopicIF type) {
     String name;
-    if (type == null)
+    if (type == null) {
       name = Messages.getString("Viz.Untyped");
-    else if (type == controller.getConfigurationManager()
-        .defaultType)
+    } else if (type == controller.getConfigurationManager()
+        .defaultType) {
       name = Messages.getString("Viz.DefaultType");
-    else
+    } else {
       name = stringifier.apply(type);
+    }
 
     // add new ones based on topicmap ontology.
     ColouredSquareMenuItem mItem = new ColouredSquareMenuItem(name,
@@ -744,15 +755,17 @@ public class VizDesktop implements VizFrontEndIF {
 
     TopicIF visibleTopic = confMan.getTypeVisibleTopic();
     if (confMan.hasOccurrence(type, visibleTopic)) {
-      if (confMan.isAssociationTypeVisible(type))
+      if (confMan.isAssociationTypeVisible(type)) {
         return VisibleIndicator.CHECKED;
+      }
 
       return VisibleIndicator.UNCHECKED;
     }
       
     if (isTopicType && confMan.isTopicTypeVisible(type) ||
-        (!isTopicType) && confMan.isAssociationTypeVisible(type))
+        (!isTopicType) && confMan.isAssociationTypeVisible(type)) {
       return VisibleIndicator.DEFAULT_CHECKED;
+    }
       
     return VisibleIndicator.DEFAULT_UNCHECKED;
   }
@@ -770,8 +783,9 @@ public class VizDesktop implements VizFrontEndIF {
 
     if ("rdf".equals(getFileExtension(f)) || "n3".equals(getFileExtension(f))) {
       String mapping = controller.getRdfMappingFile();
-      if (mapping == null)
+      if (mapping == null) {
         this.setRdfMappingFile(f.getAbsolutePath());
+      }
     }
 
     TopicMapIF newTopicMap;
@@ -881,12 +895,14 @@ public class VizDesktop implements VizFrontEndIF {
 
     ColouredSquareMenuItem menuItem = (ColouredSquareMenuItem)topicTypeButtonMap
         .get(type);
-    if (menuItem != null)
+    if (menuItem != null) {
       menuItem.setSquareColor(c);
+    }
 
     menuItem = (ColouredSquareMenuItem) associationTypeButtonMap.get(type);
-    if (menuItem != null)
+    if (menuItem != null) {
       menuItem.setSquareColor(c);
+    }
 
   }
 
@@ -947,8 +963,9 @@ public class VizDesktop implements VizFrontEndIF {
       
       controller.setAssociationTypeVisible(type, indicator.isSelected());
       
-      if (assocFrame != null)
+      if (assocFrame != null) {
         assocFrame.updateSelectedFilter();
+      }
     }
   }
 
@@ -969,8 +986,9 @@ public class VizDesktop implements VizFrontEndIF {
 
       controller.setTopicTypeVisible(type, indicator.isSelected());
 
-      if (topicFrame != null)
+      if (topicFrame != null) {
         topicFrame.updateSelectedFilter();
+      }
     }
   }
 
@@ -1027,8 +1045,9 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   private void menuOpenRDBMSTopicMap() {
-    if (openBox == null)
+    if (openBox == null) {
       openBox = new OpenRDBMSDialogBox(this);
+    }
     openBox.show();
   }
   
@@ -1048,8 +1067,9 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   protected void menuOpenAssociationConfig() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     if (assocFrame == null) {
       assocFrame = TypesConfigFrame.createAssociationTypeConfigFrame(
@@ -1062,8 +1082,9 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   private void menuOpenGeneralConfig() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     if (generalFrame == null) {
       generalFrame = new GeneralConfigFrame(controller);
@@ -1075,8 +1096,9 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   private void menuOpenPrecedenceConfig() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     if (precedenceFrame == null) {
       precedenceFrame = new TypesPrecedenceFrame(controller);
@@ -1088,8 +1110,9 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   protected void menuOpenTopicConfig() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     if (topicFrame == null) {
       topicFrame =
@@ -1102,13 +1125,15 @@ public class VizDesktop implements VizFrontEndIF {
   }
 
   private void menuSaveConfiguration() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     File existing = getFileFor(controller.getConfigurationManager()
         .getTopicMap());
-    if (existing == null) 
+    if (existing == null) {
       existing = getConfigFileFor(getFileFor(controller.getTopicMap()));
+    }
 
     JFileChooser fc = new JFileChooser();
       fc.setSelectedFile(existing);
@@ -1137,11 +1162,13 @@ public class VizDesktop implements VizFrontEndIF {
 
   public String getCurrentTopicMapDirectory() {
     String configDir = controller.getCurrentTMDir();
-    if (configDir != null)
+    if (configDir != null) {
       return configDir;
+    }
     
-    if (this.currentTopicMap == null)
+    if (this.currentTopicMap == null) {
       return null;
+    }
 
     // This seems like an overly convoluted way to get to the
     // (String)path of the currently loaded TM, but I have not

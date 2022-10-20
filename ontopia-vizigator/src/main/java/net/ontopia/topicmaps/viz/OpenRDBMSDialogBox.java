@@ -271,8 +271,9 @@ public class OpenRDBMSDialogBox extends JFrame {
     }
 
     if (oldPropertiesFilePath != null && !oldPropertiesFilePath
-        .equals(newPropertiesFile.getAbsolutePath()))
+        .equals(newPropertiesFile.getAbsolutePath())) {
       oldPropertiesFilePath = null;
+    }
         
     // Get the properties file.
     Collection propertiesReferences;
@@ -286,8 +287,9 @@ public class OpenRDBMSDialogBox extends JFrame {
       }
         
       if (e.getCause() instanceof IllegalArgumentException) {
-        if (oldPropertiesFilePath != null)
+        if (oldPropertiesFilePath != null) {
           return;
+        }
           
         oldPropertiesFilePath = newPropertiesFile.getAbsolutePath();
         WarningBox warningBox = new WarningBox(Messages
@@ -339,8 +341,9 @@ public class OpenRDBMSDialogBox extends JFrame {
     fc.setFileFilter(filter);
 
     int returnVal = fc.showOpenDialog(this);
-    if (returnVal == JFileChooser.APPROVE_OPTION)
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
       return fc.getSelectedFile();
+    }
       
     return null;
   }
@@ -406,26 +409,28 @@ public class OpenRDBMSDialogBox extends JFrame {
     private void _actionPerformed(ActionEvent action) throws IOException {
       String filename = configurationFileField.getText();
       File conffile = null;
-      if (filename != null && filename.length() > 0)
+      if (filename != null && filename.length() > 0) {
         conffile = new File(filename);
+      }
       
       if (!topicMapChooser.isEnabled()) {
         String propertiesText = propertiesFileField.getText();
         File propertiesFile = new File(propertiesText);
         
-        if (propertiesFile.isDirectory())
+        if (propertiesFile.isDirectory()) {
           warn("Viz.WarningPropertiesFileIsDirectory");
-        else if (!propertiesFile.isFile())
+        } else if (!propertiesFile.isFile()) {
           warn("Viz.WarningWrongPathPropertiesFile");
-        else
+        } else {
           warn("Viz.InvalidPropertiesFile");
-      } if (tmReference == null)
+        }
+      } if (tmReference == null) {
         warn("Viz.MissingTopicMapReference");
-      else if (conffile != null && conffile.isDirectory())
+      } else if (conffile != null && conffile.isDirectory()) {
         warn("Viz.WarningConfigFileIsDirectory");
-      else if (conffile != null && !conffile.isFile())
+      } else if (conffile != null && !conffile.isFile()) {
         warn("Viz.WarningWrongPathConfigFile");
-      else {
+      } else {
         hide();
         desktop.loadTopicMap(tmReference, filename);
       }

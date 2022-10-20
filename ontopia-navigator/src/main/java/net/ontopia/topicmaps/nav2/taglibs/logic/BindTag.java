@@ -58,21 +58,24 @@ public class BindTag extends TagSupport {
 
     // Get the Map
     Collection coll;
-    if (name != null)
+    if (name != null) {
       coll = ctxtMgr.getValue(name);
-    else
+    } else {
       coll = ctxtMgr.getDefaultValue();
+    }
     
     // We should only have one value in the collection
-    if (coll.size() != 1)
+    if (coll.size() != 1) {
       throw new NavigatorRuntimeException("The collection passed on logic:bind" +
                                           " contains " + coll.size() + " entries");
+    }
 
     // And it has to be a map
     Object value = CollectionUtils.getFirstElement(coll);
-    if (!(value instanceof Map))
+    if (!(value instanceof Map)) {
       throw new NavigatorRuntimeException("The value passed to logic:bind was not " +
                                           "a map, but " + value);
+    }
     
     Map map = (Map) value;
 

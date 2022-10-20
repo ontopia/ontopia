@@ -79,8 +79,9 @@ public class DefaultJspWriter extends JspWriter {
 
   @Override
   public void write(char[] ch, int start, int length) throws IOException {
-    for (int ix = 0; ix < length; ix++)
+    for (int ix = 0; ix < length; ix++) {
       out.print(ch[ix + start]);
+    }
   }
 
   @Override

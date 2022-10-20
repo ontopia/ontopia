@@ -56,8 +56,9 @@ public class FulltextTag extends BaseValueProducingTag {
     TopicMapIF topicmap = contextTag.getTopicMap();
     String tmid = contextTag.getTopicMapId();
     
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("FulltextTag found no topic map.");
+    }
 
     try {
       // Output debugging information
@@ -75,7 +76,9 @@ public class FulltextTag extends BaseValueProducingTag {
       TopicMapSearchResult result = new TopicMapSearchResult(topicmap, sengine.search(query));
 
       // Set object id field
-      if (idfield != null) result.setObjectIdField(idfield);
+      if (idfield != null) {
+        result.setObjectIdField(idfield);
+      }
 
       // Return search result
       return result;

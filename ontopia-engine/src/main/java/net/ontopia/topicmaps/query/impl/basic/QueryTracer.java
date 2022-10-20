@@ -238,12 +238,14 @@ public class QueryTracer {
       }
 
       // log memory consuming query
-      if (memoryDelta > memoryDeltaThreshold)
+      if (memoryDelta > memoryDeltaThreshold) {
         logger.warn("Query execution exceeded memory delta threshold " + memoryDelta + " bytes", new RuntimeException());
+      }
 
       // log time consuming query
-      if (elapsed > elapsedThreshold)
-        logger.warn("Query execution exceeded time elapsed threshold " + elapsed + " seconds", new RuntimeException());      
+      if (elapsed > elapsedThreshold) {
+        logger.warn("Query execution exceeded time elapsed threshold " + elapsed + " seconds", new RuntimeException());
+      }      
     }
     
     @Override
@@ -266,17 +268,19 @@ public class QueryTracer {
     }
     
     private String clauseToString(AbstractClause clause) {
-      if (clause instanceof NotClause)
+      if (clause instanceof NotClause) {
         return "not( ... )";
+      }
       if (clause instanceof OrClause) {
 				OrClause orClause = ((OrClause)clause);
         int size = orClause.getAlternatives().size();
-				if (orClause.getShortCircuit())
-					return "{ ... SHORTCIRCUITING OR, " + size + " alternatives ... }";
-        else if (size == 1)
+				if (orClause.getShortCircuit()) {
+          return "{ ... SHORTCIRCUITING OR, " + size + " alternatives ... }";
+        } else if (size == 1) {
           return "{ ... OPTIONAL ... }";
-				else
-					return "{ ... OR, " + size + " alternatives ... }";
+        } else {
+          return "{ ... OR, " + size + " alternatives ... }";
+        }
       }
       return clause.toString();
     }
@@ -292,14 +296,16 @@ public class QueryTracer {
 
     @Override
     public void enter(List branch) {
-      if (!isEnabled())
+      if (!isEnabled()) {
         return;
+      }
     }
 
     @Override
     public void leave(List branch) {
-      if (!isEnabled())
+      if (!isEnabled()) {
         return;
+      }
     }
 
     @Override
@@ -351,8 +357,9 @@ public class QueryTracer {
     
     private String getIndent(Info info) {
       StringBuilder buf = new StringBuilder();
-      for (int ix = 0; ix < info.entered.size(); ix++)
+      for (int ix = 0; ix < info.entered.size(); ix++) {
         buf.append("  ");
+      }
       return buf.toString();
     }
 

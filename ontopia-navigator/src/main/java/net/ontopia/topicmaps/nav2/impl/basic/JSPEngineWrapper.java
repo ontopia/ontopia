@@ -72,14 +72,16 @@ public class JSPEngineWrapper {
   // --- Internal methods
 
   private static WrapperIF getWrapper() {
-    if (wrapper != null)
+    if (wrapper != null) {
       return wrapper;
+    }
 
-    if (JspFactory.getDefaultFactory() == null)
+    if (JspFactory.getDefaultFactory() == null) {
       // ontojsp can't set the default factory, since ontojsp needs to
       // be able to run inside app servers, which will set the default.
       // in the test suite there will therefore be no default factory.
-      return new JSP12Wrapper(); 
+      return new JSP12Wrapper();
+    } 
 
     JspEngineInfo engine = JspFactory.getDefaultFactory().getEngineInfo();
     String version = engine.getSpecificationVersion();

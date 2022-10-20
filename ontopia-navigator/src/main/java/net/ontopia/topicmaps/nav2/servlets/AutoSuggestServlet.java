@@ -65,14 +65,19 @@ public class AutoSuggestServlet extends HttpServlet {
     response.setContentType("text/plain; charset=utf-8");
 
     String tmid = request.getParameter("tm");
-    if (tmid == null) throw new ServletException("Parameter tm is not given.");
+    if (tmid == null) {
+      throw new ServletException("Parameter tm is not given.");
+    }
     String term = request.getParameter("term");
-    if (term == null) throw new ServletException("Parameter term is not given.");
+    if (term == null) {
+      throw new ServletException("Parameter term is not given.");
+    }
 
     TopicMapStoreIF store = TopicMaps.createStore(tmid, true);
 	
-    if (store instanceof net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore)
-	    term = term + '*';
+    if (store instanceof net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore) {
+      term = term + '*';
+    }
 
     try {
       QueryProcessorIF qp = QueryUtils.getQueryProcessor(store.getTopicMap());
@@ -82,8 +87,12 @@ public class AutoSuggestServlet extends HttpServlet {
       w.write("{ results: [\n");
       int count = 0;
       while (qr.next()) {
-        if (count > limit) break;
-        if (count > 0) w.write(",\n");
+        if (count > limit) {
+          break;
+        }
+        if (count > 0) {
+          w.write(",\n");
+        }
         TopicIF topic = (TopicIF)qr.getValue(0);
         String desc = (String)qr.getValue(1);
         w.write("    { id: \"");

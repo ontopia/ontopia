@@ -97,8 +97,9 @@ public class WebChew {
         try {
           TopicMapIF topicmap = store.getTopicMap();
           AssociationIF assoc = (AssociationIF)topicmap.getObjectById(removeAssociation);
-          if (assoc != null)
+          if (assoc != null) {
             assoc.remove();
+          }
           store.commit();
         } finally {
           store.close();
@@ -120,7 +121,9 @@ public class WebChew {
           
           // create associations; look up existing classified document in session
           TopicMapClassification tmc = (TopicMapClassification)session.getAttribute(tmckey);
-          if (tmc == null) return;
+          if (tmc == null) {
+            return;
+          }
           
           // process form data
           TopicMapStoreIF store = NavigatorUtils.getTopicMapRepository(session.getServletContext()).getReferenceByKey(request.getParameter("tm")).createStore(false);
@@ -136,18 +139,23 @@ public class WebChew {
               
                 String termid = selected[i];
                 String at = request.getParameter("at-" + termid);
-                if (at == null || "-".equals(at)) continue;
+                if (at == null || "-".equals(at)) {
+                  continue;
+                }
                 String cn = request.getParameter("cn-" + termid);
                 String ct = request.getParameter("ct-" + termid);
-                if (ct == null || "-".equals(ct)) continue;
+                if (ct == null || "-".equals(ct)) {
+                  continue;
+                }
 
                 // create new candidate topic
                 TopicIF ctopic;
                 if (ct.startsWith("new:")) {
                   String ctoid = ct.substring("new:".length());
                   TopicIF ctype = (TopicIF)topicmap.getObjectById(ctoid);
-                  if (ctype == null)
+                  if (ctype == null) {
                     throw new OntopiaRuntimeException("Cannot find topic type: " + ct + " " + ctoid);
+                  }
                   ctopic = builder.makeTopic(ctype);
                   builder.makeTopicName(ctopic, cn);
                 } else if ("-".equals(ct)) {
@@ -158,18 +166,23 @@ public class WebChew {
 
                 // create association
                 String[] at_data = StringUtils.split(at, ":");
-                if (at_data.length != 3) continue;
+                if (at_data.length != 3) {
+                  continue;
+                }
                 
                 TopicIF atype = (TopicIF)topicmap.getObjectById(at_data[0]);
-                if (atype == null)
+                if (atype == null) {
                   throw new OntopiaRuntimeException("Cannot find association type: " + at);
+                }
                 
                 TopicIF drtype = (TopicIF)topicmap.getObjectById(at_data[1]);
-                if (drtype == null)
+                if (drtype == null) {
                   throw new OntopiaRuntimeException("Cannot find document roletype: " + at_data[1]);
+                }
                 TopicIF crtype = (TopicIF)topicmap.getObjectById(at_data[2]);
-                if (crtype == null)
+                if (crtype == null) {
                   throw new OntopiaRuntimeException("Cannot find concept roletype: " + at_data[2]);
+                }
                 
                 AssociationIF assoc = builder.makeAssociation(atype);
                 builder.makeAssociationRole(assoc, drtype, dtopic);
@@ -232,8 +245,9 @@ public class WebChew {
         ClassifiableContentIF cc = cp.getClassifiableContent(topic);
         
         // if no plug-in content then delegate to file upload
-        if (cc == null)
+        if (cc == null) {
           cc = ClassifyUtils.getFileUploadContent(request);
+        }
         
         // classify content
         if (cc != null) {
@@ -257,11 +271,13 @@ public class WebChew {
     HttpSession session = request.getSession(true);
     ServletContext scontext = session.getServletContext();
     String pclass = scontext.getInitParameter("classify_plugin");
-    if (pclass == null)
+    if (pclass == null) {
       pclass = "net.ontopia.topicmaps.classify.DefaultPlugin";
+    }
     ClassifyPluginIF cp = (ClassifyPluginIF)ObjectUtils.newInstance(pclass);
-    if (cp instanceof HttpServletRequestAwareIF)
+    if (cp instanceof HttpServletRequestAwareIF) {
       ((HttpServletRequestAwareIF)cp).setRequest(request);
+    }
     return cp;
   }
 
@@ -270,7 +286,9 @@ public class WebChew {
 
       TopicMapClassification tmc = new TopicMapClassification(topicmap);
       BlackList bl = getBlackList();
-      if (bl != null) tmc.setCustomTermAnalyzer(bl);
+      if (bl != null) {
+        tmc.setCustomTermAnalyzer(bl);
+      }
       tmc.classify(cc);
       return tmc;
       
@@ -385,8 +403,9 @@ public class WebChew {
       Variant[] variants = term.getVariantsByRank();
       for (int i=0; i < variants.length; i++) {
         for (TopicIF c : wc.tmc.getTopics(variants[i])) {
-          if (!candidates.contains(c))
+          if (!candidates.contains(c)) {
             candidates.add(c);
+          }
         }
       }
     }
@@ -405,13 +424,16 @@ public class WebChew {
       String[] selected = request.getParameterValues("selected");
       if (selected != null && selected.length > 0) {
         for (int i=0; i < selected.length; i++) {
-          if (id.equals(selected[i])) return true;
+          if (id.equals(selected[i])) {
+            return true;
+          }
         }
       }
-      if (selected == null || selected.length == 0)
+      if (selected == null || selected.length == 0) {
         return getHasCandidateTopics() && getDefaultAssociationType() != null;
-      else
+      } else {
         return false;
+      }
     }
     
     public String getNameField() {
@@ -420,10 +442,11 @@ public class WebChew {
     
     public String getNameValue() {
       String value = request.getParameter(getNameField());
-      if (value != null)
+      if (value != null) {
         return value;
-      else
+      } else {
         return term.getPreferredName();
+      }
     }
     
     public String getNameTitle() {

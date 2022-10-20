@@ -75,28 +75,32 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
 
   public TopicMapSourceManager(Collection<TopicMapSourceIF> sources) {
     Iterator<TopicMapSourceIF> iter = sources.iterator();
-    while (iter.hasNext())
+    while (iter.hasNext()) {
       addSource(iter.next());
+    }
   }
 
   @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
-    if (!refreshed)
+    if (!refreshed) {
       refresh();
+    }
     return keyrefs.values();
   }
 
   @Override
   public synchronized Collection<String> getReferenceKeys() {
-    if (!refreshed)
+    if (!refreshed) {
       refresh();
+    }
     return keyrefs.keySet();
   }
 
   @Override
   public synchronized TopicMapReferenceIF getReferenceByKey(String key) {
-    if (!refreshed)
+    if (!refreshed) {
       refresh();
+    }
     return keyrefs.get(key);
   }
 
@@ -108,8 +112,9 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   @Override
   public TopicMapStoreIF createStore(String refkey, boolean readonly) {
     TopicMapReferenceIF ref = getReferenceByKey(refkey);
-    if (ref == null)
+    if (ref == null) {
       throw new OntopiaRuntimeException("Topic map reference '" + refkey + "' not found.");
+    }
     try {
       return ref.createStore(readonly);
     } catch (java.io.IOException e) {
@@ -135,11 +140,12 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
       // Add to source id map, if source has id.
       String id = source.getId();
       if (id != null) {
-        if (!smap.containsKey(id))
+        if (!smap.containsKey(id)) {
           smap.put(id, source);
-        else
+        } else {
           throw new OntopiaRuntimeException("Source with id already exists: "
               + id);
+        }
       }
     }
   }
@@ -151,8 +157,9 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
       refreshed = false;
       // remove from source id map if, if source has id.
       String id = source.getId();
-      if (id != null && smap.containsKey(id))
+      if (id != null && smap.containsKey(id)) {
         smap.remove(id);
+      }
     }
   }
 
@@ -197,14 +204,16 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     // ! throw new OntopiaRuntimeException("Source id cannot contain periods." +
     // srcid);
     TopicMapSourceIF source = ref.getSource();
-    if (source == null)
+    if (source == null) {
       throw new OntopiaRuntimeException(
           "The reference is not attached to a source: " + ref);
+    }
 
     // Complain if key already used
     String refkey = ref.getId();
-    if (keyrefs.containsKey(refkey))
+    if (keyrefs.containsKey(refkey)) {
       throw new OntopiaRuntimeException("Duplicate reference keys: " + refkey);
+    }
 
     return refkey;
   }
@@ -215,8 +224,9 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     while (iter.hasNext()) {
       TopicMapReferenceIF ref = iter.next();
       try {
-        if (ref.isOpen())
+        if (ref.isOpen()) {
           ref.close();
+        }
       } catch (Exception e) {
         log.warn("Problems occurred when closing reference " + ref, e);
       }

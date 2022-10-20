@@ -57,7 +57,9 @@ public class TopicTypeModel extends LoadableDetachableModel<TopicType> {
 
   @Override
   protected TopicType load() {
-    if (topicMapId == null) return null;
+    if (topicMapId == null) {
+      return null;
+    }
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     return new TopicType(topicIf, tm);

@@ -116,8 +116,9 @@ public class ForEachTag extends BodyTagSupport {
                                                             ForEachTag.class);
       
       // It's an error to have neither a query nor an ancestor.
-      if (groupingAncestor == null)
+      if (groupingAncestor == null) {
         throw new JspTagException("<tolog:foreach> missing query attribute");
+      }
       
       // Share the queryWrapper in groupingAncestor;
       queryWrapper = groupingAncestor.getQueryWrapper();
@@ -200,22 +201,25 @@ public class ForEachTag extends BodyTagSupport {
     if (groupBy == null) {
       // By default group by all columns.
       // Set all columns to true.
-      for (int i = 0; i < groupColumns.length; i++) 
+      for (int i = 0; i < groupColumns.length; i++) {
         groupColumns[i] = true;
+      }
       
     } else {
       // Initialize to group by no columns. 
-      for (int i = 0; i < groupColumns.length; i++) 
+      for (int i = 0; i < groupColumns.length; i++) {
         groupColumns[i] = false;
+      }
     
       StringTokenizer tok = new StringTokenizer(groupBy);
       
       // Must have at least one token in groupBy.
-      if (!tok.hasMoreTokens()) 
+      if (!tok.hasMoreTokens()) { 
         throw new JspTagException("<tolog:foreach> : got an empty groupBy"
                 + " attribute."
                 + "\nPlease group by at least one column"
                 + " or leave the groupBy attribute out alltogether.\n");
+      }
       
       
       // Group by all columns mentioned in the groupBy String.
@@ -224,12 +228,13 @@ public class ForEachTag extends BodyTagSupport {
         int currentIndex = queryWrapper.getIndex(currentToken);
         
         // If token is not recognised as any of the column names
-        if (currentIndex == -1) 
+        if (currentIndex == -1) { 
           throw new JspTagException("<tolog:foreach> : The name"
                   + " \"" + currentToken + 
                   "\" mentioned in groupBy=\"" + groupBy + "\"," 
                   + " is not recognised as a column name in the query:"
                   + "\n\"" + queryWrapper.getQuery() + "\".\n");
+        }
                   
         groupColumns[currentIndex] = true;
         groupNames.add(currentToken);
@@ -246,33 +251,36 @@ public class ForEachTag extends BodyTagSupport {
     * Validate the groupNames against the names in orderBy. 
     */
   protected void validateGroupByOrderBy() throws JspTagException {
-    if (hasValidated)
+    if (hasValidated) {
       return;
-    else
+    } else {
       hasValidated = true;
+    }
     
     while (!groupNames.isEmpty()) {
       // Every name in groupNames must occur (at least somewhere in orderBy.
-      if (orderBy.isEmpty()) 
+      if (orderBy.isEmpty()) { 
         throw new JspTagException("<tolog:foreach> : A column mentioned in"
                 + " groupBy=\"" + groupBy + "\""
                 + " did not occur in the \"order by\" part of the query:"
                 + queryWrapper.getQuery() + "."
                 + "\nPlease make sure the query result is ordered in the same"
                 + " way as you wish to group it in the output.\n");
+      }
       
       String currentName = (String)orderBy.get(0);
       
       // The first few names in orderBy must be in groupBy, until groupBy is
       // empty.
       // i.e. the groupBy-s must follow the order of the "order by"-s
-      if (!groupNames.contains(currentName))
+      if (!groupNames.contains(currentName)) {
         throw new JspTagException("A column mentioned in"
                 + " groupBy=\"" + groupBy + "\""
                 + " did not match the \"order by\" of the query:"
                 + "\n\"" + queryWrapper.getQuery() + "\"."
                 + "\nPlease make sure the query result is ordered in the same"
                 + " way as you wish to group it in the output.");
+      }
       
       orderBy.remove(0);
       groupNames.remove(currentName);
@@ -295,12 +303,14 @@ public class ForEachTag extends BodyTagSupport {
     }
       
     // If current row is relevant to the grouping ancestor.
-    if (groupingAncestor != null && groupingAncestor.needsCurrentRow())
-      return SKIP_BODY;  
+    if (groupingAncestor != null && groupingAncestor.needsCurrentRow()) {
+      return SKIP_BODY;
+    }  
     
     // If the end of the query result has been reached.
-    if (!queryWrapper.hasNext())
+    if (!queryWrapper.hasNext()) {
       return SKIP_BODY;
+    }
     
     // Move to next row in query result.  
     queryWrapper.next();
@@ -337,7 +347,7 @@ public class ForEachTag extends BodyTagSupport {
    */
   @Override
   public int doEndTag() throws JspException {
-    if (!(queryWrapper.fullyGrouped() || neverEvaluatedBody))
+    if (!(queryWrapper.fullyGrouped() || neverEvaluatedBody)) {
       throw new JspTagException("<tolog:foreach> - tag insufficiently grouped"
               + " or missing grouping descendant."
                 + "\nA grouping descendant is another <tolog:foreach> tag"
@@ -346,6 +356,7 @@ public class ForEachTag extends BodyTagSupport {
                 + "\nA <tolog:foreach> tag is insufficiently grouped if it"
                 + " has no grouping descendant and uses the \"groupBy\""
                 + " attribute to group by some but not all its columns.\n");
+    }
   
     // establish old lexical scope, back to outside of the loop
     queryWrapper.getContextManager().popScope();

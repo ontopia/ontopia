@@ -48,17 +48,18 @@ public class ObjectIdTag extends BaseOutputProducingTag {
     
     String objectId = null;
     Object elem = iter.next();
-    if (elem == null) // FIXME. really needed?
+    if (elem == null) { // FIXME. really needed?
       return;
+    }
     
     // --- first try if object is instance of TMObjectIF
     try {      
       objectId = ((TMObjectIF) elem).getObjectId();
     } catch (ClassCastException e) {
       // --- TopicMapReferenceIF
-      if (elem instanceof TopicMapReferenceIF) 
+      if (elem instanceof TopicMapReferenceIF) { 
         objectId = ((TopicMapReferenceIF) elem).getId();
-      else {
+      } else {
         // --- otherwise signal error
         String msg = "ObjectIdTag expected collection which contains " +
           "object instances of TMObjectIF or TopicMapReferenceIF, but got " +
@@ -71,8 +72,9 @@ public class ObjectIdTag extends BaseOutputProducingTag {
     }
     
     // finally write out String with help of the Stringifier
-    if (objectId != null)
+    if (objectId != null) {
       print2Writer( out, objectId );
+    }
   }
 
 }

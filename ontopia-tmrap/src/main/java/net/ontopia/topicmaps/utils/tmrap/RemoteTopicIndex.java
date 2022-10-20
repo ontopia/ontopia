@@ -84,8 +84,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
                               Collection<LocatorIF> sources,
                               Collection<LocatorIF> subjects) {
 
-    if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty())
+    if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty()) {
       return Collections.emptySet();
+    }
 
     // lookup or create target topic
     TopicMapIF targetTopicMap = storefactory.createStore().getTopicMap();    
@@ -100,8 +101,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     // send get-topic request
     try {
       String params = encodeIdentityParameters(indicators, sources, subjects);
-      if (tmid != null)
+      if (tmid != null) {
         params = "topicmap=" + tmid + "&" + params;
+      }
       loadXTM("get-topic", params, false, sourceTopicMap);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
@@ -130,8 +132,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
       }
     }
     // if no topics was found then create a new one
-    if (topic == null)
+    if (topic == null) {
       topic = tm.getBuilder().makeTopic();
+    }
 
     // make sure topic has all the identities
     Iterator<LocatorIF> it = indicators.iterator();
@@ -161,15 +164,17 @@ public class RemoteTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF loc = it.next();
       TopicIF topic = tm.getTopicBySubjectIdentifier(loc);
-      if (topic != null) return topic;
+      if (topic != null) {
+        return topic;
+      }
     }
     it = sources.iterator();
     while (it.hasNext()) {
       LocatorIF loc = it.next();
       TopicIF topic = (TopicIF) tm.getObjectByItemIdentifier(loc);
-      if (topic != null) 
-				return topic;
-			else {
+      if (topic != null) {
+        return topic;
+      } else {
   			// Resolve object by object id
   			String address = loc.getAddress();
   			if (RemoteTopicIndex.isVirtualReference(address)) {
@@ -177,7 +182,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
 													.sourceTopicMapFromVirtualReference(address))) {
 						topic = (TopicIF)tm.getObjectById(RemoteTopicIndex
 																										.resolveVirtualReference(address, tmid));
-						if (topic != null) return topic;			
+						if (topic != null) {			
+              return topic;
+            }			
 					}
   			}
 			}
@@ -186,7 +193,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF subject = it.next();
       TopicIF topic = tm.getTopicBySubjectLocator(subject);
-      if (topic != null) return topic;
+      if (topic != null) {
+        return topic;
+      }
     }
     return null;
   }
@@ -201,15 +210,17 @@ public class RemoteTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF loc = it.next();
       TopicIF topic = tm.getTopicBySubjectIdentifier(loc);
-      if (topic != null) result.add(topic);
+      if (topic != null) {
+        result.add(topic);
+      }
     }
     it = sources.iterator();
     while (it.hasNext()) {
       LocatorIF loc = it.next();
       TopicIF topic = (TopicIF) tm.getObjectByItemIdentifier(loc);
-      if (topic != null) 
-				result.add(topic);
-			else {
+      if (topic != null) {
+        result.add(topic);
+      } else {
 			  // Resolve object by object id
 			  String address = loc.getAddress();
 			  if (RemoteTopicIndex.isVirtualReference(address)) {
@@ -217,7 +228,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
 		  										.sourceTopicMapFromVirtualReference(address))) {
 		  			topic = (TopicIF)tm.getObjectById(RemoteTopicIndex
 		  																							.resolveVirtualReference(address, tmid));
-						if (topic != null) result.add(topic);
+						if (topic != null) {
+              result.add(topic);
+            }
 		  		}
 			  }
 			}
@@ -226,14 +239,17 @@ public class RemoteTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF subject = it.next();
       TopicIF topic = tm.getTopicBySubjectLocator(subject);
-      if (topic != null) result.add(topic);
+      if (topic != null) {
+        result.add(topic);
+      }
     }
     return result;
   }
 
   private boolean isLoaded(TopicIF topic) { 
-    if (topic instanceof net.ontopia.topicmaps.impl.remote.RemoteTopic)
+    if (topic instanceof net.ontopia.topicmaps.impl.remote.RemoteTopic) {
       return ((net.ontopia.topicmaps.impl.remote.RemoteTopic) topic).isLoaded();
+    }
     return true;
   }
   
@@ -251,10 +267,11 @@ public class RemoteTopicIndex implements TopicIndexIF {
 			String address = loc.getAddress();
 			if (RemoteTopicIndex.isVirtualReference(address)) {
 				String topicId = RemoteTopicIndex.resolveVirtualReference(address, tmid);
-				if (topicId != null)
-					idpredicates.add("$" + varname + " = @" + topicId);
-				else
-					System.err.println("Cannot resolve virtual reference: " + topicId + " (" + address + ")");
+				if (topicId != null) {
+          idpredicates.add("$" + varname + " = @" + topicId);
+        } else {
+          System.err.println("Cannot resolve virtual reference: " + topicId + " (" + address + ")");
+        }
 			} else {
 				idpredicates.add("item-identifier($" + varname + ", \"" + loc.getAddress() + "\")");
 			}
@@ -277,8 +294,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
                                       Collection<LocatorIF> sources,
                                       Collection<LocatorIF> subjects,
                                       boolean two_steps) {
-    if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty())
+    if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty()) {
       return Collections.emptySet();
+    }
     
     try {
       // lookup or create target topic
@@ -287,8 +305,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
       
       // build identity predicates
       List<String> idpredicates_T = getIdPredicates(targetTopic, "T");
-      if (idpredicates_T.isEmpty())
+      if (idpredicates_T.isEmpty()) {
         return Collections.emptySet();
+      }
       
       StringBuilder query = new StringBuilder();
       query.append("related-to($T1, $T2) :- " +
@@ -300,25 +319,29 @@ public class RemoteTopicIndex implements TopicIndexIF {
                    "  $T1 /= $T2 . ");
 
       query.append("select $O from ");
-      if (idpredicates_T.size() > 1)
+      if (idpredicates_T.size() > 1) {
         query.append("  {");
+      }
       query.append(StringUtils.join(idpredicates_T, " | "));
-      if (idpredicates_T.size() > 1)
+      if (idpredicates_T.size() > 1) {
         query.append("  }");
+      }
       
       query.append(", { ");
       query.append("  $O = $T | ");
       query.append("  related-to($T, $O) ");
-      if (two_steps)
+      if (two_steps) {
         query.append("| related-to($T, $TMP), related-to($TMP, $O) ");
+      }
       query.append("}?");
 
       TopicMapIF sourceTopicMap = new InMemoryTopicMapStore().getTopicMap();
       sourceTopicMap.getStore().setBaseAddress(targetTopicMap.getStore().getBaseAddress());
 
       String params = "syntax=application/x-xtm&tolog=" + URLEncoder.encode(query.toString());
-      if (tmid != null)
+      if (tmid != null) {
         params = "topicmap=" + tmid + "&" + params;
+      }
       params += "&compress=true";
 
       loadXTM("get-tolog", params, true, sourceTopicMap);
@@ -336,8 +359,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
       while (riter.hasNext()) {
         TopicIF topic = riter.next();
         loaded.add(topic);
-        if (two_steps)
+        if (two_steps) {
           loaded.addAll(CharacteristicUtils.getAssociatedTopics(topic));
+        }
       }
       
       // move topics over, and mark as loaded
@@ -357,8 +381,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     
     try {
       String params = encodeIdentityParameters(indicators, sources, subjects);
-      if (tmid != null)
+      if (tmid != null) {
         params = "topicmap=" + tmid + "&" + params;
+      }
       InputSource src = getInputSource("get-topic-page", params, false);
       String baseuri = viewBaseuri == null ? editBaseuri : viewBaseuri;
       LocatorIF base = new URILocator(baseuri + "get-topic-page");
@@ -370,8 +395,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
 
       LocatorIF vpsi = new URILocator("http://psi.ontopia.net/tmrap/view-page");
       TopicIF vptype = tm.getTopicBySubjectIdentifier(vpsi);
-      if (vptype == null)
+      if (vptype == null) {
         return pages;
+      }
       
       Iterator<TopicIF> it = ix.getTopics(vptype).iterator();
       while (it.hasNext()) {
@@ -415,8 +441,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     tmptm.getStore().setBaseAddress(topicmap.getStore().getBaseAddress());
     
     String params = "syntax=application/x-xtm&tolog=" + query;
-    if (tmid != null)
+    if (tmid != null) {
       params = "topicmap=" + tmid + "&" + params;
+    }
     params += "&compress=true";
       
     // send request
@@ -430,8 +457,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
       if (!(topic.getTypes().isEmpty() &&
             topic.getTopicNames().isEmpty() &&
             topic.getOccurrences().isEmpty() &&
-            topic.getRoles().isEmpty()))
+            topic.getRoles().isEmpty())) {
         loaded.add(topic);
+      }
     }
     
     // mark as loaded and transfer
@@ -466,10 +494,13 @@ public class RemoteTopicIndex implements TopicIndexIF {
       String ctype = conn.getContentType();
       if (ctype != null && ctype.startsWith("text/xml")) {
         int pos = ctype.indexOf("charset=");
-        if (pos != -1) src.setEncoding(ctype.substring(pos + 8));
+        if (pos != -1) {
+          src.setEncoding(ctype.substring(pos + 8));
+        }
       }
-    } else
+    } else {
       src.setByteStream(new java.util.zip.GZIPInputStream(conn.getInputStream()));
+    }
     
     return src;
   }
@@ -504,7 +535,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
       LocatorIF locator = it.next();
-      if (notfirst) buf.append("&");
+      if (notfirst) {
+        buf.append("&");
+      }
       buf.append("identifier=" + URLEncoder.encode(locator.getExternalForm()));
       notfirst = true;
     }
@@ -512,7 +545,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     it = sources.iterator();
     while (it.hasNext()) {
       LocatorIF locator = it.next();
-      if (notfirst) buf.append("&");
+      if (notfirst) {
+        buf.append("&");
+      }
       buf.append("item=" + URLEncoder.encode(locator.getExternalForm()));
       notfirst = true;
     }
@@ -520,7 +555,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     it = subjects.iterator();
     while (it.hasNext()) {
       LocatorIF locator = it.next();
-      if (notfirst) buf.append("&");
+      if (notfirst) {
+        buf.append("&");
+      }
       buf.append("subject=" + URLEncoder.encode(locator.getExternalForm()));
     }
     return buf.toString();
@@ -564,9 +601,10 @@ public class RemoteTopicIndex implements TopicIndexIF {
   
   public static String resolveVirtualReference(String address, String tmid) {
     String topicMapIndex = RemoteTopicIndex.sourceTopicMapFromVirtualReference(address);
-    if (!topicMapIndex.equals(tmid))
+    if (!topicMapIndex.equals(tmid)) {
       throw new OntopiaRuntimeException("Topic map IDs do not match, requested=" + topicMapIndex +
                                         ", current=" + tmid);
+    }
     
     return address.substring(address.indexOf('#') + 1);
   }

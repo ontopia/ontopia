@@ -125,10 +125,11 @@ public class XTMTopicMapReference extends AbstractOntopolyURLReference {
     } else {
       reader = new XTMTopicMapReader(url, base_address);
     }
-    if (ref_handler != null)
+    if (ref_handler != null) {
       reader.setExternalReferenceHandler(ref_handler);
-    else
+    } else {
       reader.setFollowTopicRefs(followTopicRefs);
+    }
     reader.setValidation(validate);
     return reader;
   }

@@ -70,8 +70,9 @@ public class RemoteTopic extends Topic {
   }
   
   public synchronized void checkLoad() {
-    if (!isLoaded() && isConnected())
+    if (!isLoaded() && isConnected()) {
       load();
+    }
   }
   
   /** Attempts to load topic from remote topic map.*/
@@ -81,8 +82,9 @@ public class RemoteTopic extends Topic {
 
     if (getSubjectIdentifiers().isEmpty() &&
         getItemIdentifiers().isEmpty() &&
-        getSubjectLocators().isEmpty())
+        getSubjectLocators().isEmpty()) {
       throw new OntopiaRuntimeException("Can't load topic without identity");
+    }
     
     // isLoaded gets set from elsewhere, strangely
     tindex.getTopics(getSubjectIdentifiers(), getItemIdentifiers(),
@@ -95,115 +97,128 @@ public class RemoteTopic extends Topic {
   
   @Override
   public Collection<LocatorIF> getSubjectLocators() {
-    if (realTopic!=null)
+    if (realTopic!=null) {
       return realTopic.getSubjectLocators();
-    else
+    } else {
       return super.getSubjectLocators();
+    }
   }
 
   @Override
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.addSubjectLocator(subject_locator);
-    else
+    } else {
       super.addSubjectLocator(subject_locator);
+    }
   }
 
   @Override
   public void removeSubjectLocator(LocatorIF subject_locator) {
     checkLoad();
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.removeSubjectLocator(subject_locator);
-    else
-      super.removeSubjectLocator(subject_locator);      
+    } else {
+      super.removeSubjectLocator(subject_locator);
+    }      
   }
   
   @Override
   public Collection<LocatorIF> getSubjectIdentifiers() {
-    if (realTopic!=null)
+    if (realTopic!=null) {
       return realTopic.getSubjectIdentifiers();
-    else
+    } else {
       return super.getSubjectIdentifiers();
+    }
   }
 
   @Override
   public void addSubjectIdentifier(LocatorIF subject_indicator) throws ConstraintViolationException {
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.addSubjectIdentifier(subject_indicator);
-    else
+    } else {
       super.addSubjectIdentifier(subject_indicator);
+    }
   }
 
   @Override
   public void removeSubjectIdentifier(LocatorIF subject_indicator) {
     checkLoad();
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.removeSubjectIdentifier(subject_indicator);
-    else
-      super.removeSubjectIdentifier(subject_indicator);      
+    } else {
+      super.removeSubjectIdentifier(subject_indicator);
+    }      
   }
   
   @Override
   public Collection<TopicNameIF> getTopicNames() {
     checkLoad();
-    if (realTopic != null)
+    if (realTopic != null) {
       return realTopic.getTopicNames();
-    else
+    } else {
       return super.getTopicNames();
+    }
   }
 
   @Override
   protected void addTopicName(TopicNameIF _basename) {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       realTopic.addTopicName(_basename);
-    else
+    } else {
       super.addTopicName(_basename);
+    }
   }
 
   @Override
   protected void removeTopicName(TopicNameIF _basename) {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       realTopic.removeTopicName(_basename);
-    else
+    } else {
       super.removeTopicName(_basename);
+    }
   }
   
   @Override
   public Collection<OccurrenceIF> getOccurrences() {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       return realTopic.getOccurrences();
-    else
+    } else {
       return super.getOccurrences();
+    }
   }
 
   @Override
   protected void addOccurrence(OccurrenceIF _occurrence) {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       realTopic.addOccurrence(_occurrence);
-    else
+    } else {
       super.addOccurrence(_occurrence);
+    }
   }
 
   @Override
   protected void removeOccurrence(OccurrenceIF _occurrence) {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       realTopic.removeOccurrence(_occurrence);
-    else
+    } else {
       super.removeOccurrence(_occurrence);
+    }
   }
 
   @Override
   public Collection<AssociationRoleIF> getRoles() {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       return realTopic.getRoles();
-    else
+    } else {
       return super.getRoles();
+    }
   }
 
   @Override
@@ -214,28 +229,31 @@ public class RemoteTopic extends Topic {
   @Override
   public Collection<TopicIF> getTypes() {
     checkLoad();
-    if (realTopic != null)
+    if (realTopic != null) {
       return realTopic.getTypes();
-    else
+    } else {
       return super.getTypes();
+    }
   }
 
   @Override
   public void addType(TopicIF type) {
     // this gets called before we know the identity of the topic
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.addType(type);
-    else
+    } else {
       super.addType(type);
+    }
   }
 
   @Override
   public void removeType(TopicIF type) {
     checkLoad();
-    if (realTopic!=null)
+    if (realTopic!=null) {
       realTopic.removeType(type);
-    else
+    } else {
       super.removeType(type);
+    }
   }
   
   // -----------------------------------------------------------------------------
@@ -255,10 +273,11 @@ public class RemoteTopic extends Topic {
   
   @Override
   public String getObjectId() {
-    if (realTopic != null)
+    if (realTopic != null) {
       return realTopic.getObjectId();
-    else
+    } else {
       return super.getObjectId();
+    }
   }
 
   @Override
@@ -290,24 +309,27 @@ public class RemoteTopic extends Topic {
 
   @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.addItemIdentifier(source_locator);
-    else
+    } else {
       super.addItemIdentifier(source_locator);
+    }
   }
   
   @Override
   public void removeItemIdentifier(LocatorIF source_locator) {
-    if (realTopic != null)
+    if (realTopic != null) {
       realTopic.removeItemIdentifier(source_locator);
-    else
+    } else {
       super.removeItemIdentifier(source_locator);
+    }
   }
   
   @Override
   public synchronized void merge(TopicIF topic) {
-    if (realTopic != null)
+    if (realTopic != null) {
       throw new OntopiaRuntimeException("THIS SHOULD NEVER HAPPEN.");
+    }
 
     RemoteTopic rtopic = (RemoteTopic) topic;
             
@@ -333,26 +355,30 @@ public class RemoteTopic extends Topic {
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof RemoteTopic) {
-      if( realTopic == null )
+      if( realTopic == null ) {
         return ((RemoteTopic) obj).equals(this);
+      }
       return obj.equals(realTopic);
     }
         
-    if (realTopic == null)
+    if (realTopic == null) {
       return super.equals(obj);
+    }
     return realTopic.equals(obj);
   }
 
   public boolean equals(RemoteTopic obj) {
-    if (realTopic == null)
+    if (realTopic == null) {
       return super.equals(obj);
+    }
     return realTopic.equals(obj);
   }
 
   @Override
   public int hashCode() {
-    if (realTopic == null)
+    if (realTopic == null) {
       return super.hashCode();
+    }
     return realTopic.hashCode();
   }
 }

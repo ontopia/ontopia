@@ -104,7 +104,9 @@ public abstract class BooleanSQLOptimizer {
     // NOTE: is true if all subexpressions are true
     SQLExpressionIF[] exprs = expr.getExpressions();
     for (int i=0; i < exprs.length; i++) {
-      if (exprs[i] == null) continue;
+      if (exprs[i] == null) {
+        continue;
+      }
       totcount++;
       int result = optimizeExpression(exprs[i]);
       // Remove removable expression
@@ -112,15 +114,17 @@ public abstract class BooleanSQLOptimizer {
         exprs[i] = null;
         truecount++;
       }
-      else if (result == -1)
+      else if (result == -1) {
         return -1;
+      }
     }
     // If all subexpressions are true so is the whole expression,
     // otherwise it is non-optimizable.
-    if (totcount == truecount)
+    if (totcount == truecount) {
       return 1;
-    else
+    } else {
       return 0;
+    }
   }
 
   protected int optimizeEquals(SQLEquals expr) {
@@ -173,23 +177,26 @@ public abstract class BooleanSQLOptimizer {
     // NOTE: is true if any of the subexpressions are true
     SQLExpressionIF[] exprs = expr.getExpressions();
     for (int i=0; i < exprs.length; i++) {
-      if (exprs[i] == null) continue;
+      if (exprs[i] == null) {
+        continue;
+      }
       totcount++;
       int result = optimizeExpression(exprs[i]);
       // Remove removable expression
-      if (result == 1)
-        return 1;        
-      else if (result == -1) {
+      if (result == 1) {
+        return 1;
+      } else if (result == -1) {
         exprs[i] = null;
         falsecount++;
       }        
     }
     // If all subexpressions are false so is the whole expression,
     // otherwise it is non-optimizable.
-    if (totcount == falsecount)
+    if (totcount == falsecount) {
       return 1;
-    else
+    } else {
       return 0;
+    }
   }
 
   protected int optimizeSetOperation(SQLSetOperation expr) {

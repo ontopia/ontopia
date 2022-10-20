@@ -75,8 +75,9 @@ public class VizTopicTypePriorityConfigManager {
       tmConfig.builder.makeAssociationRole(newRankAssociation, rankAboveRoleType, rankTopic);
     }
     
-    if (!isRanked(defaultTypePrecedenceTopic))
+    if (!isRanked(defaultTypePrecedenceTopic)) {
       rankLast(defaultTypePrecedenceTopic);
+    }
   }
   
   /**
@@ -93,9 +94,10 @@ public class VizTopicTypePriorityConfigManager {
     AssociationRoleIF targetRole = getRankRole(association, up);
 
     TopicIF target = targetRole.getPlayer();
-    if (target == null)
+    if (target == null) {
       throw new OntopiaRuntimeException("Error in configuration: Every"
           + " rank-below-role must have a player.");
+    }
     return target;
   }
   
@@ -113,9 +115,10 @@ public class VizTopicTypePriorityConfigManager {
     if (rankRoles.size() != 1) {
       String nextTo = up ? "below" : "above";
       
-      if (rankRoles.isEmpty())
+      if (rankRoles.isEmpty()) {
         throw new OntopiaRuntimeException("Error in configuration: Missing"
             + " ranked " + nextTo + " role on configuration topic.");
+      }
 
       throw new OntopiaRuntimeException("Error in configuration: Found more"
           + " than one ranked " + nextTo + " role on configuration topic.");
@@ -136,9 +139,10 @@ public class VizTopicTypePriorityConfigManager {
     AssociationIF rankAssociation = source.getAssociation();
     
     if (rankAssociation == null || rankAssociation.getType()
-        != rankAssociationType)
+        != rankAssociationType) {
       throw new OntopiaRuntimeException("Error in configuration: Missing rank"
           + " association on rank role.");
+    }
     return rankAssociation;
   }
     
@@ -239,8 +243,9 @@ public class VizTopicTypePriorityConfigManager {
         retVal.add(defaultTypePrecedenceTopic);
       } else {
         TopicIF rankedTopic = (TopicIF)configToRealTopics.get(currentTopic);
-        if (rankedTopic != null)
+        if (rankedTopic != null) {
           retVal.add(rankedTopic);
+        }
       }
       currentTopic = getNeighbourRanked(currentTopic, false);
     }
@@ -290,8 +295,9 @@ public class VizTopicTypePriorityConfigManager {
 
   public TopicIF highestRankedType(List realTypes) {
     // If the topic is untyped, no type is highest in rank.
-    if (realTypes.isEmpty())
+    if (realTypes.isEmpty()) {
       return null;
+    }
 
     // Sort the real topic types.
     Collections.sort(realTypes, topicComparator );
@@ -300,19 +306,22 @@ public class VizTopicTypePriorityConfigManager {
     List rankedTypes = getRankedTopicTypes(realTypes);
     
     // If there are no ranked topics, choose the first of the real topics.
-    if (rankedTypes.isEmpty())
+    if (rankedTypes.isEmpty()) {
       return (TopicIF)realTypes.iterator().next();
+    }
     
     TopicIF firstRanked = (TopicIF)rankedTypes.get(0);
-    if (!firstRanked.equals(defaultTypePrecedenceTopic))
+    if (!firstRanked.equals(defaultTypePrecedenceTopic)) {
       return firstRanked;
+    }
       
     // For default type, search 'realTypes' for the first unranked type.
     Iterator realTypesIt = realTypes.iterator();
     while (realTypesIt.hasNext()) {
       TopicIF currentType = (TopicIF)realTypesIt.next();
-      if (!isRanked(tmConfig.getConfigTopic(currentType)))
+      if (!isRanked(tmConfig.getConfigTopic(currentType))) {
         return currentType;
+      }
     }
     
     // If no unranked type was found, return the ranked type below the default

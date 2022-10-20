@@ -68,8 +68,9 @@ public class BufferedQueryResult
   
   @Override
   public Object getValue(int ix) {
-    if (inBuffer)
+    if (inBuffer) {
       return bufferedRow[ix];
+    }
     return queryResult.getValue(ix);
   }
   
@@ -80,8 +81,9 @@ public class BufferedQueryResult
   
   @Override
   public Object[] getValues() {
-    if (inBuffer)
+    if (inBuffer) {
       return bufferedRow;
+    }
     return queryResult.getValues();
   }
   
@@ -109,8 +111,9 @@ public class BufferedQueryResult
       bufferIt = null;
       retVal = queryResult.next();
       
-      if (retVal)
+      if (retVal) {
         buffer.add(queryResult.getValues());
+      }
         
       inBuffer = false;
     }

@@ -60,11 +60,13 @@ public class NotEqualsPredicate implements BasicPredicateIF {
       Object value2 = matches.data[ix][colix2];
 
       if ((value1 == null && value2 == null) ||
-          (value1 != null && value2 != null && value1.equals(value2)))
+          (value1 != null && value2 != null && value1.equals(value2))) {
         continue; // not a match, so skip it
+      }
       
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
 
       // FIXME: is this really safe? or could row sharing give overwrites?

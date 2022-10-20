@@ -130,7 +130,9 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
 
   public void addComposites(TermDatabase tdb, Term t1, int length) {
     double t1Score = t1.getScore();
-    if (t1Score < term1ScoreThreshold) return;
+    if (t1Score < term1ScoreThreshold) {
+      return;
+    }
 
     // loop over all variants and look at their followers
     Variant[] variants = t1.getVariants();
@@ -144,10 +146,14 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
           Variant v2 = followers1[z];
           Term t2 = v2.getTerm();
 
-          if (t1.equals(t2)) continue; // ignore repeated terms
+          if (t1.equals(t2)) {
+            continue; // ignore repeated terms
+          }
 
           double t2Score = t2.getScore();
-          if (t2Score < term2ScoreThreshold) continue;
+          if (t2Score < term2ScoreThreshold) {
+            continue;
+          }
 
           // check threshold by term, not by variant
           double compositeScoreTerm = f1.getScore(t2);            
@@ -196,13 +202,18 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
             log.debug("  b: " + t1.getScore() + " " + t2.getScore());
             double ns1 = ((1.0d * compositeOccs) / t1.getOccurrences());
             double ns2 = ((1.0d * compositeOccs) / t2.getOccurrences());
-            if (ns1 < 1.0d) t1.multiplyScore((1.0d - ns1), "compound individiual adjustment");
-            if (ns2 < 1.0d) t2.multiplyScore((1.0d - ns2), "compound individiual adjustment");
+            if (ns1 < 1.0d) {
+              t1.multiplyScore((1.0d - ns1), "compound individiual adjustment");
+            }
+            if (ns2 < 1.0d) {
+              t2.multiplyScore((1.0d - ns2), "compound individiual adjustment");
+            }
             log.debug("  a: " + t1.getScore() + " " + t2.getScore());
             
             // find more complex composites
-            if (length < maxLength)
+            if (length < maxLength) {
               addComposites(tdb, t3, ++length);
+            }
           }
         }
       }
@@ -221,9 +232,9 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
       Variant v = (Variant)variants[x];
       System.out.println("  v:" + v + ":" + t.getOccurrences(v));
       Followers f = followers.get(v);
-      if (f == null)
+      if (f == null) {
         System.out.println("    f:null");
-      else {
+      } else {
         System.out.println("    f:delimiters: " + f.getFollowedByDelimiter());
         
         Object[] followers = f.getFollowersByRank();
@@ -263,10 +274,11 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
     public void addFollower(Token token, int counts) {
       if (token.getType() == Token.TYPE_VARIANT) {
         Variant variant = (Variant) token;
-        if (followers.get(variant) > 0)
+        if (followers.get(variant) > 0) {
           followers.adjustValue(variant, counts);
-        else
+        } else {
           followers.put(variant, counts);
+        }
         totalFollowerOccurrences += counts;
       } else {
         followedByDelimiter += counts;

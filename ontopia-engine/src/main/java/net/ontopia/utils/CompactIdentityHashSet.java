@@ -55,7 +55,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
    */
   @Override
   public boolean contains(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
     
     int index = (System.identityHashCode(o) & 0x7FFFFFFF) % objects.length;
     int offset = 1;
@@ -65,8 +67,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     return objects[index] != null;
@@ -82,7 +85,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
    */
   @Override
   public boolean add(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
 
     int index = (System.identityHashCode(o) & 0x7FFFFFFF) % objects.length;
     int offset = 1;
@@ -93,32 +98,38 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
 
       // if there's a deleted object here we can put this object here,
       // provided it's not in here somewhere else already
-      if (objects[index] == deletedObject)
+      if (objects[index] == deletedObject) {
         deletedix = index;
+      }
       
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
     
     if (objects[index] == null) { // wasn't present already
-      if (deletedix != -1) // reusing a deleted cell
+      if (deletedix != -1) { // reusing a deleted cell
         index = deletedix;
-      else
+      } else {
         freecells--;
+      }
 
       modCount++;
       elements++;
       objects[index] = (E)o;
 
       // rehash with same capacity
-      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR)
+      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
         rehash();
+      }
       return true;
-    } else // was there already 
+    } else {
+      // was there already
       return false;
+    }
   }
 
   /**
@@ -126,7 +137,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
    */
   @Override
   public boolean remove(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
     
     int index = (System.identityHashCode(o) & 0x7FFFFFFF) % objects.length;
     int offset = 1;
@@ -136,8 +149,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     // we found the right position, now do the removal
@@ -147,9 +161,10 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
       modCount++;
       elements--;
       return true;
-    } else
+    } else {
       // we did not find the object
       return false;
+    }
   }
   
   // ===== INTERNAL METHODS ==================================================
@@ -164,8 +179,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
 
     for (int ix = 0; ix < oldCapacity; ix++) {
       E o = objects[ix];
-      if (o == null || o == deletedObject)
+      if (o == null || o == deletedObject) {
         continue;
+      }
       
       int index = (System.identityHashCode(o) & 0x7FFFFFFF) % newCapacity;
       int offset = 1;
@@ -175,8 +191,9 @@ public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
         index = ((index + offset) & 0x7FFFFFFF) % newCapacity;
         offset = offset*2 + 1;
 
-        if (offset == -1)
+        if (offset == -1) {
           offset = 2;
+        }
       }
 
       newObjects[index] = o;

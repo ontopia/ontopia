@@ -56,9 +56,10 @@ public class ProbabilityManager {
    * @param compFactor Let 'key' = 'compFactor' * 'compKey'.
    */
   public void addProbability(Object key, Object compKey, double compFactor) {
-    if (compFactor < 0)
+    if (compFactor < 0) {
       throw new OntopiaRuntimeException("Internal error, received negative" +
           " probability factor.");
+    }
 
     Double compValue = (Double)probabilities.get(compKey);
     double compVal = compValue.doubleValue();
@@ -69,8 +70,9 @@ public class ProbabilityManager {
     // The old value of key.
     double oldVal = 0;
     Double oldValue = (Double)probabilities.get(key);
-    if (oldValue != null)
+    if (oldValue != null) {
       oldVal = oldValue.doubleValue();
+    }
     
     // The temporarily new sum before adjusting.
     double sum = 1 + newVal - oldVal;
@@ -103,8 +105,9 @@ public class ProbabilityManager {
       currentKey = keysIt.next();
       Double currentValue = (Double)probabilities.get(currentKey);
       cummulator += currentValue.doubleValue();
-      if (valueGuess < cummulator)
+      if (valueGuess < cummulator) {
         return currentKey;
+      }
     }
     return currentKey;
   }
@@ -115,8 +118,9 @@ public class ProbabilityManager {
   
   public double getProbabilityValue(Object key) {
     Double probability = getProbability(key);
-    if (probability == null)
+    if (probability == null) {
       return 0;
+    }
     return probability.doubleValue();
   }
   
@@ -180,12 +184,15 @@ public class ProbabilityManager {
     int key3Count = 0;
     int iterations = 1000000;
     for (int i = 0 ; i < iterations; i++) {
-      if (man.guessKey() == key1)
+      if (man.guessKey() == key1) {
         key1Count++;
-      if (man.guessKey() == key2)
+      }
+      if (man.guessKey() == key2) {
         key2Count++;
-      if (man.guessKey() == key3)
+      }
+      if (man.guessKey() == key3) {
         key3Count++;
+      }
     }
     System.out.println("Key1Count: " + key1Count + ", " + 
         ((double)key1Count)/iterations);

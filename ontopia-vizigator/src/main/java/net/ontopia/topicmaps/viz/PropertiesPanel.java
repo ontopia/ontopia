@@ -139,8 +139,9 @@ public class PropertiesPanel extends JScrollPane {
         .hasMoreElements();) {
       DefaultMutableTreeNode node = (DefaultMutableTreeNode) enumeration
           .nextElement();
-      if (node.getChildCount() != 0)
-          tree.expandPath(new TreePath(node.getPath()));
+      if (node.getChildCount() != 0) {
+        tree.expandPath(new TreePath(node.getPath()));
+      }
     }
   }
 
@@ -174,8 +175,9 @@ public class PropertiesPanel extends JScrollPane {
   private void addSubjectTreeNodeTo(DefaultMutableTreeNode parent) {
     LocatorIF subject = (LocatorIF)CollectionUtils.getFirst(target.getSubjectLocators()); // NOTE: gets only the first one
 
-    if (subject == null)
+    if (subject == null) {
       return;
+    }
 
     String subjectAddress = subject.getAddress();
 
@@ -222,7 +224,9 @@ public class PropertiesPanel extends JScrollPane {
             result = occ.getValue();
             result = result.replace('\n', ' ');
           }
-          else result = occ.getLocator().getAddress();
+          else {
+            result = occ.getLocator().getAddress();
+          }
 
           sub.add(new DynamicUtilTreeNode(result, null));
         }
@@ -263,7 +267,9 @@ public class PropertiesPanel extends JScrollPane {
           buff.append(" - ");
           boolean first = true;
           for (Iterator<TopicIF> iter = name.getScope().iterator(); iter.hasNext();) {
-            if (!first) buff.append(" : ");
+            if (!first) {
+              buff.append(" : ");
+            }
             buff.append(controller.getStringifier().apply(iter.next()));
             first = false;
           }

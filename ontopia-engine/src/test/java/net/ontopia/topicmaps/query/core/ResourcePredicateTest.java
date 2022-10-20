@@ -52,16 +52,18 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
         while (it3.hasNext()) {
           VariantNameIF vn = (VariantNameIF) it3.next();
 
-          if (vn.getLocator() != null)
+          if (vn.getLocator() != null) {
             addMatch(matches, "OBJ", vn, "LOCATOR", vn.getLocator().getAddress());
+          }
         }
       }
 
       it2 = topic.getOccurrences().iterator();
       while (it2.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it2.next();
-        if (occ.getLocator() != null)
+        if (occ.getLocator() != null) {
           addMatch(matches, "OBJ", occ, "LOCATOR", occ.getLocator().getAddress());
+        }
       }
     }
     
@@ -87,16 +89,18 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
         while (it3.hasNext()) {
           VariantNameIF vn = (VariantNameIF) it3.next();
 
-          if (vn.getLocator() != null)
+          if (vn.getLocator() != null) {
             addMatch(matches, "OBJ", vn, "LOCATOR", vn.getLocator().getAddress());
+          }
         }
       }
 
       it2 = topic.getOccurrences().iterator();
       while (it2.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it2.next();
-        if (occ.getLocator() != null)
+        if (occ.getLocator() != null) {
           addMatch(matches, "OBJ", occ, "LOCATOR", occ.getLocator().getAddress());
+        }
       }
     }
     
@@ -239,8 +243,9 @@ public class ResourcePredicateTest extends AbstractPredicateTest {
     Iterator it = topic.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it.next();
-      if (type.equals(occ.getType()))
+      if (type.equals(occ.getType())) {
         return occ;
+      }
     }
     return null;
   }

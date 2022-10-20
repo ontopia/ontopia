@@ -224,29 +224,35 @@ public class URLTopicMapSource implements TopicMapSourceIF {
   
   @Override
   public synchronized Collection<TopicMapReferenceIF> getReferences() {
-    if (reflist == null) refresh();
+    if (reflist == null) {
+      refresh();
+    }
     return reflist;
   }
 
   @Override
   public synchronized void refresh() {
-    if (url == null)
+    if (url == null) {
       throw new OntopiaRuntimeException("'url' property has not been set.");
-    if (refid == null)
+    }
+    if (refid == null) {
       refid = id;
-    if (refid == null)
+    }
+    if (refid == null) {
       throw new OntopiaRuntimeException("Neither 'id' nor 'referenceId' properties has been set.");
+    }
 
     // Look at file suffix and guess file syntax.
     if (syntax == null) {
-      if (url.endsWith(".xtm"))
+      if (url.endsWith(".xtm")) {
         syntax = "XTM";
-      else if (url.endsWith(".ltm"))
+      } else if (url.endsWith(".ltm")) {
         syntax = "LTM";
-      else if (url.endsWith(".rdf"))
+      } else if (url.endsWith(".rdf")) {
         syntax = "RDF";
-      else if (url.endsWith(".n3"))
+      } else if (url.endsWith(".n3")) {
         syntax = "N3";
+      }
     }
 
     // Create proper URL object
@@ -258,8 +264,9 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     }
 
     // Use id if title not set.
-    if (title == null)
+    if (title == null) {
       title = id;
+    }
     
     if (syntax == null) {
       throw new OntopiaRuntimeException("Syntax not specified for '" + url + "'. Please set the 'syntax' parameter.");
@@ -269,8 +276,9 @@ public class URLTopicMapSource implements TopicMapSourceIF {
       ref.setSource(this);
       ref.setDuplicateSuppression(duplicate_suppression);
       ref.setValidation(validate);
-      if (ref_handler!=null)
+      if (ref_handler!=null) {
         ref.setExternalReferenceHandler(ref_handler);
+      }
       reflist = Collections.singleton((TopicMapReferenceIF)ref);
 
     } else if ("LTM".equalsIgnoreCase(syntax)) {
@@ -300,9 +308,10 @@ public class URLTopicMapSource implements TopicMapSourceIF {
       } else {
         throw new OntopiaRuntimeException("Topic maps RDF syntax " + syntax + " specified, but no RDF import-export service found on the classpath");
       }
-    } else 
+    } else { 
       throw new OntopiaRuntimeException("Topic maps syntax '" + syntax +
                                         "' not supported.");
+    }
     
   }
 

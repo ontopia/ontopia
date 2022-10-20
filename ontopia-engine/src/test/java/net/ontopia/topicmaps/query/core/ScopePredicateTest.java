@@ -49,8 +49,9 @@ public class ScopePredicateTest extends AbstractPredicateTest {
       addScopesOf(matches, topic.getTopicNames());
 
       Iterator it2 = topic.getTopicNames().iterator();
-      while (it2.hasNext())
+      while (it2.hasNext()) {
         addScopesOf(matches, ((TopicNameIF) it2.next()).getVariants());
+      }
     }
                 
     assertQueryMatches(matches, "scope($SCOPED, $THEME)?");
@@ -71,8 +72,9 @@ public class ScopePredicateTest extends AbstractPredicateTest {
     while (it.hasNext()) {
       ScopedIF object = (ScopedIF) it.next();
       Iterator it2 = object.getScope().iterator();
-      while (it2.hasNext())
+      while (it2.hasNext()) {
         addMatch(matches, "SCOPED", object, "THEME", it2.next());
+      }
     }
   }
   

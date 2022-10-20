@@ -78,10 +78,12 @@ public class RDBMSPatternSingleTopicMapSourceTest
                  ((RDBMSTopicMapReference) ref).getTopicMapId() == store2.getLongId());
     } finally {
       // clean up
-      if (store != null)
+      if (store != null) {
         store.delete(true);
-      if (store2 != null)
+      }
+      if (store2 != null) {
         store2.delete(true);
+      }
     }
   }
 

@@ -45,10 +45,11 @@ public class CTMTopicMapReference extends AbstractOntopolyURLReference {
   @Override
   public TopicMapReaderIF getImporter() {
     try {
-      if (base_address == null)
+      if (base_address == null) {
         return new CTMTopicMapReader(url);
-      else
+      } else {
         return new CTMTopicMapReader(url, base_address);
+      }
     } catch (IOException e) {
       throw new OntopiaRuntimeException("Bad URL: " + url, e);
     }

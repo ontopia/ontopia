@@ -130,8 +130,9 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
   public String getResolvedParameter(String param) {
     try {
       String paramValue = getParameter(param);
-      if (paramValue == null)
+      if (paramValue == null) {
         return null;
+      }
       return resolve(getParameter(param));
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
@@ -150,12 +151,14 @@ public class Vizlet extends JApplet implements VizFrontEndIF {
    * Process the menu file and get the enabled item ids from it.
    */
   public ParsedMenuFile getEnabledItemIds() {
-    if (parsedMenuItems)
+    if (parsedMenuItems) {
       return enabledMenuItems;
+    }
       
     String fileString = getParameter("menufile");
-    if (fileString == null)
+    if (fileString == null) {
       return new ParsedMenuFile(null);
+    }
 
     URL codeBase = getCodeBase();
     String urlString = codeBase.toExternalForm() + fileString;

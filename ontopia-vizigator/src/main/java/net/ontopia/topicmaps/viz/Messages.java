@@ -40,10 +40,11 @@ public class Messages {
 
   public static void setLanguage(String lang) {
     String bundleName;
-    if (lang == null || lang.toLowerCase().equals("en"))
+    if (lang == null || lang.toLowerCase().equals("en")) {
       bundleName = BUNDLE_NAME;
-    else
+    } else {
       bundleName = BUNDLE_NAME + '_' + lang;
+    }
     resourceBundle = ResourceBundle.getBundle(bundleName);
   }
 

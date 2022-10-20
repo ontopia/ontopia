@@ -47,14 +47,17 @@ public class UserPrincipal implements Principal, Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null)
+    if (o == null) {
       return false;
+    }
     
-    if (this == o)
+    if (this == o) {
       return true;
+    }
     
-    if (!(o instanceof UserPrincipal))
+    if (!(o instanceof UserPrincipal)) {
       return false;
+    }
 
     UserPrincipal that = (UserPrincipal) o;
     return getName().equals(that.getName());

@@ -98,8 +98,9 @@ public class TopicMap {
         TopicIF topicIf = getTopicMapIF().getReifier();
         if (topicIf != null) {
           OccurrenceIF occ = OntopolyModelUtils.findOccurrence(typeIf, topicIf);
-          if (occ != null)
+          if (occ != null) {
             this.dc = QueryUtils.parseDeclarations(topicMapIF, declarations, this.dc);
+          }
         }
       }
     } catch (InvalidQueryException e) {
@@ -138,7 +139,9 @@ public class TopicMap {
       @Override
       protected T wrapValue(Object value) {
         // don't wrap if type is null
-        if (type == null) return (T)value;
+        if (type == null) {
+          return (T)value;
+        }
         
         // if (value == null) return null;
         try {      
@@ -195,14 +198,16 @@ public class TopicMap {
         LocatorIF srcloc = iter.next();
         TopicIF _reifier = tm.getTopicBySubjectIdentifier(srcloc);
         if (_reifier != null) {
-          if (reifier != null)
+          if (reifier != null) {
             MergeUtils.mergeInto(reifier, _reifier);
-          else
+          } else {
             reifier = _reifier;
+          }
         }
       }
-      if (reifier == null)
+      if (reifier == null) {
         reifier = tm.getBuilder().makeTopic();
+      }
       tm.setReifier(reifier);
       reifier.addType(tm.getTopicBySubjectIdentifier(PSI.ON_TOPIC_MAP));
     }
@@ -236,8 +241,9 @@ public class TopicMap {
     TopicIF ontologyVersion = getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_ONTOLOGY_VERSION);
     Collection<TopicIF> scope = Collections.emptySet();    
     Collection<OccurrenceIF> occs = OntopolyModelUtils.findOccurrences(ontologyVersion, reifier, scope);
-    if (occs.isEmpty())
+    if (occs.isEmpty()) {
       return 0;
+    }
  
     String versionNumber = occs.iterator().next().getValue();
     try {
@@ -387,8 +393,9 @@ public class TopicMap {
     TopicMapBuilderIF builder = getTopicMapIF().getBuilder();
     TopicIF topic = builder.makeTopic(type);
 
-    if (name != null && !name.equals(""))
+    if (name != null && !name.equals("")) {
       builder.makeTopicName(topic, name);
+    }
 
     return topic;
   }
@@ -601,8 +608,9 @@ public class TopicMap {
     Collection<TopicIF> duplicateChecks = new HashSet<TopicIF>(rows.size());
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
-      if (duplicateChecks.contains(topic))
+      if (duplicateChecks.contains(topic)) {
         continue; // avoid duplicates
+      }
       results.add(new Topic(topic, this));
       duplicateChecks.add(topic);
     }
@@ -618,23 +626,26 @@ public class TopicMap {
    * in Topic.getName(), though.
    */
   protected String getTopicName(TopicIF topic, AbstractTypingTopic fallback) {
-    if (defnametype == null)
+    if (defnametype == null) {
       defnametype = OntopolyModelUtils.getTopicIF(this, PSI.TMDM_TOPIC_NAME);
+    }
 
     int score = -10;
     TopicNameIF best = null;
     for (TopicNameIF name : topic.getTopicNames()) {
       int points = 0;
-      if (name.getType() == defnametype)
+      if (name.getType() == defnametype) {
         points += 10;
+      }
       points -= name.getScope().size();
       if (points > score) {
       score = points;
       best = name;
       }
     }
-    if (best != null)
+    if (best != null) {
       return best.getValue();
+    }
 
     return (fallback == null ? null : fallback.getName());
   }

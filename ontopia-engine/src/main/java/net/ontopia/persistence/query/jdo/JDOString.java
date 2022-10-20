@@ -31,8 +31,9 @@ public class JDOString implements JDOValueIF {
   protected String value;
   
   public JDOString(String value) {
-    if (value == null)
+    if (value == null) {
       throw new IllegalArgumentException("String value cannot be null.");
+    }
     
     this.value = value;
   }
@@ -53,7 +54,9 @@ public class JDOString implements JDOValueIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOString) {
       JDOString other = (JDOString)obj;    
       return value.equals(other.value);

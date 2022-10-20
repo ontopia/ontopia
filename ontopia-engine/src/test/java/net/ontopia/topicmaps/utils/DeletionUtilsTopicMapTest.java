@@ -61,8 +61,9 @@ public class DeletionUtilsTopicMapTest {
     String name = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
     TopicMapIF tm = makeTopicMap();
     TopicMapReaderIF importer = ImportExportUtils.getReader(name);
-    if (name.endsWith(".xtm"))
+    if (name.endsWith(".xtm")) {
       ((XTMTopicMapReader) importer).setValidation(false);
+    }
     try {
       importer.importInto(tm);
     } catch (OntopiaRuntimeException ore) {

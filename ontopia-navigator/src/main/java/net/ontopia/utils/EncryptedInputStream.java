@@ -42,10 +42,11 @@ public class EncryptedInputStream extends InputStream {
     int b = myInput.read();
     int plain;
     // only if not end of file is reached
-    if (b != -1)
+    if (b != -1) {
       plain = b ^ KEY;
-    else
+    } else {
       plain = -1;
+    }
     return plain;
   }
   

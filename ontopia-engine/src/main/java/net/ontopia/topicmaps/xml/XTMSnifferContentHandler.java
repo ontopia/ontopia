@@ -82,7 +82,9 @@ public class XTMSnifferContentHandler extends DefaultHandler
     try {
       startElement_(uri, name, qname, atts);
     } catch (Exception e) {
-			if (logError()) log.error("Exception was thrown from within startElement", e);
+			if (logError()) {
+        log.error("Exception was thrown from within startElement", e);
+      }
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -110,8 +112,9 @@ public class XTMSnifferContentHandler extends DefaultHandler
       }
       
       // pass on events
-      if (locator != null)
+      if (locator != null) {
         outer_handler.setDocumentLocator(locator);
+      }
       Iterator it = entities.keySet().iterator();
       while (it.hasNext()) {
         String ename = (String) it.next();
@@ -119,8 +122,10 @@ public class XTMSnifferContentHandler extends DefaultHandler
       }
       
       outer_handler.startDocument();
-      for (int ix = 0; ix < stack_depth; ix++) // avoid EmptyStackException
+      for (int ix = 0; ix < stack_depth; ix++) {
+        // avoid EmptyStackException
         outer_handler.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "fake-element", EMPTY_ATTS);
+      }
       outer_handler.startElement(uri, name, qname, atts);
       
     } else if (XTM2ContentHandler.NS_XTM2.equals(uri)) {
@@ -136,8 +141,9 @@ public class XTMSnifferContentHandler extends DefaultHandler
         parser.setContentHandler(outer_handler);
       }
 
-      if (locator != null)
+      if (locator != null) {
         outer_handler.setDocumentLocator(locator);
+      }
       outer_handler.startDocument();
       outer_handler.startElement(uri, name, qname, atts);
     }
@@ -153,8 +159,9 @@ public class XTMSnifferContentHandler extends DefaultHandler
   @Override
   public void endDocument() {
     // if we get here it means we never found any 1.0 or 2.0 TMs
-    if (reader.getValidation())
+    if (reader.getValidation()) {
       throw new InvalidTopicMapException("XTM input is neither 1.0 nor 2.0");
+    }
   }
 
   @Override
@@ -169,8 +176,9 @@ public class XTMSnifferContentHandler extends DefaultHandler
   @Override
   public void externalEntityDecl(String name,  String publicId, 
                                  String systemId) {
-    if (systemId != null)
+    if (systemId != null) {
       entities.put(name, systemId);
+    }
   }
   
   @Override
@@ -192,14 +200,16 @@ public class XTMSnifferContentHandler extends DefaultHandler
   // --- LexicalHandler
   @Override
   public void startEntity(String name) {
-    if (handler1 != null)
+    if (handler1 != null) {
       handler1.startEntity(name);
+    }
   }
   
   @Override
   public void endEntity(String name) {
-    if (handler1 != null)
+    if (handler1 != null) {
       handler1.endEntity(name);
+    }
   }
   
   @Override
@@ -240,20 +250,22 @@ public class XTMSnifferContentHandler extends DefaultHandler
   // --- External interface
 
   public Collection getTopicMaps() {
-    if (handler1 != null)
+    if (handler1 != null) {
       return handler1.getTopicMaps();
-    else if (handler2 != null)
+    } else if (handler2 != null) {
       return handler2.getTopicMaps();
-    else
+    } else {
       return Collections.EMPTY_SET;
+    }
   }
 
   public XTMVersion getXTMVersion() {
-    if (handler1 != null)
+    if (handler1 != null) {
       return XTMVersion.XTM_1_0;
-    else if (handler2 != null)
+    } else if (handler2 != null) {
       return XTMVersion.XTM_2_0;
-    else
+    } else {
       return null;
+    }
   }
 }

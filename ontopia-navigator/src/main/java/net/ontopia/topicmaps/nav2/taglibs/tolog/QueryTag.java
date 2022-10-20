@@ -56,16 +56,18 @@ public class QueryTag extends BodyTagSupport {
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:query> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found.");
+    }
 
     contextTag.getContextManager().pushScope();
 
-    if (name == null)
+    if (name == null) {
       throw new JspTagException("<tolog:query> : Missing 'name'"
               + " attribute.\n");
+    }
 
     return EVAL_BODY_BUFFERED;
   }
@@ -88,8 +90,9 @@ public class QueryTag extends BodyTagSupport {
 
     // Get the TopicMap from the context.
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new JspTagException("<tolog:query> : found no topic map.\n");
+    }
 
     // Create a QueryProcessorIF for the topicmap.
     QueryProcessorIF queryProcessor = contextTag.getQueryProcessor();

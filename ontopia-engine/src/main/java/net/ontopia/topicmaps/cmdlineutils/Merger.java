@@ -89,8 +89,9 @@ public class Merger {
         merged = merge(merged, args[ix]);
       }
 
-      if (ohandler.suppress)
+      if (ohandler.suppress) {
         DuplicateSuppressionUtils.removeDuplicates(merged);
+      }
       
       export(merged, args[args.length - 1], ohandler.xtm);
     }
@@ -143,12 +144,14 @@ public class Merger {
   protected static void export(TopicMapIF tm, String outfile, boolean xtm)
     throws java.io.IOException {
     if (xtm) {
-      if (encoding != null)
+      if (encoding != null) {
         new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
-      else
+      } else {
         new XTMTopicMapWriter(new File(outfile)).write(tm);
-    } else
+      }
+    } else {
       ImportExportUtils.getWriter(new File(outfile), encoding).write(tm);
+    }
   }
 
   // --- Listener class
@@ -161,9 +164,15 @@ public class Merger {
     @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
-      if (option == 'x') xtm = true;
-      if (option == 'e') enc = true;
-      if (option == 's') suppress = Boolean.valueOf(value).booleanValue();
+      if (option == 'x') {
+        xtm = true;
+      }
+      if (option == 'e') {
+        enc = true;
+      }
+      if (option == 's') {
+        suppress = Boolean.valueOf(value).booleanValue();
+      }
     }
   }
   

@@ -88,8 +88,9 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
 
     // use wrapped rule if there are many matches already
     // FIXME: make this work for more matches
-    if (extmatches.last > 0)
+    if (extmatches.last > 0) {
       return rule.satisfy(extmatches, extarguments);
+    }
 
     QueryTracer.trace("satisfying hierarchywalker " + getName(), extarguments);
     
@@ -99,15 +100,17 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
     List params = rule.getParameters();
     for (int ix = 0; ix < params.size(); ix++) {
       Object p = params.get(ix);
-      if (p.equals(firstvar))
+      if (p.equals(firstvar)) {
         ix1 = extmatches.getIndex(extarguments[ix]);
-      else if (p.equals(secondvar))
+      } else if (p.equals(secondvar)) {
         ix2 = extmatches.getIndex(extarguments[ix]);
+      }
     }
 
     // $A $B -> run using wrapped rule (may be slower; need to test)
-    if (!extmatches.bound(ix1) && !extmatches.bound(ix2))
+    if (!extmatches.bound(ix1) && !extmatches.bound(ix2)) {
       return rule.satisfy(extmatches, extarguments);
+    }
 
     // $A b  -> use optimization
     // a  $B -> same
@@ -186,8 +189,9 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
 
       if (intvar.equals(firstvar) ||
           intvar.equals(secondvar) ||
-          intvar.equals(midvar))
+          intvar.equals(midvar)) {
         continue;
+      }
       
       if (extargs[ix] instanceof TMObjectIF || extargs[ix] instanceof String) {
         int col = matches.getIndex(intvar);
@@ -219,8 +223,9 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
   private void addTransitively(QueryMatches result, int startcol, int goalcol,
                                Set closure) {
     for (int ix = 0; ix <= result.last; ix++) {
-      if (closure.contains(result.data[ix][startcol]))
+      if (closure.contains(result.data[ix][startcol])) {
         closure.add(result.data[ix][goalcol]);
+      }
     }
   }
 }

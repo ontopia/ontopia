@@ -55,8 +55,9 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
       addSrclocsOf(matches, topic.getTopicNames());
 
       Iterator it2 = topic.getTopicNames().iterator();
-      while (it2.hasNext())
+      while (it2.hasNext()) {
         addSrclocsOf(matches, ((TopicNameIF) it2.next()).getVariants());
+      }
     }
 
     it = topicmap.getAssociations().iterator();
@@ -74,8 +75,9 @@ public class ItemIdentifierPredicateTest extends AbstractPredicateTest {
       TMObjectIF object = (TMObjectIF) it.next();
 
       Iterator it2 = object.getItemIdentifiers().iterator();
-      while (it2.hasNext())
+      while (it2.hasNext()) {
         addMatch(matches, "OBJ", object, "LOCATOR", ((LocatorIF) it2.next()).getAddress());
+      }
     }
   }
   

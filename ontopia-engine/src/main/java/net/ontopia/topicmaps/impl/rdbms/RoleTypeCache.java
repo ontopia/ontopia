@@ -158,10 +158,11 @@ public class RoleTypeCache {
   // -----------------------------------------------------------------------------
 
   protected Object i(Object value) {
-    if (value instanceof PersistentIF)
+    if (value instanceof PersistentIF) {
       return ((PersistentIF) value)._p_getIdentity();
-    else
+    } else {
       return value;
+    }
   }
 
   protected void addEntry(ParameterArray key, AssociationRoleIF added) {
@@ -174,8 +175,9 @@ public class RoleTypeCache {
     avals.add(added);
     // - removed
     Collection<AssociationRoleIF> rvals = rrem.get(key);
-    if (rvals != null)
+    if (rvals != null) {
       rvals.remove(added);
+    }
   }
 
   protected void removeEntry(ParameterArray key, AssociationRoleIF removed) {
@@ -188,8 +190,9 @@ public class RoleTypeCache {
     rvals.add(removed);
     // - added
     Collection<AssociationRoleIF> avals = radd.get(key);
-    if (avals != null)
+    if (avals != null) {
       avals.remove(removed);
+    }
   }
 
   /**
@@ -203,8 +206,9 @@ public class RoleTypeCache {
 
       // ignore event if player is null
       TopicIF player = added.getPlayer();
-      if (player == null)
+      if (player == null) {
         return;
+      }
 
       // register entry
       addEntry(new ParameterArray(new Object[] { i(tm), i(player), i(added.getType()) }), added);
@@ -222,8 +226,9 @@ public class RoleTypeCache {
 
       // ignore event if player is null
       TopicIF player = removed.getPlayer();
-      if (player == null)
+      if (player == null) {
         return;
+      }
 
       // unregister entry
       removeEntry(new ParameterArray(new Object[] { i(tm), i(player), i(removed.getType()) }), removed);
@@ -240,8 +245,9 @@ public class RoleTypeCache {
       AssociationRoleIF arole = (AssociationRoleIF) object;
       // ignore event if player is null
       TopicIF player = arole.getPlayer();
-      if (player == null)
+      if (player == null) {
         return;
+      }
 
       // unregister old entry
       removeEntry(new ParameterArray(new Object[] { i(tm), i(player), i(old_value) }), arole);
@@ -260,12 +266,14 @@ public class RoleTypeCache {
       AssociationRoleIF arole = (AssociationRoleIF) object;
 
       // unregister old entry
-      if (old_value != null)
+      if (old_value != null) {
         removeEntry(new ParameterArray(new Object[] { i(tm), i(old_value), i(arole.getType()) }), arole);
+      }
 
       // register new entry
-      if (new_value != null)
+      if (new_value != null) {
         addEntry(new ParameterArray(new Object[] { i(tm), i(new_value), i(arole.getType()) }), arole);
+      }
     }
   }
 

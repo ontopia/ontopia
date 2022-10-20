@@ -73,9 +73,11 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> {
 
   @Override
   public V get(Object key) {
-    for (int i=0; i < size; i++)
-      if (keys[i].equals(key))
+    for (int i=0; i < size; i++) {
+      if (keys[i].equals(key)) {
         return values[i];
+      }
+    }
     return null;
   }
 
@@ -88,21 +90,29 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> {
 
   @Override
   public boolean containsKey(Object key) {
-    for (int i=0; i < size; i++)
-      if (keys[i].equals(key)) return true;
+    for (int i=0; i < size; i++) {
+      if (keys[i].equals(key)) {
+        return true;
+      }
+    }
     return false;
   }
     
   @Override
   public boolean containsValue(Object value) {
-    for (int i=0; i < size; i++)
-      if (values[i].equals(value)) return true;
+    for (int i=0; i < size; i++) {
+      if (values[i].equals(value)) {
+        return true;
+      }
+    }
     return false;
   }
         
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof Map)) return false;
+    if (!(o instanceof Map)) {
+      return false;
+    }
     // compare entry sets
     return entrySet().equals(((Map)o).entrySet());
   }
@@ -121,8 +131,9 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> {
   public Set<Map.Entry<K, V>> entrySet() {
     // produce a entry set copy
     Map<K, V> map = new HashMap<K, V>(size);
-    for (int i=0; i < size; i++)
+    for (int i=0; i < size; i++) {
       map.put(keys[i], values[i]);
+    }
     return map.entrySet();
   }
     

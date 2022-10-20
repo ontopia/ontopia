@@ -71,12 +71,14 @@ public class PredicateClause extends AbstractClause {
   public String toString() {
     StringBuilder buf = new StringBuilder(predicate.getName() + "(");
     for (int ix = 0; ix < arguments.size(); ix++) {
-      if (arguments.get(ix) == null)
+      if (arguments.get(ix) == null) {
         buf.append("<null>");
-      else
+      } else {
         buf.append(arguments.get(ix).toString());
-      if (ix+1 < arguments.size())
+      }
+      if (ix+1 < arguments.size()) {
         buf.append(", ");
+      }
     }
     buf.append(')');
     return buf.toString();
@@ -88,12 +90,13 @@ public class PredicateClause extends AbstractClause {
     
     for (int i = 0; i < arguments.size(); i++) {
       Object argument = arguments.get(i);
-      if (argument instanceof Variable) 
+      if (argument instanceof Variable) { 
         vars.add(argument);
-      else if (argument instanceof Pair) {
+      } else if (argument instanceof Pair) {
         Object arg = ((Pair) argument).getFirst();
-        if (arg instanceof Variable)
+        if (arg instanceof Variable) {
           vars.add(arg);
+        }
       }
     }
 
@@ -106,10 +109,12 @@ public class PredicateClause extends AbstractClause {
     
     for (int i = 0; i < arguments.size(); i++) {
       Object argument = arguments.get(i);
-      if (argument instanceof Pair)
+      if (argument instanceof Pair) {
         argument = ((Pair) argument).getFirst();
-      if (!(argument instanceof Variable)) 
+      }
+      if (!(argument instanceof Variable)) {
         literals.add(argument);
+      }
     }
 
     return literals;
@@ -122,8 +127,9 @@ public class PredicateClause extends AbstractClause {
    */
   public PredicateClause getReplacement() {
     if (predicate instanceof RulePredicate &&
-        ((RulePredicate) predicate).replaceable()) 
+        ((RulePredicate) predicate).replaceable()) {
       return ((RulePredicate) predicate).translate(arguments);
+    }
     return this;
   }
 }

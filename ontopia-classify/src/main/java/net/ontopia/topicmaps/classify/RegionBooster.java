@@ -55,12 +55,15 @@ public class RegionBooster extends AbstractDocumentAnalyzer {
   @Override
   public void analyzeToken(TextBlock parent, Token token, int index) {
     // ignore non variant tokens
-    if (token.getType() != Token.TYPE_VARIANT) return;
+    if (token.getType() != Token.TYPE_VARIANT) {
+      return;
+    }
     
     Term term = ((Variant)token).getTerm();
     double score = term.getScore();
-    if (score > 0d)
+    if (score > 0d) {
       term.multiplyScore(boost, "region boost");
+    }
   }
 
   @Override

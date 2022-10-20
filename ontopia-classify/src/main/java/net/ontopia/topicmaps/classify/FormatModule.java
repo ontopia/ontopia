@@ -109,10 +109,14 @@ public class FormatModule implements FormatModuleIF {
   // --------------------------------------------------------------------------
 
   public static boolean matchesExtension(String uri, String[] extensions) {
-    if (extensions == null) return false;
+    if (extensions == null) {
+      return false;
+    }
     String luri = uri.toLowerCase();
     for (int i=0; i < extensions.length; i++) {
-      if (luri.endsWith(extensions[i])) return true;
+      if (luri.endsWith(extensions[i])) {
+        return true;
+      }
     }
     return false;
   }
@@ -133,8 +137,9 @@ public class FormatModule implements FormatModuleIF {
     // check byte order mark
     for (int i=0; i < boms.length; i++) {
       byte[] bom = boms[i];
-      if (startsWith(content, bom))
+      if (startsWith(content, bom)) {
         return i;
+      }
     }
     return -1;
   }
@@ -160,9 +165,13 @@ public class FormatModule implements FormatModuleIF {
   }
 
   public static boolean startsWith(byte[] content, byte[] s) {
-    if (content == null || content.length < s.length) return false;
+    if (content == null || content.length < s.length) {
+      return false;
+    }
     for (int i=0; i < s.length; i++) {
-      if (content[i] != s[i]) return false;
+      if (content[i] != s[i]) {
+        return false;
+      }
     }
     return true;
   }
@@ -173,7 +182,9 @@ public class FormatModule implements FormatModuleIF {
     for (int i=0; i < ss.length; i++) {
       byte[] s = ss[i];
       for (int o=offset; o < s.length; o++) {
-        if (content[o+offset] != s[o]) continue outer;
+        if (content[o+offset] != s[o]) {
+          continue outer;
+        }
       }
       return true;
     }
@@ -183,7 +194,9 @@ public class FormatModule implements FormatModuleIF {
   public static boolean startsWithSkipWhitespace(byte[] content, byte[] s) {
     int offset = getLeadingWhitespace(content);
     for (int i=0; i < s.length; i++) {
-      if (content[i+offset] != s[i]) return false;
+      if (content[i+offset] != s[i]) {
+        return false;
+      }
     }
     return true;
   }
@@ -193,10 +206,11 @@ public class FormatModule implements FormatModuleIF {
     int offset = 0;
     for (int i=0; i < content.length; i++) {
       char c = (char)content[i];
-      if (Character.isWhitespace(c) || c == '\u0000' || c == '\u00ff' || c == '\u00fe' || c == '\u00ef' || c == '\u00ef' || c == '\u00bb' || c == '\u00bf')
+      if (Character.isWhitespace(c) || c == '\u0000' || c == '\u00ff' || c == '\u00fe' || c == '\u00ef' || c == '\u00ef' || c == '\u00bb' || c == '\u00bf') {
         offset++;
-      else
+      } else {
         break;
+      }
     }
     return offset;
   }

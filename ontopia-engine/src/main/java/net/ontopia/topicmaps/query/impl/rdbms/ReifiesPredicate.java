@@ -70,10 +70,11 @@ public class ReifiesPredicate
             
       // Do direct predicate evaluation
 			ReifiableIF reified = ((TopicIF)args[0]).getReified();
-      if (Objects.equals(reified, args[1]))
+      if (Objects.equals(reified, args[1])) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
 
     } else {
 

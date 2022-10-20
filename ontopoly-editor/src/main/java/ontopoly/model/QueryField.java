@@ -59,8 +59,9 @@ public class QueryField extends FieldDefinition {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof QueryField))
+    if (!(obj instanceof QueryField)) {
       return false;
+    }
     
     QueryField other = (QueryField)obj;
     return (getTopicIF().equals(other.getTopicIF()));

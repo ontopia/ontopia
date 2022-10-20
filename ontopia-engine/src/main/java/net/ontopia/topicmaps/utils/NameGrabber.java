@@ -182,12 +182,14 @@ public class NameGrabber implements Function<TopicIF, NameIF> {
    */
   @Override
   public NameIF apply(TopicIF topic) {
-    if (topic == null)
+    if (topic == null) {
       return null;
+    }
     
     List<TopicNameIF> basenames = new ArrayList<TopicNameIF>(topic.getTopicNames());
-    if (basenames.isEmpty())
+    if (basenames.isEmpty()) {
       return null;
+    }
 
     // If subject indicator of theme is set use this to setup scope
     if (themeIndicator != null) {
@@ -200,10 +202,11 @@ public class NameGrabber implements Function<TopicIF, NameIF> {
       if (tm != null) {
         TopicIF theme = tm.getTopicBySubjectIdentifier(themeIndicator);
         if (theme != null) {
-          if (indicatorVariant)
+          if (indicatorVariant) {
             variantScope = Collections.singleton(theme);
-          else
+          } else {
             scope = Collections.singleton(theme);
+          }
         }
       }
     }
@@ -217,8 +220,9 @@ public class NameGrabber implements Function<TopicIF, NameIF> {
     VariantNameIF vn = null;
 
     for (TopicNameIF current : basenames) {
-      if (name == null)
+      if (name == null) {
         name = current;
+      }
 
       if (!variantScope.isEmpty()) {
         vn = vngrabber.apply(current);
@@ -230,20 +234,22 @@ public class NameGrabber implements Function<TopicIF, NameIF> {
           // and specified scope then we are delivering this variant
           Collection<TopicIF> interSection = new HashSet<TopicIF>(vn.getScope());
           interSection.retainAll(variantScope);
-          if (!interSection.isEmpty())
+          if (!interSection.isEmpty()) {
             break;
-          else
+          } else {
             vn = null;
+          }
         }
       }
     } // while
 
     // if valid variant name get base name which belongs to this
     if (vn != null) {
-      if (grabOnlyTopicName)
+      if (grabOnlyTopicName) {
         name = vn.getTopicName();
-      else
+      } else {
         name = vn;
+      }
     }
 
     return name;

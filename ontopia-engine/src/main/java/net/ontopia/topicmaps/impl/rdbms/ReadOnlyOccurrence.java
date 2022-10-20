@@ -126,7 +126,9 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   
   @Override
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
+    if (!DataTypes.TYPE_URI.equals(getDataType())) {
+      return null;
+    }
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
@@ -140,10 +142,11 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
   public long getLength() {
     Number length = this.<Number>loadField(Occurrence.LF_length);
     long len = (length == null ? 0 : length.longValue());
-    if (len < 0)
+    if (len < 0) {
       return len * -1L;
-    else
+    } else {
       return len;
+    }
   }
   
   // ---------------------------------------------------------------------------

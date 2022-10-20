@@ -162,8 +162,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    * method if using the TopicMapWriterIF interface.
    */
   public void close() throws IOException {
-    if (writer != null)
+    if (writer != null) {
       writer.close();
+    }
   }
   
   // --- Accessors
@@ -218,8 +219,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "xmlns:" + prefix, CDATA, nsuri);
     }
 
-    if (topicmap != null) // topic map can be null in some situations (particularly when using tmrap)
+    if (topicmap != null) { // topic map can be null in some situations (particularly when using tmrap)
       addReifierAttribute(topicmap, atts);
+    }
     
     out.startDocument();
     out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, docelem, atts);
@@ -233,8 +235,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    */
   public void gatherPrefixes(Collection topics) {
     Iterator it = topics.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       gatherPrefixes((TopicIF) it.next());
+    }
   }
   
   /**
@@ -242,8 +245,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
    */
   public void writeTopics(Collection topics) throws SAXException {    
     Iterator it = topics.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       writeTopic((TopicIF) it.next());
+    }
   }
 
   /**
@@ -258,8 +262,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     
     String elem = TOPIC; // special name meaning: no topic type
     Iterator typeit = filterCollection(topic.getTypes()).iterator();
-    if (typeit.hasNext())
+    if (typeit.hasNext()) {
       elem = getElementTypeName((TopicIF) typeit.next(), TOPIC);
+    }
     
     atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "id", CDATA, getTopicId(topic));
     out.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, elem, atts);
@@ -290,8 +295,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String bnelem = getElementTypeName(bn.getType(), BASENAME);
 
       String scope = getScope(bn);
-      if (scope != null)
+      if (scope != null) {
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
+      }
 
       addReifierAttribute(bn, atts);
       
@@ -307,10 +313,12 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
         atts.clear();
         scope = getScope(vn);
-        if (scope != null)
+        if (scope != null) {
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
-        if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_STRING))
+        }
+        if (!Objects.equals(vn.getDataType(), DataTypes.TYPE_STRING)) {
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", CDATA, vn.getDataType().getAddress());
+        }
 
         addReifierAttribute(vn, atts);
         
@@ -331,10 +339,12 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       String occelem = getElementTypeName(occ.getType(), OCCURRENCE);
 
       String scope = getScope(occ);
-      if (scope != null && filterOk(scope))
+      if (scope != null && filterOk(scope)) {
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
-      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_STRING))
+      }
+      if (!Objects.equals(occ.getDataType(), DataTypes.TYPE_STRING)) {
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", CDATA, occ.getDataType().getAddress());
+      }
 
       addReifierAttribute(occ, atts);
 
@@ -362,16 +372,19 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
       AssociationIF assoc = role.getAssociation();
-      if (!filterOk(assoc))
+      if (!filterOk(assoc)) {
         continue; // Do not output filtered associations.
-      if (exported.contains(assoc.getObjectId()))
+      }
+      if (exported.contains(assoc.getObjectId())) {
         continue; // output each association only once
+      }
       exported.add(assoc.getObjectId());
 
       String assocelem = getElementTypeName(assoc.getType(), ASSOCIATION);
       String scope = getScope(assoc);
-      if (scope != null)
+      if (scope != null) {
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SCOPE, CDATA, scope);
+      }
       atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "role", CDATA,
                         getElementTypeName(role.getType(), ROLE));
 
@@ -407,8 +420,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
         Iterator it2 = assoc.getRoles().iterator();
         while (it2.hasNext()) {
           AssociationRoleIF r = (AssociationRoleIF) it2.next();
-          if (r.equals(role))
+          if (r.equals(role)) {
             continue; // this is our role, which is already covered
+          }
 
           atts.clear();
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicref", CDATA, getTopicId(r.getPlayer()));
@@ -494,8 +508,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
 
   private String getScope(ScopedIF scoped) {
     Iterator it = filterCollection(scoped.getScope()).iterator();
-    if (!it.hasNext())
+    if (!it.hasNext()) {
       return null;
+    }
     
     StringBuilder buf = new StringBuilder();
     while (it.hasNext()) {
@@ -507,8 +522,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   
   private void findPrefixFor(Collection topics) {
     Iterator it = topics.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       findPrefixFor((TopicIF) it.next());
+    }
   }
 
   private void findPrefixFor(TopicIF type) {
@@ -521,8 +537,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   }
   
   private String getElementTypeName(TopicIF topic, String def) {
-    if (topic == null)
+    if (topic == null) {
       return def;
+    }
     
     Collection subjids = topic.getSubjectIdentifiers();
     if (!subjids.isEmpty()) {
@@ -556,16 +573,19 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       if (first != -1 && second != -1) {
         String candidate = baseurl.substring(second + 1, first);
         candidate = StringUtils.normalizeId(candidate);
-        if (candidate != null && candidate.length() <= 1) 
+        if (candidate != null && candidate.length() <= 1) { 
           candidate = null; // could be too short after cutting
-        if (candidate != null && !prefixes.containsKey(candidate))
+        }
+        if (candidate != null && !prefixes.containsKey(candidate)) {
           prefix = candidate;
+        }
       } 
 
-      if (prefix == null)
+      if (prefix == null) {
         unassigned.add(baseurl); // will assign preXX prefix later
-      else
+      } else {
         addPrefix(prefix, baseurl);
+      }
     }
     
     return prefix;
@@ -577,8 +597,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     List uris = new ArrayList(unassigned);
     unassigned = null;
     Collections.sort(uris);
-    for (int ix = 0; ix < uris.size(); ix++)
+    for (int ix = 0; ix < uris.size(); ix++) {
       addPrefix("pre" + nsuris.size(), (String) uris.get(ix));
+    }
   }
 
   private String getTopicId(TopicIF topic) {
@@ -588,7 +609,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       Iterator it = topic.getItemIdentifiers().iterator();
       while (it.hasNext()) {
         String extractedId = extractRelativeId(base, (LocatorIF) it.next());
-        if (extractedId != null) return extractedId;
+        if (extractedId != null) {
+          return extractedId;
+        }
       }
     }    
     return "id" + topic.getObjectId();
@@ -598,8 +621,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     String addr = srcloc.getAddress();
     if (addr.startsWith(base) && addr.length() > base.length()) {
       String id = addr.substring(base.length() + 1);
-      if (isValidXMLId(id))
+      if (isValidXMLId(id)) {
         return id;
+      }
     }
     return null;
   }
@@ -625,8 +649,9 @@ public class TMXMLWriter extends AbstractTopicMapExporter
       if (base != null && address.startsWith(base)
           && address.indexOf('#') != -1) {
         String id = address.substring(address.indexOf('#'));
-        if (isValidXMLId(id.substring(1)))
+        if (isValidXMLId(id.substring(1))) {
           return id;
+        }
       }
     }
 

@@ -55,10 +55,12 @@ public class ExternalValidation {
       Iterator<IValidator<String>> iter = validators.iterator();
       while (iter.hasNext()) {
         validator = iter.next();
-        if (isNull == false || validator instanceof INullAcceptingValidator)
+        if (isNull == false || validator instanceof INullAcceptingValidator) {
           validator.validate(validatable);
-        if (!component.isValid())
+        }
+        if (!component.isValid()) {
           break;
+        }
       }
     }
     catch (Exception e) {

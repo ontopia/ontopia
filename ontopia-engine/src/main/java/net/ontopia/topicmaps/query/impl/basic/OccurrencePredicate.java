@@ -49,14 +49,15 @@ public class OccurrencePredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -112,11 +113,13 @@ public class OccurrencePredicate implements BasicPredicateIF {
 
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!(matches.data[ix][occix] instanceof OccurrenceIF))
+      if (!(matches.data[ix][occix] instanceof OccurrenceIF)) {
         continue;
+      }
 
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
       
       Object[] newRow = (Object[]) matches.data[ix].clone();

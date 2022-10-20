@@ -44,10 +44,11 @@ public class SimpleClassifier {
   public static TermDatabase classify(String uri_or_file, TopicMapIF topicmap) {
     // create classifier
     TopicMapClassification tcl;
-    if (topicmap == null)
+    if (topicmap == null) {
       tcl = new TopicMapClassification();
-    else
+    } else {
       tcl = new TopicMapClassification(topicmap);
+    }
 
     // read document
     ClassifiableContentIF cc = ClassifyUtils.getClassifiableContent(uri_or_file);

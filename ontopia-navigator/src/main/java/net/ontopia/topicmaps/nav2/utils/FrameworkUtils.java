@@ -81,22 +81,24 @@ public final class FrameworkUtils {
     try {
       Object obj = pageContext.getAttribute(NavigatorApplicationIF.USER_KEY,
 					    PageContext.SESSION_SCOPE);
-      if (obj != null && obj instanceof UserIF)
-	return (UserIF) obj;
-      else
-	// if no user object exists just create a new one
-	return (create ? createUserSession(pageContext) : null);
+      if (obj != null && obj instanceof UserIF) {
+        return (UserIF) obj;
+      } else {
+        // if no user object exists just create a new one
+        return (create ? createUserSession(pageContext) : null);
+      }
 
     } catch (java.lang.IllegalStateException e) {
 
       // sessions not allowed in page, so get the user from the request scope instead
       Object obj = pageContext.getAttribute(NavigatorApplicationIF.USER_KEY,
 					    PageContext.REQUEST_SCOPE);
-      if (obj != null && obj instanceof UserIF)
-	return (UserIF) obj;
-      else
-	// if no user object exists just create a new one
-	return (create ? createUserSession(pageContext, PageContext.REQUEST_SCOPE) : null);
+      if (obj != null && obj instanceof UserIF) {
+        return (UserIF) obj;
+      } else {
+        // if no user object exists just create a new one
+        return (create ? createUserSession(pageContext, PageContext.REQUEST_SCOPE) : null);
+      }
 
     }
   }
@@ -116,8 +118,9 @@ public final class FrameworkUtils {
     NavigatorConfigurationIF navConf = NavigatorUtils.getNavigatorApplication(pageContext).getConfiguration();
     // try to retrieve the user name from the request, otherwise null
     String username = null;
-    if (pageContext.getRequest() instanceof HttpServletRequest)
+    if (pageContext.getRequest() instanceof HttpServletRequest) {
       username = ((HttpServletRequest) pageContext.getRequest()).getRemoteUser();
+    }
     // create new user object
     UserIF user = new User(username, navConf);
     // set MVS settings
@@ -137,7 +140,9 @@ public final class FrameworkUtils {
     //! UserIF user = (UserIF) pageContext.getAttribute(NavigatorApplicationIF.USER_KEY,
     //!                                                 PageContext.SESSION_SCOPE);
     UserIF user = getUser(pageContext, false);
-    if (user == null) return; // ignore if no user
+    if (user == null) {
+      return; // ignore if no user
+    }
 
     // reset MVS settings
     user = setDefaultMVS(navConf, user);
@@ -153,10 +158,11 @@ public final class FrameworkUtils {
   public static List evaluateParameterList(PageContext pageContext,
                                             String params)
     throws JspTagException {
-    if (params != null && !params.equals(""))
-       return getMultipleValuesAsList(params, pageContext);
-    else
+    if (params != null && !params.equals("")) {
+      return getMultipleValuesAsList(params, pageContext);
+    } else {
       return Collections.EMPTY_LIST;
+    }
   }
   
   /**
@@ -189,9 +195,10 @@ public final class FrameworkUtils {
           throw new JspTagException(e.getException().getMessage() +
                                     " (in action parameter list)");
         }
-      } else
+      } else {
         // it's a variable name
         values = InteractionELSupport.extendedGetValue(names[i], pageContext);
+      }
       
       varlist.add(values);
     }
@@ -210,14 +217,17 @@ public final class FrameworkUtils {
                                       UserIF user) {
     // get defaults from config and set them
     if (navConf.getDefaultModel() != null
-        && !navConf.getDefaultModel().equals(""))
+        && !navConf.getDefaultModel().equals("")) {
       user.setModel( navConf.getDefaultModel() );
+    }
     if (navConf.getDefaultView() != null
-        && !navConf.getDefaultView().equals(""))
+        && !navConf.getDefaultView().equals("")) {
       user.setView( navConf.getDefaultView()  );
+    }
     if (navConf.getDefaultSkin() != null
-        && !navConf.getDefaultSkin().equals(""))
+        && !navConf.getDefaultSkin().equals("")) {
       user.setSkin( navConf.getDefaultSkin() );
+    }
     
     return user;
   }

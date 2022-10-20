@@ -73,10 +73,12 @@ public class SchemaTracker {
    protected int maxcard = -1;
    protected void registerCardinality(int cardinality) {
      this.count += cardinality;
-     if (cardinality > maxcard || maxcard == -1)
+     if (cardinality > maxcard || maxcard == -1) {
        this.maxcard = cardinality;
-     if (cardinality < mincard || mincard == -1)
-       this.mincard = cardinality;      
+     }
+     if (cardinality < mincard || mincard == -1) {
+       this.mincard = cardinality;
+     }      
    }
   }  
   private class CharType extends AbstractProperty {
@@ -146,10 +148,11 @@ public class SchemaTracker {
        CharType ctype = createCharType(ttinfo.ntypes, tn.getType());
        ctype.count++;
        // track cardinalities
-       if (ncards.containsKey(ctype.type))
+       if (ncards.containsKey(ctype.type)) {
          ncards.increment(ctype.type);
-       else
+       } else {
          ncards.put(ctype.type, 1);
+       }
      }
      // register cardinalities
      Iterator<CharType> ntiter = ttinfo.ntypes.values().iterator();
@@ -169,18 +172,20 @@ public class SchemaTracker {
          CharType ctype = createCharType(ttinfo.oitypes, oc.getType());
          ctype.count++;
          // track cardinalities
-         if (oicards.containsKey(ctype.type))
+         if (oicards.containsKey(ctype.type)) {
            oicards.increment(ctype.type);
-         else
+         } else {
            oicards.put(ctype.type, 1);
+         }
        } else {
          CharType ctype = createCharType(ttinfo.oetypes, oc.getType());
          ctype.count++;
          // track cardinalities
-         if (oecards.containsKey(ctype.type))
+         if (oecards.containsKey(ctype.type)) {
            oecards.increment(ctype.type);
-         else
+         } else {
            oecards.put(ctype.type, 1);
+         }
        }
      }
      // register cardinalities
@@ -220,10 +225,11 @@ public class SchemaTracker {
   
      // symmetric association?
      if (symmetric) {
-       if (prev_rtype == null)
+       if (prev_rtype == null) {
          prev_rtype = rtype;
-       else if (rtype == null || !rtype.equals(prev_rtype))          
+       } else if (rtype == null || !rtype.equals(prev_rtype)) {
          symmetric = false;
+       }
      }        
      
      if (player != null) {        
@@ -244,8 +250,9 @@ public class SchemaTracker {
      }
    }
    // non-symmetric association type
-   if (!symmetric)
+   if (!symmetric) {
      non_symmetric_atypes.add(atype);
+   }
   }
   
   protected int getPlayerCardinality(TopicIF atype, TopicIF rtype, TopicIF player) {
@@ -254,14 +261,19 @@ public class SchemaTracker {
    while (iter.hasNext()) {
      AssociationRoleIF role = iter.next();
      TopicIF _rtype = role.getType();
-     if (_rtype == null || !_rtype.equals(rtype)) continue;
+     if (_rtype == null || !_rtype.equals(rtype)) {
+       continue;
+     }
   
      AssociationIF assoc = role.getAssociation();
-     if (assoc == null) continue;
+     if (assoc == null) {
+       continue;
+     }
      
      TopicIF _atype = assoc.getType();
-     if (_atype != null && _atype.equals(atype))
+     if (_atype != null && _atype.equals(atype)) {
        result++;
+     }
    }
    return result;
   }
@@ -274,33 +286,42 @@ public class SchemaTracker {
   
   public int getTopicTypeInstances(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null)
+   if (tt == null) {
      return 0;
-   else
+   } else {
      return tt.count;
+   }
   }
   
   public int getSubjectLocatorMinCardinality(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    return tt.subloc.mincard;
   }
   
   public int getSubjectLocatorMaxCardinality(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    return tt.subloc.maxcard;
   }
   
   public int getSubjectIndicatorMinCardinality(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    return tt.subind.mincard;
   }
   
   public int getSubjectIndicatorMaxCardinality(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    return tt.subind.maxcard;
   }
   
@@ -314,67 +335,97 @@ public class SchemaTracker {
   
   public Collection<TopicIF> getNameTypes(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return Collections.emptySet();
+   if (tt == null) {
+     return Collections.emptySet();
+   }
    return tt.ntypes.keySet();
   }
   
   public int getNameTypeMinCardinality(TopicIF ttype, TopicIF ntype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    CharType ct = (CharType)tt.ntypes.get(ntype);
-   if (ct == null) return 0;
+   if (ct == null) {
+     return 0;
+   }
    return ct.mincard;
   }
   
   public int getNameTypeMaxCardinality(TopicIF ttype, TopicIF ntype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    CharType ct = (CharType)tt.ntypes.get(ntype);
-   if (ct == null) return 0;
+   if (ct == null) {
+     return 0;
+   }
    return ct.maxcard;
   }
   
   public Collection<TopicIF> getExternalOccurrenceTypes(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return Collections.emptySet();
+   if (tt == null) {
+     return Collections.emptySet();
+   }
    return tt.oetypes.keySet();
   }
   
   public int getExternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF otype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    CharType ct = (CharType)tt.oetypes.get(otype);
-   if (ct == null) return 0;
+   if (ct == null) {
+     return 0;
+   }
    return ct.mincard;
   }
   
   public int getExternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF otype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    CharType ct = (CharType)tt.oetypes.get(otype);
-   if (ct == null) return 0;
+   if (ct == null) {
+     return 0;
+   }
    return ct.maxcard;
   }
   
   public Collection<TopicIF> getInternalOccurrenceTypes(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return Collections.emptySet();
+   if (tt == null) {
+     return Collections.emptySet();
+   }
    return tt.oitypes.keySet();
   }
   
   public int getInternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF otype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    CharType ct = (CharType)tt.oitypes.get(otype);
-   if (ct == null) return 0;
+   if (ct == null) {
+     return 0;
+   }
    return ct.mincard;
   }
   
   public int getInternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF otype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return 0;
+   if (tt == null) {
+     return 0;
+   }
    CharType ct = (CharType)tt.oitypes.get(otype);
-   if (ct == null) return 0;
+   if (ct == null) {
+     return 0;
+   }
    return ct.maxcard;
   }
   
@@ -384,30 +435,37 @@ public class SchemaTracker {
   
   public Collection<TopicIF> getRoleTypes(TopicIF atype) {
    Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
-   if (rmap == null)
+   if (rmap == null) {
      return Collections.emptySet();
-   else
+   } else {
      return rmap.keySet();
+   }
   }
   
   public Collection<TopicIF> getPlayerTypes(TopicIF atype, TopicIF rtype) {
    Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
-   if (rmap == null)
+   if (rmap == null) {
      return  Collections.emptySet();
+   }
    
    Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
-   if (pmap == null)
+   if (pmap == null) {
      return Collections.emptySet();
-   else
+   } else {
      return pmap.keySet();
+   }
   }
   
   public int getPlayerTypeMinCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype) {
    Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
-   if (rmap == null) return 0;
+   if (rmap == null) {
+     return 0;
+   }
    
    Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
-   if (pmap == null) return 0;
+   if (pmap == null) {
+     return 0;
+   }
   
    PlayerType pt = pmap.get(ptype);
    return (pt == null ? 0 : pt.mincard);
@@ -415,10 +473,14 @@ public class SchemaTracker {
   
   public int getPlayerTypeMaxCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype) {
    Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
-   if (rmap == null) return 0;
+   if (rmap == null) {
+     return 0;
+   }
    
    Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
-   if (pmap == null) return 0;
+   if (pmap == null) {
+     return 0;
+   }
   
    PlayerType pt = pmap.get(ptype);
    return (pt == null ? 0 : pt.maxcard);
@@ -511,9 +573,13 @@ public class SchemaTracker {
   
   protected PlayerType getPlayerType(Map<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>> amap, TopicIF atype, TopicIF rtype, TopicIF ptype) {
    Map<TopicIF,Map<TopicIF,PlayerType>> rmap = amap.get(atype);
-   if (rmap == null) return null;
+   if (rmap == null) {
+     return null;
+   }
    Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
-   if (pmap == null) return null;
+   if (pmap == null) {
+     return null;
+   }
    return pmap.get(ptype);
   }
   

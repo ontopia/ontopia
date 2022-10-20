@@ -57,7 +57,9 @@ public class JDOEndsWith implements JDOExpressionIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOEndsWith) {
       JDOEndsWith other = (JDOEndsWith)obj;
       return (left.equals(other.left) &&

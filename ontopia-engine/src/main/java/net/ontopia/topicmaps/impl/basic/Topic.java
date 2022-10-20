@@ -81,12 +81,14 @@ public class Topic extends TMObject implements TopicIF {
   protected void setTopicMap(TopicMap parent) {
     // (De)reference pooled sets
     if (parent == null) {
-      if (scope != null)
+      if (scope != null) {
         topicmap.setpool.dereference(scope);
+      }
       topicmap.setpool.dereference(types);
     } else {
-      if (scope != null)
+      if (scope != null) {
         scope = topicmap.setpool.get(scope);
+      }
       types = topicmap.setpool.get(types);
     }
     // Set parent
@@ -95,23 +97,26 @@ public class Topic extends TMObject implements TopicIF {
 
   @Override
   public Collection<LocatorIF> getSubjectLocators() {
-    if (subjects == null)
+    if (subjects == null) {
       return Collections.emptySet();
-    else
+    } else {
       return Collections.unmodifiableSet(subjects);
+    }
   }
 
   @Override
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
     Objects.requireNonNull(subject_locator, MSG_NULL_ARGUMENT);
     // Notify topic map
-    if (!isConnected())
+    if (!isConnected()) {
       throw new ConstraintViolationException("Cannot modify subject locator when topic isn't attached to a topic map.");
-    if (subjects == null)
-      subjects = topicmap.cfactory.makeSmallSet();    
-    // Check to see if subject is already a subject locator of this topic.
-    else if (subjects.contains(subject_locator))
+    }
+    if (subjects == null) {
+      subjects = topicmap.cfactory.makeSmallSet();
+      // Check to see if subject is already a subject locator of this topic.
+    } else if (subjects.contains(subject_locator)) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_SUBJECTLOCATOR, subject_locator, null);    
     // Modify property
@@ -122,11 +127,13 @@ public class Topic extends TMObject implements TopicIF {
   public void removeSubjectLocator(LocatorIF subject_locator) {
     Objects.requireNonNull(subject_locator, MSG_NULL_ARGUMENT);
     // Notify topic map
-    if (!isConnected())
+    if (!isConnected()) {
       throw new ConstraintViolationException("Cannot modify subject locator when topic isn't attached to a topic map.");
+    }
     // Check to see if subject locator is a subject locator of this topic.
-    if (subjects == null || !subjects.contains(subject_locator))
+    if (subjects == null || !subjects.contains(subject_locator)) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, null, subject_locator);    
     // Modify property
@@ -135,23 +142,26 @@ public class Topic extends TMObject implements TopicIF {
 
   @Override
   public Collection<LocatorIF> getSubjectIdentifiers() {
-    if (indicators == null)
+    if (indicators == null) {
       return Collections.emptySet();
-    else
+    } else {
       return Collections.unmodifiableSet(indicators);
+    }
   }
 
   @Override
   public void addSubjectIdentifier(LocatorIF subject_indicator) throws ConstraintViolationException {
     Objects.requireNonNull(subject_indicator, MSG_NULL_ARGUMENT);
     // Notify topic map
-    if (!isConnected())
+    if (!isConnected()) {
       throw new ConstraintViolationException("Cannot modify subject indicator when topic isn't attached to a topic map.");
-    if (indicators == null)
-      indicators = topicmap.cfactory.makeSmallSet();    
-    // Check to see if subject is already a subject indicator of this topic.
-    else if (indicators.contains(subject_indicator))
+    }
+    if (indicators == null) {
+      indicators = topicmap.cfactory.makeSmallSet();
+      // Check to see if subject is already a subject indicator of this topic.
+    } else if (indicators.contains(subject_indicator)) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, subject_indicator, null);    
     // Modify property
@@ -162,11 +172,13 @@ public class Topic extends TMObject implements TopicIF {
   public void removeSubjectIdentifier(LocatorIF subject_indicator) {
     Objects.requireNonNull(subject_indicator, MSG_NULL_ARGUMENT);
     // Notify topic map
-    if (!isConnected())
+    if (!isConnected()) {
       throw new ConstraintViolationException("Cannot modify subject indicator when topic isn't attached to a topic map.");
+    }
     // Check to see if subject indicator is a subject indicator of this topic.
-    if (indicators == null || !indicators.contains(subject_indicator))
+    if (indicators == null || !indicators.contains(subject_indicator)) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, null, subject_indicator);    
     // Modify property
@@ -183,11 +195,13 @@ public class Topic extends TMObject implements TopicIF {
     TopicName name = (TopicName)_name;
     Objects.requireNonNull(name, MSG_NULL_ARGUMENT);
     // Check to see if name is already a member of this topic
-    if (name.parent == this)
+    if (name.parent == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (name.parent != null)
+    if (name.parent != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_TOPICNAME, name, null);    
     // Set topic property
@@ -200,8 +214,9 @@ public class Topic extends TMObject implements TopicIF {
     TopicName name = (TopicName)_name;
     Objects.requireNonNull(name, MSG_NULL_ARGUMENT);
     // Check to see if name is not a member of this topic
-    if (name.parent != this)
+    if (name.parent != this) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_TOPICNAME, null, name);    
     // Unset topic property
@@ -241,11 +256,13 @@ public class Topic extends TMObject implements TopicIF {
     Occurrence occurrence = (Occurrence)_occurrence;
     Objects.requireNonNull(occurrence, MSG_NULL_ARGUMENT);
     // Check to see if occurrence is already a member of this topic
-    if (occurrence.parent == this)
+    if (occurrence.parent == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (occurrence.parent != null)
+    if (occurrence.parent != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_OCCURRENCE, occurrence, null);    
     // Set topic property
@@ -258,8 +275,9 @@ public class Topic extends TMObject implements TopicIF {
     Occurrence occurrence = (Occurrence)_occurrence;
     Objects.requireNonNull(occurrence, MSG_NULL_ARGUMENT);
     // Check to see if occurrence is not a member of this topic
-    if (occurrence.parent != this)
+    if (occurrence.parent != this) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_OCCURRENCE, null, occurrence);    
     // Unset topic property
@@ -282,8 +300,9 @@ public class Topic extends TMObject implements TopicIF {
       Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
         AssociationRoleIF role = iter.next();
-        if (role.getType() == roletype)
+        if (role.getType() == roletype) {
           result.add(role);
+        }
       }
     }
     return result;
@@ -313,8 +332,9 @@ public class Topic extends TMObject implements TopicIF {
           AssociationRoleIF role = iter.next();
           if (role.getType() == roletype) {
             AssociationIF assoc = role.getAssociation();
-            if (assoc != null && assoc.getType() == assoc_type)
+            if (assoc != null && assoc.getType() == assoc_type) {
               result.add(role);
+            }
           }
         }
         return result;
@@ -374,8 +394,9 @@ public class Topic extends TMObject implements TopicIF {
 
   @Override
   public void remove() {
-    if (topicmap != null)
+    if (topicmap != null) {
       topicmap.removeTopic(this);
+    }
   }
   
   @Override
@@ -430,19 +451,21 @@ public class Topic extends TMObject implements TopicIF {
     public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
 
       int c = role1.getType().hashCode() - role2.getType().hashCode();
-      if (c == 0)
+      if (c == 0) {
         c = role1.getAssociation().getType().hashCode() -
-            role2.getAssociation().getType().hashCode();
+                role2.getAssociation().getType().hashCode();
+      }
       if (c == 0) {
         // have to do this the long-winded way, because of overflow issues
         int hc1 = role1.getAssociation().hashCode();
         int hc2 = role2.getAssociation().hashCode();
-        if (hc1 < hc2)
+        if (hc1 < hc2) {
           c = -1;
-        else if (hc1 > hc2)
+        } else if (hc1 > hc2) {
           c = 1;
-        else
+        } else {
           c = 0;
+        }
       }
       return c;
     }

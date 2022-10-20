@@ -54,9 +54,9 @@ public class OccurrencesTag extends BaseScopedTag {
   @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all occurrences of all topics in collection
-    if (topics == null)
+    if (topics == null) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       ArrayList occurrences = new ArrayList();
       Iterator iter = topics.iterator();
       Object obj = null;
@@ -71,8 +71,9 @@ public class OccurrencesTag extends BaseScopedTag {
 
       // log.debug("---OccurrencesTag - type: " + type);
       // setup scope filter for user context filtering
-      if (useUserContextFilter)
+      if (useUserContextFilter) {
         scopeFilter = getScopeFilter(SCOPE_OCCURRENCES);
+      }
 
       try {
         while (iter.hasNext()) {
@@ -92,8 +93,9 @@ public class OccurrencesTag extends BaseScopedTag {
             filteredOccs = new ArrayList(occs.size());
             while (iterOccs.hasNext()) {
               occ = (OccurrenceIF) iterOccs.next();
-              if (Objects.equals(DataTypes.TYPE_STRING, occ.getDataType()))
+              if (Objects.equals(DataTypes.TYPE_STRING, occ.getDataType())) {
                 filteredOccs.add(occ);
+                }
             }
             break;
           }
@@ -103,16 +105,18 @@ public class OccurrencesTag extends BaseScopedTag {
             filteredOccs = new ArrayList(occs.size());
             while (iterOccs.hasNext()) {
               occ = (OccurrenceIF) iterOccs.next();
-              if (Objects.equals(DataTypes.TYPE_URI, occ.getDataType()))
+              if (Objects.equals(DataTypes.TYPE_URI, occ.getDataType())) {
                 filteredOccs.add(occ);
+                }
             }
             break;
           }
           }
           
           // apply user context filter
-          if (!filteredOccs.isEmpty() && scopeFilter != null)
+          if (!filteredOccs.isEmpty() && scopeFilter != null) {
             filteredOccs = scopeFilter.filter(filteredOccs.iterator());
+          }
 
           // now add the filtered occurrences to the result
           occurrences.addAll(filteredOccs);
@@ -144,14 +148,15 @@ public class OccurrencesTag extends BaseScopedTag {
    * </ul>
    */
   public void setType(String typeString) throws NavigatorRuntimeException {
-    if (typeString.equals(TYPE_NAME_INTERNAL))
+    if (typeString.equals(TYPE_NAME_INTERNAL)) {
       type = TYPE_INTERNAL;
-    else if (typeString.equals(TYPE_NAME_EXTERNAL))
+    } else if (typeString.equals(TYPE_NAME_EXTERNAL)) {
       type = TYPE_EXTERNAL;
-    else if (typeString.equals(TYPE_NAME_ALL))
+    } else if (typeString.equals(TYPE_NAME_ALL)) {
       type = TYPE_ALL;
-    else
+    } else {
       throw new NavigatorRuntimeException("Occurrences tag got invalid value for 'type' attribute: " + typeString);
+    }
   }
   
 }

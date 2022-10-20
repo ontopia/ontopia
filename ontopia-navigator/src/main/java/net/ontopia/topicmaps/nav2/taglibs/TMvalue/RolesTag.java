@@ -53,17 +53,18 @@ public class RolesTag extends BaseScopedTag {
   public Collection process(Collection tmObjects) throws JspTagException {
     // find all base names of all tmObjects in collection
     // avoid duplicate type entries therefore use a HashSet
-    if (tmObjects == null || tmObjects.isEmpty())
+    if (tmObjects == null || tmObjects.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       HashSet assocRoles = new HashSet();
       // retrieve collection which should be subtracted
       Collection excludedTopics = (varRemoveColl == null ? null : contextTag.getContextManager().getValue(varRemoveColl));
 
       Predicate<ScopedIF> scopeDecider = null;
       // setup scope filter for user context filtering
-      if (useUserContextFilter)
+      if (useUserContextFilter) {
         scopeDecider = getScopeDecider(SCOPE_ASSOCIATIONS);
+      }
       
       // loop over input collection
       Iterator iter = tmObjects.iterator();
@@ -79,10 +80,12 @@ public class RolesTag extends BaseScopedTag {
             Iterator itRoles = _roles.iterator();
             while (itRoles.hasNext()) {
               AssociationRoleIF assocRole = (AssociationRoleIF) itRoles.next();
-              if (scopeDecider != null && !scopeDecider.test(assocRole.getAssociation()))
+              if (scopeDecider != null && !scopeDecider.test(assocRole.getAssociation())) {
                 continue;
-              if (excludedTopics == null || !excludedTopics.contains(assocRole.getPlayer()))
+              }
+              if (excludedTopics == null || !excludedTopics.contains(assocRole.getPlayer())) {
                 assocRoles.add( assocRole );
+              }
             }
           }
         }
@@ -95,10 +98,12 @@ public class RolesTag extends BaseScopedTag {
             Iterator itRoles = _roles.iterator();
             while (itRoles.hasNext()) {
               AssociationRoleIF assocRole = (AssociationRoleIF) itRoles.next();
-              if (scopeDecider != null && !scopeDecider.test(assocRole.getAssociation()))
+              if (scopeDecider != null && !scopeDecider.test(assocRole.getAssociation())) {
                 continue;
-              if (excludedTopics == null || !excludedTopics.contains(assocRole.getPlayer()))
+              }
+              if (excludedTopics == null || !excludedTopics.contains(assocRole.getPlayer())) {
                 assocRoles.add( assocRole );
+              }
             }
           }
         } else {
@@ -115,13 +120,16 @@ public class RolesTag extends BaseScopedTag {
    * INTERNAL: returns true if claimed cardinality is kept, otherwise
    * false.
    */
-  private final boolean checkCardinality(int nrOfPlayers) {
-    if (cardinality == null)
+  private boolean checkCardinality(int nrOfPlayers) {
+    if (cardinality == null) {
       return true;
-    if (cardinality.equals(BINARY))
+    }
+    if (cardinality.equals(BINARY)) {
       return (nrOfPlayers == 2);
-    if (cardinality.equals(NARY))
+    }
+    if (cardinality.equals(NARY)) {
       return (nrOfPlayers > 2);
+    }
     return false;
   }
   
@@ -147,11 +155,12 @@ public class RolesTag extends BaseScopedTag {
    */
   public void setCardinality(String cardinality) {
     // FIXME: Should support "unary" as well.
-    if (cardinality.equals(BINARY) || cardinality.equals(NARY))
+    if (cardinality.equals(BINARY) || cardinality.equals(NARY)) {
       this.cardinality = cardinality;
-    else
+    } else {
       throw new IllegalArgumentException("RolesTag: not allowed value specified" +
                                          " for attribute 'cardinality'.");
+    }
   }
   
 }

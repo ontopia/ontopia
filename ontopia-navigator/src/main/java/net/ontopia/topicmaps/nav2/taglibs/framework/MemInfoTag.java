@@ -102,10 +102,11 @@ public final class MemInfoTag extends TagSupport {
     long endTime = System.currentTimeMillis();
 
     StringBuilder strBuf = new StringBuilder();
-    if (usedMem > 0)
+    if (usedMem > 0) {
       strBuf.append("Used Mem: " + formatter.format(usedMem));
-    else
+    } else {
       strBuf.append("garbage was collected in the meantime!");
+    }
 
     strBuf.append(" - required " + (endTime - startTime) + " ms.");
     return strBuf.toString();

@@ -44,8 +44,9 @@ public class TextBlock {
   }
   
   public void addText(char[] ch, int start, int length) {
-    if (sb == null)
+    if (sb == null) {
       sb = new StringBuilder(length);
+    }
     sb.append(ch, start, length);
   }
 

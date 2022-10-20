@@ -57,7 +57,9 @@ public class CollectionUtils {
    * @since 1.3.4
    */
   public static <T> T getFirstElement(Collection<T> coll) {
-    if ((coll == null) || coll.isEmpty()) throw new NoSuchElementException();
+    if ((coll == null) || coll.isEmpty()) {
+      throw new NoSuchElementException();
+    }
     return coll.iterator().next();
   }
 
@@ -67,11 +69,15 @@ public class CollectionUtils {
    */
   public static <T> T getRandom(Collection<T> coll) {
 
-    if (coll == null || coll.isEmpty()) return null;
+    if (coll == null || coll.isEmpty()) {
+      return null;
+    }
     int chosen = random.nextInt(coll.size());
 
     // If it's a list return it directly
-    if (coll instanceof List) return ((List<T>)coll).get(chosen);
+    if (coll instanceof List) {
+      return ((List<T>)coll).get(chosen);
+    }
 
     // Otherwise loop through the collection
     Iterator<T> iter = coll.iterator();
@@ -90,23 +96,26 @@ public class CollectionUtils {
   public static <T> boolean equalsUnorderedSet(Collection<T> coll1, Collection<T> coll2) {
     
     // Take care of nulls
-    if (coll1 == null)
-      if (coll2 == null)
+    if (coll1 == null) {
+      if (coll2 == null) {
         // 1: null 2: null
         return true;
-      else
+      } else {
         // 1: null 2: not null
         return false;
-    else
-      if (coll2 == null)
+      }
+    } else
+      if (coll2 == null) {
         // 1: not null 2: null
         return false;
+    }
     
     // Compare set size
     int size1 = coll1.size();
     int size2 = coll2.size();    
-    if (size1 != size2)
+    if (size1 != size2) {
       return false;
+    }
     
     // If both have 1 element compare first element
     if (size1 == 1) {      
@@ -114,15 +123,17 @@ public class CollectionUtils {
     }
     
     // Compare collections as sets
-    if (coll1 instanceof Set)
-      if (coll2 instanceof Set)
+    if (coll1 instanceof Set) {
+      if (coll2 instanceof Set) {
         return coll1.equals(coll2);
-      else
+      } else {
         return coll1.equals(new HashSet<T>(coll2));
-    else if (coll2 instanceof Set)
+      }
+    } else if (coll2 instanceof Set) {
       return coll2.equals(new HashSet<T>(coll1));
-    else
+    } else {
       return new HashSet<T>(coll2).equals(new HashSet<T>(coll1));
+    }
   }
 
   /**

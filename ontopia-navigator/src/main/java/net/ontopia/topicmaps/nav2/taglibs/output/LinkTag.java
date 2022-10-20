@@ -67,8 +67,9 @@ public class LinkTag extends BaseOutputProducingTag {
     throws JspTagException, IOException {
 
     String link = null;
-    if (linkGenerator == null)
+    if (linkGenerator == null) {
       linkGenerator = DEF_LINK_GENERATOR;
+    }
 
     // --- first try if object is instance of TMObjectIF
     try {
@@ -78,18 +79,20 @@ public class LinkTag extends BaseOutputProducingTag {
       link = linkGenerator.generate(contextTag, tmobj, tmRef, templateStr);
     } catch (ClassCastException e) {
       // --- TopicMapReferenceIF
-      if (elem instanceof TopicMapReferenceIF)
+      if (elem instanceof TopicMapReferenceIF) {
         link = linkGenerator.generate(contextTag, (TopicMapReferenceIF) elem,
-                                      templateStr);
-      else
+                templateStr);
+      } else {
         // --- otherwise            
         throw new NavigatorRuntimeException("LinkTag: Unsupported object type: " +
                                             elem.getClass().getName());
+      }
     }
     
     // finally put it out
-    if (link != null)
-      print2Writer(out, link);      
+    if (link != null) {
+      print2Writer(out, link);
+    }      
   }
 
   // -----------------------------------------------------------------

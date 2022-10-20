@@ -66,8 +66,9 @@ public class RDBMSAccess implements StorageAccessIF {
     this.mapping = storage.getMapping();
     
     // Enable or disable batch updates
-    if (Boolean.parseBoolean(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates")))
+    if (Boolean.parseBoolean(getProperty("net.ontopia.topicmaps.impl.rdbms.BatchUpdates"))) {
       batch_updates = true;
+    }
     
     handlers = new HashMap<Class<?>, ClassAccessIF>();
     flushable = new HashSet<FlushableIF>();
@@ -143,13 +144,16 @@ public class RDBMSAccess implements StorageAccessIF {
   }
   
   protected boolean isSQLException(Throwable e) {
-    if (e == null) return false;
-    if (e instanceof SQLException)
+    if (e == null) {
+      return false;
+    }
+    if (e instanceof SQLException) {
       return true;
-    else if (e instanceof OntopiaRuntimeException)
+    } else if (e instanceof OntopiaRuntimeException) {
       return isSQLException(((OntopiaRuntimeException)e).getCause());
-    else
-      return false;    
+    } else {
+      return false;
+    }    
   }
 
   // -----------------------------------------------------------------------------
@@ -201,15 +205,18 @@ public class RDBMSAccess implements StorageAccessIF {
   protected boolean validateConnection(Connection conn) {
     // stop here if connection says that it's closed 
     try {
-      if (conn.isClosed()) return false;
+      if (conn.isClosed()) {
+        return false;
+      }
     } catch (SQLException e) {
       return false;
     }
     
     // get validation query
     String vquery = getProperty("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ValidationQuery");
-    if (vquery == null)
+    if (vquery == null) {
       vquery = "select seq_count from TM_ADMIN_SEQUENCE where 1 != 1";
+    }
     
     // run validation query
     PreparedStatement stm = null;
@@ -225,7 +232,9 @@ public class RDBMSAccess implements StorageAccessIF {
       return false;
     } finally {
       try {
-        if (stm != null) stm.close();
+        if (stm != null) {
+          stm.close();
+        }
       } catch (SQLException e) {
         return false;
       }
@@ -291,7 +300,9 @@ public class RDBMSAccess implements StorageAccessIF {
   @Override
   public void flush() {
     // Return if nothing to flush
-    if (flushable.isEmpty()) return;
+    if (flushable.isEmpty()) {
+      return;
+    }
     
     try {
       log.trace(Thread.currentThread() + " RDBMSAccess.flush enter");
@@ -310,8 +321,9 @@ public class RDBMSAccess implements StorageAccessIF {
   @Override
   public boolean loadObject(AccessRegistrarIF registrar, IdentityIF identity) {
     try {
-      if (debug)
+      if (debug) {
         log.debug("Loading object: " + identity);
+      }
       try {
         return getHandler(identity.getType()).load(registrar, identity);
       } catch (IdentityNotFoundException e) {
@@ -327,8 +339,9 @@ public class RDBMSAccess implements StorageAccessIF {
   @Override
   public Object loadField(AccessRegistrarIF registrar, IdentityIF identity, int field) {
     try {
-      if (debug)
+      if (debug) {
         log.debug("Loading field: " + field + " identity: " + identity);
+      }
       try {
         return getHandler(identity.getType()).loadField(registrar, identity, field);
       } catch (IdentityNotFoundException e) {
@@ -346,11 +359,12 @@ public class RDBMSAccess implements StorageAccessIF {
       IdentityIF current, Class<?> type, int field) {
     try {
       if (debug) {
-        if (current == null)
+        if (current == null) {
           log.debug("Loading field: " + field + " batch: " + (identities == null ? 0 : identities.size()));
-        else
+        } else {
           log.debug("Loading field: " + field + " identity: " + current + " and " + 
               (identities == null ? 0 : identities.size()) + " others");
+        }
       }
       try {
         return getHandler(type).loadFieldMultiple(registrar, identities, current, field);
@@ -367,8 +381,9 @@ public class RDBMSAccess implements StorageAccessIF {
   @Override
   public void createObject(ObjectAccessIF oaccess, Object object) {
     try {
-      if (debug)
+      if (debug) {
         log.debug(getId() + ": Creating object " + oaccess.getIdentity(object));
+      }
       getHandler(oaccess.getType(object)).create(oaccess, object);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
@@ -378,8 +393,9 @@ public class RDBMSAccess implements StorageAccessIF {
   @Override
   public void deleteObject(ObjectAccessIF oaccess, Object object) {
     try {
-      if (debug)
+      if (debug) {
         log.debug(getId() + ": Deleting object " + oaccess.getIdentity(object));
+      }
       getHandler(oaccess.getType(object)).delete(oaccess, object);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
@@ -389,8 +405,9 @@ public class RDBMSAccess implements StorageAccessIF {
   @Override
   public void storeDirty(ObjectAccessIF oaccess, Object object) {
     try {
-      if (debug)
+      if (debug) {
         log.debug(getId() + ": Storing dirty object " + oaccess.getIdentity(object));
+      }
       getHandler(oaccess.getType(object)).storeDirty(oaccess, object);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);

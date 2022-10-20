@@ -59,8 +59,9 @@ public abstract class ModificationStatement extends TologStatement {
     // add vars in litlist to select list of subquery so that we get projection
     for (int ix = 0; ix < litlist.size(); ix++) {
       Object lit = litlist.get(ix);
-      if (lit instanceof Variable)
+      if (lit instanceof Variable) {
         query.addVariable((Variable) lit);
+      }
     }
   }
 
@@ -70,16 +71,20 @@ public abstract class ModificationStatement extends TologStatement {
 
   @Override
   public void close() throws InvalidQueryException {
-    if (query != null)
+    if (query != null) {
       query.close();
+    }
 
     // verify that if we have variables in the litlist we also have a FROM
     // part
-    if (query == null)
-      for (int ix = 0; ix < litlist.size(); ix++)
-        if (litlist.get(ix) instanceof Variable)
+    if (query == null) {
+      for (int ix = 0; ix < litlist.size(); ix++) {
+        if (litlist.get(ix) instanceof Variable) {
           throw new InvalidQueryException("Cannot have variables in select " +
                                           "part if no from part");
+        }
+      }
+    }
   }
 
   public abstract int doStaticUpdates(TopicMapIF topicmap, Map arguments)
@@ -94,17 +99,19 @@ public abstract class ModificationStatement extends TologStatement {
     StringBuilder buf = new StringBuilder();
     for (int ix = 0; ix < litlist.size(); ix++) {
       buf.append(litlist.get(ix));
-      if (ix + 1 < litlist.size())
+      if (ix + 1 < litlist.size()) {
         buf.append(", ");
+      }
     }
     return buf.toString();
   }
 
   protected static int getIndex(Object arg, QueryMatches matches) {
-    if (arg instanceof Variable)
+    if (arg instanceof Variable) {
       return matches.getIndex((Variable) arg);
-    else
+    } else {
       return -1;
+    }
   }
 
   // translates parameters to their values (and leaves values alone)
@@ -113,10 +120,12 @@ public abstract class ModificationStatement extends TologStatement {
     Object value;
     if (obj instanceof Parameter) {
       value = arguments.get(((Parameter) obj).getName());
-      if (value == null)
+      if (value == null) {
         throw new InvalidQueryException("Parameter not specified: " + obj);
-    } else
+      }
+    } else {
       value = obj;
+    }
     return value;
   }  
 }

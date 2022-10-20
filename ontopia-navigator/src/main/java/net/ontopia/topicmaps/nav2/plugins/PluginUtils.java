@@ -33,12 +33,13 @@ public final class PluginUtils {
    * INTERNAL: returns true if <code>groupId</code> occurs in list of
    * <code>groups</code>, otherwise false.
    */
-  public final static boolean inPluginGroups(String groupId, List groups) {
+  public static boolean inPluginGroups(String groupId, List groups) {
     Iterator it = groups.iterator();
     while (it.hasNext()) {
       String curGroupId = (String) it.next();
-      if (curGroupId.equals(groupId))
+      if (curGroupId.equals(groupId)) {
         return true;
+      }
     }
     return false;
   }

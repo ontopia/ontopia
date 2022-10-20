@@ -92,7 +92,9 @@ public final class FieldAssignment {
    * Returns the ordering key of the field on this topic type.
    */
   public int getOrder() {
-    if (cachedOrder < Integer.MAX_VALUE) return cachedOrder;
+    if (cachedOrder < Integer.MAX_VALUE) {
+      return cachedOrder;
+    }
 
     int order = getOrder(topicType);
     this.cachedOrder = (order == Integer.MAX_VALUE ? order - 1 : order);
@@ -147,7 +149,9 @@ public final class FieldAssignment {
     Collection<TopicIF> scope = Collections.singleton(themeIf);
     Collection<OccurrenceIF> occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype, scope);
     if (!occs.isEmpty()) {
-      if (!replace) return; // stop here if we're not replacing
+      if (!replace) {
+        return; // stop here if we're not replacing
+      }
       Iterator<OccurrenceIF> iter = occs.iterator();
       while (iter.hasNext()) {
         OccurrenceIF occ = iter.next();
@@ -163,8 +167,9 @@ public final class FieldAssignment {
    */
   public void moveAfter(FieldAssignment other) {
 
-    if (!Objects.equals(getTopicType(), other.getTopicType()))
+    if (!Objects.equals(getTopicType(), other.getTopicType())) {
       throw new RuntimeException("Cannot reorder fields that are assigned to different topic types.");
+    }
 
     List<FieldAssignment> fieldAssignments = getTopicType().getFieldAssignments();
     int length = fieldAssignments.size();
@@ -172,8 +177,9 @@ public final class FieldAssignment {
     // find next field assignment
     FieldAssignment fa_next = null;
     int indexOfThis = fieldAssignments.indexOf(this);
-    if (indexOfThis < (length-1))
+    if (indexOfThis < (length-1)) {
       fa_next = fieldAssignments.get(indexOfThis+1);
+    }
 
     // get last field order
     int fieldOrderMax = Ordering.MAX_ORDER;
@@ -181,8 +187,9 @@ public final class FieldAssignment {
       FieldAssignment fa = fieldAssignments.get(i);
       int fieldOrder = fa.getOrder();
       if (fieldOrder != Ordering.MAX_ORDER &&
-          (fieldOrderMax == Ordering.MAX_ORDER || fieldOrder > fieldOrderMax))
+          (fieldOrderMax == Ordering.MAX_ORDER || fieldOrder > fieldOrderMax)) {
         fieldOrderMax = fieldOrder;
+      }
     }
 
     // make sure this field assignment has a field order
@@ -218,8 +225,9 @@ public final class FieldAssignment {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof FieldAssignment))
+    if (!(obj instanceof FieldAssignment)) {
       return false;
+    }
 
     FieldAssignment fa = (FieldAssignment) obj;
     return (topicType.getTopicIF().equals(fa.topicType.getTopicIF()) &&

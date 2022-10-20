@@ -53,10 +53,11 @@ public class QueryContext {
   }
 
   public Object[] getVariableTypes(String varname) {
-    if (query == null)
+    if (query == null) {
       return null;
-    else
+    } else {
       return (Object[]) query.getVariableTypes().get(varname);
+    }
   }
 
   public Object getParameterValue(String paramname) {

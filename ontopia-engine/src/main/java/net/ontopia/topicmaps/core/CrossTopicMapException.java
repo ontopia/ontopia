@@ -56,21 +56,26 @@ public class CrossTopicMapException extends ConstraintViolationException {
   
 	public static void check(TMObjectIF tmobject, TMObjectIF target) {
 		TopicMapIF topicmap1 = tmobject.getTopicMap();
-		if (topicmap1 == null)
-			throw new ObjectRemovedException(tmobject);
+		if (topicmap1 == null) {
+      throw new ObjectRemovedException(tmobject);
+    }
 		TopicMapIF topicmap2 = target.getTopicMap();
-		if (topicmap2 == null)
-			throw new ObjectRemovedException(target);
-		if (!topicmap1.equals(topicmap2))
-			throw new CrossTopicMapException(tmobject, target);
+		if (topicmap2 == null) {
+      throw new ObjectRemovedException(target);
+    }
+		if (!topicmap1.equals(topicmap2)) {
+      throw new CrossTopicMapException(tmobject, target);
+    }
 	}
 
 	public static void check(TMObjectIF tmobject, TopicMapIF target) {
 		TopicMapIF topicmap = tmobject.getTopicMap();
-		if (topicmap == null)
-			throw new ObjectRemovedException(tmobject);
-		if (!topicmap.equals(target))
-			throw new CrossTopicMapException(tmobject, target);
+		if (topicmap == null) {
+      throw new ObjectRemovedException(tmobject);
+    }
+		if (!topicmap.equals(target)) {
+      throw new CrossTopicMapException(tmobject, target);
+    }
 	}
 
 }

@@ -156,11 +156,13 @@ public class TopicName extends TMObject implements TopicNameIF {
   protected void addVariant(VariantNameIF variant) {
     Objects.requireNonNull(variant, MSG_NULL_ARGUMENT);
     // Check to see if variant is already a member of this topic name
-    if (variant.getTopicName() == this)
+    if (variant.getTopicName() == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (variant.getTopicName() != null)
+    if (variant.getTopicName() != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_ADD_VARIANT, variant, null);
@@ -170,22 +172,25 @@ public class TopicName extends TMObject implements TopicNameIF {
     valueAdded(LF_variants, variant, false);
 
     // Add inherited themes to variant name
-    for (TopicIF theme : getScope())
+    for (TopicIF theme : getScope()) {
       ((VariantName)variant)._addTheme(theme, false);
+    }
   }
 
   protected void removeVariant(VariantNameIF variant) {
     Objects.requireNonNull(variant, MSG_NULL_ARGUMENT);
     // Check to see if variant is not a member of this topic name
-    if (variant.getTopicName() != this)
+    if (variant.getTopicName() != this) {
       return;
+    }
     
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_REMOVE_VARIANT, null, variant);
 
     // Remove inherited themes from variant name
-    for (TopicIF theme : getScope())
+    for (TopicIF theme : getScope()) {
       ((VariantName)variant)._removeTheme(theme, false);
+    }
     
     // Unset parent name property
     ((VariantName) variant).setTopicName(null);
@@ -296,18 +301,21 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null)
+    if (_reifier != null) {
       CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic) _reifier;
     Topic oldReifier = (Topic) getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-    if (oldReifier != null)
+    if (oldReifier != null) {
       oldReifier.setReified(null);
-    if (reifier != null)
+    }
+    if (reifier != null) {
       reifier.setReified(this);
+    }
   }
 
   // ---------------------------------------------------------------------------

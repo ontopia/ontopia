@@ -38,8 +38,9 @@ public class LexicalComparator implements Comparator<Object> {
 
   private LexicalComparator(boolean casesensitive) {
     collator = Collator.getInstance();
-    if (!casesensitive)
+    if (!casesensitive) {
       collator.setStrength(Collator.SECONDARY);
+    }
   }
   
   @Override

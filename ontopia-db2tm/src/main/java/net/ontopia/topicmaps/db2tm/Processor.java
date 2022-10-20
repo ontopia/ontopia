@@ -85,9 +85,15 @@ public class Processor {
   }
 
   private static String commitModeToString(int usedCommitMode, int usedCommitCount) {
-    if (usedCommitMode == RELATIONAL_COMMIT_MODE) return "relational";
-    if (usedCommitMode == TUPLE_COMMIT_MODE) return "tuple";
-    if (usedCommitMode == COUNT_COMMIT_MODE) return "count (" + usedCommitCount + ")";
+    if (usedCommitMode == RELATIONAL_COMMIT_MODE) {
+      return "relational";
+    }
+    if (usedCommitMode == TUPLE_COMMIT_MODE) {
+      return "tuple";
+    }
+    if (usedCommitMode == COUNT_COMMIT_MODE) {
+      return "count (" + usedCommitCount + ")";
+    }
     return "unknown";
   }
 
@@ -98,7 +104,9 @@ public class Processor {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Adding relations: {}", new Date());
+    if (log.isInfoEnabled()) {
+      log.info("Adding relations: {}", new Date());
+    }
 
     try {
       // verify relation mapping
@@ -114,17 +122,21 @@ public class Processor {
       // figure out the commit mode
       String cm = rmapping.getCommitMode();
       if (cm != null) {
-        if ("relation".equals(cm)) topLevelCommitMode = RELATIONAL_COMMIT_MODE;
-        if ("tuple".equals(cm)) topLevelCommitMode = TUPLE_COMMIT_MODE;
+        if ("relation".equals(cm)) {
+          topLevelCommitMode = RELATIONAL_COMMIT_MODE;
+        }
+        if ("tuple".equals(cm)) {
+          topLevelCommitMode = TUPLE_COMMIT_MODE;
+        }
         if (cm.startsWith("count:")) {
           topLevelCommitMode = COUNT_COMMIT_MODE;
           topLevelCommitCount = Integer.parseInt(cm.substring(6));
         }
       }
 
-      if (baseloc != null)
+      if (baseloc != null) {
         ctx.setBaseLocator(baseloc);
-      else {
+      } else {
         log.info("No base locator specified, so using base of topic maps store.");
         ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
       }
@@ -160,8 +172,12 @@ public class Processor {
             usedCommitMode = topLevelCommitMode;
             usedCommitCount = topLevelCommitCount;
           } else {
-            if ("relation".equals(cm)) usedCommitMode = RELATIONAL_COMMIT_MODE;
-            if ("tuple".equals(cm)) usedCommitMode = TUPLE_COMMIT_MODE;
+            if ("relation".equals(cm)) {
+              usedCommitMode = RELATIONAL_COMMIT_MODE;
+            }
+            if ("tuple".equals(cm)) {
+              usedCommitMode = TUPLE_COMMIT_MODE;
+            }
             if (cm.startsWith("count:")) {
               usedCommitMode = COUNT_COMMIT_MODE;
               usedCommitCount = Integer.parseInt(cm.substring(6));
@@ -219,20 +235,23 @@ public class Processor {
       // unwrap so we can find the real exception
       String msg = e.getMessage();
       if (e instanceof OntopiaRuntimeException &&
-          e.getCause() instanceof Exception)
+          e.getCause() instanceof Exception) {
         e = (Exception) e.getCause();
+      }
       
-      if (e instanceof DB2TMException)
+      if (e instanceof DB2TMException) {
         // don't wrap if it's already a DB2TMException, because this causes
         // the cmd-line tool to hide the real error
-        throw (DB2TMException) e; 
-      else
+        throw (DB2TMException) e;
+      } else {
         throw new DB2TMException(msg == null ? "Error occurred in addRelations call." : msg, e);
+      }
     } finally {
       ctx.close();
     }
-    if (log.isInfoEnabled())
+    if (log.isInfoEnabled()) {
       log.info("done adding relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
+    }
   }
 
   /**
@@ -242,7 +261,9 @@ public class Processor {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Removing relations: {}", new Date());
+    if (log.isInfoEnabled()) {
+      log.info("Removing relations: {}", new Date());
+    }
 
     try {
       // verify relation mapping
@@ -251,9 +272,9 @@ public class Processor {
       // set up context object
       ctx.setMapping(rmapping);
       ctx.setTopicMap(topicmap);
-      if (baseloc != null)
+      if (baseloc != null) {
         ctx.setBaseLocator(baseloc);
-      else {
+      } else {
         log.info("No base locator specified, so using base of topic maps store.");
         ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
       }
@@ -302,12 +323,15 @@ public class Processor {
     } finally {
       ctx.close();
     }
-    if (log.isInfoEnabled())
+    if (log.isInfoEnabled()) {
       log.info("done removing relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
+    }
   }
   
   public static void addTuple(Relation relation, String[] tuple, Context ctx) {
-    if (log.isDebugEnabled()) log.debug("    a({}),{}", StringUtils.join(tuple, "|"), tuple.length);
+    if (log.isDebugEnabled()) {
+      log.debug("    a({}),{}", StringUtils.join(tuple, "|"), tuple.length);
+    }
     
     List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
@@ -323,7 +347,9 @@ public class Processor {
 
   protected static Object addEntity(Relation relation, Entity entity, String[] tuple, Context ctx) {
     // check condition before proceeding
-    if (!checkCondition(relation, entity, tuple, ctx)) return null;
+    if (!checkCondition(relation, entity, tuple, ctx)) {
+      return null;
+    }
     
     TopicIF topic = null;
     
@@ -336,11 +362,11 @@ public class Processor {
       
       // do nothing more not if entity is not primary
       if (topic == null) {
-        if (!entity.isPrimary())
+        if (!entity.isPrimary()) {
           return null;
-        else if (entity.getEntityType() == Entity.TYPE_TOPIC)
+        } else if (entity.getEntityType() == Entity.TYPE_TOPIC) {
           throw new DB2TMInputException("Not able to find topic for primary entity. None of the identity fields could be used.", entity, tuple);
-        else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
+        } else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
           // create new topic if not found
           topic = ctx.getBuilder().makeTopic();
           ctx.registerNewObject(topic);
@@ -348,9 +374,10 @@ public class Processor {
       }
       
       // add topic types
-      if (entity.getEntityType() == Entity.TYPE_TOPIC)
+      if (entity.getEntityType() == Entity.TYPE_TOPIC) {
         // NOTE: association reifiers cannot have types
         addTypes(topic, entity.getTypes(), entity, tuple, ctx);
+      }
         
       // add characteristics
       List<Field> cfields = entity.getCharacteristicFields();
@@ -408,16 +435,18 @@ public class Processor {
         case Field.OPTIONAL_TRUE:
           continue;
         case Field.OPTIONAL_DEFAULT:
-          if (rlen > 2)
+          if (rlen > 2) {
             continue;
-          else
+        } else {
             return null;
+        }
         }
       }
       // get role type
       rtypes[i] = Utils.getTopic(role.getRoleType(), ctx);
-      if (rtypes[i] == null)
+      if (rtypes[i] == null) {
         throw new DB2TMInputException("Role type not found", entity, tuple, role.getRoleType());
+      }
     }
     
     // find association      
@@ -425,8 +454,9 @@ public class Processor {
 
     // get association type
     TopicIF atype = Utils.getTopic(entity.getAssociationType(), ctx);
-    if (atype == null)
+    if (atype == null) {
       throw new DB2TMInputException("Association type not found", entity, tuple, entity.getAssociationType());
+    }
     
     if (assoc == null) {    
       // create association
@@ -440,8 +470,9 @@ public class Processor {
           arity++;
           log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
-          if (arity == 1)
+          if (arity == 1) {
             ctx.characteristicsChanged(players[i]);
+          }
         }
       }
       
@@ -458,15 +489,17 @@ public class Processor {
       for (int i=0; i < rlen; i++) {
         AssociationRoleIF or = extractRoleOfType(oroles, rtypes[i]);
         if (or != null) {
-          if (!Objects.equals(or.getPlayer(), players[i]))
+          if (!Objects.equals(or.getPlayer(), players[i])) {
             or.setPlayer(players[i]);
+          }
           log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
           log.trace("      +R {} :{}", players[i], rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
-        if (i == 1)
+        if (i == 1) {
           ctx.characteristicsChanged(players[i]);
+        }
       }
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
@@ -474,7 +507,9 @@ public class Processor {
           TopicIF player = or.getPlayer();
           log.trace("      -R {} :{}", player, or.getType());
           or.remove();
-          if (player != null) ctx.characteristicsChanged(player);
+          if (player != null) {
+            ctx.characteristicsChanged(player);
+          }
         }
       }
     
@@ -493,8 +528,9 @@ public class Processor {
   }
 
   public static void removeTuple(Relation relation, String[] tuple, Context ctx) {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.trace("    r({}),{}", StringUtils.join(tuple, "|"), tuple.length);
+    }
 
     List<Entity> entities = relation.getEntities();
     
@@ -519,13 +555,15 @@ public class Processor {
   protected static void removeEntity(Relation relation, Entity entity, String[] tuple, Context ctx) {
     // find candidate topic
     TopicIF topic = null;
-    if (entity.requiresTopic())
+    if (entity.requiresTopic()) {
       topic = findTopicByIdentities(relation, entity, tuple, ctx);
+    }
     
     if (entity.getEntityType() == Entity.TYPE_TOPIC) {
       // remove topic
-      if (topic != null)
+      if (topic != null) {
         removeTopic(topic, relation, entity, tuple, ctx);
+      }
       
     } else if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
       if (topic != null) {
@@ -617,7 +655,9 @@ public class Processor {
   protected static TopicIF findTopicByIdentities(Relation relation, Entity entity, String[] tuple, Context ctx) {
     for (Field field : entity.getIdentityFields()) {
       TopicIF topic = findTopicByIdentity(relation, entity, field, tuple, ctx);
-      if (topic != null) return topic;
+      if (topic != null) {
+        return topic;
+      }
     }
     return null;
   }
@@ -626,26 +666,34 @@ public class Processor {
     switch (field.getFieldType()) {
     case Field.TYPE_SUBJECT_LOCATOR: {
       LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-      if (loc == null) return null;
+      if (loc == null) {
+        return null;
+      }
       return ctx.getTopicMap().getTopicBySubjectLocator(loc);
     }
     case Field.TYPE_SUBJECT_IDENTIFIER: {
       LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-      if (loc == null) return null;
+      if (loc == null) {
+        return null;
+      }
       return ctx.getTopicMap().getTopicBySubjectIdentifier(loc);
     }
     case Field.TYPE_ITEM_IDENTIFIER: {
       // note: do not look up topics by item identifier if entity type is association
-      if (entity.getEntityType() == Entity.TYPE_ASSOCIATION)
+      if (entity.getEntityType() == Entity.TYPE_ASSOCIATION) {
         return null;
+      }
       LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-      if (loc == null) return null;
+      if (loc == null) {
+        return null;
+      }
       TMObjectIF tmobject = ctx.getTopicMap().getObjectByItemIdentifier(loc);
       if (tmobject instanceof TopicIF) {
         return (TopicIF)tmobject;
       } else {
-        if (tmobject != null)
+        if (tmobject != null) {
           log.warn("Item identifier lookup returned non-topic: {} -> {}", loc, tmobject);
+        }
         return null;
       }
     } default:
@@ -660,10 +708,11 @@ public class Processor {
       if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
         LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
         TMObjectIF tmobject = ctx.getTopicMap().getObjectByItemIdentifier(loc);
-        if (tmobject instanceof AssociationIF)
+        if (tmobject instanceof AssociationIF) {
           return (AssociationIF)tmobject;
-        else if (tmobject != null)
+        } else if (tmobject != null) {
           log.warn("Item identifier lookup returned non-association: {} -> {}", loc, tmobject);
+        }
       }
     }
     return null;
@@ -683,7 +732,9 @@ public class Processor {
       switch (field.getFieldType()) {
       case Field.TYPE_SUBJECT_LOCATOR:
         loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-        if (loc == null) continue;
+        if (loc == null) {
+          continue;
+      }
         found = tm.getTopicBySubjectLocator(loc);
 
         if (found != null) {
@@ -704,7 +755,9 @@ public class Processor {
         break;
       case Field.TYPE_SUBJECT_IDENTIFIER:
         loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-        if (loc == null) continue;
+        if (loc == null) {
+          continue;
+      }
         found = tm.getTopicBySubjectIdentifier(loc);
 
         if (found != null) {
@@ -727,7 +780,9 @@ public class Processor {
         // note: add item identifier iff entity type is topic
         if (entity.getEntityType() == Entity.TYPE_TOPIC) {
           loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-          if (loc == null) continue;
+          if (loc == null) {
+            continue;
+          }
           found = (TopicIF) tm.getObjectByItemIdentifier(loc);
           
           if (found != null) {
@@ -766,7 +821,9 @@ public class Processor {
     for (Field field : entity.getIdentityFields()) {
       if (field.getFieldType() == Field.TYPE_ITEM_IDENTIFIER) {
         LocatorIF loc = Utils.getLocator(relation, entity, field, tuple, ctx);
-        if (loc == null) continue;        
+        if (loc == null) {
+          continue;
+        }        
         // note: at this point we should know that there are no other objects with the same identity
         assoc.addItemIdentifier(loc);
       }      
@@ -776,10 +833,11 @@ public class Processor {
   protected static void addTypes(TopicIF topic, String[] types, Entity entity, String[] tuple, Context ctx) {
     for (int i = 0; i < types.length; i++) {
       TopicIF type = Utils.getTopic(types[i], ctx);
-      if (type != null)
+      if (type != null) {
         topic.addType(type);
-      else
+      } else {
         throw new DB2TMInputException("Topic type not found", entity, tuple, types[i]);
+      }
     }
   }
 
@@ -793,26 +851,30 @@ public class Processor {
     // loop over new list of types
     for (int i = 0; i < types.length; i++) {
       TopicIF type = Utils.getTopic(types[i], ctx);
-      if (type == null)
+      if (type == null) {
         throw new DB2TMInputException("Topic type not found", entity, tuple,
-                                      types[i]);
+                types[i]);
+      }
 
-      if (oldtypes.contains(type))
+      if (oldtypes.contains(type)) {
         oldtypes.remove(type);
-      else
+      } else {
         topic.addType(type);
+      }
     }
 
     // any old types that still remain need to be removed
-    for (TopicIF oldtype : oldtypes)
+    for (TopicIF oldtype : oldtypes) {
       topic.removeType(oldtype);
+    }
   }
   
   protected static void removeTypes(TopicIF topic, String[] types, Context ctx) {
     for (int i = 0; i < types.length; i++) {
       TopicIF type = Utils.getTopic(types[i], ctx);
-      if (type != null)
+      if (type != null) {
         topic.removeType(type);
+      }
     }
   }
 
@@ -820,10 +882,11 @@ public class Processor {
     // TODO: should really remove any existing scope
     for (int i = 0; i < scope.length; i++) {
       TopicIF theme = Utils.getTopic(scope[i], ctx);
-      if (theme != null)
+      if (theme != null) {
         scoped.addTheme(theme);
-      else
+      } else {
         throw new DB2TMInputException("Scoping topic not found", entity, tuple, scope[i]);
+      }
     }
   }
 
@@ -841,12 +904,17 @@ public class Processor {
   }
   
   protected static boolean compareScope(String[] scope1, Collection<TopicIF> scope2, Entity entity, String[] tuple, Context ctx) {
-    if (scope1.length != scope2.size()) return false; // ISSUE: what if scope attribute contains duplicates?
+    if (scope1.length != scope2.size()) {
+      return false; // ISSUE: what if scope attribute contains duplicates?
+    }
     for (int i=0; i < scope1.length; i++) {
       TopicIF theme = Utils.getTopic(scope1[i], ctx);
-      if (theme == null)
+      if (theme == null) {
         throw new DB2TMInputException("Scoping topic not found", entity, tuple, scope1[i]);
-      if (!scope2.contains(theme)) return false;
+      }
+      if (!scope2.contains(theme)) {
+        return false;
+      }
     }
     return true;
   }
@@ -857,8 +925,9 @@ public class Processor {
     String value = Utils.getValue(relation, entity, field, tuple, ctx);
     if (!Utils.isValueEmpty(value)) {
       TopicIF type = Utils.getTopic(field.getType(), ctx);
-      if (type == null && field.getType() != null)
+      if (type == null && field.getType() != null) {
         throw new DB2TMInputException("Name type not found", entity, tuple, field.getType());
+      }
       
       TopicNameIF bn = (TopicNameIF)ctx.reuseOldFieldValue(topic, fieldIndex);
       if (bn == null) {
@@ -881,9 +950,10 @@ public class Processor {
                                       String[] tuple, Context ctx) {
     TopicIF type = Utils.getTopic(field.getType(), ctx);
     if (type == null) {
-      if (field.getType() != null)
+      if (field.getType() != null) {
         throw new DB2TMInputException("Name type not found", entity, tuple,
-                                      field.getType());
+                field.getType());
+      }
       // this means the type is the default name type. sync of this will fail
       // because null != defaultnametype.
       type = getDefaultNameType(ctx);
@@ -898,11 +968,13 @@ public class Processor {
         TopicNameIF _bn = ba[i];
         // check type
         TopicIF _type = _bn.getType();
-        if (!Objects.equals(_type, type))
+        if (!Objects.equals(_type, type)) {
           continue;
+        }
         // check scope
-        if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx))
+        if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) {
           continue;
+        }
         result.add(_bn);          
       }
     }
@@ -921,9 +993,10 @@ public class Processor {
     String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
     if (type == null) {
-      if (field.getType() != null)
+      if (field.getType() != null) {
         throw new DB2TMInputException("Name type not found", entity, tuple,
                                       field.getType());
+      }
       // this means the type is the default name type. remove will fail
       // because null != defaultnametype.
       type = getDefaultNameType(ctx);
@@ -934,11 +1007,17 @@ public class Processor {
     while (iter.hasNext()) {
       TopicNameIF _bn = iter.next();
       // check value
-      if (!Objects.equals(_bn.getValue(), value)) continue;
+      if (!Objects.equals(_bn.getValue(), value)) {
+        continue;
+      }
       // check type
-      if (!Objects.equals(_bn.getType(), type)) continue;
+      if (!Objects.equals(_bn.getType(), type)) {
+        continue;
+      }
       // check scope
-      if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) continue;
+      if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) {
+        continue;
+      }
 
       log.trace("      -N {} {}", topic, _bn);
       // remove matching name
@@ -956,8 +1035,9 @@ public class Processor {
     if (!Utils.isValueEmpty(value)) {
 
       TopicIF type = Utils.getTopic(field.getType(), ctx);
-      if (type == null)
+      if (type == null) {
         throw new DB2TMInputException("Occurrence type not found", entity, tuple, field.getType());
+      }
 
       String occvalue = value;
       LocatorIF occDatatype = DataTypes.TYPE_STRING;
@@ -966,8 +1046,9 @@ public class Processor {
         if (datatype.equals(DataTypes.TYPE_URI)) {
           occvalue = ctx.getBaseLocator().resolveAbsolute(value).getAddress();
           occDatatype = DataTypes.TYPE_URI;
-        } else
+        } else {
           occDatatype = URILocator.create(datatype);
+        }
       }
       
       OccurrenceIF oc = (OccurrenceIF)ctx.reuseOldFieldValue(topic, fieldIndex);
@@ -991,8 +1072,9 @@ public class Processor {
   protected static List<OccurrenceIF> getOccurrences(TopicIF topic, Relation relation, Entity entity, Field field,
                                        String[] tuple, Context ctx) {
     TopicIF type = Utils.getTopic(field.getType(), ctx);
-    if (type == null)
+    if (type == null) {
       throw new DB2TMInputException("Occurrence type not found", entity, tuple, field.getType());
+    }
     
     //! String datatype = (field.getDatatype() == null ? null : Utils.expandPrefixedValue(field.getDatatype(), ctx));    
 
@@ -1004,12 +1086,16 @@ public class Processor {
       for (int i=0; i < oa.length; i++) {
         OccurrenceIF _occ = oa[i];
         // check type
-        if (!Objects.equals(_occ.getType(), type)) continue;
+        if (!Objects.equals(_occ.getType(), type)) {
+          continue;
+        }
 
 				// FIXME: compare datatype?
 
         // check scope
-        if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) continue;
+        if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) {
+          continue;
+        }
         result.add(_occ);                  
       }
     }
@@ -1021,8 +1107,9 @@ public class Processor {
     
     String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
-    if (type == null)
+    if (type == null) {
       throw new DB2TMInputException("Occurrence type not found", entity, tuple, field.getType());
+    }
 
     //! String datatype = (field.getDatatype() == null ? null : Utils.expandPrefixedValue(field.getDatatype(), ctx));
 
@@ -1031,14 +1118,20 @@ public class Processor {
     while (iter.hasNext()) {
       OccurrenceIF _occ = iter.next();
       // check value or locator
-			if (!Objects.equals(_occ.getValue(), value)) continue;
+			if (!Objects.equals(_occ.getValue(), value)) {
+        continue;
+      }
 
 			// FIXME: compare datatype?
 
       // check type
-      if (!Objects.equals(_occ.getType(), type)) continue;
+      if (!Objects.equals(_occ.getType(), type)) {
+        continue;
+      }
       // check scope
-      if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) continue;
+      if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) {
+        continue;
+      }
 
       log.trace("      -O {} {}", topic, _occ);
       // remove matching occurrence
@@ -1072,28 +1165,32 @@ public class Processor {
         case Field.OPTIONAL_TRUE:
           continue;
         case Field.OPTIONAL_DEFAULT:
-          if (rlen > 2)
+          if (rlen > 2) {
             continue;
-          else
+        } else {
             return;
+        }
         }
       }
       // get role type
       rtypes[i] = Utils.getTopic(role.getRoleType(), ctx);
-      if (rtypes[i] == null)
+      if (rtypes[i] == null) {
         throw new DB2TMInputException("Role type not found", entity, tuple, role.getRoleType());
+      }
     }
 
     AssociationRoleIF ar = (AssociationRoleIF)ctx.reuseOldFieldValue(topic, fieldIndex);
     if (ar == null) {
       // get association type
       TopicIF atype = Utils.getTopic(field.getAssociationType(), ctx);
-      if (atype == null)
+      if (atype == null) {
         throw new DB2TMInputException("Association type not found", entity, tuple, entity.getAssociationType());
+      }
       // get current role type
       TopicIF rtype = Utils.getTopic(field.getRoleType(), ctx);
-      if (rtype == null)
+      if (rtype == null) {
         throw new DB2TMInputException("Role type not found", entity, tuple, field.getRoleType());
+      }
       
       // create association
       AssociationIF assoc = ctx.getBuilder().makeAssociation(atype);
@@ -1127,8 +1224,9 @@ public class Processor {
       for (int i=0; i < rlen; i++) {
         AssociationRoleIF or = extractRoleOfType(oroles, rtypes[i]);
         if (or != null) {
-          if (!Objects.equals(or.getPlayer(), players[i]))
+          if (!Objects.equals(or.getPlayer(), players[i])) {
             or.setPlayer(players[i]);
+          }
           log.trace("      =R {} :{}", players[i], rtypes[i]);
         } else {
           log.trace("      +R {} :{}", players[i], rtypes[i]);
@@ -1141,7 +1239,9 @@ public class Processor {
           TopicIF player = or.getPlayer();
           log.trace("      -R {} :{}", player, or.getType());
           or.remove();
-          if (player != null) ctx.characteristicsChanged(player);
+          if (player != null) {
+            ctx.characteristicsChanged(player);
+          }
         }
       }      
     }
@@ -1164,11 +1264,13 @@ public class Processor {
   protected static List<AssociationRoleIF> getPlayers(TopicIF topic, Relation relation, Entity entity, Field field,
                                    String[] tuple, Context ctx) {    
     TopicIF atype = Utils.getTopic(field.getAssociationType(), ctx);
-    if (atype == null)
+    if (atype == null) {
       throw new DB2TMInputException("Association type not found", entity, tuple, field.getAssociationType());
+    }
     TopicIF rtype_p = Utils.getTopic(field.getRoleType(), ctx);
-    if (rtype_p == null)
+    if (rtype_p == null) {
       throw new DB2TMInputException("Role type not found", entity, tuple, field.getRoleType());
+    }
 
     // loop over roles and update
     List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
@@ -1181,32 +1283,46 @@ public class Processor {
       for (int i=0; i < ra.length; i++) {
         AssociationRoleIF role = ra[i];
         // check role type
-        if (!Objects.equals(role.getType(), rtype_p)) continue;
+        if (!Objects.equals(role.getType(), rtype_p)) {
+          continue;
+        }
         // check association type
         AssociationIF assoc = role.getAssociation();
-        if (!Objects.equals(assoc.getType(), atype)) continue;
+        if (!Objects.equals(assoc.getType(), atype)) {
+          continue;
+        }
         // check scope
-        if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
+        if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) {
+          continue;
+        }
         // check association cardinality
         Collection<AssociationRoleIF> roles = assoc.getRoles();
-        if (roles.size() != (rfields.size() + 1)) continue;
+        if (roles.size() != (rfields.size() + 1)) {
+          continue;
+        }
         for (AssociationRoleIF arole : roles) {
-          if (arole.equals(role)) continue;
+          if (arole.equals(role)) {
+            continue;
+          }
           TopicIF rtype = arole.getType();
           // check role
           Field matching_rfield = null;
           for (Field rfield : rfields) {
             TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
-            if (rtype_o == null)
+            if (rtype_o == null) {
               throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
+            }
             // check role type
-            if (!Objects.equals(rtype, rtype_o))
+            if (!Objects.equals(rtype, rtype_o)) {
               continue;
+            }
             // role field matched
             matching_rfield = rfield;
             break;
           }
-          if (matching_rfield == null) continue outer;
+          if (matching_rfield == null) {
+            continue outer;
+          }
         }
         result.add(role);
       }
@@ -1218,45 +1334,61 @@ public class Processor {
                                      String[] tuple, Context ctx) {
     
     TopicIF atype = Utils.getTopic(field.getAssociationType(), ctx);
-    if (atype == null)
+    if (atype == null) {
       throw new DB2TMInputException("Association type not found", entity, tuple, field.getAssociationType());
+    }
     TopicIF rtype_p = Utils.getTopic(field.getRoleType(), ctx);
-    if (rtype_p == null)
+    if (rtype_p == null) {
       throw new DB2TMInputException("Role type not found", entity, tuple, field.getRoleType());
+    }
 
     Collection<Field> rfields = field.getOtherRoleFields();
 
     outer:
     for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
-      if (!Objects.equals(role.getType(), rtype_p)) continue;
+      if (!Objects.equals(role.getType(), rtype_p)) {
+        continue;
+      }
       // check association type
       AssociationIF assoc = role.getAssociation();
-      if (!Objects.equals(assoc.getType(), atype)) continue;
+      if (!Objects.equals(assoc.getType(), atype)) {
+        continue;
+      }
       // check scope
-      if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
+      if (!compareScope(field.getScope(), assoc.getScope(), entity, tuple, ctx)) {
+        continue;
+      }
       // check association cardinality
       Collection<AssociationRoleIF> roles = assoc.getRoles();
-      if (roles.size() != (rfields.size() + 1)) continue;
+      if (roles.size() != (rfields.size() + 1)) {
+        continue;
+      }
       for (AssociationRoleIF arole : roles) {
-        if (arole.equals(role)) continue;
+        if (arole.equals(role)) {
+          continue;
+        }
         TopicIF rtype = arole.getType();
         TopicIF player = arole.getPlayer();
         // check role
         Field matching_rfield = null;
         for (Field rfield : rfields) {
           TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
-          if (rtype_o == null)
+          if (rtype_o == null) {
             throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
+          }
           // check role type and player
           if (!Objects.equals(rtype, rtype_o) ||
-              !Objects.equals(player, Utils.getTopic(rfield.getPlayer(), ctx)))
+              !Objects.equals(player, Utils.getTopic(rfield.getPlayer(), ctx))) {
             continue;
+          }
           // role field matched
           matching_rfield = rfield;
           break;
         }
-        if (matching_rfield == null) continue outer;
+        if (matching_rfield == null) {
+          continue outer;
+        }
       }
       //! // if reifier topic found, then remove it (or its characteristics)
       //! TopicIF reifier = assoc.getReifier();
@@ -1281,56 +1413,77 @@ public class Processor {
     Field pfield = rfields.get(0);
     
     TopicIF atype = Utils.getTopic(entity.getAssociationType(), ctx);
-    if (atype == null)
+    if (atype == null) {
       throw new DB2TMInputException("Association type not found", entity, tuple, entity.getAssociationType());
+    }
     TopicIF rtype_p = Utils.getTopic(pfield.getRoleType(), ctx);
-    if (rtype_p == null)
+    if (rtype_p == null) {
       throw new DB2TMInputException("Role type not found", entity, tuple, pfield.getRoleType());
+    }
 
     TopicIF topic = Utils.getTopic(pfield.getPlayer(), ctx);
     
     // if player topic is gone, then there won't be any matching associations either
-    if (topic == null) return;
+    if (topic == null) {
+      return;
+    }
     
     outer:
     for (AssociationRoleIF role : topic.getRoles()) {
       // check role type
-      if (!Objects.equals(role.getType(), rtype_p)) continue;
+      if (!Objects.equals(role.getType(), rtype_p)) {
+        continue;
+      }
       // check association type
       AssociationIF assoc = role.getAssociation();
-      if (!Objects.equals(assoc.getType(), atype)) continue;
+      if (!Objects.equals(assoc.getType(), atype)) {
+        continue;
+      }
       // check association cardinality
       Collection<AssociationRoleIF> roles = assoc.getRoles();
-      if (roles.size() != rfields.size()) continue;
+      if (roles.size() != rfields.size()) {
+        continue;
+      }
       for (AssociationRoleIF arole : roles) {
-        if (arole.equals(role)) continue;
+        if (arole.equals(role)) {
+          continue;
+        }
         TopicIF rtype = arole.getType();
         TopicIF player = arole.getPlayer();
         // check role
         Field matching_rfield = null;
         for (int i=0; i < rfields.size(); i++) {
           Field rfield = rfields.get(i);
-          if (rfield.equals(pfield)) continue;
+          if (rfield.equals(pfield)) {
+            continue;
+          }
           TopicIF rtype_o = Utils.getTopic(rfield.getRoleType(), ctx);
-          if (rtype_o == null)
+          if (rtype_o == null) {
             throw new DB2TMInputException("Role type not found", entity, tuple, rfield.getRoleType());
+          }
           // check role type and player
           if (!Objects.equals(rtype, rtype_o) ||
-              !Objects.equals(player, Utils.getTopic(rfield.getPlayer(), ctx)))
+              !Objects.equals(player, Utils.getTopic(rfield.getPlayer(), ctx))) {
             continue;
+          }
           // role field matched
           matching_rfield = rfield;
           break;
         }
-        if (matching_rfield == null) continue outer;
+        if (matching_rfield == null) {
+          continue outer;
+        }
       }
       // check scope
-      if (!compareScope(entity.getScope(), assoc.getScope(), entity, tuple, ctx)) continue;
+      if (!compareScope(entity.getScope(), assoc.getScope(), entity, tuple, ctx)) {
+        continue;
+      }
 
       // if reifier topic found, then remove it (or its characteristics)
       TopicIF reifier = assoc.getReifier();
-      if (reifier != null)
+      if (reifier != null) {
         removeTopic(reifier, relation, entity, tuple, ctx);
+      }
       // remove association
       if (entity.isPrimary()) {
         log.trace("      -A {} {}", assoc, atype);
@@ -1360,7 +1513,9 @@ public class Processor {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
-    if (log.isInfoEnabled()) log.info("Synchronizing relations: {}", new Date());
+    if (log.isInfoEnabled()) {
+      log.info("Synchronizing relations: {}", new Date());
+    }
 
     try {
       // verify relation mapping
@@ -1369,9 +1524,9 @@ public class Processor {
       // set up context object
       ctx.setMapping(rmapping);
       ctx.setTopicMap(topicmap);
-      if (baseloc != null)
+      if (baseloc != null) {
         ctx.setBaseLocator(baseloc);
-      else {
+      } else {
         log.info("No base locator specified, so using base of topic maps store.");
         ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
       }
@@ -1393,8 +1548,9 @@ public class Processor {
           // figure out what the synchronization type is
           int synctype = relation.getSynchronizationType();
       
-          if (forceRescan)
+          if (forceRescan) {
             synctype = Relation.SYNCHRONIZATION_RESCAN;
+          }
       
           if (synctype == Relation.SYNCHRONIZATION_UNKNOWN) {
             if (!relation.getSyncs().isEmpty()) {
@@ -1437,13 +1593,15 @@ public class Processor {
                     // track order value
                     String orderValue = reader.getOrderValue();                
                     if (highestOrder == null ||
-                        highestOrder.compareTo(orderValue) < 0)
+                        highestOrder.compareTo(orderValue) < 0) {
                       highestOrder = orderValue;
+                    }
 
-                    if (reader.getChangeType() == ChangeType.UPDATE)
+                    if (reader.getChangeType() == ChangeType.UPDATE) {
                       updateTuple(relation, tuple, ctx);
-                    else
+                    } else {
                       removeTuple(relation, tuple, ctx);
+                    }
                     
                     rstime2 += (System.currentTimeMillis()-time);
                     rtuples++;
@@ -1505,8 +1663,9 @@ public class Processor {
     } finally {
       ctx.close();
     }
-    if (log.isInfoEnabled())
+    if (log.isInfoEnabled()) {
       log.info("done synchronizing relations: {} tuples, {} ms. {}", new Object[] {ttuples, (System.currentTimeMillis()-tstime), new Date()});
+    }
   }
   
   /**
@@ -1597,8 +1756,9 @@ public class Processor {
   
   private static void updateTuple(Relation relation, String[] tuple, Context ctx) {
 
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("    u({}),{}", StringUtils.join(tuple, "|"), tuple.length);
+    }
     
     List<Entity> entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
@@ -1664,8 +1824,9 @@ public class Processor {
         // update topic types if primary
         if (entity.getEntityType() == Entity.TYPE_TOPIC) {
           // NOTE: association reifiers cannot have types
-          if (entity.isPrimary())
+          if (entity.isPrimary()) {
             updateTypes(topic, entity.getTypes(), entity, tuple, ctx);
+          }
         }
 
         // update characteristics
@@ -1689,8 +1850,9 @@ public class Processor {
         
       }
       // create topic entity if it does not exist
-      else if (entity.getEntityType() == Entity.TYPE_TOPIC)
+      else if (entity.getEntityType() == Entity.TYPE_TOPIC) {
         return addEntity(relation, entity, tuple, ctx);
+      }
       
       // if association entity, we'll have to wait a little      
     }

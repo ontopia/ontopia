@@ -41,17 +41,18 @@ public class ScopeTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection characteristics) throws JspTagException {
     // find all themes of all characteristics in collection
-    if (characteristics == null)
+    if (characteristics == null) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       ArrayList themes = new ArrayList();
       Iterator iter = characteristics.iterator();
       ScopedIF object = null;
       while (iter.hasNext()) {
         object = (ScopedIF) iter.next();
         // just get the scope stated for this object
-        if (object != null)
+        if (object != null) {
           themes.addAll( object.getScope() );
+        }
       } // while
       return themes;
     }

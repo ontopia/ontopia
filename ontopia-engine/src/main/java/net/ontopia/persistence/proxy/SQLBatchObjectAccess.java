@@ -54,10 +54,11 @@ public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF
     case FieldInfoIF.ONE_TO_ONE:
       return new SQLBatchOneToOne(access, finfo);
     case FieldInfoIF.ONE_TO_MANY:
-      if (finfo.isAggregateField())
+      if (finfo.isAggregateField()) {
         return new SQLBatchOneToManyAggregate(access, finfo);
-      else
+    } else {
         return new SQLBatchOneToManyReference(access, finfo);
+    }
     case FieldInfoIF.MANY_TO_MANY:
       return new SQLBatchManyToManyReference(access, finfo);
     default:
@@ -105,7 +106,9 @@ public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF
     bindParametersCreate(stm, oaccess, object);
 
     // Add batch update
-    if (debug) log.debug("Adding batch: " + sql_create);
+    if (debug) {
+      log.debug("Adding batch: " + sql_create);
+    }
     stm.addBatch();      
   }
 
@@ -136,7 +139,9 @@ public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF
     bindParametersDelete(stm, identity);
 
     // Add batch update
-    if (debug) log.debug("Adding batch: " + sql_delete);
+    if (debug) {
+      log.debug("Adding batch: " + sql_delete);
+    }
     stm.addBatch();
   }
 

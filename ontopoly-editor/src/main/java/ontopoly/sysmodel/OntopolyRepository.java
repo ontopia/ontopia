@@ -81,8 +81,9 @@ public class OntopolyRepository {
     // open system topic map
     String systemTopicMapId = getSystemTopicMapId();
     TopicMapReferenceIF topicMapReferenceIF = getTopicMapRepository().getReferenceByKey(systemTopicMapId);
-    if (topicMapReferenceIF == null)
+    if (topicMapReferenceIF == null) {
       throw new OntopiaRuntimeException("Cannot find topic map with id '" + systemTopicMapId);
+    }
 
     try {
       return topicMapReferenceIF.createStore(false).getTopicMap();
@@ -164,8 +165,9 @@ public class OntopolyRepository {
 
       // import ontopoly ontology
       TopicMapReferenceIF ontologyTopicMapReference = getTopicMapRepository().getReferenceByKey(ONTOLOGY_TOPIC_MAP_ID);
-      if (ontologyTopicMapReference == null)
+      if (ontologyTopicMapReference == null) {
         throw new OntopiaRuntimeException("Could not find ontology topic map '" + ONTOLOGY_TOPIC_MAP_ID + "'");
+      }
       TopicMapStoreIF ontologyTopicMapStore = ontologyTopicMapReference.createStore(true);
       try {
         TopicMapIF ontologyTopicMap = ontologyTopicMapStore.getTopicMap();
@@ -176,8 +178,9 @@ public class OntopolyRepository {
         TopicIF newReifier = null;
         if (oldReifier != null) {
           Collection<TopicIF> sameTopic = IdentityUtils.findSameTopic(tm, oldReifier);
-          if (!sameTopic.isEmpty())
+          if (!sameTopic.isEmpty()) {
             newReifier = sameTopic.iterator().next();
+          }
         }
         TopicIF reifier = tm.getReifier();
         if (reifier != null && newReifier != null && !reifier.equals(newReifier)) {
@@ -192,16 +195,18 @@ public class OntopolyRepository {
         ontologyTopicMapStore.close();
       }
       // save topic map with ontology
-      if (ref instanceof XTMTopicMapReference)
+      if (ref instanceof XTMTopicMapReference) {
         ((XTMTopicMapReference) ref).save();
+      }
 
       store.commit();
 
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (store != null)
+      if (store != null) {
         store.close();
+      }
     }
 
     // notify repository and wrap up
@@ -218,7 +223,9 @@ public class OntopolyRepository {
     TopicMapReferenceIF reference = repository.getReferenceByKey(referenceId);
 
     // remove from topic map repository
-    if (reference != null && !reference.isDeleted()) reference.delete();
+    if (reference != null && !reference.isDeleted()) {
+      reference.delete();
+    }
 
     // make ontopoly topic map
     unregisterOntopolyTopicMap(reference.getId());
@@ -231,8 +238,9 @@ public class OntopolyRepository {
    * repository, but does not actually change the topic map itself.
    */
   public void registerOntopolyTopicMap(String referenceId, String name) {
-    if (getTopicMapRepository().getReferenceByKey(referenceId) == null)
+    if (getTopicMapRepository().getReferenceByKey(referenceId) == null) {
       throw new OntopiaRuntimeException("Can't upgrade non-existent topic map: '" + referenceId + "'");
+    }
 
     // create topic for topic map
     TopicMapIF systemtm = getSystemTopicMap();

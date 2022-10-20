@@ -77,20 +77,25 @@ public class JDONativeValue implements JDOValueIF {
   public int hashCode() {
     int hashCode = root.hashCode();
     for (int ix = 0; ix < args.length; ix++) {
-      if (args[ix] != null)
+      if (args[ix] != null) {
         hashCode = (hashCode + args[ix].hashCode()) & 0x7FFFFFFF;
+      }
     }
     return hashCode;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDONativeValue) {
       JDONativeValue other = (JDONativeValue)obj;
-      if (root.equals(other.root))
-        if (Arrays.equals(args, other.args))
+      if (root.equals(other.root)) {
+        if (Arrays.equals(args, other.args)) {
           return true;
+        }
+      }
     }
     return false;
   }

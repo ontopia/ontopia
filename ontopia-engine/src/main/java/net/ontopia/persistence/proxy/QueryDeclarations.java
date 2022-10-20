@@ -74,13 +74,15 @@ public class QueryDeclarations {
       if ("query".equals(name)) {
         // Get query name
         String query_name = atts.getValue("name");
-        if (query_name == null) 
+        if (query_name == null) {
           throw new OntopiaRuntimeException("query.name must be specified: " + query_name);
+        }
 
         // Get query result type
         String type = atts.getValue("type");
-        if (type == null) 
+        if (type == null) {
           throw new OntopiaRuntimeException("query.type must be specified: " + type);
+        }
 
         // Get query identity lookup
         boolean lookup_identities = PropertyUtils.isTrue(atts.getValue("lookup"), true);
@@ -126,14 +128,16 @@ public class QueryDeclarations {
       else if ("statement".equals(name)) {
         // Get statement platform       
         String platform = atts.getValue("platform");
-        if (platform == null) 
+        if (platform == null) {
           throw new OntopiaRuntimeException("statement.platform must be specified: " + platform);
+        }
         String[] platforms = StringUtils.split(platform, ",");
         
         // Get query statement
         String query = atts.getValue("query");
-        if (query == null) 
+        if (query == null) {
           throw new OntopiaRuntimeException("statement.query must be specified: " + query);
+        }
         
         // Add query statement
         qdesc.addStatement(platforms, query);
@@ -141,16 +145,18 @@ public class QueryDeclarations {
       else if ("class-indicator".equals(name)) {
         // Get indicator name
         indname = atts.getValue("name");
-        if (indname == null) 
+        if (indname == null) {
           throw new OntopiaRuntimeException("class-indicator.name must be specified: " + indname);
+        }
 
         indics = new HashMap<String, Class<?>>();
       }
       else if ("indicator".equals(name)) {
         // Get indicator token
         String token = atts.getValue("token");
-        if (token == null) 
+        if (token == null) {
           throw new OntopiaRuntimeException("indicator.token must be specified: " + token);
+        }
         
         // Get indicator class
         Class klass = getClassByName(atts.getValue("class"));
@@ -210,8 +216,9 @@ public class QueryDeclarations {
    */
   public void addQuery(QueryDescriptor qdesc) {
     String name = qdesc.getName();
-    if (name == null) 
+    if (name == null) {
       throw new OntopiaRuntimeException("Cannot add query descriptor without a name: " + qdesc);
+    }
     
     queries.put(name, qdesc);
   }
@@ -220,8 +227,9 @@ public class QueryDeclarations {
    * INTERNAL: Looks up the class indicator map by name.
    */
   public Map<String, Class<?>> getIndicator(String name) {
-    if (!indicators.containsKey(name))
+    if (!indicators.containsKey(name)) {
       throw new OntopiaRuntimeException("No indicator with the name: " + name);
+    }
     
     return indicators.get(name);
   }

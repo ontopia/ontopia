@@ -81,13 +81,15 @@ public class ValuePredicate
       //! JDOFunction substr = new JDOFunction(funcname, String.class, new JDOField(jv_object, "value"));
       //! expressions.add(new JDOEquals(jv_value, substr));
     }
-		if (!builder.isArgumentOfType(args[0], TopicName.class))
+		if (!builder.isArgumentOfType(args[0], TopicName.class)) {
 			expressions.add(new JDONotEquals(new JDOField(jv_object, "datatype", "address"), 
 																			 builder.createJDOValue(DataTypes.TYPE_URI.getAddress())));
+    }
 
     // if variable: filter out nulls
-    if (jv_value.getType() == JDOValueIF.VARIABLE)
+    if (jv_value.getType() == JDOValueIF.VARIABLE) {
       expressions.add(new JDONotEquals(jv_value, new JDONull()));
+    }
 
     // JDOQL: B.topicmap = TOPICMAP
     expressions.add(new JDOEquals(new JDOField(jv_object, "topicmap"),

@@ -54,9 +54,9 @@ public class TestUtils {
         LocatorIF itemid = (LocatorIF) it2.next();
         String iid = itemid.getAddress();
         if (iid.startsWith(base)) {
-          if (AbstractTopicMapExporter.mayCollide(iid.substring(base.length() + 1)))
+          if (AbstractTopicMapExporter.mayCollide(iid.substring(base.length() + 1))) {
             topic.removeItemIdentifier(itemid);
-          else {
+          } else {
             topic.removeItemIdentifier(itemid);
             String tmp = iid.substring(base.length());
             topic.addItemIdentifier(new URILocator(origbase + tmp));
@@ -65,8 +65,9 @@ public class TestUtils {
       }
     }
 
-    if (tm.getStore() instanceof InMemoryTopicMapStore)
+    if (tm.getStore() instanceof InMemoryTopicMapStore) {
       ((InMemoryTopicMapStore) tm.getStore()).setBaseAddress(origbaseloc);
+    }
   }
   
 }

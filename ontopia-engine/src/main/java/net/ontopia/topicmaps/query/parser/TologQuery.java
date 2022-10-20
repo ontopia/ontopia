@@ -92,15 +92,17 @@ public class TologQuery extends TologStatement {
   }
 
   public Object getArgument(String name) throws InvalidQueryException {
-    if (arguments == null)
+    if (arguments == null) {
       throw new InvalidQueryException("Tried to get value for query parameter '" +
                                       name + "', but no arguments provided");
+    }
 
     Object value = arguments.get(name);
     
-    if (value == null)
+    if (value == null) {
       throw new InvalidQueryException("No value supplied for query parameter '" +
                                       name + "'");
+    }
 
     return value;
   }
@@ -121,10 +123,11 @@ public class TologQuery extends TologStatement {
     if (selected_variables == null) {
       // Need to resolve the list of selected variables once, because
       // allVariables is unordered.
-      if (variables.size() > 0)
+      if (variables.size() > 0) {
         selected_variables = Collections.unmodifiableList(variables);
-      else
+      } else {
         selected_variables = Collections.unmodifiableList(new ArrayList(allVariables));
+      }
     }
     return selected_variables;
   }
@@ -179,12 +182,15 @@ public class TologQuery extends TologStatement {
     List selected = getSelectedVariables();
     if (!selected.isEmpty()) {
       for (int ix = 0; ix < selected.size(); ix++) {
-        if (ix > 0) buf.append(", ");
+        if (ix > 0) {
+          buf.append(", ");
+        }
 
-        if (countVariables.contains(selected.get(ix)))
+        if (countVariables.contains(selected.get(ix))) {
           buf.append("count(" + selected.get(ix) + ")");
-        else
+        } else {
           buf.append(selected.get(ix));
+        }
 
       }
       
@@ -198,17 +204,21 @@ public class TologQuery extends TologStatement {
     if (!orderBy.isEmpty()) {
       buf.append(" order by ");
       for (int ix = 0; ix < orderBy.size(); ix++) {
-        if (ix > 0) buf.append(", ");
+        if (ix > 0) {
+          buf.append(", ");
+        }
         buf.append(orderBy.get(ix));
       }
       buf.append('\n');
     }
 
     // limit/offset
-    if (limit != -1)
+    if (limit != -1) {
       buf.append(" limit " + limit);
-    if (offset != -1)
+    }
+    if (offset != -1) {
       buf.append(" offset " + offset);
+    }
     
     buf.append('?');
 
@@ -228,7 +238,9 @@ public class TologQuery extends TologStatement {
 
     Set rules = new CompactHashSet();
     for (int ix = 0; ix < clauses.size(); ix++) {
-      if (ix > 0) buf.append(", ");
+      if (ix > 0) {
+        buf.append(", ");
+      }
 
       AbstractClause theClause = (AbstractClause) clauses.get(ix);
       if (theClause instanceof PredicateClause) {
@@ -237,8 +249,9 @@ public class TologQuery extends TologStatement {
         buf.append(predicate.getName() + "(" +
                    argumentsToString(clause.getArguments()) + ")");
 
-        if (predicate instanceof net.ontopia.topicmaps.query.impl.basic.RulePredicate)
+        if (predicate instanceof net.ontopia.topicmaps.query.impl.basic.RulePredicate) {
           rules.add(predicate);
+        }
 
       } else if (theClause instanceof OrClause) {
         OrClause clause = (OrClause) theClause;
@@ -246,7 +259,9 @@ public class TologQuery extends TologStatement {
         buf.append("{ ");
         List alts = clause.getAlternatives();
         for (int i = 0; i < alts.size(); i++) {
-          if (i > 0) buf.append(" | ");
+          if (i > 0) {
+            buf.append(" | ");
+          }
           buf.append(toString((List) alts.get(i)));
         }
         buf.append(" }");
@@ -255,8 +270,9 @@ public class TologQuery extends TologStatement {
         NotClause clause = (NotClause) theClause;
         buf.append("not(" + toString(clause.getClauses()) + ")");
         
-      } else
+      } else {
         throw new OntopiaRuntimeException("Unknown clause type:" + theClause);
+      }
 
       buf.append('\n');
     }
@@ -279,7 +295,9 @@ public class TologQuery extends TologStatement {
     StringBuilder buf = new StringBuilder();
 
     for (int ix = 0; ix < arguments.size(); ix++) {
-      if (ix > 0) buf.append(", ");
+      if (ix > 0) {
+        buf.append(", ");
+      }
       valueToString(arguments.get(ix), buf);
     }
     
@@ -287,17 +305,18 @@ public class TologQuery extends TologStatement {
   }
 
   private static void valueToString(Object arg, StringBuilder buf) {
-    if (arg instanceof String)
+    if (arg instanceof String) {
       buf.append('"').append(arg).append('"');
-    else if (arg instanceof TopicIF)
+    } else if (arg instanceof TopicIF) {
       buf.append(topicToString((TopicIF) arg));
-    else if (arg instanceof Pair) {
+    } else if (arg instanceof Pair) {
       Pair pair = (Pair) arg;
       valueToString(pair.getFirst(), buf);
       buf.append(" : ");
       buf.append(topicToString((TopicIF) pair.getSecond()));
-    } else
+    } else {
       buf.append(arg);
+    }
   }
 
   private static String topicToString(TopicIF topic) {
@@ -310,49 +329,56 @@ public class TologQuery extends TologStatement {
       int pos = addr.lastIndexOf('#');
       if (pos != -1) {
         String id = addr.substring(pos + 1);
-        if (AbstractTopicMapExporter.mayCollide(id))
+        if (AbstractTopicMapExporter.mayCollide(id)) {
           fallbackid = id;
-        else
+        } else {
           return id;
+        }
       }
     }
 
     it = topic.getSubjectIdentifiers().iterator();
-    if (it.hasNext())
+    if (it.hasNext()) {
       return "i\"" + ((LocatorIF) it.next()).getAddress() + "\"";
+    }
 
     it = topic.getSubjectLocators().iterator();
-    if (it.hasNext())
+    if (it.hasNext()) {
       return "a\"" + ((LocatorIF) it.next()).getAddress() + "\"";
+    }
 
-    if (fallbackid != null)
+    if (fallbackid != null) {
       return fallbackid;
+    }
     return "@" + topic.getObjectId();
   }
     
   /// Modifiers
 
   public void addVariable(Variable variable) throws AntlrWrapException {
-    if (variables.contains(variable))
+    if (variables.contains(variable)) {
       throw new AntlrWrapException(
               new InvalidQueryException(VARIABLE + variable +
                                         " appears twice in select clause"));
+    }
     variables.add(variable);
   }
 
   public void addCountVariable(Variable variable) throws AntlrWrapException {
-    if (variables.contains(variable))
+    if (variables.contains(variable)) {
       throw new AntlrWrapException(
               new InvalidQueryException(VARIABLE + variable +
                                         " appears twice in select clause"));
+    }
     variables.add(variable);
     countVariables.add(variable);
   }
   
   public void addOrderBy(Variable variable, boolean ascending) {
     orderBy.add(variable);
-    if (!ascending)
+    if (!ascending) {
       orderDescending.add(variable.getName());
+    }
   }
   
   @Override
@@ -362,24 +388,29 @@ public class TologQuery extends TologStatement {
     for (int ix = 0; ix < clauses.size(); ix++) {
       AbstractClause clause = (AbstractClause) clauses.get(ix);
       Iterator it = clause.getAllVariables().iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         allVariables.add((Variable) it.next());
+      }
     }
 
     // verify that SELECT variables actually exist
-    for (int ix = 0; ix < variables.size(); ix++)
-      if (!allVariables.contains(variables.get(ix)))
+    for (int ix = 0; ix < variables.size(); ix++) {
+      if (!allVariables.contains(variables.get(ix))) {
         throw new InvalidQueryException(VARIABLE + variables.get(ix) + " in select clause not used in query");
+      }
+    }
 
     // verify that ORDER BY variables actually exist (and are selected)
     for (int ix = 0; ix < orderBy.size(); ix++) {
-      if (!allVariables.contains(orderBy.get(ix)))
+      if (!allVariables.contains(orderBy.get(ix))) {
         throw new InvalidQueryException(VARIABLE + orderBy.get(ix) + " in order by clause not used in query");
+      }
 
       if (!(variables.isEmpty() && countVariables.isEmpty()) &&
           !variables.contains(orderBy.get(ix)) &&
-          !countVariables.contains(orderBy.get(ix)))
+          !countVariables.contains(orderBy.get(ix))) {
         throw new InvalidQueryException(VARIABLE + orderBy.get(ix) + " in order by clause not in select list");
+      }
     }
 
     // type analysis
@@ -394,9 +425,10 @@ public class TologQuery extends TologStatement {
       if (value.length > 1) {
         int seedType = getTypeIdentifier((Class)value[0]);
         for (int ix = 1; ix < value.length; ix++) {
-          if (!isCompatibleTypes(seedType, getTypeIdentifier((Class)value[ix])))
+          if (!isCompatibleTypes(seedType, getTypeIdentifier((Class)value[ix]))) {
             throw new InvalidQueryException(VARIABLE + key + " can be bound to incompatible types: '" + 
                                             value[0] + "' and '" + value[ix] + "'");
+          }
         }
       }
     }
@@ -405,23 +437,25 @@ public class TologQuery extends TologStatement {
   }
 
   private int getTypeIdentifier(Class type) throws InvalidQueryException {
-    if (TMObjectIF.class.isAssignableFrom(type))
+    if (TMObjectIF.class.isAssignableFrom(type)) {
       return TYPE_TMObjectIF;
-    else if (String.class.equals(type))
+    } else if (String.class.equals(type)) {
       return TYPE_String;
-    else if (Integer.class.equals(type))
+    } else if (Integer.class.equals(type)) {
       return TYPE_Number;
-    else if (Float.class.equals(type))
+    } else if (Float.class.equals(type)) {
       return TYPE_Number;
-    else
+    } else {
       throw new InvalidQueryException("Unsupported variable type: " + type);
+    }
   }
 
   private boolean isCompatibleTypes(int type1, int type2) {
-    if (type1 == type2)
+    if (type1 == type2) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
   public void setLimit(int limit) {

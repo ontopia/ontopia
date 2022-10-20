@@ -207,7 +207,9 @@ public class ClassInstanceIndex extends RDBMSIndex
   
   @Override
   public boolean usedAsType(TopicIF topic) {
-    if (topic == null) return false;
+    if (topic == null) {
+      return false;
+    }
     return (usedAsTopicType(topic) ||
             usedAsAssociationType(topic) ||
             usedAsAssociationRoleType(topic) ||

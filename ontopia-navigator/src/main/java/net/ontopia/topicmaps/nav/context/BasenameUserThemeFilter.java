@@ -108,8 +108,9 @@ public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
     //log.info("\n  used for scoping " + baseNames.size() + " topic base names.");
 
     // is not used for scoping anywhere?
-    if (baseNames.size() == 0)
+    if (baseNames.size() == 0) {
       return true;
+    }
 
     // (pre) RULE 1A: theme topic is used to type topics
     if ( instanceIndex.usedAsTopicType(actTheme) ) {
@@ -199,8 +200,9 @@ public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
       } // if RULE 1A applies
 
       // if rule (1A|1B|2|3A) apply then reduce number of remaining topics
-      if (associatedWithTheme || typedByTheme || usedToTypeAssocs || usedAsTopicNameTheme)
+      if (associatedWithTheme || typedByTheme || usedToTypeAssocs || usedAsTopicNameTheme) {
         nRemainingTopics--;
+      }
 
     } // while itNames
 

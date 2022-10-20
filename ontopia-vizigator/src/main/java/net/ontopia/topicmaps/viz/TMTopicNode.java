@@ -90,7 +90,9 @@ public class TMTopicNode extends TMAbstractNode {
     
     miniPaint(g, tgPanel);
       
-    if (!intersects(tgPanel.getSize())) return;
+    if (!intersects(tgPanel.getSize())) {
+      return;
+    }
     this.paintNodeBody(g, tgPanel);
   
     this.drawMissingEdgesIndicator(g, tgPanel);
@@ -106,7 +108,9 @@ public class TMTopicNode extends TMAbstractNode {
   public void miniPaint(Graphics g, TGPanel tgPanel) {
     String oldLabel = this.getLabel();
   
-    if (!intersects(tgPanel.getSize())) return;
+    if (!intersects(tgPanel.getSize())) {
+      return;
+    }
     this.paintNodeBody(g, tgPanel);
   
     this.drawMissingEdgesIndicator(g, tgPanel);
@@ -122,7 +126,9 @@ public class TMTopicNode extends TMAbstractNode {
   protected void drawMissingEdgesIndicator(Graphics g, TGPanel tgPanel) {
     int hiddenEdgeCount = associationCount - visibleEdgeCount();
 
-    if (hiddenEdgeCount <= 0) return;
+    if (hiddenEdgeCount <= 0) {
+      return;
+    }
 
     int ix = (int) drawx;
     int iy = (int) drawy;
@@ -138,8 +144,9 @@ public class TMTopicNode extends TMAbstractNode {
   @Override
   public void setLabel(String name) {
     int maxNameLength = topicMapView.getMaxTopicNameLength();
-    if (name != null && name.length() > maxNameLength)
+    if (name != null && name.length() > maxNameLength) {
       name = name.substring(0, maxNameLength) + "...";
+    }
 
     super.setLabel(name);
   }
@@ -173,10 +180,11 @@ public class TMTopicNode extends TMAbstractNode {
    */
   @Override
   public Color getPaintBackColor(TGPanel tgPanel) {
-    if (forceColor)
+    if (forceColor) {
       return getBackColor();
-    else
+    } else {
       return super.getPaintBackColor(tgPanel);
+    }
   }        
 
   public void repaint(Color aColor, TGPanel tgPanel) {

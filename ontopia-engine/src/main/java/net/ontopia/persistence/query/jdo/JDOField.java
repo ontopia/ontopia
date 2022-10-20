@@ -108,20 +108,25 @@ public class JDOField implements JDOValueIF {
   public int hashCode() {
     int hashCode = root.hashCode();
     for (int ix = 0; ix < path.length; ix++) {
-      if (path[ix] != null)
+      if (path[ix] != null) {
         hashCode = (hashCode + path[ix].hashCode()) & 0x7FFFFFFF;
+      }
     }
     return hashCode;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOField) {
       JDOField other = (JDOField)obj;
-      if (root.equals(other.root))
-        if (Arrays.equals(path, other.path))
+      if (root.equals(other.root)) {
+        if (Arrays.equals(path, other.path)) {
           return true;
+        }
+      }
     }
     return false;
   }
@@ -131,7 +136,9 @@ public class JDOField implements JDOValueIF {
     StringBuilder sb = new StringBuilder(root.toString());
     sb.append('.');
     sb.append(StringUtils.join(path, "."));
-    if (!getEvaluatable()) sb.append('*');
+    if (!getEvaluatable()) {
+      sb.append('*');
+    }
     return sb.toString();
   }
 

@@ -108,8 +108,9 @@ public class RDBMSIndexTool {
         Map dindexes = new HashMap();
         if (table.getPrimaryKeys() != null) {
           String pkey = table_name + '(' + StringUtils.join(table.getPrimaryKeys(), ',') + ')';
-          if (!pkeys.containsKey(pkey))
+          if (!pkeys.containsKey(pkey)) {
             System.out.println("PKM: " + pkey);
+          }
         }
 
         Iterator iter = table.getIndexes().iterator();
@@ -143,16 +144,18 @@ public class RDBMSIndexTool {
         }
 
       }
-      if (!extra_indexes.isEmpty())
+      if (!extra_indexes.isEmpty()) {
         System.out.println("/* --- Extra indexes ----------------------------------------- */");
+      }
       Iterator eiter = extra_indexes.keySet().iterator();
       while (eiter.hasNext()) {
         Object k = eiter.next();
         System.out.println("drop index " + extra_indexes.get(k) + "; /* " + k + " */");
       }
 
-      if (!missing_indexes.isEmpty())
+      if (!missing_indexes.isEmpty()) {
         System.out.println("/* --- Missing indexes---------------------------------------- */");
+      }
       Iterator miter = missing_indexes.keySet().iterator();
       while (miter.hasNext()) {
         Object k = miter.next();
@@ -199,17 +202,19 @@ public class RDBMSIndexTool {
       // column_name might be quoted, so unquote it before proceeding
       String column_name = unquote(rs.getString(9), dbm.getIdentifierQuoteString());
 
-      if (columns == null) 
+      if (columns == null) { 
         columns = column_name;
-      else
+      } else {
         columns = columns + "," + column_name;
+      }
 
       prev_index_name = index_name;
     }
     rs.close();
 
-    if (prev_index_name != null)
+    if (prev_index_name != null) {
       result.put(table_name + '(' + columns + ')', prev_index_name);
+    }
 
     return result;
   }
@@ -229,27 +234,30 @@ public class RDBMSIndexTool {
       }
       // column_name might be quoted, so unquote it before proceeding
       String column_name = unquote(rs.getString(4), dbm.getIdentifierQuoteString());
-      if (columns == null) 
+      if (columns == null) { 
         columns = column_name;
-      else
+      } else {
         columns = columns + "," + column_name;
+      }
 
       prev_index_name = index_name;
     }
     rs.close();
 
-    if (prev_index_name != null)
+    if (prev_index_name != null) {
       result.put(table_name + '(' + columns + ')', prev_index_name);
+    }
 
     return result;
   }
 
   protected static String unquote(String column_name, String quote) {
     // column_name might be quoted, so unquote it before proceeding
-    if (column_name != null && column_name.startsWith(quote) && column_name.endsWith(quote))
+    if (column_name != null && column_name.startsWith(quote) && column_name.endsWith(quote)) {
       return column_name.substring(quote.length(), column_name.length()-quote.length());
-    else
+    } else {
       return column_name;
+    }
   }
     
   private static void usage() {

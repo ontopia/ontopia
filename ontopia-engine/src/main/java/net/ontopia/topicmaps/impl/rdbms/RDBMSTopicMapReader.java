@@ -55,12 +55,13 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
   
   @Override
   public TopicMapIF read() throws java.io.IOException {
-    if (properties != null)
+    if (properties != null) {
       return new RDBMSTopicMapStore(properties, topicmap_id).getTopicMap();
-    else if (propfile != null)
+    } else if (propfile != null) {
       return new RDBMSTopicMapStore(propfile, topicmap_id).getTopicMap();
-    else
+    } else {
       return new RDBMSTopicMapStore(topicmap_id).getTopicMap();
+    }
   }
 
   @Override

@@ -49,10 +49,12 @@ public class GenericLocator extends AbstractLocator implements Externalizable {
   public GenericLocator(String notation, String address)
     throws IllegalArgumentException {
     
-    if (notation == null)
+    if (notation == null) {
       throw new IllegalArgumentException("The notation argument cannot be null.");
-    if (address == null)
+    }
+    if (address == null) {
       throw new IllegalArgumentException("The address argument cannot be null.");
+    }
     this.notation = notation;
     this.address = address;
   }

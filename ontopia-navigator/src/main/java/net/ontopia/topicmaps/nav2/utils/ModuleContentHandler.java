@@ -75,8 +75,9 @@ public class ModuleContentHandler extends JSPContentHandler {
       curFuncParams = new ArrayList();
       if (atts.getValue("params") != null) {
         StringTokenizer strtok = new StringTokenizer(atts.getValue("params"));
-        while (strtok.hasMoreTokens())
+        while (strtok.hasMoreTokens()) {
           curFuncParams.add(strtok.nextToken());
+        }
       }
       characterCare = true;
     } else {
@@ -89,8 +90,9 @@ public class ModuleContentHandler extends JSPContentHandler {
   
   @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
-    if (characterCare) 
+    if (characterCare) {
       super.characters(ch, start, length);
+    }
   }
   
   @Override

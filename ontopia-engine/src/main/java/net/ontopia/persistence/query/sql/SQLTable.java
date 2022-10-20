@@ -56,10 +56,16 @@ public class SQLTable {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof SQLTable)) return false;
+    if (!(obj instanceof SQLTable)) {
+      return false;
+    }
     SQLTable table = (SQLTable)obj;
-    if (alias == null ? table.getAlias() != null : !alias.equals(table.getAlias())) return false;
-    if (name == null ? table.getName() != null : !name.equals(table.getName())) return false;
+    if (alias == null ? table.getAlias() != null : !alias.equals(table.getAlias())) {
+      return false;
+    }
+    if (name == null ? table.getName() != null : !name.equals(table.getName())) {
+      return false;
+    }
     return true;
   }
   

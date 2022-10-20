@@ -54,12 +54,14 @@ public class TopicTreeNode {
   }
 
   public void setParent(TopicTreeNode parent) {
-    if (this.parent != null)
+    if (this.parent != null) {
       this.parent.getChildren().remove(this);
+    }
     this.parent = parent;
     
-    if (this.parent != null)
+    if (this.parent != null) {
       this.parent.getChildren().add(this);
+    }
   }
   
   public TopicIF getTopic() {

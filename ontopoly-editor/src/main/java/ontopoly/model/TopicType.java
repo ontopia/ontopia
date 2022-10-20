@@ -179,15 +179,17 @@ public class TopicType extends AbstractTypingTopic {
         topicTypeTopic, FIELD_OWNER, 
         fieldDefinitionTopic, FIELD_DEFINITION, 
         Cardinality.getDefaultCardinality(fieldDefinition).getTopicIF(), CARDINALITY);
-    if (associationIF != null)
+    if (associationIF != null) {
       associationIF.remove();
+    }
 
     // find and remove has-field association
     associationIF = OntopolyModelUtils.findBinaryAssociation(tm, HAS_FIELD,
         topicTypeTopic, FIELD_OWNER, 
         fieldDefinitionTopic, FIELD_DEFINITION);
-    if (associationIF != null)
+    if (associationIF != null) {
       associationIF.remove();
+    }
 
     // See if one of the supertypes have also defined this field. If some of
     // the supertypes has defined
@@ -347,10 +349,11 @@ public class TopicType extends AbstractTypingTopic {
       if (occurrenceIF == null) {
         String fieldOrderAsString;
         int fieldOrder = fa.getOrder(tt);
-        if (fieldOrder != Integer.MAX_VALUE)
+        if (fieldOrder != Integer.MAX_VALUE) {
           fieldOrderAsString = StringUtils.leftPad(Integer.toString(fieldOrder + 1), 9, '0');
-        else
+        } else {
           fieldOrderAsString = tt.getNextUnusedFieldOrder();
+        }
 
         // create field-order occurrence
         OntopolyModelUtils.makeOccurrence(FIELD_ORDER, topicIF,
@@ -370,8 +373,9 @@ public class TopicType extends AbstractTypingTopic {
     // see if field-order occurrence already exist for the same field
     OccurrenceIF occurrenceIF = OntopolyModelUtils.findOccurrence(FIELD_ORDER,
         topicTypeTopic, DataTypes.TYPE_STRING, scope);
-    if (occurrenceIF != null)
+    if (occurrenceIF != null) {
       return;
+    }
 
     // create field-order occurrence
     OntopolyModelUtils.makeOccurrence(FIELD_ORDER, topicTypeTopic, 
@@ -401,8 +405,9 @@ public class TopicType extends AbstractTypingTopic {
 
     // The field is defined on this topic type too, hence the field-order
     // occurrence can't be removed.
-    if (associationIF != null)
+    if (associationIF != null) {
       return;
+    }
 
     // find field-order occurrence
     Collection<TopicIF> scope = Collections.singleton(fieldDefinitionTopic);
@@ -438,10 +443,11 @@ public class TopicType extends AbstractTypingTopic {
   public List<FieldAssignment> getFieldAssignments(FieldsView view) {
     String viewClause = "";
     if (view != null) {
-      if (view.isDefaultView())
+      if (view.isDefaultView()) {
         viewClause = "{ on:field-in-view($FD : on:field-definition, on:default-fields-view : on:fields-view) | not(on:field-in-view($FD : on:field-definition, $XV : on:fields-view), $XV /= on:default-fields-view) }, ";
-      else
+      } else {
         viewClause = "on:field-in-view($FD : on:field-definition, %view% : on:fields-view), ";
+      }
     }
 
     String query = 
@@ -461,9 +467,9 @@ public class TopicType extends AbstractTypingTopic {
       "direct-instance-of($FD, $FT), xtm:superclass-subclass($FT : xtm:subclass, on:field-definition : xtm:superclass), " +
       "{ field-order(%tt%, $FD, $FO) }?";
     Map<String,TopicIF> params;
-    if (view == null)
+    if (view == null) {
       params = Collections.singletonMap("tt", getTopicIF());
-    else {
+    } else {
       params = new HashMap<String,TopicIF>(2);
       params.put("tt", getTopicIF());
       params.put("view", view.getTopicIF());
@@ -495,20 +501,21 @@ public class TopicType extends AbstractTypingTopic {
 
   protected static FieldDefinition findFieldDefinitionImpl(TopicMap tm, TopicIF fieldDefinitionTopic, TopicIF fieldDefinitionType) {
     Collection<LocatorIF> identities = fieldDefinitionType.getSubjectIdentifiers();
-    if (identities.contains(PSI.ON_OCCURRENCE_FIELD))
+    if (identities.contains(PSI.ON_OCCURRENCE_FIELD)) {
       return new OccurrenceField(fieldDefinitionTopic, tm);
-    else if (identities.contains(PSI.ON_ROLE_FIELD))
+    } else if (identities.contains(PSI.ON_ROLE_FIELD)) {
       return new RoleField(fieldDefinitionTopic, tm);
-    else if (identities.contains(PSI.ON_NAME_FIELD))
+    } else if (identities.contains(PSI.ON_NAME_FIELD)) {
       return new NameField(fieldDefinitionTopic, tm);
-    else if (identities.contains(PSI.ON_IDENTITY_FIELD))
+    } else if (identities.contains(PSI.ON_IDENTITY_FIELD)) {
       return new IdentityField(fieldDefinitionTopic, tm);
-    else if (identities.contains(PSI.ON_QUERY_FIELD))
+    } else if (identities.contains(PSI.ON_QUERY_FIELD)) {
       return new QueryField(fieldDefinitionTopic, tm);
-    else
+    } else {
       throw new OntopolyModelRuntimeException(
           "This topic's subjectIndicator address didn't match any FieldDefinition implementations: "
           + identities);
+    }
   }
 
   private String getNextUnusedFieldOrder() {
@@ -523,8 +530,9 @@ public class TopicType extends AbstractTypingTopic {
     while (it.hasNext()) {
       OccurrenceIF occurrenceIF = it.next();
       int temp = Integer.parseInt(occurrenceIF.getValue());
-      if (temp > fieldOrder)
+      if (temp > fieldOrder) {
         fieldOrder = temp;
+      }
     }
 
     return StringUtils.leftPad(Integer.toString(fieldOrder + 1), 9, '0');
@@ -552,16 +560,17 @@ public class TopicType extends AbstractTypingTopic {
 
     // delegate to specific create method if known type
     Collection<LocatorIF> subinds = getTopicIF().getSubjectIdentifiers();
-    if (subinds.contains(PSI.ON_TOPIC_TYPE))
+    if (subinds.contains(PSI.ON_TOPIC_TYPE)) {
       return tm.createTopicType(name);
-    else if (subinds.contains(PSI.ON_ASSOCIATION_TYPE))
+    } else if (subinds.contains(PSI.ON_ASSOCIATION_TYPE)) {
       return tm.createAssociationType(name);
-    else if (subinds.contains(PSI.ON_ROLE_TYPE))
+    } else if (subinds.contains(PSI.ON_ROLE_TYPE)) {
       return tm.createRoleType(name);
-    else if (subinds.contains(PSI.ON_NAME_TYPE))
+    } else if (subinds.contains(PSI.ON_NAME_TYPE)) {
       return tm.createNameType(name);
-    else if (subinds.contains(PSI.ON_OCCURRENCE_TYPE))
+    } else if (subinds.contains(PSI.ON_OCCURRENCE_TYPE)) {
       return tm.createOccurrenceType(name);
+    }
 
     // use default create method
     TopicIF topic = tm.createNamedTopic(name, getTopicIF());
@@ -597,8 +606,9 @@ public class TopicType extends AbstractTypingTopic {
       Set<Topic> duplicateChecks = new HashSet<Topic>(rows.size());
       while (it.hasNext()) {
         Topic topic = it.next();
-        if (duplicateChecks.contains(topic))
+        if (duplicateChecks.contains(topic)) {
           continue; // avoid duplicates
+        }
         results.add(topic);
         duplicateChecks.add(topic);
       }
@@ -640,10 +650,11 @@ public class TopicType extends AbstractTypingTopic {
           @Override
           public FieldsView mapRow(QueryResultIF result, int rowno) {
             TopicIF viewTopic = (TopicIF)result.getValue(0);
-            if (viewTopic == null)
+            if (viewTopic == null) {
               return FieldsView.getDefaultFieldsView(getTopicMap());
-            else
+            } else {
               return new FieldsView(viewTopic, getTopicMap());
+            }
           }
         }, params);
   }

@@ -329,8 +329,9 @@ public class StatisticsPrinter {
         }
       }
     }
-    if (id == null)
+    if (id == null) {
       id = "id" + topic.getObjectId();
+    }
     return id;
   }
 
@@ -369,7 +370,9 @@ public class StatisticsPrinter {
       // If the user have specifed a parser to use, try to use it 
 
       TopicMapIF tm = ImportExportUtils.getReader(args[0]).read();
-      if (tm == null) throw new OntopiaRuntimeException("No topic maps found.");      
+      if (tm == null) {
+        throw new OntopiaRuntimeException("No topic maps found.");
+      }      
       StatisticsPrinter statsprinter = new StatisticsPrinter(tm);
       statsprinter.topicStats();
     } catch (Exception e) {
@@ -406,7 +409,9 @@ public class StatisticsPrinter {
             temp = retur[j];
             retur[j] = retur[j-1];
             retur[j-1] = temp;
-          } else done = true;
+          } else {
+            done = true;
+          }
           j--;
         }//end of while.
       }//end of if

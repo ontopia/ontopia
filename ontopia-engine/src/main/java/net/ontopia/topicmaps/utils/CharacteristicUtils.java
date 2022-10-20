@@ -52,8 +52,9 @@ public class CharacteristicUtils {
     Iterator<T> it = objects.iterator();
     while (it.hasNext()) {
       T typed = it.next();
-      if (type.equals(typed.getType()))
+      if (type.equals(typed.getType())) {
         return typed;
+      }
     }
     return null;
   }
@@ -148,7 +149,9 @@ public class CharacteristicUtils {
     Iterator<TopicNameIF> iter = basenames.iterator();
     while (iter.hasNext()) {
       TopicIF topic = iter.next().getTopic();
-      if (topic != null) topics.add(topic);
+      if (topic != null) {
+        topics.add(topic);
+      }
     }
     return topics;
   }
@@ -162,7 +165,9 @@ public class CharacteristicUtils {
   public static Collection<TopicIF> getAssociatedTopics(TopicIF topic) {
     Collection<TopicIF> result = new HashSet<TopicIF>();
     Collection<AssociationRoleIF> roles = topic.getRoles();
-    if (roles.isEmpty()) return Collections.emptySet();
+    if (roles.isEmpty()) {
+      return Collections.emptySet();
+    }
     Iterator<AssociationRoleIF> iter = roles.iterator();
     while (iter.hasNext()) {
       AssociationRoleIF role1 = iter.next();
@@ -170,9 +175,13 @@ public class CharacteristicUtils {
       Iterator<AssociationRoleIF> riter = assoc.getRoles().iterator();
       while (riter.hasNext()) {
         AssociationRoleIF role2 = riter.next();
-        if (Objects.equals(role1, role2)) continue;
+        if (Objects.equals(role1, role2)) {
+          continue;
+        }
         TopicIF other = role2.getPlayer();
-        if (other != null) result.add(other);
+        if (other != null) {
+          result.add(other);
+        }
       }
     }
     return result;

@@ -38,18 +38,20 @@ public class TMRAPConfiguration {
     servername = config.get("server_name");
     edituri = config.get("edit_uri");
     viewuri = config.get("view_uri");
-    if (edituri == null && viewuri == null)
+    if (edituri == null && viewuri == null) {
       throw new ServletException("One of the 'edit_uri' and 'view_uri' " +
                                  "parameters must be specified");
+    }
   }
   
   public TMRAPConfiguration(ServletConfig config) throws ServletException {
     servername = config.getInitParameter("server_name");
     edituri = config.getInitParameter("edit_uri");
     viewuri = config.getInitParameter("view_uri");
-    if (edituri == null && viewuri == null)
+    if (edituri == null && viewuri == null) {
       throw new ServletException("One of the 'edit_uri' and 'view_uri' " +
                                  "parameters must be specified");
+    }
   }
 
   public String getServerName() {

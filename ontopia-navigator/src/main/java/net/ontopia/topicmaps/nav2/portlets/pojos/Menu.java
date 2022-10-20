@@ -190,10 +190,11 @@ public class Menu {
     List children = new ArrayList(childrenTopics.size());
     for (int i=0; i < childrenTopics.size(); i++) {
       TopicIF child = (TopicIF)childrenTopics.get(i);
-      if (headingsTopics.contains(child))
+      if (headingsTopics.contains(child)) {
         children.add(buildHeading(child));
-      else
+      } else {
         children.add(buildItem(child));
+      }
     }
     return children;    
   }

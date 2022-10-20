@@ -103,8 +103,9 @@ public class NoNames {
         noname = !bn.getScope().isEmpty();
       }
 
-      if (noname)
+      if (noname) {
         retur.add(topic);
+      }
     }
     return retur;
   }
@@ -123,8 +124,9 @@ public class NoNames {
         }
       }
     }
-    if (id == null)
+    if (id == null) {
       id = "id" + topic.getObjectId();
+    }
     return id;
   }    
 

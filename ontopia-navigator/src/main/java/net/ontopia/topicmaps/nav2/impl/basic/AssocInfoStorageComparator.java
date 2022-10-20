@@ -46,8 +46,12 @@ public class AssocInfoStorageComparator implements Comparator {
       throw new OntopiaRuntimeException(msg);
     }
 
-    if (value1 == null) return 1;
-    if (value2 == null) return -1;
+    if (value1 == null) {
+      return 1;
+    }
+    if (value2 == null) {
+      return -1;
+    }
     
     return value1.compareToIgnoreCase(value2);
   }

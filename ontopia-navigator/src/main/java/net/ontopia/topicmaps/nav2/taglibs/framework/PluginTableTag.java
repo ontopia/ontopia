@@ -72,8 +72,9 @@ public class PluginTableTag extends TagSupport {
         out.write(pluginIdFor(plugin, plugins, activeIndex));
         out.write("\">");
         html = plugin.generateHTML(contextTag);
-        if (html != null)
+        if (html != null) {
           out.write(html);
+        }
         out.write("</td>");
       }
 
@@ -95,8 +96,9 @@ public class PluginTableTag extends TagSupport {
   private int getActiveIndex(List plugins) {
     for (int i = 0; i < plugins.size(); i++) {
       PluginIF plugin = (PluginIF) plugins.get(i);
-      if (plugin.getId().equals(active))
+      if (plugin.getId().equals(active)) {
         return i;
+      }
     }
     return -1;
   }
@@ -110,8 +112,9 @@ public class PluginTableTag extends TagSupport {
     for (Iterator iter = plugins.iterator(); iter.hasNext();) {
       PluginIF plugin = (PluginIF) iter.next();
       if (!excludePluginId.equals(plugin.getId())
-          && (plugin.getState() == PluginIF.ACTIVATED))
+          && (plugin.getState() == PluginIF.ACTIVATED)) {
         activePlugins.add(plugin);
+      }
     }
     return activePlugins;
   }
@@ -138,8 +141,9 @@ public class PluginTableTag extends TagSupport {
      */
 
     // Special Case
-    if (plugins.size() == 1)
+    if (plugins.size() == 1) {
       return "tab-sole";
+    }
 
     int index = plugins.indexOf(plugin);
     boolean isFirst = index == 0;
@@ -149,29 +153,37 @@ public class PluginTableTag extends TagSupport {
     boolean isActive = active.equals(plugin.getId());
 
     // First Tab
-    if (isFirst)
-      if (isActive)
+    if (isFirst) {
+      if (isActive) {
         return "tab-first-active";
-      else if (isBeforeActive)
+      } else if (isBeforeActive) {
         return "tab-first-beforeactive";
-      else return "tab-first-inactive";
+      } else {
+        return "tab-first-inactive";
+      }
+    }
     
     // Last Tab
-    if (isLast)
-      if (isActive)
+    if (isLast) {
+      if (isActive) {
         return "tab-last-active";
-      else if (isAfterActive)
+      } else if (isAfterActive) {
         return "tab-last-afteractive";
-      else return "tab-last-inactive";      
+      } else {
+        return "tab-last-inactive";
+      }
+    }      
 
     // Middle Tab
-      if (isActive)
+      if (isActive) {
         return "tab-mid-active";
-      else if (isAfterActive)
-        return "tab-mid-afteractive";
-      else if (isBeforeActive)
-        return "tab-mid-beforeactive";
-      else return "tab-mid-inactive";
+    } else if (isAfterActive) {
+      return "tab-mid-afteractive";
+    } else if (isBeforeActive) {
+      return "tab-mid-beforeactive";
+    } else {
+      return "tab-mid-inactive";
+    }
 
   }
 

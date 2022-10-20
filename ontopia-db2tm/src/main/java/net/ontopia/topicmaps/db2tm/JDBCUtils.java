@@ -45,11 +45,15 @@ public class JDBCUtils {
     switch (sql_type) {
     case Types.DATE:
       Date date = rs.getDate(ix);
-      if (date == null) return null;
+      if (date == null) {
+        return null;
+    }
       return df_date.format(date);
     case Types.TIMESTAMP:
       Timestamp timestamp = rs.getTimestamp(ix);
-      if (timestamp == null) return null;
+      if (timestamp == null) {
+        return null;
+    }
       return df_datetime.format(timestamp);
     default:
       return rs.getString(ix);

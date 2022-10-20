@@ -86,7 +86,9 @@ public class CollectionSortedMap<K, V> extends TreeMap<K, Collection<V>> {
       // Remove value
       boolean removed = coll.remove(value);
       // Remove key
-      if (drop_empty && coll.size() == 0) remove(key);
+      if (drop_empty && coll.size() == 0) {
+        remove(key);
+      }
       
       return removed;
     }

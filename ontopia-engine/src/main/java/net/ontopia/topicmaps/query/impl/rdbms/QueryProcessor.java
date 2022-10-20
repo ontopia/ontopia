@@ -152,10 +152,10 @@ public class QueryProcessor implements QueryProcessorIF {
     throws InvalidQueryException {
 
     TologQuery tquery;
-    if (context == null)
+    if (context == null) {
       // there is no context, so we just use the default parser
       tquery = parser.parseQuery(query);
-    else {
+    } else {
       // there is a context, so we have to use a new parser for this
       TologParser localparser = new TologParser((ParseContextIF) context,
                                                 bprocessor.getOptions());

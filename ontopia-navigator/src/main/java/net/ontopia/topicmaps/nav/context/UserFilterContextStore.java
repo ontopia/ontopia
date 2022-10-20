@@ -144,31 +144,35 @@ public class UserFilterContextStore {
   // -------------------------------------------------------------
   
   public Collection getScopeTopicNames(TopicMapIF topicmap) {
-    if (scope_baseNames.get(topicmap) != null)
+    if (scope_baseNames.get(topicmap) != null) {
       return (Collection) scope_baseNames.get(topicmap);
-    else
+    } else {
       return Collections.EMPTY_LIST;
+    }
   }
   
   public Collection getScopeVariantNames(TopicMapIF topicmap) {
-    if (scope_variantNames.get(topicmap) != null)
+    if (scope_variantNames.get(topicmap) != null) {
       return (Collection) scope_variantNames.get(topicmap);
-    else
+    } else {
       return Collections.EMPTY_LIST;
+    }
   }
   
   public Collection getScopeOccurrences(TopicMapIF topicmap) {
-    if (scope_occurrences.get(topicmap) != null)
+    if (scope_occurrences.get(topicmap) != null) {
       return (Collection) scope_occurrences.get(topicmap);
-    else
+    } else {
       return Collections.EMPTY_LIST;
+    }
   }
   
   public Collection getScopeAssociations(TopicMapIF topicmap) {
-    if (scope_associations.get(topicmap) != null)
+    if (scope_associations.get(topicmap) != null) {
       return (Collection) scope_associations.get(topicmap);
-    else
+    } else {
       return Collections.EMPTY_LIST;
+    }
   }
   
 }

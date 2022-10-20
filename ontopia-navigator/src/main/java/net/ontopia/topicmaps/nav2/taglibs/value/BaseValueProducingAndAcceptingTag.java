@@ -52,10 +52,11 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
   @Override
   public int doStartTag() throws JspTagException {
     // ignore body if variable name is set
-    if (variableName != null)
+    if (variableName != null) {
       return SKIP_BODY;
-    else
+    } else {
       return EVAL_BODY_INCLUDE;
+    }
   }
 
   /**
@@ -79,8 +80,9 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
     Collection resultCollection = process( inputCollection );
 
     // kick result over to the accepting tag
-    if (acceptingTag != null)
+    if (acceptingTag != null) {
       acceptingTag.accept( resultCollection );
+    }
 
     // reset members
     this.contextTag = null;
@@ -97,10 +99,11 @@ public abstract class BaseValueProducingAndAcceptingTag extends BaseValueProduci
   protected Collection getInputCollection(ContextManagerIF ctxtMgr)
     throws NavigatorRuntimeException {
     // FIXME: This should perhaps instead depend in variableName != null.
-    if (inputCollection != null)
+    if (inputCollection != null) {
       return inputCollection;
-    else
+    } else {
       return super.getInputCollection(ctxtMgr);
+    }
   }
   
   // -----------------------------------------------------------------

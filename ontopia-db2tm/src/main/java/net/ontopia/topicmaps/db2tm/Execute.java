@@ -102,11 +102,11 @@ public class Execute {
       String tmurl = ohandler.tm;    
       log.debug("Opening topic map {}", tmurl);
       TopicMapIF topicmap;
-      if (tmurl == null || "tm:in-memory:new".equals(tmurl))
+      if (tmurl == null || "tm:in-memory:new".equals(tmurl)) {
         topicmap = new InMemoryTopicMapStore().getTopicMap();
-      else if ("tm:rdbms:new".equals(tmurl))
-        topicmap = new RDBMSTopicMapStore().getTopicMap();      
-      else {
+      } else if ("tm:rdbms:new".equals(tmurl)) {
+        topicmap = new RDBMSTopicMapStore().getTopicMap();
+      } else {
         TopicMapReaderIF reader = ImportExportUtils.getReader(tmurl);
         topicmap = reader.read();
       }
@@ -115,8 +115,9 @@ public class Execute {
       // base locator
       String outfile = ohandler.out;
       LocatorIF baseloc = (outfile == null ? store.getBaseAddress() : new URILocator(new File(outfile)));
-      if (baseloc == null && tmurl != null)
+      if (baseloc == null && tmurl != null) {
         baseloc = (ohandler.baseuri == null ? new URILocator(tmurl) : new URILocator(ohandler.baseuri));
+      }
 
       // figure out which relations to actually process
       Collection<String> relations = null;
@@ -130,15 +131,16 @@ public class Execute {
       
       try {
         // Process data sources in mapping
-        if ("add".equals(operation))
+        if ("add".equals(operation)) {
           Processor.addRelations(mapping, relations, topicmap, baseloc);
-        else if ("sync".equals(operation)) {
+        } else if ("sync".equals(operation)) {
           boolean rescan = ohandler.forceRescan != null && Boolean.valueOf(ohandler.forceRescan).booleanValue();
           Processor.synchronizeRelations(mapping, relations, topicmap, baseloc, rescan);
-        } else if ("remove".equals(operation))
+        } else if ("remove".equals(operation)) {
           Processor.removeRelations(mapping, relations, topicmap, baseloc);
-        else
+        } else {
           throw new UnsupportedOperationException("Unsupported operation: " + operation);
+        }
 
         // export topicmap
         if (outfile != null) {
@@ -157,15 +159,18 @@ public class Execute {
         log.debug("Transaction aborted.");
         throw t;
       } finally {
-        if (store.isOpen()) store.close();
+        if (store.isOpen()) {
+          store.close();
+        }
       }
       
     } catch (Exception e) {
       Throwable cause = e.getCause();
-      if (cause instanceof DB2TMException)
+      if (cause instanceof DB2TMException) {
         System.err.println("Error: " + e.getMessage());
-      else
+      } else {
         throw e;
+      }
     }
   }
   
@@ -197,11 +202,17 @@ public class Execute {
     private String forceRescan;
     @Override
     public void processOption(char option, String value) {
-      if (option == 't') tm = value;
-      else if (option == 'b') baseuri = value;
-      else if (option == 'o') out = value;
-      else if (option == 'r') relations = value;
-      else if (option == 'f') forceRescan = value;
+      if (option == 't') {
+        tm = value;
+      } else if (option == 'b') {
+        baseuri = value;
+      } else if (option == 'o') {
+        out = value;
+      } else if (option == 'r') {
+        relations = value;
+      } else if (option == 'f') {
+        forceRescan = value;
+      }
     }
   }
 

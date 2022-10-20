@@ -109,12 +109,14 @@ public class ContextTag extends TagSupport
     pcontext = pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                         PageContext.REQUEST_SCOPE);
     pontopia = pageContext.getAttribute("ontopia", PageContext.REQUEST_SCOPE);
-    if (pontopia == null)
+    if (pontopia == null) {
       pontopia = pageContext.getAttribute("oks", PageContext.REQUEST_SCOPE);
+    }
       
     pontopiacontext = pageContext.getAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
-    if (pontopiacontext == null)
+    if (pontopiacontext == null) {
       pontopia = pageContext.getAttribute("okscontext", PageContext.REQUEST_SCOPE);
+    }
 
     // set this instance to page context, so normal JSPs can access information
     pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, this,
@@ -126,8 +128,9 @@ public class ContextTag extends TagSupport
     ServletRequest request = pageContext.getRequest();
     String charenc = navApp.getConfiguration().getProperty("defaultCharacterEncoding");
     try {
-      if (charenc != null && !charenc.equals(""))
+      if (charenc != null && !charenc.equals("")) {
         JSPEngineWrapper.setRequestEncoding(request, charenc);
+      }
     } catch (java.io.UnsupportedEncodingException e) {
       throw new net.ontopia.utils.OntopiaRuntimeException(e);
     }
@@ -136,24 +139,27 @@ public class ContextTag extends TagSupport
     if (attrTopicmapID != null) {
       topicmapID = attrTopicmapID;
     } else {
-      if (tmParamName != null)
+      if (tmParamName != null) {
         // get the value from request parameter
         topicmapID = request.getParameter(tmParamName);
-      else
+      } else {
         topicmapID = null;
+      }
     }
     // get topicmap id from request attribute if not specified at this point
-    if (topicmapID == null)
+    if (topicmapID == null) {
       topicmapID = (String)request.getAttribute(ContextTag.TOPICMAPID_REQUEST_ATTRIBUTE);
+    }
     
     // --- Set value(s) of object ID
     if (objParamName != null) {
       // get value(s) from request parameter
       objectIDs = request.getParameterValues(objParamName);
-      if (objectIDs == null)
-        throw new NavigatorRuntimeException("Object ID is not specified " 
-                + "by parameter '" + objParamName 
+      if (objectIDs == null) {
+        throw new NavigatorRuntimeException("Object ID is not specified "
+                + "by parameter '" + objParamName
                 + "', but needed to process this page.");
+      }
     } else {
       objectIDs = null;
     }
@@ -162,10 +168,11 @@ public class ContextTag extends TagSupport
     topicmap = null;
     if (topicmapID != null) {
       topicmap = navApp.getTopicMapById(topicmapID, readonly);
-      if (topicmap == null)
+      if (topicmap == null) {
         throw new NavigatorRuntimeException("Topicmap with ID '" + topicmapID +
                                             "' could not be loaded, " +
                                             "maybe wrong topicmap ID.");
+      }
     }
     
     // Make the ontopia variables available to the PageContext and hence to JSTL.
@@ -181,27 +188,31 @@ public class ContextTag extends TagSupport
     // --- try to retrieve topic object(s) belonging to object ID(s)
     if (topicmap != null) {
 
-      if (objectIDs == null)
+      if (objectIDs == null) {
         tmObjects = Collections.EMPTY_LIST;
-      else {
+      } else {
         tmObjects = new ArrayList(objectIDs.length);
         for (int i = 0; i < objectIDs.length; i++) {
           TMObjectIF tmObject = NavigatorUtils.stringID2Object(topicmap, objectIDs[i]);
-          if (tmObject == null)
+          if (tmObject == null) {
             throw new NonexistentObjectException(objectIDs[i], topicmapID);
+          }
           tmObjects.add(tmObject);
         } // for
         contextManager.setDefaultValue(tmObjects);
-        if (varObjName != null)
+        if (varObjName != null) {
           contextManager.setValue(varObjName, tmObjects);
+        }
       }
 
       // --- setup topicmap object 
-      if (objParamName == null) 
+      if (objParamName == null) { 
         // set default value to this topicmap object
         contextManager.setDefaultValue(topicmap);
-      if (varTMName != null)
+      }
+      if (varTMName != null) {
         contextManager.setValue(varTMName, topicmap);
+      }
 
       try {
         declarationContext = QueryUtils.parseDeclarations(topicmap, "");
@@ -232,12 +243,13 @@ public class ContextTag extends TagSupport
 
     // put back parent context tag and ontopia attribute
     // NOTE: null values to setAttribute not allowed! bug #1551
-    if (pcontext != null)
+    if (pcontext != null) {
       pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, pcontext,
                                PageContext.REQUEST_SCOPE);
-    else
+    } else {
       pageContext.removeAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                   PageContext.REQUEST_SCOPE);
+    }
     if (pontopia != null) {
       pageContext.setAttribute("ontopia", pontopia, PageContext.REQUEST_SCOPE);
       pageContext.setAttribute("oks", pontopia, PageContext.REQUEST_SCOPE);
@@ -421,9 +433,10 @@ public class ContextTag extends TagSupport
   
   @Override
   public QueryProcessorIF getQueryProcessor() {
-    if (queryProcessor == null)
+    if (queryProcessor == null) {
       // construct new query processor instance
       queryProcessor = QueryUtils.getQueryProcessor(topicmap);
+    }
 
     return queryProcessor;
   }
@@ -462,12 +475,13 @@ public class ContextTag extends TagSupport
     }
 
     // put back parent context tag and ontopia attribute
-    if (pcontext != null)
+    if (pcontext != null) {
       pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, pcontext,
                                PageContext.REQUEST_SCOPE);
-    else
+    } else {
       pageContext.removeAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                   PageContext.REQUEST_SCOPE);
+    }
 
     if (pontopia != null) {
       pageContext.setAttribute("ontopia", pontopia, PageContext.REQUEST_SCOPE);

@@ -93,8 +93,9 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
 
     // Set base address on in-memory store
     if ((store instanceof AbstractTopicMapStore)
-        && store.getBaseAddress() == null)
+        && store.getBaseAddress() == null) {
       ((AbstractTopicMapStore) store).setBaseAddress(getBaseAddress());
+    }
 
     try (Reader reader = makeReader((String) null, new JTMEncodingSniffer())) {
       JTMStreamingParser parser = new JTMStreamingParser(topicmap);

@@ -73,13 +73,15 @@ public class DuplicateSuppressionUtils {
     while (atypes.hasNext()) {
       TopicIF atype = atypes.next();
       assocs = cindex.getAssociations(atype);
-      if (!assocs.isEmpty())
+      if (!assocs.isEmpty()) {
         removeDuplicateAssociations(assocs);
+      }
     }
     // remove duplicate untyped associations
     assocs = cindex.getAssociations(null);
-    if (!assocs.isEmpty())
+    if (!assocs.isEmpty()) {
       removeDuplicateAssociations(assocs);
+    }
   }
 
   private static void prefetchTopics(TopicMapIF topicmap, Collection<TopicIF> batch) {
@@ -165,8 +167,9 @@ public class DuplicateSuppressionUtils {
           MergeUtils.mergeInto(duplicate, basename);
           basename = duplicate; // do this so that we can remove duplicate variants later
         }
-      } else
+      } else {
         map.put(key, basename);
+      }
 
       removeDuplicates(basename);
     }
@@ -184,10 +187,12 @@ public class DuplicateSuppressionUtils {
 
       OccurrenceIF duplicate = map.get(key);
       if (duplicate != null) {
-        if (!duplicate.equals(occ))
+        if (!duplicate.equals(occ)) {
           MergeUtils.mergeInto(duplicate, occ);
-      } else
+        }
+      } else {
         map.put(key, occ);
+      }
     }
   }
 
@@ -195,7 +200,9 @@ public class DuplicateSuppressionUtils {
    * INTERNAL: do not call this method.
    */
   public static void removeDuplicateAssociations(Collection<AssociationIF> assocs) {
-    if (assocs.isEmpty()) return;
+    if (assocs.isEmpty()) {
+      return;
+    }
     
     Map<String, AssociationIF> map = new HashMap<String, AssociationIF>();
     int batchSize = 50;
@@ -221,10 +228,12 @@ public class DuplicateSuppressionUtils {
         
         AssociationIF duplicate = map.get(key);
         if (duplicate != null) {
-          if (!duplicate.equals(assoc))
+          if (!duplicate.equals(assoc)) {
             MergeUtils.mergeInto(duplicate, assoc);
-        } else
+          }
+        } else {
           map.put(key, assoc);
+        }
       }
     }
   }
@@ -240,10 +249,11 @@ public class DuplicateSuppressionUtils {
       String key = KeyGenerator.makeVariantKey(variant);
 
       VariantNameIF duplicate = map.get(key);
-      if (duplicate != null)
+      if (duplicate != null) {
         MergeUtils.mergeInto(duplicate, variant);
-      else
+      } else {
         map.put(key, variant);
+      }
     }
   }
 
@@ -257,10 +267,11 @@ public class DuplicateSuppressionUtils {
       AssociationRoleIF role = it.next();
       String key = KeyGenerator.makeAssociationRoleKey(role);
 
-      if (map.get(key) != null)
+      if (map.get(key) != null) {
         MergeUtils.mergeInto((AssociationRoleIF) map.get(key), role);
-      else
+      } else {
         map.put(key, role);
+      }
     }
   }
 
@@ -276,15 +287,18 @@ public class DuplicateSuppressionUtils {
     Iterator<AssociationRoleIF> it = new ArrayList<AssociationRoleIF>(topic.getRoles()).iterator();
     while (it.hasNext()) {
       AssociationIF assoc = it.next().getAssociation();
-      if (assoc == null) continue;
+      if (assoc == null) {
+        continue;
+      }
 
       String key = KeyGenerator.makeAssociationKey(assoc);
       AssociationIF existing = map.get(key);
       
       // For associations where the same topic plays more than one
       // role, the associations are the same, and this is not a duplicate. 
-      if (assoc.equals(existing))
+      if (assoc.equals(existing)) {
         continue;
+      }
 
       if (existing != null) {
         if (existing.getTopicMap() != null) {
@@ -309,7 +323,9 @@ public class DuplicateSuppressionUtils {
   private static void copySourceLocators(TMObjectIF target, TMObjectIF source) {
 
     Collection<LocatorIF> srclocs = source.getItemIdentifiers();
-    if (srclocs.isEmpty()) return;
+    if (srclocs.isEmpty()) {
+      return;
+    }
 
     LocatorIF[] list = srclocs.toArray(new LocatorIF[srclocs.size()]);
 

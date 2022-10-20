@@ -74,7 +74,9 @@ public class NormalizeWhitespaceTag extends BodyTagSupport {
           break;
         default:
           //if (previousWasWS && !(previousWasGT && c == '<')) w.write(' '); // dangerous
-          if (previousWasWS) w.write(' ');
+          if (previousWasWS) {
+            w.write(' ');
+        }
           previousWasWS = false;
           w.write(c);
         }

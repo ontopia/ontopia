@@ -71,8 +71,12 @@ public class TMAssociationNode extends TMAbstractNode
       TopicMapIF tm = association.getTopicMap();
       TopicIF shortName = (tm == null ? null : tm.getTopicBySubjectIdentifier(VizUtils
           .makeLocator(SHORT_NAME)));
-      if (shortName != null) scope.add(shortName);
-      if (scopingTopic != null) scope.add(scopingTopic);
+      if (shortName != null) {
+        scope.add(shortName);
+      }
+      if (scopingTopic != null) {
+        scope.add(scopingTopic);
+      }
 
       Collection bnames = association.getType().getTopicNames();
       int nsize = bnames.size();
@@ -98,8 +102,9 @@ public class TMAssociationNode extends TMAbstractNode
              first = false;
            }
          }
-         if (!first)
+         if (!first) {
            names += ")";
+         }
          return main + names;
        }
       }
@@ -122,7 +127,9 @@ public class TMAssociationNode extends TMAbstractNode
   protected void drawMissingEdgesIndicator(Graphics g, TGPanel tgPanel) {
     int hiddenEdgeCount = roleCount - visibleEdgeCount();
 
-    if (hiddenEdgeCount <= 0) return;
+    if (hiddenEdgeCount <= 0) {
+      return;
+    }
 
     int ix = (int) drawx;
     int iy = (int) drawy;
@@ -180,8 +187,9 @@ public class TMAssociationNode extends TMAbstractNode
     for (Iterator iter = this.getEdges(); iter.hasNext();) {
       TMRoleEdge element = (TMRoleEdge) iter.next();
       Node target = element.getOtherEndpt(this);
-      if (!target.equals(find))
+      if (!target.equals(find)) {
         targets.add(target);
+      }
     }
     return targets;
   }
@@ -193,8 +201,9 @@ public class TMAssociationNode extends TMAbstractNode
 
   @Override
   public int getWidth() {
-    if (icon == null)
+    if (icon == null) {
       return this.lineWeight * 2;
+    }
     return icon.getIconWidth();
   }
 
@@ -224,9 +233,10 @@ public class TMAssociationNode extends TMAbstractNode
     super.paint(g, tgPanel);
     this.drawMissingEdgesIndicator(g, tgPanel);
 
-    if (icon != null)
+    if (icon != null) {
       icon.paintIcon(tgPanel, g, (int) drawx - icon.getIconWidth() / 2,
           (int) drawy - icon.getIconHeight() / 2);
+    }
   }
 
   @Override
@@ -246,8 +256,9 @@ public class TMAssociationNode extends TMAbstractNode
    */
   @Override
   public void paintLast(Graphics g) {
-    if (underMouse)
+    if (underMouse) {
       this.paintToolTip(g);
+    }
   }
 
   private void paintToolTip(Graphics g) {

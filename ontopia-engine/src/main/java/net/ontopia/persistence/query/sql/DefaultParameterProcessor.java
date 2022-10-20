@@ -61,8 +61,9 @@ public class DefaultParameterProcessor implements ParameterProcessorIF {
 
   @Override
   public ResultSet executeQuery(Connection conn, String sql, Map params) throws SQLException {
-    if (param_names == null)
+    if (param_names == null) {
       throw new OntopiaRuntimeException("Cannot use named parameters when query not defined with parameter names.");
+    }
     // Map parameters into parameter array
     Object[] _params = new Object[param_names.length];
     for (int i=0; i < _params.length; i++) {
@@ -75,10 +76,14 @@ public class DefaultParameterProcessor implements ParameterProcessorIF {
   @Override
   public ResultSet executeQuery(Connection conn, String sql, Object[] params) throws SQLException {
     
-    if (log.isDebugEnabled()) log.debug("Executing: " + sql);    
+    if (log.isDebugEnabled()) {
+      log.debug("Executing: " + sql);
+    }    
     // FIXME: Should we keep a reference to the prepared statement?
     PreparedStatement stm = conn.prepareStatement(sql);
-    if (fetchSize > 0) stm.setFetchSize(fetchSize);
+    if (fetchSize > 0) {
+      stm.setFetchSize(fetchSize);
+    }
 
     // Bind query parameters
     int offset = 1;

@@ -84,7 +84,9 @@ public class Chew {
     private int terms = 30;
     @Override
     public void processOption(char option, String value) {
-      if (option == 't') terms = Integer.valueOf(value).intValue();
+      if (option == 't') {
+        terms = Integer.valueOf(value).intValue();
+      }
     }
   }
   

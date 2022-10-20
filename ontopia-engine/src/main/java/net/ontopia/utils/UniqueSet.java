@@ -138,7 +138,9 @@ public class UniqueSet<E> extends CompactHashSet<E> {
    * another object, but one that is considered to be equal.
    */
   protected E lookup(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
     
     int hash = o.hashCode();
     int index = (hash & 0x7FFFFFFF) % objects.length;
@@ -151,8 +153,9 @@ public class UniqueSet<E> extends CompactHashSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     return objects[index];
@@ -169,37 +172,58 @@ public class UniqueSet<E> extends CompactHashSet<E> {
     //!   // decrement reference count
     //!   set.refcount--;
     //! }
-    if (!contains((E)set))
+    if (!contains((E)set)) {
       throw new IllegalArgumentException("Set " + set + " is not registered with this pool.");
+    }
     set.refcount--;
-    if (set.refcount == 0) super.remove((E)set);
+    if (set.refcount == 0) {
+      super.remove((E)set);
+    }
     //! if (set.refcount == 0) System.out.println("DEREF: " + set);
   }
   
   protected boolean equalsAdd(UniqueSet<E> other, Object o) {
-    if (other.elements+1 != elements || !contains((E)o)) return false;
+    if (other.elements+1 != elements || !contains((E)o)) {
+      return false;
+    }
     for (int i=0; i < other.objects.length; i++) {
-      if (other.objects[i] == null || other.objects[i] == deletedObject) continue;
-      if (!contains((E)other.objects[i])) return false;
+      if (other.objects[i] == null || other.objects[i] == deletedObject) {
+        continue;
+      }
+      if (!contains((E)other.objects[i])) {
+        return false;
+      }
     }
     return true;
   }
 
   protected boolean equalsRemove(UniqueSet<E> other, Object o) {
-    if (other.elements-1 != elements || contains((E)o)) return false;
+    if (other.elements-1 != elements || contains((E)o)) {
+      return false;
+    }
     for (int i=0; i < other.objects.length; i++) {
-      if (other.objects[i] == null || other.objects[i] == deletedObject) continue;
-      if (!contains((E)other.objects[i]) && !other.objects[i].equals(o)) return false;
+      if (other.objects[i] == null || other.objects[i] == deletedObject) {
+        continue;
+      }
+      if (!contains((E)other.objects[i]) && !other.objects[i].equals(o)) {
+        return false;
+      }
     }
     return true;
   }
   
   public UniqueSet<E> add(UniqueSet<E> set, Object o, boolean dereference) {
-    if (o == null) o = nullObject;
-    if (set.contains((E)o)) return set;
+    if (o == null) {
+      o = nullObject;
+    }
+    if (set.contains((E)o)) {
+      return set;
+    }
     
     // decrement reference count
-    if (dereference) dereference(set);
+    if (dereference) {
+      dereference(set);
+    }
     
     int hash = set.hashCode() + o.hashCode();
     int index = (hash & 0x7FFFFFFF) % objects.length;
@@ -212,8 +236,9 @@ public class UniqueSet<E> extends CompactHashSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     if (objects[index] == null || objects[index] == deletedObject) { // wasn't present already
@@ -234,11 +259,17 @@ public class UniqueSet<E> extends CompactHashSet<E> {
 
   @SuppressWarnings("unchecked")
   public UniqueSet<E> remove(UniqueSet<E> set, Object o, boolean dereference) {
-    if (o == null) o = nullObject;
-    if (!set.contains((E)o)) return set;
+    if (o == null) {
+      o = nullObject;
+    }
+    if (!set.contains((E)o)) {
+      return set;
+    }
     
     // decrement reference count
-    if (dereference) dereference(set);
+    if (dereference) {
+      dereference(set);
+    }
     
     int hash = set.hashCode() - o.hashCode();
     int index = (hash & 0x7FFFFFFF) % objects.length;
@@ -251,8 +282,9 @@ public class UniqueSet<E> extends CompactHashSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     if (objects[index] == null || objects[index] == deletedObject) { // wasn't present already

@@ -186,18 +186,21 @@ public class FakePageContext extends PageContext {
   @Override
   public Object findAttribute(String name) {
     Object o = attrs.get(name);
-    if (o != null)
+    if (o != null) {
       return o;
+    }
     
     o = getRequest().getAttribute(name);
-    if (o != null)
+    if (o != null) {
       return o;
+    }
     
     HttpSession session = getSession();
     if (session != null) {
       o = session.getAttribute(name);
-      if (o != null)
+      if (o != null) {
         return o;
+      }
     }
     
     return getServletContext().getAttribute(name);

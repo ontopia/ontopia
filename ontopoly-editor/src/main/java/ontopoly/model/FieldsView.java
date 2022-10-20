@@ -44,8 +44,9 @@ public class FieldsView extends Topic {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof FieldsView))
+    if (!(obj instanceof FieldsView)) {
       return false;
+    }
 
     FieldsView other = (FieldsView) obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -53,10 +54,11 @@ public class FieldsView extends Topic {
 
   public boolean isEmbeddedView() {
     // NOTE: value is cached
-    if (isEmbeddedView == 0)
+    if (isEmbeddedView == 0) {
       return false;
-    else if (isEmbeddedView == 1)
+    } else if (isEmbeddedView == 1) {
       return true;
+    }
     
     // view is embedded is part of on:is-embedded-view(x : on:fields-view)
     TopicIF associationType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_IS_EMBEDDED_VIEW);    

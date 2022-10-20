@@ -81,7 +81,9 @@ public class Utils {
           break;
         }
       }
-      if (!relationMapped) missingRelations.add(relation);
+      if (!relationMapped) {
+        missingRelations.add(relation);
+      }
     }
     // complain if found mappings without relations
     int size = missingRelations.size();
@@ -106,8 +108,9 @@ public class Utils {
   
   protected static TopicIF getTopic(String id, Context ctx) {
     // Note: null values or empty strings are considered dead
-    if (isValueEmpty(id))
+    if (isValueEmpty(id)) {
       return null;
+    }
 
     if (id.charAt(0) == '#') {
       String entity_id = id.substring(1);
@@ -124,9 +127,10 @@ public class Utils {
       // prefix reference
       String prefix_id = id.substring(0, cix);
       Prefix prefix = ctx.getMapping().getPrefix(prefix_id);
-      if (prefix == null)
+      if (prefix == null) {
         throw new DB2TMConfigException("Unknown prefix: '" + prefix_id +
                                        "' (value='" + id + "')");
+      }
       String relloc = prefix.getLocator() + id.substring(cix + 1);
       if (ctx.getBaseLocator() == null) {
         throw new DB2TMException("Cannot resolve locator '" + relloc + "', missing a base locator");
@@ -141,18 +145,21 @@ public class Utils {
     switch (loctype) {
     case Prefix.TYPE_SUBJECT_IDENTIFIER:
       TopicIF topic = tm.getTopicBySubjectIdentifier(loc);
-      if (topic != null)
+      if (topic != null) {
         return topic;
+    }
       break;
     case Prefix.TYPE_ITEM_IDENTIFIER:
       TMObjectIF tmobject = tm.getObjectByItemIdentifier(loc);
-      if (tmobject != null)
+      if (tmobject != null) {
         return (TopicIF) tmobject;
+    }
       break;
     case Prefix.TYPE_SUBJECT_LOCATOR:
       topic = tm.getTopicBySubjectLocator(loc);
-      if (topic != null)
+      if (topic != null) {
         return topic;
+    }
       break;
     }
 
@@ -188,7 +195,9 @@ public class Utils {
   protected static LocatorIF getLocator(Relation relation, Entity entity, Field field,
       String[] tuple, Context ctx) {
     String value = getValue(relation, entity, field, tuple, ctx);
-    if (isValueEmpty(value)) return null;
+    if (isValueEmpty(value)) {
+      return null;
+    }
     if (ctx.getBaseLocator() == null) {
       throw new DB2TMException("Cannot resolve locator '" + value + "', missing a base locator");
     }
@@ -201,9 +210,10 @@ public class Utils {
       // prefix reference
       String prefix_id = value.substring(0, cix);
       Prefix prefix = ctx.getMapping().getPrefix(prefix_id);
-      if (prefix == null)
+      if (prefix == null) {
         throw new DB2TMConfigException("Unknown prefix: '" + prefix_id +
                                        "' (value='" + value + "')");      
+      }      
       return prefix.getLocator() + value.substring(cix + 1);
     } else {
       throw new DB2TMConfigException("Illegal prefixed value: '" + value + "'");

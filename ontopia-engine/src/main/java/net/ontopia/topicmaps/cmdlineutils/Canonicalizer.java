@@ -125,8 +125,9 @@ public class Canonicalizer {
     private boolean readall = false;
     @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
-      if (option == 'a')
+      if (option == 'a') {
         readall = true;
+      }
     }
   }
   

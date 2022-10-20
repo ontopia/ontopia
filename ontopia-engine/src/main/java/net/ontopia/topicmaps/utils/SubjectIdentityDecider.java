@@ -65,22 +65,25 @@ public class SubjectIdentityDecider<T extends TMObjectIF> implements Predicate<T
   public boolean test(T object) {
     if (object instanceof TopicIF) {
       TopicIF topic = (TopicIF) object;
-      if (topic.getSubjectIdentifiers().contains(subject_identifier))
+      if (topic.getSubjectIdentifiers().contains(subject_identifier)) {
         return true;
+      }
     }
       
     if (object instanceof TypedIF) {
       TopicIF topic = ((TypedIF) object).getType();
-      if (topic == null)
+      if (topic == null) {
         return false;
+      }
       return topic.getSubjectIdentifiers().contains(subject_identifier);
       
     } else if (object instanceof TopicIF) {
       Iterator<TopicIF> it = ((TopicIF) object).getTypes().iterator();
       while (it.hasNext()) {
         TopicIF topic = it.next();
-        if (topic.getSubjectIdentifiers().contains(subject_identifier))
+        if (topic.getSubjectIdentifiers().contains(subject_identifier)) {
           return true;
+        }
       }
     } 
 

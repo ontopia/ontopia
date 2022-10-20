@@ -56,8 +56,9 @@ public class IgnoreTopicMapDTDEntityResolver extends ConfigurableEntityResolver 
 
   @Override
   public InputSource resolveEntity (String public_id, String system_id) {
-    if (system_id != null && system_id.endsWith(".dtd"))
+    if (system_id != null && system_id.endsWith(".dtd")) {
       return factory.createInputSource();
+    }
     return super.resolveEntity(public_id, system_id);
   }
   

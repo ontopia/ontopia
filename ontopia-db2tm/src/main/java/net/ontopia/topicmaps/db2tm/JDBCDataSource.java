@@ -111,17 +111,21 @@ public class JDBCDataSource implements DataSourceIF {
         String table_name = rs.getString(3);
 
         Relation relation = null;
-        if (schema_name != null)
+        if (schema_name != null) {
           relation = mapping.getRelation(schema_name + "." + table_name);
-        if (relation == null)
+        }
+        if (relation == null) {
           relation = mapping.getRelation(table_name);
-        if (relation == null)
+        }
+        if (relation == null) {
           relation = mapping.getRelation(table_name.toLowerCase());
+        }
 
-        if (relation != null)
+        if (relation != null) {
           relations.add(relation);
-        else
+        } else {
           log.debug("No mapping found for table '{}' in schema '{}'.", table_name, schema_name);
+        }
       }
       rs.close();
     } catch (Throwable t) {
@@ -133,7 +137,9 @@ public class JDBCDataSource implements DataSourceIF {
   @Override
   public TupleReaderIF getReader(String relation) {
     Relation rel = mapping.getRelation(relation);
-    if (rel == null) throw new DB2TMException("Unknown relation: " + relation);
+    if (rel == null) {
+      throw new DB2TMException("Unknown relation: " + relation);
+    }
     return new TupleReader(rel);
   }
 
@@ -152,11 +158,13 @@ public class JDBCDataSource implements DataSourceIF {
       // get datatypes
       Map<String, Integer> cdatatypes = getColumnTypes(changelog.getTable(), conn);
       Integer ocoltypeobj = cdatatypes.get(changelog.getOrderColumn());
-      if (ocoltypeobj == null) ocoltypeobj = cdatatypes.get(changelog.getOrderColumn().toUpperCase());
+      if (ocoltypeobj == null) {
+        ocoltypeobj = cdatatypes.get(changelog.getOrderColumn().toUpperCase());
+      }
       int ocoltype;
-      if (ocoltypeobj != null)
+      if (ocoltypeobj != null) {
         ocoltype = ocoltypeobj.intValue();
-      else {
+      } else {
         ocoltype = 12; // varchar
         throw new DB2TMException("Couldn't find data type of order column '" +
                  changelog.getOrderColumn() + "'");
@@ -176,11 +184,16 @@ public class JDBCDataSource implements DataSourceIF {
       try {
         pstm = conn.prepareStatement(sql);
         rs = pstm.executeQuery();
-        if(rs.next())
+        if(rs.next()) {
           return JDBCUtils.getHighPrecisionString(rs, 1, ocoltype);
+        }
       } finally {
-        if (rs != null) rs.close();
-        if (pstm != null) pstm.close();
+        if (rs != null) {
+          rs.close();
+        }
+        if (pstm != null) {
+          pstm.close();
+        }
       }
       return null;
     } catch (Throwable t) {
@@ -213,10 +226,11 @@ public class JDBCDataSource implements DataSourceIF {
     Map<String, Integer> datatypes = new HashMap<String, Integer>();
     ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
     try {
-      while(rs.next())
+      while(rs.next()) {
         // 4: COLUMN_NAME
         // 5: DATA_TYPE
         datatypes.put(rs.getString(4), rs.getInt(5));
+      }
     } finally {
       rs.close();
     }
@@ -246,9 +260,10 @@ public class JDBCDataSource implements DataSourceIF {
   private Properties loadProperties() throws IOException {
     File basedir = mapping.getBaseDirectory();
     InputStream is = StreamUtils.getInputStream(basedir, propfile);
-    if (is == null)
+    if (is == null) {
       throw new DB2TMException("Couldn't find properties file '" + propfile +
                                "'");
+    }
     
     Properties props = new Properties();
     props.load(is);
@@ -311,8 +326,9 @@ public class JDBCDataSource implements DataSourceIF {
             result[i] = JDBCUtils.getString(rs, i+1, coltypes[i]);
           }
           return result;
-        } else 
+        } else {
           return null;
+        }
       } catch (Throwable t) {
         throw new OntopiaRuntimeException(t);
       }
@@ -321,8 +337,12 @@ public class JDBCDataSource implements DataSourceIF {
     @Override
     public void close() {
       try {
-        if (rs != null) rs.close();
-        if (stm != null) stm.close();
+        if (rs != null) {
+          rs.close();
+        }
+        if (stm != null) {
+          stm.close();
+        }
       } catch (SQLException t) {
         throw new OntopiaRuntimeException(t);
       }
@@ -348,26 +368,30 @@ public class JDBCDataSource implements DataSourceIF {
       Relation relation = changelog.getRelation();
       String[] cpkey = changelog.getPrimaryKey();
       String[] rpkey = relation.getPrimaryKey();
-      if (cpkey.length == 0 && rpkey.length > 0)
+      if (cpkey.length == 0 && rpkey.length > 0) {
         cpkey = rpkey;
-      else if(rpkey.length == 0 && cpkey.length > 0)
+      } else if(rpkey.length == 0 && cpkey.length > 0) {
         rpkey = cpkey;
-      else if(rpkey.length == 0 && cpkey.length == 0)
+      } else if(rpkey.length == 0 && cpkey.length == 0) {
         throw new DB2TMConfigException("Please specify the primary-key on the relation and/or on the changelog table '" + changelog.getTable() + ".");
+      }
       
       String[] rcols = relation.getColumns();
 
       // use ordering column if no local ordering column
       String localOrderColumn = changelog.getLocalOrderColumn();
-      if (localOrderColumn == null)
+      if (localOrderColumn == null) {
         localOrderColumn = changelog.getOrderColumn();
+      }
       
       StringBuilder sb = new StringBuilder();
       sb.append("select distinct");
       
       // list primary key of main relation
       for (int i=0; i < rpkey.length; i++) {
-        if (i > 0) sb.append(", ");
+        if (i > 0) {
+          sb.append(", ");
+        }
         sb.append(" r.");
         sb.append(rpkey[i]);
       }
@@ -393,10 +417,11 @@ public class JDBCDataSource implements DataSourceIF {
 
       String[] cols = new String[cpkey.length];
       for (int i=0; i < cpkey.length; i++) {
-        if (changelog.isExpressionColumn(cpkey[i]))
+        if (changelog.isExpressionColumn(cpkey[i])) {
           cols[i] = changelog.getColumnExpression(cpkey[i]) + " as " + cpkey[i];
-        else
+        } else {
           cols[i] = " m1." + cpkey[i];
+        }
       }
       sb.append(StringUtils.join(cols, ", "));
 
@@ -422,8 +447,9 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(" r on (");
 
       String[] clauses = new String[cpkey.length];
-      for (int i=0; i < cpkey.length; i++)
+      for (int i=0; i < cpkey.length; i++) {
         clauses[i] = "c." + cpkey[i] + " = r." + rpkey[i];
+      }
 
       sb.append(StringUtils.join(clauses, " and "));
 
@@ -447,7 +473,9 @@ public class JDBCDataSource implements DataSourceIF {
       // order by clause
       sb.append(" order by");
       for (int i=0; i < cpkey.length; i++) {
-        if (i > 0) sb.append(", ");
+        if (i > 0) {
+          sb.append(", ");
+        }
         sb.append(" c.");
         sb.append(cpkey[i]);
       }
@@ -461,8 +489,9 @@ public class JDBCDataSource implements DataSourceIF {
 
         // get hold of column data types
         Map<String, Integer> rdatatypes = getColumnTypes(relation.getName(), conn);
-        if (rdatatypes.isEmpty())
+        if (rdatatypes.isEmpty()) {
           throw new DB2TMInputException("Relation '" + relation.getName() + "' does not exist.");
+      }
         coltypes = new int[rcols.length];
         for (int i=0; i < rcols.length; i++) {
           if (rdatatypes.containsKey(rcols[i])) {
@@ -474,15 +503,18 @@ public class JDBCDataSource implements DataSourceIF {
           }
         }
         Map<String, Integer> cdatatypes = getColumnTypes(changelog.getTable(), conn);
-        if (cdatatypes.isEmpty())
+        if (cdatatypes.isEmpty()) {
           throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
+      }
         Integer oct = cdatatypes.get(changelog.getOrderColumn());
-        if (oct == null)
+        if (oct == null) {
           oct = cdatatypes.get(changelog.getOrderColumn().toUpperCase());
-        if (oct == null)
+      }
+        if (oct == null) {
           throw new DB2TMInputException("Order column '" +
                                         changelog.getOrderColumn() +
                                         "' does not exist");
+      }
         ocoltype = oct.intValue();
         
       // FIXME: consider locking strategy. lock table?
@@ -501,8 +533,9 @@ public class JDBCDataSource implements DataSourceIF {
     
     private String replacePrimaryKey(String col, String[] rpkey, String[] cpkey) {
       for (int i=0; i < rpkey.length; i++) {
-        if (col.equals(rpkey[i]))
+        if (col.equals(rpkey[i])) {
           return "c." + cpkey[i];
+        }
       }
       return "r." + col;
     }
@@ -517,8 +550,9 @@ public class JDBCDataSource implements DataSourceIF {
             result[i-tcix] = JDBCUtils.getString(rs, i+1, coltypes[i-tcix]);
           }
           return result;
-        } else 
+        } else {
           return null;
+        }
       } catch (Throwable t) {
         throw new OntopiaRuntimeException(t);
       }
@@ -529,8 +563,9 @@ public class JDBCDataSource implements DataSourceIF {
       try {
         // if the primary key is null, then obviously the row has been
         // deleted
-        if (rs.getObject(1) == null)
+        if (rs.getObject(1) == null) {
           return ChangeType.DELETE;
+        }
         
         // otherwise it's an update
         return ChangeType.UPDATE;
@@ -551,8 +586,12 @@ public class JDBCDataSource implements DataSourceIF {
     @Override
     public void close() {
       try {
-        if (rs != null) rs.close();
-        if (stm != null) stm.close();
+        if (rs != null) {
+          rs.close();
+        }
+        if (stm != null) {
+          stm.close();
+        }
       } catch (Throwable t) {
         throw new OntopiaRuntimeException(t);
       }

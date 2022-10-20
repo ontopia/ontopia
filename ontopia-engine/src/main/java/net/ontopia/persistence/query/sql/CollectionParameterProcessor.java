@@ -89,8 +89,9 @@ public class CollectionParameterProcessor implements ParameterProcessorIF {
 
   @Override
   public ResultSet executeQuery(Connection conn, String sql, Map params) throws SQLException {
-    if (param_names == null)
+    if (param_names == null) {
       throw new OntopiaRuntimeException("Cannot use named parameters when query not defined with parameter names.");
+    }
     // Map parameters into parameter array
     Object[] _params = new Object[param_names.length];
     for (int i=0; i < _params.length; i++) {
@@ -107,8 +108,9 @@ public class CollectionParameterProcessor implements ParameterProcessorIF {
     String processed_sql = process(sql, params);
 
     // Prepare statement
-    if (log.isDebugEnabled())
-      log.debug("Executing: " + processed_sql);    
+    if (log.isDebugEnabled()) {
+      log.debug("Executing: " + processed_sql);
+    }    
     PreparedStatement stm = conn.prepareStatement(processed_sql);
 
     // Pull out next collection index

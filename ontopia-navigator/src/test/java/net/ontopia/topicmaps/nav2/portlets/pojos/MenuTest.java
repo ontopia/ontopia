@@ -559,8 +559,9 @@ public class MenuTest {
         item3.getTitle().equals("new item"));
 
     // Test Item.moveOneUp
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
       item3.moveOneUp();
+    }
     children = menu.getChildren();
     item0 = (Menu.ChildIF)children.get(0);
     Assert.assertTrue("'new item' should be the first child", 
@@ -580,8 +581,9 @@ public class MenuTest {
         item0.getTitle().equals("new item"));
 
     // Test Item.moveOneDown
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
       item0.moveOneDown();
+    }
     children = menu.getChildren();
     item3 = (Menu.ChildIF)children.get(3);
     Assert.assertTrue("'new item' should be the third and last child", 
@@ -791,8 +793,9 @@ public class MenuTest {
         item3.getTitle().equals("new item"));
 
     // Test Item.moveOneUp
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
       item3.moveOneUp();
+    }
     children = heading1.getChildren();
     item0 = (Menu.ChildIF)children.get(0);
     Assert.assertTrue("'new item' should be the first child", 
@@ -813,8 +816,9 @@ public class MenuTest {
         item0.getTitle().equals("new item"));
 
     // Test Item.moveOneDown
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
       item0.moveOneDown();
+    }
     children = heading1.getChildren();
     item3 = (Menu.ChildIF)children.get(3);
     Assert.assertTrue("'new item' should be the third and last child", 

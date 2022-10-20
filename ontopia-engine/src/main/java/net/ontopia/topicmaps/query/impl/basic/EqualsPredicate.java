@@ -40,14 +40,15 @@ public class EqualsPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
   
   @Override
@@ -57,17 +58,18 @@ public class EqualsPredicate implements BasicPredicateIF {
     int arg1 = matches.getIndex(arguments[0]);
     int arg2 = matches.getIndex(arguments[1]);
 
-    if (matches.bound(arg1) && matches.bound(arg2))
+    if (matches.bound(arg1) && matches.bound(arg2)) {
       return PredicateUtils.filter(matches, arg1, arg2, Object.class,
-                                   Object.class, PredicateUtils.FILTER_EQUALS);
-    else if (matches.bound(arg1) && !matches.bound(arg2))
+              Object.class, PredicateUtils.FILTER_EQUALS);
+    } else if (matches.bound(arg1) && !matches.bound(arg2)) {
       return PredicateUtils.objectToOne(matches, arg1, arg2, Object.class,
-                                        PredicateUtils.EQUAL_TO_EQUAL);
-    else if (!matches.bound(arg1) && matches.bound(arg2))
+              PredicateUtils.EQUAL_TO_EQUAL);
+    } else if (!matches.bound(arg1) && matches.bound(arg2)) {
       return PredicateUtils.objectToOne(matches, arg2, arg1, Object.class,
-                                        PredicateUtils.EQUAL_TO_EQUAL);
-    else
+              PredicateUtils.EQUAL_TO_EQUAL);
+    } else {
       throw new InvalidQueryException("At least one argument to = must be bound");
+    }
   }
   
 }

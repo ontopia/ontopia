@@ -64,13 +64,15 @@ public class TopicPages {
       currentPages = new HashSet<TopicPage>();
       pagesMap.put(mapHandle, currentPages);
       
-      if (tmName != null)
+      if (tmName != null) {
         tmNameMap.put(mapHandle, tmName);
+      }
     }
     currentPages.add(page);
     
-    if (name == null)
+    if (name == null) {
       name = TopicStringifiers.toString(page.getTopic());
+    }
     sourceLocators.addAll(page.getTopic().getItemIdentifiers());
     subjectIndicators.addAll(page.getTopic().getSubjectIdentifiers());
     subjectLocators.addAll(page.getTopic().getSubjectLocators());
@@ -87,19 +89,22 @@ public class TopicPages {
       
       Collection<TopicPage> currentOtherPages = otherPages.getPages(otherMapHandle);
       Collection<TopicPage> currentPages = getPages(otherMapHandle);
-      if (currentPages == null)
+      if (currentPages == null) {
         pagesMap.put(otherMapHandle, new HashSet<TopicPage>(currentOtherPages));
-      else
+      } else {
         currentPages.addAll(currentOtherPages);
+      }
 
       String otherName = otherPages.getTMName(otherMapHandle);
       String currentName = getTMName(otherMapHandle);
-      if (currentName == null && otherName != null)
+      if (currentName == null && otherName != null) {
         tmNameMap.put(otherMapHandle, otherName);
+      }
     }
     
-    if (name == null)
+    if (name == null) {
       name = otherPages.getName();
+    }
     sourceLocators.addAll(otherPages.getItemIdentifiers());
     subjectIndicators.addAll(otherPages.getSubjectIdentifiers());
     subjectLocators.addAll(otherPages.getSubjectLocators());

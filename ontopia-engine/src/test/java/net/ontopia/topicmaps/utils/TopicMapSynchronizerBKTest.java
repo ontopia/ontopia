@@ -231,10 +231,11 @@ public class TopicMapSynchronizerBKTest {
       while (it.hasNext()) {
         Object obj = it.next();
         LocatorIF psi;
-        if (obj instanceof LocatorIF)
+        if (obj instanceof LocatorIF) {
           psi = (LocatorIF) obj;
-        else
+        } else {
           psi = new URILocator((String) obj);
+        }
         this.okpsis.add(psi);
       }
     }
@@ -243,13 +244,16 @@ public class TopicMapSynchronizerBKTest {
     public boolean test(Object object) {
       if (object instanceof TypedIF) {
         TopicIF type = ((TypedIF) object).getType();
-        if (type == null)
+        if (type == null) {
           return false;
+        }
         
         Iterator it = type.getSubjectIdentifiers().iterator();
-        while (it.hasNext())
-          if (okpsis.contains(it.next()))
+        while (it.hasNext()) {
+          if (okpsis.contains(it.next())) {
             return true;
+          }
+        }
       } 
       return false;
     }

@@ -80,8 +80,9 @@ public class TMRAP {
    */
   public Collection query(Collection psis)
     throws IOException, InvalidQueryException {
-    if (psis.isEmpty())
+    if (psis.isEmpty()) {
       return Collections.EMPTY_SET;
+    }
     String psikey = makeKey(psis);
     
     Collection model = new ArrayList();    
@@ -142,9 +143,9 @@ public class TMRAP {
       while (it2.hasNext()) {
         Page page = (Page) it2.next();
         Collection pages;
-        if (map.containsKey(page.getTypeURI()))
+        if (map.containsKey(page.getTypeURI())) {
           pages = (Collection) map.get(page.getTypeURI());
-        else {
+        } else {
           pages = new ArrayList();
           map.put(page.getTypeURI(), pages);
         }
@@ -232,12 +233,14 @@ public class TMRAP {
     }
 
     public String getTypeURI() { // tells us if it's edit-page, view-page ...
-      if (topic.getTypes().isEmpty())
+      if (topic.getTypes().isEmpty()) {
         return null;
+      }
 
       TopicIF type = topic.getTypes().iterator().next();
-      if (type.getSubjectIdentifiers().isEmpty())
+      if (type.getSubjectIdentifiers().isEmpty()) {
         return null;
+      }
 
       LocatorIF psi = type.getSubjectIdentifiers().iterator().next();
       return psi.getAddress();
@@ -261,12 +264,14 @@ public class TMRAP {
     
     @Override
     public Object mapRow(QueryResultIF result, int rowno) {
-      if (server == null && topicmap == null)
+      if (server == null && topicmap == null) {
         return new Server((TopicIF) result.getValue(0));
-      if (server != null && topicmap == null)
+      }
+      if (server != null && topicmap == null) {
         return new TopicMap(server, (TopicIF) result.getValue(0));
-      else
+      } else {
         return new Page(topicmap, (TopicIF) result.getValue(0));
+      }
     }
   }
   
@@ -303,8 +308,9 @@ public class TMRAP {
       String psi = (String) it.next();
       buf.append("identifier=");
       buf.append(StringUtils.replace(psi, "#", "%23"));
-      if (it.hasNext())
+      if (it.hasNext()) {
         buf.append("&");
+      }
     }
     return buf.toString();
   }
@@ -313,8 +319,9 @@ public class TMRAP {
     List uris = new ArrayList(psis);
     Collections.sort(uris);
     StringBuilder sb = new StringBuilder();
-    for (int ix = 0; ix < uris.size(); ix++)
+    for (int ix = 0; ix < uris.size(); ix++) {
       sb.append((String) uris.get(ix));
+    }
     return sb.toString();
   }
 }

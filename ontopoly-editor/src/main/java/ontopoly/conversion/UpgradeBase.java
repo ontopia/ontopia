@@ -116,10 +116,11 @@ public abstract class UpgradeBase {
   protected static TopicIF getTopic(TopicMapIF topicmap, LocatorIF base_on, String ref) {
     LocatorIF loc = base_on.resolveAbsolute(ref);
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);
-    if (topic == null) 
+    if (topic == null) { 
       throw new OntopiaRuntimeException("Cannot find topic with id " + loc.getAddress());
-    else
+    } else {
       return topic;
+    }
   }
 
   protected static void translateAssociations(String atype1, String[] rtypes1,
@@ -133,8 +134,9 @@ public abstract class UpgradeBase {
     sb.append("association($A), type($A, " + atype1 + ")");
     for (int i=0; i < rtypes1.length; i++) {
       sb.append(", association-role($A, $R"+ i + "), type($R" + i + ", " + rtypes1[i] + ")");
-      if (i > 0)
+      if (i > 0) {
         sb.append(", $R" + i + " /= $R" + (i-1));
+      }
       sb.append(", role-player($R" + i + ", $P" +i + ")");
     }
     sb.append(", not(association-role($A, $R" + rtypes1.length + ")");
@@ -159,7 +161,9 @@ public abstract class UpgradeBase {
         }        
       }              
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }    
   }
 
@@ -169,8 +173,9 @@ public abstract class UpgradeBase {
     sb.append("association($A), type($A, " + atype + ")");
     for (int i=0; i < rtypes.length; i++) {
       sb.append(", association-role($A, $R"+ i + "), type($R" + i + ", " + rtypes[i] + ")");
-      if (i > 0)
+      if (i > 0) {
         sb.append(", $R" + i + " /= $R" + (i-1));
+      }
     }
     sb.append(", not(association-role($A, $R" + rtypes.length + ")");
     for (int i=0; i < rtypes.length; i++) {
@@ -186,7 +191,9 @@ public abstract class UpgradeBase {
         a.remove();
       }              
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     } 
   }
 
@@ -202,7 +209,9 @@ public abstract class UpgradeBase {
         }
       }
     } finally {
-      if (qr != null) qr.close();
+      if (qr != null) {
+        qr.close();
+      }
     }    
   }
   
@@ -323,17 +332,19 @@ public abstract class UpgradeBase {
   protected static void removeTopicIfExist(TopicMapIF topicmap, LocatorIF base_on, String ref) {
     LocatorIF loc = base_on.resolveAbsolute(ref);
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);
-    if (topic != null) 
+    if (topic != null) {
       topic.remove();
+    }
   }
   
   protected static void removeTopic(TopicMapIF topicmap, LocatorIF base_on, String ref) {
     LocatorIF loc = base_on.resolveAbsolute(ref);
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);
-    if (topic == null) 
+    if (topic == null) { 
       throw new OntopiaRuntimeException("Cannot find topic with id " + loc.getAddress());
-    else
+    } else {
       topic.remove();
+    }
   }
 
 //  protected static TopicIF getTopic(TopicMapIF topicmap, String ref) {
@@ -486,12 +497,13 @@ public abstract class UpgradeBase {
     TopicMapIF topicmap = topicMap.getTopicMapIF();    
     TopicMapBuilderIF builder = topicmap.getBuilder();
     LocatorIF dt;
-    if ("datatype-string".equals(datatype))
+    if ("datatype-string".equals(datatype)) {
       dt = DataTypes.TYPE_STRING;
-    else if ("datatype-number".equals(datatype))
+    } else if ("datatype-number".equals(datatype)) {
       dt = DataTypes.TYPE_DECIMAL;
-    else
+    } else {
       throw new RuntimeException("Unsupported datatype: " + datatype);
+    }
     return builder.makeOccurrence(topic, getTopic(topicmap, base_on, otype), value, dt);
   }
   

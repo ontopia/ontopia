@@ -158,12 +158,13 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   public RDBMSStorage getStorage() {
     if (storage_local && storage == null) {
       try {
-        if (propfile != null)
+        if (propfile != null) {
           this.storage = new RDBMSStorage(propfile);
-        else if (properties != null)
+        } else if (properties != null) {
           this.storage = new RDBMSStorage(properties);
-        else
+        } else {
           this.storage = new RDBMSStorage();
+        }
       } catch (IOException e) {
         throw new OntopiaRuntimeException(e);
       }
@@ -183,22 +184,24 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   @Override
   public LocatorIF getBaseAddress() {
-    if (base_address != null) 
+    if (base_address != null) { 
       return base_address;
-    else if (readonly)
+    } else if (readonly) {
       return ((ReadOnlyTopicMap)getTopicMap()).getBaseAddress();
-    else
+    } else {
       return ((TopicMap)getTopicMap()).getBaseAddress();
+    }
   }
 
   @Override
   public void setBaseAddress(LocatorIF base_address) {
     this.base_address = null;
     // update persistent field
-    if (readonly)
+    if (readonly) {
       ((ReadOnlyTopicMap)getTopicMap()).setBaseAddress(base_address);
-    else
+    } else {
       ((TopicMap)getTopicMap()).setBaseAddress(base_address);
+    }
   }
 
   /**
@@ -218,7 +221,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
-    if (!isOpen()) open();
+    if (!isOpen()) {
+      open();
+    }
     
     // Create a new transaction if it doesn't exist or it has been
     // deactivated.
@@ -243,11 +248,15 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   @Override
   public void abort() {
-    if (transaction != null) transaction.abort();
+    if (transaction != null) {
+      transaction.abort();
+    }
   }
   
   public void clear() {
-    if (readonly) throw new ReadOnlyException();
+    if (readonly) {
+      throw new ReadOnlyException();
+    }
 
     // Do direct table row deletion here since it is much more efficient.
     try {
@@ -265,14 +274,19 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   
   @Override
   public void delete(boolean force) throws NotRemovableException {
-    if (readonly) throw new ReadOnlyException();
-    if (deleted) return;
+    if (readonly) {
+      throw new ReadOnlyException();
+    }
+    if (deleted) {
+      return;
+    }
 
     // check that parent source allows deleting
     if (reference != null) {
       TopicMapSourceIF source = reference.getSource();
-      if (source != null && !source.supportsDelete())
-        throw new NotRemovableException("Cannot delete topic map as the parent topic map source does not allow deleting.");        
+      if (source != null && !source.supportsDelete()) {
+        throw new NotRemovableException("Cannot delete topic map as the parent topic map source does not allow deleting.");
+      }        
     }
     
     // Get topic map
@@ -280,10 +294,12 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
     if (!force) {
       // If we're not forcing, complain if the topic map contains any data.
-      if (!tm.getTopics().isEmpty())
+      if (!tm.getTopics().isEmpty()) {
         throw new NotRemovableException("Cannot delete topic map when it contains topics.");
-      if (!tm.getAssociations().isEmpty())
+      }
+      if (!tm.getAssociations().isEmpty()) {
         throw new NotRemovableException("Cannot delete topic map when it contains associations.");
+      }
     }
 
     flush();
@@ -314,7 +330,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   @Override
   protected void finalize() {
     // Close store when garbage collected.
-    if (isOpen()) close();
+    if (isOpen()) {
+      close();
+    }
   }
 
   /* -- store pool -- */
@@ -344,13 +362,17 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       }
     } else {
       // physically close store
-      if (!isOpen()) throw new StoreNotOpenException("Store is not open.");
+      if (!isOpen()) {
+        throw new StoreNotOpenException("Store is not open.");
+      }
       
       // reset reference
       reference = null;
 
       // close transaction
-      if (transaction != null) transaction.abort(true);
+      if (transaction != null) {
+        transaction.abort(true);
+      }
       
       // if storage is not shared close it as well
       if (storage_local && storage != null) {
@@ -367,12 +389,15 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   @Override
   public boolean validate() {    
     // if we're closed then not valid
-    if (closed) return false;
+    if (closed) {
+      return false;
+    }
     // delegate to transaction
-    if (transaction != null)
+    if (transaction != null) {
       return ((AbstractTopicMapTransaction)transaction).validate();
-    else
+    } else {
       return true;
+    }
   }
 
   // -- cache statistics
@@ -403,7 +428,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     if (transaction != null) {
       //! RDBMSStorage storage = (RDBMSStorage)transaction.getTransaction().getStorageAccess().getStorage();
       // clear shared caches
-      if (storage != null) storage.clearCache();
+      if (storage != null) {
+        storage.clearCache();
+      }
     }
   }
   
@@ -467,8 +494,12 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     Map<Class<?>, Collection<IdentityIF>> idmap = new HashMap<Class<?>, Collection<IdentityIF>>();
     for (String object_id : object_ids) {
       IdentityIF identity = getIdentityForObjectId(txn, object_id);
-      if (identity == null) continue;
-      if (txn.isObjectLoaded(identity)) continue;
+      if (identity == null) {
+        continue;
+      }
+      if (txn.isObjectLoaded(identity)) {
+        continue;
+      }
 
       Collection<IdentityIF> ids = idmap.get(identity.getType());
       if (ids == null) {
@@ -493,7 +524,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     Map<Class<?>, Collection<IdentityIF>> idmap = new HashMap<Class<?>, Collection<IdentityIF>>();
     for (String object_id : object_ids) {
       IdentityIF identity = getIdentityForObjectId(txn, object_id);
-      if (identity == null) continue;
+      if (identity == null) {
+        continue;
+      }
       Collection<IdentityIF> ids = idmap.get(identity.getType());
       if (ids == null) {
         ids = new ArrayList<IdentityIF>();
@@ -546,7 +579,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     TransactionIF txn = transaction.getTransaction();
 
     int size = objects.size();
-    if (size == 0) return false;
+    if (size == 0) {
+      return false;
+    }
     //! if (size <= 3) return false;
 
     Collection identities = new ArrayList(size);
@@ -556,8 +591,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       if (o != null) {
         // filter out objects by getClass() == types[type]
         IdentityIF identity = o._p_getIdentity();
-        if (types[type].equals(identity.getType()))
+        if (types[type].equals(identity.getType())) {
           identities.add(identity);
+        }
         //! else
         //!   new RuntimeException("X: " + o + " not of expected type " + types[type]).printStackTrace();
       }
@@ -571,7 +607,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     TransactionIF txn = transaction.getTransaction();
 
     int size = objects.size();
-    if (size == 0) return false;
+    if (size == 0) {
+      return false;
+    }
     //! if (size <= 3 && fields.length < 2) return false;
 
     Collection identities = new ArrayList(size);
@@ -581,8 +619,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       PersistentIF o = (PersistentIF)iter.next();
       if (o != null) {
         IdentityIF identity = o._p_getIdentity();
-        if (types[type].equals(identity.getType()))
+        if (types[type].equals(identity.getType())) {
           identities.add(identity);
+        }
         //! else
         //!   new RuntimeException("Y: " + o + " not of expected type " + types[type]).printStackTrace();
       }

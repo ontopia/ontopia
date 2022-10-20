@@ -82,9 +82,10 @@ public class SpyDriver implements Driver {
   public Connection connect(String url, Properties info) 
     throws SQLException {
     String realURL = getRealURL(url);
-    if (realURL == null) 
+    if (realURL == null) { 
       // stop here as this url was not meant for jdbcspy
       return null;
+    }
 
     if (realURL.startsWith("jdbc:postgresql:")) {
       initDriver("org.postgresql.Driver");
@@ -112,7 +113,9 @@ public class SpyDriver implements Driver {
   }
 
   private static void initialize() throws SQLException {
-    if (initialized) return;
+    if (initialized) {
+      return;
+    }
 
     // register driver
     SpyDriver driver = new SpyDriver();

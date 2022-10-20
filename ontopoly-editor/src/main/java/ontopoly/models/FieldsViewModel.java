@@ -36,8 +36,9 @@ public class FieldsViewModel extends LoadableDetachableModel<FieldsView> {
 
   public FieldsViewModel(FieldsView fieldsView) {
     super(fieldsView);
-    if (fieldsView == null)
+    if (fieldsView == null) {
       throw new RuntimeException("fieldsView cannot be null.");
+    }
     if (fieldsView != null) {
       this.topicMapId = fieldsView.getTopicMap().getId();
       this.topicId = fieldsView.getId();
@@ -57,7 +58,9 @@ public class FieldsViewModel extends LoadableDetachableModel<FieldsView> {
   
   @Override
   protected FieldsView load() {
-    if (topicMapId == null) return null;
+    if (topicMapId == null) {
+      return null;
+    }
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     return new FieldsView(topicIf, tm);

@@ -130,15 +130,18 @@ public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
     // Register handlers with parser
     parser.setContentHandler(this);
     ErrorHandler _ehandler = parser.getErrorHandler();
-    if (_ehandler == null || (_ehandler instanceof org.xml.sax.helpers.DefaultHandler))
+    if (_ehandler == null || (_ehandler instanceof org.xml.sax.helpers.DefaultHandler)) {
       parser.setErrorHandler(getDefaultErrorHandler());
+    }
 
     // Get hold of actual error handler
     ehandler = parser.getErrorHandler();
   }
 
   protected String getLocationInfo() {
-    if (locator == null) return "";
+    if (locator == null) {
+      return "";
+    }
     return "(resource '" + locator.getSystemId() + "' line " + locator.getLineNumber() + " col " + locator.getColumnNumber() + ")";
   }
 

@@ -52,11 +52,12 @@ public final class WrappedIdentity implements IdentityIF, Externalizable {
    * INTERNAL: Factory method that wraps the identity in a
    * WrappedIdentity if the identity itself is not a WrappedIdentity.
    */
-  public static final IdentityIF wrap(IdentityIF identity) {
-    if (identity instanceof WrappedIdentity)
+  public static IdentityIF wrap(IdentityIF identity) {
+    if (identity instanceof WrappedIdentity) {
       return identity;
-    else
+    } else {
       return new WrappedIdentity(identity);
+    }
   }
 
   @Override

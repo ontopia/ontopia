@@ -75,7 +75,9 @@ public class FakeBodyContent extends BodyContent {
       } else if (len == 0) {
         return;
       } 
-      if (len >= bufferSize - nextChar) reAllocBuff (len);
+      if (len >= bufferSize - nextChar) {
+        reAllocBuff (len);
+      }
       System.arraycopy(cbuf, off, cb, nextChar, len);
       nextChar+=len;
     }
@@ -89,7 +91,9 @@ public class FakeBodyContent extends BodyContent {
   @Override
   public void write(String s, int off, int len) throws IOException {
     synchronized (lock) {
-      if (len >= bufferSize - nextChar) reAllocBuff(len);    
+      if (len >= bufferSize - nextChar) {
+        reAllocBuff(len);
+      }    
       s.getChars(off, off + len, cb, nextChar);
       nextChar += len;
     }
@@ -139,7 +143,9 @@ public class FakeBodyContent extends BodyContent {
 
   @Override
   public void print(String s) throws IOException {
-    if (s == null) s = "null";
+    if (s == null) {
+      s = "null";
+    }
     write(s);
   }
 

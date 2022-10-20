@@ -73,17 +73,22 @@ public class RequestAttributeStoreServletFilter implements Filter {
     String requestAttribute = getRequestAttribute(request);
     
     TopicMapStoreIF store;
-    if (repositoryId == null)
+    if (repositoryId == null) {
       store = TopicMaps.createStore(topicMapId, readOnly);
-    else
-      store = TopicMaps.createStore(topicMapId, readOnly, repositoryId);      
+    } else {
+      store = TopicMaps.createStore(topicMapId, readOnly, repositoryId);
+    }      
 
     try {
       request.setAttribute(requestAttribute, store);
       chain.doFilter(request, response);
-      if (!readOnly) store.commit();
+      if (!readOnly) {
+        store.commit();
+      }
     } catch (Exception e) {
-      if (!readOnly) store.abort();      
+      if (!readOnly) {
+        store.abort();
+      }      
       log.error("Exception thrown from doFilter.", e);      
     } finally {
       request.removeAttribute(requestAttribute);

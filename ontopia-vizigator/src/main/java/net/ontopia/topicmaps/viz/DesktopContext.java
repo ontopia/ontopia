@@ -71,8 +71,9 @@ public class DesktopContext extends ApplicationContext {
 
   @Override
   public void focusNode(TMAbstractNode aNode) {
-    if (aNode != null)
+    if (aNode != null) {
       getView().focusNode(aNode);
+    }
 
     desktop.resetMapViewMenu();
     desktop.resetClearStartMenu();

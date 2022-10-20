@@ -39,9 +39,10 @@ public class URILocatorTest extends AbstractLocatorTest {
 
   @Override
   protected LocatorIF createLocator(String notation, String address) {
-    if (!NOTATION.equals(notation))
+    if (!NOTATION.equals(notation)) {
       throw new OntopiaRuntimeException("Notation '" + notation +
 					"' unsupported.");
+    }
     try {
       return new URILocator(address);
     } catch (MalformedURLException e) {
@@ -248,8 +249,9 @@ public class URILocatorTest extends AbstractLocatorTest {
   private String getCorrectFileURI(File file) {
     // produce initial string
     String uri = file.getAbsolutePath().replace(File.separatorChar, '/');
-    if (!uri.startsWith("/"))
+    if (!uri.startsWith("/")) {
       uri = "/" + uri;
+    }
     uri = "file:" + uri;
 
     // now, transcode to UTF-8

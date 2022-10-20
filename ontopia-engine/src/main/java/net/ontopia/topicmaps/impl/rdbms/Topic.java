@@ -139,15 +139,19 @@ public class Topic extends TMObject implements TopicIF {
     Objects.requireNonNull(subject_locator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
-    if (tm == null)
+    if (tm == null) {
       throw new ConstraintViolationException("Cannot modify subject locator when topic isn't attached to a topic map.");
+    }
     
     // Check to see if subject is already a subject locator of this topic.
     Collection<LocatorIF> subjects = this.<LocatorIF>loadCollectionField(LF_subjects);
-    if (subjects.contains(subject_locator)) return;
+    if (subjects.contains(subject_locator)) {
+      return;
+    }
     
-    if (!(subject_locator instanceof SubjectLocator))
+    if (!(subject_locator instanceof SubjectLocator)) {
       subject_locator = new SubjectLocator(subject_locator);
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_SUBJECTLOCATOR, subject_locator, null);    
@@ -160,15 +164,19 @@ public class Topic extends TMObject implements TopicIF {
     Objects.requireNonNull(subject_locator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
-    if (tm == null)
+    if (tm == null) {
       throw new ConstraintViolationException("Cannot modify subject locator when topic isn't attached to a topic map.");
+    }
     
     // Check to see if subject locator is a subject locator of this topic.
     Collection<LocatorIF> subjects = this.<LocatorIF>loadCollectionField(LF_subjects);
-    if (!subjects.contains(subject_locator)) return;
+    if (!subjects.contains(subject_locator)) {
+      return;
+    }
     
-    if (!(subject_locator instanceof SubjectLocator))
+    if (!(subject_locator instanceof SubjectLocator)) {
       subject_locator = new SubjectLocator(subject_locator);
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, null, subject_locator);    
@@ -187,15 +195,19 @@ public class Topic extends TMObject implements TopicIF {
     Objects.requireNonNull(subject_indicator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
-    if (tm == null)
+    if (tm == null) {
       throw new ConstraintViolationException("Cannot modify subject indicator when topic isn't attached to a topic map.");
+    }
     
     // Check to see if subject is already a subject indicator of this topic.
     Collection<LocatorIF> indicators = this.<LocatorIF>loadCollectionField(LF_indicators);
-    if (indicators.contains(subject_indicator)) return;
+    if (indicators.contains(subject_indicator)) {
+      return;
+    }
     
-    if (!(subject_indicator instanceof SubjectIndicatorLocator))
+    if (!(subject_indicator instanceof SubjectIndicatorLocator)) {
       subject_indicator = new SubjectIndicatorLocator(subject_indicator);
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, subject_indicator, null);    
@@ -208,15 +220,19 @@ public class Topic extends TMObject implements TopicIF {
     Objects.requireNonNull(subject_indicator, MSG_NULL_ARGUMENT);
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
-    if (tm == null)
+    if (tm == null) {
       throw new ConstraintViolationException("Cannot modify subject indicator when topic isn't attached to a topic map.");
+    }
     
     // Check to see if subject indicator is a subject indicator of this topic.
     Collection<LocatorIF> indicators = this.<LocatorIF>loadCollectionField(LF_indicators);
-    if (!indicators.contains(subject_indicator)) return;
+    if (!indicators.contains(subject_indicator)) {
+      return;
+    }
     
-    if (!(subject_indicator instanceof SubjectIndicatorLocator))
+    if (!(subject_indicator instanceof SubjectIndicatorLocator)) {
       subject_indicator = new SubjectIndicatorLocator(subject_indicator);
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, null, subject_indicator);    
@@ -237,10 +253,13 @@ public class Topic extends TMObject implements TopicIF {
   protected void addTopicName(TopicNameIF name) {
     Objects.requireNonNull(name, MSG_NULL_ARGUMENT);
     // Check to see if name is already a member of this topic
-    if (name.getTopic() == this) return;
+    if (name.getTopic() == this) {
+      return;
+    }
     // Check if used elsewhere.
-    if (name.getTopic() != null)
+    if (name.getTopic() != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_TOPICNAME, name, null);    
@@ -253,7 +272,9 @@ public class Topic extends TMObject implements TopicIF {
   protected void removeTopicName(TopicNameIF name) {
     Objects.requireNonNull(name, MSG_NULL_ARGUMENT);
     // Check to see if name is not a member of this topic
-    if (name.getTopic() != this) return;
+    if (name.getTopic() != this) {
+      return;
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_TOPICNAME, null, name);    
@@ -276,11 +297,13 @@ public class Topic extends TMObject implements TopicIF {
   protected void addOccurrence(OccurrenceIF occurrence) {
     Objects.requireNonNull(occurrence, MSG_NULL_ARGUMENT);
     // Check to see if occurrence is already a member of this topic
-    if (occurrence.getTopic() == this)
+    if (occurrence.getTopic() == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (occurrence.getTopic() != null)
+    if (occurrence.getTopic() != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_ADD_OCCURRENCE, occurrence, null);    
@@ -293,7 +316,9 @@ public class Topic extends TMObject implements TopicIF {
   protected void removeOccurrence(OccurrenceIF occurrence) {
     Objects.requireNonNull(occurrence, MSG_NULL_ARGUMENT);
     // Check to see if occurrence is not a member of this topic
-    if (occurrence.getTopic() != this) return;
+    if (occurrence.getTopic() != this) {
+      return;
+    }
     
     // Notify listeners
     fireEvent(TopicIF.EVENT_REMOVE_OCCURRENCE, null, occurrence);    
@@ -315,21 +340,24 @@ public class Topic extends TMObject implements TopicIF {
     if (isLoaded(LF_roles)) {
       Collection<AssociationRoleIF> roles = (Collection<AssociationRoleIF>)
         getValue(LF_roles);
-      if (roles.isEmpty())
+      if (roles.isEmpty()) {
         return (Collection<AssociationRoleIF>) Collections.EMPTY_SET;
+      }
       
       Collection<AssociationRoleIF> result =
         new CompactHashSet<AssociationRoleIF>();
       for (AssociationRoleIF role : roles) {
-        if (role.getType() == roletype)
+        if (role.getType() == roletype) {
           result.add(role);
+        }
       }
       return result;
     } else {
       // lookup roles by type
       TopicMap tm = (TopicMap)getTopicMap();
-      if (tm == null)
+      if (tm == null) {
         throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
+      }
       return tm.getRolesByType(this, roletype);
     }
   }
@@ -343,16 +371,18 @@ public class Topic extends TMObject implements TopicIF {
     if (isLoaded(LF_roles)) {
       Collection<AssociationRoleIF> roles = (Collection<AssociationRoleIF>)
         getValue(LF_roles);
-      if (roles.isEmpty())
+      if (roles.isEmpty()) {
         return (Collection<AssociationRoleIF>) Collections.EMPTY_SET;
+      }
       
       Collection<AssociationRoleIF> result =
         new CompactHashSet<AssociationRoleIF>();
       for (AssociationRoleIF role : roles) {
         if (role.getType() == roletype) {
           AssociationIF assoc = role.getAssociation();
-          if (assoc != null && assoc.getType() == assoc_type)
+          if (assoc != null && assoc.getType() == assoc_type) {
             result.add(role);
+          }
         }
       }
       return result;
@@ -360,8 +390,9 @@ public class Topic extends TMObject implements TopicIF {
       // lookup roles by type
       if (roletype == null) {
         TopicMap tm = (TopicMap) getTopicMap();
-        if (tm == null)
+        if (tm == null) {
           throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
+        }
         return tm.getRolesByType(this, roletype, assoc_type);
         
       } else {
@@ -408,8 +439,9 @@ public class Topic extends TMObject implements TopicIF {
   @Override
   public void remove() {
     TopicMap topicmap = (TopicMap)getTopicMap();
-    if (topicmap != null)
+    if (topicmap != null) {
       topicmap.removeTopic(this);
+    }
   }
   
   @Override
@@ -440,8 +472,9 @@ public class Topic extends TMObject implements TopicIF {
   @Override
   public ReifiableIF getReified() {
     String reifiedId = this.<String>loadField(Topic.LF_reified);
-    if (reifiedId == null)
+    if (reifiedId == null) {
       return null;
+    }
     return (ReifiableIF) getTopicMap().getObjectById(reifiedId);
   }
 

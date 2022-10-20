@@ -84,7 +84,9 @@ public class CollectionMap<K, V> extends HashMap<K, Collection<V>> {
       // Remove value
       boolean removed = coll.remove(value);
       // Remove key
-      if (drop_empty && coll.isEmpty()) remove(key);
+      if (drop_empty && coll.isEmpty()) {
+        remove(key);
+      }
       
       return removed;
     }

@@ -91,7 +91,9 @@ public final class AtomicIdentity implements IdentityIF, Externalizable {
   @Override
   public boolean equals(Object object) {
     if (object instanceof LongIdentity) {
-      if (!(key instanceof Long)) return false;
+      if (!(key instanceof Long)) {
+        return false;
+      }
       LongIdentity other = (LongIdentity)object;
       return ((Long)key).longValue() == other.getLongKey() &&
              type.equals(other.getType());

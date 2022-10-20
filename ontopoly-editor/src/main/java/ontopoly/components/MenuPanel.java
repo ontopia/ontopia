@@ -48,13 +48,15 @@ public class MenuPanel extends Panel {
         item.add(link);
 
         if (counter == selectedMenuItemIndex) {
-          if (counter > 0)          
+          if (counter > 0) {          
             item.add(new SimpleAttributeModifier("class", "delimiter selected"));
-          else
+          } else {
             item.add(new SimpleAttributeModifier("class", "selected"));
+          }
         } else {
-          if (counter > 0)
-            item.add(new SimpleAttributeModifier("class", "delimiter"));          
+          if (counter > 0) {
+            item.add(new SimpleAttributeModifier("class", "delimiter"));
+          }          
         }
         counter++;
       }

@@ -53,8 +53,9 @@ public class IndicatorsTag extends BaseValueProducingAndAcceptingTag {
         }
         
         // get all subject indicators for specified topic as LocatorIF objects
-        if (topic != null)
+        if (topic != null) {
           subjectIndicators.addAll( topic.getSubjectIdentifiers() );
+        }
       }
     }
     return subjectIndicators;

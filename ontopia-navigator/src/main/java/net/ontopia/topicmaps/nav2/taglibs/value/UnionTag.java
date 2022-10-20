@@ -77,8 +77,9 @@ public class UnionTag extends TagSupport implements ValueAcceptingTagIF {
 
   @Override
   public void accept(Collection inputCollection) {
-    if (resultCollection == null)
+    if (resultCollection == null) {
       resultCollection = new HashSet(inputCollection.size());
+    }
 
     // because we are using HashSet duplicates are avoided and we
     // automatically retrieve the union by addition of the two

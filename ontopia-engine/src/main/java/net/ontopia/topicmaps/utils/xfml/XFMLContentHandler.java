@@ -136,21 +136,24 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // ----- <xfml> -----------------------------------------------------------
     if (EL_XFML.equals(qName)) {
       String version = atts.getValue("version");
-      if (version == null)
+      if (version == null) {
         log.warn("No version attribute on 'xfml' element");
-      if (!"1.0".equals(version))
+      }
+      if (!"1.0".equals(version)) {
         log.warn("Unsupported XFML version: " + version);
+      }
 
       String mapurl = atts.getValue("url");
-      if (mapurl == null)
+      if (mapurl == null) {
         log.warn("No url attribute on 'xfml' element");
-      else {
+      } else {
         try {
           map_uri = new URILocator(mapurl);
 
           TopicMapStoreIF store = topicmap.getStore();
-          if (store instanceof AbstractTopicMapStore && store.getBaseAddress() == null)
+          if (store instanceof AbstractTopicMapStore && store.getBaseAddress() == null) {
             ((AbstractTopicMapStore) store).setBaseAddress(map_uri);
+          }
 
           doc_address = map_uri;
           
@@ -184,8 +187,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
       registerSourceLocator(current_topic, id);
 
       String parentid = atts.getValue("parentTopicid");
-      if (parentid == null)
+      if (parentid == null) {
         parentid = atts.getValue("facetid");
+      }
       // FIXME: complain if no refs
 
       TopicIF parent = resolveTopicRef("#" + parentid);
@@ -216,8 +220,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // ----- <title> ----------------------------------------------------------
     // ----- <connect> --------------------------------------------------------
     else if (EL_NAME.equals(qName) || EL_PSI.equals(qName) || EL_DESCRIPTION.equals(qName) ||
-            EL_TITLE.equals(qName) || EL_CONNECT.equals(qName)) 
-      keep_content = true;   
+            EL_TITLE.equals(qName) || EL_CONNECT.equals(qName)) {
+      keep_content = true;
+    }   
     
     } catch (RuntimeException e) {
       e.printStackTrace();
@@ -227,8 +232,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
 
   @Override
   public void characters (char ch[], int start, int length) {
-    if (keep_content) 
-      content.append(ch, start, length);      
+    if (keep_content) {
+      content.append(ch, start, length);
+    }      
   }
 
   @Override
@@ -236,27 +242,28 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     // log.debug("E: " + qName);
 
     // ----- </facet> ---------------------------------------------------------
-    if (EL_FACET.equals(qName))
+    if (EL_FACET.equals(qName)) {
       builder.makeTopicName(current_topic, content.toString());
     
     // ----- </name> ----------------------------------------------------------
     // ----- </title> ---------------------------------------------------------
-    else if ((EL_NAME.equals(qName) || EL_TITLE.equals(qName)) &&
-             current_topic != null)
+    } else if ((EL_NAME.equals(qName) || EL_TITLE.equals(qName)) &&
+             current_topic != null) {
       builder.makeTopicName(current_topic, content.toString());
     
     // ----- </psi> -----------------------------------------------------------
-    else if (EL_PSI.equals(qName))
+    } else if (EL_PSI.equals(qName)) {
       addSubjectIdentifier(current_topic, createLocator(content.toString()));
     
     // ----- </description> ---------------------------------------------------
-    else if (EL_DESCRIPTION.equals(qName)) {
+    } else if (EL_DESCRIPTION.equals(qName)) {
       builder.makeOccurrence(current_topic, PSI_DESCRIPTION, content.toString());
     }
 
     // ----- </connect> -------------------------------------------------------
-    else if (EL_CONNECT.equals(qName)) 
+    else if (EL_CONNECT.equals(qName)) {
       current_topic.addItemIdentifier(createLocator(content.toString()));
+    }
     
     keep_content = false;
     content.setLength(0);
@@ -273,8 +280,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   protected TopicIF resolveTopicRef(String address) throws SAXException {
     LocatorIF locator = createLocator(address);
     TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(locator);
-    if (topic == null)
+    if (topic == null) {
       topic = topicmap.getTopicBySubjectIdentifier(locator);
+    }
     
     if (topic == null) {
       if (address.charAt(0) == '#' ||
@@ -283,8 +291,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
         topic = builder.makeTopic();
         topic.addItemIdentifier(locator);
         
-      } else
+      } else {
         throw new OntopiaRuntimeException("INTERNAL: Topic ID must begin with '#'");
+      }
     }
 
     return topic;
@@ -292,7 +301,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
 
   protected void registerSourceLocator(TopicIF tmobject, String id) {
     // No need to register source locator if id is null
-    if (id == null) return;
+    if (id == null) {
+      return;
+    }
     // Create source locator
     LocatorIF locator = createLocator("#" + id);
     // Add the source locator
@@ -301,7 +312,9 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
 
   protected void registerSourceLocator(TMObjectIF tmobject, String id) {
     // No need to register source locator if id is null
-    if (id == null) return;
+    if (id == null) {
+      return;
+    }
     tmobject.addItemIdentifier(createLocator("#" + id));
   }
 
@@ -312,9 +325,10 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     TopicIF other_topic = topicmap.getTopicBySubjectIdentifier(locator);
     
     if (other_topic != null) {
-      if (log.isInfoEnabled())
+      if (log.isInfoEnabled()) {
         log.info("Topic " + topic + " merged with + " + other_topic +
                  " because the source locator is the same as the subject indicator of the other: " + locator);
+      }
       
       // Merge topic with other topic. 
       MergeUtils.mergeInto(topic, other_topic);
@@ -332,9 +346,10 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
     TMObjectIF other_topic = topicmap.getObjectByItemIdentifier(locator);
 
     if (other_topic != null && other_topic instanceof TopicIF) {
-      if (log.isInfoEnabled())
+      if (log.isInfoEnabled()) {
         log.info("Topic " + topic + " merged with + " + other_topic +
                  " because the subject indicator is the same as the source locator of the other: " + locator);
+      }
       
       // Merge topic with other topic. 
       MergeUtils.mergeInto(topic, (TopicIF)other_topic);
@@ -348,16 +363,17 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   }
   
   protected LocatorIF createLocator(String address) {
-    if (address.length() == 0)
+    if (address.length() == 0) {
       return getBaseAddress();
-    else if (address.charAt(0) == '#')
+    } else if (address.charAt(0) == '#') {
       // this is necessary because URI refs of the form "#foo" are
       // same-document references (RFC 2396 - 4.2), and resolve
       // relative to the document address, regardless of what base
       // address may be in effect inside the document
       return doc_address.resolveAbsolute(address);
-    else
+    } else {
       return getBaseAddress().resolveAbsolute(address);
+    }
   }
 
   protected LocatorIF createURILocator(String address) {

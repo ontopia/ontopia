@@ -82,7 +82,9 @@ public class RDBMSMapQuery implements DetachedQueryIF {
       rs.close();
       rs = null;
       // Close statement
-      if (_stm != null) _stm.close();
+      if (_stm != null) {
+        _stm.close();
+      }
     }
 
     return result;

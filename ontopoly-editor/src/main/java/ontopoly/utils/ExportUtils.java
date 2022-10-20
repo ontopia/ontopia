@@ -51,51 +51,60 @@ public class ExportUtils {
 
       TopicMapWriterIF writer;
       Predicate filter = null;
-      if (content == Content.INSTANCES_ONLY)
+      if (content == Content.INSTANCES_ONLY) {
         filter = new SchemaFilter();
-      else if (content == Content.SCHEMA_ONLY)
+      } else if (content == Content.SCHEMA_ONLY) {
         filter = new SchemaOnlyFilter();
+      }
 
       // if filter == null it never gets used
       TMExporterDecider decider = null;
-      if (filter != null)
+      if (filter != null) {
         decider = new TMExporterDecider(filter);
+      }
 
       if (format.equalsIgnoreCase("xtm1")) { 
         XTMTopicMapWriter filterer = new XTMTopicMapWriter(out, charset);
-        if (filter != null)
+        if (filter != null) {
           filterer.setFilter(decider);
+        }
         filterer.setVersion(XTMVersion.XTM_1_0);
         writer = filterer;
       } else if (format.equalsIgnoreCase("xtm2")) { 
         XTM2TopicMapWriter filterer = new XTM2TopicMapWriter(out, charset);
-        if (filter != null)
+        if (filter != null) {
           filterer.setFilter(decider);
+        }
         filterer.setVersion(XTMVersion.XTM_2_0);
         writer = filterer;
       } else if (format.equalsIgnoreCase("xtm21")) { 
         XTM21TopicMapWriter filterer = new XTM21TopicMapWriter(out, charset);
-        if (filter != null)
+        if (filter != null) {
           filterer.setFilter(decider);
+        }
         filterer.setVersion(XTMVersion.XTM_2_1);
         writer = filterer;
       } else if (format.equalsIgnoreCase("rdf")) { 
         RDFTopicMapWriter filterer = new RDFTopicMapWriter(out);
-        if (filter != null)
+        if (filter != null) {
           filterer.setFilter(decider);
+        }
         writer = filterer;
       } else if (format.equalsIgnoreCase("ltm")) {
         LTMTopicMapWriter filterer = new LTMTopicMapWriter(out, charset);
-        if (filter != null)
+        if (filter != null) {
           filterer.setFilter(decider);
+        }
         writer = filterer;
       } else if (format.equalsIgnoreCase("tmxml")) {
         TMXMLWriter filterer = new TMXMLWriter(out);
-        if (filter != null)
+        if (filter != null) {
           filterer.setFilter(decider);
+        }
         writer = filterer;
-      } else
+      } else {
         throw new OntopiaRuntimeException("Unsupported/unknown export format: " + format);
+      }
     
       writer.write(tm);
 

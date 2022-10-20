@@ -114,19 +114,19 @@ public class ImportExportUtils {
   public static TopicMapReaderIF getReader (URL url) {
     String address = url.toString();
     try {
-      if (address.startsWith (ONTOPIA_RDBMS_URI_PREFIX))
+      if (address.startsWith (ONTOPIA_RDBMS_URI_PREFIX)) {
         return new RDBMSTopicMapReader (getTopicMapId (address));
-      else if (address.endsWith (XTM_EXTENSION))
+      } else if (address.endsWith (XTM_EXTENSION)) {
         return new XTMTopicMapReader (url);
-      else if (address.endsWith (LTM_EXTENSION))
+      } else if (address.endsWith (LTM_EXTENSION)) {
         return new LTMTopicMapReader (url);
-      else if (address.endsWith (TMX_EXTENSION))
+      } else if (address.endsWith (TMX_EXTENSION)) {
         return new TMXMLReader (url);
-      else if (address.endsWith (".xml"))
-        return new TMXMLReader(url); 
-      else if (address.endsWith (CTM_EXTENSION))
+      } else if (address.endsWith (".xml")) {
+        return new TMXMLReader(url);
+      } else if (address.endsWith (CTM_EXTENSION)) {
         return new CTMTopicMapReader(url);
-      else {
+      } else {
         for (ImportExportServiceIF service : services) {
           if (service.canRead(url)) {
             return service.getReader(url);
@@ -182,15 +182,16 @@ public class ImportExportUtils {
    */
   public static long getTopicMapId (String address) {
     int offset = 0;
-    if (address.startsWith("M"))
+    if (address.startsWith("M")) {
       offset = 1;
-    else if (address.startsWith(ONTOPIA_RDBMS_URI_PREFIX)) {
+    } else if (address.startsWith(ONTOPIA_RDBMS_URI_PREFIX)) {
       // Syntax: x-ontopia:tm-rdbms:12345
       offset = ONTOPIA_RDBMS_URI_PREFIX.length ();
       
       // Ignore M suffix on topic map id
-      if (address.charAt (offset) == 'M')
+      if (address.charAt (offset) == 'M') {
         offset = offset + 1;
+      }
     }
     
     try {

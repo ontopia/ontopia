@@ -66,8 +66,9 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   @Override
   public TopicIF getTopic() {
     TopicNameIF name = getTopicName();
-    if (name == null)
+    if (name == null) {
       return null;
+    }
     return name.getTopic();
   }
 
@@ -112,7 +113,9 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   
   @Override
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
+    if (!DataTypes.TYPE_URI.equals(getDataType())) {
+      return null;
+    }
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
@@ -126,10 +129,11 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   public long getLength() {
     Number length = this.<Number>loadField(VariantName.LF_length);
     long len = (length == null ? 0 : length.longValue());
-    if (len < 0)
+    if (len < 0) {
       return len * -1L;
-    else
+    } else {
       return len;
+    }
   }
 
   // ---------------------------------------------------------------------------

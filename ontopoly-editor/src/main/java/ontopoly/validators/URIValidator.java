@@ -44,7 +44,9 @@ public class URIValidator extends AbstractValidator<String> {
   @Override
   protected void onValidate(IValidatable<String> validatable) {
     final String value = validatable.getValue();
-    if (value == null) return;
+    if (value == null) {
+      return;
+    }
     try {
       new URILocator(value);
     } catch (Exception e) {

@@ -142,10 +142,11 @@ public class RoleTypeAssocTypeCache {
     StringBuilder sb = new StringBuilder();
     sb.append("select r.player_id, r.id, r.assoc_id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.type_id = ? and r.assoc_id = a.id and a.topicmap_id = ? and a.type_id = ? and r.player_id in (");
     for (int i=0; i < batchSize; i++) {
-      if (i > 0) 
+      if (i > 0) { 
         sb.append(", ?");
-      else
+      } else {
         sb.append('?');
+      }
     }
     sb.append(')');
     this.sql = sb.toString();
@@ -207,10 +208,14 @@ public class RoleTypeAssocTypeCache {
     
     try {
 
-      if (!ptxn.isClean()) return;
+      if (!ptxn.isClean()) {
+        return;
+      }
       
       // flush transaction if not shared
-      if (!qlshared) ptxn.flush();
+      if (!qlshared) {
+        ptxn.flush();
+      }
 
       // get identities
       IdentityIF rtypeid = i(rtype);
@@ -226,10 +231,13 @@ public class RoleTypeAssocTypeCache {
       while (iter.hasNext()) {
         key[0] = i(iter.next());
         // filter out parameters that are already in the cache
-        if (key[0] != null && rolesByType.get(params) == null)
+        if (key[0] != null && rolesByType.get(params) == null) {
           rbt.put(key[0], new HashSet<IdentityIF>());
+        }
       }
-      if (rbt.size() < 1) return;
+      if (rbt.size() < 1) {
+        return;
+      }
       
       // collection associations for prefetching
       Collection<IdentityIF> assocs = new HashSet<IdentityIF>();
@@ -263,8 +271,9 @@ public class RoleTypeAssocTypeCache {
               TopicIF_idfield, stm, offset, batchSize);
           
           // execute statement
-          if (log.isDebugEnabled())
+          if (log.isDebugEnabled()) {
             log.debug("Executing: " + sql);
+          }
           ResultSet rs = stm.executeQuery();
           
           // zero or more rows expected
@@ -301,7 +310,9 @@ public class RoleTypeAssocTypeCache {
         }
         
       } finally {
-        if (stm != null) stm.close();
+        if (stm != null) {
+          stm.close();
+        }
       }
       
       // update query cache
@@ -344,7 +355,9 @@ public class RoleTypeAssocTypeCache {
     try {
       
       // flush transaction if not shared
-      if (!qlshared) ptxn.flush();
+      if (!qlshared) {
+        ptxn.flush();
+      }
       
       // get identities
       IdentityIF playerid = i(player);
@@ -355,8 +368,9 @@ public class RoleTypeAssocTypeCache {
       // check query cache
       ParameterArray params = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
       Collection<IdentityIF> result = rolesByType.get(params);
-      if (result != null)
+      if (result != null) {
         return syncWithTransaction(result, params, playerid, rtypeid, atypeid, tmid);
+      }
       //! System.out.println("CM: " + params);
 
       // Get ticket
@@ -384,8 +398,9 @@ public class RoleTypeAssocTypeCache {
       try {
         
         // execute statement
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug("Executing: " + sql_individual);
+        }
         ResultSet rs = stm.executeQuery();
         
         // zero or more rows expected
@@ -414,7 +429,9 @@ public class RoleTypeAssocTypeCache {
         rs.close();
         
       } finally {
-        if (stm != null) stm.close();
+        if (stm != null) {
+          stm.close();
+        }
       }
       
       // update query cache
@@ -445,7 +462,9 @@ public class RoleTypeAssocTypeCache {
         r = null; // identity not found
       }
       // passed through filter so add to result
-      if (r != null) result.add(r);
+      if (r != null) {
+        result.add(r);
+      }
     }
     // add roles that have been introduced in this transaction
     Collection<AssociationRoleIF> ra = radd.get(params);
@@ -494,7 +513,9 @@ public class RoleTypeAssocTypeCache {
     avals.add(added);
     // - removed
     Collection<AssociationRoleIF> rvals = rrem.get(key);
-    if (rvals != null) rvals.remove(added);    
+    if (rvals != null) {
+      rvals.remove(added);
+    }    
   }
   
   protected void removeEntry(ParameterArray key, AssociationRoleIF removed) {
@@ -507,7 +528,9 @@ public class RoleTypeAssocTypeCache {
     rvals.add(removed);
     // - added
     Collection<AssociationRoleIF> avals = radd.get(key);
-    if (avals != null) avals.remove(removed);
+    if (avals != null) {
+      avals.remove(removed);
+    }
   }
   
   /**
@@ -520,7 +543,9 @@ public class RoleTypeAssocTypeCache {
       
       // ignore event if player is null
       TopicIF player = added.getPlayer(); 
-      if (player == null) return;
+      if (player == null) {
+        return;
+      }
       
       // get association type
       AssociationIF assoc = added.getAssociation();
@@ -541,7 +566,9 @@ public class RoleTypeAssocTypeCache {
       
       // ignore event if player is null
       TopicIF player = removed.getPlayer(); 
-      if (player == null) return;
+      if (player == null) {
+        return;
+      }
       
       // get association type
       AssociationIF assoc = removed.getAssociation();
@@ -561,7 +588,9 @@ public class RoleTypeAssocTypeCache {
       AssociationRoleIF arole = (AssociationRoleIF)object;
       // ignore event if player is null
       TopicIF player = arole.getPlayer(); 
-      if (player == null) return;
+      if (player == null) {
+        return;
+      }
       
       // get association type
       AssociationIF assoc = arole.getAssociation();
@@ -587,12 +616,14 @@ public class RoleTypeAssocTypeCache {
       TopicIF atype = (assoc == null ? null : assoc.getType());
       
       // unregister old entry
-      if (old_value != null)
+      if (old_value != null) {
         removeEntry(new ParameterArray(new Object[] { i(old_value), i(arole.getType()), i(atype) }), arole);
+      }
       
       // register new entry
-      if (new_value != null)
+      if (new_value != null) {
         addEntry(new ParameterArray(new Object[] { i(new_value), i(arole.getType()), i(atype) }), arole);
+      }
     }
   }
   
@@ -610,7 +641,9 @@ public class RoleTypeAssocTypeCache {
         
         // ignore event if player is null
         TopicIF player = arole.getPlayer(); 
-        if (player == null) continue;
+        if (player == null) {
+          continue;
+        }
         
         // unregister old entry
         removeEntry(new ParameterArray(new Object[] { i(player), i(arole.getType()), i(old_value) }), arole);

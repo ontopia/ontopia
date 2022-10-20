@@ -36,8 +36,9 @@ public class MergeStatement extends ModificationStatement {
     throws InvalidQueryException {
     TopicIF topic1 = (TopicIF) getValue(litlist.get(0), arguments);
     TopicIF topic2 = (TopicIF) getValue(litlist.get(1), arguments);
-    if (!topic1.equals(topic2))
+    if (!topic1.equals(topic2)) {
       topic1.merge(topic2);
+    }
     return 1;
   }
 
@@ -53,11 +54,13 @@ public class MergeStatement extends ModificationStatement {
     int varix2 = getIndex(arg2, matches);
     
     for (int row = 0; row <= matches.last; row++) {
-      if (varix1 != -1)
+      if (varix1 != -1) {
         arg1 = matches.data[row][varix1];
+      }
 
-      if (varix2 != -1)
+      if (varix2 != -1) {
         arg2 = matches.data[row][varix2];
+      }
 
       TopicIF topic1 = (TopicIF) arg1;
       TopicIF topic2 = (TopicIF) arg2;
@@ -75,8 +78,9 @@ public class MergeStatement extends ModificationStatement {
   @Override
   public String toString() {
     String str = "merge " + toStringLitlist();
-    if (query != null)
+    if (query != null) {
       str += "\nfrom" + query.toStringFromPart();
+    }
     return str;
   }
 }

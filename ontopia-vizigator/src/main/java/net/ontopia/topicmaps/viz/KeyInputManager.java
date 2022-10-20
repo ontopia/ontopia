@@ -64,25 +64,30 @@ public class KeyInputManager implements KeyListener, ContainerListener {
   
   @Override
   public void keyPressed(KeyEvent keyEvent) {
-    if (keyEvent.getKeyCode() == KEY_MODIFIER)
+    if (keyEvent.getKeyCode() == KEY_MODIFIER) {
       keyModifierDown = true;
+    }
   }
   
   @Override
   public void keyReleased(KeyEvent keyEvent) {
-    if (keyEvent == lastProcessed)
+    if (keyEvent == lastProcessed) {
       return;
-    else
+    } else {
       lastProcessed = keyEvent;
+    }
     
-    if (keyEvent.getKeyCode() == KEY_MODIFIER)
+    if (keyEvent.getKeyCode() == KEY_MODIFIER) {
       keyModifierDown = false;
+    }
 
     if (UndoManager.ENABLE_UNDO_MANAGER && keyModifierDown) {
-      if (keyEvent.getKeyCode() == KeyEvent.VK_Z)
+      if (keyEvent.getKeyCode() == KeyEvent.VK_Z) {
         controller.undo();
-      if (keyEvent.getKeyCode() == KeyEvent.VK_Y)
+      }
+      if (keyEvent.getKeyCode() == KeyEvent.VK_Y) {
         controller.redo();
+      }
     }
   }
   

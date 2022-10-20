@@ -95,12 +95,14 @@ public class RDBMSImport {
     TopicMapIF tm = store.getTopicMap();
 
     // set topic map title
-    if (ohandler.topicMapTitle != null)
+    if (ohandler.topicMapTitle != null) {
       ((TopicMap)tm).setTitle(ohandler.topicMapTitle);
+    }
 
     // set topic map comments
-    if (ohandler.topicMapComments != null)
+    if (ohandler.topicMapComments != null) {
       ((TopicMap)tm).setComments(ohandler.topicMapComments);
+    }
     
     for (int i=1; i < args.length; i++) {
       
@@ -108,12 +110,14 @@ public class RDBMSImport {
       TopicMapReaderIF importer = ImportExportUtils.getReader(filename);
       
       // disable XTM validation
-      if (importer instanceof XTMTopicMapReader && !ohandler.validate)
+      if (importer instanceof XTMTopicMapReader && !ohandler.validate) {
         ((XTMTopicMapReader)importer).setValidation(false);
+      }
 
       // disable following external topicRefs
-      if (importer instanceof XTMTopicMapReader && !ohandler.loadExternal)
+      if (importer instanceof XTMTopicMapReader && !ohandler.loadExternal) {
         ((XTMTopicMapReader)importer).setFollowTopicRefs(false);
+      }
       
       System.out.println("Importing " + filename + " into " + tm.getObjectId());
       long start = System.currentTimeMillis();
@@ -130,14 +134,16 @@ public class RDBMSImport {
           FileInputStream fis = new WrappedFileInputStream(file);
           InputSource src = ((AbstractXMLFormatReader) importer).getInputSource();
           src.setByteStream(fis);
-        } else
+        } else {
           System.out.println("Cannot produce progress report!");
+        }
       }
 
       importer.importInto(tm);
 
-      if (ohandler.suppress)
+      if (ohandler.suppress) {
         DuplicateSuppressionUtils.removeDuplicates(tm);
+      }
 
       store.commit();
       
@@ -194,14 +200,30 @@ public class RDBMSImport {
     
     @Override
     public void processOption(char option, String value) {
-      if (option == 'i') topicMapId = ImportExportUtils.getTopicMapId(value);
-      if (option == 'v') validate = Boolean.valueOf(value).booleanValue();
-      if (option == 'e') loadExternal = Boolean.valueOf(value).booleanValue();
-      if (option == 's') suppress = Boolean.valueOf(value).booleanValue();
-      if (option == 'j') jdbcspyFile = value;
-      if (option == 't') topicMapTitle = value;
-      if (option == 'c') topicMapComments = value;
-      if (option == 'p') progress = Boolean.valueOf(value).booleanValue();
+      if (option == 'i') {
+        topicMapId = ImportExportUtils.getTopicMapId(value);
+      }
+      if (option == 'v') {
+        validate = Boolean.valueOf(value).booleanValue();
+      }
+      if (option == 'e') {
+        loadExternal = Boolean.valueOf(value).booleanValue();
+      }
+      if (option == 's') {
+        suppress = Boolean.valueOf(value).booleanValue();
+      }
+      if (option == 'j') {
+        jdbcspyFile = value;
+      }
+      if (option == 't') {
+        topicMapTitle = value;
+      }
+      if (option == 'c') {
+        topicMapComments = value;
+      }
+      if (option == 'p') {
+        progress = Boolean.valueOf(value).booleanValue();
+      }
     }
   }
 

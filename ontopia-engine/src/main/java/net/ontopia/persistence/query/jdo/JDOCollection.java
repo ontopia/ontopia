@@ -33,10 +33,12 @@ public class JDOCollection implements JDOValueIF {
   protected Class eltype;
   
   public JDOCollection(Collection coll, Class eltype) {
-    if (coll == null)
+    if (coll == null) {
       throw new IllegalArgumentException("Collection cannot be null.");
-    if (eltype == null)
+    }
+    if (eltype == null) {
       throw new IllegalArgumentException("Element type cannot be null.");
+    }
     
     this.coll = coll;
     this.eltype = eltype;
@@ -66,7 +68,9 @@ public class JDOCollection implements JDOValueIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOCollection) {
       JDOCollection other = (JDOCollection)obj;    
       return coll.equals(other.coll);

@@ -149,8 +149,9 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
   
   protected RoleField getOtherBinaryRoleField(RoleField thisField) {
     Collection<RoleField> otherRoleFields = thisField.getFieldsForOtherRoles();
-    if (otherRoleFields.size() != 1)
+    if (otherRoleFields.size() != 1) {
       throw new RuntimeException("Binary association does not have two fields.");
+    }
     RoleField otherField = otherRoleFields.iterator().next();
     return otherField;
   }

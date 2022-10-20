@@ -52,7 +52,9 @@ public class JDOVariable implements JDOValueIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOVariable){
       JDOVariable other = (JDOVariable)obj;
       return name.equals(other.name);

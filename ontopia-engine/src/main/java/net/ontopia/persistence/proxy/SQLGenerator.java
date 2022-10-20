@@ -56,7 +56,9 @@ public class SQLGenerator {
     StringBuilder sb = new StringBuilder("delete from ");
     sb.append(table).append(WHERE_SPACED);
     for (int i=0; i < where_columns.length; i++) {
-      if (i > 0) sb.append(" and ");
+      if (i > 0) {
+        sb.append(" and ");
+      }
       sb.append(where_columns[i]).append(EQUALS_PARAMETER);
     }
     return sb.toString();
@@ -81,12 +83,16 @@ public class SQLGenerator {
     StringBuilder sb = new StringBuilder("insert into ");
     sb.append(table).append(" (");
     for (int i=0; i < value_columns.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append(value_columns[i]);
     }
     sb.append(") values (");
     for (int i=0; i < value_columns.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append('?');
     }
     sb.append(')');
@@ -116,15 +122,20 @@ public class SQLGenerator {
     sb.append(table).append(" set ");
     
     for (int i=0; i < set_columns.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append(set_columns[i]).append(EQUALS_PARAMETER);
     }
 
-    if (where_columns.length > 0)
+    if (where_columns.length > 0) {
       sb.append(WHERE_SPACED);
+    }
     
     for (int i=0; i < where_columns.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append(where_columns[i]).append(EQUALS_PARAMETER);
     }
     return sb.toString();
@@ -157,13 +168,16 @@ public class SQLGenerator {
         .append(table)
         .append(WHERE_SPACED);
     if (multiple > 0) {
-      if (where_columns.length > 1) throw new RuntimeException("Multiple conditions not allowed.");
+      if (where_columns.length > 1) {
+        throw new RuntimeException("Multiple conditions not allowed.");
+      }
       sb.append(where_columns[0]).append(" in (");
       for (int i=0; i < multiple; i++) {
-	if (i > 0 )
-	  sb.append(", ?");
-	else
-	  sb.append('?');
+        if (i > 0 ) {
+          sb.append(", ?");
+        } else {
+          sb.append('?');
+        }
       }
       sb.append(')');
       // WARNING: we are not filtering on 'S.col is not null' here
@@ -198,7 +212,9 @@ public class SQLGenerator {
     if (multiple > 0) {
       // must include where key when selecting multiple
       for (int i=0; i < jointable_where_columns.length; i++) {
-	if (i > 0) sb.append(", ");
+	if (i > 0) {
+    sb.append(", ");
+  }
 	sb.append("a.");
 	sb.append(jointable_where_columns[i]);
 	sb.append(" as a").append(i);
@@ -210,7 +226,9 @@ public class SQLGenerator {
       }
     } else {
       for (int i=0; i < datatable_select_columns.length; i++) {
-	if (i > 0) sb.append(", ");
+	if (i > 0) {
+    sb.append(", ");
+  }
 	sb.append("b.");
 	sb.append(datatable_select_columns[i]);
       }
@@ -222,7 +240,9 @@ public class SQLGenerator {
 
     // join conditions
     for (int i=0; i < jointable_keys.length; i++) {
-      if (i > 0) sb.append(" AND ");
+      if (i > 0) {
+        sb.append(" AND ");
+      }
       sb.append("a.").append(jointable_keys[i])
           .append(" = b.").append(datatable_keys[i]);
     }
@@ -234,14 +254,16 @@ public class SQLGenerator {
       if (multiple > 0) {
 	sb.append(" in (");
 	for (int x=0; x < multiple; x++) {
-	  if (x > 0)
-	    sb.append(", ?");
-	  else
-	    sb.append('?');
+	  if (x > 0) {
+      sb.append(", ?");
+    } else {
+      sb.append('?');
+    }
 	}
 	sb.append(')');
-      } else
-	sb.append(EQUALS_PARAMETER);
+      } else {
+        sb.append(EQUALS_PARAMETER);
+      }
     }
     return sb.toString();    
   }
@@ -254,7 +276,9 @@ public class SQLGenerator {
     int size = identities.size();
     Iterator<IdentityIF> iter = identities.iterator();
     for (int i=0; i < size; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       IdentityIF identity = iter.next();
       // HACK: this assumes that arity of identity field is 1
       sb.append(identity.getKey(0));

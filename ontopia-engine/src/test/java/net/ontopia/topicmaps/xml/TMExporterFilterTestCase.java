@@ -296,8 +296,9 @@ public class TMExporterFilterTestCase {
         Iterator baseNamesIt = topic.getTopicNames().iterator();
         while (baseNamesIt.hasNext()) {
           TopicNameIF name = (TopicNameIF)baseNamesIt.next();
-          if (name.getValue().startsWith(("fTopic")))
+          if (name.getValue().startsWith(("fTopic"))) {
             return false;
+          }
         }
         return true;
       } else if (object instanceof AssociationIF) {
@@ -306,8 +307,9 @@ public class TMExporterFilterTestCase {
         Iterator baseNamesIt = topic.getTopicNames().iterator();
         while (baseNamesIt.hasNext()) {
           TopicNameIF name = (TopicNameIF)baseNamesIt.next();
-          if (name.getValue().startsWith(("fAssocs")))
+          if (name.getValue().startsWith(("fAssocs"))) {
             return false;
+          }
         }
         return true;
       } else if (object instanceof OccurrenceIF) {
@@ -316,17 +318,20 @@ public class TMExporterFilterTestCase {
         Iterator baseNamesIt = topic.getTopicNames().iterator();
         while (baseNamesIt.hasNext()) {
           TopicNameIF name = (TopicNameIF)baseNamesIt.next();
-          if (name.getValue().startsWith(("fOccs")))
+          if (name.getValue().startsWith(("fOccs"))) {
             return false;
+          }
         }
         return true;
       } else if (object instanceof TopicNameIF) {
         TopicNameIF name = (TopicNameIF)object;
-        if (name.getValue().startsWith(("fName")))
+        if (name.getValue().startsWith(("fName"))) {
           return false;
+        }
         return true;
-      } else
+      } else {
         return true;
+      }
     }
     
   }

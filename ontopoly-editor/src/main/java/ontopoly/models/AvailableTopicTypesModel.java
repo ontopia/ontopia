@@ -56,16 +56,19 @@ public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<L
     Topic topic = topicModel.getTopic();
     TopicMap topicMap = topic.getTopicMap();
     types.addAll(topicMap.getTopicTypes());
-    if (!getShouldIncludeSelf()) 
+    if (!getShouldIncludeSelf()) { 
       types.remove(topic); // remove topic itself as it cannot be an instance of itself
-    if (!getShouldIncludeExistingTypes())
+    }
+    if (!getShouldIncludeExistingTypes()) {
       types.removeAll(topic.getTopicTypes());
+    }
     List<TopicType> result = new ArrayList<TopicType>(types.size()); 
     Iterator<TopicType> iter = types.iterator();
     while (iter.hasNext()) {
       TopicType o = iter.next();
-      if (filter(o))
+      if (filter(o)) {
         result.add(o);
+      }
     }
     Collections.sort(result, TopicComparator.INSTANCE);
     return result;

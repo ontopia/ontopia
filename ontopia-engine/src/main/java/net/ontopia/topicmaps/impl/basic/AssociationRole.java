@@ -61,10 +61,11 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
    */
   protected void setAssociation(Association parent) {
     // Validate topic map
-    if (parent != null && parent.topicmap != this.topicmap)
-        throw new ConstraintViolationException(
+    if (parent != null && parent.topicmap != this.topicmap) {
+      throw new ConstraintViolationException(
             "Cannot move objects across topic maps: " + this.topicmap + " and "
                 + parent.topicmap);
+    }
     // Set parent
     this.parent = parent;
   }
@@ -81,13 +82,15 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     // Notify listeners
     fireEvent(AssociationRoleIF.EVENT_SET_PLAYER, player, this.player);
     // Unregister association role with topic
-    if (this.player != null && parent != null && parent.parent != null)
-        ((Topic) this.player).removeRole(this);
+    if (this.player != null && parent != null && parent.parent != null) {
+      ((Topic) this.player).removeRole(this);
+    }
     // Set property
     this.player = player;
     // Register association role with topic
-    if (player != null && parent != null && parent.parent != null)
-        ((Topic) this.player).addRole(this);
+    if (player != null && parent != null && parent.parent != null) {
+      ((Topic) this.player).addRole(this);
+    }
   }
 
   @Override
@@ -127,15 +130,21 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) {
+      CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
-    if (oldReifier != null) oldReifier.setReified(null);
-    if (reifier != null) reifier.setReified(this);
+    if (oldReifier != null) {
+      oldReifier.setReified(null);
+    }
+    if (reifier != null) {
+      reifier.setReified(this);
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -144,10 +153,11 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
-    if (parent == null || parent.parent == null)
+    if (parent == null || parent.parent == null) {
       return;
-    else
+    } else {
       topicmap.processEvent(this, event, new_value, old_value);
+    }
   }
 
   @Override

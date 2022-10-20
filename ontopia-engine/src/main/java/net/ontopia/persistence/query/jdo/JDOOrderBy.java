@@ -64,25 +64,30 @@ public class JDOOrderBy {
 
   @Override
   public int hashCode() {
-    if (isAggregate())      
+    if (isAggregate()) {      
       return aggregate.hashCode() + order;
-    else
+    } else {
       return value.hashCode() + order;
+    }
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOOrderBy) {
       JDOOrderBy other = (JDOOrderBy)obj;
       if (isAggregate()) {
-        if (!other.isAggregate())
+        if (!other.isAggregate()) {
           return false;
+        }
         return (aggregate.equals(other.aggregate)  &&
                 order == other.order);
       } else {
-        if (other.isAggregate())
+        if (other.isAggregate()) {
           return false;
+        }
         return (value.equals(other.value)  &&
                 order == other.order);        
       }
@@ -92,10 +97,11 @@ public class JDOOrderBy {
 
   @Override
   public String toString() {
-    if (aggregate == null)
+    if (aggregate == null) {
       return value + (order == ASCENDING ? " ascending" : " descending");
-    else 
+    } else {
       return aggregate + (order == ASCENDING ? " ascending" : " descending");
+    }
   }
   
 }

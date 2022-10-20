@@ -37,8 +37,12 @@ public class TopicNameComparator implements Comparator<TopicNameIF> {
     String value1 = o1.getValue();
     String value2 = o2.getValue();
 
-    if (value1 == null) return 1;
-    if (value2 == null) return -1;
+    if (value1 == null) {
+      return 1;
+    }
+    if (value2 == null) {
+      return -1;
+    }
     
     return value1.compareToIgnoreCase(value2);
   }

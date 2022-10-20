@@ -83,13 +83,15 @@ public class OnDemandValue {
       try {
       
         // Bind identity columns
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug("Binding object identity: " + identity);
+        }
         identity_field.bind(identity, stm, 1);
       
         // Execute statement
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug("Executing: " + sql_load);
+        }
         ResultSet rs = stm.executeQuery();
         try {
           // Exactly one row expected
@@ -109,11 +111,15 @@ public class OnDemandValue {
           }
         } finally {
           // Close result set
-          if (mustClose) rs.close();
+          if (mustClose) {
+            rs.close();
+          }
         }
       } finally {
         //! if (close_stm && stm != null) stm.close();
-        if (stm != null && mustClose) stm.close();
+        if (stm != null && mustClose) {
+          stm.close();
+        }
       }
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);

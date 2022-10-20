@@ -73,10 +73,14 @@ public class TopicModel<T extends Topic> extends MutableLoadableDetachableModel<
   @SuppressWarnings("unchecked")
   @Override
   protected T load() {
-    if (topicMapId == null) return null;
+    if (topicMapId == null) {
+      return null;
+    }
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
-    if (topicIf == null) return null;
+    if (topicIf == null) {
+      return null;
+    }
     switch (returnType) {
       case TYPE_ASSOCIATION_TYPE:
         return (T)new AssociationType(topicIf, tm);
@@ -108,11 +112,12 @@ public class TopicModel<T extends Topic> extends MutableLoadableDetachableModel<
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof TopicModel)
+    if (obj instanceof TopicModel) {
       return Objects.equals(topicMapId, ((TopicModel)obj).topicMapId) &&
         Objects.equals(topicId, ((TopicModel)obj).topicId);
-    else
+    } else {
       return false;
+    }
   }
 
   @Override

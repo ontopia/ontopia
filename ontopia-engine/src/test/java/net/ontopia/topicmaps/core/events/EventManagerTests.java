@@ -177,7 +177,9 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
       if (!equals) {
           StringBuilder sb = new StringBuilder();
           sb.append("Events not as expected:\n");
-          if (ix > -1) sb.append("Different at index: ").append(ix).append("\n");
+          if (ix > -1) {
+            sb.append("Different at index: ").append(ix).append("\n");
+          }
           sb.append("seen (").append(seenEvents.size()).append(")\n");
           for (int i=0; i < seenEvents.size(); i++) {
               sb.append(i).append(": ").append(seenEvents.get(i)).append("\n");

@@ -145,8 +145,9 @@ public class GeneralConfigFrame extends JFrame {
       @Override
       public void mouseClicked(MouseEvent anEvent) {
 
-        if (anEvent.getClickCount() == 2)
-            exclude((TopicListItem) included.getSelectedValue());
+        if (anEvent.getClickCount() == 2) {
+          exclude((TopicListItem) included.getSelectedValue());
+        }
       }
     });
 
@@ -155,8 +156,9 @@ public class GeneralConfigFrame extends JFrame {
     excluded.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent anEvent) {
-        if (anEvent.getClickCount() == 2)
-            include((TopicListItem) excluded.getSelectedValue());
+        if (anEvent.getClickCount() == 2) {
+          include((TopicListItem) excluded.getSelectedValue());
+        }
       }
     });
 
@@ -223,9 +225,12 @@ public class GeneralConfigFrame extends JFrame {
     Iterator iterator = topics.iterator();
     while (iterator.hasNext()) {
       TopicIF type = (TopicIF) iterator.next();
-      if (controller.getConfigurationManager().isTypeExcluded(type)) this.excludedTopicTypes
-          .add(new TopicListItem(type, controller.getStringifier()));
-      else this.includedTopicTypes.add(new TopicListItem(type, controller.getStringifier()));
+      if (controller.getConfigurationManager().isTypeExcluded(type)) {
+        this.excludedTopicTypes
+                .add(new TopicListItem(type, controller.getStringifier()));
+      } else {
+        this.includedTopicTypes.add(new TopicListItem(type, controller.getStringifier()));
+      }
     }
     this.setListDate(included, includedTopicTypes);
     this.setListDate(excluded, excludedTopicTypes);
@@ -241,8 +246,9 @@ public class GeneralConfigFrame extends JFrame {
     main.add(createMouseButtonConfigurationPanel());
     main.add(createHoverHelpPanel());
     main.add(createLocalityPanel());
-    if (VizDebugUtils.ENABLE_MOTION_CONFIGURATION)
+    if (VizDebugUtils.ENABLE_MOTION_CONFIGURATION) {
       main.add(createMotionPanel());
+    }
     main.add(createNameLengthPanel());
     return main;
   }

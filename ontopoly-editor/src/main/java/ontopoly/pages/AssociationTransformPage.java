@@ -83,7 +83,9 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
         setResponsePage(AssociationTransformPage.class, pageParameters);
       }
     };
-    if (lockPanel.isLockedByOther()) setReadOnlyPage(true);
+    if (lockPanel.isLockedByOther()) {
+      setReadOnlyPage(true);
+    }
     add(lockPanel);
     
     // Adding part containing title and help link

@@ -68,10 +68,11 @@ public class TypePredicate
     if (args[0] instanceof TypedIF && args[1] instanceof TopicIF) {
 
       // Do direct predicate evaluation
-      if (args[1].equals(((TypedIF)args[0]).getType()))
+      if (args[1].equals(((TypedIF)args[0]).getType())) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
             
     } else {                  
             
@@ -82,8 +83,9 @@ public class TypePredicate
       expressions.add(new JDOEquals(new JDOField(jv_typed, "type"), jv_type));
 
       // if variable: filter out nulls
-      if (jv_type.getType() == JDOValueIF.VARIABLE)
+      if (jv_type.getType() == JDOValueIF.VARIABLE) {
         expressions.add(new JDONotEquals(jv_type, new JDONull()));
+      }
             
       // JDOQL: O.topicmap = TOPICMAP
       expressions.add(new JDOEquals(new JDOField(jv_typed, "topicmap"),

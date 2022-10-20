@@ -46,12 +46,15 @@ public abstract class RegexValidator extends AbstractValidator<String> {
     final String value = validatable.getValue();
     final String regex = getRegex();
     
-    if (value == null) return;
+    if (value == null) {
+      return;
+    }
     try {
-      if (value.matches(regex))
+      if (value.matches(regex)) {
         return;
-      else
+      } else {
         reportError(resourceKeyInvalidValue(), value, regex);
+      }
               
     } catch (PatternSyntaxException e) {
       reportError(resourceKeyInvalidRegex(), value, regex);

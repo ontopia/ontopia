@@ -159,8 +159,9 @@ public class VariantImpl extends DatatypeAwareImpl implements Variant {
   @Override
   public void removeTheme(Topic theme) {
     explicitScope.remove(theme);
-    if (!getParent().getScope().contains(theme))
+    if (!getParent().getScope().contains(theme)) {
       super.removeTheme(theme);
+    }
   }
 
   @Override

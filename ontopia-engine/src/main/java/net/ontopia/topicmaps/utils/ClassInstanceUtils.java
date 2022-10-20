@@ -81,8 +81,9 @@ public class ClassInstanceUtils {
 
     if (classinstance == null ||
         klass == null ||
-        instance == null)
+        instance == null) {
       return;
+    }
 
     // then, get the index
     ClassInstanceIndexIF typeIndex = (ClassInstanceIndexIF)
@@ -94,8 +95,9 @@ public class ClassInstanceUtils {
       AssociationIF assoc = it.next();
       if (assoc.getRoles().size() != 2 ||
           !assoc.getScope().isEmpty() ||
-          assoc.getReifier() != null)
+          assoc.getReifier() != null) {
         continue;
+      }
       
       TopicIF klasstopic = null;
       TopicIF insttopic = null;
@@ -104,18 +106,20 @@ public class ClassInstanceUtils {
       while (it2.hasNext()) {
         AssociationRoleIF role = it2.next();
         TopicIF type = role.getType();
-        if (type == null)
+        if (type == null) {
           break;
-        else if (type.equals(klass))
+        } else if (type.equals(klass)) {
           klasstopic = role.getPlayer();
-        else if (type.equals(instance))
+        } else if (type.equals(instance)) {
           insttopic = role.getPlayer();
-        else
+        } else {
           break;
+        }
       }
 
-      if (klasstopic == null || insttopic == null)
+      if (klasstopic == null || insttopic == null) {
         continue;
+      }
 
       insttopic.addType(klasstopic);
       assoc.remove();
@@ -149,9 +153,13 @@ public class ClassInstanceUtils {
     while (iter.hasNext()) {
       Object object = iter.next();
       if (object instanceof TypedIF) {
-        if (isInstanceOf((TypedIF)object, type)) result.add(object);
+        if (isInstanceOf((TypedIF)object, type)) {
+          result.add(object);
+        }
       } else {
-        if (isInstanceOf((TopicIF)object, type)) result.add(object);
+        if (isInstanceOf((TopicIF)object, type)) {
+          result.add(object);
+        }
       }
     }
     return result;
@@ -174,10 +182,11 @@ public class ClassInstanceUtils {
     Iterator iter = typed.iterator();
     while (iter.hasNext()) {
       Object object = iter.next();
-      if (object instanceof TypedIF)
+      if (object instanceof TypedIF) {
         accumulated.add(((TypedIF)object).getType());
-      else
+      } else {
         accumulated.add(((TopicIF)object).getTypes());
+      }
     }
     return accumulated;
   }
@@ -206,14 +215,18 @@ public class ClassInstanceUtils {
       if (object instanceof TypedIF) {
         // TypedIF
         type = ((TypedIF)object).getType();
-        if (!accumulated.containsKey(type)) accumulated.put(type, new HashSet());
+        if (!accumulated.containsKey(type)) {
+          accumulated.put(type, new HashSet());
+        }
         ((Set)accumulated.get(type)).add(object);
       } else {
         // TopicIF
         Iterator<TopicIF> iter2 = ((TopicIF)object).getTypes().iterator();
         while (iter2.hasNext()) {
           type = iter2.next();
-          if (!accumulated.containsKey(type)) accumulated.put(type, new HashSet());
+          if (!accumulated.containsKey(type)) {
+            accumulated.put(type, new HashSet());
+          }
           ((Set)accumulated.get(type)).add(object);
         }
 

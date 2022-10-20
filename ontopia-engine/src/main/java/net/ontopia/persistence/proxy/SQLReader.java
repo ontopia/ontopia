@@ -47,7 +47,9 @@ public class SQLReader extends FilterReader {
   @Override
   public int read() throws IOException {
     int result = super.read();
-    if (result == -1) close();
+    if (result == -1) {
+      close();
+    }
     return result;
   }
 

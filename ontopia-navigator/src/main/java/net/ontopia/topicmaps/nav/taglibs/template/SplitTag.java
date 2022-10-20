@@ -36,8 +36,9 @@ public class SplitTag extends TagSupport {
   @Override
   public int doStartTag() throws JspException {
     PutTag parent = (PutTag) findAncestorWithClass(this, PutTag.class);
-    if (parent == null)
+    if (parent == null) {
       throw new JspException("Split tag has no template:put ancestor.");
+    }
 
     try {
       pageContext.getOut().print(TOKEN);

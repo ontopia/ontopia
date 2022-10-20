@@ -44,8 +44,9 @@ public class Argument {
 
   public Class<?>[] getTypes() {
     Class<?>[] a = new Class<?>[types.size()];
-    for (int ix = 0; ix < a.length; ix++)
+    for (int ix = 0; ix < a.length; ix++) {
       a[ix] = types.get(ix);
+    }
     return a;
   }
 
@@ -84,8 +85,9 @@ public class Argument {
   public boolean allows(Class<?> type) {
     for (int ix = 0; ix < types.size(); ix++) {
       Class<?> required = types.get(ix);
-      if (required.isAssignableFrom(type))
+      if (required.isAssignableFrom(type)) {
         return true;
+      }
     }
     return false;
   }

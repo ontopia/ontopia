@@ -187,12 +187,13 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * @return true if access allowed
    */
   public boolean filterTopic(Topic topic) {
-    if (isAdministrationEnabled())
+    if (isAdministrationEnabled()) {
       return OntopolyUtils.filterTopicByAdministratorRole(topic);
-    else if (isAnnotationEnabled())
+    } else if (isAnnotationEnabled()) {
       return OntopolyUtils.filterTopicByAnnotationRole(topic);
-    else
+    } else {
       return OntopolyUtils.filterTopicByDefaultRole(topic);
+    }
   }
 
   /**
@@ -201,12 +202,13 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * @param topics the topics to check rights for
    */
   public void filterTopics(Collection<? extends Topic> topics) {
-    if (isAdministrationEnabled())
+    if (isAdministrationEnabled()) {
       OntopolyUtils.filterTopicsByAdministratorRole(topics);
-    else if (isAnnotationEnabled())
+    } else if (isAnnotationEnabled()) {
       OntopolyUtils.filterTopicsByAnnotationRole(topics);
-    else
+    } else {
       OntopolyUtils.filterTopicsByDefaultRole(topics);
+    }
   }
   
   /**
@@ -215,10 +217,11 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    */
   public String getLabel(Topic topic) {
 	String name;
-    if (topic instanceof FieldDefinition)
+    if (topic instanceof FieldDefinition) {
       name = ((FieldDefinition)topic).getFieldName();
-    else
+  } else {
       name = topic.getName();
+  }
     return name == null ? "[No name]" : name;
   }
  
@@ -246,8 +249,9 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
     if (thisParams != null) {
       // forward ontology parameter (if applicable)
       String ontology = thisParams.getString("ontology");
-      if (ontology != null && topic.isOntologyTopic())
+      if (ontology != null && topic.isOntologyTopic()) {
         params.put("ontology", "true");
+      }
     }    
     return params;    
   }

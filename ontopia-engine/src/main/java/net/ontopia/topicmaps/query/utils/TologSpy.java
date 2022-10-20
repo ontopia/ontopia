@@ -67,7 +67,8 @@ public class TologSpy {
    * INTERNAL: Records data about a query.
    */
   public static void recordExecute(TologQuery query, long start, long end) {
-    if (is_recording)
+    if (is_recording) {
       profiler.recordExecute(query.toString(), start, end);
+    }
   }
 }

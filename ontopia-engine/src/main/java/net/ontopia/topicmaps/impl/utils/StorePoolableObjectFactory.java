@@ -70,7 +70,9 @@ public class StorePoolableObjectFactory
     AbstractTopicMapStore s = (AbstractTopicMapStore)o;
     stores.remove(s);
     // close topic map store
-    if (s.isOpen()) s.close(false);    
+    if (s.isOpen()) {
+      s.close(false);
+    }    
   }
 
   @Override

@@ -53,10 +53,11 @@ public class CSVExport {
   }
 
   protected String escape(String value) {
-    if (value == null)
+    if (value == null) {
       return "";
-    else
+    } else {
       return value;
+    }
   }
 
   public void exportCSV(Writer writer, String table, String[] columns) throws SQLException, IOException {
@@ -65,7 +66,9 @@ public class CSVExport {
     try {
       while (rs.next()) {
         for (int i = 1; i <= columns.length; i++) {
-          if (i > 1) writer.write(separator);
+          if (i > 1) {
+            writer.write(separator);
+          }
           writer.write('"');
           String value = rs.getString(i);
           if (value != null) {
@@ -150,8 +153,9 @@ public class CSVExport {
     private String separator = ";";
     @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
-      if (option == 's')
+      if (option == 's') {
         separator = value;
+      }
     }
   }
   

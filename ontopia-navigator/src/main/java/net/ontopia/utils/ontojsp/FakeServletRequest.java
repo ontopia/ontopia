@@ -83,10 +83,11 @@ public class FakeServletRequest implements HttpServletRequest {
 
   @Override
   public void setAttribute(String name, Object value) {
-    if (value == null) 
+    if (value == null) { 
       attrs.remove(name);
-    else 
+    } else {
       attrs.put(name, value);
+    }
   }
 
   @Override
@@ -148,14 +149,17 @@ public class FakeServletRequest implements HttpServletRequest {
   public String getParameter(String name) {
     Object retVal = params.get(name);
     
-    if (retVal == null)
+    if (retVal == null) {
       return null;
+    }
     
-    if (retVal instanceof String[])
+    if (retVal instanceof String[]) {
       retVal = ((String[])retVal)[0];
+    }
     
-    if (retVal instanceof String)
+    if (retVal instanceof String) {
       return (String)retVal;
+    }
 
     throw new OntopiaRuntimeException("The parameter name " + name
         + " should have returened a String or array of Strings, but gave a " 
@@ -293,8 +297,9 @@ public class FakeServletRequest implements HttpServletRequest {
   
   @Override
   public javax.servlet.http.HttpSession getSession() {
-    if (session == null)
+    if (session == null) {
       session = new FakeHttpSession(context);
+    }
     return session;
   }
   

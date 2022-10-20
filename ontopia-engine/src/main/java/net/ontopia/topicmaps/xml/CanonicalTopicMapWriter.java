@@ -96,8 +96,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       export(topicmap, out);
     }
     catch (SAXException e) {
-      if (e.getException() instanceof IOException)
+      if (e.getException() instanceof IOException) {
         throw (IOException) e.getException();
+      }
       throw new IOException("XML writing problem: " + e.toString());
     }
   }
@@ -136,13 +137,15 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     // topics
     ContextHolder context = createContext(topicmap);
     Iterator<TopicIF> it = context.topicsInOrder(topicmap.getTopics());
-    while (it.hasNext()) 
+    while (it.hasNext()) {
       writeTopic(it.next(), dh, context);
+    }
 
     // associations
     Iterator<AssociationIF> ait = context.assocsInOrder(topicmap.getAssociations());
-    while (ait.hasNext()) 
+    while (ait.hasNext()) {
       writeAssociation(ait.next(), dh, context);
+    }
         
     dh.endElement("", "", "topicMap");
     dh.endDocument();
@@ -154,8 +157,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
         
     Iterator<TopicIF> it = context.topicsInOrder(topicmap.getTopics());
     int counter = 1;
-    while (it.hasNext())
+    while (it.hasNext()) {
       topicIds.put(it.next(), "id" + Integer.toString(counter++));
+    }
         
     return context;
   }
@@ -170,8 +174,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     // instanceOf
     if (topic.getTypes().size() != 0) {
       Iterator<TopicIF> it = context.topicRefsInOrder(topic.getTypes());
-      while (it.hasNext())
+      while (it.hasNext()) {
         writeInstanceOf(it.next(), dh, context);
+      }
     }
         
     // subjectIdentity
@@ -181,8 +186,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
       Iterator<LocatorIF> it = orderedIterator(topic.getSubjectLocators(),
                            Comparator.comparing(LocatorIF::getExternalForm));
-      while (it.hasNext())
+      while (it.hasNext()) {
         writeResourceRef(it.next(), dh);
+      }
 
       it = orderedIterator(topic.getSubjectIdentifiers(),
                            Comparator.comparing(LocatorIF::getExternalForm));
@@ -200,8 +206,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     // baseName
     if (topic.getTopicNames().size() > 0) {
       Iterator<TopicNameIF> it = context.baseNamesInOrder(topic.getTopicNames());
-      while (it.hasNext())
+      while (it.hasNext()) {
         writeTopicName(it.next(), dh, context);
+      }
     }
         
     // occurrences
@@ -210,13 +217,15 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     while (it.hasNext()) {
       OccurrenceIF occ = it.next();
       dh.startElement("", "", "occurrence", empty);
-      if (occ.getType() != null)
+      if (occ.getType() != null) {
         writeInstanceOf(occ.getType(), dh, context);
+      }
       writeScope(occ, dh, context);
-      if (occ.getLocator() != null)
+      if (occ.getLocator() != null) {
         writeResourceRef(occ.getLocator(), dh);
-      else
+      } else {
         writeResourceData(occ.getValue(), dh);
+      }
       dh.endElement("", "", "occurrence");
     }
             
@@ -237,8 +246,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       dh.startElement("", "", "scope", empty);
         
       Iterator<TopicIF> it = context.topicRefsInOrder(scoped.getScope());
-      while (it.hasNext())
+      while (it.hasNext()) {
         writeTopicRef(it.next(), dh, context);
+      }
 
       dh.endElement("", "", "scope");
     }
@@ -273,8 +283,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   private void writeTopicName(TopicNameIF basename, ContentHandler dh,
                              ContextHolder context) throws SAXException {
     dh.startElement("", "", "baseName", empty);
-    if (basename.getType() != null)
+    if (basename.getType() != null) {
       writeInstanceOf(basename.getType(), dh, context);
+    }
     writeScope(basename, dh, context);
 
     dh.startElement("", "", "baseNameString", empty);
@@ -286,8 +297,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
     if (basename.getVariants().size() > 0) {
       Iterator<VariantNameIF> it = context.variantsInOrder(basename.getVariants());
-      while (it.hasNext()) 
+      while (it.hasNext()) {
         writeVariant(it.next(), dh, context);
+      }
     }
     dh.endElement("", "", "baseName");
   }
@@ -298,10 +310,11 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     writeScope(variant, dh, context);
 
     dh.startElement("", "", "variantName", empty);
-    if (variant.getLocator() == null) 
+    if (variant.getLocator() == null) { 
       writeResourceData(variant.getValue(), dh);
-    else
+    } else {
       writeResourceRef(variant.getLocator(), dh);
+    }
     dh.endElement("", "", "variantName");    
     dh.endElement("", "", "variant");
   }
@@ -309,18 +322,21 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   private void writeAssociation(AssociationIF assoc, ContentHandler dh,
                                 ContextHolder context) throws SAXException {
     dh.startElement("", "", "association", empty);
-    if (assoc.getType() != null)
+    if (assoc.getType() != null) {
       writeInstanceOf(assoc.getType(), dh, context);
+    }
     writeScope(assoc, dh, context);
 
     Iterator<AssociationRoleIF> it = context.rolesInOrder(assoc.getRoles());
     while (it.hasNext()) {
       AssociationRoleIF role = it.next();
       dh.startElement("", "", "member", empty);
-      if (role.getType() != null)
+      if (role.getType() != null) {
         writeInstanceOf(role.getType(), dh, context);
-      if (role.getPlayer() != null)
+      }
+      if (role.getPlayer() != null) {
         writeTopicRef(role.getPlayer(), dh, context);
+      }
       dh.endElement("", "", "member");
     }
         
@@ -337,25 +353,28 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   private String resolveRelative(LocatorIF locator) {
     // resolve locator relatively to base locator
-    if (baseloc == null)
+    if (baseloc == null) {
       return locator.getExternalForm();
-    else {
+    } else {
       // HACK: replace this code with baseloc.resolveRelative(locator);      
       String base = baseloc.getExternalForm();
       String address = locator.getExternalForm();
 
       String pbase = null;
       int lix = base.lastIndexOf('/');
-      if (lix > 0) pbase = base.substring(0, lix+1);
+      if (lix > 0) {
+        pbase = base.substring(0, lix+1);
+      }
 
       // TODO: walk up the entire path this way
 
-      if (address.startsWith(base))
+      if (address.startsWith(base)) {
         return address.substring(base.length());
-      else if (pbase != null && address.startsWith(pbase))
+      } else if (pbase != null && address.startsWith(pbase)) {
         return address.substring(pbase.length());
-      else
+      } else {
         return address;
+      }
     }
   }
 
@@ -375,10 +394,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     protected <O> int compareObjects(Comparable<O> obj1, O obj2) {
       // Compares two objects; null values means lower ordering
       if (obj1 == null) {
-        if (obj2 != null) return -1;
+        if (obj2 != null) {
+          return -1;
+        }
         return 0;
       } else {
-        if (obj2 == null) return 1;
+        if (obj2 == null) {
+          return 1;
+        }
         return obj1.compareTo(obj2);
       }
     }
@@ -386,10 +409,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     protected <O> int compareObjects(O obj1, O obj2, Comparator<? super O> comparator) {
       // Compares two objects; null values means lower ordering
       if (obj1 == null) {
-        if (obj2 != null) return -1;
+        if (obj2 != null) {
+          return -1;
+        }
         return 0;
       } else {
-        if (obj2 == null) return 1;
+        if (obj2 == null) {
+          return 1;
+        }
         return comparator.compare(obj1, obj2);
       }
     }
@@ -406,57 +433,76 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       int length = (array1.length < array2.length ? array1.length : array2.length);
       for (int i=0; i < length; i++) {
         int cval = comparator.compare((O)array1[i], (O)array2[i]);
-        if (cval != 0) return cval;
+        if (cval != 0) {
+          return cval;
+        }
       }
       // Compare array sizes
-      if (array1.length > array2.length)
+      if (array1.length > array2.length) {
         return 1;
-      else if (array1.length < array2.length)
+      } else if (array1.length < array2.length) {
         return -1;
-      else
+      } else {
         return 0;
+      }
     }
   }
   
   static class TopicComparator extends AbstractComparator<TopicIF> {
     protected static TopicComparator instance;
     public static TopicComparator getInstance() {
-      if (instance == null) instance = new TopicComparator();
+      if (instance == null) {
+        instance = new TopicComparator();
+      }
       return instance;      
     }    
     @Override
     public int compare(TopicIF topic1, TopicIF topic2) {
-      if (topic1 == topic2) return 0;
+      if (topic1 == topic2) {
+        return 0;
+      }
 
       // Compare the subject
       int cval0 = compareCollections(topic1.getSubjectLocators(), topic2.getSubjectLocators(),
                                      LocatorComparator.getInstance());
-      if (cval0 != 0) return cval0;
+      if (cval0 != 0) {
+        return cval0;
+      }
 
       // Compare subject indicators
       int cval1 = compareCollections(topic1.getSubjectIdentifiers(), topic2.getSubjectIdentifiers(),
                                      LocatorComparator.getInstance());
-      if (cval1 != 0) return cval1;
+      if (cval1 != 0) {
+        return cval1;
+      }
 
       // Compare basenames
       int cval2 = compareCollections(topic1.getTopicNames(), topic2.getTopicNames(),
                                      TopicNameComparator.getInstance());
-      if (cval2 != 0) return cval2;
+      if (cval2 != 0) {
+        return cval2;
+      }
 
       // Compare occurrences
       int cval3 = compareCollections(topic1.getOccurrences(), topic2.getOccurrences(),
                                      OccurrenceComparator.getInstance());
-      if (cval3 != 0) return cval3;
+      if (cval3 != 0) {
+        return cval3;
+      }
 
       // Compare types
       int cval4 = compareCollections(topic1.getTypes(), topic2.getTypes(),
                                      TopicComparator.getInstance());
-      if (cval4 != 0) return cval4;
+      if (cval4 != 0) {
+        return cval4;
+      }
 
       // Compare source locators
       int cval5 = compareCollections(topic1.getItemIdentifiers(), topic2.getItemIdentifiers(),
                                      LocatorComparator.getInstance());
-      if (cval5 != 0) return cval5;
+      if (cval5 != 0) {
+        return cval5;
+      }
       
       // Compare object ids
       return topic1.getObjectId().compareTo(topic2.getObjectId());
@@ -466,16 +512,22 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   static class LocatorComparator extends AbstractComparator<LocatorIF> {
     protected static LocatorComparator instance;
     public static LocatorComparator getInstance() {
-      if (instance == null) instance = new LocatorComparator();
+      if (instance == null) {
+        instance = new LocatorComparator();
+      }
       return instance;      
     }
     @Override
     public int compare(LocatorIF loc1, LocatorIF loc2) {
-      if (loc1 == loc2) return 0;
+      if (loc1 == loc2) {
+        return 0;
+      }
 
       // Compare address
       int c_address = loc1.getExternalForm().compareTo(loc2.getExternalForm());
-      if (c_address != 0) return c_address;
+      if (c_address != 0) {
+        return c_address;
+      }
 
       // Compare notation
       return loc1.getNotation().compareTo(loc2.getNotation());
@@ -485,21 +537,29 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   static class TopicNameComparator extends AbstractComparator<TopicNameIF> {
     protected static TopicNameComparator instance;
     public static TopicNameComparator getInstance() {
-      if (instance == null) instance = new TopicNameComparator();
+      if (instance == null) {
+        instance = new TopicNameComparator();
+      }
       return instance;      
     }
     @Override
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
-      if (Objects.equals(bn1, bn2)) return 0;
+      if (Objects.equals(bn1, bn2)) {
+        return 0;
+      }
       
       // Compare basename values
       int cval1 = compareObjects(bn1.getValue(), bn2.getValue());
-      if (cval1 != 0) return cval1;
+      if (cval1 != 0) {
+        return cval1;
+      }
       
       // Compare scope
       int cval2 = compareCollections(bn1.getScope(), bn2.getScope(),
                                      TopicComparator.getInstance());
-      if (cval2 != 0) return cval2;
+      if (cval2 != 0) {
+        return cval2;
+      }
       
       // Compare variant names
       return compareCollections(bn1.getVariants(), bn2.getVariants(),
@@ -510,21 +570,29 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   static class VariantNameComparator extends AbstractComparator<VariantNameIF> {
     protected static VariantNameComparator instance;
     public static VariantNameComparator getInstance() {
-      if (instance == null) instance = new VariantNameComparator();
+      if (instance == null) {
+        instance = new VariantNameComparator();
+      }
       return instance;      
     }
     @Override
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
-      if (vn1 == vn2) return 0;
+      if (vn1 == vn2) {
+        return 0;
+      }
       
       // Compare variant name values
       int cval1 = compareObjects(vn1.getValue(), vn2.getValue());
-      if (cval1 != 0) return cval1;
+      if (cval1 != 0) {
+        return cval1;
+      }
       
       // Compare variant name locators
       int cval2 = compareObjects(vn1.getLocator(), vn2.getLocator(),
                                  LocatorComparator.getInstance());
-      if (cval2 != 0) return cval2;
+      if (cval2 != 0) {
+        return cval2;
+      }
       
       // Compare scope
       return compareCollections(vn1.getScope(), vn2.getScope(),
@@ -535,26 +603,36 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   static class OccurrenceComparator extends AbstractComparator<OccurrenceIF> {
     protected static OccurrenceComparator instance;
     public static OccurrenceComparator getInstance() {
-      if (instance == null) instance = new OccurrenceComparator();
+      if (instance == null) {
+        instance = new OccurrenceComparator();
+      }
       return instance;      
     }
     @Override
     public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
-      if (occ1 == occ2) return 0;
+      if (occ1 == occ2) {
+        return 0;
+      }
       
       // Compare occurrence values
       int cval1 = compareObjects(occ1.getValue(), occ2.getValue());
-      if (cval1 != 0) return cval1;
+      if (cval1 != 0) {
+        return cval1;
+      }
       
       // Compare occurrence locators
       int cval2 = compareObjects(occ1.getLocator(), occ2.getLocator(),
                                  LocatorComparator.getInstance());
-      if (cval2 != 0) return cval2;
+      if (cval2 != 0) {
+        return cval2;
+      }
       
       // Compare type
       int cval3 = compareObjects(occ1.getType(), occ2.getType(),
                                  TopicComparator.getInstance());
-      if (cval3 != 0) return cval3;
+      if (cval3 != 0) {
+        return cval3;
+      }
       
       // Compare scope
       return compareCollections(occ1.getScope(), occ2.getScope(),
@@ -565,22 +643,30 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   static class AssociationComparator extends AbstractComparator<AssociationIF> {
     protected static AssociationComparator instance;
     public static AssociationComparator getInstance() {
-      if (instance == null) instance = new AssociationComparator();
+      if (instance == null) {
+        instance = new AssociationComparator();
+      }
       return instance;      
     }
     @Override
     public int compare(AssociationIF assoc1, AssociationIF assoc2) {
-      if (Objects.equals(assoc1, assoc2)) return 0;
+      if (Objects.equals(assoc1, assoc2)) {
+        return 0;
+      }
       
       // Compare type
       int cval1 = compareObjects(assoc1.getType(), assoc2.getType(),
                                  TopicComparator.getInstance());
-      if (cval1 != 0) return cval1;
+      if (cval1 != 0) {
+        return cval1;
+      }
       
       // Compare scope
       int cval2 = compareCollections(assoc1.getScope(), assoc2.getScope(),
                                      TopicComparator.getInstance());
-      if (cval2 != 0) return cval2;
+      if (cval2 != 0) {
+        return cval2;
+      }
       
       // Compare roles
       return compareCollections(assoc1.getRoles(), assoc2.getRoles(),
@@ -591,17 +677,23 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   static class AssociationRoleComparator extends AbstractComparator<AssociationRoleIF> {
     protected static AssociationRoleComparator instance;
     public static AssociationRoleComparator getInstance() {
-      if (instance == null) instance = new AssociationRoleComparator();
+      if (instance == null) {
+        instance = new AssociationRoleComparator();
+      }
       return instance;      
     }
     @Override
     public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
-      if (Objects.equals(role1, role2)) return 0;
+      if (Objects.equals(role1, role2)) {
+        return 0;
+      }
       
       // Compare types
       int cval2 = compareObjects(role1.getType(), role2.getType(),
                                  TopicComparator.getInstance());
-      if (cval2 != 0) return cval2;
+      if (cval2 != 0) {
+        return cval2;
+      }
       
       // Compare players
       return compareObjects(role1.getPlayer(), role2.getPlayer(),
@@ -675,8 +767,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       if (!"baseNameString".equals(name) && 
           !"resourceData".equals(name) && !"topicRef".equals(name) &&
           !"instanceOf".equals(name) && !"resourceRef".equals(name) &&
-          !"subjectIndicatorRef".equals(name))
+          !"subjectIndicatorRef".equals(name)) {
         writer.print("\n");
+      }
     }
 
     @Override

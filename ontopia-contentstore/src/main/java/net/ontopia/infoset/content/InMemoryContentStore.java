@@ -40,8 +40,9 @@ public class InMemoryContentStore implements ContentStoreIF {
   // --- Static interface
 
   public static ContentStoreIF getInstance(TopicMapIF topicmap) {
-    if (store == null)
+    if (store == null) {
       store = new InMemoryContentStore();
+    }
     return store;
   }
 
@@ -59,8 +60,9 @@ public class InMemoryContentStore implements ContentStoreIF {
   @Override
   public ContentInputStream get(int key) throws ContentStoreException {
     byte[] data = content.get(key);
-    if (data == null)
+    if (data == null) {
       throw new ContentStoreException("No content for key " + key);
+    }
     return new ContentInputStream(new ByteArrayInputStream(data), data.length);
   }
 

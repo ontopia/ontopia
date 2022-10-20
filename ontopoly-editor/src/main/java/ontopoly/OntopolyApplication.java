@@ -109,8 +109,9 @@ public class OntopolyApplication extends WebApplication implements Serializable 
   }
   
   public synchronized OntopolyRepository getOntopolyRepository() {
-    if (repository == null)
+    if (repository == null) {
       repository = new OntopolyRepository();
+    }
     return repository;
   }
   

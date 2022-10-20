@@ -61,16 +61,21 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
   }
 
   protected void addContentField(DocumentIF doc, String value) {
-    if (value != null)
+    if (value != null) {
       doc.addField(GenericField.createTextField("content", value));
+    }
   }
 
   protected void addLocatorField(DocumentIF doc, LocatorIF locator) {
     if (locator != null) {
 			String notation = locator.getNotation();
       String address = locator.getAddress();      
-      if (notation != null) doc.addField(GenericField.createTextField("notation", notation));
-      if (address != null) doc.addField(GenericField.createTextField("address", address));
+      if (notation != null) {
+        doc.addField(GenericField.createTextField("notation", notation));
+      }
+      if (address != null) {
+        doc.addField(GenericField.createTextField("address", address));
+      }
     }
   }
     
@@ -108,10 +113,11 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     DocumentIF doc = createDocument();
     // Add fields
     addObjectFields(doc, occur, "O");
-    if (Objects.equals(occur.getDataType(), DataTypes.TYPE_URI))
-			addLocatorField(doc, occur.getLocator());
-		else
-			addContentField(doc, occur.getValue());
+    if (Objects.equals(occur.getDataType(), DataTypes.TYPE_URI)) {
+      addLocatorField(doc, occur.getLocator());
+    } else {
+      addContentField(doc, occur.getValue());
+    }
     return doc;
   }
 
@@ -121,10 +127,11 @@ public class DefaultTopicMapDocumentGenerator implements TopicMapDocumentGenerat
     DocumentIF doc = createDocument();
     // Add fields
     addObjectFields(doc, variant, "N");
-    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI))
-			addLocatorField(doc, variant.getLocator());
-		else
-    addContentField(doc, variant.getValue());
+    if (Objects.equals(variant.getDataType(), DataTypes.TYPE_URI)) {
+      addLocatorField(doc, variant.getLocator());
+    } else {
+      addContentField(doc, variant.getValue());
+    }
     return doc;
   }
 

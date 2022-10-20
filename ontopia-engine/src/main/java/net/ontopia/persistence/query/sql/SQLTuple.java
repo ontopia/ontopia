@@ -46,8 +46,9 @@ public class SQLTuple implements SQLValueIF {
   }
   
   public SQLTuple(SQLValueIF[] values) {
-    if (values == null)
-      throw new IllegalArgumentException("Tuples values cannot be null.");    
+    if (values == null) {
+      throw new IllegalArgumentException("Tuples values cannot be null.");
+    }    
     this.values = values;
     // Compute arity
     // TODO: Should this rather be done on demand instead?
@@ -124,8 +125,9 @@ public class SQLTuple implements SQLValueIF {
   public boolean equals(Object obj) {
     if (obj instanceof SQLTuple) {
       SQLTuple other = (SQLTuple)obj;
-      if (Arrays.equals(values, other.getValues()))
+      if (Arrays.equals(values, other.getValues())) {
         return true;
+      }
     }
     return false;
   }
@@ -135,7 +137,9 @@ public class SQLTuple implements SQLValueIF {
     StringBuilder sb = new StringBuilder();
     sb.append("tuple:").append(arity).append(":(");
     for (int i=0; i < values.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append(values[i]);
     }
     sb.append(')');

@@ -160,8 +160,9 @@ public class OccurrencePredicateTest extends AbstractPredicateTest {
     Iterator it = topic.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it.next();
-      if (type.equals(occ.getType()))
+      if (type.equals(occ.getType())) {
         return occ;
+      }
     }
     return null;
   }

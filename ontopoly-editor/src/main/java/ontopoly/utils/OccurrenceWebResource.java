@@ -56,7 +56,9 @@ public class OccurrenceWebResource extends WebResource {
   }
 
   public static final IResourceStream getResourceStream(OccurrenceIF occ)  {
-    if (occ == null) return null;
+    if (occ == null) {
+      return null;
+    }
     Reader reader = occ.getReader();
     return (reader == null ? null : new Base64EncodedResourceStream(reader));
   }

@@ -81,18 +81,22 @@ public class TopicComparator implements Comparator<TopicIF> {
     // for every list of topics. could probably do more to make it
     // faster.
 
-    if (o1 == null)
+    if (o1 == null) {
       return 1;
-    if (o2 == null)
+    }
+    if (o2 == null) {
       return -1;
+    }
 
     String n1 = nameStringifier.apply(nameGrabber.apply(o1));
     String n2 = nameStringifier.apply(nameGrabber.apply(o2));
 
-    if (n1 == null)
+    if (n1 == null) {
       return 1;
-    if (n2 == null)
+    }
+    if (n2 == null) {
       return -1;
+    }
     
     return n1.compareToIgnoreCase(n2);
   }

@@ -92,8 +92,9 @@ public class MotionKiller extends TimerTask {
    */
   @Override
   public void run() {
-    if (!enabled)
+    if (!enabled) {
       return;
+    }
     stopMotion();
   }
   
@@ -132,17 +133,19 @@ public class MotionKiller extends TimerTask {
       // layouting. Wait a bit longer than usual by only executing
       // some of the times (frequency: 1 / maxCycle)
       cycle++;
-      if (cycle >= maxCycle)
+      if (cycle >= maxCycle) {
         cycle = 0;
-      else
+      } else {
         return;
+      }
     }
     
     if (waitUntil1 != 0) {
       // This execution is soon after a call to a waitFor().
       // Check if the wait to slow down the motion has been long enough.
-      if (System.currentTimeMillis() <  waitUntil1)
+      if (System.currentTimeMillis() <  waitUntil1) {
         return;
+      }
       waitUntil1 = 0;
     }
     tgPanel.stopMotion();
@@ -150,8 +153,9 @@ public class MotionKiller extends TimerTask {
     if (waitUntil2 != 0) {
       // This execution is soon after a call to a waitFor().
       // Check if the wait to stop the motion has been long enough.
-      if (System.currentTimeMillis() <  waitUntil2)
+      if (System.currentTimeMillis() <  waitUntil2) {
         return;
+      }
       waitUntil2 = 0;
     }
     tgPanel.stopMotion();

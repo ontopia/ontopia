@@ -54,8 +54,9 @@ public class FlatQueryResultIterator implements Iterator  {
   
   @Override
   public Object next() {
-    if (next == null)
+    if (next == null) {
       throw new NoSuchElementException();
+    }
 
     Object current = next;
     next = findNext();
@@ -69,8 +70,9 @@ public class FlatQueryResultIterator implements Iterator  {
       next = result.getValue(next_column++);
 
       Object previous = previous_row[next_column - 1];
-      if (next != null && previous != null && next.equals(previous))
+      if (next != null && previous != null && next.equals(previous)) {
         next = null;
+      }
       
       if (next_column >= result.getWidth() && has_next) {
         next_column = 0;

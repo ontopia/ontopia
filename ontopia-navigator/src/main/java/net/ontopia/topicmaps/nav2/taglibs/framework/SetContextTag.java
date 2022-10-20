@@ -55,27 +55,33 @@ public class SetContextTag extends TagSupport {
     UserIF user = FrameworkUtils.getUser(contextTag.getPageContext());
     UserFilterContextStore userContext = user.getFilterContext();
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("SetContextTag found no topic map.");
+    }
 
-    if (userContext == null) 
+    if (userContext == null) {
       userContext = new UserFilterContextStore();
+    }
 
     Collection themes = getvalue(contextTag, basenameValue);
-    if (themes != null)
+    if (themes != null) {
       userContext.setScopeTopicNames(topicmap, themes);
+    }
     
     themes = getvalue(contextTag, variantValue);
-    if (themes != null)
+    if (themes != null) {
       userContext.setScopeVariantNames(topicmap, themes);
+    }
     
     themes = getvalue(contextTag, occurrenceValue);
-    if (themes != null)
+    if (themes != null) {
       userContext.setScopeOccurrences(topicmap, themes);
+    }
     
     themes = getvalue(contextTag, associationValue);
-    if (themes != null)
+    if (themes != null) {
       userContext.setScopeAssociations(topicmap, themes);
+    }
 
     return SKIP_BODY;
   }
@@ -112,11 +118,13 @@ public class SetContextTag extends TagSupport {
 
   private Collection getvalue(ContextTag contextTag, String token) {
     if (token != null) {
-      if (token.equalsIgnoreCase("none"))
+      if (token.equalsIgnoreCase("none")) {
         return Collections.EMPTY_LIST;
-      else 
+      } else {
         return contextTag.getContextManager().getValue(token);
-    } else
+      }
+    } else {
       return null;
+    }
   }
 }

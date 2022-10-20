@@ -43,9 +43,9 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
   AbstractLocalCache(AbstractTransaction txn, StorageCacheIF pcache) {
     this.txn = txn;
     this.pcache = pcache;
-    if (this.pcache != null)
+    if (this.pcache != null) {
       this.pregistrar = this.pcache.getRegistrar();
-    else {
+    } else {
       this.ticket = new TicketIF() {
           @Override
           public boolean isValid() {
@@ -76,16 +76,18 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   @Override
   public boolean isObjectLoaded(IdentityIF identity) {
-    if (pcache != null) 
+    if (pcache != null) {
       return pcache.isObjectLoaded(identity);
+    }
 
     return false;
   }
 
   @Override
   public boolean isFieldLoaded(IdentityIF identity, int field) {
-    if (pcache != null) 
+    if (pcache != null) {
       return pcache.isFieldLoaded(identity, field);
+    }
     
     return false;
   }
@@ -96,32 +98,44 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   @Override
   public void registerEviction() {
-    if (pcache != null) pcache.registerEviction();
+    if (pcache != null) {
+      pcache.registerEviction();
+    }
   }
   
   @Override
   public void releaseEviction() {
-    if (pcache != null) pcache.releaseEviction();
+    if (pcache != null) {
+      pcache.releaseEviction();
+    }
   }
 
   @Override
   public void evictIdentity(IdentityIF identity, boolean notifyCluster) {
-    if (pcache != null) pcache.evictIdentity(identity, notifyCluster);
+    if (pcache != null) {
+      pcache.evictIdentity(identity, notifyCluster);
+    }
   }
 
   @Override
   public void evictFields(IdentityIF identity, boolean notifyCluster) {
-    if (pcache != null) pcache.evictFields(identity, notifyCluster);
+    if (pcache != null) {
+      pcache.evictFields(identity, notifyCluster);
+    }
   }
 
   @Override
   public void evictField(IdentityIF identity, int field, boolean notifyCluster) {
-    if (pcache != null) pcache.evictField(identity, field, notifyCluster);
+    if (pcache != null) {
+      pcache.evictField(identity, field, notifyCluster);
+    }
   }  
 
   @Override
   public void clear(boolean notifyCluster) {
-    if (pcache != null) pcache.clear(notifyCluster);
+    if (pcache != null) {
+      pcache.clear(notifyCluster);
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -133,7 +147,9 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
   @Override
   public int prefetch(StorageAccessIF access, Class<?> type, int field, int nextField, boolean traverse, Collection<IdentityIF> identities) {
     // WARNING: dirty objects should never be handed over to shared cache
-    if (pcache != null) return pcache.prefetch(access, type, field, nextField, traverse, identities);
+    if (pcache != null) {
+      return pcache.prefetch(access, type, field, nextField, traverse, identities);
+    }
     return 0;
   }
   
@@ -158,20 +174,23 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   @Override
   public TicketIF getTicket() {
-    if (pregistrar == null)
+    if (pregistrar == null) {
       return ticket;
-    else
+    } else {
       return pregistrar.getTicket();
+    }
   }
   
   @Override
   public void registerIdentity(TicketIF ticket, IdentityIF identity) {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("Registering identity " + identity);
+    }
 
     // notify parent cache if no txn changes
-    if (pregistrar != null && txn.isObjectClean(identity))
+    if (pregistrar != null && txn.isObjectClean(identity)) {
       pregistrar.registerIdentity(ticket, identity);
+    }
 
     // make sure txn holds an object instance
     txn.checkIdentityMapAndCreateInstance(identity);
@@ -179,12 +198,14 @@ public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegist
 
   @Override
   public void registerField(TicketIF ticket, IdentityIF identity, int field, Object value) {
-    if (log.isDebugEnabled())
-      log.debug("Registering " + identity + " field " + field + "=" + value);      
+    if (log.isDebugEnabled()) {
+      log.debug("Registering " + identity + " field " + field + "=" + value);
+    }      
 
     // notify parent cache if no txn changes
-    if (pregistrar != null && txn.isObjectClean(identity))
+    if (pregistrar != null && txn.isObjectClean(identity)) {
       pregistrar.registerField(ticket, identity, field, value);
+    }
     
     // make sure txn holds an object instance
     txn.checkIdentityMapAndCreateInstance(identity);

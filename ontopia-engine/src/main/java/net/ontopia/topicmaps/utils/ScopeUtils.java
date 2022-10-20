@@ -77,8 +77,9 @@ public class ScopeUtils {
     Collection<TopicIF> objscope = obj.getScope();
 
     for (int i=0; i < context.length; i++) {
-      if (!objscope.contains(context[i]))
+      if (!objscope.contains(context[i])) {
         return false;
+      }
     }
     return true;
   }
@@ -125,7 +126,9 @@ public class ScopeUtils {
     Iterator<TopicIF> iter = context.iterator();
     while (iter.hasNext()) {
       // If object scope contains context theme then there is an intersection.
-      if (objscope.contains(iter.next())) return true;
+      if (objscope.contains(iter.next())) {
+        return true;
+      }
     }
     // There is no intersection with the object scope.
     return false;
@@ -141,7 +144,9 @@ public class ScopeUtils {
     // Loop over context to see if there is an intersection with the object scope.
     for (int i=0; i < context.length; i++) {
       // If object scope contains context theme then there is an intersection.
-      if (objscope.contains(context[i])) return true;
+      if (objscope.contains(context[i])) {
+        return true;
+      }
     }
     
     // There is no intersection with the object scope.

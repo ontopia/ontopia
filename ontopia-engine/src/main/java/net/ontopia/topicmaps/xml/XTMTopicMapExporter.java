@@ -140,8 +140,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
     Collection topics = tm.getTopics();
     topics = filterCollection(topics);
     Iterator iter = topics.iterator();
-    while (iter.hasNext())
+    while (iter.hasNext()) {
       writeTopic((TopicIF) iter.next(), dh);
+    }
 
     // Finished with the topics, so allow them to be GC-ed
     topics = null;
@@ -150,8 +151,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
     // Do all the associations
     Collection associations = filterCollection(tm.getAssociations());
     iter = associations.iterator();
-    while (iter.hasNext())
+    while (iter.hasNext()) {
       writeAssociation((AssociationIF) iter.next(), dh);
+    }
 
     // Close element
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicMap");
@@ -176,12 +178,14 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
 
     Collection basenames = topic.getTopicNames();
     basenames = filterCollection(basenames);
-    if (!basenames.isEmpty())
+    if (!basenames.isEmpty()) {
       writeTopicNames(basenames, dh);
+    }
 
     Collection occurs = topic.getOccurrences();
-    if (!occurs.isEmpty())
+    if (!occurs.isEmpty()) {
       writeOccurrences(filterCollection(topic.getOccurrences()), dh);
+    }
 
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topic");
   }
@@ -240,8 +244,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
 
       // Write variant
       Collection variants = basename.getVariants();
-      if (!variants.isEmpty())
+      if (!variants.isEmpty()) {
         writeVariants(filterCollection(variants), dh);
+      }
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "baseName");
     }
   }
@@ -287,8 +292,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
     }
     if (id != null) {
       String idfrag = id.substring(1);
-      if (!(mayCollide(idfrag) || !isValidXMLId(idfrag)))
-				return id;
+      if (!(mayCollide(idfrag) || !isValidXMLId(idfrag))) {
+        return id;
+      }
     }
 
     //! TMObjectIF reified = topic.getReified();
@@ -308,8 +314,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
     boolean outputIdentities = !(subjects.isEmpty() && subinds.isEmpty()
                                  && (!export_srclocs || srclocs.isEmpty()));
     ReifiableIF reified = topic.getReified();
-    if (outputIdentities || reified != null)
+    if (outputIdentities || reified != null) {
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "subjectIdentity", EMPTY_ATTR_LIST);
+    }
 
     if (outputIdentities) {
       // Subject address(es)
@@ -323,8 +330,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
             atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, XLINK_HREF, CDATA, subject.getExternalForm());
             dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, RESOURCEREF, atts);
             dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, RESOURCEREF);
-          } else
+          } else {
             reportInvalidLocator(subject);
+          }
         }
       }
 			
@@ -340,8 +348,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
                                                                             topic, indicator));
             dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SUBJECTINDICATORREF, atts);
             dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SUBJECTINDICATORREF);
-          } else
+          } else {
             reportInvalidLocator(indicator);
+          }
         }
       }
 
@@ -356,8 +365,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
             atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, XLINK_HREF, CDATA, srcloc.getExternalForm());
             dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SUBJECTINDICATORREF, atts);
             dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SUBJECTINDICATORREF);
-          } else
+          } else {
             reportInvalidLocator(srcloc);
+          }
         }
       }
 
@@ -371,8 +381,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SUBJECTINDICATORREF);
     }
 
-    if (outputIdentities || reified != null)
+    if (outputIdentities || reified != null) {
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "subjectIdentity");
+    }
   }
 
   protected void writeVariants(Collection variants, ContentHandler dh)
@@ -412,8 +423,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
 					atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, XLINK_HREF, CDATA, varloc.getExternalForm());
 					dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, RESOURCEREF, atts);
 					dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, RESOURCEREF);
-				} else
-					reportInvalidLocator(varloc);
+				} else {
+          reportInvalidLocator(varloc);
+        }
 			}
 		} else {
 			// FIXME: what to do about data type?
@@ -436,8 +448,9 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "parameters", EMPTY_ATTR_LIST);
 
       Iterator it = params.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         writeTopicRef((TopicIF) it.next(), dh);
+      }
 
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "parameters");
     }
@@ -541,13 +554,15 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
 
         // Write roleSpec
         TopicIF type = role.getType();
-        if (type != null)
+        if (type != null) {
           writeRoleSpec(type, dh);
+        }
 
         // Write topicRef
         TopicIF player = role.getPlayer();
-        if (player != null)
+        if (player != null) {
           writeTopicRef(player, dh);
+        }
 
         dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "member");
       }

@@ -92,13 +92,15 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
     int qix = matches.getIndex(arguments[1]);
     int six = (arguments.length > 2 ? matches.getIndex(arguments[2]) : -1);
     
-    if (!matches.bound(qix))
+    if (!matches.bound(qix)) {
       throw new InvalidQueryException("Second argument to " + getName() + " must " +
                                       "be bound");
+    }
 
-    if (six >= 0 && matches.bound(six))
+    if (six >= 0 && matches.bound(six)) {
       throw new InvalidQueryException("Third argument to " + getName() + " must " +
                                       "be unbound");
+    }
     
     int valtype = searcher.getValueType();
 
@@ -139,7 +141,9 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
           } else {
             Object o = getObject(sr.getValue(), valtype);
             // note: ignore null values
-            if (o == null) continue;
+            if (o == null) {
+              continue;
+            }
             Collection s = (Collection)r.get(o);
             if (s == null) {
               s = new ArrayList();
@@ -163,18 +167,22 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
         // filter results
         Object o = matches.data[ix][oix];
         Collection scores = (Collection)r.get(o);
-        if (scores == null) continue;
+        if (scores == null) {
+          continue;
+        }
         Iterator siter = scores.iterator();
         while (siter.hasNext()) {
           Object score = siter.next();
           
           Object[] newRow = (Object[]) matches.data[ix].clone();
           //! newRow[oix] = o;
-          if (six >= 0)
+          if (six >= 0) {
             newRow[six] = score;
+          }
           
-          if (result.last+1 == result.size) 
+          if (result.last+1 == result.size) {
             result.increaseCapacity();
+          }
           result.last++;
           
           // FIXME: is this really safe? or could row sharing give overwrites?
@@ -192,11 +200,13 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
 
             Object[] newRow = (Object[]) matches.data[ix].clone();
             newRow[oix] = o;
-            if (six >= 0)
+            if (six >= 0) {
               newRow[six] = score;
+            }
             
-            if (result.last+1 == result.size) 
+            if (result.last+1 == result.size) {
               result.increaseCapacity();
+            }
             result.last++;
             
             // FIXME: is this really safe? or could row sharing give overwrites?

@@ -71,12 +71,14 @@ public class InPredicate
     JDOValueIF jv_var = builder.createJDOValue(args[0]);
     
     Collection values = new ArrayList(args.length - 1);
-    for (int i=1; i < args.length; i++)
+    for (int i=1; i < args.length; i++) {
       values.add(args[i]);
+    }
 
     Class vartype = builder.getArgumentType(args[0]);
-    if (vartype == null)
+    if (vartype == null) {
       throw new InvalidQueryException("Argument " + args[0] + " of unknown type.");
+    }
 
     // TODO: We should really support primitive types here
 

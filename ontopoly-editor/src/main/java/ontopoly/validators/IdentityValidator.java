@@ -48,7 +48,9 @@ public class IdentityValidator extends AbstractValidator<String> {
   @Override
   protected void onValidate(IValidatable<String> validatable) {
     String value = validatable.getValue();
-    if (value == null) return;
+    if (value == null) {
+      return;
+    }
     LocatorIF locator;
     try {
       locator = new URILocator(value);
@@ -63,12 +65,14 @@ public class IdentityValidator extends AbstractValidator<String> {
     TopicIF topicIf = topic.getTopicIF();
   
     TopicIF otopic = topicMapIf.getTopicBySubjectIdentifier(locator);
-    if (otopic != null && !Objects.equals(topicIf, otopic))
+    if (otopic != null && !Objects.equals(topicIf, otopic)) {
       reportError("validators.IdentityValidator.subjectIdentifierClash", value);
+    }
 
     otopic = topicMapIf.getTopicBySubjectLocator(locator);
-    if (otopic != null && !Objects.equals(topicIf, otopic))
+    if (otopic != null && !Objects.equals(topicIf, otopic)) {
       reportError("validators.IdentityValidator.subjectLocatorClash", value);
+    }
   }
 
   private void reportError(String resourceKey, final String identity) {    

@@ -57,10 +57,11 @@ public abstract class BaseScopedTag extends BaseValueProducingAndAcceptingTag
    */
   public FilterIF<ScopedIF> getScopeFilter(int scopeType) {
     Predicate decider = getScopeDecider(scopeType);
-    if (decider == null)
+    if (decider == null) {
       return null;
-    else
+    } else {
       return new DeciderFilter(decider);
+    }
   }
 
   // -----------------------------------------------------------------
@@ -77,10 +78,12 @@ public abstract class BaseScopedTag extends BaseValueProducingAndAcceptingTag
    * </ul>
    */
   public void setContextFilter(String contextFilter) {
-    if (contextFilter.indexOf("off") != -1)
+    if (contextFilter.indexOf("off") != -1) {
       this.useUserContextFilter = false;
-    if (contextFilter.indexOf("user") != -1)
+    }
+    if (contextFilter.indexOf("user") != -1) {
       this.useUserContextFilter = true;
+    }
   }
   
 }

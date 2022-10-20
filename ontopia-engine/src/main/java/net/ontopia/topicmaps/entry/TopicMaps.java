@@ -55,10 +55,11 @@ public class TopicMaps {
                                             String repositoryId) {
     TopicMapRepositoryIF repository = getRepository(repositoryId);
     TopicMapReferenceIF ref = repository.getReferenceByKey(topicmapId);
-    if (ref == null)
+    if (ref == null) {
       throw new OntopiaRuntimeException("Topic map '" + topicmapId +
                                         "' not found in repository '" +
                                         repositoryId + "'.");
+    }
     try {
       return ref.createStore(readOnly);
     } catch (java.io.IOException e) {
@@ -84,12 +85,13 @@ public class TopicMaps {
     synchronized (repositories) {
       TopicMapRepositoryIF repository = repositories.get(repositoryId);
       if (repository == null) {
-        if (repositoryId.startsWith("file:"))
+        if (repositoryId.startsWith("file:")) {
           repository = XMLConfigSource.getRepository(repositoryId.substring("file:".length()), environ);
-        else if (repositoryId.startsWith("classpath:"))
+        } else if (repositoryId.startsWith("classpath:")) {
           repository = XMLConfigSource.getRepositoryFromClassPath(repositoryId.substring("classpath:".length()), environ);
-        else
+        } else {
           throw new IllegalArgumentException("Invalid scheme on repository id: '" + repositoryId + "'. Must be either file: or classpath.");
+        }
         repositories.put(repositoryId, repository);
       }
       return repository;
@@ -104,7 +106,9 @@ public class TopicMaps {
         break;
       }
     }
-    if (match != null) repositories.remove(match);
+    if (match != null) {
+      repositories.remove(match);
+    }
   }
   
 }

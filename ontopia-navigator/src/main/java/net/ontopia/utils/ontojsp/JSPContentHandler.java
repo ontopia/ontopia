@@ -71,8 +71,9 @@ public class JSPContentHandler extends DefaultHandler {
   public void register(XMLReader parser) {
     parser.setContentHandler(this);
     ErrorHandler _ehandler = parser.getErrorHandler();
-    if (_ehandler == null || (_ehandler instanceof DefaultHandler))
+    if (_ehandler == null || (_ehandler instanceof DefaultHandler)) {
       parser.setErrorHandler(getDefaultErrorHandler());
+    }
     ehandler = parser.getErrorHandler();
   }
 
@@ -101,8 +102,9 @@ public class JSPContentHandler extends DefaultHandler {
     if (TaglibTagFactory.isKnownTag(qname)) {
       node = new JSPTreeNode(qname, current, useTagPooling);
       // add the attributes to the tree node.
-      for (int i = 0; i < atts.getLength(); i++)
+      for (int i = 0; i < atts.getLength(); i++) {
         node.addAttribute(atts.getQName(i), atts.getValue(i));
+      }
 
       TagSupport parentTag = current.getTag();
       try {
@@ -143,8 +145,9 @@ public class JSPContentHandler extends DefaultHandler {
     String content = new String(ch, start, length);
     JSPTreeNodeIF node = new JSPContentTreeNode(current, content);
     current.addChild(node);
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("Created content child: " + node);
+    }
   }
   
   @Override

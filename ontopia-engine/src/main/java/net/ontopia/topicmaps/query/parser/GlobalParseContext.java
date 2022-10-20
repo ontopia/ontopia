@@ -74,10 +74,11 @@ public class GlobalParseContext implements ParseContextIF {
   @Override
   public LocatorIF absolutify(String uriref) throws AntlrWrapException {
     try {
-      if (base == null)
+      if (base == null) {
         return new URILocator(uriref);
-      else
+      } else {
         return base.resolveAbsolute(uriref);
+      }
     } catch (OntopiaRuntimeException e) {
       if (e.getCause() != null &&
           e.getCause() instanceof MalformedURLException) {
@@ -92,8 +93,9 @@ public class GlobalParseContext implements ParseContextIF {
   }
   
   public TMObjectIF getObjectByIdentifier(String id) {
-    if (base == null)
+    if (base == null) {
       return null;
+    }
     LocatorIF loc = base.resolveAbsolute("#" + id);
     return topicmap.getObjectByItemIdentifier(loc);
   }
@@ -107,8 +109,9 @@ public class GlobalParseContext implements ParseContextIF {
   public TopicIF getTopicBySubjectIdentifier(String uri) 
     throws AntlrWrapException {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(absolutify(uri));
-    if (topic == null)
+    if (topic == null) {
       throw new AntlrWrapException(new BadObjectReferenceException("No topic with subject identifier '" + uri + "' found"));
+    }
     return topic;
   }
 
@@ -116,8 +119,9 @@ public class GlobalParseContext implements ParseContextIF {
   public TopicIF getTopicBySubjectLocator(String uri) 
     throws AntlrWrapException {
     TopicIF topic = topicmap.getTopicBySubjectLocator(absolutify(uri));
-    if (topic == null)
+    if (topic == null) {
       throw new AntlrWrapException(new BadObjectReferenceException("No topic with subject locator '" + uri + "' found"));
+    }
     return topic;
   }
 
@@ -125,17 +129,19 @@ public class GlobalParseContext implements ParseContextIF {
   public TMObjectIF getObjectByItemId(String uri) 
     throws AntlrWrapException {
     TMObjectIF object = topicmap.getObjectByItemIdentifier(absolutify(uri));
-    if (object == null)
+    if (object == null) {
       throw new AntlrWrapException(new BadObjectReferenceException("No object with item identifier '" + uri + "' found"));
+    }
     return object;
   }
 
   @Override
   public TMObjectIF getObject(QName qname) throws AntlrWrapException {
-    if (qname.getPrefix() != null) // no prefixes bound here, so report error
+    if (qname.getPrefix() != null) { // no prefixes bound here, so report error
       throw new AntlrWrapException(
               new InvalidQueryException("Unbound prefix " + qname.getPrefix() +
                                         " in " + qname));
+    }
 
     return getObjectByIdentifier(qname.getLocalName());
   }
@@ -154,8 +160,9 @@ public class GlobalParseContext implements ParseContextIF {
 
     if (predicate == null) {
       TopicIF topic = getTopic(qname);
-      if (topic != null)
+      if (topic != null) {
         predicate = getPredicate(topic, assoc);
+      }
     }
 
     return predicate;

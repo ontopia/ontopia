@@ -72,22 +72,30 @@ public class MergeReference extends AbstractTopicMapReference {
   @Override
   public synchronized void open() {
     // ignore if already open
-    if (isOpen()) return;
-    if (isDeleted()) 
+    if (isOpen()) {
+      return;
+    }
+    if (isDeleted()) {
       throw new StoreDeletedException("Topic map has been deleted through this reference.");
+    }
     // make sure store is loaded
-    if (reuse_store && store == null)
+    if (reuse_store && store == null) {
       store = createStore();
+    }
 
     this.isopen = true;
   }
 
   @Override
   public synchronized TopicMapStoreIF createStore(boolean readonly) throws IOException {
-    if (!isOpen()) open();
+    if (!isOpen()) {
+      open();
+    }
 
     if (reuse_store) {
-      if (store != null) return store;
+      if (store != null) {
+        return store;
+      }
       store = createStore();
       return store;
     } else {
@@ -123,7 +131,9 @@ public class MergeReference extends AbstractTopicMapReference {
   public synchronized void close() {    
     // close and dereference store
     if (store != null) {
-      if (store.isOpen()) store.close();
+      if (store.isOpen()) {
+        store.close();
+      }
       store = null;
     }
     this.isopen = false;

@@ -59,8 +59,9 @@ public class AssociationType extends AbstractTypingTopic {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof AssociationType))
+    if (!(obj instanceof AssociationType)) {
       return false;
+    }
 
     AssociationType other = (AssociationType) obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -120,15 +121,17 @@ public class AssociationType extends AbstractTypingTopic {
     Iterator<RoleField> iter = roleFields.iterator();
     while (iter.hasNext()) {
       RoleField roleField = iter.next();
-      if (associationField == null)
+      if (associationField == null) {
         associationField = roleField.getAssociationField();
-      else if (!associationField.equals(roleField.getAssociationField()))
+      } else if (!associationField.equals(roleField.getAssociationField())) {
         continue;
+      }
       result.add(roleField.getRoleType());
     }
     // duplicate single role type if association type is symmetric
-    if (result.size() == 1 && isSymmetric())
-      result.add(result.get(0));    
+    if (result.size() == 1 && isSymmetric()) {
+      result.add(result.get(0));
+    }    
     return result;
   }
 
@@ -175,8 +178,9 @@ public class AssociationType extends AbstractTypingTopic {
 	 */
 	public void transformInstances(List<RoleType> roleTypesFrom, List<RoleType> roleTypesTo) {
 	  int size = roleTypesFrom.size(); 
-	  if (size != roleTypesTo.size())
-	    throw new RuntimeException("Incompatible role type sets: sizes are different");
+	  if (size != roleTypesTo.size()) {
+      throw new RuntimeException("Incompatible role type sets: sizes are different");
+    }
 	  
     TopicIF associationType = getTopicIF();
     ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
@@ -188,7 +192,9 @@ public class AssociationType extends AbstractTypingTopic {
     while (iter.hasNext()) {
       AssociationIF assoc = iter.next();
       Collection<AssociationRoleIF> roles = assoc.getRoles();
-      if (roles.size() != roleTypesFrom.size()) continue;
+      if (roles.size() != roleTypesFrom.size()) {
+        continue;
+      }
       boolean match = true;
       Arrays.fill(roleMatches, null);
       
@@ -217,7 +223,9 @@ public class AssociationType extends AbstractTypingTopic {
           RoleType fromType = roleTypesFrom.get(i);
           RoleType toType = roleTypesTo.get(i);
           if (role.getType().equals(fromType.getTopicIF())) {
-            if (!role.getType().equals(toType.getTopicIF())) role.setType(toType.getTopicIF());
+            if (!role.getType().equals(toType.getTopicIF())) {
+              role.setType(toType.getTopicIF());
+            }
           }
         }        
       }

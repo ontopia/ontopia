@@ -41,8 +41,9 @@ public class DataType extends Topic {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof DataType))
+    if (!(obj instanceof DataType)) {
       return false;
+    }
 
     DataType other = (DataType) obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -57,27 +58,30 @@ public class DataType extends Topic {
     if (typeIf != null) {
       OccurrenceIF occ = OntopolyModelUtils.findOccurrence(typeIf, topicIf);
       LocatorIF loc = (occ == null ? null : occ.getLocator());
-      if (loc != null) return loc;
+      if (loc != null) {
+        return loc;
+      }
     }
     
     // the code below can be removed at some time in the future
     Collection<LocatorIF> subinds = getTopicIF().getSubjectIdentifiers();
-    if (subinds.contains(DataTypes.TYPE_DATE))
+    if (subinds.contains(DataTypes.TYPE_DATE)) {
       return DataTypes.TYPE_DATE;
-    else if (subinds.contains(DataTypes.TYPE_DATETIME))
+    } else if (subinds.contains(DataTypes.TYPE_DATETIME)) {
       return DataTypes.TYPE_DATETIME;
-    else if (subinds.contains(DataTypes.TYPE_DECIMAL))
+    } else if (subinds.contains(DataTypes.TYPE_DECIMAL)) {
       return DataTypes.TYPE_DECIMAL;
-    else if (subinds.contains(DataTypes.TYPE_STRING))
+    } else if (subinds.contains(DataTypes.TYPE_STRING)) {
       return DataTypes.TYPE_STRING;
-    else if (subinds.contains(DataTypes.TYPE_URI))
+    } else if (subinds.contains(DataTypes.TYPE_URI)) {
       return DataTypes.TYPE_URI;
-    else if (subinds.contains(PSI.ON_DATATYPE_HTML))
+    } else if (subinds.contains(PSI.ON_DATATYPE_HTML)) {
       return PSI.ON_DATATYPE_HTML;
-    else if (subinds.contains(PSI.ON_DATATYPE_IMAGE))
+    } else if (subinds.contains(PSI.ON_DATATYPE_IMAGE)) {
       return PSI.ON_DATATYPE_IMAGE;
-    else
+    } else {
       throw new OntopolyModelRuntimeException("Unknown datatype for topic "+ getTopicIF());
+    }
   }
 
   /**

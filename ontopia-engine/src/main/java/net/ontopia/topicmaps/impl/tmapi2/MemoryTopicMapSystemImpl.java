@@ -108,9 +108,10 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
   public TopicMapImpl createTopicMap(TopicMapIF topicmap)
     throws TopicMapExistsException {
     Locator loc = wrapLocator(topicmap.getStore().getBaseAddress());
-    if (loc2tm.containsKey(loc))
+    if (loc2tm.containsKey(loc)) {
       throw new TopicMapExistsException("Topic map with base locator " + loc +
                                         " already exists");
+    }
     // wrap the topic map
     TopicMapImpl tm = new TopicMapImpl(this, topicmap.getStore());
     // register base locator

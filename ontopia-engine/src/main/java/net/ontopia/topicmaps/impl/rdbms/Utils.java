@@ -77,8 +77,9 @@ public class Utils {
     // Delete all database rows for this topic map
     Statement stm = conn.createStatement();
       
-    if (!clear_only)
+    if (!clear_only) {
       stm.executeUpdate("delete from TM_TOPIC_MAP where id = " + id);
+    }
 
     stm.executeUpdate("delete from TM_TOPIC_TYPES where type_id in (select id from TM_TOPIC where topicmap_id = " + id + ")");
     stm.executeUpdate("delete from TM_TOPIC_TYPES where topic_id in (select id from TM_TOPIC where topicmap_id = " + id + ")");
@@ -138,22 +139,29 @@ public class Utils {
         long topic_id = rs.getLong(1);
 
         TMObjectIF o1 = topicmap.getObjectById('B' + Long.toString(rs.getLong(2)));
-        if (o1 != null) duplicates.add(o1);
+        if (o1 != null) {
+          duplicates.add(o1);
+        }
         TMObjectIF o2 = topicmap.getObjectById('B' + Long.toString(rs.getLong(3)));
-        if (o2 != null) duplicates.add(o2);
+        if (o2 != null) {
+          duplicates.add(o2);
+        }
         
         if (topic_id != prev_topic_id && prev_topic_id != -1) {
           DuplicateSuppressionUtils.removeDuplicateTopicNames(duplicates);
           duplicates = new HashSet();
         }
       }
-      if (!duplicates.isEmpty())
+      if (!duplicates.isEmpty()) {
         DuplicateSuppressionUtils.removeDuplicateTopicNames(duplicates);
+      }
 
       rs.close();
       
     } finally {
-      if (stm_names != null) stm_names.close();
+      if (stm_names != null) {
+        stm_names.close();
+      }
     }
 
     // find duplicate occurrences 
@@ -171,22 +179,29 @@ public class Utils {
         long topic_id = rs.getLong(1);
 
         TMObjectIF o1 = topicmap.getObjectById('O' + Long.toString(rs.getLong(2)));
-        if (o1 != null) duplicates.add(o1);
+        if (o1 != null) {
+          duplicates.add(o1);
+        }
         TMObjectIF o2 = topicmap.getObjectById('O' + Long.toString(rs.getLong(3)));
-        if (o2 != null) duplicates.add(o2);
+        if (o2 != null) {
+          duplicates.add(o2);
+        }
         
         if (topic_id != prev_topic_id && prev_topic_id != -1) {
           DuplicateSuppressionUtils.removeDuplicateOccurrences(duplicates);
           duplicates = new HashSet();
         }
       }
-      if (!duplicates.isEmpty())
+      if (!duplicates.isEmpty()) {
         DuplicateSuppressionUtils.removeDuplicateOccurrences(duplicates);
+      }
 
       rs.close();
       
     } finally {
-      if (stm_occurs != null) stm_occurs.close();
+      if (stm_occurs != null) {
+        stm_occurs.close();
+      }
     }
     
     // find duplicate associations 
@@ -208,18 +223,23 @@ public class Utils {
 
       while (rs.next()) {
         TMObjectIF o1 = topicmap.getObjectById('A' + Long.toString(rs.getLong(1)));
-        if (o1 != null) duplicates.add(o1);
+        if (o1 != null) {
+          duplicates.add(o1);
+        }
         //! TMObjectIF o2 = topicmap.getObjectById('A' + Long.toString(rs.getLong(2)));
         //! if (o2 != null) duplicates.add(o2);
       }
 
-      if (!duplicates.isEmpty())
+      if (!duplicates.isEmpty()) {
         DuplicateSuppressionUtils.removeDuplicateAssociations(duplicates);
+      }
 
       rs.close();
       
     } finally {
-      if (stm_assocs != null) stm_assocs.close();
+      if (stm_assocs != null) {
+        stm_assocs.close();
+      }
     }
 
   }

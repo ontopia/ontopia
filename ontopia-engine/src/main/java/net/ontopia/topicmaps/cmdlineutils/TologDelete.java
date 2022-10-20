@@ -82,12 +82,14 @@ public class TologDelete {
 
     // open topic map
     String tmurl = ohandler.tm;
-    if (tmurl == null)
+    if (tmurl == null) {
       throw new OntopiaRuntimeException("--tm option must be specified");
+    }
 
     boolean simulate = false;
-    if (ohandler.simulate != null)
+    if (ohandler.simulate != null) {
       simulate = Boolean.valueOf(ohandler.simulate).booleanValue();
+    }
 
     System.out.println("Simulate: " + simulate + ":" + ohandler.simulate);
     log.debug("Loading topic map '" + tmurl + "'");
@@ -108,15 +110,17 @@ public class TologDelete {
         QueryResultIF result = pqs[i].execute();
         try {
           // complain if multiple columns
-          if (result.getWidth() != 1)
+          if (result.getWidth() != 1) {
             throw new OntopiaRuntimeException("Query must project exactly one column: " + args[i]);
+          }
 
           while (result.next()) {
             TMObjectIF o = (TMObjectIF)result.getValue(0);
             System.out.println("Removing: " + o);
             log.debug("Removing: " + o);
-            if (!simulate)
+            if (!simulate) {
               o.remove();
+            }
           }
         } finally {
           result.close();
@@ -141,7 +145,9 @@ public class TologDelete {
       log.debug("Transaction aborted.");
       throw t;
     } finally {
-      if (store.isOpen()) store.close();
+      if (store.isOpen()) {
+        store.close();
+      }
     }
   }
   
@@ -166,9 +172,13 @@ public class TologDelete {
     private String simulate;
     @Override
     public void processOption(char option, String value) {
-      if (option == 't') tm = value;
-      else if (option == 'o') out = value;
-      else if (option == 's') simulate = value;
+      if (option == 't') {
+        tm = value;
+      } else if (option == 'o') {
+        out = value;
+      } else if (option == 's') {
+        simulate = value;
+      }
     }
   }
 

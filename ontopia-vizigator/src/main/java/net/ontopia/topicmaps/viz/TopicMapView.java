@@ -155,16 +155,18 @@ public class TopicMapView {
   }
   
   public void updateDisplay() {
-    if (ghost != null && ghost != getFocusNode())
+    if (ghost != null && ghost != getFocusNode()) {
       hideNode(ghost);
+    }
 
     updateAssociationCountForAllTopics();
     resetDamper();
   }
   
   public void updateDisplayLazily() {
-    if (ghost != null && ghost != getFocusNode())
+    if (ghost != null && ghost != getFocusNode()) {
       hideNode(ghost);
+    }
 
     updateAssociationCountForMarkedTopics();
     resetDamper();
@@ -246,8 +248,9 @@ public class TopicMapView {
   public Collection loadNodesInLocality(TMAbstractNode startNode,
       boolean create, boolean delete) {
     // Don't do anything if in map view.
-    if (startNode == null)
+    if (startNode == null) {
       return Collections.EMPTY_SET;
+    }
 
     // Visit all the nodes no more than 'locality' edges away from focus node.
     // Do this using a BREADTH-FIRST traversal, to avoid early cut-offs in
@@ -268,14 +271,16 @@ public class TopicMapView {
         TMAbstractNode currentNode = (TMAbstractNode)currentLevelIt.next();
         
         // Load node, adding all neighbour nodes to the view (if create). 
-        if (create)
+        if (create) {
           createAssociations(currentNode, true, false);
+        }
         
         // Add edges to the next level.
         Iterator edgesIt = currentNode.getEdges();
-        while (edgesIt.hasNext())
+        while (edgesIt.hasNext()) {
           nextLevel.addAll(((TMAbstractEdge)edgesIt.next())
               .getTargetsFrom(currentNode));
+        }
         
         visited.add(currentNode);
       }
@@ -305,8 +310,9 @@ public class TopicMapView {
       Iterator edgesIt = currentNode.getEdges();
       while (edgesIt.hasNext()) {
         TMAbstractEdge currentEdge = (TMAbstractEdge)edgesIt.next();
-        if (!(visited.contains(currentEdge.getOtherEndpt(currentNode))))
+        if (!(visited.contains(currentEdge.getOtherEndpt(currentNode)))) {
           farEdges.add(currentEdge);
+        }
       }
     }
     
@@ -326,8 +332,9 @@ public class TopicMapView {
 
       if (useNodeLocality()) {
         // Load node, adding all neighbour nodes to the view (if create). 
-        if (create)
+        if (create) {
           createAssociations(currentNode, false, false);
+        }
       }
     }
     
@@ -346,8 +353,9 @@ public class TopicMapView {
     it = getTopicNodesFor(type).iterator();
     while (it.hasNext()) {
       TMAbstractNode node = (TMAbstractNode) it.next();
-      if (isShowType(node, type))
+      if (isShowType(node, type)) {
         node.setFont(font);
+      }
     }
   }
 
@@ -355,8 +363,9 @@ public class TopicMapView {
     Iterator it = getTopicNodesFor(type).iterator();
     while (it.hasNext()) {
       TMAbstractNode node = (TMAbstractNode) it.next();
-      if (isShowType(node, type))
+      if (isShowType(node, type)) {
         node.setType(shape);
+      }
     }
   }
   
@@ -372,8 +381,9 @@ public class TopicMapView {
     it = getTopicNodesFor(type).iterator();
     while (it.hasNext()) {
       TMAbstractNode node = (TMAbstractNode) it.next();
-      if (isShowType(node, type))
+      if (isShowType(node, type)) {
         node.setBackColor(c);
+      }
     }
   }
 
@@ -381,8 +391,9 @@ public class TopicMapView {
     Iterator it = getTopicNodesFor(type).iterator();
     while (it.hasNext()) {
       TMTopicNode node = (TMTopicNode) it.next();
-      if (isShowType(node, type))
+      if (isShowType(node, type)) {
         node.setShapePadding(value);
+      }
     }
   }
 
@@ -398,8 +409,9 @@ public class TopicMapView {
     it = getTopicNodesFor(type).iterator();
     while (it.hasNext()) {
       TMTopicNode node = (TMTopicNode) it.next();
-      if (isShowType(node, type))
+      if (isShowType(node, type)) {
         node.setIcon(icon);
+      }
     }
   }
 
@@ -410,11 +422,13 @@ public class TopicMapView {
    * @return True iff 'type is the appropriate config type for 'node'.
    */
   private boolean isShowType(TMAbstractNode node, TopicIF type) {
-    if (!(node instanceof TMTopicNode))
+    if (!(node instanceof TMTopicNode)) {
       return true;
+    }
     TopicIF primaryType = getPrimaryTypeFor((TMTopicNode)node);
-    if (primaryType == null)
+    if (primaryType == null) {
       return type == null;
+    }
     return primaryType.equals(type);
   }
 
@@ -430,8 +444,9 @@ public class TopicMapView {
   private List getObjectsFor(TopicIF type) {
     int index = objectTypeIndex.indexOf(type);
 
-    if (index == -1)
+    if (index == -1) {
       return Collections.EMPTY_LIST;
+    }
 
     return (List) objectsByType.get(index);
   }
@@ -439,8 +454,9 @@ public class TopicMapView {
   protected List getTopicNodesFor(TopicIF type) {
     int index = nodeTypeIndex.indexOf(type);
 
-    if (index == -1)
+    if (index == -1) {
       return Collections.EMPTY_LIST;
+    }
 
     return (List) nodesByType.get(index);
   }
@@ -512,8 +528,9 @@ public class TopicMapView {
     // WITH THE CURRENT BEHAVIOUR!
     
     // Workaround that avoids mouseover icon hanging around after hiding node.
-    if (node instanceof TMAssociationNode)
+    if (node instanceof TMAssociationNode) {
       ((TMAssociationNode)node).removeMouseoverIcon();
+    }
     
     Collection incidentEdges = new ArrayList();
     Iterator edgesIt = node.getEdges();
@@ -537,38 +554,43 @@ public class TopicMapView {
         ((Locality) tgPanel.getGES()).deleteNode(node);
         deleteNode((TMTopicNode)node);
       }
-    } else
+    } else {
       removeDisconnectedNodes();
+    }
   }
 
   public static String fullName(Node node) {
-    if (node == null)
+    if (node == null) {
       return null;
+    }
       
     String name = node.getLabel();
-    if (node instanceof TMTopicNode)
+    if (node instanceof TMTopicNode) {
       name = ((TMTopicNode)node).getTopicName();
+    }
     return name;
   }
   
   public void headedDebug(String header, Object object) {
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
     
     VizDebugUtils.debug("=====================" + header + "=====================");
     VizDebugUtils.debug("---- (focusNode: " + fullName(getFocusNode()) + " ---)");
     
     if (object != null) {
       VizDebugUtils.debug("---- (Object class: " + object.getClass().getName() + ")");
-      if (object instanceof Node)
+      if (object instanceof Node) {
         VizDebugUtils.debug("---- (node fulltext: " + fullName((Node)object)
             + " ---)");
-      else if (object instanceof Edge)
+      } else if (object instanceof Edge) {
         VizDebugUtils.debug("---- (edge id: " + ((Edge)object).getID()
             + " ---)");
-      else
+      } else {
         VizDebugUtils.debug(" ---- (Object stringified: " + ((Function) controller.getStringifier())
             .apply(object) + " ---)");
+      }
     }
     
     outputDebugInfo("count");
@@ -641,8 +663,9 @@ public class TopicMapView {
           }
         }
         
-        if (getFocusNode() != null)
+        if (getFocusNode() != null) {
           removeDisconnectedNodes();
+        }
       }
     }
   }
@@ -674,8 +697,9 @@ public class TopicMapView {
           while (it.hasNext()) {
             TopicIF ttype = (TopicIF) it.next();
             if (!configman.isVisible(ttype) ||
-                !configman.isTopicTypeVisible(ttype))
+                !configman.isTopicTypeVisible(ttype)) {
               continue;
+            }
   
             TMTopicNode tnode = getNode(ttype);
             if (tnode != null) {
@@ -684,8 +708,9 @@ public class TopicMapView {
                 TopicIF instance = (TopicIF) it2.next();
                 if (configman.isVisible(instance)) {
                   TMTopicNode node = getNode(instance);
-                  if (node != null)
+                  if (node != null) {
                     makeTypeInstanceEdge(node, tnode);
+                  }
                 }
               }
             }
@@ -703,9 +728,9 @@ public class TopicMapView {
       while (edgesIt.hasNext()) {
         VizTMObjectIF edge = (VizTMObjectIF)edgesIt.next();
         
-        if (edge == getFocusNode() && edge instanceof TMAssociationNode)
+        if (edge == getFocusNode() && edge instanceof TMAssociationNode) {
           ghost = (TMAssociationNode)edge;
-        else {
+        } else {
           deleteEdgeUndoable(edge);
         }
       }
@@ -738,12 +763,13 @@ public class TopicMapView {
               .next();
           
           AssociationIF association = null;
-          if (associationObject instanceof TMAssociationNode)
+          if (associationObject instanceof TMAssociationNode) {
             association = ((TMAssociationNode)associationObject)
                 .getAssociation();
-          else if (associationObject instanceof TMAssociationEdge)
+          } else if (associationObject instanceof TMAssociationEdge) {
             association = ((TMAssociationEdge)associationObject)
                 .getAssociation();
+          }
           // Note: No need to handle class-instance associations since they
           // they have no scope.
           
@@ -802,8 +828,9 @@ public class TopicMapView {
       TopicIF player = role.getPlayer();
       
       TMTopicNode node = getNode(player);
-      if (node == null || !((Locality)tgPanel.getGES()).contains(node))
+      if (node == null || !((Locality)tgPanel.getGES()).contains(node)) {
         invisiblePlayers.add(player);
+      }
     }
     
     return invisiblePlayers;
@@ -821,19 +848,22 @@ public class TopicMapView {
     
     if (associationScopeFilterStrictness == SHOW_ALL) {
       if ((strictness == LOOSE || strictness == STRICT)
-          && configman.getAssociationScopeFilter().size() != 0)
+          && configman.getAssociationScopeFilter().size() != 0) {
         removeInvisibleEdges();
+      }
     } else if (associationScopeFilterStrictness == LOOSE) {
       if (strictness == SHOW_ALL
-          && configman.getAssociationScopeFilter().size() != 0)
+          && configman.getAssociationScopeFilter().size() != 0) {
         createVisibleEdges();
-      else if (strictness == STRICT
-               && configman.getAssociationScopeFilter().size() != 0)
+      } else if (strictness == STRICT
+               && configman.getAssociationScopeFilter().size() != 0) {
         removeInvisibleEdges();
+      }
     } else if (associationScopeFilterStrictness == STRICT) {
       if ((strictness == SHOW_ALL || strictness == LOOSE)
-          && configman.getAssociationScopeFilter().size() != 0)
+          && configman.getAssociationScopeFilter().size() != 0) {
         createVisibleEdges();
+      }
     }
     associationScopeFilterStrictness = strictness;
   }  
@@ -842,8 +872,9 @@ public class TopicMapView {
     int SHOW_ALL = VizTopicMapConfigurationManager.SHOW_ALL_ASSOCIATION_SCOPES;
     int LOOSE = VizTopicMapConfigurationManager.LOOSE_ASSOCIATION_SCOPES;
 
-    if (associationScopeFilterStrictness == SHOW_ALL)
+    if (associationScopeFilterStrictness == SHOW_ALL) {
       return;
+    }
     
     // If this is the last topic in the filter.
     if (configman.getAssociationScopeFilter().size() == 0) {
@@ -865,16 +896,19 @@ public class TopicMapView {
     int SHOW_ALL = VizTopicMapConfigurationManager.SHOW_ALL_ASSOCIATION_SCOPES;
     int LOOSE = VizTopicMapConfigurationManager.LOOSE_ASSOCIATION_SCOPES;
 
-    if (associationScopeFilterStrictness == SHOW_ALL)
+    if (associationScopeFilterStrictness == SHOW_ALL) {
       return;
+    }
     
     // If this is the first topic in the filter.
-    if (configman.getAssociationScopeFilter().size() == 1)
+    if (configman.getAssociationScopeFilter().size() == 1) {
       removeInvisibleEdges();
-    else if (associationScopeFilterStrictness == LOOSE)
+    } else if (associationScopeFilterStrictness == LOOSE) {
       createVisibleEdges();
-    else // implied: associationScopeFilterStrictness == STRICT
+    } else {
+      // implied: associationScopeFilterStrictness == STRICT
       removeInvisibleEdges();
+    }
       // Possible optimisation: Instead remove edges that don't have this topic
       // in their scope.
 
@@ -896,8 +930,9 @@ public class TopicMapView {
       ArrayList objects = (ArrayList) iter.next();
       for (Iterator iterator = objects.iterator(); iterator.hasNext();) {
         VizTMObjectIF currentObject = (VizTMObjectIF) iterator.next();
-        if (currentObject instanceof TMAssociationNode)
+        if (currentObject instanceof TMAssociationNode) {
           setValidRoleCountFor((TMAssociationNode)currentObject);
+        }
       }
     }
     
@@ -910,10 +945,12 @@ public class TopicMapView {
     Iterator markedTopicNodesIt = nodesUpdateCount.iterator();
     while (markedTopicNodesIt.hasNext()) {
       TMAbstractNode currentNode = (TMAbstractNode)markedTopicNodesIt.next();
-      if (currentNode instanceof TMTopicNode)
+      if (currentNode instanceof TMTopicNode) {
         setValidAssociationCountFor((TMTopicNode)currentNode);
-      else // currentNode instanceof TMAssociationNode
+      } else {
+        // currentNode instanceof TMAssociationNode
         setValidRoleCountFor((TMAssociationNode)currentNode);
+      }
     }
     nodesUpdateCount.clear();
   }
@@ -974,9 +1011,9 @@ public class TopicMapView {
           getAllVisibleTopics(), VizUtils
               .stringifierFor(currentScopingTopic));
       TopicIF selection = prompter.getSelection();
-      if (selection != null)
+      if (selection != null) {
         controller.focusNodeInternal(buildTopic(selection));
-      else {
+      } else {
         int result = JOptionPane
             .showConfirmDialog(
                 parentFrame,
@@ -994,8 +1031,9 @@ public class TopicMapView {
         }
       }
       updateDisplay();
-    } else
+    } else {
       controller.focusNodeInternal(buildTopic(startTopic));
+    }
     controller.undoManager.reset();
   }
 
@@ -1005,8 +1043,9 @@ public class TopicMapView {
     
     for (Iterator topicsIt = topics.iterator(); topicsIt.hasNext();) {
       TopicIF topic = (TopicIF) topicsIt.next();
-      if (configman.isVisible(topic))
+      if (configman.isVisible(topic)) {
         result.add(topic);
+      }
     }
     return result;
   }
@@ -1026,8 +1065,9 @@ public class TopicMapView {
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
       TMTopicNode node = assertNode(topic, true);
-      if (node != null)
+      if (node != null) {
         createAssociations(node);
+      }
     }
   }
   
@@ -1149,8 +1189,9 @@ public class TopicMapView {
 
     // Index by type
     Iterator it = getValidTypesFor(topic).iterator();
-    if (!it.hasNext()) // if no type
+    if (!it.hasNext()) { // if no type
       indexNode(node, null);
+    }
     while (it.hasNext()) {
       TopicIF type = (TopicIF) it.next();
       indexNode(node, type);
@@ -1216,11 +1257,12 @@ public class TopicMapView {
           .getAssociation();
       if (configman.isVisible(association)
           && (arePlayersVisible(association, topic) 
-              || association.getRoles().size() != 2))
+              || association.getRoles().size() != 2)) {
         // NOTE: n-ary associations (n > 2) can be shown even if the players
         // are not visible, as the players of an n-ary associaiton don't need
         // to be shown. An n-ary is a self contained node, not just an edge.
         count++;
+      }
     }
 
     if (configman.isAssociationTypeVisible(configman.getTypeInstanceType())) {
@@ -1228,8 +1270,9 @@ public class TopicMapView {
       count = count + getValidVisibleTypesFor(topic).size();
 
       // Class-Instance associations
-      if (configman.isTopicTypeVisible(topic))
+      if (configman.isTopicTypeVisible(topic)) {
         count = count + typeix.getTopics(topic).size();
+      }
     }
 
     aNode.setAssociationCount(count);
@@ -1240,13 +1283,15 @@ public class TopicMapView {
    */
   private List getValidVisibleTypesFor(TopicIF aTopic) {
     Collection types = aTopic.getTypes();
-    if (types.isEmpty())
+    if (types.isEmpty()) {
       return Collections.EMPTY_LIST;
+    }
     ArrayList result = new ArrayList(types.size());
     for (Iterator typesIt = types.iterator(); typesIt.hasNext();) {
       TopicIF type = (TopicIF) typesIt.next();
-      if (!isExcludedType(type) && configman.isVisible(type))
+      if (!isExcludedType(type) && configman.isVisible(type)) {
         result.add(type);
+      }
     }
     return result;
   }
@@ -1262,8 +1307,9 @@ public class TopicMapView {
     Iterator rolesIt = association.getRoles().iterator();
     while (rolesIt.hasNext()) {
       TopicIF currentPlayer = ((AssociationRoleIF)rolesIt.next()).getPlayer();
-      if (configman.isVisible(currentPlayer))
+      if (configman.isVisible(currentPlayer)) {
         count++;
+      }
     }
 
     aNode.setRoleCount(count);
@@ -1273,9 +1319,12 @@ public class TopicMapView {
     for (Iterator rolesIt = association.getRoles().iterator(); 
         rolesIt.hasNext();) {
       TopicIF player = ((AssociationRoleIF) rolesIt.next()).getPlayer();
-      if (player == null) continue;
-      if (!source.equals(player) && configman.isVisible(player))
+      if (player == null) {
+        continue;
+      }
+      if (!source.equals(player) && configman.isVisible(player)) {
         return true;
+      }
     }
     return false;
   }
@@ -1292,8 +1341,9 @@ public class TopicMapView {
    */
   private TopicIF getPrimaryTypeFor(TMTopicNode aNode) {
     List types = getValidTypesFor(aNode.getTopic());
-    if (types.isEmpty())
+    if (types.isEmpty()) {
       return null;
+    }
     
     return configman.getTTPriorityManager().highestRankedType(types);
   }
@@ -1303,13 +1353,15 @@ public class TopicMapView {
    */
   private List getValidTypesFor(TopicIF aTopic) {
     Collection types = aTopic.getTypes();
-    if (types.isEmpty())
+    if (types.isEmpty()) {
       return Collections.EMPTY_LIST;
+    }
     ArrayList result = new ArrayList(types.size());
     for (Iterator typesIt = types.iterator(); typesIt.hasNext();) {
       TopicIF type = (TopicIF) typesIt.next();
-      if (!isExcludedType(type))
+      if (!isExcludedType(type)) {
         result.add(type);
+      }
     }
     return result;
   }
@@ -1340,8 +1392,9 @@ public class TopicMapView {
       nodeTypeIndex.add(type);
       target = new ArrayList();
       nodesByType.add(target);
-    } else
+    } else {
       target = (ArrayList) nodesByType.get(index);
+    }
 
     target.add(node);
   }
@@ -1350,8 +1403,9 @@ public class TopicMapView {
     Iterator iterator = getObjectsFor(type).iterator();
     while (iterator.hasNext()) {
       VizTMObjectIF target = (VizTMObjectIF) iterator.next();
-      if (target.represents(object))
+      if (target.represents(object)) {
         return target;
+      }
     }
     return null;
   }
@@ -1406,10 +1460,11 @@ public class TopicMapView {
 
     if (displayableRoles.size() == 2
         && (!((AssociationRoleIF) displayableRoles.get(0)).getPlayer().equals(
-            ((AssociationRoleIF) displayableRoles.get(1)).getPlayer())))
+            ((AssociationRoleIF) displayableRoles.get(1)).getPlayer()))) {
       retVal = makeOptimizedAssociation(assoc, displayableRoles, create);
-    else
+    } else {
       retVal = makeStandardAssociation(assoc, displayableRoles, create);
+    }
 
     // Add all the role players of the association to the TouchGraph panel.
     rolesIt = displayableRoles.iterator();
@@ -1461,10 +1516,11 @@ public class TopicMapView {
       } catch (TGException e) {
         // Check the message in case the TGException occurred for another reason
         String msg = e.getMessage();
-        if (msg.equals("node ID '" + id + "' already exists."))
+        if (msg.equals("node ID '" + id + "' already exists.")) {
           VizDebugUtils.debug("********** Caught duplicate node id error.");
-        else
+        } else {
           throw new OntopiaRuntimeException(e);
+        }
       }
       
       // Generate a new, hopefully unique ID.
@@ -1495,20 +1551,22 @@ public class TopicMapView {
     } else if (tmObject instanceof AssociationIF) {
       AssociationIF assoc = (AssociationIF)tmObject;
       VizTMObjectIF target = (VizTMObjectIF) findObject(assoc, assoc.getType());
-      if (target == null)
+      if (target == null) {
         focusNode = makeStandardAssociation(assoc, assoc.getRoles(), true);
-      else {
-        if (!(target instanceof TMAssociationNode))
+      } else {
+        if (!(target instanceof TMAssociationNode)) {
           throw new OntopiaRuntimeException("Internal error! Got an " +
                 "association node from the focus node history, " +
                 "that is not a TMAssociationNode: " + 
                 tmObject.getClass().getName());
+        }
         focusNode = (TMAssociationNode)target;
       }
-    } else
+    } else {
       throw new OntopiaRuntimeException("Unsupported TMObjectIF type in " +
                                             "setFocusNodeOf operation: " + 
                                             tmObject.getClass().getName());
+    }
     
     controller.focusNodeInternal(focusNode);
   }
@@ -1631,9 +1689,10 @@ public class TopicMapView {
       objectTypeIndex.add(type);
       target = new ArrayList();
       objectsByType.add(target);
-    } else
+    } else {
       // Get the ArrayList for this type.
       target = (ArrayList) objectsByType.get(index);
+    }
 
     target.add(tmAssoc);
   }
@@ -1682,9 +1741,10 @@ public class TopicMapView {
         if (newNode instanceof TMTopicNode) {
           TMTopicNode topicNode = (TMTopicNode)newNode;
 
-          if (useNodeLocality())
+          if (useNodeLocality()) {
             // Create edges to already existing nodes.
             createAllAssociations(topicNode, false);
+          }
         } else if (newNode instanceof TMAssociationNode) {
           // Create roles for topics already in the display.
           TMAssociationNode associationNode = (TMAssociationNode)newNode;
@@ -1747,13 +1807,14 @@ public class TopicMapView {
 
       if (configman.isVisible(role)
           && findObject(role, assoc.getType()) == null
-          && target != null)
+          && target != null) {
         makeRole((TMAssociationNode) target, role, create);
-      else if (configman.isVisible(assoc) && target == null) {
-        if (assoc.getRoles().size() != 2)
+      } else if (configman.isVisible(assoc) && target == null) {
+        if (assoc.getRoles().size() != 2) {
           makeAssociation(assoc, node, create);
-        else
+        } else {
           makeAssociation(assoc, create);
+        }
       }
     }
   }
@@ -1870,8 +1931,9 @@ public class TopicMapView {
     if (iterator.hasNext()) {
       while (iterator.hasNext()) {
         TMTopicNode node = getTopicNode(topic, (TopicIF) iterator.next());
-        if (node != null)
+        if (node != null) {
           return node;
+        }
       }
       return null;
     }
@@ -1888,12 +1950,14 @@ public class TopicMapView {
       // Need to check if element is TMAssociationEdge, as there may well exist
       // turnary associations of the same type.
       if (element instanceof TMAssociationEdge &&
-          ((TMAssociationEdge)element).getAssociation().equals(association))
+          ((TMAssociationEdge)element).getAssociation().equals(association)) {
         edge = (TMAssociationEdge)element;
+      }
     }
     
-    if (edge != null)
+    if (edge != null) {
       return edge;
+    }
 
     return null;
   }
@@ -1908,12 +1972,14 @@ public class TopicMapView {
       // Need to check if element is TMAssociationEdge, as there may well exist
       // turnary associations of the same type.
       if (element instanceof TMRoleEdge &&
-          ((TMRoleEdge)element).getRole().equals(role))
+          ((TMRoleEdge)element).getRole().equals(role)) {
         edge = (TMRoleEdge)element;
+      }
     }
     
-    if (edge != null)
+    if (edge != null) {
       return edge;
+    }
 
     return null;
   }
@@ -1928,8 +1994,9 @@ public class TopicMapView {
     TopicIF type = association.getType();
 
     TMAssociationNode node = getAssociationNode(association, type);
-    if (node != null)
+    if (node != null) {
       return node;
+    }
 
     return null;
   }
@@ -1938,8 +2005,9 @@ public class TopicMapView {
     Iterator iter = getTopicNodesFor(type).iterator();
     while (iter.hasNext()) {
       TMTopicNode element = (TMTopicNode) iter.next();
-      if (element.getTopic().equals(topic))
+      if (element.getTopic().equals(topic)) {
         return element;
+      }
     }
     return null;
   }
@@ -1952,8 +2020,9 @@ public class TopicMapView {
       // Need to check if element is TMAssociationNode, as there may well exist
       // binary associations of the same type.
       if (element instanceof TMAssociationNode &&
-          ((TMAssociationNode)element).getAssociation().equals(assoc))
+          ((TMAssociationNode)element).getAssociation().equals(assoc)) {
         return (TMAssociationNode)element;
+      }
     }
     return null;
   }
@@ -1964,8 +2033,9 @@ public class TopicMapView {
       Iterator objects = ((ArrayList) objectCollections.next()).iterator();
       while (objects.hasNext()) {
         VizTMObjectIF object = (VizTMObjectIF) objects.next();
-        if (object.isEdge())
+        if (object.isEdge()) {
           ((TMAbstractEdge) object).setShouldDisplayRoleHoverHelp(newValue);
+        }
       }
     }
   }
@@ -1980,9 +2050,10 @@ public class TopicMapView {
       Iterator objects = ((ArrayList) objectCollections.next()).iterator();
       while (objects.hasNext()) {
         VizTMObjectIF object = (VizTMObjectIF) objects.next();
-        if (object.isAssociation())
+        if (object.isAssociation()) {
           ((VizTMAssociationIF) object)
               .setShouldDisplayScopedAssociationNames(newValue);
+        }
       }
     }
   }
@@ -1996,8 +2067,9 @@ public class TopicMapView {
     TMAbstractNode target = getFocusNode();
     
     // In map view do nothing.
-    if (target == null)
+    if (target == null) {
       return;
+    }
 
     // Get the connected graph starting from target.
     Graph connectedGraph = getConnectedGraph(target);
@@ -2009,8 +2081,9 @@ public class TopicMapView {
     while (viewNodesIt.hasNext()) {
       TMAbstractNode currentNode = (TMAbstractNode)viewNodesIt.next();
       
-      if (!connectedNodes.contains(currentNode))
+      if (!connectedNodes.contains(currentNode)) {
         disconnectedNodes.add(currentNode);
+      }
     }
     
     // Get and filter out any non-TMTopicNode Nodes from connectedNodes.
@@ -2032,8 +2105,9 @@ public class TopicMapView {
       while (viewEdgesIt.hasNext()) {
         TMAbstractEdge currentEdge = (TMAbstractEdge)viewEdgesIt.next();
         
-        if (!connectedEdges.contains(currentEdge))
+        if (!connectedEdges.contains(currentEdge)) {
           disconnectedEdges.add(currentEdge);
+        }
       }
     }
     
@@ -2071,8 +2145,9 @@ public class TopicMapView {
     Set graphEdges = new HashSet();
     Graph retVal = new Graph(graphNodes, graphEdges);
     
-    if (target == null)
+    if (target == null) {
       return retVal;
+    }
     
     graphNodes.add(target);
     
@@ -2085,8 +2160,9 @@ public class TopicMapView {
       TMAbstractNode currentNode = (TMAbstractNode)edge.getFrom();
       
       // At most one of the nodes of edge may not already be in graphNodes.
-      if (graphNodes.contains(currentNode))
+      if (graphNodes.contains(currentNode)) {
         currentNode = (TMAbstractNode)edge.getTo();
+      }
       
       // If a node of the edge has not yet been visited.
       if (!graphNodes.contains(currentNode)) {
@@ -2122,8 +2198,9 @@ public class TopicMapView {
         TMTopicNode node = (TMTopicNode) it.next();
         TopicIF primaryType = getPrimaryTypeFor(node);
         initializeNode(node, primaryType);
-        if (primaryType == null)
+        if (primaryType == null) {
           indexNode(node, null);
+        }
         Key key = new Key(aType, node.getTopic());
 
         // We need to take a copy of the edges collection since
@@ -2176,8 +2253,9 @@ public class TopicMapView {
       for (Iterator topicsIt = collection.iterator(); topicsIt
           .hasNext();) {
         TMTopicNode node = (TMTopicNode) topicsIt.next();
-        if (node.isVisible() && searchTopicFor(pattern, node))
+        if (node.isVisible() && searchTopicFor(pattern, node)) {
           results.add(node);
+        }
       }
     }
     return results;
@@ -2191,14 +2269,16 @@ public class TopicMapView {
     Iterator namesIt = node.getTopic().getTopicNames().iterator();
     while (namesIt.hasNext()) {
       TopicNameIF currentName = (TopicNameIF)namesIt.next();
-      if (matchesIgnoreCase(currentName.getValue(), pattern))
+      if (matchesIgnoreCase(currentName.getValue(), pattern)) {
         return true;
+      }
       
       Iterator variantsIt = currentName.getVariants().iterator();
       while (variantsIt.hasNext()) {
         VariantNameIF currentVariant = (VariantNameIF)variantsIt.next();
-        if (matchesIgnoreCase(currentVariant.getValue(), pattern))
+        if (matchesIgnoreCase(currentVariant.getValue(), pattern)) {
           return true;
+        }
       }
     }
     return false;
@@ -2210,8 +2290,9 @@ public class TopicMapView {
 
   public TMTopicNode getStartNode() {
     TopicIF startTopic = controller.getStartTopic(topicmap);
-    if (startTopic == null)
+    if (startTopic == null) {
       return null;
+    }
     return assertNode(startTopic, true);
   }
 
@@ -2230,8 +2311,9 @@ public class TopicMapView {
   private int getNodeCount() {
     // Get the number of nodes currently loaded
     int count = 0;
-    for (Iterator nodesIt = nodesByType.iterator(); nodesIt.hasNext();)
+    for (Iterator nodesIt = nodesByType.iterator(); nodesIt.hasNext();) {
       count = count + ((List) nodesIt.next()).size();
+    }
 
     return count;
   }
@@ -2289,20 +2371,27 @@ public class TopicMapView {
     private boolean reportAndCrash = false;
 
     protected void execute(String operation) {
-      if ("count".equals(operation))
+      if ("count".equals(operation)) {
         counts();
-      if ("gc".equals(operation))
+      }
+      if ("gc".equals(operation)) {
         collectGarbage();
-      if ("paint".equals(operation))
+      }
+      if ("paint".equals(operation)) {
         paintNodes(true);
-      if ("paint-h".equals(operation))
+      }
+      if ("paint-h".equals(operation)) {
         paintNodes(false);
-      if ("paint-all".equals(operation))
+      }
+      if ("paint-all".equals(operation)) {
         paintNodes();
-      if ("assoc-v".equals(operation))
+      }
+      if ("assoc-v".equals(operation)) {
         outputAssociaitonNames(true);
-      if ("h-assoc-h".equals(operation))
+      }
+      if ("h-assoc-h".equals(operation)) {
         outputAssociaitonNames(false);
+      }
     }
 
     private void collectGarbage() {
@@ -2448,26 +2537,30 @@ public class TopicMapView {
       System.out.println(")");
       
       int hiddenNodes = getTGNodesOfType(Node.class, true, false).size();
-      if (hiddenNodes != 0)
+      if (hiddenNodes != 0) {
         System.out.println("WARNING! - There are " + hiddenNodes
             + " - hidden nodes, but no nodes should ever be hidden!");
+      }
       int hiddenEdges = getTGEdgesOfType(Edge.class, true, false).size();
-      if (hiddenEdges != 0)
+      if (hiddenEdges != 0) {
         System.out.println("WARNING! - There are " + hiddenEdges
             + " - hidden edges, but no edges should ever be hidden!");
+      }
       
       if (VizDebugUtils.isDebugFailMode()) {
-        if (totalNodeCount_distinct != totalNodeCountTG_distinct)
+        if (totalNodeCount_distinct != totalNodeCountTG_distinct) {
           throw new OntopiaRuntimeException("The number of distinct nodes in" +
               " Vizigator (" + totalNodeCount_distinct + ") does not match the" +
               " number of distinct nodes in TouchGraph(" +
               totalNodeCountTG_distinct + ").");
+        }
       } else {
-        if (totalNodeCount_distinct != totalNodeCountTG_distinct)
+        if (totalNodeCount_distinct != totalNodeCountTG_distinct) {
           System.out.println("WARNING - The number of distinct nodes in" +
               " Vizigator (" + totalNodeCount_distinct + ") does not match the" +
               " number of distinct nodes in TouchGraph(" +
               totalNodeCountTG_distinct + ").");
+        }
       }
     }
 
@@ -2477,7 +2570,9 @@ public class TopicMapView {
       ArrayList result = new ArrayList(nodesOfType.size());
       for (Iterator iter = nodesOfType.iterator(); iter.hasNext();) {
         TMAbstractNode element = (TMAbstractNode) iter.next();
-        if (element.isVisible() == visible) result.add(element);
+        if (element.isVisible() == visible) {
+          result.add(element);
+        }
       }
       return result;
     }
@@ -2488,24 +2583,28 @@ public class TopicMapView {
       ArrayList result = new ArrayList(edgesOfType.size());
       for (Iterator iter = edgesOfType.iterator(); iter.hasNext();) {
         Edge element = (Edge) iter.next();
-        if (element.isVisible() == visible) result.add(element);
+        if (element.isVisible() == visible) {
+          result.add(element);
+        }
       }
       return result;
     }
 
     protected Collection getTGEdgesOfType(Class aClass, boolean distinct) {
       Collection result;
-      if (distinct)
+      if (distinct) {
         result = new HashSet();
-      else
+      } else {
         result = new ArrayList();
+      }
 
       Iterator edgesIt = tgPanel.getAllEdges();
       if (edgesIt != null) {
         while (edgesIt.hasNext()) {
           Object object = edgesIt.next();
-          if (aClass.isInstance(object))
+          if (aClass.isInstance(object)) {
             result.add(object);
+          }
         }
       }
 
@@ -2514,17 +2613,19 @@ public class TopicMapView {
 
     protected Collection getTGNodesOfType(Class aClass, boolean distinct) {
       Collection result;
-      if (distinct)
+      if (distinct) {
         result = new HashSet();
-      else
+      } else {
         result = new ArrayList();
+      }
 
       Iterator nodesIt = tgPanel.getAllNodes();
       if (nodesIt != null) {
         while (nodesIt.hasNext()) {
           Object object = nodesIt.next();
-          if (aClass.isInstance(object))
+          if (aClass.isInstance(object)) {
             result.add(object);
+          }
         }
       }
 
@@ -2546,8 +2647,9 @@ public class TopicMapView {
           if (node.isVisible() == visible) {
             Integer distance = (Integer) distances.get(node);
             char value = 'X';
-            if (distance != null)
+            if (distance != null) {
               value = Character.forDigit(distance.intValue(), 10);
+            }
             node.paintSmallTag(tgPanel.getGraphics(), tgPanel,
                 (int) node.drawx, (int) node.drawy, Color.black, Color.white,
                 value);
@@ -2570,8 +2672,9 @@ public class TopicMapView {
           TMTopicNode node = (TMTopicNode) topics.next();
           Integer distance = (Integer) distances.get(node);
           char value = 'X';
-          if (distance != null)
+          if (distance != null) {
             value = Character.forDigit(distance.intValue(), 10);
+          }
           node.paintSmallTag(tgPanel.getGraphics(), tgPanel, (int) node.drawx,
               (int) node.drawy, Color.black, Color.white, value);
         }
@@ -2580,18 +2683,20 @@ public class TopicMapView {
 
     public Collection getObjectsOfType(Class type, boolean distinct) {
       Collection result;
-      if (distinct)
+      if (distinct) {
         result = new HashSet();
-      else
+      } else {
         result = new ArrayList();
+      }
 
       for (Iterator collections = objectsByType.iterator(); collections
           .hasNext();) {
         for (Iterator objects = ((List) collections.next()).iterator(); objects
             .hasNext();) {
           Object object = objects.next();
-          if (type.isInstance(object))
+          if (type.isInstance(object)) {
             result.add(object);
+          }
         }
       }
       return result;
@@ -2599,25 +2704,28 @@ public class TopicMapView {
     
     public Collection getNodesOfType(Class type, boolean distinct) {
       Collection result;
-      if (distinct)
+      if (distinct) {
         result = new HashSet();
-      else
+      } else {
         result = new ArrayList();
+      }
 
       for (Iterator collections = nodesByType.iterator(); collections.hasNext();) {
         for (Iterator objects = ((List) collections.next()).iterator(); objects
             .hasNext();) {
           Object object = objects.next();
-          if (type.isInstance(object))
+          if (type.isInstance(object)) {
             result.add(object);
+          }
         }
       }
       return result;
     }
     
     public void integrityCheck() {
-      if (!VizDebugUtils.isDebugEnabled())
+      if (!VizDebugUtils.isDebugEnabled()) {
         return;
+      }
       
       VizDebugUtils.debug("-------------- Start of Integrity check.");
       
@@ -2774,8 +2882,9 @@ public class TopicMapView {
                          "allNodes", "nodesTG");
       
       VizDebugUtils.debug("-------------- End of Integrity check.");
-      if (reportAndCrash)
+      if (reportAndCrash) {
         reportAndExit();
+      }
     }
     
     private void assertEmpty(Collection coll, String whatsThere) {
@@ -2804,8 +2913,9 @@ public class TopicMapView {
         }
         if (!assertTrue(coll2.contains(current), 
             "The element " + label + " from the collection " + name1 +
-            " could not be found in the collection " + name2 + "."))
+            " could not be found in the collection " + name2 + ".")) {
           retVal = false;
+        }
       }
       
       Iterator coll2It = coll2.iterator();
@@ -2817,8 +2927,9 @@ public class TopicMapView {
         }
         if (!assertTrue(coll1.contains(current),
             "The element " + label + " from the collection " + name2 +
-            " could not be found in the collection " + name1 + "."))
+            " could not be found in the collection " + name1 + ".")) {
           retVal = false;
+        }
       }
 
       return retVal;
@@ -2840,8 +2951,9 @@ public class TopicMapView {
     }
     
     private void reportAndExit() {
-      if (!VizDebugUtils.isDebugEnabled())
+      if (!VizDebugUtils.isDebugEnabled()) {
         return;
+      }
       System.out.println("FOUND INCONSISTENCIES (SEE ABOVE)");
       System.out.println("DISABLING VIZIGATOR USER");
       vizigatorUser.enabled = false;

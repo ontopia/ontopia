@@ -94,10 +94,11 @@ public class FieldInstanceAssociationNaryField extends Panel {
         @Override
         public boolean isVisible() {
           // hide if read-only and not complete
-          if (readonly && selectedPlayers.size() != arity)
+          if (readonly && selectedPlayers.size() != arity) {
             return false;
-          else
+          } else {
             return true;
+          }
         }          
       };
       parent.setOutputMarkupId(true);
@@ -142,17 +143,19 @@ public class FieldInstanceAssociationNaryField extends Panel {
               topicModel.setObject(topic);
               boolean changesMade = onNewSelection(ofieldModel, topic);
               // replace ourselves with a topic link
-              if (changesMade)
+              if (changesMade) {
                 parent.replace(new TopicLink<Topic>("select", new TopicModel<Topic>(topic)));
+              }
             }                
           };
           autoCompleteField.getTextField().add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (needsUpdate)
+                if (needsUpdate) {
                   FieldInstanceAssociationNaryField.this.onUpdate(target);
-                else 
+                } else {
                   target.addComponent(parent);
+                }
             }
           });          
 
@@ -221,10 +224,11 @@ public class FieldInstanceAssociationNaryField extends Panel {
                 Topic topic = topicMap.getTopicById(topicId);
                 topicModel.setObject(topic);
                 onNewSelection(ofieldModel, topic);
-                if (needsUpdate)
+                if (needsUpdate) {
                   FieldInstanceAssociationNaryField.this.onUpdate(target);
-                else
+                } else {
                   target.addComponent(parent);
+                }
               }
             }
             @Override
@@ -286,10 +290,11 @@ public class FieldInstanceAssociationNaryField extends Panel {
           }          
           @Override
           protected void hideInstancePage(AjaxRequestTarget target) {
-            if (needsUpdate)
+            if (needsUpdate) {
               FieldInstanceAssociationNaryField.this.onUpdate(target);
-            else
+            } else {
               target.addComponent(parent);
+            }
           }
         };
         createPanel.setOutputMarkupId(true);
@@ -352,8 +357,9 @@ public class FieldInstanceAssociationNaryField extends Panel {
   } 
   
   protected void onError(AjaxRequestTarget target, RuntimeException e) {
-    if (needsUpdate)
+    if (needsUpdate) {
       parentPanel.onError(target, e);
+    }
     needsUpdate = false;    
   }
   
@@ -366,7 +372,9 @@ public class FieldInstanceAssociationNaryField extends Panel {
       RoleField roleField = roleFieldModel.getRoleField();
       Topic topic = topicModel.getTopic();
       // if topic is null then the value is not complete, so we return null
-      if (topic == null) return null;
+      if (topic == null) {
+        return null;
+      }
       value.addPlayer(roleField, topic);
     }
     return value;

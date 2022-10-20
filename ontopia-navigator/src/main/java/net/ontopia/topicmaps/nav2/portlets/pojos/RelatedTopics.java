@@ -253,57 +253,67 @@ public class RelatedTopics {
   public List makeModel(TopicIF topic) {
     // first, validate the configuration
     if (excltopics != null && !excltopics.isEmpty() &&
-        incltopics != null && !incltopics.isEmpty())
+        incltopics != null && !incltopics.isEmpty()) {
       throw new OntopiaRuntimeException("Configuration fields includeTopicTypes and excludeTopicTypes cannot both be specified.");
+    }
     if (exclassocs != null && !exclassocs.isEmpty() &&
-        inclassocs != null && !inclassocs.isEmpty())
+        inclassocs != null && !inclassocs.isEmpty()) {
       throw new OntopiaRuntimeException("Configuration fields includeAssociationTypes and excludeAssociationTypes cannot both be specified.");
+    }
         
     // then, update the configuration cache
     updateCache(topic.getTopicMap());
 
     ParsedQueryIF pquery = null;
-    if (filterquery != null)
+    if (filterquery != null) {
       pquery = parse(topic.getTopicMap(), filterquery);
+    }
 
     ParsedQueryIF headingOrderQuery = null;
-    if (headingOrderQueryString != null)
+    if (headingOrderQueryString != null) {
       headingOrderQuery = parse(topic.getTopicMap(), headingOrderQueryString);
+    }
       
     ParsedQueryIF childOrderQuery = null;
-    if (childOrderQueryString != null)
+    if (childOrderQueryString != null) {
       childOrderQuery = parse(topic.getTopicMap(), childOrderQueryString);
+    }
     
     // group associations by the headings they will wind up under
     Map typemap = new HashMap();
     Iterator it = getRoles(topic).iterator();
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
-      if (isRoleHidden(role, pquery))
+      if (isRoleHidden(role, pquery)) {
         continue; // if the filter hides this association we just skip it
+      }
 
       AssociationIF assoc = role.getAssociation();
       if (getWeakTypes().contains(getObjectId(assoc.getType()))) {
         // this is a weak type
-        if (assoc.getRoles().size() != 2)
+        if (assoc.getRoles().size() != 2) {
           throw new OntopiaRuntimeException("Weak associations cannot be " +
                                             "n-ary or unary");
+        }
         AssociationRoleIF other = getOtherRole(assoc, role);
         TopicIF player = other.getPlayer();
         TopicIF ttype = null;
-        if (player.getTypes().size() > 0)
+        if (player.getTypes().size() > 0) {
           ttype = (TopicIF) player.getTypes().iterator().next();
+        }
         String key = getObjectId(ttype);
         Heading heading = (Heading) typemap.get(key);
         if (heading == null) {
           heading = new Heading(ttype);
-          if (headingOrderQuery != null)
+          if (headingOrderQuery != null) {
             heading.setSortKey(getSortKey(ttype, headingOrderQuery));
+          }
           typemap.put(key, heading);
         }
         Association child = new Association(role, false);
-        if (childOrderQuery != null)
+        if (childOrderQuery != null) {
           child.setSortKey(getSortKey(child.getPlayer(), childOrderQuery));
+        }
         heading.addChild(child);
       } else {
         // not a weak type
@@ -312,13 +322,15 @@ public class RelatedTopics {
         Heading heading = (Heading) typemap.get(key);
         if (heading == null) {
           heading = new Heading(assoc.getType(), role.getType());
-          if (headingOrderQuery != null)
+          if (headingOrderQuery != null) {
             heading.setSortKey(getSortKey(assoc.getType(), headingOrderQuery));
+          }
           typemap.put(key, heading);
         }
         Association child = new Association(role, true);
-        if (childOrderQuery != null)
+        if (childOrderQuery != null) {
           child.setSortKey(getSortKey(child.getPlayer(), childOrderQuery));
+        }
         heading.addChild(child);
       }
     }
@@ -341,7 +353,9 @@ public class RelatedTopics {
 
   private Collection getRoles(TopicIF topic) {
     // if no hierarchy aggregation just return topic's direct roles
-    if (!aggregateHierarchy) return topic.getRoles();
+    if (!aggregateHierarchy) {
+      return topic.getRoles();
+    }
     
     // build aggregate query
     StringBuilder query = new StringBuilder();
@@ -365,15 +379,21 @@ public class RelatedTopics {
     if (aggregateAssociations != null && !aggregateAssociations.isEmpty()) {
       // aggregate only given association types
       boolean useOrBranch = (aggregateAssociations.size() > 1);
-      if (useOrBranch) query.append("{ ");    
+      if (useOrBranch) {
+        query.append("{ ");
+      }    
       Iterator iter = aggregateAssociations.iterator();
       while (iter.hasNext()) {
         TopicIF atype = (TopicIF)iter.next();      
         query.append("$AT = @");
         query.append(atype.getObjectId());
-        if (iter.hasNext()) query.append(" | ");      
+        if (iter.hasNext()) {
+          query.append(" | ");
+        }      
       }    
-      if (useOrBranch) query.append(" }");
+      if (useOrBranch) {
+        query.append(" }");
+      }
     } else {
       // aggregate all except hierarchical association types
       query.append("not(instance-of($AT, h:hierarchical-relation-type))");     
@@ -389,8 +409,9 @@ public class RelatedTopics {
         while (qr.next()) {
           AssociationRoleIF role = (AssociationRoleIF)qr.getValue(0);
           String rkey = KeyGenerator.makeAssociationKey(role.getAssociation(), role);
-          if (!result.containsKey(rkey))
+          if (!result.containsKey(rkey)) {
             result.put(rkey, role);
+          }
         }
       } finally {
         qr.close();
@@ -407,26 +428,31 @@ public class RelatedTopics {
     AssociationIF assoc = role.getAssociation();
     Set hide = (exclassocs == null) ? exclassocs_cache : exclassocs;
     if (hide.contains(getObjectId(assoc.getType())) || // filtered by exclude
-        (inclassocs != null && !inclassocs.contains(getObjectId(assoc.getType())))) // filtered by include
+        (inclassocs != null && !inclassocs.contains(getObjectId(assoc.getType())))) { // filtered by include
       return true;
+    }
 
     // is the role type filtered out?
-    if (exclroles != null && exclroles.contains(getObjectId(role.getType())))
+    if (exclroles != null && exclroles.contains(getObjectId(role.getType()))) {
       return true;
+    }
             
     // are any of the topics in the association filtered out?
     hide = (excltopics == null) ? excltopics_cache : excltopics;
-    if (hide.isEmpty() && pquery == null)
+    if (hide.isEmpty() && pquery == null) {
       return false;
+    }
     
     Iterator it = assoc.getRoles().iterator();
     while (it.hasNext()) {
       AssociationRoleIF other = (AssociationRoleIF) it.next();
-      if (other.equals(role))
+      if (other.equals(role)) {
         continue;
+      }
 
-      if (isTopicHidden(other.getPlayer(), hide, pquery))
+      if (isTopicHidden(other.getPlayer(), hide, pquery)) {
         return true;
+      }
     }
     return false;
   }
@@ -437,11 +463,13 @@ public class RelatedTopics {
     while (it.hasNext()) {
       TopicIF type = (TopicIF) it.next();
       // FIXME: should we support subtyping here?
-      if (hide.contains(getObjectId(type)))
+      if (hide.contains(getObjectId(type))) {
         return true;
+      }
       
-      if (!inclTopicMatch)
+      if (!inclTopicMatch) {
         inclTopicMatch = (incltopics != null && incltopics.contains(getObjectId(type)));
+      }
     }
     
     return (incltopics != null && !inclTopicMatch) ||
@@ -449,19 +477,23 @@ public class RelatedTopics {
   }
 
   private Object getSortKey(TopicIF topic, ParsedQueryIF skquery) {
-    if (topic == null) return null;
+    if (topic == null) {
+      return null;
+    }
     QueryResultIF result = null;
     try {
       result = skquery.execute(Collections.singletonMap("topic", topic));
-      if (result.next())
+      if (result.next()) {
         return result.getValue(0);
-      else
+      } else {
         return null;
+      }
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
   }
   
@@ -470,10 +502,11 @@ public class RelatedTopics {
   }
   
   private String getObjectId(TMObjectIF object) {
-    if (object == null)
+    if (object == null) {
       return "NULL";
-    else
+    } else {
       return object.getObjectId();
+    }
   }
   
   private static AssociationRoleIF getOtherRole(AssociationIF assoc,
@@ -481,13 +514,16 @@ public class RelatedTopics {
     // INV: assoc.getRoles().size() == 2
     Iterator it = assoc.getRoles().iterator();
     AssociationRoleIF other = (AssociationRoleIF) it.next();
-    if (other == role)
+    if (other == role) {
       other = (AssociationRoleIF) it.next();
+    }
     return other;
   }
 
   private Set mapToObjectIds(Set objects) {
-    if (objects == null) return null;
+    if (objects == null) {
+      return null;
+    }
     Set objids = new CompactHashSet(objects.size());
     Iterator it = objects.iterator();
     while (it.hasNext()) {
@@ -499,8 +535,9 @@ public class RelatedTopics {
 
   private void updateCache(TopicMapIF topicmap) {
     if (System.identityHashCode(topicmap.getStore()) == storeid &&
-        System.identityHashCode(topicmap) == tmid)
+        System.identityHashCode(topicmap) == tmid) {
       return; // we already have this
+    }
 
     String decl = "using port for i\"http://psi.ontopia.net/portlets/\" ";
     QueryProcessorIF proc = QueryUtils.getQueryProcessor(topicmap);
@@ -508,8 +545,9 @@ public class RelatedTopics {
     try {
       QueryResultIF result = proc.execute(decl +
         "port:not-semantic-type($AT : port:type)?");
-      while (result.next())
+      while (result.next()) {
         weaktypes_cache.add(((TopicIF) result.getValue(0)).getObjectId());
+      }
       result.close();
     } catch (InvalidQueryException e) {
       // happens if the port:* topics don't exist in the TM; that's OK
@@ -519,8 +557,9 @@ public class RelatedTopics {
     try {
       QueryResultIF result = proc.execute(decl +
         "port:is-hidden-topic-type($AT : port:type)?");
-      while (result.next())
+      while (result.next()) {
         excltopics_cache.add(((TopicIF) result.getValue(0)).getObjectId());
+      }
       result.close();
     } catch (InvalidQueryException e) {
       // happens if the port:* topics don't exist in the TM; that's OK
@@ -530,8 +569,9 @@ public class RelatedTopics {
     try {
       QueryResultIF result = proc.execute(decl +
         "port:is-hidden-association-type($AT : port:type)?");
-      while (result.next())
+      while (result.next()) {
         exclassocs_cache.add(((TopicIF) result.getValue(0)).getObjectId());
+      }
       result.close();
     } catch (InvalidQueryException e) {
       // happens if the port:* topics don't exist in the TM; that's OK
@@ -560,25 +600,28 @@ public class RelatedTopics {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
   }
 
   private int compareHeadings(Object o1, Object o2) {
     int result = _compare(o1, o2);
-    if (headingOrdering == ORDERING_DESC)
+    if (headingOrdering == ORDERING_DESC) {
       return -1 * result;
-    else
+    } else {
       return result;
+    }
   }
 
   private int compareChildren(Object o1, Object o2) {
     int result = _compare(o1, o2);
-    if (childOrdering == ORDERING_DESC)
+    if (childOrdering == ORDERING_DESC) {
       return -1 * result;
-    else
+    } else {
       return result;
+    }
   }
 
   private int _compare(Object o1, Object o2) {
@@ -686,7 +729,9 @@ public class RelatedTopics {
 
     @Override
     public int compareTo(Object o) {
-      if (!(o instanceof Heading)) return 0;
+      if (!(o instanceof Heading)) {
+        return 0;
+      }
       Heading other = (Heading)o;
       // prefer sort key over title
       Object tkey = (this.sortkey != null ? this.sortkey : this.getTitle());
@@ -721,10 +766,11 @@ public class RelatedTopics {
 
     public List getChildren() {
       // only return maximum number of children if specified
-      if (maxchildren >= 0 && children.size() > maxchildren)
+      if (maxchildren >= 0 && children.size() > maxchildren) {
         return children.subList(0, maxchildren);
-      else
+      } else {
         return children;
+      }
     }
 
     public boolean getMoreChildren() {
@@ -757,16 +803,18 @@ public class RelatedTopics {
       if (getArity() == 2) {
         AssociationRoleIF other = getOtherRole(assoc, role);
         this.player = other.getPlayer();
-        if (assoctype)
+        if (assoctype) {
           this.roleType = other.getType();
+        }
       }
     }
 
     public int getArity() {
-      if (assoctype)
+      if (assoctype) {
         return assoc.getRoles().size();
-      else
+      } else {
         return 2;
+      }
     }
 
     public TopicIF getPlayer() {
@@ -774,15 +822,17 @@ public class RelatedTopics {
     }
 
     public List getRoles() {
-      if (!assoctype || roles != null)
+      if (!assoctype || roles != null) {
         return roles;
+      }
 
       roles = new ArrayList(getArity());
       Iterator it = assoc.getRoles().iterator();
       while (it.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF) it.next();
-        if (role == this.role)
+        if (role == this.role) {
           continue;
+        }
 
         roles.add(role);
       }
@@ -813,7 +863,9 @@ public class RelatedTopics {
 
     @Override
     public int compareTo(Object o) {
-      if (!(o instanceof Association)) return 0;
+      if (!(o instanceof Association)) {
+        return 0;
+      }
       Association other = (Association)o;
       Object tkey = (this.sortkey != null ? this.sortkey : this.getTitle());
       Object okey = (other.sortkey != null ? other.sortkey : other.getTitle());

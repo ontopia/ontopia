@@ -46,10 +46,12 @@ public class CTMEncodingSniffer implements EncodingSnifferIF {
                   bomBuffer[1] == (byte) 0xBB &&
                   bomBuffer[2] == (byte) 0xBF);
       
-      if (!foundBom)
+      if (!foundBom) {
         stream.unread(bomBuffer, 0, 3);
-    } else if (bytesread != -1)
+      }
+    } else if (bytesread != -1) {
       stream.unread(bomBuffer, 0, bytesread);
+    }
 
     encoding = "utf-8"; // this is what the spec says to assume here
 
@@ -61,14 +63,16 @@ public class CTMEncodingSniffer implements EncodingSnifferIF {
       stream.unread(buf, 0, read);
       
       // Get the encoding (if any) declared in the document.
-      if (start.startsWith("%encoding"))
+      if (start.startsWith("%encoding")) {
         encoding = getEncoding(start);
+      }
       
       // If a BOM is found then the encoding must be utf-8.
-      if (foundBom && encoding != null && !encoding.equals("utf-8"))
+      if (foundBom && encoding != null && !encoding.equals("utf-8")) {
         throw new InvalidTopicMapException("Contradicting encoding information."
             + " The BOM indicates that the encoding should be utf-8,"
             + " but the encoding is declared to be: " + encoding + ".");
+      }
 
       return encoding;
     }
@@ -83,17 +87,20 @@ public class CTMEncodingSniffer implements EncodingSnifferIF {
            (buf.charAt(ix) == ' ' ||
             buf.charAt(ix) == '\u0009' ||
             buf.charAt(ix) == '\n' ||
-            buf.charAt(ix) == '\r'))
+            buf.charAt(ix) == '\r')) {
       ix++;
+    }
 
     // FIXME: triple-quoted strings should be accepted here
-    if (buf.charAt(ix) != '"')
+    if (buf.charAt(ix) != '"') {
       return null;
+    }
     ix++;
 
     int start = ix;
-    while (ix < buf.length() && buf.charAt(ix) != '"')
+    while (ix < buf.length() && buf.charAt(ix) != '"') {
       ix++;
+    }
 
     return buf.substring(start, ix);
   }

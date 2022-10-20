@@ -57,8 +57,9 @@ public abstract class ReifiableImpl extends ConstructImpl implements
   @Override
   public void setReifier(Topic reifier)
       throws ModelConstraintException {
-    if (reifier!=null)
+    if (reifier!=null) {
       Check.reifierInTopicMap(getTopicMap(), reifier);
+    }
     if (reifier != null && reifier.getReified() != null && !reifier.getReified().equals(this)) {
       throw new ModelConstraintException(this, "The reifier reifies another construct");
     }

@@ -89,15 +89,18 @@ public abstract class AbstractFieldInstancePanel extends Panel {
 //      component.add(new SimpleAttributeModifier("class", "newFieldValue"));
     
     // add css class if field value is new, and the display of it was user triggered.
-    if (!fieldValueModel.isExistingValue() && fieldValuesModel.getShowExtraField() && fieldValuesModel.getShowExtraFieldUserTriggered()) 
+    if (!fieldValueModel.isExistingValue() && fieldValuesModel.getShowExtraField() && fieldValuesModel.getShowExtraFieldUserTriggered()) {
       component.add(new SimpleAttributeModifier("class", "newFieldValue"));
+    }
   }
 
   @Override
   protected void onDetach() {
     super.onDetach();
     fieldInstanceModel.detach();
-    if (fieldValuesModel != null) fieldValuesModel.detach();
+    if (fieldValuesModel != null) {
+      fieldValuesModel.detach();
+    }
   }
 
   protected class FieldUpdatingBehaviour extends AjaxFormComponentUpdatingBehavior {
@@ -110,8 +113,9 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     @Override
     protected void onUpdate(AjaxRequestTarget target) {
       fieldValuesModel.setShowExtraField(false, false);
-      if (updateListView)
+      if (updateListView) {
         listView.removeAll();
+      }
       updateDependentComponents(target);
     }   
     @Override
@@ -123,10 +127,11 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   protected void validateCardinality() {
     Cardinality card = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
     int size = fieldValuesModel.getNumberOfValues();
-    if (card.isMinOne() && size < 1)
+    if (card.isMinOne() && size < 1) {
       error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toofew")));
-    else if (card.isMaxOne() && size > 1)
-      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toomany")));      
+    } else if (card.isMaxOne() && size > 1) {
+      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toomany")));
+    }      
   }
   
   protected class AbstractFieldInstancePanelFeedbackMessageFilter implements IFeedbackMessageFilter {

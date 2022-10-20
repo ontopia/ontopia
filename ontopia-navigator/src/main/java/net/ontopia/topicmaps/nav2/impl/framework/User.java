@@ -79,8 +79,9 @@ public class User implements UserIF, Serializable {
   }
 
   public User(String userId, NavigatorConfigurationIF navConf) {
-    if (userId == null)
+    if (userId == null) {
       userId = COMMON_USER;
+    }
     this.id = userId;
 
     // how many bundles?
@@ -106,8 +107,9 @@ public class User implements UserIF, Serializable {
    
   @Override
   public UserFilterContextStore getFilterContext() {
-    if (filterContext == null)
+    if (filterContext == null) {
       filterContext = new UserFilterContextStore();
+    }
     return filterContext;
   }
 
@@ -115,8 +117,9 @@ public class User implements UserIF, Serializable {
   
   @Override
   public HistoryMap getHistory() {
-    if (history == null)
+    if (history == null) {
       history = new HistoryMap();
+    }
     return history;
   }
 
@@ -130,8 +133,9 @@ public class User implements UserIF, Serializable {
   @Override
   public List getLogMessages() {
     synchronized (this) {
-      if (log == null)
+      if (log == null) {
         log = new HistoryMap(50, false);
+      }
       return (List) log.getEntries();
     }
   }
@@ -139,8 +143,9 @@ public class User implements UserIF, Serializable {
   @Override
   public void addLogMessage(String message) {
     synchronized (this) {
-      if (log == null)
+      if (log == null) {
         log = new HistoryMap(50, false);
+      }
       log.add(message);
     }
   }
@@ -148,8 +153,9 @@ public class User implements UserIF, Serializable {
   @Override
   public void clearLog() {
     synchronized (this) {
-      if (log == null)
+      if (log == null) {
         log = new HistoryMap(50, false);
+      }
       log.clear();
     }
   }
@@ -159,29 +165,34 @@ public class User implements UserIF, Serializable {
   @Override
   public synchronized void addWorkingBundle(String bundle_id, Object object) {
     removeOldWorkingBundles(bundle_id);
-    if (timeStamps == null)
+    if (timeStamps == null) {
       timeStamps = new LRUMap(max_bundles);
+    }
     timeStamps.put(object, new Date());
-    if (workingBundles == null)
+    if (workingBundles == null) {
       workingBundles = new LRUMap(max_bundles);
+    }
     workingBundles.put(bundle_id, object);
   }
   
   @Override
   public synchronized Object getWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
-    if (bundle_id == null) 
+    if (bundle_id == null) {
       return null;
-    if (workingBundles == null)
+    }
+    if (workingBundles == null) {
       workingBundles = new LRUMap(max_bundles);
+    }
     return workingBundles.get(bundle_id);
   }
 
   @Override
   public synchronized void removeWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
-    if (workingBundles == null)
+    if (workingBundles == null) {
       workingBundles = new LRUMap(max_bundles);
+    }
     workingBundles.remove(bundle_id);
   }
   
@@ -191,8 +202,9 @@ public class User implements UserIF, Serializable {
    * @param keepBundle Doesn't remove the bundle with this ID.
    */
   private void removeOldWorkingBundles(String keepBundle) {
-    if (workingBundles == null)
+    if (workingBundles == null) {
       return; // nothing to remove
+    }
     
     logger.debug("Removing working bundles older than " + bundleExpiryAge
         + " seconds; now at " + workingBundles.size() + " bundles");

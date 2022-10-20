@@ -135,10 +135,12 @@ public class Wiki {
     for (; ix < text.length(); ix++) {
       if (text.charAt(ix) == '\n') {
         int start = ix++;
-        while (text.charAt(ix) == ' ' || text.charAt(ix) == '\r')
+        while (text.charAt(ix) == ' ' || text.charAt(ix) == '\r') {
           ix++;
-        if (text.charAt(ix) == '\n')
+        }
+        if (text.charAt(ix) == '\n') {
           return start;
+        }
       }
     }
     return ix - 2;
@@ -153,13 +155,15 @@ public class Wiki {
       QueryResultIF result = proc.execute(query, params);
       
       out.append("<tr>");
-      for (int ix = 0; ix < result.getWidth(); ix++)
+      for (int ix = 0; ix < result.getWidth(); ix++) {
         out.append("<th>" + result.getColumnName(ix));
+      }
       
       while (result.next()) {
         out.append("<tr>");
-        for (int ix = 0; ix < result.getWidth(); ix++)
+        for (int ix = 0; ix < result.getWidth(); ix++) {
           out.append("<td>" + getString(result.getValue(ix), params));
+        }
       }
       
       out.append("</table>");
@@ -173,11 +177,13 @@ public class Wiki {
     if (value instanceof TopicIF) {
       TopicIF topic = (TopicIF) value;
       Function<TopicIF, String> l = (Function) params.get("linker");
-      if (l == null)
+      if (l == null) {
         l = linker;
+      }
       return l.apply(topic);
-    } else
+    } else {
       return value.toString();
+    }
   }
 
   private static TopicIF getTopic(String name, TopicMapIF topicmap) {
@@ -191,8 +197,9 @@ public class Wiki {
       QueryResultIF result = proc.execute(query, params);
       if (result.next()) {
         return (TopicIF) result.getValue(0);
-      } else
+      } else {
         return null;
+      }
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -211,8 +218,9 @@ public class Wiki {
       while (it.hasNext()) {
         LocatorIF loc = (LocatorIF) it.next();
         String addr = loc.getAddress();
-        if (addr.startsWith(base))
+        if (addr.startsWith(base)) {
           return addr.substring(base.length() + 1);
+        }
       }
       return topic.getObjectId();
     }

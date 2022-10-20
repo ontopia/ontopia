@@ -107,14 +107,15 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
     Object[] params = getParameters(escapeQuery(query), tmtxn.getTopicMap());
 
     String queryName;
-    if (ft_platform == FT_PLATFORM_ORACLE_TEXT)
+    if (ft_platform == FT_PLATFORM_ORACLE_TEXT) {
       queryName = "RDBMSSearcher.searchLike:oracle_text";
-    else if (ft_platform == FT_PLATFORM_TSEARCH2)
+    } else if (ft_platform == FT_PLATFORM_TSEARCH2) {
       queryName = "RDBMSSearcher.searchLike:tsearch2";
-    else if (ft_platform == FT_PLATFORM_SQLSERVER)
+    } else if (ft_platform == FT_PLATFORM_SQLSERVER) {
       queryName = "RDBMSSearcher.searchLike:sqlserver";
-    else
+    } else {
       queryName = "RDBMSSearcher.searchLike:generic";
+    }
     
     QueryResultIF result = (QueryResultIF) txn.executeQuery(queryName, params);
     return new RDBMSSearchResult(result, fnames);
@@ -139,10 +140,11 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
     if (ft_platform == FT_PLATFORM_TSEARCH2) {
       query = query.replaceAll("\\s", " & ");
       return new Object[] { query, topicmap, query, query, topicmap, query, query, topicmap, query };
-    } else if (ft_platform == FT_PLATFORM_SQLSERVER)
+    } else if (ft_platform == FT_PLATFORM_SQLSERVER) {
       return new Object[] { query, topicmap, query, topicmap, query, topicmap };
-    else
-      return new Object[] { topicmap, query, topicmap, query, topicmap, query };      
+    } else {
+      return new Object[] { topicmap, query, topicmap, query, topicmap, query };
+    }      
   }
 
   @Override

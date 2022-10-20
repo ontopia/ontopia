@@ -134,7 +134,9 @@ public class Relation {
   
   public int getColumnIndex(String column) {
     for (int i=0; i < columns.length; i++) {
-      if (columns[i].equals(column)) return i;
+      if (columns[i].equals(column)) {
+        return i;
+      }
     }
     return -1;
   }
@@ -145,8 +147,9 @@ public class Relation {
 
   public ValueIF getVirtualColumn(String name) {
     ValueIF vcol = virtualColumns.get(name);
-    if (vcol == null)
+    if (vcol == null) {
       throw new DB2TMConfigException("Unknown virtual column: " + name);
+    }
     return vcol;
   }
   

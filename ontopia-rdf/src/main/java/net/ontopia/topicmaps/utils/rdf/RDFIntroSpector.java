@@ -59,21 +59,23 @@ public class RDFIntroSpector {
   public static Map getPropertyMappings(String infileurl, boolean recommend,
                                         Map mappings)
     throws IOException {
-    if (mappings == null)
+    if (mappings == null) {
       mappings = new HashMap();
-    else
+    } else {
       mappings = new HashMap(mappings);
+    }
 
     GrabMappingsHandler handler = new GrabMappingsHandler(mappings, recommend);
 
-    if (infileurl.endsWith(".rdf"))
+    if (infileurl.endsWith(".rdf")) {
       parseRDFXML(handler, infileurl);
-    else if (infileurl.endsWith(".n3"))
+    } else if (infileurl.endsWith(".n3")) {
       parseN3(handler, infileurl);
-    else if (infileurl.endsWith(".ntriple"))
+    } else if (infileurl.endsWith(".ntriple")) {
       parseN3(handler, infileurl);
-    else
+    } else {
       parseRDFXML(handler, infileurl);
+    }
     
     return handler.getMappings();
   }
@@ -216,16 +218,18 @@ public class RDFIntroSpector {
     @Override
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       String preduri = pred.getURI();      
-      if (preduri.startsWith(RDFToTopicMapConverter.RTM_PREFIX))
+      if (preduri.startsWith(RDFToTopicMapConverter.RTM_PREFIX)) {
         return;
+      }
       
       if (recommend && !mappings.containsKey(preduri)) {
         String low = preduri.toLowerCase();
         String mapsto = RDFToTopicMapConverter.RTM_OCCURRENCE;
         if (low.endsWith("name") ||
             low.endsWith("title") ||
-            low.endsWith("label"))
+            low.endsWith("label")) {
           mapsto = RDFToTopicMapConverter.RTM_BASENAME;
+        }
         getMapping(preduri).setMapsTo(mapsto);
       }
     }
@@ -241,18 +245,20 @@ public class RDFIntroSpector {
       if (preduri.startsWith(RDFToTopicMapConverter.RTM_PREFIX)) {
         RDFPropertyMapping mapping = getMapping(sub.getURI());
 
-        if (preduri.equals(RDFToTopicMapConverter.RTM_IN_SCOPE))
+        if (preduri.equals(RDFToTopicMapConverter.RTM_IN_SCOPE)) {
           mapping.setInScope(obj.getURI());
-        else if (preduri.equals(RDFToTopicMapConverter.RTM_TYPE))
+        } else if (preduri.equals(RDFToTopicMapConverter.RTM_TYPE)) {
           mapping.setType(obj.getURI());
-        else if (preduri.equals(RDFToTopicMapConverter.RTM_SUBJECT_ROLE))
+        } else if (preduri.equals(RDFToTopicMapConverter.RTM_SUBJECT_ROLE)) {
           mapping.setSubjectRole(obj.getURI());
-        else if (preduri.equals(RDFToTopicMapConverter.RTM_OBJECT_ROLE))
+        } else if (preduri.equals(RDFToTopicMapConverter.RTM_OBJECT_ROLE)) {
           mapping.setObjectRole(obj.getURI());
+        }
       } else if (recommend && !mappings.containsKey(preduri)) {
         String mapsto = (String) defaults.get(preduri);
-        if (mapsto == null)
+        if (mapsto == null) {
           mapsto = RDFToTopicMapConverter.RTM_ASSOCIATION;
+        }
         getMapping(preduri).setMapsTo(mapsto);
       }
     }

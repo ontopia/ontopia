@@ -49,8 +49,9 @@ public abstract class LockPanel extends Panel {
     super(id, topicModel);
     
     // acquire lock unless read-only page
-    if (!shouldAcquireLock)
+    if (!shouldAcquireLock) {
       acquireLock();
+    }
     
     WebMarkupContainer container = new WebMarkupContainer("lockPanelContainer") {
       @Override 

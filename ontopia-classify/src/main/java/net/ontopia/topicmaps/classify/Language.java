@@ -131,8 +131,9 @@ public class Language {
     @Override
     public void visit(Token token) {
       if (token.getType() == Token.TYPE_VARIANT &&
-          stoplist.isStopWord(token.getValue()))
+          stoplist.isStopWord(token.getValue())) {
         count++;
+      }
     }    
   }  
 }

@@ -69,11 +69,13 @@ public class StringModule implements ModuleIF {
         PredicateSignature sign = PredicateSignature.getSignature(this);
         for (int ix = 0; ix < boundparams.length; ix++) {
           Argument arg = sign.getArgument(ix);
-          if (arg == null)
+          if (arg == null) {
             throw new OntopiaRuntimeException("INTERNAL ERROR");
+          }
           
-          if (arg.mustBeBound() && !boundparams[ix])
+          if (arg.mustBeBound() && !boundparams[ix]) {
             return PredicateDrivenCostEstimator.INFINITE_RESULT;
+          }
         }
 
         return PredicateDrivenCostEstimator.FILTER_RESULT;
@@ -108,10 +110,11 @@ public class StringModule implements ModuleIF {
       int colix2 = matches.getIndex(arguments[1]);
       int colix3 = matches.getIndex(arguments[2]);
       
-      if (matches.bound(colix1))
+      if (matches.bound(colix1)) {
         return filter(matches, colix1, colix2, colix3);
-      else
+      } else {
         return concat(matches, colix1, colix2, colix3);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int ix1, int ix2,
@@ -122,18 +125,21 @@ public class StringModule implements ModuleIF {
         // verify types of objects
         if (!(matches.data[ix][ix1] instanceof String &&
               matches.data[ix][ix2] instanceof String &&
-              matches.data[ix][ix3] instanceof String))
+              matches.data[ix][ix3] instanceof String)) {
           continue;
+        }
 
         // check value found against value given
         String str = (String) matches.data[ix][ix1];
         String str2 = ((String) matches.data[ix][ix2]) + matches.data[ix][ix3];
-        if (str == null || !str.equals(str2))
+        if (str == null || !str.equals(str2)) {
           continue;
+        }
 
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -146,14 +152,16 @@ public class StringModule implements ModuleIF {
       QueryMatches result = new QueryMatches(matches);
       for (int ix = 0; ix <= matches.last; ix++) {
         if (!(matches.data[ix][ix2] instanceof String &&
-              matches.data[ix][ix3] instanceof String))
+              matches.data[ix][ix3] instanceof String)) {
           continue;
+        }
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
         newRow[ix1] = ((String) newRow[ix2]) + newRow[ix3];
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }
@@ -275,13 +283,14 @@ public class StringModule implements ModuleIF {
       int strix = matches.getIndex(arguments[0]);
       int numix = matches.getIndex(arguments[1]);
 
-      if (matches.bound(numix))
+      if (matches.bound(numix)) {
         return PredicateUtils.filter(matches, strix, numix,
                                      String.class, Number.class,
                                      PredicateUtils.FILTER_STR_LENGTH);
-      else
+      } else {
         return PredicateUtils.objectToOne(matches, strix, numix, String.class,
                                           PredicateUtils.STR_TO_LENGTH);
+      }
     }
   }
 
@@ -311,8 +320,9 @@ public class StringModule implements ModuleIF {
       matches.getIndex(arguments[2]); // fromstr
       matches.getIndex(arguments[3]); // tostr
       int str5ix = -1;                             // deletestr
-      if (arguments.length > 4)
-        str5ix = matches.getIndex(arguments[4]); 
+      if (arguments.length > 4) {
+        str5ix = matches.getIndex(arguments[4]);
+      } 
 
       // FIXME: code assumes 2-3-4 are literals
       
@@ -321,10 +331,11 @@ public class StringModule implements ModuleIF {
         new TranslationTable((String) arguments[2], (String) arguments[3],
                              str5ix != -1 ? (String) arguments[4] : null);
       
-      if (matches.bound(str1ix))
+      if (matches.bound(str1ix)) {
         return filter(matches, str1ix, str2ix, table);
-      else
+      } else {
         return translate(matches, str1ix, str2ix, table);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int ix1, int ix2,
@@ -334,18 +345,21 @@ public class StringModule implements ModuleIF {
       for (int ix = 0; ix <= matches.last; ix++) {
         // verify types of objects
         if (!(matches.data[ix][ix1] instanceof String &&
-              matches.data[ix][ix2] instanceof String))
+              matches.data[ix][ix2] instanceof String)) {
           continue;
+        }
 
         // check value found against value given
         String str = (String) matches.data[ix][ix1];
         String str2 = table.translate((String) matches.data[ix][ix2]);
-        if (str == null || !str.equals(str2))
+        if (str == null || !str.equals(str2)) {
           continue;
+        }
 
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -357,14 +371,16 @@ public class StringModule implements ModuleIF {
                                    TranslationTable table) {
       QueryMatches result = new QueryMatches(matches);
       for (int ix = 0; ix <= matches.last; ix++) {
-        if (!(matches.data[ix][ix2] instanceof String))
+        if (!(matches.data[ix][ix2] instanceof String)) {
           continue;
+        }
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
         newRow[ix1] = table.translate((String) newRow[ix2]);
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }
@@ -387,27 +403,32 @@ public class StringModule implements ModuleIF {
         highest = 0;
         for (int ix = 0; ix < from.length(); ix++) {
           char ch = from.charAt(ix);
-          if (ch < lowest)
+          if (ch < lowest) {
             lowest = ch;
-          if (ch > highest)
+          }
+          if (ch > highest) {
             highest = ch;
+          }
         }
 
         // make conversion table
         conversion = new char[(highest - lowest) + 1];
         if (delete != null) {
-          for (int ix = lowest; ix < highest; ix++)
-            if (delete.indexOf(ix) != -1)
+          for (int ix = lowest; ix < highest; ix++) {
+            if (delete.indexOf(ix) != -1) {
               conversion[ix - lowest] = DELETE;
-            else
+            } else {
               conversion[ix - lowest] = (char) ix;
+            }
+          }
         }
         
         for (int ix = 0; ix < from.length(); ix++) {
           char fch = from.charAt(ix);
           char tch = fch;
-          if (ix < to.length()) // FIXME: report error instead?
+          if (ix < to.length()) { // FIXME: report error instead?
             tch = to.charAt(ix);
+          }
           
           conversion[fch - lowest] = tch;
         }
@@ -423,14 +444,17 @@ public class StringModule implements ModuleIF {
           if (ch < lowest || ch > highest) {
             // character outside table
             if (delete == null || // XPath behaviour: delete all unknowns
-                delete.indexOf(ch) != -1) // Python behaviour: delete only listed
+                delete.indexOf(ch) != -1) { // Python behaviour: delete only listed
               ch = DELETE;
-          } else
+            }
+          } else {
             // character in table
             ch = conversion[ch - lowest];
+          }
 
-          if (ch != DELETE)
+          if (ch != DELETE) {
             buf[pos++] = ch;
+          }
         }
 
         return new String(buf, 0, pos);
@@ -463,13 +487,15 @@ public class StringModule implements ModuleIF {
       int strix   = matches.getIndex(arguments[1]);
       int startix = matches.getIndex(arguments[2]);
       int endix   = -1;
-      if (arguments.length == 4)
+      if (arguments.length == 4) {
         endix = matches.getIndex(arguments[3]);
+      }
       
-      if (matches.bound(resix))
+      if (matches.bound(resix)) {
         return filter(matches, resix, strix, startix, endix);
-      else
+      } else {
         return substr(matches, resix, strix, startix, endix);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int ix1, int ix2, int ix3,
@@ -481,8 +507,9 @@ public class StringModule implements ModuleIF {
         if (!(matches.data[ix][ix1] instanceof String &&
               matches.data[ix][ix2] instanceof String &&
               matches.data[ix][ix3] instanceof Integer &&
-              (ix4 == -1 || matches.data[ix][ix4] instanceof Integer)))
+              (ix4 == -1 || matches.data[ix][ix4] instanceof Integer))) {
           continue;
+        }
 
         // check value found against value given
         String str = (String) matches.data[ix][ix1];
@@ -490,25 +517,28 @@ public class StringModule implements ModuleIF {
         Integer int1 = ((Integer) matches.data[ix][ix3]);
         String sub;
 
-        if (ix4 == -1)
+        if (ix4 == -1) {
           sub = str2.substring(int1.intValue());
-        else {
+        } else {
           Integer int2 = ((Integer) matches.data[ix][ix4]);
 
-          if (int2.compareTo(int1) < 0)
+          if (int2.compareTo(int1) < 0) {
             throw new InvalidQueryException("The 3rd and 4th parameters to " +
                     "the the '" + getName() + "' predicate must be in " +
                     "increasing order.");
+          }
           
           sub = str2.substring(int1.intValue(), int2.intValue());
         }
 
-        if (str == null || !str.equals(sub))
+        if (str == null || !str.equals(sub)) {
           continue;
+        }
         
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -523,30 +553,33 @@ public class StringModule implements ModuleIF {
         // verify types
         if (!(matches.data[ix][ix2] instanceof String &&
               matches.data[ix][ix3] instanceof Integer &&
-              (ix4 == -1 || matches.data[ix][ix4] instanceof Integer)))
+              (ix4 == -1 || matches.data[ix][ix4] instanceof Integer))) {
           continue;
+        }
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
         String str = ((String) matches.data[ix][ix2]);
         Integer int1 = ((Integer) matches.data[ix][ix3]);
         String sub;
 
-        if (ix4 == -1)
+        if (ix4 == -1) {
           sub = str.substring(int1.intValue());
-        else {
+        } else {
           Integer int2 = ((Integer) matches.data[ix][ix4]);
 
-          if (int2.compareTo(int1) < 0)
+          if (int2.compareTo(int1) < 0) {
             throw new InvalidQueryException("The 3rd and 4th parameters to " +
                     "the the '" + getName() + "' predicate must be in " +
                     "increasing order.");
+          }
           
           sub = str.substring(int1.intValue(), int2.intValue());
         }
         newRow[ix1] = sub;
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }
@@ -580,10 +613,11 @@ public class StringModule implements ModuleIF {
       int strix = matches.getIndex(arguments[1]);
       int subix = matches.getIndex(arguments[2]);
       
-      if (matches.bound(resix))
+      if (matches.bound(resix)) {
         return filter(matches, resix, strix, subix);
-      else
+      } else {
         return substr(matches, resix, strix, subix);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int resix, int strix,
@@ -594,8 +628,9 @@ public class StringModule implements ModuleIF {
         // verify types of objects
         if (!(matches.data[ix][resix] instanceof String &&
               matches.data[ix][strix] instanceof String &&
-              matches.data[ix][subix] instanceof String))
+              matches.data[ix][subix] instanceof String)) {
           continue;
+        }
 
         // get set values
         String res = (String) matches.data[ix][resix];
@@ -605,12 +640,14 @@ public class StringModule implements ModuleIF {
         // verify
         int pos = str.indexOf(sub);
         if (pos == -1 || res == null || !res.equals(str.substring(pos + 
-            sub.length())))
+            sub.length()))) {
           continue;
+        }
 
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -624,8 +661,9 @@ public class StringModule implements ModuleIF {
       for (int ix = 0; ix <= matches.last; ix++) {
         // verify types of objects
         if (!(matches.data[ix][strix] instanceof String &&
-              matches.data[ix][subix] instanceof String))
+              matches.data[ix][subix] instanceof String)) {
           continue;
+        }
 
         // get set values
         String str = (String) matches.data[ix][strix];
@@ -633,16 +671,18 @@ public class StringModule implements ModuleIF {
 
         // compute
         int pos = str.indexOf(sub);
-        if (pos == -1)
+        if (pos == -1) {
           continue;
+        }
         String res = str.substring(pos + sub.length());
 
         // make new match
         Object[] newRow = (Object[]) matches.data[ix].clone();
         newRow[resix] = res;
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }
@@ -676,10 +716,11 @@ public class StringModule implements ModuleIF {
       int strix = matches.getIndex(arguments[1]);
       int subix = matches.getIndex(arguments[2]);
       
-      if (matches.bound(resix))
+      if (matches.bound(resix)) {
         return filter(matches, resix, strix, subix);
-      else
+      } else {
         return substr(matches, resix, strix, subix);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int resix, int strix,
@@ -690,8 +731,9 @@ public class StringModule implements ModuleIF {
         // verify types of objects
         if (!(matches.data[ix][resix] instanceof String &&
               matches.data[ix][strix] instanceof String &&
-              matches.data[ix][subix] instanceof String))
+              matches.data[ix][subix] instanceof String)) {
           continue;
+        }
 
         // get set values
         String res = (String) matches.data[ix][resix];
@@ -700,12 +742,14 @@ public class StringModule implements ModuleIF {
 
         // verify
         int pos = str.indexOf(sub);
-        if (pos == -1 || res == null || !res.equals(str.substring(0, pos)))
+        if (pos == -1 || res == null || !res.equals(str.substring(0, pos))) {
           continue;
+        }
 
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -719,8 +763,9 @@ public class StringModule implements ModuleIF {
       for (int ix = 0; ix <= matches.last; ix++) {
         // verify types of objects
         if (!(matches.data[ix][strix] instanceof String &&
-              matches.data[ix][subix] instanceof String))
+              matches.data[ix][subix] instanceof String)) {
           continue;
+        }
 
         // get set values
         String str = (String) matches.data[ix][strix];
@@ -728,16 +773,18 @@ public class StringModule implements ModuleIF {
 
         // compute
         int pos = str.indexOf(sub);
-        if (pos == -1)
+        if (pos == -1) {
           continue;
+        }
         String res = str.substring(0, pos);
 
         // make new match
         Object[] newRow = (Object[]) matches.data[ix].clone();
         newRow[resix] = res;
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }
@@ -771,10 +818,11 @@ public class StringModule implements ModuleIF {
       int sourceix = matches.getIndex(arguments[1]);
       int targetix = matches.getIndex(arguments[2]);
       
-      if (matches.bound(indexix))
+      if (matches.bound(indexix)) {
         return filter(matches, indexix, sourceix, targetix);
-      else
+      } else {
         return index(matches, indexix, sourceix, targetix);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int ix1, int ix2, int ix3)
@@ -785,8 +833,9 @@ public class StringModule implements ModuleIF {
         // verify types of objects
         if (!(matches.data[ix][ix1] instanceof Integer &&
               matches.data[ix][ix2] instanceof String &&
-              matches.data[ix][ix3] instanceof String))
+              matches.data[ix][ix3] instanceof String)) {
           continue;
+        }
 
         Integer int1 = ((Integer) matches.data[ix][ix1]);
         String str1 = (String) matches.data[ix][ix2];
@@ -796,12 +845,14 @@ public class StringModule implements ModuleIF {
 
         // If the predicate can't be found, this is not a match
         // check value found against value given
-        if (index == -1 || int1.intValue() != index)
+        if (index == -1 || int1.intValue() != index) {
           continue;
+        }
         
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -815,8 +866,9 @@ public class StringModule implements ModuleIF {
       for (int ix = 0; ix <= matches.last; ix++) {
         // verify types
         if (!(matches.data[ix][ix2] instanceof String &&
-              matches.data[ix][ix3] instanceof String))
+              matches.data[ix][ix3] instanceof String)) {
           continue;
+        }
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
         String str1 = ((String) matches.data[ix][ix2]);
@@ -826,13 +878,15 @@ public class StringModule implements ModuleIF {
         
         // If the predicate can't be found, this is not a match
         // check value found against value given
-        if (index == -1)
+        if (index == -1) {
           continue;
+        }
         
         newRow[ix1] = index;
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }
@@ -866,10 +920,11 @@ public class StringModule implements ModuleIF {
       int sourceix = matches.getIndex(arguments[1]);
       int targetix = matches.getIndex(arguments[2]);
       
-      if (matches.bound(indexix))
+      if (matches.bound(indexix)) {
         return filter(matches, indexix, sourceix, targetix);
-      else
+      } else {
         return index(matches, indexix, sourceix, targetix);
+      }
     }
 
     private QueryMatches filter(QueryMatches matches, int ix1, int ix2, int ix3)
@@ -880,8 +935,9 @@ public class StringModule implements ModuleIF {
         // verify types of objects
         if (!(matches.data[ix][ix1] instanceof Integer &&
               matches.data[ix][ix2] instanceof String &&
-              matches.data[ix][ix3] instanceof String))
+              matches.data[ix][ix3] instanceof String)) {
           continue;
+        }
 
         Integer int1 = ((Integer) matches.data[ix][ix1]);
         String str1 = (String) matches.data[ix][ix2];
@@ -891,12 +947,14 @@ public class StringModule implements ModuleIF {
 
         // If the predicate can't be found, this is not a match
         // check value found against value given
-        if (index == -1 || int1.intValue() != index)
+        if (index == -1 || int1.intValue() != index) {
           continue;
+        }
         
         // ok, add match
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = matches.data[ix];
       }
@@ -910,8 +968,9 @@ public class StringModule implements ModuleIF {
       for (int ix = 0; ix <= matches.last; ix++) {
         // verify types
         if (!(matches.data[ix][ix2] instanceof String &&
-              matches.data[ix][ix3] instanceof String))
+              matches.data[ix][ix3] instanceof String)) {
           continue;
+        }
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
         String str1 = ((String) matches.data[ix][ix2]);
@@ -921,13 +980,15 @@ public class StringModule implements ModuleIF {
         
         // If the predicate can't be found, this is not a match
         // check value found against value given
-        if (index == -1)
+        if (index == -1) {
           continue;
+        }
         
         newRow[ix1] = index;
 
-        if (result.last + 1 == result.size) 
+        if (result.last + 1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
         result.data[result.last] = newRow;
       }

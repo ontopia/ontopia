@@ -48,8 +48,9 @@ public class StringUtils {
    * @since 1.3.1
    */
   public static String escapeHTMLEntities(String value) {
-    if (value == null)
+    if (value == null) {
       return null;
+    }
 
     return value
             .replace("&", "&amp;") // order matters
@@ -71,8 +72,9 @@ public class StringUtils {
    */
   public static void escapeHTMLEntities(String value, Writer out)
     throws IOException {
-    if (value == null)
+    if (value == null) {
       return;
+    }
 
     out.write(escapeHTMLEntities(value));
   }
@@ -83,8 +85,9 @@ public class StringUtils {
    */
   public static String makeRandomId(int length) {
     char[] chars = new char[length];
-    for (int ix = 0; ix < length; ix++)
+    for (int ix = 0; ix < length; ix++) {
       chars[ix] = (char) (65 + rand.nextInt(26));
+    }
     return new String(chars);
   }
 
@@ -106,44 +109,50 @@ public class StringUtils {
       char ch = buffer[inix];
       
       // discard high characters
-      if (ch > 0x00FF)
+      if (ch > 0x00FF) {
         continue;
+      }
 
       // handle whitespace
       if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') {
-        if (!firstchar || whitespacerun)
+        if (!firstchar || whitespacerun) {
           continue;
+        }
         ch = '-';
         whitespacerun = true;
-      } else
+      } else {
         whitespacerun = false;
+      }
       
       // check mapping table
       char mapsto = charmap[ch];
-      if (mapsto == 0 && firstchar)
-        continue;        
+      if (mapsto == 0 && firstchar) {
+        continue;
+      }        
 
       // update buffer
-      if (mapsto == 0)
+      if (mapsto == 0) {
         // discards before first NAME char turn into underscores
         buffer[outix++] = '_';
-      else {
+      } else {
         buffer[outix++] = mapsto;
         firstchar = true;
       }
     }
 
     // whitespace at end will leave a trailing '-', which needs to go
-    if (whitespacerun)
+    if (whitespacerun) {
       outix--; // leave out last '-'
+    }
 
     // check if we have a valid name start character first
-    if (outix < 1)
+    if (outix < 1) {
       return null;
-    else if (isNameStart(buffer[0]))
+    } else if (isNameStart(buffer[0])) {
       return new String(buffer, 0, outix);
-    else
+    } else {
       return "_" + new String(buffer, 0, outix);
+    }
   }
 
   private static boolean isNameStart(char ch) {

@@ -51,7 +51,9 @@ public class DeletionUtils {
     synchronized (topic) {
       // Get topic map to which topic belongs
       TopicMapIF tm = topic.getTopicMap();
-      if (tm == null) return;
+      if (tm == null) {
+        return;
+      }
       
       // Get scope index; to be used when removing where topic is used as scope
       ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
@@ -111,14 +113,18 @@ public class DeletionUtils {
 
       // Unregister as reifier
       ReifiableIF reified = topic.getReified();
-      if (reified != null) reified.setReifier(null);
+      if (reified != null) {
+        reified.setReifier(null);
+      }
     }
   }
 
   public static void removeDependencies(ReifiableIF object) {
     synchronized (object) {
       TopicIF reifier = object.getReifier();
-      if (reifier != null) object.setReifier(null);
+      if (reifier != null) {
+        object.setReifier(null);
+      }
     }
   }
   

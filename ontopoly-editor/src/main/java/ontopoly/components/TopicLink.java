@@ -70,8 +70,9 @@ public class TopicLink<T extends Topic> extends AbstractBookmarkablePageLink<T> 
     PageParameters params = page.getPageParameters(getTopic());
     if (fieldsViewModel != null) {
       FieldsView fieldsView = fieldsViewModel.getFieldsView();
-      if (fieldsView != null && !fieldsView.isDefaultView())
-      params.put("viewId", fieldsView.getId());
+      if (fieldsView != null && !fieldsView.isDefaultView()) {
+        params.put("viewId", fieldsView.getId());
+      }
     }
     return params;
   }
@@ -87,12 +88,13 @@ public class TopicLink<T extends Topic> extends AbstractBookmarkablePageLink<T> 
     super.onComponentTagBody(markupStream, openTag);
     
     String label = getLabel();
-    if (label != null)
-      // escape label because there could be markup in the label (code injection)
-      if (getEscapeLabel())
+    if (label != null) {
+      if (getEscapeLabel()) {
         replaceComponentTagBody(markupStream, openTag, Strings.escapeMarkup(label));
-      else
+      } else {
         replaceComponentTagBody(markupStream, openTag, label);
+      }
+    }
   }
 
   protected String getLabel() {
@@ -116,6 +118,8 @@ public class TopicLink<T extends Topic> extends AbstractBookmarkablePageLink<T> 
   @Override
   public void onDetach() {
 	  super.onDetach();
-	  if (fieldsViewModel != null) fieldsViewModel.detach();
+	  if (fieldsViewModel != null) {
+      fieldsViewModel.detach();
+    }
   }
 }

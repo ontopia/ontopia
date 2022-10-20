@@ -70,17 +70,19 @@ public class TopicName extends TMObject implements TopicNameIF {
    */
   protected void setTopic(Topic parent) {
     // Validate topic map
-    if (parent != null && parent.topicmap != this.topicmap)
+    if (parent != null && parent.topicmap != this.topicmap) {
       throw new ConstraintViolationException(
           "Cannot move objects across topic maps: " + this.topicmap + " and "
               + parent.topicmap);
+    }
 
     // (De)reference pooled sets
     if (scope != null) {
-      if (parent == null)
+      if (parent == null) {
         topicmap.setpool.dereference(scope);
-      else
+      } else {
         scope = topicmap.setpool.get(scope);
+      }
     }
 
     // Set parent
@@ -102,55 +104,65 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   public Collection<VariantNameIF> getVariants() {
-    if (variants == null)
+    if (variants == null) {
       return Collections.emptyList();
-    else
+    } else {
       return Collections.unmodifiableSet(variants);
+    }
   }
 
   protected void addVariant(VariantNameIF _variant) {
     VariantName variant = (VariantName) _variant;
     Objects.requireNonNull(variant, MSG_NULL_ARGUMENT);
     // Check to see if variant is already a member of this topic name
-    if (variant.parent == this)
+    if (variant.parent == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (variant.parent != null)
+    if (variant.parent != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_ADD_VARIANT, variant, null);
     // Set topic name property
-    if (variants == null)
+    if (variants == null) {
       variants = topicmap.cfactory.makeSmallSet();
+    }
     variant.setTopicName(this);
     // Add variant to list of variants
     variants.add(variant);
 
     // Add inherited themes to variant name
-    if (scope != null && !scope.isEmpty())
-      for (TopicIF theme : scope)
+    if (scope != null && !scope.isEmpty()) {
+      for (TopicIF theme : scope) {
         variant._addTheme(theme, false);
+      }
+    }
   }
 
   protected void removeVariant(VariantNameIF _variant) {
     VariantName variant = (VariantName) _variant;
     Objects.requireNonNull(variant, MSG_NULL_ARGUMENT);
     // Check to see if variant is not a member of this topic name
-    if (variant.parent != this)
+    if (variant.parent != this) {
       return;
+    }
     // Notify listeners
     fireEvent(TopicNameIF.EVENT_REMOVE_VARIANT, null, variant);
 
     // Remove inherited themes from variant name
-    if (scope != null && !scope.isEmpty())
-      for (TopicIF theme : scope)
+    if (scope != null && !scope.isEmpty()) {
+      for (TopicIF theme : scope) {
         variant._removeTheme(theme, false);
+      }
+    }
     
     // Unset topic name property
     variant.setTopicName(null);
     // Remove variant from list of variants
-    if (variants == null)
+    if (variants == null) {
       return;
+    }
     variants.remove(variant);
   }
 
@@ -211,8 +223,9 @@ public class TopicName extends TMObject implements TopicNameIF {
     }
 
     // Remove theme from scope
-    if (scope == null)
+    if (scope == null) {
       return;
+    }
     scope = topicmap.setpool.remove(scope, theme, true);
   }
 
@@ -259,18 +272,21 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null)
+    if (_reifier != null) {
       CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic) _reifier;
     Topic oldReifier = (Topic) getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
-    if (oldReifier != null)
+    if (oldReifier != null) {
       oldReifier.setReified(null);
-    if (reifier != null)
+    }
+    if (reifier != null) {
       reifier.setReified(this);
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -279,18 +295,20 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   @Override
   protected void fireEvent(String event, Object new_value, Object old_value) {
-    if (parent == null || parent.parent == null)
+    if (parent == null || parent.parent == null) {
       return;
-    else
+    } else {
       topicmap.processEvent(this, event, new_value, old_value);
+    }
   }
 
   @Override
   protected boolean isConnected() {
-    if (parent != null && parent.parent != null)
+    if (parent != null && parent.parent != null) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
   @Override

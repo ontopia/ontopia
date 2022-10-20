@@ -43,9 +43,9 @@ public class OntopolyUtils {
   public static TopicType getDefaultTopicType(Topic topic) {
     List<TopicType> topicTypes = topic.getTopicTypes();
     int size = topicTypes.size();
-    if (size == 1) 
+    if (size == 1) { 
       return (TopicType)topicTypes.get(0);
-    else if (size == 0) {
+    } else if (size == 0) {
       // HACK: add untyped-topic to list of topic types if no other type exist
       TopicMap tm = topic.getTopicMap();
       return new TopicType(OntopolyModelUtils.getTopicIF(tm, PSI.ON_UNTYPED_TOPIC), tm);
@@ -106,10 +106,11 @@ public class OntopolyUtils {
       }
     }
     
-    if (instanceType == null)
+    if (instanceType == null) {
       return ontologyType;
-    else
+    } else {
       return instanceType;
+    }
   }
   
   public static boolean filterTopicByAdministratorRole(Topic topic) {
@@ -132,8 +133,9 @@ public class OntopolyUtils {
     // WARNING: collection must be mutable and iterator support .remove()
     Iterator<? extends Topic> iter = topics.iterator();
     while (iter.hasNext()) {
-      if (!filterTopicByAnnotationRole(iter.next()))
+      if (!filterTopicByAnnotationRole(iter.next())) {
         iter.remove();
+      }
     }
   }
   
@@ -142,8 +144,9 @@ public class OntopolyUtils {
     Iterator<? extends Topic> iter = topics.iterator();
     while (iter.hasNext()) {
       Topic topic = iter.next();
-      if (!filterTopicByDefaultRole(topic))
+      if (!filterTopicByDefaultRole(topic)) {
         iter.remove();
+      }
     }
   }
   

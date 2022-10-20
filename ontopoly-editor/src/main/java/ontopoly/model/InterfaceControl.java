@@ -40,8 +40,9 @@ public class InterfaceControl extends Topic {
    */
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof InterfaceControl))
+    if (!(obj instanceof InterfaceControl)) {
       return false;
+    }
 
     InterfaceControl other = (InterfaceControl) obj;
     return (getTopicIF().equals(other.getTopicIF()));

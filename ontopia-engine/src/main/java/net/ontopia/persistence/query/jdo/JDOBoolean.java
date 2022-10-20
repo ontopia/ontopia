@@ -60,10 +60,11 @@ public class JDOBoolean implements JDOExpressionIF {
 
   @Override
   public String toString() {
-    if (value)
+    if (value) {
       return "true";
-    else
+    } else {
       return "false";
+    }
   }
 
   @Override

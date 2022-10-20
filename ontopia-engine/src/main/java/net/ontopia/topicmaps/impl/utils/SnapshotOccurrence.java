@@ -126,7 +126,9 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
   
   @Override
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
+    if (!DataTypes.TYPE_URI.equals(getDataType())) {
+      return null;
+    }
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }

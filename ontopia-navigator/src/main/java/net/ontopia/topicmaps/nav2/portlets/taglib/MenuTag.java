@@ -39,8 +39,9 @@ public class MenuTag extends TagSupport {
   @Override
   public int doStartTag() throws JspTagException {
     TopicIF topic = (TopicIF) getVariableValue(this.topic);
-    if (topic == null)
+    if (topic == null) {
       throw new JspTagException("Couldn't find topic '" + topic + "'");
+    }
 
     Menu menu = new Menu(topic);
     pageContext.setAttribute(var, menu, PageContext.REQUEST_SCOPE);
@@ -68,17 +69,19 @@ public class MenuTag extends TagSupport {
   // --- Setters
 
   public void setVar(String var) {
-    if (isEmpty(var))
+    if (isEmpty(var)) {
       this.var = null;
-    else
+    } else {
       this.var = var;
+    }
   }
 
   public void setTopic(String topic) {
-    if (isEmpty(topic))
+    if (isEmpty(topic)) {
       this.topic = null;
-    else
+    } else {
       this.topic = topic;
+    }
   }
   
   // --- Internal

@@ -37,28 +37,33 @@ public class VizPlugin extends DefaultPlugin {
   @Override
   public void init() {
     message = getParameter("message");
-    if (message == null)
+    if (message == null) {
       message = "Vizigation is disabled for this topic map";
+    }
     
     
     blocked = new CompactHashSet();
     String tmids = getParameter("blocked");
-    if (tmids == null)
+    if (tmids == null) {
       return;
+    }
 
     String[] ids = StringUtils.split(tmids, ",");
-    for (int ix = 0; ix < ids.length; ix++)
+    for (int ix = 0; ix < ids.length; ix++) {
       blocked.add(ids[ix].trim());
+    }
   }
   
   @Override
   public String generateHTML(ContextTag context) {
-    if (context == null)
+    if (context == null) {
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");
+    }
     
     String tm = context.getTopicMapId();
-    if (!blocked.contains(tm))
+    if (!blocked.contains(tm)) {
       return super.generateHTML(context);
+    }
       
     // generate HTML String
     return "<span title=\"" + message + "\">Vizigate</span>";

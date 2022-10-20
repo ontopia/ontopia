@@ -50,20 +50,23 @@ public class ContentTag extends BaseOutputProducingTag implements Function<Objec
     throws JspTagException, IOException {
 
     Function<Object, String> strify = this;
-    if (strifyCN != null) 
+    if (strifyCN != null) { 
       strify = (Function<Object, String>)
         contextTag.getNavigatorApplication().getInstanceOf(strifyCN);
+    }
     
     Object elem = null;
-    if (iter.hasNext()) 
+    if (iter.hasNext()) {
       elem = iter.next();
+    }
       
     if (elem == null) {
       // try to get the variable from context and stringify it
       ContextManagerIF ctxtMgr = contextTag.getContextManager();
       Collection coll = ctxtMgr.getValue(variableName);
-      if (coll != null) 
+      if (coll != null) {
         elem = CollectionUtils.getFirstElement(coll);
+      }
     }
 
     // finally put out content
@@ -96,8 +99,9 @@ public class ContentTag extends BaseOutputProducingTag implements Function<Objec
     // --- OccurrenceIF
     if (object instanceof OccurrenceIF) {
       OccurrenceIF occ = (OccurrenceIF) object;
-      if (Objects.equals(DataTypes.TYPE_STRING, occ.getDataType()))
+      if (Objects.equals(DataTypes.TYPE_STRING, occ.getDataType())) {
         content = occ.getValue();
+      }
       NULL_VALUE = NavigatorConfigurationIF.OCCURRENCE_NULLVALUE;
       NULL_VALUE_ALT = NavigatorConfigurationIF.DEFVAL_OCC_NULLVALUE;
       EMPTY_VALUE = NavigatorConfigurationIF.OCCURRENCE_EMPTYVALUE;
@@ -107,10 +111,11 @@ public class ContentTag extends BaseOutputProducingTag implements Function<Objec
 
     // --- TopicNameIF && VariantNameIF
     else if (object instanceof TopicNameIF || object instanceof VariantNameIF) {
-      if (object instanceof TopicNameIF)
+      if (object instanceof TopicNameIF) {
         content = ((TopicNameIF) object).getValue();
-      else
+      } else {
         content = ((VariantNameIF) object).getValue();
+      }
 
       NULL_VALUE = NavigatorConfigurationIF.NAMESTRING_NULLVALUE;
       EMPTY_VALUE = NavigatorConfigurationIF.NAMESTRING_EMPTYVALUE;
@@ -118,17 +123,19 @@ public class ContentTag extends BaseOutputProducingTag implements Function<Objec
     
     // --- otherwise call the standard toString method
     //     (this includes of course instances of String)
-    else
+    else {
       content = (object == null ? NULL_VALUE : object.toString());
+    }
     
     // --- check for null / ""
     if (content == null || content.equals("")) {
       NavigatorConfigurationIF navConf = contextTag.getNavigatorConfiguration();
       if (navConf != null) {
-        if (content == null && NULL_VALUE != null)
+        if (content == null && NULL_VALUE != null) {
           content = navConf.getProperty(NULL_VALUE, NULL_VALUE_ALT);
-        else if (EMPTY_VALUE != null)
+        } else if (EMPTY_VALUE != null) {
           content = navConf.getProperty(EMPTY_VALUE, EMPTY_VALUE_ALT);
+        }
       }
     }
 

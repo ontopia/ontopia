@@ -37,8 +37,9 @@ public class TopicPredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     Iterator it = topicmap.getTopics().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       addMatch(matches, "TOPIC", it.next());
+    }
     
     assertQueryMatches(matches, "topic($TOPIC)?");
     closeStore();

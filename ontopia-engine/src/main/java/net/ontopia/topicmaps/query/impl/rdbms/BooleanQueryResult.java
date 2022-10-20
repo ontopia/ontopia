@@ -38,17 +38,19 @@ public class BooleanQueryResult implements QueryResultIF {
   }
 
   public BooleanQueryResult(String[] colnames, Object[] values, boolean result) {
-    if (result)
+    if (result) {
       maxrow = 0;  // true -> one row
-    else
+    } else {
       maxrow = -1; // false -> no rows
+    }
 
     this.colnames = colnames;
 
-    if (values == null)
+    if (values == null) {
       this.values = new Object[colnames.length];
-    else
+    } else {
       this.values = values;
+    }
   }
 
   // --- QueryResultIF implementation
@@ -58,8 +60,9 @@ public class BooleanQueryResult implements QueryResultIF {
     if (row < maxrow) {
       row++;
       return true;
-    } else
-      return false;    
+    } else {
+      return false;
+    }    
   }
 
   @Override
@@ -70,8 +73,9 @@ public class BooleanQueryResult implements QueryResultIF {
   @Override
   public Object getValue(String colname) {
     int index = getIndex(colname);
-    if (index < 0)
+    if (index < 0) {
       throw new IndexOutOfBoundsException("No query result column named '" + colname + "'");
+    }
     return values[index];
   }
 
@@ -83,7 +87,9 @@ public class BooleanQueryResult implements QueryResultIF {
   @Override
   public int getIndex(String colname) {
     for (int i = 0; i < colnames.length; i++) {
-      if (colnames[i].equals(colname)) return i;
+      if (colnames[i].equals(colname)) {
+        return i;
+      }
     }
     return -1;
   }

@@ -284,8 +284,9 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF topic = getTopicById("bbtype");
     Iterator it = topic.getTopicNames().iterator();
     TopicNameIF name = (TopicNameIF) it.next();
-    if (name.getScope().isEmpty()) // need the one with scope
+    if (name.getScope().isEmpty()) { // need the one with scope
       name = (TopicNameIF) it.next();
+    }
     
     assertUpdate("delete scope($N, english) from topic-name(bbtype, $N), scope($N, english)");
 

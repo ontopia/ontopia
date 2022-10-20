@@ -193,8 +193,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   public void setValue(String value, LocatorIF datatype) {
     Objects.requireNonNull(value, "Occurrence value must not be null.");
     Objects.requireNonNull(datatype, "Occurrence value datatype must not be null.");
-    if (!"URI".equals(datatype.getNotation()))
+    if (!"URI".equals(datatype.getNotation())) {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    }
     setValue(value, datatype, value.length(), value.hashCode());
   }
   
@@ -227,17 +228,20 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   public void setReader(Reader value, long length, LocatorIF datatype) {
     Objects.requireNonNull(value, "Occurrence value must not be null.");
     Objects.requireNonNull(datatype, "Occurrence value datatype must not be null.");
-    if (length < 0)
+    if (length < 0) {
       throw new OntopiaRuntimeException("Length of reader is negative.");
-    if (!"URI".equals(datatype.getNotation()))
+    }
+    if (!"URI".equals(datatype.getNotation())) {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    }
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
   }
 
   @Override
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType()))
+    if (!DataTypes.TYPE_URI.equals(getDataType())) {
       return null;
+    }
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
@@ -245,8 +249,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   @Override
   public void setLocator(LocatorIF locator) {
     Objects.requireNonNull(locator, "Occurrence locator must not be null.");
-    if (!"URI".equals(locator.getNotation()))
+    if (!"URI".equals(locator.getNotation())) {
       throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
+    }
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
@@ -254,10 +259,11 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   public long getLength() {
     Number length = this.<Number>loadField(LF_length);
     long len = (length == null ? 0 : length.longValue());
-    if (len < 0)
+    if (len < 0) {
       return len * -1L;
-    else
+    } else {
       return len;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -319,18 +325,21 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null)
+    if (_reifier != null) {
       CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic) _reifier;
     Topic oldReifier = (Topic) getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-    if (oldReifier != null)
+    if (oldReifier != null) {
       oldReifier.setReified(null);
-    if (reifier != null)
+    }
+    if (reifier != null) {
       reifier.setReified(this);
+    }
   }
 
   // ---------------------------------------------------------------------------

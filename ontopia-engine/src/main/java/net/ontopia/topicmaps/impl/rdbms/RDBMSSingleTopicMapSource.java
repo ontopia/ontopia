@@ -72,15 +72,21 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
 
   @Override
   public synchronized Collection getReferences() {
-    if (reference == null) refresh();
-    if (reference == null) return Collections.EMPTY_SET;
+    if (reference == null) {
+      refresh();
+    }
+    if (reference == null) {
+      return Collections.EMPTY_SET;
+    }
     return Collections.singleton(reference);
   }
   
   @Override
   public synchronized void refresh() {
     // FIXME: for now don't recreate reference if already exists
-    if (reference != null) return;
+    if (reference != null) {
+      return;
+    }
 
     boolean foundReference = false;
     try {
@@ -100,12 +106,14 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
             
             if (rs.next()) {
               foundReference = true;
-              if (_title == null)
+              if (_title == null) {
                 _title = rs.getString(1);
+              }
               if (_base_address == null) {
                 String loc = rs.getString(2);
-                if (loc != null)
+                if (loc != null) {
                   _base_address = new URILocator(loc);
+                }
               }
             }
             rs.close();
@@ -122,8 +130,9 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
       // create a reference id if not already exists
       if (foundReference) {
         String _referenceId = this.referenceId;
-        if (_referenceId == null)
+        if (_referenceId == null) {
           _referenceId = getReferenceId(topicmap_id);
+        }
         
         // use reference id as title if not otherwise found
         _title = (_title != null ? _title : _referenceId);
@@ -133,8 +142,9 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
         ref.setSource(this);
 
         // register topic listeners
-        if (topicListeners != null)
+        if (topicListeners != null) {
           ref.registerTopicListeners(topicListeners);
+        }
         
         this.reference = ref;
       } else {
@@ -189,18 +199,20 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
   
   protected RDBMSStorage createStorage() throws IOException {
     if (storage == null) {
-      if (propfile == null)
+      if (propfile == null) {
         throw new OntopiaRuntimeException("propertyFile property must be specified on source with id '" + getId() + "'.");
+      }
       storage = new RDBMSStorage(propfile);
     }
     return storage;
   }
   
   protected String getReferenceId(long topicmap_id) {
-    if (id == null)
+    if (id == null) {
       return "RDBMS-" + topicmap_id;
-    else
+    } else {
       return id + "-" + topicmap_id;
+    }
   }
 
   // --- Extension properties
@@ -239,10 +251,11 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
    */
   public void setTopicMapId(String id) {
     // strip out 'M'
-    if (id.charAt(0) == 'M')
+    if (id.charAt(0) == 'M') {
       setTopicMapId(Long.parseLong(id.substring(1)));
-    else
+    } else {
       setTopicMapId(Long.parseLong(id));
+    }
   }
 
   /**

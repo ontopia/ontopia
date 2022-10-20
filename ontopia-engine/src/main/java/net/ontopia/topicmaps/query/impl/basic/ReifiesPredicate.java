@@ -48,14 +48,15 @@ public class ReifiesPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.BIG_RESULT;
+    }
   }
 
   @Override
@@ -65,24 +66,25 @@ public class ReifiesPredicate implements BasicPredicateIF {
     int rrix = matches.getIndex(arguments[0]); // ReifieR
     int rdix = matches.getIndex(arguments[1]); // ReifieD
 
-    if (!matches.bound(rdix) && matches.bound(rrix))
+    if (!matches.bound(rdix) && matches.bound(rrix)) {
       // reifier to reified
       return PredicateUtils.objectToOne(matches, rrix, rdix, TopicIF.class,
-                                        PredicateUtils.REIFIER_TO_REIFIED);
-    else if (matches.bound(rdix) && !matches.bound(rrix))
+              PredicateUtils.REIFIER_TO_REIFIED);
+    } else if (matches.bound(rdix) && !matches.bound(rrix)) {
       // reified to reifier
       return PredicateUtils.objectToOne(matches, rdix, rrix, TMObjectIF.class,
-                                        PredicateUtils.REIFIED_TO_REIFIER);
-    else if (matches.bound(rdix) && matches.bound(rrix))
+              PredicateUtils.REIFIED_TO_REIFIER);
+    } else if (matches.bound(rdix) && matches.bound(rrix)) {
       // filter out wrong
       return PredicateUtils.filter(matches, rdix, rrix, TMObjectIF.class,
-                                   TopicIF.class, PredicateUtils.FILTER_REIFIES);
-    else
+              TopicIF.class, PredicateUtils.FILTER_REIFIES);
+    } else {
       // completely open
       return PredicateUtils.collectionToOne(matches,
                                             topicmap.getTopics().toArray(),
                                             rrix, rdix, 
                                             PredicateUtils.GENERATE_REIFIES);
+    }
   }
   
 }

@@ -54,8 +54,9 @@ public class SingleQueryResultIterator implements Iterator  {
   
   @Override
   public Object next() {
-    if (!has_next)
+    if (!has_next) {
       throw new NoSuchElementException();
+    }
     result.getValues(values);
     has_next = result.next();
     return rowmap;

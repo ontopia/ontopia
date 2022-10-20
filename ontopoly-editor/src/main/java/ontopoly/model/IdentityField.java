@@ -66,8 +66,9 @@ public class IdentityField extends FieldDefinition {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof IdentityField))
+    if (!(obj instanceof IdentityField)) {
       return false;
+    }
 
     IdentityField other = (IdentityField)obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -92,7 +93,9 @@ public class IdentityField extends FieldDefinition {
    */
   public boolean isSubjectLocator() {
     IdentityType itype = getIdentityType();
-    if (itype == null) return false;
+    if (itype == null) {
+      return false;
+    }
     TopicIF itypeIF = itype.getTopicIF();
     return itypeIF.getSubjectIdentifiers().contains(PSI.ON_SUBJECT_LOCATOR);
   }
@@ -102,7 +105,9 @@ public class IdentityField extends FieldDefinition {
    */
   public boolean isSubjectIdentifier() {
     IdentityType itype = getIdentityType();
-    if (itype == null) return false;
+    if (itype == null) {
+      return false;
+    }
     TopicIF itypeIF = itype.getTopicIF();
     return itypeIF.getSubjectIdentifiers().contains(PSI.ON_SUBJECT_IDENTIFIER);
   }
@@ -112,7 +117,9 @@ public class IdentityField extends FieldDefinition {
    */
   public boolean isItemIdentifier() {
     IdentityType itype = getIdentityType();
-    if (itype == null) return false;
+    if (itype == null) {
+      return false;
+    }
     TopicIF itypeIF = itype.getTopicIF();
     return itypeIF.getSubjectIdentifiers().contains(PSI.ON_ITEM_IDENTIFIER);
   }
@@ -128,12 +135,13 @@ public class IdentityField extends FieldDefinition {
   @Override
   public Collection<? extends Object> getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
-    if (isSubjectLocator())
+    if (isSubjectLocator()) {
       return topicIf.getSubjectLocators();
-    else if (isItemIdentifier())
+    } else if (isItemIdentifier()) {
       return topicIf.getItemIdentifiers();
-    else
+    } else {
       return topicIf.getSubjectIdentifiers();
+    }
   }
 
   /**
@@ -148,15 +156,18 @@ public class IdentityField extends FieldDefinition {
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
                        URILocator.create((String) _value));
     if (value != null) {
-      if (isSubjectLocator())
+      if (isSubjectLocator()) {
         topicIf.addSubjectLocator(value);
-      else if (isItemIdentifier())
+      } else if (isItemIdentifier()) {
         topicIf.addItemIdentifier(value);
-      else
+      } else {
         topicIf.addSubjectIdentifier(value);
+      }
     }
     
-    if (listener != null) listener.onAfterAdd(topic, this, value);
+    if (listener != null) {
+      listener.onAfterAdd(topic, this, value);
+    }
   }
 
   /**
@@ -171,14 +182,17 @@ public class IdentityField extends FieldDefinition {
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
                        URILocator.create((String) _value));
     if (value != null) {
-      if (listener != null) listener.onBeforeRemove(topic, this, value);
+      if (listener != null) {
+        listener.onBeforeRemove(topic, this, value);
+      }
 		  
-      if (isSubjectLocator())
+      if (isSubjectLocator()) {
         topicIf.removeSubjectLocator(value);
-      else if (isItemIdentifier())
+      } else if (isItemIdentifier()) {
         topicIf.removeItemIdentifier(value);
-      else
+      } else {
         topicIf.removeSubjectIdentifier(value);
+      }
     }
   }
 

@@ -160,17 +160,20 @@ public class XMLConfigSource {
     // look up configuration via classpath
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
     URL url = cl.getResource(resourceName);
-    if (url == null)
+    if (url == null) {
       throw new OntopiaRuntimeException("Could not find resource '" + resourceName + "' on CLASSPATH.");
+    }
     
     // build configuration environment
-    if (environ == null)
+    if (environ == null) {
       environ = new HashMap<String, String>(1);
+    }
     if ("file".equals(url.getProtocol())) {
       String file = url.getFile();
       environ.put(CWD, file.substring(0, file.lastIndexOf('/')));
-    } else
+    } else {
       environ.put(CWD, ".");
+    }
 
     // read configuration and create the repository instance
     try {
@@ -228,8 +231,9 @@ public class XMLConfigSource {
       if (source.getId() == null && source.supportsCreate()) {
         String newId = source.getClass().getName() + "-" + (counter++);
         source.setId(newId);
-        if (source.getTitle() == null)
+        if (source.getTitle() == null) {
           source.setTitle(newId);
+        }
       }
     }
     return new TopicMapSourceManager(sources);
@@ -248,13 +252,16 @@ public class XMLConfigSource {
    * created by reading the configuration file.
    */
   public static List<TopicMapSourceIF> readSources(String config_file, Map<String, String> environ) {
-    if (environ == null) environ = new HashMap<String, String>(1);
+    if (environ == null) {
+      environ = new HashMap<String, String>(1);
+    }
     // add CWD entry
     if (!environ.containsKey(CWD)) {
       File file = new File(config_file);
-      if (!file.exists())
+      if (!file.exists()) {
         throw new OntopiaRuntimeException("Config file '" + config_file +
                                           "' does not exist.");
+      }
       environ.put(CWD, file.getParent());
     }
 
@@ -308,8 +315,9 @@ public class XMLConfigSource {
           ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
           source = (TopicMapSourceIF) Class.forName(atts.getValue("class"), true, classLoader).newInstance();
           String id = atts.getValue("id");
-          if (id != null)
+          if (id != null) {
             source.setId(id);
+          }
           sources.add(source);
           //log.debug("Added source " + source + ".");
         } catch (ClassNotFoundException e) {
@@ -348,9 +356,10 @@ public class XMLConfigSource {
               }
             }
           }
-          if (!found_property)
+          if (!found_property) {
             throw new SAXException("Cannot find property '" + param_name + "' " +
                                    "on source " + source);
+          }
         } catch (IntrospectionException e) {
           throw new SAXException(e);      
         } catch (InvocationTargetException e) {

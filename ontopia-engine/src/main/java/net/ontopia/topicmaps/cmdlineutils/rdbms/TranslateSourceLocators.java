@@ -95,8 +95,9 @@ public class TranslateSourceLocators {
           } catch (UniquenessViolationException e) {
             // ooops! this topic already exists, so we must merge
             TopicIF other = (TopicIF) tm.getObjectByItemIdentifier(newloc);
-            if (other == null)
+            if (other == null) {
               other = tm.getTopicBySubjectIdentifier(newloc);
+            }
             MergeUtils.mergeInto(other, topic); // this kills our topic, not the other
           }
         }

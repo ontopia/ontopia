@@ -95,7 +95,9 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   @Override
   public Collection<TopicNameIF> getTopicNames(TopicIF theme) {
     Collection<TopicNameIF> result = basenames.get(theme);
-    if (result == null) return Collections.<TopicNameIF>emptySet();
+    if (result == null) {
+      return Collections.<TopicNameIF>emptySet();
+    }
     // Create new collection
     return new ArrayList<TopicNameIF>(result);    
   }
@@ -103,7 +105,9 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   @Override
   public Collection<VariantNameIF> getVariants(TopicIF theme) {
     Collection<VariantNameIF> result = variants.get(theme);
-    if (result == null) return Collections.<VariantNameIF>emptySet();
+    if (result == null) {
+      return Collections.<VariantNameIF>emptySet();
+    }
     // Create new collection
     return new ArrayList<VariantNameIF>(result);    
   }
@@ -111,7 +115,9 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   @Override
   public Collection<OccurrenceIF> getOccurrences(TopicIF theme) {
     Collection result = (Collection)occurs.get(theme);
-    if (result == null) return Collections.<OccurrenceIF>emptySet();
+    if (result == null) {
+      return Collections.<OccurrenceIF>emptySet();
+    }
     // Create new collection
     return new ArrayList(result);    
   }
@@ -119,7 +125,9 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
   @Override
   public Collection<AssociationIF> getAssociations(TopicIF theme) {
     Collection<AssociationIF> result = assocs.get(theme);
-    if (result == null) return Collections.<AssociationIF>emptySet();
+    if (result == null) {
+      return Collections.<AssociationIF>emptySet();
+    }
     // Create new collection
     return new ArrayList<AssociationIF>(result);    
   }
@@ -200,9 +208,10 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
     public void processEvent(S scoped, String event, TopicIF new_value, TopicIF old_value) {
       // Register scope
       Collection<TopicIF> scope = scoped.getScope();
-      if (scope.isEmpty())
+      if (scope.isEmpty()) {
         // Unregister null theme
         objects.remove(null, scoped);
+      }
 
       // Register theme
       objects.add(new_value, scoped);
@@ -220,9 +229,10 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
     public void processEvent(S scoped, String event, TopicIF new_value, TopicIF old_value) {
       // Register themes
       Collection<TopicIF> scope = scoped.getScope();
-      if (scope.size() == 1 && scope.contains(old_value))
+      if (scope.size() == 1 && scope.contains(old_value)) {
         // Unregister null theme
         objects.add(null, scoped);
+      }
 
       // Unregister theme
       objects.remove(old_value, scoped);
@@ -247,8 +257,9 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
         // Register the null theme
         objects.add(null, added);       
       } else {
-        for (TopicIF _scope : scope)
+        for (TopicIF _scope : scope) {
           addEvent(added, child_event, _scope);
+        }
       }
     }
   }
@@ -267,8 +278,9 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
       // Unregister themes
       Collection<TopicIF> scope = removed.getScope();
       if (!scope.isEmpty()) {
-        for (TopicIF _scope : scope)
+        for (TopicIF _scope : scope) {
           removeEvent(removed, child_event, _scope);
+        }
       }
       // Unregister null theme
       objects.remove(null, removed);

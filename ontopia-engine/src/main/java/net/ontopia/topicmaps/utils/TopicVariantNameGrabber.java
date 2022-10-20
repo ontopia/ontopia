@@ -87,8 +87,9 @@ public class TopicVariantNameGrabber implements Function<TopicIF, VariantNameIF>
     }
     
     // If there are no variant names return null
-    if (variants.isEmpty())
+    if (variants.isEmpty()) {
       return null;
+    }
 
     // If there is multiple variant names rank them.
     Collections.sort(variants, comparator);

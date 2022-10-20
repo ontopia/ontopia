@@ -66,8 +66,9 @@ public class DefaultFieldHandler implements FieldHandlerIF {
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Read primitive value
     Object value = SQLTypes.getObject(rs, rsindex, sql_type, direct);
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("DF: Loading index " + rsindex + "=" + value);
+    }
     // Set value
     return value;
   }
@@ -75,8 +76,9 @@ public class DefaultFieldHandler implements FieldHandlerIF {
   @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // value is a primitive object
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("DF: Binding index " + stmt_index + "=" + value);
+    }
     SQLTypes.setObject(stm, stmt_index, value, sql_type);
   }
 

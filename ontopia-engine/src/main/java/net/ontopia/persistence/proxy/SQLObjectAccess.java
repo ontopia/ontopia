@@ -85,9 +85,10 @@ public class SQLObjectAccess implements ClassAccessIF {
     sql_load = SQLGenerator.getSelectStatement(cinfo.getMasterTable(),
                                                fields, new FieldInfoIF[] { identity_field }, 0);
 
-    if (debug)
+    if (debug) {
       // log.debug("Load SQL (1:1) " + field.getName() + ": " + sql_load);
       log.debug("Load SQL (1:1) : " + sql_load);
+    }
 
     // Selecting all 1:1 fields
     // SELECT id, topicmap_id, subject_notation, subject_address FROM TM_TOPIC WHERE id = ?
@@ -100,8 +101,9 @@ public class SQLObjectAccess implements ClassAccessIF {
     //! FieldInfoIF[] fields = FieldUtils.joinFieldInfos(new FieldInfoIF[] { identity_field }, o2o_fields);
     sql_create = SQLGenerator.getInsertStatement(cinfo.getMasterTable(), fields);
 
-    if (debug)
+    if (debug) {
       log.debug("Create SQL (" + cinfo.getDescriptorClass().getName() + "): " + sql_create);
+    }
 
     // INSERT INTO TM_TOPIC (id, topicmap_id, subject_notation, subject_address) VALUES (?, ?, ?, ?)
 
@@ -112,8 +114,9 @@ public class SQLObjectAccess implements ClassAccessIF {
     // Generate SQL statement
     sql_delete = SQLGenerator.getDeleteStatement(cinfo.getMasterTable(), new FieldInfoIF[] { identity_field });
 
-    if (debug)
+    if (debug) {
       log.debug("Delete SQL (" + cinfo.getDescriptorClass().getName() + "): " + sql_delete);
+    }
 
     // DELETE FROM TM_TOPIC WHERE id = ?
 
@@ -136,10 +139,11 @@ public class SQLObjectAccess implements ClassAccessIF {
     case FieldInfoIF.ONE_TO_ONE:
       return new SQLOneToOne(access, finfo);
     case FieldInfoIF.ONE_TO_MANY:
-      if (finfo.isAggregateField())
+      if (finfo.isAggregateField()) {
         return new SQLOneToManyAggregate(access, finfo);
-      else
+    } else {
         return new SQLOneToManyReference(access, finfo);
+    }
     case FieldInfoIF.MANY_TO_MANY:
       return new SQLManyToManyReference(access, finfo);
     default:
@@ -162,8 +166,9 @@ public class SQLObjectAccess implements ClassAccessIF {
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load);
+      }
       ResultSet rs = stm.executeQuery();
       
       // Exactly one row expected
@@ -201,7 +206,9 @@ public class SQLObjectAccess implements ClassAccessIF {
       }
       
     } finally {
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
   }
 
@@ -261,10 +268,14 @@ public class SQLObjectAccess implements ClassAccessIF {
       bindParametersCreate(stm, oaccess, object);
             
       // Execute statement
-      if (debug) log.debug("Executing: " + sql_create);
+      if (debug) {
+        log.debug("Executing: " + sql_create);
+      }
       stm.executeUpdate();
     } finally {
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
       
   }
@@ -277,7 +288,9 @@ public class SQLObjectAccess implements ClassAccessIF {
 
     // Bind identity columns
     Object identity = oaccess.getIdentity(object);
-    if (debug) log.debug("Binding object identity: " + identity);    
+    if (debug) {
+      log.debug("Binding object identity: " + identity);
+    }    
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
@@ -315,16 +328,22 @@ public class SQLObjectAccess implements ClassAccessIF {
       bindParametersDelete(stm, identity);
       
       // Execute statement
-      if (debug) log.debug("Executing: " + sql_delete);
+      if (debug) {
+        log.debug("Executing: " + sql_delete);
+      }
       stm.executeUpdate();
     } finally {
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
   }
   
   protected void bindParametersDelete(PreparedStatement stm, IdentityIF identity) throws Exception {            
     // Bind identity columns
-    if (debug) log.debug("Binding object identity: " + identity);
+    if (debug) {
+      log.debug("Binding object identity: " + identity);
+    }
     identity_field.bind(identity, stm, 1);
   }
 
@@ -355,7 +374,9 @@ public class SQLObjectAccess implements ClassAccessIF {
     int i = 0; // Index of next dirty field
     while (i < fcount) {
       i = oaccess.nextDirty(object, i, fcount);
-      if (i == -1) break;
+      if (i == -1) {
+        break;
+      }
 
       //! System.out.println(">-  " + i + " " + oaccess.getIdentity(object));
 

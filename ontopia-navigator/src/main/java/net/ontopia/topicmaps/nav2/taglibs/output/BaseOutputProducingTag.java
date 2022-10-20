@@ -169,10 +169,11 @@ public abstract class BaseOutputProducingTag extends TagSupport
   protected final void print2Writer(JspWriter out, String string)
     throws IOException {
 
-    if (escapeEntities)
+    if (escapeEntities) {
       out.print( StringUtils.escapeHTMLEntities(string) );
-    else
+    } else {
       out.print( string );
+    }
   }
   
 }

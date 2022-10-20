@@ -222,9 +222,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private boolean hasUnfiltered(Collection<? extends TMObjectIF> collection) {
     Iterator<? extends TMObjectIF> it = collection.iterator();
-    while (it.hasNext())
-      if (filterOk(it.next()))
+    while (it.hasNext()) {
+      if (filterOk(it.next())) {
         return true;
+      }
+    }
     return false;
   }
 
@@ -320,8 +322,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         allAssociations);
 
     // Output preamble.
-    if (encoding != null)
+    if (encoding != null) {
       out.write("@\"" + encoding + "\"\n");
+    }
     out.write("#VERSION \"1.3\"\n");
     out.write("/*\n   Generator: Ontopia");
     out.write("\n   Date:      ");
@@ -341,8 +344,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     }
 
     // If necessary, output the prefix for untyped topic map constructs.
-    if (existsUntyped)
+    if (existsUntyped) {
       out.write("\n#PREFIX untyped @\"http://psi.ontopia.net/ltm/untyped#\"\n");
+    }
 
     // If necessary, output prefix for unspecified topic map constructs(roles).
     if (existsUnspecified) {
@@ -363,16 +367,18 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       tmReifiersIt = tmReifiers.iterator();
 
       // Output the reifiers
-      while (tmReifiersIt.hasNext())
+      while (tmReifiersIt.hasNext()) {
         writeTopic(tmReifiersIt.next(), out, false);
+      }
     }
 
     // Output all associations that the tm reifier(s) are directly involved in.
     groupString1 = "";
     Iterator<AssociationIF> tmReifierAssociationsIt = tmReifierAssociations.iterator();
-    while (tmReifierAssociationsIt.hasNext())
+    while (tmReifierAssociationsIt.hasNext()) {
       writeAssociation(tmReifierAssociationsIt.next(), out,
           false);
+    }
 
     out.write("\n/* ----------------- ONTOLOGY ------------------ */\n");
 
@@ -387,8 +393,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     groupString1 = "";
     Iterator<AssociationIF> hierarchyIt = sort(supersubAssociations, supersubComparator)
         .iterator();
-    if (hierarchyIt.hasNext())
+    if (hierarchyIt.hasNext()) {
       out.write("\n");
+    }
     while (hierarchyIt.hasNext()) {
       AssociationIF currentAssociation = hierarchyIt.next();
       writeSupersub(currentAssociation, out);
@@ -416,8 +423,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     // Write all remaining associations
     groupString1 = "";
     Iterator<AssociationIF> associationsIt = allAssociations.iterator();
-    while (associationsIt.hasNext())
+    while (associationsIt.hasNext()) {
       writeAssociation(associationsIt.next(), out);
+    }
 
     out.flush();
     
@@ -433,10 +441,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     groupString1 = "";
     Iterator<TopicIF> topicsIt = topics.iterator();
     if (topicsIt.hasNext()
-        && filterOk(topics.iterator().next().getTypes()))
+        && filterOk(topics.iterator().next().getTypes())) {
       out.write("\n");
-    while (topicsIt.hasNext())
+    }
+    while (topicsIt.hasNext()) {
       writeTopic(topicsIt.next(), out);
+    }
   }
 
   /**
@@ -457,8 +467,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       Iterator<AssociationRoleIF> rolesIt = rolePlayersIt.next().getRoles().iterator();
       while (rolesIt.hasNext()) {
         AssociationIF assoc = rolesIt.next().getAssociation();
-        if (assoc != null && associations.remove(assoc))
+        if (assoc != null && associations.remove(assoc)) {
           retVal.add(assoc);
+        }
       }
     }
     return retVal;
@@ -478,8 +489,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       while (typesIt.hasNext()) {
         TopicIF currentType = typesIt.next();
 
-        if (topicInstances.remove(currentType))
+        if (topicInstances.remove(currentType)) {
           typingTopics.add(currentType);
+        }
       }
     }
     return typingTopics;
@@ -497,8 +509,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     while (it.hasNext()) {
       TopicIF type = it.next().getType();
 
-      if (type != null && topicInstances.remove(type))
+      if (type != null && topicInstances.remove(type)) {
         associationTypes.add(type);
+      }
     }
     return associationTypes;
   }
@@ -515,8 +528,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       Iterator<TopicIF> typesIt = it.next().getRoleTypes().iterator();
       while (typesIt.hasNext()) {
         TopicIF currentType = typesIt.next();
-        if (topicInstances.remove(currentType))
+        if (topicInstances.remove(currentType)) {
           roleTypes.add(currentType);
+        }
       }
     }
     return roleTypes;
@@ -543,8 +557,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         OccurrenceIF occurrence = occurrencesIt.next();
         TopicIF type = occurrence.getType();
 
-        if (type != null && filterOk(type) && topicInstances.remove(type))
+        if (type != null && filterOk(type) && topicInstances.remove(type)) {
           occurrenceTypes.add(type);
+        }
       }
     }
     return occurrenceTypes;
@@ -594,17 +609,19 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         headerType = getElementId(typesIt.next());
         typeString += COLON + headerType;
       }
-      while (typesIt.hasNext())
+      while (typesIt.hasNext()) {
         typeString += " " + getElementId(typesIt.next());
+      }
 
       // IF this is the first time a topic of the current type is written
       // then write a header comment for this topic type.
       if (writeHeaders && !headerType.equals(groupString1)) {
         out.write("\n/* -- TT: ");
-        if (headerType.isEmpty())
+        if (headerType.isEmpty()) {
           out.write("(untyped)");
-        else
+        } else {
           out.write(headerType);
+        }
         out.write(" -- */\n");
       }
 
@@ -623,8 +640,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         out.write(idString);
         out.write(" = ");
         writeTopicName(baseNamesIt.next(), out, baseString);
-      } else
+      } else {
         out.write(idString);
+      }
       while (baseNamesIt.hasNext()) {
         out.write(baseString);
         out.write(" = ");
@@ -678,8 +696,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       occurrences = filterCollection(occurrences);
       occurrences = sort(occurrences, occurrenceComparator);
       Iterator<OccurrenceIF> occurrencesIt = occurrences.iterator();
-      while (occurrencesIt.hasNext())
+      while (occurrencesIt.hasNext()) {
         writeOccurrence(occurrencesIt.next(), out);
+      }
 
       groupString1 = headerType;
     }
@@ -718,8 +737,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       Iterator<AssociationRoleIF> rolesIt = roles.iterator();
 
       // Write the roles of this association.
-      if (rolesIt.hasNext())
+      if (rolesIt.hasNext()) {
         writeAssociationRole(rolesIt.next(), out);
+      }
       if (maxRolesOf(association) == 2 && rolesIt.hasNext()) {
         out.write(", ");
         writeAssociationRole(rolesIt.next(), out);
@@ -763,8 +783,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     Iterator<AssociationRoleIF> rolesIt = roles.iterator();
 
     // Write the association roles.
-    if (rolesIt.hasNext())
+    if (rolesIt.hasNext()) {
       writeAssociationRole(rolesIt.next(), out);
+    }
     while (rolesIt.hasNext()) {
       out.write(", ");
       writeAssociationRole(rolesIt.next(), out);
@@ -802,14 +823,16 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    *         if this.filter is null, returns the original collection.
    */
   private <E> Collection<E> filterCollection(Collection<E> unfiltered) {
-    if (filter == null)
+    if (filter == null) {
       return unfiltered;
+    }
     Collection<E> retVal = new ArrayList<E>();
     Iterator<E> unfilteredIt = unfiltered.iterator();
     while (unfilteredIt.hasNext()) {
       E current = unfilteredIt.next();
-      if (filter.test(current))
+      if (filter.test(current)) {
         retVal.add(current);
+      }
     }
     return retVal;
   }
@@ -821,8 +844,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    *         False otherwise.
    */
   private boolean filterOk(Object unfiltered) {
-    if (filter == null)
+    if (filter == null) {
       return true;
+    }
     return filter.test(unfiltered);
   }
 
@@ -846,8 +870,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       if (scope.size() == 1) {
         TopicIF scopingTopic = scope.iterator().next();
         Collection<LocatorIF> scopingPSIs = scopingTopic.getSubjectIdentifiers();
-        if (scopingPSIs.contains(si))
+        if (scopingPSIs.contains(si)) {
           firstName = currentVariant;
+        }
       }
     }
     return firstName;
@@ -880,8 +905,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       out.write('"');
     }
     if (displayName != null) {
-      if (sortName == null)
+      if (sortName == null) {
         out.write("; ");
+      }
       variants.remove(displayName);
       out.write("; \"");
       out.write(escapeString(displayName.getValue()));
@@ -979,8 +1005,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   {
     // Write the reifier.
     TopicIF reifier = reifiable.getReifier();
-    if (reifier != null)
+    if (reifier != null) {
       out.write("~ " + getElementId(reifier));
+    }
   }
 
   /**
@@ -998,10 +1025,12 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     Iterator<TopicIF> scopeIt = scope.iterator();
 
     // Write the scoping topics.
-    if (scopeIt.hasNext())
+    if (scopeIt.hasNext()) {
       out.write(" /");
-    while (scopeIt.hasNext())
+    }
+    while (scopeIt.hasNext()) {
       out.write(" " + getElementId(scopeIt.next()));
+    }
   }
 
   /**
@@ -1023,8 +1052,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   private void countMaxRolesOf(AssociationIF association) {
     int newCount = association.getRoles().size();
     int oldCount = maxRolesOf(association);
-    if (oldCount < newCount)
+    if (oldCount < newCount) {
       roleCounter.put(lazyTypeElementId(association), newCount);
+    }
   }
 
   private int maxRolesOf(AssociationIF association) {
@@ -1048,8 +1078,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       countMaxRolesOf(association);
 
       Iterator<AssociationRoleIF> rolesIt = association.getRoles().iterator();
-      while (rolesIt.hasNext())
+      while (rolesIt.hasNext()) {
         count(association, rolesIt.next());
+      }
     }
   }
 
@@ -1063,8 +1094,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       Iterator<AssociationRoleIF> rolesIt = association.getRoles().iterator();
       while (rolesIt.hasNext()) {
-        if (rolesIt.next().getPlayer() == null)
+        if (rolesIt.next().getPlayer() == null) {
           return true;
+        }
       }
     }
     return false;
@@ -1078,14 +1110,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     String name = TopicStringifiers.toString(topic);
 
     String retVal;
-    if ("[No name]".equals(name))
+    if ("[No name]".equals(name)) {
       retVal = idManager.makeId(topic, "id", true);
-    else {
+    } else {
       String generatedId = StringUtils.normalizeId(name);
       if (generatedId == null || isReservedId(generatedId)
-          || allSameAs(generatedId, '_'))
+          || allSameAs(generatedId, '_')) {
         retVal = idManager.makeId(topic, "id", true);
-      else {
+      } else {
         retVal = idManager.makeId(topic, generatedId, false);
       }
     }
@@ -1099,8 +1131,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     String key = lazyTypeElementId(association) + COLON
         + lazyTypeElementId(role);
     Integer retVal = roleCounter.get(key);
-    if (retVal == null)
+    if (retVal == null) {
       return 0;
+    }
     return retVal;
   }
 
@@ -1110,8 +1143,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private String lazyPlayerElementId(AssociationRoleIF role) {
     TopicIF player = role.getPlayer();
-    if (player == null)
+    if (player == null) {
       return "unspecified:player";
+    }
     return getElementId(player);
   }
 
@@ -1124,12 +1158,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   private String lazyTypeElementId(TypedIF tmObject) {
     TopicIF type = tmObject.getType();
     if (type == null) {
-      if (tmObject instanceof AssociationIF)
+      if (tmObject instanceof AssociationIF) {
         return "untyped:association";
-      if (tmObject instanceof AssociationRoleIF)
+      }
+      if (tmObject instanceof AssociationRoleIF) {
         return "untyped:role";
-      if (tmObject instanceof OccurrenceIF)
+      }
+      if (tmObject instanceof OccurrenceIF) {
         return "untyped:occurrence";
+      }
 
       throw new OntopiaRuntimeException("lazyTypeElementId can only be"
           + " applied to associations, association roles or" + " occurrences.");
@@ -1150,14 +1187,16 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         // If fragmentId ends with _n for some integer n
         int lastPos = fragmentId.lastIndexOf('_');
         String remaining = fragmentId.substring(lastPos + 1);
-        if (lastPos > 0 && remaining.length() > 0 && allDigits(remaining))
+        if (lastPos > 0 && remaining.length() > 0 && allDigits(remaining)) {
           return idManager.makeId(topic, fragmentId.substring(0, lastPos + 1),
               true);
+        }
         if (fragmentId.length() > 0 &&
             !(fragmentId.startsWith("id") &&
               fragmentId.length() > 2 &&
-              allDigits(fragmentId.substring(2))))
+              allDigits(fragmentId.substring(2)))) {
           return idManager.makeId(topic, fragmentId, false);
+        }
       }
     } // Found no appropriate source locator.
     return idManager.makeId(topic, "id", true);
@@ -1170,11 +1209,13 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     Iterator<TopicIF> it = topics.iterator();
 
     if (preserveIds) {
-      while (it.hasNext())
+      while (it.hasNext()) {
         preserveId(it.next());
+      }
     } else {
-      while (it.hasNext())
+      while (it.hasNext()) {
         generateId(it.next());
+      }
     }
   }
 
@@ -1182,9 +1223,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Test whether source is a string that only contains digits.
    */
   private static boolean allDigits(String source) {
-    for (int i = 0; i < source.length(); i++)
-      if (!Character.isDigit(source.charAt(i)))
+    for (int i = 0; i < source.length(); i++) {
+      if (!Character.isDigit(source.charAt(i))) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1192,9 +1235,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * Returns true iff all characters in 'source' are the same as in 'sameAs'.
    */
   private static boolean allSameAs(String source, char sameAs) {
-    for (int i = 0; i < source.length(); i++)
-      if (source.charAt(i) != sameAs)
+    for (int i = 0; i < source.length(); i++) {
+      if (source.charAt(i) != sameAs) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1203,8 +1248,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private static String createSpaces(int length) {
     String retVal = "";
-    for (int i = 0; i < length; i++)
+    for (int i = 0; i < length; i++) {
       retVal += " ";
+    }
     return retVal;
   }
 
@@ -1216,10 +1262,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     String retVal = "";
     for (int i = 0; i < source.length(); i++) {
       char c = source.charAt(i);
-      if (c == '"')
+      if (c == '"') {
         retVal += "\\u000022";
-      else
+      } else {
         retVal += c;
+      }
     }
     return retVal;
   }
@@ -1232,10 +1279,11 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     String retVal = "";
     for (int i = 0; i < source.length(); i++) {
       char c = source.charAt(i);
-      if (c == ']')
+      if (c == ']') {
         retVal += "\\u00005D";
-      else
+      } else {
         retVal += c;
+      }
     }
     return retVal;
   }
@@ -1246,12 +1294,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   private String getFragment(LocatorIF locator) {
     String retVal = locator.getAddress();
     int lastHashIndex = retVal.lastIndexOf('#') + 1;
-    if (lastHashIndex != 0)
+    if (lastHashIndex != 0) {
       retVal = retVal.substring(lastHashIndex);
-    else
+    } else {
       retVal = "";
-    if (!validate((retVal)))
+    }
+    if (!validate((retVal))) {
       return null;
+    }
     return retVal;
   }
   
@@ -1260,22 +1310,25 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    * [A-Za-z_][-A-Za-z_0-9.]*
    */
   private boolean validate(String id) {
-    if (id.length() == 0)
+    if (id.length() == 0) {
       return false;
+    }
     
     char ch = id.charAt(0);
     if (!((ch >= 'A' && ch <= 'Z') ||
           (ch >= 'a' && ch <= 'z') ||
-          ch == '_'))
+          ch == '_')) {
       return false;
+    }
     
     for (int ix = 1; ix < id.length(); ix++) {
       ch = id.charAt(ix);
       if (!((ch >= 'A' && ch <= 'Z') ||
             (ch >= 'a' && ch <= 'z') ||
             (ch >= '0' && ch <= '9') ||
-            ch == '_' || ch == '-' || ch == '.'))
+            ch == '_' || ch == '-' || ch == '.')) {
         return false;
+      }
     }
     return true;
   }
@@ -1310,15 +1363,18 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private static int lazyStringCompare(String source1, String source2) {
     if (source1 == null) {
-      if (source2 == null)
+      if (source2 == null) {
         return 0;
+      }
       return -1;
     }
-    if (source2 == null)
+    if (source2 == null) {
       return 1;
+    }
     int retVal = source1.compareToIgnoreCase(source2);
-    if (retVal == 0)
+    if (retVal == 0) {
       return source1.compareTo(source2);
+    }
     return retVal;
   }
 
@@ -1327,8 +1383,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private static String minLengthString(int source, int length) {
     String retVal = String.valueOf(source);
-    while (retVal.length() < length)
+    while (retVal.length() < length) {
       retVal = "0" + retVal;
+    }
     return retVal;
   }
 
@@ -1415,12 +1472,13 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         if (t2TypesIt.hasNext()) {
           TopicIF t2Type = t2TypesIt.next();
           retVal = lazyStringCompare(getElementId(t1Type), getElementId(t2Type));
-        } else
+        } else {
           retVal = -1; // Out of types -> ordered first.
+        }
       } else {
-        if (t2TypesIt.hasNext())
+        if (t2TypesIt.hasNext()) {
           retVal = 1; // Out of types -> ordered first.
-        else {
+        } else {
           retVal = 0; // Equal types -> equal(w.r.t. types).
         }
       }
@@ -1474,24 +1532,28 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
           lazyTypeElementId(assoc2));
 
       // Compare the type of each of the roles in turn.
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = associationRoleTypeComparator.compare(assoc1.getRoles(),
             assoc2.getRoles());
+      }
 
       // Compare the player of each of the roles in turn.
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = associationRolePlayerComparator.compare(assoc1.getRoles(),
             assoc2.getRoles());
+      }
 
       // Compare the each of the roles in turn.
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = associationRolesComparator.compare(assoc1.getRoles(), assoc2
             .getRoles());
+      }
 
       // Compare the scoping topics(if any) of the association.
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = scopeComparator.compare(filterCollection(assoc1.getScope()),
             filterCollection(assoc2.getScope()));
+      }
 
       // Compare the reifier(if there is one) of the association.
       if (retVal == 0) {
@@ -1504,8 +1566,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         retVal = reifierComparator.compare(reifiers1, reifiers2);
       }
 
-      if (retVal == 0 && !assoc1.equals(assoc2))
+      if (retVal == 0 && !assoc1.equals(assoc2)) {
         retVal = -1;
+      }
 
       return retVal;
     }
@@ -1562,13 +1625,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       // Compare frequencies of(association-type, role-type and role-player).
       int retVal = count1.compareTo(count2);
 
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = associationRoleComparator.compare(ar1, ar2);
+      }
 
       // If topics are the same in all other ways, check if they're equal.
-      if (retVal == 0 && !ar1.equals(ar2))
+      if (retVal == 0 && !ar1.equals(ar2)) {
         // If they are not equal, arbitrarily order 1st role first.
         retVal = -1;
+      }
 
       return retVal;
     }
@@ -1587,9 +1652,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
           lazyTypeElementId(ar2));
 
       // Compare the IDs of the roles themselves.
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = lazyStringCompare(lazyPlayerElementId(ar1),
             lazyPlayerElementId(ar2));
+      }
 
       // Compare the reifier(if any) of the association roles.
       if (retVal == 0) {
@@ -1613,13 +1679,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(TopicNameIF bn1, TopicNameIF bn2) {
-      if (Objects.equals(bn1, bn2))
+      if (Objects.equals(bn1, bn2)) {
         return 0;
+      }
 
       int retVal = scopeComparator.compare(filterCollection(bn1.getScope()),
           filterCollection(bn2.getScope()));
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = lazyStringCompare(bn1.getValue(), bn2.getValue());
+      }
       return retVal;
     }
 
@@ -1632,19 +1700,22 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
-      if (occ1 == occ2)
+      if (occ1 == occ2) {
         return 0;
+      }
 
       int retVal = lazyStringCompare(lazyTypeElementId(occ1),
           lazyTypeElementId(occ2));
 
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = lazyStringCompare(occ1.getValue(), occ2.getValue());
+      }
 
       // Compare the scoping topics(if any) of the occurrences.
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = scopeComparator.compare(filterCollection(occ1.getScope()),
             filterCollection(occ2.getScope()));
+      }
 
       // Compare the reifier(if there is one) of the occurrences.
       if (retVal == 0) {
@@ -1657,8 +1728,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         retVal = reifierComparator.compare(reifiers1, reifiers2);
       }
 
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = -1;
+      }
 
       return retVal;
     }
@@ -1672,13 +1744,15 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(VariantNameIF vn1, VariantNameIF vn2) {
-      if (Objects.equals(vn1, vn2))
+      if (Objects.equals(vn1, vn2)) {
         return 0;
+      }
 
       int retVal = scopeComparator.compare(filterCollection(vn1.getScope()),
           filterCollection(vn2.getScope()));
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = lazyStringCompare(vn1.getValue(), vn2.getValue());
+      }
       return retVal;
     }
 
@@ -1723,8 +1797,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(Collection<E> c1, Collection<E> c2) {
-      if (c1 == c2)
+      if (c1 == c2) {
         return 0;
+      }
 
       return iteratorComparator.compare(sort(c1, withinComp).iterator(), sort(
           c2, withinComp).iterator());
@@ -1768,8 +1843,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public int compare(Collection<E> o1, Collection<E> o2) {
-      if (o1 == o2)
+      if (o1 == o2) {
         return 0;
+      }
 
       Collection<E> c1 = sort(o1, withinComp);
       Collection<E> c2 = sort(o2, withinComp);
@@ -1779,8 +1855,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       // NOTE: Deliberately does not take size into account.
       int retVal = 0;
-      while (retVal == 0 && i1.hasNext() && i2.hasNext())
+      while (retVal == 0 && i1.hasNext() && i2.hasNext()) {
         retVal = betweenComp.compare(i1.next(), i2.next());
+      }
 
       return retVal;
     }
@@ -1823,26 +1900,31 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       TopicIF type2 = ar2.getType();
 
       if (lazyHasLocator(type1, PSI.getXTMSuperclass())) {
-        if (!lazyHasLocator(type2, PSI.getXTMSuperclass()))
+        if (!lazyHasLocator(type2, PSI.getXTMSuperclass())) {
           retVal = -1;
+        }
       } else {
-        if (lazyHasLocator(type2, PSI.getXTMSuperclass()))
+        if (lazyHasLocator(type2, PSI.getXTMSuperclass())) {
           retVal = 1;
+        }
       }
 
       if (retVal == 0) {
         if (lazyHasLocator(type1, PSI.getXTMSubclass())) {
-          if (!lazyHasLocator(type2, PSI.getXTMSubclass()))
+          if (!lazyHasLocator(type2, PSI.getXTMSubclass())) {
             retVal = -1;
+          }
         } else {
-          if (lazyHasLocator(type2, PSI.getXTMSubclass()))
+          if (lazyHasLocator(type2, PSI.getXTMSubclass())) {
             retVal = 1;
+          }
         }
       }
 
-      if (retVal == 0)
+      if (retVal == 0) {
         retVal = lazyStringCompare(lazyPlayerElementId(ar1),
             lazyPlayerElementId(ar2));
+      }
 
       return retVal;
     }

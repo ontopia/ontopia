@@ -39,8 +39,9 @@ public class EditMode extends Topic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof EditMode))
+    if (!(obj instanceof EditMode)) {
       return false;
+    }
 
     EditMode cardinality = (EditMode) obj;
     return (getTopicIF().equals(cardinality.getTopicIF()));

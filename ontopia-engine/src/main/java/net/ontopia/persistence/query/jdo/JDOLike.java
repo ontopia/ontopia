@@ -63,7 +63,9 @@ public class JDOLike implements JDOExpressionIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOLike) {
       JDOLike other = (JDOLike)obj;
       return (left.equals(other.left) &&

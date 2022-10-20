@@ -133,11 +133,13 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   protected void setTopicMap(TopicMap topicmap) {    
     // Notify player
     Topic player = (Topic)getPlayer();
-    if (player != null)
-      if (topicmap != null)
+    if (player != null) {
+      if (topicmap != null) {
         player.addRole(this);
-      else 
+      } else {
         player.removeRole(this);
+      }
+    }
 
     // Note: must unregister with player before deleting itself.
     
@@ -170,12 +172,14 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     
     // Unregister association role with topic
     AssociationIF assoc = getAssociation();
-    if (oldplayer != null && assoc != null && assoc.getTopicMap() != null)
+    if (oldplayer != null && assoc != null && assoc.getTopicMap() != null) {
       ((Topic)oldplayer).removeRole(this);
+    }
 
     // Register association role with topic
-    if (player != null && assoc != null && assoc.getTopicMap() != null)
+    if (player != null && assoc != null && assoc.getTopicMap() != null) {
       ((Topic)player).addRole(this);
+    }
   }
 
   @Override
@@ -227,16 +231,21 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null)
+    if (_reifier != null) {
       CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-    if (oldReifier != null) oldReifier.setReified(null);
-    if (reifier != null) reifier.setReified(this);
+    if (oldReifier != null) {
+      oldReifier.setReified(null);
+    }
+    if (reifier != null) {
+      reifier.setReified(this);
+    }
   }
 
   // ---------------------------------------------------------------------------

@@ -66,10 +66,11 @@ public class OntopiaRuntimeException extends RuntimeException {
   @Override
   public String getMessage() {
     String message = super.getMessage();
-    if (message != null)
+    if (message != null) {
       return message;
-    else
+    } else {
       return cause.toString();
+    }
   }
   
   @Override

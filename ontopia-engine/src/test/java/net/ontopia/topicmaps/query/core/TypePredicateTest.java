@@ -251,8 +251,9 @@ public class TypePredicateTest extends AbstractPredicateTest {
     Iterator it = horse.getRoles().iterator();
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
-      if (role1.equals(role.getType()))
+      if (role1.equals(role.getType())) {
         addMatch(matches, "ASSOC", role.getAssociation());
+      }
     }
     
     assertQueryMatches(matches, "select $ASSOC from role-player($ROLE, horse), " +

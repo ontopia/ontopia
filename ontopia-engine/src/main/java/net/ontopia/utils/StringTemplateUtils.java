@@ -63,17 +63,19 @@ public class StringTemplateUtils {
         for (ix++; ix < temp.length && temp[ix] != sep_char; ix++)
           ;
 
-        if (ix == start + 1) // we found two sep_chars right next to each
+        if (ix == start + 1) { // we found two sep_chars right next to each
           out.append(sep_char);
-        else if (ix < temp.length) { // found param ref
+        } else if (ix < temp.length) { // found param ref
           String cur_param = new String(temp, start+1, ix - start - 1);
           Object value = paramvalues.get(cur_param);
-          if (value == null)
+          if (value == null) {
             throw new OntopiaRuntimeException("Value not set for parameter '" +
                                               cur_param + "' in '" + template + "'.");
+          }
           out.append(value.toString());
-        } else
+        } else {
           throw new OntopiaRuntimeException("Parameter reference not terminated");
+        }
         
         last = ix+1;
       }
@@ -116,19 +118,22 @@ public class StringTemplateUtils {
         for (ix++; ix < temp.length && temp[ix] != sep_char; ix++)
           ;
 
-        if (ix == start + 1) // we found two sep_chars right next to each 
+        if (ix == start + 1) { // we found two sep_chars right next to each 
           out.append(sep_char);
-        else if (ix < temp.length) { // found param ref
+        } else if (ix < temp.length) { // found param ref
           String cur_param = new String(temp, start+1, ix - start - 1);
-          if (!param.equals(cur_param))
+          if (!param.equals(cur_param)) {
             throw new OntopiaRuntimeException("Reference to unknown parameter '" +
                                               cur_param + "' in '" + template + "'.");
-          if (value == null)
+          }
+          if (value == null) {
             throw new OntopiaRuntimeException("Value not set for parameter '" +
                                               cur_param + "' in '" + template + "'.");
+          }
           out.append(value);
-        } else
+        } else {
           throw new OntopiaRuntimeException("Parameter reference not terminated");
+        }
         
         last = ix+1;
       }

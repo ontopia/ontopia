@@ -70,12 +70,13 @@ public class SpecialCharNormalizer implements TermNormalizerIF, DelimiterTrimmer
         break;
       }      
     }
-    if (start == end)
+    if (start == end) {
       return null;
-    else if (start == 0 && end == length)
+    } else if (start == 0 && end == length) {
       return term;
-    else
+    } else {
       return term.substring(start, end+1);
+    }
   }
   
   @Override

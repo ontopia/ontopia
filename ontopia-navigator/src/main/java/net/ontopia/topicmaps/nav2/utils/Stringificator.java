@@ -70,15 +70,17 @@ public final class Stringificator {
     Function<? extends Object, String> nameGrabber = null;
     Function<? extends Object, String> nameStringifier = null;
 
-    if (nameStringifierCN != null)
+    if (nameStringifierCN != null) {
       nameStringifier = (Function) context.getNavigatorApplication()
         .getInstanceOf(nameStringifierCN);
-    else
+    } else {
       nameStringifier = DEF_NAME_STRINGIFIER;
+    }
 
-    if (nameGrabberCN != null)
+    if (nameGrabberCN != null) {
       nameGrabber = (Function) context.getNavigatorApplication()
         .getInstanceOf(nameGrabberCN);
+    }
     
     // --- stringifier for topic
     if (elem instanceof TopicIF) {
@@ -97,25 +99,28 @@ public final class Stringificator {
         List variantScope = new ArrayList();
         // prepare-scope-1: add themes that are in user context filter
         if (filterContext != null) {
-          if (topicmap == null) 
+          if (topicmap == null) { 
             // FIXME: shouldn't we really throw an exception instead?
             log.warn("No topic map in context.");
-          else {
+          } else {
             basenameScope.addAll(filterContext.getScopeTopicNames(topicmap));
             variantScope.addAll(filterContext.getScopeVariantNames(topicmap));
           }
         }
         // prepare-scope-2: add themes that are specified by attribute scope
-        if (basenameScopeVarName != null)
+        if (basenameScopeVarName != null) {
           basenameScope.addAll(context.getContextManager().getValue(basenameScopeVarName));
+        }
 
-        if (variantScopeVarName != null)
+        if (variantScopeVarName != null) {
           variantScope.addAll(context.getContextManager().getValue(variantScopeVarName));
+        }
       
         // Add display theme if exists (bug #670)
         TopicIF display_theme = topicmap.getTopicBySubjectIdentifier(PSI.getXTMDisplay());
-        if (display_theme != null)
+        if (display_theme != null) {
           variantScope.add(display_theme);
+        }
 
         // if name should be grabbed with the custom grabber
         if (nameGrabber != null) {
@@ -132,16 +137,18 @@ public final class Stringificator {
     }
     // --- base name or variant
     else if (elem instanceof TopicNameIF) {
-      if (nameGrabber != null)
+      if (nameGrabber != null) {
         stringifier = new GrabberStringifier(nameGrabber, nameStringifier);
-      else
+      } else {
         stringifier = nameStringifier;
+      }
     }
     else if (elem instanceof VariantNameIF) {
-      if (nameGrabber != null)
+      if (nameGrabber != null) {
         stringifier = new GrabberStringifier(nameGrabber, nameStringifier);
-      else
+      } else {
         stringifier = nameStringifier;
+      }
     }
     // --- TopicMapReferenceIF
     else if (elem instanceof TopicMapReferenceIF) {
@@ -156,11 +163,12 @@ public final class Stringificator {
       StringBuilder msg =
         new StringBuilder("Expected collection which contains topics," +
                          " base names, variants or topic map refs as elements.\n");
-      if (elem != null)
+      if (elem != null) {
         msg.append("But got instance of class " +
-                   elem.getClass().getName() + ". ");
-      else
+                elem.getClass().getName() + ". ");
+      } else {
         msg.append("First element in input collection is null. ");
+      }
       
       log.error(msg.toString());
       throw new NavigatorRuntimeException(msg.toString());
@@ -173,16 +181,19 @@ public final class Stringificator {
       String str = null;
       // --- nonexistent
       str = navConf.getProperty(NavigatorConfigurationIF.NAMESTRING_NONEXISTENT, null);
-      if (str != null)
+      if (str != null) {
         ((CustomNameStringifier) stringifier).setStringNonExistent(str);
+      }
       // --- null value
       str = navConf.getProperty(NavigatorConfigurationIF.NAMESTRING_NULLVALUE, null);
-      if (str != null)
+      if (str != null) {
         ((CustomNameStringifier) stringifier).setStringValueNull(str);
+      }
       // --- empty value
       str = navConf.getProperty(NavigatorConfigurationIF.NAMESTRING_EMPTYVALUE, null);
-      if (str != null)
+      if (str != null) {
         ((CustomNameStringifier) stringifier).setStringValueEmpty(str);
+      }
     }
 
     return (String) stringifier.apply(elem);
@@ -200,19 +211,21 @@ public final class Stringificator {
     }
 
     protected String getValue(String value) {
-      if (value == null)
+      if (value == null) {
         return stringValueNull;
-      else if (value.isEmpty())
+      } else if (value.isEmpty()) {
         return stringValueEmpty;
-      else
+      } else {
         return value;
+      }
     }
     
     @Override
     public String apply(Object object) {
       // 0: verify that we have a topic at all
-      if (object == null)
+      if (object == null) {
         return stringNonExistent;
+      }
       TopicIF topic = (TopicIF) object;
 
       // 1: pick base name with the fewest topics in scope
@@ -222,20 +235,23 @@ public final class Stringificator {
       while (it.hasNext()) {
        TopicNameIF candidate = (TopicNameIF) it.next();
         int themes = candidate.getScope().size();
-        if (candidate.getType() == defnametype)
+        if (candidate.getType() == defnametype) {
           themes += Integer.MIN_VALUE; // prefer default name type
+       }
         if (themes < bn_least) {
           bn = candidate;
           bn_least = themes;
         }
       }
-      if (bn == null)
+      if (bn == null) {
         return stringNonExistent;
+      }
       
       // 2: if we have a vntheme, pick variant with fewest topics in scope
       //    beyond vntheme; penalty for no vntheme = 0xFF topics
-      if (vntheme == null)
+      if (vntheme == null) {
         return getValue(bn.getValue());
+      }
       VariantNameIF vn = null;
       int vn_least = 0xEFFF;
       it = bn.getVariants().iterator();
@@ -251,8 +267,9 @@ public final class Stringificator {
           }
         }
       }
-      if (vn == null || vn.getValue() == null)
+      if (vn == null || vn.getValue() == null) {
         return getValue(bn.getValue());
+      }
       return getValue(vn.getValue());
     }
   }  

@@ -65,19 +65,26 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
   }
 
   public static Color textColourForBackground(Color c) {
-    if (((c.getRed() + c.getGreen() + c.getBlue()) / 3) > 130)
+    if (((c.getRed() + c.getGreen() + c.getBlue()) / 3) > 130) {
       return Color.black;
+    }
     return Color.white;
   }
 
   public boolean hasPathTo(TMAbstractNode target, Set visited) {
-    if (equals(target)) return true;
-    if (visited.contains(this)) return false;
+    if (equals(target)) {
+      return true;
+    }
+    if (visited.contains(this)) {
+      return false;
+    }
     visited.add(this);
     for (Iterator iter = getVisibleEdges(); iter.hasNext();) {
       TMAbstractEdge edge = (TMAbstractEdge) iter.next();
       TMAbstractNode neighbour = (TMAbstractNode) edge.getOtherEndpt(this);
-      if (neighbour.hasPathTo(target, visited)) return true;
+      if (neighbour.hasPathTo(target, visited)) {
+        return true;
+      }
     }
     return false;
   }
@@ -91,7 +98,9 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
     // of this method returns NULL if there are no edges !!!
   
     Iterator result = super.getEdges();
-    if (result == null) return Collections.EMPTY_LIST.iterator();
+    if (result == null) {
+      return Collections.EMPTY_LIST.iterator();
+    }
     return result;
   }
 
@@ -103,8 +112,9 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
     for (Iterator iter = getEdges(); iter.hasNext();) {
       Edge edge = (Edge) iter.next();
 
-      if (edge.isVisible())
+      if (edge.isVisible()) {
         result.add(edge);
+      }
     }
     return result.iterator();
   }
@@ -116,7 +126,9 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
     ArrayList result = new ArrayList();
     for (Iterator iter = getEdges(); iter.hasNext();) {
       Edge edge = (Edge) iter.next();
-      if (edge.isVisible()) result.add(edge);
+      if (edge.isVisible()) {
+        result.add(edge);
+      }
     }
     return result;
   }
@@ -141,15 +153,20 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
 
   @Override
   public Color getPaintBorderColor(TGPanel tgPanel) {
-    if (this == tgPanel.getDragNode()) return BORDER_DRAG_COLOR;
-    else if (this == tgPanel.getMouseOverN()) return BORDER_MOUSE_OVER_COLOR;
+    if (this == tgPanel.getDragNode()) {
+      return BORDER_DRAG_COLOR;
+    } else if (this == tgPanel.getMouseOverN()) {
+      return BORDER_MOUSE_OVER_COLOR;
+    }
     return TGPanel.BACK_COLOR;
   }
 
   @Override
   public Color getPaintBackColor(TGPanel tgPanel) {
     // Overwritten to allways show @backColor except when selected
-    if (this == tgPanel.getSelect()) return BACK_SELECT_COLOR;
+    if (this == tgPanel.getSelect()) {
+      return BACK_SELECT_COLOR;
+    }
     return backColor;
   }
 
@@ -176,8 +193,9 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
       double currentD = (int)Math.sqrt(currentWidth * currentWidth + 
           currentHeight * currentHeight);
       
-      if (currentD > d)
+      if (currentD > d) {
         d = currentD;
+      }
     }
     int diameter = (int)d;
     
@@ -189,8 +207,9 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
     circleColor = new Color(red, green, blue, alpha);
     
     g.setColor(circleColor);
-    if (topicMapView.controller.showNeighbouringCircle)
+    if (topicMapView.controller.showNeighbouringCircle) {
       g.fillOval(ix - diameter/2, iy - diameter / 2, diameter, diameter);
+    }
     topicMapView.queueInForeground(this);
   }
   
@@ -200,9 +219,10 @@ public abstract class TMAbstractNode extends Node implements Recoverable {
    */
   @Override
   public Color getPaintTextColor(TGPanel tgPanel) {
-    if (this == tgPanel.getSelect())
-    // given the select color, black is right
+    if (this == tgPanel.getSelect()) {
+      // given the select color, black is right
       return Color.black;
+    }
     return textColor; // this is what the TG impl of this method does
   }
 

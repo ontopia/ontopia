@@ -82,13 +82,15 @@ public class PluginContentHandler extends SAXTracker {
 
     if ("plugin".equals(qname)) {
       String klass = attrs.getValue("class");
-      if (klass == null)
+      if (klass == null) {
         cplugin = new DefaultPlugin();
-      else
+      } else {
         cplugin = createPlugin(klass);
+      }
 
-      if (cplugin == null)
+      if (cplugin == null) {
         return; // createPlugin may fail...
+      }
       
       cplugin.setId(attrs.getValue("id"));
       String str_groups = attrs.getValue("groups");
@@ -96,16 +98,18 @@ public class PluginContentHandler extends SAXTracker {
       if (str_groups != null && !str_groups.equals("")) {
         String[] grpArray = StringUtils.split(str_groups, ",");
         List groups = new ArrayList(grpArray.length);
-        for (int i = 0; i < grpArray.length; i++) 
+        for (int i = 0; i < grpArray.length; i++) {
           groups.add(grpArray[i].trim());
+        }
         cplugin.setGroups(groups);
       }
         
     } else if ("parameter".equals(qname)) {
       param_name = attrs.getValue("name");
-      if (attrs.getValue("value") != null)
+      if (attrs.getValue("value") != null) {
         cplugin.setParameter(attrs.getValue("name"),
                              attrs.getValue("value"));
+      }
     }
   }
   
@@ -113,30 +117,32 @@ public class PluginContentHandler extends SAXTracker {
   public void endElement(String nsuri, String lname, String qname) throws SAXException {
     super.endElement(nsuri, lname, qname);
 
-    if ("plugin".equals(qname))
+    if ("plugin".equals(qname)) {
       plugins.add(cplugin);
-    else if ("title".equals(qname))
+    } else if ("title".equals(qname)) {
       cplugin.setTitle(content.toString());
-    else if ("descr".equals(qname))
+    } else if ("descr".equals(qname)) {
       cplugin.setDescription(content.toString());
-    else if ("target".equals(qname))
+    } else if ("target".equals(qname)) {
       cplugin.setTarget(content.toString());
-    else if ("uri".equals(qname))
+    } else if ("uri".equals(qname)) {
       cplugin.setURI(processURI(content.toString()));
-    else if ("activated".equals(qname)) {
+    } else if ("activated".equals(qname)) {
       String value = content.toString();
 
       if (cplugin.getState() != PluginIF.ERROR) {
-        if (value == null || !value.equals("yes"))
+        if (value == null || !value.equals("yes")) {
           cplugin.setState(PluginIF.DEACTIVATED);
-        else
+        } else {
           cplugin.setState(PluginIF.ACTIVATED);
+        }
       }
     }
     else if ("parameter".equals(qname)) {
       // If parameter hasn't yet been set use the content of the parameter element.
-      if (cplugin.getParameter(param_name) == null)
+      if (cplugin.getParameter(param_name) == null) {
         cplugin.setParameter(param_name, content.toString());
+      }
       // Reset parameter name member
       param_name = null;
     }

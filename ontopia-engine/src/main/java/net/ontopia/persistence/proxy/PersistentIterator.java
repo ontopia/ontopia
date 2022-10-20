@@ -46,11 +46,11 @@ public class PersistentIterator<E> implements Iterator<E> {
 
   @Override
   public boolean hasNext() {
-    if (has_next == 0)
+    if (has_next == 0) {
       return false;
-    else if (has_next == 1)
+    } else if (has_next == 1) {
       return true;
-    else {
+    } else {
       _next();
       return hasNext();
     }
@@ -72,9 +72,9 @@ public class PersistentIterator<E> implements Iterator<E> {
   public void _next() {
     // get object from iterator
     Object o;
-    if (iter.hasNext())
+    if (iter.hasNext()) {
       o = iter.next();
-    else {
+    } else {
       has_next = 0;
       return;
     }

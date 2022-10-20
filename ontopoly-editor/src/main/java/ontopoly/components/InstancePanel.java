@@ -65,7 +65,9 @@ public abstract class InstancePanel extends Panel {
           InstancePanel.this.onLockWon(target, topic);
         }
       };
-      if (lockPanel.isLockedByOther()) isReadOnly = true;
+      if (lockPanel.isLockedByOther()) {
+        isReadOnly = true;
+      }
       add(lockPanel);
     }
 
@@ -99,8 +101,9 @@ public abstract class InstancePanel extends Panel {
     Topic topic = topicModel.getTopic();    
     TopicType type = topicTypeModel.getTopicType();
     TopicType specificType = topic.getMostSpecificTopicType(type);
-    if (specificType == null)
+    if (specificType == null) {
       specificType = type;
+    }
     FieldsView fieldsView = fieldsViewModel.getFieldsView();
     
     List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(topic.getFieldInstances(specificType, fieldsView));

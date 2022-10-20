@@ -62,12 +62,12 @@ public class IndexResource extends AbstractTransactionalResource {
 		try {
 			switch (getAttribute("type").toUpperCase()) {
 				case "VALUE":
-					if (datatype == null) return index.getOccurrences(value);
-					else return index.getOccurrences(value, new URILocator(datatype));
+					if (datatype == null) { return index.getOccurrences(value); }
+          else { return index.getOccurrences(value, new URILocator(datatype)); }
 				case "PREFIX":
-					if (value == null) throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String");
-					if (datatype == null) return index.getOccurrencesByPrefix(value);
-					else return index.getOccurrencesByPrefix(value, new URILocator(datatype));
+					if (value == null) { throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_NULL.build("value", "String"); }
+					if (datatype == null) { return index.getOccurrencesByPrefix(value); }
+          else { return index.getOccurrencesByPrefix(value, new URILocator(datatype)); }
 				case "GTE": return IteratorUtils.toList(index.getValuesGreaterThanOrEqual(value));
 				case "LTE": return IteratorUtils.toList(index.getValuesSmallerThanOrEqual(value));
 

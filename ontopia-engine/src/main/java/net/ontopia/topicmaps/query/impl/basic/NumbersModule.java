@@ -79,8 +79,12 @@ public class NumbersModule implements ModuleIF {
     }
 
     private static NumberSupport fromClass(Class klass) {
-      if (Integer.class.isAssignableFrom(klass)) return INTEGER;
-      if (Float.class.isAssignableFrom(klass)) return FLOAT;
+      if (Integer.class.isAssignableFrom(klass)) {
+        return INTEGER;
+      }
+      if (Float.class.isAssignableFrom(klass)) {
+        return FLOAT;
+      }
       return null;
     }
 

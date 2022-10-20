@@ -185,22 +185,25 @@ public class NavigateUI extends TGUserInterface {
                 ITEM_ID_HIDE_NODE);
     
 
-    if (group1 && (group2 || group3 || group4))
+    if (group1 && (group2 || group3 || group4)) {
       nodePopup.addSeparator();
+    }
     stickyMenu = new JCheckBoxMenuItem(
         Messages.getString("Viz.PopupSticky"), false);
     stickyMenu.addActionListener(new NodeMenuListener(OP_STICKY));
     addMenuItem(nodePopup, stickyMenu, ITEM_ID_STICKY);
 
-    if (group2 && (group3 || group4))
+    if (group2 && (group3 || group4)) {
       nodePopup.addSeparator();
+    }
     propertiesMenuItem = 
       makeMenuItem(nodePopup, Messages.getString("Viz.PopupProperties"),
           OP_OPEN_PROPERTIES, ITEM_ID_PROPERTIES);
 
 
-    if (group3 && group4)
+    if (group3 && group4) {
       nodePopup.addSeparator();
+    }
     setStartNodeMenuItem = 
       makeMenuItem(nodePopup, Messages.getString("Viz.PopupSetStartNode"),
           OP_SET_AS_START_NODE, ITEM_ID_SET_START_TOPIC);
@@ -251,8 +254,9 @@ public class NavigateUI extends TGUserInterface {
    * @param itemId ID for testing if the item is enabled.
    */
   public void addMenuItem(JPopupMenu menu, JMenuItem item, String itemId) {
-    if (isEnabled(itemId))
+    if (isEnabled(itemId)) {
       menu.add(item);
+    }
   }
 
   /**
@@ -305,13 +309,15 @@ public class NavigateUI extends TGUserInterface {
     }
 
     private void spawnSingleClick(TMAbstractNode node) {
-      if (clickThread != null)
+      if (clickThread != null) {
         clickThread.stopExecution();
+      }
       int interval;
-      if (doubleClickInterval == null)
+      if (doubleClickInterval == null) {
         interval = 500;
-      else
+      } else {
         interval = doubleClickInterval.intValue();
+      }
       clickThread = new ClickThread(interval, this, node);
       clickThread.start();
     }
@@ -322,8 +328,9 @@ public class NavigateUI extends TGUserInterface {
     }
 
     private void killSingleClick() {
-      if (clickThread != null)
+      if (clickThread != null) {
         clickThread.stopExecution();
+      }
       clickThread = null;
 
     }
@@ -369,10 +376,11 @@ public class NavigateUI extends TGUserInterface {
           gotoTopicMenuItem.setEnabled(controller.isApplet());
         }
         
-        if (popupNode instanceof TMTopicNode)
+        if (popupNode instanceof TMTopicNode) {
           copyNameMenuItem.setEnabled(true);
-        else
+        } else {
           copyNameMenuItem.setEnabled(false);
+        }
 
         if (isEnabled(ITEM_ID_EXPAND_NODE) ||
             isEnabled(ITEM_ID_COLLAPSE_NODE) ||
@@ -381,8 +389,9 @@ public class NavigateUI extends TGUserInterface {
             isEnabled(ITEM_ID_HIDE_NODE) ||
             isEnabled(ITEM_ID_PROPERTIES) ||
             isEnabled(ITEM_ID_SET_START_TOPIC) ||
-            isEnabled(ITEM_ID_STICKY))
+            isEnabled(ITEM_ID_STICKY)) {
           nodePopup.show(e.getComponent(), e.getX(), e.getY());
+        }
 
       } else if (popupEdge != null) {
         if (isEnabled(ITEM_ID_HIDE_EDGE)) {
@@ -406,8 +415,9 @@ public class NavigateUI extends TGUserInterface {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      if (popupNode == null)
+      if (popupNode == null) {
         return;
+      }
 
       switch (opcode) {
       case OP_EXPAND_NODE:
@@ -490,8 +500,9 @@ public class NavigateUI extends TGUserInterface {
       } catch (InterruptedException e) {
         // Do nothing
       }
-      if (execute)
+      if (execute) {
         parent.processSingleClick(target);
+      }
     }
 
     public void stopExecution() {

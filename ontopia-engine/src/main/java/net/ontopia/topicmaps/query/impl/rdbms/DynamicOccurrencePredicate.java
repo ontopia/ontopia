@@ -54,8 +54,9 @@ public class DynamicOccurrencePredicate
   @Override
   public void prescan(QueryBuilder builder, List arguments) {
     // variable as second argument is an unsupported variabel
-    if (arguments.get(1) instanceof Variable)
+    if (arguments.get(1) instanceof Variable) {
       builder.addUnsupportedVariable((Variable)arguments.get(1));
+    }
   }
 
   @Override

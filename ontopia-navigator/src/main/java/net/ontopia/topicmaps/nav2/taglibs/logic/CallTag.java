@@ -101,10 +101,11 @@ public class CallTag extends TagSupport {
       ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)
         findAncestorWithClass(this, ValueAcceptingTagIF.class);
       // kick it up to the accepting tag
-      if (acceptingTag != null)
+      if (acceptingTag != null) {
         acceptingTag.accept( retval );
-      else
+      } else {
         log.info("No accepting tag found (function '" + functionName + "')");
+      }
     }
 
     // reset members

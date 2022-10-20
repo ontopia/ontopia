@@ -48,13 +48,15 @@ public class ResourceBundlesTest {
       List extra = new ArrayList();
       
       for (Object prop : trans.keySet()) {
-        if (!master.containsKey(prop))
+        if (!master.containsKey(prop)) {
           extra.add(prop);
+        }
       }
       
       for (Object prop : master.keySet()) {
-        if (!trans.containsKey(prop))
+        if (!trans.containsKey(prop)) {
           missing.add(prop);
+        }
       }
 
       Assert.assertTrue(buildReport(file, missing, extra),
@@ -75,10 +77,12 @@ public class ResourceBundlesTest {
    */
   private String buildReport(String file, List missing, List extra) {
     String msg = file;
-    if (!missing.isEmpty())
+    if (!missing.isEmpty()) {
       msg += " is missing: " + StringUtils.join(missing, ", ");
-    if (!extra.isEmpty())
+    }
+    if (!extra.isEmpty()) {
       msg += " has extra: " + StringUtils.join(extra, ", ");
+    }
     return msg;
   }
 }

@@ -196,7 +196,7 @@ public abstract class AbstractResourceTest {
 	}
 	
 	protected void removeById(Collection<? extends TMObject> collection, String id) {
-		if (collection == null) return;
+		if (collection == null) { return; }
 		Iterator<? extends TMObject> iterator = collection.iterator();
 		while (iterator.hasNext()) {
 			TMObject tmo = iterator.next();

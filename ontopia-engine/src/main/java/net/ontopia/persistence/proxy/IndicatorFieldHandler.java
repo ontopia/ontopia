@@ -51,9 +51,10 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
   
   @Override
   public int getColumnCount() {
-    if (common_handler == null)
+    if (common_handler == null) {
       // Register common handler by pulling out first indicated class.
       registerCommonFieldHandler(indicators.values().iterator().next());
+    }
     return 1 + common_handler.getColumnCount();
   }
   
@@ -64,7 +65,9 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
 
   protected void registerCommonFieldHandler(Class<?> indicated_klass) {
     // Register common identity field handler if not already set.
-    if (common_handler != null) return;    
+    if (common_handler != null) {
+      return;
+    }    
     common_handler = mapping.getClassInfo(indicated_klass).getIdentityFieldInfo();    
   }
   
@@ -80,8 +83,9 @@ public class IndicatorFieldHandler implements FieldHandlerIF {
     
     // Get class info
     Class<?> indicated_klass = indicators.get(indicator);
-    if (indicated_klass == null)
+    if (indicated_klass == null) {
       throw new OntopiaRuntimeException("Indicator '" + indicator + "' unknown.");
+    }
     
     FieldHandlerIF handler = mapping.getClassInfo(indicated_klass).getIdentityFieldInfo();    
     

@@ -49,12 +49,13 @@ public class RemoveDuplicatesPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (first)
+    if (first) {
       // optimizer puts us first
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       // optimizer puts us last
       return PredicateDrivenCostEstimator.INFINITE_RESULT;
+    }
   }
 
   @Override
@@ -62,8 +63,9 @@ public class RemoveDuplicatesPredicate implements BasicPredicateIF {
     throws InvalidQueryException {
 
     // don't bother with duplicates if we don't have a lot of matches
-    if (matches.last < CUTOFF)
+    if (matches.last < CUTOFF) {
       return matches;
+    }
     
     return matches.removeDuplicates();
   }

@@ -98,24 +98,30 @@ public class QueryOptimizer {
     QueryOptimizer optimizer = new QueryOptimizer();
 
     if (options != null) {
-      if (options.getBooleanValue("optimizer.inliner"))
+      if (options.getBooleanValue("optimizer.inliner")) {
         optimizer.addOptimizer(new QueryOptimizer.RuleInliner());
+      }
       if (options.getBooleanValue("optimizer.reorder")) {
         // NOTE: new optimizer is now on by default
         boolean newapproach =
           options.getBooleanValue("optimizer.reorder.predicate-based");
         optimizer.addOptimizer(new QueryOptimizer.Reorderer(newapproach));
       }
-      if (options.getBooleanValue("optimizer.typeconflict"))
+      if (options.getBooleanValue("optimizer.typeconflict")) {
         optimizer.addOptimizer(new QueryOptimizer.TypeConflictResolver());
-      if (options.getBooleanValue("optimizer.hierarchy-walker"))
+      }
+      if (options.getBooleanValue("optimizer.hierarchy-walker")) {
         optimizer.addOptimizer(new QueryOptimizer.HierarchyWalker());
-      if (options.getBooleanValue("optimizer.prefix-search"))
+      }
+      if (options.getBooleanValue("optimizer.prefix-search")) {
         optimizer.addOptimizer(new QueryOptimizer.StringPrefixOptimizer());
-      if (options.getBooleanValue("optimizer.role-player-type"))
+      }
+      if (options.getBooleanValue("optimizer.role-player-type")) {
         optimizer.addOptimizer(new QueryOptimizer.AddTypeToRolePlayer());
-      if (options.getBooleanValue("optimizer.next-previous"))
+      }
+      if (options.getBooleanValue("optimizer.next-previous")) {
         optimizer.addOptimizer(new QueryOptimizer.NextPreviousOptimizer());
+      }
     }
     return optimizer;
   }
@@ -162,14 +168,16 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        for (int i = 0; i < optimizers.size(); i++)
+        for (int i = 0; i < optimizers.size(); i++) {
           pclause = ((QueryOptimizerIF) optimizers.get(i)).optimize(pclause, context);
+        }
         clause = pclause;
         
       } else if (clause instanceof OrClause) {
         List alts = ((OrClause) clause).getAlternatives();
-        for (int i = 0; i < alts.size(); i++)
+        for (int i = 0; i < alts.size(); i++) {
           alts.set(i, optimize((List) alts.get(i), context));
+        }
             
       } else if (clause instanceof NotClause) {
         List notted = ((NotClause) clause).getClauses();
@@ -181,8 +189,9 @@ public class QueryOptimizer {
     }
 
     clauses = newclauses;
-    for (int ix = 0; ix < optimizers.size(); ix++)
+    for (int ix = 0; ix < optimizers.size(); ix++) {
       clauses = ((QueryOptimizerIF) optimizers.get(ix)).optimize(clauses, context);
+    }
 
     context.leaveClauseList();
     return clauses;
@@ -253,14 +262,16 @@ public class QueryOptimizer {
     
     @Override
     public List optimize(List qclauses, QueryContext qcontext) {
-      if (qcontext.getNestingLevel() > 1)
+      if (qcontext.getNestingLevel() > 1) {
         return qclauses;
+      }
 
       CostEstimator estimator;
-      if (predicate_based)
+      if (predicate_based) {
         estimator = new PredicateDrivenCostEstimator();
-      else
+      } else {
         estimator = new SimpleCostEstimator();
+      }
       return reorder(qclauses, Collections.EMPTY_SET, Collections.EMPTY_SET,
                      null, estimator);
     }
@@ -306,10 +317,11 @@ public class QueryOptimizer {
       
       // update based on choice
       AbstractClause clause = (AbstractClause) clauses.get(best);
-      if (clause instanceof OrClause) 
+      if (clause instanceof OrClause) { 
         reorder((OrClause) clause, boundvars, literalvars, rulename, estimator);
-      else if (clause instanceof NotClause)
+      } else if (clause instanceof NotClause) {
         reorder((NotClause) clause, boundvars, literalvars, rulename, estimator);
+      }
       context.addAll(clause.getAllVariables());
       
       newOrder.add(clauses.get(best));
@@ -317,8 +329,9 @@ public class QueryOptimizer {
     }
 
     qclauses.clear();
-    for (int ix = 0; ix < newOrder.size(); ix++)
+    for (int ix = 0; ix < newOrder.size(); ix++) {
       qclauses.add(newOrder.get(ix));
+    }
 
     return newOrder;
   }
@@ -369,8 +382,9 @@ public class QueryOptimizer {
 
     @Override
     public List optimize(List clauses, QueryContext context) {
-      if (context.getRuleName() == null)
+      if (context.getRuleName() == null) {
         return clauses; // queries are never recursive, only rules
+      }
 
       List newclauses = new ArrayList();
       for (int ix = 0; ix < clauses.size(); ix++) {
@@ -383,8 +397,9 @@ public class QueryOptimizer {
           newclauses.add(clause);
           newclauses.add(new PredicateClause(new RemoveDuplicatesPredicate(false)));
           
-        } else
+        } else {
           newclauses.add(clause);
+        }
       }
 
       return newclauses;
@@ -423,8 +438,9 @@ public class QueryOptimizer {
           PredicateIF predicate = pclause.getPredicate();
           PredicateSignature signature = null;
 
-          if (predicate instanceof PumpPredicate)
+          if (predicate instanceof PumpPredicate) {
             continue;
+          }
 
           try {
             signature = PredicateSignature.getSignature(predicate);
@@ -462,21 +478,25 @@ public class QueryOptimizer {
                   Object[] types = (Object[]) ptypemap.get(par.getName());
                   ok = !emptyIntersection(TYPES_TOPIC, types, context, par,
                                           predicate);
-                } else
+                } else {
                   ok = containsAssignable(pair.getFirst().getClass(), TYPES_TOPIC);
-              } else
+                }
+              } else {
                 ok = containsAssignable(arg.getClass(), signature.getTypes(i));
+              }
             }
           }
 
-          if (!ok)
+          if (!ok) {
             clauses.set(ix, new PredicateClause(new DynamicFailurePredicate(),
                                                 pclause.getArguments()));
+          }
 
         } else if (clause instanceof OrClause) {
           List alts = ((OrClause) clause).getAlternatives();
-          for (int i = 0; i < alts.size(); i++)
+          for (int i = 0; i < alts.size(); i++) {
             alts.set(i, optimize((List) alts.get(i), context));
+          }
           
         } else if (clause instanceof NotClause) {
           List notted = ((NotClause) clause).getClauses();
@@ -493,32 +513,39 @@ public class QueryOptimizer {
                                       PredicateIF predicate)
       throws InvalidQueryException {
       
-      if (types1 == null || types2 == null)
+      if (types1 == null || types2 == null) {
         return true;
+      }
 
       boolean empty = true;
-      for (int ix = 0; ix < types1.length; ix++)
-        for (int i = 0; empty && i < types2.length; i++)
+      for (int ix = 0; ix < types1.length; ix++) {
+        for (int i = 0; empty && i < types2.length; i++) {
           if (types1[ix].equals(types2[i]) ||
               types1[ix].equals(Object.class) ||
-              types2[i].equals(Object.class))
+              types2[i].equals(Object.class)) {
             empty = false;
+          }
+        }
+      }
 
-      if (empty && context.getBooleanOption("compiler.typecheck"))
+      if (empty && context.getBooleanOption("compiler.typecheck")) {
         throw new InvalidQueryException(
           "Type conflict on " + arg + ": cannot be both " +
           PredicateSignature.getClassList(types1) + " and, as required by " +
           "predicate '" + predicate.getName() + "', " +
           PredicateSignature.getClassList(types2));
+      }
       
       return empty;
     }
 
     private boolean containsAssignable(Class type1, Object[] types2) {
-      for (int i = 0; i < types2.length; i++)
+      for (int i = 0; i < types2.length; i++) {
         //! if (type1.isAssignableFrom((Class)types2[i])) return true;
-        if (((Class)types2[i]).isAssignableFrom(type1))
+        if (((Class)types2[i]).isAssignableFrom(type1)) {
           return true;
+        }
+      }
       
       return false;
     }
@@ -543,8 +570,9 @@ public class QueryOptimizer {
           PredicateClause pclause = (PredicateClause) clause;
           
           if (context.getRuleName() != null &&
-              pclause.getPredicate().getName().equals(context.getRuleName()))
+              pclause.getPredicate().getName().equals(context.getRuleName())) {
             continue; // can't operate inside the rule we are optimizing...
+          }
           
           PredicateIF optimized = optimize(pclause);
           if (optimized != null) {
@@ -553,8 +581,9 @@ public class QueryOptimizer {
           
         } else if (clause instanceof OrClause) {
           List alts = ((OrClause) clause).getAlternatives();
-          for (int i = 0; i < alts.size(); i++)
+          for (int i = 0; i < alts.size(); i++) {
             alts.set(i, optimize((List) alts.get(i), context));
+          }
           
         } else if (clause instanceof NotClause) {
           List notted = ((NotClause) clause).getClauses();
@@ -568,24 +597,28 @@ public class QueryOptimizer {
 
     private PredicateIF optimize(PredicateClause clause) {      
       // must be a rule
-      if (!(clause.getPredicate() instanceof RulePredicate))
+      if (!(clause.getPredicate() instanceof RulePredicate)) {
         return null;
+      }
 
       RulePredicate rule = (RulePredicate) clause.getPredicate();
       List clauses = rule.getClauses();
 
       // must have just one OR clause
-      if (clauses.size() != 1 || !(clauses.get(0) instanceof OrClause))
+      if (clauses.size() != 1 || !(clauses.get(0) instanceof OrClause)) {
         return null;
+      }
 
       // OR clause must have only two alternatives
       OrClause or = (OrClause) clauses.get(0);
-      if (or.getAlternatives().size() != 2)
+      if (or.getAlternatives().size() != 2) {
         return null;
+      }
 
       // OR clause must not be short-circuiting
-      if (or.getShortCircuit())
+      if (or.getShortCircuit()) {
         return null;
+      }
 
       List bottom = filter((List) or.getAlternatives().get(0)); // one clause
       List pump = filter((List) or.getAlternatives().get(1));   // two clauses
@@ -596,34 +629,40 @@ public class QueryOptimizer {
       }
 
       // one alternative must be 2 predicates, the other 1
-      if (bottom.size() != 1 || pump.size() != 2)
+      if (bottom.size() != 1 || pump.size() != 2) {
         return null;
+      }
 
       // bottom must not be a recursive reference
-      if (!(bottom.get(0) instanceof PredicateClause))
+      if (!(bottom.get(0) instanceof PredicateClause)) {
         return null;
+      }
 
       PredicateClause bottomclause = (PredicateClause) bottom.get(0);
-      if (bottomclause.getPredicate().getName().equals(rule.getName()))
+      if (bottomclause.getPredicate().getName().equals(rule.getName())) {
         return null;
+      }
 
       // pump must be all predicates
       if (!(pump.get(0) instanceof PredicateClause &&
-            pump.get(1) instanceof PredicateClause))
+            pump.get(1) instanceof PredicateClause)) {
         return null;
+      }
       
       // pump must have one recursive reference
       int ix;
       for (ix = 0; ix < 2; ix++) {
         if (pump.get(ix) instanceof PredicateClause) {
           if (((PredicateClause) pump.get(ix)).getPredicate().getName().
-              equals(rule.getName()))
+              equals(rule.getName())) {
             break;
+          }
         }
       }
 
-      if (ix >= 2)
+      if (ix >= 2) {
         return null; // no recursive reference found
+      }
 
       // structure is now as follows:
       //   rule(...) :- {
@@ -644,8 +683,9 @@ public class QueryOptimizer {
       //     bar(...), rule(...)
       //   }.
       if (!bottomclause.getPredicate().getName()
-          .equals(midclause.getPredicate().getName()))
+          .equals(midclause.getPredicate().getName())) {
         return null; // predicates don't match
+      }
 
       // verify variables
       //  bottom: (PARENT, CHILD, *)
@@ -673,8 +713,9 @@ public class QueryOptimizer {
             !pumpvars.contains(var) &&
             bottomvars.contains(var) &&
             midvars.contains(var)) {
-          if (child != null)
+          if (child != null) {
             return null; // ambiguous variable
+          }
           child = var;
         }
 
@@ -682,14 +723,16 @@ public class QueryOptimizer {
             !bottomvars.contains(var) &&
             midvars.contains(var) &&
             pumpvars.contains(var)) {
-          if (mid != null)
+          if (mid != null) {
             return null; // ambiguous variable
+          }
           mid = var;
         }
       }
 
-      if (child == null || mid == null)
+      if (child == null || mid == null) {
         return null; // couldn't find necessary vars
+      }
 
       it = pumpvars.iterator();
       while (it.hasNext()) {
@@ -699,14 +742,16 @@ public class QueryOptimizer {
             pumpvars.contains(var) &&
             bottomvars.contains(var) &&
             !midvars.contains(var)) {
-          if (parent != null)
+          if (parent != null) {
             return null; // ambiguous variable
+          }
           parent = var;
         }
       }
 
-      if (parent == null)
+      if (parent == null) {
         return null; // couldn't find parent
+      }
 
       // ok, we are done. now we can create the optimized version
       return new HierarchyWalkerRulePredicate(rule, parent, child, mid, bottomclause);
@@ -722,8 +767,9 @@ public class QueryOptimizer {
       for (int ix = 0; ix < clauses.size(); ix++) {
         Object clause = clauses.get(ix);
         if (!(clause instanceof PredicateClause) ||
-            !(((PredicateClause) clause).getPredicate() instanceof RemoveDuplicatesPredicate))
+            !(((PredicateClause) clause).getPredicate() instanceof RemoveDuplicatesPredicate)) {
           filtered.add(clause);
+        }
       }
       return filtered;
     }
@@ -759,53 +805,64 @@ public class QueryOptimizer {
       // find str:starts-with predicate
       PredicatePosition startsp = findPredicate(query.getClauses(),
                                     StringModule.StartsWithPredicate.class); 
-      if (startsp == null)
+      if (startsp == null) {
         return;
+      }
       PredicateClause starts = startsp.getClause();
       
       // #5: find (dynamic occ | value | resource) predicate
       PredicatePosition valuep = findPredicate(query.getClauses(),
                                                DynamicOccurrencePredicate.class);
-      if (valuep == null)
+      if (valuep == null) {
         return; // FIXME: extend to cover 'value' and 'resource'
+      }
       PredicateClause value = valuep.getClause();
 
       // #X: verify that predicates appear in same clause list
-      if (startsp.getContainingList() != valuep.getContainingList())
+      if (startsp.getContainingList() != valuep.getContainingList()) {
         return;
+      }
       
       // #1: arg1 must be unbound at value
       Object arg1 = value.getArguments().get(0);
-      if (!(arg1 instanceof Variable))
+      if (!(arg1 instanceof Variable)) {
         return;
-      if (isBoundAt(query.getClauses(), (Variable) arg1, value))
+      }
+      if (isBoundAt(query.getClauses(), (Variable) arg1, value)) {
         return;
+      }
 
       // #2: arg2 must be unbound at value
       Object arg2 = value.getArguments().get(1);
-      if (!(arg2 instanceof Variable))
+      if (!(arg2 instanceof Variable)) {
         return;
-      if (isBoundAt(query.getClauses(), (Variable) arg2, value))
+      }
+      if (isBoundAt(query.getClauses(), (Variable) arg2, value)) {
         return;
+      }
 
       // starts must have arg2 as first argument
-      if (!starts.getArguments().get(0).equals(arg2))
+      if (!starts.getArguments().get(0).equals(arg2)) {
         return;
+      }
 
       // #3: arg2 must not be used anywhere else
       Collection users = findPredicatesUsing(query.getClauses(), (Variable) arg2);
-      if (users.size() > 2)
+      if (users.size() > 2) {
         return;
+      }
 
       // #4: arg3 must be a literal
       Object arg3 = starts.getArguments().get(1);
-      if (!(arg3 instanceof String))
+      if (!(arg3 instanceof String)) {
         return;
+      }
       
       /// do the actual optimization
       // a) if arg2 is not in the SELECT list: change arg2 to be arg3
-      if (!query.getSelectedVariables().contains(arg2))
+      if (!query.getSelectedVariables().contains(arg2)) {
         value.getArguments().set(1, arg3);
+      }
       
       // b) remove the starts clause
       removePredicate(query.getClauses(), starts);
@@ -861,30 +918,35 @@ public class QueryOptimizer {
 
       Object arg1 = rolec.getArguments().get(0);
       if (!(arg1 instanceof Variable) ||
-          isBoundAt(query.getClauses(), (Variable) arg1, rolec))
+          isBoundAt(query.getClauses(), (Variable) arg1, rolec)) {
         return;
+      }
 
       Object arg2 = rolec.getArguments().get(1);
       if (arg2 instanceof Variable &&
-          !isBoundAt(query.getClauses(), (Variable) arg2, rolec))
-        return;      
+          !isBoundAt(query.getClauses(), (Variable) arg2, rolec)) {
+        return;
+      }      
       
       // --- type predicate
       PredicatePosition typepp = findTypePredicate(query, (Variable) arg1);
-      if (typepp == null)
+      if (typepp == null) {
         return;
+      }
       
       PredicateClause typec = typepp.getClause();
       // INV: first arg of typec matches first of rolec
 
       Object arg4 = typec.getArguments().get(1);
       if (arg4 instanceof Variable &&
-          !isBoundAt(query.getClauses(), (Variable) arg1, rolec))
+          !isBoundAt(query.getClauses(), (Variable) arg1, rolec)) {
         return;
+      }
 
       // FIXME: verify that rolec before typec in execution order
-      if (rolepp.getContainingList() != typepp.getContainingList())
+      if (rolepp.getContainingList() != typepp.getContainingList()) {
         return;
+      }
       
       // --- apply optimization
 
@@ -902,8 +964,9 @@ public class QueryOptimizer {
         PredicatePosition pp = (PredicatePosition) it.next();
         PredicateClause pc = pp.getClause();
         if (pc.getPredicate() instanceof TypePredicate &&
-            arg1.equals(pc.getArguments().get(0)))
+            arg1.equals(pc.getArguments().get(0))) {
           return pp;
+        }
       }
 
       return null;
@@ -918,16 +981,19 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        if (predicate.isInstance(pclause.getPredicate()))
+        if (predicate.isInstance(pclause.getPredicate())) {
           return new PredicatePosition(clauses, pclause);
+        }
         
       } else if (clause instanceof OrClause) {
         List alts = ((OrClause) clause).getAlternatives();
-        for (int i = 0; i < alts.size(); i++)
+        for (int i = 0; i < alts.size(); i++) {
           return findPredicate((List) alts.get(i), predicate);
+        }
             
-      } else if (clause instanceof NotClause)
+      } else if (clause instanceof NotClause) {
         return findPredicate(((NotClause) clause).getClauses(), predicate);
+      }
     }
 
     return null; // couldn't find it
@@ -942,16 +1008,19 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        if (predicate.isInstance(pclause.getPredicate()))
+        if (predicate.isInstance(pclause.getPredicate())) {
           pps.add(new PredicatePosition(clauses, pclause));
+        }
         
       } else if (clause instanceof OrClause) {
         List alts = ((OrClause) clause).getAlternatives();
-        for (int i = 0; i < alts.size(); i++)
+        for (int i = 0; i < alts.size(); i++) {
           pps.addAll(findPredicates((List) alts.get(i), predicate));
+        }
             
-      } else if (clause instanceof NotClause)
+      } else if (clause instanceof NotClause) {
         pps.addAll(findPredicates(((NotClause) clause).getClauses(), predicate));
+      }
     }
 
     return pps;
@@ -967,17 +1036,20 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        if (pclause.getArguments().contains(var))
+        if (pclause.getArguments().contains(var)) {
           predicates.add(new PredicatePosition(clauses, pclause));
+        }
         
       } else if (clause instanceof OrClause) {
         List alts = ((OrClause) clause).getAlternatives();
-        for (int i = 0; i < alts.size(); i++)
+        for (int i = 0; i < alts.size(); i++) {
           predicates.addAll(findPredicatesUsing((List) alts.get(i), var));
+        }
             
-      } else if (clause instanceof NotClause)
+      } else if (clause instanceof NotClause) {
         predicates.addAll(findPredicatesUsing(((NotClause) clause).getClauses(),
                                               var));
+      }
     }
 
     return predicates;
@@ -995,19 +1067,24 @@ public class QueryOptimizer {
 
       if (clause instanceof PredicateClause) {
         PredicateClause pclause = (PredicateClause) clause;
-        if (pclause.equals(theclause))
+        if (pclause.equals(theclause)) {
           return bound.contains(var);
+        }
         bound.addAll(pclause.getAllVariables());
         
       } else if (clause instanceof OrClause) {
         List alts = ((OrClause) clause).getAlternatives();
-        for (int i = 0; i < alts.size(); i++)
-          if (isBoundAt((List) alts.get(i), var, theclause, bound))
+        for (int i = 0; i < alts.size(); i++) {
+          if (isBoundAt((List) alts.get(i), var, theclause, bound)) {
             return true;
+          }
+        }
             
-      } else if (clause instanceof NotClause)
-        if (isBoundAt(((NotClause) clause).getClauses(), var, theclause, bound))
+      } else if (clause instanceof NotClause) {
+        if (isBoundAt(((NotClause) clause).getClauses(), var, theclause, bound)) {
           return true;
+        }
+      }
     }
 
     return false;
@@ -1026,13 +1103,17 @@ public class QueryOptimizer {
 
       if (clause instanceof OrClause) {
         List alts = ((OrClause) clause).getAlternatives();
-        for (int i = 0; i < alts.size(); i++)
-          if (removePredicate((List) alts.get(i), pclause))
+        for (int i = 0; i < alts.size(); i++) {
+          if (removePredicate((List) alts.get(i), pclause)) {
             return true;
+          }
+        }
             
-      } else if (clause instanceof NotClause)
-        if (removePredicate(((NotClause) clause).getClauses(), pclause))
+      } else if (clause instanceof NotClause) {
+        if (removePredicate(((NotClause) clause).getClauses(), pclause)) {
           return true;
+        }
+      }
     }
 
     return false;
@@ -1089,46 +1170,54 @@ public class QueryOptimizer {
       // ===== CHECK IF OPTIMIZATION APPLIES
       
       // must have limit, must not have offset
-      if (query.getLimit() == -1 || query.getOffset() != -1)
+      if (query.getLimit() == -1 || query.getOffset() != -1) {
         return;
+      }
 
       // must have order by with a single variable
       List orderby = query.getOrderBy();
-      if (orderby.size() != 1)
+      if (orderby.size() != 1) {
         return;
+      }
       Variable value = (Variable) orderby.get(0);
 
       // must start with dynamic occurrence predicate
       List clauses = query.getClauses();
-      if (!(clauses.get(0) instanceof PredicateClause))
+      if (!(clauses.get(0) instanceof PredicateClause)) {
         return;
+      }
 
       PredicateClause dynocc = (PredicateClause) clauses.get(0);
-      if (!(dynocc.getPredicate() instanceof DynamicOccurrencePredicate))
+      if (!(dynocc.getPredicate() instanceof DynamicOccurrencePredicate)) {
         return;
+      }
       DynamicOccurrencePredicate dynoccpred = (DynamicOccurrencePredicate)
         dynocc.getPredicate();
       
       // second predicate must be a comparison predicate
       if (clauses.size() < 2 ||
-          !(clauses.get(1) instanceof PredicateClause))
+          !(clauses.get(1) instanceof PredicateClause)) {
         return;
+      }
       PredicateClause compar = (PredicateClause) clauses.get(1);
       PredicateIF comparpred = compar.getPredicate();
       if (!((comparpred instanceof GreaterThanPredicate) ||
             (comparpred instanceof GreaterThanEqualsPredicate) ||
             (comparpred instanceof LessThanPredicate) ||
-            (comparpred instanceof LessThanEqualsPredicate)))
+            (comparpred instanceof LessThanEqualsPredicate))) {
         return;
+      }
 
       // topic parameter to dynamic occurrence predicate must be open
-      if (!(dynocc.getArguments().get(0) instanceof Variable))
+      if (!(dynocc.getArguments().get(0) instanceof Variable)) {
         return;
+      }
       Variable topicvar = (Variable) dynocc.getArguments().get(0);
 
       // second parameter to dynamic occurrence predicate must be our value
-      if (!dynocc.getArguments().get(1).equals(value))
+      if (!dynocc.getArguments().get(1).equals(value)) {
         return;
+      }
 
       // one parameter to comparison predicate must be our value
       boolean literalIsFirst;
@@ -1139,13 +1228,15 @@ public class QueryOptimizer {
       } else if (compar.getArguments().get(1).equals(value)) {
         literalIsFirst = true;
         literal = compar.getArguments().get(0);
-      } else
+      } else {
         return;
+      }
 
       // other parameter must be a literal or a parameter
       if (!((literal instanceof String) ||
-            (literal instanceof Parameter)))
+            (literal instanceof Parameter))) {
         return;
+      }
 
       // ===== APPLY OPTIMIZATION
 
@@ -1248,15 +1339,17 @@ public class QueryOptimizer {
       QueryMatches result = new QueryMatches(input);
       Iterator it;
       String literalvalue;
-      if (literal instanceof String)
+      if (literal instanceof String) {
         literalvalue = (String) literal;
-      else 
+      } else {
         literalvalue = (String) input.data[0][input.getIndex(literal)];
+      }
       
-      if (bigger)
+      if (bigger) {
         it = index.getValuesGreaterThanOrEqual(literalvalue);
-      else
+      } else {
         it = index.getValuesSmallerThanOrEqual(literalvalue);
+      }
       while (result.last + 1 < limit && it.hasNext()) {
         // double batch size from previous try to avoid checking too many batches
         batchsize *= 2;
@@ -1266,14 +1359,16 @@ public class QueryOptimizer {
         batch.ensureCapacity(batchsize);
         for (int ix = 0; ix < batchsize && it.hasNext(); ) {
           String value = (String) it.next();
-          if (!equals && value.equals(literalvalue))
+          if (!equals && value.equals(literalvalue)) {
             continue;
+          }
 
           Iterator it2 = index.getOccurrences(value).iterator();
           for (; it2.hasNext(); ix++) {
             OccurrenceIF occ = (OccurrenceIF) it2.next();
-            if (batch.last+1 == batch.size)
+            if (batch.last+1 == batch.size) {
               batch.increaseCapacity();
+            }
             
             Object[] newrow = (Object[]) input.data[0].clone();
             batch.data[++batch.last] = newrow;

@@ -53,14 +53,15 @@ public class RolePlayerPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.MEDIUM_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -76,9 +77,10 @@ public class RolePlayerPredicate implements BasicPredicateIF {
         typecolumn = ((PredicateOptions) arguments[2]).getColumn();
         // translate parameter into value
         // this isn't too pretty; we ought to be able to hide this
-        if (typecolumn instanceof Parameter)
+        if (typecolumn instanceof Parameter) {
           typecolumn = matches.getQueryContext().
             getParameterValue(((Parameter) typecolumn).getName());
+        }
       }
       return topicToRole(matches, arguments, typecolumn);
 
@@ -117,22 +119,25 @@ public class RolePlayerPredicate implements BasicPredicateIF {
   private QueryMatches topicToRole(QueryMatches matches, Object[] arguments,
                                    Object typecolumn) {
     int typeix = -1;
-    if (typecolumn != null)
+    if (typecolumn != null) {
       typeix = matches.getIndex(typecolumn);
       // will be -1 if typecolumn is a TopicIF constant
+    }
     
     QueryMatches result = new QueryMatches(matches);
     int roleix = result.getIndex(arguments[0]);
     int topicix = result.getIndex(arguments[1]);
 
-    if (typeix == -1)
+    if (typeix == -1) {
       Prefetcher.prefetch(topicmap, matches, topicix, 
                           Prefetcher.TopicIF, 
                           Prefetcher.TopicIF_roles, false);
+    }
 
     TopicIF roletype = null;
-    if (typeix == -1)
+    if (typeix == -1) {
       roletype = (TopicIF) typecolumn; // fixed role type
+    }
       
     for (int ix = 0; ix <= matches.last; ix++) {
       TopicIF topic = (TopicIF) matches.data[ix][topicix];
@@ -140,18 +145,21 @@ public class RolePlayerPredicate implements BasicPredicateIF {
       Iterator it;
       if (typecolumn != null) {
         // used when optimizer has told us the type
-        if (typeix != -1)
+        if (typeix != -1) {
           roletype = (TopicIF) matches.data[ix][typeix]; // dynamic role type
+        }
 
         it = topic.getRolesByType(roletype).iterator();
-      } else
+      } else {
         it = topic.getRoles().iterator();
+      }
 
       while (it.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF) it.next();
         
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
       
         Object[] newRow = (Object[]) matches.data[ix].clone();

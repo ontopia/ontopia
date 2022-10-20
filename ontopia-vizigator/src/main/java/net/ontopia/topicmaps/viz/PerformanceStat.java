@@ -35,16 +35,18 @@ public class PerformanceStat {
   
   public PerformanceStat(String id) {
     // NB! Put this test at the top of all dynamic methods in this class.
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
 
     this.id = id;
   }
   
   public void init() {
     // NB! Put this test at the top of all dynamic methods in this class.
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
 
     sum = 0;
     sumOfSquares = 0;
@@ -56,24 +58,27 @@ public class PerformanceStat {
   
   public void setShowIndividuals(boolean showIndividuals) {
     // NB! Put this test at the top of all dynamic methods in this class.
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
 
     this.showIndividuals = showIndividuals;
   }
   
   public void startOp() {
     // NB! Put this test at the top of all dynamic methods in this class.
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
 
     startTime = System.currentTimeMillis();
   }
   
   public void stopOp() {
     // NB! Put this test at the top of all dynamic methods in this class.
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
 
     long currentTime = System.currentTimeMillis() - startTime;
     
@@ -81,19 +86,23 @@ public class PerformanceStat {
     sum += currentTime;
     sumOfSquares += currentTime * currentTime;
     
-    if (count == 1 || currentTime < min)
+    if (count == 1 || currentTime < min) {
       min = currentTime;
-    if (count == 1 || currentTime > max)
+    }
+    if (count == 1 || currentTime > max) {
       max = currentTime;
+    }
     
-    if (showIndividuals)
+    if (showIndividuals) {
       VizDebugUtils.debug("Value(" + id + "): " + String.valueOf(currentTime));
+    }
   }
   
   public void report() {
     // NB! Put this test at the top of all dynamic methods in this class.
-    if (!VizDebugUtils.isDebugEnabled())
+    if (!VizDebugUtils.isDebugEnabled()) {
       return;
+    }
 
     long reportMakingStartTime = System.currentTimeMillis();
     VizDebugUtils.debug("--------------------------------------------------" +

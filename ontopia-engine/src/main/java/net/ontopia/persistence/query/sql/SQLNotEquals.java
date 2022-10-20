@@ -31,10 +31,11 @@ public class SQLNotEquals implements SQLExpressionIF {
 
   public SQLNotEquals(SQLValueIF left, SQLValueIF right) {
     // Complain if arities are different
-    if (left.getArity() != right.getArity())
+    if (left.getArity() != right.getArity()) {
       throw new IllegalArgumentException("Arities of values are not identical: " +
                                          left + " (arity " + left.getArity() +") " +
                                          right + " (arity " + right.getArity() +")");
+    }
     this.left = left;
     this.right = right;
   }

@@ -63,8 +63,9 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", instance.getId());
-        if (instance.isOntologyTopic())
+        if (instance.isOntologyTopic()) {
           pageParametersMap.put("ontology", "true");
+        }
         setResponsePage(getInstancePageClass(), new PageParameters(pageParametersMap));
         setRedirect(true);
       }          

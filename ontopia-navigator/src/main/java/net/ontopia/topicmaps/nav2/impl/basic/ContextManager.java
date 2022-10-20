@@ -75,10 +75,11 @@ public class ContextManager implements ContextManagerIF {
     // remove prefix (if there)
     name = cutoffPre(name);
     Object result = _getValue(name);
-    if (result == null)
+    if (result == null) {
       throw new VariableNotSetException(name);
-    else
+    } else {
       return (Collection)result;
+    }
   }
 
   @Override
@@ -86,10 +87,11 @@ public class ContextManager implements ContextManagerIF {
     // remove prefix (if there)
     name = cutoffPre(name);
     Object result = _getValue(name);
-    if (result == null)
+    if (result == null) {
       return defaultValue;
-    else
+    } else {
       return (Collection)result;
+    }
   }
 
   /**
@@ -105,17 +107,19 @@ public class ContextManager implements ContextManagerIF {
       if (scopes.size() > 1) {
         for (int i = scopes.size()-2; i >= 0; i--) {
           Map ancestorValues = (Map)scopes.elementAt(i);
-          if (ancestorValues != null && ancestorValues.containsKey(name))
+          if (ancestorValues != null && ancestorValues.containsKey(name)) {
             return ancestorValues.get(name);
+          }
         } // for
       }
 
       // we still haven't found anything. try pageContext
       Object v = InteractionELSupport.getValue(name, pageContext);
-      if (v == null || v instanceof Collection)
+      if (v == null || v instanceof Collection) {
         return v;
-      else
+      } else {
         return Collections.singleton(v);
+      }
     }
   }
   
@@ -131,18 +135,22 @@ public class ContextManager implements ContextManagerIF {
       Map currValues = (Map) scopes.get(index);
       currValues.put(cutoffPre(name), coll);
       scopes.set(index, currValues);
-    } else
+    } else {
       log.warn("Cannot set value for variable '" + name + "', because " +
                "couldn't find scope.");
+    }
   }
   
   @Override
   public void setValue(String name, Object obj) {
-    if (obj == null) return;
-    if (obj instanceof Collection)
+    if (obj == null) {
+      return;
+    }
+    if (obj instanceof Collection) {
       setValue(name, (Collection) obj);
-    else 
+    } else {
       values.put(cutoffPre(name), Collections.singleton(obj));
+    }
   }  
   
   @Override
@@ -193,12 +201,14 @@ public class ContextManager implements ContextManagerIF {
    * variable names since OKS Version 1.4).
    */
   private static String cutoffPre(String name) {
-    if (name == null)
+    if (name == null) {
       return null;
-    if (name.charAt(0) == '$')
+    }
+    if (name.charAt(0) == '$') {
       return name.substring(1);
-    else
+    } else {
       return name;
+    }
   }
   
 }

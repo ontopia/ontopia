@@ -63,13 +63,14 @@ public class XTMValidatingContentHandler implements ContentHandler {
   
   protected ContentHandler createValidator() {
     String rnc;
-    if (xtm_version == XTMVersion.XTM_1_0)
+    if (xtm_version == XTMVersion.XTM_1_0) {
       rnc = XTM_1_RNC;
-    else if (xtm_version == XTMVersion.XTM_2_0 ||
-             xtm_version == XTMVersion.XTM_2_1)
+    } else if (xtm_version == XTMVersion.XTM_2_0 ||
+             xtm_version == XTMVersion.XTM_2_1) {
       rnc = XTM_2_RNC;
-    else
+    } else {
       throw new OntopiaRuntimeException("Unknown XTM version: " + xtm_version);
+    }
       
     InputSource src = new InputSource(XTMValidatingContentHandler.class.getResourceAsStream(rnc));
     try {
@@ -101,23 +102,30 @@ public class XTMValidatingContentHandler implements ContentHandler {
     // initialize validator
     if (EL_TOPICMAP.equals(qName)) {
       validator = createValidator();
-      if (locator != null) // if received already
-        validator.setDocumentLocator(locator); 
+      if (locator != null) { // if received already
+        validator.setDocumentLocator(locator);
+      } 
       validator.startDocument();
     }
-    if (validator != null) validator.startElement(uri, name, qName, atts);
+    if (validator != null) {
+      validator.startElement(uri, name, qName, atts);
+    }
     child.startElement(uri, name, qName, atts);
   }
   
   @Override
   public void characters (char ch[], int start, int length) throws SAXException {
-    if (validator != null) validator.characters(ch, start, length);
+    if (validator != null) {
+      validator.characters(ch, start, length);
+    }
     child.characters(ch, start, length);
   }
   
   @Override
   public void endElement (String uri, String name, String qName) throws SAXException {
-    if (validator != null) validator.endElement(uri, name, qName);
+    if (validator != null) {
+      validator.endElement(uri, name, qName);
+    }
     child.endElement(uri, name, qName);
 
     // clear validator
@@ -129,12 +137,16 @@ public class XTMValidatingContentHandler implements ContentHandler {
   
   @Override
   public void startPrefixMapping(java.lang.String prefix, java.lang.String uri)  throws SAXException {
-    if (validator != null) validator.startPrefixMapping(prefix, uri);
+    if (validator != null) {
+      validator.startPrefixMapping(prefix, uri);
+    }
   }
   
   @Override
   public void endPrefixMapping(java.lang.String prefix) throws SAXException {
-    if (validator != null) validator.endPrefixMapping(prefix);
+    if (validator != null) {
+      validator.endPrefixMapping(prefix);
+    }
   }
 
   @Override
@@ -149,13 +161,17 @@ public class XTMValidatingContentHandler implements ContentHandler {
 
   @Override
   public void ignorableWhitespace(char ch[], int start, int length) throws SAXException {
-    if (validator != null) validator.characters(ch, start, length);
+    if (validator != null) {
+      validator.characters(ch, start, length);
+    }
     child.characters(ch, start, length);
   }
 
   @Override
   public void setDocumentLocator(Locator docloc) {
-    if (validator != null) validator.setDocumentLocator(docloc);
+    if (validator != null) {
+      validator.setDocumentLocator(docloc);
+    }
     child.setDocumentLocator(docloc);
     locator = docloc; // stored in case we receive it before we have validator
   }

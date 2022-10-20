@@ -103,9 +103,10 @@ public class ParsedRule {
     }
     for (int ix = 0; ix < parameters.size(); ix++) {
       Variable var = (Variable) parameters.get(ix);
-      if (!allVariables.contains(var))
+      if (!allVariables.contains(var)) {
         throw new InvalidQueryException("Parameter " + var + " to rule " + name +
                                         " is not bound by the rule.");
+      }
     }
 
     // run type inferencing
@@ -115,7 +116,9 @@ public class ParsedRule {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof ParsedRule) {
       ParsedRule other = (ParsedRule)obj;
       return (name.equals(other.name) &&

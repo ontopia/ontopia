@@ -48,12 +48,15 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
   @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
-    if (!isOpen()) open();
+    if (!isOpen()) {
+      open();
+    }
     
     // Create a new transaction if it doesn't exist or it has been
     // deactivated.
-    if (transaction == null || !transaction.isActive())
+    if (transaction == null || !transaction.isActive()) {
       transaction = new InMemoryTopicMapTransaction(this);
+    }
     return transaction;
   }
 
@@ -85,7 +88,9 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
       
     } else {
       // physically close store
-      if (!isOpen()) throw new StoreNotOpenException("Store is not open.");
+      if (!isOpen()) {
+        throw new StoreNotOpenException("Store is not open.");
+      }
       
       // reset reference
       reference = null;

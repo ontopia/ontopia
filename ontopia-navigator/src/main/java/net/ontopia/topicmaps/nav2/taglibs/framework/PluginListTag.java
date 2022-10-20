@@ -55,9 +55,10 @@ public class PluginListTag extends TagSupport {
   @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("The framework:pluginList tag can only be used " +
                                 "inside the context tag");
+    }
 
     try {
       JspWriter out = pageContext.getOut();
@@ -71,20 +72,23 @@ public class PluginListTag extends TagSupport {
       while (it.hasNext()) {
         plugin = (PluginIF) it.next();
         // if this plugin should be excluded than go to next one
-        if (excludePluginId != null && excludePluginId.equals(plugin.getId()))
+        if (excludePluginId != null && excludePluginId.equals(plugin.getId())) {
           continue;
+        }
         // if activated then generate HTML
         if (plugin.getState() == PluginIF.ACTIVATED) {          
           html = plugin.generateHTML(contextTag);
           if (html != null) {
             // don't put out separator first time and last time
-            if (!isFirst || preSeparatorFlag)
+            if (!isFirst || preSeparatorFlag) {
               out.write(separator);
+            }
             
-            if (plugin instanceof IncludePluginIF)              
+            if (plugin instanceof IncludePluginIF) {             
               pageContext.include(html);
-            else
+            } else {
               out.write(html);
+            }
             
             isFirst = false;
           }

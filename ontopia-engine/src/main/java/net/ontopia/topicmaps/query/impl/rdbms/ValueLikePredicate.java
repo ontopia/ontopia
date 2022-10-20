@@ -66,7 +66,9 @@ public class ValueLikePredicate extends
     Object[] args = arguments.toArray();
 
     // FIXME: should really support the score natively
-    if (args.length > 2) return false;
+    if (args.length > 2) {
+      return false;
+    }
     
     // if value is empty, predicate evaluates to false
     if ("".equals(args[1])) {
@@ -75,15 +77,18 @@ public class ValueLikePredicate extends
     }
     // TODO: Should check to see that second argument is actually a string.
 
-    if (args[1] instanceof Variable)
+    if (args[1] instanceof Variable) {
       throw new InvalidQueryException("Second argument to " + getName()
           + " must " + "be bound");
-    if (!(args[0] instanceof Variable))
+    }
+    if (!(args[0] instanceof Variable)) {
       throw new InvalidQueryException("First argument to " + getName()
           + " must " + "be unbound");
-    if (args.length > 2 && !(args[0] instanceof Variable))
+    }
+    if (args.length > 2 && !(args[0] instanceof Variable)) {
       throw new InvalidQueryException("Third argument to " + getName()
           + " must " + "be unbound");
+    }
 
     // TOLOG: value-like(OBJECT, MATCHING-VALUE, SCORE)
     String fexpr = builder
@@ -100,9 +105,10 @@ public class ValueLikePredicate extends
 
       String ftype = builder
           .getProperty("net.ontopia.topicmaps.query.impl.rdbms.ValueLikePredicate.function.type");
-      if (ftype == null || !ftype.equals("boolean"))
+      if (ftype == null || !ftype.equals("boolean")) {
         ftfunc = new JDOFunction(">", Boolean.class, ftfunc, new JDOPrimitive(
             JDOPrimitive.INTEGER, 0));
+      }
       expressions.add(new JDOValueExpression(ftfunc));
 
       // JDOQL: B.topicmap = TOPICMAP

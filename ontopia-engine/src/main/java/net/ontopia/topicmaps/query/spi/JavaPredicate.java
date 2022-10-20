@@ -53,9 +53,11 @@ public abstract class JavaPredicate implements BasicPredicateIF {
 
   @Override
   public int getCost(boolean[] boundparams) {
-    for (int i=0; i < boundparams.length; i++)
-      if (!boundparams[i])
+    for (int i=0; i < boundparams.length; i++) {
+      if (!boundparams[i]) {
         return PredicateDrivenCostEstimator.INFINITE_RESULT;
+      }
+    }
 
     return PredicateDrivenCostEstimator.FILTER_RESULT;
   }

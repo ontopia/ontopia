@@ -57,8 +57,9 @@ public class SubjectAddressTag extends BaseValueProducingAndAcceptingTag {
         // get subject address for specified topic
         if (topic != null) {
           LocatorIF subject_address = (LocatorIF)CollectionUtils.getFirst(topic.getSubjectLocators());
-          if (subject_address != null)
+          if (subject_address != null) {
             subjectAddresses.add(subject_address);
+          }
         }
       }
     }

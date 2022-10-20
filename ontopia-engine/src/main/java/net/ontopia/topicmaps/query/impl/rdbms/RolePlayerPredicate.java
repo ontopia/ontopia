@@ -69,10 +69,11 @@ public class RolePlayerPredicate
       // Do direct predicate evaluation
       AssociationRoleIF role = (AssociationRoleIF)args[0];
 
-      if (args[1].equals(role.getPlayer()))
+      if (args[1].equals(role.getPlayer())) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
 
     } else {                  
 
@@ -83,8 +84,9 @@ public class RolePlayerPredicate
       expressions.add(new JDOEquals(new JDOField(jv_role, "player"), jv_player));
 
       // if variable: filter out nulls
-      if (jv_player.getType() == JDOValueIF.VARIABLE)
+      if (jv_player.getType() == JDOValueIF.VARIABLE) {
         expressions.add(new JDONotEquals(jv_player, new JDONull()));
+      }
         
       // JDOQL: R.topicmap = TOPICMAP
       expressions.add(new JDOEquals(new JDOField(jv_role, "topicmap"),

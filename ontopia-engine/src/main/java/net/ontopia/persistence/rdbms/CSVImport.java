@@ -172,23 +172,28 @@ public class CSVImport {
       int datatypes[] = new int[columns.length];      
       for (int i=0; i < columns.length; i++) {
         Table tbl = project.getTableByName(table);
-        if (tbl == null)
+        if (tbl == null) {
           throw new OntopiaRuntimeException("Unknown table: " + table);
+        }
         Column col = tbl.getColumnByName(columns[i]);
-        if (col == null)
+        if (col == null) {
           throw new OntopiaRuntimeException("Unknown table column: " + columns[i]);
-        if (col.getType() == null)
+        }
+        if (col.getType() == null) {
           throw new OntopiaRuntimeException("Column type is null: " + col.getType());
+        }
         DataType datatype = project.getDataTypeByName(col.getType(), "generic");
-        if (datatype == null)
+        if (datatype == null) {
           throw new OntopiaRuntimeException("Unknown column type: " + col.getType());
+        }
         String dtype = datatype.getType();
-        if ("varchar".equals(dtype))
+        if ("varchar".equals(dtype)) {
           datatypes[i] = Types.VARCHAR;
-        else if ("integer".equals(dtype))
+        } else if ("integer".equals(dtype)) {
           datatypes[i] = Types.INTEGER;
-        else
-          throw new OntopiaRuntimeException("Unknown datatype: "+ dtype);        
+        } else {
+          throw new OntopiaRuntimeException("Unknown datatype: "+ dtype);
+        }        
       }
       
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(csvfile));
@@ -196,7 +201,9 @@ public class CSVImport {
       // Ignore first X lines
       for (int i=0; i < ignorelines; i++) {
         String line = reader.readLine();
-        if (line == null) break;
+        if (line == null) {
+          break;
+        }
       }
 
       // Process input
@@ -205,11 +212,14 @@ public class CSVImport {
       while (true) {
         lineno++;
         String line = reader.readLine();
-        if (line == null) break;
+        if (line == null) {
+          break;
+        }
         try {
           String[] cols = StringUtils.split(line, separator);
-          if (cols.length > columns.length && !ignorecolumns)
+          if (cols.length > columns.length && !ignorecolumns) {
             log.debug("Ignoring columns: " + (columns.length+1) + "-" + cols.length + " '" + line + "'");
+          }
           log.debug("CVALUES: " + (columns.length+1) + "-" + cols.length + " '" + line + "'");
           
           String dmesg = "(";
@@ -220,15 +230,18 @@ public class CSVImport {
               int len = col.length();
               if (len > 1 &&
                   ((col.charAt(0) == '"' && col.charAt(len-1) == '"') ||
-                   (col.charAt(0) == '\''&& col.charAt(len-1) == '\'')))
+                   (col.charAt(0) == '\''&& col.charAt(len-1) == '\''))) {
                 col = col.substring(1,len-1);
+              }
             }
-            if (col != null && col.equals(""))
+            if (col != null && col.equals("")) {
               col = null;
+            }
             
             dmesg = dmesg + col;
-            if (i < columns.length-1)
+            if (i < columns.length-1) {
               dmesg = dmesg + ", ";
+            }
             stm.setObject(i+1, col, datatypes[i]);
           }
           dmesg = dmesg + ")";
@@ -241,7 +254,9 @@ public class CSVImport {
       }
       conn.commit();
     } finally {
-      if (conn != null) conn.close();
+      if (conn != null) {
+        conn.close();
+      }
     }
   }
   
@@ -269,12 +284,13 @@ public class CSVImport {
     private int ignorelines = 0;
     @Override
     public void processOption(char option, String value) throws CmdlineOptions.OptionsException {
-      if (option == 's')
+      if (option == 's') {
         separator = value;
-      else if (option == 'q')
+      } else if (option == 'q') {
         stripquotes = true;
-      else if (option == 'i')
+      } else if (option == 'i') {
         ignorelines = Integer.parseInt(value);
+      }
     }
   }
   

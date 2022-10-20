@@ -32,23 +32,27 @@ public class RDF2TMPlugin extends DefaultPlugin {
   
   @Override
   public String generateHTML(ContextTag context) {
-    if (context == null)
+    if (context == null) {
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");
+    }
     
     TopicMapIF tm = context.getTopicMap();
-    if (tm == null)
+    if (tm == null) {
       return "<span title=\"The RDF2TM plug-in can't edit the RDF-to-TM mappings, since you are not currently inside a topic map converted from RDF.\">No topic map!</a></span>";
+    }
     
     String tmid = context.getTopicMapId();
     TopicMapReferenceIF reference = tm.getStore().getReference();
     if (reference instanceof RDFTopicMapReference) {
       RDFTopicMapReference rdfref = (RDFTopicMapReference) reference;
-      if (rdfref.getMappingFile() == null)
+      if (rdfref.getMappingFile() == null) {
         return "<span title=\"This RDF file does not use the global mapping file, so the RDF2TM plug-in cannot configure it.\">No mapping</span>";
-      else
+      } else {
         return "<a href=\"/omnigator/plugins/rdf2tm/configure.jsp?tm=" + tmid + "\" title=\"Modify the RDF-to-topic-map mapping.\">RDF2TM</a>";
-    } else
+      }
+    } else {
       return null;
+    }
   }
 
 }

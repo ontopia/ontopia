@@ -83,20 +83,23 @@ public class RDBMSSearcher extends AbstractSearcher {
       String sql = (String)parameters.get("sql");
       if (sql == null) {
         String queryName = (String)parameters.get("queryName");
-        if (queryName == null)
+        if (queryName == null) {
           queryName = predicateName;
+        }
 
         String queryFile = (String)parameters.get("queryFile");
-        if (queryFile == null)
+        if (queryFile == null) {
           queryFile = "RDBMSSearcher.props";
+        }
         try {
           Properties props = PropertyUtils.loadPropertiesFromClassPath(queryFile);
           sql = props.getProperty(queryName);
         } catch (IOException e) {
           throw new OntopiaRuntimeException(e);
         }
-        if (sql == null)
+        if (sql == null) {
           throw new OntopiaRuntimeException("Query with name '" + queryName + "' not found in " + queryFile + ".");
+        }
       }
 
       sql = StringUtils.replace(sql, "${topicmap}", topicmap.getObjectId().substring(1));
@@ -106,7 +109,9 @@ public class RDBMSSearcher extends AbstractSearcher {
     
     @Override
     public boolean next() {
-      if (rs == null) return false;
+      if (rs == null) {
+        return false;
+      }
       try {
         return rs.next();
       } catch (SQLException e) {
@@ -135,8 +140,12 @@ public class RDBMSSearcher extends AbstractSearcher {
     @Override
     public void close() {
       try {
-        if (rs != null) rs.close();
-        if (pstm != null) pstm.close();
+        if (rs != null) {
+          rs.close();
+        }
+        if (pstm != null) {
+          pstm.close();
+        }
       } catch (SQLException e) {
         throw new OntopiaRuntimeException(e);
       }

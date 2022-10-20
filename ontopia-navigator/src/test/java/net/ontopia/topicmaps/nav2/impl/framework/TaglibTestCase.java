@@ -118,13 +118,15 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     }
     if (params.containsKey("fail")) {
       String test = (String) params.get("fail");
-      if ("true".equals(test))
+      if ("true".equals(test)) {
         shouldFail = true;
-      else
+      } else {
         shouldFail = false;
+      }
       params.remove("fail");
-    } else
+    } else {
       shouldFail = false;
+    }
     if (params.containsKey(PARAM_TAGPOOLING)) {
       useTagPooling = ("true".equals(params.get(PARAM_TAGPOOLING)));
       params.remove(PARAM_TAGPOOLING);
@@ -157,16 +159,17 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
       }
       log.info("Got an exception: " + e);
       if (shouldFail) {
-        if (e.getClass().getName().equals(expectedException))
+        if (e.getClass().getName().equals(expectedException)) {
           Assert.assertTrue(true);
-        else
+        } else {
           throw new OntopiaRuntimeException("Expected exception " + expectedException+
                                             ", got " + e.getClass(), e);
+        }
       } else {
-        if (e instanceof java.io.FileNotFoundException)
+        if (e instanceof java.io.FileNotFoundException) {
           // handle this special to get rid of the baseline not found problem
           Assert.assertTrue("Could not find file: " + e.getMessage(), false);
-        else if (e.getClass().getName().equals(expectedException)) {
+        } else if (e.getClass().getName().equals(expectedException)) {
           try {
             javax.servlet.jsp.JspWriter out = makePageContext().getOut();
             out.print(e.getMessage());
@@ -176,8 +179,9 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
           } catch (Exception e1) {
             throw new OntopiaRuntimeException(e1);
           }
-        } else
+        } else {
           throw new OntopiaRuntimeException(e);
+        }
       }
     }
   }
@@ -197,10 +201,10 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
       fileExists = false;
     }
     if (!fileExists) {
-      if (!shouldFail)
+      if (!shouldFail) {
         Assert.fail("Cannot compare result, because baseline " +
              "file does not exist: " + infile);
-      else {
+      } else {
         Assert.assertTrue("This test case should fail, and the file does not exist", true);
         return;
       }
@@ -224,7 +228,9 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     // reuse same NavigatorApplication object for all test cases
     // so the topicmaps have not to be loaded several times.
     // setup attributes for application and session context
-    if (appAttrs == null) appAttrs = new HashMap<String, Object>();
+    if (appAttrs == null) {
+      appAttrs = new HashMap<String, Object>();
+    }
 
     // Set up a complete page context, reusing the application scope attributes
     FakePageContext pageContext = new FakePageContext(getWriter());
@@ -280,8 +286,9 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
 
       if (vals.length != 0) {
         filename.append("-").append(key).append("=").append(vals[0]);
-        for (int i = 1; i < vals.length; i++)
+        for (int i = 1; i < vals.length; i++) {
           filename.append("_").append(vals[i]);
+        }
       }
     }
 
@@ -310,14 +317,15 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     for (String key : params.keySet()) {
       descriptor.append(" ").append(key).append("=");
       Object val = params.get(key);
-      if (val instanceof String)
+      if (val instanceof String) {
         descriptor.append(val);
-      else {
+      } else {
         String[] vals = (String[]) val;
         for (int i=0; i < vals.length; i++) {
           descriptor.append(vals[i]);
-          if (i < vals.length-1)
+          if (i < vals.length-1) {
             descriptor.append(",");
+          }
         }
       }
     } // while

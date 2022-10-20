@@ -76,12 +76,15 @@ public class URILocator extends AbstractLocator implements Externalizable {
   public URILocator(File file) {
     try {
       String path = file.getAbsolutePath();
-      if (File.separatorChar != '/')
+      if (File.separatorChar != '/') {
         path = path.replace(File.separatorChar, '/');
-      if (!path.startsWith("/"))
+      }
+      if (!path.startsWith("/")) {
         path = "/" + path;
-      if (!path.endsWith("/") && file.isDirectory())
+      }
+      if (!path.endsWith("/") && file.isDirectory()) {
         path = path + "/";
+      }
 
       path = "file:" + path;          
       this.address = normalize(escapeFilePath(path));
@@ -115,15 +118,17 @@ public class URILocator extends AbstractLocator implements Externalizable {
     address.getChars(0, address.length(), uri, 0); // copy into buffer
     int length = decodeURI(uri, address.length());
     schemeEnd = (short) getScheme(uri, length);
-    if (schemeEnd == -1)
+    if (schemeEnd == -1) {
       throw new MalformedURLException("No valid scheme in URI: " + address);
+    }
 
     if (address.startsWith("file") ||
 	        address.startsWith("jar:file") ||
-	        address.startsWith("classpath"))
+	        address.startsWith("classpath")) {
       length = parseFileUrl(uri, schemeEnd, length);
-    else if (regionEquals("//", uri, schemeEnd+1, 2))
+    } else if (regionEquals("//", uri, schemeEnd+1, 2)) {
       length = parseHierarchicalUrl(uri, schemeEnd, length);
+    }
 
     return new String(uri, 0, length);
   }
@@ -146,43 +151,48 @@ public class URILocator extends AbstractLocator implements Externalizable {
   public LocatorIF resolveAbsolute(String rel) {
     int length = rel.length();
     if (length == 0) {
-      if (fragmentStart == -1)
+      if (fragmentStart == -1) {
         return this;
-      else
+      } else {
         return new URILocator(address.substring(0, fragmentStart),
                               schemeEnd, authorityEnd, lastSlash, (short) -1);
+      }
     }
 
     switch(rel.charAt(0)) {
     case '#':
-      if (fragmentStart == -1)
+      if (fragmentStart == -1) {
         return new URIFragmentLocator(address.intern(), rel.substring(1),
-                                      schemeEnd, authorityEnd, lastSlash);
-      else
+                schemeEnd, authorityEnd, lastSlash);
+    } else {
         return new URIFragmentLocator(address.substring(0, fragmentStart).intern(),
                                       rel.substring(1),
                                       schemeEnd, authorityEnd, lastSlash);
+    }
 
     case '/':
       if (length != 1 && rel.charAt(1) == '/') { // begins with "//"
-        if (authorityEnd == -1)
+        if (authorityEnd == -1) {
           throw new OntopiaRuntimeException(new MalformedURLException("Base URI is not hierarchical"));
+        }
         return new URILocator(address.substring(0, schemeEnd+1) + rel,
                               schemeEnd, authorityEnd, lastSlash,
                               fragmentStart);
-      } else
+      } else {
         // FIXME: should normalize absolute path
         return new URILocator(address.substring(0, authorityEnd) + rel,
                               schemeEnd, authorityEnd, lastSlash,
                               fragmentStart);
+    }
     } // no default needed; the rest of the method _is_ the default
       
     try {
       char[] relative = rel.toCharArray();
 
       // does the URI have a scheme?
-      if (getScheme(relative, relative.length) != -1)
+      if (getScheme(relative, relative.length) != -1) {
         return new URILocator(rel);
+      }
 
       // scan for slashes in URI
       int ix;
@@ -193,24 +203,26 @@ public class URILocator extends AbstractLocator implements Externalizable {
       // so that the normalizer resolves the directory for us
       // (also do this if rel is "." or "..")
       if (ix < length || ".".equals(rel) || "..".equals(rel)) {
-        if (lastSlash == -1) // no directory part
+        if (lastSlash == -1) { // no directory part
           // the "/" here is important, as it was normalized away and needs
           // to be added back
           return new URILocator(address.substring(0, authorityEnd + 1) + "/" +
                                 rel);
-        else
+        } else {
           return new URILocator(address.substring(0, lastSlash + 1) + rel);
+        }
       }
       
       // there were no slashes, so this is a pure file name
-      if (lastSlash == -1) // base has no directory part
+      if (lastSlash == -1) { // base has no directory part
         return new URILocator(address + rel,
                               schemeEnd, authorityEnd, lastSlash,
                               fragmentStart);
-      else
+      } else {
         return new URILocator(address.substring(0, lastSlash + 1) + rel,
                               schemeEnd, authorityEnd, lastSlash,
                               fragmentStart);
+      }
     }
     catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
@@ -235,9 +247,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
           (ch >= '?' && ch <= 'Z') || // ? @ A-Z
           (ch >= '%' && ch <= ';') || // % & ' ( ) * + , - . / 0-9 : ;
           ch == '#' | ch == '!' || ch == '$' || ch == '=' || ch == '_' || ch == '~' ||
-          (ch == '|' && ix == 7))     // file:/X|/; special case...
+          (ch == '|' && ix == 7)) {     // file:/X|/; special case...
         tmp[pos++] = ch;
-      else { // have to escape
+      } else { // have to escape
         tmp[pos++] = '%';
         if (ch <= 0x7F) {
           // 0xxxxxxx
@@ -283,8 +295,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
    */
   private int parseFileUrl(char[] uri, int ix, int length)
     throws MalformedURLException {
-    if (ix+2 >= length)
+    if (ix+2 >= length) {
       throw new MalformedURLException("File URL has only scheme name.");
+    }
 
     // STEP 1: deal with hostname and initial slashes
     // file:///home/         -> file:/home/
@@ -293,15 +306,18 @@ public class URILocator extends AbstractLocator implements Externalizable {
     // file://graph/tmp/     -> file://graph/tmp/
     
     ix++; // skip ':'
-    if (uri[ix] == '/') ix++; // skip ':/'
+    if (uri[ix] == '/') {
+      ix++; // skip ':/'
+    }
     
     int chars = -1;
     if (uri[ix] == '/') {
       // three cases: '://server/home/', ':///home/' and '://localhost/home/'
-      if (ix+1 < length && uri[ix+1] == '/')         
+      if (ix+1 < length && uri[ix+1] == '/') {         
         chars = 2; // it's ':///home/'; strip '//'
-      else 
+      } else { 
         chars = 0; // it's '://server/home/', leave it
+      }
 
       System.arraycopy(uri, ix+chars, uri, ix, length - (ix+chars));
       length -= chars;
@@ -346,16 +362,18 @@ public class URILocator extends AbstractLocator implements Externalizable {
       if (uri[ix] == ':') { // may be port number, check out
         ix++;
         portStart = ix;
-        while (ix < length && uri[ix] >= '0' && uri[ix] <= '9') 
+        while (ix < length && uri[ix] >= '0' && uri[ix] <= '9') { 
           ix++; // port numbers are pure digits, so scan for those
+        }
         if (ix >= length ||
             uri[ix] == '/' || uri[ix] == '?' || uri[ix] == '#') {
           // terminated with correct char, so it's a port number
           port = new String(uri, portStart, ix - portStart);
           break; // this means we're done with the authority part
         }
-      } else if (uri[ix] == '@') 
+      } else if (uri[ix] == '@') {
         hostStart = ix + 1;
+      }
       
       ix++;
     }
@@ -368,23 +386,27 @@ public class URILocator extends AbstractLocator implements Externalizable {
       length -= offset;
     }
 
-    for (int i = hostStart; i < ix; i++)
-      if (uri[i] >= 'A' && uri[i] <= 'Z')
+    for (int i = hostStart; i < ix; i++) {
+      if (uri[i] >= 'A' && uri[i] <= 'Z') {
         uri[i] = (char) (uri[i] | 0x20); // efficient downcase of char :-)
+      }
+    }
 
     // make sure authority part ends with a slash no matter what
     if (uri[ix] != '/') {
       length++; // we just lengthened the URI...
-      if (ix+1 < length)
+      if (ix+1 < length) {
         // have to shift part after '/' out one notch
         System.arraycopy(uri, ix, uri, ix+1, (length - ix) - 1);
+      }
 
       uri[ix++] = '/';
     }
     
     authorityEnd = (short) ix;
-    if (ix+1 >= length)
+    if (ix+1 >= length) {
       return length;
+    }
 
     return parseDirectoryPart(uri, ix, length);
   }
@@ -429,35 +451,41 @@ public class URILocator extends AbstractLocator implements Externalizable {
                ix+3 == length)) {
             // removing 3 chars if ../, 2 chars if ..
             int chars = 3;
-            if (ix+3 == length) chars = 2;
+            if (ix+3 == length) {
+              chars = 2;
+            }
 
             int offset;
-            if (ix == authorityEnd) 
+            if (ix == authorityEnd) { 
               offset = chars;
-            else
+            } else {
               offset = (ix+chars) - slashpos[slashix];
+            }
 
             //debugPrint(uri, length, slashpos, slashix+1);
             System.arraycopy(uri, ix+(chars+1), uri, slashpos[slashix] + 1, 
                              length - (ix+(chars+1)));
             ix = slashpos[slashix];
             length -= offset;
-            if (slashix != 0)
+            if (slashix != 0) {
               slashix--;
+            }
             continue;
           }
         } // end of ../ and ./ checking
         
-        if (ix != authorityEnd)
+        if (ix != authorityEnd) {
           slashpos[++slashix] = ix;
+        }
       }
       ix++;
     }
 
     // last we check for /. at the end of the directory part, and remove it
     if (slashpos[slashix] + 2 == ix && uri[ix-1] == '.') {
-      if (slashix != 0)
+      if (slashix != 0) {
         slashix--;
+      }
       
       System.arraycopy(uri, ix, uri, ix-1, length - ix);
       length--;
@@ -467,8 +495,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
     lastSlash = (short) slashpos[slashix];
     
     // ---parse query, and fragment
-    while (ix < length && uri[ix] != '#')
+    while (ix < length && uri[ix] != '#') {
       ix++;
+    }
 
     if (ix < length && uri[ix] == '#') {
       fragmentStart = (short) ix;
@@ -496,14 +525,17 @@ public class URILocator extends AbstractLocator implements Externalizable {
               uri[ix] == '_' || 
               uri[ix] == '~' ||
               uri[ix] == '%')) { // to support percent-escaping
-        if (uri[ix] == '%') ix += 2;
+        if (uri[ix] == '%') {
+          ix += 2;
+        }
         ix++;
       }
 
-      if (ix < length)
+      if (ix < length) {
         throw new MalformedURLException("Illegal character in fragment: '" + uri[ix] +
                                         "' at position " + ix + " of: '" +
                                         new String(uri) + "'");
+      }
     }
 
     return length;
@@ -525,11 +557,13 @@ public class URILocator extends AbstractLocator implements Externalizable {
            (uri[index] >= '0' && uri[index] <= '9') || // digit
            uri[index] == '+' ||
            uri[index] == '-' ||
-           uri[index] == '.'))
+           uri[index] == '.')) {
       index++;
+    }
 
-    if (index == 0 || index >= length || uri[index] != ':')
+    if (index == 0 || index >= length || uri[index] != ':') {
       return -1;
+    }
       
     return index;
   }
@@ -540,8 +574,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
    */
   private int decodeURI(char[] uri, int length)
     throws MalformedURLException {
-    while (length > 0 && uri[length-1] == ' ')
+    while (length > 0 && uri[length-1] == ' ') {
       length--;
+    }
     
     int pos = 0; // pos to write
     int ix;      // index to read
@@ -552,17 +587,19 @@ public class URILocator extends AbstractLocator implements Externalizable {
     for (; ix < length; ix++) {
       switch(uri[ix]) {
       case '%':
-        if (ix + 2 >= length)
+        if (ix + 2 >= length) {
           throw new MalformedURLException("Incomplete percent-escape at end of URI");
+      }
         char ch = (char) (decodeHexDigit(uri[ix+1]) * 16 +
                           decodeHexDigit(uri[ix+2]));
         if (ch != 38 && ch != 37 && ch != 35) {
           // it's not #, & or %, so we can unescape it
           uri[pos++] = ch;
           ix += 2;
-        } else
+        } else {
           // it *is* #, & or %. therefore must leave alone
           uri[pos++] = '%';
+      }
         break;
       case '+':
         uri[pos++] = ' ';
@@ -576,31 +613,33 @@ public class URILocator extends AbstractLocator implements Externalizable {
   }
 
   private int decodeHexDigit(char ch) throws MalformedURLException {
-    if (ch >= '0' && ch <= '9')
+    if (ch >= '0' && ch <= '9') {
       return ch - '0';
-    else if (ch >= 'A' && ch <= 'F')
+    } else if (ch >= 'A' && ch <= 'F') {
       return (ch - 'A') + 10;
-    else if (ch >= 'a' && ch <= 'f')
+    } else if (ch >= 'a' && ch <= 'f') {
       return (ch - 'a') + 10;
-    else
+    } else {
       throw new MalformedURLException("Invalid percent-escape code containing '" + ch + "' as hex digit in");
+    }
   }
 
   private String findPortDefault(char[] uri, int schemeEnd) {
-    if (regionEquals("http", uri, 0, schemeEnd))
+    if (regionEquals("http", uri, 0, schemeEnd)) {
       return "80";
-    else if (regionEquals("https", uri, 0, schemeEnd))
+    } else if (regionEquals("https", uri, 0, schemeEnd)) {
       return "443";
-    else if (regionEquals("shttp", uri, 0, schemeEnd))
+    } else if (regionEquals("shttp", uri, 0, schemeEnd)) {
       return "80";
-    else if (regionEquals("ftp", uri, 0, schemeEnd))
+    } else if (regionEquals("ftp", uri, 0, schemeEnd)) {
       return "21";
-    else if (regionEquals("ldap", uri, 0, schemeEnd))
+    } else if (regionEquals("ldap", uri, 0, schemeEnd)) {
       return "389";
-    else if (regionEquals("gopher", uri, 0, schemeEnd))
+    } else if (regionEquals("gopher", uri, 0, schemeEnd)) {
       return "70";
-    else
+    } else {
       return "dummy value";
+    }
   }
 
   /**
@@ -621,9 +660,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
           (ch >= 'A' && ch <= 'Z') ||
           (ch >= '0' && ch <= '9') ||
           (ch >= '\'' && ch <= '*') ||
-          ch == '!' || ch == '-' || ch == '.' || ch == '_' || ch == '~')
+          ch == '!' || ch == '-' || ch == '.' || ch == '_' || ch == '~') {
         tmp[pos++] = ch;
-      else if (ch > 0x7F) {
+      } else if (ch > 0x7F) {
         // UTF-8-encode the character
 
         if (ch < 0x07FF) {
@@ -657,8 +696,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
           tmp[pos++] = encodeHexDigit(codeval >> 4);
           tmp[pos++] = encodeHexDigit(codeval & 0x0F);
           
-        } else
+        } else {
           throw new OntopiaRuntimeException("INTERNAL ERROR: Only BMP characters supported");
+        }
       } else {
         tmp[pos++] = '%';
         tmp[pos++] = encodeHexDigit(ch >> 4);
@@ -670,10 +710,11 @@ public class URILocator extends AbstractLocator implements Externalizable {
   }
 
   private static char encodeHexDigit(int value) {
-    if (value <= 9)
+    if (value <= 9) {
       return (char) ('0' + value);
-    else
+    } else {
       return (char) ('A' + (value - 10));
+    }
   }
   
   // --------------------------------------------------------------------------
@@ -736,13 +777,16 @@ public class URILocator extends AbstractLocator implements Externalizable {
    */
   private static boolean regionEquals(String str, char[] ch, int start,
                                      int length) {
-    if (str.length() != length || start+length > ch.length)
+    if (str.length() != length || start+length > ch.length) {
       return false;
+    }
 
     char[] strarr = str.toCharArray();
-    for (int i=0; i<length; i++)
-      if (ch[start+i] != strarr[i])
+    for (int i=0; i<length; i++) {
+      if (ch[start+i] != strarr[i]) {
         return false;
+      }
+    }
     return true;
   }
 }

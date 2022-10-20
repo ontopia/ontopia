@@ -45,9 +45,13 @@ public class ConferencePlugin implements ClassifyPluginIF, HttpServletRequestAwa
   
   @Override
   public boolean isClassifiable(TopicIF topic) {
-    if (topic == null) return false;
+    if (topic == null) {
+      return false;
+    }
     TopicMapIF tm = topic.getTopicMap();
-    if (tm == null) return false;
+    if (tm == null) {
+      return false;
+    }
     QueryProcessorIF qp = QueryUtils.getQueryProcessor(tm);
     try {
       QueryResultIF qr = qp.execute("subject-identifier($PAPERTYPE, \"http://psi.example.org/paper\"), instance-of(%topic%, $PAPERTYPE)?", Collections.singletonMap("topic", topic));
@@ -63,9 +67,13 @@ public class ConferencePlugin implements ClassifyPluginIF, HttpServletRequestAwa
 
   @Override
   public ClassifiableContentIF getClassifiableContent(TopicIF topic) {
-    if (topic == null) return null;
+    if (topic == null) {
+      return null;
+    }
     TopicMapIF tm = topic.getTopicMap();
-    if (tm == null) return null;
+    if (tm == null) {
+      return null;
+    }
     QueryProcessorIF qp = QueryUtils.getQueryProcessor(tm);
     try {
       QueryResultIF qr = qp.execute("import \"http://psi.ontopia.net/tolog/string/\" as str subject-identifier(%topic%, $SUBIND), str:starts-with($SUBIND, \"http://psi.example.org/paper/\")?", Collections.singletonMap("topic", topic));
@@ -78,7 +86,9 @@ public class ConferencePlugin implements ClassifyPluginIF, HttpServletRequestAwa
           String infile = path + File.separator + identifier.toLowerCase() + ".xml";
           // read the content into a byte array
           ClassifiableContentIF cc = ClassifyUtils.getClassifiableContent(infile);
-          if (cc != null) return cc;
+          if (cc != null) {
+            return cc;
+          }
         }
         return null;
       } finally {

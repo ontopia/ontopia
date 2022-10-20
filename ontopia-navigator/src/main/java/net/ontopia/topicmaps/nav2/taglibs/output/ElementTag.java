@@ -116,7 +116,9 @@ public class ElementTag extends BodyTagSupport {
   // -----------------------------------------------------------------
 
   public void addAttribute(String name, String value) {
-    if (!attrnames.contains(name)) attrnames.add(name);
+    if (!attrnames.contains(name)) {
+      attrnames.add(name);
+    }
     attrs.put(name, value);
   }
 

@@ -126,7 +126,9 @@ public class SQLBatchManyToManyReference extends SQLManyToManyReference implemen
   @Override
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
     // Add batch update
-    if (debug) log.debug("Adding batch: " + sql);
+    if (debug) {
+      log.debug("Adding batch: " + sql);
+    }
     stm.addBatch();
   }
   

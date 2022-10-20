@@ -64,9 +64,10 @@ public class TologQueryTag extends BaseValueProducingTag {
   
   @Override
   public Collection process(Collection tmObjects) throws JspException {
-    if (query == null)
+    if (query == null) {
       throw new NavigatorCompileException("TologQueryTag: Ambiguous attribute " +
                                           "settings.");
+    }
     
     // try to retrieve default value from ContextManager
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -79,8 +80,9 @@ public class TologQueryTag extends BaseValueProducingTag {
     
     // get topicmap object on which we should compute 
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("TologQueryTag found no topic map.");
+    }
         
     // Get the result from the QueryProcessor
     QueryProcessorIF q_processor = (implementation == null ?
@@ -117,20 +119,22 @@ public class TologQueryTag extends BaseValueProducingTag {
 
     if (select != null) {
       int index = result.getIndex(select);
-      if (index < 0)
-	throw new IndexOutOfBoundsException("No query result column named '" + select + "'");
+      if (index < 0) {
+        throw new IndexOutOfBoundsException("No query result column named '" + select + "'");
+      }
 
       List list = new ArrayList();
-      while (result.next())
+      while (result.next()) {
         list.add(result.getValue(index));
+      }
       result.close();
       return list;
     }
 
-    if (result instanceof net.ontopia.topicmaps.query.impl.basic.QueryResult)
+    if (result instanceof net.ontopia.topicmaps.query.impl.basic.QueryResult) {
       // BASIC
       return net.ontopia.topicmaps.query.impl.basic.QueryResultWrappers.getWrapper(result);
-    else {
+    } else {
       // FIXME: Should pass collection size if available.
       return IteratorUtils.toList(new QueryResultIterator(result));
     }
@@ -169,8 +173,9 @@ public class TologQueryTag extends BaseValueProducingTag {
     @Override
     public Object get(Object key) {
       Collection coll = ctxtMgr.getValue((String) key);
-      if (coll.isEmpty())
+      if (coll.isEmpty()) {
         throw new VariableNotSetException((String) key);
+      }
       
       return CollectionUtils.getFirstElement(coll);
     }

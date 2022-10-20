@@ -39,9 +39,10 @@ public class CreateTMAssociationEdge implements EdgeRecoveryObjectIF {
     // the associationargument must necessarily be binary. Otherwise, an error
     // has been made in constructing this CreateTMassociationEdge.
     lastEdge =  view.getEdge(association);
-    if (lastEdge == null)
+    if (lastEdge == null) {
       lastEdge = (TMAssociationEdge)view
           .makeAssociation(association, null, true);  
+    }  
   }
 
   @Override

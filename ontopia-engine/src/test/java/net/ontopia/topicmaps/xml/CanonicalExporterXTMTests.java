@@ -48,8 +48,9 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
         // Ignore importInto-specific file.
         if (resourcePath.endsWith("multiple-tms-read.xtm") ||
             resourcePath.endsWith("bug750.xtm") ||
-            resourcePath.endsWith("association-duplicate-reified2.xtm"))
+            resourcePath.endsWith("association-duplicate-reified2.xtm")) {
           return false;
+        }
 
         return resourcePath.endsWith(".xtm");
       }

@@ -83,12 +83,14 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     if (topicmap_id > 0) {
       // Get hold of topic map object
       topicmap = (TopicMapIF)txn.getObject(txn.getAccessRegistrar().createIdentity(TopicMap.class, topicmap_id));
-      if (topicmap == null) throw new OntopiaRuntimeException("Topic map with id '" + topicmap_id + " not found.");
+      if (topicmap == null) {
+        throw new OntopiaRuntimeException("Topic map with id '" + topicmap_id + " not found.");
+      }
     }
     else {
-      if (readonly)
+      if (readonly) {
         throw new ReadOnlyException();
-      else {
+      } else {
         // Create new topic map object and register with database
         topicmap = new TopicMap(txn);
         txn.create((PersistentIF)topicmap);
@@ -99,10 +101,11 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     this.actual_id = ((Long)(identity.getKey(0))).longValue();
     
     // Register store with topic map
-    if (readonly)
+    if (readonly) {
       ((ReadOnlyTopicMap)topicmap).setTransaction(this);
-    else
+    } else {
       ((TopicMap)topicmap).setTransaction(this);
+    }
     
     // Activate transaction (note: must be activated at this point, because of dependencies)
     this.active = true;    
@@ -192,7 +195,9 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
         invalid = (invalid || invalidate);
         
         // Abort proxy transaction
-        if (txn.isActive()) txn.abort();
+        if (txn.isActive()) {
+          txn.abort();
+        }
         
         if (invalidate) {
           if (active) {
@@ -217,7 +222,9 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   @Override
   public boolean validate() {
     // if transaction has been aborted the store is invalid
-    if (invalid) return false;
+    if (invalid) {
+      return false;
+    }
     // check proxy transaction
     return txn.validate();    
   }
@@ -233,7 +240,9 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
    * transaction.
    */
   public TransactionIF getTransaction() {
-    if (!isActive()) throw new TransactionNotActiveException();
+    if (!isActive()) {
+      throw new TransactionNotActiveException();
+    }
     return txn;
   }
   
@@ -244,13 +253,16 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
-    if (listener == this) return;
+    if (listener == this) {
+      return;
+    }
     // Initialize event entry
     synchronized (listeners) {
       // Add listener to list of event entry listeners. This is not
       // very elegant, but it works.
-      if (!listeners.containsKey(event))
+      if (!listeners.containsKey(event)) {
         listeners.put(event, new Object[0]);
+      }
       Collection event_listeners = new ArrayList(Arrays.asList((Object[])listeners.get(event)));
       event_listeners.add(listener);
       listeners.put(event, event_listeners.toArray());      
@@ -265,10 +277,11 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
         // not very elegant, but it works.
         Collection event_listeners = new ArrayList(Arrays.asList((Object[])listeners.get(event)));
         event_listeners.remove(listener);
-        if (event_listeners.isEmpty())
+        if (event_listeners.isEmpty()) {
           listeners.remove(event);
-        else
+        } else {
           listeners.put(event, event_listeners.toArray());
+        }
       }
     }
   }
@@ -280,9 +293,10 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     if (event_listeners != null) {
       // Loop over event listeners
       int size = event_listeners.length;
-      for (int i=0; i < size; i++)
+      for (int i=0; i < size; i++) {
         // Notify listener
         ((EventListenerIF)event_listeners[i]).processEvent(object, event, new_value, old_value);
+      }
     }
   }
 

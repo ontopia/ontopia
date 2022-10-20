@@ -58,28 +58,29 @@ public class SQLTypes {
     // interface.
     
     // Figure out the SQL type
-    if (klass.equals(String.class))
+    if (klass.equals(String.class)) {
       return Types.VARCHAR;
-    else if (klass.equals(Long.class))
+    } else if (klass.equals(Long.class)) {
       return Types.BIGINT;
-    else if (klass.equals(Integer.class))
+    } else if (klass.equals(Integer.class)) {
       return Types.INTEGER;
-    else if (klass.equals(Float.class))
+    } else if (klass.equals(Float.class)) {
       return Types.FLOAT;
-    else if (klass.equals(Double.class))
+    } else if (klass.equals(Double.class)) {
       return Types.DOUBLE;
-    else if (klass.equals(Boolean.class))
+    } else if (klass.equals(Boolean.class)) {
       return Types.SMALLINT;
-    else if (klass.equals(Character.class))
+    } else if (klass.equals(Character.class)) {
       return Types.CHAR;
-    else if (klass.equals(Short.class))
+    } else if (klass.equals(Short.class)) {
       return Types.BIT;
-    else if (klass.equals(Byte.class))
+    } else if (klass.equals(Byte.class)) {
       return Types.TINYINT;
-    else if (klass.equals(Reader.class))
+    } else if (klass.equals(Reader.class)) {
       return Types.CLOB;
-    else
-      throw new OntopiaRuntimeException("Cannot map value type " + klass + " to SQL type.");           
+    } else {
+      throw new OntopiaRuntimeException("Cannot map value type " + klass + " to SQL type.");
+    }           
   }
 
   /**
@@ -175,7 +176,9 @@ public class SQLTypes {
         } else  {
           // attempt to turn into a string
           InputStream reader = rs.getBinaryStream(index);
-          if (reader == null) return null;
+          if (reader == null) {
+            return null;
+          }
           byte[] bytes = new byte[SQLTypes.SIZE_THRESHOLD];
           int lengthRead = reader.read(bytes);
           if (lengthRead <= SQLTypes.SIZE_THRESHOLD && reader.read() == -1) {
@@ -183,10 +186,11 @@ public class SQLTypes {
 							byte[] result = new byte[lengthRead];
 							System.arraycopy(bytes, 0, result, 0, result.length);
 							return result;
-						} else if (lengthRead == 0)
-							return new byte[] { };
-						else
-							return null;
+						} else if (lengthRead == 0) {
+              return new byte[] { };
+            } else {
+              return null;
+            }
           } else {
             return new OnDemandValue();
           }
@@ -202,7 +206,9 @@ public class SQLTypes {
         } else  {
           // attempt to turn into a string
           Reader reader = rs.getCharacterStream(index);
-          if (reader == null) return null;
+          if (reader == null) {
+            return null;
+          }
           char[] chars = new char[SQLTypes.SIZE_THRESHOLD];
           int lengthRead = reader.read(chars);
           if (lengthRead <= SQLTypes.SIZE_THRESHOLD && reader.read() == -1) {
@@ -271,10 +277,11 @@ public class SQLTypes {
         } else if (value instanceof OnDemandValue) {
           OnDemandValue odv = (OnDemandValue)value;
           ContentInputStream blob = (ContentInputStream)odv.getValue();
-          if (blob != null) 
+          if (blob != null) { 
             stmt.setBinaryStream(index, blob, (int)blob.getLength());
-          else
+          } else {
             stmt.setNull(index, sql_type);
+          }
         }
         break;
       case Types.CLOB:
@@ -285,10 +292,11 @@ public class SQLTypes {
         } else if (value instanceof OnDemandValue) {
           OnDemandValue odv = (OnDemandValue)value;
           ContentReader clob = (ContentReader)odv.getValue();
-          if (clob != null)
+          if (clob != null) {
             stmt.setCharacterStream(index, clob, (int)clob.getLength());
-          else
+          } else {
             stmt.setNull(index, sql_type);
+          }
         } else {
           throw new OntopiaRuntimeException("Unsupported CLOB value: " + value);
         }

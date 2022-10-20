@@ -59,8 +59,9 @@ public class FieldInstanceImageField extends Panel {
       upload.setVisible(false);
     } else {
       image.setVisible(false);
-      if (readonly)
+      if (readonly) {
         upload.setVisible(false);
+      }
     }
   }
   

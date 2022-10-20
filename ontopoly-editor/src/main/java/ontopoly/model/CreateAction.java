@@ -36,8 +36,9 @@ public class CreateAction extends Topic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof CreateAction))
+    if (!(obj instanceof CreateAction)) {
       return false;
+    }
 
     CreateAction cardinality = (CreateAction) obj;
     return (getTopicIF().equals(cardinality.getTopicIF()));

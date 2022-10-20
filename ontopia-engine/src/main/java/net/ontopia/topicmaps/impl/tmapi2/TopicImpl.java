@@ -495,8 +495,9 @@ public class TopicImpl extends ConstructImpl implements Topic {
 
   @Override
   public void mergeIn(Topic topic) {
-    if (topicMap.unwrapTopic(topic) == getWrapped())
+    if (topicMap.unwrapTopic(topic) == getWrapped()) {
       return;
+    }
     try {
       MergeUtils.mergeInto(this.getWrapped(), topicMap.unwrapTopic(topic));
       // getWrapped().merge(topicMap.unwrapTopic(topic));

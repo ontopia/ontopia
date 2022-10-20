@@ -50,10 +50,11 @@ public class QueryContext {
    */
   public boolean getBooleanOption(String name) {
     TologOptions options;
-    if (query != null)
+    if (query != null) {
       options = query.getOptions();
-    else
+    } else {
       options = rule.getOptions();
+    }
 
     return options.getBooleanValue(name);
   }
@@ -63,10 +64,11 @@ public class QueryContext {
    * traversing a query (that is, not a rule at all) null is returned.
    */
   public String getRuleName() {
-    if (rule == null)
+    if (rule == null) {
       return null;
-    else
+    } else {
       return rule.getName();
+    }
   }
   
   /**
@@ -78,17 +80,19 @@ public class QueryContext {
   }
 
   public Map getVariableTypes() {
-    if (rule != null)
+    if (rule != null) {
       return rule.getVariableTypes();
-    else
+    } else {
       return query.getVariableTypes();
+    }
   }
 
   public Map getParameterTypes() {
-    if (rule != null)
+    if (rule != null) {
       return rule.getParameterTypes();
-    else
+    } else {
       return query.getParameterTypes();
+    }
   }  
   
   public void enterClauseList() {

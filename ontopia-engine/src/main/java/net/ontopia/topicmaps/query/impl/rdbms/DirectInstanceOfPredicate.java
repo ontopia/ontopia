@@ -66,10 +66,11 @@ public class DirectInstanceOfPredicate
     if (args[0] instanceof TopicIF && args[1] instanceof TopicIF) {
 
       // Do direct predicate evaluation
-      if (((TopicIF)args[0]).getTypes().contains(args[1]))
+      if (((TopicIF)args[0]).getTypes().contains(args[1])) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
 
     } else {                  
       JDOValueIF jv_instance = builder.createJDOValue(args[0]);

@@ -56,14 +56,15 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.BIG_RESULT;
+    }
   }
 
   @Override
@@ -72,23 +73,25 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
 
     PredicateOptions options = null;
     boolean prefix_search = (arguments.length == 3); // inserted by optimizer
-    if (prefix_search)
+    if (prefix_search) {
       options = (PredicateOptions) arguments[2];
+    }
     
     QueryMatches result = new QueryMatches(matches);
     int topicix = result.getIndex(arguments[0]);
     int valueix = result.getIndex(arguments[1]);
 
-    if (matches.bound(valueix) && !matches.bound(topicix))
+    if (matches.bound(valueix) && !matches.bound(topicix)) {
       satisfyWithBoundString(matches, result, topicix, valueix, prefix_search,
-                             options);
-    else if (matches.bound(topicix) && !matches.bound(valueix))
+              options);
+    } else if (matches.bound(topicix) && !matches.bound(valueix)) {
       satisfyWithBoundTopic(matches, result, topicix, valueix);
-    else if (!matches.bound(topicix) && !matches.bound(valueix))
+    } else if (!matches.bound(topicix) && !matches.bound(valueix)) {
       satisfyWithAllUnbound(matches, result, topicix, valueix, prefix_search,
-                            options);
-    else
+              options);
+    } else {
       satisfyWithAllBound(matches, result, topicix, valueix);
+    }
 
     return result;
   }
@@ -102,20 +105,23 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
 
     for (int ix = 0; ix <= matches.last; ix++) {
       Object object = matches.data[ix][topicix];
-      if (!(object instanceof TopicIF))
+      if (!(object instanceof TopicIF)) {
         continue; // no match for this row
+      }
       
       TopicIF topic = (TopicIF) object;
 
       Iterator it = topic.getOccurrences().iterator();
       while (it.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it.next();
-        if (!type.equals(occ.getType()))
+        if (!type.equals(occ.getType())) {
           continue;
+        }
 
         String value = occ.getValue();
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
@@ -135,16 +141,19 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
       Iterator it = topic.getOccurrences().iterator();
       while (it.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it.next();
-        if (!type.equals(occ.getType()))
+        if (!type.equals(occ.getType())) {
           continue;
+        }
 
         String occval = occ.getValue();
 
-        if (!Objects.equals(value, occval))
+        if (!Objects.equals(value, occval)) {
           continue;
+        }
         
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
       
         result.data[result.last] = (Object[]) matches.data[ix].clone();
@@ -158,10 +167,11 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
 
     OccurrenceIF[] occs = new OccurrenceIF[0];
 
-    if (prefix_search)
+    if (prefix_search) {
       occs =  (OccurrenceIF[]) occindex.getOccurrencesByPrefix(options.getValue()).toArray(occs);
-    else
+    } else {
       occs = (OccurrenceIF[]) index.getOccurrences(type).toArray(occs);
+    }
 
     Prefetcher.prefetch(topicmap, occs, 
 			Prefetcher.OccurrenceIF, 
@@ -180,12 +190,14 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
         OccurrenceIF occ = occs[occix];
 
         // prefix_search is by prefix, not type, so need to check type here
-        if (!occ.getType().equals(type))
+        if (!occ.getType().equals(type)) {
           continue; // right prefix, wrong type
+        }
         
         String value = occ.getValue();
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
       
         Object[] newRow = (Object[]) matches.data[ix].clone();
@@ -203,19 +215,22 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
     // loop over all existing matches
     for (int ix = 0; ix <= matches.last; ix++) {
       Object object = matches.data[ix][valueix];
-      if (!(object instanceof String))
+      if (!(object instanceof String)) {
         continue; // no match for this row
+      }
       
       String value = (String) matches.data[ix][valueix];
-      if (prefix_search)
+      if (prefix_search) {
         value = options.getValue();
+      }
 
       // find all occurrences with this string value
       Object[] occs;
-      if (prefix_search)
+      if (prefix_search) {
         occs = occindex.getOccurrencesByPrefix(value).toArray();
-      else
-        occs = occindex.getOccurrences(value).toArray();      
+      } else {
+        occs = occindex.getOccurrences(value).toArray();
+      }      
       addTo(result, occs, type, matches.data[ix], topicix);
     }   
   }
@@ -226,8 +241,9 @@ public class DynamicOccurrencePredicate extends AbstractDynamicPredicate {
       OccurrenceIF occ = (OccurrenceIF) occs[oix];
       if (occ.getType().equals(type)) {
         // ok, it's a match: add it
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
       
         Object[] newRow = (Object[]) oldrow.clone();

@@ -75,15 +75,17 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
 
     sql_load = SQLGenerator.getSelectStatement(field.getTable(), field.getValueColumns(), 
                                                field.getJoinKeys(), 0);
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load 1:M aggregate) " + field.getName() + ": " + sql_load);
+    }
 
     sql_load_multiple = SQLGenerator.getSelectStatement(field.getTable(), 
                                                         FieldUtils.joinStrings(field.getJoinKeys(), 
                                                                                field.getValueColumns()), 
                                                         field.getJoinKeys(), batchSize);
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load 1:M aggregate*) " + field.getName() + ": " + sql_load_multiple);
+    }
   
     // -----------------------------------------------------------------------------
     // Add
@@ -92,24 +94,27 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     String[] cols = FieldUtils.joinStrings(field.getJoinKeys(), field.getValueColumns());
     
     sql_add = SQLGenerator.getInsertStatement(field.getTable(), cols);    
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (add 1:M aggregate) " + field.getName() + ": " + sql_add);
+    }
   
     // -----------------------------------------------------------------------------
     // Remove
     // -----------------------------------------------------------------------------
     
     sql_remove = SQLGenerator.getDeleteStatement(field.getTable(), cols);
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (remove 1:M aggregate) " + field.getName() + ": " + sql_remove);
+    }
   
     // -----------------------------------------------------------------------------
     // Clear
     // -----------------------------------------------------------------------------
     
     sql_clear = SQLGenerator.getDeleteStatement(field.getTable(), field.getJoinKeys());
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (clear 1:M aggregate) " + field.getName() + ": " + sql_clear);
+    }
   }
   
   @Override
@@ -125,13 +130,15 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     try {
             
       // Bind identity columns
-      if (debug)
+      if (debug) {
         log.debug(BINDING_OBJECT_MESSAGE + identity);
+      }
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load);
+      }
       ResultSet rs = stm.executeQuery();
 
       // Zero or more rows expected
@@ -158,7 +165,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
       
     } finally {
       //! if (close_stm && stm != null) stm.close();
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
     
     // Update persistence cache
@@ -191,8 +200,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     try {
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load_multiple);
+      }
       //! ResultSet rs = stm.executeQuery(sql);
       ResultSet rs = stm.executeQuery();
 
@@ -225,7 +235,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
       rs.close();
       
     } finally {
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
 
     // Update persistence cache
@@ -254,7 +266,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
       }
       
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }      
   }
   
@@ -264,13 +278,15 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   
   protected void add_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug(BINDING_OBJECT_MESSAGE + identity);
+    }
     identity_field.bind(identity, stm, 1);
         
     // Bind value columns
-    if (debug)
+    if (debug) {
       log.debug("Binding aggregate value: " + value);
+    }
     field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
@@ -290,7 +306,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
         executeUpdate(stm, sql_remove);
       }
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -300,13 +318,15 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   
   protected void remove_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {     
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug(BINDING_OBJECT_MESSAGE + identity);
+    }
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
-    if (debug)
+    if (debug) {
       log.debug("Binding reference value: " + value);
+    }
     field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
@@ -322,7 +342,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
       // Execute statement
       executeUpdate(stm, sql_clear);
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -332,8 +354,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   
   protected void clear_bindParameters(PreparedStatement stm, IdentityIF identity) throws Exception {    
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug(BINDING_OBJECT_MESSAGE + identity);
+    }
     identity_field.bind(identity, stm, 1);
   }
 
@@ -350,12 +373,14 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
     Collection<?> removed = value.getRemoved();
     
     // Add added values
-    if (added != null && !added.isEmpty())
+    if (added != null && !added.isEmpty()) {
       add(oaccess.getIdentity(object), added);
+    }
     
     // Remove removed values
-    if (removed != null && !removed.isEmpty())
+    if (removed != null && !removed.isEmpty()) {
       remove(oaccess.getIdentity(object), removed);
+    }
     
     // Reset trackable set
     value.resetTracking();    
@@ -365,7 +390,9 @@ public class SQLOneToManyAggregate implements FieldAccessIF {
   }
 
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
-    if (debug) log.debug("Executing: " + sql);
+    if (debug) {
+      log.debug("Executing: " + sql);
+    }
     stm.executeUpdate();
   }
   

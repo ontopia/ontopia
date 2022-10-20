@@ -51,8 +51,9 @@ public class AssociationComparator implements Comparator<AssociationIF> {
    */
   public AssociationComparator(Collection<TopicIF> context) {
     this.scopes = context;
-    if (scopes == null)
+    if (scopes == null) {
       scopes = Collections.emptyList();
+    }
 
     tc = Comparator.comparing(TopicStringifiers.getTopicNameStringifier(scopes).andThen(String::toUpperCase));
   }

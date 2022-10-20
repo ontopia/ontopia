@@ -31,9 +31,9 @@ public class ModuleEncrypter {
       File arg = new File(args[ix]);
 
       File[] files = null;
-      if (arg.isDirectory())
+      if (arg.isDirectory()) {
         files = arg.listFiles();
-      else {
+      } else {
         files = new File[1];
         files[0] = arg;
       }

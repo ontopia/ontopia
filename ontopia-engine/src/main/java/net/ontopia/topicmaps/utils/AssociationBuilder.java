@@ -140,8 +140,9 @@ public class AssociationBuilder {
 
     if (scope != null) {
       Iterator<TopicIF> it = scope.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         assoc.addTheme(it.next());
+      }
     }
     
     return assoc;
@@ -158,8 +159,9 @@ public class AssociationBuilder {
 
     if (scope != null) {
       Iterator<TopicIF> it = scope.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         assoc.addTheme(it.next());
+      }
     }
     
     return assoc;
@@ -176,8 +178,9 @@ public class AssociationBuilder {
   public AssociationIF makeAssociation(TopicIF player1,
                                        TopicIF player2,
                                        TopicIF player3) {
-    if (role3type == null)
+    if (role3type == null) {
       throw new IllegalArgumentException("Builder only configured for binary associations!");
+    }
     
     AssociationIF assoc = builder.makeAssociation(assoctype);
     builder.makeAssociationRole(assoc, role1type, player1);
@@ -186,8 +189,9 @@ public class AssociationBuilder {
     
     if (scope != null) {
       Iterator<TopicIF> it = scope.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         assoc.addTheme(it.next());
+      }
     }
     
     return assoc;
@@ -205,10 +209,12 @@ public class AssociationBuilder {
                                        TopicIF player2,
                                        TopicIF player3,
                                        TopicIF player4) {
-    if (role3type == null)
+    if (role3type == null) {
       throw new IllegalArgumentException("Builder only configured for binary associations!");
-    if (role4type == null)
+    }
+    if (role4type == null) {
       throw new IllegalArgumentException("Builder only configured for ternary associations!");
+    }
     
     AssociationIF assoc = builder.makeAssociation(assoctype);
     builder.makeAssociationRole(assoc, role1type, player1);
@@ -218,8 +224,9 @@ public class AssociationBuilder {
     
     if (scope != null) {
       Iterator<TopicIF> it = scope.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         assoc.addTheme(it.next());
+      }
     }
     
     return assoc;

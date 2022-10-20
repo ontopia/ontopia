@@ -343,8 +343,9 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     Iterator it = topicmap.getTopics().iterator();
     while (it.hasNext()) {
       topic = (TopicIF) it.next();
-      if (!topic.getOccurrences().isEmpty())
+      if (!topic.getOccurrences().isEmpty()) {
         break;
+      }
     }
     occ = (OccurrenceIF) topic.getOccurrences().iterator().next();
     Assert.assertTrue("occurrence had ID!", occ.getItemIdentifiers().isEmpty());
@@ -368,8 +369,9 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     Iterator it = topicmap.getTopics().iterator();
     while (it.hasNext()) {
       topic = (TopicIF) it.next();
-      if (!topic.getOccurrences().isEmpty())
+      if (!topic.getOccurrences().isEmpty()) {
         break;
+      }
     }
 
     occ = (OccurrenceIF) topic.getOccurrences().iterator().next();

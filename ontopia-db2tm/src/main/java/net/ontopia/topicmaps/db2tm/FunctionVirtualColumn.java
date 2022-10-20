@@ -49,8 +49,9 @@ public class FunctionVirtualColumn implements ValueIF {
   }
 
   public void compile() {
-    if (fullMethodName.length() < 3)
+    if (fullMethodName.length() < 3) {
       throw new DB2TMConfigException("Function column method is invalid: '" + fullMethodName + "'");
+    }
     // look up method object
     int lix = fullMethodName.lastIndexOf('.');
     String className;
@@ -61,10 +62,12 @@ public class FunctionVirtualColumn implements ValueIF {
     } else {
       throw new DB2TMConfigException("Function column method is invalid: '" + fullMethodName + "'");
     }
-    if (className == null || className.trim().equals(""))
+    if (className == null || className.trim().equals("")) {
       throw new DB2TMConfigException("Function column class name is invalid: '" + className + "'");
-    if (methodName == null || methodName.trim().equals(""))
+    }
+    if (methodName == null || methodName.trim().equals("")) {
       throw new DB2TMConfigException("Function column method name is invalid: '" + methodName + "'");
+    }
 
     // look up Class.method(String, ..., String)
     try {
@@ -78,8 +81,9 @@ public class FunctionVirtualColumn implements ValueIF {
       // method must be static and return a String
       int modifiers = m.getModifiers();
       if ((modifiers & Modifier.STATIC) == Modifier.STATIC &&
-          String.class.equals(m.getReturnType()))
+          String.class.equals(m.getReturnType())) {
         this.method = m;
+      }
     } catch (Exception e) {
       // ignore
     }
@@ -89,7 +93,9 @@ public class FunctionVirtualColumn implements ValueIF {
       sb.append(fullMethodName);
       sb.append('(');
       for (int i=0; i < params.size(); i++) {
-        if (i > 0) sb.append(", ");
+        if (i > 0) {
+          sb.append(", ");
+        }
         sb.append("String");
       }
       sb.append("). Note that the method must be static and have a return type of java.lang.String.");
@@ -111,8 +117,9 @@ public class FunctionVirtualColumn implements ValueIF {
       String[] dispargs = new String[args.length];
       for (int i=0; i < args.length; i++) {
         String val = "" + args[i];
-        if (val.length() > 100)
+        if (val.length() > 100) {
           val = val.substring(0, 100) + "...";
+        }
         dispargs[i] = val;
       }
       throw new DB2TMInputException("Error occurred when invoking function column '" + colname + "' on " + Arrays.toString(dispargs), e);

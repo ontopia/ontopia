@@ -40,9 +40,10 @@ public class WhenTag extends IfTag {
   @Override
   public int doStartTag() throws JspTagException {
     parentChooser = (ChooseTag) findAncestorWithClass(this, ChooseTag.class);
-    if (parentChooser == null)
+    if (parentChooser == null) {
       throw new JspTagException(
               "tolog:when tag is not inside tolog:choose tag.");
+    }
 
     parentChooser.setFoundWhen();
     
@@ -51,10 +52,11 @@ public class WhenTag extends IfTag {
       // No more WhenTags need to be executed (tested in each WhenTag).
       ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     
-      if (contextTag == null)
+      if (contextTag == null) {
         throw new JspTagException("<tolog:when> must be nested directly or"
                 + " indirectly within a <tolog:context> tag, but no"
                 + " <tolog:context> tag was found.");
+      }
       
       contextManager = contextTag.getContextManager();
       

@@ -155,7 +155,9 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
       // Parse input source
       if (log.isInfoEnabled()) {
         log.info("Parsing source " + source.getSystemId());
-        if (source.getEncoding() != null) log.info("Encoding: " + source.getEncoding());
+        if (source.getEncoding() != null) {
+          log.info("Encoding: " + source.getEncoding());
+        }
         log.info("Parser: " + parser + " (namespace support: " + parser.getFeature("http://xml.org/sax/features/namespaces") + ")");
       }
       parser.parse(source);
@@ -168,8 +170,9 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
                                         e.getSystemId() + ":" + e.getLineNumber() + ":" +
                                         e.getColumnNumber(), e);
     } catch (SAXException e) {
-      if (e.getException() instanceof IOException)
+      if (e.getException() instanceof IOException) {
         throw (IOException) e.getException();
+      }
       throw new IOException("XML related problem: " + e.toString());
     }
 
@@ -181,8 +184,9 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
   public Collection readAll() throws IOException {
     Collection result = new ArrayList();
     TopicMapIF tm = read();
-    if (tm != null) 
+    if (tm != null) {
       result.add(tm);
+    }
     return result;      
   }
 
@@ -190,8 +194,9 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
-    if (store == null)
+    if (store == null) {
       throw new IOException("Topic map not connected to a store.");
+    }
     
     // Read XFML from the source.
     read();

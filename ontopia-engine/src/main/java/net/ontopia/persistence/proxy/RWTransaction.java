@@ -59,7 +59,9 @@ public class RWTransaction extends AbstractTransaction {
     
     // initialize shared data cache
     StorageCacheIF scache = access.getStorage().getStorageCache();
-    if (scache != null) trackall = true;
+    if (scache != null) {
+      trackall = true;
+    }
     this.txncache = new RWLocalCache(this, scache);
 
     // initialize identity map
@@ -99,10 +101,13 @@ public class RWTransaction extends AbstractTransaction {
   public void assignIdentity(PersistentIF object) {
     // FIXME: this method is currently being used in TMObject
     // constructor. should consider getting rid of it.
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     
-    if (object._p_getIdentity() != null)
+    if (object._p_getIdentity() != null) {
       throw new OntopiaRuntimeException("Cannot add new identity to object that already has one.");
+    }
     
     // create and assign new identity
     IdentityIF identity = access.generateIdentity(object._p_getType());
@@ -114,7 +119,9 @@ public class RWTransaction extends AbstractTransaction {
   
   @Override
   public void create(PersistentIF object) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     
     // assign identity if object has no identity
     IdentityIF identity = object._p_getIdentity();
@@ -161,15 +168,17 @@ public class RWTransaction extends AbstractTransaction {
       lru.put(identity, object);
       
       // ISSUE: What if identity is already registered?
-      if (other != null && !other.equals(object))
+      if (other != null && !other.equals(object)) {
         log.warn("Created object replaced existing object: " + identity);
+      }
     }
     
     //! // Notify access registrar
     //! if (registrar != null) registrar.registerIdentity(identity);
     
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(getId() + ": Object " + identity + " created: " + object._p_getType());
+    }
     
     //! System.out.println("CREATING: " + identity + " created: " + object);
     
@@ -177,7 +186,9 @@ public class RWTransaction extends AbstractTransaction {
   
   @Override
   public void delete(PersistentIF object) {    
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     
     IdentityIF identity = object._p_getIdentity();
     //! System.out.println(">>/ " + identity);
@@ -212,8 +223,9 @@ public class RWTransaction extends AbstractTransaction {
     //!   lru.remove(identity);
     //! }
     
-    if (log.isDebugEnabled())
-      log.debug(getId() + ": Object " + identity + " deleted.");    
+    if (log.isDebugEnabled()) {
+      log.debug(getId() + ": Object " + identity + " deleted.");
+    }    
     
   }
   
@@ -224,10 +236,14 @@ public class RWTransaction extends AbstractTransaction {
   @Override
   public synchronized void flush() {
     // Flushing is non-reentrant
-    if (flushing) return;
+    if (flushing) {
+      return;
+    }
     
     // Complain if the transaction is not active
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     
     try {
       flushing = true;
@@ -240,15 +256,18 @@ public class RWTransaction extends AbstractTransaction {
       // references to them.
       
       // Only flush when changes has actually happened.
-      if (chgcre.isEmpty() && chgdty.isEmpty() && chgdel.isEmpty()) return;
+      if (chgcre.isEmpty() && chgdty.isEmpty() && chgdel.isEmpty()) {
+        return;
+      }
       
       //! System.out.println("SC: " + chgcre.size());
       //! System.out.println("SD: " + chgdty.size());
       //! System.out.println("SR: " + chgdel.size());
       
       // Store all pending changes in the database
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug(getId() + ": Storing transaction changes.");
+      }
       
       //! System.out.println("+FLUSHING");
       
@@ -277,8 +296,9 @@ public class RWTransaction extends AbstractTransaction {
       if (!chgdty.isEmpty()) {
         for (PersistentIF object : chgdty) {
           // Store dirty object fields in repository
-          if (!object.isDeleted())      
+          if (!object.isDeleted()) {
             access.storeDirty(oaccess, object);
+          }
         }
       }
       
@@ -309,8 +329,9 @@ public class RWTransaction extends AbstractTransaction {
       flushing = false;
     }
     
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(getId() + ": Transaction changes stored.");
+    }
   }
   
   // -----------------------------------------------------------------------------
@@ -319,29 +340,40 @@ public class RWTransaction extends AbstractTransaction {
   
   @Override
   public synchronized void objectDirty(PersistentIF object) {
-    if (!isactive) throw new TransactionNotActiveException();
+    if (!isactive) {
+      throw new TransactionNotActiveException();
+    }
     
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(getId() + ": Object dirty " + object._p_getIdentity());
+    }
     chgdty.add(object);
     
     // track all changes
-    if (trackall) ostates.dirty(object._p_getIdentity());
+    if (trackall) {
+      ostates.dirty(object._p_getIdentity());
+    }
   }
 
   @Override
   public void objectRead(IdentityIF identity) {
-    if (trackall) ostates.read(identity);
+    if (trackall) {
+      ostates.read(identity);
+    }
   }
 
   @Override
   public void objectCreated(PersistentIF object) {
-    if (trackall) ostates.created(object._p_getIdentity());
+    if (trackall) {
+      ostates.created(object._p_getIdentity());
+    }
   }
 
   @Override
   public void objectDeleted(PersistentIF object) {
-    if (trackall) ostates.deleted(object._p_getIdentity());
+    if (trackall) {
+      ostates.deleted(object._p_getIdentity());
+    }
   }
 
   @Override
@@ -427,7 +459,9 @@ public class RWTransaction extends AbstractTransaction {
                     }
                     // clear object
                     PersistentIF p = checkIdentityMapNoLRU(identity);
-                    if (p != null) p.clearAll();
+                    if (p != null) {
+                      p.clearAll();
+                    }
                     return true;
                   }
                 });
@@ -480,11 +514,15 @@ public class RWTransaction extends AbstractTransaction {
                         ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED)) {
                       // drop from identity map
                       PersistentIF p = checkIdentityMapNoLRU(identity);
-                      if (p != null) p.clearAll();
+                      if (p != null) {
+                        p.clearAll();
+                      }
                     } else {
                       // clear dirty/dirty-read object
                       PersistentIF p = checkIdentityMapNoLRU(identity);
-                      if (p != null) p.clearAll();
+                      if (p != null) {
+                        p.clearAll();
+                      }
                     }
                     return true;
                   }
@@ -508,13 +546,17 @@ public class RWTransaction extends AbstractTransaction {
   @Override
   public void prefetch(Class<?> type, int field, boolean traverse, Collection<IdentityIF> identities) {
     // do not prefetch when no shared cache
-    if (!trackall) super.prefetch(type, field, traverse, identities);
+    if (!trackall) {
+      super.prefetch(type, field, traverse, identities);
+    }
   }
 
   @Override
   public void prefetch(Class<?> type, int[] fields, boolean[] traverse, Collection<IdentityIF> identities) {
     // do not prefetch when no shared cache
-    if (!trackall) super.prefetch(type, fields, traverse, identities);
+    if (!trackall) {
+      super.prefetch(type, fields, traverse, identities);
+    }
   }
   
 }

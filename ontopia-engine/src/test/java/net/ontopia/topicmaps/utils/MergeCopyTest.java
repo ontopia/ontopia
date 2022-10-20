@@ -199,8 +199,9 @@ public class MergeCopyTest {
     TopicIF defnametype = topicmap1.getTopicBySubjectIdentifier(PSI.getSAMNameType());
     Iterator it = topicmap1.getTopics().iterator();
     topic = (TopicIF) it.next();
-    if (topic.equals(defnametype))
+    if (topic.equals(defnametype)) {
       topic = (TopicIF) it.next();
+    }
       
     Assert.assertTrue("empty topic suddenly has source locators",
                topic.getItemIdentifiers().isEmpty());

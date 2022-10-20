@@ -158,8 +158,9 @@ public class DocumentClassifier {
         analyzer.startAnalysis(tdb);
         try {
           Term[] terms = tdb.getTerms().toArray(new Term[] {}); // create array to avoid CME
-          for (int x=0; x < terms.length; x++)
+          for (int x=0; x < terms.length; x++) {
             analyzer.analyzeTerm(terms[x]);
+          }
 
         } finally {
           analyzer.endAnalysis();

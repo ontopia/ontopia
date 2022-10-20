@@ -47,10 +47,11 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0])
+    if (boundparams[0]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
+    }
   }
 
   @Override
@@ -59,10 +60,11 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
 
     int locix = matches.getIndex(arguments[0]);
 
-    if (!matches.bound(locix))
+    if (!matches.bound(locix)) {
       return fillIn(matches, locix);
-    else
+    } else {
       return filter(matches, locix);
+    }
   }
   
   // internal
@@ -73,13 +75,15 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
       
       Object[] newRow = matches.data[ix].clone();
       LocatorIF loc = topicmap.getStore().getBaseAddress();
-      if (loc == null)
+      if (loc == null) {
         continue;
+      }
       newRow[locix] = loc.getAddress();
       
       result.last++;
-      if (result.last == result.size) 
+      if (result.last == result.size) {
         result.increaseCapacity();
+      }
       result.data[result.last] = newRow;
     }
 
@@ -90,17 +94,20 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
     QueryMatches result = new QueryMatches(matches);
 
     LocatorIF baseloc = topicmap.getStore().getBaseAddress();
-    if (baseloc == null)
+    if (baseloc == null) {
       return result;
+    }
 
     String base = baseloc.getAddress();
     for (int ix = 0; ix <= matches.last; ix++) {
-      if (!base.equals(matches.data[ix][locix]))
+      if (!base.equals(matches.data[ix][locix])) {
         continue;
+      }
 
       result.last++;
-      if (result.last == result.size) 
+      if (result.last == result.size) {
         result.increaseCapacity();
+      }
       result.data[result.last] = matches.data[ix];      
     }
 

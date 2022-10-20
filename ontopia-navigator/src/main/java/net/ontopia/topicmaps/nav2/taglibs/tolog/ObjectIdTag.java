@@ -57,9 +57,9 @@ public class ObjectIdTag extends BaseOutputProducingTag {
       objectId = ((TMObjectIF) outObject).getObjectId();
     } catch (ClassCastException e) {
       // --- TopicMapReferenceIF
-      if (outObject instanceof TopicMapReferenceIF) 
+      if (outObject instanceof TopicMapReferenceIF) { 
         objectId = ((TopicMapReferenceIF) outObject).getId();
-      else {
+      } else {
         // --- otherwise signal error
         String msg = "<tolog:oid> expected collection which contains " +
           "object instances of TMObjectIF or TopicMapReferenceIF, but got " +
@@ -72,8 +72,9 @@ public class ObjectIdTag extends BaseOutputProducingTag {
     }
     
     // finally write out String with help of the Stringifier
-    if (objectId != null)
+    if (objectId != null) {
       print2Writer( out, objectId );
+    }
   }
 
   @Override

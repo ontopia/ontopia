@@ -72,10 +72,11 @@ public class RDBMSSearchResult implements SearchResultIF {
   @Override
   public float getScore(int hit) throws IOException {
     RDBMSDocument doc = docs.get(hit);
-    if (doc == null)
+    if (doc == null) {
       return 0f;
-    else
+    } else {
       return doc.getScore();
+    }
   }
 
   @Override

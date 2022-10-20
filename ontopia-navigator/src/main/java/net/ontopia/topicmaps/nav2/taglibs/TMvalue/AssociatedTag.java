@@ -50,9 +50,9 @@ public class AssociatedTag extends BaseScopedTag {
   
   @Override
   public Collection process(Collection topics) throws JspTagException {
-    if (topics == null || topics.isEmpty())
+    if (topics == null || topics.isEmpty()) {
       return Collections.EMPTY_SET;
-    else{
+    } else{
       ContextManagerIF ctxtMgr = contextTag.getContextManager();
       Collection startroles  = getValue(ctxtMgr, startrole);
       Collection endroles    = getValue(ctxtMgr, endrole);
@@ -63,8 +63,9 @@ public class AssociatedTag extends BaseScopedTag {
 
       // setup scope filter for user context filtering
       Predicate scopeDecider = null;
-      if (useUserContextFilter)
+      if (useUserContextFilter) {
         scopeDecider = getScopeDecider(SCOPE_ASSOCIATIONS);
+      }
 
       try {
         for (Iterator it = topics.iterator(); it.hasNext(); ) {
@@ -72,30 +73,35 @@ public class AssociatedTag extends BaseScopedTag {
 
           for (Iterator roles = start.getRoles().iterator(); roles.hasNext(); ) {
             AssociationRoleIF role = (AssociationRoleIF) roles.next();
-            if (!isInstanceOf(role, startroles))
+            if (!isInstanceOf(role, startroles)) {
               continue;
+            }
 
             AssociationIF assoc = role.getAssociation();
-            if (!isInstanceOf(assoc, assoctypes))
+            if (!isInstanceOf(assoc, assoctypes)) {
               continue;
+            }
 
             for (Iterator roles2 = assoc.getRoles().iterator(); roles2.hasNext();){
               AssociationRoleIF role2 = (AssociationRoleIF) roles2.next();
               if (role2.equals(role) ||
-                  !isInstanceOf(role2, endroles))
+                  !isInstanceOf(role2, endroles)) {
                 continue;
+              }
 
               TopicIF currentPlayer = role2.getPlayer();
-              if (totopics != null && !totopics.contains(currentPlayer))
+              if (totopics != null && !totopics.contains(currentPlayer)) {
                 continue;
+              }
 
               if (currentPlayer != null) {
                 // add current player if within user context if specified
                 if (scopeDecider == null || scopeDecider.test(currentPlayer)) {
-                  if (produceTopics)
+                  if (produceTopics) {
                     associated.add(currentPlayer);
-                  else
+                  } else {
                     associated.add(assoc);
+                  }
                 }
               }
           
@@ -114,16 +120,18 @@ public class AssociatedTag extends BaseScopedTag {
   // -----------------------------------------------------------------
 
   protected boolean isInstanceOf(TypedIF object, Collection types) {
-    if (types == null)
+    if (types == null) {
       return true;
+    }
 
     return types.contains(object.getType());
   }
 
   protected Collection getValue(ContextManagerIF ctxtMgr, String var)
     throws NavigatorRuntimeException {
-    if (var == null)
+    if (var == null) {
       return null;
+    }
 
     return ctxtMgr.getValue(var);
   }
@@ -153,12 +161,13 @@ public class AssociatedTag extends BaseScopedTag {
   }
 
   public void setProduce(String produce) {
-    if ("topics".equals(produce))
+    if ("topics".equals(produce)) {
       produceTopics = true;
-    else if ("associations".equals(produce))
+    } else if ("associations".equals(produce)) {
       produceTopics = false;
-    else
+    } else {
       throw new IllegalArgumentException("Invalid value for 'produce' attribute of element 'associated' tag: <" + produce + ">");
+    }
       
   }
   

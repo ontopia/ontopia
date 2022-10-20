@@ -37,12 +37,14 @@ public class TopicMapLinkPlugin extends DefaultPlugin {
   
   @Override
   public String generateHTML(ContextTag contextTag) {
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new OntopiaRuntimeException("Plugin must have a parent tolog:context tag.");
+    }
     
     TopicMapIF tm = contextTag.getTopicMap();
-    if (tm == null)
+    if (tm == null) {
       return "<span>No topic map!</span>";
+    }
 
     // get omnigator model
     String model = FrameworkUtils.getUser(contextTag.getPageContext()).getModel();
@@ -53,12 +55,13 @@ public class TopicMapLinkPlugin extends DefaultPlugin {
     // get topic map title
     String tmtitle = "[No name]";
     TopicIF reifier = tm.getReifier();    
-    if (reifier != null)
+    if (reifier != null) {
       tmtitle = TopicStringifiers.toString(reifier);
-    else {
+    } else {
       TopicMapReferenceIF reference = tm.getStore().getReference();
-      if (reference != null)
+      if (reference != null) {
         tmtitle = reference.getTitle();
+      }
     }
 
     return "<a href=\"" + uri + "/models/topicmap_" + model + ".jsp?tm=" + tmid + "\" title=\"Link to topic map page.\">" + tmtitle + "</a>";

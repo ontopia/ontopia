@@ -223,17 +223,20 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     }
 
     public void check() {
-      if (elementRequired)
+      if (elementRequired) {
         Assert.assertTrue("element " + element + " not found", foundElement);
-      if (allowed == REQUIRED)
+      }
+      if (allowed == REQUIRED) {
         Assert.assertTrue("attribute " + attribute + " not found", foundAttribute);
+      }
 
-      if (allowed == REQUIRED)
+      if (allowed == REQUIRED) {
         Assert.assertTrue("value " + value + " not found", foundValue);
-      else if (allowed == FORBIDDEN)
+      } else if (allowed == FORBIDDEN) {
         Assert.assertTrue("value " + value + " found", !foundValue);
-      else
+      } else {
         Assert.fail("Unknown allowed value: " + allowed);
+      }
     }
 
     @Override

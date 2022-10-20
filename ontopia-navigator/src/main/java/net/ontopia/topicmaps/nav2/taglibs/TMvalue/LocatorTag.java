@@ -61,11 +61,15 @@ public class LocatorTag extends BaseValueProducingAndAcceptingTag {
         
         if (value instanceof OccurrenceIF) {
           LocatorIF locator = ((OccurrenceIF)value).getLocator();
-          if (locator != null) locators.add(locator);
+          if (locator != null) {
+            locators.add(locator);
+          }
 
         } else if (value instanceof VariantNameIF) {
           LocatorIF locator = ((VariantNameIF)value).getLocator();
-          if (locator != null) locators.add(locator);
+          if (locator != null) {
+            locators.add(locator);
+          }
 
         } else if (value instanceof String) {
           
@@ -74,8 +78,9 @@ public class LocatorTag extends BaseValueProducingAndAcceptingTag {
           
           // get topicmap object on which we should compute 
           TopicMapIF topicmap = contextTag.getTopicMap();
-          if (topicmap == null)
+          if (topicmap == null) {
             throw new NavigatorRuntimeException("LookupTag found no topic map.");
+          }
           
           try {
             // Attempt to parse string as URI
@@ -101,10 +106,11 @@ public class LocatorTag extends BaseValueProducingAndAcceptingTag {
     throws MalformedURLException {
 
     LocatorIF base = topicmap.getStore().getBaseAddress();
-    if (base != null)
+    if (base != null) {
       return base.resolveAbsolute(locString);
-    else
+    } else {
       return new URILocator(locString);
+    }
   }
 
 }

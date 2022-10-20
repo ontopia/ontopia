@@ -89,19 +89,23 @@ public class JDOAnd implements JDOExpressionIF {
   public int hashCode() {
     int hashCode = 0;
     for (int ix = 0; ix < expressions.length; ix++) {
-      if (expressions[ix] != null)
+      if (expressions[ix] != null) {
         hashCode = (hashCode + expressions[ix].hashCode()) & 0x7FFFFFFF;
+      }
     }
     return hashCode;
   }
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOAnd) {
       JDOAnd other = (JDOAnd)obj;
-      if (Arrays.equals(expressions, other.expressions))
+      if (Arrays.equals(expressions, other.expressions)) {
         return true;
+      }
     }
     return false;
   }
@@ -111,7 +115,9 @@ public class JDOAnd implements JDOExpressionIF {
     StringBuilder sb = new StringBuilder();
     sb.append('(');
     for (int i=0; i < expressions.length; i++) {
-      if (i != 0) sb.append(" && ");
+      if (i != 0) {
+        sb.append(" && ");
+      }
       sb.append(expressions[i]);
     }
     sb.append(')');

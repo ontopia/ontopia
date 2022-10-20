@@ -94,11 +94,13 @@ public class ModalGeoPickerPage extends Panel {
     super.onBeforeRender();
 
     String lat = get(thetopic.getTopic().getTopicIF(), PSI.ON_LATITUDE);
-    if (lat == null)
+    if (lat == null) {
       lat = "59.92";
+    }
     String lng = get(thetopic.getTopic().getTopicIF(), PSI.ON_LONGITUDE);
-    if (lng == null)
+    if (lng == null) {
       lng = "10.74";
+    }
     
     // we can't call getCallbackUrl() in the constructor, but here it's
     // possible, so we insert the URI into the label we created above,
@@ -140,8 +142,9 @@ public class ModalGeoPickerPage extends Panel {
 
   private void findFields() {
     MarkupContainer container = this;
-    while (!(container instanceof FieldInstancesPanel))
+    while (!(container instanceof FieldInstancesPanel)) {
       container = container.getParent();
+    }
 
     FieldInstancesPanel parent = (FieldInstancesPanel) container;
     ListView<FieldInstanceModel> listView = parent.getFieldList();
@@ -151,12 +154,14 @@ public class ModalGeoPickerPage extends Panel {
       FieldInstance fi = li.getModelObject().getFieldInstance();
       FieldAssignment fa = fi.getFieldAssignment();
       FieldDefinition fd = fa.getFieldDefinition();
-      if (fd.getFieldType() != FieldDefinition.FIELD_TYPE_OCCURRENCE)
+      if (fd.getFieldType() != FieldDefinition.FIELD_TYPE_OCCURRENCE) {
         continue;
+      }
       OccurrenceField of = (OccurrenceField)fd;
       OccurrenceType ot = of.getOccurrenceType();
-      if (ot == null)
+      if (ot == null) {
         continue;
+      }
       Collection<LocatorIF> psis = ot.getTopicIF().getSubjectIdentifiers();
 
       if (psis.contains(PSI.ON_LATITUDE) ||
@@ -166,10 +171,11 @@ public class ModalGeoPickerPage extends Panel {
           Object component = it.next();
           if (component instanceof FieldInstanceOccurrencePanel) {
             FieldInstanceOccurrencePanel fiop = (FieldInstanceOccurrencePanel) component;
-            if (psis.contains(PSI.ON_LONGITUDE))
+            if (psis.contains(PSI.ON_LONGITUDE)) {
               lngpan = fiop;
-            else
+            } else {
               latpan = fiop;
+            }
           }
         }
       }
@@ -194,8 +200,9 @@ public class ModalGeoPickerPage extends Panel {
   private String get(TopicIF topic, LocatorIF psi) {
     for (OccurrenceIF occ : topic.getOccurrences()) {
       TopicIF type = occ.getType();
-      if (type.getSubjectIdentifiers().contains(psi))
+      if (type.getSubjectIdentifiers().contains(psi)) {
         return occ.getValue();
+      }
     }
 
     return null;

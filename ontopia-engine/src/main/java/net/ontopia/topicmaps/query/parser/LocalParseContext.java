@@ -67,11 +67,13 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   @Override
   public LocatorIF resolveQName(QName qname) {
     PrefixBinding binding = bindings.get(qname.getPrefix());
-    if (binding == null)
+    if (binding == null) {
       throw new OntopiaRuntimeException("No such prefix " + qname.getPrefix());
-    if (binding.getQualification() != SUBJECT_IDENTIFIER)
+    }
+    if (binding.getQualification() != SUBJECT_IDENTIFIER) {
       throw new OntopiaRuntimeException("Prefix " + qname.getPrefix() +
                                         " is not a subject identifier prefix");
+    }
     try {
       return new URILocator(binding.getUri(qname.getLocalName()));
     } catch (MalformedURLException e) {
@@ -83,9 +85,10 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   public void addPrefixBinding(String prefix, String uri, int qualification)
     throws AntlrWrapException {
 
-    if (bindings.containsKey(prefix))
+    if (bindings.containsKey(prefix)) {
       throw new AntlrWrapException(new InvalidQueryException("Prefix " + prefix +
                                                              " already bound"));
+    }
     
     if (qualification == MODULE) {
       ModuleIF module = getModule(uri);
@@ -93,8 +96,9 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
         LocalParseContext modulectx = new LocalParseContext(subcontext);
         TologParser parser = new TologParser(modulectx, TologOptions.defaults);
         try {
-          if (isLoading(uri))
+          if (isLoading(uri)) {
             throw new InvalidQueryException("Importing an already imported module is not allowed: '" + uri + "'");
+          }
 
           // attempt to load module from class loader / classpath
           ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -105,14 +109,17 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
             modulectx.loading_modules.add(uri);            
 
             // resolve uri absolute against topic map base address
-            if (istream == null)
+            if (istream == null) {
               istream = new URL(absolutify(uri).getAddress()).openStream();
+            }
             
             parser.load(new InputStreamReader(istream));
                         
           } finally {
             modulectx.loading_modules.remove(uri);
-            if (istream != null) istream.close();
+            if (istream != null) {
+              istream.close();
+            }
           }
 
         } catch (IOException e) {
@@ -142,14 +149,16 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   
   @Override
   public void addPredicate(PredicateIF predicate) throws AntlrWrapException {
-    if (predicates.containsKey(predicate.getName()))
+    if (predicates.containsKey(predicate.getName())) {
       throw new AntlrWrapException(new InvalidQueryException("Predicate " +
                                                              predicate.getName() +
                                                              " exists already"));
-    if (subcontext.isBuiltInPredicate(predicate.getName()))
+    }
+    if (subcontext.isBuiltInPredicate(predicate.getName())) {
       throw new AntlrWrapException(new InvalidQueryException(
         "Predicate " + predicate.getName() + " is a built-in predicate, and cannot "+
         "be redefined."));
+    }
     
     predicates.put(predicate.getName(), predicate);
   }
@@ -157,10 +166,11 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   @Override
   public TopicIF getTopic(QName qname) throws AntlrWrapException {
     TMObjectIF object = getObject(qname);
-    if (!(object instanceof TopicIF))
+    if (!(object instanceof TopicIF)) {
       throw new AntlrWrapException(
               new InvalidQueryException("Found " + qname + ", referring to non-topic "
                                         + object));
+    }
 
     return (TopicIF) object;
   }
@@ -174,12 +184,14 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     String prefix = qname.getPrefix();
     String localname = qname.getLocalName();
       
-    if (prefix == null)
+    if (prefix == null) {
       return subcontext.getObject(qname);
+    }
 
     PrefixBinding binding = bindings.get(prefix);
-    if (binding == null)
+    if (binding == null) {
       return subcontext.getObject(qname);
+    }
 
     switch (binding.getQualification()) {
     case SUBJECT_LOCATOR:
@@ -199,19 +211,22 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     throws AntlrWrapException {
     if (qname.getPrefix() == null) {
       PredicateIF predicate = (PredicateIF) predicates.get(qname.getLocalName());
-      if (predicate == null)
+      if (predicate == null) {
         predicate = subcontext.getPredicate(qname, assoc);
+      }
       return predicate;
     }
 
     PrefixBinding binding = bindings.get(qname.getPrefix());
-    if (binding == null)
+    if (binding == null) {
       return subcontext.getPredicate(qname, assoc);
+    }
 
-    if (binding.getQualification() == MODULE)
+    if (binding.getQualification() == MODULE) {
       return binding.getModule().getPredicate(qname.getLocalName());
-    else
+    } else {
       return getPredicate(getTopic(qname), assoc);
+    }
   }
 
   @Override
@@ -268,9 +283,10 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
 
   private TMObjectIF checkReference(TMObjectIF value, String token)
     throws AntlrWrapException {
-    if (value == null)
+    if (value == null) {
       throw new AntlrWrapException(new BadObjectReferenceException("No object for " +
                                                              token));
+    }
     return value;
   }
 

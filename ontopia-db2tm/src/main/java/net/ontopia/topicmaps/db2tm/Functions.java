@@ -145,10 +145,11 @@ public class Functions {
    * if the string value is null or empty.
    */
   public static String failIfEmpty(String str, String message) {
-    if (Utils.isValueEmpty(str))
+    if (Utils.isValueEmpty(str)) {
       throw new DB2TMInputException(message);
-    else
+    } else {
       return str;
+    }
   }
 
   /**
@@ -158,8 +159,9 @@ public class Functions {
   public static String convertDate(String date,
                                    String informat,
                                    String outformat) {
-    if (Utils.isValueEmpty(date))
+    if (Utils.isValueEmpty(date)) {
       return null;
+    }
     
     try {
       SimpleDateFormat inf = new SimpleDateFormat(informat);
@@ -191,14 +193,15 @@ public class Functions {
     int pos = 0;
     for (int ix = 0; ix < str.length(); ix++) {
       char ch = str.charAt(ix);
-      if (ch >= 'A' && ch <= 'Z')
+      if (ch >= 'A' && ch <= 'Z') {
         tmp[pos++] = (char) ((int) ch + 32); // downcase
-      else if ((ch >= 'a' && ch <= 'z') ||
+      } else if ((ch >= 'a' && ch <= 'z') ||
                (ch >= '0' && ch <= '9') ||
-               ch == '-' && ch == '_')
+               ch == '-' && ch == '_') {
         tmp[pos++] = ch;
-      else if (ch == ' ')
+      } else if (ch == ' ') {
         tmp[pos++] = '-';
+      }
     }
 
     str = new String(tmp, 0, pos);
@@ -216,8 +219,9 @@ public class Functions {
     int pos = 0;
     for (int ix = 0; ix < buf.length; ix++) {
       char ch = str.charAt(ix);
-      if (ch != ' ')
+      if (ch != ' ') {
         buf[pos++] = ch;
+      }
     }
     return new String(buf, 0, pos);
   }

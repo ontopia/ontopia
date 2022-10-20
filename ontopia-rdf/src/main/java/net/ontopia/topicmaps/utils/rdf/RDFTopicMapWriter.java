@@ -189,8 +189,9 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
    *         False otherwise.
    */
   private boolean filterOk(Object unfiltered) {
-    if (filter == null)
+    if (filter == null) {
       return true;
+    }
     return filter.test(unfiltered);
   }
 
@@ -201,15 +202,17 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
    *         if this.filter is null, returns the original collection.
    */
   private Collection filterCollection(Collection unfiltered) {
-    if (filter == null)
+    if (filter == null) {
       return unfiltered;
+    }
     Collection retVal = new ArrayList();
     Iterator unfilteredIt = unfiltered.iterator();
 
     while (unfilteredIt.hasNext()) {
       Object current = unfilteredIt.next();
-      if (filter.test(current))
+      if (filter.test(current)) {
         retVal.add(current);
+      }
     }
     return retVal;
   }
@@ -240,8 +243,9 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     }
 
     // finishing up
-    if (model != null && writer != null)
+    if (model != null && writer != null) {
       model.write(writer);
+    }
   }
 
   protected void write(TopicIF topic) {
@@ -254,8 +258,9 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     Iterator it2 = topic.getSubjectIdentifiers().iterator();
     while (it2.hasNext()) {
       AResource other = getResource((LocatorIF) it2.next());
-      if (!other.equals(subject))
+      if (!other.equals(subject)) {
         handler.statement(subject, sameas, other);
+      }
     }
       
     // types
@@ -278,10 +283,12 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
       if (bn.getType().getSubjectIdentifiers().contains(PSI.getSAMNameType())) {
         namepred = (AResource) namepreds.get(topictype);
-        if (namepred == null)
+        if (namepred == null) {
           namepred = namedef;
-      } else
+        }
+      } else {
         namepred = getResource(bn.getType());
+      }
       
       statement(subject, namepred, getLiteral(bn.getValue()), bn);
     }
@@ -293,12 +300,13 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     while (it2.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it2.next();
       
-      if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI))
+      if (Objects.equals(occ.getDataType(), DataTypes.TYPE_URI)) {
         statement(subject, getResource(occ.getType()),
-                  getResource(occ.getLocator()), occ);
-      else
+                getResource(occ.getLocator()), occ);
+      } else {
         statement(subject, getResource(occ.getType()),
                   getLiteral(occ.getValue()), occ);
+      }
       // else don't make a statement, since there is no value (bug #1797)
     }
   }
@@ -320,8 +328,9 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       TopicIF assoctype = assoc.getType();
       if (assoctype != null &&
           (assoctype.equals(namePropertyType) ||
-           assoctype.equals(preferredRoleType)))
+           assoctype.equals(preferredRoleType))) {
         return; // don't export mapping
+      }
       TopicIF preferred = (TopicIF) preferred_roles.get(assoctype);
       TopicIF subject = null;
       TopicIF object = null;
@@ -330,35 +339,41 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       AssociationRoleIF role = (AssociationRoleIF) it2.next();
       if (preferred == null || preferred.equals(role.getType())) {
         subject = role.getPlayer();
-        if (preferred == null)
+        if (preferred == null) {
           preferred_roles.put(assoctype, role.getType());
-      } else
+        }
+      } else {
         object = role.getPlayer();
+      }
       
       role = (AssociationRoleIF) it2.next();
       if (preferred != null && preferred.equals(role.getType()) &&
           subject == null) {
         subject = role.getPlayer();
-        if (preferred == null)
+        if (preferred == null) {
           preferred_roles.put(assoctype, role.getType());
-      } else
+        }
+      } else {
         object = role.getPlayer();
+      }
 
-      if (subject != null && assoctype != null && object != null)
+      if (subject != null && assoctype != null && object != null) {
         statement(getResource(subject),
                   getResource(assoctype),
                   getResource(object),
                   assoc);
+      }
     } else {
       // lotsary
       
       AResource type = new AResourceWrapper(NS_RDF + "type");
       AResource subject;
       TopicIF reifier = assoc.getReifier();
-      if (reifier == null || !filterOk(reifier))
+      if (reifier == null || !filterOk(reifier)) {
         subject = getResource();
-      else
+      } else {
         subject = getResource(reifier);
+      }
       
       handler.statement(subject, type, getResource(assoc.getType()));
       assertScope(subject, assoc.getScope());
@@ -403,10 +418,11 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     }
 
     if (assert_unreified) {
-      if (obj instanceof AResource)
+      if (obj instanceof AResource) {
         handler.statement(subj, pred, (AResource) obj);
-      else
+      } else {
         handler.statement(subj, pred, (ALiteral) obj);
+      }
     }
   }
 
@@ -420,17 +436,19 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
                       getResource(NS_RDF + "type"),
                       getResource(NS_RDF + "Statement"));
 
-    if (object instanceof AResource)
+    if (object instanceof AResource) {
       handler.statement(statement, getResource(NS_RDF + "object"), (AResource)object);
-    else
+    } else {
       handler.statement(statement, getResource(NS_RDF + "object"), (ALiteral)object);
+    }
   }
 
   private void assertScope(AResource statement, Collection scope) {
     Iterator it = scope.iterator();
     AResource inscope = getResource(NS_TM + "inscope");
-    while (it.hasNext())
+    while (it.hasNext()) {
       handler.statement(statement, inscope, getResource((TopicIF) it.next()));
+    }
   }
 
   // --- Internal methods
@@ -445,9 +463,10 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
         "using tm for i\"http://psi.ontopia.net/tm2rdf/#\" " +
         "tm:name-property($TYPE : tm:type, $PROP : tm:property)?");
 
-      while (result.next())
+      while (result.next()) {
         namepreds.put(getResource((TopicIF) result.getValue("TYPE")),
                       getResource((TopicIF) result.getValue("PROP")));
+      }
 
       result.close();
     } catch (InvalidQueryException e) {
@@ -460,8 +479,9 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
         "using tm for i\"http://psi.ontopia.net/tm2rdf/#\" " +
         "tm:preferred-role($ATYPE : tm:association-type, $RTYPE : tm:role-type)?");
 
-      while (result.next())
+      while (result.next()) {
         preferred_roles.put(result.getValue("ATYPE"), result.getValue("RTYPE"));
+      }
 
       result.close();
     } catch (InvalidQueryException e) {
@@ -470,12 +490,15 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
   
   private AResource getResource(TopicIF topic) {
     LocatorIF locator = null;
-    if (locator == null && !topic.getSubjectLocators().isEmpty())
+    if (locator == null && !topic.getSubjectLocators().isEmpty()) {
       locator = (LocatorIF) topic.getSubjectLocators().iterator().next();
-    if (locator == null && !topic.getSubjectIdentifiers().isEmpty())
+    }
+    if (locator == null && !topic.getSubjectIdentifiers().isEmpty()) {
       locator = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
-    if (locator != null)
+    }
+    if (locator != null) {
       return new AResourceWrapper(locator.getExternalForm());
+    }
 
     return makeAnonymousNode(topic);
   }
@@ -550,10 +573,11 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public boolean equals(Object obj) {
-      if (obj instanceof AResource)
+      if (obj instanceof AResource) {
         return uri.equals(((AResource) obj).getURI());
-      else
+      } else {
         return false;
+      }
     }
 
     @Override
@@ -606,10 +630,11 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
     @Override
     public boolean equals(Object obj) {
-      if (obj instanceof AResource)
+      if (obj instanceof AResource) {
         return anonid.equals(((AResource) obj).getAnonymousID());
-      else
+      } else {
         return false;
+      }
     }
 
     @Override
@@ -690,25 +715,28 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
     private Literal convert(ALiteral lit) {
       String dt = lit.getDatatypeURI();
-      if (dt == null)
+      if (dt == null) {
         return model.createLiteral(lit.toString(), lit.getLang());
-      else
+      } else {
         return model.createTypedLiteral(lit.toString(), dt);
+      }
     }
 
     private Resource convert(AResource r) {
-      if (r.isAnonymous())
+      if (r.isAnonymous()) {
         return model.createResource(new StringAnonId(r.getAnonymousID()));
-      else
+      } else {
         return model.createResource(r.getURI());
+      }
     }
 
     private Property convertPred(AResource r) {
-      if (r.isAnonymous())
+      if (r.isAnonymous()) {
         return model.createProperty("http://anonymous.ontopia.net/#id" +
-                                    r.getAnonymousID());
-      else  
+                r.getAnonymousID());
+      } else {
         return model.createProperty(r.getURI());
+      }
     }
     
   }

@@ -75,8 +75,9 @@ public class HTMLFormatModule extends XMLFormatModule {
     
     @Override
     public void characters (char[] ch, int start, int length) {
-      if (skipLevel == 0)
+      if (skipLevel == 0) {
         thandler.text(ch, start, length);
+      }
     }
     
     @Override

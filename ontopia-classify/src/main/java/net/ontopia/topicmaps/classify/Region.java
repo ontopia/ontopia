@@ -88,9 +88,9 @@ public class Region {
     
     for (int i=0; i < children.size(); i++) {
       Object o = children.get(i);
-      if (o instanceof TextBlock)
+      if (o instanceof TextBlock) {
         System.out.println(((TextBlock)o).getTokens());
-      else {
+      } else {
         level++;
         ((Region)o).dump(level);
         level--;
@@ -108,9 +108,9 @@ public class Region {
   public void visitTokens(TokenVisitor visitor) {
     for (int i=0; i < children.size(); i++) {
       Object o = children.get(i);
-      if (o instanceof TextBlock)
+      if (o instanceof TextBlock) {
         ((TextBlock)o).visitTokens(visitor);
-      else {
+      } else {
         ((Region)o).visitTokens(visitor);
       }
     }

@@ -50,10 +50,13 @@ public class TMRevitalizer implements TMRevitalizerIF {
   @Override
   public Object revitalize(Object o) {
     // no need to revitalize null
-    if (o == null) return null;
+    if (o == null) {
+      return null;
+    }
     // check to see if object has already been processed
-    if (processed.containsKey(o))
+    if (processed.containsKey(o)) {
       return processed.get(o);
+    }
       
     if (o instanceof TMRevitalizableIF) {
       processed.put(o, o);
@@ -101,10 +104,11 @@ public class TMRevitalizer implements TMRevitalizerIF {
     // ISSUE: what if new object have different type than old
     // object. this can actually happen if the topic map is reloaded
     // from file in the meantime.
-    if (revitalized == null)
+    if (revitalized == null) {
       throw new OntopiaRuntimeException("Object " + o + " could not be revitalized because it can no longer be found in the topic map.");
-    else
+    } else {
       return revitalized;
+    }
   }
 
   private Collection revitalize(Collection c) {

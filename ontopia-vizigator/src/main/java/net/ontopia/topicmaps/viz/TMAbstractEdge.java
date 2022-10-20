@@ -93,7 +93,9 @@ public abstract class TMAbstractEdge extends Edge
    */
   public Point getMidPoint() {
     int index = getIndexInParents();
-    if (index == 0) return getSimpleMidPoint();
+    if (index == 0) {
+      return getSimpleMidPoint();
+    }
     return getMiddleOf(getCurvedLine(index));
   }
 
@@ -101,8 +103,9 @@ public abstract class TMAbstractEdge extends Edge
     int index = getIndexInParents();
     
     // Optimize out the general case
-    if (index == 0)
+    if (index == 0) {
       return getMidPointBetween(from, getMidPoint());
+    }
     
     return getMiddleOf(getFromCurve(index));
   }
@@ -131,8 +134,9 @@ public abstract class TMAbstractEdge extends Edge
     int index = getIndexInParents();
     
     // Optimize out the general case
-    if(index == 0)
+    if(index == 0) {
       return getMidPointBetween(to, getMidPoint());
+    }
     
     return getMiddleOf(getToCurve(index));
   }
@@ -256,10 +260,13 @@ public abstract class TMAbstractEdge extends Edge
   protected int getIndexInParents() {
     ArrayList possible = new ArrayList(); 
     
-    for (Iterator iter = from.getEdges(); iter.hasNext();)
+    for (Iterator iter = from.getEdges(); iter.hasNext();) {
       possible.add(iter.next());
+    }
     
-    if (possible.size() > intBuffer.length) intBuffer = new int[possible.size()];
+    if (possible.size() > intBuffer.length) {
+      intBuffer = new int[possible.size()];
+    }
     
     int index = 0;
     
@@ -275,7 +282,9 @@ public abstract class TMAbstractEdge extends Edge
     Arrays.sort(result);
     int offset = Arrays.binarySearch(result, System.identityHashCode(this));
     // If the total size is even, increase the index.
-    if (result.length % 2 == 0) offset++;
+    if (result.length % 2 == 0) {
+      offset++;
+    }
     return offset;
   }
 
@@ -327,14 +336,18 @@ public abstract class TMAbstractEdge extends Edge
     double deltaX = (x2 - x1);
     double deltaY = (y2 - y1);
     double alpha = 0;
-    if (deltaY != 0 && deltaX != 0) alpha = Math.atan(deltaY / deltaX);
+    if (deltaY != 0 && deltaX != 0) {
+      alpha = Math.atan(deltaY / deltaX);
+    }
     double beta = (Math.PI / 2) - alpha;
     return beta;
   }
 
   @Override
   public void paintLast(Graphics g) {
-    if (underMouse) this.paintToolTip(g);
+    if (underMouse) {
+      this.paintToolTip(g);
+    }
   }
 
   protected void paintToolTip(Graphics g) {
@@ -434,7 +447,9 @@ public abstract class TMAbstractEdge extends Edge
   public void paint(Graphics g, TGPanel tgPanel) {
     underMouse = (tgPanel.getMouseOverE() == this);
   
-    if (intersects(tgPanel.getSize())) paintConnection(g);
+    if (intersects(tgPanel.getSize())) {
+      paintConnection(g);
+    }
   
     if (icon != null) {
       Point mid = this.getMidPoint();
@@ -515,13 +530,15 @@ public abstract class TMAbstractEdge extends Edge
   @Override
   public double distFromPoint(double x, double y) {
     Shape shape = getDisplayShape();
-    if (shape == null)
+    if (shape == null) {
       return super.distFromPoint(x, y);
+    }
     
     // Bit of a hack, but just because TG does something rather
     // stupid here anyway.
-    if (shape.intersects(x -2, y-2, 4, 4))
+    if (shape.intersects(x -2, y-2, 4, 4)) {
       return 0;
+    }
     return 1000;
   }
 }

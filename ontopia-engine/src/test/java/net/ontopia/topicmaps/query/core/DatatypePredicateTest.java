@@ -87,8 +87,9 @@ public class DatatypePredicateTest extends AbstractPredicateTest {
     Iterator it = paper.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it.next();
-      if (occ.getLocator() == null)
+      if (occ.getLocator() == null) {
         addMatch(matches, "OCC", occ);
+      }
     }
     
     assertQueryMatches(matches,
@@ -106,8 +107,9 @@ public class DatatypePredicateTest extends AbstractPredicateTest {
     Iterator it = paper.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF) it.next();
-      if (occ.getLocator() != null)
+      if (occ.getLocator() != null) {
         addMatch(matches, "OCC", occ);
+      }
     }
     
     assertQueryMatches(matches,
@@ -213,8 +215,9 @@ public class DatatypePredicateTest extends AbstractPredicateTest {
       Iterator it2 = topic.getOccurrences().iterator();
       while (it2.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it2.next();
-        if (occ.getDataType().getAddress().equals(datatype))
+        if (occ.getDataType().getAddress().equals(datatype)) {
           addMatch(matches, "OCC", occ);
+        }
       }
     }
     return matches;

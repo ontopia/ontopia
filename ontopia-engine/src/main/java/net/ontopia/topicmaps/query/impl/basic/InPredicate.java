@@ -43,10 +43,11 @@ public class InPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0])
+    if (boundparams[0]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.SMALL_RESULT;
+    }
   }
 
   @Override
@@ -63,10 +64,11 @@ public class InPredicate implements BasicPredicateIF {
     
     if (matches.data[0][varix] != null) {
       return filter(matches, varix, values);
-    } else
+    } else {
       return PredicateUtils.collectionToOne(matches, values.toArray(),
                                             varix, varix,
                                             PredicateUtils.NO_OPERATION);
+    }
   }
   
   protected QueryMatches filter(QueryMatches matches, int ix1, Set values) {
@@ -77,8 +79,9 @@ public class InPredicate implements BasicPredicateIF {
       Object object = matches.data[ix][ix1];
       
       // check value found against value given
-      if (object == null || !values.contains(object))
+      if (object == null || !values.contains(object)) {
         continue;
+      }
       
       // ok, add match
       result.data[nextix++] = matches.data[ix];

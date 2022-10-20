@@ -203,8 +203,9 @@ public class TemplateEventHandler implements ParseEventHandlerIF {
       } catch (IllegalAccessException e) {
         throw new OntopiaRuntimeException(e);
       } catch (InvocationTargetException e) {
-        if (e.getCause() instanceof InvalidTopicMapException)
+        if (e.getCause() instanceof InvalidTopicMapException) {
           throw (InvalidTopicMapException) e.getCause();
+        }
         throw new OntopiaRuntimeException(e.getCause());
       }
     }
@@ -215,17 +216,20 @@ public class TemplateEventHandler implements ParseEventHandlerIF {
 
     private Method getMethod(String name) {
       Method[] methods = ParseEventHandlerIF.class.getMethods();
-      for (int ix = 0; ix < methods.length; ix++)
-        if (methods[ix].getName().equals(name))
+      for (int ix = 0; ix < methods.length; ix++) {
+        if (methods[ix].getName().equals(name)) {
           return methods[ix];
+        }
+      }
       return null;
     }
 
     private Object copy(Object parameter) {
-      if (parameter instanceof ValueGeneratorIF)
+      if (parameter instanceof ValueGeneratorIF) {
         return ((ValueGeneratorIF) parameter).copy();
-      else
+      } else {
         return parameter;
+      }
     }
   }
 

@@ -93,20 +93,22 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   @Override
   public String getProperty(String name, String defaultValue) {
     String value = (String)properties.get(name);
-    if (value == null)
+    if (value == null) {
       return defaultValue;
-    else
+    } else {
       return value;
+    }
   }
 
   @Override
   public int getProperty(String name, int defaultValue) {
     try {
       String value = (String)properties.get(name);
-      if (value == null)
+      if (value == null) {
         return defaultValue;
-      else
+      } else {
         return Integer.parseInt(value);
+      }
     } catch (NumberFormatException e) {
       return defaultValue;
     }
@@ -132,10 +134,11 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
 
   @Override
   public String getClass(String shortcut) {
-    if (classmap.get(shortcut) != null)
+    if (classmap.get(shortcut) != null) {
       return (String) classmap.get(shortcut);
-    else
+    } else {
       return "";
+    }
   }
   
   @Override
@@ -153,10 +156,11 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   // ------------------------------------------------
   
   public void addAutoloadTopicMap(String topicmapId) {
-    if (topicmapId.equals(AUTOLOAD_ALL_KEY))
+    if (topicmapId.equals(AUTOLOAD_ALL_KEY)) {
       isAutoloadAll = true;
-    else
+    } else {
       autoloads.add(topicmapId);
+    }
   }
 
   @Override
@@ -197,8 +201,9 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   
   public void addModel(String name, String title, boolean isDefault) {
     mvsConfig.addModel(name, title);
-    if (isDefault)
+    if (isDefault) {
       mvsConfig.setModel(name);
+    }
   }
 
   @Override
@@ -215,8 +220,9 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   
   public void addView(String name, String title, boolean isDefault) {
     mvsConfig.addView(name, title);
-    if (isDefault)
+    if (isDefault) {
       mvsConfig.setView(name);
+    }
   }
 
   @Override
@@ -233,8 +239,9 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
   
   public void addSkin(String name, String title, boolean isDefault) {
     mvsConfig.addSkin(name, title);
-    if (isDefault)
+    if (isDefault) {
       mvsConfig.setSkin(name);
+    }
   }
 
   @Override
@@ -264,18 +271,21 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
 
   @Override
   public Collection getPlugins(String groupId) {
-    if (groupId == null)
+    if (groupId == null) {
       groupId = "";
+    }
 
     // generate Property name to look up
     StringBuilder propName = new StringBuilder(PLUGINS_ORDER);
-    if (!groupId.isEmpty())
+    if (!groupId.isEmpty()) {
       propName.append("_" + groupId);
+    }
     
     // get string which specifies sort order of plugins
     String orderProp = getProperty(propName.toString());
-    if ((orderProp == null || orderProp.isEmpty()) && groupId.isEmpty())
+    if ((orderProp == null || orderProp.isEmpty()) && groupId.isEmpty()) {
       return plugins.values();
+    }
 
     List orderedPlugins = new ArrayList();
 
@@ -287,8 +297,9 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
         if (plugin != null) {
           if (groupId == null ||
               (groupId != null && PluginUtils.inPluginGroups(groupId,
-                                                             plugin.getGroups())))
+                                                             plugin.getGroups()))) {
             orderedPlugins.add(plugin);
+          }
         } else {
           log.warn("property " + propName +
                  " contains non-existent plugin: " + order[ix]);
@@ -300,13 +311,15 @@ public class NavigatorConfiguration implements NavigatorConfigurationIF {
     Iterator it = plugins.values().iterator();
     while (it.hasNext()) {
       PluginIF plugin = (PluginIF) it.next();
-      if (orderedPlugins.contains(plugin))
+      if (orderedPlugins.contains(plugin)) {
         continue;
+      }
       // check if matches with group id, if set.
       if (groupId == null ||
           (groupId != null && PluginUtils.inPluginGroups(groupId,
-                                                         plugin.getGroups())))
+                                                         plugin.getGroups()))) {
         orderedPlugins.add(plugin);
+      }
     }
     
     return orderedPlugins;

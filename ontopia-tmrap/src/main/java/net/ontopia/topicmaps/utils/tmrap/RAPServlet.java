@@ -116,14 +116,15 @@ public class RAPServlet extends HttpServlet {
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response,
       String URLString) throws IOException, ServletException {
-    if (URLString.endsWith("get-tolog"))
+    if (URLString.endsWith("get-tolog")) {
       getTolog(request, response);
-    else if (URLString.endsWith("get-topic"))
-      getTopic(request, response); 
-    else if (URLString.endsWith("get-topic-page"))
+    } else if (URLString.endsWith("get-topic")) {
+      getTopic(request, response);
+    } else if (URLString.endsWith("get-topic-page")) {
       getTopicPage(request, response);
-    else
+    } else {
       reportError(response, "No such GET request: " + URLString);
+    }
   }
   
   @Override
@@ -134,20 +135,21 @@ public class RAPServlet extends HttpServlet {
   
   public void doPost(HttpServletRequest request, HttpServletResponse response,
       String URLString) throws IOException {
-    if (URLString.endsWith("add-fragment"))
+    if (URLString.endsWith("add-fragment")) {
       addFragment(request, response);
-    else if (URLString.endsWith("update-topic"))
+    } else if (URLString.endsWith("update-topic")) {
       updateTopic(request, response);
-    else if (URLString.endsWith("delete-topic"))
+    } else if (URLString.endsWith("delete-topic")) {
       deleteTopic(request, response);
-    else if (URLString.endsWith("add-type-listener"))
+    } else if (URLString.endsWith("add-type-listener")) {
       addTypeListener(request, response);
-    else if (URLString.endsWith("remove-type-listener"))
+    } else if (URLString.endsWith("remove-type-listener")) {
       removeTypeListener(request, response);
-    else if (URLString.endsWith("tolog-update"))
+    } else if (URLString.endsWith("tolog-update")) {
       tologUpdate(request, response);
-    else
+    } else {
       reportError(response, "No such POST request" + URLString);
+    }
   }
 
   // --- TMRAP request implementations
@@ -367,8 +369,9 @@ public class RAPServlet extends HttpServlet {
           TOPICMAP_PARAMETER_NAME));
       Collection<TopicIF> topics = topicIndex.getTopics(subjectIndicators, sourceLocators, subjectLocators);
       
-      if (topics.size() != 1)
+      if (topics.size() != 1) {
         reportError(response, "add-type-listener: Wrong number of topics.");
+      }
       
       TopicIF topic = topics.iterator().next();
       
@@ -420,22 +423,25 @@ public class RAPServlet extends HttpServlet {
           TOPICMAP_PARAMETER_NAME));
       Collection<TopicIF> topics = topicIndex.getTopics(subjectIndicators, sourceLocators, subjectLocators);
       
-      if (topics.size() != 1)
+      if (topics.size() != 1) {
         reportError(response, "remove-type-listener: Wrong number of topics.");
+      }
       
       TopicIF topic = topics.iterator().next();
       
       Map<String, String> currentTypeListeners = clientListeners.get(topic);
-      if (currentTypeListeners == null)
+      if (currentTypeListeners == null) {
         reportError(response, "remove-type-listener: " +
             "Listener not found. You have to register a listener before it can " +
             "be removed.");
+      }
       
       String currentListener = currentTypeListeners.remove(client);
-      if (currentListener == null)
+      if (currentListener == null) {
         reportError(response, "remove-type-listener: " +
             "Listener not found. You have to register a listener before it can " +
             "be removed.");
+      }
     } catch (RAPServletException e) {
       reportError(response, e);
     } finally {
@@ -491,9 +497,10 @@ public class RAPServlet extends HttpServlet {
     String parameters[] = request.getParameterValues(parameterName);
     
     if (parameters == null || parameters.length == 0) {
-      if (required)
+      if (required) {
         throw new RAPServletException("The '" + parameterName + 
             "'-parameter is required for the " + operationName + " operation.");
+      }
       return defaultValue;
     } else if (parameters.length == 1) {
       String parameter = parameters[0];
@@ -519,10 +526,11 @@ public class RAPServlet extends HttpServlet {
     NavigatorApplicationIF navApp =
       NavigatorUtils.getNavigatorApplication(getServletContext()); 
 
-    if (tmids == null || tmids.length == 0)
+    if (tmids == null || tmids.length == 0) {
       return new RegistryTopicIndex(navApp.getTopicMapRepository(), true,
                                     rapconfig.getEditURI(),
                                     rapconfig.getViewURI());
+    }
 
     List<TopicIndexIF> topicIndexes = new ArrayList<TopicIndexIF>();
     for (int i = 0; i < tmids.length; i++) {
@@ -545,8 +553,9 @@ public class RAPServlet extends HttpServlet {
   private Collection<LocatorIF> getURICollection(HttpServletRequest request, 
       String paramName) throws RAPServletException {
     String[] value = request.getParameterValues(paramName);
-    if (value == null)
+    if (value == null) {
       return Collections.emptySet();
+    }
       
     HashSet<LocatorIF> uriLocators = new HashSet<LocatorIF>();
     for (int i = 0; i < value.length; i++) {
@@ -588,10 +597,12 @@ public class RAPServlet extends HttpServlet {
   
   private String makeSeparatedWords(String[] words, String separator,
       String lastSeparator) {
-    if (words.length == 0)
+    if (words.length == 0) {
       return "";
-    if (words.length == 1)
+    }
+    if (words.length == 1) {
       return words[0];
+    }
     
     int length = words.length;
     String retVal = words[length - 2] + lastSeparator + words[length - 1];
@@ -603,8 +614,9 @@ public class RAPServlet extends HttpServlet {
   }
   
   private void closeIndex(TopicIndexIF topicIndex) {
-    if (topicIndex != null)
+    if (topicIndex != null) {
       topicIndex.close();
+    }
   }
   
   private void reportError(HttpServletResponse response, String message) 

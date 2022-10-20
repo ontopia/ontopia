@@ -76,15 +76,17 @@ public class SQLOneToManyReference implements FieldAccessIF {
     FieldInfoIF[] fields = FieldUtils.joinFieldInfos(new FieldInfoIF[] { value_field }, select_fields);    
     sql_load = SQLGenerator.getSelectStatement(field.getTable(), FieldUtils.getColumns(fields),
                                                field.getJoinKeys(), 0);      
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load 1:M reference) " + field.getName() + ": " + sql_load);
+    }
 
     sql_load_multiple = SQLGenerator.getSelectStatement(field.getTable(), 
               FieldUtils.joinStrings(field.getJoinKeys(), 
                          FieldUtils.getColumns(fields)),
               field.getJoinKeys(), batchSize);
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (load 1:M reference*) " + field.getName() + ": " + sql_load_multiple);
+    }
   
     // -----------------------------------------------------------------------------
     // Add
@@ -94,8 +96,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
     sql_add = SQLGenerator.getUpdateStatement(field.getJoinTable(),
                                               field.getJoinKeys(),
                                               field.getValueClassInfo().getIdentityFieldInfo().getValueColumns());
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (add 1:M reference) " + field.getName() + ": " + sql_add);
+    }
 
     // update TM_BASE_NAME set topic_id = ? where id = ?
   
@@ -107,8 +110,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
     sql_remove = SQLGenerator.getUpdateStatement(field.getJoinTable(),
                                                  field.getJoinKeys(),
                                                  field.getValueClassInfo().getIdentityFieldInfo().getValueColumns());
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (remove 1:M reference) " + field.getName() + ": " + sql_remove);
+    }
 
     // update TM_BASE_NAME set topic_id = NULL where id = ?
 
@@ -122,8 +126,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
     sql_clear = SQLGenerator.getUpdateStatement(field.getJoinTable(),
                                                 field.getJoinKeys(),
                                                 field.getJoinKeys());
-    if (debug)
+    if (debug) {
       log.debug("Compiled SQL (clear 1:M reference) " + field.getName() + ": " + sql_clear);
+    }
 
     // update TM_BASE_NAME set topic_id = NULL where topic_id = ?
     
@@ -142,13 +147,15 @@ public class SQLOneToManyReference implements FieldAccessIF {
     try {
       
       // Bind identity columns
-      if (debug)
+      if (debug) {
         log.debug("Binding object identity: " + identity);
+      }
       identity_field.bind(identity, stm, 1);
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load);
+      }
       ResultSet rs = stm.executeQuery();
       try {
         // Zero or more rows expected
@@ -179,8 +186,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
             registrar.registerField(ticket, value_id, finfo.getIndex(), value);
 
             // Register value identity with registrar
-            if (value != null && finfo.isReferenceField())
+            if (value != null && finfo.isReferenceField()) {
               registrar.registerIdentity(ticket, (IdentityIF)value);
+            }
 
             // Increment column index
             rsindex += finfo.getColumnCount();    
@@ -197,7 +205,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
       }
     } finally {
       //! if (close_stm && stm != null) stm.close();
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
     
     // Update persistence cache
@@ -230,8 +240,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
     try {
       
       // Execute statement
-      if (debug)
+      if (debug) {
         log.debug("Executing: " + sql_load_multiple);
+      }
       //! ResultSet rs = stm.executeQuery(sql);
       ResultSet rs = stm.executeQuery();
 
@@ -268,8 +279,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
           registrar.registerField(ticket, value_id, finfo.getIndex(), value);
 
           // Register value identity with registrar
-          if (value != null && finfo.isReferenceField())
+          if (value != null && finfo.isReferenceField()) {
             registrar.registerIdentity(ticket, (IdentityIF)value);
+          }
 
           // Increment column index
           rsindex += finfo.getColumnCount();    
@@ -282,7 +294,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
       rs.close();
       
     } finally {
-      if (stm != null) stm.close();
+      if (stm != null) {
+        stm.close();
+      }
     }
 
     // Update persistence cache
@@ -310,7 +324,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
         executeUpdate(stm, sql_add);
       }
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -320,13 +336,15 @@ public class SQLOneToManyReference implements FieldAccessIF {
   
   protected void add_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug("Binding object identity: " + identity);
+    }
     identity_field.bind(identity, stm, 1);
     
     // Bind value columns
-    if (debug)
+    if (debug) {
       log.debug("Binding reference identity: " + value);
+    }
     field.bind(value, stm, 1 + identity_field.getColumnCount());    
   }
   
@@ -346,7 +364,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
         executeUpdate(stm, sql_remove);
       }
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -356,14 +376,16 @@ public class SQLOneToManyReference implements FieldAccessIF {
   
   protected void remove_bindParameters(PreparedStatement stm, IdentityIF identity, Object value) throws Exception {
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug("Binding null identity: " + identity);
+    }
     identity_field.bind(null, stm, 1);
     // replace keys with NULLs!
     
     // Bind value columns
-    if (debug)
+    if (debug) {
       log.debug("Binding value: " + value);
+    }
     field.bind(value, stm, 1 + identity_field.getColumnCount());
   }
   
@@ -379,7 +401,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
       // Execute statement
       executeUpdate(stm, sql_clear);
     } finally {
-      if (close_stm && stm != null) stm.close();
+      if (close_stm && stm != null) {
+        stm.close();
+      }
     }
   }
   
@@ -389,14 +413,16 @@ public class SQLOneToManyReference implements FieldAccessIF {
   
   protected void clear_bindParameters(PreparedStatement stm, IdentityIF identity) throws Exception {      
     // Bind null identity columns
-    if (debug)
+    if (debug) {
       log.debug("Binding null identity: " + identity);
+    }
     identity_field.bind(null, stm, 1);
     // replace keys with NULLs!
     
     // Bind identity columns
-    if (debug)
+    if (debug) {
       log.debug("Binding identity: " + identity);
+    }
     identity_field.bind(identity, stm, 1 + identity_field.getColumnCount());
   }
 
@@ -413,12 +439,14 @@ public class SQLOneToManyReference implements FieldAccessIF {
     Collection<?> removed = value.getRemoved();
     
     // Add added values
-    if (added != null && !added.isEmpty())
+    if (added != null && !added.isEmpty()) {
       add(oaccess.getIdentity(object), added);
+    }
     
     // Remove removed values
-    if (removed != null && !removed.isEmpty())
+    if (removed != null && !removed.isEmpty()) {
       remove(oaccess.getIdentity(object), removed);
+    }
     
     // Reset trackable set
     value.resetTracking();    
@@ -428,7 +456,9 @@ public class SQLOneToManyReference implements FieldAccessIF {
   }
 
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
-    if (debug) log.debug("Executing: " + sql);
+    if (debug) {
+      log.debug("Executing: " + sql);
+    }
     stm.executeUpdate();
   }
   

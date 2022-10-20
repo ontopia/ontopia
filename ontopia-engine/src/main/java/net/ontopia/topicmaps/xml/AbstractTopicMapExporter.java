@@ -74,15 +74,17 @@ public abstract class AbstractTopicMapExporter {
    *         if this.filter is null, returns the original collection.
    */
   protected Collection filterCollection(Collection unfiltered) {
-    if (filter == null)
+    if (filter == null) {
       return unfiltered;
+    }
     
     Collection retVal = new ArrayList();
     Iterator unfilteredIt = unfiltered.iterator();
     while (unfilteredIt.hasNext()) {
       Object current = unfilteredIt.next();
-      if (filter.test(current))
+      if (filter.test(current)) {
         retVal.add(current);
+      }
     }
     return retVal;
   }
@@ -94,15 +96,17 @@ public abstract class AbstractTopicMapExporter {
    *         False otherwise.
    */
   protected boolean filterOk(Object unfiltered) {
-    if (filter == null)
+    if (filter == null) {
       return true;
+    }
     return filter.test(unfiltered);
   }
   
   protected void addId(AttributesImpl atts, TMObjectIF tmobject) {
     String id = getElementId(tmobject);
-    if (id != null)
+    if (id != null) {
       atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME,  "id", "ID", id);
+    }
   }
   
   /**
@@ -125,11 +129,13 @@ public abstract class AbstractTopicMapExporter {
    * these two methods is vital.
    */
   public String getElementId(TMObjectIF tmobject) {    
-    if (tmobject instanceof ReifiableIF && ((ReifiableIF)tmobject).getReifier() != null)
+    if (tmobject instanceof ReifiableIF && ((ReifiableIF)tmobject).getReifier() != null) {
       return "reified-id" + ((ReifiableIF)tmobject).getReifier().getObjectId();
+    }
 
-    if (!(add_ids || (tmobject instanceof TopicIF)))
+    if (!(add_ids || (tmobject instanceof TopicIF))) {
       return null; // don't output an ID
+    }
 
     String id = null;
     TopicMapIF tm = tmobject.getTopicMap();
@@ -146,18 +152,20 @@ public abstract class AbstractTopicMapExporter {
           int pos = addr.indexOf('#');
           if (pos != -1) {
             id = addr.substring(pos + 1);
-            if (mayCollide(id) || !isValidXMLId(id))
+            if (mayCollide(id) || !isValidXMLId(id)) {
               // reject this ID if it may collide with object ID-based ones
               id = null;
-            else
+            } else {
               break;
+            }
           }
         }
       }
     }
 
-    if (id == null)
+    if (id == null) {
       id = "id" + tmobject.getObjectId();
+    }
 
     return id;
   }
@@ -170,17 +178,21 @@ public abstract class AbstractTopicMapExporter {
    * and idT234234.
    */
   static public boolean mayCollide(String id) {
-    if (!(id.startsWith("id") && id.length() > 2))
+    if (!(id.startsWith("id") && id.length() > 2)) {
       return false;
+    }
 
     int ix = 2;
-    if (id.charAt(ix) >= 'A' && id.charAt(ix) <= 'Z')
+    if (id.charAt(ix) >= 'A' && id.charAt(ix) <= 'Z') {
       ix++; // we accept an uppercase character in this position
+    }
 
     // the rest must be digits
-    for (; ix < id.length(); ix++)
-      if (id.charAt(ix) < '0' || id.charAt(ix) > '9')
+    for (; ix < id.length(); ix++) {
+      if (id.charAt(ix) < '0' || id.charAt(ix) > '9') {
         return false;
+      }
+    }
     return true;
   }
 
@@ -194,15 +206,19 @@ public abstract class AbstractTopicMapExporter {
     // [4]  NameChar ::= Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar |
     //                   Extender
 
-    if (namestart == null)
+    if (namestart == null) {
       buildSets();
+    }
 
-    if (id.length() < 1 || !namestart.contains(id.charAt(0)))
+    if (id.length() < 1 || !namestart.contains(id.charAt(0))) {
       return false;
+    }
 
-    for (int ix = 1; ix < id.length(); ix++)
-      if (!namechar.contains(id.charAt(ix)))
+    for (int ix = 1; ix < id.length(); ix++) {
+      if (!namechar.contains(id.charAt(ix))) {
         return false;
+      }
+    }
 
     return true;
   }

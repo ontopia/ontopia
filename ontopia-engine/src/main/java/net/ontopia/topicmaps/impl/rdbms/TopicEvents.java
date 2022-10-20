@@ -70,7 +70,9 @@ public class TopicEvents implements EventListenerIF {
         }
       }
       for (TopicIF modified : topicsModified) {
-        if (topicsAdded.contains(modified) || topicsRemoved.containsKey(modified)) continue;
+        if (topicsAdded.contains(modified) || topicsRemoved.containsKey(modified)) {
+          continue;
+        }
         for (int i=0; i < topic_listeners.length; i++) {
           try {
             topic_listeners[i].objectModified(SnapshotTopic.makeSnapshot(modified, SnapshotTMObject.SNAPSHOT_REFERENCE, new HashMap<TMObjectIF, SnapshotTMObject>()));
@@ -118,8 +120,9 @@ public class TopicEvents implements EventListenerIF {
   protected void removingTopic(TopicIF topic) {
     if (store.topic_listeners != null) {
       topicsAdded.remove(topic);
-      if (!topicsRemoved.containsKey(topic))
+      if (!topicsRemoved.containsKey(topic)) {
         topicsRemoved.put(topic, SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_COMPLETE, new HashMap<TMObjectIF, SnapshotTMObject>()));
+      }
     }
   }
   

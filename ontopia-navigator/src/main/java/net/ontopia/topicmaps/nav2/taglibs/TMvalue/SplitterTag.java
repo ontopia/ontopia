@@ -48,9 +48,9 @@ public class SplitterTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection names) throws JspTagException {
     
-    if (names == null || names.isEmpty())
+    if (names == null || names.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       // contains the upper case first character as key and a collection
       // of TopicNameIF objects as values.
       CollectionMap charNamesMap = new CollectionMap();

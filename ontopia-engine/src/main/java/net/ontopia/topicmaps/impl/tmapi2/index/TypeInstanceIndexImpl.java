@@ -160,8 +160,9 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
   @Override
   public Collection<Topic> getTopics(Topic type) {
     TopicIF ontType = null;
-    if (type != null)
+    if (type != null) {
       ontType = topicMap.unwrapTopic(type);
+    }
 
     return new LazySet<Topic>(topicMap, classInstanceIndex.getTopics(ontType));
   }
@@ -186,8 +187,9 @@ public class TypeInstanceIndexImpl implements TypeInstanceIndex {
       }
     }
 
-    if (resultSet.isEmpty())
+    if (resultSet.isEmpty()) {
       return Collections.emptyList();
+    }
 
     return new LazySet<Topic>(topicMap, resultSet);
   }

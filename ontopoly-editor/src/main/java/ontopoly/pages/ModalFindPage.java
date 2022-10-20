@@ -221,8 +221,9 @@ public abstract class ModalFindPage<T> extends Panel {
       @Override
       public boolean isVisible() {
         IModel<String> model = searchTermField.getModel();
-        if (model == null)
+        if (model == null) {
           return false;
+        }
         return !(model.getObject() == null ||
                  model.getObject().equals("")) &&
           ((List<Topic>)results.getObject()).isEmpty();
@@ -269,12 +270,15 @@ public abstract class ModalFindPage<T> extends Panel {
       protected void onUpdate(AjaxRequestTarget target) {
         Object modelObject = checkGroup.getModelObject();
         Collection selected;
-        if (modelObject instanceof String)
+        if (modelObject instanceof String) {
           selected = Collections.singleton(modelObject);
-        else
+        } else {
           selected = (Collection)modelObject;
+        }
         
-        if (selected == null) selected = Collections.emptyList();
+        if (selected == null) {
+          selected = Collections.emptyList();
+        }
         
         // add associations for selected topics
         onSelectionConfirmed(target, selected);
@@ -321,8 +325,9 @@ public abstract class ModalFindPage<T> extends Panel {
         Iterator<TopicType> iter = allowedValueTypes.iterator();
         while (iter.hasNext()) {
           TopicType topicType = iter.next();
-          if (!largeInstanceSets.contains(topicType))
+          if (!largeInstanceSets.contains(topicType)) {
             topicTypes.add(topicType);
+          }
         }
         return topicTypes; 
       }
@@ -408,8 +413,9 @@ public abstract class ModalFindPage<T> extends Panel {
     // NOTE: need to readd model here because page, which we depend on
     // in the construction of the tree model, is not available in
     // TreePanel constructor
-    if (this.selectedTypeModel != null)
+    if (this.selectedTypeModel != null) {
       treePanel.setDefaultModel(getTreeModel(selectedType));
+    }
     
     final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", this.selectedTypeModel, playerTypesChoicesModel);
     
@@ -430,12 +436,15 @@ public abstract class ModalFindPage<T> extends Panel {
       protected void onUpdate(AjaxRequestTarget target) {
         Object modelObject = checkGroup.getModelObject();
         Collection selected;
-        if (modelObject instanceof String)
+        if (modelObject instanceof String) {
           selected = Collections.singleton(modelObject);
-        else
+        } else {
           selected = (Collection)modelObject;
+        }
         
-        if (selected == null) selected = Collections.EMPTY_LIST;
+        if (selected == null) {
+          selected = Collections.EMPTY_LIST;
+        }
         
         // add associations for selected topics
         onSelectionConfirmed(target, selected);

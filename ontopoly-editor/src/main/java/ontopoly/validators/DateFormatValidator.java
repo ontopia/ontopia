@@ -45,7 +45,9 @@ public abstract class DateFormatValidator extends AbstractValidator<String> {
   @Override
   protected void onValidate(IValidatable<String> validatable) {
     final String value = validatable.getValue();
-    if (value == null) return;
+    if (value == null) {
+      return;
+    }
     try {
       DateFormat df = createDateFormat();
       df.parse(value);

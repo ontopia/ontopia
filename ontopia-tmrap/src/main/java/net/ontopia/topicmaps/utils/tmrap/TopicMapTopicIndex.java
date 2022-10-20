@@ -68,8 +68,9 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF indicator = it.next();
       topic = topicmap.getTopicBySubjectIdentifier(indicator);
-      if (topic != null)
+      if (topic != null) {
         topics.add(topic);
+      }
     }
 
     it = sources.iterator();
@@ -77,21 +78,25 @@ public class TopicMapTopicIndex implements TopicIndexIF {
       LocatorIF srcloc = it.next();
       TMObjectIF object;
       String address = srcloc.getAddress();
-      if (XTMFragmentExporter.isVirtualReference(address))
+      if (XTMFragmentExporter.isVirtualReference(address)) {
         object = topicmap
           .getObjectById(XTMFragmentExporter.resolveVirtualReference(address, tmid));
-      else
+      } else {
         object = topicmap.getObjectByItemIdentifier(srcloc);
+      }
 
-      if (object instanceof TopicIF)
+      if (object instanceof TopicIF) {
         topics.add((TopicIF) object);
+      }
     }
 
     it = subjects.iterator();
     while (it.hasNext()) {
       LocatorIF subject = it.next();
       topic = topicmap.getTopicBySubjectLocator(subject);
-      if (topic != null) topics.add(topic);
+      if (topic != null) {
+        topics.add(topic);
+      }
     }
 
     return topics;
@@ -116,8 +121,9 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF indicator = it.next();
       topic = topicmap.getTopicBySubjectIdentifier(indicator);
-      if (topic != null)
+      if (topic != null) {
         pages.add(getTopicPage(topic, tmid));
+      }
     }
 
     it = sources.iterator();
@@ -125,22 +131,25 @@ public class TopicMapTopicIndex implements TopicIndexIF {
       LocatorIF srcloc = it.next();
       TMObjectIF object;
       String address = srcloc.getAddress();
-      if (XTMFragmentExporter.isVirtualReference(address))
+      if (XTMFragmentExporter.isVirtualReference(address)) {
         object = topicmap
           .getObjectById(XTMFragmentExporter.resolveVirtualReference(address, tmid));
-      else
+      } else {
         object = topicmap.getObjectByItemIdentifier(srcloc);
+      }
       
-      if (object instanceof TopicIF)
+      if (object instanceof TopicIF) {
         pages.add(getTopicPage((TopicIF) object, tmid));
+      }
     }
 
     it = subjects.iterator();
     while (it.hasNext()) {
       LocatorIF subject = it.next();
       topic = topicmap.getTopicBySubjectLocator(subject);
-      if (topic != null)
+      if (topic != null) {
         pages.add(getTopicPage(topic, tmid));
+      }
     }
 
     return pages;
@@ -161,8 +170,9 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     while (it.hasNext()) {
       LocatorIF indicator = it.next();
       topic = topicmap.getTopicBySubjectIdentifier(indicator);
-      if (topic != null)
+      if (topic != null) {
         retVal.addPage(topicHandle, getTopicPage(topic, tmid), tmReifierName);
+      }
     }
 
     it = sources.iterator();
@@ -170,23 +180,26 @@ public class TopicMapTopicIndex implements TopicIndexIF {
       LocatorIF srcloc = it.next();
       TMObjectIF object;
       String address = srcloc.getAddress();
-      if (XTMFragmentExporter.isVirtualReference(address))
+      if (XTMFragmentExporter.isVirtualReference(address)) {
         object = topicmap
           .getObjectById(XTMFragmentExporter.resolveVirtualReference(address, tmid));
-      else
+      } else {
         object = topicmap.getObjectByItemIdentifier(srcloc);
+      }
       
-      if (object instanceof TopicIF)
+      if (object instanceof TopicIF) {
         retVal.addPage(topicHandle, getTopicPage((TopicIF) object, tmid),
-                       tmReifierName);
+                tmReifierName);
+      }
     }
 
     it = subjects.iterator();
     while (it.hasNext()) {
       LocatorIF subject = it.next();
       topic = topicmap.getTopicBySubjectLocator(subject);
-      if (topic != null)
+      if (topic != null) {
         retVal.addPage(topicHandle, getTopicPage(topic, tmid), tmReifierName);
+      }
     }
     return retVal;
   }

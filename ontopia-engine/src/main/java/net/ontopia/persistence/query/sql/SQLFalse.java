@@ -29,7 +29,9 @@ public class SQLFalse implements SQLExpressionIF {
   private static SQLFalse singleton;
 
   public static synchronized SQLFalse getInstance() {
-    if (singleton == null) singleton = new SQLFalse();
+    if (singleton == null) {
+      singleton = new SQLFalse();
+    }
     return singleton; 
   }
 

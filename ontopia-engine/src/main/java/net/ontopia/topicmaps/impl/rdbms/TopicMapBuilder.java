@@ -83,8 +83,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     TopicIF topic = new Topic(txn);
     ((TopicMap)tm).addTopic(topic);
     Iterator types = topic_types.iterator();
-    while (types.hasNext())
+    while (types.hasNext()) {
       topic.addType((TopicIF) types.next());
+    }
     return topic;
   }
 
@@ -107,13 +108,15 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     Objects.requireNonNull(topic, MSG_TOPIC_NOT_NULL);
     Objects.requireNonNull(value, MSG_TOPIC_NAME_VALUE_NOT_NULL);
     CrossTopicMapException.check(topic, this.tm);
-    if (bntype != null)
+    if (bntype != null) {
       CrossTopicMapException.check(bntype, this.tm);
+    }
     // if type has not been specified, use the default name type
-    if (bntype == null)
+    if (bntype == null) {
       bntype = getDefaultNameType();
-    else
-      CrossTopicMapException.check(bntype, this.tm);		  
+    } else {
+      CrossTopicMapException.check(bntype, this.tm);
+    }		  
 		
     TopicNameIF name = new TopicName(txn);
     ((Topic)topic).addTopicName(name);
@@ -188,8 +191,9 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
 
   protected void checkCollection(Collection objects) {
     Iterator iter = objects.iterator();
-    while (iter.hasNext())
+    while (iter.hasNext()) {
       CrossTopicMapException.check((TMObjectIF)iter.next(), this.tm);
+    }
   }
   
   protected void addScope(ScopedIF scoped, Collection scope) {

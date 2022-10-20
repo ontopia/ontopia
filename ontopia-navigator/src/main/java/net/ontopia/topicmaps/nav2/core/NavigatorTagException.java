@@ -77,10 +77,11 @@ public class NavigatorTagException extends JspTagException {
   
   @Override
   public String getMessage() {
-    if (cause == null)
+    if (cause == null) {
       return super.getMessage();
-    else
+    } else {
       return cause.toString();
+    }
   }
   
   @Override

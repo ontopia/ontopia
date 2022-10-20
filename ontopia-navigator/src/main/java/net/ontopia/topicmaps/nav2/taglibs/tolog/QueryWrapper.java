@@ -77,25 +77,28 @@ public class QueryWrapper {
           throws NavigatorRuntimeException {
     contextTag = FrameworkUtils.getContextTag(pageContext);
     
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new NavigatorRuntimeException("<tolog:*> tags must be nested"
               + " directly or indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found");
+    }
     
     contextManager = contextTag.getContextManager();
       
     this.query = inQuery;
         
     
-    if (query == null)
+    if (query == null) {
       throw new NavigatorRuntimeException("QueryWrapper must get a non-null"
                                           + "'query' argument");
+    }
 
     // get topicmap object on which we should compute 
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("QueryWrapper found no "
               + "topic map.");
+    }
         
     // Create a QueryProcessorIF for the topicmap.
     queryProcessor = contextTag.getQueryProcessor();
@@ -125,10 +128,12 @@ public class QueryWrapper {
   }
   
   protected void updateTotalGroupBy(boolean groupBy[]) {
-    if (totalGroupBy == null)
+    if (totalGroupBy == null) {
       totalGroupBy = new boolean[groupBy.length];
-    for (int i = 0; i < totalGroupBy.length; i++)
+    }
+    for (int i = 0; i < totalGroupBy.length; i++) {
       totalGroupBy[i] |= groupBy[i];
+    }
   }
   
   protected void setUsedBy(ForEachTag user) {
@@ -140,9 +145,11 @@ public class QueryWrapper {
   }
   
   protected boolean fullyGrouped() {
-    for (int i = 0; i < totalGroupBy.length; i++)
-      if (!totalGroupBy[i])
+    for (int i = 0; i < totalGroupBy.length; i++) {
+      if (!totalGroupBy[i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -156,8 +163,9 @@ public class QueryWrapper {
       differences = null;
     } else {
       differences = new boolean[currentRow.length];
-      for (int i = 0 ; i < currentRow.length; i++)
+      for (int i = 0 ; i < currentRow.length; i++) {
         differences[i] = !sameElements(currentRow[i], nextRow[i]);
+      }
     }
   }
 
@@ -175,8 +183,9 @@ public class QueryWrapper {
     * contain the value true.
     */
   protected boolean relevantDifferences(boolean groupColumns[]) {
-    if (groupColumns == null || differences == null)
+    if (groupColumns == null || differences == null) {
       return false;
+    }
   
     boolean retVal= false;
     for (int i = 0; i < groupColumns.length; i++) {
@@ -197,10 +206,11 @@ public class QueryWrapper {
   */
   public void next() {
     currentRow = nextRow;
-    if (!lookAhead.isEmpty())
+    if (!lookAhead.isEmpty()) {
       nextRow = (Object[])lookAhead.remove(0);
-    else
+    } else {
       nextRow = queryResult.next() ? queryResult.getValues() : null;
+    }
     computeDifferences();
   }
   
@@ -226,9 +236,10 @@ public class QueryWrapper {
     DeclarationContextIF declarationContext = contextTag
             .getDeclarationContext();
     
-    if (declarationContext == null)
+    if (declarationContext == null) {
       throw new NavigatorRuntimeException("QueryWrapper found no"
               + " DeclaractionContextIF on the ContextTag");    
+    }    
             
     try {
       parsedQuery = queryProcessor.parse(query, declarationContext);
@@ -259,33 +270,49 @@ public class QueryWrapper {
     // look ahead to see if the current child is the only direct child of the parent
 
     // at last row
-    if (nextRow == null) return true;
+    if (nextRow == null) {
+      return true;
+    }
 
     // next row is different
-    if (!equalGroup(parentGroupColumns, currentRow, nextRow)) return true;
-    if (!equalGroup(childGroupColumns, currentRow, nextRow)) return false;
+    if (!equalGroup(parentGroupColumns, currentRow, nextRow)) {
+      return true;
+    }
+    if (!equalGroup(childGroupColumns, currentRow, nextRow)) {
+      return false;
+    }
     
     // check existing look ahead
     int length = lookAhead.size();
     for (int i=0; i < length; i++) {
       Object[] futureRow = (Object[])lookAhead.get(i);
-      if (!equalGroup(parentGroupColumns, currentRow, futureRow)) return true;
-      if (!equalGroup(childGroupColumns, currentRow, futureRow)) return false;            
+      if (!equalGroup(parentGroupColumns, currentRow, futureRow)) {
+        return true;
+      }
+      if (!equalGroup(childGroupColumns, currentRow, futureRow)) {
+        return false;
+      }            
     }
 
     // peek further
     while (queryResult.next()) {      
       Object[] futureRow = queryResult.getValues();      
       lookAhead.add(futureRow);
-      if (!equalGroup(parentGroupColumns, currentRow, futureRow)) return true;
-      if (!equalGroup(childGroupColumns, currentRow, futureRow)) return false;      
+      if (!equalGroup(parentGroupColumns, currentRow, futureRow)) {
+        return true;
+      }
+      if (!equalGroup(childGroupColumns, currentRow, futureRow)) {
+        return false;
+      }      
     }    
     return true;
   }
 
   protected boolean equalGroup(boolean[] groupColumns, Object[] row1, Object[] row2) {
     for (int i=0; i < row1.length; i++) {
-      if (groupColumns[i] && !Objects.equals(row1[i], row2[i])) return false;        
+      if (groupColumns[i] && !Objects.equals(row1[i], row2[i])) {
+        return false;
+      }        
     }
     return true;
   }

@@ -128,7 +128,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    */
   @Override
   public boolean contains(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
     
     int hash = o.hashCode();
     int index = (hash & 0x7FFFFFFF) % objects.length;
@@ -141,8 +143,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     return objects[index] != null;
@@ -158,7 +161,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    */
   @Override
   public boolean add(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
 
     int hash = o.hashCode();
     int index = (hash & 0x7FFFFFFF) % objects.length;
@@ -172,21 +177,24 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
 
       // if there's a deleted object here we can put this object here,
       // provided it's not in here somewhere else already
-      if (objects[index] == deletedObject)
+      if (objects[index] == deletedObject) {
         deletedix = index;
+      }
       
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
     
     if (objects[index] == null) { // wasn't present already
-      if (deletedix != -1) // reusing a deleted cell
+      if (deletedix != -1) { // reusing a deleted cell
         index = deletedix;
-      else
+      } else {
         freecells--;
+      }
 
       modCount++;
       elements++;
@@ -200,11 +208,14 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
       objects[index] = (E) o;
       
       // do we need to rehash?
-      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR)
+      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
         rehash();
+      }
       return true;
-    } else // was there already 
+    } else {
+      // was there already
       return false;
+    }
   }
 
   /**
@@ -212,7 +223,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    */
   @Override
   public boolean remove(Object o) {
-    if (o == null) o = nullObject;
+    if (o == null) {
+      o = nullObject;
+    }
     
     int hash = o.hashCode();
     int index = (hash & 0x7FFFFFFF) % objects.length;
@@ -225,8 +238,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
-      if (offset == -1)
+      if (offset == -1) {
         offset = 2;
+      }
     }
 
     // we found the right position, now do the removal
@@ -238,9 +252,10 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
       modCount++;
       elements--;
       return true;
-    } else
+    } else {
       // we did not find the object
       return false;
+    }
   }
   
   /**
@@ -249,8 +264,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   @Override
   public void clear() {
     elements = 0;
-    for (int ix = 0; ix < objects.length; ix++)
+    for (int ix = 0; ix < objects.length; ix++) {
       objects[ix] = null;
+    }
     freecells = objects.length;
     modCount++;
   }
@@ -260,13 +276,15 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
     Object[] result = new Object[elements];
     Object[] objects = this.objects;
     int pos = 0;
-    for (int i = 0; i < objects.length; i++)
+    for (int i = 0; i < objects.length; i++) {
       if (objects[i] != null && objects[i] != deletedObject) {
-        if (objects[i] == nullObject)
+        if (objects[i] == nullObject) {
           result[pos++] = null;
-        else
+        } else {
           result[pos++] = objects[i];
+        }
       }
+    }
     // unchecked because it should only contain E
     return result;
   }
@@ -275,18 +293,21 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   @Override
   public <T> T[] toArray(T[] a) {
     int size = elements;
-    if (a.length < size)
+    if (a.length < size) {
       a = (T[])java.lang.reflect.Array.newInstance(
-                                 a.getClass().getComponentType(), size);
+              a.getClass().getComponentType(), size);
+    }
     E[] objects = this.objects;
     int pos = 0;
-    for (int i = 0; i < objects.length; i++)
+    for (int i = 0; i < objects.length; i++) {
       if (objects[i] != null && objects[i] != deletedObject) {
-        if (objects[i] == nullObject)
+        if (objects[i] == nullObject) {
           a[pos++] = null;
-        else
+        } else {
           a[pos++] = (T) objects[i];
+        }
       }
+    }
     return a;
   }
   
@@ -300,8 +321,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
     System.out.println("Elements: " + elements);
     System.out.println("Free cells: " + freecells);
     System.out.println();
-    for (int ix = 0; ix < objects.length; ix++) 
+    for (int ix = 0; ix < objects.length; ix++) {
       System.out.println("[" + ix + "]: " + objects[ix]);
+    }
   }
 
   /**
@@ -315,12 +337,13 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
     // cells can be freed up by a rehash, we do it.
     
     int gargagecells = objects.length - (elements + freecells);
-    if (gargagecells / (double) objects.length > 0.05)
+    if (gargagecells / (double) objects.length > 0.05) {
       // rehash with same size
       rehash(objects.length);
-    else
+    } else {
       // rehash with increased capacity
       rehash(objects.length*2 + 1);
+    }
   }
   
   /**
@@ -333,8 +356,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
 
     for (int ix = 0; ix < oldCapacity; ix++) {
       Object o = objects[ix];
-      if (o == null || o == deletedObject)
+      if (o == null || o == deletedObject) {
         continue;
+      }
       
       int hash = o.hashCode();
       int index = (hash & 0x7FFFFFFF) % newCapacity;
@@ -345,8 +369,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
         index = ((index + offset) & 0x7FFFFFFF) % newCapacity;
         offset = offset*2 + 1;
 
-        if (offset == -1)
+        if (offset == -1) {
           offset = 2;
+        }
       }
 
       newObjects[index] = (E) o;
@@ -386,8 +411,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
     @SuppressWarnings("empty-statement")
     @Override
     public T next() {
-      if (modCount != expectedModCount)
+      if (modCount != expectedModCount) {
         throw new ConcurrentModificationException();
+      }
       int length = objects.length;
       if (index >= length) {
         lastReturned = -2;
@@ -399,18 +425,21 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
                        (objects[index] == null ||
                         objects[index] == deletedObject); index++)
         ;
-      if (objects[lastReturned] == nullObject)
+      if (objects[lastReturned] == nullObject) {
         return null;
-      else
+      } else {
         return (T) objects[lastReturned];
+      }
     }
 
     @Override
     public void remove() {
-      if (modCount != expectedModCount)
+      if (modCount != expectedModCount) {
         throw new ConcurrentModificationException();
-      if (lastReturned == -1 || lastReturned == -2)
+      }
+      if (lastReturned == -1 || lastReturned == -2) {
         throw new IllegalStateException();
+      }
       // delete object
       if (objects[lastReturned] != null && objects[lastReturned] != deletedObject) {
         objects[lastReturned] = (E) deletedObject;

@@ -109,155 +109,180 @@ public class PSI {
   // --- Locator objects
         
   public static URILocator getXTMDisplay() {
-    if (xtmDisplay == null)
+    if (xtmDisplay == null) {
       xtmDisplay = makeLocator(XTM_DISPLAY);
+    }
     return xtmDisplay;
   }
 
   public static URILocator getXTMSort() {
-    if (xtmSort == null)
+    if (xtmSort == null) {
       xtmSort = makeLocator(XTM_SORT);
+    }
     return xtmSort;
   }
 
 
   public static URILocator getXTMClassInstance() {
-    if (xtmClassInstance == null)
+    if (xtmClassInstance == null) {
       xtmClassInstance = makeLocator(XTM_CLASS_INSTANCE);
+    }
     return xtmClassInstance;
   }
 
   public static URILocator getXTMClass() {
-    if (xtmClass == null)
+    if (xtmClass == null) {
       xtmClass = makeLocator(XTM_CLASS);
+    }
     return xtmClass;
   }
 
   public static URILocator getXTMInstance() {
-    if (xtmInstance == null)
+    if (xtmInstance == null) {
       xtmInstance = makeLocator(XTM_INSTANCE);
+    }
     return xtmInstance;
   }
 
   public static URILocator getXTMOccurrence() {
-    if (xtmOccurrence == null)
+    if (xtmOccurrence == null) {
       xtmOccurrence = makeLocator(XTM_OCCURRENCE);
+    }
     return xtmOccurrence;
   }
 
   public static URILocator getXTMSuperclassSubclass() {
-    if (xtmSuperclassSubclass == null)
+    if (xtmSuperclassSubclass == null) {
       xtmSuperclassSubclass = makeLocator(XTM_SUPERCLASS_SUBCLASS);
+    }
     return xtmSuperclassSubclass;
   }
 
   public static URILocator getXTMSuperclass() {
-    if (xtmSuperclass == null)
+    if (xtmSuperclass == null) {
       xtmSuperclass = makeLocator(XTM_SUPERCLASS);
+    }
     return xtmSuperclass;
   }
 
   public static URILocator getXTMSubclass() {
-    if (xtmSubclass == null)
+    if (xtmSubclass == null) {
       xtmSubclass = makeLocator(XTM_SUBCLASS);
+    }
     return xtmSubclass;
   }
 
   // --- SAM locator objects
 
   public static URILocator getSAMTypeInstance() {
-    if (samTypeInstance == null)
+    if (samTypeInstance == null) {
       samTypeInstance = makeLocator(SAM_TYPE_INSTANCE);
+    }
     return samTypeInstance;
   }
 
   public static URILocator getSAMInstance() {
-    if (samInstance == null)
+    if (samInstance == null) {
       samInstance = makeLocator(SAM_INSTANCE);
+    }
     return samInstance;
   }
 
   public static URILocator getSAMType() {
-    if (samType == null)
+    if (samType == null) {
       samType = makeLocator(SAM_TYPE);
+    }
     return samType;
   }
 
   public static URILocator getSAMNameType() {
-    if (samNameType == null)
+    if (samNameType == null) {
       samNameType = makeLocator(SAM_NAMETYPE);
+    }
     return samNameType;
   }
 
   public static URILocator getSAMSupertypeSubtype() {
-    if (samSupertypeSubtype == null)
+    if (samSupertypeSubtype == null) {
       samSupertypeSubtype = makeLocator(SAM_SUPERTYPE_SUBTYPE);
+    }
     return samSupertypeSubtype;
   }
 
   public static URILocator getSAMSupertype() {
-    if (samSupertype == null)
+    if (samSupertype == null) {
       samSupertype = makeLocator(SAM_SUPERTYPE);
+    }
     return samSupertype;
   }
 
   public static URILocator getSAMSubtype() {
-    if (samSubtype == null)
+    if (samSubtype == null) {
       samSubtype = makeLocator(SAM_SUBTYPE);
+    }
     return samSubtype;
   }
 
   public static URILocator getXSDString() {
-    if (xsdString == null)
+    if (xsdString == null) {
       xsdString = makeLocator(XSD_STRING);
+    }
     return xsdString;
   }
 
   public static URILocator getXSDInteger() {
-    if (xsdInteger == null)
+    if (xsdInteger == null) {
       xsdInteger = makeLocator(XSD_INTEGER);
+    }
     return xsdInteger;
   }
 
   public static URILocator getXSDDecimal() {
-    if (xsdDecimal == null)
+    if (xsdDecimal == null) {
       xsdDecimal = makeLocator(XSD_DECIMAL);
+    }
     return xsdDecimal;
   }
 
   public static URILocator getXSDDate() {
-    if (xsdDate == null)
+    if (xsdDate == null) {
       xsdDate = makeLocator(XSD_DATE);
+    }
     return xsdDate;
   }
 
   public static URILocator getXSDDatetime() {
-    if (xsdDatetime == null)
+    if (xsdDatetime == null) {
       xsdDatetime = makeLocator(XSD_DATETIME);
+    }
     return xsdDatetime;
   }
 
   public static URILocator getXSDURI() {
-    if (xsdUri == null)
+    if (xsdUri == null) {
       xsdUri = makeLocator(XSD_URI);
+    }
     return xsdUri;
   }
 
   public static URILocator getCTMInteger() {
-    if (ctmInteger == null)
+    if (ctmInteger == null) {
       ctmInteger = makeLocator(CTM_INTEGER);
+    }
     return ctmInteger;
   }
 
   public static URILocator getCTMSyntax() {
-    if (ctmCtm == null)
+    if (ctmCtm == null) {
       ctmCtm = makeLocator(CTM_CTM);
+    }
     return ctmCtm;
   }
 
   public static URILocator getCTMXTMSyntax() {
-    if (ctmXtm == null)
+    if (ctmXtm == null) {
       ctmXtm = makeLocator(CTM_XTM);
+    }
     return ctmXtm;
   }
   

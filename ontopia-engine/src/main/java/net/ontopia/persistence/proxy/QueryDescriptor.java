@@ -123,8 +123,9 @@ public class QueryDescriptor {
    */
   public void addStatement(String[] platforms, String statement) {
     for (int i=0; i < platforms.length; i++) {
-      if (statements.containsKey(platforms[i]))
+      if (statements.containsKey(platforms[i])) {
         throw new OntopiaRuntimeException("Duplicate statements for '" + platforms[i] + "' (query: " + getName() + ")");
+      }
       statements.put(platforms[i], statement);
     }
   }
@@ -164,11 +165,15 @@ public class QueryDescriptor {
     String[] param_names = null; // TODO: Add support for parameter names
     DefaultParameterProcessor param_proc = 
       new DefaultParameterProcessor(param_fields, param_names);
-    if (fetchSize > 0) param_proc.setFetchSize(fetchSize);
+    if (fetchSize > 0) {
+      param_proc.setFetchSize(fetchSize);
+    }
 
     SQLStatement stm = new SQLStatement(getStatement(platforms), select_fields, param_proc);
    
-    if (fetchSize > 0) stm.setFetchSize(fetchSize);
+    if (fetchSize > 0) {
+      stm.setFetchSize(fetchSize);
+    }
 
     return stm;
   }

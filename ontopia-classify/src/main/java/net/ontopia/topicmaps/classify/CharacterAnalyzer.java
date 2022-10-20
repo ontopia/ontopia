@@ -59,28 +59,31 @@ public class CharacterAnalyzer implements TermAnalyzerIF {
     // count character types
     for (int i=0; i < length; i++) {
       char c = stem.charAt(i);
-      if (Character.isLetter(c) || Character.isWhitespace(c))
+      if (Character.isLetter(c) || Character.isWhitespace(c)) {
         cnt_letters++;
-      else if (Character.isDigit(c))
+      } else if (Character.isDigit(c)) {
         cnt_digits++;
-      else
-        cnt_other++;                                    
+      } else {
+        cnt_other++;
+      }                                    
     }
 
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("t: " + term + " l: " + cnt_letters + " d: " + cnt_digits + " o: " + cnt_other);
+    }
 
     // if term contains non-letter characters then score down
     double score = term.getScore();
     if (score > 0d) {
-      if (cnt_letters == 0)
+      if (cnt_letters == 0) {
         term.multiplyScore(FACTOR_NO_LETTERS, "no letters");
-      else if (cnt_digits > 0 && cnt_other > 0)
+      } else if (cnt_digits > 0 && cnt_other > 0) {
         term.multiplyScore(FACTOR_DIGITS_AND_OTHER, "digits and other chars");
-      else if (cnt_digits > 0)
+      } else if (cnt_digits > 0) {
         term.multiplyScore(FACTOR_DIGITS, "contains digits");
-      else if (cnt_other > 0)
+      } else if (cnt_other > 0) {
         term.multiplyScore(FACTOR_OTHER, "contains other chars");
+      }
     }    
   }
 

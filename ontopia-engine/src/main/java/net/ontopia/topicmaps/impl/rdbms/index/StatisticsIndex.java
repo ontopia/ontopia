@@ -43,7 +43,9 @@ public class StatisticsIndex extends RDBMSIndex implements StatisticsIndexIF {
       }
       throw new OntopiaRuntimeException("Statistics query " + query + " failed to produce result");
     } finally {
-      if (result != null) result.close();
+      if (result != null) {
+        result.close();
+      }
     }
   }
 

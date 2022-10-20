@@ -93,8 +93,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   @Override
   public void _p_setTransaction(TransactionIF txn) {
-    if (this.txn != null)
+    if (this.txn != null) {
       throw new OntopiaRuntimeException("Cannot change the transaction of a persistent object.");
+    }
     this.txn = txn;
   }
 
@@ -164,7 +165,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     } else {
       // get identity
       IdentityIF identity = _p_getIdentity();
-      if (identity == null) return null;
+      if (identity == null) {
+        return null;
+      }
       // load from storage
       F value = null;
       try { 
@@ -191,7 +194,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     } else {
       // get identity
       IdentityIF identity = _p_getIdentity();
-      if (identity == null) return null;
+      if (identity == null) {
+        return null;
+      }
       // load from storage
       F value = txn.<F>loadField(identity, field);
       // set value and mark field as loaded
@@ -212,7 +217,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     } else {
       // get identity
       IdentityIF identity = _p_getIdentity();
-      if (identity == null) return Collections.EMPTY_SET;
+      if (identity == null) {
+        return Collections.EMPTY_SET;
+      }
       // load from storage
       Collection<F> coll = null; 
       try {
@@ -236,11 +243,15 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   public abstract void detach();
 
   protected void detachField(int field) {
-    if (!isLoaded(field)) loadField(field);
+    if (!isLoaded(field)) {
+      loadField(field);
+    }
   }
 
   protected void detachCollectionField(int field) {
-    if (!isLoaded(field)) loadCollectionField(field);
+    if (!isLoaded(field)) {
+      loadCollectionField(field);
+    }
   }
 
   /**
@@ -251,18 +262,23 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     // initialize state
     if (pstate == STATE_HOLLOW) { 
       IdentityIF identity = _p_getIdentity();
-      if (identity != null) txn._getObject(identity); 
+      if (identity != null) {
+        txn._getObject(identity);
+      } 
     }
 
     //! System.out.println(">>  " + field + " " + _p_getIdentity() + " " + value);    
     setValue(field, value); // set new value / replace value
 
     setDirty(field, true);      
-    if (isPersistent()) txn.objectDirty(this);
+    if (isPersistent()) {
+      txn.objectDirty(this);
+    }
 
     // if value is ContentReader then flush transaction immediately
-    if (value instanceof OnDemandValue)
+    if (value instanceof OnDemandValue) {
       txn.flush();
+    }
   }
 
   protected void valueAdded(int field, Object value, boolean dchange) {
@@ -296,7 +312,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     if (coll.addWithTracking(value)) {
       //! System.out.println(">>+ " + field + " " + _p_getIdentity() + " " + value);      
       setDirty(field, true);      
-      if (isPersistent()) txn.objectDirty(this);
+      if (isPersistent()) {
+        txn.objectDirty(this);
+      }
     }
   }
 
@@ -325,7 +343,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     if (coll != null && coll.removeWithTracking(value)) {
       //! System.out.println(">>- " + field + " " + _p_getIdentity() + " " + value);
       setDirty(field, true);
-      if (isPersistent()) txn.objectDirty(this);
+      if (isPersistent()) {
+        txn.objectDirty(this);
+      }
     }
   }
 
@@ -413,7 +433,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
     // initialize state
     if (pstate == STATE_HOLLOW) { 
       IdentityIF identity = _p_getIdentity();
-      if (identity != null) txn._getObject(identity); 
+      if (identity != null) {
+        txn._getObject(identity);
+      } 
     }
 
     return ((lflags & MASKS[field]) == MASKS[field]);
@@ -423,10 +445,11 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   @Override
   public Object loadValue(FieldInfoIF finfo) {
-    if (finfo.isCollectionField()) 
+    if (finfo.isCollectionField()) { 
       return loadCollectionField(finfo.getIndex());
-    else
+    } else {
       return loadField(finfo.getIndex());
+    }
   }
   
   protected <F> F getValue(int field) {
@@ -460,7 +483,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   @Override
   public int nextDirty(int start) {
     for (int i=start; i < values.length; i++) {
-      if ((dflags & MASKS[i]) == MASKS[i]) return i;
+      if ((dflags & MASKS[i]) == MASKS[i]) {
+        return i;
+      }
     }
     return -1;
   }
@@ -468,16 +493,19 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   @Override
   public int nextDirty(int start, int end) {
     for (int i=start; i < end; i++) {
-      if ((dflags & MASKS[i]) == MASKS[i]) return i;
+      if ((dflags & MASKS[i]) == MASKS[i]) {
+        return i;
+      }
     }
     return -1;
   }
   
   public void setDirty(int field, boolean dirty) {
-    if (dirty)
+    if (dirty) {
       dflags |= MASKS[field]; // set flag    
-    else
+    } else {
       dflags &= ~(MASKS[field]); // unset flag
+    }
   }
 
   // -- dirty (flushed)
@@ -492,14 +520,18 @@ public abstract class AbstractRWPersistent implements PersistentIF {
 
   public int nextDirtyFlushed(int start) {
     for (int i=start; i < values.length; i++) {
-      if ((fflags & MASKS[i]) == MASKS[i]) return i;
+      if ((fflags & MASKS[i]) == MASKS[i]) {
+        return i;
+      }
     }
     return -1;
   }
 
   public int nextDirtyFlushed(int start, int end) {
     for (int i=start; i < end; i++) {
-      if ((fflags & MASKS[i]) == MASKS[i]) return i;
+      if ((fflags & MASKS[i]) == MASKS[i]) {
+        return i;
+      }
     }
     return -1;
   }
@@ -553,7 +585,9 @@ public abstract class AbstractRWPersistent implements PersistentIF {
   private String list(int bitmask) {
     StringBuilder sb = new StringBuilder();
     for (int i=0; i < values.length; i++) {
-      if (i > 0) sb.append(", ");
+      if (i > 0) {
+        sb.append(", ");
+      }
       sb.append((bitmask & MASKS[i]) == MASKS[i]);
     }
     return sb.toString();

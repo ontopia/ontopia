@@ -45,9 +45,9 @@ public class NamesTag extends BaseScopedTag {
   
   @Override
   public Collection process(Collection topics) throws JspTagException {
-    if (topics == null)
+    if (topics == null) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       Iterator iter = topics.iterator();
       TopicIF topic = null;
       Collection curTopicNames;
@@ -61,8 +61,9 @@ public class NamesTag extends BaseScopedTag {
       Set basenameValues = (uniqueValues ? new HashSet() : null);
       
       // setup scope filter for user context filtering
-      if (useUserContextFilter)
+      if (useUserContextFilter) {
         scopeFilter = getScopeFilter(SCOPE_BASENAMES);
+      }
       
       try {
         // loop over input collection of topics
@@ -72,8 +73,9 @@ public class NamesTag extends BaseScopedTag {
           topic = (TopicIF) obj;
           curTopicNames = topic.getTopicNames();
           if (!curTopicNames.isEmpty()) {
-            if (scopeFilter != null)
+            if (scopeFilter != null) {
               curTopicNames = scopeFilter.filter(curTopicNames.iterator());
+            }
             if (uniqueValues) {
               Iterator itBN = curTopicNames.iterator();
               while (itBN.hasNext()) {

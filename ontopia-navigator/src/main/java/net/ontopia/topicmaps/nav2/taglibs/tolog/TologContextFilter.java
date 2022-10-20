@@ -88,10 +88,12 @@ public class TologContextFilter implements Filter {
     
     try {
       String tmid = null;
-      if (topicmapid_parameter != null)
+      if (topicmapid_parameter != null) {
         tmid = request.getParameter(topicmapid_parameter);
-      if (tmid == null)
+      }
+      if (tmid == null) {
         tmid = topicmapid;
+      }
 
       // set request attribute
       request.setAttribute(topicmapid_attribute, tmid);

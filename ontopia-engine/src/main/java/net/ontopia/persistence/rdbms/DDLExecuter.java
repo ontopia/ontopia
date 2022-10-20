@@ -112,17 +112,19 @@ public class DDLExecuter {
     
     // Execute statements
     try {
-      if ("create".equals(action))
+      if ("create".equals(action)) {
         producer.executeCreate(conn);
-      else if ("drop".equals(action))
+      } else if ("drop".equals(action)) {
         producer.executeDrop(conn);
-      else if ("recreate".equals(action)) {
+      } else if ("recreate".equals(action)) {
         producer.executeDrop(conn);
         producer.executeCreate(conn);
       }
       conn.commit();
     } finally {
-      if (conn != null) conn.close();
+      if (conn != null) {
+        conn.close();
+      }
     }
   }
   
@@ -147,21 +149,24 @@ public class DDLExecuter {
     // Get the first SQL producer that matches a platform in the list.
     for (int i=0; i < platforms.length; i++) {
       GenericSQLProducer sqlgen = getSQLProducer(project, platforms[i]);
-      if (sqlgen != null) return sqlgen;
+      if (sqlgen != null) {
+        return sqlgen;
+      }
     }
     throw new OntopiaRuntimeException("No SQL producer could be found for the platforms: " +
                                       Arrays.asList(platforms));
   }
 
   public static GenericSQLProducer getSQLProducer(Project project, String platform) {
-    if ("generic".equals(platform))
+    if ("generic".equals(platform)) {
       return new GenericSQLProducer(project);
-    else if ("oracle".equals(platform))
+    } else if ("oracle".equals(platform)) {
       return new OracleSQLProducer(project);
-    else if ("mysql".equals(platform))
+    } else if ("mysql".equals(platform)) {
       return new MySqlSQLProducer(project);
-    else
+    } else {
       return null;
+    }
   }
   
 }

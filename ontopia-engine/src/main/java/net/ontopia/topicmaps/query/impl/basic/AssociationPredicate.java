@@ -47,10 +47,11 @@ public class AssociationPredicate implements BasicPredicateIF {
 
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0])
+    if (boundparams[0]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -59,12 +60,13 @@ public class AssociationPredicate implements BasicPredicateIF {
 
     int associx = matches.getIndex(arguments[0]);
 
-    if (matches.data[0][associx] == null)
+    if (matches.data[0][associx] == null) {
       return PredicateUtils.collectionToOne(matches,
                                             topicmap.getAssociations().toArray(),
                                             associx, associx,
                                             PredicateUtils.NO_OPERATION);
-    else
+    } else {
       return PredicateUtils.filterClass(matches, associx, AssociationIF.class);
+    }
   }  
 }

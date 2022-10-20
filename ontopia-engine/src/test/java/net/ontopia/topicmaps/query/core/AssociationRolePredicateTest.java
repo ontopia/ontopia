@@ -145,8 +145,9 @@ public class AssociationRolePredicateTest extends AbstractPredicateTest {
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
       AssociationIF assoc = role.getAssociation();
-      if (assoc.getType().equals(comment))
+      if (assoc.getType().equals(comment)) {
         addMatch(matches, "ASSOC", assoc);
+      }
     }
     
     assertQueryMatches(matches,

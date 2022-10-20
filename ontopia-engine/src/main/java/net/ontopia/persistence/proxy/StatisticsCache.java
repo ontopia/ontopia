@@ -69,8 +69,9 @@ public class StatisticsCache implements StorageCacheIF {
     } else {
       misses_o++;
     }    
-    if (total_o % dump_interval == 0) 
+    if (total_o % dump_interval == 0) {
       dump();
+    }
     return pcache.exists(access, identity);
   }
   
@@ -82,8 +83,9 @@ public class StatisticsCache implements StorageCacheIF {
     } else {
       misses_f++;
     }    
-    if (total_f % dump_interval == 0) 
+    if (total_f % dump_interval == 0) {
       dump();
+    }
     return pcache.getValue(access, identity, field);
   }
 
@@ -141,7 +143,9 @@ public class StatisticsCache implements StorageCacheIF {
   // -----------------------------------------------------------------------------
 
   protected int percent(int c, int total) {
-    if (c == 0) return 0;
+    if (c == 0) {
+      return 0;
+    }
     return Math.round(((100.0f*c)/(1.0f*total)));
   }
 
@@ -157,8 +161,9 @@ public class StatisticsCache implements StorageCacheIF {
   public String toString() {
     StringBuilder sb = new StringBuilder("proxy.StatisticsCache@");
     sb.append(System.identityHashCode(this));
-    if (pcache != null)
+    if (pcache != null) {
       sb.append(" [parent = ").append(pcache).append(']');
+    }
     return sb.toString();
   }
   

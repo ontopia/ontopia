@@ -87,16 +87,17 @@ public final class ScopeUtils implements ScopeSupportIF {
       .getProperty(decPropName, DEC_INTERSECTION);
     Predicate scopeDecider = null;
     if (context != null && !context.isEmpty()) {
-      if (decSetting.equalsIgnoreCase(DEC_INTERSECTION))
+      if (decSetting.equalsIgnoreCase(DEC_INTERSECTION)) {
         scopeDecider = new IntersectionOfContextDecider(context);
-      else if (decSetting.equalsIgnoreCase(DEC_APPLICABLE_IN))
+      } else if (decSetting.equalsIgnoreCase(DEC_APPLICABLE_IN)) {
         scopeDecider = new ApplicableInContextDecider(context);
-      else if (decSetting.equalsIgnoreCase(DEC_WITHIN))
+      } else if (decSetting.equalsIgnoreCase(DEC_WITHIN)) {
         scopeDecider = new WithinScopeDecider(context);
-      else if (decSetting.equalsIgnoreCase(DEC_SUBSET))
+      } else if (decSetting.equalsIgnoreCase(DEC_SUBSET)) {
         scopeDecider = new SubsetOfContextDecider(context);
-      else if (decSetting.equalsIgnoreCase(DEC_SUPERSET))
+      } else if (decSetting.equalsIgnoreCase(DEC_SUPERSET)) {
         scopeDecider = new SupersetOfContextDecider(context);
+      }
     }
 
     return scopeDecider;

@@ -78,10 +78,11 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
   @Override
   public void selfAdded() {
     if (!isEmpty()) {
-      if (added == null)
+      if (added == null) {
         added = new HashSet<E>(this);
-      else
+      } else {
         added.addAll(this);
+      }
     }
   }
 
@@ -101,9 +102,12 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     E o;
     if (_o instanceof PersistentIF) {
       o = (E) ((PersistentIF)_o)._p_getIdentity();
-      if (o == null) throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
-    } else
+      if (o == null) {
+        throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
+      }
+    } else {
       o = _o;
+    }
     
     boolean result = super.add(o);
     // Do not track if object wasn't really added.
@@ -111,7 +115,9 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
       // Register added object and remove object from removed objects
       if (removed == null || !removed.remove(o)) {
         // Initialize added set
-        if (added == null) added = new HashSet<E>(4);
+        if (added == null) {
+          added = new HashSet<E>(4);
+        }
         added.add(o);
       }
     }
@@ -124,9 +130,12 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
     E o;
     if (_o instanceof PersistentIF) {
       o = (E) ((PersistentIF)_o)._p_getIdentity();
-      if (o == null) throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
-    } else
+      if (o == null) {
+        throw new OntopiaRuntimeException("Attempting to add PersistentIF without identity to TrackableSet");
+      }
+    } else {
       o = _o;
+    }
 
     boolean result = super.remove(o);
     // Do not track if object wasn't really removed.
@@ -134,7 +143,9 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
       // Register removed object and remove object from added objects
       if (added == null || !added.remove(o)) {
         // Initialize removed set
-        if (removed == null) removed = new HashSet(4);
+        if (removed == null) {
+          removed = new HashSet(4);
+        }
         removed.add(o);
       }
     }
@@ -198,9 +209,11 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
   @Override
   public boolean containsAll(Collection<?> c) {
     Iterator e = c.iterator();
-    while (e.hasNext())
-      if(!contains(e.next()))
+    while (e.hasNext()) {
+      if (!contains(e.next())) {
         return false;
+      }
+    }
     
     return true;
   }
@@ -227,8 +240,9 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
   @Override
   public <T> T[] toArray(T[] a) {
     int size = size();
-    if (a.length < size)
+    if (a.length < size) {
       a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    }
 
     int i = 0;
     Iterator<E> it = iterator();
@@ -236,8 +250,9 @@ public class TrackableSet<E> extends HashSet<E> implements TrackableCollectionIF
       a[i] = (T) it.next();
     }
     
-    if (a.length > i+1)
+    if (a.length > i+1) {
       a[i+1] = null;
+    }
     
     return a;
   }

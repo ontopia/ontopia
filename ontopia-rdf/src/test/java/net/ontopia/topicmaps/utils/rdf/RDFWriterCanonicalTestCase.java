@@ -70,8 +70,9 @@ public class RDFWriterCanonicalTestCase {
       String bline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename);
       TopicMapReaderIF reader = ImportExportUtils.getReader(in);
-      if (reader instanceof XTMTopicMapReader)
+      if (reader instanceof XTMTopicMapReader) {
         ((XTMTopicMapReader) reader).setValidation(false);
+      }
       TopicMapIF tm = reader.read();
       FileOutputStream fos = new FileOutputStream(tmp);
       new RDFTopicMapWriter(fos).write(tm);

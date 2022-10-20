@@ -73,11 +73,12 @@ public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof RoleFieldModel)
+    if (obj instanceof RoleFieldModel) {
       return Objects.equals(topicMapId, ((RoleFieldModel)obj).topicMapId) &&
         Objects.equals(fieldId, ((RoleFieldModel)obj).fieldId);
-    else
+    } else {
       return false;
+    }
   }
 
   @Override

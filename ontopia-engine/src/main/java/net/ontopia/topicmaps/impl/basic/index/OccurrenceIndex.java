@@ -61,8 +61,9 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     handlers.put(OccurrenceIF.EVENT_SET_VALUE, new OccurrenceIF_setValue(occurs));
 
     // Register dynamic index as event listener
-    for (String handlerKey : handlers.keySet())
+    for (String handlerKey : handlers.keySet()) {
       emanager.addListener(this, handlerKey);
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -135,7 +136,9 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
 
   private <E> Collection<E> extractExactValues(CollectionSortedMap<String, E> map, String value) {
     Collection<E> result = map.get(value);
-    if (result == null) return new ArrayList<E>();
+    if (result == null) {
+      return new ArrayList<E>();
+    }
     // Create new collection
     return new ArrayList<E>(result);
   }
@@ -155,7 +158,9 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
         break;
       }
       // add values to result
-      if (result == null) result = new HashSet<E>();
+      if (result == null) {
+        result = new HashSet<E>();
+      }
       Collection<E> c = map.get(key);
       result.addAll(c);
       

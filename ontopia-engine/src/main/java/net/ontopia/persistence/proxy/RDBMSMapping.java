@@ -56,8 +56,9 @@ public class RDBMSMapping implements ObjectRelationalMappingIF {
     ClassInfoIF ci = class_infos.get(type);
     if (ci == null) {
       ClassDescriptor cdesc = mapping.getDescriptorByClass(type);
-      if (cdesc == null)
+      if (cdesc == null) {
         throw new OntopiaRuntimeException("Descriptor for type " + type + " not found.");
+      }
       log.debug("Compiling " + type + " class descriptor.");
       ClassInfo realci = new ClassInfo(this, cdesc);
       class_infos.put(type, realci);

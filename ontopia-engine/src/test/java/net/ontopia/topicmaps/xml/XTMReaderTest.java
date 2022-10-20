@@ -98,8 +98,9 @@ public class XTMReaderTest extends AbstractXMLTestCase {
       Assert.fail("reading XML document with no topic map did not throw exception");
     } catch (InvalidTopicMapException e) {
     } catch (net.ontopia.utils.OntopiaRuntimeException e) {
-      if (!(e.getCause() instanceof org.xml.sax.SAXParseException))
+      if (!(e.getCause() instanceof org.xml.sax.SAXParseException)) {
         throw e;
+      }
     }
   }
 
@@ -242,8 +243,9 @@ public class XTMReaderTest extends AbstractXMLTestCase {
         Assert.assertTrue("occurrence " + occ + " has spurious type", occ.getType()
             .getSubjectIdentifiers().contains(PSI.getXTMOccurrence()));
 
-      } else
+      } else {
         Assert.fail("spurious occurrence: " + occ);
+      }
     }
   }
 
@@ -362,8 +364,9 @@ public class XTMReaderTest extends AbstractXMLTestCase {
             .endsWith("invalid1.xtm"));
         Assert.assertTrue("wrong error line: " + ex.getLineNumber(), ex
             .getLineNumber() == 7);
-      } else
+      } else {
         Assert.fail("Unknown cause of error: " + e);
+      }
     }
   }
 
@@ -381,8 +384,9 @@ public class XTMReaderTest extends AbstractXMLTestCase {
             .endsWith("invalid2.xtm"));
         Assert.assertTrue("wrong error line: " + ex.getLineNumber(), ex
             .getLineNumber() == 2);
-      } else
+      } else {
         Assert.fail("Unknown cause of error: " + e);
+      }
     }
   }
 

@@ -68,16 +68,18 @@ public class StreamUtils {
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
       String resourceName = name.substring(CLASSPATH_PREFIX.length());
       istream = cl.getResourceAsStream(resourceName);
-      if (istream == null)
+      if (istream == null) {
         throw new IOException("Resource '" + resourceName + "' not found through class loader.");
+      }
       log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
     } else if (name.startsWith(FILE_PREFIX)) {
       File f = makeFile(basedir, name.substring(FILE_PREFIX.length()));
       if (f.exists()) {
         log.debug(MSG_FILE_LOADED_FROM_FILE_SYSTEM + name);
         istream = new FileInputStream(f);
-      } else
+      } else {
         throw new IOException("File '" + f + "' not found.");
+      }
     } else if (name.startsWith("jar:")) {
       return new URL(name).openStream();
     } else {
@@ -88,18 +90,20 @@ public class StreamUtils {
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         istream = cl.getResourceAsStream(name);
-        if (istream != null)
+        if (istream != null) {
           log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
+        }
       }
     }
     return istream;
   }
 
   private static File makeFile(File basedir, String name) {
-    if (basedir == null)
+    if (basedir == null) {
       return new File(name);
-    else
+    } else {
       return new File(basedir, name);
+    }
   }
   
   /**
@@ -117,16 +121,18 @@ public class StreamUtils {
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
       String resourceName = name.substring(CLASSPATH_PREFIX.length());
       url = cl.getResource(resourceName);
-      if (url == null)
+      if (url == null) {
         throw new FileNotFoundException("Resource '" + resourceName + "' not found through class loader.");
+      }
       log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
     } else if (name.startsWith(FILE_PREFIX)) {
       File f =  new File(name.substring(FILE_PREFIX.length()));
       if (f.exists()) {
         log.debug(MSG_FILE_LOADED_FROM_FILE_SYSTEM + name);
         url = URIUtils.toURL(f);
-      } else
+      } else {
         throw new IOException("File '" + f + "' not found.");
+      }
     } else if (name.startsWith("jar:")) {
       return new URL(name);
     } else {
@@ -137,8 +143,9 @@ public class StreamUtils {
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         url = cl.getResource(name);
-        if (url != null)
+        if (url != null) {
           log.debug(MSG_FILE_LOADED_THROUGH_CLASS_LOADER + name);
+        }
       }
     }
     return url;

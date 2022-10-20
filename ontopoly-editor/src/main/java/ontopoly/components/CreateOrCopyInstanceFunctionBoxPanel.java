@@ -62,8 +62,9 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", newInstance.getId());
-        if (newInstance.isOntologyTopic())
+        if (newInstance.isOntologyTopic()) {
           pageParametersMap.put("ontology", "true");
+        }
         setResponsePage(InstancePage.class, new PageParameters(pageParametersMap));
       }          
     });
@@ -87,8 +88,9 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", newInstance.getId());
-        if (newInstance.isOntologyTopic())
+        if (newInstance.isOntologyTopic()) {
           pageParametersMap.put("ontology", "true");
+        }
         setResponsePage(InstancePage.class, new PageParameters(pageParametersMap));
       }          
     });

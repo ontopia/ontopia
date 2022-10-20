@@ -75,8 +75,9 @@ public class TopicMapIdTag extends BaseOutputProducingTag {
     }
     
     // finally write out String with help of the Stringifier
-    if (topicMapId != null)
+    if (topicMapId != null) {
       print2Writer( out, topicMapId );
+    }
   }
 
 }

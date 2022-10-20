@@ -54,8 +54,9 @@ public class TopicAssocDep {
    * Gets the id for the association type.
    */
   public String getAssociationTypeId(String key) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return NULL;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationTypeId();
   }
 
@@ -63,8 +64,9 @@ public class TopicAssocDep {
    * Gets the name of the association.
    */
   public String getAssociationType(String key) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return NULL;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationType();
   }
 
@@ -81,8 +83,9 @@ public class TopicAssocDep {
    * Returns a hashmap containg the id of the assocrltype, and the name of assocrltype
    */
   public HashMap getAssociationRoleTypes(String key) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return null;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationRoleTypes();
   }
   
@@ -91,8 +94,9 @@ public class TopicAssocDep {
    * topics that play in this association.
    */
   public HashMap getAssociationRoles(String key) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return null;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationRoles();
   }
 
@@ -100,8 +104,9 @@ public class TopicAssocDep {
    * Returns a Collection of the different associations that have this associationtype.
    */
   public Collection getAssociationDetails(String key) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return null;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationDetails();
   }
 
@@ -109,15 +114,17 @@ public class TopicAssocDep {
    * Gets the association roles ordered aplhabetically
    */
   public String[] getAssociationRoleTypesOrdered(String key) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return null;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationRoleTypesOrdered();
   }
 
 
   public String[] getAssociationDetails(String key, AssociationIF association) {
-    if (key == null || !associations.containsKey(key))
+    if (key == null || !associations.containsKey(key)) {
       return null;
+    }
     return ((InternalAssociation)associations.get(key)).getAssociationDetails(association);
   }
 
@@ -167,10 +174,11 @@ public class TopicAssocDep {
     //Places the rolesnames in the array.
     while (it.hasNext()) {
       AssociationRoleIF arif = (AssociationRoleIF)it.next();
-      if (arif.getType() != null)
+      if (arif.getType() != null) {
         rolenames[i] = getName(arif.getType());
-      else
+      } else {
         rolenames[i] = NULL;
+      }
       i++;
     }
     //Sorts the rolenames in lexiographical order.
@@ -200,7 +208,9 @@ public class TopicAssocDep {
             temp = names[j];
             names[j] = names[j-1];
             names[j-1] = temp;
-          } else done = true;
+          } else {
+            done = true;
+          }
 
           j--;
         }//end of while.
@@ -230,7 +240,9 @@ public class TopicAssocDep {
         while (j != 0 && !done) {
           if (retur[j].compareTo(retur[j-1]) < 0) {
             temp = retur[j]; retur[j] = retur[j-1]; retur[j-1] = temp;
-          } else done = true;
+          } else {
+            done = true;
+          }
           j--;
         }//end of while.
       }//end of if
@@ -241,12 +253,13 @@ public class TopicAssocDep {
 
   //Gets the name of the topic
   private String getName(TopicIF topic) {
-    if (topic == null)
+    if (topic == null) {
       return NULL;
-    else {
+    } else {
       String name = TopicStringifiers.toString(topic);
-      if ("[No name]".equalsIgnoreCase(name))
+      if ("[No name]".equalsIgnoreCase(name)) {
         name = "{topicid: " + topic.getObjectId() + "}";
+      }
       return name;
     }
   }
@@ -382,10 +395,11 @@ public class TopicAssocDep {
       while (it.hasNext()) {
         AssociationRoleIF assocrl = (AssociationRoleIF) it.next();
         TopicIF type = assocrl.getType();
-        if (type != null)
+        if (type != null) {
           temp.put(type.getObjectId(), getName(type));
-        else 
+        } else {
           temp.put(NULL, getName(null));
+        }
       }
       return temp;
     }
@@ -399,7 +413,9 @@ public class TopicAssocDep {
       while (it.hasNext()) {
         AssociationRoleIF assocrl = (AssociationRoleIF)it.next();
         if (assocrl.getPlayer() == null) {
-          if (!assocRoles.containsValue(getName(null))) assocRoles.put(NULL, getName(null));
+          if (!assocRoles.containsValue(getName(null))) {
+            assocRoles.put(NULL, getName(null));
+          }
         } else {
           Iterator iter = assocrl.getPlayer().getTypes().iterator();
           while (iter.hasNext()) {

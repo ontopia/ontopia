@@ -70,16 +70,23 @@ public class DefaultPlugin implements PluginIF {
 
   @Override
   public String generateHTML(ContextTag context) {
-    if (context == null)
+    if (context == null) {
       throw new OntopiaRuntimeException("Plugin must have a parent logic:context tag.");
+    }
     
     String tm = context.getTopicMapId();
     String tmParam = context.getTmparam();
-    if (tmParam == null) tmParam = RP_TOPICMAP_ID;
+    if (tmParam == null) {
+      tmParam = RP_TOPICMAP_ID;
+    }
     String objidParam = context.getObjparam();
-    if (objidParam == null) objidParam = RP_TOPIC_ID;
+    if (objidParam == null) {
+      objidParam = RP_TOPIC_ID;
+    }
     String[] objids = context.getObjectIDs();
-    if (objids == null) objids = new String[] {context.getPageContext().getRequest().getParameter(objidParam)};
+    if (objids == null) {
+      objids = new String[] {context.getPageContext().getRequest().getParameter(objidParam)};
+    }
 
     HttpServletRequest request = (HttpServletRequest)
       context.getPageContext().getRequest();
@@ -91,23 +98,27 @@ public class DefaultPlugin implements PluginIF {
     link.append(contextPath).append("/").append(uri)
       .append("?").append(tmParam).append("=").append(tm);
     if (objids != null) {
-      for (int i=0; i < objids.length; i++)
+      for (int i=0; i < objids.length; i++) {
         link.append("&").append(objidParam).append("=").append(objids[i]);
+      }
     }
     
     // append requested URI inclusive query string to link
     StringBuilder comingFrom = new StringBuilder(request.getRequestURI());
-    if (request.getQueryString() != null)
+    if (request.getQueryString() != null) {
       comingFrom.append("?").append(request.getQueryString());
+    }
     link.append("&redirect=").append(URLEncoder.encode(comingFrom.toString()));
 
     // generate HTML String
     StringBuilder html = new StringBuilder(50);
     html.append("<a href=\"").append(link.toString()).append('\"');
-    if (description != null)
+    if (description != null) {
       html.append(" title=\"").append(description).append('\"');
-    if (target != null)
+    }
+    if (target != null) {
       html.append(" target=\"").append(target);
+    }
     html.append("\">").append(title).append("</a>");
     
     return html.toString();
@@ -231,8 +242,9 @@ public class DefaultPlugin implements PluginIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof PluginIF))
+    if (!(obj instanceof PluginIF)) {
       return false;
+    }
     PluginIF compObj = (PluginIF) obj;
     return (compObj.getId().equals(id)
             && compObj.getTitle().equals(title)
@@ -259,13 +271,14 @@ public class DefaultPlugin implements PluginIF {
   }
 
   protected String getStateAsString() {
-    if (state == PluginIF.ACTIVATED)
+    if (state == PluginIF.ACTIVATED) {
       return "activated";
-    else if (state == PluginIF.DEACTIVATED)
+    } else if (state == PluginIF.DEACTIVATED) {
       return "deactivated";
-    else if (state == PluginIF.ERROR)
+    } else if (state == PluginIF.ERROR) {
       return "error";
-    else
+    } else {
       return "[undefined]";
+    }
   }
 }

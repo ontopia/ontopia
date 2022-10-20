@@ -62,8 +62,9 @@ public class TNCIndex implements IndexIF {
     Iterator<TopicNameIF> it = nameix.getTopicNames(basename_string).iterator();
     while (it.hasNext()) {
       TopicNameIF bn = it.next();
-      if (bn.getScope().equals(scope))
+      if (bn.getScope().equals(scope)) {
         topics.add(bn.getTopic());
+      }
     }
 
     return topics;

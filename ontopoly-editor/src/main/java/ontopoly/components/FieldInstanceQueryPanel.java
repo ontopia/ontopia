@@ -152,7 +152,9 @@ public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
         OntopolyImageLink gotoButton = new OntopolyImageLink("goto", "goto.gif", new ResourceModel("icon.goto.topic")) {
           @Override
           public boolean isVisible() {
-            if (!isTopicValue) return false;
+            if (!isTopicValue) {
+              return false;
+            }
             FieldValueModel fieldValueModel = item.getModelObject();
             return embedded && fieldValueModel.isExistingValue();  
           }

@@ -93,25 +93,27 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
       + ((isKind!=null) ? 1 : 0)
       + ((inScopeOfValue!=null) ? 1 : 0)
       + ((randomElement) ? 1 : 0);
-    if (paramCount != 1)
+    if (paramCount != 1) {
       throw new NavigatorCompileException("FilterTag: Ambiguous attribute " +
                                           "settings (" + paramCount +" attrs "+
                                           "specified, must be exactly 1).");
+    }
     // do the fun part
-    if (instanceOf != null) 
+    if (instanceOf != null) { 
       result = filterInstanceOf(tmObjects, instanceOf);
-    else if (deciderClassName != null) {
+    } else if (deciderClassName != null) {
       decider = getDeciderInstance(deciderClassName);
-      if (decider == null)
+      if (decider == null) {
         throw new NavigatorCompileException("FilterTag: Could not retrieve " +
                                             "decider instance for " + deciderClassName);
+      }
         
       result = filterWithDecider(tmObjects, decider);
-    } else if (inScopeOfValue != null)
+    } else if (inScopeOfValue != null) {
       result = filterInScopeOf(tmObjects, inScopeOfValue);
-    else if (isKind != null) 
+    } else if (isKind != null) { 
       result = filterIs(tmObjects, isKind);
-    else if (randomElement) {
+    } else if (randomElement) {
       result = Collections.singleton(CollectionUtils.getRandom(tmObjects));
     }
     
@@ -144,12 +146,13 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
           obj = iter.next();
           if ((obj instanceof TypedIF) &&
               ( (((TypedIF) obj).getType() == null && !invert)
-                || (((TypedIF) obj).getType() != null && invert)))
+                || (((TypedIF) obj).getType() != null && invert))) {
             filtered.add(obj);
-          else if ((obj instanceof TopicIF) &&
+          } else if ((obj instanceof TopicIF) &&
                    ( (((TopicIF) obj).getTypes().isEmpty() && !invert)
-                     || (((TopicIF) obj).getTypes().isEmpty() && invert)))
+                     || (((TopicIF) obj).getTypes().isEmpty() && invert))) {
             filtered.add(obj);
+          }
         } // while
       }
     } else {
@@ -159,12 +162,14 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
         classes = new ArrayList();
         // get Topic for filtering by subject indicator
         TopicMapIF topicmap = contextTag.getTopicMap();
-        if (topicmap == null)
+        if (topicmap == null) {
           throw new NavigatorRuntimeException("FilterTag found no topic map.");
+        }
         
         TopicIF topic = topicmap.getTopicBySubjectIdentifier(new URILocator(instanceOf));
-        if (topic != null)
+        if (topic != null) {
           classes.add(topic);
+        }
       }
       catch (MalformedURLException e) {
         // --- 2nd try: interpret <instanceOf> as variable name
@@ -264,11 +269,13 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
       while (iter.hasNext()) {
         obj = iter.next();
         if (decider.test(obj)) {
-          if (!invert)
+          if (!invert) {
             filtered.add(obj);
+          }
         } else {
-          if (invert)
+          if (invert) {
             filtered.add(obj);
+          }
         }
       } // while
     }
@@ -289,37 +296,39 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
     
     // what are we filtering by?
     Class klass = null;
-    if (kind.equalsIgnoreCase(CLASS_OCC))
+    if (kind.equalsIgnoreCase(CLASS_OCC)) {
       klass = OccurrenceIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_TOPIC))
+    } else if (kind.equalsIgnoreCase(CLASS_TOPIC)) {
       klass = TopicIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_TOPICMAP))
+    } else if (kind.equalsIgnoreCase(CLASS_TOPICMAP)) {
       klass = TopicMapIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_ASSOC))
+    } else if (kind.equalsIgnoreCase(CLASS_ASSOC)) {
       klass = AssociationIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_BASENAME))
+    } else if (kind.equalsIgnoreCase(CLASS_BASENAME)) {
       klass = TopicNameIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_VARIANT))
+    } else if (kind.equalsIgnoreCase(CLASS_VARIANT)) {
       klass = VariantNameIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_LOCATOR))
+    } else if (kind.equalsIgnoreCase(CLASS_LOCATOR)) {
       klass = LocatorIF.class;
-    else if (kind.equalsIgnoreCase(CLASS_ROLE))
+    } else if (kind.equalsIgnoreCase(CLASS_ROLE)) {
       klass = AssociationRoleIF.class;
-    else
+    } else {
       throw new NavigatorCompileException("FilterTag got wrong value for the" +
                                           " kind attribute: '" + klass + "'");
+    }
 
     // do the filtering
-    if (tmObjects == null)
+    if (tmObjects == null) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       Collection filtered = new HashSet(tmObjects.size());
       Iterator iter = tmObjects.iterator();
       while (iter.hasNext()) {
         Object obj = iter.next();
         if ((klass.isInstance(obj) && !invert)
-            || (!klass.isInstance(obj) && invert))
+            || (!klass.isInstance(obj) && invert)) {
           filtered.add(obj);
+        }
       }
       return filtered;
     }
@@ -351,10 +360,11 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
   
   public void setInvert(String invert) {
     if (invert.equalsIgnoreCase("true") ||
-        invert.equalsIgnoreCase("yes") )
+        invert.equalsIgnoreCase("yes") ) {
       this.invert = true;
-    else
+    } else {
       this.invert = false;
+    }
   }
 
   /**
@@ -365,10 +375,11 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
    */
   public void setRandomElement(String randomElement) {
     if (randomElement.equalsIgnoreCase("true") ||
-        randomElement.equalsIgnoreCase("yes") )
+        randomElement.equalsIgnoreCase("yes") ) {
       this.randomElement = true;
-    else
+    } else {
       this.randomElement = false;
+    }
   }
 
   /**
@@ -386,12 +397,13 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
         || kind.equalsIgnoreCase(CLASS_LOCATOR)
         || kind.equalsIgnoreCase(CLASS_ROLE)
         || kind.equalsIgnoreCase(CLASS_BASENAME)
-        || kind.equalsIgnoreCase(CLASS_VARIANT))
+        || kind.equalsIgnoreCase(CLASS_VARIANT)) {
       this.isKind = kind;
-    else
+    } else {
       throw new IllegalArgumentException("Invalid value '" + kind +
                                          "' in attribute 'is' " +
                                          " of tag 'filter'.");
+    }
   }
 
   // ---------------------------------------------------------------
@@ -406,10 +418,11 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
       // Create decider instance
       obj = contextTag.getNavigatorApplication().getInstanceOf(classname);
       // if instance of DeciderIF we need to wrap in NavigatorDeciderWrapper
-      if (obj instanceof NavigatorDeciderIF)
+      if (obj instanceof NavigatorDeciderIF) {
         return (NavigatorDeciderIF) obj;
-      else if (obj instanceof Predicate)
+      } else if (obj instanceof Predicate) {
         return new DeciderIFWrapper((Predicate)obj);
+      }
       
     } catch (NavigatorRuntimeException e) {
       log.warn("Unable to retrieve instance of " + classname);

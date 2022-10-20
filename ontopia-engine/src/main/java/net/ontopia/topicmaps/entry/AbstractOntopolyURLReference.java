@@ -84,16 +84,18 @@ public abstract class AbstractOntopolyURLReference
     // create empty topic map
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     
-    if (base_address != null)
+    if (base_address != null) {
       store.setBaseAddress(base_address);
+    }
     TopicMapIF tm = store.getTopicMap();
 
     // import file into topic map
     reader.importInto(tm);
 
     // suppress duplicates
-    if (getDuplicateSuppression())
+    if (getDuplicateSuppression()) {
       DuplicateSuppressionUtils.removeDuplicates(tm);
+    }
 
     if (maintainFulltextIndexes) {
       for (FulltextImplementationIF ft : ftmanagers) {
@@ -125,10 +127,12 @@ public abstract class AbstractOntopolyURLReference
 
   @Override
   public synchronized void delete() {
-    if (source == null)
+    if (source == null) {
       throw new UnsupportedOperationException("This reference cannot be deleted as it does not belong to a source.");
-    if (!source.supportsDelete())
+    }
+    if (!source.supportsDelete()) {
       throw new UnsupportedOperationException("This reference cannot be deleted as the source does not allow deleting.");
+    }
 
     deleteFullTextIndex();
     super.delete();
@@ -158,7 +162,9 @@ public abstract class AbstractOntopolyURLReference
   
   public void reindexFulltextIndex() {
     if (maintainFulltextIndexes) {
-      if (!isopen) open();
+      if (!isopen) {
+        open();
+      }
       for (FulltextImplementationIF ft : ftmanagers) {
         ft.reindex();
       }
@@ -167,7 +173,9 @@ public abstract class AbstractOntopolyURLReference
 
   public void deleteFullTextIndex() {
     if (maintainFulltextIndexes) {
-      if (!isopen) open();
+      if (!isopen) {
+        open();
+      }
       for (FulltextImplementationIF ft : ftmanagers) {
         ft.deleteIndex();
       }

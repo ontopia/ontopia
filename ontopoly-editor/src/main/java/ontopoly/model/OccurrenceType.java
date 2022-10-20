@@ -48,8 +48,9 @@ public class OccurrenceType extends AbstractTypingTopic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof OccurrenceType))
+    if (!(obj instanceof OccurrenceType)) {
       return false;
+    }
 
     OccurrenceType other = (OccurrenceType) obj;
     return (getTopicIF().equals(other.getTopicIF()));

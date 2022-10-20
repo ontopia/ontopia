@@ -59,16 +59,18 @@ public class QNameRegistry {
    */
   public LocatorIF resolve(String qname) {
     int pos = qname.indexOf(':');
-    if (pos == -1)
+    if (pos == -1) {
       throw new OntopiaRuntimeException("Qname " + qname + " has no colon!");
+    }
 
     String prefix = qname.substring(0, pos);
     String localpart = qname.substring(pos + 1);
 
     String uri = (String) prefixes.get(prefix);
-    if (uri == null)
+    if (uri == null) {
       throw new OntopiaRuntimeException("Unknown prefix " + prefix + " in " +
                                         qname);
+    }
 
     try {
       return new URILocator(uri + localpart);

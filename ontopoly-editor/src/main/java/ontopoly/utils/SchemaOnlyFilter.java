@@ -37,10 +37,11 @@ public class SchemaOnlyFilter implements Predicate {
   
   @Override
   public boolean test(Object object) {
-    if (object instanceof TopicIF)
+    if (object instanceof TopicIF) {
       return includeTopic((TopicIF) object);
-    else if (object instanceof AssociationIF)
+    } else if (object instanceof AssociationIF) {
       return includeAssociation((AssociationIF) object);
+    }
 
     // if it's not a topic or association it's a component of a topic,
     // and the exporter will only ask if we've already said we're
@@ -51,8 +52,9 @@ public class SchemaOnlyFilter implements Predicate {
   protected boolean includeTopic(TopicIF topic) {
     // is this a system topic? if so, we include it
     TopicIF systemtopic = topic.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_SYSTEM_TOPIC);
-    if (thutils.isInstanceOf(topic, systemtopic))
+    if (thutils.isInstanceOf(topic, systemtopic)) {
       return true;
+    }
     
     // does every type of this topic include ON_TOPIC_TYPE among its types?
     // if so, this topic is an instance of a schema topic type, and it needs
@@ -62,17 +64,20 @@ public class SchemaOnlyFilter implements Predicate {
     for (TopicIF topictype : topic.getTypes()) {
       // so, is ON_TOPIC_TYPE the only type this topic has?
       if (topictype.getTypes().contains(metatype) &&
-          topictype.getTypes().size() == 1)
+          topictype.getTypes().size() == 1) {
         return false;
+      }
     }
 
     return true;
   }
 
   protected boolean includeAssociation(AssociationIF assoc) {
-    for (AssociationRoleIF role : assoc.getRoles())
-      if (includeTopic(role.getPlayer()))
+    for (AssociationRoleIF role : assoc.getRoles()) {
+      if (includeTopic(role.getPlayer())) {
         return true;
+      }
+    }
     return false; // not keeping any of the players, so...
   }
   

@@ -62,14 +62,17 @@ public class RulePredicate extends AbstractQueryProcessor
 
   @Override
   public String getSignature() throws InvalidQueryException {
-    if (signature != null)
+    if (signature != null) {
       return signature;
+    }
 
     // protect against infinite recursion
     List params = rule.getParameters();
     StringBuilder sign = new StringBuilder();
     for (int ix = 0; ix < params.size(); ix++) {
-      if (ix > 0) sign.append(' ');
+      if (ix > 0) {
+        sign.append(' ');
+      }
       sign.append('.');
     }
     signature = sign.toString();
@@ -84,8 +87,9 @@ public class RulePredicate extends AbstractQueryProcessor
     sign = new StringBuilder();
     for (int ix = 0; ix < params.size(); ix++) {
       Variable var = (Variable) params.get(ix);
-      if (ix > 0)
+      if (ix > 0) {
         sign.append(' ');
+      }
       sign.append(ArgumentValidator.makeSignature((Object[]) vartypes.get(var.getName())));
     }
     signature = sign.toString();
@@ -95,17 +99,20 @@ public class RulePredicate extends AbstractQueryProcessor
   @Override
   public int getCost(boolean[] boundparams) {
     int open = 0;
-    for (int ix = 0; ix < boundparams.length; ix++)
-      if (!boundparams[ix])
+    for (int ix = 0; ix < boundparams.length; ix++) {
+      if (!boundparams[ix]) {
         open++;
+      }
+    }
 
-    if (open == 0)
+    if (open == 0) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       // we want to punish rules which have many open variables;
       // at the same time we want to run rules early. this represents
       // a compromise.
       return PredicateDrivenCostEstimator.BIG_RESULT + open - 1;
+    }
   }
   
   // --- BasicPredicateIF implementation
@@ -150,10 +157,11 @@ public class RulePredicate extends AbstractQueryProcessor
     List theclauses = rule.getClauses();
     if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder")) {
       CostEstimator estimator;
-      if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder.predicate-based"))
+      if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder.predicate-based")) {
         estimator = new PredicateDrivenCostEstimator();
-      else
+      } else {
         estimator = new SimpleCostEstimator();
+      }
       theclauses = QueryOptimizer.reorder(theclauses, bound, litvars,
                                           getName(), estimator);
     }
@@ -178,8 +186,9 @@ public class RulePredicate extends AbstractQueryProcessor
     Set bound = new CompactHashSet();
     for (int ix = 0; ix < params.length; ix++) {
       int col = extmatches.getIndex(extarguments[ix]);
-      if (extmatches.bound(col))
+      if (extmatches.bound(col)) {
         bound.add(params[ix]);
+      }
     }
 
     return bound;
@@ -194,9 +203,11 @@ public class RulePredicate extends AbstractQueryProcessor
    */
   private static Set getLiteralVariables(Object[] params, Object[] extarguments) {
     Set litvars = new CompactHashSet();
-    for (int ix = 0; ix < params.length; ix++)
-      if (!(extarguments[ix] instanceof Variable))
+    for (int ix = 0; ix < params.length; ix++) {
+      if (!(extarguments[ix] instanceof Variable)) {
         litvars.add(params[ix]);
+      }
+    }
 
     return litvars;
   }
@@ -213,7 +224,9 @@ public class RulePredicate extends AbstractQueryProcessor
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof RulePredicate) {
       RulePredicate other = (RulePredicate)obj;
       return rule.equals(other.rule);
@@ -227,21 +240,26 @@ public class RulePredicate extends AbstractQueryProcessor
    * rules as well as queries that use it.
    */
   public boolean replaceable() {
-    if (rule.getClauses().size() != 1)
+    if (rule.getClauses().size() != 1) {
       return false;
+    }
 
     AbstractClause clause = (AbstractClause) rule.getClauses().get(0);
-    if (!(clause instanceof PredicateClause))
+    if (!(clause instanceof PredicateClause)) {
       return false;
+    }
     
     Collection variables = findClauseVariables(getClauses());
     List parameters = getParameters();
-    if (variables.size() != parameters.size())
+    if (variables.size() != parameters.size()) {
       return false;
+    }
     
-    for (int ix = 0; ix < parameters.size(); ix++)
-      if (!variables.contains(parameters.get(ix)))
+    for (int ix = 0; ix < parameters.size(); ix++) {
+      if (!variables.contains(parameters.get(ix))) {
         return false;
+      }
+    }
 
     return true;
   }
@@ -263,14 +281,16 @@ public class RulePredicate extends AbstractQueryProcessor
 
       if (arg instanceof Pair) {
         Pair pair = (Pair) arg;
-        if (pair.getFirst() instanceof Variable)
+        if (pair.getFirst() instanceof Variable) {
           newarg = new Pair(varmap.get(pair.getFirst()), pair.getSecond());
-        else
+        } else {
           newarg = new Pair(pair.getFirst(), pair.getSecond());
-      } else if (arg instanceof Variable)
+        }
+      } else if (arg instanceof Variable) {
         newarg = varmap.get(arg);
-      else
+      } else {
         newarg = arg;
+      }
       
       clause.addArgument(newarg);
     }
@@ -282,8 +302,9 @@ public class RulePredicate extends AbstractQueryProcessor
   private Map makeVariableMap(List arguments) {
     List params = getParameters();
     Map varmap = new HashMap();
-    for (int ix = 0; ix < arguments.size(); ix++) 
+    for (int ix = 0; ix < arguments.size(); ix++) {
       varmap.put(params.get(ix), arguments.get(ix));
+    }
     return varmap;
   }
 
@@ -299,18 +320,21 @@ public class RulePredicate extends AbstractQueryProcessor
    */
   private int[] getEqualPairs(Object[] extarguments) {
     List<Integer> l = new ArrayList<Integer>();
-    for (int ix = 0; ix+1 < extarguments.length; ix++)
-      for (int i = ix+1; i < extarguments.length; i++)
+    for (int ix = 0; ix+1 < extarguments.length; ix++) {
+      for (int i = ix+1; i < extarguments.length; i++) {
         if (extarguments[ix] instanceof Variable &&
             extarguments[i] instanceof Variable &&
             extarguments[ix].equals(extarguments[i])) {
           l.add(ix);
           l.add(i);
         }
+      }
+    }
 
     int[] pairs = new int[l.size()];
-    for (int ix = 0; ix < l.size(); ix++)
+    for (int ix = 0; ix < l.size(); ix++) {
       pairs[ix] = l.get(ix).intValue();
+    }
     
     return pairs;
   }

@@ -213,8 +213,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       for (int i=0; i < length; i++) {
         if (Collection.class.isAssignableFrom((Class)ptypes.get(i))) {
           if (indexes == null ||
-              indexes.length <= coll_count)
+              indexes.length <= coll_count) {
             indexes = new int[coll_count + 1];
+          }
           indexes[coll_count] = i;
           coll_count++;
         }
@@ -262,8 +263,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
         
         // If table registration flag is set and this is the first column,
         // register table with build info
-        if (cindex == 0 && info.register_tables)
-          info.rtables.add(table);        
+        if (cindex == 0 && info.register_tables) {
+          info.rtables.add(table);
+        }        
         referenceSQLColumnsColumn(table, columns.getColumns()[cindex], sql, info);        
         break;
       }
@@ -275,8 +277,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
         // Register parameter type+info
         SQLParameter param = (SQLParameter)current;
         //! System.out.println("===1> Parameter " + param.getName() + " (index: " + sql.length() + ")");
-        if (cindex == 0)
+        if (cindex == 0) {
           info.addParameter(param, sql.length());
+        }
         sql.append('?');
         break;
       }
@@ -335,11 +338,12 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // Wrap it all in a SQL statement object
     ParameterProcessorIF proc = null;
     int[] coll_indexes = info.getCollectionIndexes();
-    if (coll_indexes != null)
-      proc = new CollectionParameterProcessor(info.getParameterHandlers(), info.getParameterNames(), 
-                                              coll_indexes, info.getParameterOffsets());
-    else
+    if (coll_indexes != null) {
+      proc = new CollectionParameterProcessor(info.getParameterHandlers(), info.getParameterNames(),
+              coll_indexes, info.getParameterOffsets());
+    } else {
       proc = new DefaultParameterProcessor(info.getParameterHandlers(), info.getParameterNames());
+    }
     
     return new SQLStatement(sql, info.getSelectHandlers(), proc);
   }
@@ -363,8 +367,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     
     // WHERE and SELECT clauses must be created first.
     StringBuilder sql_select = createSelectClause(selects, distinct, info);
-    if (issetquery)
+    if (issetquery) {
       info.rtables.clear();
+    }
     StringBuilder sql_where = createWhereClause(filter, info);
     StringBuilder sql_group_by = createGroupByClause(info);
     StringBuilder sql_order_by = createOrderByClause(orderby, info);
@@ -376,8 +381,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql_from.append(')');
       fromSubSelectAlias(sql_from, info);
       sql_where = null;
-    } else
+    } else {
       sql_from = createFromClause(filter, info);
+    }
 
     StringBuilder sql_offset_limit = createOffsetLimitClause(offset, limit, info);
 
@@ -504,10 +510,11 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     Iterator iter = selects.iterator();
     while (iter.hasNext()) {
       Object selected = iter.next();
-      if (selected instanceof SQLAggregateIF)
+      if (selected instanceof SQLAggregateIF) {
         analyzeValue(((SQLAggregateIF)selected).getValue(), tlevels, level);
-      else
+      } else {
         analyzeValue((SQLValueIF)selected, tlevels, level);
+      }
     }
   }
 
@@ -516,16 +523,19 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     while (iter.hasNext()) {
       SQLOrderBy order = (SQLOrderBy)iter.next();
       
-      if (order.isAggregate())
+      if (order.isAggregate()) {
         analyzeValue(order.getAggregate().getValue(), tlevels, level);
-      else
+      } else {
         analyzeValue(order.getValue(), tlevels, level);
+      }
     }
   }
 
   protected void analyzeExpression(SQLExpressionIF expr, Map tlevels, Integer level) {
     // Skip if expression is null
-    if (expr == null) return;
+    if (expr == null) {
+      return;
+    }
     // Check expression type
     switch (expr.getType()) {
       
@@ -614,8 +624,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       SQLTable tbl = ((SQLColumns)value).getTable();
       
       Integer _level = (Integer)tlevels.get(tbl);
-      if (_level == null || _level.intValue() > level.intValue())
+      if (_level == null || _level.intValue() > level.intValue()) {
         tlevels.put(tbl, level);
+      }
       
       return;        
     }
@@ -643,7 +654,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   protected void produceSelect(List selects, boolean distinct, StringBuilder sql, BuildInfo info) {
     // Output distinct if specified
-    if (distinct) sql.append("distinct ");
+    if (distinct) {
+      sql.append("distinct ");
+    }
 
     // FIXME: What if select list is empty? Use '*'?
 
@@ -658,14 +671,17 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       Iterator iter = selects.iterator();
       while (iter.hasNext()) {
         Object selected = iter.next();
-        if (selected instanceof SQLAggregateIF)
+        if (selected instanceof SQLAggregateIF) {
           // aggregate
           selectSQLAggregateIF((SQLAggregateIF)selected, register, sql, info);
-        else
+        } else {
           // selected value
           selectSQLValueIF((SQLValueIF)selected, register, sql, info);
+        }
         
-        if (iter.hasNext()) sql.append(", ");
+        if (iter.hasNext()) {
+          sql.append(", ");
+        }
       }
     }
   }
@@ -676,17 +692,23 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   protected void produceGroupBy(StringBuilder sql, BuildInfo info) {
 
-    if (!info.hasaggs) return;
+    if (!info.hasaggs) {
+      return;
+    }
 
     // Ignore if no aggregate values are selected
     List nonagg = info.nonaggregate;    
-    if (nonagg.isEmpty()) return;
+    if (nonagg.isEmpty()) {
+      return;
+    }
     
     // Loop over non aggregate columns
     Iterator iter = nonagg.iterator();
     while (iter.hasNext()) {
       sql.append(iter.next());
-      if (iter.hasNext()) sql.append(", ");
+      if (iter.hasNext()) {
+        sql.append(", ");
+      }
     }
   }
   
@@ -695,7 +717,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   // -----------------------------------------------------------------------------
 
   protected void produceOrderBy(List orderby, StringBuilder sql, BuildInfo info) {
-    if (orderby == null || orderby.isEmpty()) return;
+    if (orderby == null || orderby.isEmpty()) {
+      return;
+    }
     // Do not register field handlers and aggregate functions in order by clause
     boolean register = false;
 
@@ -704,17 +728,21 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     while (iter.hasNext()) {
       SQLOrderBy ob = (SQLOrderBy)iter.next();
       // Same output as SELECT fragments, so we delegate to the select method.
-      if (ob.isAggregate())
+      if (ob.isAggregate()) {
         selectSQLAggregateIF(ob.getAggregate(), register, sql, info);
-      else
+      } else {
         selectSQLValueIF(ob.getValue(), register, sql, info);
+      }
 
-      if (ob.getOrder() == SQLOrderBy.ASCENDING)        
+      if (ob.getOrder() == SQLOrderBy.ASCENDING) {        
         sql.append(" ASC");
-      else
+      } else {
         sql.append(" DESC");
+      }
 
-      if (iter.hasNext()) sql.append(", ");
+      if (iter.hasNext()) {
+        sql.append(", ");
+      }
     }
   }
   
@@ -725,10 +753,11 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   protected boolean isFromLevel(SQLTable tbl, BuildInfo info) {
     Integer tlevel = (Integer)info.tlevels.get(tbl);
     //! System.out.println("TBL: " + tbl + ":" + info.tlevel + " " + (tlevel.intValue() == info.tlevel));
-    if (tlevel.intValue() == info.tlevel)
+    if (tlevel.intValue() == info.tlevel) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
   
   protected void produceFrom(StringBuilder sql, BuildInfo info) {
@@ -886,12 +915,15 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
         info.hasaggs = true;
       }
       sql.append("count(");
-      if (aggregate.isReference())
+      if (aggregate.isReference()) {
         sql.append(aggregate.getReference().getValue().getAlias());
-      else
+    } else {
         selectSQLValueIF(aggregate.getValue(), false, sql, info); // Note: register is false
+    }
       sql.append(')');
-      if (register) selectColumnAlias(aggregate, sql);
+      if (register) {
+        selectColumnAlias(aggregate, sql);
+    }
       return;
     default:
       throw new OntopiaRuntimeException("Invalid aggregate function: '" + aggregate + "'");
@@ -899,7 +931,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
 
   protected void selectColumnAlias(SQLAggregateIF aggregate, StringBuilder sql) {
-    if (aggregate == null) return;
+    if (aggregate == null) {
+      return;
+    }
     String alias = aggregate.getAlias();
     if (alias != null) {
       sql.append(" as ");
@@ -908,7 +942,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   }
 
   protected void selectColumnAlias(SQLValueIF value, StringBuilder sql) {
-    if (value == null) return;
+    if (value == null) {
+      return;
+    }
     String alias = value.getAlias();
     if (alias != null) {
       sql.append(" as ");
@@ -991,24 +1027,34 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     String[] cols = columns.getColumns();
         
     // If table registration flag is set, register table with build info
-    if (info.register_tables) info.rtables.add(table);            
+    if (info.register_tables) {
+      info.rtables.add(table);
+    }            
 
     // Loop over columns and insert references
     if (refvalue == null) {
       for (int i=0; i < cols.length; i++) {
-        if (i > 0) sql.append(", ");      
+        if (i > 0) {
+          sql.append(", ");
+        }      
         referenceSQLColumnsColumn(table, cols[i], sql, info);
         // TODO: support for " as <calias>"
-        if (register && !nonagg) selectColumnAlias(columns, sql);
+        if (register && !nonagg) {
+          selectColumnAlias(columns, sql);
+        }
       }
     } else {
       for (int i=0; i < cols.length; i++) {
-        if (i > 0) sql.append(", ");      
+        if (i > 0) {
+          sql.append(", ");
+        }      
         sql.append(columns.getAlias());
         // TODO: Add suffix if width > 1.
         //! if (i > 0) sql.append(i);
         // TODO: support for " as <calias>"
-        if (register) selectColumnAlias(refvalue, sql);
+        if (register) {
+          selectColumnAlias(refvalue, sql);
+        }
       }
     }
   }
@@ -1016,16 +1062,21 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   protected void selectSQLPrimitive(SQLPrimitive value, SQLValueIF refvalue, 
                                     boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
-    if (register)
+    if (register) {
       info.addSelect(value.getValueType(), value.getFieldHandler());
+    }
     
     if (refvalue == null) {
       referenceSQLPrimitive(value, sql, info);
-      if (register) selectColumnAlias(value, sql);
+      if (register) {
+        selectColumnAlias(value, sql);
+      }
     } else {
       // NOTE: This may not really be neccesary for NULLs      
       sql.append(value.getAlias()); 
-      if (register) selectColumnAlias(refvalue, sql);
+      if (register) {
+        selectColumnAlias(refvalue, sql);
+      }
     }
   }
   
@@ -1036,48 +1087,63 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   protected void selectSQLNull(SQLNull value, SQLValueIF refvalue, 
                                boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
-    if (register)
+    if (register) {
       info.addSelect(value.getValueType(), value.getFieldHandler());
+    }
     
     if (refvalue == null) {
       sql.append("null");
-      if (register) selectColumnAlias(value, sql);
+      if (register) {
+        selectColumnAlias(value, sql);
+      }
     } else {
       // NOTE: This may not really be neccesary for NULLs      
       sql.append(value.getAlias()); 
-      if (register) selectColumnAlias(refvalue, sql);
+      if (register) {
+        selectColumnAlias(refvalue, sql);
+      }
     }
   }
   
   protected void selectSQLVerbatim(SQLVerbatim value, SQLValueIF refvalue, 
                                    boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
-    if (register)
+    if (register) {
       info.addSelect(value.getValueType(), value.getFieldHandler());
+    }
     
     if (refvalue == null) {
       // Output verbatime value directly
       sql.append(value.getValue());
-      if (register) selectColumnAlias(value, sql);
+      if (register) {
+        selectColumnAlias(value, sql);
+      }
     } else {
       sql.append(value.getAlias()); 
-      if (register) selectColumnAlias(refvalue, sql);
+      if (register) {
+        selectColumnAlias(refvalue, sql);
+      }
     }
   }
   
   protected void selectSQLFunction(SQLFunction value, SQLValueIF refvalue, 
                                    boolean register, StringBuilder sql, BuildInfo info) {
     // Register select type+info
-    if (register)
+    if (register) {
       info.addSelect(value.getValueType(), value.getFieldHandler());
+    }
     
     if (refvalue == null) {
       // Output verbatime value directly
       referenceSQLFunction(value, sql, info);
-      if (register) selectColumnAlias(value, sql);
+      if (register) {
+        selectColumnAlias(value, sql);
+      }
     } else {
       sql.append(value.getAlias()); 
-      if (register) selectColumnAlias(refvalue, sql);
+      if (register) {
+        selectColumnAlias(refvalue, sql);
+      }
     }
   }
   
@@ -1163,7 +1229,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   
   protected void whereSQLExpressionIF(SQLExpressionIF expr, StringBuilder sql, BuildInfo info) {
     // Skip if expression is null
-    if (expr == null) return;
+    if (expr == null) {
+      return;
+    }
     // Check expression type
     switch (expr.getType()) {
 
@@ -1220,16 +1288,21 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   
   protected void whereSQLExpressionIF(SQLExpressionIF[] nexprs, String separator, StringBuilder sql, BuildInfo info) {
     // Returns true if any nested expression contributed to the where clause
-    if (nexprs == null || nexprs.length == 0) return;
+    if (nexprs == null || nexprs.length == 0) {
+      return;
+    }
 
     // Process expression
     //! whereSQLExpressionIF(nexprs[0], sql, info);    
     int length = nexprs.length;
     int c = 0;
     for (int i=0; i < length; i++) {
-      if (nexprs[i] == null) continue;
-      if (c > 0)
-        sql.append(separator);      
+      if (nexprs[i] == null) {
+        continue;
+      }
+      if (c > 0) {
+        sql.append(separator);
+      }      
       whereSQLExpressionIF(nexprs[i], sql, info);
       c++;
     }
@@ -1268,22 +1341,24 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   
   protected void whereSQLEquals(SQLEquals equals, StringBuilder sql, BuildInfo info) {
     // Rewrite null values to an "is null" expression    
-    if (equals.getLeft().getType() == SQLValueIF.NULL)
+    if (equals.getLeft().getType() == SQLValueIF.NULL) {
       whereSQLValueEqualsNull(equals.getRight(), sql, info);
-    else if (equals.getRight().getType() == SQLValueIF.NULL)
+    } else if (equals.getRight().getType() == SQLValueIF.NULL) {
       whereSQLValueEqualsNull(equals.getLeft(), sql, info);
-    else
-      referenceSQLValueIFOpBinary(equals.getLeft(), "=", equals.getRight(), sql, info);    
+    } else {
+      referenceSQLValueIFOpBinary(equals.getLeft(), "=", equals.getRight(), sql, info);
+    }    
   }
   
   protected void whereSQLNotEquals(SQLNotEquals nequals, StringBuilder sql, BuildInfo info) {
     // Rewrite null values to an "is not null" expression
-    if (nequals.getLeft().getType() == SQLValueIF.NULL)
+    if (nequals.getLeft().getType() == SQLValueIF.NULL) {
       whereSQLValueNotEqualsNull(nequals.getRight(), sql, info);
-    else if (nequals.getRight().getType() == SQLValueIF.NULL)
+    } else if (nequals.getRight().getType() == SQLValueIF.NULL) {
       whereSQLValueNotEqualsNull(nequals.getLeft(), sql, info);
-    else
+    } else {
       referenceSQLValueIFOpBinary(nequals.getLeft(), "!=", nequals.getRight(), sql, info);
+    }
   }
     
   protected void whereSQLValueEqualsNull(SQLValueIF value, StringBuilder sql, BuildInfo info) {
@@ -1353,7 +1428,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       } else {
         sql.append(func.getName()).append('(');
         for (int i=0; i < args.length; i++) {
-          if (i > 0) sql.append(", ");
+          if (i > 0) {
+            sql.append(", ");
+          }
           atomicSQLValueIF(args[i], sql, info);
         }
         sql.append(')');
@@ -1418,8 +1495,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
   protected void whereSQLIn(SQLIn in, StringBuilder sql, BuildInfo info) {
     SQLValueIF left = in.getLeft();
     SQLValueIF right = in.getRight();
-    if (left.getArity() != 1)
+    if (left.getArity() != 1) {
       throw new OntopiaRuntimeException("Arity of left value is not 1: " + left);
+    }
 
     // FIXME: Some databases has a limit on the number of elements in
     // the in clause, e.g. 256.
@@ -1435,7 +1513,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       int max_elements_in = (MAX_ELEMENTS_IN > 0 ? MAX_ELEMENTS_IN : Integer.MAX_VALUE);
       for (int i=0; i < rarity; i++) {
         if (i % max_elements_in == 0) {
-          if (i > 0) sql.append(") or ");
+          if (i > 0) {
+            sql.append(") or ");
+          }
           atomicSQLValueIF(left, sql, info);
           sql.append(" in (");
         }
@@ -1453,8 +1533,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append(" in (");
       atomicSQLValueIF(right, sql, info);      
       sql.append(')');
-    } else
+    } else {
       throw new OntopiaRuntimeException("Arity of right value is less than 1 (it is " + rarity + ").");
+    }
   }
   
   // -----------------------------------------------------------------------------
@@ -1555,7 +1636,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     String[] rcols = join.getRight().getColumns();
     
     int length = lcols.length;
-    if (length > 1) sql.append('(');
+    if (length > 1) {
+      sql.append('(');
+    }
     for (int i=0; i < length; i++) {
       sql.append(lalias);
       sql.append('.');
@@ -1564,10 +1647,13 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append(ralias);
       sql.append('.');
       sql.append(rcols[i]);
-      if (i != length - 1)
+      if (i != length - 1) {
         sql.append(AND);
+      }
     }
-    if (length > 1) sql.append(')');
+    if (length > 1) {
+      sql.append(')');
+    }
   }
   
   protected void whereSQLLeftOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
@@ -1590,7 +1676,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     String[] rcols = join.getRight().getColumns();
     
     int length = lcols.length;
-    if (length > 1) sql.append('(');
+    if (length > 1) {
+      sql.append('(');
+    }
     for (int i=0; i < length; i++) {
       sql.append(lalias);
       sql.append('.');
@@ -1600,10 +1688,13 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append('.');
       sql.append(rcols[i]);
       sql.append("(+)");
-      if (i != length - 1)
+      if (i != length - 1) {
         sql.append(AND);
+      }
     }
-    if (length > 1) sql.append(')');
+    if (length > 1) {
+      sql.append(')');
+    }
   }
   
   protected void whereSQLRightOuterJoin(SQLJoin join, StringBuilder sql, BuildInfo info) {
@@ -1626,7 +1717,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     String[] rcols = join.getRight().getColumns();
     
     int length = lcols.length;
-    if (length > 1) sql.append('(');
+    if (length > 1) {
+      sql.append('(');
+    }
     for (int i=0; i < length; i++) {
       sql.append(lalias);
       sql.append('.');
@@ -1636,10 +1729,13 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       sql.append(ralias);
       sql.append('.');
       sql.append(rcols[i]);
-      if (i != length - 1)
+      if (i != length - 1) {
         sql.append(AND);
+      }
     }
-    if (length > 1) sql.append(')');
+    if (length > 1) {
+      sql.append(')');
+    }
   }
   
   // -----------------------------------------------------------------------------
@@ -1737,8 +1833,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // Binary operations: <value1> <operator> <value2>
     int arity1 = value1.getArity();
     int arity2 = value2.getArity();
-    if (arity1 != arity2)
+    if (arity1 != arity2) {
       throw new OntopiaRuntimeException("Arity of values is not compatible: First: " + value1 + " (arity: " + arity1 + ") Second: " + value2 + " (arity: " + arity2 + ")");
+    }
 
     // If arity is 1 there is no need to create an array.
     if (arity1 == 1) {
@@ -1773,8 +1870,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
       SQLColumns cols = (SQLColumns)value;
       SQLTable table = cols.getTable();
       // If table registration flag is set, register table with build info
-      if (info.register_tables)
+      if (info.register_tables) {
         info.rtables.add(table);
+      }
       referenceSQLColumnsColumn(table, cols.getColumns()[0], sql, info);
       return;
     }
@@ -1811,8 +1909,12 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     char[] chars = value.toCharArray();
     for (int i=0; i < chars.length; i++) {
       // escape ' and \ characters
-      if (chars[i] == '\'') sql.append('\'');
-      if (chars[i] == '\\') sql.append('\\');
+      if (chars[i] == '\'') {
+        sql.append('\'');
+      }
+      if (chars[i] == '\\') {
+        sql.append('\\');
+      }
       sql.append(chars[i]);
     }
   }
@@ -1995,7 +2097,9 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
     // Get the first SQL generator that matches a platform in the list.
     for (int i=0; i < platforms.length; i++) {
       SQLGeneratorIF sqlgen = getSQLGenerator(platforms[i], properties);
-      if (sqlgen != null) return sqlgen;
+      if (sqlgen != null) {
+        return sqlgen;
+      }
     }
     throw new OntopiaRuntimeException("No SQL generator could be found for the platforms: " +
                                       Arrays.asList(platforms));
@@ -2003,18 +2107,19 @@ public class GenericSQLGenerator implements SQLGeneratorIF {
 
   public static SQLGeneratorIF getSQLGenerator(String platform, Map properties) {
     // ADD: sapdb, firebird
-    if ("generic".equals(platform))
+    if ("generic".equals(platform)) {
       return new GenericSQLGenerator(properties);
-    else if (platform.startsWith("oracle"))
+    } else if (platform.startsWith("oracle")) {
       return new OracleSQLGenerator(properties);
-    else if ("postgresql".equals(platform))
+    } else if ("postgresql".equals(platform)) {
       return new PostgreSQLGenerator(properties);
-    else if ("sqlserver".equals(platform))
+    } else if ("sqlserver".equals(platform)) {
       return new SQLServerSQLGenerator(properties);
-    else if ("mysql".equals(platform))
+    } else if ("mysql".equals(platform)) {
       return new MySQLGenerator(properties);
-    else
+    } else {
       return null;
+    }
   }
   
 }

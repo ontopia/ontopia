@@ -48,20 +48,24 @@ public class ContentReader extends FilterReader {
   @Override
   public int read() throws IOException {
     int result = super.read();
-    if (result != -1)
+    if (result != -1) {
       lengthRead++;
-    if (result == -1 || lengthRead >= length)
+    }
+    if (result == -1 || lengthRead >= length) {
       close();
+    }
     return result;
   }
 
   @Override
   public int read(char[] cbuf) throws IOException {
     int result = super.read(cbuf);
-    if (result != -1)
+    if (result != -1) {
       lengthRead += result;
-    if (result == -1 || lengthRead >= length)
+    }
+    if (result == -1 || lengthRead >= length) {
       close();
+    }
     
     return result;
   }
@@ -69,15 +73,20 @@ public class ContentReader extends FilterReader {
   @Override
   public int read(char[] cbuf, int off, int len) throws IOException {
     int result = super.read(cbuf, off, len);
-    if (result != -1)
+    if (result != -1) {
       lengthRead += result;
-    if (result == -1 || lengthRead >= length) close();
+    }
+    if (result == -1 || lengthRead >= length) {
+      close();
+    }
     return result;
   }
 
   @Override
   public void close() throws IOException {
-    if (closed) return;
+    if (closed) {
+      return;
+    }
     closed = true;
 		// IMPORTANT: don't call super here as this will close the
     // enclosed stream. we want the user to close it instead.

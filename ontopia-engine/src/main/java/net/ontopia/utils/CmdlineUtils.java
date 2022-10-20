@@ -92,7 +92,9 @@ public class CmdlineUtils {
         log.warn("Log4J is not available, logging configuration will be ignored");
         return;
     }
-    if (priority == null) priority = "INFO";
+    if (priority == null) {
+      priority = "INFO";
+    }
     priority = priority.toUpperCase();
     // Must be done to translate NONE to the correct Log4J level OFF
     if ("NONE".equals(priority)) {
@@ -131,7 +133,9 @@ public class CmdlineUtils {
           configureByFile(value);
           break;
         case '8':
-          if (value == null) break;
+          if (value == null) {
+            break;
+      }
           setLoggingPriority(value);
           break;
         }

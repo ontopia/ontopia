@@ -103,7 +103,9 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
                 RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
                 Topic[] players = value.getPlayers();
                 for (int i=0; i < players.length; i++) {
-                  if (!page.filterTopic(players[i])) return false;
+                  if (!page.filterTopic(players[i])) {
+                    return false;
+                  }
                 }
 //                // show remove button on 1:1 field unless just one value left
 //                FieldInstance fi = fieldValueModel.getFieldInstanceModel().getFieldInstance();
@@ -174,7 +176,9 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
       }
       @Override
       public boolean isVisible() {
-        if (readonly) return false;
+        if (readonly) {
+          return false;
+        }
 //        Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
 //        return !(cardinality.isMaxOne() && fieldValuesModel.getNumberOfValues() > 1);
         return fieldValuesModel.containsExisting();

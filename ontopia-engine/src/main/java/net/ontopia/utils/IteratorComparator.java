@@ -42,16 +42,19 @@ public class IteratorComparator<T> implements Comparator<Iterator<T>> {
     
     // Iterate until difference is is found or reached end of one or both
     // iterators.
-    while (retVal == 0 && it1.hasNext() && it2.hasNext())
+    while (retVal == 0 && it1.hasNext() && it2.hasNext()) {
       retVal = elementComparator.compare(it1.next(), it2.next());
+    }
     
     // (Only) it1 has elements left, so it1 > it2.
-    if (retVal == 0 && it1.hasNext())
+    if (retVal == 0 && it1.hasNext()) {
       retVal = 1;
+    }
     
     // (Only) it2 has elements left, so it1 < it2.
-    if (retVal == 0 && it2.hasNext())
+    if (retVal == 0 && it2.hasNext()) {
       retVal = -1;
+    }
     return retVal;
   }
 

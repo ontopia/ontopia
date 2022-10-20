@@ -145,10 +145,12 @@ public class DatabaseProjectReader {
       // Table attributes
       atts.clear();
       atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, NAME, CDATA, table.getName());
-      if (table.getShortName() != null)
+      if (table.getShortName() != null) {
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "short", CDATA, table.getShortName());
-      if (table.getPrimaryKeys() != null)
+      }
+      if (table.getPrimaryKeys() != null) {
         atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "pks", CDATA, StringUtils.join(table.getPrimaryKeys(), " "));
+      }
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "table", atts);
 
       // Table properties
@@ -179,12 +181,15 @@ public class DatabaseProjectReader {
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "refcol", CDATA, column.getReferencedColumn());
         }
         
-        if (column.getSize() != null)
+        if (column.getSize() != null) {
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, SIZE, CDATA, column.getName());
-        if (column.isNullable())
+        }
+        if (column.isNullable()) {
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "null", CDATA, "yes");
-        if (column.getDefault() != null)
+        }
+        if (column.getDefault() != null) {
           atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "default", CDATA, column.getDefault());
+        }
         dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "column", atts);
       
         // Column properties
@@ -252,13 +257,15 @@ public class DatabaseProjectReader {
         Column column = new Column();
 
         String cname = atts.getValue(NAME);
-        if (cname == null) 
-          throw new OntopiaRuntimeException("column.name must be specified: " + cname); 
+        if (cname == null) {
+          throw new OntopiaRuntimeException("column.name must be specified: " + cname);
+        } 
         column.setName(cname);
 
         String type = atts.getValue(TYPE);
-        if (type == null) 
+        if (type == null) {
           throw new OntopiaRuntimeException("column.type must be specified: " + cname);
+        }
 
         // if (project.getDataTypeByName(type) == null)
         //   throw new OntopiaRuntimeException("Unknown datatype:: " + type);
@@ -266,25 +273,35 @@ public class DatabaseProjectReader {
         column.setType(type);
         
         String size = atts.getValue(SIZE);
-        if (size != null) column.setSize(size);
+        if (size != null) {
+          column.setSize(size);
+        }
 
         String default_value = atts.getValue("default");
-        if (default_value != null) column.setDefault(default_value);
+        if (default_value != null) {
+          column.setDefault(default_value);
+        }
 
         String reftable = atts.getValue("reftab");
-        if (reftable != null) column.setReferencedTable(reftable);
+        if (reftable != null) {
+          column.setReferencedTable(reftable);
+        }
 
         String refcol = atts.getValue("refcol");
         if ((refcol == null && reftable != null) ||
-            (refcol != null && reftable == null))
-          throw new OntopiaRuntimeException("column.refcol and reftable must both specified:" + cname); 
-        if (refcol != null) column.setReferencedColumn(refcol);
+            (refcol != null && reftable == null)) {
+          throw new OntopiaRuntimeException("column.refcol and reftable must both specified:" + cname);
+        } 
+        if (refcol != null) {
+          column.setReferencedColumn(refcol);
+        }
 
         String nullable = atts.getValue("null");
-        if (nullable == null || nullable.equals("no"))
+        if (nullable == null || nullable.equals("no")) {
           column.setNullable(false);
-        else
+        } else {
           column.setNullable(true);
+        }
         
         Table table = (Table)info.get(EL_TABLE);
         // Add column to table
@@ -297,16 +314,18 @@ public class DatabaseProjectReader {
         Index index = new Index();
 
         String iname = atts.getValue(NAME);
-        if (iname == null) 
-          throw new OntopiaRuntimeException("index.name must be specified: " + iname); 
+        if (iname == null) {
+          throw new OntopiaRuntimeException("index.name must be specified: " + iname);
+        } 
         index.setName(iname);
 
         String isname = atts.getValue("short");
         index.setShortName(isname);
 
         String icolumns = atts.getValue("columns");
-        if (icolumns == null) 
-          throw new OntopiaRuntimeException("index.columns must be specified: " + icolumns); 
+        if (icolumns == null) {
+          throw new OntopiaRuntimeException("index.columns must be specified: " + icolumns);
+        } 
         index.setColumns(StringUtils.split(icolumns, ","));
         
         Table table = (Table)info.get(EL_TABLE);
@@ -320,16 +339,18 @@ public class DatabaseProjectReader {
         Table table = new Table();
 
         String tname = atts.getValue(NAME);
-        if (tname == null) 
-          throw new OntopiaRuntimeException("table.name must be specified: " + tname);  
+        if (tname == null) {
+          throw new OntopiaRuntimeException("table.name must be specified: " + tname);
+        }  
         table.setName(tname);
 
         String tsname = atts.getValue("short");
         table.setShortName(tsname);
         
         String pkeys = atts.getValue("pks");
-        if (pkeys != null)
+        if (pkeys != null) {
           table.setPrimaryKeys(StringUtils.split(pkeys));
+        }
 
         // Add table to project
         project.addTable(table);
@@ -337,8 +358,9 @@ public class DatabaseProjectReader {
 
       } else if (EL_DATATYPES.equals(qname)) {
         String platform = atts.getValue(PLATFORM);
-        if (platform == null) 
+        if (platform == null) {
           throw new OntopiaRuntimeException("datatypes.platform must be specified: " + platform);
+        }
         
         info.put(EL_DATATYPES, platform);
 
@@ -348,25 +370,29 @@ public class DatabaseProjectReader {
         String platform = (String)info.get(EL_DATATYPES);
         
         String dname = atts.getValue(NAME);
-        if (dname == null) 
+        if (dname == null) {
           throw new OntopiaRuntimeException("datatype.name must be specified: " + dname);
+        }
         datatype.setName(dname);
 
         String type = atts.getValue(TYPE);
-        if (type == null) 
-          throw new OntopiaRuntimeException("datatype.type must be specified: " + dname);       
+        if (type == null) {
+          throw new OntopiaRuntimeException("datatype.type must be specified: " + dname);
+        }       
         datatype.setType(type);
 
         String klass = atts.getValue("class");
-        if (klass == null || klass.equals("variable"))
+        if (klass == null || klass.equals("variable")) {
           datatype.setVariable(true);
-        else
+        } else {
           datatype.setVariable(false);
+        }
         
         String size = atts.getValue(SIZE);
         if (datatype.isVariable()) {
-          if (size == null)
-            throw new OntopiaRuntimeException("datatype.size must be specified: " + dname);     
+          if (size == null) {
+            throw new OntopiaRuntimeException("datatype.size must be specified: " + dname);
+          }     
           datatype.setSize(size);
         }
 
@@ -377,47 +403,56 @@ public class DatabaseProjectReader {
       } else if (EL_PROPERTY.equals(qname)) {
         if (info.containsKey(EL_DATATYPE)) {
           String propname = atts.getValue(NAME);
-          if (propname == null)
-              throw new OntopiaRuntimeException("property.name must be specified.");     
+          if (propname == null) {
+            throw new OntopiaRuntimeException("property.name must be specified.");
+          }     
           String value = atts.getValue(VALUE);
-          if (value == null)
-              throw new OntopiaRuntimeException("property.value must be specified.");
+          if (value == null) {
+            throw new OntopiaRuntimeException("property.value must be specified.");
+          }
           DataType datatype = (DataType)info.get(EL_DATATYPE);
           datatype.addProperty(propname, value);
         }
         else if (info.containsKey(EL_COLUMN)) {
           String propname = atts.getValue(NAME);
-          if (propname == null)
-              throw new OntopiaRuntimeException("property.name must be specified.");     
+          if (propname == null) {
+            throw new OntopiaRuntimeException("property.name must be specified.");
+          }     
           String value = atts.getValue(VALUE);
-          if (value == null)
-              throw new OntopiaRuntimeException("property.value must be specified.");
+          if (value == null) {
+            throw new OntopiaRuntimeException("property.value must be specified.");
+          }
           Column column = (Column)info.get(EL_COLUMN);
           column.addProperty(propname, value);
         }
         else if (info.containsKey(EL_TABLE)) {
           String propname = atts.getValue(NAME);
-          if (propname == null)
-              throw new OntopiaRuntimeException("property.name must be specified.");     
+          if (propname == null) {
+            throw new OntopiaRuntimeException("property.name must be specified.");
+          }     
           String value = atts.getValue(VALUE);
-          if (value == null)
-              throw new OntopiaRuntimeException("property.value must be specified.");
+          if (value == null) {
+            throw new OntopiaRuntimeException("property.value must be specified.");
+          }
           Table table = (Table)info.get(EL_TABLE);
           table.addProperty(propname, value);
         }
-        else
-          throw new OntopiaRuntimeException("property element in unknown parent." + info); 
+        else {
+          throw new OntopiaRuntimeException("property element in unknown parent." + info);
+        } 
           
       } else if (EL_CREATE_ACTION.equals(qname)) {
         String platform = atts.getValue(PLATFORM);
-        if (platform == null) 
-          throw new OntopiaRuntimeException("create-action.platform must be specified: " + platform); 
+        if (platform == null) {
+          throw new OntopiaRuntimeException("create-action.platform must be specified: " + platform);
+        } 
 
         info.put(EL_CREATE_ACTION, platform); 
       } else if (EL_DROP_ACTION.equals(qname)) {
         String platform = atts.getValue(PLATFORM);
-        if (platform == null) 
-          throw new OntopiaRuntimeException("drop-action.platform must be specified: " + platform); 
+        if (platform == null) {
+          throw new OntopiaRuntimeException("drop-action.platform must be specified: " + platform);
+        } 
 
         info.put(EL_DROP_ACTION, platform); 
       } else if (EL_DBSCHEMA.equals(qname)) {

@@ -51,8 +51,9 @@ public class Slf4jSaxErrorHandler implements ErrorHandler {
     } catch (SecurityException e) {
       log.warn(e.toString());      
     }
-    if (propval != null)
+    if (propval != null) {
       this.ignoreNamespaceErrors = Boolean.parseBoolean(propval);
+    }
   }
 
   /**

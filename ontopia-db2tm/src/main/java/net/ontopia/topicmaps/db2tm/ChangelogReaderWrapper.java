@@ -51,14 +51,16 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
 
     String[] pkey = relation.getPrimaryKey();
     this.keycols = new int[pkey.length];
-    for (int ix = 0; ix < pkey.length; ix++)
+    for (int ix = 0; ix < pkey.length; ix++) {
       keycols[ix] = relation.getColumnIndex(pkey[ix]);
-    if (pkey.length == 0)
+    }
+    if (pkey.length == 0) {
       // this will cause the reader to ignore rows, because they will
       // look the same (equalsKey will proclaim all rows equal since
       // none of the values in their zero-length keys differ)
       throw new DB2TMException("Must specify primary key on '" +
                                relation.getName() + "'");
+    }
   }
   
   @Override
@@ -80,18 +82,21 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     //      we've reached the end of the stream
 
     // it could be that we are finished (c), in which case, return null
-    if (prevtuple != null && tuple == null)
+    if (prevtuple != null && tuple == null) {
       return null;
+    }
     
     // it could be that we haven't started yet (a), in which case,
     // kickstart things
-    if (prevtuple == null && tuple == null)
+    if (prevtuple == null && tuple == null) {
       tuple = source.readNext();
+    }
     
     // now read new tuples until we find one belonging to a new key
     while (true) {
-      if (log.isTraceEnabled())
+      if (log.isTraceEnabled()) {
         log.trace("State: {} Tuple: ({})", prevchange, (tuple == null ? "null" : StringUtils.join(tuple, "|")));
+      }
       
       // move one row forwards
       prevtuple = tuple;
@@ -104,8 +109,9 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
 
       // did we just move onto a new key?
       if (!equalsKey(prevtuple, tuple) ||
-          (tuple == null && prevtuple == null))
+          (tuple == null && prevtuple == null)) {
         break;
+      }
     }
 
     // notice how we are now back to INVARIANT as stated above
@@ -124,14 +130,18 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   // of the primary key. for now, the code does produce such tuples.
   private boolean equalsKey(String[] tuple1, String[] tuple2) {
     if ((tuple1 == null && tuple2 != null) ||
-        (tuple1 != null && tuple2 == null))
+        (tuple1 != null && tuple2 == null)) {
       return false;
-    if (tuple1 == null && tuple2 == null)
+    }
+    if (tuple1 == null && tuple2 == null) {
       return true;
+    }
 
-    for (int ix = 0; ix < keycols.length; ix++)
-      if (!Objects.equals(tuple1[keycols[ix]], tuple2[keycols[ix]]))
+    for (int ix = 0; ix < keycols.length; ix++) {
+      if (!Objects.equals(tuple1[keycols[ix]], tuple2[keycols[ix]])) {
         return false;
+      }
+    }
     return true;
   }  
 }

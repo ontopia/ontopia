@@ -47,14 +47,15 @@ public class ObjectIdPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -65,18 +66,19 @@ public class ObjectIdPredicate implements BasicPredicateIF {
     int objix = matches.getIndex(arguments[0]);
     int idix = matches.getIndex(arguments[1]);    
 
-    if (matches.bound(objix) && !matches.bound(idix))
+    if (matches.bound(objix) && !matches.bound(idix)) {
       return PredicateUtils.objectToOne(matches, objix, idix, TMObjectIF.class,
                                         PredicateUtils.OBJECT_TO_ID);
-    else if (!matches.bound(objix) && matches.bound(idix))
+    } else if (!matches.bound(objix) && matches.bound(idix)) {
       return PredicateUtils.objectToOne(matches, idix, objix, String.class,
                                         PredicateUtils.ID_TO_OBJECT);
-    else if (matches.bound(objix) && matches.bound(idix))
+    } else if (matches.bound(objix) && matches.bound(idix)) {
       return PredicateUtils.filter(matches, objix, idix, TMObjectIF.class, 
                                    String.class, PredicateUtils.FILTER_ID);
-    else
+    } else {
       return PredicateUtils.collectionToOne(matches, PredicateUtils.getAllObjects(topicmap).toArray(),
                                             objix, idix, PredicateUtils.GENERATE_ID);
+    }
   }
   
 }

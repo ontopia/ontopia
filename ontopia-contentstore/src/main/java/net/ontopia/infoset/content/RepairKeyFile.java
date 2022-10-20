@@ -120,8 +120,9 @@ public class RepairKeyFile {
 	try {
 	  out.close();
 	} catch (IOException e) {
-	  if (!exception_thrown) 
-	    throw new ContentStoreException ("Problems occurred when closing content store.", e);
+	  if (!exception_thrown) {
+      throw new ContentStoreException ("Problems occurred when closing content store.", e);
+    }
 	}
       }
     }

@@ -259,13 +259,15 @@ public class VizPanel extends JPanel {
     JPanel spinnerPanel = buildSpinnerPanel();
     locPanel.add(spinnerPanel, c);
 
-    if (shouldShowSearchPanel())
+    if (shouldShowSearchPanel()) {
       this.buildSearchPanel();
+    }
 
     topPanel = new JPanel(new BorderLayout());
     
-    if (shouldShowSearchPanel())
+    if (shouldShowSearchPanel()) {
       topPanel.add(searchPanel, BorderLayout.NORTH);
+    }
 
     topPanel.add(locPanel, BorderLayout.SOUTH);
 
@@ -328,16 +330,19 @@ public class VizPanel extends JPanel {
     createMotionReductionMenuItem();
     
     // Create menu items for undoing and redoing actions.
-    if (UndoManager.ENABLE_UNDO_MANAGER)
-      createUndoRedoMenuItems();    
+    if (UndoManager.ENABLE_UNDO_MANAGER) {
+      createUndoRedoMenuItems();
+    }    
     
     // If enabled, create neighbouring circle menu items.
-    if (VizDebugUtils.isNeighbouringCircleEnabled())
-      createDisEnableNeighCircMenuItem();    
+    if (VizDebugUtils.isNeighbouringCircleEnabled()) {
+      createDisEnableNeighCircMenuItem();
+    }    
     
     // Create menu item for turing animation on/off.
-    if (VizDebugUtils.isAnimatorEnabled())
+    if (VizDebugUtils.isAnimatorEnabled()) {
       addAnimationMenuItem();
+    }
 
     horizontalSB.setVisible(controlsVisible);
     verticalSB.setVisible(controlsVisible);
@@ -349,9 +354,10 @@ public class VizPanel extends JPanel {
    */
   public void updateEnableMotionKillerMenuItem() {
     boolean enable = controller.isMotionKillerEnabled();
-    if (enableMotionKillerMenuItem != null)
+    if (enableMotionKillerMenuItem != null) {
       enableMotionKillerMenuItem.setText(enable ? stopMotionKiller 
                                                 : startMotionKiller);
+    }
   }
   
   /**
@@ -478,13 +484,15 @@ public class VizPanel extends JPanel {
   }
   
   public void setUndoEnabled(boolean enabled) {
-     if (undoMenuItem != null)
+     if (undoMenuItem != null) {
        undoMenuItem.setEnabled(enabled);
+     }
   }
   
   public void setRedoEnabled(boolean enabled) {
-    if (undoMenuItem != null)
+    if (undoMenuItem != null) {
       redoMenuItem.setEnabled(enabled);
+    }
   }
  
   /**
@@ -563,8 +571,11 @@ public class VizPanel extends JPanel {
   }
   
   protected void switchSearchPanel() {
-    if (searchPanelVisible) topPanel.remove(searchPanel);
-    else topPanel.add(searchPanel, BorderLayout.NORTH);
+    if (searchPanelVisible) {
+      topPanel.remove(searchPanel);
+    } else {
+      topPanel.add(searchPanel, BorderLayout.NORTH);
+    }
 
     searchPanelVisible = !searchPanelVisible;
     this.revalidate();
@@ -631,7 +642,9 @@ public class VizPanel extends JPanel {
     this.clearSearchResults();
   
     String searchString = searchTextField.getText().trim();
-    if (searchString.length() == 0) return;
+    if (searchString.length() == 0) {
+      return;
+    }
   
     List results;
   
@@ -642,9 +655,12 @@ public class VizPanel extends JPanel {
       this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
   
-    if (results.size() > 0) this.showSearchResults(results);
-    else ErrorDialog.showError(this, Messages
+    if (results.size() > 0) {
+      this.showSearchResults(results);
+    } else {
+      ErrorDialog.showError(this, Messages
         .getString("Viz.NoSearchResultsFound"));
+    }
   
     this.setSearchFocus();
     clearButton.setEnabled(true);
@@ -660,7 +676,9 @@ public class VizPanel extends JPanel {
     TMTopicNode maxElement = (TMTopicNode) results.get(0);
     for (int i = 1; i < results.size(); i++) {
       TMTopicNode element = (TMTopicNode) results.get(i);
-      if (element.edgeCount() > maxElement.edgeCount()) maxElement = element;
+      if (element.edgeCount() > maxElement.edgeCount()) {
+        maxElement = element;
+      }
     }
 
     // Center !!! this node. This code is not correct, but it is close
@@ -766,13 +784,15 @@ public class VizPanel extends JPanel {
   }
   
   public void add(JPopupMenu menu, JMenuItem item, String itemId) {
-    if (enabled(itemId))
+    if (enabled(itemId)) {
       menu.add(item);
+    }
   }
 
   private void menuOpenAssociationConfig() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     if (assocFrame == null) {
       assocFrame = vizFrontEnd.getTypesConfigFrame(controller, false);
@@ -784,8 +804,9 @@ public class VizPanel extends JPanel {
   }
 
   private void menuOpenTopicConfig() {
-    if (!controller.hasTopicMap())
+    if (!controller.hasTopicMap()) {
       return;
+    }
 
     if (topicFrame == null) {
       topicFrame = vizFrontEnd.getTypesConfigFrame(controller, true);
@@ -834,11 +855,12 @@ public class VizPanel extends JPanel {
       for (Iterator iter = results.iterator(); iter.hasNext();) {
         TMTopicNode element = (TMTopicNode) iter.next();
         if (element.isVisible()) {
-          if (blink)
+          if (blink) {
             element.repaint((Color) blinkMap.get(element
                 .getPaintBackColor(tgPanel)), tgPanel, true);
-          else 
+          } else {
             element.repaint(element.getPaintBackColor(tgPanel), tgPanel, true);
+          }
         }
       }
     }

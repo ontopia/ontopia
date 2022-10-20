@@ -49,16 +49,18 @@ public class RWLocalCache extends AbstractLocalCache {
     // check object state
     int s = ostates.getState(identity);
     if (((s & ObjectStates.STATE_CREATED) == ObjectStates.STATE_CREATED) || 
-        ((s & ObjectStates.STATE_DIRTY) == ObjectStates.STATE_DIRTY))
+        ((s & ObjectStates.STATE_DIRTY) == ObjectStates.STATE_DIRTY)) {
       // object exists if it's created/dirty in this txn
       return true;
-    else if ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED)
+    } else if ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED) {
       // object does not exists if it's created/dirty in this txn
       return false;
+    }
 
     // check parent cache
-    if (pcache != null)
+    if (pcache != null) {
       return pcache.exists(access, identity);
+    }
     
     // check database
     return access.loadObject(this, identity);
@@ -70,15 +72,17 @@ public class RWLocalCache extends AbstractLocalCache {
     int s = ostates.getState(identity);
 
     // NOTE: if we get here we've checked the object itself already
-    if ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED)
+    if ((s & ObjectStates.STATE_DELETED) == ObjectStates.STATE_DELETED) {
       return null;
+    }
 
     // get value from cache if object not dirty    
     if (!(((s & ObjectStates.STATE_CREATED) == ObjectStates.STATE_CREATED) || 
           ((s & ObjectStates.STATE_DIRTY) == ObjectStates.STATE_DIRTY))) {
       // check parent cache
-      if (pcache != null) 
+      if (pcache != null) {
         return pcache.getValue(access, identity, field);
+      }
     }
     // otherwise get directly from database
     return access.loadField(this, identity, field);
@@ -92,8 +96,9 @@ public class RWLocalCache extends AbstractLocalCache {
   public String toString() {
     StringBuilder sb = new StringBuilder("proxy.RWLocalCache@");
     sb.append(System.identityHashCode(this));
-    if (pcache != null)
+    if (pcache != null) {
       sb.append(" [parent = ").append(pcache).append(']');
+    }
     return sb.toString();
   }
   

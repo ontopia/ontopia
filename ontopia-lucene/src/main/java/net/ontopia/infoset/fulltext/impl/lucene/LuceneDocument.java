@@ -43,7 +43,9 @@ public class LuceneDocument implements DocumentIF {
   @Override
   public FieldIF getField(String name) {
     IndexableField field = document.getField(name);
-    if (field == null) return null;
+    if (field == null) {
+      return null;
+    }
     return new LuceneField(field);
   }
   

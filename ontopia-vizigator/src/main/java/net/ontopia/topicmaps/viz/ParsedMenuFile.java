@@ -30,12 +30,14 @@ public class ParsedMenuFile {
   }
 
   public boolean enabled(String itemId) {
-    if (enabledItemIds == null)
+    if (enabledItemIds == null) {
       return true;
+    }
     
-    if (enabledItemIds.containsKey(itemId))
+    if (enabledItemIds.containsKey(itemId)) {
       return ((Boolean)enabledItemIds.get(itemId)).booleanValue();
-    else
+    } else {
       return !"copy.name".equals(itemId);
+    }
   }
 }

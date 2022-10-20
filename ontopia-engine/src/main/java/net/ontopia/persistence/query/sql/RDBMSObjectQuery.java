@@ -63,13 +63,13 @@ public class RDBMSObjectQuery implements DetachedQueryIF {
   protected Object processResult(TicketIF ticket, ResultSet rs) throws Exception {    
     try {               
       // Zero or one row expected
-      if (rs.next())
+      if (rs.next()) {
         // Object was found
         return stm.readValue(ticket, rs, 0, lookup_identities);
-      else
+      } else {
         // No match
         return null;
-
+      }
       // FIXME: Should we complain when more than one object was
       // found?
       
@@ -79,7 +79,9 @@ public class RDBMSObjectQuery implements DetachedQueryIF {
       rs.close();
       rs = null;
       // Close statement
-      if (_stm != null) _stm.close();
+      if (_stm != null) {
+        _stm.close();
+      }
     }
   } 
   

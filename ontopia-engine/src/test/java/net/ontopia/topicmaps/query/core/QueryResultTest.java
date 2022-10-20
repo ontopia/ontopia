@@ -51,9 +51,10 @@ public class QueryResultTest extends AbstractQueryTest {
     String query = "parenthood($M : mother, $F : father, $C : child)?";
     QueryResultIF result = processor.execute(query);
 
-    for (int ix = 0; ix < 3; ix++)
+    for (int ix = 0; ix < 3; ix++) {
       Assert.assertTrue("unknown variable " + result.getColumnName(ix) + " found",
                  vars.remove(result.getColumnName(ix)));
+    }
 
     Assert.assertTrue("not all variables found", vars.isEmpty());
     
@@ -108,9 +109,10 @@ public class QueryResultTest extends AbstractQueryTest {
     vars.add("F");
     vars.add("C");
 
-    for (int ix = 0; ix < 3; ix++)
+    for (int ix = 0; ix < 3; ix++) {
       Assert.assertTrue("unknown variable " + cols[ix] + " found",
                  vars.remove(cols[ix]));
+    }
 
     Assert.assertTrue("not all variables found", vars.isEmpty());
   }  

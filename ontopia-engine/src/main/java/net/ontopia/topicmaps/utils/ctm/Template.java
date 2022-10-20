@@ -60,8 +60,9 @@ public class Template {
     this.named_wildcards = new HashMap<String, NamedWildcardTopicGenerator>();
     this.used_parameters = new HashSet<String>();
 
-    for (String param : parameters)
+    for (String param : parameters) {
       generators.put(param, new ParameterGenerator());
+    }
   }
 
   public String getName() {
@@ -82,8 +83,9 @@ public class Template {
 
   public ValueGeneratorIF getGenerator(String name) {
     ValueGeneratorIF gen = generators.get(name);
-    if (gen == null)
+    if (gen == null) {
       throw new InvalidTopicMapException("No such parameter: " + name);
+    }
     used_parameters.add(name);
     return gen;
   }
@@ -99,11 +101,12 @@ public class Template {
    *                  parameters list
    */
   public void invoke(List arguments, ParseEventHandlerIF handler) {
-    if (parameters.size() != arguments.size())
+    if (parameters.size() != arguments.size()) {
       throw new InvalidTopicMapException("Incorrect number of arguments to " +
                                          "template " + name + ", got " +
                                          arguments.size() + ", expected " +
                                          parameters.size());
+    }
 
     for (int ix = 0; ix < parameters.size(); ix++) {
       // name of parameter
@@ -123,8 +126,9 @@ public class Template {
 
     // release all topics created by named wildcards so that on next
     // invocation we create new ones
-    for (NamedWildcardTopicGenerator gen : named_wildcards.values())
+    for (NamedWildcardTopicGenerator gen : named_wildcards.values()) {
       gen.contextEnd();
+    }
   }
 
   /**

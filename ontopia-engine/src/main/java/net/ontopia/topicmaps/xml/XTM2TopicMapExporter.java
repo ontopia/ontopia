@@ -108,12 +108,14 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     writeItemIdentities(tm, dh);
     
     Iterator it = filterCollection(tm.getTopics()).iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       write((TopicIF) it.next(), dh);
+    }
 
     it = filterCollection(tm.getAssociations()).iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       write((AssociationIF) it.next(), dh);
+    }
     
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topicMap");
     
@@ -128,8 +130,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     final Collection<LocatorIF> slos = topic.getSubjectLocators();
 
     atts.clear();
-    if (!xtm21Mode || (iids.isEmpty() && sids.isEmpty() && slos.isEmpty()))
+    if (!xtm21Mode || (iids.isEmpty() && sids.isEmpty() && slos.isEmpty())) {
       atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "id", CDATA, getElementId(topic));
+    }
 
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topic", atts);
 
@@ -140,18 +143,21 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     Iterator it = filterCollection(topic.getTypes()).iterator();
     if (it.hasNext()) {
       dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "instanceOf", EMPTY_ATTR_LIST);
-      while (it.hasNext())
+      while (it.hasNext()) {
         writeTopicRef((TopicIF) it.next(), dh);
+      }
       dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "instanceOf");
     }
     
     it = filterCollection(topic.getTopicNames()).iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       write((TopicNameIF) it.next(), dh);
+    }
 
     it = filterCollection(topic.getOccurrences()).iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       write((OccurrenceIF) it.next(), dh);
+    }
     
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "topic");
   }
@@ -228,8 +234,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   private void write(AssociationIF assoc, ContentHandler dh)
     throws SAXException {
     Collection roles = filterCollection(assoc.getRoles());
-    if (roles.isEmpty())
+    if (roles.isEmpty()) {
       return; // don't export empty assocs; they aren't valid
+    }
     
     atts.clear();
     addReifier(atts, assoc);
@@ -240,8 +247,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     writeScope(assoc, dh);
 
     Iterator it = assoc.getRoles().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       write((AssociationRoleIF) it.next(), dh);
+    }
    
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "association");
   }
@@ -277,8 +285,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   
   private void writeType(TypedIF obj, ContentHandler dh) throws SAXException {
     if (obj.getType() == null ||
-        ((obj instanceof TopicNameIF) && isDefaultNameType(obj.getType())))
+        ((obj instanceof TopicNameIF) && isDefaultNameType(obj.getType()))) {
       return;
+    }
     
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "type", EMPTY_ATTR_LIST);
     writeTopicRef(obj.getType(), dh);
@@ -335,20 +344,23 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   private void writeScope(ScopedIF obj, ContentHandler dh)
     throws SAXException {
     Iterator it = obj.getScope().iterator();
-    if (!it.hasNext())
+    if (!it.hasNext()) {
       return;
+    }
 
     dh.startElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope", EMPTY_ATTR_LIST);
-    while (it.hasNext())
+    while (it.hasNext()) {
       writeTopicRef((TopicIF) it.next(), dh);
+    }
     dh.endElement(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "scope");
 
   }
 
   private void writeItemIdentities(TMObjectIF obj, ContentHandler dh)
     throws SAXException {
-    if (export_itemids)
+    if (export_itemids) {
       write(obj.getItemIdentifiers(), "itemIdentity", dh);
+    }
   }
 
   private boolean isDefaultNameType(TopicIF type) {
@@ -364,7 +376,8 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   }
 
   private void addDatatype(AttributesImpl atts, LocatorIF datatype) {
-    if (!datatype.equals(DataTypes.TYPE_STRING)) 
+    if (!datatype.equals(DataTypes.TYPE_STRING)) {
       atts.addAttribute(EMPTY_NAMESPACE, EMPTY_LOCALNAME, "datatype", CDATA, datatype.getExternalForm());
+    }
   }
 }

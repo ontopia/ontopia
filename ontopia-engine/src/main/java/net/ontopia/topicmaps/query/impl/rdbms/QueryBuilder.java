@@ -92,21 +92,26 @@ public class QueryBuilder {
 
   public String getProperty(String name) {
     String propval = (qp == null ? null : qp.getProperty(name));
-    if (propval == null && parent != null) 
+    if (propval == null && parent != null) { 
       return parent.getProperty(name);
-    else
-      return propval;      
+    } else {
+      return propval;
+    }      
   }
 
   /* ---- Attributes */
   
   public Object getAttribute(Object attr) {
-    if (attributes == null) return null;
+    if (attributes == null) {
+      return null;
+    }
     return attributes.get(attr);    
   }
 
   public void setAttribute(Object attr, Object value) {
-    if (attributes == null) attributes = new HashMap();
+    if (attributes == null) {
+      attributes = new HashMap();
+    }
     attributes.put(attr, value);
   }
 
@@ -114,19 +119,23 @@ public class QueryBuilder {
      
   public Class getVariableType(String name) {
     Object type = variables.get(name);
-    if (type != null && typemap.containsKey(type))
+    if (type != null && typemap.containsKey(type)) {
       return (Class)typemap.get(type);
-    else
+    } else {
       return (Class)type;
+    }
   }
 
   protected Class getVariableTypeFromParent(String name) {
-    if (parent == null) return null;
+    if (parent == null) {
+      return null;
+    }
     Class vtype = parent.getVariableType(name);
-    if (vtype != null)
+    if (vtype != null) {
       return vtype;
-    else
+    } else {
       return parent.getVariableTypeFromParent(name);
+    }
   }
 
   public Map getVariables() {
@@ -147,19 +156,23 @@ public class QueryBuilder {
      
   public Class getParameterType(String name) {
     Object type = params.get(name);
-    if (type != null && typemap.containsKey(type))
+    if (type != null && typemap.containsKey(type)) {
       return (Class)typemap.get(type);
-    else
+    } else {
       return (Class)type;
+    }
   }
 
   protected Class getParameterTypeFromParent(String name) {
-    if (parent == null) return null;
+    if (parent == null) {
+      return null;
+    }
     Class ptype = parent.getParameterType(name);
-    if (ptype != null)
+    if (ptype != null) {
       return ptype;
-    else
+    } else {
       return parent.getParameterTypeFromParent(name);
+    }
   }
 
   public Map getParameters() {
@@ -231,10 +244,11 @@ public class QueryBuilder {
       
       // If variable is bound in query select it.
       if (varnames.contains(varname)) {
-        if (aggfunc && counted.contains(var))
+        if (aggfunc && counted.contains(var)) {
           jdoquery.addSelect(new JDOAggregate(new JDOVariable(varname), JDOAggregateIF.COUNT));
-        else
+        } else {
           jdoquery.addSelect(new JDOVariable(varname));
+        }
       } 
     }
   }
@@ -285,15 +299,17 @@ public class QueryBuilder {
       String varname = var.getName();
       JDOVariable jdovar = new JDOVariable(varname);
       if (query.isOrderedAscending(varname)) {
-        if (aggfunc && counted.contains(var))
+        if (aggfunc && counted.contains(var)) {
           jdoquery.addAscending(new JDOAggregate(jdovar, JDOAggregateIF.COUNT));
-        else
+        } else {
           jdoquery.addAscending(jdovar);
+        }
       } else {
-        if (aggfunc && counted.contains(var))
+        if (aggfunc && counted.contains(var)) {
           jdoquery.addDescending(new JDOAggregate(jdovar, JDOAggregateIF.COUNT));
-        else
+        } else {
           jdoquery.addDescending(jdovar);
+        }
       }
     }
   }
@@ -310,8 +326,9 @@ public class QueryBuilder {
       // Create new variable name
       String varname = prefix + (vncounter++);
       // Check if name collides with variable name
-      if (variables.containsKey(varname))
+      if (variables.containsKey(varname)) {
         continue;
+      }
       
       variables.put(varname, type);
       return new JDOVariable(varname);
@@ -327,8 +344,9 @@ public class QueryBuilder {
 
       // TODO: is this neccessary?
       Object vtype = getVariableType(varname);
-      if (vtype != null)
+      if (vtype != null) {
         variables.put(varname, vtype);
+      }
       
       return new JDOVariable(varname);
 

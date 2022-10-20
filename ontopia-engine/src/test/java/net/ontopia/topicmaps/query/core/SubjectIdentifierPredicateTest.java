@@ -42,9 +42,10 @@ public class SubjectIdentifierPredicateTest extends AbstractPredicateTest {
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
       Iterator it2 = topic.getSubjectIdentifiers().iterator();
-      while (it2.hasNext())
+      while (it2.hasNext()) {
         addMatch(matches, "TOPIC", topic,
                  "LOCATOR", ((LocatorIF) it2.next()).getAddress());
+      }
     }
     
     assertQueryMatches(matches, "subject-identifier($TOPIC, $LOCATOR)?");

@@ -82,10 +82,11 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   @Override
   public TMObjectIF getObjectById(String object_id) {
     TMObject o = id_objects.get(object_id);
-    if (o == null || o.parent == null)
+    if (o == null || o.parent == null) {
       return null;
-    else
+    } else {
       return o;
+    }
   }
   
   @Override
@@ -178,10 +179,12 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
     // Add new map entries
     TMObject object = (TMObject)o;
     // Create new id if not already created
-    if (object.oid == null)
+    if (object.oid == null) {
       object.oid = ("" + counter++);
-    if (!id_objects.containsKey(object.oid))
+    }
+    if (!id_objects.containsKey(object.oid)) {
       id_objects.put(object.oid, object);
+    }
   }
 
   /**

@@ -83,7 +83,9 @@ public class InteractionELSupport {
       return map.get(name);
     }
     
-    if (object == null) return null;
+    if (object == null) {
+      return null;
+    }
     
     try {
       name = giveLeadingCapital(name);
@@ -144,31 +146,35 @@ public class InteractionELSupport {
    */
   public static boolean getBooleanValue(String name, boolean defaultValue,
                                         PageContext pageContext) {
-    if (name == null)
+    if (name == null) {
       return defaultValue;
-    else if ("true".equals(name) || "yes".equals(name))
+    } else if ("true".equals(name) || "yes".equals(name)) {
       return true;
-    else if ("false".equals(name) || "no".equals(name))
+    } else if ("false".equals(name) || "no".equals(name)) {
       return false;
-    else {
+    } else {
       Collection value = extendedGetValue(name, pageContext);
-      if (value.isEmpty()) return false;
+      if (value.isEmpty()) {
+        return false;
+      }
       
       // get first element in collection
       Object first;
-      if (value instanceof List)
+      if (value instanceof List) {
         first = ((List)value).get(0);
-      else
+      } else {
         first = value.iterator().next();
+      }
         
       // true if first element is not null and not boolean false
-      if (first == null)
+      if (first == null) {
         return false;
-      else {
-        if (first instanceof Boolean)
+      } else {
+        if (first instanceof Boolean) {
           return ((Boolean)first).booleanValue();
-        else
+        } else {
           return true;
+        }
       }
     }
   }

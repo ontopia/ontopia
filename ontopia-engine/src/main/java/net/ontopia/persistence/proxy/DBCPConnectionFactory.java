@@ -172,8 +172,9 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     // Get validation query
     String vquery = PropertyUtils.getProperty(properties, VALIDATION_QUERY, false);
-    if (vquery == null)
+    if (vquery == null) {
       vquery = "select seq_count from TM_ADMIN_SEQUENCE where seq_name = '<GLOBAL>'";
+    }
 
     try {
       // Make sure driver is registered

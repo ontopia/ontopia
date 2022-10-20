@@ -54,10 +54,11 @@ public class QueryResultWrappers  {
                                 int offset) {
       this.coldefs = coldefs;
       this.data = data;
-      if (size == -1)
+      if (size == -1) {
         this.size = 0;
-      else
+      } else {
         this.size = size - (offset + 1);
+      }
       this.offset = offset;
     }
     

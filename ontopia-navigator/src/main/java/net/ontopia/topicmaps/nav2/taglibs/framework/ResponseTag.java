@@ -58,18 +58,19 @@ public class ResponseTag extends TagSupport {
 
     // Get content type
     String ctype = content_type;
-    if (content_type == null)
+    if (content_type == null) {
       ctype = navConf.getProperty(NavigatorConfigurationIF.DEF_CONTENT_TYPE, "text/html");
+    }
 
     // Get character encoding
     String charEnc = charset;
-    if (charEnc == null)
+    if (charEnc == null) {
       charEnc = navConf.getProperty(NavigatorConfigurationIF.DEF_CHAR_ENCODING, "utf-8");
+    }
 
     // Get response instance
     ServletResponse response = pageContext.getResponse();
-    if (response != null && !response.isCommitted())
-
+    if (response != null && !response.isCommitted()) {
       // Set Content-type header
       if (ctype != null) {
         if (charEnc != null) {
@@ -82,6 +83,7 @@ public class ResponseTag extends TagSupport {
       } else {
         log.debug("not setting content-type");
       }
+    }
 
     // empty tag has not to eval anything
     return SKIP_BODY;

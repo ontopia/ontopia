@@ -45,7 +45,9 @@ public class TransactionalLRULookupIndex implements TransactionalLookupIndexIF, 
   @Override
   public Object get(Object key) {
     Object retval = cache.get(key);    
-    if (retval != null) lru.put(key, retval);
+    if (retval != null) {
+      lru.put(key, retval);
+    }
     return retval;
   }
 

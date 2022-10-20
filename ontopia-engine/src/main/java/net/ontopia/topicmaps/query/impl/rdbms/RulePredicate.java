@@ -78,17 +78,21 @@ public class RulePredicate
           // Check to see if rule predicate is recursive
           RulePredicate rule_pred = (RulePredicate)pred;
           if (rule_pred.equals(relative_to) ||
-              rule_pred.isRecursive(rule_pred.getClauses(), relative_to))
+              rule_pred.isRecursive(rule_pred.getClauses(), relative_to)) {
             return true;
+          }
         }
       } else if (clause instanceof OrClause) {
         Iterator iter2 = ((OrClause)clause).getAlternatives().iterator();
-        while (iter2.hasNext())
-          if (isRecursive((List)iter2.next(), relative_to))
+        while (iter2.hasNext()) {
+          if (isRecursive((List)iter2.next(), relative_to)) {
             return true;
+          }
+        }
       } else if (clause instanceof NotClause) {          
-        if (isRecursive(((NotClause)clause).getClauses(), relative_to))
-          return true;        
+        if (isRecursive(((NotClause)clause).getClauses(), relative_to)) {
+          return true;
+        }        
       }      
     }
     return false;

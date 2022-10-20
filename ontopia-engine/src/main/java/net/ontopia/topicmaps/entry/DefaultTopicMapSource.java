@@ -44,8 +44,9 @@ public class DefaultTopicMapSource implements TopicMapSourceIF {
   
   public DefaultTopicMapSource(Collection<TopicMapReferenceIF> refs) {
     Iterator<TopicMapReferenceIF> iter = refs.iterator();
-    while (iter.hasNext())
+    while (iter.hasNext()) {
       addReference(iter.next());
+    }
   }
   
   public DefaultTopicMapSource(TopicMapReferenceIF reference) {

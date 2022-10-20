@@ -49,8 +49,9 @@ public class Variant extends Token {
   }
   
   protected void setTerm(Term term) {
-    if (this.term != null)
+    if (this.term != null) {
       throw new OntopiaRuntimeException("Cannot set parent term on variant more than once." + this + " " + this.term + " " + term);
+    }
     this.term = term;
   }
 

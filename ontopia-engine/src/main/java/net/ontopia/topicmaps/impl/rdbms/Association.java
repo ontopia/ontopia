@@ -122,8 +122,9 @@ public class Association extends TMObject implements AssociationIF {
     Collection<TopicIF> result = new CompactHashSet<TopicIF>();
     for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles)) {
       TopicIF type = role.getType();
-      if (type != null)
+      if (type != null) {
         result.add(role.getType());
+      }
     }
     return result;
   }
@@ -133,9 +134,11 @@ public class Association extends TMObject implements AssociationIF {
     Objects.requireNonNull(roletype, "Role type must not be null.");
     CrossTopicMapException.check(roletype, this);
     Collection<AssociationRoleIF> result = new CompactHashSet<AssociationRoleIF>();
-    for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles))
-      if (role.getType() == roletype)
+    for (AssociationRoleIF role : this.<AssociationRoleIF>loadCollectionField(LF_roles)) {
+      if (role.getType() == roletype) {
         result.add(role);
+      }
+    }
     return result;
   }
 
@@ -152,11 +155,13 @@ public class Association extends TMObject implements AssociationIF {
   protected void addRole(AssociationRoleIF assoc_role) {
     Objects.requireNonNull(assoc_role, MSG_NULL_ARGUMENT);
     // Check to see if association role is already a member of this association
-    if (assoc_role.getAssociation() == this)
+    if (assoc_role.getAssociation() == this) {
       return;
+    }
     // Check if used elsewhere.
-    if (assoc_role.getAssociation() != null)
+    if (assoc_role.getAssociation() != null) {
       throw new ConstraintViolationException("Moving objects is not allowed.");
+    }
 
     // Notify listeners
     fireEvent(AssociationIF.EVENT_ADD_ROLE, assoc_role, null);    
@@ -167,15 +172,17 @@ public class Association extends TMObject implements AssociationIF {
 
     // Make sure role is added to player's list
     Topic player = (Topic) assoc_role.getPlayer();
-    if (player != null && getTopicMap() != null)
+    if (player != null && getTopicMap() != null) {
       player.addRole(assoc_role);
+    }
   }
 
   protected void removeRole(AssociationRoleIF assoc_role) {
     Objects.requireNonNull(assoc_role, MSG_NULL_ARGUMENT);
     // Check to see if association role is not a member of this association
-    if (assoc_role.getAssociation() != this)
+    if (assoc_role.getAssociation() != this) {
       return;
+    }
 
     // Notify listeners
     fireEvent(AssociationIF.EVENT_REMOVE_ROLE, null, assoc_role);    
@@ -271,16 +278,21 @@ public class Association extends TMObject implements AssociationIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null)
+    if (_reifier != null) {
       CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-    if (oldReifier != null) oldReifier.setReified(null);
-    if (reifier != null) reifier.setReified(this);
+    if (oldReifier != null) {
+      oldReifier.setReified(null);
+    }
+    if (reifier != null) {
+      reifier.setReified(this);
+    }
   }
 
   // ---------------------------------------------------------------------------

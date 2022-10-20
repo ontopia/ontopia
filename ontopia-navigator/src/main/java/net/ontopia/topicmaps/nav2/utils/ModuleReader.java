@@ -62,10 +62,11 @@ public class ModuleReader implements ModuleReaderIF {
     ModuleContentHandler handler = new ModuleContentHandler();
     handler.register(parser);
     InputSource inpsrc = new InputSource();
-    if (encrypted)
+    if (encrypted) {
       inpsrc.setByteStream(new EncryptedInputStream(source));
-    else
+    } else {
       inpsrc.setByteStream(source);
+    }
     
     try {
       parser.parse(inpsrc);

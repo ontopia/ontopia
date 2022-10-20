@@ -153,24 +153,29 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
     try {
       if (xtm_version == XTMVersion.XTM_1_0) {
         XTMTopicMapExporter exporter = new XTMTopicMapExporter();
-        if (filter != null)
+        if (filter != null) {
           exporter.setFilter(filter);
+        }
         exporter.setExportSourceLocators(getExportSourceLocators());
         exporter.setAddIds(getAddIds());
         exporter.export(topicmap, out);
       } 
       else {
         XTM2TopicMapExporter exporter = new XTM2TopicMapExporter(XTMVersion.XTM_2_1 == xtm_version);
-        if (filter != null)
+        if (filter != null) {
           exporter.setFilter(filter);
+        }
         exporter.setExportItemIdentifiers(getExportSourceLocators());
         exporter.export(topicmap, out);
       }
-      if (writer != null) writer.close();
+      if (writer != null) {
+        writer.close();
+      }
     }
     catch (SAXException e) {
-      if (e.getException() instanceof IOException)
+      if (e.getException() instanceof IOException) {
         throw (IOException) e.getException();
+      }
       throw new IOException("XML writing problem: " + e.toString());
     }
   }

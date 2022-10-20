@@ -79,8 +79,9 @@ public class VariantNameGrabber implements Function<TopicNameIF, VariantNameIF> 
     List<VariantNameIF> variants = new ArrayList<VariantNameIF>(basename.getVariants());
 
     // If there are no variant names return the base name itself.
-    if (variants.isEmpty())
+    if (variants.isEmpty()) {
       return null;
+    }
 
     // If there are multiple variant names rank them.
     Collections.sort(variants, comparator);

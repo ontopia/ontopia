@@ -62,9 +62,9 @@ public class ContextManagerMapWrapper implements Map {
     }
     
     Collection valueCollection;
-    if (value instanceof Collection)
+    if (value instanceof Collection) {
       valueCollection = (Collection)value;
-    else {
+    } else {
       valueCollection = new HashSet();
       valueCollection.add(value);
     }
@@ -130,8 +130,9 @@ public class ContextManagerMapWrapper implements Map {
     // Get the old mapped value of the key, if there is one
     Object retVal = get(key);
 
-    if (retVal == null)
+    if (retVal == null) {
       return null;
+    }
 
     // Make the mapping.
     contextManager.setValue((String)key, Collections.EMPTY_SET);

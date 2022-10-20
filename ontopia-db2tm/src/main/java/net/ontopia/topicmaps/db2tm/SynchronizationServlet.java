@@ -105,8 +105,9 @@ public class SynchronizationServlet extends HttpServlet {
         c.set(Calendar.HOUR_OF_DAY, 1);
         c.set(Calendar.MINUTE, 0);
         c.add(Calendar.MILLISECOND, (int)d.getTime());
-        if (c.before(c0))
+        if (c.before(c0)) {
           c.add(Calendar.HOUR_OF_DAY, 24);
+        }
         time = c.getTime();
         log.info("Setting synchronization start time to {} ms.", time);
       } else {
@@ -121,30 +122,34 @@ public class SynchronizationServlet extends HttpServlet {
       
       // load relation mapping file
       String mapping = config.getInitParameter("mapping");
-      if (mapping == null)
+      if (mapping == null) {
         throw new OntopiaRuntimeException("Servlet init-param 'mapping' must be specified.");
+      }
       
       // get relation names (comma separated)
       Collection<String> relnames = null;
       String relations = config.getInitParameter("relations");
-      if (relations != null)
+      if (relations != null) {
         relnames = Arrays.asList(StringUtils.split(relations, ","));
+      }
       
       // get hold of the topic map
       String tmid = config.getInitParameter("topicmap");
-      if (tmid == null)
+      if (tmid == null) {
         throw new OntopiaRuntimeException("Servlet init-param 'topicmap' must be specified.");
+      }
       TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(config.getServletContext());
       TopicMapReferenceIF ref = rep.getReferenceByKey(tmid);
       
       // make sure delay is at least 10 seconds to make sure that it doesn't
       // start too early
-      if (time == null)
+      if (time == null) {
         task = new SynchronizationTask(config.getServletName(),
                                        (delay < 10000 ? 10000 : delay),
                                        interval);
-      else 
+      } else {
         task = new SynchronizationTask(config.getServletName(), time, interval);
+      }
       
       task.setRelationMappingFile(mapping);
       task.setRelationNames(relnames);

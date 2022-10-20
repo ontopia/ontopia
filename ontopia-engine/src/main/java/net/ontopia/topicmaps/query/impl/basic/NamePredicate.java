@@ -45,14 +45,15 @@ public class NamePredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.INFINITE_RESULT; // will fail
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -61,10 +62,12 @@ public class NamePredicate implements BasicPredicateIF {
 
     int topicix = result.getIndex(arguments[0]);
     int valueix = result.getIndex(arguments[1]);
-    if (result.data[0][topicix] == null)
+    if (result.data[0][topicix] == null) {
       throw new InvalidQueryException("Topic argument to 'name' must be bound");
-    if (result.data[0][valueix] != null)
+    }
+    if (result.data[0][valueix] != null) {
       throw new InvalidQueryException("Value argument to 'name' must be unbound");
+    }
     
     
     for (int ix = 0; ix <= result.last; ix++) {

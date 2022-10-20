@@ -68,9 +68,15 @@ public class ControlConfig implements ControlConfigIF {
    */
   @Override
   public void update(String model, String view, String skin) {
-    if (model != null && !model.isEmpty()) this.model = model;
-    if (view  != null && !view.isEmpty())  this.view = view;
-    if (skin  != null && !skin.isEmpty())  this.skin = skin; 
+    if (model != null && !model.isEmpty()) {
+      this.model = model;
+    }
+    if (view  != null && !view.isEmpty()) {
+      this.view = view;
+    }
+    if (skin  != null && !skin.isEmpty()) {
+      this.skin = skin;
+    } 
     makePaths();
   }
 
@@ -82,37 +88,42 @@ public class ControlConfig implements ControlConfigIF {
   private void makePaths() {
 
     // fix dodgy path
-    if (resource == null || "/index.html".equals(resource)) 
-      resource = "/index.jsp"; 
+    if (resource == null || "/index.html".equals(resource)) {
+      resource = "/index.jsp";
+    } 
                 
     // ModelPath
-    if ("/topic.jsp".equals(resource))
+    if ("/topic.jsp".equals(resource)) {
       modelPath = "/models/topic_" + model + ".jsp";
-    else if ("/topicmap.jsp".equals(resource))
+    } else if ("/topicmap.jsp".equals(resource)) {
       modelPath = "/models/topicmap_" + model + ".jsp";
-    else
+    } else {
       modelPath = "/models" + resource;
+    }
    
     // ViewPath
     if ("/def_topic_occ.jsp".equals(resource) || 
         "/def_topicmap_occ.jsp".equals(resource) || 
-        "/blank.jsp".equals(resource))
+        "/blank.jsp".equals(resource)) {
       viewPath = "/views/template_plain.jsp";
-    else 
+    } else {
       viewPath = "/views/template_" + view + ".jsp";
+    }
 
     // SkinPath
     skinPath = "skins/" + skin + ".css";
 
     // Behaviour
     behaviour = "no_frames";
-    if ("frames".equals(view))
-      behaviour = "frames"; 
+    if ("frames".equals(view)) {
+      behaviour = "frames";
+    } 
     
     // ContentType
     contentType = "text/html";
-    if ("xml".equals(view))
+    if ("xml".equals(view)) {
       contentType = "text/xml";
+    }
   }
 
   

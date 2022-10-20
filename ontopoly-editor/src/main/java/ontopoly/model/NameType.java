@@ -48,8 +48,9 @@ public class NameType extends AbstractTypingTopic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof NameType))
+    if (!(obj instanceof NameType)) {
       return false;
+    }
 
     NameType other = (NameType) obj;
     return (getTopicIF().equals(other.getTopicIF()));

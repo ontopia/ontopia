@@ -139,25 +139,27 @@ public class PrettyPrinterTest {
            result.charAt(ix) == expected.charAt(ix); ix++)
       ;
 
-    if (ix < rlen && rlen > elen)
+    if (ix < rlen && rlen > elen) {
       Assert.fail("Result longer than expected; expected: " + elen + "; " +
            "result: " + rlen + "; rest: " + getRest(result, expected));
-    else if (ix < elen && rlen < elen)
+    } else if (ix < elen && rlen < elen) {
       Assert.fail("Result shorter than expected; expected: " + elen + "; " +
            "result: " + rlen + "; rest: " + getRest(expected, result));
-    else if (ix < rlen && rlen == elen)
+    } else if (ix < rlen && rlen == elen) {
       Assert.fail("Result differs from expected in position " + ix + "; " +
            "result: " + result.charAt(ix) + " (" +
            encode(result.charAt(ix)) + "; " +
            "expected: " + expected.charAt(ix) + " (" +
            encode(expected.charAt(ix)));
+    }
   }
 
   // assumes s1.length() > s2.length()
   private String getRest(String s1, String s2) {
     StringBuilder buf = new StringBuilder();
-    for (int ix = s2.length(); ix < s1.length(); ix++) 
+    for (int ix = s2.length(); ix < s1.length(); ix++) {
       buf.append(encode(s1.charAt(ix)) + " ");
+    }
     return buf.toString();
   }
 
@@ -170,9 +172,10 @@ public class PrettyPrinterTest {
   }
   
   private char encodeHexDigit(int value) {
-    if (value <= 9)
+    if (value <= 9) {
       return (char) ('0' + value);
-    else
+    } else {
       return (char) ('A' + (value - 10));
+    }
   }
 }

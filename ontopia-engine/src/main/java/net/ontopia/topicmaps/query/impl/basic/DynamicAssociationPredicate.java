@@ -70,18 +70,20 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     int open = 0;
     int closed = 0;
     for (int ix = 0; ix < boundparams.length; ix++) {
-      if (!boundparams[ix])
+      if (!boundparams[ix]) {
         open++;
-      else
+      } else {
         closed++;
+      }
     }
 
-    if (open == 0)
+    if (open == 0) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (closed > 0)
+    } else if (closed > 0) {
       return PredicateDrivenCostEstimator.MEDIUM_RESULT - closed;
-    else
+    } else {
       return PredicateDrivenCostEstimator.BIG_RESULT - closed;
+    }
   }
 
   @Override
@@ -98,8 +100,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
         break;
       }
     }
-    if (argix != -1)
+    if (argix != -1) {
       return satisfyWhenBound(matches, arguments, argix);
+    }
     
     // initialize
     QueryMatches result = new QueryMatches(matches);
@@ -125,14 +128,16 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       Collection<AssociationRoleIF> rolecoll = assoc.getRoles();
       AssociationRoleIF[] roles = rolecoll.toArray(seed2);
       int roles_length = rolecoll.size();
-      if (roles_length > roleused.length)
+      if (roles_length > roleused.length) {
         roleused = new boolean[roles_length];
+      }
 
       // loop over existing matches
       for (int row = 0; row <= matches.last; row++) {
         // blank out array of used roles
-        for (int roleix = 0; roleix < roles_length; roleix++)
+        for (int roleix = 0; roleix < roles_length; roleix++) {
           roleused[roleix] = false;
+        }
         
         // check bound columns against association
         boolean ok = true;
@@ -152,12 +157,14 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
             }
           }
           
-          if (!ok) // no matching role, so don't bother checking more columns
+          if (!ok) { // no matching role, so don't bother checking more columns
             break;
+          }
         }
 
-        if (!ok) // match failed, so try next row
+        if (!ok) { // match failed, so try next row
           continue;
+        }
 
         // produce all possible combinations of role bindings
         while (true) {
@@ -195,12 +202,14 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
             unbound[colix].boundTo = roles[role].getPlayer();
           }
 
-          if (!one_unused_role)
+          if (!one_unused_role) {
             break; // no combos where one role unused
+          }
 
           // ok, the row/assoc combo is fine; now make a match for it
-          if (result.last+1 == result.size)
+          if (result.last+1 == result.size) {
             result.increaseCapacity();
+          }
           result.last++;
         
           System.arraycopy(data[row], 0, result.data[result.last], 0, colcount);
@@ -209,9 +218,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
             // column, so have to check whether they matched up
             Object value = result.data[result.last][unbound[colix].ix];
             if ((value == null || value.equals(unbound[colix].boundTo)) &&
-                unbound[colix].boundTo != null)
+                unbound[colix].boundTo != null) {
               result.data[result.last][unbound[colix].ix] = unbound[colix].boundTo;
-            else {
+            } else {
               // this match is bad. we need to retract it
               result.last--; // all cols reset when new matches made, anyway
             }
@@ -276,8 +285,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     for (int row = 0; row <= matches.last; row++) {
 
       // verify that we're looking at a topic
-      if (!(data[row][boundcol] instanceof TopicIF))
+      if (!(data[row][boundcol] instanceof TopicIF)) {
         continue; // this can't be a valid row
+      }
       
       // now, test if this row is really valid
       TopicIF topic = (TopicIF) data[row][boundcol];
@@ -314,17 +324,20 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
             break;
           }
         }
-        if (!ok)
+        if (!ok) {
           continue; // this assoc didn't match
+        }
 
         // produce match by binding unbound columns
-        if (roles_length > roleused.length)
+        if (roles_length > roleused.length) {
           roleused = new boolean[roles_length];
-        for (int roleix = 0; roleix < roles_length; roleix++)
+        }
+        for (int roleix = 0; roleix < roles_length; roleix++) {
           roleused[roleix] =
             // if this is the start role then that's already used
             topic.equals(roles[roleix].getPlayer()) &&
             rtype.equals(roles[roleix].getType());
+        }
 
         for (int arg = 0; arg < unbound_length; arg++) {
           TopicIF roleType = unbound[arg].roleType;
@@ -356,8 +369,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
 
         if (ok) {
           // ok, the row/assoc combo is fine; now make a match for it
-          if (result.last+1 == result.size)
+          if (result.last+1 == result.size) {
             result.increaseCapacity();
+          }
           result.last++;
 
           System.arraycopy(data[row], 0, result.data[result.last], 0, colcount);
@@ -382,13 +396,15 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     int col2 = -1;
     for (int ix1 = 0; ix1 < arguments.length; ix1++) {
       Pair arg1 = (Pair) arguments[ix1];
-      if (!(arg1.getFirst() instanceof Variable))
+      if (!(arg1.getFirst() instanceof Variable)) {
         continue;
+      }
       
       for (int ix2 = ix1+1; ix2 < arguments.length; ix2++) {
         Pair arg2 = (Pair) arguments[ix2];
-        if (!(arg2.getFirst() instanceof Variable))
+        if (!(arg2.getFirst() instanceof Variable)) {
           continue;
+        }
         
         if (arg1.getSecond().equals(arg2.getSecond())) {
           col1 = result.getIndex((Variable) arg1.getFirst());
@@ -399,8 +415,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       }
     }
 
-    if (col1 == -1)
+    if (col1 == -1) {
       return; // no symmetry, so nothing to do
+    }
 
     result.ensureCapacity((result.last+1) * 2);
 
@@ -427,17 +444,20 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     int width = arguments.length;
     List<ArgumentPair> args = new ArrayList<ArgumentPair>(width);
     for (int ix = 0; ix < width; ix++) {
-      if (ix == boundarg)
+      if (ix == boundarg) {
         continue; // yes, this is bound, but since we're starting from it
                   // we can ignore it
+      }
       
       Object arg = arguments[ix];
-      if (!(arg instanceof Pair))
+      if (!(arg instanceof Pair)) {
         throw new InvalidQueryException("Invalid argument to association predicate (only pairs allowed)");
+      }
       
       Pair pair = (Pair) arg;
-      if (!(pair.getSecond() instanceof TopicIF))
+      if (!(pair.getSecond() instanceof TopicIF)) {
         throw new InvalidQueryException("Second half of association predicate pair argument must be a topic constant; found '" + pair + "'");
+      }
 
       
       int colno = matches.getIndex(pair.getFirst());
@@ -446,8 +466,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       }
     }
 
-    if (args.isEmpty())
+    if (args.isEmpty()) {
       return new ArgumentPair[0];
+    }
     return args.toArray(new ArgumentPair[args.size()]);
   }
 
@@ -459,8 +480,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     List<ArgumentPair> args = new ArrayList<ArgumentPair>(width);
     for (int ix = 0; ix < width; ix++) {
       Pair pair = (Pair) arguments[ix];
-      if (!(pair.getSecond() instanceof TopicIF))
+      if (!(pair.getSecond() instanceof TopicIF)) {
         throw new InvalidQueryException("Second half of association predicate pair argument must be a topic constant");
+      }
       
       int colno = matches.getIndex(pair.getFirst());
       if (matches.data[0][colno] == null) {
@@ -468,8 +490,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       }
     }
 
-    if (args.isEmpty())
+    if (args.isEmpty()) {
       return new ArgumentPair[0];
+    }
     return args.toArray(new ArgumentPair[args.size()]);
   }
   

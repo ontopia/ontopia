@@ -50,7 +50,9 @@ public class StatisticsIndex extends BasicIndex implements StatisticsIndexIF {
     QueryResultIF result = null;
     try {
       result = queryProcessor.execute(query);
-      if (result.getWidth() == 0) throw new OntopiaRuntimeException("Counting query did not produce a result");
+      if (result.getWidth() == 0) {
+        throw new OntopiaRuntimeException("Counting query did not produce a result");
+      }
       if (result.next()) {
         return ((Integer) result.getValue(0)).intValue();
       }
@@ -58,7 +60,9 @@ public class StatisticsIndex extends BasicIndex implements StatisticsIndexIF {
     } catch (InvalidQueryException iqe) {
       throw new OntopiaRuntimeException("Invalid query in statistics index: " + iqe.getMessage(), iqe);
     } finally {
-      if (result != null) result.close();
+      if (result != null) {
+        result.close();
+      }
     }
   }
 

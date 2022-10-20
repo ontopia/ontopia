@@ -51,29 +51,33 @@ public class IfTag extends QueryExecutingTag {
   @Override
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:if> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found.");
+    }
     
     this.contextManager = contextTag.getContextManager();
     
     // establish new lexical scope
     contextManager.pushScope();
   
-    if (query == null && var == null)
+    if (query == null && var == null) {
       throw new JspTagException("<tolog:if> requires either a 'query' - "
               + "or a 'var' parameter, but got neither.\n");
-    if (var != null && query != null)
+    }
+    if (var != null && query != null) {
       throw new JspTagException("<tolog:if> requires either a 'query' - "
               + "or a 'var' parameter, but got both.\n");
+    }
 
     if (var != null) {                                      
       try {
         // If value of var is bound, then evaluate body.
         if (contextManager.getValue(var) == null ||
-            contextManager.getValue(var).isEmpty())
+            contextManager.getValue(var).isEmpty()) {
           return SKIP_BODY;
+        }
         return EVAL_BODY_BUFFERED;
       } catch (VariableNotSetException e) {
         return SKIP_BODY;
@@ -87,8 +91,9 @@ public class IfTag extends QueryExecutingTag {
       bindVariables();
       return EVAL_BODY_BUFFERED;
     }
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("Empty query result : '" + query + "'");
+    }
     return SKIP_BODY;
   }
 

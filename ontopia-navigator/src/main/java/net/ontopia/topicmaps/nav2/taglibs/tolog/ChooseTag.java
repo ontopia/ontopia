@@ -42,10 +42,11 @@ public class ChooseTag extends BodyTagSupport {
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:choose> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found.");
+    }
     
     contextTag.getContextManager().pushScope();
             
@@ -62,9 +63,10 @@ public class ChooseTag extends BodyTagSupport {
     // establish old lexical scope, back to outside of the loop
     FrameworkUtils.getContextTag(pageContext).getContextManager().popScope();
 
-    if (!foundWhen())
+    if (!foundWhen()) {
       throw new JspTagException("<tolog:choose> : must have one or more"
               + " <tolog:when> tags nested within it, but none were found.\n");
+    }
     
     return EVAL_PAGE;
   }

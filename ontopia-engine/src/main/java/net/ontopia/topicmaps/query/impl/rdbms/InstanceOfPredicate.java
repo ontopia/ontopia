@@ -97,10 +97,13 @@ public class InstanceOfPredicate
       Iterator iter = itypes.iterator();
       boolean overlap = false;
       while (iter.hasNext()) {
-        if (ttypes.contains(iter.next())) overlap = true;          
+        if (ttypes.contains(iter.next())) {
+          overlap = true;
+        }          
       }
-      if (!overlap)
+      if (!overlap) {
         expressions.add(JDOBoolean.FALSE);
+      }
         
     } else if (args[0] instanceof TopicIF) {
       // instance-of(topic, <any>)
@@ -168,9 +171,9 @@ public class InstanceOfPredicate
   }
 
   protected Collection getSuperclasses(Collection types) {
-    if (types.isEmpty())
+    if (types.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       TypeHierarchyUtils tu = new TypeHierarchyUtils();
       Collection result = new CompactHashSet(types);
       Iterator iter = types.iterator();

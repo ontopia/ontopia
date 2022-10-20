@@ -67,8 +67,9 @@ public class IdentityFieldInfo implements FieldInfoIF {
     this.column_count = value_columns.length;
     
     // Optimization: Hack to figure out if the field is a long field
-    if (fields_length == 1 && fields[0] instanceof PrimitiveFieldInfo)
-      this.sqlType = ((PrimitiveFieldInfo)fields[0]).getSQLType(); 
+    if (fields_length == 1 && fields[0] instanceof PrimitiveFieldInfo) {
+      this.sqlType = ((PrimitiveFieldInfo)fields[0]).getSQLType();
+    } 
   }
 
   /**
@@ -170,11 +171,12 @@ public class IdentityFieldInfo implements FieldInfoIF {
     }    
   }
 
-  private final IdentityIF getIdentity(Object value) {
-    if (value instanceof PersistentIF)
+  private IdentityIF getIdentity(Object value) {
+    if (value instanceof PersistentIF) {
       return ((PersistentIF)value)._p_getIdentity();
-    else
+    } else {
       return (IdentityIF)value;
+    }
   }
 
   //! // WARNING: This is actually incorrect, since we should be getting
@@ -229,15 +231,18 @@ public class IdentityFieldInfo implements FieldInfoIF {
     // Optimization: primitive long field
     if (sqlType == Types.BIGINT) {
       long value = rs.getLong(rsindex);
-      if (rs.wasNull()) 
+      if (rs.wasNull()) { 
         return null;
-      else
+      } else {
         return registrar.createIdentity(parent_class, value);
+      }
       
     } else {
       // If first key is null, no object is referenced.
       Object first_key = fields[0].load(registrar, ticket, rs, rsindex, direct);
-      if (first_key == null) return null;
+      if (first_key == null) {
+        return null;
+      }
       
       if (fields_length == 1) {
         // If the identity only consists of a single key component return

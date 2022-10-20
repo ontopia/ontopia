@@ -62,14 +62,15 @@ public class TypePredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else if (boundparams[0] && !boundparams[1])
+    } else if (boundparams[0] && !boundparams[1]) {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
-    else if (!boundparams[0] && boundparams[1])
+    } else if (!boundparams[0] && boundparams[1]) {
       return PredicateDrivenCostEstimator.BIG_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.WHOLE_TM_RESULT;
+    }
   }
 
   @Override
@@ -149,8 +150,9 @@ public class TypePredicate implements BasicPredicateIF {
       list.addAll(index.getAssociationRoles(topic));
       list.addAll(index.getTopicNames(topic));
 
-      while (result.last + list.size() >= result.size) 
+      while (result.last + list.size() >= result.size) {
         result.increaseCapacity();
+      }
       
       for (int inst = 0; inst < list.size(); inst++) {
         Object[] newRow = (Object[]) matches.data[ix].clone();

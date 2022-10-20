@@ -132,13 +132,15 @@ public class DisplayHierarchyFunction extends AbstractFunction {
     QueryResultIF result = null;
     try {
       result = processor.execute(query);
-      if (result.next())
+      if (result.next()) {
         return (TopicIF) result.getValue(0);
-      else
+      } else {
         return null;
+      }
     } finally {
-      if (result != null)
+      if (result != null) {
         result.close();
+      }
     }
   }
   

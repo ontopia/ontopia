@@ -88,10 +88,11 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
           @Override
           public boolean isVisible() {
             Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
-            if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
+            if (fieldValuesModel.size() == 1 && cardinality.isMinOne()) {
               return false;
-            else
+            } else {
               return !readonly && fieldValueModel.isExistingValue();
+            }
           }
           @Override
           public void onClick(AjaxRequestTarget target) {
@@ -155,7 +156,9 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
       }
       @Override
       public boolean isVisible() {
-        if (readonly) return false;
+        if (readonly) {
+          return false;
+        }
         Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
         return !cardinality.isMaxOne() && fieldValuesModel.containsExisting();
       }      
@@ -170,8 +173,9 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
     fieldInstanceButtons.add(addButton);
 
     Cardinality cardinality = fieldAssignment.getCardinality();
-    if (cardinality.isMaxOne())
+    if (cardinality.isMaxOne()) {
       addButton.setVisible(false);
+    }
   }
 
 }

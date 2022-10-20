@@ -113,10 +113,11 @@ public class Module implements ModuleIF {
       // [[ new InputStreamReader(stream)
       // url.openConnection().getInputStream()
       reader = new ModuleReader(readerType.equalsIgnoreCase(TYPE_ENCRYPTED));
-    } else
+    } else {
       throw new NavigatorRuntimeException("Unknown module reader '" +
                                           readerType +
                                           "' defined in application.xml");
+    }
     try {
       final String classpathPrefix = "file:classpath:"; // IncludeTag adds file: prefix
       funcs = (location.toString().startsWith(classpathPrefix))
@@ -137,8 +138,9 @@ public class Module implements ModuleIF {
                                           "'.", e);
     }
 
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("Module.readIn - funcs:" + funcs);
+    }
     
     // create functions and assign them to the module
     Iterator it = funcs.keySet().iterator();
@@ -146,8 +148,9 @@ public class Module implements ModuleIF {
       String functionName = (String) it.next();
       FunctionIF function = (FunctionIF) funcs.get(functionName);
       this.addFunction(function);
-      if (log.isInfoEnabled())
+      if (log.isInfoEnabled()) {
         log.info(" - registered function: " + function.toString());
+      }
     }
   }
   

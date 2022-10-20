@@ -45,12 +45,13 @@ public class FieldValueModel extends LoadableDetachableModel<Object> {
   
   private void setValueInternal(Object value) {
     // turn non-serializable objects into model objects
-    if (value instanceof RoleField.ValueIF)
+    if (value instanceof RoleField.ValueIF) {
       this.value = new AssociationFieldValueModel((RoleField.ValueIF)value);
-    else if (value instanceof TMObjectIF)
+    } else if (value instanceof TMObjectIF) {
       this.value = new TMObjectModel(fieldInstanceModel.getFieldInstance().getInstance().getTopicMap().getId(), (TMObjectIF)value);
-    else
+    } else {
       this.value = value;
+    }
   }    
   
   public static FieldValueModel createModel(FieldInstanceModel fieldInstanceModel, Object value, boolean isExistingValue) {
@@ -77,10 +78,11 @@ public class FieldValueModel extends LoadableDetachableModel<Object> {
   
   @Override
   public Object load() {
-    if (value instanceof IModel)
+    if (value instanceof IModel) {
       return ((IModel)value).getObject();
-    else
+    } else {
       return value;
+    }
   }
   
   @Override

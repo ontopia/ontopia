@@ -78,13 +78,17 @@ public class ConfigurableEntityResolver implements EntityResolver {
     // Check to see if a public id input source factory exist
     if (public_ids.containsKey(public_id)) {
       InputSourceFactoryIF is_factory = (InputSourceFactoryIF)public_ids.get(public_id);
-      if (is_factory != null) return is_factory.createInputSource();
+      if (is_factory != null) {
+        return is_factory.createInputSource();
+      }
       return null;
     }
     // Check to see if a system id input source factory exist
     if (system_ids.containsKey(system_id)) {
 	InputSourceFactoryIF is_factory = (InputSourceFactoryIF)system_ids.get(system_id);
-	if (is_factory != null) return is_factory.createInputSource();      
+	if (is_factory != null) {
+    return is_factory.createInputSource();
+  }      
 	return null;
     }
     // Use the default

@@ -47,8 +47,9 @@ public class VizUtils {
   }
   
   public static Function<TopicIF, String> stringifierFor(TopicIF scope) {
-    if (scope == null)
+    if (scope == null) {
       return TopicStringifiers.getDefaultStringifier();
+    }
 
     return TopicStringifiers.getTopicNameStringifier(Collections
           .singleton(scope));
@@ -61,14 +62,17 @@ public class VizUtils {
   public static void debug(TopicIF topic) {
     System.out.println("Object ID: " + topic.getObjectId()); 
     Iterator it = topic.getSubjectLocators().iterator();
-    while (it.hasNext())
-      System.out.println("Subject: " + it.next()); 
+    while (it.hasNext()) {
+      System.out.println("Subject: " + it.next());
+    } 
     it = topic.getSubjectIdentifiers().iterator();
-    while (it.hasNext())
-      System.out.println("Indicator: " + it.next()); 
+    while (it.hasNext()) {
+      System.out.println("Indicator: " + it.next());
+    } 
     it = topic.getItemIdentifiers().iterator();
-    while (it.hasNext())
-      System.out.println("Source: " + it.next()); 
+    while (it.hasNext()) {
+      System.out.println("Source: " + it.next());
+    } 
 
     it = topic.getRoles().iterator();
     while (it.hasNext()) {
@@ -77,8 +81,9 @@ public class VizUtils {
       Iterator it2 = assoc.getRoles().iterator();
       while (it2.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF) it2.next();
-        if (role.getPlayer() != topic)
-          System.out.print(" " + role.getPlayer().getObjectId()); 
+        if (role.getPlayer() != topic) {
+          System.out.print(" " + role.getPlayer().getObjectId());
+        } 
       }
       System.out.println();
     }

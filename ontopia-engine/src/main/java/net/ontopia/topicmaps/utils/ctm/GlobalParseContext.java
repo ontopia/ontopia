@@ -57,11 +57,12 @@ public class GlobalParseContext implements ParseContextIF {
   @Override
   public void addPrefix(String prefix, LocatorIF locator) {
     LocatorIF boundto = prefixes.get(prefix);
-    if (boundto != null && !boundto.equals(locator))
+    if (boundto != null && !boundto.equals(locator)) {
       throw new InvalidTopicMapException("Attempted to bind prefix " + prefix +
                                          " to " + locator.getAddress() + ", but "+
                                          "it's already bound to " +
                                          boundto.getAddress());
+    }
 
     prefixes.put(prefix, locator);
   }
@@ -83,9 +84,10 @@ public class GlobalParseContext implements ParseContextIF {
     String local = qname.substring(ix+1);
     
     LocatorIF boundto = prefixes.get(prefix);
-    if (boundto == null)
+    if (boundto == null) {
       throw new InvalidTopicMapException("Cannot resolve qname " + qname + ", " +
                                          "prefix not bound");
+    }
 
     try {
       return new URILocator(boundto.getAddress() + local);
@@ -96,11 +98,12 @@ public class GlobalParseContext implements ParseContextIF {
   
   @Override
   public ValueGeneratorIF getTopicById(String id) {
-    if (base == null)
+    if (base == null) {
       // when no base locator only absolute URIs are allowed
       // see https://github.com/ontopia/ontopia/issues/182
       throw new InvalidTopicMapException("Cannot resolve id '" + id +
                                          "' when no base locator");
+    }
     LocatorIF itemid = base.resolveAbsolute('#' + id);
     return new TopicByItemIdentifierGenerator(this, itemid, id);
   }
@@ -143,9 +146,10 @@ public class GlobalParseContext implements ParseContextIF {
   @Override
   public void registerTemplate(String name, Template template) {
     String key = name + template.getParameterCount();
-    if (templates.containsKey(key))
+    if (templates.containsKey(key)) {
       throw new InvalidTopicMapException("Template " + name + " already defined"
                                          + " with " + template.getParameterCount() + " parameters");
+    }
     templates.put(key, template);
   }
 
@@ -261,10 +265,11 @@ public class GlobalParseContext implements ParseContextIF {
 
     @Override
     protected String getDescription() {
-      if (id != null)
+      if (id != null) {
         return "item identifier #" + id;
-      else
+      } else {
         return "item identifier " + locator.getExternalForm();
+      }
     }
   }
 

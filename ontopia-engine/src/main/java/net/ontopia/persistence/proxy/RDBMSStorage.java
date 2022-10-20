@@ -186,10 +186,12 @@ public class RDBMSStorage implements StorageIF {
     
     // Load properties from file
     InputStream istream = StreamUtils.getInputStream(propfile);
-    if (istream == null)
+    if (istream == null) {
       throw new OntopiaRuntimeException("Property file '" + propfile + "' was not found.");
-    if (log.isDebugEnabled())
+    }
+    if (log.isDebugEnabled()) {
       log.info("Loading properties file from: "  + propfile);
+    }
     init(PropertyUtils.toMap(PropertyUtils.loadProperties(istream)));
   }
   
@@ -226,14 +228,16 @@ public class RDBMSStorage implements StorageIF {
     // Get mapping.xml file 
     InputStream mstream = getInputStream("net.ontopia.topicmaps.impl.rdbms.MappingFile", 
         "mapping.xml");    
-    if (mstream == null)
+    if (mstream == null) {
       throw new OntopiaRuntimeException("Object-relational mapping file 'mapping.xml' cannot be found.");
+    }
     
     // Get queries.xml file
     InputStream qstream = getInputStream("net.ontopia.topicmaps.impl.rdbms.QueriesFile", 
         "queries.xml");
-    if (qstream == null)
+    if (qstream == null) {
       throw new OntopiaRuntimeException("Built-in queries file 'queries.xml' cannot be found.");
+    }
     
     // Read configuration files
     this.mapping = new RDBMSMapping(new ObjectRelationalMapping(mstream));
@@ -264,8 +268,9 @@ public class RDBMSStorage implements StorageIF {
 
     // Get database
     this.database = getProperty("net.ontopia.topicmaps.impl.rdbms.Database");
-    if (this.database == null)
+    if (this.database == null) {
       throw new OntopiaRuntimeException("The property 'net.ontopia.topicmaps.impl.rdbms.Database' is not set.");
+    }
     
     // Get platforms
     String _platforms = getProperty("net.ontopia.topicmaps.impl.rdbms.Platforms");
@@ -350,8 +355,9 @@ public class RDBMSStorage implements StorageIF {
         throw new OntopiaRuntimeException("Not able to figure out cluster type from cluster id: " + clusterId);
       }
     }
-    if (this.caches == null)
+    if (this.caches == null) {
       this.caches = new DefaultCaches();
+    }
     
     
     // initialize shared cache
@@ -383,8 +389,9 @@ public class RDBMSStorage implements StorageIF {
     }
 
     // join cluster
-    if (this.cluster != null)
+    if (this.cluster != null) {
       this.cluster.join();
+    }
   }
   
   @Override
@@ -412,10 +419,11 @@ public class RDBMSStorage implements StorageIF {
   
   public String getProperty(String property, String default_value) {
     String propval = properties.get(property);
-    if (propval == null)
+    if (propval == null) {
       return default_value;
-    else
+    } else {
       return propval;
+    }
   }
   
   public StorageAccessIF createAccess(boolean readonly) {
@@ -427,10 +435,11 @@ public class RDBMSStorage implements StorageIF {
   @Override
   public TransactionIF createTransaction(boolean readonly) {
     AbstractTransaction transaction;
-    if (readonly)
+    if (readonly) {
       transaction = new ROTransaction(createAccess(readonly));
-    else
+    } else {
       transaction= new RWTransaction(createAccess(readonly));
+    }
 
     synchronized (transactions) {
       transactions.add(transaction);
@@ -486,10 +495,18 @@ public class RDBMSStorage implements StorageIF {
         log.error("Could not deregister from cluster.", t);
       }
     }
-    if (scache != null) scache.close();
-    if (saccess != null) saccess.close();
-    if (rw_connfactory != null) rw_connfactory.close();
-    if (ro_connfactory != null) ro_connfactory.close();
+    if (scache != null) {
+      scache.close();
+    }
+    if (saccess != null) {
+      saccess.close();
+    }
+    if (rw_connfactory != null) {
+      rw_connfactory.close();
+    }
+    if (ro_connfactory != null) {
+      ro_connfactory.close();
+    }
   }
   
   // -----------------------------------------------------------------------------
@@ -498,7 +515,9 @@ public class RDBMSStorage implements StorageIF {
 
   @Override
   public void notifyCluster() {
-    if (cluster != null) cluster.flush();
+    if (cluster != null) {
+      cluster.flush();
+    }
   }
   
   // -----------------------------------------------------------------------------
@@ -607,11 +626,13 @@ public class RDBMSStorage implements StorageIF {
   protected QueryDescriptor getQueryDescriptor(String name) {
     // Lookup query descriptor
     QueryDescriptor qdesc = queries.getQueryDescriptor(name);
-    if (qdesc == null)
+    if (qdesc == null) {
       throw new OntopiaRuntimeException("No query with the name " + name + " found.");
+    }
     
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("Generating query '" + name + "' from descriptor.");
+    }
     
     return qdesc;
   }
@@ -631,16 +652,18 @@ public class RDBMSStorage implements StorageIF {
     SQLQuery sqlquery = sqlbuilder.makeQuery(jdoquery, oaccess);
     
     boolean debug = log.isDebugEnabled();
-    if (debug)
+    if (debug) {
       log.debug("SQL1: " + sqlquery + " [width=" + sqlquery.getWidth() + "]");
+    }
     //! System.out.println("SQL1: " + sqlquery + " [width=" + sqlquery.getWidth() + "]");
     
     sqlquery = new RedundantTablesSQLOptimizer().optimize(sqlquery);
     sqlquery = new EqualsSQLOptimizer().optimize(sqlquery);
     
     SQLStatementIF stm = sqlgen.createSQLStatement(sqlquery);
-    if (debug)
+    if (debug) {
       log.debug("SQL2: " + stm + " [width=" + stm.getWidth() + "]");
+    }
     //! System.out.println("SQL2: " + stm + " [width=" + stm.getWidth() + "]");
     
     stm.setObjectAccess(oaccess);
@@ -766,10 +789,11 @@ public class RDBMSStorage implements StorageIF {
       if ("net.ontopia.topicmaps.impl.rdbms.Password".equals(prop)) {
         out.write("<b>" + prop + "</b>=(<i>hidden for security reasons</i>)<br>\n");
       } else {
-        if (known_properties.contains(prop)) 
+        if (known_properties.contains(prop)) { 
           out.write("<b>" + prop + "</b>=" + properties.get(prop) + "<br>\n");
-        else
+        } else {
           out.write(prop + "=" + properties.get(prop) + "<br>\n");
+        }
       }
     }
   }

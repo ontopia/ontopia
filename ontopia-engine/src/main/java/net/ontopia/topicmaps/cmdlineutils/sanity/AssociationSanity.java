@@ -173,8 +173,9 @@ public class AssociationSanity {
         }
       }
     }
-    if (id == null)
+    if (id == null) {
       id = "id" + topic.getObjectId();
+    }
     return id;
   }
 

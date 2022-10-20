@@ -515,8 +515,9 @@ public class AccessctlTest extends AbstractWebBasedTestCase {
     
     int row = 0;
     while (row < table.getRowCount() && !table.getTableCell(row, 1).asText()
-        .equals(text))
+        .equals(text)) {
       row ++;
+    }
         
     assertTrue("The text \"" + text + "\" was not found in any tablerow.",
         row < table.getRowCount());
@@ -536,8 +537,9 @@ public class AccessctlTest extends AbstractWebBasedTestCase {
     
     int row = 0;
     while (row < table.getRowCount() && table.getTableCell(row, 0)
-        .getLinkWith(text) == null)
+        .getLinkWith(text) == null) {
       row ++;
+    }
         
     assertTrue("A link with the text \"" + text + "\" was not found in any"
         + " tablerow.", 

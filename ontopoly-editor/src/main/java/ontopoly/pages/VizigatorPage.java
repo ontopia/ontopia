@@ -71,8 +71,9 @@ public class VizigatorPage extends OntopolyAbstractPage {
     String idtype = "source";
     String idvalue = null;
     Iterator<LocatorIF> it = topic.getItemIdentifiers().iterator();
-    if (it.hasNext())
+    if (it.hasNext()) {
       idvalue = it.next().getExternalForm();
+    }
 
     if (idvalue == null) {
       it = topic.getSubjectIdentifiers().iterator();

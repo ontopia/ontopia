@@ -40,10 +40,11 @@ public abstract class AbstractSQLAnalyzer {
     Iterator iter = query.getSelect().iterator();
     while (iter.hasNext()) {
       Object selected = iter.next();
-      if (selected instanceof SQLAggregateIF)
+      if (selected instanceof SQLAggregateIF) {
         analyzeAggregate(null, (SQLAggregateIF)selected);
-      else
+      } else {
         analyzeValue(null, (SQLValueIF)selected);
+      }
     }
   }
 
@@ -56,10 +57,11 @@ public abstract class AbstractSQLAnalyzer {
     while (iter.hasNext()) {
       SQLOrderBy order = (SQLOrderBy)iter.next();
       
-      if (order.isAggregate())
+      if (order.isAggregate()) {
         analyzeAggregate(null, order.getAggregate());
-      else
+      } else {
         analyzeValue(null, order.getValue());
+      }
     }
   }
 
@@ -71,7 +73,9 @@ public abstract class AbstractSQLAnalyzer {
   }
 
   protected void analyzeExpression(SQLExpressionIF sqlexpr) {
-    if (sqlexpr == null) return;
+    if (sqlexpr == null) {
+      return;
+    }
     switch (sqlexpr.getType()) {
     case SQLExpressionIF.AND:
       analyzeAnd((SQLAnd)sqlexpr);
@@ -194,7 +198,9 @@ public abstract class AbstractSQLAnalyzer {
   }
 
   protected void analyzeValue(SQLExpressionIF expr, SQLValueIF sqlvalue) {
-    if (sqlvalue == null) return;
+    if (sqlvalue == null) {
+      return;
+    }
     switch (sqlvalue.getType()) {
     case SQLValueIF.COLUMNS:
       analyzeColumns(expr, (SQLColumns)sqlvalue);

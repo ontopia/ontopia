@@ -61,8 +61,9 @@ public class OC4JContextFilter implements Filter {
   
     private void setServletMappingContext(String requestURI) {  
         //1. remove last / if it exists  
-        if (requestURI.endsWith("/"))  
-            requestURI = requestURI.substring(0, requestURI.length()-1);  
+        if (requestURI.endsWith("/")) {
+          requestURI = requestURI.substring(0, requestURI.length()-1);
+        }  
   
         //2. get only the servlet mapping defined in web.xml i.e /app  
         requestURI = requestURI.substring(requestURI.lastIndexOf("/"));  

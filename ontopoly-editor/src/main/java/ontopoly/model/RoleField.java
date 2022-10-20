@@ -68,8 +68,9 @@ public class RoleField extends FieldDefinition {
   @Override
   public String getFieldName() {
     String name = getTopicMap().getTopicName(getTopicIF(), null);
-    if (name != null)
+    if (name != null) {
       return name;
+    }
 
     AssociationType atype = getAssociationType();
     RoleType rtype = getRoleType();
@@ -83,8 +84,9 @@ public class RoleField extends FieldDefinition {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof RoleField))
+    if (!(obj instanceof RoleField)) {
       return false;
+    }
 
     RoleField other = (RoleField)obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -199,8 +201,9 @@ public class RoleField extends FieldDefinition {
 
     Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
     params.put("field", getTopicIF());
-    if (currentTopic != null)
+    if (currentTopic != null) {
       params.put("topic", currentTopic.getTopicIF());
+    }
 
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
     return qm.queryForList(query, params);
@@ -261,12 +264,13 @@ public class RoleField extends FieldDefinition {
   public List<Topic> searchAllowedPlayers(String searchTerm) {
     try {
       String query = getAllowedPlayersSearchQuery();
-      if (query == null)
+      if (query == null) {
         query = "select $player, $score from "
           + "on:has-field(%field% : on:field-definition, $ttype : on:field-owner), "
           + "instance-of($player, $ttype), "
           + "topic-name($player, $tn), value-like($tn, %search%, $score) "
           + "order by $score desc, $player?";
+      }
 
       Map<String,Object> params = new HashMap<String,Object>(2);
       params.put("field", getTopicIF());
@@ -281,8 +285,9 @@ public class RoleField extends FieldDefinition {
 
       while (it.hasNext()) {
         TopicIF topic = it.next();
-        if (duplicateChecks.contains(topic))
+        if (duplicateChecks.contains(topic)) {
           continue; // avoid duplicates
+        }
         results.add(new Topic(topic, getTopicMap()));
         duplicateChecks.add(topic);
       } 
@@ -307,19 +312,24 @@ public class RoleField extends FieldDefinition {
     while (iter.hasNext()) {
       AssociationRoleIF role = iter.next();
       ValueIF value = createValue(this, role);
-      if (value != null)
+      if (value != null) {
         result.add(value);
+      }
     }
     return result;
   }
 
   private Collection<AssociationRoleIF> getRoles(Topic topic) {
     AssociationType atype = getAssociationType();
-    if (atype == null) return Collections.emptySet();
+    if (atype == null) {
+      return Collections.emptySet();
+    }
     TopicIF associationTypeIf = atype.getTopicIF();
 
     RoleType rtype = getRoleType();
-    if (rtype == null) return Collections.emptySet();
+    if (rtype == null) {
+      return Collections.emptySet();
+    }
     TopicIF roleTypeIf = rtype.getTopicIF();
 
     TopicIF playerIf = topic.getTopicIF();
@@ -402,7 +412,9 @@ public class RoleField extends FieldDefinition {
     ValueIF value = (ValueIF) _value;
 
     AssociationType atype = getAssociationType();
-    if (atype == null) return;
+    if (atype == null) {
+      return;
+    }
     TopicIF atypeIf = atype.getTopicIF();
     TopicIF[] rtypes = getRoleTypes(value);
     TopicIF[] players = getPlayers(value);
@@ -448,7 +460,9 @@ public class RoleField extends FieldDefinition {
         }
       }
     }
-    if (listener != null) listener.onAfterAdd(topic, this, value);
+    if (listener != null) {
+      listener.onAfterAdd(topic, this, value);
+    }
   }
 
   //  protected void clear(FieldInstance fieldInstance, LifeCycleListener listener) {
@@ -472,12 +486,16 @@ public class RoleField extends FieldDefinition {
     ValueIF value = (ValueIF) _value;
 
     AssociationType atype = getAssociationType();
-    if (atype == null) return;
+    if (atype == null) {
+      return;
+    }
     TopicIF atypeIf = atype.getTopicIF();
     TopicIF[] rtypes = getRoleTypes(value);
     TopicIF[] players = getPlayers(value);
 
-    if (listener != null) listener.onBeforeRemove(topic, this, value);
+    if (listener != null) {
+      listener.onBeforeRemove(topic, this, value);
+    }
 
     Collection<TopicIF> scope = Collections.emptySet();          
     Collection<AssociationIF> assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
@@ -509,8 +527,9 @@ public class RoleField extends FieldDefinition {
 
     // ignore roles where the arity does not match
     Collection<AssociationRoleIF> aroles = assoc.getRoles();
-    if (fieldCount != aroles.size())
+    if (fieldCount != aroles.size()) {
       return null;
+    }
 
     ValueIF value = createValue(fieldCount);
     value.addPlayer(roleField, new Topic(role.getPlayer(), roleField.getTopicMap()));
@@ -525,24 +544,29 @@ public class RoleField extends FieldDefinition {
       RoleField ofield = iter.next();
       // only match your own field once
       if (ofield.equals(roleField)) {
-        if (++selfMatch == 1)
+        if (++selfMatch == 1) {
           continue;
+        }
       }
       RoleType ortype = ofield.getRoleType();
-      if (ortype == null) return null;
+      if (ortype == null) {
+        return null;
+      }
       boolean match = false;
       for (int i = 0; i < roles.length; i++) {
         AssociationRoleIF orole = (AssociationRoleIF) roles[i];
-        if (matched.contains(orole))
+        if (matched.contains(orole)) {
           continue;
+        }
         if (Objects.equals(orole.getType(), ortype.getTopicIF())) {
           matched.add(orole);
           value.addPlayer(ofield, new Topic(orole.getPlayer(), topicMap));
           match = true;
         }
       }
-      if (!match)
+      if (!match) {
         return null;
+      }
     }
     return value;
   }
@@ -619,16 +643,18 @@ public class RoleField extends FieldDefinition {
         RoleField rf = roleFields[i];
         if (rf.equals(ofield)) {
           Topic player = players[i];
-          if (!Objects.equals(player, oPlayer))
+          if (!Objects.equals(player, oPlayer)) {
             return player;
-          else
+          } else {
             xPlayer = oPlayer;
+          }
         }
       }
-      if (xPlayer == null)
-        throw new RuntimeException("Could not find player for RoleField: " + ofield + " (" + oPlayer + ")");			
-      else
+      if (xPlayer == null) {
+        throw new RuntimeException("Could not find player for RoleField: " + ofield + " (" + oPlayer + ")");
+      } else {
         return xPlayer;
+      }
     }
 
     @Override
@@ -638,18 +664,21 @@ public class RoleField extends FieldDefinition {
       sb.append(getArity());
       sb.append(": ");
       for (int i=0; i < roleFields.length; i++) {
-        if (i > 0) sb.append(", ");
-        if (roleFields[i] == null)
+        if (i > 0) {
+          sb.append(", ");
+        }
+        if (roleFields[i] == null) {
           sb.append("null");
-        else {
+        } else {
           RoleType rtype = roleFields[i].getRoleType();
           sb.append((rtype == null ? null : rtype.getTopicIF()));
         }
         sb.append(":");
-        if (players[i] == null)
+        if (players[i] == null) {
           sb.append("null");
-        else
+        } else {
           sb.append(players[i].getTopicIF());
+        }
       }
       sb.append(")");
       return sb.toString();
@@ -735,8 +764,9 @@ public class RoleField extends FieldDefinition {
       fieldOrderP2 = Ordering.stringToOrder(p2occ.getValue());
       // find occurrence after p2occ
       int indexP2occ = occs.indexOf(p2occ);
-      if (indexP2occ < (occs.size()-1))
+      if (indexP2occ < (occs.size()-1)) {
         next_occ = occs.get(indexP2occ+1);
+      }
       if (next_occ != null) {
         // if next then average this and next field orders
         int fieldOrderNext = Ordering.stringToOrder(next_occ.getValue());
@@ -753,8 +783,9 @@ public class RoleField extends FieldDefinition {
         }
       }
     }
-    if (nextOrder == Ordering.MAX_ORDER)
+    if (nextOrder == Ordering.MAX_ORDER) {
       nextOrder = fieldOrderP2;
+    }
     if (p1occ == null) {
       nextOrder += Ordering.ORDER_INCREMENTS;
       p1occ = topics_occs.get(p1);

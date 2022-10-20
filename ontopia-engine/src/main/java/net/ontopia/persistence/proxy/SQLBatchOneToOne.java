@@ -58,14 +58,18 @@ public class SQLBatchOneToOne extends SQLOneToOne implements FlushableIF {
   @Override
   protected void executeUpdate(PreparedStatement stm, String sql) throws Exception {
     // Add batch update
-    if (debug) log.debug("Adding batch: " + sql);
+    if (debug) {
+      log.debug("Adding batch: " + sql);
+    }
     stm.addBatch();
   }
   
   @Override
   public void flush() throws Exception {
     // Do nothing if no statement
-    if (stm_set == null) return;
+    if (stm_set == null) {
+      return;
+    }
 
     try {
       // Execute batch statements

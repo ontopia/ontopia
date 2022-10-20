@@ -86,15 +86,17 @@ public class TopicSelectionPrompter extends JDialog {
     jList.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent anEvent) {
-        if (anEvent.getClickCount() == 2)
-            validateAndAccept();
+        if (anEvent.getClickCount() == 2) {
+          validateAndAccept();
+        }
       }
     });
     jList.addKeyListener(new KeyAdapter() {
       @Override
       public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
           validateAndAccept();
+        }
       }
     });
 
@@ -141,13 +143,13 @@ public class TopicSelectionPrompter extends JDialog {
     selectedTopic = null;
     TopicListItem item = (TopicListItem) jList.getSelectedValue();
 
-    if (item == null)
+    if (item == null) {
       if (warnNoSelection()) {
         hide();
-      }
-      else
+      } else {
         return;
-    else {
+      }
+    } else {
       selectedTopic = item.getTopic();
       hide();
     }
@@ -162,8 +164,9 @@ public class TopicSelectionPrompter extends JDialog {
   private void setListData(Vector aList) {
     TopicListItem.sort(aList);
     jList.setListData(aList);
-    if (aList.size() > 0)
+    if (aList.size() > 0) {
       jList.setSelectedIndex(0);
+    }
   }
 
   public TopicIF getSelection() {

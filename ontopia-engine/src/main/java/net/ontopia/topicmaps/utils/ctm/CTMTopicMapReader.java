@@ -99,9 +99,10 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
 
     // Set base address on in-memory store
     if ((store instanceof net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore) &&
-        store.getBaseAddress() == null)
+        store.getBaseAddress() == null) {
       ((net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore)store)
           .setBaseAddress(getBaseAddress());
+    }
 
     // Parse!
     try (Reader reader = makeReader((String) null, new CTMEncodingSniffer())) {
@@ -140,8 +141,9 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
   protected Reader makeReader(InputStream stream, String encoding)
     throws IOException {
     // FIXME: fill in auto-detection of encoding
-    if (encoding == null)
+    if (encoding == null) {
       encoding = "utf-8";
+    }
     return new InputStreamReader(stream, encoding);
   }
 

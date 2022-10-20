@@ -49,13 +49,17 @@ public abstract class QueryTreeModel extends DefaultTreeModel {
       QueryResultIF qr = qp.execute(query, params, dc);
 
       // ignore query if it contains less than two columns
-      if (qr.getWidth() < 2) return;
+      if (qr.getWidth() < 2) {
+        return;
+      }
       
       try {
         while (qr.next()) {
           Object p = qr.getValue(0);
           Object c = qr.getValue(1);
-          if (!filter(p, c)) continue;
+          if (!filter(p, c)) {
+            continue;
+          }
           
           DefaultMutableTreeNode parent;
           DefaultMutableTreeNode child;
@@ -88,8 +92,9 @@ public abstract class QueryTreeModel extends DefaultTreeModel {
       Iterator<DefaultMutableTreeNode> iter = nodes.values().iterator();
       while (iter.hasNext()) {
         DefaultMutableTreeNode node = iter.next();
-        if (node.getParent() == null)
+        if (node.getParent() == null) {
           root.add(node);
+        }
       }
       
     } catch (InvalidQueryException e) {

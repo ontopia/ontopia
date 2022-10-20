@@ -100,8 +100,9 @@ public class JDOEvaluator {
     JDOValueIF right = jdoexpr.getRight();
 
     // Decisive only if equals
-    if (left.equals(right))
+    if (left.equals(right)) {
       return 1;
+    }
       
     // If both are objects compare them
     if (isEvaluatable(left, mapping) &&
@@ -121,8 +122,9 @@ public class JDOEvaluator {
     JDOValueIF right = jdoexpr.getRight();
 
     // Decisive only if equals
-    if (left.equals(right))
+    if (left.equals(right)) {
       return -1;
+    }
       
     // If both are objects compare them
     if (isEvaluatable(left, mapping) &&
@@ -147,10 +149,11 @@ public class JDOEvaluator {
       Collection lval = (Collection)evaluateJDOValue(left, mapping);
       Object rval = evaluateJDOValue(right, mapping);
       // NOTE: Using containsAll if rval is a collection
-      if (rval instanceof Collection)
+      if (rval instanceof Collection) {
         return (lval == null ? -1 : (lval.containsAll((Collection)rval) ? 1 : -1));
-      else
+      } else {
         return (lval == null ? -1 : (lval.contains(rval) ? 1 : -1));
+      }
     }
     return 0;
   }
@@ -239,8 +242,9 @@ public class JDOEvaluator {
       }      
       
       // If no expressions remain, return true
-      if (_exprs.length == 0)
+      if (_exprs.length == 0) {
         return 1;
+      }
 
       // Update AND-expression
       jdoexpr.setExpressions(_exprs);      
@@ -288,8 +292,9 @@ public class JDOEvaluator {
       }
       
       // If no expressions remain, return false
-      if (_exprs.length == 0)
+      if (_exprs.length == 0) {
         return -1;
+      }
         
       // Update OR-expression
       jdoexpr.setExpressions(_exprs);
@@ -356,9 +361,10 @@ public class JDOEvaluator {
           ClassInfoIF cinfo = mapping.getClassInfo(ctype);
           finfo = cinfo.getFieldInfoByName(path[i]);
           
-          if (finfo == null)
+          if (finfo == null) {
             throw new OntopiaRuntimeException("Parent '" + ctype + "' do not have field called '" +
                                               path[i] + "'");
+          }
           try {
             value = finfo.getValue(value);
           } catch (Exception e) {
@@ -366,13 +372,16 @@ public class JDOEvaluator {
           }
 
           // We'll have to stop here if the returned value is null.
-          if (value == null) break;
+          if (value == null) {
+            break;
+          }
           
           ctype = finfo.getValueClass();
         }
-        else
+        else {
           throw new OntopiaRuntimeException("Parent of field  '" + path[i] +
                                             "' of undeclared type: '" + ctype + "'");
+        }
       }
       //! System.out.println("FVALUE: " + value);
       return value;

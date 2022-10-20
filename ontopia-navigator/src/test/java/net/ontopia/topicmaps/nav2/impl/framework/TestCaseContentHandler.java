@@ -67,8 +67,9 @@ public class TestCaseContentHandler extends SAXTracker {
   public void register(XMLReader parser) {
     parser.setContentHandler(this);
     ErrorHandler _ehandler = parser.getErrorHandler();
-    if (_ehandler == null || (_ehandler instanceof DefaultHandler))
+    if (_ehandler == null || (_ehandler instanceof DefaultHandler)) {
       parser.setErrorHandler(getDefaultErrorHandler());
+    }
     ehandler = parser.getErrorHandler();
   }
 
@@ -101,7 +102,9 @@ public class TestCaseContentHandler extends SAXTracker {
 
   @Override
   public void endElement(String nsuri, String name, String qname) {
-    if ("test".equals(qname)) createTests(stack);
+    if ("test".equals(qname)) {
+      createTests(stack);
+    }
     parents.pop();
   }
   
@@ -126,8 +129,9 @@ public class TestCaseContentHandler extends SAXTracker {
       Map<String, String> result = new LinkedHashMap<String, String>(params);
       // Check to see if there are more tests using the same key.
       Set<Map<String, String>> testsWithSameKey = tests.get(key);
-      if (testsWithSameKey == null) 
+      if (testsWithSameKey == null) {
         testsWithSameKey = new HashSet<Map<String, String>>();
+      }
       testsWithSameKey.add(result);
       tests.put(key, testsWithSameKey);
     }

@@ -94,25 +94,29 @@ public class TMRAPImplementation {
                               ContentHandler handler) throws Exception {
 
     // verify parameters
-    if (syntax == null)
+    if (syntax == null) {
       syntax = RAPServlet.SYNTAX_XTM; // default
+    }
     if (!(RAPServlet.SYNTAX_XTM.equals(syntax) || 
-          RAPServlet.SYNTAX_TM_XML.equals(syntax)))
+          RAPServlet.SYNTAX_TM_XML.equals(syntax))) {
       throw new TMRAPException("Invalid value for 'syntax' parameter: '" +
                                syntax + "'");
-    if (view == null)
+    }
+    if (view == null) {
       view = "stub";
-    if (!"stub".equals(view) && !"names".equals(view))
+    }
+    if (!"stub".equals(view) && !"names".equals(view)) {
       throw new TMRAPException("Invalid value for 'view' parameter: '" +
                                view + "'");
+    }
 
     // get on with it
     TopicIndexIF index = getTopicIndex(navapp, true, tmids);
     try {
       Collection<TopicIF> topics = index.getTopics(indicators, items, subjects);
-      if (RAPServlet.SYNTAX_XTM.equals(syntax))
+      if (RAPServlet.SYNTAX_XTM.equals(syntax)) {
         generateXTM(handler, topics, subjects, items, indicators, true);
-      else {     
+      } else {     
         generateTMXML(handler, topics, subjects, items, indicators,
                 "names".equals(view),
                       tmids != null && tmids.length == 1);
@@ -139,27 +143,32 @@ public class TMRAPImplementation {
                               String view,
                               ContentHandler handler) throws Exception {
 
-    if (tmid == null)
+    if (tmid == null) {
       throw new TMRAPException("No value given for required parameter " +
                                RAPServlet.TOPICMAP_PARAMETER_NAME);
-    if (tolog == null)
+    }
+    if (tolog == null) {
       throw new TMRAPException("No value given for required parameter " +
                                RAPServlet.TOLOG_PARAMETER_NAME);
-    if (syntax == null)
+    }
+    if (syntax == null) {
       syntax = RAPServlet.SYNTAX_TOLOG;
+    }
     if (!syntax.equals(RAPServlet.SYNTAX_TOLOG) &&
         !syntax.equals(RAPServlet.SYNTAX_XTM) &&
-        !syntax.equals(RAPServlet.SYNTAX_TM_XML))
+        !syntax.equals(RAPServlet.SYNTAX_TM_XML)) {
       throw new TMRAPException("Unsupported syntax '" + syntax + "'");
+    }
     
     TopicMapIF topicmap = navapp.getTopicMapById(tmid, true);
     try {
       QueryProcessorIF processor = QueryUtils.getQueryProcessor(topicmap);
       QueryResultIF result = processor.execute(tolog);
-      if (syntax.equals(RAPServlet.SYNTAX_XTM) && result.getWidth() != 1)
+      if (syntax.equals(RAPServlet.SYNTAX_XTM) && result.getWidth() != 1) {
         throw new TMRAPException(
           "The tolog query must produce a query result of exactly one column," +
           "but produced " + result.getWidth() + " columns.");
+      }
 
       if (syntax.equals(RAPServlet.SYNTAX_XTM)) {
         Collection<TopicIF> topics = getTopics(result);
@@ -205,8 +214,9 @@ public class TMRAPImplementation {
       // Delete the topic(s)
       Collection<TopicIF> topics = index.getTopics(identifiers, items, subjects);
       Iterator<TopicIF> it = topics.iterator();
-      while (it.hasNext())
+      while (it.hasNext()) {
         it.next().remove();
+      }
 
       // Return a message
       return "Deleted " + topics.size() + " topics";
@@ -236,14 +246,15 @@ public class TMRAPImplementation {
     try {
       LocatorIF base = topicmap.getStore().getBaseAddress();
       StringReader reader = new StringReader(fragment);
-      if (syntax.equals(RAPServlet.SYNTAX_XTM))
+      if (syntax.equals(RAPServlet.SYNTAX_XTM)) {
         new XTMTopicMapReader(reader, base).importInto(topicmap);
-      else if (syntax.equals(RAPServlet.SYNTAX_LTM))
+      } else if (syntax.equals(RAPServlet.SYNTAX_LTM)) {
         new LTMTopicMapReader(reader, base).importInto(topicmap);
-      else if (syntax.equals(RAPServlet.SYNTAX_CTM))
+      } else if (syntax.equals(RAPServlet.SYNTAX_CTM)) {
         new CTMTopicMapReader(reader, base).importInto(topicmap);
-      else
+      } else {
         throw new TMRAPException("Bad syntax value: '" + syntax + "'");
+      }
       topicmap.getStore().commit();
     } finally {
       topicmap.getStore().close();
@@ -273,25 +284,28 @@ public class TMRAPImplementation {
     try {
       LocatorIF base = topicmap.getStore().getBaseAddress();
       InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-      if (base != null)
+      if (base != null) {
         store.setBaseAddress(base);
+      }
       TopicMapIF ftm = store.getTopicMap();
       
       StringReader reader = new StringReader(fragment);
-      if (syntax.equals(RAPServlet.SYNTAX_XTM))
+      if (syntax.equals(RAPServlet.SYNTAX_XTM)) {
         new XTMTopicMapReader(reader, base).importInto(ftm);
-      else if (syntax.equals(RAPServlet.SYNTAX_LTM))
+      } else if (syntax.equals(RAPServlet.SYNTAX_LTM)) {
         new LTMTopicMapReader(reader, base).importInto(ftm);
-      else
+      } else {
         throw new TMRAPException("Bad syntax value: '" + syntax + "'");
+      }
 
       // FIXME: THIS IS DIFFICULT IN PRACTICE!! NEED TO BE ABLE TO SPECIFY
       // RELATIVE ITEM IDENTIFIERS, METHINKS...
       
       TopicMapTopicIndex ix = new TopicMapTopicIndex(ftm, null, null, null);
       Collection<TopicIF> topics = ix.getTopics(indicators, items, subjects);
-      if (topics.size() != 1)
+      if (topics.size() != 1) {
         throw new TMRAPException("Wrong number of topics identified in fragment");
+      }
       TopicIF ft = topics.iterator().next();
       TopicMapSynchronizer.update(topicmap, ft);
       
@@ -336,8 +350,9 @@ public class TMRAPImplementation {
       
       // Create topic of type rap:server to represent the server.
       TopicIF rapServerTopic = builder.makeTopic(rapServerType);
-      if (config.getServerName() != null)
+      if (config.getServerName() != null) {
         builder.makeTopicName(rapServerTopic, config.getServerName());
+      }
       TopicPages pages = index.getTopicPages2(indicators, items, subjects);
       
       // If there are any matching topics:
@@ -345,20 +360,24 @@ public class TMRAPImplementation {
         // Create a topic to represent the matching topics.
         TopicIF matchTopic = builder.makeTopic();
         
-        if (pages.getName() != null)
+        if (pages.getName() != null) {
           builder.makeTopicName(matchTopic, pages.getName());
+        }
         
         Iterator<LocatorIF> it = pages.getItemIdentifiers().iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
           matchTopic.addItemIdentifier(it.next());
+        }
         
         it = pages.getSubjectIdentifiers().iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
           matchTopic.addSubjectIdentifier(it.next());
+        }
         
         it = pages.getSubjectLocators().iterator();
-        if (it.hasNext())
+        if (it.hasNext()) {
           matchTopic.addSubjectLocator(it.next());
+        }
         
         // Create topic type rap:topicmap.
         TopicIF rapTopicMapType = makeTopic(topicmap, "topicmap");
@@ -387,8 +406,9 @@ public class TMRAPImplementation {
               currentHandle);
           
           String tmName = pages.getTMName(currentHandle);
-          if (tmName != null)
+          if (tmName != null) {
             builder.makeTopicName(currentRAPTopicMap, tmName);
+          }
           
           // This topic map is contained in the server it came from.
           AssociationIF tmInServerAssoc = builder.makeAssociation(rapContainedInType);
@@ -396,14 +416,16 @@ public class TMRAPImplementation {
           builder.makeAssociationRole(tmInServerAssoc, rapContainerType, rapServerTopic);
   
           TopicIF rapEditPageType = null;
-          if (config.getEditURI() != null)
+          if (config.getEditURI() != null) {
             // Create topic type rap:edit-page
             rapEditPageType = makeTopic(topicmap, "edit-page");
+          }
   
           TopicIF rapViewPageType = null;
-          if (config.getViewURI() != null)
+          if (config.getViewURI() != null) {
             // Create topic type rap:view-page
             rapViewPageType = makeTopic(topicmap, "view-page");
+          }
           
           // For each page. Each page object represents both view and edit page
           // when there's both.
@@ -497,9 +519,10 @@ public class TMRAPImplementation {
                                             String viewBaseuri,
                                             String editBaseuri)
     throws NavigatorRuntimeException {    
-    if (tmids == null || tmids.length == 0)
+    if (tmids == null || tmids.length == 0) {
       return new RegistryTopicIndex(navapp.getTopicMapRepository(), readonly,
                                     editBaseuri, viewBaseuri);
+    }
 
     List<TopicIndexIF> topicIndexes = new ArrayList<TopicIndexIF>();
     for (int i = 0; i < tmids.length; i++) {
@@ -635,8 +658,9 @@ public class TMRAPImplementation {
       while (it2.hasNext()) {
         AssociationRoleIF other = it2.next();
         TopicIF refd = other.getPlayer();
-        if (!refd.equals(source))
+        if (!refd.equals(source)) {
           copyTopic(tm, refd);
+        }
       }
     }
   }
@@ -647,14 +671,17 @@ public class TMRAPImplementation {
 
     // copy identity
     Iterator<LocatorIF> it = referenced.getSubjectLocators().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       topic.addSubjectLocator(it.next());
+    }
     it = referenced.getSubjectIdentifiers().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       topic.addSubjectIdentifier(it.next());
+    }
     it = referenced.getItemIdentifiers().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       topic.addItemIdentifier(it.next());
+    }
     
     // copy name
     builder.makeTopicName(topic, TopicStringifiers.toString(referenced));
@@ -665,11 +692,12 @@ public class TMRAPImplementation {
     Collection<TopicIF> topics = new ArrayList<TopicIF>();
     while (result.next()) {
       Object current = result.getValue(0);
-      if (!(current instanceof TopicIF))
+      if (!(current instanceof TopicIF)) {
         throw new TMRAPException(
           "The query result produced by the tolog query must only contain " +
           "topics, but contained an object of type " + 
           current.getClass().getName() + ".");
+      }
       
       topics.add((TopicIF) current);
     }
@@ -707,18 +735,21 @@ public class TMRAPImplementation {
           // use empty element
         } else if (value instanceof TopicIF) {
           TopicIF topic = (TopicIF) value;
-          if (view == null)
+          if (view == null) {
             view = "stub";
-          if ("stub".equals(view))
+          }
+          if ("stub".equals(view)) {
             makeStub(topic, handler);
-          else if ("full-name".equals(view))
+          } else if ("full-name".equals(view)) {
             makeFullName(topic, handler);
+          }
         } else if (value instanceof String || value instanceof Number) {
           String svalue = value.toString();
           char[] chars = svalue.toCharArray();
           handler.characters(chars, 0, chars.length);
-        } else
+        } else {
           throw new TMRAPException("Unsupported value: " + value);
+        }
         
         handler.endElement("", "", "value");
       }
@@ -743,8 +774,9 @@ public class TMRAPImplementation {
     } else if (!topic.getItemIdentifiers().isEmpty()) {
       loc = topic.getItemIdentifiers().iterator().next();
       elemname = "x:topicRef";
-    } else
+    } else {
       throw new TMRAPException("Not implemented yet"); // FIXME!!
+    }
 
     atts.addAttribute("", "", "l:href", "CDATA", loc.getExternalForm());
     handler.startElement("", "", elemname, atts);

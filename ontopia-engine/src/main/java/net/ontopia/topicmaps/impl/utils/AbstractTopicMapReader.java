@@ -165,8 +165,9 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
   public void importInto(TopicMapIF topicmap) throws IOException {
     // Check that store is ok
     TopicMapStoreIF store = topicmap.getStore();
-    if (store == null)
+    if (store == null) {
       throw new IOException("Topic map not connected to a store.");
+    }
 
     // Use a store factory that always returns the same topic
     // map. This makes sure that all topic maps found inside the
@@ -194,9 +195,15 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
   }
   
   protected Reader makeReader(String encoding, EncodingSnifferIF sniffer) throws IOException {
-    if (reader != null) return reader;
-    if (stream != null) return makeReader(stream, encoding, sniffer);
-    if (url != null) return makeReader(url.openStream(), encoding, sniffer);
+    if (reader != null) {
+      return reader;
+    }
+    if (stream != null) {
+      return makeReader(stream, encoding, sniffer);
+    }
+    if (url != null) {
+      return makeReader(url.openStream(), encoding, sniffer);
+    }
     return null;
   }
 }

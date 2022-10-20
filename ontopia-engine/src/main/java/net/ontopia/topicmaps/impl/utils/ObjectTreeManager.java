@@ -96,7 +96,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
   @Override
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
-    if (listener == this) return;
+    if (listener == this) {
+      return;
+    }
     // Initialize event entry
     if (!listeners.containsKey(event)) {
       Set<EventListenerIF> newset = cfactory.makeSmallSet(); 
@@ -113,7 +115,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       Set<EventListenerIF> event_listeners = listeners.get(event);
       event_listeners.remove(listener);
       // If there are no more listeners, remove event entry.
-      if (event_listeners.isEmpty()) listeners.remove(event);      
+      if (event_listeners.isEmpty()) {
+        listeners.remove(event);
+      }      
     }
   }
   
@@ -179,12 +183,14 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       treeAddEvent(object, TopicIF.EVENT_ADDED, added);
       // Add basenames
       Object[] basenames = added.getTopicNames().toArray();
-      for (int i=0; i < basenames.length; i++)
+      for (int i=0; i < basenames.length; i++) {
         otree.processEvent(added, TopicIF.EVENT_ADD_TOPICNAME, basenames[i], null);
+      }
       // Add occurrences
       Object[] occurs = added.getOccurrences().toArray();
-      for (int i=0; i < occurs.length; i++)
+      for (int i=0; i < occurs.length; i++) {
         otree.processEvent(added, TopicIF.EVENT_ADD_OCCURRENCE, occurs[i], null);
+      }
     }
   }
   /**
@@ -198,12 +204,14 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       treeRemoveEvent(object, TopicIF.EVENT_REMOVED, removed);
       // Remove basenames
       Object[] basenames = removed.getTopicNames().toArray();
-      for (int i=0; i < basenames.length; i++)
+      for (int i=0; i < basenames.length; i++) {
         otree.processEvent(removed, TopicIF.EVENT_REMOVE_TOPICNAME, null, basenames[i]);
+      }
       // Remove occurrences
       Object[] occurs = removed.getOccurrences().toArray();
-      for (int i=0; i < occurs.length; i++)
+      for (int i=0; i < occurs.length; i++) {
         otree.processEvent(removed, TopicIF.EVENT_REMOVE_OCCURRENCE, null, occurs[i]);
+      }
     }
   }
   /**
@@ -217,8 +225,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       treeAddEvent(object, AssociationIF.EVENT_ADDED, added);
       // Add association roles
       Object[] roles = added.getRoles().toArray();
-      for (int i=0; i < roles.length; i++)
+      for (int i=0; i < roles.length; i++) {
         otree.processEvent(added, AssociationIF.EVENT_ADD_ROLE, roles[i], null);
+      }
     }
   }
   /**
@@ -232,8 +241,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       treeRemoveEvent(object, AssociationIF.EVENT_REMOVED, removed);
       // Remove association roles
       Object[] roles = removed.getRoles().toArray();
-      for (int i=0; i < roles.length; i++)
+      for (int i=0; i < roles.length; i++) {
         otree.processEvent(removed, AssociationIF.EVENT_REMOVE_ROLE, null, roles[i]);
+      }
     }
   }
   /**
@@ -247,8 +257,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       treeAddEvent(object, TopicNameIF.EVENT_ADDED, added);
       // Add variants
       Object[] variants = added.getVariants().toArray();
-      for (int i=0; i < variants.length; i++)
+      for (int i=0; i < variants.length; i++) {
         otree.processEvent(added, TopicNameIF.EVENT_ADD_VARIANT, variants[i], null);
+      }
     }
   }
   /**
@@ -262,8 +273,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
       treeRemoveEvent(object, TopicNameIF.EVENT_REMOVED, removed);
       // Remove variants
       Object[] variants = removed.getVariants().toArray();
-      for (int i=0; i < variants.length; i++)
+      for (int i=0; i < variants.length; i++) {
         otree.processEvent(removed, TopicNameIF.EVENT_REMOVE_VARIANT, null, variants[i]);
+      }
     }
   }
   /**

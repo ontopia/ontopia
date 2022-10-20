@@ -85,10 +85,11 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
 
     // get collection which contains topic to work with
     Collection coll = null;
-    if (varNameTopic != null)
+    if (varNameTopic != null) {
       coll = ctxtMgr.getValue(varNameTopic);
-    else
+    } else {
       coll = ctxtMgr.getDefaultValue();
+    }
     
     // establish new lexical scope for this loop
     ctxtMgr.pushScope();
@@ -113,9 +114,10 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
     // get scope decider based on the user context filer
     // FIXME: Should avoid creating a new decider for every loop.
     Predicate<ScopedIF> scopeDecider = null;
-    if (useUserContextFilter)
+    if (useUserContextFilter) {
       scopeDecider = ScopeUtils.getScopeDecider(pageContext, contextTag,
                                                 SCOPE_ASSOCIATIONS);
+    }
     
     // create list of ordered associations for this topic
     assocStore = createOrderedAssociationTypes(topic, scopeDecider);
@@ -216,10 +218,12 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
    * </ul>
    */
   public void setContextFilter(String contextFilter) {
-    if (contextFilter.indexOf("off") != -1)
+    if (contextFilter.indexOf("off") != -1) {
       this.useUserContextFilter = false;
-    if (contextFilter.indexOf("user") != -1)
+    }
+    if (contextFilter.indexOf("user") != -1) {
       this.useUserContextFilter = true;
+    }
   }
   
   // -----------------------------------------------------------------
@@ -231,15 +235,18 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
    */
   private void setVariableValues(AssocInfoStorage ais) {
     // set variables in current lexical scope
-    if (varNameAssociations != null)
+    if (varNameAssociations != null) {
       ctxtMgr.setValue(varNameAssociations, ais.getAssociations());
-    if (varNameAT != null)
+    }
+    if (varNameAT != null) {
       ctxtMgr.setValue(varNameAT, ais.getType());
+    }
     if (varNameART != null) {
-      if (ais.getRoleType() != null)
+      if (ais.getRoleType() != null) {
         ctxtMgr.setValue(varNameART, ais.getRoleType());
-      else
+      } else {
         ctxtMgr.setValue(varNameART, Collections.EMPTY_LIST);
+      }
     }
   }
 
@@ -259,8 +266,9 @@ public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSuppo
     while (it.hasNext()) {
       AssociationRoleIF assocRole = (AssociationRoleIF) it.next();
       AssociationIF assoc = assocRole.getAssociation();
-      if (_scopeDec != null && !_scopeDec.test(assoc))
+      if (_scopeDec != null && !_scopeDec.test(assoc)) {
         continue;
+      }
         
       TopicIF assocType = assoc.getType();
       TopicIF assocRoleType = assocRole.getType();

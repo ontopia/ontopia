@@ -37,16 +37,19 @@ public abstract class AbstractTemplateTag extends BodyTagSupport {
   protected void putParameter(String content, boolean direct) throws JspException {
     
     InsertTag parent = (InsertTag) findAncestorWithClass(this, InsertTag.class);
-    if (parent == null)
+    if (parent == null) {
       throw new JspException(this.getClass().getName() + ": has no template:insert ancestor.");
+    }
 
     Stack template_stack = parent.getStack();
-    if (template_stack == null) 
-      throw new JspException(this.getClass().getName() + ": has no template stack."); 
+    if (template_stack == null) {
+      throw new JspException(this.getClass().getName() + ": has no template stack.");
+    } 
 
     Map params = (Map) template_stack.peek();
-    if (params == null) 
-      throw new JspException(this.getClass().getName() + ": has no parameter map.");      
+    if (params == null) {
+      throw new JspException(this.getClass().getName() + ": has no parameter map.");
+    }      
                 
     params.put(name, new PageParameter(content, direct));
   }
@@ -54,12 +57,14 @@ public abstract class AbstractTemplateTag extends BodyTagSupport {
   protected PageParameter getParameter() throws JspException, NavigatorRuntimeException {
     Stack stack = (Stack) pageContext
       .getAttribute(InsertTag.TEMPL_STACK_KEY, PageContext.REQUEST_SCOPE);
-    if (stack == null)
+    if (stack == null) {
       throw new JspException(this.getClass().getName() + " has no template stack.");
+    }
 
     Map params = (Map) stack.peek();
-    if (params == null)
+    if (params == null) {
       throw new JspException(this.getClass().getName() + " has no parameter map.");
+    }
                         
     return (PageParameter) params.get(name);
   }

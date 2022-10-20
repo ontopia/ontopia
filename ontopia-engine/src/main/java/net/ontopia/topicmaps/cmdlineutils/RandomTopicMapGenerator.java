@@ -110,7 +110,9 @@ public class RandomTopicMapGenerator {
                        " AT: " + dp.associationTypes.size());
     
     for (int i=0; i < topics+1; i++) {
-      if (i % 100 == 0 && i != 0) System.out.println("I: " + i + " " + dp.topics.size());
+      if (i % 100 == 0 && i != 0) {
+        System.out.println("I: " + i + " " + dp.topics.size());
+      }
       TopicIF t = makeTopic("i");
       t.addType((TopicIF)CollectionUtils.getRandom(dp.topicTypes));
       
@@ -143,12 +145,13 @@ public class RandomTopicMapGenerator {
 
   private int getCount(int min, int avg, int max) {
     int x = r.nextInt(2*(max-avg));
-    if (x < min)
+    if (x < min) {
       return min;
-    else if (x > max)
+    } else if (x > max) {
       return max;
-    else
+    } else {
       return x;
+    }
   }
   
   private void addCharacteristics(TopicIF t, InstanceConfig ic, DataPool dp) {
@@ -214,8 +217,9 @@ public class RandomTopicMapGenerator {
       rg.topics = Integer.parseInt(args[1]);
       rg.populateTopicMap();
 
-      if (args.length > 2)
+      if (args.length > 2) {
         ImportExportUtils.getWriter(new File(args[2])).write(tm);
+      }
       store.commit();
     } finally {
       store.close();

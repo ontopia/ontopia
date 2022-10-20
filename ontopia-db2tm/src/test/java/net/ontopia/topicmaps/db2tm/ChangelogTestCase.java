@@ -68,8 +68,9 @@ public class ChangelogTestCase {
   public void testFile() throws IOException, SQLException {
     // this particular test file is for FullRescanEventTest, and we don't
     // want to test it again here. we lack the -changelog.csv in any case.
-    if ("EVENTS".equals(casename))
+    if ("EVENTS".equals(casename)) {
       return;
+    }
     
     TestFileUtils.verifyDirectory(base, "out");
       
@@ -145,24 +146,27 @@ public class ChangelogTestCase {
     // read the first line to get the column names
     String[] colnames = csvreader.readNext();
     String[] columndefs = new String[colnames.length];
-    for (int ix = 0; ix < colnames.length; ix++)
+    for (int ix = 0; ix < colnames.length; ix++) {
       columndefs[ix] = colnames[ix] + " varchar";
+    }
 
     // now we can create the table
     stm.executeUpdate("create table " + table + " (" +
                       StringUtils.join(columndefs, ", ") + ")");
 
     // are we just creating the table, or should we load the data?
-    if (!load_data)
+    if (!load_data) {
       return;
+    }
 
     // ok, now insert the actual data
     String cols = StringUtils.join(colnames, ", ");
     String[] tuple = csvreader.readNext();
     while (tuple != null) {
       String[] values = new String[tuple.length];
-      for (int ix = 0; ix < tuple.length; ix++)
+      for (int ix = 0; ix < tuple.length; ix++) {
         values[ix] = "'" + tuple[ix] + "'"; // escaping? hah!
+      }
           
       stm.executeUpdate("insert into " + table + " (" + cols + ") values (" +
                         StringUtils.join(values, ", ") + ")");

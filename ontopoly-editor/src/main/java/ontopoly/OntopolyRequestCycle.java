@@ -91,8 +91,9 @@ public class OntopolyRequestCycle extends WebRequestCycle {
   @Override
   protected void logRuntimeException(RuntimeException e) {
     // do not log unauthorized exceptions
-    if (!(e instanceof org.apache.wicket.authorization.UnauthorizedInstantiationException))
+    if (!(e instanceof org.apache.wicket.authorization.UnauthorizedInstantiationException)) {
       super.logRuntimeException(e);
+    }
   }
   
   @SuppressWarnings("unchecked")
@@ -120,10 +121,12 @@ public class OntopolyRequestCycle extends WebRequestCycle {
     }
     
     Throwable cause = e;
-    if (cause instanceof WicketRuntimeException) 
-    cause = cause.getCause(); 
-    if (cause instanceof InvocationTargetException) 
-    cause = cause.getCause();
+    if (cause instanceof WicketRuntimeException) {
+      cause = cause.getCause();
+    } 
+    if (cause instanceof InvocationTargetException) {
+      cause = cause.getCause();
+    }
     if (e instanceof PageExpiredException) {
 
       String referer = ((WebRequest)this.getRequest()).getHttpServletRequest().getHeader("Referer");
@@ -131,15 +134,17 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         Pattern pattern = Pattern.compile("ontopoly.pages.\\w*");
         Matcher matcher = pattern.matcher(referer);
         String pageName = "";
-        if (matcher.find())
+        if (matcher.find()) {
           pageName = matcher.group();
+        }
         
         pattern = Pattern.compile("&([^&]*)=([^&]*)");
         matcher = pattern.matcher(referer);
         
         Map<String,String> pageParametersMap = new HashMap<String,String>();
-        while (matcher.find())
+        while (matcher.find()) {
           pageParametersMap.put(matcher.group(1), matcher.group(2));
+        }
         
         Class<? extends Page> classObjectForPage = null;
         try {
@@ -211,9 +216,10 @@ public class OntopolyRequestCycle extends WebRequestCycle {
 
   private TopicMapStoreIF createStore(String topicMapId, boolean readOnly, TopicMapRepositoryIF repository) {
     TopicMapReferenceIF ref = repository.getReferenceByKey(topicMapId);
-    if (ref == null)
+    if (ref == null) {
       throw new OntopiaRuntimeException("Topic map '" + topicMapId +
                                         "' not found in ontopoly repository.");
+    }
     try {
       return ref.createStore(readOnly);
     } catch (java.io.IOException e) {

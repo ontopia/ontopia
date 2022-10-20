@@ -99,7 +99,9 @@ public class TermDatabase {
   }
   
   protected void mergeTerms(Term t1, Term t2) {
-    if (Objects.equals(t1, t2)) return;
+    if (Objects.equals(t1, t2)) {
+      return;
+    }
     t1.merge(t2);
     terms.remove(t2.getStem());
   }
@@ -115,10 +117,11 @@ public class TermDatabase {
   
   protected double getMaxScore() {
     Term[] terms = getTermsByRank();
-    if (terms.length == 0)
+    if (terms.length == 0) {
       return 0;
-    else
+    } else {
       return terms[0].getScore();
+    }
   }
 
   protected Variant createVariant(String variant) {

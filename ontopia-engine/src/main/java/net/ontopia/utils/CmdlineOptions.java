@@ -59,12 +59,13 @@ public class CmdlineOptions {
    * Add a short option with argument with the specified listener.
    */    
   public void addShort(ListenerIF listener, char c, boolean req_arg) {    
-    if (req_arg)
+    if (req_arg) {
       // Required argument
       sargs.append("" + c + ":");
-    else
+    } else {
       // Optional argument
       sargs.append("" + c + "::");
+    }
     // Register listener
     listeners.put((int) c, listener);
   }
@@ -82,12 +83,13 @@ public class CmdlineOptions {
    * Add a long option with argument with the specified listener.
    */    
   public void addLong(ListenerIF listener, String name, char c, boolean req_arg) {
-    if (req_arg)
+    if (req_arg) {
       // Required argument
       largs.add(new LongOpt(name, LongOpt.REQUIRED_ARGUMENT, null, c));
-    else
+    } else {
       // Optional argument
       largs.add(new LongOpt(name, LongOpt.OPTIONAL_ARGUMENT, null, c));
+    }
     // Register listener
     listeners.put((int) c, listener);    
   }
@@ -109,10 +111,11 @@ public class CmdlineOptions {
         throw new OptionsException(option, g.getOptarg());
       default:
         ListenerIF listener = listeners.get(c);
-        if (listener != null)
+        if (listener != null) {
           listener.processOption((char)c, g.getOptarg());
-        else
+      } else {
           System.err.println ("Warning: option '" + (char)c + "' ignored");
+      }
         break;
       }
     }
@@ -179,10 +182,11 @@ public class CmdlineOptions {
 
     @Override
     public String getMessage() {
-      if (value == null)
+      if (value == null) {
         return "Invalid option '" + getArgument() + "'.";
-      else
-        return "Invalid option '" + getArgument() + "=" + getValue() + "'.";    
+      } else {
+        return "Invalid option '" + getArgument() + "=" + getValue() + "'.";
+      }    
     }
   }
 

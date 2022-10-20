@@ -58,8 +58,9 @@ public class UpdateStatement extends ModificationFunctionStatement {
   @Override
   public String toString() {
     String str = "update " + toStringFunction();
-    if (query != null)
+    if (query != null) {
       str += "\nfrom " + query.toStringFromPart();
+    }
     return str;
   }
 
@@ -74,14 +75,15 @@ public class UpdateStatement extends ModificationFunctionStatement {
     public void modify(TMObjectIF object, Object v) {
       String value = (String) v;
 
-      if (object instanceof OccurrenceIF)
+      if (object instanceof OccurrenceIF) {
         ((OccurrenceIF) object).setValue(value);
-      else if (object instanceof TopicNameIF)
+      } else if (object instanceof TopicNameIF) {
         ((TopicNameIF) object).setValue(value);
-      else if (object instanceof VariantNameIF)
+      } else if (object instanceof VariantNameIF) {
         ((VariantNameIF) object).setValue(value);
-      else
+      } else {
         throw new OntopiaRuntimeException("OUCH!");
+      }
     }
   }
 
@@ -95,12 +97,13 @@ public class UpdateStatement extends ModificationFunctionStatement {
       try {
         LocatorIF loc = new URILocator((String) v);
 
-        if (object instanceof OccurrenceIF)
+        if (object instanceof OccurrenceIF) {
           ((OccurrenceIF) object).setLocator(loc);
-        else if (object instanceof VariantNameIF)
+        } else if (object instanceof VariantNameIF) {
           ((VariantNameIF) object).setLocator(loc);
-        else
+        } else {
           throw new OntopiaRuntimeException("OUCH!");
+        }
       } catch (MalformedURLException e) {
         throw new OntopiaRuntimeException(e);
       }

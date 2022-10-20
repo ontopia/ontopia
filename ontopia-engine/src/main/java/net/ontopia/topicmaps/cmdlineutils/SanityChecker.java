@@ -144,8 +144,9 @@ public class SanityChecker {
         while (st.hasMoreTokens()) {
           String value = st.nextToken();
           String attribute = "<no attribute>";
-          if (st.hasMoreTokens())
-            attribute = st.nextToken(); 
+          if (st.hasMoreTokens()) {
+            attribute = st.nextToken();
+          } 
           print("attribute : \"" + attribute + "\", and value : \"" + value + "\"\n"); 
         }
 
@@ -153,7 +154,9 @@ public class SanityChecker {
         Integer i = (Integer)numberOfDuplicates.get(s);
         print("Appears " + i.intValue() + " times.\n");
       }
-    } else print("This Topic Map contains no duplicate Associations.\n");
+    } else {
+      print("This Topic Map contains no duplicate Associations.\n");
+    }
   }
 
  /**
@@ -271,15 +274,17 @@ public class SanityChecker {
         }
       }
     }
-    if (id == null)
+    if (id == null) {
       id = "id" + topic.getObjectId();
+    }
     return id;
   }
 
   private void list(Collection tmobjects) {
     Iterator it = tmobjects.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       print("  " + it.next() + "\n");
+    }
   }
   
 }

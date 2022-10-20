@@ -48,8 +48,9 @@ public class IdentityType extends AbstractTypingTopic {
   
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof IdentityType))
+    if (!(obj instanceof IdentityType)) {
       return false;
+    }
 
     IdentityType other = (IdentityType) obj;
     return (getTopicIF().equals(other.getTopicIF()));

@@ -61,9 +61,9 @@ public abstract class ModificationFunctionStatement
   @Override
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
-    if (funcname == null)
+    if (funcname == null) {
       return doLitListDeletes(true, arguments);
-    else {
+    } else {
       // in order to avoid duplicating code we produce a "fake" matches
       // object here, so that in effect we're simulating a one-row zero-column
       // result set
@@ -88,19 +88,22 @@ public abstract class ModificationFunctionStatement
     FunctionSignature signature = FunctionSignature.getSignature(function);
     QueryContext context = matches.getQueryContext();
     Map parameters = Collections.EMPTY_MAP;
-    if (context != null)
+    if (context != null) {
       parameters = context.getParameters();
+    }
     Object arg1 = getValue(litlist.get(0), parameters);
     int varix1 = getIndex(arg1, matches);
     Object arg2 = getValue(litlist.get(1), parameters);
     int varix2 = getIndex(arg2, matches);
     
     for (int row = 0; row <= matches.last; row++) {
-      if (varix1 != -1)
+      if (varix1 != -1) {
         arg1 = matches.data[row][varix1];
+      }
 
-      if (varix2 != -1)
+      if (varix2 != -1) {
         arg2 = matches.data[row][varix2];
+      }
 
       signature.validateArguments(arg1, arg2, funcname);
       function.modify((TMObjectIF) arg1, arg2);
@@ -115,8 +118,9 @@ public abstract class ModificationFunctionStatement
   protected static ModificationFunctionIF makeFunction(String name)
     throws InvalidQueryException {
     ModificationFunctionIF function = functions.get(name);
-    if (function == null)
+    if (function == null) {
       throw new InvalidQueryException("No such function: '" + name + "'");
+    }
     return function;
   }
 
@@ -154,13 +158,14 @@ public abstract class ModificationFunctionStatement
 
     public void check(Object arg, Argument reqarg, String function, int no)
       throws InvalidQueryException {
-      if (!reqarg.allows(arg.getClass()))
+      if (!reqarg.allows(arg.getClass())) {
         throw new InvalidQueryException("Function " + function +
                                         " does not accept " +
                                         arg +
                                         " as parameter no " + no +
                                         ", but requires " +
                                         getClassList(reqarg.getTypes()));
+      }
     }
   }
 }

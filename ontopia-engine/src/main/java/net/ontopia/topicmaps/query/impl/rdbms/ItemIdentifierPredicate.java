@@ -76,16 +76,18 @@ public class ItemIdentifierPredicate
         throw new InvalidQueryException("Not a valid URI: " + args[1]);
       }
 
-      if (tmobject.getItemIdentifiers().contains(locator))
+      if (tmobject.getItemIdentifiers().contains(locator)) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
             
     } else {          
 
       // BUG #2003: avoid situaton where T instanceof TopicMapIF
-      if (builder.isArgumentOfType(args[0], TopicMapIF.class))
+      if (builder.isArgumentOfType(args[0], TopicMapIF.class)) {
         return false;
+      }
       
       JDOValueIF jv_tmobject = builder.createJDOValue(args[0]);
       JDOValueIF jv_locator = builder.createJDOVariable("L", SourceLocator.class);

@@ -76,11 +76,14 @@ public class FieldInstanceNumberField extends TextField<String> {
   protected void onModelChanged() {
     super.onModelChanged();
     String newValue = (String)getModelObject();
-    if (Objects.equals(newValue, oldValue)) return;
+    if (Objects.equals(newValue, oldValue)) {
+      return;
+    }
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
-    if (fieldValueModel.isExistingValue() && oldValue != null)
+    if (fieldValueModel.isExistingValue() && oldValue != null) {
       fieldInstance.removeValue(oldValue, page.getListener());
+    }
     if (newValue != null && !newValue.equals("")) {
       fieldInstance.addValue(newValue, page.getListener());
       fieldValueModel.setExistingValue(newValue);

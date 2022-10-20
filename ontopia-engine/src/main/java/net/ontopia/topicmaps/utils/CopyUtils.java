@@ -169,10 +169,11 @@ public class CopyUtils {
    * @since 4.0
    */
   public static void copyVariantData(VariantNameIF target, VariantNameIF source) {
-    if (source.getLength() > DataTypes.SIZE_THRESHOLD)
+    if (source.getLength() > DataTypes.SIZE_THRESHOLD) {
       target.setReader(source.getReader(), source.getLength(), source.getDataType());
-    else
+    } else {
       target.setValue(source.getValue(), source.getDataType());
+    }
   }
 
   // --- associations
@@ -207,8 +208,9 @@ public class CopyUtils {
     while (it.hasNext()) {
       AssociationRoleIF o = it.next();
       TopicIF player = o.getPlayer();
-      if (player != null && player.equals(sourcePlayer))
+      if (player != null && player.equals(sourcePlayer)) {
         player = targetPlayer;
+      }
       builder.makeAssociationRole(n, o.getType(), player);
     }
     return n;
@@ -218,16 +220,18 @@ public class CopyUtils {
 
   private static void copyScope(ScopedIF target, ScopedIF source) {
     Iterator<TopicIF> it = source.getScope().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       target.addTheme(it.next());
+    }
   }
 
   // --- types
 
   private static void copyTypes(TopicIF target, TopicIF source) {
     Iterator<TopicIF> it = source.getTypes().iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       target.addType(it.next());
+    }
   }
 
 }

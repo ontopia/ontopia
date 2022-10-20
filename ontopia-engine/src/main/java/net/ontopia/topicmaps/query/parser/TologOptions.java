@@ -57,11 +57,13 @@ public class TologOptions {
   public boolean getBooleanValue(String name) {
     String value = options.get(name);
     if (value == null) {
-      if (parent == null)
+      if (parent == null) {
         return false; // FIXME: throw exception?
+      }
       return parent.getBooleanValue(name);
-    } else
+    } else {
       return Boolean.parseBoolean(value);
+    }
   }
 
   public void setOption(String name, String value) {
@@ -78,8 +80,9 @@ public class TologOptions {
         log.warn("Couldn't load tolog.properties", e);
       }
 
-      if (properties == null) // avoid a reload
-        properties = new Properties(); 
+      if (properties == null) { // avoid a reload
+        properties = new Properties();
+      } 
     }
 
     // copy across properties

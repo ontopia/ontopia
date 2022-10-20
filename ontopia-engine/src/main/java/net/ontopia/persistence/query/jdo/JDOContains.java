@@ -72,7 +72,9 @@ public class JDOContains implements JDOExpressionIF {
   
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOContains) {
       JDOContains other = (JDOContains)obj;
       return (left.equals(other.left) &&

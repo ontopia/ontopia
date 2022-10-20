@@ -152,9 +152,10 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   protected TologQuery parseQuery(String query, DeclarationContextIF context)
       throws InvalidQueryException {
 
-    if (context == null)
+    if (context == null) {
       // there is no context, so we just use the default parser
       return optimize(parser.parseQuery(query));
+    }
 
     // there is a context, so we have to use a new parser for this
     TologParser localparser = new TologParser((ParseContextIF) context, options);
@@ -183,8 +184,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     long start = System.currentTimeMillis();
     QueryAnalyzer.verifyParameters(query, arguments);
 
-    if (logger.isDebugEnabled())
+    if (logger.isDebugEnabled()) {
       logger.debug("Parsed query: " + query);
+    }
 
     QueryMatches matches;
 
@@ -249,9 +251,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   protected ModificationStatement parseUpdateStatement(String statement,
                                                        DeclarationContextIF ctx)
     throws InvalidQueryException {
-    if (ctx == null)
+    if (ctx == null) {
       return (ModificationStatement) parser.parseStatement(statement);
-    else {
+    } else {
       // there is a context, so we have to use a new parser for this
       TologParser localparser = new TologParser((ParseContextIF) ctx, options);
       return (ModificationStatement) localparser.parseStatement(statement);
@@ -271,8 +273,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       } finally {
         QueryTracer.endQuery();
       }
-    } else
+    } else {
       return statement.doStaticUpdates(topicmap, params);
+    }
   }
   
   // / actual query processor implementation
@@ -301,8 +304,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
    */
   public QueryMatches reduce(TologQuery query, QueryMatches matches) {
     // WARNING: method used by rdbms tolog
-    if (!query.hasSelectClause() && !matches.hasLiteralColumns())
+    if (!query.hasSelectClause() && !matches.hasLiteralColumns()) {
       return matches; // only run if no select clause
+    }
 
     QueryTracer.enterSelect(matches);
 
@@ -323,8 +327,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
 
     result.last = 0; // we use one row too many all the way through
     for (int row = 0; row <= matches.last; row++) {
-      for (int col = 0; col < varix.length; col++)
+      for (int col = 0; col < varix.length; col++) {
         rdata[result.last][col] = mdata[row][varix[col]];
+      }
 
       wrapper.setArray(rdata[result.last]); // reuse previous wrapper
       if (!alreadyAdded.contains(wrapper)) {
@@ -352,22 +357,25 @@ public class QueryProcessor extends AbstractQueryProcessor implements
    */
   public QueryMatches count(TologQuery query, QueryMatches matches) {
     // WARNING: method used by rdbms tolog
-    if (query.getCountedVariables().isEmpty())
+    if (query.getCountedVariables().isEmpty()) {
       return matches;
+    }
 
     Collection countVars = query.getCountedVariables();
     int[] countcols = new int[countVars.size()];
     int ix = 0;
-    for (Iterator it = countVars.iterator(); it.hasNext();)
+    for (Iterator it = countVars.iterator(); it.hasNext();) {
       countcols[ix++] = matches.getIndex(it.next());
+    }
 
     // fixes issue 80: return 0 if the query did not match anything, and
     //                 the select clauses contain only counted variables
     if (countVars.size() == matches.colcount && 
         matches.last == -1 && matches.size == 1) {
       Object[] row = matches.data[matches.size - 1];
-      for (int i = 0; i < matches.colcount; i++)
+      for (int i = 0; i < matches.colcount; i++) {
         row[i] = 0;
+      }
       matches.last = 0;
       return matches;
     }
@@ -380,22 +388,24 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       Object[] row = matches.data[ix];
       boolean nonnull = false; // is at least one counted value non-null?
       for (int i = 0; i < countcols.length; i++) {
-        if (row[countcols[i]] != null)
+        if (row[countcols[i]] != null) {
           nonnull = true;
+        }
         row[countcols[i]] = null;
       }
 
       wrapper.setArray(row);
       Counter counter;
-      if (counters.containsKey(wrapper))
+      if (counters.containsKey(wrapper)) {
         counter = (Counter) counters.get(wrapper);
-      else {
+      } else {
         counter = new Counter();
         counters.put(wrapper, counter);
         wrapper = new ArrayWrapper();
       }
-      if (nonnull)
+      if (nonnull) {
         counter.counter++; // only count if we have non-null counted values
+      }
     }
 
     // replace variable values in result set with counts
@@ -406,8 +416,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       Object[] row = wrapper.row;
       Counter count = (Counter) counters.get(wrapper);
 
-      for (int i = 0; i < countcols.length; i++)
+      for (int i = 0; i < countcols.length; i++) {
         row[countcols[i]] = count.counter;
+      }
 
       matches.data[next++] = row; // no need to expand...
     }
@@ -424,10 +435,12 @@ public class QueryProcessor extends AbstractQueryProcessor implements
    */
   public void sort(TologQuery query, QueryMatches matches) {
     // WARNING: method used by rdbms tolog
-    if (query.getOrderBy().isEmpty())
+    if (query.getOrderBy().isEmpty()) {
       return;
-    if (matches.isEmpty()) // no use sorting an empty table
+    }
+    if (matches.isEmpty()) { // no use sorting an empty table
       return;
+    }
 
     QueryTracer.enterOrderBy();
     java.util.Arrays.sort(matches.data, 0, matches.last + 1, new RowComparator(
@@ -474,20 +487,20 @@ public class QueryProcessor extends AbstractQueryProcessor implements
         orderColumns[ix] = result.getIndex(orderBy);
         Object[] types = (Object[]) query.getVariableTypes().get(
             orderBy.getName());
-        if (counted.contains(orderBy))
+        if (counted.contains(orderBy)) {
           orderType[ix] = ORDER_INT;
-        else if (types == null) // we don't know the type of the variable
+        } else if (types == null) { // we don't know the type of the variable
           orderType[ix] = ORDER_UNKNOWN;
-        else if (types.length > 1) { // multiple types (possibly TMObjectIFs)
+        } else if (types.length > 1) { // multiple types (possibly TMObjectIFs)
           // types might hold only Number classes, treat those separately
           boolean onlyNumbers = true;
           for (Object type : types) {
             onlyNumbers &= Number.class.isAssignableFrom((Class) type);
           }
           orderType[ix] = onlyNumbers ? ORDER_NUMBERS : ORDER_OBJECT;
-        } else if (types[0].equals(String.class))
+        } else if (types[0].equals(String.class)) {
           orderType[ix] = ORDER_STRING;
-        else if (types[0].equals(TopicIF.class)) {
+        } else if (types[0].equals(TopicIF.class)) {
           orderType[ix] = ORDER_TOPIC;
 
           Prefetcher.prefetch(topicmap, result, orderColumns[ix],
@@ -497,12 +510,13 @@ public class QueryProcessor extends AbstractQueryProcessor implements
               Prefetcher.TopicIF, Prefetcher_OB_fields, Prefetcher_OB_traverse);
 
         } 
-        else if (types[0].equals(Integer.class))
+        else if (types[0].equals(Integer.class)) {
           orderType[ix] = ORDER_INT;
-        else if (types[0].equals(Float.class))
+        } else if (types[0].equals(Float.class)) {
           orderType[ix] = ORDER_FLOAT;
-        else
+        } else {
           orderType[ix] = ORDER_OBJECT; // single type (possibly TMObjectIF)
+        }
 
         isAscending[ix] = query.isOrderedAscending(orderBy.getName());
       }
@@ -521,10 +535,11 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       for (ix = 0; comp == 0 && ix < orderColumns.length; ix++) {
         // null checks first
         if (row1[orderColumns[ix]] == null) {
-          if (row2[orderColumns[ix]] == null)
+          if (row2[orderColumns[ix]] == null) {
             comp = 0;
-          else
+          } else {
             comp = -1;
+          }
           continue;
         } else if (row2[orderColumns[ix]] == null) {
           comp = 1;
@@ -534,20 +549,21 @@ public class QueryProcessor extends AbstractQueryProcessor implements
         // no nulls, we can compare
         switch (orderType[ix]) {
         case ORDER_TOPIC:
-          if (row1[orderColumns[ix]] == row2[orderColumns[ix]])
+          if (row1[orderColumns[ix]] == row2[orderColumns[ix]]) {
             comp = 0;
-          else {
+         } else {
             String name1 = sort.apply((TopicIF) row1[orderColumns[ix]]);
             String name2 = sort.apply((TopicIF) row2[orderColumns[ix]]);
             
-            if (name1 == null)
+            if (name1 == null) {
               comp = name2 == null ? 0 : -1;
-            else if (name2 == null)
+            } else if (name2 == null) {
               comp = 1;
-            else
+            } else {
               comp = (collator != null ?
                       collator.compare(name1, name2) :
                       name1.compareTo(name2));
+            }
           }
           break;
         case ORDER_INT:
@@ -568,20 +584,21 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           // if both objects are topic then sort them as topics
           if (row1[orderColumns[ix]] instanceof TopicIF &&
               row2[orderColumns[ix]] instanceof TopicIF) {
-            if (row1[orderColumns[ix]] == row2[orderColumns[ix]])
+            if (row1[orderColumns[ix]] == row2[orderColumns[ix]]) {
               comp = 0;
-            else {
+            } else {
               String name1 = sort.apply((TopicIF) row1[orderColumns[ix]]);
               String name2 = sort.apply((TopicIF) row2[orderColumns[ix]]);
               
-              if (name1 == null)
+              if (name1 == null) {
                 comp = name2 == null ? 0 : -1;
-              else if (name2 == null)
+              } else if (name2 == null) {
                 comp = 1;
-              else
+              } else {
                 comp = (collator != null ?
                         collator.compare(name1, name2) :
                         name1.compareTo(name2));
+              }
             }
           } else {
             Object x1 = row1[orderColumns[ix]];
@@ -610,8 +627,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       }
 
       ix--; // get back to previous value
-      if (comp != 0 && !isAscending[ix])
+      if (comp != 0 && !isAscending[ix]) {
         comp *= -1;
+      }
       return comp;
     }
   }
@@ -629,9 +647,11 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       this.row = row;
 
       hashCode = 0;
-      for (int ix = 0; ix < row.length; ix++)
-        if (row[ix] != null)
+      for (int ix = 0; ix < row.length; ix++) {
+        if (row[ix] != null) {
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
+        }
+      }
     }
 
     @Override
@@ -647,9 +667,11 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       // - o is an ArrayWrapper
       // - o contains an Object[] array of the same length as row
       Object[] orow = ((ArrayWrapper) o).row;
-      for (int ix = 0; ix < orow.length; ix++)
-        if (orow[ix] != null && !orow[ix].equals(row[ix]))
+      for (int ix = 0; ix < orow.length; ix++) {
+        if (orow[ix] != null && !orow[ix].equals(row[ix])) {
           return false;
+        }
+      }
       return true;
     }
   }
@@ -662,7 +684,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       RDBMSTopicMapStore store = (RDBMSTopicMapStore) tm.getStore();
       String locale = store.getProperty("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale");
       Collator c = getCollator(locale);
-      if (c != null) return c;
+      if (c != null) {
+        return c;
+      }
     }
     // fallback to using system property
     try {
@@ -673,29 +697,40 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   }
 
   private Locale getLocale(String _locale) {
-    if (_locale == null) return null;
+    if (_locale == null) {
+      return null;
+    }
 
     String language = null;
     String country = null;
     String variant = null;
     
     String[] locale = StringUtils.split(_locale, "_");
-    if (locale.length >= 1)
+    if (locale.length >= 1) {
       language = locale[0];
-    if (locale.length >= 2)
+    }
+    if (locale.length >= 2) {
       country = locale[1];
-    if (locale.length >= 3)
+    }
+    if (locale.length >= 3) {
       variant = locale[2];
+    }
     
-    if (country == null) country = "";
-    if (variant == null) variant = "";
+    if (country == null) {
+      country = "";
+    }
+    if (variant == null) {
+      variant = "";
+    }
 
     return new Locale(language, country, variant);    
   }
   
   private Collator getCollator(String _locale) {
     Locale locale = getLocale(_locale);
-    if (locale == null) return null;
+    if (locale == null) {
+      return null;
+    }
     return Collator.getInstance(locale);
   }
 

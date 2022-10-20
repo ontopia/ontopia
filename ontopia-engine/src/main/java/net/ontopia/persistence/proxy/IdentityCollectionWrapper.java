@@ -93,8 +93,9 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
   public boolean containsAll(Collection<?> c) {
     Iterator<?> e = c.iterator();
     while (e.hasNext()) {
-      if(!contains(e.next()))
+      if(!contains(e.next())) {
         return false;
+      }
     }
     return true;
   }
@@ -120,8 +121,9 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
   @Override
   public <T> T[] toArray(T[] a) {
     int size = size();
-    if (a.length < size)
+    if (a.length < size) {
       a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    }
 
     int i = 0;
     Iterator<E> it = iterator();
@@ -129,8 +131,9 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
       a[i] = (T) it.next();
     }
     
-    if (a.length > i+1)
+    if (a.length > i+1) {
       a[i+1] = null;
+    }
     
     return a;
   }
@@ -148,8 +151,9 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
       E o = i.next();
       buf.append(o == this ? "(this Collection)" : String.valueOf(o));
       hasNext = i.hasNext();
-      if (hasNext)
+      if (hasNext) {
         buf.append(", ");
+      }
     }
     
     buf.append(']');
@@ -175,8 +179,9 @@ public class IdentityCollectionWrapper<E> implements Collection<E> {
 
     @Override
     public boolean hasNext() {
-      while (has_next == -1)
+      while (has_next == -1) {
         _next(); // updates has_next
+      }
 
       return has_next == 1;
     }

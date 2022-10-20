@@ -69,9 +69,9 @@ public class PropertyUtils {
    * not set or any problems occur the default value is returned.
    */
   public static int getInt(String property_value, int default_value) {
-    if (property_value == null)
+    if (property_value == null) {
       return default_value;
-    else
+    } else
       try {
         return getInt(property_value);
       } catch (NumberFormatException e) {
@@ -88,8 +88,9 @@ public class PropertyUtils {
    * INTERNAL; Reads properties from a file. 
    */
   public static Properties loadProperties(File propfile) throws IOException {
-    if (!propfile.exists())
+    if (!propfile.exists()) {
       throw new OntopiaRuntimeException("Property file '" + propfile.getPath() + "' does not exist.");
+    }
     
     // Load properties from file
     Properties properties = new Properties();
@@ -102,8 +103,9 @@ public class PropertyUtils {
     ClassLoader cloader = PropertyUtils.class.getClassLoader();
     Properties properties = new Properties();
     InputStream istream = cloader.getResourceAsStream(resource);
-    if (istream == null)
+    if (istream == null) {
       return null;
+    }
     properties.load(istream);
     return properties;
   }

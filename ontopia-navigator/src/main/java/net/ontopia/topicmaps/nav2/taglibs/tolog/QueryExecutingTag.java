@@ -66,21 +66,24 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
-    if (contextTag == null)
+    if (contextTag == null) {
       throw new JspTagException("<tolog:*> tags must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> tag was found.");
+    }
 
     this.contextManager = contextTag.getContextManager();
-    if (query == null)
+    if (query == null) {
       throw new NavigatorRuntimeException("QueryExecutingTag didn't find "
               + "required parameter 'query'.");
+    }
 
     // get topicmap object on which we should compute
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("QueryExecutingTag found no "
               + "topic map.");
+    }
 
     // Create a QueryProcessorIF for the topicmap.
     QueryProcessorIF queryProcessor = contextTag.getQueryProcessor();
@@ -95,8 +98,9 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
         log.debug("Parsing of query '" + query + "' failed with message: " + e);
         throw new NavigatorRuntimeException(e);
       }
-    else
+    else {
       ((BufferedQueryResultIF)queryResult).restart();
+    }
 
     columnNames = queryResult.getColumnNames();
 

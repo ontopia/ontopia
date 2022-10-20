@@ -88,26 +88,30 @@ public class InstancePage extends OntopolyAbstractPage {
     
     this.topicModel = new TopicModel<Topic>(topicMapId, topicId);
     Topic topic = topicModel.getTopic();
-    if (topic == null)
-        throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+    if (topic == null) {
+      throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+    }
     
     // if "topicType" parameter is specified, pull out most specific direct type    
     TopicType tt = null;
     String topicTypeId = parameters.getString("topicTypeId");
-    if (topicTypeId != null)
+    if (topicTypeId != null) {
       tt = topic.getMostSpecificTopicType(new TopicTypeModel(topicMapId, topicTypeId).getTopicType());
+    }
     
     // if not topic type found, use first available direct type
-    if (tt == null)
+    if (tt == null) {
       tt = OntopolyUtils.getDefaultTopicType(topic);
+    }
     
     this.topicTypeModel = new TopicTypeModel(tt);
 
     String viewId = parameters.getString("viewId");
-    if (viewId != null)
+    if (viewId != null) {
       this.fieldsViewModel = new FieldsViewModel(topicMapId, viewId);
-    else
+    } else {
       this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
+    }
 
     Privilege privilege = ((OntopolySession)Session.get()).getPrivilege(topic);
 
@@ -187,16 +191,19 @@ public class InstancePage extends OntopolyAbstractPage {
   
   private void createFields(Form<Object> form) {
     InstancePanel instancePanel = createInstancePanel("instancePanel");
-    if (instancePanel.isReadOnly()) setReadOnlyPage(true); // page is readonly if instance panel is    
+    if (instancePanel.isReadOnly()) {
+      setReadOnlyPage(true); // page is readonly if instance panel is    
+    }
     form.add(instancePanel);
 
     // if topic is a topic type then display fields editor
     Topic topic = getTopicModel().getTopic();
     FieldsView fieldsView = getFieldsViewModel().getFieldsView();
-    if (fieldsView.isDefaultView() && topic.isTopicType() && isOntologyPage)
+    if (fieldsView.isDefaultView() && topic.isTopicType() && isOntologyPage) {
       form.add(new FieldsEditor("fieldsEditor", new TopicTypeModel(new TopicType(topic.getTopicIF(), topic.getTopicMap())), isReadOnlyPage()));
-    else
-      form.add(new Label("fieldsEditor").setVisible(false));    
+    } else {
+      form.add(new Label("fieldsEditor").setVisible(false));
+    }    
   }
 
   protected InstancePanel createInstancePanel(final String id) {
@@ -334,7 +341,9 @@ public class InstancePage extends OntopolyAbstractPage {
                   @Override
                   protected boolean filter(Topic o) {
                     // if current topic is an ontology topic then include ontology types
-                    if (isOntologyType && o.isOntologyType()) return true;
+                    if (isOntologyType && o.isOntologyType()) {
+                      return true;
+                    }
                     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
                     return page.filterTopic(o);
                   }                              

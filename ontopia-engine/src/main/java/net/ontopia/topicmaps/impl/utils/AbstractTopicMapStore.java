@@ -53,8 +53,9 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   
   @Override
   public void open() {
-    if (deleted)
+    if (deleted) {
       throw new OntopiaRuntimeException("A deleted store cannot be reopened.");
+    }
         
     // Set open flag to true
     open = true;
@@ -99,10 +100,12 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
 
     if (!force) {
       // If we're not forcing, complain if the topic map contains any data.
-      if (!tm.getTopics().isEmpty())
+      if (!tm.getTopics().isEmpty()) {
         throw new NotRemovableException("Cannot delete topic map when it contains topics.");
-      if (!tm.getAssociations().isEmpty())
+      }
+      if (!tm.getAssociations().isEmpty()) {
         throw new NotRemovableException("Cannot delete topic map when it contains associations.");
+      }
     }
     
     // Remove all the objects from the topic map
@@ -118,7 +121,9 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
   }
 
   public void setReadOnly(boolean readonly) {
-    if (readonlySet) throw new OntopiaRuntimeException("Readonly flag has already been set.");
+    if (readonlySet) {
+      throw new OntopiaRuntimeException("Readonly flag has already been set.");
+    }
     this.readonly = readonly;
     this.readonlySet = true;
   }

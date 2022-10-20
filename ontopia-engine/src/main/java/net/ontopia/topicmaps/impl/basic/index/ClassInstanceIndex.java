@@ -307,9 +307,10 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     public void processEvent(TopicIF topic, String event, TopicIF new_value, TopicIF old_value) {
       // Register types
       Collection<TopicIF> types = topic.getTypes();
-      if (types.isEmpty())
+      if (types.isEmpty()) {
         // Unregister null type
         objects.remove(null, topic);
+      }
 
       // Register type
       objects.add(new_value, topic);
@@ -327,9 +328,10 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     public void processEvent(TopicIF topic, String event, TopicIF new_value, TopicIF old_value) {
       // Register types
       Collection<TopicIF> types = topic.getTypes();
-      if (types.size() == 1 && types.contains(old_value))
+      if (types.size() == 1 && types.contains(old_value)) {
         // Unregister null type
         objects.add(null, topic);
+      }
 
       // Unregister type
       objects.remove(old_value, topic);
@@ -350,12 +352,13 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     public void processEvent(Object object, String event, TopicIF added, TopicIF old_value) {
       // Register types
       Collection<TopicIF> types = added.getTypes();
-      if (types.isEmpty())
+      if (types.isEmpty()) {
         // Register the null type 
         objects.add(null, added);
-      else {
-        for (TopicIF type : types)
+      } else {
+        for (TopicIF type : types) {
           addEvent(added, child_event, type);
+        }
       }
     }
   }
@@ -374,8 +377,9 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
       // Unregister types
       Collection<TopicIF> types = removed.getTypes();
       if (!types.isEmpty()) {
-        for (TopicIF type : types)
+        for (TopicIF type : types) {
           removeEvent(removed, child_event, type);
+        }
       }
       // Unregister null type
       objects.remove(null, removed);

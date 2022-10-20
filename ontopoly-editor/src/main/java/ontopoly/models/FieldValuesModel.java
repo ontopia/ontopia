@@ -92,8 +92,9 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
    */
   public int getNumberOfValues() {
     int size = size();
-    if (getShowExtraField())
+    if (getShowExtraField()) {
       size--;
+    }
     return size;
   }
   
@@ -109,8 +110,9 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   @Override
   public List<FieldValueModel> getObject() {
     List<FieldValueModel> values = super.getObject();
-    if (values.isEmpty() && autoExtraField)
+    if (values.isEmpty() && autoExtraField) {
       setShowExtraField(true, false);
+    }
     if (getShowExtraField()) {
       List<FieldValueModel> result = new ArrayList<FieldValueModel>(values);
       FieldValueModel fieldValueModel = FieldValueModel.createModel(fieldInstanceModel, null, false); 
@@ -135,8 +137,9 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
         result.add(FieldValueModel.createModel(fieldInstanceModel,  value, true));
       }
       // sort field value models
-      if (comparator != null)
+      if (comparator != null) {
         Collections.sort(result, this);
+      }
       return result;
     }
   }

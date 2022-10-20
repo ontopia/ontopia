@@ -148,8 +148,9 @@ public class XTM2ContentHandler extends DefaultHandler {
     try {
       startElement_(uri, name, qname, atts);
     } catch(Exception e) {
-      if (logError())
+      if (logError()) {
         log.error("Exception was thrown from within startElement", e);
+      }
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -159,16 +160,18 @@ public class XTM2ContentHandler extends DefaultHandler {
     try {
       endElement_(uri, name, qname);
     } catch(Exception e) {
-      if (logError())
+      if (logError()) {
         log.error("Exception was thrown from within startElement", e);
+      }
       throw new OntopiaRuntimeException(e);
     }
   }
   
   public void startElement_(String uri, String name, String qname,
                             Attributes atts) throws SAXException {
-    if (!NS_XTM2.equals(uri)) // we only react to XTM 2.0 elements
+    if (!NS_XTM2.equals(uri)) { // we only react to XTM 2.0 elements
       return;
+    }
 
     // <TOPICMAP
     if ("topicMap".equals(name)) {
@@ -179,8 +182,9 @@ public class XTM2ContentHandler extends DefaultHandler {
       xtm21 = "2.1".equals(atts.getValue("", "version"));
 
       if ((store instanceof net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore) &&
-          store.getBaseAddress() == null)
+          store.getBaseAddress() == null) {
         ((net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore)store).setBaseAddress(doc_address);
+      }
 
       handleTopicMapReifier(getReifier(atts));
 
@@ -192,53 +196,57 @@ public class XTM2ContentHandler extends DefaultHandler {
       if (id != null) {
         seenIdentity = true;
         addItemIdentifier(topic, makeIDLocator(id));
-      } else if (!xtm21)
+      } else if (!xtm21) {
         throw new InvalidTopicMapException("No id attribute on <topic>.");
+      }
 
       context = CONTEXT_TOPIC;
 
       // <ITEMIDENTITY
     } else if ("itemIdentity".equals(name)) {
       LocatorIF loc = makeLocator(atts.getValue("", HREF));
-      if (context == CONTEXT_TOPIC_MAP)
+      if (context == CONTEXT_TOPIC_MAP) {
         topicmap.addItemIdentifier(loc);
-      else if (context == CONTEXT_TOPIC)
+      } else if (context == CONTEXT_TOPIC) {
         addItemIdentifier(topic, loc);
-      else if (context == CONTEXT_TOPIC_NAME ||
+      } else if (context == CONTEXT_TOPIC_NAME ||
                context == CONTEXT_OCCURRENCE ||
                context == CONTEXT_ASSOCIATION ||
                context == CONTEXT_ROLE ||
-               context == CONTEXT_VARIANT)
+               context == CONTEXT_VARIANT) {
         itemids.add(loc);
-      else
+      } else {
         throw new OntopiaRuntimeException("UNKNOWN CONTEXT: " + context);
+      }
 
       // <SUBJECTLOCATOR
     } else if ("subjectLocator".equals(name)) {
       seenIdentity = true;
       LocatorIF sl = makeLocator(atts.getValue("", HREF));
       TopicIF other = topicmap.getTopicBySubjectLocator(sl);
-      if (other == null)
+      if (other == null) {
         topic.addSubjectLocator(sl);
-      else
+      } else {
         merge(topic, other);
+      }
 
       // <SUBJECTIDENTIFIER
     } else if ("subjectIdentifier".equals(name)) {
       seenIdentity = true;
       LocatorIF si = makeLocator(atts.getValue("", HREF));
       TopicIF other = topicmap.getTopicBySubjectIdentifier(si);
-      if (other == null)
+      if (other == null) {
         topic.addSubjectIdentifier(si);
-      else
+      } else {
         merge(topic, other);
+      }
 
       // <VALUE
-    } else if ("value".equals(name))
+    } else if ("value".equals(name)) {
       keep_content = true;
 
       // <RESOURCEDATA
-    else if ("resourceData".equals(name)) {
+    } else if ("resourceData".equals(name)) {
       keep_content = true;
       datatype = atts.getValue("", "datatype");
     
@@ -266,38 +274,40 @@ public class XTM2ContentHandler extends DefaultHandler {
       handleTopicReference(getTopicBySlo(makeLocator(atts.getValue("", HREF))));
       
       // <SCOPE
-    } else if ("scope".equals(name))
+    } else if ("scope".equals(name)) {
       context = CONTEXT_SCOPE;
 
       // <INSTANCEOF
-    else if ("instanceOf".equals(name))
+    } else if ("instanceOf".equals(name)) {
       context = CONTEXT_INSTANCEOF;
 
       // <RESOURCEREF
-    else if ("resourceRef".equals(name))
+    } else if ("resourceRef".equals(name)) {
       locator = makeLocator(atts.getValue("", HREF));
 
       // <ROLE
-    else if ("role".equals(name)) {
+    } else if ("role".equals(name)) {
       if (association == null) {
         association = builder.makeAssociation(type);
         addScope(association);
-        if (!itemids.isEmpty())
+        if (!itemids.isEmpty()) {
           stacked_itemids = new ArrayList<LocatorIF>(itemids);
+        }
         clear();
       }
       context = CONTEXT_ROLE;
       reifier = getReifier(atts);
 
       // <MERGEMAP
-    } else if ("mergeMap".equals(name))
+    } else if ("mergeMap".equals(name)) {
       loadMap(makeLocator(atts.getValue("", HREF)));
 
       // <VARIANT
-    else if ("variant".equals(name)) {
+    } else if ("variant".equals(name)) {
       context = CONTEXT_VARIANT;
-      if (basename == null)
+      if (basename == null) {
         makeTopicName(); // can't store properties across the variants
+      }
       reifier = getReifier(atts);
 
       // <NAME
@@ -317,10 +327,12 @@ public class XTM2ContentHandler extends DefaultHandler {
       
       // <REIFIER
     } else if ("reifier".equals(name)) {
-      if (!xtm21)
+      if (!xtm21) {
         throw new InvalidTopicMapException("The <reifier/> is illegal in XTM 2.0");
-      if (seenReifier)
+      }
+      if (seenReifier) {
         throw new InvalidTopicMapException("Having a reifier attribute and a reifier element is illegal in XTM 2.1");
+      }
 
       nextContext = context;
       context = CONTEXT_REIFIER;
@@ -329,35 +341,39 @@ public class XTM2ContentHandler extends DefaultHandler {
 
   @Override
   public void characters(char ch[], int start, int length) {
-    if (keep_content) 
-      content.append(ch, start, length);      
+    if (keep_content) {
+      content.append(ch, start, length);
+    }      
   }
   
   public void endElement_(String uri, String name, String qName)
     throws MalformedURLException {
-    if (!NS_XTM2.equals(uri)) // we only react to XTM 2.0 elements
+    if (!NS_XTM2.equals(uri)) { // we only react to XTM 2.0 elements
       return;
+    }
 
     if ("topic".equals(name)) {
-      if (!seenIdentity)
+      if (!seenIdentity) {
         throw new InvalidTopicMapException("The topic has neither id, subject identifier, item identifier, nor subject locator");
+      }
     }
       // </VALUE
-    else if ("value".equals(name) || "resourceData".equals(name))
+    else if ("value".equals(name) || "resourceData".equals(name)) {
       keep_content = false;
 
       // </NAME
-    else if ("name".equals(name)) {
-      if (basename == null)
+    } else if ("name".equals(name)) {
+      if (basename == null) {
         makeTopicName();
+      }
       basename = null; // no more variants now
       
       // </OCCURRENCE
     } else if ("occurrence".equals(name)) {
       OccurrenceIF occ;
-      if (locator == null && datatype == null)
+      if (locator == null && datatype == null) {
         occ = builder.makeOccurrence(topic, type, content.toString());
-      else if (locator == null && datatype != null) {
+      } else if (locator == null && datatype != null) {
         if (datatype.equals(XTM_URITYPE)) {
           locator = makeLocator(content.toString());
           occ = builder.makeOccurrence(topic, type, locator);
@@ -366,8 +382,9 @@ public class XTM2ContentHandler extends DefaultHandler {
           occ = builder.makeOccurrence(topic, type, content.toString(),
                                        dtloc);
         }
-      } else
+      } else {
         occ = builder.makeOccurrence(topic, type, locator);
+      }
       addScope(occ);
       addItemIdentifiers(occ);
       reify(occ, reifier);
@@ -377,14 +394,15 @@ public class XTM2ContentHandler extends DefaultHandler {
     } else if ("role".equals(name)) {
       AssociationRoleIF role =
         builder.makeAssociationRole(association, type, player);
-      if (reifier != null && reifier.getReified() != null) 
+      if (reifier != null && reifier.getReified() != null) { 
         // this is essentially issue 116: the role is reified by a topic that
         // already has a reifier. we can't merge the roles, because we haven't
         // seen the whole association yet. so we have to delay the reification
         // until after the association is done.
         delayedRoleReification.add(new RoleReification(role, reifier));
-      else
+      } else {
         reify(role, reifier);
+      }
       addItemIdentifiers(role);
       clear();
 
@@ -398,17 +416,18 @@ public class XTM2ContentHandler extends DefaultHandler {
       reify(association, stacked_reifier);
       association = null;
       if (!delayedRoleReification.isEmpty()) {
-        for (RoleReification rr : delayedRoleReification)
+        for (RoleReification rr : delayedRoleReification) {
           reify(rr.role, rr.reifier);
+        }
         delayedRoleReification.clear();
       }
 
       // </VARIANT>
     } else if ("variant".equals(name)) {
       VariantNameIF variant;
-      if (locator == null && datatype == null)
+      if (locator == null && datatype == null) {
         variant = builder.makeVariantName(basename, content.toString(), Collections.emptySet());
-      else if (locator == null && datatype != null) {
+      } else if (locator == null && datatype != null) {
         if (datatype.equals(XTM_URITYPE)) {
           locator = makeLocator(content.toString());
           variant = builder.makeVariantName(basename, locator, Collections.emptySet());
@@ -417,17 +436,19 @@ public class XTM2ContentHandler extends DefaultHandler {
           variant = builder.makeVariantName(basename, content.toString(),
                                             dtloc, Collections.emptySet());
         }
-      } else
+      } else {
         variant = builder.makeVariantName(basename, locator, Collections.emptySet());
+      }
       addScope(variant);
       addItemIdentifiers(variant);
       reify(variant, reifier);
       clear();
 
-      if (variant.getScope().size() <= basename.getScope().size())
+      if (variant.getScope().size() <= basename.getScope().size()) {
         throw new InvalidTopicMapException("Variant " + variant + " scope " +
                                            "was not a superset of parent base "+
                                            "name's scope");
+      }
     }
   }
 
@@ -514,8 +535,9 @@ public class XTM2ContentHandler extends DefaultHandler {
    * code is required in two places.
    */
   private void makeTopicName() {
-    if (type == null)
+    if (type == null) {
       type = getDefaultNameType();
+    }
     basename = builder.makeTopicName(topic, type, content.toString());
     addScope(basename);
     addItemIdentifiers(basename);
@@ -532,8 +554,9 @@ public class XTM2ContentHandler extends DefaultHandler {
   }
 
   private TopicIF getTopicByIid(LocatorIF itemid) {
-    if (!xtm21 && itemid.getAddress().indexOf('#') == -1)
+    if (!xtm21 && itemid.getAddress().indexOf('#') == -1) {
       throw new InvalidTopicMapException("Topic references must have fragment identifiers; invalid reference: " + itemid.getAddress());
+    }
     
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(itemid);
     if (obj == null) {
@@ -592,13 +615,15 @@ public class XTM2ContentHandler extends DefaultHandler {
   private void addItemIdentifier(TopicIF topic, LocatorIF ii) {
     seenIdentity = true;
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(ii);
-    if (obj == null)
+    if (obj == null) {
       topic.addItemIdentifier(ii);
-    else if (obj instanceof TopicIF)
+    } else if (obj instanceof TopicIF) {
       merge(topic, (TopicIF) obj);
-    else // itemid collision
+    } else {
+      // itemid collision
       throw new InvalidTopicMapException("Another object " + obj + " already " +
                                          "has item identifier " + ii);
+    }
   }
 
   private void addItemIdentifiers(ReifiableIF object) {
@@ -608,10 +633,11 @@ public class XTM2ContentHandler extends DefaultHandler {
         object.addItemIdentifier(itemid);
       } catch (UniquenessViolationException e) {
         TMObjectIF other = topicmap.getObjectByItemIdentifier(itemid);
-        if (other != null && canBeMerged(object, other))
+        if (other != null && canBeMerged(object, other)) {
           MergeUtils.mergeInto(object, (ReifiableIF) other);
-        else
+        } else {
           throw e;
+        }
       }
     }
     itemids.clear();
@@ -623,17 +649,20 @@ public class XTM2ContentHandler extends DefaultHandler {
   }
   
   private void merge(TopicIF target, TopicIF source) {
-    if (target.equals(source))
+    if (target.equals(source)) {
       return;
-    if (source.equals(nametype))
+    }
+    if (source.equals(nametype)) {
       nametype = target;
+    }
     MergeUtils.mergeInto(target, source);
   }
 
   private void loadMap(LocatorIF mapuri) throws SAXException {
     // Have we read this before?
-    if (read_documents.contains(mapuri))
+    if (read_documents.contains(mapuri)) {
       return;
+    }
     
     // Create new parser object
     XMLReader parser = DefaultXMLReaderFactory.createXMLReader();
@@ -681,10 +710,11 @@ public class XTM2ContentHandler extends DefaultHandler {
   // --- External interface
   
   public Collection getTopicMaps() {
-    if (topicmap == null)
+    if (topicmap == null) {
       return Collections.EMPTY_SET;
-    else
+    } else {
       return Collections.singleton(topicmap);
+    }
   }
 
   // --- Helper class

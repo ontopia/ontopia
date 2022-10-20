@@ -97,9 +97,10 @@ public class LTMTopicMapReader extends AbstractTopicMapReader {
 
     // Set base address on in-memory store
     if ((store instanceof net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore) &&
-        store.getBaseAddress() == null)
+        store.getBaseAddress() == null) {
       ((net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore)store)
           .setBaseAddress(getBaseAddress());
+    }
 
     try (Reader reader = makeReader((String) null, new LTMEncodingSniffer())) {
        // Parse!

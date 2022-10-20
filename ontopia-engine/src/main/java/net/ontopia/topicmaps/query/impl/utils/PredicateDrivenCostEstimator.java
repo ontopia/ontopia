@@ -66,17 +66,19 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
       cost = predicate.getCost(boundparams);
 
       // postpone recursive evaluation
-      if (rulename != null && predicate.getName().equals(rulename))
+      if (rulename != null && predicate.getName().equals(rulename)) {
         cost += BIG_RESULT;
+      }
       
-    } else if (clause instanceof NotClause)
+    } else if (clause instanceof NotClause) {
       cost = computeCost((NotClause) clause, context, literalvars);
-    else if (clause instanceof OrClause &&
-             ((OrClause) clause).getAlternatives().size() == 1)
+    } else if (clause instanceof OrClause &&
+             ((OrClause) clause).getAlternatives().size() == 1) {
       // set the cost to something big
       cost = INFINITE_RESULT - 1; // avoid crashes because of unbound vars
-    else if (clause instanceof OrClause) 
+    } else if (clause instanceof OrClause) {
       cost = computeCost((OrClause) clause, context, literalvars, rulename);
+    }
     
     return cost;
   }
@@ -87,8 +89,9 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
     Iterator it = not.getAllVariables().iterator();
     while (it.hasNext()) {
       Variable var = (Variable) it.next();
-      if (!context.contains(var) && !literalvars.contains(var))
+      if (!context.contains(var) && !literalvars.contains(var)) {
         return INFINITE_RESULT + 2; // might not be safe to run just yet
+      }
     }
     return FILTER_RESULT; // all variables are bound, so this not() will filter
   }
@@ -136,9 +139,10 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
   }
 
   public static int getComparisonPredicateCost(boolean[] boundparams) {
-    if (boundparams[0] && boundparams[1])
+    if (boundparams[0] && boundparams[1]) {
       return FILTER_RESULT;
-    else
+    } else {
       return INFINITE_RESULT;
+    }
   }
 }

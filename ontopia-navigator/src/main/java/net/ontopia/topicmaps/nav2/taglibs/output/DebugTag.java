@@ -60,10 +60,11 @@ public class DebugTag extends TagSupport
     ContextManagerIF ctxtMgr = contextTag.getContextManager();
     
     Collection coll;
-    if (variableName != null) 
+    if (variableName != null) { 
       coll = ctxtMgr.getValue(variableName);
-    else
+    } else {
       coll = ctxtMgr.getDefaultValue();
+    }
 
     try {
       JspWriter out = pageContext.getOut();    

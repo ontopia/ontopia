@@ -80,14 +80,16 @@ public class Consistify {
 
     try {
       TopicMapIF loaded = ImportExportUtils.getReader(args[0]).read();
-      if (ohandler.normalize)
+      if (ohandler.normalize) {
         normalizeTopicNames(loaded);
+      }
       doTNCMerge(loaded);
       removeDuplicates(loaded);
 
       char format = '?';
-      if (ohandler.xtm)
+      if (ohandler.xtm) {
         format = 'x';
+      }
       
       export(loaded, args[1], ohandler.encoding, format);
     }
@@ -117,8 +119,9 @@ public class Consistify {
     Iterator it = new ArrayList(tm.getTopics()).iterator();
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
-      if (topic.getTopicMap() == null)
+      if (topic.getTopicMap() == null) {
         continue;
+      }
 
       Iterator it2 = new ArrayList(topic.getTopicNames()).iterator();
       while (it2.hasNext()) {
@@ -127,8 +130,9 @@ public class Consistify {
         Iterator<TopicIF> it3 =index.getTopics(bn.getValue(), bn.getScope()).iterator();
         while (it3.hasNext()) {
           TopicIF source = it3.next();
-          if (source.equals(topic))
+          if (source.equals(topic)) {
             continue;
+          }
           MergeUtils.mergeInto(topic, source);
         }
       }
@@ -139,13 +143,15 @@ public class Consistify {
                                char format)
     throws java.io.IOException {
 
-    if (encoding == null)
+    if (encoding == null) {
       encoding = "utf-8";
+    }
 
-    if (format == 'e')
+    if (format == 'e') {
       new XTMTopicMapWriter(new File(outfile), encoding).write(tm);
-    else
+    } else {
       ImportExportUtils.getWriter(new File(outfile), encoding).write(tm);
+    }
   }
 
   protected static void normalizeTopicNames(TopicMapIF tm) {
@@ -188,9 +194,15 @@ public class Consistify {
     @Override
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
-      if (option == 'n') normalize = true;
-      if (option == 'x') xtm = true;
-      if (option == 'e') encoding = value;
+      if (option == 'n') {
+        normalize = true;
+      }
+      if (option == 'x') {
+        xtm = true;
+      }
+      if (option == 'e') {
+        encoding = value;
+      }
     }
   }
   

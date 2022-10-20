@@ -53,7 +53,7 @@ public final class NavigatorUtils {
    *
    * @param strList delimiter separated list of string entries.
    */
-  public final static Collection string2Collection(String strList) {
+  public static Collection string2Collection(String strList) {
     return string2Collection(strList, null);
   }
   
@@ -64,20 +64,22 @@ public final class NavigatorUtils {
    * @param strList delimiter separated list of string entries.
    * @param delimiter characters which are used to separate the list entries.
    */
-  public final static Collection string2Collection(String strList,
+  public static Collection string2Collection(String strList,
                                                    String delimiter) {
     Collection list = new ArrayList();
     StringTokenizer st;
 
     // check if arguments ok, otherwise return empty collection
-    if (strList == null || strList.equals(""))
+    if (strList == null || strList.equals("")) {
       return list;
+    }
 
     // setup StringTokenizer
-    if (delimiter == null) 
+    if (delimiter == null) { 
       st = new StringTokenizer(strList);
-    else
+    } else {
       st = new StringTokenizer(strList, delimiter);
+    }
 
     // iterate over all tokens and add to list
     String str;
@@ -103,11 +105,12 @@ public final class NavigatorUtils {
    * @param s       the String which should be investigated.
    * @return A matched topic otherwise null.
    */
-  public final static TopicIF stringID2Topic(TopicMapIF tm, String s) {
+  public static TopicIF stringID2Topic(TopicMapIF tm, String s) {
     TopicIF t = null;
 
-    if (tm == null || s == null || s.equals(""))
+    if (tm == null || s == null || s.equals("")) {
       return null;
+    }
     
     // 1. try to match a subject indicator
     try {
@@ -151,21 +154,23 @@ public final class NavigatorUtils {
    * @return A Collection of matched topics in the order they were listed.
    *         Arguments that do not match will be ignored.
    */
-  public final static Collection stringIDs2Topics(TopicMapIF tm,
+  public static Collection stringIDs2Topics(TopicMapIF tm,
                                                   String strList,
                                                   String delimiter) {
     Collection list = new ArrayList();
     StringTokenizer st;
 
     // check if arguments ok, otherwise return empty collection
-    if (strList == null || tm == null || strList.equals(""))
+    if (strList == null || tm == null || strList.equals("")) {
       return list;
+    }
 
     // setup StringTokenizer
-    if (delimiter == null) 
+    if (delimiter == null) { 
       st = new StringTokenizer(strList);
-    else
+    } else {
       st = new StringTokenizer(strList, delimiter);
+    }
 
     // iterate over all tokens and try to find appropiate topic
     String str;
@@ -173,8 +178,9 @@ public final class NavigatorUtils {
     while (st.hasMoreTokens()) {
       str = st.nextToken();
       topic = stringID2Topic(tm, str);
-      if (topic != null)
+      if (topic != null) {
         list.add(topic);
+      }
     }
     
     return list;
@@ -194,7 +200,7 @@ public final class NavigatorUtils {
    * @param s       the String which should be investigated.
    * @return A matched object, or null.
    */
-  public final static TMObjectIF stringID2Object(TopicMapIF tm, String s) {
+  public static TMObjectIF stringID2Object(TopicMapIF tm, String s) {
     return stringID2Object(tm, s, null);
   }
 
@@ -214,11 +220,12 @@ public final class NavigatorUtils {
    * @param context the context to lookup the prefix in
    * @return A matched object, or null.
    */
-  public final static TMObjectIF stringID2Object(TopicMapIF tm, String s, DeclarationContextIF context) {
+  public static TMObjectIF stringID2Object(TopicMapIF tm, String s, DeclarationContextIF context) {
     TMObjectIF t = null;
 
-    if (tm == null || s == null || s.equals(""))
+    if (tm == null || s == null || s.equals("")) {
       return null;
+    }
     
     // 1. try to match a subject indicator
     try {
@@ -237,8 +244,9 @@ public final class NavigatorUtils {
     }
         
     // 3. try to match a topic id
-    if (t == null)
+    if (t == null) {
       t = tm.getObjectById(s);
+    }
 
     // 4. try to match a prefixed subject identifier
     if ((t == null) && (context != null)) {
@@ -258,7 +266,7 @@ public final class NavigatorUtils {
    *
    * @since 3.1
    */
-  public final static TopicMapRepositoryIF getTopicMapRepository(PageContext pageContext) {
+  public static TopicMapRepositoryIF getTopicMapRepository(PageContext pageContext) {
     return getNavigatorApplication(pageContext.getServletContext()).getTopicMapRepository();
   }
   
@@ -267,7 +275,7 @@ public final class NavigatorUtils {
    *
    * @since 3.1
    */
-  public final static TopicMapRepositoryIF getTopicMapRepository(ServletContext servletContext) {
+  public static TopicMapRepositoryIF getTopicMapRepository(ServletContext servletContext) {
     return getNavigatorApplication(servletContext).getTopicMapRepository();
   }
   
@@ -275,7 +283,7 @@ public final class NavigatorUtils {
    * INTERNAL: Gets the navigator application instance belonging to
    * the web application.
    */
-  public final static NavigatorApplicationIF getNavigatorApplication(PageContext pageContext) {
+  public static NavigatorApplicationIF getNavigatorApplication(PageContext pageContext) {
     return getNavigatorApplication(pageContext.getServletContext());
   }
   
@@ -283,7 +291,7 @@ public final class NavigatorUtils {
    * INTERNAL: Gets the navigator application instance belonging to
    * the web application.
    */
-  public final static NavigatorApplicationIF getNavigatorApplication(ServletContext servletContext) {
+  public static NavigatorApplicationIF getNavigatorApplication(ServletContext servletContext) {
   
     NavigatorApplicationIF navApp = (NavigatorApplicationIF)
       servletContext.getAttribute(NavigatorApplicationIF.NAV_APP_KEY);
@@ -313,8 +321,9 @@ public final class NavigatorUtils {
         while (it.hasNext()) {
           LocatorIF loc = (LocatorIF) it.next();
           String locstr = loc.getAddress();
-          if (locstr.startsWith(basestr))
+          if (locstr.startsWith(basestr)) {
             return locstr.substring(basestr.length());
+          }
         }
       }
     }

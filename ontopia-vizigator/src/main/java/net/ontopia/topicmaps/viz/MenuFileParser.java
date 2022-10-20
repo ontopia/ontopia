@@ -72,15 +72,17 @@ public class MenuFileParser {
   }
   
   public ParsedMenuFile parse() {
-    if (source == null)
+    if (source == null) {
       return null;
+    }
     
     enabled = new HashMap();
     lineIndex = 1;
     
     try {
-      while (parseLine())
+      while (parseLine()) {
         lineIndex++;
+      }
       return new ParsedMenuFile(enabled);
     } catch (MenuFileParseError e) {
       warn(e.getMessage());
@@ -95,14 +97,16 @@ public class MenuFileParser {
     int index = source.indexOf('\n');
     
     if (index == -1) {
-      if (source.length() > 0)
+      if (source.length() > 0) {
         parseLine(source);
+      }
       return false;
     }
 
     parseLine(source.substring(0, index));
-    if (source.length() == index + 1)
+    if (source.length() == index + 1) {
       return false;
+    }
     
     source = source.substring(index + 1);
     return true;
@@ -114,8 +118,9 @@ public class MenuFileParser {
     
     // Remove the comment part (if present).
     int hashIndex = line.indexOf('#');
-    if (hashIndex != -1)
+    if (hashIndex != -1) {
       line = line.substring(0, hashIndex);
+    }
     
     // Remove any leading and trailing whitespace.
     line = line.trim();
@@ -123,21 +128,25 @@ public class MenuFileParser {
     
     // This was a blank line or one with only a comment.
     // No further processing needed.
-    if (line.length() == 0)
+    if (line.length() == 0) {
       return;
+    }
     
     String args[] = new String[1];
     args[0] = startLine;
     int eqIndex = line.indexOf('=');
-    if (eqIndex == -1)
+    if (eqIndex == -1) {
       throw new MenuFileParseError(
           Messages.getString("Viz.MissingEqualsMessage", startLine));
-    if (eqIndex == 0)
+    }
+    if (eqIndex == 0) {
       throw new MenuFileParseError(
           Messages.getString("Viz.MissingNameMessage", startLine));
-    if (eqIndex == line.length() - 1)
+    }
+    if (eqIndex == line.length() - 1) {
       throw new MenuFileParseError(
           Messages.getString("Viz.MissingOnOffMessage", startLine));
+    }
     
     String name = line.substring(0, eqIndex);
     VizDebugUtils.debug("name: " + name);
@@ -153,19 +162,22 @@ public class MenuFileParser {
   private void validateName (String name) throws MenuFileParseError {
     // The name must be on the form: Alpha ("." | Alpha)*
     
-    if (!loweralpha(name.charAt(0)))
+    if (!loweralpha(name.charAt(0))) {
       throw new MenuFileParseError(Messages
           .getString("Viz.NameCannotStartPeriod"));
-    if (!loweralpha(name.charAt(name.length() - 1)))
+    }
+    if (!loweralpha(name.charAt(name.length() - 1))) {
       throw new MenuFileParseError(Messages
           .getString("Viz.NameCannotEndPeriod"));
+    }
     
     int index = 0;
     while (index < name.length()) {
       char currentChar = name.charAt(index);
-      if (!(loweralpha(currentChar) || currentChar == '.'))
+      if (!(loweralpha(currentChar) || currentChar == '.')) {
         throw new MenuFileParseError(Messages
             .getString("Viz.NameOnlyAZ"));
+      }
       index++;
     }
   }
@@ -176,9 +188,10 @@ public class MenuFileParser {
   
   private void validateValue (String value) throws MenuFileParseError {
     // Value must be either "on" or "off".
-    if (!("on".equals(value) || "off".equals(value)))
+    if (!("on".equals(value) || "off".equals(value))) {
       throw new MenuFileParseError("The value \"" + value +
           "\" is not on the form \"on\" or \"off\"");
+    }
   }
   
   private String readFile(String urlFileString) throws IOException {

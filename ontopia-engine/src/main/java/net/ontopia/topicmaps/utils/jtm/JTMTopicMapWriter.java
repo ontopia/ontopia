@@ -189,18 +189,22 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
 
     writer.key("topics").array();
     for (TopicIF topic : topics) {
-      if (baseLoc == null)
+      if (baseLoc == null) {
         baseLoc = topic.getTopicMap().getStore().getBaseAddress();
+      }
       serializeTopic(topic, false);
     }
     writer.endArray();
 
     writer.key("associations").array();
-    for (AssociationIF assoc : assocs)
+    for (AssociationIF assoc : assocs) {
       serializeAssociation(assoc, false);
-    for (TopicIF instance : topics)
-      for (TopicIF type : (Collection<TopicIF>) instance.getTypes())
+    }
+    for (TopicIF instance : topics) {
+      for (TopicIF type : (Collection<TopicIF>) instance.getTypes()) {
         serializeTypeInstanceAssociation(type, instance);
+      }
+    }
 
     writer.endArray();
 
@@ -631,8 +635,9 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     String reference = loc.getAddress();
     String retVal = reference.substring(longestCommonPath(reference,
             baseLoc.getAddress()).length());
-    if (retVal.startsWith("/"))
+    if (retVal.startsWith("/")) {
       retVal = retVal.substring(1);
+    }
     
     return retVal;
   }
@@ -646,27 +651,27 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
   private String longestCommonPath(String source1, String source2) {
     String retVal = "";    
 
-    if (source1.startsWith(source2))
+    if (source1.startsWith(source2)) {
       retVal = source2;
-      
-    else if (source2.startsWith(source1))
+    } else if (source2.startsWith(source1)) {
       retVal = source1;
-    
-    else {
+    } else {
       int i = 0;
       int lastSlashIndex = 0;
       
       while (i < source1.length() && i < source2.length() 
               && source1.charAt(i) == source2.charAt(i)) {
-        if (source1.charAt(i) == '/')
+        if (source1.charAt(i) == '/') {
           lastSlashIndex = i;
+        }
         i++;
       }
   
-      if (lastSlashIndex == -1)
+      if (lastSlashIndex == -1) {
         retVal = "";
-      else 
+      } else { 
         retVal = source1.substring(0, lastSlashIndex);
+      }
     }
        
     return retVal;

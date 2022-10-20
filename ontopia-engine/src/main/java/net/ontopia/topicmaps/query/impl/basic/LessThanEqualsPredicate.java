@@ -59,11 +59,13 @@ public class LessThanEqualsPredicate implements BasicPredicateIF {
       Object value1 = matches.data[ix][colix1];
       Object value2 = matches.data[ix][colix2];
       
-      if (PredicateUtils.compare(value1, value2) > 0)
+      if (PredicateUtils.compare(value1, value2) > 0) {
         continue; // if greater than - skip it
+      }
       
-      if (result.last+1 == result.size) 
+      if (result.last+1 == result.size) {
         result.increaseCapacity();
+      }
       result.last++;
 
       // FIXME: is this really safe? or could row sharing give overwrites?

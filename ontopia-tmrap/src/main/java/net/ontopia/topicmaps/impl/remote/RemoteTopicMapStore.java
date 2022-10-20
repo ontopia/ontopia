@@ -47,12 +47,15 @@ public class RemoteTopicMapStore extends InMemoryTopicMapStore {
   @Override
   public TopicMapTransactionIF getTransaction() {
     // Open store automagically if store is not open at this point.
-    if (!isOpen()) open();
+    if (!isOpen()) {
+      open();
+    }
     
     // Create a new transaction if it doesn't exist or it has been
     // deactivated.
-    if (transaction == null || !transaction.isActive())
+    if (transaction == null || !transaction.isActive()) {
       transaction = new RemoteTopicMapTransaction(this);
+    }
     return transaction;
   }
   

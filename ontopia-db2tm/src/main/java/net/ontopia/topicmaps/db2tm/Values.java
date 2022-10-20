@@ -45,15 +45,17 @@ public final class Values {
     } else {
       // use standard column
       int cix = relation.getColumnIndex(colname);
-      if (cix < 0)
+      if (cix < 0) {
         throw new DB2TMException("Cannot find column '" + colname + "' in relation '" + relation.getName() + "'");
+      }
       return getColumnValue(relation, cix);
     }
   }
 
   protected static ValueIF getColumnValue(Relation relation, int cix) {
-    if (cix < 0 || cix >= relation.getColumns().length)
+    if (cix < 0 || cix >= relation.getColumns().length) {
       throw new DB2TMException("Cannot find column $" + cix + " in relation '" + relation.getName() + "'");
+    }
     return new TupleValue(cix);
   }
   
@@ -79,21 +81,24 @@ public final class Values {
       }
       if (name != null) {
         int beginOffset = matcher.start();
-        if (beginOffset > ix)
+        if (beginOffset > ix) {
           list.add(value.substring(ix, beginOffset));
+        }
         list.add(colval);
         colvals++;
       } else {
         int endOffset = matcher.end();
-        if (endOffset > ix)
+        if (endOffset > ix) {
           list.add(value.substring(ix, endOffset));
+        }
       }
       ix = matcher.end();
     }
-    if (ix > 0 && value.length() > ix)
+    if (ix > 0 && value.length() > ix) {
       list.add(value.substring(ix));
-    else if (list.isEmpty())
+    } else if (list.isEmpty()) {
       return new StaticValue(value);
+    }
     return new PatternValue(list.toArray(), colvals);
   }
 
@@ -139,17 +144,19 @@ public final class Values {
       StringBuilder sb = new StringBuilder();
       for (int i=0; i < list.length; i++) {
         Object o = list[i];
-        if (o instanceof String)
+        if (o instanceof String) {
           sb.append(o);
-        else {
+        } else {
           ValueIF colval = (ValueIF)o;
           String value = colval.getValue(tuple);
           if (Utils.isValueEmpty(value)) {
             empties++;
-            if (empties == colvals)
+            if (empties == colvals) {
               return null;
-          } else
+            }
+          } else {
             sb.append(value);
+          }
         }
       }
       return sb.toString();

@@ -94,20 +94,22 @@ public class IfTag extends TagSupport
     inputs = new ArrayList();
     
     // use the decider specified by tag attribute
-    if (deciderClassName != null)
+    if (deciderClassName != null) {
       this.decider = getDeciderInstance(deciderClassName);
+    }
     if (decider == null) {
       // get name of default decider class
       NavigatorConfigurationIF navConf =
         contextTag.getNavigatorApplication().getConfiguration();
       String dcn = navConf.getProperty(NavigatorConfigurationIF.DEF_DECIDER,
                                        NavigatorConfigurationIF.DEFVAL_DECIDER);
-      if (dcn.equals(NavigatorConfigurationIF.DEFVAL_DECIDER))
+      if (dcn.equals(NavigatorConfigurationIF.DEFVAL_DECIDER)) {
         // TODO: Should replace with generic attributes support in NavigatorDeciderIF
         decider = new DefaultIfDecider(equalsVariableName, equalsSize,
                                        lessThanNumber, greaterThanNumber);
-      else
+      } else {
         decider = getDeciderInstance(dcn);
+      }
     }
 
     return EVAL_BODY_INCLUDE;
@@ -124,9 +126,11 @@ public class IfTag extends TagSupport
     // pass received collections further upwards
     ValueAcceptingTagIF acceptingTag = (ValueAcceptingTagIF)
       findAncestorWithClass(this, ValueAcceptingTagIF.class);
-    if (acceptingTag != null)
-      for (int ix = 0; ix < inputs.size(); ix++)
+    if (acceptingTag != null) {
+      for (int ix = 0; ix < inputs.size(); ix++) {
         acceptingTag.accept((Collection) inputs.get(ix));
+      }
+    }
     
     // Reset members
     contextTag = null;
@@ -254,10 +258,11 @@ public class IfTag extends TagSupport
       // Create decider instance
       obj = contextTag.getNavigatorApplication().getInstanceOf(classname);
       // if instance of DeciderIF we need to wrap in NavigatorDeciderWrapper
-      if (obj instanceof NavigatorDeciderIF)
+      if (obj instanceof NavigatorDeciderIF) {
         return (NavigatorDeciderIF) obj;
-      else if (obj instanceof Predicate)
+      } else if (obj instanceof Predicate) {
         return new DeciderIFWrapper((Predicate)obj);
+      }
       
     } catch (NavigatorRuntimeException e) {
       log.warn("Unable to retrieve instance of " + classname);

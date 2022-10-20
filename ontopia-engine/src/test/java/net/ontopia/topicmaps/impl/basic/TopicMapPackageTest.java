@@ -209,17 +209,21 @@ public abstract class TopicMapPackageTest {
 
   protected void assertTMObject(TMObjectIF tmobject, boolean typed,
                               boolean scoped) {
-    if (tmobject != tm)
+    if (tmobject != tm) {
       Assert.assertTrue("getTopicMap" + tmobject + tmobject.getClass() +
                  tmobject.getTopicMap(),
                  tmobject.getTopicMap() == tm);
+    }
 
     Assert.assertTrue("isTyped", (tmobject instanceof TypedIF ||
                            tmobject instanceof TopicIF) == typed);
     Assert.assertTrue("isScoped", (tmobject instanceof ScopedIF) == scoped);
-    if (tmobject instanceof TypedIF || tmobject instanceof TopicIF)
+    if (tmobject instanceof TypedIF || tmobject instanceof TopicIF) {
       typedTest(tmobject);
-    if (tmobject instanceof ScopedIF) scopedTest((ScopedIF) tmobject);
+    }
+    if (tmobject instanceof ScopedIF) {
+      scopedTest((ScopedIF) tmobject);
+    }
   }
   
   protected void scopedTest(ScopedIF scoped) {
@@ -239,8 +243,9 @@ public abstract class TopicMapPackageTest {
 
   protected void typedTest(TMObjectIF tmobject) {
     // Check if this really is a typed object
-    if (!(tmobject instanceof TypedIF || tmobject instanceof TopicIF))
+    if (!(tmobject instanceof TypedIF || tmobject instanceof TopicIF)) {
       Assert.fail("Object " + tmobject + " isnt't typed.");
+    }
     
     // Topic
     if (tmobject instanceof TopicIF) {

@@ -55,10 +55,12 @@ public class SimpleCostEstimator extends CostEstimator {
     Iterator it = clause.getAllVariables().iterator();
     while (it.hasNext()) {
       Object variable = it.next();
-      if (!context.contains(variable))
+      if (!context.contains(variable)) {
         cost += 10;
-      if (literalvars.contains(variable))
+      }
+      if (literalvars.contains(variable)) {
         cost += 1; // this is really a literal...
+      }
 
       // penalties and bonuses for various kinds of predicates
       if (clause instanceof PredicateClause) {
@@ -73,14 +75,15 @@ public class SimpleCostEstimator extends CostEstimator {
 
         // check for specific predicates (FIXME: generalize!)
         String name = predicate.getName();
-        if ("instance-of".equals(name))
+        if ("instance-of".equals(name)) {
           cost += 1;
-        else if ("/=".equals(name))
+        } else if ("/=".equals(name)) {
           cost -= 5;
-        else if ("value-like".equals(name))
+        } else if ("value-like".equals(name)) {
           cost -= 11; // value-like must go first
-        else if (rulename.equals(name))
+        } else if (rulename.equals(name)) {
           cost += 100; // recursive evaluation should happen late
+        }
 
         // check for arguments which must be bound
         Argument lastArgument = null;
@@ -95,18 +98,21 @@ public class SimpleCostEstimator extends CostEstimator {
                 (argument == null ?
                  (lastArgument == null ? false :
                   (lastArgument.isRepeatable() && lastArgument.mustBeBound())) : // take repeatable arguments into account
-                 argument.mustBeBound()))
+                 argument.mustBeBound())) {
               cost += 100000; // can't run this one now
+            }
           }
           
-          if (argument != null)
+          if (argument != null) {
             lastArgument = argument;
+          }
         }
-      } else if (clause instanceof NotClause)
+      } else if (clause instanceof NotClause) {
         cost += 100; // not clauses must be done late
-      else if (clause instanceof OrClause &&
-               ((OrClause) clause).getAlternatives().size() == 1)
+      } else if (clause instanceof OrClause &&
+               ((OrClause) clause).getAlternatives().size() == 1) {
         cost += 50; // optional clauses should also be done late
+      }
       
     }
 

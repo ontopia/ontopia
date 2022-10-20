@@ -108,12 +108,14 @@ public class OracleSQLGenerator extends GenericSQLGenerator {
 
   @Override
   protected String getSetOperator(int operator) {
-    if (operator == SQLSetOperation.EXCEPT)
+    if (operator == SQLSetOperation.EXCEPT) {
       return "minus";
-    if (operator == SQLSetOperation.EXCEPT_ALL)
+    }
+    if (operator == SQLSetOperation.EXCEPT_ALL) {
       return "minus all";
-    else
+    } else {
       return super.getSetOperator(operator);
+    }
   }
   
   @Override

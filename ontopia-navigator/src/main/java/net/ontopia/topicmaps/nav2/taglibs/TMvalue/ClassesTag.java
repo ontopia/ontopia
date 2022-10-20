@@ -59,8 +59,9 @@ public class ClassesTag extends TagSupport { // implements ValueProducingTagIF
 
     // get topicmap object on which we should compute 
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
+    if (topicmap == null) {
       throw new NavigatorRuntimeException("ClassesTag found no topic map.");
+    }
     
     // get class instance index
     ClassInstanceIndexIF index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
@@ -73,14 +74,15 @@ public class ClassesTag extends TagSupport { // implements ValueProducingTagIF
       resColl.addAll(index.getAssociationTypes());
       resColl.addAll(index.getAssociationRoleTypes());
       resColl.addAll(index.getOccurrenceTypes());
-    } else if (typeName.equals(TYPE_TOPIC))
+    } else if (typeName.equals(TYPE_TOPIC)) {
       resColl = index.getTopicTypes();
-    else if (typeName.equals(TYPE_ASSOC))
+    } else if (typeName.equals(TYPE_ASSOC)) {
       resColl = index.getAssociationTypes();
-    else if (typeName.equals(TYPE_ROLE))
+    } else if (typeName.equals(TYPE_ROLE)) {
       resColl = index.getAssociationRoleTypes();
-    else if (typeName.equals(TYPE_OCC))
+    } else if (typeName.equals(TYPE_OCC)) {
       resColl = index.getOccurrenceTypes();
+    }
     
     // kick it over to the accepting tag
     acceptingTag.accept(resColl);
@@ -102,11 +104,12 @@ public class ClassesTag extends TagSupport { // implements ValueProducingTagIF
     if (typeName.equals(TYPE_TOPIC)
         || typeName.equals(TYPE_ASSOC)
         || typeName.equals(TYPE_ROLE)
-        || typeName.equals(TYPE_OCC))
+        || typeName.equals(TYPE_OCC)) {
         this.typeName = typeName;
-    else
+    } else {
       throw new IllegalArgumentException("Invalid type name <" + typeName + "> in attribute 'of' " +
                                          " of element 'classes'.");
+    }
   }
 
 }

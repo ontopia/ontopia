@@ -80,8 +80,9 @@ public class InstanceTypesPage extends OntopolyAbstractPage {
             return new Label(id, new Model<String>(getLabel(topic))) {
               @Override
               protected void onComponentTag(final ComponentTag tag) {
-                if (isSystemTopic)
+                if (isSystemTopic) {
                   tag.put("class", "italic");
+                }
                 super.onComponentTag(tag);              
               }
             };

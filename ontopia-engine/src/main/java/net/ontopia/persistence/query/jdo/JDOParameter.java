@@ -52,7 +52,9 @@ public class JDOParameter implements JDOValueIF {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
+    if (this == obj) {
+      return true;
+    }
     if (obj instanceof JDOParameter) {
       JDOParameter other = (JDOParameter)obj;
       return name.equals(other.name);

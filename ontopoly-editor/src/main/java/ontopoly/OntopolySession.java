@@ -54,8 +54,9 @@ public class OntopolySession extends WebSession {
     if (accessStrategy.isEnabled()) {
       WebRequest wr = (WebRequest)request;
       User authenticatedUser = this.accessStrategy.autoAuthenticate(wr.getHttpServletRequest());
-      if (authenticatedUser != null)
+      if (authenticatedUser != null) {
         setUser(authenticatedUser);
+      }
     }
     // set locale
 //    setLocale(new Locale("no"));
@@ -116,8 +117,9 @@ public class OntopolySession extends WebSession {
   public String getLockerId(Request request) {
     User user = getUser();
     String lockerId = (user == null ? null : user.getName());
-    if (lockerId == null)
+    if (lockerId == null) {
       lockerId = getApplication().getSessionStore().getSessionId(request, true); // WARNING: will create new session
+    }
     return lockerId;
   }
   
@@ -136,10 +138,11 @@ public class OntopolySession extends WebSession {
    */
   public boolean isAuthenticated() {
     //!return true; // NOTE: authentication disabled
-    if (accessStrategy.isEnabled())
+    if (accessStrategy.isEnabled()) {
       return user != null;
-    else
+    } else {
       return true;
+    }
   }
   
   public boolean isAutoLogin() {

@@ -62,8 +62,9 @@ public class LiteralIndexImpl implements LiteralIndex {
    */
   @Override
   public Collection<Name> getNames(String value) {
-    if (value == null)
+    if (value == null) {
       throw new IllegalArgumentException("value is null");
+    }
 
     return new LazySet<Name>(topicMap, nameIndex.getTopicNames(value));
   }
@@ -90,8 +91,9 @@ public class LiteralIndexImpl implements LiteralIndex {
   public Collection<Occurrence> getOccurrences(Locator value) {
     Check.valueNotNull(value);
 
-    if (value == null)
+    if (value == null) {
       throw new IllegalArgumentException("value is null");
+    }
 
     return new LazySet<Occurrence>(topicMap, occurrenceIndex.getOccurrences(
         value.toExternalForm()));

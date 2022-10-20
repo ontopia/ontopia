@@ -46,8 +46,9 @@ public class TopicTypesFunctionBoxPanel extends Panel {
     add(new Label("title", new ResourceModel("topictypes.list.header")));
 
     List<TopicType> types = topicModel.getTopic().getTopicTypes();
-    if (types.isEmpty())
+    if (types.isEmpty()) {
       setVisible(false);
+    }
     
     TopicType currentTopicType = topicTypeModel.getTopicType();
     FieldsView currentView = fieldsViewModel.getFieldsView();
@@ -71,8 +72,9 @@ public class TopicTypesFunctionBoxPanel extends Panel {
       pageParametersMap.put("topicId", topic.getId());
       pageParametersMap.put("topicTypeId", topicType.getId());
       
-      if (currentView != null && isCurrentTopicType)
+      if (currentView != null && isCurrentTopicType) {
         pageParametersMap.put("viewId", currentView.getId());
+      }
       
       String linkText = topicType.getName();
       OntopolyBookmarkablePageLink link =

@@ -42,10 +42,11 @@ public class IdentityUtils {
    */
   public static TMObjectIF getObjectBySymbolicId(TopicMapIF topicmap, String symbolicId) {
     LocatorIF loc = getSymbolicIdLocator(topicmap, symbolicId);
-    if (loc != null)
+    if (loc != null) {
       return topicmap.getObjectByItemIdentifier(loc);
-    else
+    } else {
       return null;
+    }
   }
 
   /**
@@ -54,10 +55,11 @@ public class IdentityUtils {
    */
   public static LocatorIF getSymbolicIdLocator(TopicMapIF topicmap, String symbolicId) {
     LocatorIF base = topicmap.getStore().getBaseAddress();
-    if (base != null)
+    if (base != null) {
       return base.resolveAbsolute('#' + symbolicId);
-    else
+    } else {
       return null;
+    }
   }
 
   /**
@@ -74,24 +76,27 @@ public class IdentityUtils {
     while (srclocs.hasNext()) {
       LocatorIF srcloc = srclocs.next();
       TMObjectIF o = topicmap.getObjectByItemIdentifier(srcloc);
-      if (o instanceof TopicIF)
+      if (o instanceof TopicIF) {
         result.add((TopicIF) o);
+      }
     }
     // subject identifiers
     Iterator<LocatorIF> subinds = topic.getSubjectIdentifiers().iterator();
     while (subinds.hasNext()) {
       LocatorIF subind = subinds.next();
       TopicIF t = topicmap.getTopicBySubjectIdentifier(subind);
-      if (t != null)
+      if (t != null) {
         result.add(t);
+      }
     }
     // subject locators
     Iterator<LocatorIF> sublocs = topic.getSubjectLocators().iterator();
     while (sublocs.hasNext()) {
       LocatorIF subloc = sublocs.next();
       TopicIF t = topicmap.getTopicBySubjectLocator(subloc);
-      if (t != null)
+      if (t != null) {
         result.add(t);
+      }
     }
     return result;
   }

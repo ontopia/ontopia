@@ -210,8 +210,9 @@ public class RDBMSConsistencyChecker {
                 + " is null";
       }
       notNullFieldsString += ")";
-    } else
+    } else {
       throw new SQLException();
+    }
 
     out.write("\n\nChecking for duplicate values for the combination "
             + fieldsString + " ...\n");
@@ -251,12 +252,13 @@ public class RDBMSConsistencyChecker {
       } while (resultSet.next());
     }
 
-    if (allUnique)
+    if (allUnique) {
       out.write("... There are no duplicate values for " + uniqueTable + "."
               + uniqueFields[0] + ".\n");
-    else
+    } else {
       out.write("\n...There are duplicate values for " + uniqueTable + "."
               + uniqueFields[0] + ". Details are given above.\n");
+    }
 
     return allUnique;
   }
@@ -265,7 +267,7 @@ public class RDBMSConsistencyChecker {
     * Check the database given by dbProperties for topic map consistency.
     * In particular, checks for referential integrity and uniqueness.
     */
-  private final static void checkConsistency(String dbProperties,
+  private static void checkConsistency(String dbProperties,
           Writer writer) throws SQLException, IOException {
     new RDBMSConsistencyChecker(dbProperties, writer);
   }

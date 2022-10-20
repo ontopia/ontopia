@@ -89,10 +89,11 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   }
 
   public static TopicIF makeSnapshot(TopicIF original, int snapshotType, Map<TMObjectIF, SnapshotTMObject> processed) {
-    if (original == null)
+    if (original == null) {
       return null; // this avoids a thousand ifs elsewhere
-    else if (processed.containsKey(original))
-			return (TopicIF)processed.get(original);
+    } else if (processed.containsKey(original)) {
+      return (TopicIF)processed.get(original);
+    }
 		
 		SnapshotTopic st = new SnapshotTopic(original, snapshotType, processed);
 		processed.put(original, st);

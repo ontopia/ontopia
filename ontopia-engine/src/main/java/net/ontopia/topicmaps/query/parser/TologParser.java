@@ -70,17 +70,19 @@ public class TologParser {
     }
     catch (AntlrWrapException ex) {
       Exception e = ex.getException();
-      if (e instanceof InvalidQueryException)
+      if (e instanceof InvalidQueryException) {
         throw (InvalidQueryException)e;
-      else 
+      } else {
         throw new InvalidQueryException(e);
+      }
     }
     catch (JFlexWrapException ex) {
       Exception e = ex.getException();
-      if (e instanceof InvalidQueryException)
+      if (e instanceof InvalidQueryException) {
         throw (InvalidQueryException)e;
-      else 
+      } else {
         throw new InvalidQueryException(e);
+      }
     }
     catch (RecognitionException ex) {
       throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
@@ -118,8 +120,9 @@ public class TologParser {
       InsertStatement stmt = (InsertStatement) parseStatement(new StringReader(query));
       stmt.setCTMPart(ctm, context);
       return stmt;
-    } else
+    } else {
       return parseStatement(new StringReader(query));
+    }
   }
   
   /**
@@ -135,10 +138,11 @@ public class TologParser {
     }
     catch (AntlrWrapException ex) {
       Exception e = ex.getException();
-      if (e instanceof InvalidQueryException)
+      if (e instanceof InvalidQueryException) {
         throw (InvalidQueryException)e;
-      else 
+      } else {
         throw new InvalidQueryException(e);
+      }
     }
     catch (RecognitionException ex) {
       throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
@@ -165,10 +169,11 @@ public class TologParser {
     }
     catch (AntlrWrapException ex) {
       Exception e = ex.getException();
-      if (e instanceof InvalidQueryException)
+      if (e instanceof InvalidQueryException) {
         throw (InvalidQueryException)e;
-      else 
+      } else {
         throw new InvalidQueryException(e);
+      }
     }
     catch (RecognitionException ex) {
       throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
@@ -197,10 +202,11 @@ public class TologParser {
     }
     catch (AntlrWrapException ex) {
       Exception e = ex.getException();
-      if (e instanceof InvalidQueryException)
+      if (e instanceof InvalidQueryException) {
         throw (InvalidQueryException)e;
-      else 
+      } else {
         throw new InvalidQueryException(e);
+      }
     }
     catch (RecognitionException ex) {
       throw new InvalidQueryException(MSG_LEXICAL_ERROR_AT /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
@@ -241,8 +247,9 @@ public class TologParser {
     Reader reader = new StringReader(query);
     TologLexer lexer = new TologLexer(reader, options);
     Token token = lexer.nextToken();
-    while (token.getType() != RealTologParser.INSERT)
+    while (token.getType() != RealTologParser.INSERT) {
       token = lexer.nextToken();
+    }
     return lexer.getStartOfToken();
   }
 
@@ -253,12 +260,14 @@ public class TologParser {
     Token token = lexer.nextToken();
     while (!(token.getType() == CTMParser.IDENTIFIER &&
              token.getText().equalsIgnoreCase("from")) && 
-           token.getType() != CTMParser.EOF)
+           token.getType() != CTMParser.EOF) {
       token = lexer.nextToken();
+    }
 
-    if (token.getType() == CTMParser.EOF)
+    if (token.getType() == CTMParser.EOF) {
       return -1;
-    else
+    } else {
       return lexer.getStartOfToken() + insertpos + 6;
+    }
   }
 }

@@ -64,23 +64,31 @@ public class TMExporterDecider implements Predicate<Object> {
     if (object instanceof ScopedIF) {
       ScopedIF scoped = (ScopedIF)object;
       Iterator<TopicIF> scopeIt = scoped.getScope().iterator();
-      while (scopeIt.hasNext())
-        if (!test(scopeIt.next()))
+      while (scopeIt.hasNext()) {
+        if (!test(scopeIt.next())) {
           return false;
+        }
+      }
     }
 
-    if (object instanceof AssociationIF)
+    if (object instanceof AssociationIF) {
       return test((AssociationIF)object);
-    if (object instanceof TopicNameIF)
+    }
+    if (object instanceof TopicNameIF) {
       return test((TopicNameIF)object);
-    if (object instanceof Collection)
+    }
+    if (object instanceof Collection) {
       return test((Collection<?>)object);
-    if (object instanceof OccurrenceIF)
+    }
+    if (object instanceof OccurrenceIF) {
       return test((OccurrenceIF)object);
-    if (object instanceof TopicIF)
+    }
+    if (object instanceof TopicIF) {
       return test((TopicIF)object);
-    if (object instanceof VariantNameIF)
+    }
+    if (object instanceof VariantNameIF) {
       return test((VariantNameIF)object);
+    }
     return true;
   }
 
@@ -151,9 +159,11 @@ public class TMExporterDecider implements Predicate<Object> {
    */
   private boolean test(Collection<?> coll) {
     Iterator<?> it = coll.iterator();
-    while (it.hasNext())
-      if (!test(it.next()))
+    while (it.hasNext()) {
+      if (!test(it.next())) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -167,15 +177,18 @@ public class TMExporterDecider implements Predicate<Object> {
    */
   private boolean test(TopicIF topic, Collection<TopicIF> checked) {
     // Only check each topic once.
-    if (checked.contains(topic))
+    if (checked.contains(topic)) {
       return true;
-    if (topic == null)
+    }
+    if (topic == null) {
       return true;
+    }
 
-    if (filter.test(topic))
+    if (filter.test(topic)) {
       checked.add(topic);
-    else
+    } else {
       return false;
+    }
 
     return true;
   }

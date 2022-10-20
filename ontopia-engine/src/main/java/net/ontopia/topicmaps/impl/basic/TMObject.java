@@ -59,7 +59,9 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
 
   @Override
   public boolean isReadOnly() {
-    if (!isConnected()) return true;
+    if (!isConnected()) {
+      return true;
+    }
     return topicmap.getStore().isReadOnly();
   }
 
@@ -70,22 +72,26 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
 
   @Override
   public Collection<LocatorIF> getItemIdentifiers() {
-    if (sources == null)
+    if (sources == null) {
       return Collections.emptySet();
-    else
+    } else {
       return Collections.unmodifiableSet(sources);
+    }
   }
 
   @Override
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
     Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
-    if (!isConnected())
+    if (!isConnected()) {
       throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
-    if (sources == null)
+    }
+    if (sources == null) {
       sources = topicmap.cfactory.makeSmallSet();
-    // Check to see if the item identifier is already a item identifier of this topic.
-    else if (sources.contains(source_locator)) return;
+      // Check to see if the item identifier is already a item identifier of this topic.
+    } else if (sources.contains(source_locator)) {
+      return;
+    }
     // Notify listeners
     fireEvent(TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, source_locator, null);
     // Modify property    
@@ -96,10 +102,13 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
   public void removeItemIdentifier(LocatorIF source_locator) {
     Objects.requireNonNull(source_locator, "null is not a valid argument.");
     // Notify topic map
-    if (!isConnected())
+    if (!isConnected()) {
       throw new ConstraintViolationException("Cannot modify item identifiers when object isn't attached to a topic map.");
+    }
     // Check to see if item identifier is a item identifier of this topic.
-    if (sources == null || !sources.contains(source_locator)) return;
+    if (sources == null || !sources.contains(source_locator)) {
+      return;
+    }
     // Notify listeners
     fireEvent(TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, source_locator);
     // Modify property
@@ -116,8 +125,11 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
    * modified.
    */
   protected void fireEvent(String event, Object new_value, Object old_value) {
-    if (parent == null) return;
-    else topicmap.processEvent(this, event, new_value, old_value);
+    if (parent == null) {
+      return;
+    } else {
+      topicmap.processEvent(this, event, new_value, old_value);
+    }
   }
   
   // -----------------------------------------------------------------------------

@@ -41,9 +41,9 @@ public class ClassesOfTag extends BaseValueProducingAndAcceptingTag {
   public Collection process(Collection tmObjects) throws JspTagException {
     // find all the classes of all tmObjects in collection
     // avoid duplicate type entries therefore use a 'Set'
-    if (tmObjects == null)
+    if (tmObjects == null) {
       return Collections.EMPTY_SET;
-    else{
+    } else{
       Set types = new HashSet();
       Iterator iter = tmObjects.iterator();
       Object obj = null;
@@ -53,15 +53,17 @@ public class ClassesOfTag extends BaseValueProducingAndAcceptingTag {
         if (obj instanceof TypedIF) {
           TypedIF singleTypedObj = (TypedIF) obj;
           TopicIF type = singleTypedObj.getType();
-          if (type != null)
+          if (type != null) {
             types.add( type );
+          }
         }
         // --- for topic objects
         else if (obj instanceof TopicIF) {
           TopicIF topic = (TopicIF) obj;
           Collection _types = topic.getTypes();
-          if (!_types.isEmpty())
+          if (!_types.isEmpty()) {
             types.addAll( _types );
+          }
         }
       } // while    
       return new ArrayList(types);

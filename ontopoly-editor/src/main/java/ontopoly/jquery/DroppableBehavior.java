@@ -100,10 +100,11 @@ public abstract class DroppableBehavior extends JQueryBehavior {
       if (component.getMarkupId().equals(id)) {
         this.found = component;
         return IVisitor.STOP_TRAVERSAL;
-      } else  if (component instanceof MarkupContainer)
+      } else  if (component instanceof MarkupContainer) {
         return ((MarkupContainer)component).visitChildren(this);
-      else
+      } else {
         return IVisitor.CONTINUE_TRAVERSAL;
+      }
     }
     
     public Component getFoundComponent() {

@@ -209,8 +209,9 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       PageParameters params = new PageParameters();
       params.put("topicMapId", fieldDefinition.getTopicMap().getId());
       params.put("ontology", "true");
-      if (tt != null)
+      if (tt != null) {
         params.put("topicId", tt.getId());
+      }
       
       return new OntopolyBookmarkablePageLink(id, InstancePage.class, params, fieldTypeAsString);        
     }

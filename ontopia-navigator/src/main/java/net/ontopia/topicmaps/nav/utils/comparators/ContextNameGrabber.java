@@ -76,14 +76,15 @@ public class ContextNameGrabber implements Function<TopicIF, NameIF> {
     // --- pick out best basename
     Collection<TopicNameIF> basenames = mytopic.getTopicNames();
     int basenames_size = basenames.size();
-    if (basenames_size == 0)
+    if (basenames_size == 0) {
       return null;
+    }
 
     TopicNameIF bestTopicName;
-    if (basenames_size == 1)
+    if (basenames_size == 1) {
       // Pull out the only basename
       bestTopicName = CollectionUtils.getFirstElement(basenames);
-    else {
+    } else {
       // Sort list of basenames
       TopicNameIF[] mybasenames = basenames.toArray(new TopicNameIF[basenames.size()]);
       Arrays.sort(mybasenames, bnComparator);
@@ -95,19 +96,22 @@ public class ContextNameGrabber implements Function<TopicIF, NameIF> {
     Collection<VariantNameIF> variantnames = bestTopicName.getVariants();
     int variantnames_size = variantnames.size();
     // If there is no variant name return bestTopicName
-    if (variantnames_size == 0)
+    if (variantnames_size == 0) {
       return bestTopicName;
+    }
     
     // If there is multiple basenames rank them.
     VariantNameIF[] myvariantnames = variantnames.toArray(new VariantNameIF[variantnames.size()]);
-    if (variantnames_size > 1)
+    if (variantnames_size > 1) {
       Arrays.sort(myvariantnames, vnComparator);
+    }
     
     // Test that first variant is within scope
-    if (within.test(myvariantnames[0]))
+    if (within.test(myvariantnames[0])) {
       return myvariantnames[0];
-    else
+    } else {
       return bestTopicName;
+    }
   }
 
 }

@@ -71,10 +71,11 @@ public class DB2TMErrorTestCase {
       // Import the topic map seed.
       TopicMapIF topicmap;
       URL infile = getClass().getClassLoader().getResource(in.substring("classpath:".length()));
-      if (infile != null)
+      if (infile != null) {
         topicmap = ImportExportUtils.getReader(in).read();
-      else
+      } else {
         topicmap = ImportExportUtils.getReader(default_in).read();
+      }
                
       try {
         // Extend the topic map seed with the the config file.

@@ -91,24 +91,28 @@ public class SQLQuery {
     for (int i=0; i < length; i++) {
       Object value = select.get(i);
       SQLValueIF sqlvalue;
-      if (value instanceof SQLAggregateIF)
+      if (value instanceof SQLAggregateIF) {
         sqlvalue = ((SQLAggregateIF)value).getValue();
-      else
+      } else {
         sqlvalue = (SQLValueIF)value;
+      }
       width = width + sqlvalue.getArity();
     }
     return width;
   }
   
   public List getOrderBy() {
-    if (orderby == null)
+    if (orderby == null) {
       return Collections.EMPTY_LIST;
-    else
+    } else {
       return orderby;
+    }
   }
 
   public void addOrderBy(SQLOrderBy sob) {
-    if (orderby == null) orderby = new ArrayList();
+    if (orderby == null) {
+      orderby = new ArrayList();
+    }
     orderby.add(sob);
   }
 
@@ -139,12 +143,14 @@ public class SQLQuery {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("select ");
-    if (getDistinct())
+    if (getDistinct()) {
       sb.append("distinct ");
-    if (select == null || select.isEmpty())
+    }
+    if (select == null || select.isEmpty()) {
       sb.append('*');
-    else
+    } else {
       sb.append(StringUtils.join(select, ", "));
+    }
     if (getFilter() != null) {
       sb.append(" from ");
       sb.append(getFilter());

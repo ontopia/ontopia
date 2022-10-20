@@ -53,22 +53,25 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
   }
   public TaglibTagFactory(boolean useTagPooling) {
     this.useTagPooling = useTagPooling;
-    if (classes == null)
+    if (classes == null) {
       initClassMap();
+    }
   }
 
   public static String getTagName(Class tagclass) {
     String classname = tagclass.getName();
     for (String tagname : classes.keySet()) {
-      if (classes.get(tagname).equals(classname))
+      if (classes.get(tagname).equals(classname)) {
         return tagname;
+      }
     }
     return "unresolved tag: " + classname;
   }
 
   public static boolean isKnownTag(String tagname) {
-    if (classes == null)
+    if (classes == null) {
       initClassMap();
+    }
     return (classes.get(tagname) != null);
   }
 
@@ -77,9 +80,10 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
                                    TagSupport parentTag)
     throws NavigatorRuntimeException {
 
-    if (!isKnownTag(tagname))
+    if (!isKnownTag(tagname)) {
       throw new NavigatorRuntimeException("TaglibTagFactory - " +
                                           "Unknown tag: " + tagname);
+    }
 
     if (useTagPooling) {
       if (tagPool == null) { tagPool = new HashMap<TagSupport, Map<String, TagSupport>>(); }

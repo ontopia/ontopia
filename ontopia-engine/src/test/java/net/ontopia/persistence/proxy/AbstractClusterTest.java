@@ -109,8 +109,9 @@ public abstract class AbstractClusterTest extends ReceiverAdapter {
   // -----------------------------------------------------------------------------
 
   public void assertTrue(String message, boolean fact) {
-    if (!fact)
+    if (!fact) {
       throw new OntopiaRuntimeException(message);
+    }
   }
   
 }

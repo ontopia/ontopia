@@ -33,7 +33,9 @@ public class SQLValueReference implements SQLValueIF {
   protected String alias;
   
   public SQLValueReference(SQLValueIF refvalue) {
-    if (refvalue == null) throw new IllegalArgumentException("Referenced SQLValueIF cannot be null.");
+    if (refvalue == null) {
+      throw new IllegalArgumentException("Referenced SQLValueIF cannot be null.");
+    }
     this.refvalue = refvalue;
   }
   
@@ -101,8 +103,9 @@ public class SQLValueReference implements SQLValueIF {
   public boolean equals(Object obj) {
     if (obj instanceof SQLValueReference) {
       SQLValueReference other = (SQLValueReference)obj;
-      if (refvalue.equals(other.getReference()))
+      if (refvalue.equals(other.getReference())) {
         return true;
+      }
     }
     return false;
   }

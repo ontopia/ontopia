@@ -105,14 +105,17 @@ public class Context {
     this.relation = relation;
     this.entityObjects = new Object[relation.getEntities().size()];
     if (this.newObjects == null ||
-        !this.newObjects.isEmpty())
+        !this.newObjects.isEmpty()) {
       this.newObjects = new HashSet<Object>();
+    }
     if (this.oldObjects == null ||
-        !this.oldObjects.isEmpty())
+        !this.oldObjects.isEmpty()) {
       this.oldObjects = new HashSet<Object>();
+    }
     if (this.oldValues == null ||
-        !this.oldValues.isEmpty())
+        !this.oldValues.isEmpty()) {
       this.oldValues = new HashMap<Object, List<?>[]>();
+    }
     this.extents = (Collection<Object>[]) Array.newInstance(Collection.class, this.entityObjects.length);
   }
 
@@ -138,8 +141,9 @@ public class Context {
    * INTERNAL: Gets the topic map query processor currently in use.
    */    
   public QueryProcessorIF getQueryProcessor() {
-    if (qp == null)
+    if (qp == null) {
       qp = QueryUtils.getQueryProcessor(getTopicMap());
+    }
     return qp;
   }
 
@@ -201,8 +205,9 @@ public class Context {
     for (int i=0; i < entityObjects.length; i++) {
       Entity e = entities.get(i);
       String eid = e.getId();
-      if (id.equals(eid))
+      if (id.equals(eid)) {
         return this.entityObjects[i];
+      }
     }
     throw new DB2TMConfigException("Entity reference " + id + " does not exist.");
   }
@@ -228,12 +233,13 @@ public class Context {
    * method will return true if this is the first time we've seen it.
    */    
   protected boolean registerOldObject(Object object) {
-    if (this.newObjects.contains(object))
+    if (this.newObjects.contains(object)) {
       // if it is a new object return false
       return false;
-    else
+    } else {
       // return true if this is the first time we see this object
       return this.oldObjects.add(object);
+    }
   }
 
   /**
@@ -258,11 +264,13 @@ public class Context {
    */    
   protected Object reuseOldFieldValue(Object object, int fieldIndex) {
     List<?>[] fieldValues = this.oldValues.get(object);
-    if (fieldValues == null || fieldIndex > fieldValues.length-1)
+    if (fieldValues == null || fieldIndex > fieldValues.length-1) {
       return null;
+    }
     List<?> values = fieldValues[fieldIndex];
-    if (values == null || values.isEmpty())
+    if (values == null || values.isEmpty()) {
       return null;
+    }
     // reuse last object
     return values.remove(values.size() - 1);
   }
@@ -304,12 +312,15 @@ public class Context {
                     log.debug("      -R {} :{}", topic, r.getType());
                     a.remove();
                     // notify context
-                    if (topic != null) characteristicsChanged(topic);
+                    if (topic != null) {
+                      characteristicsChanged(topic);
+                    }
                   }
                 }
               } else {
-                if (o != null)
+                if (o != null) {
                   System.err.println("Unknown old value: " + o);
+                }
               }
             }
           }          

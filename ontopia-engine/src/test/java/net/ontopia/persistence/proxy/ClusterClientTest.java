@@ -672,8 +672,9 @@ public class ClusterClientTest extends AbstractClusterTest {
     // leave cluster
     leaveCluster();
 
-    if (topicmap != null)
+    if (topicmap != null) {
       topicmap.getStore().close();
+    }
   }
 
   @Override
@@ -681,7 +682,9 @@ public class ClusterClientTest extends AbstractClusterTest {
     System.out.println("Client is ready.");
     while (true) {
       Thread.sleep(100);
-      if (done) break;
+      if (done) {
+        break;
+      }
     }
   }
   
@@ -697,7 +700,9 @@ public class ClusterClientTest extends AbstractClusterTest {
       testsRun++;
       System.out.println("Received test: " + mt.testname);
       ClientTest ct = (ClientTest)tests.get(mt.testname);
-      if (ct == null) throw new OntopiaRuntimeException("Could not find test: " + mt.testname);
+      if (ct == null) {
+        throw new OntopiaRuntimeException("Could not find test: " + mt.testname);
+      }
       ct.run(mt);
       topicmap.getStore().commit();
       

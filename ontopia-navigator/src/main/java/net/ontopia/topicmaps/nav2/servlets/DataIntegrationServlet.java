@@ -69,13 +69,15 @@ public class DataIntegrationServlet extends HttpServlet {
 
     // get topic map id
     String topicMapId = topicMapId = getInitParameter("topicMapId");
-    if (topicMapId == null)
+    if (topicMapId == null) {
       throw new ServletException("Topic map identifier is not specified.");
+    }
     
     // parse path
     String path = request.getPathInfo();
-    if (path == null)
+    if (path == null) {
       throw new ServletException("Path is missing.");
+    }
     path = path.substring(1);
     
     String[] args = StringUtils.split(path, "/");
@@ -84,13 +86,15 @@ public class DataIntegrationServlet extends HttpServlet {
 
     // get topics query
     String topicsQuery = getInitParameter("topicsQuery");
-    if (topicsQuery == null)
+    if (topicsQuery == null) {
       throw new ServletException("Parameter 'topicsQuery' is not specified.");
+    }
 
     // get characteristcs query
     String characteristicsQuery = getInitParameter("characteristicsQuery");
-    if (characteristicsQuery == null)
+    if (characteristicsQuery == null) {
       throw new ServletException("Parameter 'characteristicsQuery' is not specified.");
+    }
     
     TopicMapStoreIF targetStore = TopicMaps.createStore(topicMapId, false);
     try {
@@ -171,8 +175,9 @@ public class DataIntegrationServlet extends HttpServlet {
   public TopicMapIF transformRequest(String transformId, InputStream xmlstream, LocatorIF base) throws Exception {
 
     InputStream xsltstream = StreamUtils.getInputStream("classpath:" + transformId + ".xsl");    
-    if (xsltstream == null)
+    if (xsltstream == null) {
       throw new ServletException("Could not find style sheet '" + transformId + ".xsl'");
+    }
     
     // set up source and target streams
     // Source xmlSource = new StreamSource(xmlstream);

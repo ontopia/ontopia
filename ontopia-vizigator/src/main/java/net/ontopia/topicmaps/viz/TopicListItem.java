@@ -80,10 +80,12 @@ class TopicListItem {
     @Override
     public int compare(Object first, Object second) {
 
-      if (first == null)
+      if (first == null) {
         return 1;
-      if (second == null)
+      }
+      if (second == null) {
         return -1;
+      }
 
       String firstString = first.toString();
       String secondString = second.toString();

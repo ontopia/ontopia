@@ -63,18 +63,20 @@ public class DataType {
    * INTERNAL: Gets the property value
    */
   public String getProperty(String property) {
-    if (properties == null)
+    if (properties == null) {
       return null;
-    else
+    } else {
       return properties.get(property);
+    }
   }
 
   /**
    * INTERNAL: Adds table property.
    */
   public void addProperty(String property, String value) {
-    if (properties == null)
+    if (properties == null) {
       properties = new HashMap<String, String>();
+    }
     properties.put(property, value);
   }
   
@@ -82,10 +84,13 @@ public class DataType {
    * INTERNAL: Removes table property.
    */
   public void removeProperty(String property, String value) {
-    if (properties == null) return;
+    if (properties == null) {
+      return;
+    }
     properties.remove(property);
-    if (properties.isEmpty())
+    if (properties.isEmpty()) {
       properties = null;
+    }
   }
 
   /**

@@ -139,12 +139,13 @@ public class TypesPrecedenceFrame extends JFrame {
     while (iterator.hasNext()) {
       TopicIF type = (TopicIF) iterator.next();
       
-      if (type.equals(defaultPrecedence))
+      if (type.equals(defaultPrecedence)) {
         topicTypes.add(new TopicListItem(type,
             Messages.getString("Viz.UnknownTypes")));
-      else 
+      } else { 
         topicTypes.add(new TopicListItem(type,
             controller.getStringifier()));
+      }
     }
     setListData(topicTypesList, topicTypes);
   }
@@ -174,10 +175,12 @@ public class TypesPrecedenceFrame extends JFrame {
   private void rank(TopicListItem selected, boolean up) {
     if (selected != null) {
       // If there's no further ranked element, do nothing.
-      if (up && topicTypes.firstElement() == selected)
+      if (up && topicTypes.firstElement() == selected) {
         return;
-      if (!up && topicTypes.lastElement() == selected)
+      }
+      if (!up && topicTypes.lastElement() == selected) {
         return;
+      }
       
       // Determine the new index of the element.
       int newIndex = topicTypes.indexOf(selected) + (up ? -1 : 1);
@@ -198,10 +201,11 @@ public class TypesPrecedenceFrame extends JFrame {
           .changeRank(selected.getTopic(), up);
       
       // Update the highest ranked topic (of the two) in the view.
-      if (up)
+      if (up) {
         controller.updateViewType(selected.getTopic());
-      else
+      } else {
         controller.updateViewType(swapTopic);
+      }
     }
   }
 }

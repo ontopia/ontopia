@@ -107,9 +107,10 @@ public class NameImpl extends ScopedImpl implements Name {
   }
 
   private void checkScope(Collection<org.tmapi.core.Topic> scope) {
-    if (getScope().containsAll(scope))
+    if (getScope().containsAll(scope)) {
       throw new ModelConstraintException(this,
           "The variant has the same scope as the name!");
+    }
 
   }
 
@@ -283,8 +284,9 @@ public class NameImpl extends ScopedImpl implements Name {
     // the variant again.
     
     for (Variant v : getVariants()) {
-      if (((VariantImpl) v).getExplicitScope().contains(theme))
+      if (((VariantImpl) v).getExplicitScope().contains(theme)) {
         v.addTheme(theme);
+      }
     }
 
   }

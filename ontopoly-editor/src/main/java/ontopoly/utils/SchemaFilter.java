@@ -58,8 +58,9 @@ public class SchemaFilter implements Predicate {
     boolean include = true;
     TopicIF systemTopic = topic.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_SYSTEM_TOPIC);
     
-    if (thutils.isInstanceOf(topic, systemTopic))
+    if (thutils.isInstanceOf(topic, systemTopic)) {
       include = false;
+    }
     
     // check subject identifiers first
     Iterator<LocatorIF> it = topic.getSubjectIdentifiers().iterator();
@@ -73,13 +74,15 @@ public class SchemaFilter implements Predicate {
           PSI.ON_VERSION.equals(psi) ||
           PSI.ON_SUPERCLASS_SUBCLASS.equals(psi) ||
           PSI.ON_SUPERCLASS.equals(psi) ||
-          PSI.ON_SUBCLASS.equals(psi))
+          PSI.ON_SUBCLASS.equals(psi)) {
         return true;
+      }
       
       // If one PSI is an Ontopoly system PSI, then the topic should
       // be filtered out unless there is an exception
-      if (psi.getAddress().startsWith("http://psi.ontopia.net/ontology/"))
+      if (psi.getAddress().startsWith("http://psi.ontopia.net/ontology/")) {
         include = false;
+      }
     }
     return include;
   }

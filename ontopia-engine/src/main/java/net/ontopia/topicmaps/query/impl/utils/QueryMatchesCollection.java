@@ -89,12 +89,16 @@ public class QueryMatchesCollection implements Collection {
     // linear scan
     if (o == null) {
       for (int row = 0; row <= matches.last; row++) {
-	if (matches.data[row][this.colidx] == null) return true;
+	if (matches.data[row][this.colidx] == null) {
+    return true;
+  }
       }
       return false;
     } else {
       for (int row = 0; row <= matches.last; row++) {
-	if (o.equals(matches.data[row][this.colidx])) return true;
+	if (o.equals(matches.data[row][this.colidx])) {
+    return true;
+  }
       }
       return false;
     }
@@ -103,9 +107,11 @@ public class QueryMatchesCollection implements Collection {
   @Override
   public boolean containsAll(Collection c) {
     Iterator e = c.iterator();
-    while (e.hasNext())
-      if(!contains(e.next()))
-	return false;
+    while (e.hasNext()) {
+      if (!contains(e.next())) {
+        return false;
+      }
+    }
     
     return true;
   }
@@ -121,16 +127,18 @@ public class QueryMatchesCollection implements Collection {
 
   @Override
   public Object[] toArray(Object[] a) {
-    if (a.length < matches.last+1)
+    if (a.length < matches.last+1) {
       a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), matches.last+1);
+    }
 
     int row = 0;
     for (; row <= matches.last; row++) {
       a[row] = matches.data[row][colidx];
     }
     
-    if (a.length > row+1)
+    if (a.length > row+1) {
       a[row+1] = null;
+    }
     
     return a;
   }
@@ -148,8 +156,9 @@ public class QueryMatchesCollection implements Collection {
       Object o = i.next();
       buf.append(o == this ? "(this Collection)" : String.valueOf(o));
       hasNext = i.hasNext();
-      if (hasNext)
-	buf.append(", ");
+      if (hasNext) {
+        buf.append(", ");
+      }
     }
     
     buf.append(']');

@@ -65,37 +65,40 @@ public class OccurrenceComparator implements Comparator<OccurrenceIF> {
   public int compare(OccurrenceIF oc1, OccurrenceIF oc2) {
     int cmp;
     // first compare by type
-    if (oc1.getType() == oc2.getType())
+    if (oc1.getType() == oc2.getType()) {
       cmp = 0;
-    else if (oc1.getType() == null)
+    } else if (oc1.getType() == null) {
       cmp = 1;
-    else if (oc2.getType() == null)
+    } else if (oc2.getType() == null) {
       cmp = -1;
-    else
+    } else {
       cmp = tc.compare(oc1.getType(), oc2.getType());
+    }
 
     // if that had no effect, try by locator
     if (cmp == 0) {
-      if (oc1.getLocator() == oc2.getLocator())
+      if (oc1.getLocator() == oc2.getLocator()) {
         cmp = 0;
-      else if (oc1.getLocator() == null)
+      } else if (oc1.getLocator() == null) {
         cmp = 1;
-      else if (oc2.getLocator() == null)
+      } else if (oc2.getLocator() == null) {
         cmp = -1;
-      else
+      } else {
         cmp = oc1.getLocator().getAddress().compareTo(oc2.getLocator().getAddress());
+      }
     }
 
     // if that didn't work, try by value
     if (cmp == 0) {
-      if (oc1.getValue().equals(oc2.getValue()))
+      if (oc1.getValue().equals(oc2.getValue())) {
         cmp = 0;
-      else if (oc1.getValue() == null)
+      } else if (oc1.getValue() == null) {
         cmp = 1;
-      else if (oc2.getValue() == null)
+      } else if (oc2.getValue() == null) {
         cmp = -1;
-      else
+      } else {
         cmp = oc1.getValue().compareTo(oc2.getValue());
+      }
     } 
     
     return cmp;

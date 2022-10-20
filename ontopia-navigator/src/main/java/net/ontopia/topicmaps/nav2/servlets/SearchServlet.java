@@ -51,13 +51,15 @@ public class SearchServlet extends HttpServlet {
 
     // get topic map id
     String topicMapId = topicMapId = getInitParameter("topicMapId");
-    if (topicMapId == null)
+    if (topicMapId == null) {
       throw new ServletException("Topic map identifier is not specified.");
+    }
 
     // get query and parameters
     String query = getInitParameter("query");
-    if (query == null)
+    if (query == null) {
       throw new ServletException("Query is not specified.");
+    }
     String arg = request.getParameter("query");
     Map params = (arg == null ? Collections.EMPTY_MAP : Collections.singletonMap("query", arg));
     
@@ -77,10 +79,11 @@ public class SearchServlet extends HttpServlet {
         Object object = (Object)qr.getValue(0);
         Float relevance = (Float)qr.getValue(1);
 
-        if (object instanceof TMObjectIF)
+        if (object instanceof TMObjectIF) {
           atts.addAttribute("", "", "id", "CDATA", ((TMObjectIF)object).getObjectId());
-        else
+        } else {
           atts.addAttribute("", "", "id", "CDATA", object.toString());
+        }
         
         atts.addAttribute("", "", "relevance", "CDATA", df.format(relevance));        
         out.startElement("", "", "hit", atts);

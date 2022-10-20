@@ -97,8 +97,9 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
   public void testAtRandom () throws IOException, SAXException {
     // Maintain old user group
     getPage("index.jsp");
-    while (visitCount <= VISIT_LIMIT) 
+    while (visitCount <= VISIT_LIMIT) {
       visitCurrentPage();
+    }
     log.debug("Finished");
   }
   
@@ -154,10 +155,11 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
    * @throws SAXException
    */
   public void visitIndex () throws IOException, SAXException {
-    if (random.nextBoolean())
+    if (random.nextBoolean()) {
       clickLinkNumber(0);
-    else
+    } else {
       clickRandomLink();
+    }
     login();
   }
 
@@ -169,14 +171,15 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     log.debug("Main - Links: " + resp.getLinks().length);
     int choice = random.nextInt(100);
     
-    if (choice < 30)
+    if (choice < 30) {
       clickButton("privilegeCreation", "createNewPrivilege");
-    else if (choice < 60)
+    } else if (choice < 60) {
       clickButton("userCreation", "createNewUser");
-    else if (choice < 90)
+    } else if (choice < 90) {
       clickButton("userGroupCreation", "createNewUserGroup");
-    else
-      clickRandomLinkOrButton();  
+    } else {
+      clickRandomLinkOrButton();
+    }  
   }
   
   /**
@@ -222,10 +225,11 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     }
 
     int choice = random.nextInt(100);
-    if (choice < 95)
+    if (choice < 95) {
       clickButton("create");
-    else
-      clickRandomLinkOrButton();  
+    } else {
+      clickRandomLinkOrButton();
+    }  
   }
 
   /**
@@ -233,12 +237,15 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
    * @throws SAXException
    */
   public void visitUser () throws IOException, SAXException {
-    if (random.nextBoolean())
+    if (random.nextBoolean()) {
       changeField("enterName", StringUtils.makeRandomId(2 + random.nextInt(10)));
-    if (random.nextBoolean())
+    }
+    if (random.nextBoolean()) {
       changeField("enterUsername", StringUtils.makeRandomId(2 + random.nextInt(10)));
-    if (random.nextBoolean())
+    }
+    if (random.nextBoolean()) {
       changeField("enterPassword", StringUtils.makeRandomId(2 + random.nextInt(10)));
+    }
     
     clickRandomButton();  
   }
@@ -255,10 +262,11 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     }
 
     int choice = random.nextInt(100);
-    if (choice < 95)
+    if (choice < 95) {
       clickButton("create");
-    else
-      clickRandomLinkOrButton();  
+    } else {
+      clickRandomLinkOrButton();
+    }  
   }
 
   /**
@@ -266,8 +274,9 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
    * @throws SAXException
    */
   public void visitUserGroup () throws IOException, SAXException {  
-    if (random.nextBoolean())
+    if (random.nextBoolean()) {
       changeField("enterName", StringUtils.makeRandomId(2 + random.nextInt(10)));
+    }
     
     clickRandomButton();  
   }
@@ -284,10 +293,11 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     }
 
     int choice = random.nextInt(100);
-    if (choice < 95)
+    if (choice < 95) {
       clickButton("create");
-    else
-      clickRandomLinkOrButton(); 
+    } else {
+      clickRandomLinkOrButton();
+    } 
   }
 
   /**
@@ -295,10 +305,11 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
    * @throws SAXException
    */
   public void clickRandomLinkOrButton () throws IOException, SAXException {
-    if (random.nextBoolean()) 
+    if (random.nextBoolean()) { 
       clickRandomLink();
-    else 
+    } else {
       clickRandomButton();
+    }
   }
   
   /**
@@ -340,8 +351,9 @@ public class AccessctlRandomizedTest extends AbstractWebBasedTestCase {
     log.debug("Clicking link number: " + index);
     WebLink links[] = resp.getLinks();
     log.debug("Links: " + links.length);
-    if (index >= links.length)
+    if (index >= links.length) {
       index = links.length - 1;
+    }
     WebLink link = links[index];
     log.debug("Index: " + index + " text: " + link.getName());
     if (!(link == null || link.getURLString().startsWith("http://"))) {

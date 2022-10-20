@@ -96,12 +96,13 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     // this is a special situation, because while we might be passed a
     // topic, we might also be passed just an IRI to be interpreted as
     // a subject identifier
-    if (topicgen.isTopic())
+    if (topicgen.isTopic()) {
       topic = topicgen.getTopic();
-    else if (topicgen.getLocator() != null)
+    } else if (topicgen.getLocator() != null) {
       startTopicSubjectIdentifier(topicgen);
-    else
+    } else {
       throw new InvalidTopicMapException("Wrong type passed as topic identifier: " + topicgen.getLiteral());
+    }
   }
   
   @Override
@@ -113,10 +114,11 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   public void addSubjectIdentifier(ValueGeneratorIF locator) {
     TopicMapIF tm = builder.getTopicMap();
     TopicIF other = tm.getTopicBySubjectIdentifier(locator.getLocator());
-    if (other != null)
+    if (other != null) {
       merge(topic, other);
-    else
+    } else {
       topic.addSubjectIdentifier(locator.getLocator());
+    }
   }
   
   @Override
@@ -132,12 +134,15 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   @Override
   public void addSubtype(ValueGeneratorIF thesubtype) {
     // get typing topics
-    if (assoctype == null)
+    if (assoctype == null) {
       assoctype = getTopicByPSI(PSI.getSAMSupertypeSubtype());
-    if (subtype == null)
+    }
+    if (subtype == null) {
       subtype = getTopicByPSI(PSI.getSAMSubtype());
-    if (supertype == null)
+    }
+    if (supertype == null) {
       supertype = getTopicByPSI(PSI.getSAMSupertype());
+    }
     
     // make the assertion
     AssociationIF assoc = builder.makeAssociation(assoctype); 
@@ -160,10 +165,11 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   @Override
   public void addReifier(ValueGeneratorIF topic) {
     TopicIF reifier = topic.getTopic();
-    if (reifier.getReified() != null)
+    if (reifier.getReified() != null) {
       throw new InvalidTopicMapException("Cannot reify " + reifiable + " because "+
                                          reifier + " already reifies " +
                                          reifier.getReified());
+    }
     reifiable.setReifier(reifier);
   }
 
@@ -254,10 +260,11 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     }
 
     Template template = context.getTemplate(name, arguments.size());
-    if (template == null)
+    if (template == null) {
       throw new InvalidTopicMapException("Template '" + name + "' not declared"+
                                          " with " + arguments.size() +
                                          " parameters");
+    }
     
     TopicIF tmp = topic; // template may end current topic block
     template.invoke(arguments, this);
@@ -271,16 +278,18 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   }
 
   private void merge(TopicIF topic, TopicIF other) {
-    if (Objects.equals(topic, other))
+    if (Objects.equals(topic, other)) {
       return;
+    }
 
     // make sure hard-wired references to "ako" topics are not lost
-    if (Objects.equals(assoctype, other))
+    if (Objects.equals(assoctype, other)) {
       assoctype = topic;
-    else if (Objects.equals(subtype, other))
+    } else if (Objects.equals(subtype, other)) {
       subtype = topic;
-    else if (Objects.equals(supertype, other))
+    } else if (Objects.equals(supertype, other)) {
       supertype = topic;
+    }
     
     MergeUtils.mergeInto(topic, other);
   }

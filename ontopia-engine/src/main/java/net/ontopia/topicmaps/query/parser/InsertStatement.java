@@ -79,8 +79,9 @@ public class InsertStatement extends ModificationStatement {
 
     // the argument values to be passed to the template
     List arguments = new ArrayList(matches.colcount);
-    for (int ix = 0; ix < matches.colcount; ix++)
+    for (int ix = 0; ix < matches.colcount; ix++) {
       arguments.add(null); // making a slot for value filled in later
+    }
 
     // a mapping from the column indexes in matches to the corresponding
     // parameter indexes in the arguments list
@@ -91,8 +92,9 @@ public class InsertStatement extends ModificationStatement {
     }
 
     for (int row = 0; row <= matches.last; row++) {
-      for (int ix = 0; ix < parameters.size(); ix++)
+      for (int ix = 0; ix < parameters.size(); ix++) {
         arguments.set(ix, makeGenerator(matches.data[row][colix[ix]]));
+      }
 
       template.invoke(arguments, handler);
       context.endContext();
@@ -104,8 +106,9 @@ public class InsertStatement extends ModificationStatement {
   @Override
   public String toString() {
     String str = "insert ..."; // FIXME: stringfy CTM part
-    if (query != null)
+    if (query != null) {
       str += "\nfrom" + query.toStringFromPart();
+    }
     return str;
   }
   
@@ -117,13 +120,14 @@ public class InsertStatement extends ModificationStatement {
     // this list allows the CTM parser to reject unknown parameters and
     // still work the way it usually does. we reset the parameter list
     // once the CTM has been parsed.
-    if (query == null)
+    if (query == null) {
       parameters = Collections.EMPTY_LIST;
-    else {
+    } else {
       String[] varnames = query.getSelectedVariableNames();
       parameters = new ArrayList<String>(varnames.length);
-      for (int ix = 0; ix < varnames.length; ix++)
+      for (int ix = 0; ix < varnames.length; ix++) {
         parameters.add("$" + varnames[ix]);
+      }
     }
 
     // actually do the CTM parsing
@@ -163,27 +167,30 @@ public class InsertStatement extends ModificationStatement {
       // what parameters are actually used in the INSERT part.
       Set<String> used = template.getUsedParameters();
       parameters = new ArrayList<String>(used.size());
-      for (String param : used)
+      for (String param : used) {
         parameters.add(param);
+      }
       template.setParameters(parameters);
 
       // finally, adjust the SELECT part of the query to match the parameters
       // actually used in the INSERT, to project the query down correctly.
       List<Variable> vars = new ArrayList<Variable>(parameters.size());
-      for (String name : parameters)
+      for (String name : parameters) {
         vars.add(new Variable(name));
+      }
       query.setSelectedVariables(vars);
     }
   }
 
   private static ValueGeneratorIF makeGenerator(Object value) {
-    if (value instanceof TopicIF)
+    if (value instanceof TopicIF) {
       return new ValueGenerator((TopicIF) value, null, null, null);
-    else if (value instanceof String)
+    } else if (value instanceof String) {
       return new ValueGenerator(null, (String) value, DataTypes.TYPE_STRING,
-                                null);
-    else
+              null);
+    } else {
       throw new OntopiaRuntimeException("Can't make generator for " + value);
+    }
   }
 
   // --- CTM parse context wrapping tolog parse context

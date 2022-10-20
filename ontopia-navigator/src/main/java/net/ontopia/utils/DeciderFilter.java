@@ -49,8 +49,9 @@ public class DeciderFilter<T> implements FilterIF<T> {
     while (objects.hasNext()) {
       T object = objects.next();
       // Add object to result if accepted by decider
-      if (decider.test(object))
+      if (decider.test(object)) {
         result.add(object);
+      }
     }
     return result;
   }

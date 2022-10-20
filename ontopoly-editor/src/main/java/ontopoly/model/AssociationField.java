@@ -50,8 +50,9 @@ public class AssociationField extends Topic {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof AssociationField))
+    if (!(obj instanceof AssociationField)) {
       return false;
+    }
 		
     AssociationField other = (AssociationField)obj;
     return (getTopicIF().equals(other.getTopicIF()));
@@ -87,7 +88,9 @@ public class AssociationField extends Topic {
    * @return List of RoleField objects
    */
   public List<RoleField> getFieldsForRoles() {
-    if (cachedFieldsForRoles != null) return cachedFieldsForRoles;
+    if (cachedFieldsForRoles != null) {
+      return cachedFieldsForRoles;
+    }
                 
     String query = "select $RF from "
 			+ "on:has-association-field(%AF% : on:association-field, $RF : on:role-field)?";
@@ -124,7 +127,9 @@ public class AssociationField extends Topic {
       rf.remove(listener);
     }
     // remove association type topic
-    if (listener != null) listener.onBeforeDelete(this);
+    if (listener != null) {
+      listener.onBeforeDelete(this);
+    }
     getTopicIF().remove();
   }
   

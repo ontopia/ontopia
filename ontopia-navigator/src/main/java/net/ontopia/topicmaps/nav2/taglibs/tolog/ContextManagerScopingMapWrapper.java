@@ -39,8 +39,9 @@ public class ContextManagerScopingMapWrapper extends ContextManagerMapWrapper {
   @Override
   public Object get(Object key) {
     Collection coll = (Collection) super.get(key);
-    if (coll == null)
+    if (coll == null) {
       return null;
+    }
     return CollectionUtils.getFirstElement(coll);
   }
 }

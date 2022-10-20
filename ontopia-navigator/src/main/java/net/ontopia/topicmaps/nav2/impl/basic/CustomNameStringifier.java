@@ -51,16 +51,19 @@ public class CustomNameStringifier implements Function<Object, String> {
   @Override
   public String apply(Object name) {
     String stringName = null;
-    if (name == null)
+    if (name == null) {
       return stringNonExistent;
-    if (name instanceof TopicNameIF)
+    }
+    if (name instanceof TopicNameIF) {
       stringName = ((TopicNameIF) name).getValue();
-    else
+    } else {
       stringName = ((VariantNameIF) name).getValue();
-    if (stringName == null)
+    }
+    if (stringName == null) {
       stringName = stringValueNull;
-    else if (stringName.isEmpty())
+    } else if (stringName.isEmpty()) {
       stringName = stringValueEmpty;
+    }
     return stringName;
   }
 

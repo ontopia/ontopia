@@ -52,10 +52,11 @@ public class FileContentStore implements ContentStoreIF {
   private File key_file;
   
   public FileContentStore(File store_root) throws ContentStoreException {
-    if (!store_root.canWrite())
+    if (!store_root.canWrite()) {
       throw new ContentStoreException("Content store root directory '" +
                                       store_root.getAbsoluteFile() +
                                       "' not writable.");
+    }
 
     // FIXME: should use java.nio.FileLock to ensure that only this
     // JVM accesses this directory. should also use some mechanism to
@@ -107,14 +108,16 @@ public class FileContentStore implements ContentStoreIF {
     checkOpen();
     int key = getNewKey();
     File file = getFileForKey(key);
-    if (file.exists())
+    if (file.exists()) {
       throw new ContentStoreException("Content store corrupted: file already " +
                                       "exists for key " + key + ".");
+    }
 
     try {
       // verify that container directory exists
-      if (!file.getParentFile().exists())
+      if (!file.getParentFile().exists()) {
         file.getParentFile().mkdir();
+      }
 
       // store data
       OutputStream out = new FileOutputStream(file);
@@ -125,10 +128,11 @@ public class FileContentStore implements ContentStoreIF {
     }
 
     // integrity check
-    if (file.length() != length)
+    if (file.length() != length) {
       throw new ContentStoreException("Stored entry for key " + key + " of wrong " +
                                       "size. Given length was " + length + ", but " +
                                       "resulting entry was " + file.length());
+    }
 
     return key;
   }
@@ -149,8 +153,9 @@ public class FileContentStore implements ContentStoreIF {
   // --- Internal helpers
 
   private void checkOpen() throws ContentStoreException {
-    if (!open)
+    if (!open) {
       throw new ContentStoreException("Content store on " + store_root +  "not open");
+    }
   }
 
   private File getFileForKey(int key) {
@@ -160,8 +165,9 @@ public class FileContentStore implements ContentStoreIF {
   }
 
   private int getNewKey() throws ContentStoreException {
-    if (last_key == end_of_key_block)
+    if (last_key == end_of_key_block) {
       allocateNewBlock();
+    }
 
     last_key++;
     return last_key;
@@ -202,8 +208,9 @@ public class FileContentStore implements ContentStoreIF {
                 old_key = Integer.parseInt(content);
                 new_key = old_key + KEY_BLOCK_SIZE;
               } catch (NumberFormatException e) {
-                if (content.length() > 100)
+                if (content.length() > 100) {
                   content = content.substring(0, 100) + "...";
+                }
                 throw new ContentStoreException("Content store key file corrupted. Contained: '" + content + "'");
               }
             }
@@ -240,8 +247,9 @@ public class FileContentStore implements ContentStoreIF {
         try {
           out.close();
         } catch (IOException e) {
-          if (!exception_thrown) 
+          if (!exception_thrown) {
             throw new ContentStoreException ("Problems occurred when closing content store.", e);
+          }
         }
       }
     }

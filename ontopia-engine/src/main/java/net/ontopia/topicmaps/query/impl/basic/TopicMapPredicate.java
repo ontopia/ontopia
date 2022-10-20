@@ -46,10 +46,11 @@ public class TopicMapPredicate implements BasicPredicateIF {
   
   @Override
   public int getCost(boolean[] boundparams) {
-    if (boundparams[0])
+    if (boundparams[0]) {
       return PredicateDrivenCostEstimator.FILTER_RESULT;
-    else
+    } else {
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
+    }
   }
 
   @Override
@@ -58,10 +59,11 @@ public class TopicMapPredicate implements BasicPredicateIF {
 
     int tmix = matches.getIndex(arguments[0]);
 
-    if (!matches.bound(tmix))
+    if (!matches.bound(tmix)) {
       return fillIn(matches, tmix);
-    else
+    } else {
       return PredicateUtils.filterClass(matches, tmix, TopicMapIF.class);
+    }
   }
   
   // internal
@@ -74,8 +76,9 @@ public class TopicMapPredicate implements BasicPredicateIF {
       newRow[tmix] = topicmap;
 
       result.last++;
-      if (result.last == result.size) 
+      if (result.last == result.size) {
         result.increaseCapacity();
+      }
       result.data[result.last] = newRow;
     }
 

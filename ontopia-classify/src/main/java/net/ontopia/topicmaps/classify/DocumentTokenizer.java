@@ -95,7 +95,9 @@ public class DocumentTokenizer {
   }
   
   protected void tokenize(TextBlock tb, String token) {
-    if (token == null) return;
+    if (token == null) {
+      return;
+    }
     
     // sentence boundaries; extract delimiters
     String delimiterBefore = null;
@@ -121,7 +123,9 @@ public class DocumentTokenizer {
       for (int i=0; i < size; i++) {
         TermNormalizerIF normalizer = termNormalizers.get(i);
         normalized = normalizer.normalize(normalized);
-        if (normalized == null) break;
+        if (normalized == null) {
+          break;
+        }
       }
     }
 
@@ -136,15 +140,17 @@ public class DocumentTokenizer {
     }
 
     // add before delimiter
-    if (delimiterBefore != null)
+    if (delimiterBefore != null) {
       tb.addToken(tdb.createDelimiter(delimiterBefore));
+    }
 
     // add token to text block
     tb.addToken(t);
     
     // add after delimiter
-    if (delimiterAfter != null)
+    if (delimiterAfter != null) {
       tb.addToken(tdb.createDelimiter(delimiterAfter));
+    }
   }
   
 }

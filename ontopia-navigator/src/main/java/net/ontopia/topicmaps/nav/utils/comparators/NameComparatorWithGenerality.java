@@ -71,23 +71,26 @@ public class NameComparatorWithGenerality extends NameComparator {
       initSortNameGrabber( basename );
       VariantNameIF sortVariant = sortNameGrabber.apply( basename );
       if (sortVariant != null) {
-        if (sortVariant.getValue() != null)
+        if (sortVariant.getValue() != null) {
           value = sortVariant.getValue();
-        else
+        } else {
           value = sortVariant.getLocator().getAddress();
+        }
       }
-      else
+      else {
         value = basename.getValue();
+      }
       // order in first instance after the generality
       value = basename.getScope().size() + value;
 
     } else if (obj instanceof VariantNameIF) {
       // --- ...second try if it's a variant name
       VariantNameIF variant = (VariantNameIF) obj;
-      if (variant.getValue() != null)
+      if (variant.getValue() != null) {
         value = variant.getValue();
-      else
+      } else {
         value = variant.getLocator().getAddress();
+      }
       // order in first instance after the generality
       value = variant.getScope().size() + value;
     } else {

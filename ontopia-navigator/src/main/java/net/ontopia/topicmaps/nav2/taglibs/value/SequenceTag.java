@@ -77,8 +77,9 @@ public class SequenceTag extends TagSupport implements ValueAcceptingTagIF {
 
   @Override
   public void accept(Collection inputCollection) {
-    if (resultCollection == null)
+    if (resultCollection == null) {
       resultCollection = new ArrayList();
+    }
 
     // we accept duplicates, and the list will ensure that we respect order
     resultCollection.addAll( inputCollection );

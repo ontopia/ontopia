@@ -138,10 +138,18 @@ public class QueryCacheTests {
       storeD.commit();
 
     } finally {
-      if (storeD != null) storeD.close();
-      if (storeC != null) storeC.close();
-      if (storeB != null) storeB.close();
-      if (storeA != null) storeA.delete(true);
+      if (storeD != null) {
+        storeD.close();
+      }
+      if (storeC != null) {
+        storeC.close();
+      }
+      if (storeB != null) {
+        storeB.close();
+      }
+      if (storeA != null) {
+        storeA.delete(true);
+      }
     }
   }
 
@@ -338,11 +346,21 @@ public class QueryCacheTests {
       storeD.commit();
 
     } finally {
-      if (storeE != null) storeE.close();
-      if (storeD != null) storeD.close();
-      if (storeC != null) storeC.close();
-      if (storeB != null) storeB.close();
-      if (storeA != null) storeA.delete(true);
+      if (storeE != null) {
+        storeE.close();
+      }
+      if (storeD != null) {
+        storeD.close();
+      }
+      if (storeC != null) {
+        storeC.close();
+      }
+      if (storeB != null) {
+        storeB.close();
+      }
+      if (storeA != null) {
+        storeA.delete(true);
+      }
     }
   }
   

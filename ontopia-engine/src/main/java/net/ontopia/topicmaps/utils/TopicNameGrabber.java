@@ -70,14 +70,16 @@ public class TopicNameGrabber implements Function<TopicIF, TopicNameIF> {
    */
   @Override
   public TopicNameIF apply(TopicIF topic) {
-    if (topic == null)
+    if (topic == null) {
       return null;
+    }
     
     List<TopicNameIF> basenames = new ArrayList<TopicNameIF>(topic.getTopicNames());
 
     // If there is no base name return null
-    if (basenames.isEmpty())
+    if (basenames.isEmpty()) {
       return null;
+    }
 
     // If there are multiple basenames rank them.    
     Collections.sort(basenames, comparator);

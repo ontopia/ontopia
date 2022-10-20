@@ -79,10 +79,11 @@ public class SubjectIdentifierPredicate
           throw new InvalidQueryException("Not a valid URI: " + args[1]);
         }
 
-        if (topic.getSubjectIdentifiers().contains(locator))
+        if (topic.getSubjectIdentifiers().contains(locator)) {
           expressions.add(JDOBoolean.TRUE);
-        else
+        } else {
           expressions.add(JDOBoolean.FALSE);
+        }
           
       } else {          
         JDOValueIF jv_topic = builder.createJDOValue(args[0]);

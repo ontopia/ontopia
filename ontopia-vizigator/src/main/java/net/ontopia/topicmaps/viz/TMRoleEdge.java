@@ -62,7 +62,9 @@ public class TMRoleEdge extends TMAbstractEdge {
 
   @Override
   protected void paintToolTip(Graphics g) {
-    if (!shouldDisplayRoleHoverHelp) return;
+    if (!shouldDisplayRoleHoverHelp) {
+      return;
+    }
 
     Point p = this.getMidPoint();
 

@@ -68,36 +68,43 @@ public class GetTag extends AbstractTemplateTag {
 
   @Override
   public int doStartTag() throws JspException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("doStartTag, name: " + name);
+    }
 
     PageParameter param = getParameter();
-    if (param == null)
+    if (param == null) {
       return fallback ? EVAL_BODY_BUFFERED : SKIP_BODY;
+    }
     
     String content = param.getContent();
-    if (content == null) content = "";
+    if (content == null) {
+      content = "";
+    }
 
     int splitpos = content.indexOf(SplitTag.TOKEN);
 
     if (splitpos != -1) {
       try {
         pageContext.getOut().print(content.substring(0, splitpos));
-	if (log.isDebugEnabled())
-	  log.debug(name + ": wrote " + splitpos + " chars");
+        if (log.isDebugEnabled()) {
+          log.debug(name + ": wrote " + splitpos + " chars");
+        }
       }
       catch(java.io.IOException ex) {
         throw new NavigatorRuntimeException("Exception occurred when writing content.", ex);
       }
       return EVAL_BODY_BUFFERED;
-    } else
+    } else {
       return SKIP_BODY;
+    }
   }
 
   @Override
   public int doEndTag() throws JspException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("doEndTag, name: " + name);
+    }
     
     PageParameter param = getParameter();
     if (param == null) {
@@ -113,7 +120,9 @@ public class GetTag extends AbstractTemplateTag {
     }
     
     String content = param.getContent();
-    if (content == null) content = "";
+    if (content == null) {
+      content = "";
+    }
 
     int splitpos = content.indexOf(SplitTag.TOKEN);
     
@@ -121,31 +130,35 @@ public class GetTag extends AbstractTemplateTag {
       try {
         if (splitpos == -1) {
           pageContext.getOut().print(content);
-	  if (log.isDebugEnabled())
-	    log.debug(name + ": wrote " + content.length() + " chars");
+          if (log.isDebugEnabled()) {
+            log.debug(name + ": wrote " + content.length() + " chars");
+          }
         } else {
           BodyContent bodyContent = getBodyContent();
           bodyContent.writeOut(pageContext.getOut());
 
           int start = splitpos + SplitTag.TOKEN.length();
           pageContext.getOut().print(content.substring(start));
-	  if (log.isDebugEnabled())
-	    log.debug(name + ": wrote " + (content.length() - start) + " chars (split)");
+          if (log.isDebugEnabled()) {
+            log.debug(name + ": wrote " + (content.length() - start) + " chars (split)");
+          }
         }
       }
       catch(java.io.IOException ex) {
         throw new NavigatorRuntimeException("Exception occurred when writing content.", ex);
       }
     } else {
-      if (splitpos != -1)
+      if (splitpos != -1) {
         throw new JspException("Split slots must be direct");
+      }
 
       try {
         // --> java.io.IOException: Illegal to flush within a custom tag 
         // pageContext.getOut().flush();
         // ** System.out.println("---before include " + content + ".");
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug("including resource '" + content + "'.");
+        }
         pageContext.include(content);
         // ** System.out.println("---after include " + content + ".");
         // ================ NOTE =======================================

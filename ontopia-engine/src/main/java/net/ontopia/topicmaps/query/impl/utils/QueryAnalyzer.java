@@ -136,8 +136,9 @@ public class QueryAnalyzer {
     
     for (int ix = 0; ix < args.length; ix++) {
       Class[] types = sign.getTypes(ix);
-      if (types.length == 1 && types[0].equals(Pair.class))
+      if (types.length == 1 && types[0].equals(Pair.class)) {
         types = TYPES_TOPIC;
+      }
 
       bc.addArgumentTypes(args[ix], types, predicate);
     }
@@ -159,8 +160,9 @@ public class QueryAnalyzer {
       String parname = (String) it.next();
       Object value = (arguments == null ? null : arguments.get(parname));
 
-      if (value == null)
+      if (value == null) {
         throw new InvalidQueryException("Parameter " + parname + " not specified");
+      }
 
       boolean ok = false;
       Object[] types = (Object[]) ptypes.get(parname);
@@ -168,10 +170,11 @@ public class QueryAnalyzer {
         Class type = (Class) types[ix];
         ok = type.isAssignableFrom(value.getClass());
       }
-      if (!ok & typecheck)
+      if (!ok & typecheck) {
         throw new InvalidQueryException(
           "Parameter " + parname + " must be " +
           PredicateSignature.getClassList(types) + ", but was " + value);
+      }
                                         
     }
   }

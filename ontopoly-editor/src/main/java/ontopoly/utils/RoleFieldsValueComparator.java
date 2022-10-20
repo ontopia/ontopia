@@ -50,7 +50,9 @@ public class RoleFieldsValueComparator implements Comparator<Object>, Serializab
       Topic t1 = rfv1.getPlayer(roleField, topic);
       Topic t2 = rfv2.getPlayer(roleField, topic);
       int retval = TopicComparator.INSTANCE.compare(t1, t2);
-      if (retval != 0) return retval;
+      if (retval != 0) {
+        return retval;
+      }
     }
     return 0;
   }

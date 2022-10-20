@@ -88,7 +88,9 @@ public class QueryCollection<E> extends AbstractCollection<E> {
       return new QueryResultIterator<E>(result);
     } catch (Throwable e) {
       if (result != null) try { result.close(); } catch (Throwable t) {}
-      if (e instanceof OntopiaRuntimeException) throw (OntopiaRuntimeException)e;
+      if (e instanceof OntopiaRuntimeException) {
+        throw (OntopiaRuntimeException)e;
+      }
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -119,7 +121,9 @@ public class QueryCollection<E> extends AbstractCollection<E> {
       return integer.intValue();
     } catch (Throwable e) {
       if (result != null) try { result.close(); } catch (Throwable t) {}
-      if (e instanceof OntopiaRuntimeException) throw (OntopiaRuntimeException)e;
+      if (e instanceof OntopiaRuntimeException) {
+        throw (OntopiaRuntimeException)e;
+      }
       throw new OntopiaRuntimeException(e);
     }
   }

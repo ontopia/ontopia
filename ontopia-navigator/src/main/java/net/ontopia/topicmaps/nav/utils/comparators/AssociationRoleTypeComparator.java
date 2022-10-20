@@ -60,12 +60,14 @@ public class AssociationRoleTypeComparator implements Comparator<AssociationRole
    * @param sortTopic The topic representing sort names.
    */
   public AssociationRoleTypeComparator(Collection<TopicIF> context, TopicIF sortTopic) {
-    if (context == null)
+    if (context == null) {
       context = Collections.emptySet();
+    }
 
     List<TopicIF> sortContext = new ArrayList<TopicIF>(context);
-    if (sortTopic != null)
+    if (sortTopic != null) {
       sortContext.add(sortTopic);
+    }
     tc = new TopicComparator(context, sortContext);
   }
   
@@ -76,11 +78,12 @@ public class AssociationRoleTypeComparator implements Comparator<AssociationRole
   public int compare (AssociationRoleIF ar1, AssociationRoleIF ar2){
     // Compare role types
     int result = tc.compare(ar1.getType(), ar2.getType());
-    if (result == 0)
+    if (result == 0) {
       // Compare role players
       return tc.compare(ar1.getPlayer(), ar2.getPlayer());
-    else
+    } else {
       return result;
+    }
   }
   
 }

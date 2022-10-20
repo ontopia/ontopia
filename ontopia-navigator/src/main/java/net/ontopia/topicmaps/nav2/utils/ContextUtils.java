@@ -49,7 +49,7 @@ public final class ContextUtils {
    *
    * @since 3.4
    */
-  public final static TopicMapRepositoryIF getRepository(ServletContext servletContext) {
+  public static TopicMapRepositoryIF getRepository(ServletContext servletContext) {
     return NavigatorUtils.getNavigatorApplication(servletContext).getTopicMapRepository();
   }
 
@@ -63,8 +63,9 @@ public final class ContextUtils {
   public static TopicMapIF getTopicMap(ServletRequest request) {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       request.getAttribute(NavigatorApplicationIF.CONTEXT_KEY);
-    if (ctxt == null)
+    if (ctxt == null) {
       throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     return ctxt.getTopicMap();
   }
 
@@ -79,8 +80,9 @@ public final class ContextUtils {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                PageContext.REQUEST_SCOPE);
-    if (ctxt == null)
+    if (ctxt == null) {
       throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     return ctxt.getTopicMap();
   }
   
@@ -93,7 +95,9 @@ public final class ContextUtils {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                PageContext.REQUEST_SCOPE);
-    if (ctxt == null) throw new OntopiaRuntimeException("Could not find navigator context.");
+    if (ctxt == null) {
+      throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     return ctxt.getContextManager().getValue(name);
 
   }
@@ -108,7 +112,9 @@ public final class ContextUtils {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                PageContext.REQUEST_SCOPE);
-    if (ctxt == null) throw new OntopiaRuntimeException("Could not find navigator context.");
+    if (ctxt == null) {
+      throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     return ctxt.getContextManager().getValue(name, defaultValue);
   }
 
@@ -130,7 +136,9 @@ public final class ContextUtils {
   public static Object getSingleValue(String name, ServletRequest request) {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       request.getAttribute(NavigatorApplicationIF.CONTEXT_KEY);
-    if (ctxt == null) throw new OntopiaRuntimeException("Could not find navigator context.");
+    if (ctxt == null) {
+      throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     Collection coll = ctxt.getContextManager().getValue(name);
     return CollectionUtils.getFirst(coll);
   }
@@ -144,7 +152,9 @@ public final class ContextUtils {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                PageContext.REQUEST_SCOPE);
-    if (ctxt == null) throw new OntopiaRuntimeException("Could not find navigator context.");
+    if (ctxt == null) {
+      throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     ctxt.getContextManager().setValue(name, value);
   }
 
@@ -157,7 +167,9 @@ public final class ContextUtils {
     NavigatorPageIF ctxt = (NavigatorPageIF)
       pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                PageContext.REQUEST_SCOPE);
-    if (ctxt == null) throw new OntopiaRuntimeException("Could not find navigator context.");
+    if (ctxt == null) {
+      throw new OntopiaRuntimeException("Could not find navigator context.");
+    }
     Collection coll = new ArrayList(1);
     coll.add(value);
     ctxt.getContextManager().setValue(name, coll);

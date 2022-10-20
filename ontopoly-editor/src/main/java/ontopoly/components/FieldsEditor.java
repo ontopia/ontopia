@@ -274,8 +274,9 @@ public class FieldsEditor extends Panel {
     Iterator<? extends FieldDefinition> fditer = fieldDefinitions.iterator();
     while (fditer.hasNext()) {
       FieldDefinition fieldDefinition = fditer.next();
-      if (!existingFieldDefinitions.contains(fieldDefinition))
+      if (!existingFieldDefinitions.contains(fieldDefinition)) {
         result.add(new FieldDefinitionModel(fieldDefinition));
+      }
     }
     Collections.sort(result, new Comparator<FieldDefinitionModel>() {
       @Override

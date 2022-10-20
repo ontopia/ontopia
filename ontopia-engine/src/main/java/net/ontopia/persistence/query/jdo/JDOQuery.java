@@ -77,21 +77,25 @@ public class JDOQuery {
   }
   
   public List getParameterNames() {
-    if (param_names == null)
+    if (param_names == null) {
       return Collections.EMPTY_LIST;
-    else
+    } else {
       return param_names;
+    }
   }
   
   public boolean hasParameterName(String name) {
-    if (params == null) return false;
+    if (params == null) {
+      return false;
+    }
     return params.containsKey(name);
   }
 
   public Class getParameterType(String name) {
     // Complain if parameter is unknown
-    if (params == null || !params.containsKey(name))
+    if (params == null || !params.containsKey(name)) {
       throw new OntopiaRuntimeException("Parameter with name '" + name + "' does not exist.");
+    }
     return (Class)params.get(name);
   }
   
@@ -99,9 +103,13 @@ public class JDOQuery {
     Objects.requireNonNull(klass, "JDO parameter class must not be null.");
     // Must be unique. Hides candidate class fields. Not 'this'.
     checkExistingName(name);
-    if (params == null) params = new HashMap();
+    if (params == null) {
+      params = new HashMap();
+    }
     params.put(name, klass);
-    if (param_names == null) param_names = new ArrayList();
+    if (param_names == null) {
+      param_names = new ArrayList();
+    }
     param_names.add(name);
   }
 
@@ -110,21 +118,25 @@ public class JDOQuery {
   }
   
   public Collection getVariableNames() {
-    if (variables == null)
+    if (variables == null) {
       return Collections.EMPTY_SET;
-    else
+    } else {
       return variables.keySet();
+    }
   }
 
   public boolean hasVariableName(String name) {
-    if (variables == null) return false;
+    if (variables == null) {
+      return false;
+    }
     return variables.containsKey(name);
   }
   
   public Class getVariableType(String name) {
     // Complain if unknown variable
-    if (variables == null || !variables.containsKey(name))
+    if (variables == null || !variables.containsKey(name)) {
       throw new OntopiaRuntimeException("JDO variable '" + name + "' does not exist.");
+    }
     return (Class)variables.get(name);
   }
   
@@ -133,15 +145,19 @@ public class JDOQuery {
     // Must be unique and not conflict with parameter names. Hides
     // candidate class fields. Not 'this'.
     checkExistingName(name);
-    if (variables == null) variables = new HashMap();
+    if (variables == null) {
+      variables = new HashMap();
+    }
     variables.put(name, klass);
   }
 
   protected void checkExistingName(String name) throws RuntimeException {
-    if (params != null && params.containsKey(name))
+    if (params != null && params.containsKey(name)) {
       throw new OntopiaRuntimeException("Parameter with name '" + name + "' already exists.");
-    if (variables != null && variables.containsKey(name))
+    }
+    if (variables != null && variables.containsKey(name)) {
       throw new OntopiaRuntimeException("Variable with name '" + name + "' already exists.");
+    }
   }
   
   public JDOExpressionIF getFilter() {
@@ -160,12 +176,13 @@ public class JDOQuery {
     String[] colnames = new String[select.size()];
     for (int i=0; i < colnames.length; i++) {
       Object selected = select.get(i);
-      if (selected instanceof JDOVariable)
-	colnames[i] = ((JDOVariable)selected).getName();
-      else if (selected instanceof JDOAggregate)
-	colnames[i] = ((JDOVariable)((JDOAggregate)selected).getValue()).getName();
-      else
-	throw new OntopiaRuntimeException("Not able to figure out column name.");
+      if (selected instanceof JDOVariable) {
+        colnames[i] = ((JDOVariable)selected).getName();
+      } else if (selected instanceof JDOAggregate) {
+        colnames[i] = ((JDOVariable)((JDOAggregate)selected).getValue()).getName();
+      } else {
+        throw new OntopiaRuntimeException("Not able to figure out column name.");
+      }
     }
     return colnames;
   }
@@ -179,14 +196,17 @@ public class JDOQuery {
   }
   
   public List getOrderBy() {
-    if (orderby == null)
+    if (orderby == null) {
       return Collections.EMPTY_LIST;
-    else
+    } else {
       return orderby;
+    }
   }
 
   public void addOrderBy(JDOOrderBy job) {
-    if (orderby == null) orderby = new ArrayList();
+    if (orderby == null) {
+      orderby = new ArrayList();
+    }
     orderby.add(job);
   }
   
@@ -210,12 +230,14 @@ public class JDOQuery {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("select ");
-    if (getDistinct())
+    if (getDistinct()) {
       sb.append("distinct ");
-    if (select == null || select.isEmpty())
+    }
+    if (select == null || select.isEmpty()) {
       sb.append('*');
-    else
+    } else {
       StringUtils.join(select, ", ", sb);
+    }
     if (getFilter() != null) {
       sb.append(" from ");
       sb.append(getFilter());

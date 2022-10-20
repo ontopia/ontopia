@@ -38,7 +38,8 @@ public class DeleteTMClassInstanceAssociation implements RecoveryObjectIF {
     Key key = new Key(type, instance);
     edge = (TMClassInstanceAssociation)view
         .findObject(key, view.configman.getTypeInstanceType());
-    if (edge != null)
-    view.deleteEdge(edge);
+    if (edge != null) {
+      view.deleteEdge(edge);
+    }
   }
 }

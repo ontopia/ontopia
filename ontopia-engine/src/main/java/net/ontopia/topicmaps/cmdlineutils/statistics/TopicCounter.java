@@ -228,7 +228,9 @@ public class TopicCounter {
             temp = retur[j];
             retur[j] = retur[j-1];
             retur[j-1] = temp;
-          } else done = true;
+          } else {
+            done = true;
+          }
           j--;
         }//end of while.
       }//end of if

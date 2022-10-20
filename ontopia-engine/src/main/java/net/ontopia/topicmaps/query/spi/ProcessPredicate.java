@@ -87,8 +87,9 @@ public abstract class ProcessPredicate extends JavaPredicate {
       
     @Override
     public void add(Object[] row) {
-      if (output.last+1 == output.size) 
+      if (output.last+1 == output.size) {
         output.increaseCapacity();
+      }
       output.last++;
 
       // clone existing row
@@ -96,8 +97,9 @@ public abstract class ProcessPredicate extends JavaPredicate {
 
       // update argument columns
       for (int i=0; i < row.length; i++) {
-        if (!boundparams[i])
+        if (!boundparams[i]) {
           newRow[this.argindexes[i]] = row[i];
+        }
       }
       
       output.data[output.last] = newRow;

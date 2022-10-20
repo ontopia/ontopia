@@ -44,10 +44,11 @@ public class IfElseTag extends BodyTagSupport {
       throw new JspTagException("logic:else is not inside logic:if.");
     }
 
-    if (ifTagParent.matchCondition())
+    if (ifTagParent.matchCondition()) {
       return SKIP_BODY;
-    else
+    } else {
       return EVAL_BODY_BUFFERED;
+    }
   }
  
   /**

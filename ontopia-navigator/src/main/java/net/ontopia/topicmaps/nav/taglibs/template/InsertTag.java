@@ -62,8 +62,9 @@ public class InsertTag extends TagSupport {
   @Override
   public int doEndTag() throws JspException {
     try {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug("doEndTag, template: '" + template + "'.");
+      }
       pageContext.include(template);
     }
     catch(java.io.IOException ex) {

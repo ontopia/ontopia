@@ -84,8 +84,9 @@ public class QueryMatches {
   public int getVariableIndex(String varname) {
     for (int ix = 0; ix < colcount; ix++) {
       if (columnDefinitions[ix] instanceof Variable &&
-          varname.equals(((Variable)columnDefinitions[ix]).getName()))
+          varname.equals(((Variable)columnDefinitions[ix]).getName())) {
             return ix;
+      }
     }
     return -1;
   }
@@ -94,9 +95,11 @@ public class QueryMatches {
    * INTERNAL: Returns the index of the given constant in the table.
    */
   public int getIndex(TMObjectIF constant) {
-    for (int ix = 0; ix < colcount; ix++)
-      if (constant.equals(columnDefinitions[ix]))
+    for (int ix = 0; ix < colcount; ix++) {
+      if (constant.equals(columnDefinitions[ix])) {
         return ix;
+      }
+    }
     return -1;
   }
 
@@ -104,9 +107,11 @@ public class QueryMatches {
    * INTERNAL: Returns the index of the given variable in the table.
    */
   public int getIndex(Variable var) {
-    for (int ix = 0; ix < colcount; ix++)
-      if (var.equals(columnDefinitions[ix]))
+    for (int ix = 0; ix < colcount; ix++) {
+      if (var.equals(columnDefinitions[ix])) {
         return ix;
+      }
+    }
     return -1;
   }
 
@@ -114,9 +119,11 @@ public class QueryMatches {
    * INTERNAL: Returns the index of the given string constant in the table.
    */
   public int getIndex(String str) {
-    for (int ix = 0; ix < colcount; ix++)
-      if (str.equals(columnDefinitions[ix]))
+    for (int ix = 0; ix < colcount; ix++) {
+      if (str.equals(columnDefinitions[ix])) {
         return ix;
+      }
+    }
     return -1;
   }
 
@@ -124,9 +131,11 @@ public class QueryMatches {
    * INTERNAL: Returns the index of the given integer constant in the table.
    */
   public int getIndex(Integer num) {
-    for (int ix = 0; ix < colcount; ix++)
-      if (num.equals(columnDefinitions[ix]))
+    for (int ix = 0; ix < colcount; ix++) {
+      if (num.equals(columnDefinitions[ix])) {
         return ix;
+      }
+    }
     return -1;
   }
 
@@ -134,9 +143,11 @@ public class QueryMatches {
    * INTERNAL: Returns the index of the given float constant in the table.
    */
   public int getIndex(Float num) {
-    for (int ix = 0; ix < colcount; ix++)
-      if (num.equals(columnDefinitions[ix]))
+    for (int ix = 0; ix < colcount; ix++) {
+      if (num.equals(columnDefinitions[ix])) {
         return ix;
+      }
+    }
     return -1;
   }
 
@@ -145,20 +156,21 @@ public class QueryMatches {
    * table.
    */
   public int getIndex(Object argument) {
-    if (argument instanceof Variable)
+    if (argument instanceof Variable) {
       return getIndex((Variable) argument);
-    else if (argument instanceof TMObjectIF)
+    } else if (argument instanceof TMObjectIF) {
       return getIndex((TMObjectIF) argument);
-    else if (argument instanceof Parameter)
+    } else if (argument instanceof Parameter) {
       return getIndex(context.getParameterValue(((Parameter) argument).getName()));
-    else if (argument instanceof String)
+    } else if (argument instanceof String) {
       return getIndex((String) argument);
-    else if (argument instanceof Integer)
+    } else if (argument instanceof Integer) {
       return getIndex((Integer) argument);
-    else if (argument instanceof Float)
+    } else if (argument instanceof Float) {
       return getIndex((Float) argument);
-    else
+    } else {
       throw new OntopiaRuntimeException("Argument of unknown type: " + argument);
+    }
   }
 
   /**
@@ -179,8 +191,9 @@ public class QueryMatches {
    * INTERNAL: Ensures that the table has at least the given size.
    */
   public void ensureCapacity(int requirement) {
-    while (size < requirement)
+    while (size < requirement) {
       size *= 2;
+    }
     
     Object[][] newdata = new Object[size][colcount];
     System.arraycopy(data, 0, newdata, 0, last+1);
@@ -206,9 +219,11 @@ public class QueryMatches {
    * representing a literal in the query.
    */
   public boolean hasLiteralColumns() {
-    for (int ix = 0; ix < colcount; ix++)
-      if (!(columnDefinitions[ix] instanceof Variable))
+    for (int ix = 0; ix < colcount; ix++) {
+      if (!(columnDefinitions[ix] instanceof Variable)) {
         return true;
+      }
+    }
     return false;
   }
 
@@ -229,13 +244,15 @@ public class QueryMatches {
       if (columnDefinitions[col] instanceof TMObjectIF ||
           columnDefinitions[col] instanceof String ||
           columnDefinitions[col] instanceof Integer ||
-          columnDefinitions[col] instanceof Float)
+          columnDefinitions[col] instanceof Float) {
         template[col] = columnDefinitions[col];
+      }
     }
     for (int ix = 0; ix <= last; ix++) {
       for (int i = 0; i < template.length; i++) {
-        if (template[i] != null)
+        if (template[i] != null) {
           data[ix][i] = template[i];
+        }
       }
     }
   }
@@ -257,8 +274,9 @@ public class QueryMatches {
    * Note that the two tables must have the same layout.
    */
   public void add(QueryMatches extra) {
-    if (extra.last == -1)
+    if (extra.last == -1) {
       return;
+    }
     
     ensureCapacity(last + extra.last + 2);
     System.arraycopy(extra.data, 0, data, last+1, extra.last+1);
@@ -269,7 +287,9 @@ public class QueryMatches {
    * EXPERIMENTAL: Adds input array to this table.
    */
   public void add(Object[][] newdata, int length) {
-    if (length < 1) return;
+    if (length < 1) {
+      return;
+    }
     // Add to query matches
     ensureCapacity(last + length + 2);
     System.arraycopy(newdata, 0, data, last+1, length);
@@ -289,8 +309,9 @@ public class QueryMatches {
     for (int i=0; i < extra_width; i++) {
       // skip column if not in query matches
       int index = getVariableIndex(extra.getColumnName(i));
-      if (index > -1)
+      if (index > -1) {
         spec[index] = i;
+      }
     }
 
     int batch_size = 50; // number of rows
@@ -308,10 +329,11 @@ public class QueryMatches {
       for (int i=0; i < spec_width; i++) {
         int idx = spec[i];
         // If index specified read value from extra, otherwise use feeding row.
-        if (idx == -1)
+        if (idx == -1) {
           crow[i] = frow[i];
-        else
+        } else {
           crow[i] = extra.getValue(idx);
+        }
       }
       if (rowidx == batch_size - 1) {
         // Prepare for new batch
@@ -346,15 +368,18 @@ public class QueryMatches {
         for (int mrow = 0; ok && mrow <= matches.last; mrow++) {
 
           boolean eq = true;
-          for (int col = 0; eq && col < cols; col++)
-            if (row[col] != null)
+          for (int col = 0; eq && col < cols; col++) {
+            if (row[col] != null) {
               eq = row[col].equals(matches.data[mrow][col]);
+            }
+          }
 
           ok = !eq; // we're ok if it didn't match
         }
 
-        if (ok) // the row is ok, so keep it
+        if (ok) { // the row is ok, so keep it
           data[next++] = row;
+        }
       }
       last = next-1;
       
@@ -367,15 +392,19 @@ public class QueryMatches {
       // columns are bound. we will always have fewer columns bound
       // than the not-ed result set, so use our own count.
       int count = 0;
-      for (int ix = 0; ix < colcount; ix++)
-        if (bound(ix))
+      for (int ix = 0; ix < colcount; ix++) {
+        if (bound(ix)) {
           count++;
+        }
+      }
 
       int compare[] = new int[count];
       count = 0;
-      for (int ix = 0; ix < colcount; ix++)
-        if (bound(ix))
-          compare[count++] = ix;      
+      for (int ix = 0; ix < colcount; ix++) {
+        if (bound(ix)) {
+          compare[count++] = ix;
+        }
+      }      
 
       // second step: build the set
       Set set = new CompactHashSet(last + 1);
@@ -394,8 +423,9 @@ public class QueryMatches {
       wrapper = new SelectiveArrayWrapper(compare);
       for (int row = 0; row <= last; row++) {
         wrapper.setArray(data[row]);
-        if (!set.contains(wrapper))
+        if (!set.contains(wrapper)) {
           data[next++] = data[row]; // keep it
+        }
       }
       last = next - 1;
     }
@@ -418,16 +448,19 @@ public class QueryMatches {
         Object[] row = data[resrow];
       
         boolean eq = true;
-        for (int col = 0; eq && col < cols; col++)
-          if (matches.data[mrow][col] != null)
+        for (int col = 0; eq && col < cols; col++) {
+          if (matches.data[mrow][col] != null) {
             eq = matches.data[mrow][col].equals(row[col]);
+          }
+        }
 
         found = eq;
       }
         
       if (!found) { // the row is ok, so add it
-        if (last+1 == size) 
-            increaseCapacity();
+        if (last+1 == size) {
+          increaseCapacity();
+        }
         last++;
         data[last] = matches.data[mrow];
       }
@@ -460,9 +493,10 @@ public class QueryMatches {
       intcols[ix] = getIndex(intarguments[ix]);
       extcols[ix] = extmatches.getIndex(extarguments[ix]);
 
-      if (extcols[ix] == -1)
+      if (extcols[ix] == -1) {
         throw new InvalidQueryException("Unused argument " +
                                         extarguments[ix]);
+      }
     }
 
     int[][] spec = new int[2][];
@@ -489,8 +523,9 @@ public class QueryMatches {
       }
       toQM.last++;
 
-      for (int col = 0; col < cols; col++) 
+      for (int col = 0; col < cols; col++) {
         to[toQM.last][toCols[col]] = from[fromrow][fromCols[col]];
+      }
     }
   }
 
@@ -515,10 +550,12 @@ public class QueryMatches {
     // find out what columns to compare by creating intcols+extcols, which
     // is really a list of pairs of columns to compare.
     int compcount = 0;
-    for (int ix = 0; ix < intspec_length; ix++)
+    for (int ix = 0; ix < intspec_length; ix++) {
       if (data[0][intspec[ix]] != null &&
-          extmatches.data[0][extspec[ix]] != null)
+          extmatches.data[0][extspec[ix]] != null) {
         compcount++;
+      }
+    }
 
     int[] intcols = new int[compcount];
     int[] extcols = new int[compcount];
@@ -543,8 +580,9 @@ public class QueryMatches {
                 (data[introw][col] != null && data[introw][col].equals(data[introw-1][col]))); col++)
           ;
 
-        if (col == width) 
+        if (col == width) {
           continue;
+        }
       }
       
       externalrow:
@@ -552,20 +590,24 @@ public class QueryMatches {
         // check that internal and external values match
         for (int col = 0; col < compcount; col++) {
           if (data[introw][intcols[col]] == null ||
-              !data[introw][intcols[col]].equals(extmatches.data[extrow][extcols[col]]))
+              !data[introw][intcols[col]].equals(extmatches.data[extrow][extcols[col]])) {
             continue externalrow;
+          }
         }
 
         // check equal pairs
-        for (int ix = 0; ix+1 < equalpairs.length; ix += 2)
+        for (int ix = 0; ix+1 < equalpairs.length; ix += 2) {
           if (extmatches.data[extrow][extspec[equalpairs[ix]]] != null &&
               !extmatches.data[extrow][extspec[equalpairs[ix]]].
-                equals(extmatches.data[extrow][extspec[equalpairs[ix+1]]]))
+                equals(extmatches.data[extrow][extspec[equalpairs[ix+1]]])) {
             continue externalrow;
+          }
+        }
 
         // generate output match
-        if (result.last+1 == result.size) 
+        if (result.last+1 == result.size) {
           result.increaseCapacity();
+        }
         result.last++;
 
         // copy internal match row
@@ -574,8 +616,9 @@ public class QueryMatches {
                          width);
 
         // fill in results from internal match
-        for (int col = 0; col < extspec_length; col++) 
+        for (int col = 0; col < extspec_length; col++) {
           result.data[result.last][intspec[col]] = extmatches.data[extrow][extspec[col]];
+        }
       }
     }
     
@@ -621,9 +664,11 @@ public class QueryMatches {
       this.row = row;
 
       hashCode = 0;
-      for (int ix = 0; ix < row.length; ix++)
-        if (row[ix] != null)
+      for (int ix = 0; ix < row.length; ix++) {
+        if (row[ix] != null) {
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
+        }
+      }
     }
 
     @Override
@@ -639,9 +684,11 @@ public class QueryMatches {
       //  - o is an ArrayWrapper
       //  - o contains an Object[] array of the same length as row
       Object[] orow = ((ArrayWrapper) o).row;
-      for (int ix = 0; ix < orow.length; ix++)
-        if (orow[ix] != null && !orow[ix].equals(row[ix]))
+      for (int ix = 0; ix < orow.length; ix++) {
+        if (orow[ix] != null && !orow[ix].equals(row[ix])) {
           return false;
+        }
+      }
       return true;
     }
   }
@@ -661,8 +708,9 @@ public class QueryMatches {
       hashCode = 0;
       for (int i = 0; i < comparedColumns.length; i++) {
         int ix = comparedColumns[i];
-        if (row[ix] != null)
+        if (row[ix] != null) {
           hashCode = (hashCode + row[ix].hashCode()) & 0x7FFFFFFF;
+        }
       }
     }
 
@@ -676,8 +724,9 @@ public class QueryMatches {
       Object[] orow = ((ArrayWrapper) o).row;
       for (int i = 0; i < comparedColumns.length; i++) {
         int ix = comparedColumns[i];
-        if (orow[ix] != null && !orow[ix].equals(row[ix]))
+        if (orow[ix] != null && !orow[ix].equals(row[ix])) {
           return false;
+        }
       }
       return true;
     }
@@ -709,14 +758,16 @@ public class QueryMatches {
         String addr = loc.getAddress();
         int ix = addr.indexOf('#');
         //! int ix = addr.lastIndexOf('/'); // include file name
-        if (ix != -1)
+        if (ix != -1) {
           return addr.substring(ix + 1);
+        }
       }
       return ((TopicIF) obj).getObjectId();
-    } else if (obj == null)
+    } else if (obj == null) {
       return "null";
-    else
+    } else {
       return obj.toString();
+    }
   }
 
 }

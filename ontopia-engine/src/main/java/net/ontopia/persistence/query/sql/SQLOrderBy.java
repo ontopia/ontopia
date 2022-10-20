@@ -72,10 +72,11 @@ public class SQLOrderBy {
 
   @Override
   public String toString() {
-    if (aggregate == null)
+    if (aggregate == null) {
       return value + (order == ASCENDING ? " asc" : " desc");
-    else 
+    } else {
       return aggregate + (order == ASCENDING ? " asc" : " desc");
+    }
   }
   
 }

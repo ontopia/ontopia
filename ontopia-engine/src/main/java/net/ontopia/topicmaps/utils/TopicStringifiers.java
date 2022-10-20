@@ -130,15 +130,17 @@ public class TopicStringifiers {
   public static Function<TopicIF, String> getStringifier(Collection<TopicIF> tnscope,
                                              Collection<TopicIF> vnscope) {
     if (tnscope == null || tnscope.isEmpty()) {
-      if (vnscope == null || vnscope.isEmpty())
+      if (vnscope == null || vnscope.isEmpty()) {
         return getDefaultStringifier();
-      else
+      } else {
         return getVariantNameStringifier(vnscope);
-    } else if (vnscope == null || vnscope.isEmpty())
+      }
+    } else if (vnscope == null || vnscope.isEmpty()) {
       return getTopicNameStringifier(tnscope);
-    else
+    } else {
       return new GrabberStringifier<TopicIF, NameIF>(new NameGrabber(tnscope, vnscope, false),
-                                    new NameStringifier());
+              new NameStringifier());
+    }
   }
 
   /**
@@ -225,8 +227,9 @@ public class TopicStringifiers {
     @Override
     public String apply(TopicIF topic) {
       // 0: verify that we have a topic at all
-      if (topic == null)
+      if (topic == null) {
         return "[No name]";
+      }
 
       // 1: pick base name with the fewest topics in scope
       //    (and avoid typed names)
@@ -238,8 +241,9 @@ public class TopicStringifiers {
         while (it.hasNext()) {
           TopicNameIF candidate = it.next();
           int score = candidate.getScope().size() * 10;
-          if (candidate.getType() != defnametype)
+          if (candidate.getType() != defnametype) {
             score++;
+          }
           
           if (score < least) {
             bn = candidate;
@@ -247,13 +251,15 @@ public class TopicStringifiers {
           }
         }
       }
-      if (bn == null)
+      if (bn == null) {
         return "[No name]";
+      }
       
       // 2: if we have a sort name, pick variant with fewest topics in scope
       //    beyond sort name; penalty for no sort name = 0xFF topics
-      if (sort == null)
+      if (sort == null) {
         return bn.getValue();
+      }
       VariantNameIF vn = null;
       least = 0xEFFF;
       Collection<VariantNameIF> vns = bn.getVariants();
@@ -263,18 +269,20 @@ public class TopicStringifiers {
           VariantNameIF candidate = it.next();
           Collection<TopicIF> scope = candidate.getScope();
           int themes;
-          if (scope.contains(sort))
+          if (scope.contains(sort)) {
             themes = scope.size() - 1;
-          else
+          } else {
             themes = 0xFF + scope.size();
+          }
           if (themes < least) {
             vn = candidate;
             least = themes;
           }
         }
       }
-      if (vn == null || vn.getValue() == null)
+      if (vn == null || vn.getValue() == null) {
         return bn.getValue();
+      }
       return vn.getValue();
     }
   }

@@ -41,7 +41,9 @@ public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFiel
     Topic[] players = afv.getPlayers();
     afvinfo = new String[rfields.length][3];
     for (int i=0; i < rfields.length; i++) {
-      if (rfields[i] == null) continue; // REALLY?
+      if (rfields[i] == null) {
+        continue; // REALLY?
+      }
       afvinfo[i][0] = rfields[i].getTopicMap().getId();
       afvinfo[i][1] = rfields[i].getId();
       afvinfo[i][2] = players[i].getId();
@@ -68,11 +70,12 @@ public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFiel
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof AssociationFieldValueModel)
+    if (obj instanceof AssociationFieldValueModel) {
       return Objects.equals(getAssociationFieldValue(),
           ((AssociationFieldValueModel) obj).getAssociationFieldValue());
-    else
+    } else {
       return false;
+    }
   }
 
   @Override

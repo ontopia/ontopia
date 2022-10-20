@@ -119,13 +119,15 @@ public class TMLoginModule implements LoginModule {
    */
   @Override
   public boolean commit() throws LoginException {
-    if (!loginSucceeded)
+    if (!loginSucceeded) {
       return false;
+    }
 
     // add user principal if not already exists
     userPrincipal = new UserPrincipal(username);
-    if (!subject.getPrincipals().contains(userPrincipal))
+    if (!subject.getPrincipals().contains(userPrincipal)) {
       subject.getPrincipals().add(userPrincipal);
+    }
     
     // Use a query to find all the RolePrincipals of the user.
     processRoles();
@@ -134,8 +136,9 @@ public class TMLoginModule implements LoginModule {
     Iterator<RolePrincipal> iter = rolePrincipals.iterator();
     while (iter.hasNext()) {
       Principal rolePrincipal = iter.next();
-      if (!subject.getPrincipals().contains(rolePrincipal))
+      if (!subject.getPrincipals().contains(rolePrincipal)) {
         subject.getPrincipals().add(rolePrincipal);
+      }
     }
     
     log.debug("TMLoginModule: committed");      
@@ -158,15 +161,19 @@ public class TMLoginModule implements LoginModule {
     
     // get options
     jndiname = (String)options.get("jndi_repository");
-    if (jndiname == null) jndiname = (String)options.get("jndiname");
+    if (jndiname == null) {
+      jndiname = (String)options.get("jndiname");
+    }
     topicmapId = (String)options.get("topicmap");
     repositoryId = (String)options.get("repository");
-    if (topicmapId == null)
+    if (topicmapId == null) {
       throw new OntopiaRuntimeException("'topicmap' option is not provided to the JAAS module. Check jaas.config file.");
+    }
     
     hashMethod = (String)options.get("hashmethod");
-    if (hashMethod == null)
+    if (hashMethod == null) {
       hashMethod = "plaintext";
+    }
   }
 
   /** 
@@ -176,9 +183,10 @@ public class TMLoginModule implements LoginModule {
   public boolean login() throws LoginException {
     log.debug("TMLoginModule: login");
     
-    if (callbackHandler == null)
+    if (callbackHandler == null) {
       throw new LoginException("Error: no CallbackHandler available " +
               "to garner authentication information from the user");
+    }
     
     // prompt for a user name and password
     NameCallback nameCallback =  new NameCallback("user name: ");
@@ -213,8 +221,9 @@ public class TMLoginModule implements LoginModule {
     Iterator<RolePrincipal> iter = rolePrincipals.iterator();
     while (iter.hasNext()) {
       Principal rolePrincipal = iter.next();
-      if (!subject.getPrincipals().contains(rolePrincipal))
+      if (!subject.getPrincipals().contains(rolePrincipal)) {
         subject.getPrincipals().remove(rolePrincipal);
+      }
     }
     log.debug("TMLoginModule: logout");
 
@@ -249,10 +258,11 @@ public class TMLoginModule implements LoginModule {
         throw new OntopiaRuntimeException("Unable to create store for '" + topicmapId + "'", e);
       }
     } else {
-      if (repositoryId == null)
+      if (repositoryId == null) {
         store = TopicMaps.createStore(topicmapId, readonly);
-      else
+      } else {
         store = TopicMaps.createStore(topicmapId, readonly, repositoryId);
+      }
       
     }      
     log.debug("TMLoginModule Initialised Correctly");
@@ -315,8 +325,9 @@ public class TMLoginModule implements LoginModule {
         TopicIF r = (TopicIF) queryResult.getValue(0);
         if (!visited.contains(r)) {
           String rolename = getName(r);
-          if (rolename != null)
+          if (rolename != null) {
             rolePrincipals.add(new RolePrincipal(rolename));
+          }
           visited.add(r);
           log.info("Added role-principal from user-group '" + rolename + "' for user '" + username + "'");
         }
@@ -325,8 +336,9 @@ public class TMLoginModule implements LoginModule {
 		if (p != null) {
 			if (!visited.contains(p)) {
 			  String rolename = getName(p);
-			  if (rolename != null)
-				rolePrincipals.add(new RolePrincipal(rolename));
+			  if (rolename != null) {
+          rolePrincipals.add(new RolePrincipal(rolename));
+        }
 			  visited.add(p);
 			  log.info("Added role-principal from privilege '" + rolename + "' for user '" + username + "'");
 			}
@@ -339,13 +351,19 @@ public class TMLoginModule implements LoginModule {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (queryResult != null) queryResult.close();
-      if (topicMap != null) topicMap.getStore().close();
+      if (queryResult != null) {
+        queryResult.close();
+      }
+      if (topicMap != null) {
+        topicMap.getStore().close();
+      }
     }
   }
   
   private boolean verifyUsernamePassword(String username, String password) {
-    if (username == null || password == null) return false;
+    if (username == null || password == null) {
+      return false;
+    }
     
     TopicMapIF topicMap = getTopicMap();
     QueryResultIF queryResult = null;
@@ -375,8 +393,12 @@ public class TMLoginModule implements LoginModule {
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
-      if (queryResult != null) queryResult.close();
-      if (topicMap != null) topicMap.getStore().close();
+      if (queryResult != null) {
+        queryResult.close();
+      }
+      if (topicMap != null) {
+        topicMap.getStore().close();
+      }
     }
   }
 }

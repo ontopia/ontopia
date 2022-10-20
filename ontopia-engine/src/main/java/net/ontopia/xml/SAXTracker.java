@@ -82,14 +82,16 @@ public abstract class SAXTracker extends DefaultHandler {
     openElements.push(qname);
 
     keepContents = keepContentsOf.contains(qname);
-    if (keepContents)
+    if (keepContents) {
       content = new StringBuilder();
+    }
   }
 
   @Override
   public void characters(char[] chars, int start, int length) {
-    if (keepContents)
+    if (keepContents) {
       content.append(chars, start, length);
+    }
   }
     
   @Override

@@ -53,25 +53,29 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
 
     this.topicModel = new TopicModel<Topic>(topicMapId, topicId);
     Topic topic = topicModel.getTopic();
-    if (topic == null)
-        throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+    if (topic == null) {
+      throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+    }
 
     // if "topicType" parameter is specified, pull out most specific direct type    
     TopicType tt = null;
     String topicTypeId = parameters.getString("topicTypeId");
-    if (topicTypeId != null)
+    if (topicTypeId != null) {
       tt = topic.getMostSpecificTopicType(new TopicTypeModel(topicMapId, topicTypeId).getTopicType());
+    }
     
     // if not topic type found, use first available direct type
-    if (tt == null)
+    if (tt == null) {
       tt = OntopolyUtils.getDefaultTopicType(topic);
+    }
     this.topicTypeModel = new TopicTypeModel(tt);
 
     String viewId = parameters.getString("viewId");
-    if (viewId != null)
+    if (viewId != null) {
       this.fieldsViewModel = new FieldsViewModel(topicMapId, viewId);
-    else
+    } else {
       this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
+    }
     
     // page is read-only if topic type is read-only
     
@@ -126,13 +130,15 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     //! params.put("topicTypeId", getTopicType().getId());
     
     FieldsView fieldsView = getFieldsView();
-    if (!fieldsView.isDefaultView())
+    if (!fieldsView.isDefaultView()) {
       params.put("viewId", fieldsView.getId());
+    }
     
     PageParameters thisParams = getPageParameters();
     // forward buttons parameter
-    if (thisParams.getString("buttons") != null)
+    if (thisParams.getString("buttons") != null) {
       params.put("buttons", "true");
+    }
 
     return params;
   }

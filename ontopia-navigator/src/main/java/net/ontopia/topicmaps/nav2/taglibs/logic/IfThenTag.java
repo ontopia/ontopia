@@ -44,13 +44,15 @@ public class IfThenTag extends BodyTagSupport {
   @Override
   public int doStartTag() throws JspTagException {
     this.ifTagParent = (IfTag) findAncestorWithClass(this, IfTag.class);
-    if (ifTagParent == null)
+    if (ifTagParent == null) {
       throw new JspTagException("logic:then tag is not inside logic:if tag.");
+    }
 
-    if (!ifTagParent.matchCondition())
+    if (!ifTagParent.matchCondition()) {
       return SKIP_BODY;
-    else
+    } else {
       return EVAL_BODY_BUFFERED;
+    }
   }
  
   /**

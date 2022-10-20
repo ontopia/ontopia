@@ -97,21 +97,24 @@ public class NameComparator implements Comparator<NameIF> {
       initSortNameGrabber( basename );
       VariantNameIF sortVariant = sortNameGrabber.apply( basename );
       if (sortVariant != null) {
-        if (sortVariant.getValue() != null)
+        if (sortVariant.getValue() != null) {
           value = sortVariant.getValue();
-        else
+        } else {
           value = sortVariant.getLocator().getAddress();
+        }
       }
-      else
+      else {
         value = basename.getValue();
+      }
 
     } else if (obj instanceof VariantNameIF) {
       // --- ...second try if it's a variant name
       VariantNameIF variant = (VariantNameIF) obj;
-      if (variant.getValue() != null)
+      if (variant.getValue() != null) {
         value = variant.getValue();
-      else
+      } else {
         value = variant.getLocator().getAddress();
+      }
     } else {
       throw new OntopiaRuntimeException("NameComparator Error: This comparator only compares " +
                                         "TopicNameIFs and VariantNameIFs. Got " + obj);
@@ -128,8 +131,12 @@ public class NameComparator implements Comparator<NameIF> {
     String value1 = getName(o1);
     String value2 = getName(o2);
     
-    if (value1 == null) return 1;
-    if (value2 == null) return -1;
+    if (value1 == null) {
+      return 1;
+    }
+    if (value2 == null) {
+      return -1;
+    }
     
     return value1.compareToIgnoreCase(value2);
   }

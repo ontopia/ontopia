@@ -80,9 +80,10 @@ public class CanonicalPrinter implements ContentHandler {
 
     // then write it out in sorted order
     writer.print("<" + name);
-    for (int i = 0; i < attNames.length; i++) 
+    for (int i = 0; i < attNames.length; i++) { 
       writer.print(" " + attNames[i] + "=\"" + escape(atts.getValue(attNames[i])) +
 		   "\"");
+    }
     writer.print(">");
   }
 

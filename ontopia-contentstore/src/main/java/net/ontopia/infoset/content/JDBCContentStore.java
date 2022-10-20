@@ -108,8 +108,12 @@ public class JDBCContentStore implements ContentStoreIF {
           return false;
         }
       } finally {
-        if (ps != null) ps.close();
-        if (rs != null) rs.close();
+        if (ps != null) {
+          ps.close();
+        }
+        if (rs != null) {
+          rs.close();
+        }
       }
     } catch (Throwable t) {
       throw new ContentStoreException(t);
@@ -125,7 +129,9 @@ public class JDBCContentStore implements ContentStoreIF {
         ps = conn.prepareStatement(sql_get);
         ps.setInt(1, key);
       } catch (SQLException e) {
-        if (ps != null) ps.close();      
+        if (ps != null) {
+          ps.close();
+        }      
         throw e;
       }
       
@@ -140,11 +146,16 @@ public class JDBCContentStore implements ContentStoreIF {
         if (rs.next()) {
           InputStream istream = rs.getBinaryStream(1);
           return new JDBCBinaryInputStream(ps, rs, istream, readLength(istream));
-        } else
+        } else {
           return null;
+        }
       } catch (SQLException e) {
-        if (ps != null) ps.close();
-        if (rs != null) rs.close();
+        if (ps != null) {
+          ps.close();
+        }
+        if (rs != null) {
+          rs.close();
+        }
         throw e;
       }
     } catch (Throwable t) {
@@ -154,8 +165,9 @@ public class JDBCContentStore implements ContentStoreIF {
 
   protected int readLength(InputStream stream) throws IOException {
     byte[] b = new byte[4];
-    if (stream.read(b) < 4)
+    if (stream.read(b) < 4) {
       throw new RuntimeException("Could not read content length.");
+    }
     
     return
       ((b[3] & 0xFF) << 0) +
@@ -196,8 +208,12 @@ public class JDBCContentStore implements ContentStoreIF {
         ps.setBinaryStream(2, pstream, length + b.length);
         ps.executeUpdate();
       } finally {
-        if (ps != null) ps.close();
-        if (pstream != null) pstream.close();
+        if (ps != null) {
+          ps.close();
+        }
+        if (pstream != null) {
+          pstream.close();
+        }
       }
 
       return key;
@@ -216,7 +232,9 @@ public class JDBCContentStore implements ContentStoreIF {
         int rows = ps.executeUpdate();
         return (rows >= 1);
       } finally {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       }
     } catch (Throwable t) {
       throw new ContentStoreException(t);

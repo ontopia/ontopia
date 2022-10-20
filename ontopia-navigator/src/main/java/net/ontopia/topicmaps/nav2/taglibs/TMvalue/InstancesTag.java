@@ -51,26 +51,27 @@ public class InstancesTag extends BaseValueProducingAndAcceptingTag {
   public Collection process(Collection tmObjects) throws JspTagException {
     ClassInstanceIndexIF index = null;
 
-    if (tmObjects == null || tmObjects.isEmpty())
+    if (tmObjects == null || tmObjects.isEmpty()) {
       return Collections.EMPTY_SET;
-    else{
+    } else{
       Collection instances = new HashSet();
       Iterator iter = tmObjects.iterator();
       TopicIF topic;
       while (iter.hasNext()) {
         topic = (TopicIF) iter.next();
-        if (index == null)
+        if (index == null) {
           index = getIndex(topic);
+        }
 
-        if (instancesAs.equals(KIND_TOPIC))
+        if (instancesAs.equals(KIND_TOPIC)) {
           instances.addAll( index.getTopics(topic) );
-        else if (instancesAs.equals(KIND_ASSOC))
+        } else if (instancesAs.equals(KIND_ASSOC)) {
           instances.addAll( index.getAssociations(topic) );
-        else if (instancesAs.equals(KIND_ROLE))
+        } else if (instancesAs.equals(KIND_ROLE)) {
           instances.addAll( index.getAssociationRoles(topic) );
-        else if (instancesAs.equals(KIND_OCC))
+        } else if (instancesAs.equals(KIND_OCC)) {
           instances.addAll( index.getOccurrences(topic) );
-        else if (instancesAs.equals(KIND_ALL)) {
+        } else if (instancesAs.equals(KIND_ALL)) {
           instances.addAll( index.getTopics(topic) );
           instances.addAll( index.getAssociations(topic) );
           instances.addAll( index.getAssociationRoles(topic) );
@@ -91,10 +92,11 @@ public class InstancesTag extends BaseValueProducingAndAcceptingTag {
         && !as.equals(KIND_TOPIC)
         && !as.equals(KIND_OCC)
         && !as.equals(KIND_ASSOC)
-        && !as.equals(KIND_ROLE))
+        && !as.equals(KIND_ROLE)) {
       throw new NavigatorRuntimeException("Not supported value ('" + as + "')" +
                                           " given for attribute 'as' in" +
                                           " element 'instances'.");
+    }
 
     this.instancesAs = as;
   }

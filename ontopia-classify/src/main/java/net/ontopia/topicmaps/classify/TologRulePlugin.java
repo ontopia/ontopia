@@ -35,9 +35,13 @@ public class TologRulePlugin implements ClassifyPluginIF {
 
   @Override
   public boolean isClassifiable(TopicIF topic) {
-    if (topic == null) return false;
+    if (topic == null) {
+      return false;
+    }
     TopicMapIF tm = topic.getTopicMap();
-    if (tm == null) return false;
+    if (tm == null) {
+      return false;
+    }
     QueryProcessorIF qp = QueryUtils.getQueryProcessor(tm);
     try {
       QueryResultIF qr = qp.execute("import \"classify.tl\" as classify classify:is-classifiable(%topic%)?", Collections.singletonMap("topic", topic));
@@ -53,9 +57,13 @@ public class TologRulePlugin implements ClassifyPluginIF {
   
   @Override
   public ClassifiableContentIF getClassifiableContent(TopicIF topic) {
-    if (topic == null) return null;
+    if (topic == null) {
+      return null;
+    }
     TopicMapIF tm = topic.getTopicMap();
-    if (tm == null) return null;
+    if (tm == null) {
+      return null;
+    }
     QueryProcessorIF qp = QueryUtils.getQueryProcessor(tm);
     try {
       QueryResultIF qr = qp.execute("import \"classify.tl\" as classify cl:get-classifiable-content(%topic%, $DOCURI)?", Collections.singletonMap("topic", topic));

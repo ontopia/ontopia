@@ -54,9 +54,9 @@ public class SubclassesTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection topics) throws JspTagException {
     // find all subclasses of all topics in collection
-    if (topics == null || topics.isEmpty())
+    if (topics == null || topics.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       HashSet subclasses = new HashSet();
       Iterator iter = topics.iterator();
       TopicIF topic = null;
@@ -71,11 +71,12 @@ public class SubclassesTag extends BaseValueProducingAndAcceptingTag {
         }
 
         // the topic casting succeeded, now find the subclasses
-        if (levelNumber == null)
+        if (levelNumber == null) {
           subclasses.addAll( hierUtils.getSubclasses(topic) );
-        else
+        } else {
           subclasses.addAll( hierUtils.getSubclasses(topic,
                              levelNumber.intValue()));
+        }
         
       } // while
       return subclasses;
@@ -101,8 +102,9 @@ public class SubclassesTag extends BaseValueProducingAndAcceptingTag {
       levelNumber = null;
     }
 
-    if (levelNumber.intValue() < 1)
+    if (levelNumber.intValue() < 1) {
       throw new OntopiaRuntimeException("Only positive levels are allowed.");
+    }
   }
   
 }

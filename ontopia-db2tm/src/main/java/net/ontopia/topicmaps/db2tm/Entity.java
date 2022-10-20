@@ -59,21 +59,24 @@ public class Entity {
   }
 
   public void compile() {
-    for (Field field : ifields)
+    for (Field field : ifields) {
       field.compile();
-    for (Field field : cfields)
+    }
+    for (Field field : cfields) {
       field.compile();
-    for (Field field : rfields)
+    }
+    for (Field field : rfields) {
       field.compile();
+    }
 
-    if (etype == TYPE_TOPIC)
+    if (etype == TYPE_TOPIC) {
       this.requiresTopic = true;
-    else {
+    } else {
       // association entity require topic if there are subject
       // locator, subject identity or characteristics fields
-      if (!cfields.isEmpty())
+      if (!cfields.isEmpty()) {
         this.requiresTopic = true;
-      else {
+      } else {
         for (int i=0; i < ifields.size(); i++) {
           int ftype = ifields.get(i).getFieldType();
           if (ftype == Field.TYPE_SUBJECT_LOCATOR ||
@@ -86,10 +89,11 @@ public class Entity {
     }
     // default to primary=true if both identity and characteristics/role fields
     if (primary == null) {
-      if (!ifields.isEmpty() && (!cfields.isEmpty() || !rfields.isEmpty()))
+      if (!ifields.isEmpty() && (!cfields.isEmpty() || !rfields.isEmpty())) {
         primary = Boolean.TRUE;
-      else
-        primary = Boolean.FALSE;      
+      } else {
+        primary = Boolean.FALSE;
+      }      
     } else {
       // complain if <topic primary="false"> with characteristics and synctype is changelog
       if (etype == TYPE_TOPIC && primary == Boolean.FALSE && !ifields.isEmpty() && (!cfields.isEmpty() || !rfields.isEmpty())) {
@@ -207,8 +211,9 @@ public class Entity {
   }
 
   public void addExtentQuery(String extentQuery) {
-    if (extentQuery == null)
+    if (extentQuery == null) {
       throw new DB2TMConfigException("Extent query cannot be null (entity " + this + ").");
+    }
     extents.add(extentQuery);
   }
 

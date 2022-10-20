@@ -135,8 +135,9 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
   protected Method getGetterMethod() {
     if (getter == null) {
       getter = field.getGetterMethod();
-      if (getter == null)
+      if (getter == null) {
         throw new OntopiaRuntimeException("Could not find getter method for field " + field.getName());
+      }
     }
     return getter;
   }
@@ -144,8 +145,9 @@ public abstract class AbstractFieldInfo implements FieldInfoIF {
   protected Method getSetterMethod() {
     if (setter == null) {
       setter = field.getSetterMethod();
-      if (setter == null)
+      if (setter == null) {
         throw new OntopiaRuntimeException("Could not find setter method for field " + field.getName());
+      }
     }
     return setter;
   }

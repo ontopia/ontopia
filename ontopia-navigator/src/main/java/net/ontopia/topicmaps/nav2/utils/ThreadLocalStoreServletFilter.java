@@ -74,17 +74,22 @@ public class ThreadLocalStoreServletFilter implements Filter {
     boolean readOnly = getReadOnly(request);
     
     TopicMapStoreIF store;
-    if (repositoryId == null)
+    if (repositoryId == null) {
       store = TopicMaps.createStore(topicMapId, readOnly);
-    else
-      store = TopicMaps.createStore(topicMapId, readOnly, repositoryId);      
+    } else {
+      store = TopicMaps.createStore(topicMapId, readOnly, repositoryId);
+    }      
 
     try {
       data.set(store);
       chain.doFilter(request, response);
-      if (!readOnly) store.commit();
+      if (!readOnly) {
+        store.commit();
+      }
     } catch (Exception e) {
-      if (!readOnly) store.abort();      
+      if (!readOnly) {
+        store.abort();
+      }      
       log.error("Exception thrown from doFilter.", e);      
     } finally {
       data.set(null);

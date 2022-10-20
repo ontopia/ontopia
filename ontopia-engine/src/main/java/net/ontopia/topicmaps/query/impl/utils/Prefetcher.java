@@ -111,11 +111,14 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, Object[] objects, 
                              int type, int field, boolean traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (objects == null || objects.length == 0) return false;
+    if (objects == null || objects.length == 0) {
+      return false;
+    }
 
     // prefetch fields in rdbms implementation
     return ((net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore)tm.getStore())
@@ -124,11 +127,14 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, Object[] objects, 
                              int type, int[] fields, boolean[] traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (objects == null || objects.length == 0) return false;
+    if (objects == null || objects.length == 0) {
+      return false;
+    }
 
     // prefetch fields in rdbms implementation
     return ((net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore)tm.getStore())
@@ -141,11 +147,14 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, Collection objects, 
                              int type, int field, boolean traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (objects.isEmpty()) return false;
+    if (objects.isEmpty()) {
+      return false;
+    }
 
     // prefetch fields in rdbms implementation
     return ((net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore)tm.getStore())
@@ -154,11 +163,14 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, Collection objects, 
                              int type, int[] fields, boolean[] traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (objects.isEmpty()) return false;
+    if (objects.isEmpty()) {
+      return false;
+    }
 
     // prefetch fields in rdbms implementation
     return ((net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore)tm.getStore())
@@ -171,11 +183,14 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, QueryMatches matches, int qmidx, 
                              int type, int field, boolean traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (matches.last < 0) return false;
+    if (matches.last < 0) {
+      return false;
+    }
 
     // prefetch fields in rdbms implementation
     return ((net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore)tm.getStore())
@@ -184,11 +199,14 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, QueryMatches matches, int qmidx, 
                              int type, int[] fields, boolean[] traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (matches.last < 0) return false;
+    if (matches.last < 0) {
+      return false;
+    }
 
     // prefetch fields in rdbms implementation
     return ((net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore)tm.getStore())
@@ -201,13 +219,16 @@ public class Prefetcher {
 
   public static boolean prefetch(TopicMapIF tm, SearchResultIF result, 
                              String idfname) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
     try {
       int size = result.hits();
-      if (size <= 1) return false;
+      if (size <= 1) {
+        return false;
+      }
       
       // extract object ids
       Collection oids = new CompactHashSet(size);
@@ -215,9 +236,13 @@ public class Prefetcher {
        DocumentIF doc = result.getDocument(i);
        
        FieldIF idfield = doc.getField(idfname);
-       if (idfield == null) continue;
+       if (idfield == null) {
+         continue;
+       }
        String idval = idfield.getValue();
-       if (idval == null) continue;
+       if (idval == null) {
+         continue;
+       }
 
        oids.add(idval);
       }
@@ -236,11 +261,14 @@ public class Prefetcher {
 
   public static boolean prefetchRolesByType(TopicMapIF tm, QueryMatches matches, int qmidx, 
                                        TopicIF rtype, int[] fields, boolean[] traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (matches.last < 0) return false;
+    if (matches.last < 0) {
+      return false;
+    }
 
     // NOTE: taking advantage of the fact that the
     // TopicIF.getRolesByType results are being cached
@@ -260,11 +288,14 @@ public class Prefetcher {
 
   public static boolean prefetchRolesByType(TopicMapIF tm, QueryMatches matches, int qmidx, 
                                        TopicIF rtype, TopicIF atype, int[] fields, boolean[] traverse) {
-    if (!doPrefetch(tm))
+    if (!doPrefetch(tm)) {
       return false;
+    }
 
     // no prefetching if no hits
-    if (matches.last < 0) return false;
+    if (matches.last < 0) {
+      return false;
+    }
 
     Collection players = new QueryMatchesCollection(matches, qmidx);
 
@@ -278,17 +309,20 @@ public class Prefetcher {
   // -----------------------------------------------------------------------------
 
   private static boolean doPrefetch(TopicMapIF tm) {
-    if (tm.getStore().getImplementation() != TopicMapStoreIF.RDBMS_IMPLEMENTATION)
+    if (tm.getStore().getImplementation() != TopicMapStoreIF.RDBMS_IMPLEMENTATION) {
       return false;
+    }
 
     RDBMSTopicMapStore store = (RDBMSTopicMapStore) tm.getStore();
     // no prefetching if shared cache is disabled
-    if (!PropertyUtils.isTrue(store.getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.shared"), true))
+    if (!PropertyUtils.isTrue(store.getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.shared"), true)) {
       return false;
+    }
     // default is true, but check prefetch property
     String value = store.getProperty("net.ontopia.topicmaps.query.core.prefetch");
-    if (value == null)
+    if (value == null) {
       return true; // on by default    
+    }
 
     value = value.trim().toLowerCase();
     return "true".equals(value);

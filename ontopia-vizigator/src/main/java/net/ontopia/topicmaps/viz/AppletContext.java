@@ -57,10 +57,11 @@ public class AppletContext extends ApplicationContext {
       URL absurl = new URL(vizlet.getCodeBase(), url);
 
       String target = vizlet.getParameter("gototarget");
-      if (target == null || target.length() == 0)
+      if (target == null || target.length() == 0) {
         vizlet.getAppletContext().showDocument(absurl);
-      else
+      } else {
         vizlet.getAppletContext().showDocument(absurl, target);
+      }
 
     } catch (MalformedURLException e) {
       ErrorDialog.showError(vizlet, Messages.getString("Viz.BadUrl") + url);
@@ -86,8 +87,9 @@ public class AppletContext extends ApplicationContext {
   public void openPropertiesURL(String url) {
     try {
       String target = vizlet.getParameter("proptarget");
-      if (target == null || target.length() == 0)
+      if (target == null || target.length() == 0) {
         target = "_blank";
+      }
       vizlet.getAppletContext().showDocument(new URL(url), target);
     } catch (MalformedURLException e) {
       ErrorDialog.showError(vizlet, Messages.getString("Viz.BadUrl") + url);
@@ -131,9 +133,10 @@ public class AppletContext extends ApplicationContext {
     String scopeValue = vizlet.getParameter("scopevalue");
 
     if (scopeType == null || scopeValue == null || scopeType.length() == 0
-        || scopeValue.length() == 0)
+        || scopeValue.length() == 0) {
       // Get the scope topic from the config topicmap
       return getConfiguredScopingTopic(aTopicmap);
+    }
 
     // Otherwise, resolve the scoping topic from the applet parameters
     return getTopicFrom(aTopicmap, scopeType, scopeValue);
@@ -146,12 +149,13 @@ public class AppletContext extends ApplicationContext {
       Set srclocs = Collections.EMPTY_SET;
       Set subjids = Collections.EMPTY_SET;
       Set sublocs = Collections.EMPTY_SET;
-      if ("source".equals(type))
+      if ("source".equals(type)) {
         srclocs = Collections.singleton(locator);
-      else if ("indicator".equals(type))
+      } else if ("indicator".equals(type)) {
         subjids = Collections.singleton(locator);
-      else
+      } else {
         sublocs = Collections.singleton(locator);
+      }
       return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
     } catch (MalformedURLException m) {
       throw new OntopiaRuntimeException(m);
@@ -179,24 +183,28 @@ public class AppletContext extends ApplicationContext {
     Collection topics;
     if (!indicators.isEmpty() ||
         !locators.isEmpty() ||
-        !subjects.isEmpty())
+        !subjects.isEmpty()) {
       topics = tindex.getTopics(indicators, locators, subjects);
-    else
+    } else {
       return null;
-    if (topics == null || topics.isEmpty())
+    }
+    if (topics == null || topics.isEmpty()) {
       return null;
+    }
     return (TopicIF) CollectionUtils.getFirst(topics);
   }
 
   private Collection getCollectionFor(LocatorIF aLocator) {
-    if (aLocator == null)
+    if (aLocator == null) {
       return Collections.EMPTY_LIST;
+    }
     return Collections.singletonList(aLocator);
   }
 
   private LocatorIF getLocatorFrom(OccurrenceIF anOccurrence) {
-    if (anOccurrence == null)
+    if (anOccurrence == null) {
       return null;
+    }
     return anOccurrence.getLocator();
   }
 
@@ -205,9 +213,10 @@ public class AppletContext extends ApplicationContext {
     System.out.println("Loading start topic...");
     
     String idValue = vizlet.getParameter("idvalue");
-    if (idValue == null)
+    if (idValue == null) {
       throw new VizigatorReportException("The required \"idvalue\" parameter" +
           " has not been set.");
+    }
     LocatorIF locator;
     try {
       locator = new URILocator(idValue);
@@ -216,10 +225,11 @@ public class AppletContext extends ApplicationContext {
     }
     
     String idtype = vizlet.getParameter("idtype");
-    if (idtype == null)
+    if (idtype == null) {
       throw new VizigatorReportException("The required \"idtype\" parameter" +
           " has not been set. It should be set to \"indicator\", \"source\" " +
           "or \"subject\".");
+    }
     Collection indicators = ("indicator".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
     Collection sources = ("source".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
     Collection subject = ("subject".equals(idtype) ? Collections.singleton(locator) : Collections.EMPTY_SET);
@@ -241,9 +251,10 @@ public class AppletContext extends ApplicationContext {
 
   public String getTmid() {
     String retVal = vizlet.getParameter("tmid");
-    if (retVal == null)
+    if (retVal == null) {
       throw new VizigatorReportException("The required \"tmid\" parameter " +
           "has not been set.");
+    }
     return retVal;
   }
 

@@ -218,20 +218,22 @@ public class TreeWidget {
 
     // get current node
     TopicIF current = null;
-    if (parameters.containsKey("current"))
+    if (parameters.containsKey("current")) {
       current = getTopic(get(parameters, "current"));
+    }
 
     int action = getAction(parameters);
-    if (action == EXPAND_ALL)
+    if (action == EXPAND_ALL) {
       openNodes = new UniversalSet();
-    else if (action == CLOSE_ALL)
+    } else if (action == CLOSE_ALL) {
       openNodes = new CompactHashSet();
-    else {
+    } else {
       openNodes = getOpenNodes(request);
-      if (action == OPEN)
+      if (action == OPEN) {
         openNodes.add(current);
-      else if (action == CLOSE)
+      } else if (action == CLOSE) {
         openNodes.remove(current);
+      }
     }
 
     int topline = 0;
@@ -252,13 +254,15 @@ public class TreeWidget {
 
   protected void parseQueries() throws InvalidQueryException {
     // check that query has been parsed
-    if (query == null)
+    if (query == null) {
       query = processor.parse(querystr, context.getDeclarationContext());
+    }
   }
 
   protected void initializeContext(HttpServletRequest request) {
-    if (context == null)
+    if (context == null) {
       context = FrameworkUtils.getContextTag(request);
+    }
   }
 
   private void doQuery(int topline, Writer writer) throws IOException,
@@ -282,18 +286,20 @@ public class TreeWidget {
       if (openNodes.contains(topic)) {
         ancestors = new ArrayList();
         process(group);
-        if (group.getChildren().isEmpty())
+        if (group.getChildren().isEmpty()) {
           group.setAttribute("action", null);
-        else
+        } else {
           group.setAttribute("action", "close");
+        }
         openNodes.add(topic);
       } else {
         // check if there are children
         QueryResultIF leaves = getChildren(topic);
-        if (leaves.next())
+        if (leaves.next()) {
           group.setAttribute("action", "open");
-        else
+        } else {
           group.setAttribute("action", null);
+        }
       }
     }
     return root;
@@ -308,8 +314,9 @@ public class TreeWidget {
 
   protected void process(TopicTreeNode parent) throws InvalidQueryException {
     TopicIF topic = parent.getTopic();
-    if (ancestors.contains(topic))
+    if (ancestors.contains(topic)) {
       return;
+    }
     ancestors.add(topic);
     
     QueryResultIF children = getChildren(topic);
@@ -321,17 +328,19 @@ public class TreeWidget {
 
       if (openNodes.contains(childtopic)) {
         process(child);
-        if (!child.getChildren().isEmpty())
+        if (!child.getChildren().isEmpty()) {
           child.setAttribute("action", "close");
+        }
         openNodes.add(childtopic);
 
       } else {
         // this one is not open; need to check if it has children
         QueryResultIF leaves = getChildren(childtopic);
-        if (leaves.next())
+        if (leaves.next()) {
           child.setAttribute("action", "open");
-        else
+        } else {
           child.setAttribute("action", null);
+        }
       }
     }
 
@@ -344,23 +353,27 @@ public class TreeWidget {
     staticurl = ownpage + "topline=";
     startRender(writer);
 
-    if (topline > 1)
+    if (topline > 1) {
       renderBackButton(writer, topline);
+    }
     renderExpandAllButton(writer, topline);
     renderCloseAllButton(writer, topline);
-    if (topline + windowSize < nodes)
+    if (topline + windowSize < nodes) {
       renderForwardButton(writer, topline);
+    }
     renderAdditionalOnTopExpandCloseLine(writer, topline);
     writer.write("<br><br>\n");
 
     renderTree(node, topline, writer);
 
-    if (topline > 1)
+    if (topline > 1) {
       renderBackButton(writer, topline);
+    }
     renderExpandAllButton(writer, topline);
     renderCloseAllButton(writer, topline);
-    if (topline + windowSize < nodes)
+    if (topline + windowSize < nodes) {
       renderForwardButton(writer, topline);
+    }
     renderAdditionalOnBottomExpandCloseLine(writer, topline);
 
     endRender(writer);
@@ -370,9 +383,10 @@ public class TreeWidget {
       throws IOException {
     List children = node.getChildren();
     int lineno = 0;
-    for (int ix = 0; ix < children.size(); ix++)
+    for (int ix = 0; ix < children.size(); ix++) {
       lineno = writeNode((TopicTreeNode) children.get(ix), topline, writer, 0,
           lineno, false);
+    }
 
     writer.write("<br>");
   }
@@ -385,13 +399,14 @@ public class TreeWidget {
       String id = (String) node.getAttribute("id");
       String action = (String) node.getAttribute("action");
 
-      if (action == null)
+      if (action == null) {
         writer.write("<img border=0 src=" + imageurl + "spacer.gif width="
             + (level * 30) + " height=5>" + "<img border=0 src=" + imageurl
             + "boxed.gif>");
-      else
+      } else {
         renderNodeButton(topline, level, "open".equals(action) ? OPEN : CLOSE,
             id, writer);
+      }
 
       writer.write("<a name=" + id + "></a>");
 
@@ -402,9 +417,10 @@ public class TreeWidget {
 
     if (lineno < topline + windowSize) {
       List children = node.getChildren();
-      for (int ix = 0; ix < children.size(); ix++)
+      for (int ix = 0; ix < children.size(); ix++) {
         lineno = writeNode((TopicTreeNode) children.get(ix), topline, writer,
             level + 1, lineno, nextIndoc);
+      }
     }
 
     return lineno;
@@ -414,25 +430,28 @@ public class TreeWidget {
 
   private int getAction(Map parameters) {
     String action = get(parameters, "todo");
-    if (action == null)
+    if (action == null) {
       action = "close";
+    }
 
-    if ("open".equals(action))
+    if ("open".equals(action)) {
       return OPEN;
-    else if ("close".equals(action))
+    } else if ("close".equals(action)) {
       return CLOSE;
-    else if ("expandall".equals(action))
+    } else if ("expandall".equals(action)) {
       return EXPAND_ALL;
-    else if ("closeall".equals(action))
+    } else if ("closeall".equals(action)) {
       return CLOSE_ALL;
-    else
+    } else {
       return -1;
+    }
   }
 
   private Set getOpenNodes(HttpServletRequest request) {
     String opennodes = (String) request.getSession().getAttribute(name);
-    if (opennodes == null)
+    if (opennodes == null) {
       opennodes = "";
+    }
 
     return makeSet(StringUtils.split(opennodes, ","));
   }
@@ -446,16 +465,18 @@ public class TreeWidget {
   private Set makeSet(String[] open) {
     Set nodes = new CompactHashSet(open.length * 2);
     for (int ix = 0; ix < open.length; ix++) {
-      if (open[ix].equals(""))
+      if (open[ix].equals("")) {
         continue;
+      }
 
       TMObjectIF object = getObjectById(open[ix]);
       // if the ID list in the session is out of date, because the
       // topic map was reloaded or changed in the meantime, we may
       // get non-existent topics or non-topics back here. if this
       // happens we assume we have out-of-date info and stop
-      if (object == null || !(object instanceof TopicIF))
+      if (object == null || !(object instanceof TopicIF)) {
         return new CompactHashSet();
+      }
 
       nodes.add(object);
     }
@@ -477,8 +498,9 @@ public class TreeWidget {
   protected String list(Set nodes) {
     StringBuilder buf = new StringBuilder();
     Iterator it = nodes.iterator();
-    while (it.hasNext())
+    while (it.hasNext()) {
       buf.append("," + getId((TopicIF) it.next()));
+    }
     return buf.toString();
   }
 
@@ -489,13 +511,15 @@ public class TreeWidget {
 
     Object value = parameters.get(name);
 
-    if (value instanceof String) // then your app server is broken
+    if (value instanceof String) { // then your app server is broken
       return (String) value;
+    }
 
     // else, we continue like normal
     String[] values = (String[]) value;
-    if (values == null)
+    if (values == null) {
       return null;
+    }
     return values[0];
   }
 
@@ -504,8 +528,9 @@ public class TreeWidget {
     List children = node.getChildren();
     int size = children.size();
     int count = 0;
-    for (int ix = 0; ix < size; ix++)
+    for (int ix = 0; ix < size; ix++) {
       count += countNodes((TopicTreeNode) children.get(ix));
+    }
     return count + size;
   }
 
@@ -528,15 +553,17 @@ public class TreeWidget {
     TopicIF topic = node.getTopic();    
     if (topic != null) {
       out.write("<a href='" + makeNodeUrl(node) + "'");
-      if (nodeFrame != null)
+      if (nodeFrame != null) {
         out.write(" target=\"" + nodeFrame + "\"");
+      }
       out.write(">");
     }
 
     out.write(toString(topic));
 
-    if (topic != null)
+    if (topic != null) {
       out.write("</a>");
+    }
   }
 
   /**
@@ -546,8 +573,9 @@ public class TreeWidget {
   protected void renderNodeButton(int topline, int level, int action,
       String id, Writer out) throws IOException {
     String image = "expand";
-    if (action == CLOSE)
+    if (action == CLOSE) {
       image = "collapse";
+    }
 
     out.write("<a href=\"" + staticurl + topline + "&todo="
         + (action == OPEN ? "open" : "close") + "&current=" + id

@@ -467,12 +467,13 @@ public class MergeTMTest {
       while (it.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it.next();
                 
-        if (occ.getLocator() != null && occ.getLocator().equals(loc2))
+        if (occ.getLocator() != null && occ.getLocator().equals(loc2)) {
           Assert.assertTrue("source occurrence type not copied correctly",
                  occ.getType().getSubjectLocators().contains(makeLocator("http://www.ikke.no")));
-        else
+        } else {
           Assert.assertTrue("mysterious occurrence after merge: " + occ,
                  occ.equals(oc1));
+        }
                 
         Assert.assertTrue("original occurrence lost",
                t1.getOccurrences().contains(oc1));
@@ -560,8 +561,9 @@ public class MergeTMTest {
       Iterator it = topicmap1.getTopics().iterator();
       while (it.hasNext()) {
         topic = (TopicIF) it.next();
-        if (topic.getSubjectLocators().contains(makeLocator("http://www.ontopia.net")))
+        if (topic.getSubjectLocators().contains(makeLocator("http://www.ontopia.net"))) {
           break;
+        }
       }
 
       Assert.assertTrue("wrong number of types after merge",

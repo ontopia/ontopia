@@ -221,7 +221,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
               Topic[] players = value.getPlayers();
               for (int i=0; i < players.length; i++) {
-                if (!page.filterTopic(players[i])) return false;
+                if (!page.filterTopic(players[i])) {
+                  return false;
+                }
               }
             }
             return visible;
@@ -257,8 +259,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               }
             }
             // notify association panel so that it can update itself
-            if (changesMade)
+            if (changesMade) {
               FieldInstanceAssociationBinaryPanel.this.onUpdate(target);
+            }
           }
         };
         fieldValueButtons.add(removeButton);
@@ -304,8 +307,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             fieldValueModel.setExistingValue(value); 
           }          
         };
-        if (binaryField.getUpdateableComponent() != null)
+        if (binaryField.getUpdateableComponent() != null) {
           binaryField.getUpdateableComponent().add(new FieldUpdatingBehaviour(true));
+        }
         item.add(binaryField); 
 
         addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
@@ -338,10 +342,11 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         }
         @Override
         public boolean isVisible() {
-          if (readonlyField) 
+          if (readonlyField) { 
             return false;
-          else
+          } else {
             return fieldValuesModel.containsExisting();
+          }
         }
         @Override public String getImage() {
           return fieldValuesModel.getShowExtraField() ? "remove.gif" : "add.gif";
@@ -396,8 +401,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               }
             }          
             // notify association panel so that it can update itself
-            if (changesMade)
+            if (changesMade) {
               FieldInstanceAssociationBinaryPanel.this.onUpdate(target);
+            }
           }
         }        
         @Override
@@ -432,12 +438,13 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
 
       CreateAction ca = roleField.getCreateAction();
       int createAction;
-      if (embedded || ca.isNone())
+      if (embedded || ca.isNone()) {
         createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_NONE;
-      else if (ca.isNavigate())
+      } else if (ca.isNavigate()) {
         createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_NAVIGATE;
-      else
+      } else {
         createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_POPUP;
+      }
 
       FieldInstanceCreatePlayerPanel createPanel = new FieldInstanceCreatePlayerPanel("create", fieldInstanceModel, fieldsViewModel, new RoleFieldModel(ofield), this, createAction) {
         @Override

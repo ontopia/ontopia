@@ -76,8 +76,9 @@ public class DefaultIfDecider implements NavigatorDeciderIF {
     if (equalsVariableName == null &&
         equalsSize == -1 &&
         lessThanNumber == -1 &&
-        greaterThanNumber == -1)
+        greaterThanNumber == -1) {
       greaterThanNumber = 0;
+    }
   }
   
   // -----------------------------------------------------------
@@ -86,8 +87,9 @@ public class DefaultIfDecider implements NavigatorDeciderIF {
 
   @Override
   public boolean ok(NavigatorPageIF contextTag, Object obj) {
-    if (obj == null)
+    if (obj == null) {
       return false;
+    }
     // log.debug("--> ok? " + obj + " class: " + obj.getClass().getName());
     if (obj instanceof Collection) {
       Collection collection = (Collection) obj;
@@ -101,14 +103,17 @@ public class DefaultIfDecider implements NavigatorDeciderIF {
       //   equals: equals (variable name)
 
       // Perform operations
-      if (greaterThanNumber != -1 && collection.size() <= greaterThanNumber)
-          return false;
+      if (greaterThanNumber != -1 && collection.size() <= greaterThanNumber) {
+        return false;
+      }
       
-      if (equalsSize != -1 && collection.size() != equalsSize)
-          return false;
+      if (equalsSize != -1 && collection.size() != equalsSize) {
+        return false;
+      }
 
-      if (lessThanNumber != -1 && collection.size() >= lessThanNumber)
-          return false;
+      if (lessThanNumber != -1 && collection.size() >= lessThanNumber) {
+        return false;
+      }
 
       if (equalsVariableName != null) {
         // get collection to compare with (never null)

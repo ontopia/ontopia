@@ -68,18 +68,20 @@ public class DatatypePredicate
     if (args[0] instanceof VariantNameIF && args[1] instanceof String) {
 
       // Do direct predicate evaluation
-      if (args[1].equals(((VariantNameIF)args[0]).getDataType().getAddress()))
+      if (args[1].equals(((VariantNameIF)args[0]).getDataType().getAddress())) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
 
     } else if (args[0] instanceof OccurrenceIF && args[1] instanceof String) {
 
       // Do direct predicate evaluation
-      if (args[1].equals(((OccurrenceIF)args[0]).getDataType().getAddress()))
+      if (args[1].equals(((OccurrenceIF)args[0]).getDataType().getAddress())) {
         expressions.add(JDOBoolean.TRUE);
-      else
+      } else {
         expressions.add(JDOBoolean.FALSE);
+      }
             
     } else {                  
             
@@ -90,8 +92,9 @@ public class DatatypePredicate
       expressions.add(new JDOEquals(new JDOField(jv_object, "datatype", "address"), jv_datatype));
 
       // if variable: filter out nulls
-      if (jv_datatype.getType() == JDOValueIF.VARIABLE)
+      if (jv_datatype.getType() == JDOValueIF.VARIABLE) {
         expressions.add(new JDONotEquals(jv_datatype, new JDONull()));
+      }
             
       // JDOQL: O.topicmap = TOPICMAP
       expressions.add(new JDOEquals(new JDOField(jv_object, "topicmap"),

@@ -92,8 +92,9 @@ public class PrettyPrinter implements ContentHandler {
 
   @Override
   public void startElement(String uri, String localName, String qName, Attributes atts) {
-    if (level > 0)
+    if (level > 0) {
       indent();
+    }
     // Write start tag
     write(writer, '<');
     write(writer, qName);
@@ -109,14 +110,17 @@ public class PrettyPrinter implements ContentHandler {
     level++;
 
     // check arrays are still of right size
-    if (offset + level*2 > startline.length)
+    if (offset + level*2 > startline.length) {
       makeStartLineBuffer((offset + level*2) * 2);
-    if (level >= subelements.length)
+    }
+    if (level >= subelements.length) {
       makeSubelements(level * 2);
+    }
     
     // Set sub element flag on parent element to true
-    if (level > 0)
+    if (level > 0) {
       subelements[level - 1] = true;
+    }
 
     // Set sub element flag on this element to false
     subelements[level] = false;
@@ -124,8 +128,9 @@ public class PrettyPrinter implements ContentHandler {
 
   @Override
   public void endElement(String uri, String localName, String qName) {
-    if (subelements[level--])
+    if (subelements[level--]) {
       indent();
+    }
 
     write(writer, "</");
     write(writer, qName);
@@ -297,17 +302,20 @@ public class PrettyPrinter implements ContentHandler {
     startline = new char[size];
     offset = NL.length();
     int ix = 0;
-    for (; ix < offset; ix++)
+    for (; ix < offset; ix++) {
       startline[ix] = NL.charAt(ix);
+    }
 
-    for (; ix < size; ix++)
+    for (; ix < size; ix++) {
       startline[ix] = ' ';
+    }
   }
 
   protected void makeSubelements(int size) {
     boolean subs[] = new boolean[size];
-    if (subelements != null)
+    if (subelements != null) {
       System.arraycopy(subelements, 0, subs, 0, subelements.length);
+    }
     subelements = subs;
   }
   

@@ -127,7 +127,9 @@ public class VariantName extends TMObject implements VariantNameIF {
   @Override
   public TopicIF getTopic() {
     TopicNameIF name = getTopicName();
-    if (name == null) return null;
+    if (name == null) {
+      return null;
+    }
     return name.getTopic();
   }
 
@@ -198,8 +200,9 @@ public class VariantName extends TMObject implements VariantNameIF {
   public void setValue(String value, LocatorIF datatype) {
     Objects.requireNonNull(value, "Variant value must not be null.");
     Objects.requireNonNull(datatype, "Variant value datatype must not be null.");
-    if (!"URI".equals(datatype.getNotation()))
+    if (!"URI".equals(datatype.getNotation())) {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    }
     setValue(value, datatype, value.length(), value.hashCode());
   }
   
@@ -232,17 +235,20 @@ public class VariantName extends TMObject implements VariantNameIF {
   public void setReader(Reader value, long length, LocatorIF datatype) {
     Objects.requireNonNull(value, "Variant value must not be null.");
     Objects.requireNonNull(datatype, "Variant value datatype must not be null.");
-    if (length < 0)
+    if (length < 0) {
       throw new OntopiaRuntimeException("Length of reader is negative.");
-    if (!"URI".equals(datatype.getNotation()))
+    }
+    if (!"URI".equals(datatype.getNotation())) {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    }
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
   }
 
   @Override
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType()))
+    if (!DataTypes.TYPE_URI.equals(getDataType())) {
       return null;
+    }
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
@@ -250,8 +256,9 @@ public class VariantName extends TMObject implements VariantNameIF {
   @Override
   public void setLocator(LocatorIF locator) {
     Objects.requireNonNull(locator, "Variant locator must not be null.");
-    if (!"URI".equals(locator.getNotation()))
+    if (!"URI".equals(locator.getNotation())) {
       throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
+    }
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
@@ -259,10 +266,11 @@ public class VariantName extends TMObject implements VariantNameIF {
   public long getLength() {
     Number length = this.<Number>loadField(LF_length);
     long len = (length == null ? 0 : length.longValue());
-    if (len < 0)
+    if (len < 0) {
       return len * -1L;
-    else
+    } else {
       return len;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -304,8 +312,9 @@ public class VariantName extends TMObject implements VariantNameIF {
     // complain if theme already defined on parent
     if (validate) {
       TopicNameIF parent = getTopicName();
-      if (parent != null && parent.getScope().contains(theme))
+      if (parent != null && parent.getScope().contains(theme)) {
         throw new ConstraintViolationException("Can't remove theme from variant when theme is declared on topic name value.");
+      }
     }
   }
   
@@ -320,18 +329,21 @@ public class VariantName extends TMObject implements VariantNameIF {
   
   @Override
   public void setReifier(TopicIF _reifier) {
-    if (_reifier != null)
+    if (_reifier != null) {
       CrossTopicMapException.check(_reifier, this);
+    }
     if (DuplicateReificationException.check(this, _reifier)) { return; }
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-    if (oldReifier != null)
+    if (oldReifier != null) {
       oldReifier.setReified(null);
-    if (reifier != null)
+    }
+    if (reifier != null) {
       reifier.setReified(this);
+    }
   }
 
   // ---------------------------------------------------------------------------

@@ -55,8 +55,9 @@ public abstract class OntopolyImageLink extends AjaxFallbackLink<Object> {
   @Override
   protected void onComponentTag(ComponentTag tag) {
     IModel<String> titleModel = getTitleModel();
-    if (titleModel != null)
+    if (titleModel != null) {
       tag.put("title", titleModel.getObject());
+    }
     super.onComponentTag(tag);
   }
   

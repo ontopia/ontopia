@@ -88,8 +88,9 @@ public class XMLFormatModule implements FormatModuleIF {
                                         e.getSystemId() + ":" + e.getLineNumber() + ":" +
                                         e.getColumnNumber(), e);
     } catch (SAXException e) {
-      if (e.getException() instanceof IOException)
+      if (e.getException() instanceof IOException) {
         throw new OntopiaRuntimeException((IOException) e.getException());
+      }
       throw new OntopiaRuntimeException(e);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
@@ -117,8 +118,9 @@ public class XMLFormatModule implements FormatModuleIF {
     
     @Override
     public void characters (char[] ch, int start, int length) {
-      if (skipLevel == 0)
+      if (skipLevel == 0) {
         thandler.text(ch, start, length);
+      }
     }
     
     @Override

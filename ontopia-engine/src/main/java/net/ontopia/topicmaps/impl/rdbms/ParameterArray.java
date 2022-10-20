@@ -66,16 +66,18 @@ public class ParameterArray implements Externalizable {
     ParameterArray o = (ParameterArray)other;
     for (int i=0; i < params.length; i++) {
       if (params[i] == null) {
-        if (o.params[i] == null)
+        if (o.params[i] == null) {
           continue;
-        else
+        } else {
           return false;
+        }
       } else {
-        if (o.params[i] == null)
+        if (o.params[i] == null) {
           return false;
-        else
-          if (!params[i].equals(o.params[i]))
+        } else
+          if (!params[i].equals(o.params[i])) {
             return false;
+        }
       }
     }
     return true;

@@ -73,8 +73,9 @@ public class ThemeCategorizer {
     // ----- initialisation
     // for output of theme class topic basename
     Collection vnc = new ArrayList(context);
-    if (display != null)
+    if (display != null) {
       vnc.add(display);
+    }
     stringifier = new GrabberStringifier(new ContextNameGrabber(context, vnc),
                                          new NameStringifier());
 
@@ -83,8 +84,9 @@ public class ThemeCategorizer {
 
     // for topic sorting (themes)
     vnc = new ArrayList(context);
-    if (sort != null)
-      vnc.add(sort);    
+    if (sort != null) {
+      vnc.add(sort);
+    }    
     topicComparator = new TopicComparator(context, vnc);
   }
 
@@ -171,8 +173,9 @@ public class ThemeCategorizer {
                                   Function<TopicIF, String> stringifierSelectedTheme) {
     if (themeClassMap == null
         || stringifierThemeClass == null
-        || stringifierTheme == null)
+        || stringifierTheme == null) {
       return "";
+    }
     
     StringBuilder strBuf = new StringBuilder();
 
@@ -202,10 +205,11 @@ public class ThemeCategorizer {
           actTheme = (TopicIF) itRelThemes.next();
           // append string representation for theme
           if (selectedThemes != null && stringifierSelectedTheme != null) {
-            if (selectedThemes.contains(actTheme))
+            if (selectedThemes.contains(actTheme)) {
               strBuf.append( stringifierSelectedTheme.apply( actTheme ));
-            else
-              strBuf.append( stringifierTheme.apply( actTheme ));  
+            } else {
+              strBuf.append( stringifierTheme.apply( actTheme ));
+            }  
           } else {
             strBuf.append( stringifierTheme.apply( actTheme ));
           }
@@ -231,10 +235,12 @@ public class ThemeCategorizer {
                                   String templSelectedTheme) {
     if (themeClassMap == null
         || templThemeClass == null
-        || templTheme == null)
+        || templTheme == null) {
       return "";
-    if (templSelectedTheme == null)
+    }
+    if (templSelectedTheme == null) {
       templSelectedTheme = "";
+    }
     
     StringBuilder strBuf = new StringBuilder();
 
@@ -272,11 +278,12 @@ public class ThemeCategorizer {
           tmp = StringUtils.replace(tmp, "%themeId%",
                                     actTheme.getObjectId());
           // c: if selected, replace selected template
-          if (selectedThemes != null && selectedThemes.contains(actTheme))
+          if (selectedThemes != null && selectedThemes.contains(actTheme)) {
             tmp = StringUtils.replace(tmp, "%selected%",
                                       templSelectedTheme);
-          else
+          } else {
             tmp = StringUtils.replace(tmp, "%selected%", "");
+          }
 
           // -- append string representation for theme
           strBuf.append( tmp );

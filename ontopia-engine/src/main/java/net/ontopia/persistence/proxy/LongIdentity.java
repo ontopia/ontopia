@@ -94,11 +94,12 @@ public final class LongIdentity implements IdentityIF, Externalizable {
       
       // compare key
       Object okey = other.getKey(0);
-      if (okey instanceof Long)
+      if (okey instanceof Long) {
         return ((Long)okey).longValue() == key &&
           type.equals(other.getType());
-      else
+      } else {
         return false;
+      }
       
     } else if (object instanceof IdentityIF) {
       IdentityIF other = (IdentityIF)object;      

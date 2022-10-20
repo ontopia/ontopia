@@ -156,9 +156,9 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
       // getValue method should be moved somewhere else, or at least
       // out of the FieldInfoIF interface.
       Object field_value;
-      if (value == null)
+      if (value == null) {
         field_value = null;
-      else {
+      } else {
         try {
           field_value = finfo.getValue(value);
         } catch (Exception e) {
@@ -176,10 +176,11 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   public void retrieveFieldValues(Object value, List<Object> field_values) {
     for (int i=0; i < fields.length; i++) {      
       try {
-        if (value == null) 
+        if (value == null) { 
           fields[i].retrieveFieldValues(null, field_values);
-        else
+        } else {
           fields[i].retrieveFieldValues(fields[i].getValue(value), field_values);
+        }
       } catch (Exception e) {
         throw new PersistenceRuntimeException(e);
       }
@@ -190,10 +191,11 @@ public class AggregateFieldInfo extends AbstractFieldInfo {
   public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
     for (int i=0; i < fields.length; i++) {      
       try {
-        if (value == null) 
+        if (value == null) { 
           fields[i].retrieveSQLValues(null, sql_values);
-        else
+        } else {
           fields[i].retrieveSQLValues(fields[i].getValue(value), sql_values);
+        }
       } catch (Exception e) {
         throw new PersistenceRuntimeException(e);
       }

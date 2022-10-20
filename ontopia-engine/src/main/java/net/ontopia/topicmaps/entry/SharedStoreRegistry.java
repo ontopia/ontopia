@@ -91,18 +91,20 @@ public class SharedStoreRegistry {
       TopicMapRepositoryIF repository = repositories.get(registryName);
       
       // return repository if already initialized
-      if (repository != null) 
+      if (repository != null) {
         return repository;
+      }
       
-      if (sourceLocation != null)
+      if (sourceLocation != null) {
         // load repository from file
         repository = XMLConfigSource.getRepository(sourceLocation);
-      else if (resourceName != null)
+      } else if (resourceName != null) {
         // load named repository from the classpath
         repository = XMLConfigSource.getRepositoryFromClassPath(resourceName);
-      else
+      } else {
         // load repository from the classpath
         repository = XMLConfigSource.getRepositoryFromClassPath();
+      }
       
       // update shared map
       repositories.put(registryName, repository);
@@ -126,11 +128,12 @@ public class SharedStoreRegistry {
       
       // load repository from file
       TopicMapRepositoryIF newRepository;
-      if (sourceLocation != null)
+      if (sourceLocation != null) {
         newRepository = XMLConfigSource.getRepository(sourceLocation);
-      else
+      } else {
         // load repository from the classpath
         newRepository = XMLConfigSource.getRepositoryFromClassPath();
+      }
       
       // look up repository in shared map
       TopicMapRepositoryIF repository = repositories.get(registryName);

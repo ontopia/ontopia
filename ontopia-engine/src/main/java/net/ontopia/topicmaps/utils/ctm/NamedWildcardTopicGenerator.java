@@ -34,8 +34,9 @@ public class NamedWildcardTopicGenerator extends AbstractTopicGenerator {
   
   @Override
   public TopicIF getTopic() {
-    if (topic == null)
+    if (topic == null) {
       topic = context.makeAnonymousTopic(name);
+    }
     return topic;
   }
 

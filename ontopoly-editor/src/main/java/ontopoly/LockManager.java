@@ -52,14 +52,16 @@ public class LockManager implements Serializable {
   public Lock lock(String lockKey, String lockerId) {
     synchronized (locks) {
       long expiryTime = System.currentTimeMillis(); 
-      if (expiryTime >= nextPrune && (++accessCount % 100 == 0))
+      if (expiryTime >= nextPrune && (++accessCount % 100 == 0)) {
         pruneLocks(nextPrune);
+      }
       Lock lock = locks.get(lockKey);
       // return existing lock, if not expired
       if (lock != null && !lock.expired(expiryTime, getLockTimeSpan())) {
         // if the existing lock was owned by us, then update the expiry
-        if (lock.ownedBy(lockerId))
+        if (lock.ownedBy(lockerId)) {
           lock.setLockTime(expiryTime);
+        }
         return lock;
       } else {
         // create new lock
@@ -73,8 +75,9 @@ public class LockManager implements Serializable {
   public LockManager.Lock forcedUnlock(String lockKey) {
     synchronized (locks) {
       long expiryTime = System.currentTimeMillis(); 
-      if (expiryTime >= nextPrune && (++accessCount % 100 == 0))
+      if (expiryTime >= nextPrune && (++accessCount % 100 == 0)) {
         pruneLocks(nextPrune);
+      }
       return locks.remove(lockKey);
     }    
   }
@@ -82,13 +85,15 @@ public class LockManager implements Serializable {
   public LockManager.Lock unlock(String lockKey, String lockerId) {
     synchronized (locks) {
       long expiryTime = System.currentTimeMillis(); 
-      if (expiryTime >= nextPrune && (+accessCount % 100 == 0))
+      if (expiryTime >= nextPrune && (+accessCount % 100 == 0)) {
         pruneLocks(nextPrune);
+      }
       Lock lock = locks.get(lockKey);
-      if (lock != null && lock.ownedBy(lockerId))
+      if (lock != null && lock.ownedBy(lockerId)) {
         return locks.remove(lockKey);
-      else
+      } else {
         return null;
+      }
     }    
   }
 
@@ -98,8 +103,9 @@ public class LockManager implements Serializable {
       while (iter.hasNext()) {
         String lockKey = iter.next();
         Lock lock = locks.get(lockKey);
-        if (lock.ownedBy(lockerId))
+        if (lock.ownedBy(lockerId)) {
           iter.remove();
+        }
       }
     }
   }
@@ -111,8 +117,9 @@ public class LockManager implements Serializable {
       while (iter.hasNext()) {
         String lockKey = iter.next();
         Lock lock = locks.get(lockKey);
-        if (lock.expired(expiryTime, getLockTimeSpan()))
+        if (lock.expired(expiryTime, getLockTimeSpan())) {
           iter.remove();
+        }
       }
     }
     accessCount = 0;

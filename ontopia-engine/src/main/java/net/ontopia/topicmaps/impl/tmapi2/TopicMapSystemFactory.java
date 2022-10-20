@@ -67,20 +67,23 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
   @Override
   public TopicMapSystem newTopicMapSystem() throws TMAPIException {
     String store = properties.getProperty(STORE_PROPERTY);
-    if (store != null && store.equalsIgnoreCase("rdbms") )
+    if (store != null && store.equalsIgnoreCase("rdbms") ) {
       return new RDBMSTopicMapSystemImpl(this);
-    else 
+    } else {
       return new MemoryTopicMapSystemImpl(this);
+    }
   }
 
   @Override
   public boolean hasFeature(String feature) {
-    if (features.containsKey(feature))
+    if (features.containsKey(feature)) {
       return (features.get(feature)).booleanValue();
+    }
     // get default if it exists
     for (int i = 0; i < dfeatures.length; i++) {
-      if (dfeatures[i].name.equals(feature))
+      if (dfeatures[i].name.equals(feature)) {
         return dfeatures[i].defval;
+      }
     }
     return false;
   }
@@ -88,12 +91,14 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
   @Override
   public boolean getFeature(String feature)
       throws FeatureNotRecognizedException {
-    if (features.containsKey(feature))
+    if (features.containsKey(feature)) {
       return (features.get(feature)).booleanValue();
+    }
     // get default if it exists
     for (int i = 0; i < dfeatures.length; i++) {
-      if (dfeatures[i].name.equals(feature))
+      if (dfeatures[i].name.equals(feature)) {
         return dfeatures[i].defval;
+      }
     }
     throw new FeatureNotRecognizedException("The feature name '"
         + feature + "' is not recognized.");
@@ -108,21 +113,23 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
       Feature f = dfeatures[i];
       if (f.name.equals(feature)) {
         if (f.fixed) {
-          if (f.defval == value)
+          if (f.defval == value) {
             return;
-          else
+          } else {
             throw new FeatureNotSupportedException("Feature '"
                 + feature + "' is fixed to " + f.defval
                 + " by this implementation.");
+          }
         } else {
           canchg = true;
           break;
         }
       }
     }
-    if (!canchg)
+    if (!canchg) {
       throw new FeatureNotRecognizedException("Feature '"
           + feature + "' not recognized by this implementation.");
+    }
 
     features.put(feature, (value ? Boolean.TRUE : Boolean.FALSE));
   }

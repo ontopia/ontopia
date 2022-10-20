@@ -140,8 +140,9 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     // lookup roles by type
     if (roletype == null) {
       ReadOnlyTopicMap tm = (ReadOnlyTopicMap)getTopicMap();
-      if (tm == null)
+      if (tm == null) {
         throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
+      }
       return tm.getRolesByType(this, roletype);
       
     } else {
@@ -155,8 +156,9 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     // lookup roles by type
     if (roletype == null) {
       ReadOnlyTopicMap tm = (ReadOnlyTopicMap)getTopicMap();
-      if (tm == null)
+      if (tm == null) {
         throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
+      }
       return tm.getRolesByType(this, roletype, assoc_type);
       
     } else {
@@ -198,7 +200,9 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   @Override
 	public ReifiableIF getReified() {
 		String reifiedId = this.<String>loadField(Topic.LF_reified);
-		if (reifiedId == null) return null;
+		if (reifiedId == null) {
+      return null;
+    }
 		return (ReifiableIF)getTopicMap().getObjectById(reifiedId);
 	}
   

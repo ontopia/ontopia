@@ -120,10 +120,12 @@ public abstract class AbstractOntopolyTopicMapSource
   @Override
   public synchronized TopicMapReferenceIF createTopicMap(String name,
                                                          String baseAddress) {
-    if (!supportsCreate())
+    if (!supportsCreate()) {
       throw new UnsupportedOperationException("This source does not support creating new topic maps.");
-    if (path == null)
+    }
+    if (path == null) {
       throw new OntopiaRuntimeException("Cannot create reference as source does not have a path specified.");
+    }
     // make sure references map has been initialized
     getReferences();
     
@@ -170,9 +172,9 @@ public abstract class AbstractOntopolyTopicMapSource
    * INTERNAL: Creates well-formed reference ID from user-provided names.
    */
   private String createReferenceId(String name) {
-    if (name == null || name.trim().equals(""))
+    if (name == null || name.trim().equals("")) {
       name = "topicmap";
-    else {
+    } else {
       // lower casing (bug #1659) and replace all non-ascii characters
       char[] chars = name.toLowerCase().toCharArray();
       for (int i = 0; i < chars.length; i++) {
@@ -190,11 +192,13 @@ public abstract class AbstractOntopolyTopicMapSource
     // avoid reference id collisions
     int cnt = 1;
     String id = name;
-    if (!name.toLowerCase().endsWith(suffix))
+    if (!name.toLowerCase().endsWith(suffix)) {
       id += suffix;
+    }
     
-    while (refmap.containsKey(id))
+    while (refmap.containsKey(id)) {
       id = name + '-' + (cnt++) + suffix;
+    }
 
     return id;
   } 

@@ -49,21 +49,23 @@ public class MappingVirtualColumn implements ValueIF {
     this.isVirtualColumn = relation.isVirtualColumn(inputColumn);
     if (!this.isVirtualColumn) {
       this.cix = relation.getColumnIndex(inputColumn);
-      if (this.cix < 0)
+      if (this.cix < 0) {
         throw new DB2TMConfigException("Unknown mapping input column: " + inputColumn);
+      }
     }
   }
 
   @Override
   public String getValue(String[] tuple) {
     String value = (isVirtualColumn ? relation.getVirtualColumn(inputColumn).getValue(tuple) : tuple[cix]);
-    if (table.containsKey(value))
+    if (table.containsKey(value)) {
       return table.get(value);
-    else
-      if (defaultSpecified)
+    } else
+      if (defaultSpecified) {
         return defaultValue;
-      else
+    } else {
         throw new DB2TMInputException("No default value specified for mapping column '" + colname + "'", relation, tuple);
+    }
   }
 
   public void addMapping(String from_value, String to_value) {

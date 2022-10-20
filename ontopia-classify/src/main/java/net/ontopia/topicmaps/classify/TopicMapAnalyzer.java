@@ -95,8 +95,9 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
         TopicIF crtype = (TopicIF)qr.getValue(3);
         String asc = (String)qr.getValue(4);
         String usc = (String)qr.getValue(5);
-        if (ctypes.add(ctype))
+        if (ctypes.add(ctype)) {
           ctypes_sorted.add(ctype);
+        }
 
         AssociationType at = atypes.get(atype);
         if (at == null) {
@@ -173,8 +174,9 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
       }
 
       // adjust score if term found in topic map
-      if (foundMatches > 0)
+      if (foundMatches > 0) {
         term.multiplyScore(matchFactor, "found in topic map");
+      }
       
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
@@ -205,7 +207,9 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
   }
 
   private Term createTerm(Term term, String value) {
-    if (value == null) return term;
+    if (value == null) {
+      return term;
+    }
     Variant variant = tdb.getVariant(value);
     if (variant != null) {
       if (term == null) {
@@ -262,10 +266,11 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
 
     public double getScoreThreshold(boolean hasCandidates) {
       //! System.out.println("HS: " + hasCandidates + " " + atype + " " + ascore + " vs " + uscore);
-      if (hasCandidates)
+      if (hasCandidates) {
         return (ascore >= 0 ? ascore : uscore);
-      else
+      } else {
         return (uscore >= 0 ? uscore : ascore);
+      }
     }
     
   }

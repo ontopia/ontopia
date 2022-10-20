@@ -55,8 +55,9 @@ public class HighlightNode implements KeyListener, ContainerListener {
   }
   
   public void setNode(TMAbstractNode node, Graphics g) {
-    if (!fixed)
+    if (!fixed) {
       this.node = node;
+    }
     
     if (this.node != null) {
       highlight(g);
@@ -76,8 +77,9 @@ public class HighlightNode implements KeyListener, ContainerListener {
     if (keyEvent.getKeyCode() == KeyEvent.VK_CONTROL) {
       fixed = true;
       TopicMapView view = controller.getView();
-      if (view != null)
+      if (view != null) {
         view.getTGPanel().repaint();
+      }
     }
   }
   
@@ -86,8 +88,9 @@ public class HighlightNode implements KeyListener, ContainerListener {
     if (keyEvent.getKeyCode() == KeyEvent.VK_CONTROL) {
       fixed = false;
       TopicMapView view = controller.getView();
-      if (view != null)
+      if (view != null) {
         view.getTGPanel().repaint();
+      }
     }
   }
   

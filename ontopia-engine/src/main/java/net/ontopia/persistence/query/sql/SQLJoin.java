@@ -54,10 +54,11 @@ public class SQLJoin implements SQLExpressionIF {
   
   public SQLJoin(SQLColumns left, SQLColumns right, int jointype) {
     // Complain if arities are different
-    if (left.getArity() != right.getArity())
+    if (left.getArity() != right.getArity()) {
       throw new IllegalArgumentException("Arities of values are not identical: " +
                                          left + " (arity " + left.getArity() +") " +
                                          right + " (arity " + right.getArity() +")");
+    }
     this.left = left;
     this.right = right;
     this.jointype = jointype;
@@ -103,9 +104,11 @@ public class SQLJoin implements SQLExpressionIF {
   public boolean equals(Object obj) {
     if (obj instanceof SQLJoin) {
       SQLJoin other = (SQLJoin)obj;
-      if (left.equals(other.getLeft()))
-        if (right.equals(other.getRight()))
+      if (left.equals(other.getLeft())) {
+        if (right.equals(other.getRight())) {
           return true;
+        }
+      }
     }
     return false;
   }

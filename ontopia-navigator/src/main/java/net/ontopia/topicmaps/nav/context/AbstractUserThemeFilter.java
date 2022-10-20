@@ -68,8 +68,9 @@ public abstract class AbstractUserThemeFilter implements UserThemeFilterIF {
     Iterator it = unfilteredThemes.iterator();
     while (it.hasNext()) {
       actTheme = (TopicIF) it.next();
-      if (!shouldNotBeUsed(actTheme))
-        themes.add( actTheme ); 
+      if (!shouldNotBeUsed(actTheme)) {
+        themes.add( actTheme );
+      } 
     }
 
     return themes;

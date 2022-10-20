@@ -39,9 +39,9 @@ public class ReifiedTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection topics) throws JspTagException {
     // Find all topics which are reified by topic map objects in collection
-    if (topics == null)
+    if (topics == null) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       ArrayList reifiedObjects = new ArrayList();
       Iterator iter = topics.iterator();
       ReifiableIF reifiedObject;
@@ -53,8 +53,9 @@ public class ReifiedTag extends BaseValueProducingAndAcceptingTag {
           TopicIF topic = (TopicIF) iter.next();
           reifiedObject = topic.getReified();
           // If an object was found add it to the result list.
-          if (reifiedObject != null)
+          if (reifiedObject != null) {
             reifiedObjects.add(reifiedObject);
+          }
         } catch (ClassCastException e) {
           throw new NavigatorRuntimeException("'reified' tag got a collection containing non-topic objects.");
         }

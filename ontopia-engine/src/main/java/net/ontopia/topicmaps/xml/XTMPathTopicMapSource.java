@@ -75,10 +75,11 @@ public class XTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
     ref.setMaintainFulltextIndexes(maintainFulltextIndexes);
     ref.setIndexDirectory(indexDirectory);
     ref.setAlwaysReindexOnLoad(alwaysReindexOnLoad);
-    if (ref_handler != null)
+    if (ref_handler != null) {
       ref.setExternalReferenceHandler(ref_handler);
-    else
-      ref.setFollowTopicRefs(followTopicRefs);      
+    } else {
+      ref.setFollowTopicRefs(followTopicRefs);
+    }      
     return ref;
   }
 

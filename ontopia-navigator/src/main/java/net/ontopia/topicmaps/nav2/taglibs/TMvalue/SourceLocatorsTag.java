@@ -40,9 +40,9 @@ public class SourceLocatorsTag extends BaseValueProducingAndAcceptingTag {
   @Override
   public Collection process(Collection tmObjs) throws JspTagException {
     // find all source locators of all topic map objects in collection
-    if (tmObjs == null || tmObjs.isEmpty())
+    if (tmObjs == null || tmObjs.isEmpty()) {
       return Collections.EMPTY_SET;
-    else {
+    } else {
       List sourceLocators = new ArrayList();
       Iterator iter = tmObjs.iterator();
       
@@ -50,8 +50,9 @@ public class SourceLocatorsTag extends BaseValueProducingAndAcceptingTag {
         try {
           TMObjectIF tmObj = (TMObjectIF) iter.next();
           // get all source locators as LocatorIF objects
-          if (tmObj != null)
+          if (tmObj != null) {
             sourceLocators.addAll( tmObj.getItemIdentifiers() );
+          }
         } catch (ClassCastException e) {
         }
       }

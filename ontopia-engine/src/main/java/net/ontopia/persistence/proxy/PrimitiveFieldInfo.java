@@ -83,16 +83,18 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
   public Object load(AccessRegistrarIF registrar, TicketIF ticket, ResultSet rs, int rsindex, boolean direct) throws SQLException {
     // Read primitive value
     Object value = SQLTypes.getObject(rs, rsindex, sqltype, direct);
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("PF: Loading column " + colname + "=" + value);
+    }
     return value;
   }
   
   @Override
   public void bind(Object value, PreparedStatement stm, int stmt_index) throws SQLException {
     // value is a primitive object
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug("PF: Binding [" + stmt_index + "] " + colname + "=" + value);
+    }
     SQLTypes.setObject(stm, stmt_index, value, sqltype);
   }
 
@@ -103,10 +105,11 @@ public class PrimitiveFieldInfo extends AbstractFieldInfo {
 
   @Override
   public void retrieveSQLValues(Object value, List<SQLValueIF> sql_values) {
-    if (value == null)      
+    if (value == null) {      
       sql_values.add(new SQLNull()); // TODO: Use SQLNull.getInstance() / SQLNull.INSTANCE
-    else
-      sql_values.add(new SQLPrimitive(value, sqltype));      
+    } else {
+      sql_values.add(new SQLPrimitive(value, sqltype));
+    }      
   }
 
   @Override
