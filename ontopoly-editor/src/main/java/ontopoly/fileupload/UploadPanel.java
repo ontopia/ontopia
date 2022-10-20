@@ -109,6 +109,6 @@ public class UploadPanel extends Panel {
       protected void respond(AjaxRequestTarget target) {
         parentField.callOnUpdate(target);
       }
-    };
+    }
 
 }

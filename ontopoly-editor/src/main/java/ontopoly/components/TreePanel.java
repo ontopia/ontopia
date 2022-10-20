@@ -212,5 +212,5 @@ public abstract class TreePanel extends Panel {
       TreeNode treeNode = (TreeNode) model.getObject();
       return populateNode(id, treeNode);
     }
-  };
+  }
 }

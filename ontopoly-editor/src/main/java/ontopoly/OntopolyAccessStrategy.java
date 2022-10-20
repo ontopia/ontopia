@@ -43,7 +43,7 @@ public abstract class OntopolyAccessStrategy implements Serializable {
   /**
    * The set of Privileges that a user can have.
    */
-  public enum Privilege { EDIT, READ_ONLY, NONE };
+  public enum Privilege { EDIT, READ_ONLY, NONE }
 
   /**
    * Indicates if this strategy is enabled. An enabled strategy will cause the

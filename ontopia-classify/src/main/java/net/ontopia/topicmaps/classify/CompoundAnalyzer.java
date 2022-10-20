@@ -264,7 +264,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
     public int compare(Variant v1, Variant v2) {
       return Double.compare(f.getScore(v2), f.getScore(v1));
     }
-  };
+  }
   
   private class Followers {
     private TObjectIntHashMap<Variant> followers = new TObjectIntHashMap<Variant>();

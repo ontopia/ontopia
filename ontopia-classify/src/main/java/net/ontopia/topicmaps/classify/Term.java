@@ -202,6 +202,6 @@ public class Term {
       }
       return v1.getValue().compareTo(v2.getValue());
     }
-  };
+  }
   
 }
