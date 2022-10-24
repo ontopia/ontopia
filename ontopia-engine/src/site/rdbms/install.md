@@ -208,11 +208,6 @@ clustering feature *must* be enabled to prevent inconsistencies. As each instanc
 data cache any modifications to the data needs to be replicated across all nodes in the cluster.
 This must be done to prevent any of the nodes from holding stale data.
 
-> **Warning**
-> Note that if your application uses the Web Editor framework then another clustering configuration
-> needs to the set up. See the *[Web Editor Framework Developer's Guide](../webed/devguide.html)* for
-> more information.
-
 net.ontopia.topicmaps.impl.rdbms.Cluster.id
 :   Type: string, Default: none
 :   This property specifies the id of the cluster that the instance should be a member of. All instances

@@ -74,9 +74,6 @@ your POM:
 `ontopia-vizigator`
 :    Contains the core code of the [Vizigator](vizigator/userguide.html) and Vizlet.
 
-`ontopia-webed`
-:    Contains the [Web Editor Framework](webed/devguide.html) code, **Deprecated**
-
 `ontopoly-editor`
 :    Contains the core code of the [Ontopoly Topic Maps editor](ontopoly/user-guide.html).
 

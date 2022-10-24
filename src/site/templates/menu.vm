@@ -75,17 +75,6 @@
 	</li>
 	#end
 
-	#if ($id == "ontopia-webed" || $id == "ontopia-distribution-tomcat")
-	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-code"></i>Webed framework </i></a>
-		<ul class="nav">
-			<li><a href="${root}webed/config.html">Configuration</a></li>
-			<li><a href="${root}webed/devguide.html">Developer guide</a></li>
-			<li><a href="${root}webed/taglib.html">Tab library reference</a></li>
-			<li><a href="${root}webed/action-ref.html">Action library reference</a></li>
-		</ul>
-	</li>
-	#end
-
 	#if ($id == "ontopia-distribution-tomcat")
 	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-wrench"></i>Tools </i></a>
 		<ul class="nav">

@@ -30,13 +30,6 @@ Documentation
 * [The Ontopia Navigator, Tag Library Reference](navigator/tolog-taglib.html)
 * [The Ontopia Navigator, User Management Guide](navigator/userman.html)
 
-### Web Editor-specific documents ###
-
-* [The Ontopia Web Editor Framework, Developer's Guide](webed/devguide.html)
-* [The Ontopia Web Editor Framework, Tag Library Reference](webed/taglib.html)
-* [The Ontopia Web Editor Framework, Action Library Reference Documentation](webed/action-ref.html)
-* [The Ontopia Web Editor Framework, Configuration Guide](webed/config.html)
-
 ### RDBMS Backend Connector ###
 
 * [The Ontopia RDBMS Backend Connector, Installation Guide](rdbms/install.html)

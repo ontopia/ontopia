@@ -27,7 +27,6 @@
 +slf4j-taglib*.jar,\
 +ontopia-lucene-*,\
 +ontopia-navigator-*.jar,\
-+ontopia-webed-*.jar,\
 +jstl-*.jar
  
  # String cache configuration.

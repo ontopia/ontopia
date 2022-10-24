@@ -23,30 +23,7 @@
   </clients>  
   <application>
     <dso>
-      <roots>
-        <root><field-name>net.ontopia.topicmaps.webed.impl.utils.LockManagers.lockManagers</field-name></root>
-      </roots>
       <locks>
-         <autolock>
-          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.LockManagers.getLockManager(..)</method-expression>
-          <lock-level>read</lock-level>
-         </autolock>
-         <autolock>
-          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.LockManagers.createLockManager(..)</method-expression>
-          <lock-level>write</lock-level>
-         </autolock>
-         <autolock>
-          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.NamedLockManager.*(..)</method-expression>
-          <lock-level>write</lock-level>
-        </autolock>
-        <autolock>
-          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.NamedLock.*(..)</method-expression>
-          <lock-level>read</lock-level>
-        </autolock>
-        <autolock>
-          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.LockResult.*(..)</method-expression>
-          <lock-level>read</lock-level>
-        </autolock>
         <autolock>
           <method-expression>* java.util.HashMap.*(..)</method-expression>
           <lock-level>write</lock-level>
@@ -61,21 +38,6 @@
         </autolock>
       </locks>
       <instrumented-classes>
-        <include>
-          <class-expression>net.ontopia.topicmaps.webed.impl.utils.LockManagers</class-expression>
-        </include>
-        <include>
-          <class-expression>net.ontopia.topicmaps.webed.impl.utils.NamedLockManager</class-expression>
-        </include>
-        <include>
-          <class-expression>net.ontopia.topicmaps.webed.impl.utils.NamedLockManager$TMObjectIFHandle</class-expression>
-        </include>
-        <include>
-          <class-expression>net.ontopia.topicmaps.webed.impl.utils.NamedLock</class-expression>
-        </include>
-        <include>
-          <class-expression>net.ontopia.topicmaps.webed.impl.utils.LockResult</class-expression>
-        </include>
         <include>
           <class-expression>java.util.HashSet</class-expression>
         </include>
