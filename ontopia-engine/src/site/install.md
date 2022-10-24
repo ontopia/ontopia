@@ -31,7 +31,6 @@ Ontopia has the following components:
 *  The Ontopia Topic Maps Engine
     *  Full-text Integration
     *  Query Engine
-    *  Schema Tools
 *  The Ontopia Navigator Framework
     *  TMRAP
 *  The Ontopia Web Editor Framework
@@ -333,7 +332,7 @@ directory.
     3.  `jgroups-all.jar`, version 2.6.10 GA, ([JGroups - A Toolkit for Reliable Multicast
        Communication](http://www.jgroups.org/))
 
-The Query Engine and the Schema Tools require no jar files beyond the ones needed for the Topic Map
+The Query Engine requires no jar files beyond the ones needed for the Topic Map
 Engine.
 
 ### Appendix 2: How to set Java properties ###

@@ -216,28 +216,6 @@ control, in which case the fragment will be evaluated once for each topic map ob
 object.
 
 
-#### <a name="p-OSLValidate">`OSLValidate`</a> ####
-
-Validates modified objects against an OSL schema to ensure that the data has not been incorrectly
-modified.
-
-##### Parameters #####
-
-| Name | Required | Value | Description | 
-|---|---|---|
-| object | yes | a set of topic maps, associations, and topics | The objects to validate. | 
-
-**HTTP request parameter**
-
-The HTTP request parameter, if any, will be ignored.
-
-##### Execution #####
-
-The objects in the `object` parameter will be validated against the OSL schema registered for the
-current topic map. If errors are found, or if there is no schema, a critical error is thrown. If no
-errors are found nothing happens.
-
-
 #### <a name="p-RemoveSourceLocator">`RemoveSourceLocator`</a> ####
 
 Removes an item identifier from the topic map object.

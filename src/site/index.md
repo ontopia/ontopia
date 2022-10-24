@@ -51,11 +51,6 @@ Documentation
 * [tolog - Tutorial](query/tutorial.html)
 * [tolog - Predicate Reference](query/predicate-reference.html)
 
-### Schema language ###
-
-* [The Ontopia Schema Language, Tutorial](schema/tutorial.html)
-* [The Ontopia Schema Language, Reference Guide](schema/spec.html)
-
 ### DB2TM ###
 
 * [DB2TM, User's Guide](db2tm/user-guide.html)
