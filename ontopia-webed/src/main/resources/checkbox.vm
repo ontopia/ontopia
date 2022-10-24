@@ -1,7 +1,0 @@
-## Template used by net.ontopia.topicmaps.webed.taglibs.form.CheckboxTag
-## -----------------------------------------------------------------------
-#if ($readonly)
-  <input type="checkbox" name="${name}" disabled="disabled" #condAttribute("id" ${id}) #condAttribute("class" ${class}) ${checked} />
-#else
-  <input type="checkbox" name="${name}" #condAttribute("id" ${id}) #condAttribute("class" ${class}) #if(${checked} == "checked")checked="checked"#end />
-#end
