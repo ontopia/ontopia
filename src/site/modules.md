@@ -62,9 +62,6 @@ your POM:
 `ontopia-rest`
 :    Contains the Ontopia REST API implementation.
 
-`ontopia-schema`
-:    Contains code to apply schema constraints to a Topic Map, **Deprecated**
-
 `ontopia-tmprefs`
 :    Contains code that allows a Topic Map to serve as Java Preferences API store.
 
